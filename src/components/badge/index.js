@@ -7,7 +7,7 @@ import Typography from '../../style/typography';
  * Round colored badge, typically used to show a number
  */
 export default class Badge extends Component {
-
+  static displayName = 'Badge';
   static propTypes = {
     /**
      * Text to show inside the badge

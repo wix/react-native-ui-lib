@@ -8,7 +8,7 @@ import {Colors, ComponentsColors, Typography} from '../../style';
  * Basic button component
  */
 export default class Button extends Component {
-
+  static displayName = 'Button';
   static propTypes = {
     /**
      * Text to show inside the button

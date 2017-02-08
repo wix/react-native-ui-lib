@@ -8,7 +8,7 @@ import {ComponentsColors} from '../../style';
  * Component that shows a full screen for a certain state like an empty state
  */
 export default class StateScreen extends Component {
-
+  static displayName = 'StateScreen';
   static propTypes = {
     /**
      * Image that's showing at the top. use an image that was required locally
