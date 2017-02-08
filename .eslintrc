@@ -1,6 +1,10 @@
 {
+  "parser": "babel-eslint",
   "plugins": ["react-native"],
   "extends": [
     "airbnb"
-  ]
+  ],
+  "rules": {
+    "object-curly-spacing": "off"
+  }
 }
