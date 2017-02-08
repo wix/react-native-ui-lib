@@ -1,29 +1,17 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   AppRegistry,
   StyleSheet,
   View,
 } from 'react-native';
+import {Navigation} from 'react-native-navigation';
 import {Colors, Button, Badge} from 'react-native-ui-lib'; //eslint-disable-line
+import './screens';
 
-export default class uilib extends Component {
-  render() {
-    return (
-      <View style={[styles.container, {backgroundColor: Colors.dark40}]}>
-        <Button label="Hello" onPress={() => { alert('welcome to UI-Lib'); }} />
-        <Badge label="1" color={Colors.red10} />
-      </View>
-    );
+Navigation.startSingleScreenApp({
+  screen: {
+    screen: 'example.MainScreen',
+    title: 'Wix UI Lib',
+    navigatorButtons: {}
   }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
 });
-
-AppRegistry.registerComponent('uilib', () => uilib);

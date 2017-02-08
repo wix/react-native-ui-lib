@@ -9,21 +9,33 @@
   },
   "dependencies": {
     "react": "15.4.2",
-    "react-native": "^0.38.1"
+    "react-autobind": "^1.0.6",
+    "react-native": "^0.38.1",
+    "react-native-navigation": "^2.0.0-experimental"
   },
   "jest": {
     "preset": "react-native"
   },
+  "babel": {
+    "env": {
+      "test": {
+        "presets": [
+          "react-native"
+        ],
+        "retainLines": true
+      }
+    }
+  },  
   "devDependencies": {
+    "babel-eslint": "^7.0.0",
     "babel-jest": "18.0.0",
     "babel-preset-react-native": "1.9.1",
-    "jest": "18.1.0",
     "eslint": "^3.0.0",
-    "babel-eslint": "^7.0.0",
-    "eslint-plugin-react": "^6.9.0",
-    "eslint-plugin-react-native": "^2.0.0",
     "eslint-config-airbnb": "^14.0.0",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "4.0.0"
+    "eslint-plugin-jsx-a11y": "4.0.0",
+    "eslint-plugin-react": "^6.9.0",
+    "eslint-plugin-react-native": "^2.0.0",
+    "jest": "18.1.0"
   }
 }
