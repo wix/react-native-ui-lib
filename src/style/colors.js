@@ -81,7 +81,7 @@ const Colors = {
   violet70: '#E3D8ED',
   violet80: '#F1EBF6',
   // WHITES
-  white: '#ffffff'
+  white: '#ffffff',
 };
 
 

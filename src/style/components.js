@@ -12,7 +12,7 @@ const Components = StyleSheet.create({
     borderColor: Colors.dark60,
     transform: [{
       rotate: '45deg',
-    }]
+    }],
   },
 });
 

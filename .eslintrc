@@ -5,6 +5,12 @@
     "airbnb"
   ],
   "rules": {
-    "object-curly-spacing": "off"
+    "object-curly-spacing": "off",
+    "react/prefer-stateless-function": "off",
+    "react/jsx-filename-extension": "off",
+    "react/require-default-props": "off",
+    "no-use-before-define": "off",
+    "react/forbid-prop-types": "off",
+    "max-len": [2, 120, 4, {"ignoreUrls": true}]
   }
 }

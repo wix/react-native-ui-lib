@@ -12,19 +12,25 @@ export default class Button extends Component {
     disabled: PropTypes.bool,
     containerStyle: PropTypes.object,
     labelStyle: PropTypes.object,
-    enableShadow: PropTypes.bool // iOS-only
+    enableShadow: PropTypes.bool, // iOS-only
+    testId: PropTypes.string,
   };
 
   static defaultProps = {
     containerStyle: {},
-    labelStyle: {}
+    labelStyle: {},
   };
 
   render() {
-    const {label, onPress, disabled, containerStyle, labelStyle, enableShadow, testID} = this.props;
+    const shadowStyle = enableShadow ? styles.shadowStyle : {};
+    const {label, onPress, disabled, containerStyle, labelStyle, enableShadow, testId} = this.props;
     return (
-      <TouchableOpacity style={[styles.container, enableShadow ? styles.shadowStyle : {}, disabled && styles.disabled, containerStyle]} onPress={onPress} disabled={disabled} >
-        <Text style={[styles.text, labelStyle]} testID={testID}>
+      <TouchableOpacity
+        style={[styles.container, shadowStyle, disabled && styles.disabled, containerStyle]}
+        onPress={onPress}
+        disabled={disabled}
+      >
+        <Text style={[styles.text, labelStyle]} testID={testId}>
           {Constants.isAndroid ? _.toUpper(label) : label}
         </Text>
       </TouchableOpacity>
@@ -41,22 +47,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
     height: 54,
     borderRadius: Platform.OS === 'ios' ? 27 : 3,
-    minWidth: 160
+    minWidth: 160,
   },
   shadowStyle: {
     shadowColor: '#3082C8',
     shadowOffset: {height: 5, width: 0},
     shadowOpacity: 0.35,
-    shadowRadius: 9.5
+    shadowRadius: 9.5,
   },
   text: {
     flex: 0,
     flexDirection: 'row',
     color: 'white',
     ...Typography.text70,
-    fontWeight: '100'
+    fontWeight: '100',
   },
   disabled: {
-    backgroundColor: Colors.dark60
+    backgroundColor: Colors.dark60,
   },
 });

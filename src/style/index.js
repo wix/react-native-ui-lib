@@ -9,5 +9,5 @@ module.exports = {
   Shadows,
   Components,
   ComponentsColors,
-  Typography
+  Typography,
 };
