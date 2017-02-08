@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, View, Text, StyleSheet} from 'react-native';
-import {Typography, Colors} from 'react-native-ui-lib';
+import {Typography, Colors} from 'react-native-ui-lib';//eslint-disable-line
 
 export default class TypographyScreen extends Component {
 
@@ -34,5 +34,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     borderColor: Colors.dark20,
     borderBottomWidth: 1,
-  }
+  },
 });
