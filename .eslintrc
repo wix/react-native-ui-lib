@@ -1,0 +1,7 @@
+{
+  "plugins": ["react-native"],
+  "extends": [
+    "wix/react",
+    "wix/esnext"
+  ]
+}

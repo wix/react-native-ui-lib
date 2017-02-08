@@ -1,0 +1,3 @@
+rootProject.name = 'uilib'
+
+include ':app'
