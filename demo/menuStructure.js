@@ -1,9 +1,9 @@
 // import {Constants} from '../../src';
 export const navigationData = {
   Style: [
-    // {title: 'Typography', tags: 'fonts text', screen: 'example.TypographyScreen'},
+    {title: 'Typography', tags: 'fonts text', screen: 'example.style.TypographyScreen'},
     {title: 'Colors', tags: 'palette rgb hex', screen: 'example.style.ColorsScreen'},
-    // {title: 'Shadows (iOS)', tags: 'shadow', screen: 'example.ShadowsScreen'}
+    {title: 'Shadows (iOS)', tags: 'shadow', screen: 'example.ShadowsScreen'}
   ],
   // General: [
   //   {title: 'Form Screen', description: 'Text Input, Stepper, Select', tags: 'text input multi select email validation', screen: 'example.FormScreen'},
