@@ -4,15 +4,39 @@ import _ from 'lodash';
 import * as Constants from '../../helpers/Constants';
 import {Colors, ComponentsColors, Typography} from '../../style';
 
+/**
+ * Basic button component
+ */
 export default class Button extends Component {
 
   static propTypes = {
+    /**
+     * Text to show inside the button
+     */
     label: PropTypes.string,
+    /**
+     * Actions handler
+     */
     onPress: PropTypes.func,
+    /**
+     * Disable interactions for the component
+     */
     disabled: PropTypes.bool,
+    /**
+     * Additional styles for the top container
+     */
     containerStyle: PropTypes.object,
+    /**
+     * Additional styles for label text
+     */
     labelStyle: PropTypes.object,
+    /**
+     * Control shadow visibility
+     */
     enableShadow: PropTypes.bool, // iOS-only
+    /**
+     * Use to identify in tests
+     */
     testId: PropTypes.string,
   };
 

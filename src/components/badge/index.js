@@ -1,13 +1,21 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-import * as Constants from '../../helpers/Constants';
 import Colors from '../../style/colors';
 import Typography from '../../style/typography';
 
+/**
+ * Round colored badge, typically used to show a number
+ */
 export default class Badge extends Component {
 
   static propTypes = {
+    /**
+     * Text to show inside the badge
+     */
     label: React.PropTypes.string,
+    /**
+     * Color of the badge background
+     */
     color: React.PropTypes.string,
   };
 
@@ -20,8 +28,8 @@ export default class Badge extends Component {
 
 const styles = StyleSheet.create({
   badge: {
-    width: 23,
-    height: 23,
+    width: 24,
+    height: 24,
     borderRadius: 12,
     backgroundColor: Colors.blue20,
     alignItems: 'center',
