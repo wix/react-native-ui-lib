@@ -11,7 +11,8 @@
     "react": "15.4.2",
     "react-autobind": "^1.0.6",
     "react-native": "^0.38.1",
-    "react-native-navigation": "^2.0.0-experimental"
+    "react-native-navigation": "^2.0.0-experimental",
+    "lodash": "^4.0.0"
   },
   "jest": {
     "preset": "react-native"
