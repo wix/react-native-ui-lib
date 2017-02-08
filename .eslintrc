@@ -11,7 +11,9 @@
     "react/require-default-props": "off",
     "no-use-before-define": "off",
     "react/forbid-prop-types": "off",
-    "max-len": [2, 120, 4, {"ignoreUrls": true}]
+    "max-len": [2, 120, 4, {"ignoreUrls": true}],
+    "class-methods-use-this": "off",
+    "arrow-body-style": "off"
   },
   "env": {
     "browser": true,

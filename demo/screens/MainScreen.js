@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 import {TouchableOpacity, View, Text, ListView, StyleSheet} from 'react-native';
 import _ from 'lodash';
-import {Colors, Typography} from 'react-native-ui-lib';
-import {navigationData} from '../menuStructure';
 import autobind from 'react-autobind';
+import {Colors, Typography} from 'react-native-ui-lib';//eslint-disable-line
+import {navigationData} from '../menuStructure';
 
 const ds = new ListView.DataSource({
   rowHasChanged: (r1, r2) => r1 !== r2,
@@ -13,8 +13,8 @@ const ds = new ListView.DataSource({
 export default class UiLibExplorerMenu extends Component {
 
   static propTypes = {
-    navigator: PropTypes.object
-  }
+    navigator: PropTypes.object,
+  };
 
   constructor(props) {
     super(props);
@@ -24,37 +24,13 @@ export default class UiLibExplorerMenu extends Component {
     };
   }
 
-  _openScreen(row) {
+  openScreen(row) {
     const {navigator} = this.props;
     navigator.push({
       screen: row.screen,
       title: row.title,
-      overrideBackPress: row.overrideBackPress
+      overrideBackPress: row.overrideBackPress,
     });
-  }
-
-  renderRow(row) {
-    return (
-      <TouchableOpacity 
-        style={{justifyContent: 'center', paddingVertical: 20, paddingHorizontal: 25}}
-        onPress={() => this._openScreen(row)}>
-        <Text>
-          {row.title}
-        </Text>
-      </TouchableOpacity>
-    );
-  }
-
-  renderSeparator(sId, id) {
-    return (<View style={styles.separator} key={'s' + sId +'_' + id} />);
-  }
-
-  renderSectionHeader(sectionData, sectionID) {
-    return (
-      <View style={styles.sectionContainer}>
-        <Text style={styles.sectionText}>{sectionID}</Text>
-      </View>
-    );
   }
 
   filterExplorerScreens(filterText) {
@@ -82,6 +58,31 @@ export default class UiLibExplorerMenu extends Component {
     });
   }
 
+  renderSectionHeader(sectionData, sectionID) {
+    return (
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionText}>{sectionID}</Text>
+      </View>
+    );
+  }
+
+  renderSeparator(sId, id) {
+    return (<View style={styles.separator} key={`s${sId}_${id}`} />);
+  }
+
+  renderRow(row) {
+    return (
+      <TouchableOpacity
+        style={{justifyContent: 'center', paddingVertical: 20, paddingHorizontal: 25}}
+        onPress={() => this.openScreen(row)}
+      >
+        <Text>
+          {row.title}
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+
   render() {
     return (
       <ListView
@@ -98,11 +99,11 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'left',
     fontSize: 22,
-    padding: 20
+    padding: 20,
   },
   row: {
     height: 56,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   separator: {
     borderBottomWidth: 1,
