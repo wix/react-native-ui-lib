@@ -4,6 +4,7 @@ import Button from './components/button';
 import ConnectionStatusBar from './components/connection-status-bar';
 import StateScreen from './screens/stateScreen';
 import LoaderScreen from './screens/loaderScreen';
+import PageControl from './components/page-control';
 import Style from './style';
 import * as Constants from './helpers/Constants';
 
@@ -15,5 +16,6 @@ module.exports = {
   Constants,
   StateScreen,
   LoaderScreen,
+  PageControl,
   ...Style,
 };
