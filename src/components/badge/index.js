@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import Colors from '../../style/colors';
 import Typography from '../../style/typography';
+import {BaseComponent} from '../../commons';
 
 /**
  * Round colored badge, typically used to show a number
  */
-export default class Badge extends Component {
+export default class Badge extends BaseComponent {
   static displayName = 'Badge';
   static propTypes = {
     /**
@@ -19,26 +20,32 @@ export default class Badge extends Component {
     color: React.PropTypes.string,
   };
 
+  generateStyles() {
+    this.styles = createStyles();
+  }
+
   render() {
-    return (<View style={[styles.badge, this.props.color && {backgroundColor: this.props.color}]}>
-      <Text style={styles.count} numberOfLines={1} testID="badge">{this.props.label}</Text>
+    return (<View style={[this.styles.badge, this.props.color && {backgroundColor: this.props.color}]}>
+      <Text style={this.styles.count} numberOfLines={1} testID="badge">{this.props.label}</Text>
     </View>);
   }
 }
 
-const styles = StyleSheet.create({
-  badge: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: Colors.blue20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  count: {
-    ...Typography.text70,
-    color: Colors.white,
-    backgroundColor: 'rgba(0,0,0,0)',
-  },
-});
-
+function createStyles() {
+  const styles = StyleSheet.create({
+    badge: {
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      backgroundColor: Colors.blue20,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    count: {
+      ...Typography.text70,
+      color: Colors.white,
+      backgroundColor: 'rgba(0,0,0,0)',
+    },
+  });
+  return styles;
+}

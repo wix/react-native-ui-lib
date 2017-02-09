@@ -3,11 +3,12 @@ import _ from 'lodash';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import * as Constants from '../../helpers/Constants';
 import {ComponentsColors} from '../../style';
+import {BaseComponent} from '../../commons';
 
 /**
  * Component that shows a full screen for a certain state like an empty state
  */
-export default class StateScreen extends Component {
+export default class StateScreen extends BaseComponent {
   static displayName = 'StateScreen';
   static propTypes = {
     /**
@@ -36,18 +37,22 @@ export default class StateScreen extends Component {
     testId: PropTypes.string,
   };
 
+  generateStyles() {
+    this.styles = createStyles();
+  }
+
   render() {
-    const {title, subtitle, image, ctaLabel, onCtaPress, testId, labelTestId} = this.props;
+    const {title, subtitle, image, ctaLabel, onCtaPress, testId} = this.props;
     return (
-      <View style={styles.container} testID={testId}>
+      <View style={this.styles.container} testID={testId}>
         <View>
-          <Image style={styles.image} resizeMode={'contain'} source={image} />
+          <Image style={this.styles.image} resizeMode={'contain'} source={image} />
         </View>
         <View>
-          <Text style={[styles.title]}>{title}</Text>
-          <Text style={[styles.subtitle]}>{subtitle}</Text>
+          <Text style={[this.styles.title]}>{title}</Text>
+          <Text style={[this.styles.subtitle]}>{subtitle}</Text>
         </View>
-        <View style={styles.cta}>
+        <View style={this.styles.cta}>
           <TouchableOpacity onPress={onCtaPress}>
             <Text style={{color: ComponentsColors.CTA, fontSize: Constants.typography.text1}}>
               {Constants.isAndroid ? _.toUpper(ctaLabel) : ctaLabel}
@@ -59,30 +64,33 @@ export default class StateScreen extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 80,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  image: {
-    height: 200,
-  },
-  title: {
-    textAlign: 'center',
-    fontSize: Constants.typography.header1,
-    color: Constants.paletteColors.gray10,
-    fontWeight: '300',
-  },
-  subtitle: {
-    textAlign: 'center',
-    fontSize: Constants.typography.text1,
-    color: Constants.paletteColors.gray20,
-    fontWeight: '300',
-    marginTop: 12,
-  },
-  cta: {
-    marginTop: 30,
-  },
-});
+function createStyles() {
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingTop: 80,
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+    },
+    image: {
+      height: 200,
+    },
+    title: {
+      textAlign: 'center',
+      fontSize: Constants.typography.header1,
+      color: Constants.paletteColors.gray10,
+      fontWeight: '300',
+    },
+    subtitle: {
+      textAlign: 'center',
+      fontSize: Constants.typography.text1,
+      color: Constants.paletteColors.gray20,
+      fontWeight: '300',
+      marginTop: 12,
+    },
+    cta: {
+      marginTop: 30,
+    },
+  });
+  return styles;
+}
