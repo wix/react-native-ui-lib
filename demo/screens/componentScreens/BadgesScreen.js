@@ -10,7 +10,7 @@ export default class ButtonsScreen extends Component {
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <Badge label={'1'} containerStyle={{marginRight: BadgesSpace}} />
-        <Badge label={'10'} containerStyle={{marginRight: BadgesSpace}} />
+        <Badge label={'10'} containerStyle={{marginRight: BadgesSpace}} backgroundColor={Colors.red40} />
         <Badge label={'27'} containerStyle={{marginRight: BadgesSpace}} />
       </ScrollView>
     );

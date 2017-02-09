@@ -17,7 +17,8 @@ export default class ButtonsScreen extends Component {
         <Button
           label={'This is a button with long text'}
           onPress={() => Alert.alert('Button #2')}
-          containerStyle={{backgroundColor: Colors.violet50, marginBottom: ButtonSpace}}
+          backgroundColor={Colors.violet50}
+          containerStyle={{marginBottom: ButtonSpace}}
           enableShadow
         />
         <Button

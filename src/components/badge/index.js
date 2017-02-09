@@ -17,7 +17,7 @@ export default class Badge extends BaseComponent {
     /**
      * Color of the badge background
      */
-    color: React.PropTypes.string,
+    backgroundColor: React.PropTypes.string,
     /**
      * Additional styles for the top container
      */
@@ -30,8 +30,9 @@ export default class Badge extends BaseComponent {
 
   render() {
     const containerStyle = this.extractContainerStyle(this.props);
+    const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
     return (
-      <View style={[this.styles.badge, containerStyle, this.props.color && {backgroundColor: this.props.color}]}>
+      <View style={[this.styles.badge, containerStyle, backgroundStyle]}>
         <Text style={this.styles.count} numberOfLines={1} testID="badge">{this.props.label}</Text>
       </View>
     );

@@ -16,6 +16,10 @@ export default class Button extends BaseComponent {
      */
     label: PropTypes.string,
     /**
+     * Color of the button background
+     */
+    backgroundColor: React.PropTypes.string,
+    /**
      * Actions handler
      */
     onPress: PropTypes.func,
@@ -53,10 +57,11 @@ export default class Button extends BaseComponent {
   render() {
     const {label, onPress, disabled, labelStyle, enableShadow, testId} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
+    const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
     const shadowStyle = enableShadow ? this.styles.shadowStyle : {};
     return (
       <TouchableOpacity
-        style={[this.styles.container, shadowStyle, disabled && this.styles.disabled, containerStyle]}
+        style={[this.styles.container, shadowStyle, disabled && this.styles.disabled, containerStyle, backgroundStyle]}
         onPress={onPress}
         disabled={disabled}
       >
