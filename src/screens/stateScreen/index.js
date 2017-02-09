@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {PropTypes} from 'react';
 import _ from 'lodash';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import * as Constants from '../../helpers/Constants';

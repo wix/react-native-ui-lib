@@ -11,7 +11,7 @@ class ThemeManager {
     primaryColor: Colors.blue30,
     titleColor: Colors.dark10,
     subtitleColor: Colors.dark50,
-  }
+  };
 
   setTheme(overrides) {
     this.theme = _.merge(this.theme, overrides);
