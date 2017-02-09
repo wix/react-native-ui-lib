@@ -29,9 +29,9 @@ function cardContent(shadowName) {
     },
     actions: [
       {
-        text: 'action'
-      }
-    ]
+        text: 'action',
+      },
+    ],
   };
 }
 
@@ -98,14 +98,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   subContainer: {
     flex: 1,
     flexDirection: 'column',
     minHeight: 0.8 * height,
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   shadowCircle: {
     width: SHAPE_DIAMETER,
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     margin: 40,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   innerCircle: {
     width: SHAPE_DIAMETER,
@@ -140,6 +140,6 @@ const styles = StyleSheet.create({
   },
   shadowLabel: {
     fontSize: 9,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
