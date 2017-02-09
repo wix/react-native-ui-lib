@@ -65,7 +65,7 @@ export default class Button extends BaseComponent {
         onPress={onPress}
         disabled={disabled}
       >
-        <Text style={[this.styles.text, labelStyle]} testID={testId}>
+        <Text style={[this.styles.text, labelStyle]} numberOfLines={1} testID={testId}>
           {Constants.isAndroid ? _.toUpper(label) : label}
         </Text>
       </TouchableOpacity>
