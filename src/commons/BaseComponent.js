@@ -18,15 +18,13 @@ export default class BaseComponent extends Component {
   }
 
   extractContainerStyle(props) {
-    const containerStyle = {};
+    let containerStyle = {};
     if (props.containerStyle) {
-      _.map(props.containerStyle, (value, key) => {
-        if (_.isString(key) && key.includes('margin')) {
-          containerStyle[key] = value;
-        }
+      containerStyle = _.pickBy(props.containerStyle, (value, key) => {
+        return key.includes('margin');
       });
     }
+
     return containerStyle;
   }
-
 }
