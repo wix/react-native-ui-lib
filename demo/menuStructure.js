@@ -9,7 +9,8 @@ export const navigationData = {
     {title: 'Avatars', tags: 'avatar contact', screen: 'example.components.AvatarsScreen'},
     {title: 'Buttons', tags: 'button cta', screen: 'example.components.ButtonsScreen'},
     {title: 'Badges', tags: 'badge', screen: 'example.components.BadgesScreen'},
-    {title: 'ConnectionStatusBar', tags: 'connection status', screen: 'example.components.ConnectionStatusBar'},
+    {title: 'ConnectionStatusBar', tags: 'connection status bar', screen: 'example.components.ConnectionStatusBar'},
+    {title: 'PageControl', tags: 'page', screen: 'example.components.PageControlScreen'},
   ],
   Screens: [
     {title: 'State Screen', tags: 'empty state screen', screen: 'example.screens.EmptyStateScreen'},

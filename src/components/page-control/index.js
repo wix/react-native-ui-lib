@@ -12,15 +12,17 @@ function getColorStyle(color, index, currentPage) {
 /**
  * Page indicator, typically used in paged scroll-views
  */
-function PageControl({containerStyle, numOfPages, currentPage, onPagePress, color}) {
+function PageControl({containerStyle, numOfPages, currentPage, onPagePress, color, size = 10}) {
+  const style = createStyles(size);
   return (
-    <View style={[styles.container, containerStyle]}>
+    <View style={[style.container, containerStyle]}>
       {
         _.map([...new Array(numOfPages)], (item, index) =>
           <TouchableOpacity
+            disabled={_.isUndefined(onPagePress)}
             onPress={() => onPagePress && onPagePress(index)}
             key={index}
-            style={[styles.pageIndicator, getColorStyle(color, index, currentPage)]}
+            style={[style.pageIndicator, getColorStyle(color, index, currentPage)]}
           />)
       }
     </View>
@@ -46,31 +48,36 @@ PageControl.propTypes = {
    */
   onPagePress: PropTypes.func,
   /**
-   * Color of the selected page and the border of the not selected pages
+   * Color of the selected page dot and the border of the not selected pages
    */
   color: React.PropTypes.string,
+  /**
+   * The size of the page indicator
+   */
+  size: PropTypes.number,
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  pageView: {
-    width: Constants.screenWidth,
-    height: Constants.screenHeight,
-  },
-  pageIndicator: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    marginRight: 2,
-    marginLeft: 2,
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-  },
-});
+function createStyles(size) {
+  return StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    pageView: {
+      width: Constants.screenWidth,
+      height: Constants.screenHeight,
+    },
+    pageIndicator: {
+      backgroundColor: 'transparent',
+      borderWidth: 1,
+      marginRight: 2,
+      marginLeft: 2,
+      width: size,
+      height: size,
+      borderRadius: size / 2,
+    },
+  });
+}
 
 export default PageControl;
