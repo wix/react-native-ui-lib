@@ -2,12 +2,17 @@ import React, {PropTypes} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import _ from 'lodash';
 import * as Constants from '../../helpers/Constants';
-import {Colors} from '../../style';
+import {ThemeManager} from '../../style';
+
+function getColorStyle(color, index, currentPage) {
+  const compColor = color || ThemeManager.primaryColor;
+  return {borderColor: compColor, backgroundColor: (index === currentPage) ? compColor : 'transparent'};
+}
 
 /**
  * Page indicator, typically used in paged scroll-views
  */
-function PageControl({containerStyle, numOfPages, currentPage, onPagePress}) {
+function PageControl({containerStyle, numOfPages, currentPage, onPagePress, color}) {
   return (
     <View style={[styles.container, containerStyle]}>
       {
@@ -15,7 +20,7 @@ function PageControl({containerStyle, numOfPages, currentPage, onPagePress}) {
           <TouchableOpacity
             onPress={() => onPagePress && onPagePress(index)}
             key={index}
-            style={[styles.pageIndicator, {backgroundColor: (index === currentPage) ? Colors.dark30 : 'transparent'}]}
+            style={[styles.pageIndicator, getColorStyle(color, index, currentPage)]}
           />)
       }
     </View>
@@ -40,6 +45,10 @@ PageControl.propTypes = {
    * Action handler for clicking on a page indicator
    */
   onPagePress: PropTypes.func,
+  /**
+   * Color of the selected page and the border of the not selected pages
+   */
+  color: React.PropTypes.string,
 };
 
 const styles = StyleSheet.create({
@@ -55,7 +64,6 @@ const styles = StyleSheet.create({
   },
   pageIndicator: {
     backgroundColor: 'transparent',
-    borderColor: Colors.dark30,
     borderWidth: 1,
     marginRight: 2,
     marginLeft: 2,
