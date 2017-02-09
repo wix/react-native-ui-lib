@@ -7,6 +7,10 @@ export const navigationData = {
   ],
   Components: [
     {title: 'Buttons', tags: 'button cta', screen: 'example.components.ButtonsScreen'},
+    {title: 'Badges', tags: 'button cta', screen: 'example.components.BadgesScreen'},
+  ],
+  Screens: [
+    {title: 'State Screen', tags: 'empty state screen', screen: 'example.screens.EmptyStateScreen'},
   ],
   // General: [
   //   {title: 'Form Screen', description: 'Text Input, Stepper, Select', tags: 'text input multi select email validation', screen: 'example.FormScreen'},
