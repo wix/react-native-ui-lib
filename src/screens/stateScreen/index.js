@@ -33,17 +33,13 @@ export default class StateScreen extends Component {
     /**
      * Use to identify the container in tests
      */
-    containerTestId: PropTypes.string,
-    /**
-     * Use to identify the label in tests
-     */
-    labelTestId: PropTypes.string,
+    testId: PropTypes.string,
   };
 
   render() {
-    const {title, subtitle, image, ctaLabel, onCtaPress, containerTestId, labelTestId} = this.props;
+    const {title, subtitle, image, ctaLabel, onCtaPress, testId, labelTestId} = this.props;
     return (
-      <View style={styles.container} testID={containerTestId}>
+      <View style={styles.container} testID={testId}>
         <View>
           <Image style={styles.image} resizeMode={'contain'} source={image} />
         </View>
@@ -53,7 +49,7 @@ export default class StateScreen extends Component {
         </View>
         <View style={styles.cta}>
           <TouchableOpacity onPress={onCtaPress}>
-            <Text testID={labelTestId} style={{color: ComponentsColors.CTA, fontSize: Constants.typography.text1}}>
+            <Text style={{color: ComponentsColors.CTA, fontSize: Constants.typography.text1}}>
               {Constants.isAndroid ? _.toUpper(ctaLabel) : ctaLabel}
             </Text>
           </TouchableOpacity>
