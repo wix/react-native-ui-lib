@@ -50,7 +50,7 @@ function createStyles() {
       justifyContent: 'center',
     },
     count: {
-      ...Typography.text70,
+      ...Typography.text90,
       color: Colors.white,
       backgroundColor: 'rgba(0,0,0,0)',
     },
