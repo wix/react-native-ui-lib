@@ -12,6 +12,7 @@ export const navigationData = {
   ],
   Screens: [
     {title: 'State Screen', tags: 'empty state screen', screen: 'example.screens.EmptyStateScreen'},
+    {title: 'Loading Screen', tags: 'loading screen', screen: 'example.screens.LoadingScreen'},
   ],
   // General: [
   //   {title: 'Form Screen', description: 'Text Input, Stepper, Select', tags: 'text input multi select email validation', screen: 'example.FormScreen'},
