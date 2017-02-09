@@ -6,11 +6,23 @@ import * as Constants from '../../helpers/Constants';
 /**
  * Component that shows a full screen with an activity indicator
  */
-const Loader = () => (
+const LoaderScreen = ({loaderColor}) => (
   <View style={styles.container}>
-    <ActivityIndicator size={'large'} animating color={Constants.isIOS ? Colors.dark60 : ThemeManager.primaryColor} />
+    <ActivityIndicator
+      size={'large'}
+      animating
+      color={loaderColor || (Constants.isIOS ? Colors.dark60 : ThemeManager.primaryColor)}
+    />
   </View>
 );
+
+LoaderScreen.displayName = 'LoaderScreen';
+LoaderScreen.propTypes = {
+  /**
+   * Color of the loading indicator
+   */
+  loaderColor: React.PropTypes.string,
+};
 
 const styles = {
   container: {
@@ -20,4 +32,4 @@ const styles = {
   },
 };
 
-export default Loader;
+export default LoaderScreen;
