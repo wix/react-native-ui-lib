@@ -11,6 +11,8 @@
     "react/require-default-props": "off",
     "no-use-before-define": "off",
     "react/forbid-prop-types": "off",
+    "react/jsx-space-before-closing": "off",
+    "react/jsx-tag-spacing": "off",
     "max-len": [2, 120, 4, {"ignoreUrls": true}],
     "class-methods-use-this": "off",
     "arrow-body-style": "off"
