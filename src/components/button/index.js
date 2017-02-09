@@ -74,7 +74,7 @@ export default class Button extends BaseComponent {
 }
 
 function createStyles() {
-  const styles = StyleSheet.create({
+  return StyleSheet.create({
     container: {
       backgroundColor: ThemeManager.CTABackgroundColor,
       flexDirection: 'column',
@@ -102,6 +102,4 @@ function createStyles() {
       backgroundColor: Colors.dark60,
     },
   });
-
-  return styles;
 }

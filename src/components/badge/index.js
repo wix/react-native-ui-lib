@@ -40,7 +40,7 @@ export default class Badge extends BaseComponent {
 }
 
 function createStyles() {
-  const styles = StyleSheet.create({
+  return StyleSheet.create({
     badge: {
       width: 24,
       height: 24,
@@ -55,5 +55,4 @@ function createStyles() {
       backgroundColor: 'rgba(0,0,0,0)',
     },
   });
-  return styles;
 }

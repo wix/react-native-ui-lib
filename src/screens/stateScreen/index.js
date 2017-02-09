@@ -68,7 +68,7 @@ export default class StateScreen extends BaseComponent {
 
 function createStyles(isRemoteImage) {
   const imageStyle = _.merge({height: 200}, isRemoteImage && {width: Constants.screenWidth * 0.9});
-  const styles = StyleSheet.create({
+  return StyleSheet.create({
     container: {
       flex: 1,
       paddingTop: 80,
@@ -97,5 +97,4 @@ function createStyles(isRemoteImage) {
       ...Typography.text70,
     },
   });
-  return styles;
 }

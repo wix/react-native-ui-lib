@@ -7,7 +7,8 @@ export const navigationData = {
   ],
   Components: [
     {title: 'Buttons', tags: 'button cta', screen: 'example.components.ButtonsScreen'},
-    {title: 'Badges', tags: 'button cta', screen: 'example.components.BadgesScreen'},
+    {title: 'Badges', tags: 'badge', screen: 'example.components.BadgesScreen'},
+    {title: 'ConnectionStatusBar', tags: 'connection status', screen: 'example.components.ConnectionStatusBar'},
   ],
   Screens: [
     {title: 'State Screen', tags: 'empty state screen', screen: 'example.screens.EmptyStateScreen'},
