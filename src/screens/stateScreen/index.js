@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import _ from 'lodash';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import * as Constants from '../../helpers/Constants';
-import {ComponentsColors} from '../../style';
+import {Typography, ThemeManager} from '../../style';
 import {BaseComponent} from '../../commons';
 
 /**
@@ -12,9 +12,9 @@ export default class StateScreen extends BaseComponent {
   static displayName = 'StateScreen';
   static propTypes = {
     /**
-     * Image that's showing at the top. use an image that was required locally
+     * The image source that's showing at the top. use an image that was required locally
      */
-    image: PropTypes.number,
+    imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
      * To to show as the title
      */
@@ -38,15 +38,17 @@ export default class StateScreen extends BaseComponent {
   };
 
   generateStyles() {
-    this.styles = createStyles();
+    const {imageSource} = this.props;
+    const isRemoteImage = _.isObject(imageSource) && Boolean(imageSource.uri);
+    this.styles = createStyles(isRemoteImage);
   }
 
   render() {
-    const {title, subtitle, image, ctaLabel, onCtaPress, testId} = this.props;
+    const {title, subtitle, imageSource, ctaLabel, onCtaPress, testId} = this.props;
     return (
       <View style={this.styles.container} testID={testId}>
         <View>
-          <Image style={this.styles.image} resizeMode={'contain'} source={image} />
+          <Image style={this.styles.image} resizeMode={'contain'} source={imageSource} />
         </View>
         <View>
           <Text style={[this.styles.title]}>{title}</Text>
@@ -54,7 +56,7 @@ export default class StateScreen extends BaseComponent {
         </View>
         <View style={this.styles.cta}>
           <TouchableOpacity onPress={onCtaPress}>
-            <Text style={{color: ComponentsColors.CTA, fontSize: Constants.typography.text1}}>
+            <Text style={this.styles.ctaLabel}>
               {Constants.isAndroid ? _.toUpper(ctaLabel) : ctaLabel}
             </Text>
           </TouchableOpacity>
@@ -64,7 +66,8 @@ export default class StateScreen extends BaseComponent {
   }
 }
 
-function createStyles() {
+function createStyles(isRemoteImage) {
+  const imageStyle = _.merge({height: 200}, isRemoteImage && {width: Constants.screenWidth * 0.9});
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -72,24 +75,26 @@ function createStyles() {
       justifyContent: 'flex-start',
       alignItems: 'center',
     },
-    image: {
-      height: 200,
-    },
+    image: imageStyle,
     title: {
       textAlign: 'center',
-      fontSize: Constants.typography.header1,
-      color: Constants.paletteColors.gray10,
+      ...Typography.text50,
+      color: ThemeManager.titleColor,
       fontWeight: '300',
     },
     subtitle: {
       textAlign: 'center',
-      fontSize: Constants.typography.text1,
-      color: Constants.paletteColors.gray20,
+      ...Typography.text70,
+      color: ThemeManager.subtitleColor,
       fontWeight: '300',
       marginTop: 12,
     },
     cta: {
       marginTop: 30,
+    },
+    ctaLabel: {
+      color: ThemeManager.primaryColor,
+      ...Typography.text70,
     },
   });
   return styles;

@@ -3,12 +3,12 @@ import {Colors, Button, Badge, ThemeManager} from 'react-native-ui-lib'; //eslin
 import './screens';
 
 // ThemeManager.setTheme({
+//   primaryColor: Colors.yellow30,
 //   CTA: {
-//     backgroundColor: Colors.green10,
+//     backgroundColor: Colors.purple30,
 //     textColor: Colors.dark10,
 //   },
 // });
-
 
 Navigation.startSingleScreenApp({
   screen: {
