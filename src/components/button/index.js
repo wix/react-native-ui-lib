@@ -51,7 +51,8 @@ export default class Button extends BaseComponent {
   }
 
   render() {
-    const {label, onPress, disabled, containerStyle, labelStyle, enableShadow, testId} = this.props;
+    const {label, onPress, disabled, labelStyle, enableShadow, testId} = this.props;
+    const containerStyle = this.extractContainerStyle(this.props);
     const shadowStyle = enableShadow ? this.styles.shadowStyle : {};
     return (
       <TouchableOpacity
