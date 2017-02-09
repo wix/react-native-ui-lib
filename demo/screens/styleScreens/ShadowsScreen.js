@@ -77,17 +77,23 @@ export default class ShadowsScreen extends Component {
 
   render() {
     return (
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={[styles.subContainer, {backgroundColor: Colors.dark80}]}>
-            {this.renderShadows(shadowsOverDarkBkg)}
-          </View>
-          <View style={[styles.subContainer, {backgroundColor: Colors.white}]}>
-            {this.renderShadows(shadowsOverWhiteBkg)}
-          </View>
+      <View>
+        <View style={{flexDirection: 'row', position: 'absolute', top: 0, left: 0, bottom: 0, right: 0}}>
+          <View style={[styles.subContainer, {backgroundColor: Colors.dark80}]}/>
+          <View style={[styles.subContainer, {backgroundColor: Colors.white}]}/>
         </View>
-        {this.renderCards()}
-      </ScrollView>
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.subContainer}>
+              {this.renderShadows(shadowsOverDarkBkg)}
+            </View>
+            <View style={styles.subContainer}>
+              {this.renderShadows(shadowsOverWhiteBkg)}
+            </View>
+          </View>
+          {this.renderCards()}
+        </ScrollView>
+      </View>
     );
   }
 }
