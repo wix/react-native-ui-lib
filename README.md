@@ -1,7 +1,7 @@
 # react-native-ui-lib
 The Amazing UI-Lib
 
-## Converntions
+## Conventions
 ### Folder Structure
 All simple component files must be placed in src/components
 
