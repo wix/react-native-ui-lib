@@ -8,7 +8,7 @@ export default class ButtonsScreen extends Component {
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <Button label="Button" />
-        <Button label="Disabled Button " disabled />
+        <Button label="Disabled Button" disabled />
       </ScrollView>
     );
   }

@@ -1,13 +1,14 @@
-import React, {Component, PropTypes} from 'react';
+import React, {PropTypes} from 'react';
 import {Text, TouchableOpacity, StyleSheet, Platform} from 'react-native';
 import _ from 'lodash';
 import * as Constants from '../../helpers/Constants';
-import {Colors, ComponentsColors, Typography} from '../../style';
+import {BaseComponent} from '../../commons';
+import {Colors, Typography, ThemeManager} from '../../style';
 
 /**
  * Basic button component
  */
-export default class Button extends Component {
+export default class Button extends BaseComponent {
   static displayName = 'Button';
   static propTypes = {
     /**
@@ -45,16 +46,20 @@ export default class Button extends Component {
     labelStyle: {},
   };
 
+  generateStyles() {
+    this.styles = createStyles();
+  }
+
   render() {
-    const shadowStyle = enableShadow ? styles.shadowStyle : {};
+    const shadowStyle = enableShadow ? this.styles.shadowStyle : {};
     const {label, onPress, disabled, containerStyle, labelStyle, enableShadow, testId} = this.props;
     return (
       <TouchableOpacity
-        style={[styles.container, shadowStyle, disabled && styles.disabled, containerStyle]}
+        style={[this.styles.container, shadowStyle, disabled && this.styles.disabled, containerStyle]}
         onPress={onPress}
         disabled={disabled}
       >
-        <Text style={[styles.text, labelStyle]} testID={testId}>
+        <Text style={[this.styles.text, labelStyle]} testID={testId}>
           {Constants.isAndroid ? _.toUpper(label) : label}
         </Text>
       </TouchableOpacity>
@@ -62,31 +67,35 @@ export default class Button extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: ComponentsColors.CTA,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 50,
-    height: 54,
-    borderRadius: Platform.OS === 'ios' ? 27 : 3,
-    minWidth: 160,
-  },
-  shadowStyle: {
-    shadowColor: '#3082C8',
-    shadowOffset: {height: 5, width: 0},
-    shadowOpacity: 0.35,
-    shadowRadius: 9.5,
-  },
-  text: {
-    flex: 0,
-    flexDirection: 'row',
-    color: 'white',
-    ...Typography.text70,
-    fontWeight: '100',
-  },
-  disabled: {
-    backgroundColor: Colors.dark60,
-  },
-});
+function createStyles() {
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: ThemeManager.CTABackgroundColor,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: 50,
+      height: 54,
+      borderRadius: Platform.OS === 'ios' ? 27 : 3,
+      minWidth: 160,
+    },
+    shadowStyle: {
+      shadowColor: '#3082C8',
+      shadowOffset: {height: 5, width: 0},
+      shadowOpacity: 0.35,
+      shadowRadius: 9.5,
+    },
+    text: {
+      flex: 0,
+      flexDirection: 'row',
+      color: ThemeManager.CTATextColor,
+      ...Typography.text70,
+      fontWeight: '100',
+    },
+    disabled: {
+      backgroundColor: Colors.dark60,
+    },
+  });
+
+  return styles;
+}
