@@ -40,7 +40,7 @@ export default class Button extends BaseComponent {
      */
     enableShadow: PropTypes.bool, // iOS-only
     /**
-     * Use to identify in tests
+     * Use to identify the button in tests
      */
     testId: PropTypes.string,
   };

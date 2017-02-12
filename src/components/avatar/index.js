@@ -38,7 +38,7 @@ export default class Avatar extends BaseComponent {
      */
     size: PropTypes.number,
     /**
-     * Use to identify in tests
+     * Use to identify the avatar in tests
      */
     testId: PropTypes.string,
   };
