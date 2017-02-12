@@ -10,6 +10,7 @@ import {Colors, Typography, ThemeManager} from '../../style';
  */
 export default class Button extends BaseComponent {
   static displayName = 'Button';
+  static exampleImageUrl = 'http://path-to-image.png';
   static propTypes = {
     /**
      * Text to show inside the button
