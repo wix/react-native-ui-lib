@@ -15,7 +15,8 @@
     "react/jsx-tag-spacing": "off",
     "max-len": [2, 120, 4, {"ignoreUrls": true}],
     "class-methods-use-this": "off",
-    "arrow-body-style": "off"
+    "arrow-body-style": "off",
+    "no-plusplus": "off"
   },
   "env": {
     "browser": true,

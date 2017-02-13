@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {ListView, View, Text, StyleSheet} from 'react-native';
+import {ListView, View, Text, StyleSheet, Alert} from 'react-native';
 import _ from 'lodash';
-import {ConversationList, Avatar} from 'react-native-ui-lib';//eslint-disable-line
+import {ConversationList, Avatar, Badge, AvatarHelper} from 'react-native-ui-lib';//eslint-disable-line
 import conversations from '../../data/conversations';
 
 export default class ConversationListScreen extends Component {
@@ -32,13 +32,17 @@ export default class ConversationListScreen extends Component {
   }
 
   renderRow(row, id) {
+    const initials = AvatarHelper.getInitials(row.name);
     const props = {
       avatar: <Avatar
         imageSource={row.thumbnail ? {uri: row.thumbnail} : null}
+        label={initials}
       />,
       title: row.name,
       subtitle: row.text,
       timestamp: row.timestamp,
+      badge: row.count ? <Badge label={row.count}/> : null,
+      onPress: () => Alert.alert(`pressed on row id: ${id}`),
     };
 
     return (
@@ -51,8 +55,6 @@ export default class ConversationListScreen extends Component {
       <ListView
         dataSource={this.state.dataSource}
         renderRow={(row, sectionId, rowId) => this.renderRow(row, rowId)}
-        contentContainerStyle={{flex: 1}}
-
       />
     );
   }
