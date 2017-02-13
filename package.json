@@ -15,15 +15,17 @@
     "lodash": "^4.0.0"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "testPathIgnorePatterns": [
+      "/e2e/",
+      "/node_modules/"
+    ]
   },
   "babel": {
     "env": {
       "test": {
         "presets": [
-          "react-native",
-          "react",
-          "es2015"
+          "react-native"
         ],
         "retainLines": true
       }
