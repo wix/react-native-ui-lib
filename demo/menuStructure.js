@@ -9,8 +9,8 @@ export const navigationData = {
     {title: 'Avatars', tags: 'avatar contact', screen: 'example.components.AvatarsScreen'},
     {title: 'Buttons', tags: 'button cta', screen: 'example.components.ButtonsScreen'},
     {title: 'Badges', tags: 'badge', screen: 'example.components.BadgesScreen'},
-    {title: 'ConnectionStatusBar', tags: 'connection status bar', screen: 'example.components.ConnectionStatusBar'},
-    {title: 'PageControl', tags: 'page', screen: 'example.components.PageControlScreen'},
+    {title: 'Connection Status Bar', tags: 'connection status bar', screen: 'example.components.ConnectionStatusBar'},
+    {title: 'Page Control', tags: 'page', screen: 'example.components.PageControlScreen'},
   ],
   Screens: [
     {title: 'State Screen', tags: 'empty state screen', screen: 'example.screens.EmptyStateScreen'},
@@ -30,7 +30,7 @@ export const navigationData = {
   //   {title: 'Top Tabs and Search Screen', screen: 'example.TopTabsScreen'},
   // ],
   List: [
-    {title: 'ConversationList', tags: 'list conversation', screen: 'example.lists.ConversationListScreen'},
+    {title: 'Conversation List', tags: 'list conversation', screen: 'example.lists.ConversationListScreen'},
     // {title: 'Basic List', description: 'Orders', screen: 'example.ItemsListBasicScreen'},
     // {title: 'Basic List', description: 'Hotel', screen: 'example.ItemsListBasicHotelScreen'},
     // {title: 'Contacts List', tags: 'conversations chat engage', screen: 'example.ItemsListContactScreen'},
