@@ -25,7 +25,7 @@ export default class Badge extends BaseComponent {
     /**
      * Use to identify the badge in tests
      */
-    testId: PropTypes.string,
+    testId: React.PropTypes.string,
   };
 
   generateStyles() {
