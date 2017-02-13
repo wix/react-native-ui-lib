@@ -3,6 +3,7 @@ import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import _ from 'lodash';
 import * as Constants from '../../helpers/Constants';
 import {ThemeManager} from '../../style';
+import {BaseComponent} from '../../commons';
 
 function getColorStyle(color, index, currentPage) {
   const compColor = color || ThemeManager.primaryColor;
@@ -12,52 +13,58 @@ function getColorStyle(color, index, currentPage) {
 /**
  * Page indicator, typically used in paged scroll-views
  */
-function PageControl({containerStyle, numOfPages, currentPage, onPagePress, color, size = 10}) {
-  const style = createStyles(size);
-  return (
-    <View style={[style.container, containerStyle]}>
-      {
-        _.map([...new Array(numOfPages)], (item, index) =>
-          <TouchableOpacity
-            disabled={_.isUndefined(onPagePress)}
-            onPress={() => onPagePress && onPagePress(index)}
-            key={index}
-            style={[style.pageIndicator, getColorStyle(color, index, currentPage)]}
-          />)
-      }
-    </View>
-  );
+export default class PageControl extends BaseComponent {
+  static displayName = 'PageControl';
+  static propTypes = {
+    /**
+     * Additional styles for the top container
+     */
+    containerStyle: PropTypes.object,
+    /**
+     * Total number of pages
+     */
+    numOfPages: PropTypes.number,
+    /**
+     * Zero-based index of the current page
+     */
+    currentPage: PropTypes.number,
+    /**
+     * Action handler for clicking on a page indicator
+     */
+    onPagePress: PropTypes.func,
+    /**
+     * Color of the selected page dot and the border of the not selected pages
+     */
+    color: React.PropTypes.string,
+    /**
+     * The size of the page indicator
+     */
+    size: PropTypes.number,
+  };
+
+  generateStyles() {
+    this.styles = createStyles(this.props.size);
+  }
+
+  render() {
+    const {numOfPages, currentPage, color, containerStyle, onPagePress} = this.props;
+    return (
+      <View style={[this.styles.container, containerStyle]}>
+        {
+          _.map([...new Array(numOfPages)], (item, index) =>
+            <TouchableOpacity
+              disabled={_.isUndefined(onPagePress)}
+              onPress={() => onPagePress && onPagePress(index)}
+              key={index}
+              style={[this.styles.pageIndicator, getColorStyle(color, index, currentPage)]}
+            />)
+        }
+      </View>
+    );
+  }
 }
 
-PageControl.displayName = 'PageControl';
-PageControl.propTypes = {
-  /**
-   * Additional styles for the top container
-   */
-  containerStyle: PropTypes.object,
-  /**
-   * Total number of pages
-   */
-  numOfPages: PropTypes.number,
-  /**
-   * Zero-based index of the current page
-   */
-  currentPage: PropTypes.number,
-  /**
-   * Action handler for clicking on a page indicator
-   */
-  onPagePress: PropTypes.func,
-  /**
-   * Color of the selected page dot and the border of the not selected pages
-   */
-  color: React.PropTypes.string,
-  /**
-   * The size of the page indicator
-   */
-  size: PropTypes.number,
-};
-
-function createStyles(size) {
+function createStyles(size = 10) {
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -79,5 +86,3 @@ function createStyles(size) {
     },
   });
 }
-
-export default PageControl;
