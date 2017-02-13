@@ -44,9 +44,9 @@ export default class Avatar extends BaseComponent {
   };
 
   static defaultProps = {
-    backgroundColor: Colors.dark50,
+    backgroundColor: Colors.dark80,
     size: 50,
-    labelColor: Colors.white,
+    labelColor: Colors.dark10,
   }
 
   generateStyles() {

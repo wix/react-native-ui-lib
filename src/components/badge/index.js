@@ -46,8 +46,8 @@ export default class Badge extends BaseComponent {
 function createStyles() {
   return StyleSheet.create({
     badge: {
-      width: 24,
-      height: 24,
+      width: 21,
+      height: 21,
       borderRadius: 12,
       backgroundColor: ThemeManager.primaryColor,
       alignItems: 'center',
