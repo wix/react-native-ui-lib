@@ -11,6 +11,7 @@ class ThemeManager {
     },
     titleColor: Colors.dark10,
     subtitleColor: Colors.dark50,
+    dividerColor: Colors.dark70,
   };
 
   setTheme(overrides) {
@@ -35,6 +36,10 @@ class ThemeManager {
 
   get subtitleColor() {
     return this.theme.subtitleColor;
+  }
+
+  get dividerColor() {
+    return this.theme.dividerColor;
   }
 
 }
