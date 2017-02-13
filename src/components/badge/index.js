@@ -22,6 +22,10 @@ export default class Badge extends BaseComponent {
      * Additional styles for the top container
      */
     containerStyle: React.PropTypes.object,
+    /**
+     * Use to identify the badge in tests
+     */
+    testId: PropTypes.string,
   };
 
   generateStyles() {
@@ -32,7 +36,7 @@ export default class Badge extends BaseComponent {
     const containerStyle = this.extractContainerStyle(this.props);
     const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
     return (
-      <View style={[this.styles.badge, containerStyle, backgroundStyle]}>
+      <View testID={this.props.testId} style={[this.styles.badge, containerStyle, backgroundStyle]}>
         <Text style={this.styles.count} numberOfLines={1} testID="badge">{this.props.label}</Text>
       </View>
     );
