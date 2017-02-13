@@ -6,6 +6,7 @@ import ConnectionStatusBar from './components/connection-status-bar';
 import StateScreen from './screens/stateScreen';
 import LoaderScreen from './screens/loaderScreen';
 import PageControl from './components/page-control';
+import Stepper from './components/stepper';
 import Style from './style';
 import Helpers from './helpers';
 
@@ -19,5 +20,6 @@ module.exports = {
   StateScreen,
   LoaderScreen,
   PageControl,
+  Stepper,
   ...Style,
 };

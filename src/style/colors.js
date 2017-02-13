@@ -82,6 +82,7 @@ const Colors = {
   violet80: '#F1EBF6',
   // WHITES
   white: '#ffffff',
+  black: '#000000'
 };
 
 

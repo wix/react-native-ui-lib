@@ -11,6 +11,7 @@ export const navigationData = {
     {title: 'Badges', tags: 'badge', screen: 'example.components.BadgesScreen'},
     {title: 'Connection Status Bar', tags: 'connection status bar', screen: 'example.components.ConnectionStatusBar'},
     {title: 'Page Control', tags: 'page', screen: 'example.components.PageControlScreen'},
+    {title: 'Form Control', tags: 'form stepper', screen: 'example.components.FormScreen'},
   ],
   Screens: [
     {title: 'State Screen', tags: 'empty state screen', screen: 'example.screens.EmptyStateScreen'},
