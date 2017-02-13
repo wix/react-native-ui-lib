@@ -10,7 +10,7 @@ class ThemeManager {
       backgroundColor: Colors.blue30,
     },
     titleColor: Colors.dark10,
-    subtitleColor: Colors.dark50,
+    subtitleColor: Colors.dark40,
     dividerColor: Colors.dark70,
   };
 
