@@ -37,7 +37,14 @@ export default class Badge extends BaseComponent {
     const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
     return (
       <View testID={this.props.testId} style={[this.styles.badge, containerStyle, backgroundStyle]}>
-        <Text style={this.styles.count} numberOfLines={1} testID="badge">{this.props.label}</Text>
+        <Text
+          style={this.styles.count}
+          allowFontScaling={false}
+          numberOfLines={1}
+          testID="badge"
+        >
+          {this.props.label}
+        </Text>
       </View>
     );
   }
