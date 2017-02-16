@@ -1,4 +1,5 @@
 import Avatar from './components/avatar';
+import AnimatedImage from './components/animatedImage';
 import Badge from './components/badge';
 import Button from './components/button';
 import * as ConversationList from './lists/conversationList';
@@ -12,6 +13,7 @@ import Helpers from './helpers';
 
 module.exports = {
   Avatar,
+  AnimatedImage,
   Badge,
   Button,
   ConnectionStatusBar,

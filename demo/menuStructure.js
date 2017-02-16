@@ -7,6 +7,7 @@ export const navigationData = {
   ],
   Components: [
     {title: 'Avatars', tags: 'avatar contact', screen: 'example.components.AvatarsScreen'},
+    {title: 'Animated Image', tags: 'animated image', screen: 'example.components.AnimatedImageScreen'},
     {title: 'Buttons', tags: 'button cta', screen: 'example.components.ButtonsScreen'},
     {title: 'Badges', tags: 'badge', screen: 'example.components.BadgesScreen'},
     {title: 'Connection Status Bar', tags: 'connection status bar', screen: 'example.components.ConnectionStatusBar'},
