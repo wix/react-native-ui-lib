@@ -8,6 +8,7 @@ import './screens';
 //     backgroundColor: Colors.purple30,
 //     textColor: Colors.dark10,
 //   },
+//   titleColor: Colors.green10,
 // });
 
 Navigation.startSingleScreenApp({

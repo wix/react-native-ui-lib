@@ -5,7 +5,8 @@
   "scripts": {
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint src -c .eslintrc"
+    "lint": "eslint src -c .eslintrc",
+    "xcode": "open ./ios/uilib.xcodeproj"
   },
   "dependencies": {
     "react": "15.4.2",
