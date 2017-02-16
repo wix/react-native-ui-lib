@@ -2,6 +2,7 @@
 export const navigationData = {
   Style: [
     {title: 'Typography', tags: 'fonts text', screen: 'example.style.TypographyScreen'},
+    {title: 'Border Radius', tags: 'corener border radius circle', screen: 'example.style.BorderRadiusesScreen'},
     {title: 'Colors', tags: 'palette rgb hex', screen: 'example.style.ColorsScreen'},
     {title: 'Shadows (iOS)', tags: 'shadow', screen: 'example.style.ShadowsScreen'},
   ],
