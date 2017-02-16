@@ -1,16 +1,15 @@
 import React, {PropTypes} from 'react';
 import {Text, TouchableOpacity, StyleSheet, Platform} from 'react-native';
 import _ from 'lodash';
-import * as Constants from '../../helpers/Constants';
+import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
-import {Colors, Typography, ThemeManager} from '../../style';
+import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 
 /**
  * Basic button component
  */
 export default class Button extends BaseComponent {
   static displayName = 'Button';
-  static exampleImageUrl = 'http://path-to-image.png';
   static propTypes = {
     /**
      * Text to show inside the button
@@ -19,7 +18,18 @@ export default class Button extends BaseComponent {
     /**
      * Color of the button background
      */
-    backgroundColor: React.PropTypes.string,
+    backgroundColor: PropTypes.string,
+    /**
+     * Size of the button [large, medium, small]
+     */
+    size: PropTypes.oneOf(['small', 'medium', 'large']),
+    /**
+     * Custom border radius. can be a number or any of the BorderRadiuses constants
+     */
+    borderRadius: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.oneOf(_.keys(BorderRadiuses)),
+    ]),
     /**
      * Actions handler
      */
@@ -28,6 +38,14 @@ export default class Button extends BaseComponent {
      * Disable interactions for the component
      */
     disabled: PropTypes.bool,
+    /**
+     * Button will have outline style
+     */
+    outline: PropTypes.bool,
+    /**
+     * The outline color
+     */
+    outlineColor: PropTypes.string,
     /**
      * Additional styles for the top container
      */
@@ -49,24 +67,55 @@ export default class Button extends BaseComponent {
   static defaultProps = {
     containerStyle: {},
     labelStyle: {},
+    backgroundColor: ThemeManager.CTABackgroundColor,
+    borderRadius: Constants.isIOS ? BorderRadiuses.br50 : BorderRadiuses.br10,
+    size: 'large',
+    outline: false,
+    outlineColor: Colors.dark70,
   };
 
+  static sizes = {
+    small: 'small',
+    medium: 'medium',
+    large: 'large',
+  }
+
   generateStyles() {
-    this.styles = createStyles();
+    this.styles = createStyles(this.props);
+  }
+
+  getSizeStyle() {
+    const {size} = this.props;
+    if (size === Button.sizes.small) {
+      return this.styles.small;
+    } else if (size === Button.sizes.medium) {
+      return this.styles.medium;
+    }
+    return null;
+  }
+
+  getTextStyle() {
+    const {size} = this.props;
+    if (size !== Button.sizes.large) {
+      return this.styles.textSmall;
+    }
+    return null;
   }
 
   render() {
     const {label, onPress, disabled, labelStyle, enableShadow, testId} = this.props;
+    const sizeStyle = this.getSizeStyle();
     const containerStyle = this.extractContainerStyle(this.props);
-    const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
     const shadowStyle = enableShadow ? this.styles.shadowStyle : {};
+    const textStyle = this.getTextStyle();
     return (
       <TouchableOpacity
-        style={[this.styles.container, shadowStyle, disabled && this.styles.disabled, containerStyle, backgroundStyle]}
+        style={[this.styles.container, sizeStyle, shadowStyle, disabled && this.styles.disabled, containerStyle]}
+        activeOpacity={0.6}
         onPress={onPress}
         disabled={disabled}
       >
-        <Text style={[this.styles.text, labelStyle]} numberOfLines={1} testID={testId}>
+        <Text style={[this.styles.text, textStyle, labelStyle]} numberOfLines={1} testID={testId}>
           {Constants.isAndroid ? _.toUpper(label) : label}
         </Text>
       </TouchableOpacity>
@@ -74,17 +123,31 @@ export default class Button extends BaseComponent {
   }
 }
 
-function createStyles() {
+function createStyles({backgroundColor, borderRadius, outline, outlineColor}) {
+
+  const customBorderRadius = _.isString(borderRadius) ? BorderRadiuses[borderRadius] : borderRadius;
   return StyleSheet.create({
     container: {
-      backgroundColor: ThemeManager.CTABackgroundColor,
+      backgroundColor: outline ? undefined : backgroundColor,
+      borderWidth: outline ? 1 : 0,
+      borderColor: outline ? outlineColor : undefined,
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      paddingHorizontal: 50,
-      height: 54,
-      borderRadius: Platform.OS === 'ios' ? 27 : 3,
-      minWidth: 160,
+      borderRadius: customBorderRadius,
+      paddingHorizontal: 36,
+      paddingVertical: 16,
+      minWidth: 150,
+    },
+    medium: {
+      paddingHorizontal: 24,
+      paddingVertical: 11,
+      minWidth: 125,
+    },
+    small: {
+      paddingHorizontal: 15,
+      paddingVertical: 5,
+      minWidth: 74,
     },
     shadowStyle: {
       shadowColor: '#3082C8',
@@ -95,9 +158,12 @@ function createStyles() {
     text: {
       flex: 0,
       flexDirection: 'row',
-      color: ThemeManager.CTATextColor,
+      color: outline ? Colors.dark10 : ThemeManager.CTATextColor,
       ...Typography.text70,
       fontWeight: '100',
+    },
+    textSmall: {
+      ...Typography.text80,
     },
     disabled: {
       backgroundColor: Colors.dark60,
