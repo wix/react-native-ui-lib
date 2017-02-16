@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   typographyEntry: {
     paddingVertical: 15,
     paddingHorizontal: 25,
-    borderColor: Colors.dark20,
+    borderColor: Colors.dark70,
     borderBottomWidth: 1,
   },
 });
