@@ -1,9 +1,9 @@
 const BorderRadiuses = {
-  cr10: 0,
-  cr20: 9,
-  cr30: 12,
-  cr40: 15,
-  cr50: 999,
+  br10: 0,
+  br20: 9,
+  br30: 12,
+  br40: 15,
+  br50: 999,
 };
 
 export default BorderRadiuses;
