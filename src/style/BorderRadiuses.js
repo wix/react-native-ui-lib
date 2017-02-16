@@ -1,5 +1,6 @@
 const BorderRadiuses = {
-  br10: 0,
+  br0: 0,
+  br10: 3,
   br20: 9,
   br30: 12,
   br40: 15,
