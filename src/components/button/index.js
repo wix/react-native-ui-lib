@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Text, TouchableOpacity, StyleSheet, Platform} from 'react-native';
+import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
@@ -124,7 +124,6 @@ export default class Button extends BaseComponent {
 }
 
 function createStyles({backgroundColor, borderRadius, outline, outlineColor}) {
-
   const customBorderRadius = _.isString(borderRadius) ? BorderRadiuses[borderRadius] : borderRadius;
   return StyleSheet.create({
     container: {
