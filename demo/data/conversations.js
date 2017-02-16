@@ -65,7 +65,7 @@ const conversations = [
     "text": "When will you have them back in stock?",
     "timestamp": "1 Week",
     "count": "",
-    "isNew": true,
+    "isNew": false,
   },
   {
     "name": "Elliot Brown",
@@ -73,7 +73,7 @@ const conversations = [
     "timestamp": "1 Week",
     "count": "",
     "thumbnail": "https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg",
-    "isNew": true,
+    "isNew": false,
   },
   {
     "name": "Vanessa Campbell",
@@ -81,7 +81,7 @@ const conversations = [
     "timestamp": "1 Week",
     "count": "",
     "thumbnail": "https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg",
-    "isNew": true,
+    "isNew": false,
   },
   {
     "name": "Jennifer Clark",
@@ -89,7 +89,7 @@ const conversations = [
     "timestamp": "2 hours",
     "count": "1",
     "thumbnail": "https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg",
-    "isNew": true,
+    "isNew": false,
   },
   {
     "name": "Rebecka",
@@ -97,7 +97,7 @@ const conversations = [
     "timestamp": "3 hours",
     "count": "12",
     "thumbnail": "https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg",
-    "isNew": true,
+    "isNew": false,
   },
 ];
 

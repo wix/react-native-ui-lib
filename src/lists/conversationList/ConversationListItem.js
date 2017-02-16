@@ -18,7 +18,7 @@ export default class ConversationListItem extends BaseListItem {
   };
 
   generateStyles() {
-    super.generateStyles(createStyles());
+    super.generateStyles(createStyles(this.props));
   }
 
   renderElement1() {
@@ -63,7 +63,7 @@ export default class ConversationListItem extends BaseListItem {
   }
 }
 
-function createStyles() {
+function createStyles({isNew}) {
   return {
     container: {
       paddingVertical: 11,
@@ -85,6 +85,7 @@ function createStyles() {
     },
     titleText: {
       ...Typography.text70,
+      fontWeight: isNew ? '500' : Typography.text70.fontWeight,
       color: ThemeManager.titleColor,
       flex: 1,
     },

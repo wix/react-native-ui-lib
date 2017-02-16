@@ -43,6 +43,7 @@ export default class ConversationListScreen extends Component {
       timestamp: row.timestamp,
       badge: row.count ? <Badge label={row.count}/> : null,
       onPress: () => Alert.alert(`pressed on row id: ${id}`),
+      isNew: row.isNew,
     };
 
     return (
