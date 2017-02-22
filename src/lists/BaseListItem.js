@@ -40,7 +40,7 @@ export default class BaseListItem extends BaseComponent {
         <View style={this.styles.middleContainer}>
           {this.renderMiddle()}
         </View>
-        <View>
+        <View style={this.styles.rightContainer}>
           {this.renderRight()}
         </View>
       </Container>

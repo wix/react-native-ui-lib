@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {ListView, View, Text, StyleSheet, Alert} from 'react-native';
-import _ from 'lodash';
+import {ListView, Alert} from 'react-native';
 import {ConversationList, Avatar, Badge, AvatarHelper} from 'react-native-ui-lib';//eslint-disable-line
 import conversations from '../../data/conversations';
 

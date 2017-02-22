@@ -9,15 +9,47 @@ import {Colors, Typography, ThemeManager} from '../../style';
 export default class ConversationListItem extends BaseListItem {
   static displayName = 'ConversationListItem';
   static propTypes = {
+    /**
+     * Avatar component to render contact avatar
+     */
     avatar: PropTypes.element,
+    /**
+     * Title, usually the contact name
+     */
     title: PropTypes.string,
+    /**
+     * Custom Style for title
+     */
     titleStyle: PropTypes.object,
+    /**
+     * Subtitle, secondary title, usually message preview
+     */
     subtitle: PropTypes.string,
+    /**
+     * Custom Style for subtitle
+     */
     subtitleStyle: PropTypes.object,
+    /**
+     * Timestamp, displayed text representing message time
+     */
     timestamp: PropTypes.string,
+    /**
+     * Custom Style for timestamp
+     */
     timestampStyle: PropTypes.object,
+    /**
+     * Unread messages counter to display inside a badge
+     */
     unreadMessages: PropTypes.number,
+    /**
+     * Custom height for the item
+     */
+    height: PropTypes.number,
   };
+
+  static defaultProps = {
+    height: 75,
+  }
 
   generateStyles() {
     super.generateStyles(createStyles(this.props));
@@ -80,18 +112,18 @@ export default class ConversationListItem extends BaseListItem {
   }
 }
 
-function createStyles({titleStyle, subtitleStyle, timestampStyle}) {
+function createStyles({titleStyle, subtitleStyle, timestampStyle, height}) {
   return {
     container: {
-      paddingVertical: 11,
       flexDirection: 'row',
-      borderBottomWidth: 1,
-      borderColor: ThemeManager.dividerColor,
+      height,
     },
     middleContainer: {
       flex: 1,
       justifyContent: 'center',
       paddingRight: 19,
+      borderBottomWidth: 1,
+      borderColor: ThemeManager.dividerColor,
     },
     middleTopContainer: {
       flexDirection: 'row',
@@ -106,6 +138,8 @@ function createStyles({titleStyle, subtitleStyle, timestampStyle}) {
     },
     avatarContainer: {
       paddingHorizontal: 18,
+      justifyContent: 'center',
+      flex: 1,
     },
     badgeContainer: {
       marginLeft: 10,
