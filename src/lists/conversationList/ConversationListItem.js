@@ -7,7 +7,7 @@ import {Colors, Typography, ThemeManager} from '../../style';
  * BaseListItem component
  */
 export default class ConversationListItem extends BaseListItem {
-  static displayName = 'ConversationListItem';
+  static displayName = 'Conversation List Item';
   static propTypes = {
     /**
      * Avatar component to render contact avatar
