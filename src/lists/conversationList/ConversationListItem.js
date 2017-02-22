@@ -11,10 +11,12 @@ export default class ConversationListItem extends BaseListItem {
   static propTypes = {
     avatar: PropTypes.element,
     title: PropTypes.string,
+    titleStyle: PropTypes.object,
     subtitle: PropTypes.string,
+    subtitleStyle: PropTypes.object,
     timestamp: PropTypes.string,
+    timestampStyle: PropTypes.object,
     unreadMessages: PropTypes.number,
-    isNew: PropTypes.bool,
   };
 
   generateStyles() {
@@ -78,7 +80,7 @@ export default class ConversationListItem extends BaseListItem {
   }
 }
 
-function createStyles({isNew}) {
+function createStyles({titleStyle, subtitleStyle, timestampStyle}) {
   return {
     container: {
       paddingVertical: 11,
@@ -110,18 +112,20 @@ function createStyles({isNew}) {
     },
     titleText: {
       ...Typography.text70,
-      fontWeight: isNew ? '500' : Typography.text70.fontWeight,
       color: ThemeManager.titleColor,
+      ...titleStyle,
       flex: 1,
     },
     subtitleText: {
       ...Typography.text80,
       color: ThemeManager.subtitleColor,
+      ...subtitleStyle,
       flex: 1,
     },
     timestampText: {
       ...Typography.text90,
       color: Colors.dark50,
+      ...timestampStyle,
     },
   };
 }
