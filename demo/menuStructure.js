@@ -33,6 +33,7 @@ export const navigationData = {
   //   {title: 'Top Tabs and Search Screen', screen: 'example.TopTabsScreen'},
   // ],
   List: [
+    {title: 'Basic List', tags: 'basic list', screen: 'example.lists.BasicListScreen'},
     {title: 'Conversation List', tags: 'list conversation', screen: 'example.lists.ConversationListScreen'},
     // {title: 'Basic List', description: 'Orders', screen: 'example.ItemsListBasicScreen'},
     // {title: 'Basic List', description: 'Hotel', screen: 'example.ItemsListBasicHotelScreen'},
