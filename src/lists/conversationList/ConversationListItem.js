@@ -21,7 +21,7 @@ export default class ConversationListItem extends BaseListItem {
     super.generateStyles(createStyles(this.props));
   }
 
-  renderElement1() {
+  renderLeft() {
     const {avatar} = this.props;
     if (avatar) {
       return (<View style={this.styles.avatarContainer}>
@@ -31,28 +31,43 @@ export default class ConversationListItem extends BaseListItem {
     return null;
   }
 
-  renderElement2() {
+  renderMiddle() {
+    return (
+      <View>
+        <View style={this.styles.middleTopContainer}>
+          {this.renderTitle()}
+          {this.renderTimestamp()}
+        </View>
+        <View style={this.styles.middleBottomContainer}>
+          {this.renderSubtitle()}
+          {this.renderBadge()}
+        </View>
+      </View>
+    );
+  }
+
+  renderTitle() {
     const {title} = this.props;
     return (<Text style={this.styles.titleText} numberOfLines={1}>
       {title}
     </Text>);
   }
 
-  renderElement3() {
+  renderTimestamp() {
     const {timestamp} = this.props;
     return (<Text style={this.styles.timestampText}>
       {timestamp}
     </Text>);
   }
 
-  renderElement4() {
+  renderSubtitle() {
     const {subtitle} = this.props;
     return (<Text style={this.styles.subtitleText} numberOfLines={1}>
       {subtitle}
     </Text>);
   }
 
-  renderElement5() {
+  renderBadge() {
     const {badge} = this.props;
     if (badge) {
       return (<View style={this.styles.badgeContainer}>
@@ -72,10 +87,20 @@ function createStyles({isNew}) {
       borderColor: ThemeManager.dividerColor,
     },
     middleContainer: {
+      flex: 1,
+      justifyContent: 'center',
       paddingRight: 19,
     },
     middleTopContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
       marginBottom: 3,
+    },
+    middleBottomContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
     avatarContainer: {
       paddingHorizontal: 18,
