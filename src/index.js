@@ -3,6 +3,7 @@ import AnimatedImage from './components/animatedImage';
 import Badge from './components/badge';
 import Button from './components/button';
 import * as ConversationList from './lists/conversationList';
+import * as GridList from './lists/gridList';
 import * as BasicList from './lists/basicList';
 import ConnectionStatusBar from './components/connection-status-bar';
 import StateScreen from './screens/stateScreen';
@@ -20,6 +21,7 @@ module.exports = {
   Button,
   ConnectionStatusBar,
   ConversationList,
+  GridList,
   ...Helpers,
   StateScreen,
   LoaderScreen,

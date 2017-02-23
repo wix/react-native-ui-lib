@@ -35,6 +35,7 @@ export const navigationData = {
   List: [
     {title: 'Basic List', tags: 'basic list', screen: 'example.lists.BasicListScreen'},
     {title: 'Conversation List', tags: 'list conversation', screen: 'example.lists.ConversationListScreen'},
+    {title: 'Grid List', tags: 'list grid', screen: 'example.lists.GridListScreen'},
     // {title: 'Basic List', description: 'Orders', screen: 'example.ItemsListBasicScreen'},
     // {title: 'Basic List', description: 'Hotel', screen: 'example.ItemsListBasicHotelScreen'},
     // {title: 'Contacts List', tags: 'conversations chat engage', screen: 'example.ItemsListContactScreen'},
