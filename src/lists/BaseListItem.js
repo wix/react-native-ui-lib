@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {BaseComponent} from '../commons';
+import {ThemeManager} from '../style';
 
 /**
  * BaseListItem component
@@ -17,6 +18,19 @@ export default class BaseListItem extends BaseComponent {
   }
 
   renderMiddle() {
+    return (
+      <View>
+        {this.renderMiddleTop()}
+        {this.renderMiddleBottom()}
+      </View>
+    );
+  }
+
+  renderMiddleTop() {
+    return null;
+  }
+
+  renderMiddleBottom() {
     return null;
   }
 
@@ -57,6 +71,22 @@ function createStyles(overrides) {
     leftContainer: {
     },
     middleContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      paddingRight: 19,
+      borderBottomWidth: 1,
+      borderColor: ThemeManager.dividerColor,
+    },
+    middleTopContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: 3,
+    },
+    middleBottomContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
     rightContainer: {
     },

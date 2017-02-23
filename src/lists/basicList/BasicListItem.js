@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {View, Text, Image} from 'react-native';
 import BaseListItem from '../BaseListItem';
-import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
+import {Typography, ThemeManager, BorderRadiuses} from '../../style';
 
 /**
  * BaseListItem component
@@ -69,17 +69,20 @@ export default class BasicListItem extends BaseListItem {
     return null;
   }
 
-  renderMiddle() {
+  renderMiddleTop() {
     return (
-      <View>
-        <View style={this.styles.middleTopContainer}>
-          {this.renderLeftTitle()}
-          {this.renderRightTitle()}
-        </View>
-        <View style={this.styles.middleBottomContainer}>
-          {this.renderLeftSubtitle()}
-          {this.renderRightSubtitle()}
-        </View>
+      <View style={this.styles.middleTopContainer}>
+        {this.renderLeftTitle()}
+        {this.renderRightTitle()}
+      </View>
+    );
+  }
+
+  renderMiddleBottom() {
+    return (
+      <View style={this.styles.middleBottomContainer}>
+        {this.renderLeftSubtitle()}
+        {this.renderRightSubtitle()}
       </View>
     );
   }
@@ -118,24 +121,6 @@ function createStyles({height}) {
     container: {
       flexDirection: 'row',
       height,
-    },
-    middleContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      paddingRight: 19,
-      borderBottomWidth: 1,
-      borderColor: ThemeManager.dividerColor,
-    },
-    middleTopContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: 3,
-    },
-    middleBottomContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
     },
     imageContainer: {
       paddingHorizontal: 18,

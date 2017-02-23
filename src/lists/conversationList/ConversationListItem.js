@@ -65,17 +65,20 @@ export default class ConversationListItem extends BaseListItem {
     return null;
   }
 
-  renderMiddle() {
+  renderMiddleTop() {
     return (
-      <View>
-        <View style={this.styles.middleTopContainer}>
-          {this.renderTitle()}
-          {this.renderTimestamp()}
-        </View>
-        <View style={this.styles.middleBottomContainer}>
-          {this.renderSubtitle()}
-          {this.renderBadge()}
-        </View>
+      <View style={this.styles.middleTopContainer}>
+        {this.renderTitle()}
+        {this.renderTimestamp()}
+      </View>
+    );
+  }
+
+  renderMiddleBottom() {
+    return (
+      <View style={this.styles.middleBottomContainer}>
+        {this.renderSubtitle()}
+        {this.renderBadge()}
       </View>
     );
   }
@@ -117,24 +120,6 @@ function createStyles({titleStyle, subtitleStyle, timestampStyle, height}) {
     container: {
       flexDirection: 'row',
       height,
-    },
-    middleContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      paddingRight: 19,
-      borderBottomWidth: 1,
-      borderColor: ThemeManager.dividerColor,
-    },
-    middleTopContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: 3,
-    },
-    middleBottomContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
     },
     avatarContainer: {
       paddingHorizontal: 18,
