@@ -4,7 +4,6 @@ import {
   View,
 } from 'react-native';
 import _ from 'lodash';
-import autobind from 'react-autobind';
 import createStyles from './style';
 import {BaseComponent} from '../../commons';
 import StepperButton from './StepperButton';
@@ -46,7 +45,6 @@ export default class Stepper extends BaseComponent {
     this.state = {
       value: props.initialValue,
     };
-    autobind(this);
   }
 
   generateStyles() {

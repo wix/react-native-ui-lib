@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import _ from 'lodash';
-import autobind from 'react-autobind';
 import {View, StyleSheet, Text, TouchableOpacity, NetInfo} from 'react-native';
 import * as Constants from '../../helpers/Constants';
 import {BaseComponent} from '../../commons';
@@ -33,7 +32,8 @@ export default class ConnectionStatusBar extends BaseComponent {
 
   constructor(props) {
     super(props);
-    autobind(this);
+    this.onConnectionChange = this.onConnectionChange.bind(this);
+
     this.state = {
       isConnected: true,
       isCancelled: false,
