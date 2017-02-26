@@ -16,7 +16,22 @@
     "lodash": "^4.0.0"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "testPathIgnorePatterns": [
+      "/e2e/",
+      "/node_modules/",
+      "/demo/"
+    ]
+  },
+  "babel": {
+    "env": {
+      "test": {
+        "presets": [
+          "react-native"
+        ],
+        "retainLines": true
+      }
+    }
   },
   "devDependencies": {
     "babel-jest": "18.0.0",
