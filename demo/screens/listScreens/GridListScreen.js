@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {ListView, Alert} from 'react-native';
 import {GridList, Avatar, Badge, AvatarHelper, Colors} from 'react-native-ui-lib';//eslint-disable-line
 import products from '../../data/products';
+const plusIcon = require('../../assets/icons/plus.png');
 
 export default class BasicListScreen extends Component {
 
@@ -22,15 +23,20 @@ export default class BasicListScreen extends Component {
     alert(`item pressed: ${id}`); // eslint-disable-line
   }
 
-  getInitials(name) {
-    let ret = '';
-    if (name) {
-      name.split(' ').forEach(s => ret += s[0] ? s[0].toUpperCase() : '');
-    }
-    return ret.substr(0, 2);
-  }
-
   renderRow(row, id) {
+    if (id === '0') {
+      const props = {
+        index: Number(id),
+        imageSource: plusIcon,
+        title: 'Add Product',
+        onPress: () => Alert.alert(`pressed on row id: ${id}`),
+      };
+
+      return (
+        <GridList.NewItem {...props}/>
+      );
+    }
+
     const props = {
       index: Number(id),
       imageSource: row.mediaUrl ? {uri: row.mediaUrl} : null,

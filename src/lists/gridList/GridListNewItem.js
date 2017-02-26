@@ -5,21 +5,17 @@ import {Constants} from '../../helpers';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 
 /**
- * GridListItem component
+ * GridListNewItem component
  */
 export default class GridListItem extends BaseComponent {
-  static displayName = 'Grid List Item';
+  static displayName = 'Grid List New Item';
   static propTypes = {
     index: PropTypes.number.isRequired,
+    imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     title: PropTypes.string,
     titleStyle: PropTypes.object,
-    secondaryTitle: PropTypes.string,
-    secondaryTitleStyle: PropTypes.object,
-    subtitle: PropTypes.string,
-    subtitleStyle: PropTypes.object,
     onPress: PropTypes.func,
     height: PropTypes.number,
-    imageSource: PropTypes.object,
   };
 
   static defaultProps = {
@@ -38,16 +34,6 @@ export default class GridListItem extends BaseComponent {
     );
   }
 
-  renderBottom() {
-    return (
-      <View style={this.styles.bottomContainer}>
-        {this.renderSecondaryTitle()}
-        {this.renderTitle()}
-        {this.renderSubtitle()}
-      </View>
-    );
-  }
-
   renderImage() {
     const {imageSource} = this.props;
     if (imageSource) {
@@ -60,12 +46,11 @@ export default class GridListItem extends BaseComponent {
     return null;
   }
 
-  renderSecondaryTitle() {
-    const {secondaryTitle} = this.props;
+  renderBottom() {
     return (
-      <Text style={this.styles.secondaryTitleText}>
-        {secondaryTitle}
-      </Text>
+      <View style={this.styles.bottomContainer}>
+        {this.renderTitle()}
+      </View>
     );
   }
 
@@ -74,15 +59,6 @@ export default class GridListItem extends BaseComponent {
     return (
       <Text style={this.styles.titleText}>
         {title}
-      </Text>
-    );
-  }
-
-  renderSubtitle() {
-    const {subtitle} = this.props;
-    return (
-      <Text style={this.styles.subtitleText}>
-        {subtitle}
       </Text>
     );
   }
@@ -97,7 +73,6 @@ export default class GridListItem extends BaseComponent {
           {this.renderTop()}
           {this.renderBottom()}
         </View>
-
       </Container>
     );
   }
@@ -121,13 +96,10 @@ function createStyles({index, height}) {
       overflow: 'hidden',
     },
     topContainer: {
-      height: 117,
+      height: 157,
     },
     bottomContainer: {
-      justifyContent: 'space-around',
       alignItems: 'center',
-      paddingTop: 7,
-      paddingBottom: 14,
       flex: 1,
     },
     titleText: {
@@ -135,19 +107,11 @@ function createStyles({index, height}) {
       fontWeight: '400',
       color: ThemeManager.titleColor,
     },
-    secondaryTitleText: {
-      ...Typography.text70,
-      color: ThemeManager.titleColor,
-    },
-    subtitleText: {
-      ...Typography.text90,
-      color: ThemeManager.subtitleColor,
-    },
     imageContainer: {
       flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
-    image: {
-      flex: 1,
-    },
+    image: {},
   });
 }
