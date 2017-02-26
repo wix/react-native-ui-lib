@@ -2,6 +2,7 @@ test/
 ios/
 android/
 typings/
+demo/
 demo-app.component.js
 index.android.js
 index.ios.js
