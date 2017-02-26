@@ -22,14 +22,6 @@ export default class BasicListScreen extends Component {
     alert(`item pressed: ${id}`); // eslint-disable-line
   }
 
-  getInitials(name) {
-    let ret = '';
-    if (name) {
-      name.split(' ').forEach(s => ret += s[0] ? s[0].toUpperCase() : '');
-    }
-    return ret.substr(0, 2);
-  }
-
   renderRow(row, id) {
     const props = {
       imageSource: row.mediaUrl ? {uri: row.mediaUrl} : null,
