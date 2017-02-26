@@ -19,8 +19,7 @@
     "preset": "react-native",
     "testPathIgnorePatterns": [
       "/e2e/",
-      "/node_modules/",
-      "/demo/"
+      "/node_modules/"
     ]
   },
   "babel": {
