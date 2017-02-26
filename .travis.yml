@@ -4,7 +4,7 @@ node_js:
 install: npm install
 deploy:
   provider: npm
-  email: "NPM_EMAIL2"
-  api_key: "NPM_API_KEY"
+  email: ${NPM_EMAIL}
+  api_key: ${NPM_API_KEY}
   on:
     branch: master
