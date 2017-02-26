@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
-import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
+import {Colors, Typography, Shadows, ThemeManager, BorderRadiuses} from '../../style';
 
 /**
  * GridListItem component
@@ -112,6 +112,8 @@ function createStyles({index, height}) {
       paddingLeft: !isLeftItem ? 0 : 7.5,
       marginTop: 15,
       height,
+      backgroundColor: 'transparent',
+      ...Shadows.white10.bottom,
     },
     innerContainer: {
       height,
