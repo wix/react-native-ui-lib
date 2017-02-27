@@ -1,3 +1,4 @@
+import * as Assets from './assets';
 import Avatar from './components/avatar';
 import AnimatedImage from './components/animatedImage';
 import Badge from './components/badge';
@@ -14,6 +15,7 @@ import Style from './style';
 import Helpers from './helpers';
 
 module.exports = {
+  Assets,
   Avatar,
   AnimatedImage,
   Badge,
