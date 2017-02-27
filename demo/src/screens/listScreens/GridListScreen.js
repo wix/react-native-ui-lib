@@ -45,6 +45,8 @@ export default class BasicListScreen extends Component {
       subtitle: row.inventory.status,
       onPress: () => Alert.alert(`pressed on row id: ${id}`),
       animationType: 'FADE_IN_DOWN',
+      // animationDuration: 1000,
+      // animationDelay: 200,
     };
 
     return (

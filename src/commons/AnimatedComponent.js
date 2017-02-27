@@ -13,7 +13,14 @@ export default class AnimatedComponent extends BaseComponent {
   }
   static propTypes = {
     animationType: PropTypes.oneOf(AnimatedComponent.animationTypes),
+    animationDuration: PropTypes.number,
+    animationDelay: PropTypes.number,
     ...BaseComponent.propTypes,
+  }
+
+  static defaultProps = {
+    animationDuration: 600,
+    animationDelay: 200,
   }
 
   static animationTypes = {
@@ -23,10 +30,11 @@ export default class AnimatedComponent extends BaseComponent {
   }
 
   componentDidMount() {
+    const {animationDuration, animationDelay} = this.props;
     Animated.timing(this.state.enterProgress, {
       toValue: 100,
-      duration: 800,
-      delay: 100,
+      duration: animationDuration,
+      delay: animationDelay,
     }).start();
   }
 
