@@ -20,7 +20,7 @@ export default class AnimatedComponent extends BaseComponent {
 
   static defaultProps = {
     animationDuration: 600,
-    animationDelay: 200,
+    animationDelay: 0,
   }
 
   static animationTypes = {
