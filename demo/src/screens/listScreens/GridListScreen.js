@@ -44,6 +44,7 @@ export default class BasicListScreen extends Component {
       secondaryTitle: row.formattedPrice,
       subtitle: row.inventory.status,
       onPress: () => Alert.alert(`pressed on row id: ${id}`),
+      animationType: 'FADE_IN_DOWN',
     };
 
     return (
