@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {ListView, Alert} from 'react-native';
+import _ from 'lodash';
 import {GridList, Avatar, Badge, AvatarHelper, Colors} from 'react-native-ui-lib';//eslint-disable-line
 import products from '../../data/products';
 const plusIcon = require('../../assets/icons/plus.png');
@@ -44,9 +45,9 @@ export default class BasicListScreen extends Component {
       secondaryTitle: row.formattedPrice,
       subtitle: row.inventory.status,
       onPress: () => Alert.alert(`pressed on row id: ${id}`),
-      animationType: 'FADE_IN_DOWN',
-      // animationDuration: 1000,
-      // animationDelay: 200,
+      animationType: 'FADE_IN',
+      animationDuration: _.sample([200, 400, 600, 700]),
+      animationDelay: _.sample([100, 200]),
     };
 
     return (
