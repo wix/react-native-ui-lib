@@ -9,6 +9,7 @@
   "scripts": {
     "start": "react-native start",
     "test": "jest",
+    "test:watch": "jest --watch",
     "lint": "eslint src -c .eslintrc",
     "xcode": "open ./ios/uilib.xcodeproj"
   },
