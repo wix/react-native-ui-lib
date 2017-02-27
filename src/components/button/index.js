@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
@@ -68,7 +68,7 @@ export default class Button extends BaseComponent {
     containerStyle: {},
     labelStyle: {},
     backgroundColor: ThemeManager.CTABackgroundColor,
-    borderRadius: Constants.isIOS ? BorderRadiuses.br50 : BorderRadiuses.br10,
+    borderRadius: Constants.isIOS ? BorderRadiuses.br100 : BorderRadiuses.br10,
     size: 'large',
     outline: false,
     outlineColor: Colors.dark70,
@@ -115,9 +115,12 @@ export default class Button extends BaseComponent {
         onPress={onPress}
         disabled={disabled}
       >
-        <Text style={[this.styles.text, textStyle, labelStyle]} numberOfLines={1} testID={testId}>
-          {Constants.isAndroid ? _.toUpper(label) : label}
-        </Text>
+        <View style={this.styles.innerContainer}>
+          <Text style={[this.styles.text, textStyle, labelStyle]} numberOfLines={1} testID={testId}>
+            {Constants.isAndroid ? _.toUpper(label) : label}
+          </Text>
+          {this.props.children}
+        </View>
       </TouchableOpacity>
     );
   }
@@ -127,10 +130,13 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor}) {
   const customBorderRadius = _.isString(borderRadius) ? BorderRadiuses[borderRadius] : borderRadius;
   return StyleSheet.create({
     container: {
+      backgroundColor: 'transparent',
+    },
+    innerContainer: {
       backgroundColor: outline ? undefined : backgroundColor,
       borderWidth: outline ? 1 : 0,
       borderColor: outline ? outlineColor : undefined,
-      flexDirection: 'column',
+      flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: customBorderRadius,

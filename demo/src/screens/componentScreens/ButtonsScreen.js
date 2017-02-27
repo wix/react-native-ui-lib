@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet, Alert, Text} from 'react-native';
-import {Constants, Button, Colors, Typography} from 'react-native-ui-lib';//eslint-disable-line
+import {ScrollView, StyleSheet, View, Alert, Text, Image} from 'react-native';
+import {Assets, Constants, Button, Colors, Typography} from 'react-native-ui-lib';//eslint-disable-line
+const plusIcon = require('../../assets/icons/plus.png');
 
 const ButtonSpace = 20;
 
@@ -55,7 +56,7 @@ export default class ButtonsScreen extends Component {
           enableShadow
           containerStyle={{marginBottom: ButtonSpace}}
         />
-        
+
         <Text style={styles.header}>Inside Out</Text>
         <Button
           label="Outline"
@@ -102,6 +103,21 @@ export default class ButtonsScreen extends Component {
           onPress={() => Alert.alert('Button #3')}
           containerStyle={{marginBottom: ButtonSpace}}
         />
+        <Text style={styles.header}>Custom Content</Text>
+        <Button
+          onPress={() => Alert.alert('Button #3')}
+          containerStyle={{marginBottom: ButtonSpace}}
+        >
+          <Text>{Assets.emojis.cloud} {Assets.emojis.airplane} {Assets.emojis.sunny}</Text>
+        </Button>
+        <Button
+          outline
+          onPress={() => Alert.alert('Button #3')}
+          containerStyle={{marginBottom: ButtonSpace}}
+        >
+          <Image source={plusIcon}/>
+          <Text style={{marginLeft: 10, color: Colors.blue30}}>New Item</Text>
+        </Button>
       </ScrollView>
     );
   }
