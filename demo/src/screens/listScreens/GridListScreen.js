@@ -14,7 +14,7 @@ export default class BasicListScreen extends Component {
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
     });
     this.state = {
-      dataSource: ds.cloneWithRows(products),
+      dataSource: ds.cloneWithRows(products.concat(products).concat(products)),
       onEdit: false,
       updating: false,
     };
@@ -45,9 +45,10 @@ export default class BasicListScreen extends Component {
       secondaryTitle: row.formattedPrice,
       subtitle: row.inventory.status,
       onPress: () => Alert.alert(`pressed on row id: ${id}`),
-      animationType: 'FADE_IN',
-      animationDuration: _.sample([200, 400, 600, 700]),
-      animationDelay: _.sample([100, 200]),
+      animationType: 'FADE_IN_DOWN',
+      // animationDuration: _.sample([200, 400, 600, 700]),
+      animationDuration: (Number(id) % 6) * 200,
+      // animationDelay: _.sample([100, 200]),
     };
 
     return (
