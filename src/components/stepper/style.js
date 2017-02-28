@@ -7,11 +7,10 @@ export default function createStyles() {
   const bottomTextMargin = 4; // use margins to center the text until we move to using assets
   return StyleSheet.create({
     container: {
-      flex: 1,
       flexDirection: 'row',
-      paddingLeft: Constants.isIOS ? 16 : undefined,
-      paddingRight: Constants.isIOS ? 16 : undefined,
       alignItems: 'center',
+      // paddingLeft: Constants.isIOS ? 16 : undefined,
+      // paddingRight: Constants.isIOS ? 16 : undefined,
     },
     buttons: {
       flexDirection: 'row',
