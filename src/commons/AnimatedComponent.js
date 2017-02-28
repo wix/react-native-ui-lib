@@ -1,5 +1,6 @@
 import {PropTypes} from 'react';
-import {Animated} from 'react-native';
+import {Animated, Easing} from 'react-native';
+import {Constants} from '../helpers';
 import BaseComponent from './BaseComponent';
 import * as AnimationPresenter from './AnimationPresenter';
 
@@ -34,7 +35,9 @@ export default class AnimatedComponent extends BaseComponent {
     Animated.timing(this.state.enterProgress, {
       toValue: 100,
       duration: animationDuration,
-      delay: animationDelay,
+      delay: Constants.isAndroid ? animationDelay : 0,
+      easing: Easing.ease,
+      useNativeDriver: true,
     }).start();
   }
 
