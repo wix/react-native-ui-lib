@@ -36,6 +36,10 @@ class Picker extends BaseComponent {
      */
     mode: PropTypes.oneOf(Object.keys(Picker.modes)),
     /**
+     * Adds blur effect to picker modal (only iOS)
+     */
+    enableModalBlur: PropTypes.bool,
+    /**
      * Use to identify the picker in tests
      */
     testId: PropTypes.string,
@@ -43,6 +47,7 @@ class Picker extends BaseComponent {
 
   static defaultProps = {
     mode: Picker.modes.SINGLE,
+    enableModalBlur: true,
   }
 
   constructor(props) {
@@ -132,7 +137,7 @@ class Picker extends BaseComponent {
   }
 
   renderPickerModal() {
-    const {mode} = this.props;
+    const {mode, enableModalBlur} = this.props;
     const {showModal} = this.state;
     return (
       <PickerModal
@@ -140,6 +145,7 @@ class Picker extends BaseComponent {
         onCancel={this.cancelSelect}
         onDone={this.doneMultiSelect}
         showDone={mode === Picker.modes.MULTI}
+        enableModalBlur={enableModalBlur}
       >
         {this.appendPropsToChildren(this.props.children)}
       </PickerModal>);

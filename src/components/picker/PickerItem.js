@@ -5,7 +5,7 @@ import * as Assets from '../../assets';
 
 const PickerItem = ({label, value, isSelected, onPress}) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={() => onPress({value})}>
+    <TouchableOpacity activeOpacity={0.5} style={styles.container} onPress={() => onPress({value})}>
       <Text style={styles.labelText}>{label}</Text>
       {isSelected && <Image source={Assets.icons.check}/>}
     </TouchableOpacity>

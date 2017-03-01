@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {Stepper, Typography, Picker} from 'react-native-ui-lib';//eslint-disable-line
+import {Colors, Stepper, Typography, Picker} from 'react-native-ui-lib';//eslint-disable-line
 
 export default class FormScreen extends Component {
 
@@ -28,6 +28,7 @@ export default class FormScreen extends Component {
         <Picker
           label="Pick a Language"
           selectedValue={this.state.language}
+          enableModalBlur={false}
           onValueChange={({value}) => this.setState({language: value})}
         >
           <Picker.Item label={'JavaScript'} value={'js'}/>

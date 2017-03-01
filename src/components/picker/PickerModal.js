@@ -1,17 +1,19 @@
 import React, {PropTypes} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Modal} from 'react-native';
+import {BlurView} from 'react-native-blur';
 import {Colors, Typography} from '../../style';
 import {Constants} from '../../helpers';
 
-const PickerModal = ({visible, onCancel, onDone, showDone, children}) => {
+const PickerModal = ({visible, onCancel, onDone, showDone, enableModalBlur, children}) => {
+  const Container = (Constants.isIOS && enableModalBlur) ? BlurView : View;
   return (
     <Modal
       animationType={'slide'}
-      transparent={false}
+      transparent={(Constants.isIOS && enableModalBlur)}
       visible={visible}
       onRequestClose={onCancel}
     >
-      <View style={styles.container}>
+      <Container style={styles.container} blurType="light">
         <View style={styles.modalHeader}>
           <View style={[styles.modalHeaderPart, styles.modalHeaderLeft]}>
             <TouchableOpacity onPress={onCancel}>
@@ -28,10 +30,10 @@ const PickerModal = ({visible, onCancel, onDone, showDone, children}) => {
             </TouchableOpacity>}
           </View>
         </View>
-      </View>
-      <View style={styles.modalBody}>
-        {children}
-      </View>
+        <View style={styles.modalBody}>
+          {children}
+        </View>
+      </Container>
     </Modal>
   );
 };
@@ -45,7 +47,7 @@ PickerModal.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.white,
+    flex: 1,
   },
   modalHeader: {
     height: 32 + Constants.statusBarHeight,

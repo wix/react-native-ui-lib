@@ -1048,15 +1048,9 @@ browser-resolve@^1.11.2, browser-resolve@^1.7.0:
   dependencies:
     resolve "1.1.7"
 
-bser@1.0.2:
+bser@1.0.2, bser@^1.0.2:
   version "1.0.2"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/bser/-/bser-1.0.2.tgz#381116970b2a6deea5646dd15dd7278444b56169"
-  dependencies:
-    node-int64 "^0.4.0"
-
-bser@^1.0.2:
-  version "1.0.3"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/bser/-/bser-1.0.3.tgz#d63da19ee17330a0e260d2a34422b21a89520317"
   dependencies:
     node-int64 "^0.4.0"
 
@@ -4574,6 +4568,10 @@ react-dom@^15.4.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
+react-native-blur@~1.0.0:
+  version "1.0.1"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-native-blur/-/react-native-blur-1.0.1.tgz#c81e48f631489a87a86a0c58674f6283d7dc15a7"
+
 react-native-navigation@^2.0.0-experimental:
   version "2.0.0-legacy.2"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-native-navigation/-/react-native-navigation-2.0.0-legacy.2.tgz#e913c6de52c3de1f970142859a0b428614c30069"
@@ -4582,9 +4580,9 @@ react-native-navigation@^2.0.0-experimental:
   optionalDependencies:
     react-redux "*"
 
-react-native@^0.38.1:
-  version "0.38.1"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-native/-/react-native-0.38.1.tgz#7e4b2038a7caf0608c8b7efdde662286d8433df3"
+react-native@0.38.0:
+  version "0.38.0"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-native/-/react-native-0.38.0.tgz#fa553d467a9e75cbd6a0c15eb1ab88346e0d5d5c"
   dependencies:
     absolute-path "^0.0.0"
     art "^0.10.0"
