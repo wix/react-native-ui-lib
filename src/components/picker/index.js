@@ -19,10 +19,25 @@ class Picker extends BaseComponent {
   }
 
   static propTypes = {
+    /**
+     * The Picker button label
+     */
     label: PropTypes.string,
+    /**
+     * the current selected value
+     */
     selectedValue: PropTypes.any,
+    /**
+     * callback for when picker value change
+     */
     onValueChange: PropTypes.func,
+    /**
+     * SINGLE mode or MULTI mode
+     */
     mode: PropTypes.oneOf(Object.keys(Picker.modes)),
+    /**
+     * Use to identify the picker in tests
+     */
     testId: PropTypes.string,
   };
 
@@ -131,12 +146,13 @@ class Picker extends BaseComponent {
   }
 
   render() {
-    const {label} = this.props;
+    const {label, testId} = this.props;
     return (
       <TouchableOpacity
         style={[this.styles.container]}
         activeOpacity={0.6}
         onPress={() => this.togglePickerModal(true)}
+        testId={testId}
       >
         <Text style={this.styles.label}>
           {label}

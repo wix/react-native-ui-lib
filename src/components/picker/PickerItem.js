@@ -13,7 +13,13 @@ const PickerItem = ({label, value, isSelected, onPress}) => {
 };
 
 PickerItem.propTypes = {
+  /**
+   * The item label
+   */
   label: PropTypes.string,
+  /**
+   * The item value
+   */
   value: PropTypes.any,
   isSelected: PropTypes.bool,
   onPress: PropTypes.func,
