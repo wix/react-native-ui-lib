@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {Stepper} from 'react-native-ui-lib';//eslint-disable-line
+import {View, Text, StyleSheet} from 'react-native';
+import {Stepper, Typography, Picker} from 'react-native-ui-lib';//eslint-disable-line
 
 export default class FormScreen extends Component {
 
@@ -8,20 +8,48 @@ export default class FormScreen extends Component {
     super(props);
     this.state = {
       itemsCount: 1,
+      language: 'java',
+      languages: [],
     };
   }
 
   render() {
     return (
       <View style={styles.container}>
+        <Text style={{...Typography.text60}}>Stepper</Text>
         <Stepper
-          containerStyle={{marginLeft: 15, marginRight: 15}}
           label={this.state.itemsCount === 1 ? 'Item' : 'Items'}
           min={1}
           max={5}
           onValueChange={count => this.setState({itemsCount: count})}
           initialValue={1}
         />
+        <Text style={styles.componentTitle}>Single Select Picker</Text>
+        <Picker
+          label="Pick a Language"
+          selectedValue={this.state.language}
+          onValueChange={({value}) => this.setState({language: value})}
+        >
+          <Picker.Item label={'JavaScript'} value={'js'}/>
+          <Picker.Item label={'Java'} value={'java'}/>
+          <Picker.Item label={'Python'} value={'python'}/>
+          <Picker.Item label={'C++'} value={'c++'}/>
+          <Picker.Item label={'Perl'} value={'perl'}/>
+        </Picker>
+
+        <Text style={styles.componentTitle}>Multi Select Picker</Text>
+        <Picker
+          label="Pick Languages"
+          selectedValue={this.state.languages}
+          onValueChange={({value}) => this.setState({languages: value})}
+          mode={Picker.modes.MULTI}
+        >
+          <Picker.Item label={'JavaScript'} value={'js'}/>
+          <Picker.Item label={'Java'} value={'java'}/>
+          <Picker.Item label={'Python'} value={'python'}/>
+          <Picker.Item label={'C++'} value={'c++'}/>
+          <Picker.Item label={'Perl'} value={'perl'}/>
+        </Picker>
       </View>
     );
   }
@@ -30,7 +58,11 @@ export default class FormScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 15,
+  },
+  componentTitle: {
+    ...Typography.text60,
+    marginTop: 20,
+    marginBottom: 5,
   },
 });
