@@ -9,6 +9,7 @@ const PickerModal = ({visible, onCancel, onDone, showDone, children}) => {
       animationType={'slide'}
       transparent={false}
       visible={visible}
+      onRequestClose={onCancel}
     >
       <View style={styles.container}>
         <View style={styles.modalHeader}>
