@@ -178,23 +178,6 @@ function createStyles() {
       ...Typography.text80,
       color: Colors.dark10,
     },
-    modalContainer: {
-      backgroundColor: Colors.white,
-    },
-    modalHeader: {
-      height: 52,
-      flexDirection: 'row',
-      borderBottomWidth: 1,
-      borderColor: ThemeManager.dividerColor,
-    },
-    modalHeaderPart: {
-      flex: 1,
-      flexDirection: 'row',
-      borderWidth: 1,
-      alignItems: 'center',
-    },
-    modalHeaderMiddle: {
-    }
   });
 }
 
