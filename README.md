@@ -17,4 +17,5 @@ The Amazing UI-Lib
 
 
 ### Dependecies 
+- react-native-animatable
 - react-native-blur (Picker)
