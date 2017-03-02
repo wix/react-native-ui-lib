@@ -1,10 +1,11 @@
 language: node_js
 node_js:
-  - "node"
+- node
 install: npm install
 deploy:
   provider: npm
-  email: ${NPM_EMAIL}
-  api_key: ${NPM_API_KEY}
+  email: "${NPM_EMAIL}"
+  api_key:
+    secure: zR4CalFSysemr3/R8VoqQv8g2/0PEcCMVg4Rl9NPttTUdixVjlsrXKfGYcCGY5luJnsl76PZMbmsB6WDGreCF9sLvDiiqVYm73hua4Xx/YppvTBklQ/tn2NdlwE2I4GQiNuQJxXaVgs7xpGBc8vXNXbdAX2XI9c4wm0n5QFcFWfbalNqv+curjsXd0mue1nVy9BYV23osdnUDMkz7g7RZow9D49JFsXPvEwHwWLs1c+BngJgrFHh5yu1pqHIvM9gRHoCtf4JopeFN++Uqnv5M0vSrtemgfEmUPPPn1em+cnAJa+eNxCQdWscZx5YFdc9snYuXbm0T11QcLZoZztKqjXQSjk1okIWZIH1EhRetcQ1q4le5Q4Dcft4ULltBXEXhPI7p7uV2EvIYvYBg2PhlRbStfbAbRWqCSepeK1lBJwap7fIviZCTyWkvqJiv9Iw45k0tKIciNm0Nr959KLtBRCxCxPAYoB4GUGDQ+RMZr1pQmlz8/irqzIiRkrEMZP2XB3zZiRfN657tnIud/Z09njhOuHRJv8TU/Lb3QVvWrW1GuAS5XfdPlvZ6fDsnMGceHaJTEnTpREWHpFD5VyyJ4EBu5uD6buzefYLDhppLnNbHQ+9ZqHIZPxMObr45jIK1NANTAqGXIBOEAbPRY2es4w42B0b3yUaRukDmat36vc=
   on:
     branch: master
