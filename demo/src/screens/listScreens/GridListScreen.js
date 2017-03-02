@@ -25,25 +25,9 @@ export default class BasicListScreen extends Component {
   }
 
   renderRow(row, id) {
-    if (id === '0') {
-      const props = {
-        index: Number(id),
-        imageSource: plusIcon,
-        title: 'Add Product',
-        onPress: () => Alert.alert(`pressed on row id: ${id}`),
-      };
-
-      return (
-        <GridList.NewItem {...props}/>
-      );
-    }
-
     const props = {
       index: Number(id),
       imageSource: row.mediaUrl ? {uri: row.mediaUrl} : null,
-      title: row.name,
-      secondaryTitle: row.formattedPrice,
-      subtitle: row.inventory.status,
       onPress: () => Alert.alert(`pressed on row id: ${id}`),
       animation: 'fadeIn',
       delay: 200,
@@ -53,8 +37,23 @@ export default class BasicListScreen extends Component {
       // animationDelay: _.sample([100, 200]),
     };
 
+    let Item;
+    if (id === '0') {
+      Item = GridList.NewItem;
+
+      props.imageSource = plusIcon;
+      props.title = 'Add Product';
+      props.delay = 0;
+    } else {
+      Item = GridList.Item;
+
+      props.title = row.name;
+      props.secondaryTitle = row.formattedPrice;
+      props.subtitle = row.inventory.status;
+    }
+
     return (
-      <GridList.Item {...props}/>
+      <Item {...props}/>
     );
   }
 

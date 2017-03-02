@@ -1,9 +1,8 @@
 import React, {PropTypes} from 'react';
-import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {BaseComponent} from '../../commons';
-import {Constants} from '../../helpers';
-import {Colors, Typography, Shadows, ThemeManager, BorderRadiuses} from '../../style';
+import createStyles from './style';
 
 /**
  * GridListItem component
@@ -105,55 +104,4 @@ export default class GridListItem extends BaseComponent {
       </Container>
     );
   }
-}
-
-function createStyles({index, height}) {
-  const isLeftItem = index % 2 === 0;
-  return StyleSheet.create({
-    container: {
-      width: Constants.screenWidth / 2,
-      paddingRight: isLeftItem ? 0 : 7.5,
-      paddingLeft: !isLeftItem ? 0 : 7.5,
-      marginTop: 15,
-      height,
-      backgroundColor: 'transparent',
-      ...Shadows.white10.bottom,
-    },
-    innerContainer: {
-      height,
-      marginHorizontal: 7.5,
-      backgroundColor: Colors.white,
-      borderRadius: BorderRadiuses.br30,
-      overflow: 'hidden',
-    },
-    topContainer: {
-      height: 117,
-    },
-    bottomContainer: {
-      justifyContent: 'space-around',
-      alignItems: 'center',
-      paddingTop: 7,
-      paddingBottom: 14,
-      flex: 1,
-    },
-    titleText: {
-      ...Typography.text70,
-      fontWeight: '400',
-      color: ThemeManager.titleColor,
-    },
-    secondaryTitleText: {
-      ...Typography.text70,
-      color: ThemeManager.titleColor,
-    },
-    subtitleText: {
-      ...Typography.text90,
-      color: ThemeManager.subtitleColor,
-    },
-    imageContainer: {
-      flex: 1,
-    },
-    image: {
-      flex: 1,
-    },
-  });
 }
