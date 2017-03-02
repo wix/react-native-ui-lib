@@ -1,13 +1,14 @@
 import React from 'react';
-import {Text, StyleSheet, Animated} from 'react-native';
+import {Text, StyleSheet} from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import Colors from '../../style/colors';
-import {AnimatedComponent} from '../../commons';
+import {BaseComponent} from '../../commons';
 import {Typography, ThemeManager} from '../../style';
 
 /**
  * Round colored badge, typically used to show a number
  */
-export default class Badge extends AnimatedComponent {
+export default class Badge extends BaseComponent {
   static displayName = 'Badge';
   static propTypes = {
     /**
@@ -26,7 +27,6 @@ export default class Badge extends AnimatedComponent {
      * Use to identify the badge in tests
      */
     testId: React.PropTypes.string,
-    ...AnimatedComponent.propTypes,
   };
 
   generateStyles() {
@@ -36,11 +36,12 @@ export default class Badge extends AnimatedComponent {
   render() {
     const containerStyle = this.extractContainerStyle(this.props);
     const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
-    const animatedStyle = this.getAnimationStyle();
+    const animationProps = this.extractAnimationProps();
     return (
-      <Animated.View
+      <Animatable.View
         testID={this.props.testId}
-        style={[this.styles.badge, containerStyle, backgroundStyle, animatedStyle]}
+        style={[this.styles.badge, containerStyle, backgroundStyle]}
+        {...animationProps}
       >
         <Text
           style={this.styles.count}
@@ -50,7 +51,7 @@ export default class Badge extends AnimatedComponent {
         >
           {this.props.label}
         </Text>
-      </Animated.View>
+      </Animatable.View>
     );
   }
 }

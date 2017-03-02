@@ -4,6 +4,7 @@ import {Constants} from '../helpers';
 import BaseComponent from './BaseComponent';
 import * as AnimationPresenter from './AnimationPresenter';
 
+// this is deprecated
 export default class AnimatedComponent extends BaseComponent {
 
   constructor(props) {

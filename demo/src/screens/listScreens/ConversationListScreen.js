@@ -32,7 +32,7 @@ export default class ConversationListScreen extends Component {
       title: row.name,
       subtitle: row.text,
       timestamp: row.timestamp,
-      badge: row.count ? <Badge label={row.count} animationType="FADE_IN" animationDuration={400}/> : null,
+      badge: row.count ? <Badge label={row.count} animation="fadeIn" duration={400}/> : null,
       onPress: () => Alert.alert(`pressed on row id: ${id}`),
       titleStyle: row.isNew ? {fontWeight: '500'} : undefined,
     };

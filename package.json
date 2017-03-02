@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "lodash": "^4.0.0",
+    "react-native-animatable": "^1.1.0",
     "react-native-blur": "~1.0.0"
   },
   "devDependencies": {

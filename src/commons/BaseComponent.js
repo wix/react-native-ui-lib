@@ -1,8 +1,17 @@
-import {Component} from 'react';
+import {Component, PropTypes} from 'react';
 import {StyleSheet} from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import _ from 'lodash';
 
 export default class BaseComponent extends Component {
+
+  static propTypes = {
+    useNativeDriver: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    useNativeDriver: true,
+  }
 
   constructor(props) {
     super(props);
@@ -15,6 +24,10 @@ export default class BaseComponent extends Component {
 
   generateStyles() {
     this.styles = StyleSheet.create({});
+  }
+
+  extractAnimationProps() {
+    return _.pick(this.props, ['animation', 'duration', 'delay', 'direction', 'easing', 'iterationCount', 'transition', 'onAnimationBegin', 'onAnimationEnd', 'useNativeDriver']);
   }
 
   extractContainerStyle(props) {

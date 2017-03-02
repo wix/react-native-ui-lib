@@ -1,15 +1,18 @@
 import React, {PropTypes} from 'react';
-import {Animated, View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
-import {AnimatedComponent} from '../../commons';
+import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 import {Colors, Typography, Shadows, ThemeManager, BorderRadiuses} from '../../style';
 
 /**
  * GridListItem component
  */
-export default class GridListItem extends AnimatedComponent {
+export default class GridListItem extends BaseComponent {
   static displayName = 'Grid List Item';
   static propTypes = {
+    ...BaseComponent.propTypes,
+    // ...Animatable.propTypes,
     index: PropTypes.number.isRequired,
     title: PropTypes.string,
     titleStyle: PropTypes.object,
@@ -20,10 +23,10 @@ export default class GridListItem extends AnimatedComponent {
     onPress: PropTypes.func,
     height: PropTypes.number,
     imageSource: PropTypes.object,
-    ...AnimatedComponent.propTypes,
   };
 
   static defaultProps = {
+    ...BaseComponent.defaultProps,
     height: 210,
   }
 
@@ -90,15 +93,14 @@ export default class GridListItem extends AnimatedComponent {
 
   render() {
     const {onPress} = this.props;
+    const animationProps = this.extractAnimationProps();
     const Container = onPress ? TouchableOpacity : View;
-    const animatedStyle = this.getAnimationStyle();
-
     return (
       <Container style={this.styles.container} onPress={onPress}>
-        <Animated.View style={[this.styles.innerContainer, animatedStyle]}>
+        <Animatable.View {...animationProps} style={[this.styles.innerContainer]}>
           {this.renderTop()}
           {this.renderBottom()}
-        </Animated.View>
+        </Animatable.View>
 
       </Container>
     );

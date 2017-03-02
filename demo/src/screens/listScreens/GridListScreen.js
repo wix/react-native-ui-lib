@@ -45,9 +45,11 @@ export default class BasicListScreen extends Component {
       secondaryTitle: row.formattedPrice,
       subtitle: row.inventory.status,
       onPress: () => Alert.alert(`pressed on row id: ${id}`),
-      animationType: 'FADE_IN_DOWN',
-      // animationDuration: _.sample([200, 400, 600, 700]),
-      animationDuration: (Number(id) % 6) * 200,
+      animation: 'fadeIn',
+      delay: 200,
+      easing: 'ease-in-out',
+      // duration: _.sample([200, 400, 600, 700]),
+      duration: (Number(id) % 6) * 200,
       // animationDelay: _.sample([100, 200]),
     };
 
