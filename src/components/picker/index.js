@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 import _ from 'lodash';
-import {Colors, Typography, ThemeManager} from '../../style';
+import {Colors, Typography} from '../../style';
 import {BaseComponent} from '../../commons';
 import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';

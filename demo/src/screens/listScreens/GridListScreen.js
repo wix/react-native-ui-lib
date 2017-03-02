@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {ListView, Alert} from 'react-native';
-import _ from 'lodash';
 import {GridList, Avatar, Badge, AvatarHelper, Colors} from 'react-native-ui-lib';//eslint-disable-line
 import products from '../../data/products';
+
 const plusIcon = require('../../assets/icons/plus.png');
 
 export default class BasicListScreen extends Component {
@@ -59,8 +59,7 @@ export default class BasicListScreen extends Component {
 
   render() {
     return (
-      <ListView
-        contentContainerStyle={{flexDirection: 'row', flexWrap: 'wrap', backgroundColor: Colors.dark80, paddingBottom: 15}}
+      <GridList
         dataSource={this.state.dataSource}
         renderRow={(row, sectionId, rowId) => this.renderRow(row, rowId)}
       />
