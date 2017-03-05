@@ -35,6 +35,7 @@ export default class BasicListScreen extends Component {
       // duration: _.sample([200, 400, 600, 700]),
       duration: (Number(id) % 6) * 200,
       // animationDelay: _.sample([100, 200]),
+      // disabled: true,
     };
 
     let Item;
@@ -44,6 +45,7 @@ export default class BasicListScreen extends Component {
       props.imageSource = plusIcon;
       props.title = 'Add Product';
       props.delay = 0;
+      // props.disabled = true;
     } else {
       Item = GridList.Item;
 

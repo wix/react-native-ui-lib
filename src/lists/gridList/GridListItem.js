@@ -22,6 +22,7 @@ export default class GridListItem extends BaseComponent {
     onPress: PropTypes.func,
     height: PropTypes.number,
     imageSource: PropTypes.object,
+    disabled: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -91,12 +92,12 @@ export default class GridListItem extends BaseComponent {
   }
 
   render() {
-    const {onPress} = this.props;
+    const {onPress, disabled} = this.props;
     const animationProps = this.extractAnimationProps();
-    const Container = onPress ? TouchableOpacity : View;
+    const Container = (onPress && !disabled) ? TouchableOpacity : View;
     return (
-      <Container style={this.styles.container} onPress={onPress}>
-        <Animatable.View {...animationProps} style={[this.styles.innerContainer]}>
+      <Container style={[this.styles.container, disabled && this.containerDisabled]} onPress={onPress}>
+        <Animatable.View {...animationProps} style={[this.styles.innerContainer, disabled && this.styles.innerContainerDisabled]}>
           {this.renderTop()}
           {this.renderBottom()}
         </Animatable.View>
