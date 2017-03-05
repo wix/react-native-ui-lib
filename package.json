@@ -1,17 +1,18 @@
 {
   "name": "react-native-ui-lib",
   "version": "0.0.5",
-  "main": "src/index.js",
+  "main": "index.js",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "start": "react-native start",
+    "start": "export DEV_MODE=true && react-native start",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint src -c .eslintrc",
-    "xcode": "open ./ios/uilib.xcodeproj"
+    "xcode": "open ./ios/uilib.xcodeproj",
+    "build": "mkdir -p dist && cp -r src/assets dist/ && babel src --out-dir dist"
   },
   "dependencies": {
     "lodash": "^4.0.0",
@@ -19,8 +20,10 @@
     "react-native-blur": "~1.0.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.23.0",
     "babel-eslint": "^7.0.0",
     "babel-jest": "18.0.0",
+    "babel-plugin-transform-inline-environment-variables": "^0.0.2",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.22.0",
     "babel-preset-react-native": "1.9.1",
@@ -58,6 +61,7 @@
         ],
         "retainLines": true
       }
-    }
+    },
+    "plugins": ["transform-inline-environment-variables"]
   }
 }
