@@ -2,6 +2,7 @@ language: node_js
 node_js:
 - node
 install: npm install
+before_deploy: npm run build
 deploy:
   provider: npm
   email: ethan.shar@gmail.com
