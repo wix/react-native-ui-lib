@@ -13,6 +13,7 @@ import PageControl from './components/page-control';
 import Picker from './components/picker';
 import Stepper from './components/stepper';
 import Style from './style';
+import Text from './components/text';
 import Helpers from './helpers';
 
 module.exports = {
@@ -32,4 +33,5 @@ module.exports = {
   Picker,
   Stepper,
   ...Style,
+  Text,
 };
