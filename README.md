@@ -6,6 +6,7 @@ The Amazing UI-Lib
 - Badge
 - Basic List
 - Button
+- Card
 - Connection Status Bar
 - Conversation List
 - Grid List
@@ -13,7 +14,8 @@ The Amazing UI-Lib
 - Loader Screen
 - Page Control
 - Picker 
-- Stepper 
+- Stepper
+- Text
 
 
 ### Dependecies 
