@@ -3,6 +3,7 @@ import Avatar from './components/avatar';
 import AnimatedImage from './components/animatedImage';
 import Badge from './components/badge';
 import Button from './components/button';
+import Card from './components/card';
 import * as ConversationList from './lists/conversationList';
 import GridList from './lists/gridList';
 import * as BasicList from './lists/basicList';
@@ -23,6 +24,7 @@ module.exports = {
   Badge,
   BasicList,
   Button,
+  Card,
   ConnectionStatusBar,
   ConversationList,
   GridList,

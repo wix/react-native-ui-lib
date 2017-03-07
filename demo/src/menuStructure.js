@@ -11,6 +11,7 @@ export const navigationData = {
     {title: 'Animated Image', tags: 'animated image', screen: 'example.components.AnimatedImageScreen'},
     {title: 'Buttons', tags: 'button cta', screen: 'example.components.ButtonsScreen'},
     {title: 'Badges', tags: 'badge', screen: 'example.components.BadgesScreen'},
+    {title: 'Cards', tags: 'cards feed', screen: 'example.components.CardsScreen'},
     {title: 'Connection Status Bar', tags: 'connection status bar', screen: 'example.components.ConnectionStatusBar'},
     {title: 'Page Control', tags: 'page', screen: 'example.components.PageControlScreen'},
     {title: 'Form Controls', tags: 'form stepper', screen: 'example.components.FormScreen'},
