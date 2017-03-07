@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
+import Text from '../text';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 
 /**
@@ -11,10 +12,15 @@ import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 export default class Button extends BaseComponent {
   static displayName = 'Button';
   static propTypes = {
+    ...Text.propTypes,
     /**
      * Text to show inside the button
      */
     label: PropTypes.string,
+    /**
+     * Icon image source
+     */
+    iconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
      * Color of the button background
      */
@@ -46,6 +52,10 @@ export default class Button extends BaseComponent {
      * The outline color
      */
     outlineColor: PropTypes.string,
+    /**
+     * Button will look like a link
+     */
+    link: PropTypes.bool,
     /**
      * Additional styles for the top container
      */
@@ -102,40 +112,68 @@ export default class Button extends BaseComponent {
     return null;
   }
 
+  renderIcon() {
+    const {iconSource, label} = this.props;
+    if (iconSource) {
+      return (
+        <Image
+          source={iconSource}
+          style={[this.styles.icon, label && this.styles.iconRightSpacing]}
+        />);
+    }
+    return null;
+  }
+
+  renderLabel() {
+    const {label, labelStyle, testId} = this.props;
+    const textStyle = this.getTextStyle();
+    const textProps = this.extractTextProps(this.props);
+    return (
+      <Text {...textProps} style={[this.styles.text, textStyle, labelStyle]} numberOfLines={1} testID={testId}>
+        {Constants.isAndroid ? _.toUpper(label) : label}
+      </Text>
+    );
+  }
+
   render() {
-    const {label, onPress, disabled, labelStyle, enableShadow, testId} = this.props;
+    const {onPress, disabled, link, enableShadow} = this.props;
     const sizeStyle = this.getSizeStyle();
     const containerStyle = this.extractContainerStyle(this.props);
     const shadowStyle = enableShadow ? this.styles.shadowStyle : {};
-    const textStyle = this.getTextStyle();
+
     return (
       <TouchableOpacity
-        style={[this.styles.container, sizeStyle, shadowStyle, disabled && this.styles.disabled, containerStyle]}
+        style={[
+          this.styles.container,
+          sizeStyle, shadowStyle,
+          disabled && this.styles.disabled,
+          containerStyle]}
         activeOpacity={0.6}
         onPress={onPress}
         disabled={disabled}
       >
-        <View style={this.styles.innerContainer}>
-          <Text style={[this.styles.text, textStyle, labelStyle]} numberOfLines={1} testID={testId}>
-            {Constants.isAndroid ? _.toUpper(label) : label}
-          </Text>
+        <View style={[this.styles.innerContainer, link && this.styles.innerContainerLink]}>
           {this.props.children}
+          {this.renderIcon()}
+          {this.renderLabel()}
         </View>
       </TouchableOpacity>
     );
   }
 }
 
-function createStyles({backgroundColor, borderRadius, outline, outlineColor}) {
+function createStyles({backgroundColor, borderRadius, outline, outlineColor, link}) {
   const customBorderRadius = _.isString(borderRadius) ? BorderRadiuses[borderRadius] : borderRadius;
+  const showBorder = outline && !link;
+  const haveBackground = !outline && !link;
   return StyleSheet.create({
     container: {
       backgroundColor: 'transparent',
     },
     innerContainer: {
-      backgroundColor: outline ? undefined : backgroundColor,
-      borderWidth: outline ? 1 : 0,
-      borderColor: outline ? outlineColor : undefined,
+      backgroundColor: haveBackground ? backgroundColor : undefined,
+      borderWidth: showBorder ? 1 : 0,
+      borderColor: showBorder ? outlineColor : undefined,
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
@@ -143,6 +181,11 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor}) {
       paddingHorizontal: 36,
       paddingVertical: 16,
       minWidth: 150,
+    },
+    innerContainerLink: {
+      minWidth: undefined,
+      paddingHorizontal: undefined,
+      paddingVertical: undefined,
     },
     medium: {
       paddingHorizontal: 24,
@@ -163,7 +206,7 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor}) {
     text: {
       flex: 0,
       flexDirection: 'row',
-      color: outline ? Colors.dark10 : ThemeManager.CTATextColor,
+      color: (outline || link) ? Colors.dark10 : ThemeManager.CTATextColor,
       ...Typography.text70,
       fontWeight: '100',
     },
@@ -172,6 +215,14 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor}) {
     },
     disabled: {
       backgroundColor: Colors.dark60,
+    },
+    icon: {
+      width: 18,
+      height: 18,
+    },
+    iconRightSpacing: {
+      marginRight: 7,
+      marginBottom: 2,
     },
   });
 }
