@@ -7,9 +7,20 @@ export default class CardImage extends BaseComponent {
   static displayName = 'Card Image';
 
   static propTypes = {
+    /**
+     * Image soruce, either remove source or local
+     */
     imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * Image height
+     */
+    height: PropTypes.number,
     testId: PropTypes.string,
   };
+
+  static defaultProps = {
+    height: 150,
+  }
 
   generateStyles() {
     this.styles = createStyles(this.props);
@@ -29,10 +40,10 @@ export default class CardImage extends BaseComponent {
   }
 }
 
-function createStyles() {
+function createStyles({height}) {
   return StyleSheet.create({
     container: {
-      height: 150,
+      height,
     },
     image: {
       width: null,
