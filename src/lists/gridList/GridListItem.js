@@ -97,7 +97,13 @@ export default class GridListItem extends BaseComponent {
     const Container = (onPress && !disabled) ? TouchableOpacity : View;
     return (
       <Container style={[this.styles.container, disabled && this.containerDisabled]} onPress={onPress}>
-        <Animatable.View {...animationProps} style={[this.styles.innerContainer, disabled && this.styles.innerContainerDisabled]}>
+        <Animatable.View
+          {...animationProps}
+          style={[
+            this.styles.innerContainer,
+            disabled && this.styles.innerContainerDisabled,
+          ]}
+        >
           {this.renderTop()}
           {this.renderBottom()}
         </Animatable.View>

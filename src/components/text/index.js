@@ -1,14 +1,14 @@
-import React, {Component, PropTypes} from 'react';
-import {TouchableOpacity, View, Text as RNText, ListView, StyleSheet} from 'react-native';
+import React, {PropTypes} from 'react';
+import {Text as RNText, StyleSheet} from 'react-native';
 import _ from 'lodash';
-import {Colors, Typography} from '../../style';
+import {Typography} from '../../style';
 import {BaseComponent} from '../../commons';
 
 export default class Text extends BaseComponent {
 
   static displayName = 'Text';
   static propTypes = {
-    // ...RNText,
+    ...RNText.propTypes,
     text10: PropTypes.bool,
     text20: PropTypes.bool,
     text30: PropTypes.bool,

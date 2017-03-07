@@ -1,7 +1,7 @@
 import {Component, PropTypes} from 'react';
 import {StyleSheet} from 'react-native';
-// import * as Animatable from 'react-native-animatable';
 import _ from 'lodash';
+import {Typography} from '../style';
 
 export default class BaseComponent extends Component {
 
@@ -50,5 +50,9 @@ export default class BaseComponent extends Component {
     }
 
     return containerStyle;
+  }
+
+  extractTextProps(props) {
+    return _.pick(props, [..._.keys(Typography), 'color']);
   }
 }
