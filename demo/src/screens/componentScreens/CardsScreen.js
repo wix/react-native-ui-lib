@@ -21,20 +21,20 @@ export default class ButtonsScreen extends Component {
                   <Text text40 color={Colors.dark10}>{post.title}</Text>
                 </Card.Section>
                 <Card.Section>
-                  <Text>
+                  <Card.Item>
                     <Text text90 color={statusColor}>{post.status}</Text>
                     <Text text90> | {post.timestamp}</Text>
-                  </Text>
+                  </Card.Item>
                 </Card.Section>
                 <Card.Section>
                   <Text text70 color={Colors.dark10}>{post.description}</Text>
                 </Card.Section>
                 <Card.Section footer>
                   <Text text90 color={Colors.dark50}>{post.likes} Likes</Text>
-                  <Card.Section footer>
+                  <Card.Item>
                     <Button containerStyle={{marginRight: 10}} text90 link iconSource={featureIcon} label="Feature"/>
                     <Button text90 link iconSource={featureIcon} label="Share"/>
-                  </Card.Section>
+                  </Card.Item>
                 </Card.Section>
               </Card.Section>
             </Card>

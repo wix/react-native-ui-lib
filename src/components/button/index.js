@@ -162,7 +162,7 @@ export default class Button extends BaseComponent {
   }
 }
 
-function createStyles({backgroundColor, borderRadius, outline, outlineColor, link}) {
+function createStyles({backgroundColor, borderRadius, outline, outlineColor, link, color}) {
   const customBorderRadius = _.isString(borderRadius) ? BorderRadiuses[borderRadius] : borderRadius;
   const showBorder = outline && !link;
   const haveBackground = !outline && !link;
@@ -219,6 +219,8 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor, lin
     icon: {
       width: 18,
       height: 18,
+      resizeMode: 'contain',
+      tintColor: color,
     },
     iconRightSpacing: {
       marginRight: 7,

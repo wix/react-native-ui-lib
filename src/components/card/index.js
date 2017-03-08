@@ -4,6 +4,7 @@ import {Colors, Shadows, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 
 import CardSection from './CardSection';
+import CardItem from './CardItem';
 import CardImage from './CardImage';
 
 class Card extends BaseComponent {
@@ -54,6 +55,7 @@ function createStyles() {
 }
 
 Card.Section = CardSection;
+Card.Item = CardItem;
 Card.Image = CardImage;
 
 export default Card;
