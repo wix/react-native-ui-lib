@@ -88,7 +88,7 @@ const customStyle = {
     justifyContent: 'center',
   },
   image: {
-    flex: null,
+    flex: 0,
   },
   imageDisabled: {
     tintColor: Colors.dark60,

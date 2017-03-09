@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import _ from 'lodash';
 import {BaseComponent} from '../commons';
 import {ThemeManager} from '../style';
@@ -45,18 +46,21 @@ export default class BaseListItem extends BaseComponent {
   render() {
     const {onPress} = this.props;
     const Container = onPress ? TouchableOpacity : View;
+    const animationProps = this.extractAnimationProps();
 
     return (
       <Container style={this.styles.container} onPress={onPress}>
-        <View style={this.styles.leftContainer}>
-          {this.renderLeft()}
-        </View>
-        <View style={this.styles.middleContainer}>
-          {this.renderMiddle()}
-        </View>
-        <View style={this.styles.rightContainer}>
-          {this.renderRight()}
-        </View>
+        <Animatable.View style={this.styles.innerContainer} {...animationProps}>
+          <View style={this.styles.leftContainer}>
+            {this.renderLeft()}
+          </View>
+          <View style={this.styles.middleContainer}>
+            {this.renderMiddle()}
+          </View>
+          <View style={this.styles.rightContainer}>
+            {this.renderRight()}
+          </View>
+        </Animatable.View>
       </Container>
     );
   }
@@ -65,6 +69,8 @@ export default class BaseListItem extends BaseComponent {
 function createStyles(overrides) {
   return StyleSheet.create(_.merge({
     container: {
+    },
+    innerContainer: {
       flexDirection: 'row',
       flex: 1,
     },

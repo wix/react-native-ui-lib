@@ -31,6 +31,10 @@ export default class BasicListScreen extends Component {
       rightSubtitle: row.inventory.status,
       rightSubtitleStyle: row.inventory.quantity === 0 ? {color: Colors.red30} : undefined,
       onPress: () => Alert.alert(`pressed on row id: ${id}`),
+      animation: 'basicListEntrance',
+      duration: 600,
+      delay: 10 + (Number(id) % 10) * 80,
+      easing: 'ease-out-quint',
     };
 
     return (
