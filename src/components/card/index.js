@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {Colors, Shadows, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 
@@ -12,6 +12,10 @@ class Card extends BaseComponent {
   static displayName = 'Card';
 
   static propTypes = {
+    /**
+     * action for when pressing the card
+     */
+    onPress: PropTypes.func,
     /**
      * Additional styles for the top container
      */
@@ -27,14 +31,15 @@ class Card extends BaseComponent {
   }
 
   render() {
-    const {testId} = this.props;
+    const {onPress, testId} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
+    const Container = onPress ? TouchableOpacity : View;
     return (
-      <View style={[this.styles.container, containerStyle]} testId={testId}>
+      <Container style={[this.styles.container, containerStyle]} onPress={onPress} testId={testId}>
         <View style={this.styles.innerContainer}>
           {this.props.children}
         </View>
-      </View>
+      </Container>
     );
   }
 }

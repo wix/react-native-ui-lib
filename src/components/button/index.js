@@ -218,7 +218,7 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor, lin
     },
     icon: {
       width: 18,
-      height: 18,
+      // height: 18,
       resizeMode: 'contain',
       tintColor: color,
     },

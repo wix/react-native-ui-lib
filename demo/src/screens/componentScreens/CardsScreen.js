@@ -5,6 +5,7 @@ import {Assets, Constants, Card, Button, Colors, Typography, Text} from 'react-n
 import posts from '../../data/posts';
 
 const featureIcon = require('../../assets/icons/star.png');
+const shareIcon = require('../../assets/icons/share.png');
 
 export default class ButtonsScreen extends Component {
 
@@ -14,7 +15,7 @@ export default class ButtonsScreen extends Component {
         {_.map(posts, (post, i) => {
           const statusColor = post.status === 'Published' ? Colors.green30 : Colors.orange30;
           return (
-            <Card key={i} containerStyle={{marginBottom: 15}}>
+            <Card key={i} containerStyle={{marginBottom: 15}} onPress={() => console.log('press on a card')}>
               <Card.Image imageSource={post.coverImage}/>
               <Card.Section body>
                 <Card.Section>
@@ -33,7 +34,7 @@ export default class ButtonsScreen extends Component {
                   <Text text90 color={Colors.dark50}>{post.likes} Likes</Text>
                   <Card.Item>
                     <Button containerStyle={{marginRight: 10}} text90 link iconSource={featureIcon} label="Feature"/>
-                    <Button text90 link iconSource={featureIcon} label="Share"/>
+                    <Button text90 link iconSource={shareIcon} label="Share"/>
                   </Card.Item>
                 </Card.Section>
               </Card.Section>
