@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import _ from 'lodash';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 
