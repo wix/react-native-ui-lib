@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {ListView, Alert} from 'react-native';
-import {BasicList, Avatar, Badge, AvatarHelper, Colors} from 'react-native-ui-lib';//eslint-disable-line
-import products from '../../data/products';
+import {ListView, Image, StyleSheet, Alert} from 'react-native';
+import {ListItem, Avatar, Text, BasicList, BorderRadiuses, Badge, AvatarHelper, Colors, ThemeManager} from 'react-native-ui-lib';//eslint-disable-line
+import orders from '../../data/orders';
 
 export default class BasicListScreen extends Component {
 
@@ -12,7 +12,7 @@ export default class BasicListScreen extends Component {
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
     });
     this.state = {
-      dataSource: ds.cloneWithRows(products),
+      dataSource: ds.cloneWithRows(orders),
       onEdit: false,
       updating: false,
     };
@@ -23,23 +23,31 @@ export default class BasicListScreen extends Component {
   }
 
   renderRow(row, id) {
-    const props = {
-      imageSource: row.mediaUrl ? {uri: row.mediaUrl} : null,
-      leftTitle: row.name,
-      leftSubtitle: `${row.inventory.quantity} item`,
-      rightTitle: row.formattedPrice,
-      rightSubtitle: row.inventory.status,
-      rightSubtitleStyle: row.inventory.quantity === 0 ? {color: Colors.red30} : undefined,
-      onPress: () => Alert.alert(`pressed on row id: ${id}`),
-      animation: 'basicListEntrance',
-      duration: 600,
-      delay: 10 + (Number(id) % 10) * 80,
-      easing: 'ease-out-quint',
-    };
-
+    const statusColor = row.inventory.status === 'Paid' ? Colors.green30 : Colors.red30;
     return (
-      <BasicList.Item {...props}/>
+      <ListItem
+        height={77.5}
+        onPress={() => Alert.alert(`pressed on contact # ${id}`)}
+      >
+        <ListItem.Part left>
+          <Image source={{uri: row.mediaUrl}} style={styles.image}/>
+        </ListItem.Part>
+        <ListItem.Part middle column containerStyle={[styles.border, {paddingRight: 17}]}>
+          <ListItem.Part containerStyle={{marginBottom: 3}}>
+            <Text style={{flex: 1, marginRight: 10}} text70 color={Colors.dark10} numberOfLines={1}>{row.name}</Text>
+            <Text style={{marginTop: 2}} text70 color={Colors.dark50}>{row.formattedPrice}</Text>
+          </ListItem.Part>
+          <ListItem.Part>
+            <Text style={{flex: 1, marginRight: 10}} text90 color={Colors.dark40} numberOfLines={1}>{`${row.inventory.quantity} item`}</Text>
+            <Text text90 color={statusColor} numberOfLines={1}>{row.inventory.status}</Text>
+          </ListItem.Part>
+        </ListItem.Part>
+      </ListItem>
     );
+
+    // return (
+    //   <BasicList.Item {...props}/>
+    // );
   }
 
   render() {
@@ -51,3 +59,16 @@ export default class BasicListScreen extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  image: {
+    width: 54,
+    height: 54,
+    borderRadius: BorderRadiuses.br20,
+    marginHorizontal: 14,
+  },
+  border: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: ThemeManager.dividerColor,
+  },
+});
