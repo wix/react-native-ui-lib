@@ -4,6 +4,7 @@ import AnimatedImage from './components/animatedImage';
 import Badge from './components/badge';
 import Button from './components/button';
 import Card from './components/card';
+import ListItem from './components/listItem';
 import * as ConversationList from './lists/conversationList';
 import GridList from './lists/gridList';
 import * as BasicList from './lists/basicList';
@@ -30,6 +31,7 @@ module.exports = {
   GridList,
   ...Helpers,
   StateScreen,
+  ListItem,
   LoaderScreen,
   PageControl,
   Picker,

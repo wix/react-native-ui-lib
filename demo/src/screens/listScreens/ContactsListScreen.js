@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {StyleSheet, ListView, Alert} from 'react-native';
-import {Avatar, AvatarHelper, Badge, Colors, ListItem, Text, ConversationList, ThemeManager} from 'react-native-ui-lib';//eslint-disable-line
+import {ListView, Alert, StyleSheet} from 'react-native';
+import {ListItem, Text, Avatar, Badge, ThemeManager, AvatarHelper} from 'react-native-ui-lib';//eslint-disable-line
 import conversations from '../../data/conversations';
 
-export default class ConversationListScreen extends Component {
+export default class ContactsListScreen extends Component {
 
   constructor(props) {
     super(props);
@@ -26,35 +26,25 @@ export default class ConversationListScreen extends Component {
     const initials = AvatarHelper.getInitials(row.name);
     const animationProps = {
       animation: 'basicListEntrance',
-      duration: 400,
+      duration: 600,
       delay: 10 + ((Number(id) % 12) * 40),
-      easing: 'ease-out-quart',
+      easing: 'ease-out-quint',
     };
-
     return (
       <ListItem
-        height={75.8}
         onPress={() => Alert.alert(`pressed on contact # ${id}`)}
         {...animationProps}
       >
         <ListItem.Part left>
           <Avatar
-            size={54}
             imageSource={row.thumbnail ? {uri: row.thumbnail} : null}
             label={initials}
             isOnline={Number(id) % 3 === 0}
             containerStyle={{marginHorizontal: 18}}
           />
         </ListItem.Part>
-        <ListItem.Part middle column containerStyle={[styles.border, {paddingRight: 17}]}>
-          <ListItem.Part containerStyle={{marginBottom: 3}}>
-            <Text style={{flex: 1, marginRight: 10}} text70 color={Colors.dark10} numberOfLines={1}>{row.name}</Text>
-            <Text style={{marginTop: 2}} text90 color={Colors.dark50}>{row.timestamp}</Text>
-          </ListItem.Part>
-          <ListItem.Part>
-            <Text style={{flex: 1, marginRight: 10}} text80 color={Colors.dark40} numberOfLines={1}>{row.text}</Text>
-            {row.count > 0 && <Badge label={row.count} animation="fadeIn" duration={400}/>}
-          </ListItem.Part>
+        <ListItem.Part middle containerStyle={styles.border}>
+          <Text text70>{row.name}</Text>
         </ListItem.Part>
       </ListItem>
     );
