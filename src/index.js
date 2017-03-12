@@ -5,9 +5,7 @@ import Badge from './components/badge';
 import Button from './components/button';
 import Card from './components/card';
 import ListItem from './components/listItem';
-import * as ConversationList from './lists/conversationList';
 import GridList from './lists/gridList';
-import * as BasicList from './lists/basicList';
 import ConnectionStatusBar from './components/connection-status-bar';
 import StateScreen from './screens/stateScreen';
 import LoaderScreen from './screens/loaderScreen';
@@ -23,11 +21,9 @@ module.exports = {
   Avatar,
   AnimatedImage,
   Badge,
-  BasicList,
   Button,
   Card,
   ConnectionStatusBar,
-  ConversationList,
   GridList,
   ...Helpers,
   StateScreen,
