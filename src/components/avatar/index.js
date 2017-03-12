@@ -76,7 +76,7 @@ export default class Avatar extends BaseComponent {
 
 function createStyles({size, backgroundColor, labelColor}) {
   const borderRadius = size / 2;
-  const fontSizeToImageSizeRatio = 0.4;
+  const fontSizeToImageSizeRatio = 0.32;
   const styles = StyleSheet.create({
     container: {
       alignItems: 'center',
