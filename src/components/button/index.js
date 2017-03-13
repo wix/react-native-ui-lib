@@ -145,14 +145,14 @@ export default class Button extends BaseComponent {
       <TouchableOpacity
         style={[
           this.styles.container,
-          sizeStyle, shadowStyle,
+          shadowStyle,
           disabled && this.styles.disabled,
           containerStyle]}
         activeOpacity={0.6}
         onPress={onPress}
         disabled={disabled}
       >
-        <View style={[this.styles.innerContainer, link && this.styles.innerContainerLink]}>
+        <View style={[this.styles.innerContainer, sizeStyle, link && this.styles.innerContainerLink]}>
           {this.props.children}
           {this.renderIcon()}
           {this.renderLabel()}
