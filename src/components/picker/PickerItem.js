@@ -42,7 +42,7 @@ function createStyles() {
       alignItems: 'center',
       height: 56.5,
       paddingHorizontal: 23,
-      borderColor: `${Colors.dark10}1A`,
+      borderColor: Colors.alpha(Colors.dark10, 0.1),
       borderBottomWidth: 1,
     },
     labelText: {

@@ -74,6 +74,10 @@ align-text@^0.1.1, align-text@^0.1.3:
     longest "^1.0.1"
     repeat-string "^1.5.2"
 
+all-your-base@^0.3.0:
+  version "0.3.0"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/all-your-base/-/all-your-base-0.3.0.tgz#eb56a9c42da5d1735eada745e92d0568b6850d34"
+
 amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"

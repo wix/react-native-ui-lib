@@ -1,3 +1,5 @@
+import BaseConvert from 'all-your-base';
+
 const Colors = {
   // DARKS
   dark10: '#20303C',
@@ -83,6 +85,16 @@ const Colors = {
   // WHITES
   white: '#ffffff',
   black: '#000000',
+};
+
+Colors.alpha = (color, opacity = 1) => {
+  if (isNaN(opacity) || opacity > 1 || opacity < 0) {
+    return color;
+  }
+  let alpha = Math.round(opacity * 255);
+  alpha = BaseConvert.decToHex(alpha);
+  alpha = String(`00${alpha}`).slice(-2);
+  return `${color}${alpha}`;
 };
 
 export default Colors;
