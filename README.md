@@ -8,7 +8,7 @@ UI Components Library for React Native
 - Button
 - Card
 - Connection Status Bar
-- Conversation List
+- List Item
 - Grid List
 - State Screen
 - Loader Screen
@@ -17,6 +17,27 @@ UI Components Library for React Native
 - Stepper
 - Text
 
+## Helpers
+
+### AvatarHelpers
+usage: </br>
+
+
+#### getInitials
+usage: </br>
+```
+import {AvatarHelper} from 'react-native-ui-lib';
+AvatarHelper.getInitials('Lilly Wheeler'); // LW
+AvatarHelper.getInitials('Russell Lloyd'); // RL
+AvatarHelper.getInitials('Andrew'); // A
+```
+
+### Colors
+#### alpha (for hex colors)
+usage: </br>
+```
+Colors.alpha('#ff2442', 0.05); //ff24420D;
+```
 
 ### Dependecies 
 - react-native-animatable
