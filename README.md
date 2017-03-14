@@ -36,7 +36,7 @@ AvatarHelper.getInitials('Andrew'); // A
 #### alpha (for hex colors)
 usage: </br>
 ```
-Colors.alpha('#ff2442', 0.05); //ff24420D;
+Colors.alpha('#ff2442', 0.05); //#ff24420D;
 ```
 
 ### Dependecies 
