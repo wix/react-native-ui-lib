@@ -74,7 +74,7 @@ export default class Avatar extends BaseComponent {
   }
 }
 
-function createStyles({size, backgroundColor, labelColor}) {
+function createStyles({size, backgroundColor, labelColor, imageSource}) {
   const borderRadius = size / 2;
   const fontSizeToImageSizeRatio = 0.32;
   const styles = StyleSheet.create({
@@ -108,22 +108,19 @@ function createStyles({size, backgroundColor, labelColor}) {
       borderRadius,
     },
     onlineBadge: {
-      height: 13,
-      width: 13,
-      borderRadius: 6.5,
-      backgroundColor: Colors.white,
+      height: 13.5,
+      width: 13.5,
+      padding: 1.5,
+      borderRadius: 999,
+      backgroundColor: imageSource ? Colors.white : 'transparent',
       position: 'absolute',
-      right: 0,
-      top: 0,
+      right: imageSource ? -1.5 : 0,
+      top: -1,
     },
     onlineBadgeInner: {
-      height: 10,
-      width: 10,
-      borderRadius: 5,
+      flex: 1,
+      borderRadius: 999,
       backgroundColor: Colors.green30,
-      position: 'absolute',
-      right: 1.5,
-      top: 1.5,
     },
     fixAbsolutePosition: {
       position: undefined,
