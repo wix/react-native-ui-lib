@@ -3,7 +3,7 @@ import {Text, StyleSheet} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Colors from '../../style/colors';
 import {BaseComponent} from '../../commons';
-import {Typography, ThemeManager} from '../../style';
+import {Typography, ThemeManager, BorderRadiuses} from '../../style';
 
 /**
  * Round colored badge, typically used to show a number
@@ -30,7 +30,7 @@ export default class Badge extends BaseComponent {
   };
 
   generateStyles() {
-    this.styles = createStyles();
+    this.styles = createStyles(this.props);
   }
 
   render() {
@@ -56,12 +56,13 @@ export default class Badge extends BaseComponent {
   }
 }
 
-function createStyles() {
+function createStyles({label}) {
+  const isOneLetter = label.length < 2;
   return StyleSheet.create({
     badge: {
-      width: 21,
+      width: isOneLetter ? 21 : 30,
       height: 21,
-      borderRadius: 12,
+      borderRadius: BorderRadiuses.br100,
       backgroundColor: ThemeManager.primaryColor,
       alignItems: 'center',
       justifyContent: 'center',

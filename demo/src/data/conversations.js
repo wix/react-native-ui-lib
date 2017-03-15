@@ -6,6 +6,13 @@ const conversations = [
     "thumbnail": "https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg"
   },
   {
+    "name": "Martin Jabin",
+    "text": "I have no name and initials",
+    "timestamp": "1 Week",
+    "count": "382",
+    "isNew": false,
+  },
+  {
     "name": "Vadim Molokovich",
     "text": "Hi! I wanna order new Ipho",
     "timestamp": "2 hours",
@@ -36,13 +43,6 @@ const conversations = [
     "count": "16",
     "thumbnail": "https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg",
     "isNew": true,
-  },
-  {
-    "name": "Martin Jabin",
-    "text": "I have no name and initials",
-    "timestamp": "1 Week",
-    "count": "38",
-    "isNew": false,
   },
   {
     "name": "Brad Taylor",

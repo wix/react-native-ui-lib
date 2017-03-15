@@ -42,7 +42,7 @@ export default class ConversationListScreen extends Component {
             size={54}
             imageSource={row.thumbnail ? {uri: row.thumbnail} : null}
             label={initials}
-            isOnline={Number(id) % 3 === 0}
+            isOnline={Number(id) < 3}
             containerStyle={{marginHorizontal: 18}}
           />
         </ListItem.Part>
