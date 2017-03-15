@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, TouchableHighlight, StyleSheet} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -33,18 +33,36 @@ class ListItem extends BaseComponent {
     height: 63,
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      pressed: false,
+    };
+  }
+
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
   render() {
     const {onPress, testId} = this.props;
+    const {pressed} = this.state;
     const containerStyle = this.extractContainerStyle(this.props);
     const animationProps = this.extractAnimationProps();
-    const Container = onPress ? TouchableOpacity : View;
+    const Container = onPress ? TouchableHighlight : View;
+
     return (
-      <Container style={[this.styles.container, containerStyle]} onPress={onPress} testId={testId}>
-        <Animatable.View {...animationProps} style={this.styles.innerContainer}>
+      <Container
+        activeOpacity={1}
+        style={[this.styles.container, containerStyle]}
+        onPress={onPress} testId={testId}
+        onHideUnderlay={() => this.setState({pressed: false})}
+        onShowUnderlay={() => this.setState({pressed: true})}
+      >
+        <Animatable.View
+          {...animationProps}
+          style={[this.styles.innerContainer, pressed && this.styles.pressed]}
+        >
           {this.props.children}
         </Animatable.View>
       </Container>
@@ -55,6 +73,9 @@ class ListItem extends BaseComponent {
 function createStyles({height}) {
   return StyleSheet.create({
     container: {
+    },
+    pressed: {
+      backgroundColor: Colors.dark70,
     },
     innerContainer: {
       flexDirection: 'row',

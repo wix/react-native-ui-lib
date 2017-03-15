@@ -87,14 +87,54 @@ const Colors = {
   black: '#000000',
 };
 
-Colors.alpha = (color, opacity = 1) => {
-  if (isNaN(opacity) || opacity > 1 || opacity < 0) {
-    return color;
+/**
+ * Add alpha to hex or rgb color
+ * arguments:
+ * p1 - hex color / R part of RGB
+ * p2 - opacity / G part of RGB
+ * p3 - B part of RGB
+ * p4 - opacity
+ */
+Colors.rgba = function (p1, p2, p3, p4) {
+  let hex;
+  let opacity;
+  let red;
+  let green;
+  let blue;
+
+  if (arguments.length === 2) {
+    hex = p1;
+    opacity = p2;
+
+    hex = validateHex(hex);
+    red = parseInt(hex.substring(0, 2), 16);
+    green = parseInt(hex.substring(2, 4), 16);
+    blue = parseInt(hex.substring(4, 6), 16);
+  } else if (arguments.length === 4) {
+    red = validateRGB(p1);
+    green = validateRGB(p2);
+    blue = validateRGB(p3);
+    opacity = p4;
+  } else {
+    throw new Error('rgba can work with either 2 or 4 arguments');
   }
-  let alpha = Math.round(opacity * 255);
-  alpha = BaseConvert.decToHex(alpha);
-  alpha = String(`00${alpha}`).slice(-2);
-  return `${color}${alpha}`;
+
+  return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
 };
+
+function validateRGB(value) {
+  if (isNaN(value) || value > 255 || value < 0) {
+    throw new Error(`${value} is invalid rgb code, please use number between 0-255`);
+  }
+
+  return value;
+}
+
+function validateHex(value) {
+  if (!/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value)) {
+    throw new Error(`${value} is invalid hex color`);
+  }
+  return value.replace('#', '');
+}
 
 export default Colors;

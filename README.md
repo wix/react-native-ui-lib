@@ -20,23 +20,23 @@ UI Components Library for React Native
 ## Helpers
 
 ### AvatarHelpers
-usage: </br>
-
-
 #### getInitials
 usage: </br>
 ```
 import {AvatarHelper} from 'react-native-ui-lib';
+
 AvatarHelper.getInitials('Lilly Wheeler'); // LW
 AvatarHelper.getInitials('Russell Lloyd'); // RL
 AvatarHelper.getInitials('Andrew'); // A
 ```
 
 ### Colors
-#### alpha (for hex colors)
+#### rgba (for hex colors)
 usage: </br>
 ```
-Colors.alpha('#ff2442', 0.05); //#ff24420D;
+import {Colors} from 'react-native-ui-lib';
+
+Colors.rgba('#ff2442', 0.05); // 'rgb(255, 36, 66, 0.05)'
 ```
 
 ### Dependecies 
