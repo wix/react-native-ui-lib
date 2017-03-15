@@ -22,6 +22,7 @@ describe('services/AvatarService', () => {
 
   it('should getInitials', () => {
     expect(uut.getInitials('Austin Guerrero')).toBe('AG');
+    expect(uut.getInitials('Austin   Guerrero')).toBe('AG');
     expect(uut.getInitials('theresa simpson')).toBe('TS');
     expect(uut.getInitials('Sarah Michelle Galler')).toBe('SM');
     expect(uut.getInitials('Keith')).toBe('K');
