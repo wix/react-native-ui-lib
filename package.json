@@ -16,7 +16,6 @@
     "log": "react-native log-ios | grep 'ethan -'"
   },
   "dependencies": {
-    "all-your-base": "^0.3.0",
     "lodash": "^4.0.0",
     "react-native-animatable": "^1.1.0",
     "react-native-blur": "~1.0.0"

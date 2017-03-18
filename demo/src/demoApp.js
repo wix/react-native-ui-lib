@@ -1,7 +1,9 @@
 import {Navigation} from 'react-native-navigation';
-import {Colors, Button, Badge, ThemeManager} from 'react-native-ui-lib'; //eslint-disable-line
+import {Typography, Colors, Button, Badge, ThemeManager} from 'react-native-ui-lib'; //eslint-disable-line
 import * as Animatable from 'react-native-animatable';
 import './screens';
+
+// Typography.loadTypographies();
 
 // ThemeManager.setTheme({
 //   primaryColor: Colors.purple30,

@@ -48,11 +48,11 @@ export default class BasicListScreen extends Component {
         </ListItem.Part>
         <ListItem.Part middle column containerStyle={[styles.border, {paddingRight: 17}]}>
           <ListItem.Part containerStyle={{marginBottom: 3}}>
-            <Text style={{flex: 1, marginRight: 10}} text70 color={Colors.dark10} numberOfLines={1}>{row.name}</Text>
-            <Text style={{marginTop: 2}} text70 color={Colors.dark10}>{row.formattedPrice}</Text>
+            <Text text70 style={{flex: 1, marginRight: 10}} numberOfLines={1}>{row.name}</Text>
+            <Text dark10 text70 style={{marginTop: 2}}>{row.formattedPrice}</Text>
           </ListItem.Part>
           <ListItem.Part>
-            <Text style={{flex: 1, marginRight: 10}} text90 color={Colors.dark40} numberOfLines={1}>{`${row.inventory.quantity} item`}</Text>
+            <Text style={{flex: 1, marginRight: 10}} text90 dark40 numberOfLines={1}>{`${row.inventory.quantity} item`}</Text>
             <Text text90 color={statusColor} numberOfLines={1}>{row.inventory.status}</Text>
           </ListItem.Part>
         </ListItem.Part>

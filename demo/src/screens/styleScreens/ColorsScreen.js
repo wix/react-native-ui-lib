@@ -12,9 +12,11 @@ export default class ColorsScreen extends Component {
       <ScrollView >
         <View style={styles.pallete}>
           {_.map(Colors, (value, key) => {
-            return (
-              <View key={key} style={[styles.palletEeColor, {backgroundColor: value}]} />
-            );
+            if (!_.isFunction(value)) {
+              return (
+                <View key={key} style={[styles.palletEeColor, {backgroundColor: value}]} />
+              );
+            }
           })}
         </View>
 

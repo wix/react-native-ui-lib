@@ -1,5 +1,3 @@
-import BaseConvert from 'all-your-base';
-
 const Colors = {
   // DARKS
   dark10: '#20303C',

@@ -1,11 +1,13 @@
 import {Component, PropTypes} from 'react';
 import {StyleSheet} from 'react-native';
 import _ from 'lodash';
-import {Typography} from '../style';
+import {Typography, Colors} from '../style';
 
 export default class BaseComponent extends Component {
 
   static propTypes = {
+    ..._.mapValues(Typography, () => PropTypes.bool),
+    ..._.mapValues(Colors, () => PropTypes.bool),
     useNativeDriver: PropTypes.bool, // eslint-disable-line
   }
 
@@ -50,6 +52,26 @@ export default class BaseComponent extends Component {
     }
 
     return containerStyle;
+  }
+
+  extractTypographyValue() {
+    let typography = {};
+    _.forEach(Typography, (value, key) => {
+      if (this.props[key] === true) {
+        typography = value;
+      }
+    });
+    return typography;
+  }
+
+  extractColorValue() {
+    let color;
+    _.forEach(Colors, (value, key) => {
+      if (this.props[key] === true) {
+        color = value;
+      }
+    });
+    return color;
   }
 
   extractTextProps(props) {
