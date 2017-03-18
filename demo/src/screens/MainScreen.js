@@ -33,7 +33,8 @@ export default class UiLibExplorerMenu extends Component {
     navigator.push({
       screen: row.screen,
       title: row.title,
-      overrideBackPress: row.overrideBackPress,
+      // overrideBackPress: row.overrideBackPress,
+      backButtonTitle: '',
     });
   }
 
