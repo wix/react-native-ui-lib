@@ -11,6 +11,7 @@ import StateScreen from './screens/stateScreen';
 import LoaderScreen from './screens/loaderScreen';
 import PageControl from './components/page-control';
 import Picker from './components/picker';
+import ScannerAnimation from './components/scanner';
 import Stepper from './components/stepper';
 import Style from './style';
 import Text from './components/text';
@@ -31,6 +32,7 @@ module.exports = {
   LoaderScreen,
   PageControl,
   Picker,
+  ScannerAnimation,
   Stepper,
   ...Style,
   Text,
