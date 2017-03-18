@@ -42,13 +42,13 @@ export default class BasicListScreen extends Component {
             animation="fadeInLeft"
             easing="ease-out-expo"
             duration={600}
-            delay={_.sample([20, 80, 120, 170])}
+            delay={_.sample([20, 120, 220])}
             useNativeDriver
           />
         </ListItem.Part>
         <ListItem.Part middle column containerStyle={[styles.border, {paddingRight: 17}]}>
           <ListItem.Part containerStyle={{marginBottom: 3}}>
-            <Text text70 style={{flex: 1, marginRight: 10}} numberOfLines={1}>{row.name}</Text>
+            <Text dark10 text70 style={{flex: 1, marginRight: 10}} numberOfLines={1}>{row.name}</Text>
             <Text dark10 text70 style={{marginTop: 2}}>{row.formattedPrice}</Text>
           </ListItem.Part>
           <ListItem.Part>

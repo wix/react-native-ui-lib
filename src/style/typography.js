@@ -12,6 +12,12 @@ class Typography {
   text90 = {fontSize: 13, fontWeight: '300', lineHeight: Math.floor(13 * 1.2)};
   text100 = {fontSize: 11, fontWeight: '300', lineHeight: Math.floor(11 * 1.2)};
 
+  /**
+   * Load custom set of typographies
+   * arguments:
+   * typographies - map of keys and typography values
+   * e.g {text15: {fontSize: 58, fontWeight: '100', lineHeight: Math.floor(58 * 1.4)}}
+   */
   loadTypographies(typographies) {
     _.forEach(typographies, (value, key) => {
       this[key] = value;
