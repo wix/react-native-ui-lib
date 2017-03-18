@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {ListView, Image, StyleSheet, Alert} from 'react-native';
 import {ListItem, Avatar, Text, BasicList, BorderRadiuses, Badge, AvatarHelper, Colors, ThemeManager} from 'react-native-ui-lib';//eslint-disable-line
+import _ from 'lodash';
+import * as Animatable from 'react-native-animatable';
 import orders from '../../data/orders';
 
 export default class BasicListScreen extends Component {
@@ -28,9 +30,21 @@ export default class BasicListScreen extends Component {
       <ListItem
         height={77.5}
         onPress={() => Alert.alert(`pressed on contact # ${id}`)}
+        animation="fadeIn"
+        easing="ease-out-expo"
+        duration={1000}
+        useNativeDriver
       >
         <ListItem.Part left>
-          <Image source={{uri: row.mediaUrl}} style={styles.image}/>
+          <Animatable.Image
+            source={{uri: row.mediaUrl}}
+            style={styles.image}
+            animation="fadeInLeft"
+            easing="ease-out-expo"
+            duration={600}
+            delay={_.sample([20, 80, 120, 170])}
+            useNativeDriver
+          />
         </ListItem.Part>
         <ListItem.Part middle column containerStyle={[styles.border, {paddingRight: 17}]}>
           <ListItem.Part containerStyle={{marginBottom: 3}}>
@@ -44,10 +58,6 @@ export default class BasicListScreen extends Component {
         </ListItem.Part>
       </ListItem>
     );
-
-    // return (
-    //   <BasicList.Item {...props}/>
-    // );
   }
 
   render() {
