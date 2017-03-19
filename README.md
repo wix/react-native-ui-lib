@@ -31,12 +31,13 @@ AvatarHelper.getInitials('Andrew'); // A
 ```
 
 ### Colors
-#### rgba (for hex colors)
+#### rgba
 usage: </br>
 ```
 import {Colors} from 'react-native-ui-lib';
 
 Colors.rgba('#ff2442', 0.05); // 'rgb(255, 36, 66, 0.05)'
+Colors.rgba(44, 224, 112, 0.2); // 'rgb(44, 224, 112, 0.2)'
 ```
 
 ### Dependecies 
