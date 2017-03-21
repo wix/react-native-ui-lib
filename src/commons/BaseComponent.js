@@ -75,6 +75,6 @@ export default class BaseComponent extends Component {
   }
 
   extractTextProps(props) {
-    return _.pick(props, [..._.keys(Typography), 'color']);
+    return _.pick(props, [..._.keys(Typography), ..._.keys(Colors), 'color']);
   }
 }
