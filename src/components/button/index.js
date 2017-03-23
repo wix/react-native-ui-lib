@@ -94,24 +94,6 @@ export default class Button extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
-  getSizeStyle() {
-    const {size} = this.props;
-    if (size === Button.sizes.small) {
-      return this.styles.small;
-    } else if (size === Button.sizes.medium) {
-      return this.styles.medium;
-    }
-    return null;
-  }
-
-  getTextStyle() {
-    const {size} = this.props;
-    if (size !== Button.sizes.large) {
-      return this.styles.textSmall;
-    }
-    return null;
-  }
-
   renderIcon() {
     const {iconSource, label} = this.props;
     if (iconSource) {
@@ -126,18 +108,19 @@ export default class Button extends BaseComponent {
 
   renderLabel() {
     const {label, labelStyle, testId} = this.props;
-    const textStyle = this.getTextStyle();
     const textProps = this.extractTextProps(this.props);
-    return (
-      <Text {...textProps} style={[this.styles.text, textStyle, labelStyle]} numberOfLines={1} testID={testId}>
-        {Constants.isAndroid ? _.toUpper(label) : label}
-      </Text>
-    );
+    if (label) {
+      return (
+        <Text {...textProps} style={[this.styles.text, labelStyle]} numberOfLines={1} testID={testId}>
+          {Constants.isAndroid ? _.toUpper(label) : label}
+        </Text>
+      );
+    }
+    return null;
   }
 
   render() {
     const {onPress, disabled, link, enableShadow} = this.props;
-    const sizeStyle = this.getSizeStyle();
     const containerStyle = this.extractContainerStyle(this.props);
     const shadowStyle = enableShadow ? this.styles.shadowStyle : {};
 
@@ -153,7 +136,6 @@ export default class Button extends BaseComponent {
       >
         <View style={[
           this.styles.innerContainer,
-          sizeStyle,
           disabled && this.styles.disabled,
           link && this.styles.innerContainerLink]}
         >
@@ -166,7 +148,19 @@ export default class Button extends BaseComponent {
   }
 }
 
-function createStyles({backgroundColor, borderRadius, outline, outlineColor, link, color}) {
+function createStyles({backgroundColor, borderRadius, outline, outlineColor, link, color, size}) {
+  const textStyleBySize = {
+    large: {paddingHorizontal: 36},
+    medium: {paddingHorizontal: 24},
+    small: {paddingHorizontal: 15},
+  };
+
+  const containerStyleBySize = {
+    large: {paddingVertical: 16, minWidth: 158},
+    medium: {paddingVertical: 11, minWidth: 125},
+    small: {paddingVertical: 5, minWidth: 74},
+  };
+
   const customBorderRadius = _.isString(borderRadius) ? BorderRadiuses[borderRadius] : borderRadius;
   const showBorder = outline && !link;
   const haveBackground = !outline && !link;
@@ -182,24 +176,12 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor, lin
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: customBorderRadius,
-      paddingHorizontal: 36,
-      paddingVertical: 16,
-      minWidth: 150,
+      ...containerStyleBySize[size],
     },
     innerContainerLink: {
       minWidth: undefined,
       paddingHorizontal: undefined,
       paddingVertical: undefined,
-    },
-    medium: {
-      paddingHorizontal: 24,
-      paddingVertical: 11,
-      minWidth: 125,
-    },
-    small: {
-      paddingHorizontal: 15,
-      paddingVertical: 5,
-      minWidth: 74,
     },
     shadowStyle: {
       shadowColor: '#3082C8',
@@ -208,11 +190,13 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor, lin
       shadowRadius: 9.5,
     },
     text: {
+      backgroundColor: 'transparent',
       flex: 0,
       flexDirection: 'row',
       color: (outline || link) ? Colors.dark10 : ThemeManager.CTATextColor,
       ...Typography.text70,
       fontWeight: '100',
+      ...textStyleBySize[size],
     },
     textSmall: {
       ...Typography.text80,
@@ -222,7 +206,6 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor, lin
     },
     icon: {
       width: 18,
-      // height: 18,
       resizeMode: 'contain',
       tintColor: color,
     },

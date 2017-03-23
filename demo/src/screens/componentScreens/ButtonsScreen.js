@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet, View, Alert, Text, Image} from 'react-native';
+import {ScrollView, StyleSheet, Alert, Text, Image} from 'react-native';
 import {Assets, Constants, Button, Colors, Typography} from 'react-native-ui-lib';//eslint-disable-line
 const plusIcon = require('../../assets/icons/plus.png');
 
@@ -103,7 +103,7 @@ export default class ButtonsScreen extends Component {
           onPress={() => Alert.alert('Button #3')}
           containerStyle={{marginBottom: ButtonSpace}}
         />
-        <Text style={styles.header}>Custom Content</Text>
+        <Text style={styles.header}>Special Cases</Text>
         <Button
           onPress={() => Alert.alert('Button #3')}
           containerStyle={{marginBottom: ButtonSpace}}
@@ -118,6 +118,8 @@ export default class ButtonsScreen extends Component {
           <Image source={plusIcon}/>
           <Text style={{marginLeft: 10, color: Colors.blue30}}>New Item</Text>
         </Button>
+
+        <Button blue30 label="link button" link/>
       </ScrollView>
     );
   }
