@@ -67,12 +67,13 @@ function createStyles({placeholderTextColor}) {
       borderColor: Colors.dark80,
     },
     input: {
-      marginBottom: 10,
       flex: 1,
+      marginBottom: 10,
+      padding: 0,
     },
     placeholder: {
       position: 'absolute',
-      color: placeholderTextColor
+      color: placeholderTextColor,
     },
   });
 }
