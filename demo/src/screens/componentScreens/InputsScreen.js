@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, View, StyleSheet} from 'react-native';
 import {Assets, Constants, Button, Colors, Text, TextInput, Typography} from 'react-native-ui-lib';//eslint-disable-line
 
 
@@ -28,6 +28,21 @@ export default class InputScreen extends Component {
           placeholder="Huge Text"
           containerStyle={{marginBottom: INPUT_SPACING}}
         />
+
+        <TextInput
+          text70
+          hideUnderline
+          placeholder="No Underline"
+          containerStyle={{marginBottom: INPUT_SPACING}}
+        />
+
+        <TextInput
+          text10
+          hideUnderline
+          centered
+          placeholder="Centered"
+          containerStyle={{marginBottom: INPUT_SPACING}}
+        />
       </ScrollView>
     );
   }
@@ -38,7 +53,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     padding: 25,
-    flex: 1,
   },
   title: {
     ...Typography.text20,
