@@ -6,6 +6,7 @@ import BadgesScreen from './BadgesScreen';
 import CardsScreen from './CardsScreen';
 import ConnectionStatusBarScreen from './ConnectionStatusBarScreen';
 import FormScreen from './FormScreen';
+import InputsScreen from './InputsScreen';
 import PageControlScreen from './PageControlScreen';
 
 Navigation.registerComponent('example.components.AvatarsScreen', () => AvatarsScreen);
@@ -15,4 +16,5 @@ Navigation.registerComponent('example.components.BadgesScreen', () => BadgesScre
 Navigation.registerComponent('example.components.CardsScreen', () => CardsScreen);
 Navigation.registerComponent('example.components.ConnectionStatusBar', () => ConnectionStatusBarScreen);
 Navigation.registerComponent('example.components.FormScreen', () => FormScreen);
+Navigation.registerComponent(InputsScreen.id, () => InputsScreen);
 Navigation.registerComponent('example.components.PageControlScreen', () => PageControlScreen);

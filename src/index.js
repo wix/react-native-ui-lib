@@ -15,6 +15,7 @@ import ScannerAnimation from './components/scanner';
 import Stepper from './components/stepper';
 import Style from './style';
 import Text from './components/text';
+import * as Inputs from './components/inputs';
 import Helpers from './helpers';
 
 module.exports = {
@@ -26,6 +27,7 @@ module.exports = {
   Card,
   ConnectionStatusBar,
   GridList,
+  ...Inputs,
   ...Helpers,
   StateScreen,
   ListItem,
