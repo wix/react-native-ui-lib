@@ -28,6 +28,8 @@ export default class TextInput extends BaseComponent {
 
     this.onChangeText = this.onChangeText.bind(this);
     this.onContentSizeChange = this.onContentSizeChange.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
 
     const typography = this.getTypography();
     this.state = {
@@ -46,9 +48,10 @@ export default class TextInput extends BaseComponent {
   }
 
   renderPlaceholder() {
+    const {focused, value} = this.state;
     const {floatingPlaceholder, centered, placeholder} = this.props;
     const typography = this.getTypography();
-    if (floatingPlaceholder || centered) {
+    if (!focused && !value && (floatingPlaceholder || centered)) {
       return (
         <Text
           style={[
@@ -67,7 +70,7 @@ export default class TextInput extends BaseComponent {
   render() {
     const color = this.props.color || this.extractColorValue();
     const typography = this.getTypography();
-    const {style, containerStyle, placeholder, floatingPlaceholder, centered, ...others} = this.props;
+    const {style, containerStyle, placeholder, floatingPlaceholder, centered, multiline, ...others} = this.props;
     const {inputWidth} = this.state;
     const inputStyle = [
       this.styles.input,
@@ -86,16 +89,34 @@ export default class TextInput extends BaseComponent {
           placeholder={(floatingPlaceholder || centered) ? undefined : placeholder}
           underlineColorAndroid="transparent"
           style={inputStyle}
+          multiline={centered || multiline}
 
-          multiline={centered}
           onChangeText={this.onChangeText}
           onContentSizeChange={this.onContentSizeChange}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
         />
       </View>
     );
   }
 
+  onFocus(event) {
+    _.invoke(this.props, 'onFocus', event);
+    this.setState({
+      focused: true,
+    });
+  }
+
+  onBlur(event) {
+    _.invoke(this.props, 'onBlur', event);
+    this.setState({
+      focused: false,
+    });
+  }
+
   onChangeText(text) {
+    _.invoke(this.props, 'onChangeText', text);
+
     this.setState({
       value: text,
     });
