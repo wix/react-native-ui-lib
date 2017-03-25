@@ -3,6 +3,7 @@ import {View, TextInput as RNTextInput, StyleSheet, Animated} from 'react-native
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
 import {Colors, Typography} from '../../style';
+import {Constants} from '../../helpers';
 
 export default class TextInput extends BaseComponent {
 
@@ -172,7 +173,7 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
       paddingTop: 20,
     },
     input: {
-      flex: centered ? undefined : 1,
+      flex: (centered && Constants.isIOS) ? undefined : 1,
       marginBottom: 10,
       padding: 0,
       textAlign: centered ? 'center' : undefined,
