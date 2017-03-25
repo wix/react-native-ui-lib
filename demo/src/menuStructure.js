@@ -16,6 +16,9 @@ export const navigationData = {
     {title: 'Page Control', tags: 'page', screen: 'example.components.PageControlScreen'},
     {title: 'Form Controls', tags: 'form stepper', screen: 'example.components.FormScreen'},
   ],
+  Form: [
+    {title: 'Inputs', tags: 'text input form', screen: 'example.components.InputsScreen'},
+  ],
   Screens: [
     {title: 'State Screen', tags: 'empty state screen', screen: 'example.screens.EmptyStateScreen'},
     {title: 'Loading Screen', tags: 'loading screen', screen: 'example.screens.LoadingScreen'},
