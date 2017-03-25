@@ -16,6 +16,7 @@ UI Components Library for React Native
 - Picker 
 - Stepper
 - Text
+- TextInput
 
 ## Helpers
 
