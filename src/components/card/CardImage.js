@@ -27,10 +27,10 @@ export default class CardImage extends BaseComponent {
   }
 
   render() {
-    const {imageSource} = this.props;
+    const {imageSource, style} = this.props;
     if (imageSource) {
       return (
-        <View style={this.styles.container}>
+        <View style={[this.styles.container, style]}>
           <Image source={imageSource} style={this.styles.image}/>
         </View>
       );

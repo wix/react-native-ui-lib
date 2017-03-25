@@ -24,9 +24,10 @@ export default class Text extends BaseComponent {
   render() {
     const color = this.props.color || this.extractColorValue();
     const typography = this.extractTypographyValue();
-    const style = [this.props.style, typography, color && {color}];
+    const {style, ...others} = this.props;
+    const textStyle = [this.styles.container, typography, color && {color}, style];
     return (
-      <RNText {...this.props} style={style}>
+      <RNText {...others} style={textStyle}>
         {this.props.children}
       </RNText>
     );
@@ -36,6 +37,7 @@ export default class Text extends BaseComponent {
 function createStyles() {
   return StyleSheet.create({
     container: {
+      backgroundColor: 'transparent',
     },
   });
 }

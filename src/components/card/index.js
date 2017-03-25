@@ -31,12 +31,12 @@ class Card extends BaseComponent {
   }
 
   render() {
-    const {onPress, testId} = this.props;
+    const {onPress, style, testId} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const Container = onPress ? TouchableOpacity : View;
     return (
       <Container style={[this.styles.container, containerStyle]} onPress={onPress} testId={testId}>
-        <View style={this.styles.innerContainer}>
+        <View style={[this.styles.innerContainer, style]}>
           {this.props.children}
         </View>
       </Container>

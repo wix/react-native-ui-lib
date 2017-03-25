@@ -26,8 +26,9 @@ export default class CardItem extends BaseComponent {
   }
 
   render() {
+    const {style} = this.props;
     return (
-      <View style={this.styles.container}>
+      <View style={[this.styles.container, style]}>
         {this.props.children}
       </View>
     );

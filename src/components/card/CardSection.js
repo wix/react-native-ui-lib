@@ -1,12 +1,22 @@
 import React, {PropTypes} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
+import {BlurView} from 'react-native-blur';
+import {Constants} from '../../helpers';
 
 export default class CardSection extends BaseComponent {
 
   static displayName = 'Card Section';
 
   static propTypes = {
+    /**
+     * enable blur view
+     */
+    enableBlur: PropTypes.bool,
+    /**
+     * blur options
+     */
+    blurOptions: PropTypes.object,
     /**
      * style as a body, apply inner padding
      */
@@ -23,10 +33,12 @@ export default class CardSection extends BaseComponent {
   }
 
   render() {
+    const {enableBlur, blurOptions, style} = this.props;
+    const Container = (Constants.isIOS && enableBlur) ? BlurView : View;
     return (
-      <View style={this.styles.container}>
+      <Container {...blurOptions} style={[this.styles.container, style]}>
         {this.props.children}
-      </View>
+      </Container>
     );
   }
 }
