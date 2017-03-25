@@ -1,10 +1,8 @@
 import React, {PropTypes} from 'react';
-import {View, TextInput as RNTextInput, StyleSheet} from 'react-native';
+import {View, TextInput as RNTextInput, StyleSheet, Animated} from 'react-native';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
 import {Colors, Typography} from '../../style';
-import {Constants} from '../../helpers';
-import Text from '../text';
 
 export default class TextInput extends BaseComponent {
 
@@ -28,14 +26,14 @@ export default class TextInput extends BaseComponent {
 
     this.onChangeText = this.onChangeText.bind(this);
     this.onContentSizeChange = this.onContentSizeChange.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
+    this.animatedFloatingPlaceholder = this.animatedFloatingPlaceholder.bind(this);
 
     const typography = this.getTypography();
     this.state = {
       inputWidth: typography.fontSize * 2,
       widthExtendBreaks: [],
       value: '',
+      floatingPlaceholderState: new Animated.Value(0),
     };
   }
 
@@ -47,24 +45,46 @@ export default class TextInput extends BaseComponent {
     return this.extractTypographyValue() || Typography.text70;
   }
 
+  hasText() {
+    const {value} = this.state;
+    return value.length > 0;
+  }
+
   renderPlaceholder() {
-    const {focused, value} = this.state;
+    const {floatingPlaceholderState} = this.state;
     const {floatingPlaceholder, centered, placeholder} = this.props;
     const typography = this.getTypography();
-    if (!focused && !value && (floatingPlaceholder || centered)) {
-      return (
-        <Text
-          style={[
-            this.styles.placeholder,
-            centered && this.styles.placeholderCentered,
-            typography]}
-        >
-          {placeholder}
-        </Text>
-      );
+
+    if (!floatingPlaceholder && !centered) {
+      return null;
     }
 
-    return null;
+    if (centered && this.hasText()) {
+      return null;
+    }
+
+    return (
+      <Animated.Text
+        style={[
+          this.styles.placeholder,
+          typography,
+          centered && this.styles.placeholderCentered,
+          !centered && {
+            top: floatingPlaceholderState.interpolate({
+              inputRange: [0, 1],
+              outputRange: [20, 0],
+            }),
+            fontSize: floatingPlaceholderState.interpolate({
+              inputRange: [0, 1],
+              outputRange: [typography.fontSize, Typography.text80.fontSize],
+            }),
+            lineHeight: this.hasText() ? Typography.text80.lineHeight : typography.lineHeight,
+          },
+        ]}
+      >
+        {placeholder}
+      </Animated.Text>
+    );
   }
 
   render() {
@@ -93,25 +113,20 @@ export default class TextInput extends BaseComponent {
 
           onChangeText={this.onChangeText}
           onContentSizeChange={this.onContentSizeChange}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
         />
+
       </View>
     );
   }
 
-  onFocus(event) {
-    _.invoke(this.props, 'onFocus', event);
-    this.setState({
-      focused: true,
-    });
-  }
-
-  onBlur(event) {
-    _.invoke(this.props, 'onBlur', event);
-    this.setState({
-      focused: false,
-    });
+  animatedFloatingPlaceholder() {
+    Animated.spring(
+      this.state.floatingPlaceholderState,
+      {
+        toValue: this.hasText() ? 1 : 0,
+        duration: 150,
+      },
+    ).start();
   }
 
   onChangeText(text) {
@@ -119,7 +134,7 @@ export default class TextInput extends BaseComponent {
 
     this.setState({
       value: text,
-    });
+    }, this.animatedFloatingPlaceholder);
 
     const {widthExtendBreaks, width} = this.state;
     if (text.length < _.last(widthExtendBreaks)) {
@@ -153,6 +168,7 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
       borderColor: Colors.dark80,
 
       justifyContent: centered ? 'center' : undefined,
+      paddingTop: 20,
     },
     input: {
       flex: centered ? undefined : 1,
