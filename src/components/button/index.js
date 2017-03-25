@@ -134,10 +134,12 @@ export default class Button extends BaseComponent {
         onPress={onPress}
         disabled={disabled}
       >
-        <View style={[
-          this.styles.innerContainer,
-          disabled && this.styles.disabled,
-          link && this.styles.innerContainerLink]}
+        <View
+          style={[
+            this.styles.innerContainer,
+            disabled && this.styles.disabled,
+            link && this.styles.innerContainerLink,
+          ]}
         >
           {this.props.children}
           {this.renderIcon()}
