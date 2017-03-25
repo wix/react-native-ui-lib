@@ -15,6 +15,7 @@ export default class InputScreen extends Component {
         <TextInput
           text70
           placeholder="Write something..."
+          value="some text"
           floatingPlaceholder
           containerStyle={{marginBottom: INPUT_SPACING}}
         />

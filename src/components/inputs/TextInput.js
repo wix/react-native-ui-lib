@@ -32,8 +32,8 @@ export default class TextInput extends BaseComponent {
     this.state = {
       inputWidth: typography.fontSize * 2,
       widthExtendBreaks: [],
-      value: '',
-      floatingPlaceholderState: new Animated.Value(0),
+      value: props.value,
+      floatingPlaceholderState: new Animated.Value(props.value ? 1 : 0),
     };
   }
 
@@ -47,7 +47,7 @@ export default class TextInput extends BaseComponent {
 
   hasText() {
     const {value} = this.state;
-    return value.length > 0;
+    return value && value.length > 0;
   }
 
   renderPlaceholder() {
@@ -91,7 +91,7 @@ export default class TextInput extends BaseComponent {
     const color = this.props.color || this.extractColorValue();
     const typography = this.getTypography();
     const {style, containerStyle, placeholder, floatingPlaceholder, centered, multiline, ...others} = this.props;
-    const {inputWidth} = this.state;
+    const {inputWidth, value} = this.state;
     const inputStyle = [
       this.styles.input,
       style,
@@ -106,6 +106,7 @@ export default class TextInput extends BaseComponent {
         {this.renderPlaceholder()}
         <RNTextInput
           {...others}
+          value={value}
           placeholder={(floatingPlaceholder || centered) ? undefined : placeholder}
           underlineColorAndroid="transparent"
           style={inputStyle}
