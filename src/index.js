@@ -1,6 +1,6 @@
+import Animations from './animations';
 import * as Assets from './assets';
 import Avatar from './components/avatar';
-import AnimatedImage from './components/animatedImage';
 import Badge from './components/badge';
 import Button from './components/button';
 import Card from './components/card';
@@ -19,9 +19,9 @@ import * as Inputs from './components/inputs';
 import Helpers from './helpers';
 
 module.exports = {
+  ...Animations,
   Assets,
   Avatar,
-  AnimatedImage,
   Badge,
   Button,
   Card,
