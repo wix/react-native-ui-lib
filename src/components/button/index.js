@@ -100,7 +100,7 @@ export default class Button extends BaseComponent {
       return (
         <Image
           source={iconSource}
-          style={[this.styles.icon, label && this.styles.iconRightSpacing]}
+          style={[this.styles.icon, label && this.styles.iconSpacing]}
         />);
     }
     return null;
@@ -198,7 +198,7 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor, lin
       color: (outline || link) ? Colors.dark10 : ThemeManager.CTATextColor,
       ...Typography.text70,
       fontWeight: '100',
-      ...textStyleBySize[size],
+      paddingHorizontal: link ? 0 : textStyleBySize[size].paddingHorizontal,
     },
     textSmall: {
       ...Typography.text80,
@@ -211,9 +211,10 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor, lin
       resizeMode: 'contain',
       tintColor: color,
     },
-    iconRightSpacing: {
+    iconSpacing: {
       marginRight: 7,
       marginBottom: 2,
+      paddingRight: 0,
     },
   });
 }

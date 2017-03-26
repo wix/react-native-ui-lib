@@ -116,8 +116,16 @@ export default class ButtonsScreen extends Component {
           containerStyle={{marginBottom: ButtonSpace}}
         >
           <Image source={plusIcon}/>
-          <Text style={{marginLeft: 10, color: Colors.blue30}}>New Item</Text>
+          <Text style={{marginLeft: 10, color: Colors.blue30}}>Custom Icon</Text>
         </Button>
+
+        <Button
+          text90
+          link
+          containerStyle={{marginBottom: ButtonSpace}}
+          iconSource={plusIcon}
+          label="link icon"
+        />
 
         <Button blue30 label="link button" link/>
       </ScrollView>
