@@ -1,16 +1,16 @@
 import React, {PropTypes} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, Modal} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {BlurView} from 'react-native-blur';
 import {Colors, Typography, ThemeManager} from '../../style';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
+import {Modal} from '../../screensComponents';
 
 class PickerModal extends BaseComponent {
 
   static propTypes = {
     onCancel: PropTypes.func,
     onDone: PropTypes.func,
-    showDone: PropTypes.bool,
     ...Modal.propTypes,
   };
 
@@ -19,7 +19,7 @@ class PickerModal extends BaseComponent {
   }
 
   render() {
-    const {visible, onCancel, onDone, showDone, enableModalBlur, children} = this.props;
+    const {visible, onCancel, onDone, enableModalBlur, children} = this.props;
     const Container = (Constants.isIOS && enableModalBlur) ? BlurView : View;
     return (
       <Modal
@@ -29,22 +29,7 @@ class PickerModal extends BaseComponent {
         onRequestClose={onCancel}
       >
         <Container style={this.styles.container} blurType="light">
-          <View style={this.styles.modalHeader}>
-            <View style={[this.styles.modalHeaderPart, this.styles.modalHeaderLeft]}>
-              <TouchableOpacity onPress={onCancel}>
-                <Text style={this.styles.headerActionText}>Cancel</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={[this.styles.modalHeaderPart, this.styles.modalHeaderMiddle]}>
-              <Text style={[this.styles.headerText, {fontWeight: '500'}]}>Modal Header</Text>
-            </View>
-            <View style={[this.styles.modalHeaderPart, this.styles.modalHeaderRight]}>
-              {showDone &&
-              <TouchableOpacity onPress={onDone}>
-                <Text style={this.styles.headerActionText}>Done</Text>
-              </TouchableOpacity>}
-            </View>
-          </View>
+          <Modal.TopBar onDone={onDone} onCancel={onCancel}/>
           <View style={this.styles.modalBody}>
             {children}
           </View>

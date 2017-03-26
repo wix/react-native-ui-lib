@@ -143,8 +143,7 @@ class Picker extends BaseComponent {
       <PickerModal
         visible={showModal}
         onCancel={this.cancelSelect}
-        onDone={this.doneMultiSelect}
-        showDone={mode === Picker.modes.MULTI}
+        onDone={mode === Picker.modes.MULTI ? this.doneMultiSelect : undefined}
         enableModalBlur={enableModalBlur}
       >
         {this.appendPropsToChildren(this.props.children)}
