@@ -3,6 +3,7 @@ import './componentScreens';
 import './componentScreenScreens';
 import './listScreens';
 import './styleScreens';
+import './animationScreens';
 import './PlaygroundScreen';
 import MainScreen from './MainScreen';
 

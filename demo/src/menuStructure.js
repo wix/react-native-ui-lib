@@ -50,6 +50,9 @@ export const navigationData = {
     // {title: 'Action Items List Contacts', screen: 'example.ActionItemsListBasicScreen', overrideBackPress: Constants.isAndroid},
     // {title: 'Selectable Contacts List', screen: 'example.ItemsListSelectableContactScreen'},
   ],
+  Animations: [
+    {title: 'Card Scanner', tags: 'card scanner process', screen: 'example.animations.CardScannerScreen'},
+  ],
   // Errors: [
   //   {title: 'Default Error', screen: 'example.DefaultErrorScreen'},
   //   {title: 'Custom Error', screen: 'example.CustomErrorScreen'},
