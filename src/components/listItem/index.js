@@ -45,7 +45,7 @@ class ListItem extends BaseComponent {
   }
 
   render() {
-    const {onPress, testId} = this.props;
+    const {style, onPress, testId} = this.props;
     const {pressed} = this.state;
     const containerStyle = this.extractContainerStyle(this.props);
     const animationProps = this.extractAnimationProps();
@@ -61,7 +61,7 @@ class ListItem extends BaseComponent {
       >
         <Animatable.View
           {...animationProps}
-          style={[this.styles.innerContainer, pressed && this.styles.pressed]}
+          style={[this.styles.innerContainer, style, pressed && this.styles.pressed]}
         >
           {this.props.children}
         </Animatable.View>
