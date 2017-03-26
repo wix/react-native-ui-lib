@@ -2,12 +2,13 @@ import React, {PropTypes} from 'react';
 import {View, TextInput as RNTextInput, StyleSheet, Animated} from 'react-native';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
+import Text from '../text';
 import {Colors, Typography} from '../../style';
 import {Constants} from '../../helpers';
 
 export default class TextInput extends BaseComponent {
 
-  static displayName = 'Text';
+  static displayName = 'TextInput';
   static propTypes = {
     ...RNTextInput.propTypes,
     ...BaseComponent.propTypes,
@@ -15,6 +16,7 @@ export default class TextInput extends BaseComponent {
     hideUnderline: PropTypes.bool,
     centered: PropTypes.bool,
     containerStyle: PropTypes.object,
+    error: PropTypes.string,
     testId: PropTypes.string,
   };
 
@@ -28,6 +30,8 @@ export default class TextInput extends BaseComponent {
     this.onChangeText = this.onChangeText.bind(this);
     this.onContentSizeChange = this.onContentSizeChange.bind(this);
     this.animatedFloatingPlaceholder = this.animatedFloatingPlaceholder.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
 
     const typography = this.getTypography();
     this.state = {
@@ -44,6 +48,18 @@ export default class TextInput extends BaseComponent {
 
   getTypography() {
     return this.extractTypographyValue() || Typography.text70;
+  }
+
+  getUnderlineStyle() {
+    const {focused} = this.state;
+    const {error} = this.props;
+    if (error) {
+      return this.styles.errorUnderline;
+    } else if (focused) {
+      return this.styles.focusedUnderline;
+    }
+
+    return null;
   }
 
   hasText() {
@@ -88,6 +104,17 @@ export default class TextInput extends BaseComponent {
     );
   }
 
+  renderError() {
+    const {error} = this.props;
+    if (error) {
+      return (
+        <Text style={this.styles.errorMessage}>{error}</Text>
+      );
+    }
+
+    return null;
+  }
+
   render() {
     const color = this.props.color || this.extractColorValue();
     const typography = this.getTypography();
@@ -102,8 +129,10 @@ export default class TextInput extends BaseComponent {
       centered && {width: inputWidth},
     ];
 
+    const underlineStyle = this.getUnderlineStyle();
+
     return (
-      <View style={[this.styles.container, containerStyle]}>
+      <View style={[this.styles.container, underlineStyle, containerStyle]}>
         {this.renderPlaceholder()}
         <RNTextInput
           {...others}
@@ -115,8 +144,10 @@ export default class TextInput extends BaseComponent {
 
           onChangeText={this.onChangeText}
           onContentSizeChange={this.onContentSizeChange}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
         />
-
+        {this.renderError()}
       </View>
     );
   }
@@ -129,6 +160,16 @@ export default class TextInput extends BaseComponent {
         duration: 150,
       },
     ).start();
+  }
+
+  onFocus(...args) {
+    _.invoke(this.props, 'onFocus', ...args);
+    this.setState({focused: true});
+  }
+
+  onBlur(...args) {
+    _.invoke(this.props, 'onBlur', ...args);
+    this.setState({focused: false});
   }
 
   onChangeText(text) {
@@ -168,9 +209,14 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
       flexDirection: 'row',
       borderBottomWidth: hideUnderline ? 0 : 1,
       borderColor: Colors.dark80,
-
       justifyContent: centered ? 'center' : undefined,
       paddingTop: 20,
+    },
+    focusedUnderline: {
+      borderColor: Colors.blue30,
+    },
+    errorUnderline: {
+      borderColor: Colors.red30,
     },
     input: {
       flex: (centered && Constants.isIOS) ? undefined : 1,
@@ -187,6 +233,13 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
       left: 0,
       right: 0,
       textAlign: 'center',
+    },
+    errorMessage: {
+      color: Colors.red30,
+      ...Typography.text90,
+      position: 'absolute',
+      left: 0,
+      bottom: -(Typography.text90.lineHeight + 2),
     },
   });
 }

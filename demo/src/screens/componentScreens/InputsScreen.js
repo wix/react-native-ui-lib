@@ -8,12 +8,27 @@ export default class InputScreen extends Component {
 
   static id = 'example.components.InputsScreen';
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      error: '',
+    };
+  }
+          
+
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={{marginBottom: 20}} text40>Inputs</Text>
         <TextInput
           text70
+          placeholder="Email"
+          floatingPlaceholder
+          containerStyle={{marginBottom: INPUT_SPACING}}
+          onChangeText={text => this.setState({error: text ? '' : 'This field is required' })}
+          error={this.state.error}
+        />
           placeholder="Write something..."
           value="some text"
           floatingPlaceholder
