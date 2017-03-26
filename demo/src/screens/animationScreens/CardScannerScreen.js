@@ -18,10 +18,6 @@ export default class CardScannerScreen extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   this.start();
-  // }
-
   start() {
     if (!this.state.started) {
       this.setState({started: true});
