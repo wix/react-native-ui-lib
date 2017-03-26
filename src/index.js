@@ -7,8 +7,7 @@ import Card from './components/card';
 import ListItem from './components/listItem';
 import GridList from './lists/gridList';
 import ConnectionStatusBar from './components/connection-status-bar';
-import StateScreen from './screens/stateScreen';
-import LoaderScreen from './screens/loaderScreen';
+import ScreenComponents from './screensComponents';
 import PageControl from './components/page-control';
 import Picker from './components/picker';
 import ScannerAnimation from './components/scanner';
@@ -29,12 +28,11 @@ module.exports = {
   GridList,
   ...Inputs,
   ...Helpers,
-  StateScreen,
   ListItem,
-  LoaderScreen,
   PageControl,
   Picker,
   ScannerAnimation,
+  ...ScreenComponents,
   Stepper,
   ...Style,
   Text,
