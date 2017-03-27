@@ -35,6 +35,7 @@ function createStyles() {
       flex: 1,
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
+      textAlignVertical: 'top',
     },
   });
 }
