@@ -108,10 +108,11 @@ export default class Button extends BaseComponent {
 
   renderLabel() {
     const {label, labelStyle, testId} = this.props;
-    const textProps = this.extractTextProps(this.props);
+    const typography = this.extractTypographyValue();
+    const color = this.extractColorValue();
     if (label) {
       return (
-        <Text {...textProps} style={[this.styles.text, labelStyle]} numberOfLines={1} testID={testId}>
+        <Text style={[this.styles.text, color && {color}, {...typography}, labelStyle]} numberOfLines={1} testID={testId}>
           {Constants.isAndroid ? _.toUpper(label) : label}
         </Text>
       );
@@ -159,7 +160,7 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor, lin
   };
 
   const containerStyleBySize = {
-    large: {paddingVertical: 16, minWidth: 158},
+    large: {paddingVertical: 16, minWidth: 138},
     medium: {paddingVertical: 11, minWidth: 125},
     small: {paddingVertical: 5, minWidth: 74},
   };
