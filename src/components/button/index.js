@@ -112,7 +112,16 @@ export default class Button extends BaseComponent {
     const color = this.extractColorValue();
     if (label) {
       return (
-        <Text style={[this.styles.text, color && {color}, {...typography}, labelStyle]} numberOfLines={1} testID={testId}>
+        <Text
+          style={[
+            this.styles.text,
+            color && {color},
+            {...typography},
+            labelStyle,
+          ]}
+          numberOfLines={1}
+          testID={testId}
+        >
           {Constants.isAndroid ? _.toUpper(label) : label}
         </Text>
       );

@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {BlurView} from 'react-native-blur';
 import {Colors, Typography, ThemeManager} from '../../style';
 import {Constants} from '../../helpers';

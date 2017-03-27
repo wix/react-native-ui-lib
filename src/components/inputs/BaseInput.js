@@ -1,12 +1,8 @@
-import React, {PropTypes} from 'react';
-import {View, TextInput as RNTextInput, StyleSheet, Animated} from 'react-native';
+import {PropTypes} from 'react';
+import {TextInput as RNTextInput, Animated} from 'react-native';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
-import Text from '../text';
 import {Colors, Typography} from '../../style';
-import {Constants} from '../../helpers';
-import {Modal} from '../../screensComponents';
-import TextArea from './TextArea';
 
 export default class BaseInput extends BaseComponent {
 

@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {BaseComponent} from '../../commons';
 import {BlurView} from 'react-native-blur';
+import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 
 export default class CardSection extends BaseComponent {
