@@ -36,10 +36,12 @@ export default class TopBar extends BaseComponent {
   renderDone() {
     const {doneLabel, doneIcon, onDone} = this.props;
     if (onDone && (doneLabel || doneIcon)) {
-      return (<Button link onPress={onDone}>
-        <Image style={this.styles.icon} source={doneIcon}/>
-        <Text blue30 text70>{doneLabel}</Text>
-      </Button>);
+      return (
+        <Button link onPress={onDone}>
+          <Image style={this.styles.icon} source={doneIcon}/>
+          <Text blue30 text70>{doneLabel}</Text>
+        </Button>
+      );
     }
     return null;
   }
