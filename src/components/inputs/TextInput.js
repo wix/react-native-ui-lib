@@ -1,22 +1,35 @@
 import React, {PropTypes} from 'react';
 import {View, TextInput as RNTextInput, StyleSheet, Animated} from 'react-native';
 import _ from 'lodash';
-import {BaseComponent} from '../../commons';
+import BaseInput from './BaseInput';
 import Text from '../text';
 import {Colors, Typography} from '../../style';
 import {Constants} from '../../helpers';
+import {Modal} from '../../screensComponents';
+import TextArea from './TextArea';
 
-export default class TextInput extends BaseComponent {
+export default class TextInput extends BaseInput {
 
   static displayName = 'TextInput';
   static propTypes = {
     ...RNTextInput.propTypes,
-    ...BaseComponent.propTypes,
-    color: PropTypes.string,
+    ...BaseInput.propTypes,
+    /**
+     * hide text input underline, by default false
+     */
     hideUnderline: PropTypes.bool,
+    /**
+     * should text input be align to center
+     */
     centered: PropTypes.bool,
-    containerStyle: PropTypes.object,
+    /**
+     * input error message, should be empty if no error exists
+     */
     error: PropTypes.string,
+    /**
+     * should the input expand to another text area modal
+     */
+    expandable: PropTypes.bool,
     testId: PropTypes.string,
   };
 
@@ -30,8 +43,8 @@ export default class TextInput extends BaseComponent {
     this.onChangeText = this.onChangeText.bind(this);
     this.onContentSizeChange = this.onContentSizeChange.bind(this);
     this.animatedFloatingPlaceholder = this.animatedFloatingPlaceholder.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
+    this.toggleExpandableModal = this.toggleExpandableModal.bind(this);
+    this.onDoneEditingExpandableInput = this.onDoneEditingExpandableInput.bind(this);
 
     const typography = this.getTypography();
     this.state = {
@@ -39,6 +52,7 @@ export default class TextInput extends BaseComponent {
       widthExtendBreaks: [],
       value: props.value,
       floatingPlaceholderState: new Animated.Value(props.value ? 1 : 0),
+      showExpandableModal: false,
     };
   }
 
@@ -69,10 +83,10 @@ export default class TextInput extends BaseComponent {
 
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
-    const {floatingPlaceholder, centered, placeholder} = this.props;
+    const {floatingPlaceholder, centered, expandable, placeholder} = this.props;
     const typography = this.getTypography();
 
-    if (!floatingPlaceholder && !centered) {
+    if (!floatingPlaceholder && !centered && !expandable) {
       return null;
     }
 
@@ -98,6 +112,7 @@ export default class TextInput extends BaseComponent {
             lineHeight: this.hasText() ? Typography.text80.lineHeight : typography.lineHeight,
           },
         ]}
+        onPress={() => expandable && this.toggleExpandableModal(true)}
       >
         {placeholder}
       </Animated.Text>
@@ -115,41 +130,90 @@ export default class TextInput extends BaseComponent {
     return null;
   }
 
-  render() {
+  renderExpandableModal() {
+    const {showExpandableModal} = this.state;
+    return (
+      <Modal
+        animationType={'slide'}
+        visible={showExpandableModal}
+        onRequestClose={() => this.toggleExpandableModal(false)}
+      >
+        <Modal.TopBar
+          onCancel={() => this.toggleExpandableModal(false)}
+          onDone={this.onDoneEditingExpandableInput}
+        />
+        <View style={this.styles.expandableModalContent}>
+          <TextArea
+            ref={(textarea) => { this.expandableInput = textarea; }}
+            {...this.props}
+            value={this.state.value}
+          />
+        </View>
+      </Modal>
+    );
+  }
+
+  renderExpandableInput() {
+    const typography = this.getTypography();
+    const {value} = this.state;
+
+    return (
+      <Text
+        style={[this.styles.input, typography, !value && {height: 0}]}
+        numberOfLines={3}
+        onPress={() => this.toggleExpandableModal(true)}
+      >
+        {value}
+      </Text>
+    );
+  }
+
+  renderTextInput() {
     const color = this.props.color || this.extractColorValue();
     const typography = this.getTypography();
-    const {style, containerStyle, placeholder, floatingPlaceholder, centered, multiline, ...others} = this.props;
+    const {style, placeholder, floatingPlaceholder, centered, multiline, ...others} = this.props;
     const {inputWidth, value} = this.state;
     const inputStyle = [
       this.styles.input,
       style,
       typography,
-      {height: typography.lineHeight},
+      {height: (multiline && !centered) ? typography.lineHeight * 3 : typography.lineHeight},
       color && {color},
       centered && {width: inputWidth},
     ];
 
+    return (
+      <RNTextInput
+        {...others}
+        value={value}
+        placeholder={(floatingPlaceholder || centered) ? undefined : placeholder}
+        underlineColorAndroid="transparent"
+        style={inputStyle}
+        multiline={centered || multiline}
+        onChangeText={this.onChangeText}
+        onContentSizeChange={this.onContentSizeChange}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+      />
+    );
+  }
+
+  render() {
+    const {expandable, containerStyle} = this.props;
     const underlineStyle = this.getUnderlineStyle();
 
     return (
       <View style={[this.styles.container, underlineStyle, containerStyle]}>
         {this.renderPlaceholder()}
-        <RNTextInput
-          {...others}
-          value={value}
-          placeholder={(floatingPlaceholder || centered) ? undefined : placeholder}
-          underlineColorAndroid="transparent"
-          style={inputStyle}
-          multiline={centered || multiline}
-
-          onChangeText={this.onChangeText}
-          onContentSizeChange={this.onContentSizeChange}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-        />
+        {expandable ? this.renderExpandableInput() : this.renderTextInput()}
         {this.renderError()}
+        {this.renderExpandableModal()}
       </View>
     );
+  }
+
+  toggleExpandableModal(value) {
+    this.setState({showExpandableModal: value});
   }
 
   animatedFloatingPlaceholder() {
@@ -162,14 +226,13 @@ export default class TextInput extends BaseComponent {
     ).start();
   }
 
-  onFocus(...args) {
-    _.invoke(this.props, 'onFocus', ...args);
-    this.setState({focused: true});
-  }
-
-  onBlur(...args) {
-    _.invoke(this.props, 'onBlur', ...args);
-    this.setState({focused: false});
+  onDoneEditingExpandableInput() {
+    const expandableInputValue = _.get(this.expandableInput, 'state.value');
+    this.setState({
+      value: expandableInputValue,
+    });
+    _.invoke(this.props, 'onChangeText', expandableInputValue);
+    this.toggleExpandableModal(false);
   }
 
   onChangeText(text) {
@@ -190,6 +253,8 @@ export default class TextInput extends BaseComponent {
   }
 
   onContentSizeChange(event) {
+    const {multiline, centered} = this.props;
+    if (multiline && !centered) return;
     const typography = this.getTypography();
     const initialHeight = typography.lineHeight + 10;
     const {width, height} = event.nativeEvent.contentSize;
@@ -240,6 +305,11 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
       position: 'absolute',
       left: 0,
       bottom: -(Typography.text90.lineHeight + 2),
+    },
+    expandableModalContent: {
+      flex: 1,
+      paddingTop: 15,
+      paddingHorizontal: 20,
     },
   });
 }

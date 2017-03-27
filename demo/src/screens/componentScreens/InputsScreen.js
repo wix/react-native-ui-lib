@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ScrollView, View, StyleSheet} from 'react-native';
 import {Assets, Constants, Button, Colors, Text, TextInput, Typography} from 'react-native-ui-lib';//eslint-disable-line
 
-
+const LONG_TEXT = 'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer Martín Bollati. In this piece';
 const INPUT_SPACING = 25;
 export default class InputScreen extends Component {
 
@@ -15,11 +15,10 @@ export default class InputScreen extends Component {
       error: '',
     };
   }
-          
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps>
         <Text style={{marginBottom: 20}} text40>Inputs</Text>
         <TextInput
           text70
@@ -29,9 +28,12 @@ export default class InputScreen extends Component {
           onChangeText={text => this.setState({error: text ? '' : 'This field is required' })}
           error={this.state.error}
         />
-          placeholder="Write something..."
-          value="some text"
-          floatingPlaceholder
+
+        <TextInput
+          text70
+          placeholder="Tell us about yourself"
+          value={LONG_TEXT}
+          expandable
           containerStyle={{marginBottom: INPUT_SPACING}}
         />
         <TextInput
