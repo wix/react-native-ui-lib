@@ -120,7 +120,7 @@ export default class Button extends BaseComponent {
   }
 
   render() {
-    const {onPress, disabled, link, enableShadow} = this.props;
+    const {onPress, disabled, link, enableShadow, style} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const shadowStyle = enableShadow ? this.styles.shadowStyle : {};
 
@@ -139,6 +139,7 @@ export default class Button extends BaseComponent {
             this.styles.innerContainer,
             disabled && this.styles.disabled,
             link && this.styles.innerContainerLink,
+            style,
           ]}
         >
           {this.props.children}
