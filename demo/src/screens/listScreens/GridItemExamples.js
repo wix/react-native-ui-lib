@@ -24,9 +24,16 @@ export class ProducItem extends Component {
         />
         <Card.Section
           body
-          enableBlur
+          enableBlur={Constants.isIOS}
           blurOptions={{blurType: 'xlight'}}
-          style={{position: 'absolute', paddingVertical: 12, bottom: 0, left: 0, right: 0}}
+          style={{
+            position: 'absolute',
+            paddingVertical: 12,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: Constants.isIOS ? 'transparent' : Colors.white
+          }}
         >
           <Card.Section footer style={{justifyContent: 'center'}}>
             <Card.Item column style={{alignItems: 'center'}}>
