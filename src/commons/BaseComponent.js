@@ -55,7 +55,7 @@ export default class BaseComponent extends Component {
   }
 
   extractTypographyValue() {
-    let typography = {};
+    let typography;
     _.forEach(Typography, (value, key) => {
       if (this.props[key] === true) {
         typography = value;

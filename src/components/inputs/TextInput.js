@@ -60,10 +60,6 @@ export default class TextInput extends BaseInput {
     this.styles = createStyles(this.props);
   }
 
-  getTypography() {
-    return this.extractTypographyValue() || Typography.text70;
-  }
-
   getUnderlineStyle() {
     const {focused} = this.state;
     const {error} = this.props;
