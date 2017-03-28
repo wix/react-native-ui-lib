@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView, View, StyleSheet} from 'react-native';
-import {Assets, Constants, Button, Colors, Text, TextInput, Typography} from 'react-native-ui-lib';//eslint-disable-line
+import {Assets, Constants, Button, Colors, Text, TextInput, TextArea, Typography} from 'react-native-ui-lib';//eslint-disable-line
 
 const LONG_TEXT = 'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer Martín Bollati. In this piece';
 const INPUT_SPACING = 25;
@@ -20,14 +20,18 @@ export default class InputScreen extends Component {
     return (
       <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps>
         <Text style={{marginBottom: 20}} text40>Inputs</Text>
+
         <TextInput
-          text70
-          placeholder="Email"
           floatingPlaceholder
-          containerStyle={{marginBottom: INPUT_SPACING}}
+          text70
+          placeholder="write something.."
           onChangeText={text => this.setState({error: text ? '' : 'This field is required' })}
           error={this.state.error}
         />
+
+        <TextInput containerStyle={{marginBottom: INPUT_SPACING}} text40 hideUnderline placeholder="write something.."/>
+
+        <TextInput containerStyle={{marginBottom: INPUT_SPACING}} centered text30 hideUnderline placeholder="write something.."/>
 
         <TextInput
           text70
@@ -36,6 +40,12 @@ export default class InputScreen extends Component {
           expandable
           containerStyle={{marginBottom: INPUT_SPACING}}
         />
+
+        <Text dark40>Text Area</Text>
+        <View style={{height: 150, borderWidth: 1, marginBottom: INPUT_SPACING, padding: 10, borderColor: Colors.dark60}}>
+          <TextArea placeholder="write something.."/>
+        </View>
+        
         <TextInput
           text50
           placeholder="Big Title Text"
