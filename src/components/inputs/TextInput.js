@@ -171,10 +171,10 @@ export default class TextInput extends BaseInput {
     const {inputWidth, value} = this.state;
     const inputStyle = [
       this.styles.input,
-      style,
       typography,
-      {height: (multiline && !centered) ? typography.lineHeight * 3 : typography.lineHeight},
       color && {color},
+      style,
+      {height: (multiline && !centered) ? typography.lineHeight * 3 : typography.lineHeight},
       centered && {width: inputWidth},
     ];
 
