@@ -300,7 +300,9 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
       ...Typography.text90,
       position: 'absolute',
       left: 0,
+      right: 0,
       bottom: -(Typography.text90.lineHeight + 2),
+      textAlign: centered ? 'center' : undefined,
     },
     expandableModalContent: {
       flex: 1,
