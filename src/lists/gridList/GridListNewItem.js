@@ -4,6 +4,8 @@ import GridListItem from './GridListItem';
 import createStyles from './style';
 import {Colors} from '../../style';
 
+/** THIS IS DEPRECATED */
+
 /**
  * GridListNewItem component
  */

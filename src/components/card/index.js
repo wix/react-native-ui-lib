@@ -13,13 +13,21 @@ class Card extends BaseComponent {
 
   static propTypes = {
     /**
+     * card custom width
+     */
+    width: PropTypes.number,
+    /**
+     * card custom height
+     */
+    height: PropTypes.number,
+    /**
      * action for when pressing the card
      */
     onPress: PropTypes.func,
     /**
      * Additional styles for the top container
      */
-    containerStyle: PropTypes.object,
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * Use to identify the button in tests
      */
@@ -31,8 +39,8 @@ class Card extends BaseComponent {
   }
 
   render() {
-    const {onPress, style, testId} = this.props;
-    const containerStyle = this.extractContainerStyle(this.props);
+    const {onPress, style, containerStyle, testId} = this.props;
+    // const containerStyle =  this.extractContainerStyle(this.props);
     const Container = onPress ? TouchableOpacity : View;
     return (
       <Container style={[this.styles.container, containerStyle]} onPress={onPress} testId={testId}>
@@ -44,10 +52,12 @@ class Card extends BaseComponent {
   }
 }
 
-function createStyles() {
+function createStyles({width, height}) {
   // const customBorderRadius = _.isString(borderRadius) ? BorderRadiuses[borderRadius] : borderRadius;
   return StyleSheet.create({
     container: {
+      width,
+      height,
       backgroundColor: 'transparent',
       ...Shadows.white40.bottom,
     },
@@ -55,6 +65,7 @@ function createStyles() {
       backgroundColor: Colors.white,
       borderRadius: BorderRadiuses.br40,
       overflow: 'hidden',
+      flexGrow: 1,
     },
   });
 }

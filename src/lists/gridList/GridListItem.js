@@ -4,6 +4,9 @@ import * as Animatable from 'react-native-animatable';
 import {BaseComponent} from '../../commons';
 import createStyles from './style';
 
+
+/** THIS IS DEPRECATED */
+
 /**
  * GridListItem component
  */

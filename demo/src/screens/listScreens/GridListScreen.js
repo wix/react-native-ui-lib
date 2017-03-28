@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {ListView, Alert} from 'react-native';
-import {GridList, Avatar, Badge, AvatarHelper, Colors} from 'react-native-ui-lib';//eslint-disable-line
+import {ListView, View, Alert} from 'react-native';
+import {GridList, Avatar, Badge, AvatarHelper, Colors, Card, Constants, Text} from 'react-native-ui-lib';//eslint-disable-line
 import products from '../../data/products';
+
+import * as GridItemExamples from './GridItemExamples';
 
 const plusIcon = require('../../assets/icons/plus.png');
 
@@ -14,21 +16,26 @@ export default class BasicListScreen extends Component {
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
     });
     this.state = {
-      dataSource: ds.cloneWithRows(products.concat(products).concat(products)),
+      dataSource: ds.cloneWithRows(products.concat(products)),
       onEdit: false,
       updating: false,
     };
+
+    this.renderItem = this.renderItem.bind(this);
   }
 
   onItemPressed(id) {
     alert(`item pressed: ${id}`); // eslint-disable-line
   }
 
-  renderRow(row, id) {
+  renderItem(row, id) {
     const props = {
-      index: Number(id),
+      id,
       imageSource: row.mediaUrl ? {uri: row.mediaUrl} : null,
-      onPress: () => Alert.alert(`pressed on row id: ${id}`),
+      title: row.name,
+      secondaryTitle: row.formattedPrice,
+      subtitle: row.inventory.status,
+      onPress: () => alert(`pressed on row id: ${id}`),
       animation: 'gridListEntrance',
       duration: 600,
       delay: (Number(id) % 6) * 40,
@@ -39,32 +46,23 @@ export default class BasicListScreen extends Component {
       // disabled: true,
     };
 
-    let Item;
-    if (id === '0') {
-      Item = GridList.NewItem;
-
-      props.imageSource = plusIcon;
-      props.title = 'Add Product';
-      // props.delay = 0;
-      // props.disabled = true;
-    } else {
-      Item = GridList.Item;
-
-      props.title = row.name;
-      props.secondaryTitle = row.formattedPrice;
-      props.subtitle = row.inventory.status;
-    }
-
     return (
-      <Item {...props}/>
+      <GridItemExamples.ProducItem key={id} {...props} />
     );
+
+    // Enable it to see another example, also set the appropriate itemsInRow in GridList
+    // return (
+    //   <GridItemExamples.SimpleItem key={id}/>
+    // );
   }
 
   render() {
     return (
       <GridList
-        dataSource={this.state.dataSource}
-        renderRow={(row, sectionId, rowId) => this.renderRow(row, rowId)}
+        contentContainerStyle={{padding: 15, paddingBottom: 0}}
+        renderItem={this.renderItem}
+        items={products.concat(products)}
+        itemsInRow={GridItemExamples.ProducItem.itemsPerRow}
       />
     );
   }
