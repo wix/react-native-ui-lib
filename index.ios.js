@@ -1,1 +1,3 @@
-import './demo/src/demoApp';
+import {startApp} from './demo/src/demoApp';
+
+startApp();

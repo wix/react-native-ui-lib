@@ -35,10 +35,13 @@ Animatable.initializeRegistryWithDefinitions({
   },
 });
 
-Navigation.startSingleScreenApp({
-  screen: {
-    screen: 'example.MainScreen',
-    title: 'Wix UI Lib',
-    navigatorButtons: {},
-  },
-});
+export function startApp() {
+  Navigation.startSingleScreenApp({
+    screen: {
+      screen: 'example.MainScreen',
+      title: 'Wix UI Lib',
+      navigatorButtons: {},
+    },
+  });
+}
+
