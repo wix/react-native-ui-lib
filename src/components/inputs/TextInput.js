@@ -190,6 +190,7 @@ export default class TextInput extends BaseInput {
         onContentSizeChange={this.onContentSizeChange}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
+        ref={(input) => { this.input = input; }}
       />
     );
   }
