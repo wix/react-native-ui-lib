@@ -47,7 +47,7 @@ export default class BaseComponent extends Component {
     let containerStyle = {};
     if (props.containerStyle) {
       containerStyle = _.pickBy(props.containerStyle, (value, key) => {
-        return key.includes('margin') || key === 'alignSelf';
+        return key.includes('margin') || _.includes(['alignSelf', 'transform'], key);
       });
     }
 
