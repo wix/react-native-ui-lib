@@ -18,7 +18,8 @@
     "arrow-body-style": "off",
     "no-plusplus": "off",
     "import/prefer-default-export": "off",
-    "global-require": "off"
+    "global-require": "off",
+    "consistent-return": "off"
   },
   "env": {
     "browser": true,
