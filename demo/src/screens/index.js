@@ -7,4 +7,4 @@ import './animationScreens';
 import './PlaygroundScreen';
 import MainScreen from './MainScreen';
 
-Navigation.registerComponent('example.MainScreen', () => MainScreen);
+Navigation.registerComponent('unicorn.MainScreen', () => MainScreen);

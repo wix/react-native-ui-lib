@@ -4,7 +4,7 @@ import BorderRadiusesScreen from './BorderRadiusesScreen';
 import TypographyScreen from './TypographyScreen';
 import ShadowsScreen from './ShadowsScreen';
 
-Navigation.registerComponent('example.style.BorderRadiusesScreen', () => BorderRadiusesScreen);
-Navigation.registerComponent('example.style.ColorsScreen', () => ColorsScreen);
-Navigation.registerComponent('example.style.TypographyScreen', () => TypographyScreen);
-Navigation.registerComponent('example.style.ShadowsScreen', () => ShadowsScreen);
+Navigation.registerComponent('unicorn.style.BorderRadiusesScreen', () => BorderRadiusesScreen);
+Navigation.registerComponent('unicorn.style.ColorsScreen', () => ColorsScreen);
+Navigation.registerComponent('unicorn.style.TypographyScreen', () => TypographyScreen);
+Navigation.registerComponent('unicorn.style.ShadowsScreen', () => ShadowsScreen);

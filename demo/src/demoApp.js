@@ -38,7 +38,7 @@ Animatable.initializeRegistryWithDefinitions({
 export function startApp() {
   Navigation.startSingleScreenApp({
     screen: {
-      screen: 'example.MainScreen',
+      screen: 'unicorn.MainScreen',
       title: 'Wix UI Lib',
       navigatorButtons: {},
     },

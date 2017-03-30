@@ -5,9 +5,6 @@ import {Assets, Constants, Button, Colors, Text, TextInput, TextArea, Typography
 const LONG_TEXT = 'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer Martín Bollati. In this piece';
 const INPUT_SPACING = 25;
 export default class InputScreen extends Component {
-
-  static id = 'example.components.InputsScreen';
-
   constructor(props) {
     super(props);
 
