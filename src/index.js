@@ -4,6 +4,7 @@ import Avatar from './components/avatar';
 import Badge from './components/badge';
 import Button from './components/button';
 import Card from './components/card';
+import Commons from './commons';
 import ConnectionStatusBar from './components/connection-status-bar';
 import ListItem from './components/listItem';
 import GridList from './lists/gridList';
@@ -24,6 +25,7 @@ module.exports = {
   Badge,
   Button,
   Card,
+  ...Commons,
   ConnectionStatusBar,
   GridList,
   ...Inputs,

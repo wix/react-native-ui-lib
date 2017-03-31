@@ -35,7 +35,7 @@ export default class BasicListScreen extends Component {
       title: row.name,
       secondaryTitle: row.formattedPrice,
       subtitle: row.inventory.status,
-      onPress: () => alert(`pressed on row id: ${id}`),
+      // onPress: () => alert(`pressed on row id: ${id}`),
       animation: 'gridListEntrance',
       duration: 600,
       delay: (Number(id) % 6) * 40,
@@ -47,7 +47,7 @@ export default class BasicListScreen extends Component {
     };
 
     return (
-      <GridItemExamples.ProducItem key={id} {...props} />
+      <GridItemExamples.ProducItem key={id} {...props} selectable selectableIndicatorSize={36}/>
     );
 
     // Enable it to see another example, also set the appropriate itemsInRow in GridList

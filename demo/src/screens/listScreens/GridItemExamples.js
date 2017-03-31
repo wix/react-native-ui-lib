@@ -1,12 +1,20 @@
 import React, {Component} from 'react';
 import {View} from 'react-native';
-import {GridList, Avatar, Badge, AvatarHelper, Colors, Card, Constants, Text} from 'react-native-ui-lib';//eslint-disable-line
+import {GridList, Avatar, Badge, AvatarHelper, Colors, Card, Constants, Text, SelectableComponent} from 'react-native-ui-lib';//eslint-disable-line
 
 const plusIcon = require('../../assets/icons/plus.png');
 
-export class ProducItem extends Component {
+export class ProducItem extends SelectableComponent {
 
   static itemsPerRow = 2;
+
+  renderSelectableContainer() {
+    return (
+      <View style={{position: 'absolute', top: 15, right: 15}}>
+        {this.renderSelectableIndicator()}
+      </View>
+    );
+  }
 
   render() {
     const props = this.props;
@@ -16,7 +24,7 @@ export class ProducItem extends Component {
       <Card
         height={210}
         containerStyle={[{marginBottom: 15, flex: 1}, addRightMargin && {marginRight: 15}]}
-        onPress={props.onPress}
+        onPress={this.onSelect}
       >
         <Card.Image
           imageSource={props.imageSource}
@@ -43,6 +51,7 @@ export class ProducItem extends Component {
             </Card.Item>
           </Card.Section>
         </Card.Section>
+        {this.renderSelectableContainer()}
       </Card>
     );
   }
