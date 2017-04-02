@@ -155,7 +155,7 @@ export default class TextInput extends BaseInput {
 
     return (
       <Text
-        style={[this.styles.input, typography, !value && {height: 0}]}
+        style={[this.styles.input, typography]}
         numberOfLines={3}
         onPress={() => this.toggleExpandableModal(true)}
       >
@@ -228,6 +228,7 @@ export default class TextInput extends BaseInput {
     this.setState({
       value: expandableInputValue,
     });
+    this.state.floatingPlaceholderState.setValue(expandableInputValue ? 1 : 0);
     _.invoke(this.props, 'onChangeText', expandableInputValue);
     this.toggleExpandableModal(false);
   }
