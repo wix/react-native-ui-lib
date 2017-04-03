@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react';
-import {Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {Text} from 'react-native';
 import _ from 'lodash';
-import {Colors, Typography} from '../../style';
-import {BaseComponent} from '../../commons';
+import {Colors} from '../../style';
 import {TextInput} from '../inputs';
 import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
@@ -58,16 +57,14 @@ class Picker extends TextInput {
   constructor(props) {
     super(props);
 
-    this.pickItem = this.pickItem.bind(this);
+    this.onDoneSelecting = this.onDoneSelecting.bind(this);
     this.toggleItemSelection = this.toggleItemSelection.bind(this);
     this.appendPropsToChildren = this.appendPropsToChildren.bind(this);
-    this.doneMultiSelect = this.doneMultiSelect.bind(this);
     this.cancelSelect = this.cancelSelect.bind(this);
 
     this.state = {
       ...this.state,
       showModal: false,
-      selectedValue: props.selectedValue,
     };
 
     if (props.mode === Picker.modes.SINGLE && Array.isArray(props.value)) {
@@ -81,15 +78,8 @@ class Picker extends TextInput {
 
   componentWillReceiveProps(nexProps) {
     this.setState({
-      selectedValue: nexProps.selectedValue,
+      value: nexProps.value,
     });
-  }
-
-  pickItem(item) {
-    this.onChangeText(item);
-    this.toggleExpandableModal(false);
-    _.invoke(this.props, 'onChange', item);
-    // this.updateFloatingPlaceholderState(true);
   }
 
   toggleItemSelection(item) {
@@ -100,19 +90,10 @@ class Picker extends TextInput {
     });
   }
 
-  doneMultiSelect() {
-
-    const {value} = this.state;
-    this.onChangeText(value);
+  onDoneSelecting(item) {
+    this.onChangeText(item);
     this.toggleExpandableModal(false);
-    _.invoke(this.props, 'onChange', value);
-
-
-    // const {onValueChange} = this.props;
-    // this.toggleExpandableModal(false);
-    // if (onValueChange) {
-    //   onValueChange({value: this.state.selectedValue});
-    // }
+    _.invoke(this.props, 'onChange', item);
   }
 
   cancelSelect() {
@@ -128,7 +109,7 @@ class Picker extends TextInput {
     const childrenWithProps = React.Children.map(children,
       child => React.cloneElement(child, {
         isSelected: PickerPresenter.isItemSelected(child.props.value, value),
-        onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.pickItem,
+        onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
       }),
     );
 
@@ -161,28 +142,18 @@ class Picker extends TextInput {
 
   renderExpandableModal() {
     const {mode, enableModalBlur} = this.props;
-    // const {showModal} = this.state;
     const {showExpandableModal} = this.state;
     return (
       <PickerModal
         visible={showExpandableModal}
         onCancel={this.cancelSelect}
-        onDone={mode === Picker.modes.MULTI ? this.doneMultiSelect : undefined}
+        onDone={mode === Picker.modes.MULTI ? () => this.onDoneSelecting(this.state.value) : undefined}
         enableModalBlur={enableModalBlur}
       >
         {this.appendPropsToChildren(this.props.children)}
       </PickerModal>);
   }
 }
-
-// function createStyles() {
-//   return StyleSheet.create({
-//     label: {
-//       ...Typography.text80,
-//       color: Colors.dark10,
-//     },
-//   });
-// }
 
 Picker.Item = PickerItem;
 export default Picker;
