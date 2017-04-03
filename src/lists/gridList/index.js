@@ -88,5 +88,4 @@ function createStyles({backgroundColor}) {
   });
 }
 
-
 export default GridList;
