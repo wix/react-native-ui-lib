@@ -26,7 +26,7 @@ class PickerItem extends BaseComponent {
   render() {
     const {label, value, isSelected, onPress} = this.props;
     return (
-      <TouchableOpacity activeOpacity={0.5} style={this.styles.container} onPress={() => onPress({value})}>
+      <TouchableOpacity activeOpacity={0.5} style={this.styles.container} onPress={() => onPress({value, label})}>
         <Text style={this.styles.labelText}>{label}</Text>
         {isSelected && <Image style={this.styles.checkIcon} source={Assets.icons.check}/>}
       </TouchableOpacity>

@@ -1,6 +1,15 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {Colors, Stepper, Typography, Picker} from 'react-native-ui-lib';//eslint-disable-line
+import {View, StyleSheet} from 'react-native';
+import _ from 'lodash';
+import {Colors, Text, Stepper, Typography, Picker} from 'react-native-ui-lib';//eslint-disable-line
+
+const options = [
+  {label: 'JavaScript', value: 'js'},
+  {label: 'Java', value: 'java'},
+  {label: 'Python', value: 'python'},
+  {label: 'C++', value: 'c++'},
+  {label: 'Perl', value: 'perl'},
+];
 
 export default class FormScreen extends Component {
 
@@ -8,7 +17,8 @@ export default class FormScreen extends Component {
     super(props);
     this.state = {
       itemsCount: 1,
-      language: 'java',
+      // language: {value: 'java', label: 'Java'},
+      language: undefined,
       languages: [],
     };
   }
@@ -25,32 +35,31 @@ export default class FormScreen extends Component {
           initialValue={1}
         />
         <Text style={styles.componentTitle}>Single Select Picker</Text>
+
         <Picker
-          label="Pick a Language"
+          placeholder="Pick a Language"
+          value={this.state.language}
           selectedValue={this.state.language}
           enableModalBlur={false}
-          onValueChange={({value}) => this.setState({language: value})}
+          onChange={item => this.setState({language: item})}
         >
-          <Picker.Item label={'JavaScript'} value={'js'}/>
-          <Picker.Item label={'Java'} value={'java'}/>
-          <Picker.Item label={'Python'} value={'python'}/>
-          <Picker.Item label={'C++'} value={'c++'}/>
-          <Picker.Item label={'Perl'} value={'perl'}/>
+          {_.map(options, option => <Picker.Item key={option.value} label={option.label} value={option.value}/>)}
         </Picker>
+
+        <Text text80 purple50>Selected Value: {_.get(this.state.language, 'value')}</Text>
 
         <Text style={styles.componentTitle}>Multi Select Picker</Text>
         <Picker
-          label="Pick Languages"
-          selectedValue={this.state.languages}
-          onValueChange={({value}) => this.setState({languages: value})}
+          placeholder="Pick Languages"
+          value={this.state.languages}
+          onChange={items => this.setState({languages: items})}
           mode={Picker.modes.MULTI}
         >
-          <Picker.Item label={'JavaScript'} value={'js'}/>
-          <Picker.Item label={'Java'} value={'java'}/>
-          <Picker.Item label={'Python'} value={'python'}/>
-          <Picker.Item label={'C++'} value={'c++'}/>
-          <Picker.Item label={'Perl'} value={'perl'}/>
+          {_.map(options, option => <Picker.Item key={option.value} label={option.label} value={option.value}/>)}
         </Picker>
+
+        <Text text80 purple50>Selected Languages: {_.chain(this.state.languages).map('value').join(', ').value()}</Text>
+
       </View>
     );
   }

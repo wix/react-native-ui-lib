@@ -3,14 +3,17 @@ import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {Colors, Typography} from '../../style';
 import {BaseComponent} from '../../commons';
+import {TextInput} from '../inputs';
 import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
 import * as PickerPresenter from './PickerPresenter';
 
+const ItemType = PropTypes.shape({value: PropTypes.any, label: PropTypes.string});
+
 /**
  * Picker Component
  */
-class Picker extends BaseComponent {
+class Picker extends TextInput {
   static displayName = 'Picker';
 
   static modes = {
@@ -19,18 +22,15 @@ class Picker extends BaseComponent {
   }
 
   static propTypes = {
+    ...TextInput.propTypes,
     /**
-     * The Picker button label
+     * picker current value
      */
-    label: PropTypes.string,
-    /**
-     * the current selected value
-     */
-    selectedValue: PropTypes.any,
+    value: PropTypes.oneOf(ItemType, PropTypes.arrayOf(ItemType)),
     /**
      * callback for when picker value change
      */
-    onValueChange: PropTypes.func,
+    onChange: PropTypes.func,
     /**
      * SINGLE mode or MULTI mode
      */
@@ -46,15 +46,18 @@ class Picker extends BaseComponent {
   };
 
   static defaultProps = {
+    ...TextInput.defaultProps,
     mode: Picker.modes.SINGLE,
     enableModalBlur: true,
+
+    expandable: true,
+    text70: true,
+    floatingPlaceholder: true,
   }
 
   constructor(props) {
     super(props);
 
-    this.togglePickerModal = this.togglePickerModal.bind(this);
-    this.renderPickerModal = this.renderPickerModal.bind(this);
     this.pickItem = this.pickItem.bind(this);
     this.toggleItemSelection = this.toggleItemSelection.bind(this);
     this.appendPropsToChildren = this.appendPropsToChildren.bind(this);
@@ -62,16 +65,17 @@ class Picker extends BaseComponent {
     this.cancelSelect = this.cancelSelect.bind(this);
 
     this.state = {
+      ...this.state,
       showModal: false,
       selectedValue: props.selectedValue,
     };
 
-    if (props.mode === Picker.modes.SINGLE && Array.isArray(props.selectedValue)) {
-      console.warn('Picker in SINGLE mode cannot accpet an array for selectedValue');
+    if (props.mode === Picker.modes.SINGLE && Array.isArray(props.value)) {
+      console.warn('Picker in SINGLE mode cannot accpet an array for value');
     }
 
-    if (props.mode === Picker.modes.MULTI && !Array.isArray(props.selectedValue)) {
-      console.warn('Picker in MULTI mode must accpet an array for selectedValue');
+    if (props.mode === Picker.modes.MULTI && !Array.isArray(props.value)) {
+      console.warn('Picker in MULTI mode must accpet an array for value');
     }
   }
 
@@ -81,54 +85,49 @@ class Picker extends BaseComponent {
     });
   }
 
-  generateStyles() {
-    this.styles = createStyles(this.props);
+  pickItem(item) {
+    this.onChangeText(item);
+    this.toggleExpandableModal(false);
+    _.invoke(this.props, 'onChange', item);
+    // this.updateFloatingPlaceholderState(true);
   }
 
-  togglePickerModal(value) {
-    return this.setState({showModal: value});
-  }
-
-  pickItem({value}) {
-    const {onValueChange} = this.props;
+  toggleItemSelection(item) {
+    const {value} = this.state;
+    const newValue = _.xorBy(value, [item], 'value');
     this.setState({
-      selectedValue: value,
-    });
-    if (onValueChange) {
-      onValueChange({value});
-    }
-    this.togglePickerModal(false);
-  }
-
-  toggleItemSelection({value}) {
-    const {selectedValue} = this.state;
-    const newSelectedValue = _.xor(selectedValue, [value]);
-    this.setState({
-      selectedValue: newSelectedValue,
+      value: newValue,
     });
   }
 
   doneMultiSelect() {
-    const {onValueChange} = this.props;
-    this.togglePickerModal(false);
-    if (onValueChange) {
-      onValueChange({value: this.state.selectedValue});
-    }
+
+    const {value} = this.state;
+    this.onChangeText(value);
+    this.toggleExpandableModal(false);
+    _.invoke(this.props, 'onChange', value);
+
+
+    // const {onValueChange} = this.props;
+    // this.toggleExpandableModal(false);
+    // if (onValueChange) {
+    //   onValueChange({value: this.state.selectedValue});
+    // }
   }
 
   cancelSelect() {
     this.setState({
-      selectedValue: this.props.selectedValue,
+      value: this.props.value,
     });
-    this.togglePickerModal(false);
+    this.toggleExpandableModal(false);
   }
 
   appendPropsToChildren() {
     const {children, mode} = this.props;
-    const {selectedValue} = this.state;
+    const {value} = this.state;
     const childrenWithProps = React.Children.map(children,
       child => React.cloneElement(child, {
-        isSelected: PickerPresenter.isItemSelected(child.props.value, selectedValue),
+        isSelected: PickerPresenter.isItemSelected(child.props.value, value),
         onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.pickItem,
       }),
     );
@@ -136,12 +135,37 @@ class Picker extends BaseComponent {
     return childrenWithProps;
   }
 
-  renderPickerModal() {
+  getLabel() {
+    const {value} = this.state;
+    if (_.isArray(value)) {
+      return _.chain(value).map('label').join(', ').value();
+    }
+    return _.get(value, 'label');
+  }
+
+  renderExpandableInput() {
+    const typography = this.getTypography();
+    const color = this.extractColorValue() || Colors.dark10;
+    const label = this.getLabel();
+
+    return (
+      <Text
+        style={[this.styles.input, typography, {color}]}
+        numberOfLines={3}
+        onPress={() => this.toggleExpandableModal(true)}
+      >
+        {label}
+      </Text>
+    );
+  }
+
+  renderExpandableModal() {
     const {mode, enableModalBlur} = this.props;
-    const {showModal} = this.state;
+    // const {showModal} = this.state;
+    const {showExpandableModal} = this.state;
     return (
       <PickerModal
-        visible={showModal}
+        visible={showExpandableModal}
         onCancel={this.cancelSelect}
         onDone={mode === Picker.modes.MULTI ? this.doneMultiSelect : undefined}
         enableModalBlur={enableModalBlur}
@@ -149,36 +173,16 @@ class Picker extends BaseComponent {
         {this.appendPropsToChildren(this.props.children)}
       </PickerModal>);
   }
-
-  render() {
-    const {label, testId} = this.props;
-    return (
-      <TouchableOpacity
-        style={[this.styles.container]}
-        activeOpacity={0.6}
-        onPress={() => this.togglePickerModal(true)}
-        testId={testId}
-      >
-        <Text style={this.styles.label}>
-          {label}
-        </Text>
-
-        {this.renderPickerModal()}
-      </TouchableOpacity>
-    );
-  }
 }
 
-function createStyles() {
-  return StyleSheet.create({
-    container: {
-    },
-    label: {
-      ...Typography.text80,
-      color: Colors.dark10,
-    },
-  });
-}
+// function createStyles() {
+//   return StyleSheet.create({
+//     label: {
+//       ...Typography.text80,
+//       color: Colors.dark10,
+//     },
+//   });
+// }
 
 Picker.Item = PickerItem;
 export default Picker;

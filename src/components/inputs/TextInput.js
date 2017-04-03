@@ -15,6 +15,10 @@ export default class TextInput extends BaseInput {
     ...RNTextInput.propTypes,
     ...BaseInput.propTypes,
     /**
+     * should placeholder have floating behavior
+     */
+    floatingPlaceholder: PropTypes.bool,
+    /**
      * hide text input underline, by default false
      */
     hideUnderline: PropTypes.bool,
@@ -42,7 +46,7 @@ export default class TextInput extends BaseInput {
 
     this.onChangeText = this.onChangeText.bind(this);
     this.onContentSizeChange = this.onContentSizeChange.bind(this);
-    this.animatedFloatingPlaceholder = this.animatedFloatingPlaceholder.bind(this);
+    this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(this);
     this.toggleExpandableModal = this.toggleExpandableModal.bind(this);
     this.onDoneEditingExpandableInput = this.onDoneEditingExpandableInput.bind(this);
 
@@ -51,7 +55,7 @@ export default class TextInput extends BaseInput {
       inputWidth: typography.fontSize * 2,
       widthExtendBreaks: [],
       value: props.value,
-      floatingPlaceholderState: new Animated.Value(props.value ? 1 : 0),
+      floatingPlaceholderState: new Animated.Value(this.hasText(props.value) ? 1 : 0),
       showExpandableModal: false,
     };
   }
@@ -72,9 +76,10 @@ export default class TextInput extends BaseInput {
     return null;
   }
 
-  hasText() {
-    const {value} = this.state;
-    return value && value.length > 0;
+  hasText(value) {
+    return !_.isEmpty(value || this.state.value);
+    // const {value} = this.state;
+    // return value && value.length > 0;
   }
 
   renderPlaceholder() {
@@ -213,14 +218,18 @@ export default class TextInput extends BaseInput {
     this.setState({showExpandableModal: value});
   }
 
-  animatedFloatingPlaceholder() {
-    Animated.spring(
-      this.state.floatingPlaceholderState,
-      {
-        toValue: this.hasText() ? 1 : 0,
-        duration: 150,
-      },
-    ).start();
+  updateFloatingPlaceholderState(withoutAnimation) {
+    if (withoutAnimation) {
+      this.state.floatingPlaceholderState.setValue(this.hasText() ? 1 : 0);
+    } else {
+      Animated.spring(
+        this.state.floatingPlaceholderState,
+        {
+          toValue: this.hasText() ? 1 : 0,
+          duration: 150,
+        },
+      ).start();
+    }
   }
 
   onDoneEditingExpandableInput() {
@@ -238,7 +247,7 @@ export default class TextInput extends BaseInput {
 
     this.setState({
       value: text,
-    }, this.animatedFloatingPlaceholder);
+    }, this.updateFloatingPlaceholderState);
 
     const {widthExtendBreaks, width} = this.state;
     if (text.length < _.last(widthExtendBreaks)) {
@@ -287,6 +296,7 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
       padding: 0,
       textAlign: centered ? 'center' : undefined,
       minWidth: 40,
+      backgroundColor: 'transparent',
     },
     placeholder: {
       position: 'absolute',
