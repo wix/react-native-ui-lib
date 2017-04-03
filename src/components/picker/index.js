@@ -25,7 +25,7 @@ class Picker extends TextInput {
     /**
      * picker current value
      */
-    value: PropTypes.oneOf(ItemType, PropTypes.arrayOf(ItemType)),
+    value: PropTypes.oneOfType(ItemType, PropTypes.arrayOf(ItemType)),
     /**
      * callback for when picker value change
      */
