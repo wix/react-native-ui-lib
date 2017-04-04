@@ -195,6 +195,7 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor, lin
       minWidth: undefined,
       paddingHorizontal: undefined,
       paddingVertical: undefined,
+      borderRadius: BorderRadiuses.br0,
     },
     shadowStyle: {
       shadowColor: '#3082C8',
