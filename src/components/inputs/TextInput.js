@@ -122,13 +122,9 @@ export default class TextInput extends BaseInput {
 
   renderError() {
     const {error} = this.props;
-    if (error) {
-      return (
-        <Text style={this.styles.errorMessage}>{error}</Text>
-      );
-    }
-
-    return null;
+    return (
+      <Text style={this.styles.errorMessage}>{error}</Text>
+    );
   }
 
   renderExpandableModal() {
@@ -206,10 +202,12 @@ export default class TextInput extends BaseInput {
 
     return (
       <View style={[this.styles.container, underlineStyle, containerStyle]}>
-        {this.renderPlaceholder()}
-        {expandable ? this.renderExpandableInput() : this.renderTextInput()}
+        <View style={this.styles.innerContainer}>
+          {this.renderPlaceholder()}
+          {expandable ? this.renderExpandableInput() : this.renderTextInput()}
+          {this.renderExpandableModal()}
+        </View>
         {this.renderError()}
-        {this.renderExpandableModal()}
       </View>
     );
   }
@@ -278,6 +276,8 @@ export default class TextInput extends BaseInput {
 function createStyles({placeholderTextColor, hideUnderline, centered}) {
   return StyleSheet.create({
     container: {
+    },
+    innerContainer: {
       flexDirection: 'row',
       borderBottomWidth: hideUnderline ? 0 : 1,
       borderColor: Colors.dark80,
@@ -310,11 +310,9 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
     errorMessage: {
       color: Colors.red30,
       ...Typography.text90,
-      position: 'absolute',
-      left: 0,
-      right: 0,
-      bottom: -(Typography.text90.lineHeight + 2),
+      height: Typography.text90.lineHeight,
       textAlign: centered ? 'center' : undefined,
+      marginTop: 1,
     },
     expandableModalContent: {
       flex: 1,

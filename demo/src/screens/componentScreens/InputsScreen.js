@@ -3,7 +3,7 @@ import {ScrollView, View, StyleSheet} from 'react-native';
 import {Assets, Constants, Button, Colors, Text, TextInput, TextArea, Typography} from 'react-native-ui-lib';//eslint-disable-line
 
 const LONG_TEXT = 'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer Martín Bollati. In this piece';
-const INPUT_SPACING = 25;
+const INPUT_SPACING = 10;
 export default class InputScreen extends Component {
   constructor(props) {
     super(props);
