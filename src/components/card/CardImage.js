@@ -1,5 +1,7 @@
 import React, {PropTypes} from 'react';
 import {View, Image, StyleSheet} from 'react-native';
+import {Constants} from '../../helpers';
+import {BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 
 export default class CardImage extends BaseComponent {
@@ -15,6 +17,14 @@ export default class CardImage extends BaseComponent {
      * Image height
      */
     height: PropTypes.number,
+    /**
+     * determing the top border radius (for Android)
+     */
+    top: PropTypes.bool,
+    /**
+     * determing the bottom border radius (for Android)
+     */
+    bottom: PropTypes.bool,
     testId: PropTypes.string,
   };
 
@@ -40,16 +50,36 @@ export default class CardImage extends BaseComponent {
   }
 }
 
-function createStyles({height}) {
+function generateBorderRadiusStyle({top, bottom}) {
+  const borderRaidusStyle = {};
+  if (Constants.isAndroid) {
+    if (top) {
+      borderRaidusStyle.borderTopLeftRadius = BorderRadiuses.br10;
+      borderRaidusStyle.borderTopRightRadius = BorderRadiuses.br10;
+    }
+
+    if (bottom) {
+      borderRaidusStyle.borderBottomLeftRadius = BorderRadiuses.br10;
+      borderRaidusStyle.borderBottomRightRadius = BorderRadiuses.br10;
+    }
+  }
+
+  return borderRaidusStyle;
+}
+
+function createStyles({height, top, bottom}) {
+  const borderRadiusStyle = generateBorderRadiusStyle({top, bottom});
   return StyleSheet.create({
     container: {
       height,
+      ...borderRadiusStyle,
     },
     image: {
       width: null,
       height: null,
       flex: 1,
       resizeMode: 'cover',
+      ...borderRadiusStyle,
     },
   });
 }

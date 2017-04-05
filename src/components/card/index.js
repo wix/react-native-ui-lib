@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {Colors, Shadows, BorderRadiuses} from '../../style';
+import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 
 import CardSection from './CardSection';
@@ -63,7 +64,7 @@ function createStyles({width, height}) {
     },
     innerContainer: {
       backgroundColor: Colors.white,
-      borderRadius: BorderRadiuses.br40,
+      borderRadius: Constants.isIOS ? BorderRadiuses.br40 : BorderRadiuses.br10,
       overflow: 'hidden',
       flexGrow: 1,
     },

@@ -16,7 +16,7 @@ export default class ButtonsScreen extends Component {
           const statusColor = post.status === 'Published' ? Colors.green30 : Colors.orange30;
           return (
             <Card key={i} containerStyle={{marginBottom: 15}} onPress={() => console.log('press on a card')}>
-              <Card.Image imageSource={post.coverImage}/>
+              <Card.Image top imageSource={post.coverImage}/>
               <Card.Section body>
                 <Card.Section>
                   <Text text40 color={Colors.dark10}>{post.title}</Text>
