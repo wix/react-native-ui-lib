@@ -17,6 +17,7 @@ import Style from './style';
 import Text from './components/text';
 import * as Inputs from './components/inputs';
 import Helpers from './helpers';
+import View from './components/view';
 
 module.exports = {
   ...Animations,
@@ -38,4 +39,5 @@ module.exports = {
   Stepper,
   ...Style,
   Text,
+  View,
 };
