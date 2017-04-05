@@ -74,6 +74,16 @@ export default class BaseComponent extends Component {
     return color;
   }
 
+  extractBackgroundColorValue() {
+    let backgroundColor;
+    _.forEach(Colors, (value, key) => {
+      if (this.props[`background-${key}`] === true) {
+        backgroundColor = value;
+      }
+    });
+    return backgroundColor;
+  }
+
   extractTextProps(props) {
     return _.pick(props, [..._.keys(Typography), ..._.keys(Colors), 'color']);
   }

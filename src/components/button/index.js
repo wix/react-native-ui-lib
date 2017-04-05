@@ -137,6 +137,7 @@ export default class Button extends BaseComponent {
     const {onPress, disabled, link, enableShadow, style, testId} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const shadowStyle = enableShadow ? this.styles.shadowStyle : {};
+    const backgroundColor = this.extractBackgroundColorValue();
 
     return (
       <TouchableOpacity
@@ -152,6 +153,7 @@ export default class Button extends BaseComponent {
         <View
           style={[
             this.styles.innerContainer,
+            backgroundColor && {backgroundColor},
             disabled && this.styles.innerContainerDisabled,
             link && this.styles.innerContainerLink,
             style,
