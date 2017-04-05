@@ -20,6 +20,7 @@ export default class PlaygroundScreen extends Component {
       <View style={styles.container}>
         <Card style={{width: CARD_WIDTH, height: CARD_HEIGHT}}>
           <Card.Image
+            top
             imageSource={{uri: product.mediaUrl}}
             height={183} style={{position: 'absolute', top: 0, left: 0, right: 0}}/>
           <Card.Section
@@ -51,4 +52,4 @@ const styles = StyleSheet.create({
 });
 
 
-Navigation.registerComponent('example.PlaygroundScreen', () => PlaygroundScreen);
+Navigation.registerComponent('unicorn.PlaygroundScreen', () => PlaygroundScreen);

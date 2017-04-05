@@ -27,6 +27,7 @@ export class ProducItem extends SelectableComponent {
         onPress={this.onSelect}
       >
         <Card.Image
+          top
           imageSource={props.imageSource}
           height={183} style={{position: 'absolute', top: 0, left: 0, right: 0}}
         />

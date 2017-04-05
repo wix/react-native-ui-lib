@@ -54,19 +54,20 @@ class Card extends BaseComponent {
 }
 
 function createStyles({width, height}) {
-  // const customBorderRadius = _.isString(borderRadius) ? BorderRadiuses[borderRadius] : borderRadius;
   return StyleSheet.create({
     container: {
       width,
       height,
       backgroundColor: 'transparent',
       ...Shadows.white40.bottom,
+      padding: Constants.isAndroid ? 2 : undefined,
     },
     innerContainer: {
       backgroundColor: Colors.white,
       borderRadius: Constants.isIOS ? BorderRadiuses.br40 : BorderRadiuses.br10,
       overflow: 'hidden',
       flexGrow: 1,
+      elevation: 2,
     },
   });
 }
