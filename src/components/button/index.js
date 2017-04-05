@@ -95,19 +95,23 @@ export default class Button extends BaseComponent {
   }
 
   renderIcon() {
-    const {iconSource, label} = this.props;
+    const {iconSource, label, link, disabled} = this.props;
     if (iconSource) {
       return (
         <Image
           source={iconSource}
-          style={[this.styles.icon, label && this.styles.iconSpacing]}
+          style={[
+            this.styles.icon,
+            (link && disabled) && this.styles.iconDisabled,
+            label && this.styles.iconSpacing,
+          ]}
         />);
     }
     return null;
   }
 
   renderLabel() {
-    const {label, labelStyle, testId} = this.props;
+    const {label, labelStyle, link, disabled} = this.props;
     const typography = this.extractTypographyValue();
     const color = this.extractColorValue();
     if (label) {
@@ -115,12 +119,12 @@ export default class Button extends BaseComponent {
         <Text
           style={[
             this.styles.text,
+            (link && disabled) && this.styles.textDisabled,
             color && {color},
             {...typography},
             labelStyle,
           ]}
           numberOfLines={1}
-          testID={testId}
         >
           {Constants.isAndroid ? _.toUpper(label) : label}
         </Text>
@@ -130,7 +134,7 @@ export default class Button extends BaseComponent {
   }
 
   render() {
-    const {onPress, disabled, link, enableShadow, style} = this.props;
+    const {onPress, disabled, link, enableShadow, style, testId} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const shadowStyle = enableShadow ? this.styles.shadowStyle : {};
 
@@ -143,11 +147,12 @@ export default class Button extends BaseComponent {
         activeOpacity={0.6}
         onPress={onPress}
         disabled={disabled}
+        testId={testId}
       >
         <View
           style={[
             this.styles.innerContainer,
-            disabled && this.styles.disabled,
+            disabled && this.styles.innerContainerDisabled,
             link && this.styles.innerContainerLink,
             style,
           ]}
@@ -191,11 +196,15 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor, lin
       borderRadius: customBorderRadius,
       ...containerStyleBySize[size],
     },
+    innerContainerDisabled: {
+      backgroundColor: Colors.dark60,
+    },
     innerContainerLink: {
       minWidth: undefined,
       paddingHorizontal: undefined,
       paddingVertical: undefined,
       borderRadius: BorderRadiuses.br0,
+      backgroundColor: undefined,
     },
     shadowStyle: {
       shadowColor: '#3082C8',
@@ -215,13 +224,16 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor, lin
     textSmall: {
       ...Typography.text80,
     },
-    disabled: {
-      backgroundColor: Colors.dark60,
+    textDisabled: {
+      color: Colors.dark60,
     },
     icon: {
       width: 18,
       resizeMode: 'contain',
       tintColor: color,
+    },
+    iconDisabled: {
+      tintColor: Colors.dark60,
     },
     iconSpacing: {
       marginRight: 7,

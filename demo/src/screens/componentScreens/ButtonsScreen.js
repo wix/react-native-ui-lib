@@ -37,6 +37,13 @@ export default class ButtonsScreen extends Component {
           containerStyle={{marginBottom: ButtonSpace}}
         />
 
+        <Button
+          label={'Disabled'}
+          disabled
+          onPress={() => Alert.alert('Disabled')}
+          containerStyle={{marginBottom: ButtonSpace}}
+        />
+
         <Text style={styles.header}>Do you have it in red?</Text>
         <Button
           label={'Bold!'}
@@ -46,6 +53,13 @@ export default class ButtonsScreen extends Component {
         />
         <Button
           label={'Red Button'}
+          onPress={() => Alert.alert('Button #3')}
+          backgroundColor={Colors.red30}
+          containerStyle={{marginBottom: ButtonSpace}}
+        />
+        <Button
+          label={'Dark Label'}
+          dark10
           onPress={() => Alert.alert('Button #3')}
           backgroundColor={Colors.red30}
           containerStyle={{marginBottom: ButtonSpace}}
@@ -125,6 +139,15 @@ export default class ButtonsScreen extends Component {
           containerStyle={{marginBottom: ButtonSpace}}
           iconSource={plusIcon}
           label="link icon"
+        />
+
+        <Button
+          text90
+          link
+          disabled
+          containerStyle={{marginBottom: ButtonSpace}}
+          iconSource={plusIcon}
+          label="disabled link"
         />
 
         <Button blue30 label="link button" link/>
