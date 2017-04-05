@@ -10,6 +10,7 @@
     "start": "export DEV_MODE=true && react-native start",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
+    "pretest": "npm run lint",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint src -c .eslintrc",
