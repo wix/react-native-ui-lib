@@ -1,55 +1,50 @@
 import {Navigation} from 'react-native-navigation';
 import React, {Component} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {Assets, Text, Constants, Card, Button, Colors, Typography} from 'react-native-ui-lib';//eslint-disable-line
-
-import products from '../data/products';
-
-const SCREEN_PADDING = 15;
-const CARD_WIDTH = (Constants.screenWidth - (SCREEN_PADDING * 2)) / 2;
-const CARD_HEIGHT = 210;
-
+import {View, TextInput, Text, Button} from 'react-native-ui-lib';//eslint-disable-line
 
 export default class PlaygroundScreen extends Component {
 
-  static id = 'example.Playground'
+  static id = 'example.Playground';
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+    };
+
+    this.updateUsername = this.updateUsername.bind(this);
+  }
+
+  updateUsername(username) {
+    this.setState({
+      username,
+    });
+  }
 
   render() {
-    const product = products[1];
+    const {username} = this.state;
     return (
-      <View style={styles.container}>
-        <Card style={{width: CARD_WIDTH, height: CARD_HEIGHT}}>
-          <Card.Image
-            top
-            imageSource={{uri: product.mediaUrl}}
-            height={183} style={{position: 'absolute', top: 0, left: 0, right: 0}}/>
-          <Card.Section
-            body
-            enableBlur
-            blurOptions={{blurType: 'xlight'}}
-            style={{position: 'absolute', paddingVertical: 12, bottom: 0, left: 0, right: 0}}
-          >
-            <Card.Section footer style={{justifyContent: 'center'}}>
-              <Card.Item column style={{alignItems: 'center'}}>
-                <Text text70 dark10 style={{fontWeight: '400', marginBottom: 4}}>{product.name}</Text>
-                <Text text70 dark10 style={{marginBottom: 4}}>{product.formattedPrice}</Text>
-                <Text text90 dark50>{product.inventory.quantity} In Stock</Text>
-              </Card.Item>
-            </Card.Section>
-          </Card.Section>
-        </Card>
+      <View flex paddingH-25 paddingT-120>
+        <Text blue50 text20>Welcome</Text>
+        <TextInput text50 placeholder="username" dark10 value={username} onChangeText={this.updateUsername}/>
+        <TextInput text50 placeholder="password" secureTextEntry dark10/>
+        <View marginT-100 center>
+          <Button text70 white background-orange30 label="Login"/>
+          <Button link text70 orange30 label="Sign Up" marginT-20/>
+        </View>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 15,
-    backgroundColor: Colors.dark80,
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     padding: 15,
+//     backgroundColor: Colors.dark80,
+//   },
+// });
 
 
 Navigation.registerComponent('unicorn.PlaygroundScreen', () => PlaygroundScreen);

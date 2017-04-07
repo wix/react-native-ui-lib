@@ -3,13 +3,15 @@ import {Typography, Colors, Button, Badge, ThemeManager} from 'react-native-ui-l
 import * as Animatable from 'react-native-animatable';
 import './screens';
 
-// Typography.loadTypographies({
-//   text15: {fontSize: 58, fontWeight: '100', lineHeight: Math.floor(58 * 1.4)}
-// });
+Typography.loadTypographies({
+  h1: {fontSize: 58, fontWeight: '300', lineHeight: 80},
+  h2: {fontSize: 46, fontWeight: '300', lineHeight: 64},
+});
 
-// Colors.loadColors({
-//   pink30: '#FF69B4',
-// });
+Colors.loadColors({
+  pink: '#FF69B4',
+  gold: '#FFD700',
+});
 
 // ThemeManager.setTheme({
 //   primaryColor: Colors.purple30,

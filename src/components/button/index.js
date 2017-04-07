@@ -137,13 +137,14 @@ export default class Button extends BaseComponent {
     const {onPress, disabled, link, enableShadow, style, testId} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const shadowStyle = enableShadow ? this.styles.shadowStyle : {};
-    const backgroundColor = this.extractBackgroundColorValue();
+    const {backgroundColor, margins} = this.state;
 
     return (
       <TouchableOpacity
         style={[
           this.styles.container,
           shadowStyle,
+          margins,
           containerStyle]}
         activeOpacity={0.6}
         onPress={onPress}

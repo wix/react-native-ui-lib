@@ -6,7 +6,6 @@ export default class View extends BaseComponent {
 
   static displayName = 'Text';
   static propTypes = {
-    row: PropTypes.bool,
     ...RNView.propTypes,
     ...BaseComponent.propTypes,
     testId: PropTypes.string,
@@ -17,7 +16,7 @@ export default class View extends BaseComponent {
   }
 
   render() {
-    const backgroundColor = this.extractBackgroundColorValue();
+    const {backgroundColor, paddings, margins, alignments, flex} = this.state;
     const {style, ...others} = this.props;
     return (
       <RNView
@@ -25,6 +24,10 @@ export default class View extends BaseComponent {
         style={[
           this.styles.container,
           backgroundColor && {backgroundColor},
+          flex && {flex},
+          paddings,
+          margins,
+          alignments,
           style,
         ]}
       >
@@ -34,10 +37,9 @@ export default class View extends BaseComponent {
   }
 }
 
-function createStyles({row}) {
+function createStyles() {
   return StyleSheet.create({
     container: {
-      flexDirection: row ? 'row' : undefined,
     },
   });
 }

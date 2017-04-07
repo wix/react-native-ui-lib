@@ -20,6 +20,10 @@ export default class BaseComponent extends Component {
     if (!this.styles) {
       this.generateStyles();
     }
+
+    this.state = {
+      ...this.extractStyleProps(),
+    };
   }
 
   styles;
@@ -82,6 +86,125 @@ export default class BaseComponent extends Component {
       }
     });
     return backgroundColor;
+  }
+
+  extractPaddingValues() {
+    const PADDING_VARIATIONS = {
+      padding: 'padding',
+      paddingL: 'paddingLeft',
+      paddingT: 'paddingTop',
+      paddingR: 'paddingRight',
+      paddingB: 'paddingBottom',
+      paddingH: 'paddingHorizontal',
+      paddingV: 'paddingVertical',
+    };
+    const KEY_PATTERN = /padding[LTRBHV]?-[0-9]*/;
+    const paddings = {};
+    const paddingPropsKeys = _.chain(this.props).keys(this.props).filter(key => KEY_PATTERN.test(key)).value();
+
+    _.forEach(paddingPropsKeys, (key) => {
+      const [paddingKey, paddingValue] = key.split('-');
+      const paddingVariation = PADDING_VARIATIONS[paddingKey];
+      if (!isNaN(paddingValue)) {
+        paddings[paddingVariation] = Number(paddingValue);
+      }
+    });
+
+    return paddings;
+  }
+
+  extractMarginValues() {
+    const MARGIN_VARIATIONS = {
+      margin: 'margin',
+      marginL: 'marginLeft',
+      marginT: 'marginTop',
+      marginR: 'marginRight',
+      marginB: 'marginBottom',
+      marginH: 'marginHorizontal',
+      marginV: 'marginVertical',
+    };
+    const KEY_PATTERN = /margin[LTRBHV]?-[0-9]*/;
+    const margins = {};
+    const marginPropsKeys = _.chain(this.props).keys(this.props).filter(key => KEY_PATTERN.test(key)).value();
+
+    _.forEach(marginPropsKeys, (key) => {
+      const [marginKey, marginValue] = key.split('-');
+      const paddingVariation = MARGIN_VARIATIONS[marginKey];
+      if (!isNaN(marginValue)) {
+        margins[paddingVariation] = Number(marginValue);
+      }
+    });
+
+    return margins;
+  }
+
+  extractAlignmentsValues() {
+    const {row, center} = this.props;
+    const alignments = {};
+
+    const alignmentRules = {};
+    if (row) {
+      alignments.flexDirection = 'row';
+      alignmentRules.justifyContent = ['left', 'right', 'centerH'];
+      alignmentRules.alignItems = ['top', 'bottom', 'centerV'];
+    } else {
+      alignmentRules.justifyContent = ['top', 'bottom', 'centerV'];
+      alignmentRules.alignItems = ['left', 'right', 'centerH'];
+    }
+
+    _.forEach(alignmentRules, (positions, attribute) => {
+      _.forEach(positions, (position) => {
+        if (this.props[position]) {
+          if (_.includes(['top', 'left'], position)) {
+            alignments[attribute] = 'flex-start';
+          } else if (_.includes(['bottom', 'right'], position)) {
+            alignments[attribute] = 'flex-end';
+          } else if (_.includes(['centerH', 'centerV'], position)) {
+            alignments[attribute] = 'center';
+          }
+        }
+      });
+    });
+
+    if (center) {
+      alignments.justifyContent = 'center';
+      alignments.alignItems = 'center';
+    }
+
+    return alignments;
+  }
+
+  extractFlexValue() {
+    const KEY_PATTERN = /flex-?[0-9]*/;
+    const flexPropKey = _.chain(this.props)
+                           .keys(this.props)
+                           .filter(key => KEY_PATTERN.test(key))
+                           .last()
+                           .value();
+    if (flexPropKey) {
+      const value = flexPropKey.split('-').pop();
+      if (value === 'flex' || value === '') {
+        return 1;
+      } else if (!isNaN(value)) {
+        return Number(value);
+      }
+    }
+  }
+
+  extractStyleProps() {
+    const backgroundColor = this.extractBackgroundColorValue();
+    const paddings = this.extractPaddingValues();
+    const margins = this.extractMarginValues();
+    const alignments = this.extractAlignmentsValues();
+    const flex = this.extractFlexValue();
+
+    return {
+      backgroundColor,
+      paddings,
+      margins,
+      alignments,
+      flex,
+    };
   }
 
   extractTextProps(props) {
