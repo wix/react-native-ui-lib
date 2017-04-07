@@ -24,7 +24,8 @@ better lookings apps (:
 
 <img style="float: right; margin-top: -70px" src="https://cloud.githubusercontent.com/assets/1780255/24791489/f5db80f4-1b82-11e7-8538-5a3388fb4345.png" width=300 /> 
 
-``` import React, {Component} from 'react';
+```javascript 
+import React, {Component} from 'react';
 import {View, TextInput, Text, Button} from 'react-native-ui-lib';
 
 export default class Example extends Component {
