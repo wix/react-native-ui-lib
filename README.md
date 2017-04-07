@@ -129,7 +129,7 @@ Same goes here... space, stretch and color in a more readable way. <br>
 
 - **margin-[value]**, **marginL-[value]**, **marginT-[value]**, **marginR-[value]**, **marginB-[value]**, **marginH-[value]**, **marginV-[value]**
 
-Check out [this example]() where we use most of these props
+Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where we use most of these props
 
 ## Components (WIP)
 - Avatar
