@@ -31,6 +31,10 @@ export default class TextInput extends BaseInput {
      */
     error: PropTypes.string,
     /**
+     * should the input component support error messages
+     */
+    enableErrors: PropTypes.bool,
+    /**
      * should the input expand to another text area modal
      */
     expandable: PropTypes.bool,
@@ -39,6 +43,7 @@ export default class TextInput extends BaseInput {
 
   static defaultProps = {
     placeholderTextColor: Colors.dark60,
+    enableErrors: true,
   }
 
   constructor(props) {
@@ -121,10 +126,12 @@ export default class TextInput extends BaseInput {
   }
 
   renderError() {
-    const {error} = this.props;
-    return (
-      <Text style={this.styles.errorMessage}>{error}</Text>
-    );
+    const {enableErrors, error} = this.props;
+    if (enableErrors) {
+      return (
+        <Text style={this.styles.errorMessage}>{error}</Text>
+      );
+    }
   }
 
   renderExpandableModal() {
