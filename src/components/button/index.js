@@ -22,6 +22,10 @@ export default class Button extends BaseComponent {
      */
     iconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
+     * Icon image style
+     */
+    iconStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
      * Color of the button background
      */
     backgroundColor: PropTypes.string,
@@ -95,7 +99,7 @@ export default class Button extends BaseComponent {
   }
 
   renderIcon() {
-    const {iconSource, label, link, disabled} = this.props;
+    const {iconSource, iconStyle, label, link, disabled} = this.props;
     if (iconSource) {
       return (
         <Image
@@ -104,6 +108,7 @@ export default class Button extends BaseComponent {
             this.styles.icon,
             (link && disabled) && this.styles.iconDisabled,
             label && this.styles.iconSpacing,
+            iconStyle,
           ]}
         />);
     }
