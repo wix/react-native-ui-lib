@@ -19,7 +19,7 @@ export default class PageControl extends BaseComponent {
     /**
      * Additional styles for the top container
      */
-    containerStyle: PropTypes.object,
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * Total number of pages
      */
