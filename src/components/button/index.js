@@ -185,7 +185,7 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor, lin
   const customBorderRadius = _.isString(borderRadius) ? BorderRadiuses[borderRadius] : borderRadius;
   const showBorder = outline && !link;
   const haveBackground = !outline && !link;
-  const textTypography = size === 'large' ? Typography.text70 : Typography.text80; 
+  const textTypography = size === 'large' ? Typography.text70 : Typography.text80;
   return StyleSheet.create({
     container: {
       backgroundColor: 'transparent',
