@@ -185,6 +185,7 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor, lin
   const customBorderRadius = _.isString(borderRadius) ? BorderRadiuses[borderRadius] : borderRadius;
   const showBorder = outline && !link;
   const haveBackground = !outline && !link;
+  const textTypography = size === 'large' ? Typography.text70 : Typography.text80; 
   return StyleSheet.create({
     container: {
       backgroundColor: 'transparent',
@@ -220,7 +221,7 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor, lin
       flex: 0,
       flexDirection: 'row',
       color: (outline || link) ? Colors.dark10 : ThemeManager.CTATextColor,
-      ...Typography.text70,
+      ...textTypography,
       fontWeight: '100',
       paddingHorizontal: link ? 0 : textStyleBySize[size].paddingHorizontal,
     },

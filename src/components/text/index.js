@@ -25,7 +25,8 @@ export default class Text extends BaseComponent {
     const color = this.props.color || this.extractColorValue();
     const typography = this.extractTypographyValue();
     const {style, ...others} = this.props;
-    const textStyle = [this.styles.container, typography, color && {color}, style];
+    const {margins} = this.state;
+    const textStyle = [this.styles.container, typography, color && {color}, margins, style];
     return (
       <RNText {...others} style={textStyle}>
         {this.props.children}

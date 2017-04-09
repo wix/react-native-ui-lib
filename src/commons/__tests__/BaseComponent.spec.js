@@ -6,7 +6,9 @@ import {Colors} from '../../style';
 describe('BaseComponent', () => {
   describe('background modifiers', () => {
     it('should return color value according to background-?? prop that was sent', () => {
-      const uut = new BaseComponent({'background-red30': true});
+      let uut = new BaseComponent({'background-red30': true});
+      expect(uut.extractBackgroundColorValue()).toBe(Colors.red30);
+      uut = new BaseComponent({'bg-red30': true});
       expect(uut.extractBackgroundColorValue()).toBe(Colors.red30);
     });
 

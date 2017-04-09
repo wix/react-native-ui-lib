@@ -81,7 +81,7 @@ export default class BaseComponent extends Component {
   extractBackgroundColorValue() {
     let backgroundColor;
     _.forEach(Colors, (value, key) => {
-      if (this.props[`background-${key}`] === true) {
+      if (this.props[`background-${key}`] === true || this.props[`bg-${key}`] === true) {
         backgroundColor = value;
       }
     });
@@ -103,10 +103,12 @@ export default class BaseComponent extends Component {
     const paddingPropsKeys = _.chain(this.props).keys(this.props).filter(key => KEY_PATTERN.test(key)).value();
 
     _.forEach(paddingPropsKeys, (key) => {
-      const [paddingKey, paddingValue] = key.split('-');
-      const paddingVariation = PADDING_VARIATIONS[paddingKey];
-      if (!isNaN(paddingValue)) {
-        paddings[paddingVariation] = Number(paddingValue);
+      if (this.props[key] === true) {
+        const [paddingKey, paddingValue] = key.split('-');
+        const paddingVariation = PADDING_VARIATIONS[paddingKey];
+        if (!isNaN(paddingValue)) {
+          paddings[paddingVariation] = Number(paddingValue);
+        }
       }
     });
 
@@ -128,10 +130,12 @@ export default class BaseComponent extends Component {
     const marginPropsKeys = _.chain(this.props).keys(this.props).filter(key => KEY_PATTERN.test(key)).value();
 
     _.forEach(marginPropsKeys, (key) => {
-      const [marginKey, marginValue] = key.split('-');
-      const paddingVariation = MARGIN_VARIATIONS[marginKey];
-      if (!isNaN(marginValue)) {
-        margins[paddingVariation] = Number(marginValue);
+      if (this.props[key] === true) {
+        const [marginKey, marginValue] = key.split('-');
+        const paddingVariation = MARGIN_VARIATIONS[marginKey];
+        if (!isNaN(marginValue)) {
+          margins[paddingVariation] = Number(marginValue);
+        }
       }
     });
 
