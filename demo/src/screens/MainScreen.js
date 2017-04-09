@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.dark70,
   },
   sectionContainer: {
-    backgroundColor: Colors.dark20,
+    backgroundColor: Colors.violet40,
     paddingVertical: 4,
     paddingLeft: 12,
   },
