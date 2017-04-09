@@ -4,6 +4,7 @@ import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 
+// todo: add finisher animation (check icon animation or something)
 export default class AnimatedScanner extends BaseComponent {
 
   static displayName = 'AnimatedScanner';

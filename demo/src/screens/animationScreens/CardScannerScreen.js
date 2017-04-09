@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Animated, Easing} from 'react-native';
 import _ from 'lodash';
-import {Assets, Constants, Card, Button, Colors, Typography, Text, ScannerAnimation} from 'react-native-ui-lib';//eslint-disable-line
+import {Assets, Constants, Card, Button, Colors, Typography, Text, AnimatedScanner} from 'react-native-ui-lib';//eslint-disable-line
 import posts from '../../data/posts';
 
 const featureIcon = require('../../assets/icons/star.png');
@@ -59,7 +59,7 @@ export default class CardScannerScreen extends Component {
                 </Card.Item>
               </Card.Section>
             </Card.Section>
-            <ScannerAnimation progress={this.state.progress}/>
+            <AnimatedScanner progress={this.state.progress}/>
           </Card>
 
           {this.state.started && JSON.stringify(this.state.progress) !== '100' &&
