@@ -1,5 +1,6 @@
 import {Navigation} from 'react-native-navigation';
 import AvatarsScreen from './AvatarsScreen';
+import ActionBarScreen from './ActionBarScreen';
 import AnimatedImageScreen from './AnimatedImageScreen';
 import ButtonsScreen from './ButtonsScreen';
 import BadgesScreen from './BadgesScreen';
@@ -10,6 +11,7 @@ import InputsScreen from './InputsScreen';
 import PageControlScreen from './PageControlScreen';
 
 Navigation.registerComponent('unicorn.components.AvatarsScreen', () => AvatarsScreen);
+Navigation.registerComponent('unicorn.components.ActionBarScreen', () => ActionBarScreen);
 Navigation.registerComponent('unicorn.components.AnimatedImageScreen', () => AnimatedImageScreen);
 Navigation.registerComponent('unicorn.components.ButtonsScreen', () => ButtonsScreen);
 Navigation.registerComponent('unicorn.components.BadgesScreen', () => BadgesScreen);
