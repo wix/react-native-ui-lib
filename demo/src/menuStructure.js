@@ -15,6 +15,7 @@ export const navigationData = {
     {title: 'Connection Status Bar', tags: 'connection status bar', screen: 'unicorn.components.ConnectionStatusBar'},
     {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
     {title: 'Form Controls', tags: 'form stepper', screen: 'unicorn.components.FormScreen'},
+    {title: 'Action Bar', tags: 'action bar floating bottom', screen: 'unicorn.components.ActionBarScreen'},
   ],
   Form: [
     {title: 'Inputs', tags: 'text input form', screen: 'unicorn.components.InputsScreen'},
