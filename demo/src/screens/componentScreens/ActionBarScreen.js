@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import _ from 'lodash';
-import {View, ActionBar, Constants, Colors, Typography, PageControl} from 'react-native-ui-lib';//eslint-disable-line
+import {View, ActionBar, Constants, Colors, Typography, PageControl, Carousel} from 'react-native-ui-lib';//eslint-disable-line
 
 import cameraSelected from '../../assets/icons/cameraSelected.png';
 import video from '../../assets/icons/video.png';
@@ -16,14 +16,6 @@ export default class ActionBarScreen extends Component {
     this.state = {currentPage: 0};
   }
 
-  setCurrentPage(offsetX) {
-    if (offsetX >= 0) {
-      this.setState({
-        currentPage: Math.floor(offsetX / Constants.screenWidth),
-      });
-    }
-  }
-
   render() {
     return (
       <View flex bg-dark80>
@@ -35,16 +27,10 @@ export default class ActionBarScreen extends Component {
           size={15}
         />
 
-        <ScrollView
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onScroll={(event) => {
-            this.setCurrentPage(event.nativeEvent.contentOffset.x);
-          }}
-          style={{flex: 1}}
+        <Carousel
+          onChangePage={currentPage => this.setState({currentPage})}
+          initialPage={this.state.currentPage}
         >
-
           <View style={styles.page}>
             <ActionBar
               actions={[
@@ -60,9 +46,9 @@ export default class ActionBarScreen extends Component {
               marginB-10
               style={{backgroundColor: Colors.blue30}}
               actions={[
-                {label: 'Hide', onPress: () => alert('delete'), white: true},
-                {label: 'Add Discount', onPress: () => alert('replace photo'), white: true},
-                {label: 'Duplicate', onPress: () => alert('edit'), white: true},
+                {label: 'Hide', onPress: () => alert('hide'), white: true},
+                {label: 'Add Discount', onPress: () => alert('add discount'), white: true},
+                {label: 'Duplicate', onPress: () => alert('duplicate'), white: true},
               ]}
             />
           </View>
@@ -104,7 +90,7 @@ export default class ActionBarScreen extends Component {
             />
           </View>
 
-        </ScrollView>
+        </Carousel>
       </View>
     );
   }
