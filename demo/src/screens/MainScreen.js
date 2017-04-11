@@ -24,10 +24,6 @@ export default class UiLibExplorerMenu extends Component {
     };
   }
 
-  componentDidMount() {
-    this.props.navigator.push({screen: 'example.lists.BasicListScreen'});
-  }
-
   openScreen(row) {
     const {navigator} = this.props;
     navigator.push({
