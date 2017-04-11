@@ -3,6 +3,7 @@ import Avatar from './avatar';
 import Badge from './badge';
 import Button from './button';
 import Card from './card';
+import Carousel from './carousel';
 import ConnectionStatusBar from './connectionStatusBar';
 import Inputs from './inputs';
 import ListItem from './listItem';
@@ -18,6 +19,7 @@ module.exports = {
   Badge,
   Button,
   Card,
+  Carousel,
   ConnectionStatusBar,
   ...Inputs,
   ListItem,
