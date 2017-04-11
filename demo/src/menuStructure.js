@@ -24,7 +24,7 @@ export const navigationData = {
     {title: 'State Screen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
     {title: 'Loading Screen', tags: 'loading screen', screen: 'unicorn.screens.LoadingScreen'},
   ],
-  List: [
+  Lists: [
     {title: 'Contacts List', tags: 'list contacts', screen: 'unicorn.lists.ContactsListScreen'},
     {title: 'Conversation List', tags: 'list conversation', screen: 'unicorn.lists.ConversationListScreen'},
     {title: 'Grid List', tags: 'list grid', screen: 'unicorn.lists.GridListScreen'},
