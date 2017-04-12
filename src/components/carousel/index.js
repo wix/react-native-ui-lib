@@ -1,9 +1,8 @@
 import React, {PropTypes} from 'react';
-import {ScrollView, StyleSheet, InteractionManager} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
 import View from '../view';
-import {Typography, ThemeManager, BorderRadiuses, Colors} from '../../style';
 import {Constants} from '../../helpers';
 import * as presenter from './CarouselPresenter';
 
@@ -50,8 +49,6 @@ export default class Carousel extends BaseComponent {
         if (currentPage !== newPage) {
           _.invoke(this.props, 'onChangePage', newPage, currentPage);
         }
-
-
       });
 
       if (presenter.isOutOfBounds(offsetX, this.props)) {
@@ -92,7 +89,7 @@ export default class Carousel extends BaseComponent {
   }
 
   render() {
-    const {containerStyle, pageWidth} = this.props;
+    const {containerStyle} = this.props;
     return (
       <View flex style={containerStyle}>
         <ScrollView
