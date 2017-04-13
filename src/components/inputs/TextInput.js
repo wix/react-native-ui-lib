@@ -66,9 +66,11 @@ export default class TextInput extends BaseInput {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      value: nextProps.value,
-    }, this.updateFloatingPlaceholderState);
+    if (nextProps.value !== this.props.value) {
+      this.setState({
+        value: nextProps.value,
+      }, this.updateFloatingPlaceholderState);
+    }
   }
 
   generateStyles() {
