@@ -1,7 +1,7 @@
 {
   "name": "react-native-ui-lib",
   "version": "1.0.15",
-  "main": "src/index.js",
+  "main": "index.js",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
