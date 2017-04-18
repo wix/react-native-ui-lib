@@ -17,7 +17,7 @@ export default class View extends BaseComponent {
 
   render() {
     const {backgroundColor, paddings, margins, alignments, flex} = this.state;
-    const {style, ...others} = this.props;
+    const {style, left, top, right, bottom, ...others} = this.props;
     return (
       <RNView
         {...others}

@@ -24,9 +24,12 @@ export default class PlaygroundScreen extends Component {
 
   render() {
     const {username} = this.state;
+
     return (
       <View flex paddingH-25 paddingT-120>
-        <Text blue50 text20>Welcome</Text>
+        <View>
+          <Text left blue50 text20>Welcome</Text>
+        </View>
         <TextInput text50 placeholder="username" dark10 value={username} onChangeText={this.updateUsername}/>
         <TextInput text50 placeholder="password" secureTextEntry dark10/>
         <View marginT-100 center>
