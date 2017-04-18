@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react';
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, Image} from 'react-native';
 import {LoaderScreen} from 'react-native-ui-lib';//eslint-disable-line
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 import * as Assets from '../../assets';
 import {Colors} from '../../style';
+import View from '../../components/view';
 
 import Button from '../../components/button';
 import Text from '../../components/text';
@@ -38,8 +39,8 @@ export default class TopBar extends BaseComponent {
     if (onDone && (doneLabel || doneIcon)) {
       return (
         <Button link onPress={onDone}>
-          <Image style={this.styles.icon} source={doneIcon}/>
-          <Text blue30 text70>{doneLabel}</Text>
+          {doneIcon && <Image style={this.styles.icon} source={doneIcon}/>}
+          {doneLabel && <Text numberOfLines={1} blue30 text70>{doneLabel}</Text>}
         </Button>
       );
     }
@@ -51,8 +52,8 @@ export default class TopBar extends BaseComponent {
     if (onCancel && (cancelLabel || cancelIcon)) {
       return (
         <Button link onPress={onCancel}>
-          <Image style={this.styles.icon} source={cancelIcon}/>
-          <Text blue30 text70>{cancelLabel}</Text>
+          {cancelIcon && <Image style={this.styles.icon} source={cancelIcon}/>}
+          {cancelLabel && <Text numberOfLines={1} blue30 text70>{cancelLabel}</Text>}
         </Button>
       );
     }
@@ -64,13 +65,13 @@ export default class TopBar extends BaseComponent {
 
     return (
       <View style={this.styles.container}>
-        <View style={[this.styles.part, this.styles.leftPart]}>
+        <View row flex bottom paddingL-15>
           {this.renderCancel()}
         </View>
-        <View style={[this.styles.part, this.styles.middlePart]}>
-          <Text text70 style={{fontWeight: '500'}}>{title}</Text>
+        <View row flex-3 bottom centerH>
+          <Text numberOfLines={1} text70 style={this.styles.title}>{title}</Text>
         </View>
-        <View style={[this.styles.part, this.styles.rightPart]}>
+        <View row flex bottom right paddingR-15>
           {this.renderDone()}
         </View>
       </View>
@@ -84,25 +85,14 @@ function createStyles() {
       flexDirection: 'row',
       height: 32 + Constants.statusBarHeight,
     },
-    part: {
-      flex: 1,
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-    },
-    leftPart: {
-      paddingLeft: 20,
-    },
-    middlePart: {
-      justifyContent: 'center',
-    },
-    rightPart: {
-      justifyContent: 'flex-end',
-      paddingRight: 20,
+    title: {
+      fontWeight: '500',
     },
     icon: {
       width: 16,
       height: 16,
       tintColor: Colors.dark10,
+      marginBottom: 2,
     },
   });
 }

@@ -23,6 +23,7 @@ export const navigationData = {
   Screens: [
     {title: 'State Screen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
     {title: 'Loading Screen', tags: 'loading screen', screen: 'unicorn.screens.LoadingScreen'},
+    {title: 'Modal Screen', tags: 'modal topbar screen', screen: 'unicorn.screens.ModalScreen'},
   ],
   Lists: [
     {title: 'Contacts List', tags: 'list contacts', screen: 'unicorn.lists.ContactsListScreen'},
