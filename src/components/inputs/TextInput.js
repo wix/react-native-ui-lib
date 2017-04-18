@@ -38,6 +38,10 @@ export default class TextInput extends BaseInput {
      * should the input expand to another text area modal
      */
     expandable: PropTypes.bool,
+    /**
+     * transform function executed on value and return transformed value
+     */
+    transformer: PropTypes.func,
     testId: PropTypes.string,
   };
 
@@ -256,14 +260,20 @@ export default class TextInput extends BaseInput {
   }
 
   onChangeText(text) {
-    _.invoke(this.props, 'onChangeText', text);
+    let transformedText = text;
+    const {transformer} = this.props;
+    if (_.isFunction(transformer)) {
+      transformedText = transformer(text);
+    }
+
+    _.invoke(this.props, 'onChangeText', transformedText);
 
     this.setState({
-      value: text,
+      value: transformedText,
     }, this.updateFloatingPlaceholderState);
 
     const {widthExtendBreaks, width} = this.state;
-    if (text.length < _.last(widthExtendBreaks)) {
+    if (transformedText.length < _.last(widthExtendBreaks)) {
       const typography = this.getTypography();
       this.setState({
         inputWidth: width - typography.fontSize,

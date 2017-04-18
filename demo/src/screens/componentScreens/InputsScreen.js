@@ -4,6 +4,17 @@ import {Assets, Constants, Button, Colors, Text, TextInput, TextArea, Typography
 
 const LONG_TEXT = 'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer Martín Bollati. In this piece';
 const INPUT_SPACING = 10;
+
+const transformPrice = (value) => {
+  let cleanValue;
+  let priceText = '';
+  if (value) {
+    [cleanValue] = value.match(/^(?:(?:-?(?:0|\d{1,9}))(?:\.\d{0,2})?)|-/) || [''];
+    priceText = cleanValue;
+  }
+  return priceText;
+};
+
 export default class InputScreen extends Component {
   constructor(props) {
     super(props);
@@ -38,11 +49,19 @@ export default class InputScreen extends Component {
           containerStyle={{marginBottom: INPUT_SPACING}}
         />
 
+        <TextInput
+          floatingPlaceholder
+          text70
+          placeholder="with price transformer"
+          value={this.state.value}
+          transformer={transformPrice}
+        />
+
         <Text dark40>Text Area</Text>
         <View style={{height: 150, borderWidth: 1, marginBottom: INPUT_SPACING, padding: 10, borderColor: Colors.dark60}}>
           <TextArea placeholder="write something.."/>
         </View>
-        
+
         <TextInput
           text50
           placeholder="Big Title Text"
@@ -69,6 +88,7 @@ export default class InputScreen extends Component {
           placeholder="Centered"
           containerStyle={{marginBottom: INPUT_SPACING}}
         />
+
       </ScrollView>
     );
   }
