@@ -15,7 +15,14 @@ class PickerItem extends BaseComponent {
      * The item value
      */
     value: PropTypes.any,
+    /**
+     * Is the item selected
+     */
     isSelected: PropTypes.bool,
+    /**
+     * Is the item disabled
+     */
+    disabled: PropTypes.bool,
     onPress: PropTypes.func,
   };
 
@@ -24,11 +31,21 @@ class PickerItem extends BaseComponent {
   }
 
   render() {
-    const {label, value, isSelected, onPress} = this.props;
+    const {label, value, isSelected, disabled, onPress} = this.props;
     return (
-      <TouchableOpacity activeOpacity={0.5} style={this.styles.container} onPress={() => onPress({value, label})}>
-        <Text style={this.styles.labelText}>{label}</Text>
-        {isSelected && <Image style={this.styles.checkIcon} source={Assets.icons.check}/>}
+      <TouchableOpacity
+        activeOpacity={0.5}
+        style={this.styles.container}
+        onPress={() => onPress({value, label})}
+        disabled={disabled}
+      >
+        <Text style={[this.styles.labelText, disabled && this.styles.labelTextDisabled]}>{label}</Text>
+        {isSelected &&
+          <Image
+            style={[this.styles.checkIcon, disabled && this.styles.checkIconDisabled]}
+            source={Assets.icons.check}
+          />
+        }
       </TouchableOpacity>
     );
   }
@@ -49,8 +66,14 @@ function createStyles() {
       ...Typography.text70,
       color: Colors.dark10,
     },
+    labelTextDisabled: {
+      color: Colors.dark60,
+    },
     checkIcon: {
       tintColor: ThemeManager.primaryColor,
+    },
+    checkIconDisabled: {
+      tintColor: Colors.dark60,
     },
   });
 }

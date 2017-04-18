@@ -7,7 +7,7 @@ const options = [
   {label: 'JavaScript', value: 'js'},
   {label: 'Java', value: 'java'},
   {label: 'Python', value: 'python'},
-  {label: 'C++', value: 'c++'},
+  {label: 'C++', value: 'c++', disabled: true},
   {label: 'Perl', value: 'perl'},
 ];
 
@@ -19,7 +19,7 @@ export default class FormScreen extends Component {
       itemsCount: 1,
       // language: {value: 'java', label: 'Java'},
       language: undefined,
-      languages: [],
+      languages: [options[3]],
     };
   }
 
@@ -43,7 +43,7 @@ export default class FormScreen extends Component {
           enableModalBlur={false}
           onChange={item => this.setState({language: item})}
         >
-          {_.map(options, option => <Picker.Item key={option.value} label={option.label} value={option.value}/>)}
+          {_.map(options, option => <Picker.Item key={option.value} label={option.label} value={option.value} disabled={option.disabled}/>)}
         </Picker>
 
         <Text text80 purple50>Selected Value: {_.get(this.state.language, 'value')}</Text>
@@ -55,7 +55,14 @@ export default class FormScreen extends Component {
           onChange={items => this.setState({languages: items})}
           mode={Picker.modes.MULTI}
         >
-          {_.map(options, option => <Picker.Item key={option.value} label={option.label} value={option.value}/>)}
+          {_.map(options, option => (
+            <Picker.Item
+              key={option.value}
+              label={option.label}
+              value={option.value}
+              disabled={option.disabled}
+            />
+          ))}
         </Picker>
 
         <Text text80 purple50>Selected Languages: {_.chain(this.state.languages).map('value').join(', ').value()}</Text>
