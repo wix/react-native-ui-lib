@@ -7,6 +7,7 @@ class ThemeManager {
     primaryColor: Colors.blue30,
     CTA: {
       textColor: Colors.white,
+      disabledColor: Colors.dark60,
       backgroundColor: Colors.blue30,
     },
     titleColor: Colors.dark10,
@@ -24,6 +25,10 @@ class ThemeManager {
 
   get CTATextColor() {
     return this.theme.CTA.textColor;
+  }
+
+  get CTADisabledColor() {
+    return this.theme.CTA.disabledColor;
   }
 
   get CTABackgroundColor() {

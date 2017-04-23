@@ -75,7 +75,7 @@ export default class Button extends BaseComponent {
     /**
      * Use to identify the button in tests
      */
-    testId: PropTypes.string,
+    testID: PropTypes.string,
   };
 
   static defaultProps = {
@@ -98,6 +98,60 @@ export default class Button extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
+  getBackgroundColor() {
+    const {disabled, outline, link, backgroundColor: propsBackgroundColor} = this.props;
+    const {backgroundColor: stateBackgroundColor} = this.state;
+
+    if (!outline && !link) {
+      if (disabled) {
+        return ThemeManager.CTADisabledColor;
+      } else {
+        return propsBackgroundColor || stateBackgroundColor;
+      }
+    }
+  }
+
+  getLabelColor() {
+    const {link, outline, disabled} = this.props;
+
+    let color = ThemeManager.CTATextColor;
+    if (link || outline) {
+      color = Colors.dark10;
+
+      if (disabled) {
+        return ThemeManager.CTADisabledColor;
+      }
+    }
+
+    color = this.props.color || this.extractColorValue() || color;
+    return color;
+  }
+
+  getLabelSizeStyle() {
+    const {size, link} = this.props;
+    let style = {
+      paddingHorizontal: 36,
+    };
+
+    if (size === 'small') {
+      style = {
+        paddingHorizontal: 15,
+        ...Typography.text80,
+      };
+    } else if (size === 'medium') {
+      style = {
+        paddingHorizontal: 24,
+        ...Typography.text80,
+      };
+    }
+
+    if (link) {
+      style.paddingHorizontal = 0;
+    }
+
+    return style;
+  }
+
   renderIcon() {
     const {iconSource, iconStyle, label, link, disabled} = this.props;
     if (iconSource) {
@@ -116,16 +170,17 @@ export default class Button extends BaseComponent {
   }
 
   renderLabel() {
-    const {label, labelStyle, link, disabled} = this.props;
+    const {label, labelStyle} = this.props;
+    const sizeStyle = this.getLabelSizeStyle();
     const typography = this.extractTypographyValue();
-    const color = this.extractColorValue();
+    const color = this.getLabelColor();
     if (label) {
       return (
         <Text
           style={[
             this.styles.text,
-            (link && disabled) && this.styles.textDisabled,
             color && {color},
+            sizeStyle,
             {...typography},
             labelStyle,
           ]}
@@ -139,10 +194,11 @@ export default class Button extends BaseComponent {
   }
 
   render() {
-    const {onPress, disabled, link, enableShadow, style, testId} = this.props;
+    const {onPress, disabled, link, enableShadow, style, testID} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const shadowStyle = enableShadow ? this.styles.shadowStyle : {};
-    const {backgroundColor, margins} = this.state;
+    const {margins} = this.state;
+    const backgroundColor = this.getBackgroundColor();
 
     return (
       <TouchableOpacity
@@ -154,12 +210,12 @@ export default class Button extends BaseComponent {
         activeOpacity={0.6}
         onPress={onPress}
         disabled={disabled}
-        testId={testId}
+        testID={testID}
       >
         <View
           style={[
             this.styles.innerContainer,
-            backgroundColor && {backgroundColor},
+            {backgroundColor},
             disabled && this.styles.innerContainerDisabled,
             link && this.styles.innerContainerLink,
             style,
@@ -174,12 +230,7 @@ export default class Button extends BaseComponent {
   }
 }
 
-function createStyles({backgroundColor, borderRadius, outline, outlineColor, link, color, size}) {
-  const textStyleBySize = {
-    large: {paddingHorizontal: 36},
-    medium: {paddingHorizontal: 24},
-    small: {paddingHorizontal: 15},
-  };
+function createStyles({borderRadius, outline, outlineColor, link, color, size}) {
 
   const containerStyleBySize = {
     large: {paddingVertical: 16, minWidth: 138},
@@ -189,14 +240,11 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor, lin
 
   const customBorderRadius = _.isString(borderRadius) ? BorderRadiuses[borderRadius] : borderRadius;
   const showBorder = outline && !link;
-  const haveBackground = !outline && !link;
-  const textTypography = size === 'large' ? Typography.text70 : Typography.text80;
   return StyleSheet.create({
     container: {
       backgroundColor: 'transparent',
     },
     innerContainer: {
-      backgroundColor: haveBackground ? backgroundColor : undefined,
       borderWidth: showBorder ? 1 : 0,
       borderColor: showBorder ? outlineColor : undefined,
       flexDirection: 'row',
@@ -225,16 +273,8 @@ function createStyles({backgroundColor, borderRadius, outline, outlineColor, lin
       backgroundColor: 'transparent',
       flex: 0,
       flexDirection: 'row',
-      color: (outline || link) ? Colors.dark10 : ThemeManager.CTATextColor,
-      ...textTypography,
+      ...Typography.text70,
       fontWeight: '100',
-      paddingHorizontal: link ? 0 : textStyleBySize[size].paddingHorizontal,
-    },
-    textSmall: {
-      ...Typography.text80,
-    },
-    textDisabled: {
-      color: Colors.dark60,
     },
     icon: {
       width: 18,

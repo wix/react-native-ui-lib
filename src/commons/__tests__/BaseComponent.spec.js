@@ -98,6 +98,8 @@ describe('BaseComponent', () => {
       expect(uut.extractAlignmentsValues()).toEqual({flexDirection: 'row', justifyContent: 'center'});
       uut = new BaseComponent({row: true, centerV: true});
       expect(uut.extractAlignmentsValues()).toEqual({flexDirection: 'row', alignItems: 'center'});
+      uut = new BaseComponent({row: true, spread: true});
+      expect(uut.extractAlignmentsValues()).toEqual({flexDirection: 'row', justifyContent: 'space-between'});
     });
 
     it('should return prop alignment for a column view (default)', () => {
@@ -113,6 +115,8 @@ describe('BaseComponent', () => {
       expect(uut.extractAlignmentsValues()).toEqual({alignItems: 'center'});
       uut = new BaseComponent({centerV: true});
       expect(uut.extractAlignmentsValues()).toEqual({justifyContent: 'center'});
+      uut = new BaseComponent({spread: true});
+      expect(uut.extractAlignmentsValues()).toEqual({justifyContent: 'space-between'});
     });
 
     it('should return center alignment for both axis', () => {

@@ -10,7 +10,7 @@ export default class Text extends BaseComponent {
     ...RNText.propTypes,
     ...BaseComponent.propTypes,
     color: PropTypes.string,
-    testId: PropTypes.string,
+    testID: PropTypes.string,
   };
 
   // static defaultProps = {
