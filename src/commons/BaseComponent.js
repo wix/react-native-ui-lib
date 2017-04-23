@@ -149,10 +149,10 @@ export default class BaseComponent extends Component {
     const alignmentRules = {};
     if (row) {
       alignments.flexDirection = 'row';
-      alignmentRules.justifyContent = ['left', 'right', 'centerH'];
+      alignmentRules.justifyContent = ['left', 'right', 'centerH', 'spread'];
       alignmentRules.alignItems = ['top', 'bottom', 'centerV'];
     } else {
-      alignmentRules.justifyContent = ['top', 'bottom', 'centerV'];
+      alignmentRules.justifyContent = ['top', 'bottom', 'centerV', 'spread'];
       alignmentRules.alignItems = ['left', 'right', 'centerH'];
     }
 
@@ -165,6 +165,8 @@ export default class BaseComponent extends Component {
             alignments[attribute] = 'flex-end';
           } else if (_.includes(['centerH', 'centerV'], position)) {
             alignments[attribute] = 'center';
+          } else if (position === 'spread') {
+            alignments[attribute] = 'space-between';
           }
         }
       });
