@@ -1,5 +1,3 @@
-// import React from 'react';
-// import {shallow} from 'enzyme';
 import Button from '../index';
 import {Colors, Typography, ThemeManager} from '../../../style';
 
@@ -17,12 +15,12 @@ describe('Button', () => {
 
     it('should return undefined if this button is outline', () => {
       const uut = new Button({backgroundColor: 'blue', outline: true});
-      expect(uut.getBackgroundColor()).toEqual(undefined);
+      expect(uut.getBackgroundColor()).toEqual('transparent');
     });
 
     it('should return undefined if this button is link', () => {
       const uut = new Button({'bg-orange30': true, link: true});
-      expect(uut.getBackgroundColor()).toEqual(undefined);
+      expect(uut.getBackgroundColor()).toEqual('transparent');
     });
 
     it('should return theme disabled color if button is disabled', () => {
@@ -82,6 +80,72 @@ describe('Button', () => {
     it('should have no padding of button is a link', () => {
       const uut = new Button({size: 'medium', link: true});
       expect(uut.getLabelSizeStyle()).toEqual({paddingHorizontal: 0, ...Typography.text80});
+    });
+  });
+
+  describe('getOutlineStyle', () => {
+    it('should return undefined when outline is false', () => {
+      const uut = new Button({ outline: false });
+      expect(uut.getOutlineStyle()).toEqual(undefined);
+    });
+
+    it('should return borderWidth style with default borderColor when outline is true', () => {
+      const uut = new Button({ outline: true });
+      expect(uut.getOutlineStyle()).toEqual({borderWidth: 1, borderColor: Colors.dark70});
+    });
+
+    it('should return undefined when link is true, even when outline is true', () => {
+      const uut = new Button({ outline: true, link: true });
+      expect(uut.getOutlineStyle()).toEqual(undefined);
+    });
+
+    it('should return outlineColor according to prop', () => {
+      const uut = new Button({ outline: true, outlineColor: 'red' });
+      expect(uut.getOutlineStyle()).toEqual({borderWidth: 1, borderColor: 'red'});
+    });
+
+    it('should return outline even if only got outlineColor prop', () => {
+      const uut = new Button({ outlineColor: 'yellow' });
+      expect(uut.getOutlineStyle()).toEqual({borderWidth: 1, borderColor: 'yellow'});
+    });
+  });
+
+  describe('getBorderRadiusStyle', () => {
+    it('should return undefined when no border radius sent', () => {
+      const uut = new Button({});
+      expect(uut.getBorderRadiusStyle()).toEqual(undefined);
+    });
+
+    it('should return given border radius when use plain number', () => {
+      const uut = new Button({borderRadius: 12});
+      expect(uut.getBorderRadiusStyle()).toEqual({borderRadius: 12});
+    });
+
+    it('should return 0 border radius when button is a link', () => {
+      const uut = new Button({link: true});
+      expect(uut.getBorderRadiusStyle()).toEqual({borderRadius: 0});
+    });
+
+    it('should return 0 border radius when border radius prop is 0', () => {
+      const uut = new Button({borderRadius: 0});
+      expect(uut.getBorderRadiusStyle()).toEqual({borderRadius: 0});
+    });
+  });
+
+  describe('getContainerSizeStyle', () => {
+    it('should return style for large button', () => {
+      const uut = new Button({size: 'large'});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 16, minWidth: 138});
+    });
+
+    it('should return style for medium button', () => {
+      const uut = new Button({size: 'medium'});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 11, minWidth: 125});
+    });
+
+    it('should return style for small button', () => {
+      const uut = new Button({size: 'small'});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 5, minWidth: 74});
     });
   });
 });

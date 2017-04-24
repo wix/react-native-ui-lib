@@ -1,16 +1,46 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Alert, Text, Image} from 'react-native';
-import {Assets, Constants, Button, Colors, Typography} from 'react-native-ui-lib';//eslint-disable-line
+import {View, Assets, Constants, Button, Colors, Typography} from 'react-native-ui-lib';//eslint-disable-line
+import DemoScreen from '../DemoScreen';
 const plusIcon = require('../../assets/icons/plus.png');
 
 const ButtonSpace = 20;
 
-export default class ButtonsScreen extends Component {
+export default class ButtonsScreen extends DemoScreen {
+
+  constructor(props) {
+    super(props);
+
+    this.propsToRender = ['label', 'color', 'backgroundColor', 'size', 'outlineColor', 'outline', 'disabled', 'link', 'enableShadow', 'borderRadius'];
+
+    this.state = {
+      backgroundColor: Colors.yellow30,
+      label: 'Button',
+      // outline: true,
+    };
+  }
+
+  getComponent() {
+    return Button;
+  }
 
   render() {
+    /*return (
+      <View flex>
+        <View center paddingV-20>
+          <Button
+            ref={(component) => { this.component = component; }}
+            {...this.state}
+          />
+        </View>
+        <View flex>
+          {this.renderComponentSettings()}
+        </View>
+      </View>
+    );*/
+
     return (
       <ScrollView contentContainerStyle={styles.container}>
-
         <Text style={styles.title}>Buttons</Text>
 
         <Text style={styles.header}>Do you have it in small?</Text>
@@ -96,12 +126,12 @@ export default class ButtonsScreen extends Component {
         <Text style={styles.header}>Let your curves show</Text>
         {Constants.isIOS ? <Button
           label={'Squarish'}
-          borderRadius="br10"
+          borderRadius={2}
           onPress={() => Alert.alert('Button #3')}
           containerStyle={{marginBottom: ButtonSpace}}
         /> : <Button
           label={'Roundish'}
-          borderRadius="br50"
+          borderRadius={15}
           onPress={() => Alert.alert('Button #3')}
           containerStyle={{marginBottom: ButtonSpace}}
         />}
@@ -113,7 +143,7 @@ export default class ButtonsScreen extends Component {
         />
         <Button
           label={'No Radius'}
-          borderRadius={'br0'}
+          borderRadius={0}
           onPress={() => Alert.alert('Button #3')}
           containerStyle={{marginBottom: ButtonSpace}}
         />

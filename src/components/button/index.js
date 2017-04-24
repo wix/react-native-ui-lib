@@ -34,12 +34,9 @@ export default class Button extends BaseComponent {
      */
     size: PropTypes.oneOf(['small', 'medium', 'large']),
     /**
-     * Custom border radius. can be a number or any of the BorderRadiuses constants
+     * Custom border radius.
      */
-    borderRadius: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.oneOf(_.keys(BorderRadiuses)),
-    ]),
+    borderRadius: PropTypes.number,
     /**
      * Actions handler
      */
@@ -81,11 +78,8 @@ export default class Button extends BaseComponent {
   static defaultProps = {
     containerStyle: {},
     labelStyle: {},
-    backgroundColor: ThemeManager.CTABackgroundColor,
-    borderRadius: Constants.isIOS ? BorderRadiuses.br100 : BorderRadiuses.br10,
     size: 'large',
     outline: false,
-    outlineColor: Colors.dark70,
   };
 
   static sizes = {
@@ -105,10 +99,11 @@ export default class Button extends BaseComponent {
     if (!outline && !link) {
       if (disabled) {
         return ThemeManager.CTADisabledColor;
-      } else {
-        return propsBackgroundColor || stateBackgroundColor;
       }
+
+      return propsBackgroundColor || stateBackgroundColor;
     }
+    return 'transparent';
   }
 
   getLabelColor() {
@@ -150,6 +145,48 @@ export default class Button extends BaseComponent {
     }
 
     return style;
+  }
+
+  getContainerSizeStyle() {
+    const {size} = this.props;
+    let style = {
+      paddingVertical: 16,
+      minWidth: 138,
+    };
+
+    if (size === 'small') {
+      style = {
+        paddingVertical: 5,
+        minWidth: 74,
+      };
+    } else if (size === 'medium') {
+      style = {
+        paddingVertical: 11,
+        minWidth: 125,
+      };
+    }
+
+    return style;
+  }
+
+  getOutlineStyle() {
+    const {outline, outlineColor, link} = this.props;
+    if ((outline || outlineColor) && !link) {
+      return {
+        borderWidth: 1,
+        borderColor: outlineColor || Colors.dark70,
+      };
+    }
+    return undefined;
+  }
+
+  getBorderRadiusStyle() {
+    const {link, borderRadius} = this.props;
+    if (link) {
+      return {borderRadius: 0};
+    } else if (!_.isUndefined(borderRadius)) {
+      return {borderRadius};
+    }
   }
 
   renderIcon() {
@@ -199,6 +236,9 @@ export default class Button extends BaseComponent {
     const shadowStyle = enableShadow ? this.styles.shadowStyle : {};
     const {margins} = this.state;
     const backgroundColor = this.getBackgroundColor();
+    const outlineStyle = this.getOutlineStyle();
+    const containerSizeStyle = this.getContainerSizeStyle();
+    const borderRadiusStyle = this.getBorderRadiusStyle();
 
     return (
       <TouchableOpacity
@@ -215,7 +255,10 @@ export default class Button extends BaseComponent {
         <View
           style={[
             this.styles.innerContainer,
-            {backgroundColor},
+            containerSizeStyle,
+            backgroundColor && {backgroundColor},
+            borderRadiusStyle,
+            outlineStyle,
             disabled && this.styles.innerContainerDisabled,
             link && this.styles.innerContainerLink,
             style,
@@ -230,28 +273,20 @@ export default class Button extends BaseComponent {
   }
 }
 
-function createStyles({borderRadius, outline, outlineColor, link, color, size}) {
-
-  const containerStyleBySize = {
-    large: {paddingVertical: 16, minWidth: 138},
-    medium: {paddingVertical: 11, minWidth: 125},
-    small: {paddingVertical: 5, minWidth: 74},
-  };
-
-  const customBorderRadius = _.isString(borderRadius) ? BorderRadiuses[borderRadius] : borderRadius;
+function createStyles({outline, outlineColor, link, color}) {
   const showBorder = outline && !link;
   return StyleSheet.create({
     container: {
       backgroundColor: 'transparent',
     },
     innerContainer: {
+      backgroundColor: ThemeManager.CTABackgroundColor,
       borderWidth: showBorder ? 1 : 0,
       borderColor: showBorder ? outlineColor : undefined,
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: customBorderRadius,
-      ...containerStyleBySize[size],
+      borderRadius: Constants.isIOS ? BorderRadiuses.br100 : BorderRadiuses.br10,
     },
     innerContainerDisabled: {
       backgroundColor: Colors.dark60,
