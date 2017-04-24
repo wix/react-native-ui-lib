@@ -1,7 +1,7 @@
 import {Component, PropTypes} from 'react';
 import {StyleSheet} from 'react-native';
 import _ from 'lodash';
-import {Typography, Colors} from '../style';
+import {Typography, Colors, BorderRadiuses} from '../style';
 
 export default class BaseComponent extends Component {
 
@@ -86,6 +86,16 @@ export default class BaseComponent extends Component {
       }
     });
     return backgroundColor;
+  }
+
+  extractBorderRadiusValue() {
+    let borderRadius;
+    _.forEach(BorderRadiuses, (value, key) => {
+      if (this.props[key] === true) {
+        borderRadius = value;
+      }
+    });
+    return borderRadius;
   }
 
   extractPaddingValues() {
@@ -199,6 +209,7 @@ export default class BaseComponent extends Component {
 
   extractStyleProps() {
     const backgroundColor = this.extractBackgroundColorValue();
+    const borderRadius = this.extractBorderRadiusValue();
     const paddings = this.extractPaddingValues();
     const margins = this.extractMarginValues();
     const alignments = this.extractAlignmentsValues();
@@ -206,6 +217,7 @@ export default class BaseComponent extends Component {
 
     return {
       backgroundColor,
+      borderRadius,
       paddings,
       margins,
       alignments,

@@ -1,7 +1,7 @@
 // import React from 'react';
 // import {shallow} from 'enzyme';
 import BaseComponent from '../BaseComponent';
-import {Colors} from '../../style';
+import {Colors, BorderRadiuses} from '../../style';
 
 describe('BaseComponent', () => {
   describe('background modifiers', () => {
@@ -148,6 +148,15 @@ describe('BaseComponent', () => {
     it('should ignore non numeric values', () => {
       const uut = new BaseComponent({'flex-1a2': true});
       expect(uut.extractFlexValue()).toEqual(undefined);
+    });
+  });
+
+  describe('border radius modifier', () => {
+    it('should return border radius value according br? modifier prop', () => {
+      let uut = new BaseComponent({br10: true});
+      expect(uut.extractBorderRadiusValue()).toEqual(BorderRadiuses.br10);
+      uut = new BaseComponent({br20: true});
+      expect(uut.extractBorderRadiusValue()).toEqual(BorderRadiuses.br20);
     });
   });
 });
