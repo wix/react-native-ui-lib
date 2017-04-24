@@ -40,4 +40,5 @@ buck-out/
 android/app/libs
 *.keystore
 
+# UILib
 dist
