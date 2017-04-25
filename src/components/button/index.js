@@ -64,7 +64,7 @@ export default class Button extends BaseComponent {
     /**
      * Additional styles for label text
      */
-    labelStyle: PropTypes.object,
+    labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * Control shadow visibility
      */

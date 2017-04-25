@@ -21,7 +21,7 @@ export default class LoadingScreen extends Component {
       <View flex>
         <PageControl
           containerStyle={styles.pageControl}
-          numOfPages={3}
+          numOfPages={4}
           currentPage={this.state.currentPage}
           color={Colors.dark10}
           size={15}
@@ -70,6 +70,23 @@ export default class LoadingScreen extends Component {
             <View padding-20>
               <Text text70>
                 Sending onDone/onCancel is required for rendering done/cancel actions
+              </Text>
+            </View>
+          </View>
+
+
+          <View bg-dark70 flex style={styles.page}>
+            <Modal.TopBar
+              title="Custom Style"
+              onCancel={() => alert('cancel')}
+              onDone={() => alert('done')}
+              doneButtonProps={{color: Colors.orange30}}
+              cancelButtonProps={{iconStyle: {tintColor: Colors.orange30}}}
+
+            />
+            <View padding-20>
+              <Text text70>
+                use doneButtonProps/cancelButtonProps properties to have custom behaviour or style for done/canel actions
               </Text>
             </View>
           </View>
