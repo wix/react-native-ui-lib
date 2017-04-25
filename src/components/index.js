@@ -3,7 +3,7 @@ import Avatar from './avatar';
 import Badge from './badge';
 import Button from './button';
 import Card from './card';
-import Carousel from './carousel';
+import Carousel from './carousel/Carousel';
 import ConnectionStatusBar from './connectionStatusBar';
 import Inputs from './inputs';
 import ListItem from './listItem';
