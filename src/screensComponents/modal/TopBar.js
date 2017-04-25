@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react';
-import {StyleSheet, Image} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {LoaderScreen} from 'react-native-ui-lib';//eslint-disable-line
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 import * as Assets from '../../assets';
-import {Colors} from '../../style';
+import {Colors, Typography} from '../../style';
 import View from '../../components/view';
 
 import Button from '../../components/button';
@@ -15,49 +15,60 @@ export default class TopBar extends BaseComponent {
   static propTypes = {
     title: PropTypes.string,
     titleStyle: PropTypes.object,
+    doneButtonProps: PropTypes.shape(Button.propTypes),
     doneLabel: PropTypes.string,
     donelIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    doneStyle: PropTypes.object,
     onDone: PropTypes.func,
+    cancelButtonProps: PropTypes.shape(Button.propTypes),
     cancelLabel: PropTypes.string,
     cancelIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    cancelStyle: PropTypes.object,
     onCancel: PropTypes.func,
   }
 
   static defaultProps = {
     doneLabel: 'Save',
     cancelIcon: Assets.icons.x,
+    doneButtonProps: {
+      color: Colors.blue30,
+    },
+    cancelButtonProps: {
+      color: Colors.blue30,
+    },
   }
 
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
-  renderDone() {
-    const {doneLabel, doneIcon, onDone} = this.props;
-    if (onDone && (doneLabel || doneIcon)) {
+  renderTopBarButton({onPress, label, icon, buttonProps}) {
+    if (onPress && (label || icon)) {
+      const {iconStyle, labelStyle, ...otherButtonProps} = buttonProps;
       return (
-        <Button link onPress={onDone}>
-          {doneIcon && <Image style={this.styles.icon} source={doneIcon}/>}
-          {doneLabel && <Text numberOfLines={1} blue30 text70>{doneLabel}</Text>}
-        </Button>
+        <Button
+          link
+          onPress={onPress}
+          label={label}
+          labelStyle={[this.styles.actionLabel, labelStyle]}
+          iconSource={icon}
+          iconStyle={[this.styles.icon, iconStyle]}
+          {...otherButtonProps}
+        />
       );
     }
-    return null;
+  }
+
+  renderDone() {
+    const {doneButtonProps, doneLabel, doneIcon, onDone} = this.props;
+    return this.renderTopBarButton({
+      onPress: onDone, label: doneLabel, icon: doneIcon, buttonProps: doneButtonProps,
+    });
   }
 
   renderCancel() {
-    const {cancelLabel, cancelIcon, onCancel} = this.props;
-    if (onCancel && (cancelLabel || cancelIcon)) {
-      return (
-        <Button link onPress={onCancel}>
-          {cancelIcon && <Image style={this.styles.icon} source={cancelIcon}/>}
-          {cancelLabel && <Text numberOfLines={1} blue30 text70>{cancelLabel}</Text>}
-        </Button>
-      );
-    }
-    return null;
+    const {cancelButtonProps, cancelLabel, cancelIcon, onCancel} = this.props;
+    return this.renderTopBarButton({
+      onPress: onCancel, label: cancelLabel, icon: cancelIcon, buttonProps: cancelButtonProps,
+    });
   }
 
   render() {
@@ -87,6 +98,9 @@ function createStyles() {
     },
     title: {
       fontWeight: '500',
+    },
+    actionLabel: {
+      ...Typography.text70,
     },
     icon: {
       width: 16,
