@@ -27,5 +27,11 @@ describe('Carousel presenter', () => {
     expect(uut.isOutOfBounds(481, {pageWidth: 120, children: [{}, {}, {}]})).toBe(true);
     expect(uut.isOutOfBounds(1875, {pageWidth: 375, children: [{}, {}, {}, {}]})).toBe(true);
   });
+
+  it('should calcCarouselWidth', () => {
+    expect(uut.calcCarouselWidth({pageWidth: 70, children: [{}, {}, {}]})).toBe(210);
+    expect(uut.calcCarouselWidth({pageWidth: 50, children: [{}, {}, {}]})).toBe(150);
+    expect(uut.calcCarouselWidth({pageWidth: 150, loop: true, children: [{}, {}, {}]})).toBe(750);
+  });
 });
 

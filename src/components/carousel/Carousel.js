@@ -4,37 +4,74 @@ import Interactable from 'react-native-interactable';
 import _ from 'lodash';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
-
-// const NUMBER_OF_PAGES = 5;
-// const PAGE_WIDTH = 130;
+import * as presenter from './CarouselPresenter';
 
 export default class Carousel extends BaseComponent {
 
   static propTypes = {
     pageWidth: PropTypes.number,
+    initialPage: PropTypes.number,
+    loop: PropTypes.bool,
   }
 
   static defaultProps = {
     pageWidth: Constants.screenWidth,
+    initialPage: 0,
   }
 
   constructor(props) {
     super(props);
     this.deltaX = new Animated.Value(0);
+
+    this.onStop = this.onStop.bind(this);
+    this.state = {
+      currentPage: props.initialPage,
+    };
+  }
+
+  componentWillMount() {
+    this.updateCarouselPosition();
   }
 
   onStop(event) {
-    const snapPointId = event.nativeEvent.id;
-    console.log(`ethan - drawer state is ${snapPointId}`);
+    const offset = event.nativeEvent.x;
+    const newPage = presenter.calcPageIndex(-offset, this.props);
+    const {currentPage} = this.state;
+
+    this.setState({
+      currentPage: newPage,
+    }, () => {
+      if (currentPage !== newPage) {
+        _.invoke(this.props, 'onChangePage', newPage, currentPage);
+      }
+    });
+
+    if (presenter.isOutOfBounds(-offset, this.props)) {
+      this.updateCarouselPosition();
+    }
   }
 
-  getPagesLength() {
-    return this.props.children.length;
+  updateCarouselPosition() {
+    const position = {
+      x: -presenter.calcOffset(this.props, this.state),
+      y: 0,
+    };
+    this.setState({position});
+
+    if (!this.carousel) {
+      return;
+    }
+
+    this.carousel.snapTo({index: 1});
   }
 
   getSnappingPoints() {
-    const {pageWidth} = this.props;
-    return _.times(this.getPagesLength(), (i) => {
+    const {pageWidth, loop} = this.props;
+    let length = presenter.getChildrenLength(this.props);
+    if (loop) {
+      length += 2;
+    }
+    const snappingPoints = _.times(length, (i) => {
       return {
         x: -i * pageWidth,
         id: i,
@@ -42,30 +79,54 @@ export default class Carousel extends BaseComponent {
         damping: 0.6,
       };
     });
+
+    return snappingPoints;
   }
 
-  generateInputRange() {
-    const {pageWidth} = this.props;
-    return _.times(this.getPagesLength(), i => -i * pageWidth).reverse();
-  }
+  // generateInputRange() {
+  //   const {pageWidth} = this.props;
+  //   return _.times(this.getPagesLength(), i => -i * pageWidth).reverse();
+  // }
 
-  generateOutputRange(index, values) {
-    const {pageWidth} = this.props;
-    const inputRange = this.generateInputRange();
-    return _.map(inputRange, (input) => {
-      const valueIndex = Number(-index * pageWidth === input);
-      return values[valueIndex];
-    });
-  }
+  // generateOutputRange(index, values) {
+  //   const {pageWidth} = this.props;
+  //   const inputRange = this.generateInputRange();
+  //   return _.map(inputRange, (input) => {
+  //     const valueIndex = Number(-index * pageWidth === input);
+  //     return values[valueIndex];
+  //   });
+  // }
 
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
+  cloneChild(child) {
+    if (!child.key) {
+      return child;
+    }
+    return React.cloneElement(child, {
+      key: `${child.key}-clone`,
+    });
+  }
+
   renderPages() {
-    const {children} = this.props;
+    const {loop} = this.props;
+    let {children} = this.props;
+    const length = presenter.getChildrenLength(this.props);
+
+    if (loop) {
+      children = [
+        this.cloneChild(children[length - 1]),
+        ...children,
+        this.cloneChild(children[0]),
+      ];
+    }
+
+    return children;
+
     // const inputRange = this.generateInputRange();
-    return _.forEach(children, (page, pageIndex) => {
+    // return _.forEach(children, (page) => {
       // const titleStyle = {
       //   color: this.deltaX.interpolate({
       //     inputRange,
@@ -79,25 +140,26 @@ export default class Carousel extends BaseComponent {
       //   }],
       // };
 
-      return (
-        <View key={pageIndex} style={this.styles.page}>
-          {page}
-        </View>
-      );
-    });
+    //   return (
+    //     {page}
+    //   );
+    // });
   }
 
   render() {
+    const carouselWidth = presenter.calcCarouselWidth(this.props);
+    const {position} = this.state;
     return (
       <View style={this.styles.container}>
-
         <Interactable.View
+          ref={(carousel) => { this.carousel = carousel; }}
           horizontalOnly
           dragToss={0.05}
           snapPoints={this.getSnappingPoints()}
           onStop={this.onStop}
           animatedValueX={this.deltaX}
-          style={this.styles.scrollStrip}
+          initialPosition={position}
+          style={[this.styles.scrollStrip, {width: carouselWidth}]}
         >
           {this.renderPages()}
         </Interactable.View>
@@ -106,7 +168,7 @@ export default class Carousel extends BaseComponent {
   }
 }
 
-function createStyles({pageWidth, children}) {
+function createStyles() {
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -115,17 +177,6 @@ function createStyles({pageWidth, children}) {
       flexDirection: 'row',
       flex: 1,
       borderBottomWidth: 1,
-      width: children.length * pageWidth,
-    },
-    page: {
-      width: pageWidth,
-      paddingLeft: 40,
-      paddingTop: 20,
-      alignItems: 'center',
-    },
-    pageTitle: {
-      fontSize: 26,
-      backgroundColor: 'transparent',
     },
   });
 }

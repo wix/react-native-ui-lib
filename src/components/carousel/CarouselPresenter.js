@@ -12,6 +12,7 @@ export function calcOffset(props, state) {
   return pageWidth * (currentPage + 1);
 }
 
+// todo: differentiate between loop mode and default mode
 export function calcPageIndex(offset, props) {
   const length = getChildrenLength(props);
   const {pageWidth} = props;
@@ -27,4 +28,12 @@ export function isOutOfBounds(offset, props) {
   const maxLimit = ((length + 1) * pageWidth) - 1;
 
   return !_.inRange(offset, minLimit, maxLimit);
+}
+
+// todo: need to support more cases of page width in loop mode
+export function calcCarouselWidth(props) {
+  const {pageWidth, loop} = props;
+  let length = getChildrenLength(props);
+  length = loop ? length + 2 : length;
+  return pageWidth * length;
 }
