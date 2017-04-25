@@ -1,4 +1,6 @@
 rootProject.name = 'uilib'
+include ':react-native-interactable'
+project(':react-native-interactable').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-interactable/android')
 
 include ':app'
 include ':react-native-blur'

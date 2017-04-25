@@ -3957,6 +3957,10 @@ react-native-blur@^3.0.0-alpha:
   version "3.0.0-alpha"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-native-blur/-/react-native-blur-3.0.0-alpha.tgz#d1efa6fca64a56301f1ae3c052dfc07ad0e19e85"
 
+react-native-interactable@^0.0.8:
+  version "0.0.8"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-native-interactable/-/react-native-interactable-0.0.8.tgz#f4a175daccded50aa7edc67fb65f64e325eec70c"
+
 react-native-navigation@^1.1.19:
   version "1.1.19"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-native-navigation/-/react-native-navigation-1.1.19.tgz#a3a95d1c21c988ceac3e435dac9169493e7b40b5"

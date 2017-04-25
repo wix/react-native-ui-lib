@@ -26,7 +26,8 @@
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
     "lodash": "^4.0.0",
     "react-native-animatable": "^1.1.0",
-    "react-native-blur": "^3.0.0-alpha"
+    "react-native-blur": "^3.0.0-alpha",
+    "react-native-interactable": "^0.0.8"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
