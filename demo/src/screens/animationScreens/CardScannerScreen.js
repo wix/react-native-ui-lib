@@ -59,7 +59,11 @@ export default class CardScannerScreen extends Component {
                 </Card.Item>
               </Card.Section>
             </Card.Section>
-            <AnimatedScanner progress={this.state.progress}/>
+            <AnimatedScanner
+              backgroundColor={Colors.orange70}
+              opacity={0.7}
+              progress={this.state.progress}
+            />
           </Card>
 
           {this.state.started && JSON.stringify(this.state.progress) !== '100' &&

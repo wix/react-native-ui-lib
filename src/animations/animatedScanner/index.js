@@ -14,7 +14,15 @@ export default class AnimatedScanner extends BaseComponent {
      * animated value between 0 and 100
      */
     progress: PropTypes.object,
-    testId: PropTypes.string,
+    /**
+     * scanner opacity
+     */
+    opacity: PropTypes.number,
+    /**
+     * scanner background color
+     */
+    backgroundColor: PropTypes.string,
+    testID: PropTypes.string,
   };
 
   generateStyles() {
@@ -22,14 +30,18 @@ export default class AnimatedScanner extends BaseComponent {
   }
 
   render() {
-    const {progress} = this.props;
+    const {progress, opacity, backgroundColor} = this.props;
     return (
       <Animated.View
-        style={[this.styles.container, {
-          right: progress.interpolate({
-            inputRange: [0, 5, 55, 100],
-            outputRange: [Constants.screenWidth, Constants.screenWidth / 2, Constants.screenWidth / 3, 0],
-          })},
+        style={[this.styles.container,
+          opacity && {opacity},
+          backgroundColor && {backgroundColor},
+          {
+            right: progress.interpolate({
+              inputRange: [0, 5, 55, 100],
+              outputRange: [Constants.screenWidth, Constants.screenWidth / 2, Constants.screenWidth / 3, 0],
+            }),
+          },
         ]}
       >
         {JSON.stringify(progress) !== '100' && <View style={this.styles.scanner}/>}
