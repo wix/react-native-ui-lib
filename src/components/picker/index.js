@@ -6,6 +6,8 @@ import {TextInput} from '../inputs';
 import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
 import * as PickerPresenter from './PickerPresenter';
+import Button from '../../components/button';
+import View from '../../components/view';
 
 const ItemType = PropTypes.shape({value: PropTypes.any, label: PropTypes.string});
 
@@ -39,6 +41,14 @@ class Picker extends TextInput {
      */
     enableModalBlur: PropTypes.bool,
     /**
+     * render custom picker
+     */
+    renderPicker: PropTypes.func,
+    /**
+     * add onPress callback for when pressing the picker
+     */
+    onPress: PropTypes.func,
+    /**
      * Use to identify the picker in tests
      */
     testId: PropTypes.string,
@@ -48,7 +58,6 @@ class Picker extends TextInput {
     ...TextInput.defaultProps,
     mode: Picker.modes.SINGLE,
     enableModalBlur: true,
-
     expandable: true,
     text70: true,
     floatingPlaceholder: true,
@@ -61,6 +70,7 @@ class Picker extends TextInput {
     this.toggleItemSelection = this.toggleItemSelection.bind(this);
     this.appendPropsToChildren = this.appendPropsToChildren.bind(this);
     this.cancelSelect = this.cancelSelect.bind(this);
+    this.handlePickerOnPress = this.handlePickerOnPress.bind(this);
 
     this.state = {
       ...this.state,
@@ -124,6 +134,11 @@ class Picker extends TextInput {
     return _.get(value, 'label');
   }
 
+  handlePickerOnPress() {
+    this.toggleExpandableModal(true);
+    _.invoke(this.props, 'onPress');
+  }
+
   renderExpandableInput() {
     const typography = this.getTypography();
     const color = this.extractColorValue() || Colors.dark10;
@@ -133,7 +148,7 @@ class Picker extends TextInput {
       <Text
         style={[this.styles.input, typography, {color}]}
         numberOfLines={3}
-        onPress={() => this.toggleExpandableModal(true)}
+        onPress={this.handlePickerOnPress}
       >
         {label}
       </Text>
@@ -152,6 +167,23 @@ class Picker extends TextInput {
       >
         {this.appendPropsToChildren(this.props.children)}
       </PickerModal>);
+  }
+
+  render() {
+    const {renderPicker} = this.props;
+    if (_.isFunction(renderPicker)) {
+      const {value} = this.state;
+      return (
+        <View left>
+          <Button link onPress={this.handlePickerOnPress}>
+            {renderPicker(value)}
+          </Button>
+          {this.renderExpandableModal()}
+        </View>
+      );
+    }
+
+    return super.render();
   }
 }
 
