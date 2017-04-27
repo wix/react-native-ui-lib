@@ -4,7 +4,7 @@ import {BaseComponent} from '../../commons';
 
 export default class View extends BaseComponent {
 
-  static displayName = 'Text';
+  static displayName = 'View';
   static propTypes = {
     ...RNView.propTypes,
     ...BaseComponent.propTypes,
