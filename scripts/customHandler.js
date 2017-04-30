@@ -6,11 +6,11 @@ const { getMemberValuePath, getNameOrValue } = utils;
 const {types: {namedTypes: types}} = recast;
 
 const DEFAULT_NAME = '';
-const PROP_NAME = 'custom';
+const DEFAULT_PROP_NAME = 'custom';
 
-function getStaticMemberValue(path) {
+function getStaticMemberValue(path, staticMemberName) {
   let staticMemberValue = null;
-  const staticMember = getMemberValuePath(path, PROP_NAME);
+  const staticMember = getMemberValuePath(path, staticMemberName);
   if (staticMember && types.Literal.check(staticMember.node)) {
     staticMemberValue = getNameOrValue(staticMember);
   }
@@ -65,16 +65,16 @@ function getStaticMemberValue(path) {
 // }
 
 // export function createDisplayNameHandler(filePath) {
-function createCustomStaticMemberHandler() {
+function createCustomStaticMemberHandler(staticMemberName = DEFAULT_PROP_NAME) {
   return function displayNameHandler(documentation, path) {
     const staticMemberValue = [
       getStaticMemberValue,
       // getNodeIdentifier,
       // getVariableIdentifier,
-    ].reduce((name, getDisplayName) => name || getDisplayName(path), '');
+    ].reduce((name, getValue) => name || getValue(path, staticMemberName), '');
 
-    documentation.set(PROP_NAME, staticMemberValue || DEFAULT_NAME);
+    documentation.set(staticMemberName, staticMemberValue || DEFAULT_NAME);
   };
 }
 
-module.exports = createCustomStaticMemberHandler('');
+module.exports = createCustomStaticMemberHandler;

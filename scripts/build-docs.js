@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const fs = require('fs');
 const reactDocs = require('react-docgen');
-const customHandler = require('./customHandler');
+const customHandler = require('./customHandler')('customMemberName');
 
 
 // import displayNameHandler from 'react-docgen-displayname-handler';
