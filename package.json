@@ -23,10 +23,10 @@
     "log": "react-native log-ios | grep 'ethan -'"
   },
   "dependencies": {
+    "babel-plugin-transform-inline-environment-variables": "^0.0.2",
     "lodash": "^4.0.0",
     "react-native-animatable": "^1.1.0",
-    "react-native-blur": "~1.0.0",
-    "babel-plugin-transform-inline-environment-variables": "^0.0.2"
+    "react-native-blur": "~1.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
@@ -46,9 +46,12 @@
     "react": "15.4.2",
     "react-addons-test-utils": "^15.4.2",
     "react-autobind": "^1.0.6",
+    "react-doc-generator": "^1.2.5",
+    "react-docgen": "^2.14.1",
     "react-dom": "^15.4.2",
     "react-native": "0.38.0",
-    "react-native-navigation": "^2.0.0-experimental"
+    "react-native-navigation": "^2.0.0-experimental",
+    "recast": "^0.12.3"
   },
   "peerDependencies": {
     "react": "15.4.2",
