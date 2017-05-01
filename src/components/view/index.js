@@ -15,6 +15,10 @@ export default class View extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
+  setNativeProps(nativeProps) {
+    this._root.setNativeProps(nativeProps);
+  }
+
   render() {
     const {backgroundColor, borderRadius, paddings, margins, alignments, flex} = this.state;
     const {style, left, top, right, bottom, ...others} = this.props;
