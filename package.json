@@ -1,6 +1,6 @@
 {
   "name": "react-native-ui-lib",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "main": "index.js",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "publishConfig": {
