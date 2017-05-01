@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react';
 import {Text as RNText, StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
 
-
 export default class Text extends BaseComponent {
 
   static displayName = 'Text';
@@ -19,6 +18,10 @@ export default class Text extends BaseComponent {
 
   generateStyles() {
     this.styles = createStyles(this.props);
+  }
+
+  setNativeProps(nativeProps) {
+    this._root.setNativeProps(nativeProps); // eslint-disable-line
   }
 
   render() {
