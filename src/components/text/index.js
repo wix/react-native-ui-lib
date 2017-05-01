@@ -21,7 +21,7 @@ export default class Text extends BaseComponent {
   }
 
   setNativeProps(nativeProps) {
-    this._root.setNativeProps(nativeProps);
+    this._root.setNativeProps(nativeProps); // eslint-disable-line
   }
 
   render() {

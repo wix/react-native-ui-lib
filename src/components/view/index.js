@@ -16,7 +16,7 @@ export default class View extends BaseComponent {
   }
 
   setNativeProps(nativeProps) {
-    this._root.setNativeProps(nativeProps);
+    this._root.setNativeProps(nativeProps); // eslint-disable-line
   }
 
   render() {
