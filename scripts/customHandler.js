@@ -18,52 +18,6 @@ function getStaticMemberValue(path, staticMemberName) {
   return staticMemberValue || null;
 }
 
-// function getNodeIdentifier(path) {
-//   let displayName = null;
-//   if (
-//     types.FunctionExpression.check(path.node) ||
-//     types.FunctionDeclaration.check(path.node) ||
-//     types.ClassExpression.check(path.node) ||
-//     types.ClassDeclaration.check(path.node)
-//   ) {
-//     displayName = getNameOrValue(path.get('id'));
-//   }
-
-//   return displayName || null;
-// }
-
-// function getVariableIdentifier(path) {
-//   let displayName = null;
-//   let searchPath = path;
-
-//   while (searchPath !== null) {
-//     if (types.VariableDeclarator.check(searchPath.node)) {
-//       displayName = getNameOrValue(searchPath.get('id'));
-//       break;
-//     }
-//     searchPath = searchPath.parentPath;
-//   }
-
-//   return displayName || null;
-// }
-
-// function getNameFromFilePath(filePath = '') {
-//   let displayName = null;
-
-//   const filename = path.basename(filePath, path.extname(filePath));
-//   if (filename === 'index') {
-//     const parts = path.dirname(filePath).split(path.sep);
-//     displayName = parts[parts.length - 1];
-//   } else {
-//     displayName = filename;
-//   }
-
-//   return displayName
-//     .charAt(0).toUpperCase()
-//     .concat(displayName.slice(1))
-//     .replace(/-([a-z])/, (_, match) => match.toUpperCase());
-// }
-
 // export function createDisplayNameHandler(filePath) {
 function createCustomStaticMemberHandler(staticMemberName = DEFAULT_PROP_NAME) {
   return function displayNameHandler(documentation, path) {
