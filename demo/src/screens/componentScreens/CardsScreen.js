@@ -6,12 +6,30 @@ import posts from '../../data/posts';
 
 const featureIcon = require('../../assets/icons/star.png');
 const shareIcon = require('../../assets/icons/share.png');
+const cardImage = require('../../assets/images/card-example.jpg');
 
 export default class ButtonsScreen extends Component {
 
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
+
+        <Card row height={160} containerStyle={{marginBottom: 15}} onPress={() => {}}>
+          <Card.Image left imageSource={cardImage}/>
+          <Card.Section body>
+            <Card.Section>
+              <Text text70 dark10>You’re Invited!</Text>
+            </Card.Section>
+            <Card.Section>
+              <Text text80 dark10>Join Old The Town Barbershop Official Store. Download the Wix app to...</Text>
+            </Card.Section>
+            <Card.Section footer>
+              <Text text90 dark50>wix.to/A465c</Text>
+            </Card.Section>
+          </Card.Section>
+        </Card>
+
+
         {_.map(posts, (post, i) => {
           const statusColor = post.status === 'Published' ? Colors.green30 : Colors.orange30;
           return (
@@ -50,6 +68,5 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     backgroundColor: Colors.dark80,
-    flex: 1,
   },
 });

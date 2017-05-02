@@ -1,8 +1,10 @@
 import React, {PropTypes} from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {TouchableOpacity, StyleSheet} from 'react-native';
+import _ from 'lodash';
 import {Colors, Shadows, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
+import View from '../view';
 
 import CardSection from './CardSection';
 import CardItem from './CardItem';
@@ -13,6 +15,7 @@ class Card extends BaseComponent {
   static displayName = 'Card';
 
   static propTypes = {
+    ...View.propTypes,
     /**
      * card custom width
      */
@@ -40,12 +43,11 @@ class Card extends BaseComponent {
   }
 
   render() {
-    const {onPress, style, containerStyle, testId} = this.props;
-    // const containerStyle =  this.extractContainerStyle(this.props);
+    const {onPress, style, containerStyle, testId, ...others} = this.props;
     const Container = onPress ? TouchableOpacity : View;
     return (
       <Container style={[this.styles.container, containerStyle]} onPress={onPress} testId={testId}>
-        <View style={[this.styles.innerContainer, style]}>
+        <View style={[this.styles.innerContainer, style]} {...others}>
           {this.props.children}
         </View>
       </Container>

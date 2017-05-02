@@ -18,18 +18,27 @@ export default class CardImage extends BaseComponent {
      */
     height: PropTypes.number,
     /**
-     * determing the top border radius (for Android)
+     * determine the top border radius (for Android)
      */
     top: PropTypes.bool,
     /**
-     * determing the bottom border radius (for Android)
+     * determine the left border radius (for Android)
+     */
+    left: PropTypes.bool,
+    /**
+     * determine the right border radius (for Android)
+     */
+    right: PropTypes.bool,
+    /**
+     * determine the bottom border radius (for Android)
      */
     bottom: PropTypes.bool,
-    testId: PropTypes.string,
+    testID: PropTypes.string,
   };
 
   static defaultProps = {
     height: 150,
+    width: 115,
   }
 
   generateStyles() {
@@ -50,28 +59,24 @@ export default class CardImage extends BaseComponent {
   }
 }
 
-function generateBorderRadiusStyle({top, bottom}) {
+function generateBorderRadiusStyle({top, bottom, left, right}) {
   const borderRaidusStyle = {};
   if (Constants.isAndroid) {
-    if (top) {
-      borderRaidusStyle.borderTopLeftRadius = BorderRadiuses.br10;
-      borderRaidusStyle.borderTopRightRadius = BorderRadiuses.br10;
-    }
-
-    if (bottom) {
-      borderRaidusStyle.borderBottomLeftRadius = BorderRadiuses.br10;
-      borderRaidusStyle.borderBottomRightRadius = BorderRadiuses.br10;
-    }
+    borderRaidusStyle.borderTopLeftRadius = (top || left) ? BorderRadiuses.br10 : undefined;
+    borderRaidusStyle.borderTopRightRadius = (top || right) ? BorderRadiuses.br10 : undefined;
+    borderRaidusStyle.borderBottomLeftRadius = (bottom || left) ? BorderRadiuses.br10 : undefined;
+    borderRaidusStyle.borderBottomRightRadius = (bottom || right) ? BorderRadiuses.br10 : undefined;
   }
 
   return borderRaidusStyle;
 }
 
-function createStyles({height, top, bottom}) {
-  const borderRadiusStyle = generateBorderRadiusStyle({top, bottom});
+function createStyles({width, height, top, bottom, left, right}) {
+  const borderRadiusStyle = generateBorderRadiusStyle({top, bottom, left, right});
   return StyleSheet.create({
     container: {
-      height,
+      height: (left || right) ? undefined : height,
+      width: (top || bottom) ? undefined : width,
       ...borderRadiusStyle,
     },
     image: {
