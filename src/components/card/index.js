@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import {TouchableOpacity, StyleSheet} from 'react-native';
-import _ from 'lodash';
 import {Colors, Shadows, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
