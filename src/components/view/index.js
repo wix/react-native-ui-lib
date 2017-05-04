@@ -5,6 +5,10 @@ import {BaseComponent} from '../../commons';
 export default class View extends BaseComponent {
 
   static displayName = 'View';
+
+  /**
+   * @modifiers: margins, paddings, alignments, background, borderRadius
+   */
   static propTypes = {
     ...RNView.propTypes,
     ...BaseComponent.propTypes,
