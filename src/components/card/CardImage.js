@@ -10,7 +10,7 @@ export default class CardImage extends BaseComponent {
 
   static propTypes = {
     /**
-     * Image soruce, either remove source or local
+     * Image source, either remote source or local
      */
     imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
@@ -18,28 +18,11 @@ export default class CardImage extends BaseComponent {
      */
     height: PropTypes.number,
     /**
-     * determine the top border radius (for Android)
+     * Image position to determine the right flex-ness and border radius (for Android)
      */
-    top: PropTypes.bool,
-    /**
-     * determine the left border radius (for Android)
-     */
-    left: PropTypes.bool,
-    /**
-     * determine the right border radius (for Android)
-     */
-    right: PropTypes.bool,
-    /**
-     * determine the bottom border radius (for Android)
-     */
-    bottom: PropTypes.bool,
+    position: PropTypes.string,
     testID: PropTypes.string,
   };
-
-  static defaultProps = {
-    height: 150,
-    width: 115,
-  }
 
   generateStyles() {
     this.styles = createStyles(this.props);
@@ -59,7 +42,18 @@ export default class CardImage extends BaseComponent {
   }
 }
 
-function generateBorderRadiusStyle({top, bottom, left, right}) {
+function extractPositionValues(position) {
+  const top = position === 'top';
+  const left = position === 'left';
+  const right = position === 'right';
+  const bottom = position === 'bottom';
+
+  return {top, left, right, bottom};
+}
+
+function generateBorderRadiusStyle({position}) {
+  const {top, left, right, bottom} = extractPositionValues(position);
+
   const borderRaidusStyle = {};
   if (Constants.isAndroid) {
     borderRaidusStyle.borderTopLeftRadius = (top || left) ? BorderRadiuses.br10 : undefined;
@@ -71,7 +65,8 @@ function generateBorderRadiusStyle({top, bottom, left, right}) {
   return borderRaidusStyle;
 }
 
-function createStyles({width, height, top, bottom, left, right}) {
+function createStyles({width, height, position}) {
+  const {top, left, right, bottom} = extractPositionValues(position);
   const borderRadiusStyle = generateBorderRadiusStyle({top, bottom, left, right});
   return StyleSheet.create({
     container: {

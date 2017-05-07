@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {TouchableOpacity, StyleSheet} from 'react-native';
+import _ from 'lodash';
 import {Colors, Shadows, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
@@ -41,13 +42,35 @@ class Card extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
+  // todo: add unit test
+  calcImagePosition(childIndex) {
+    const {row, children} = this.props;
+    if (childIndex === 0) {
+      return row ? 'left' : 'top';
+    } else if (childIndex === _.size(children) - 1) {
+      return row ? 'right' : 'bottom';
+    }
+  }
+
+  renderChildren() {
+    const children = _.map(this.props.children, (child, index) => {
+      if (child.type === CardImage) {
+        const position = this.calcImagePosition(index);
+        return React.cloneElement(child, {key: index, position});
+      }
+
+      return child;
+    });
+    return children;
+  }
+
   render() {
     const {onPress, style, containerStyle, testId, ...others} = this.props;
     const Container = onPress ? TouchableOpacity : View;
     return (
       <Container style={[this.styles.container, containerStyle]} onPress={onPress} testId={testId}>
         <View style={[this.styles.innerContainer, style]} {...others}>
-          {this.props.children}
+          {this.renderChildren()}
         </View>
       </Container>
     );
