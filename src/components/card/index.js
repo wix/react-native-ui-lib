@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {TouchableOpacity, StyleSheet} from 'react-native';
+import _ from 'lodash';
 import {Colors, Shadows, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
@@ -54,7 +55,7 @@ class Card extends BaseComponent {
 
   renderChildren() {
     const children = React.Children.map(this.props.children, (child, index) => {
-      if (child.type === CardImage) {
+      if (_.get(child, 'type') === CardImage) {
         const position = this.calcImagePosition(index);
         return React.cloneElement(child, {key: index, position});
       }
