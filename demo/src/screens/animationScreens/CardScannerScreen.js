@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Animated, Easing} from 'react-native';
-import _ from 'lodash';
+import {StyleSheet} from 'react-native';
 import {View, Assets, Constants, Card, Button, Colors, Typography, Text, AnimatedScanner} from 'react-native-ui-lib';//eslint-disable-line
 import posts from '../../data/posts';
 
@@ -11,22 +10,33 @@ export default class CardScannerScreen extends Component {
 
   constructor(props) {
     super(props);
+
     this.start = this.start.bind(this);
+    this.onBreak = this.onBreak.bind(this);
+
     this.state = {
-      progress: new Animated.Value(0),
+      progress: 0,
       started: false,
+      isDone: false,
     };
   }
 
-  start() {
-    if (!this.state.started) {
-      this.setState({started: true});
-      Animated.timing(this.state.progress, {
-        toValue: 100,
-        duration: 7000,
-        easing: Easing.easeOut,
-      }).start(() => this.setState({done: true}));
+  onBreak({isDone, progress}) {
+    if (!isDone) {
+      this.start();
+    } else {
+      this.setState({
+        isDone,
+      });
     }
+  }
+
+  start() {
+    const {progress} = this.state;
+    this.setState({
+      started: true,
+      progress: progress + 25,
+    });
   }
 
   render() {
@@ -62,15 +72,16 @@ export default class CardScannerScreen extends Component {
               backgroundColor={Colors.orange70}
               opacity={0.7}
               progress={this.state.progress}
+              onBreakpoint={this.onBreak}
             />
           </Card>
 
-          {this.state.started && JSON.stringify(this.state.progress) !== '100' &&
+          {this.state.started && !this.state.isDone &&
           <Text text70 dark10 style={{alignSelf: 'center', marginTop: 20}}>
             Publishing Post...
           </Text>}
 
-          {JSON.stringify(this.state.progress) === '100' &&
+          {this.state.isDone &&
           <Text text70 dark10 style={{alignSelf: 'center', marginTop: 20}}>
             Done!
           </Text>}
