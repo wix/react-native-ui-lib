@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {BlurView} from 'react-native-blur';
 import {Colors, Typography, ThemeManager} from '../../style';
 import {Constants} from '../../helpers';
@@ -30,9 +30,11 @@ class PickerModal extends BaseComponent {
       >
         <Container style={this.styles.container} blurType="light">
           <Modal.TopBar onDone={onDone} onCancel={onCancel}/>
-          <View style={this.styles.modalBody}>
-            {children}
-          </View>
+          <ScrollView>
+            <View style={this.styles.modalBody}>
+              {children}
+            </View>
+          </ScrollView>
         </Container>
       </Modal>
     );
