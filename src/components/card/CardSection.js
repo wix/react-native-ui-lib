@@ -54,7 +54,8 @@ function createStyles({body, footer}) {
       alignItems: body ? undefined : 'center',
       marginBottom: (footer || body) ? undefined : 10,
       padding: body ? 21 : undefined,
-      flex: 1,
+      flexGrow: 1,
+      flexShrink: 1,
     },
   });
 }

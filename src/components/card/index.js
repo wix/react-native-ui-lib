@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import {TouchableOpacity, StyleSheet} from 'react-native';
-import _ from 'lodash';
 import {Colors, Shadows, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
@@ -45,15 +44,16 @@ class Card extends BaseComponent {
   // todo: add unit test
   calcImagePosition(childIndex) {
     const {row, children} = this.props;
+    const childrenCount = React.Children.count(children);
     if (childIndex === 0) {
       return row ? 'left' : 'top';
-    } else if (childIndex === _.size(children) - 1) {
+    } else if (childIndex === childrenCount - 1) {
       return row ? 'right' : 'bottom';
     }
   }
 
   renderChildren() {
-    const children = _.map(this.props.children, (child, index) => {
+    const children = React.Children.map(this.props.children, (child, index) => {
       if (child.type === CardImage) {
         const position = this.calcImagePosition(index);
         return React.cloneElement(child, {key: index, position});

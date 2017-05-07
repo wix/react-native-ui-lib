@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Animated, Easing} from 'react-native';
+import {StyleSheet, Animated, Easing} from 'react-native';
 import _ from 'lodash';
-import {Assets, Constants, Card, Button, Colors, Typography, Text, AnimatedScanner} from 'react-native-ui-lib';//eslint-disable-line
+import {View, Assets, Constants, Card, Button, Colors, Typography, Text, AnimatedScanner} from 'react-native-ui-lib';//eslint-disable-line
 import posts from '../../data/posts';
 
 const featureIcon = require('../../assets/icons/star.png');
@@ -34,10 +34,9 @@ export default class CardScannerScreen extends Component {
     const statusColor = post.status === 'Published' ? Colors.green30 : Colors.orange30;
     return (
       <View style={styles.container}>
-
-        <View style={{flex: 1}}>
+        <View flex>
           <Card containerStyle={{marginBottom: 15}} onPress={() => console.log('press on a card')}>
-            <Card.Image imageSource={post.coverImage}/>
+            <Card.Image height={115} imageSource={post.coverImage}/>
             <Card.Section body>
               <Card.Section>
                 <Text text40 color={Colors.dark10}>{post.title}</Text>
