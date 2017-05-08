@@ -80,18 +80,19 @@ class Card extends BaseComponent {
 
 function createStyles({width, height}) {
   const shadowStyle = Constants.isIOS ? Shadows.white40.bottom : {};
+  const borderRadius = Constants.isIOS ? BorderRadiuses.br40 : BorderRadiuses.br10;
   return StyleSheet.create({
     container: {
       width,
       height,
       ...shadowStyle,
-      backgroundColor: Constants.isIOS ? 'transparent' : 'white',
-      borderRadius: Constants.isIOS ? BorderRadiuses.br40 : BorderRadiuses.br10,
+      backgroundColor: Constants.isIOS ? 'transparent' : Colors.white,
+      borderRadius,
       elevation: 2,
     },
     innerContainer: {
       backgroundColor: Colors.white,
-      borderRadius: Constants.isIOS ? BorderRadiuses.br40 : BorderRadiuses.br10,
+      borderRadius,
       overflow: 'hidden',
       flexGrow: 1,
     },

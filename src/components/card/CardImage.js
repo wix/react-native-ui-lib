@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react';
 import {View, Image, StyleSheet} from 'react-native';
-import {Constants} from '../../helpers';
-import {BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
+import * as CardPresenter from './CardPresenter';
 
 export default class CardImage extends BaseComponent {
 
@@ -29,11 +28,12 @@ export default class CardImage extends BaseComponent {
   }
 
   render() {
-    const {imageSource, style} = this.props;
+    const {imageSource, style, position} = this.props;
+    const borderStyle = CardPresenter.generateBorderRadiusStyle({position});
     if (imageSource) {
       return (
-        <View style={[this.styles.container, style]}>
-          <Image source={imageSource} style={this.styles.image}/>
+        <View style={[this.styles.container, borderStyle, style]}>
+          <Image source={imageSource} style={[this.styles.image, borderStyle]}/>
         </View>
       );
     }
@@ -42,44 +42,18 @@ export default class CardImage extends BaseComponent {
   }
 }
 
-function extractPositionValues(position) {
-  const top = position === 'top';
-  const left = position === 'left';
-  const right = position === 'right';
-  const bottom = position === 'bottom';
-
-  return {top, left, right, bottom};
-}
-
-function generateBorderRadiusStyle({position}) {
-  const {top, left, right, bottom} = extractPositionValues(position);
-
-  const borderRaidusStyle = {};
-  if (Constants.isAndroid) {
-    borderRaidusStyle.borderTopLeftRadius = (top || left) ? BorderRadiuses.br10 : undefined;
-    borderRaidusStyle.borderTopRightRadius = (top || right) ? BorderRadiuses.br10 : undefined;
-    borderRaidusStyle.borderBottomLeftRadius = (bottom || left) ? BorderRadiuses.br10 : undefined;
-    borderRaidusStyle.borderBottomRightRadius = (bottom || right) ? BorderRadiuses.br10 : undefined;
-  }
-
-  return borderRaidusStyle;
-}
-
 function createStyles({width, height, position}) {
-  const {top, left, right, bottom} = extractPositionValues(position);
-  const borderRadiusStyle = generateBorderRadiusStyle({top, bottom, left, right});
+  const {top, left, right, bottom} = CardPresenter.extractPositionValues(position);
   return StyleSheet.create({
     container: {
       height: (left || right) ? undefined : height,
       width: (top || bottom) ? undefined : width,
-      ...borderRadiusStyle,
     },
     image: {
       width: null,
       height: null,
       flex: 1,
       resizeMode: 'cover',
-      ...borderRadiusStyle,
     },
   });
 }
