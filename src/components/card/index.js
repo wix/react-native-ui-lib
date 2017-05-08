@@ -79,20 +79,21 @@ class Card extends BaseComponent {
 }
 
 function createStyles({width, height}) {
+  const shadowStyle = Constants.isIOS ? Shadows.white40.bottom : {};
   return StyleSheet.create({
     container: {
       width,
       height,
-      backgroundColor: 'transparent',
-      ...Shadows.white40.bottom,
-      padding: Constants.isAndroid ? 2 : undefined,
+      ...shadowStyle,
+      backgroundColor: Constants.isIOS ? 'transparent' : 'white',
+      borderRadius: Constants.isIOS ? BorderRadiuses.br40 : BorderRadiuses.br10,
+      elevation: 2,
     },
     innerContainer: {
       backgroundColor: Colors.white,
       borderRadius: Constants.isIOS ? BorderRadiuses.br40 : BorderRadiuses.br10,
       overflow: 'hidden',
       flexGrow: 1,
-      elevation: 2,
     },
   });
 }
