@@ -35,6 +35,7 @@ export default class InputScreen extends Component {
           placeholder="write something.."
           onChangeText={text => this.setState({error: text ? '' : 'This field is required' })}
           error={this.state.error}
+          underlineColor={{focus: Colors.orange60, error: Colors.purple50}}
         />
 
         <TextInput containerStyle={{marginBottom: INPUT_SPACING}} text40 hideUnderline placeholder="write something.."/>

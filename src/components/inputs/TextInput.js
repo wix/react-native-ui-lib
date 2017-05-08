@@ -8,6 +8,12 @@ import {Constants} from '../../helpers';
 import {Modal} from '../../screensComponents';
 import TextArea from './TextArea';
 
+const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
+  default: Colors.dark80,
+  focus: Colors.blue30,
+  error: Colors.red30,
+};
+
 export default class TextInput extends BaseInput {
 
   static displayName = 'TextInput';
@@ -22,6 +28,10 @@ export default class TextInput extends BaseInput {
      * hide text input underline, by default false
      */
     hideUnderline: PropTypes.bool,
+    /**
+     * underline color in a string format or object of states - {default: 'black', error: 'red', focus: 'blue'}
+     */
+    underlineColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     /**
      * should text input be align to center
      */
@@ -81,16 +91,29 @@ export default class TextInput extends BaseInput {
     this.styles = createStyles(this.props);
   }
 
+  // todo: add tests
   getUnderlineStyle() {
     const {focused} = this.state;
-    const {error} = this.props;
-    if (error) {
-      return this.styles.errorUnderline;
-    } else if (focused) {
-      return this.styles.focusedUnderline;
+    const {error, underlineColor} = this.props;
+
+    const underlineColorByState = DEFAULT_UNDERLINE_COLOR_BY_STATE;
+    if (underlineColor) {
+      if (_.isString(underlineColor)) {
+        return {borderColor: underlineColor}; // use given color for any state
+      } else if (_.isObject(underlineColor)) {
+        _.merge(underlineColorByState, underlineColor);
+      }
     }
 
-    return null;
+    let borderColor = underlineColorByState.default;
+    if (error) {
+      borderColor = underlineColorByState.error;
+    } else if (focused) {
+      borderColor = underlineColorByState.focus;
+    }
+
+    // return the right color for the current state
+    return {borderColor};
   }
 
   hasText(value) {
@@ -220,8 +243,8 @@ export default class TextInput extends BaseInput {
     const underlineStyle = this.getUnderlineStyle();
 
     return (
-      <View style={[this.styles.container, underlineStyle, containerStyle]}>
-        <View style={this.styles.innerContainer}>
+      <View style={[this.styles.container, containerStyle]}>
+        <View style={[this.styles.innerContainer, underlineStyle]}>
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
           {this.renderExpandableModal()}
