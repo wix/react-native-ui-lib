@@ -231,8 +231,7 @@ export default class Button extends BaseComponent {
   }
 
   render() {
-    const {onPress, disabled, link, enableShadow, style, testID} = this.props;
-    const containerStyle = this.extractContainerStyle(this.props);
+    const {onPress, disabled, link, enableShadow, style, containerStyle, testID} = this.props;
     const shadowStyle = enableShadow ? this.styles.shadowStyle : {};
     const {margins} = this.state;
     const backgroundColor = this.getBackgroundColor();
