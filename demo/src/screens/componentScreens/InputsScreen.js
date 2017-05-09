@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {ScrollView, View, StyleSheet} from 'react-native';
 import {Assets, Constants, Button, Colors, Text, TextInput, TextArea, Typography} from 'react-native-ui-lib';//eslint-disable-line
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 
 const LONG_TEXT = 'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer Martín Bollati. In this piece';
 const INPUT_SPACING = 10;
@@ -26,9 +27,12 @@ export default class InputScreen extends Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps>
+      <KeyboardAwareScrollView
+        contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps
+        getTextInputRefs={() => [this.noUnderline, this.hugeText]}
+      >
         <Text style={{marginBottom: 20}} text40>Inputs</Text>
-
         <TextInput
           floatingPlaceholder
           text70
@@ -73,6 +77,7 @@ export default class InputScreen extends Component {
           text20
           placeholder="Huge Text"
           containerStyle={{marginBottom: INPUT_SPACING}}
+          ref={(input) => this.hugeText = input}
         />
 
         <TextInput
@@ -80,6 +85,7 @@ export default class InputScreen extends Component {
           hideUnderline
           placeholder="No Underline"
           containerStyle={{marginBottom: INPUT_SPACING}}
+          ref={(input) => this.noUnderline = input}
         />
 
         <TextInput
@@ -90,7 +96,7 @@ export default class InputScreen extends Component {
           containerStyle={{marginBottom: INPUT_SPACING}}
         />
 
-      </ScrollView>
+      </KeyboardAwareScrollView>
     );
   }
 }

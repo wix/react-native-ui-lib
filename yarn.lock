@@ -4732,6 +4732,10 @@ react-native-blur@~1.0.0:
   version "1.0.1"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-native-blur/-/react-native-blur-1.0.1.tgz#c81e48f631489a87a86a0c58674f6283d7dc15a7"
 
+react-native-keyboard-aware-scrollview@^1.1.6:
+  version "1.1.6"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-native-keyboard-aware-scrollview/-/react-native-keyboard-aware-scrollview-1.1.6.tgz#3b3524ee829f19974738dc589595a2981189a662"
+
 react-native-navigation@^2.0.0-experimental:
   version "2.0.0-legacy.13"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-native-navigation/-/react-native-navigation-2.0.0-legacy.13.tgz#82791c25ad8307e19b817c039053a41606196070"
