@@ -3,9 +3,12 @@ import {View, Image, StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
 import * as CardPresenter from './CardPresenter';
 
+/**
+ * CardImage belongs inside the Card component
+ */
 export default class CardImage extends BaseComponent {
 
-  static displayName = 'Card Image';
+  static displayName = 'CardImage';
 
   static propTypes = {
     /**
@@ -17,7 +20,8 @@ export default class CardImage extends BaseComponent {
      */
     height: PropTypes.number,
     /**
-     * Image position to determine the right flex-ness and border radius (for Android)
+     * Image position to determine the right flex-ness of the image and border radius (for Android)
+     * this prop derived automatically from Card parent component
      */
     position: PropTypes.string,
     testID: PropTypes.string,

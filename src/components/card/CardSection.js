@@ -5,22 +5,25 @@ import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 import View from '../view';
 
+/**
+ * CardSection, a sub Card component for layout-ing inside a card
+ */
 export default class CardSection extends BaseComponent {
 
-  static displayName = 'Card Section';
+  static displayName = 'CardSection';
 
   static propTypes = {
     ...View.propTypes,
     /**
-     * enable blur view
+     * Enable blur view for the section
      */
     enableBlur: PropTypes.bool,
     /**
-     * blur options
+     * Blur options
      */
     blurOptions: PropTypes.object,
     /**
-     * style as a body, apply inner padding
+     * thid modifier apply inner padding
      */
     body: PropTypes.bool,
     /**

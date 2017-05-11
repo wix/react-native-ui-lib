@@ -2,9 +2,12 @@ import React, {PropTypes} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
 
+/**
+ * CardItem, a sub Card component for layout-ing inside a card
+ */
 export default class CardItem extends BaseComponent {
 
-  static displayName = 'Card Item';
+  static displayName = 'CardItem';
 
   static propTypes = {
     /**
