@@ -7,7 +7,8 @@ import Text from '../text';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 
 /**
- * Basic button component
+ * @description: Basic button component
+ * @modifiers: margins
  */
 export default class Button extends BaseComponent {
   static displayName = 'Button';
