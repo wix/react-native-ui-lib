@@ -16,9 +16,13 @@ class ListItem extends BaseComponent {
      */
     height: PropTypes.number,
     /**
-     * action for when pressing the card
+     * action for when pressing the item
      */
     onPress: PropTypes.func,
+    /**
+     * action for when long pressing the item
+     */
+    onLongPress: PropTypes.func,
     /**
      * Additional styles for the top container
      */
@@ -45,19 +49,21 @@ class ListItem extends BaseComponent {
   }
 
   render() {
-    const {style, onPress, testId} = this.props;
+    const {style, onPress, onLongPress, testId} = this.props;
     const {pressed} = this.state;
     const containerStyle = this.extractContainerStyle(this.props);
     const animationProps = this.extractAnimationProps();
-    const Container = onPress ? TouchableHighlight : View;
+    const Container = (onPress || onLongPress) ? TouchableHighlight : View;
 
     return (
       <Container
         activeOpacity={1}
         style={[this.styles.container, containerStyle]}
-        onPress={onPress} testId={testId}
+        onPress={onPress}
+        onLongPress={onLongPress}
         onHideUnderlay={() => this.setState({pressed: false})}
         onShowUnderlay={() => this.setState({pressed: true})}
+        testId={testId}
       >
         <Animatable.View
           {...animationProps}
