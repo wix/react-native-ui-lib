@@ -190,6 +190,14 @@ export default class Button extends BaseComponent {
     }
   }
 
+  getShadowStyle() {
+    const backgroundColor = this.getBackgroundColor();
+    const {enableShadow} = this.props;
+    if (enableShadow) {
+      return [this.styles.shadowStyle, backgroundColor && {shadowColor: backgroundColor}];
+    }
+  }
+
   renderIcon() {
     const {iconSource, iconStyle, label, link, disabled} = this.props;
     if (iconSource) {
@@ -232,8 +240,8 @@ export default class Button extends BaseComponent {
   }
 
   render() {
-    const {onPress, disabled, link, enableShadow, style, containerStyle, testID} = this.props;
-    const shadowStyle = enableShadow ? this.styles.shadowStyle : {};
+    const {onPress, disabled, link, style, containerStyle, testID} = this.props;
+    const shadowStyle = this.getShadowStyle();
     const {margins} = this.state;
     const backgroundColor = this.getBackgroundColor();
     const outlineStyle = this.getOutlineStyle();
