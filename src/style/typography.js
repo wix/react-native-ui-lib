@@ -7,7 +7,7 @@ class Typography {
   text40 = {fontSize: 28, fontWeight: '200', lineHeight: Math.floor(28 * 1.3)};
   text50 = {fontSize: 22, fontWeight: '300', lineHeight: Math.floor(22 * 1.3)};
   text60 = {fontSize: 20, fontWeight: '300', lineHeight: Math.floor(20 * 1.3)};
-  text70 = {fontSize: 17, fontWeight: '300', lineHeight: Math.floor(17 * 1.2)};
+  text70 = {fontSize: 17, fontWeight: '300', lineHeight: Math.floor(17 * 1.3)};
   text80 = {fontSize: 15, fontWeight: '300', lineHeight: Math.floor(15 * 1.2)};
   text90 = {fontSize: 13, fontWeight: '300', lineHeight: Math.floor(13 * 1.2)};
   text100 = {fontSize: 11, fontWeight: '300', lineHeight: Math.floor(11 * 1.2)};
