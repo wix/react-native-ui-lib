@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import {StyleSheet} from 'react-native';
-import {LoaderScreen} from 'react-native-ui-lib';//eslint-disable-line
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 import * as Assets from '../../assets';
