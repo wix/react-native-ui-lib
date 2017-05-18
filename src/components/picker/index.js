@@ -27,7 +27,7 @@ class Picker extends TextInput {
     /**
      * picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
      */
-    value: PropTypes.oneOfType(ItemType, PropTypes.arrayOf(ItemType)),
+    value: PropTypes.oneOfType([ItemType, PropTypes.arrayOf(ItemType), PropTypes.object]),
     /**
      * callback for when picker value change
      */
