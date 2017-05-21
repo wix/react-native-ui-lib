@@ -67,6 +67,10 @@ export default class Button extends BaseComponent {
      */
     labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
+     * should the button act as a coast to coast button (no border radius)
+     */
+    fullWidth: PropTypes.bool,
+    /**
      * Control shadow visibility
      */
     enableShadow: PropTypes.bool, // iOS-only
@@ -182,8 +186,8 @@ export default class Button extends BaseComponent {
   }
 
   getBorderRadiusStyle() {
-    const {link, borderRadius} = this.props;
-    if (link) {
+    const {link, borderRadius, fullWidth} = this.props;
+    if (link || fullWidth) {
       return {borderRadius: 0};
     } else if (!_.isUndefined(borderRadius)) {
       return {borderRadius};
