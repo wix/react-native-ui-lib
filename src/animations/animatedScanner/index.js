@@ -46,7 +46,7 @@ export default class AnimatedScanner extends BaseComponent {
     super(props);
 
     this.state = {
-      animatedProgress: new Animated.Value(props.progress),
+      animatedProgress: new Animated.Value(0),
       isDone: false,
     };
 
@@ -55,14 +55,21 @@ export default class AnimatedScanner extends BaseComponent {
     }
   }
 
+  componentDidMount() {
+    const {progress, duration} = this.props;
+    if (progress > 0) {
+      this.animate(progress, duration);
+    }
+  }
+
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    const {progress, duration} = this.props;
+    const {progress} = this.props;
     if (nextProps.progress !== progress) {
-      this.animate(nextProps.progress, duration);
+      this.animate(nextProps.progress, nextProps.duration);
     }
   }
 
@@ -111,6 +118,7 @@ export default class AnimatedScanner extends BaseComponent {
     if (_.isNumber(this.props.progress)) {
       return this.renderNew();
     }
+    // todo: deprecate
     return this.renderOld();
   }
 
