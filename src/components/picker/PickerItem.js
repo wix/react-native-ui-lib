@@ -48,7 +48,7 @@ class PickerItem extends BaseComponent {
       console.warn('PickerItem \'label\' prop will be deprecated soon. please include label in \'value\' prop. (refer docs)'); //eslint-disable-line
     }
 
-    if (_.isObject(props.value)) {
+    if (!_.isObject(props.value)) {
       console.warn('PickerItem \'value\' prop type has changed to object, please use it with the following format: {value: ..., label: ...} or use getItemValue & getItemLabel props'); //eslint-disable-line
     }
   }
