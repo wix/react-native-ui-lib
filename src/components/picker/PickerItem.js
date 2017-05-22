@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react';
-import {Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {Image, TouchableOpacity, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {Colors, Typography, ThemeManager} from '../../style';
 import {BaseComponent} from '../../commons';
 import * as Assets from '../../assets';
 import View from '../view';
+import Text from '../text';
 
 // todo: fully deprecate label prop
 class PickerItem extends BaseComponent {
@@ -81,7 +82,7 @@ class PickerItem extends BaseComponent {
     const {disabled} = this.props;
     return (
       <View style={this.styles.container} flex row spread centerV>
-        <Text style={[this.styles.labelText, disabled && this.styles.labelTextDisabled]}>{this.getLabel()}</Text>
+        <Text numberOfLines={1} style={[this.styles.labelText, disabled && this.styles.labelTextDisabled]}>{this.getLabel()}</Text>
         {this.renderSelectedIndicator()}
       </View>
     );
@@ -114,6 +115,7 @@ function createStyles() {
     labelText: {
       ...Typography.text70,
       color: Colors.dark10,
+      flex: 1,
     },
     labelTextDisabled: {
       color: Colors.dark60,
