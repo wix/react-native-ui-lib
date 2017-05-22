@@ -82,7 +82,12 @@ class PickerItem extends BaseComponent {
     const {disabled} = this.props;
     return (
       <View style={this.styles.container} flex row spread centerV>
-        <Text numberOfLines={1} style={[this.styles.labelText, disabled && this.styles.labelTextDisabled]}>{this.getLabel()}</Text>
+        <Text
+          numberOfLines={1}
+          style={[this.styles.labelText, disabled && this.styles.labelTextDisabled]}
+        >
+          {this.getLabel()}
+        </Text>
         {this.renderSelectedIndicator()}
       </View>
     );
