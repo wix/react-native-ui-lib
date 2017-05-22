@@ -12,11 +12,13 @@ export default class CardScannerScreen extends Component {
     super(props);
 
     this.start = this.start.bind(this);
+    this.reset = this.reset.bind(this);
     this.onBreak = this.onBreak.bind(this);
 
     this.state = {
       progress: 0,
       started: false,
+      reset: false,
       isDone: false,
     };
   }
@@ -35,11 +37,21 @@ export default class CardScannerScreen extends Component {
     const {progress} = this.state;
     this.setState({
       started: true,
+      reset: false,
       progress: progress + 25,
     });
   }
 
+  reset() {
+    this.setState({
+      started: false,
+      progress: 0,
+      reset: true,
+    });
+  }
+
   render() {
+    const {reset} = this.state;
     const post = posts[0];
     const statusColor = post.status === 'Published' ? Colors.green30 : Colors.orange30;
     return (
@@ -72,6 +84,7 @@ export default class CardScannerScreen extends Component {
               backgroundColor={Colors.orange70}
               opacity={0.7}
               progress={this.state.progress}
+              duration={reset ? 0 : 1500}
               onBreakpoint={this.onBreak}
             />
           </Card>
@@ -87,8 +100,9 @@ export default class CardScannerScreen extends Component {
           </Text>}
         </View>
 
-        <View style={{alignItems: 'center'}}>
-          <Button size="medium" label="Publish" onPress={this.start} disabled={this.state.started}/>
+        <View row center>
+          <Button size="medium" label="Reset" onPress={this.reset} disabled={!this.state.isDone}/>
+          <Button marginL-10 size="medium" label="Publish" onPress={this.start} disabled={this.state.started}/>
         </View>
 
       </View>
