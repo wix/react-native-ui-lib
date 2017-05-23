@@ -96,7 +96,7 @@ export default class TextInput extends BaseInput {
     const {focused} = this.state;
     const {error, underlineColor} = this.props;
 
-    const underlineColorByState = DEFAULT_UNDERLINE_COLOR_BY_STATE;
+    const underlineColorByState = _.cloneDeep(DEFAULT_UNDERLINE_COLOR_BY_STATE);
     if (underlineColor) {
       if (_.isString(underlineColor)) {
         return {borderColor: underlineColor}; // use given color for any state
