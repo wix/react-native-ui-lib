@@ -1,4 +1,4 @@
-import * as uut from '../TextInput';
+// import * as uut from '../TextInput';
 
 describe('TextInput', () => {
   it('should getUnderlineStyle', () => {
