@@ -22,7 +22,7 @@ class PickerModal extends BaseComponent {
       <Modal
         animationType={'slide'}
         transparent={(Constants.isIOS && enableModalBlur)}
-        enableModalBlur={enableModalBlur}
+        enableModalBlur={Constants.isIOS && enableModalBlur}
         visible={visible}
         onRequestClose={onCancel}
       >
