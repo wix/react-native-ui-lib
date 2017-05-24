@@ -39,6 +39,9 @@ export default class LoadingScreen extends Component {
               title="modal title"
               onCancel={() => this.closeScreen()}
               onDone={() => alert('done')}
+              doneButtonProps={{
+                disabled: true,
+              }}
             />
             <View padding-20>
               <Text text70>
@@ -89,7 +92,6 @@ export default class LoadingScreen extends Component {
               onDone={() => alert('done')}
               doneButtonProps={{color: Colors.orange30}}
               cancelButtonProps={{iconStyle: {tintColor: Colors.orange30}}}
-
             />
             <View padding-20>
               <Text text70>

@@ -9,6 +9,10 @@ import View from '../../components/view';
 import Button from '../../components/button';
 import Text from '../../components/text';
 
+const DEFAULT_BUTTON_PROPS = {
+  color: Colors.blue30,
+};
+
 export default class TopBar extends BaseComponent {
 
   static propTypes = {
@@ -27,12 +31,8 @@ export default class TopBar extends BaseComponent {
   static defaultProps = {
     doneLabel: 'Save',
     cancelIcon: Assets.icons.x,
-    doneButtonProps: {
-      color: Colors.blue30,
-    },
-    cancelButtonProps: {
-      color: Colors.blue30,
-    },
+    doneButtonProps: {},
+    cancelButtonProps: {},
   }
 
   generateStyles() {
@@ -42,6 +42,7 @@ export default class TopBar extends BaseComponent {
   renderTopBarButton({onPress, label, icon, buttonProps}) {
     if (onPress && (label || icon)) {
       const {iconStyle, labelStyle, ...otherButtonProps} = buttonProps;
+
       return (
         <Button
           link
@@ -50,6 +51,7 @@ export default class TopBar extends BaseComponent {
           labelStyle={[this.styles.actionLabel, labelStyle]}
           iconSource={icon}
           iconStyle={[this.styles.icon, iconStyle]}
+          {...DEFAULT_BUTTON_PROPS}
           {...otherButtonProps}
         />
       );
