@@ -27,6 +27,10 @@ export default class BaseComponent extends Component {
     };
   }
 
+  getSnippet() {
+    return DocsGenerator.generateSnippet(this);
+  }
+
   styles;
 
   generateStyles() {
@@ -228,9 +232,5 @@ export default class BaseComponent extends Component {
 
   extractTextProps(props) {
     return _.pick(props, [..._.keys(Typography), ..._.keys(Colors), 'color']);
-  }
-
-  getSnippet() {
-    return DocsGenerator.generateSnippet(this);
   }
 }

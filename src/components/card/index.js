@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react';
 import {TouchableOpacity, StyleSheet} from 'react-native';
 import _ from 'lodash';
-import {Colors, Shadows, BorderRadiuses} from '../../style';
+import {Colors, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import View from '../view';
+import MultipleShadow from '../MultipleShadow';
 
 import CardSection from './CardSection';
 import CardItem from './CardItem';
@@ -35,7 +36,7 @@ class Card extends BaseComponent {
     /**
      * Use to identify the button in tests
      */
-    testId: PropTypes.string,
+    testID: PropTypes.string,
   };
 
   generateStyles() {
@@ -66,26 +67,26 @@ class Card extends BaseComponent {
   }
 
   render() {
-    const {onPress, style, containerStyle, testId, ...others} = this.props;
+    const {onPress, style, containerStyle, testID, ...others} = this.props;
     const Container = onPress ? TouchableOpacity : View;
     return (
-      <Container style={[this.styles.container, containerStyle]} onPress={onPress} testId={testId}>
-        <View style={[this.styles.innerContainer, style]} {...others}>
-          {this.renderChildren()}
-        </View>
+      <Container style={[this.styles.container, containerStyle]} onPress={onPress} testID={testID}>
+        <MultipleShadow>
+          <View style={[this.styles.innerContainer, style]} {...others}>
+            {this.renderChildren()}
+          </View>
+        </MultipleShadow>
       </Container>
     );
   }
 }
 
 function createStyles({width, height}) {
-  const shadowStyle = Constants.isIOS ? Shadows.white40.bottom : {};
   const borderRadius = Constants.isIOS ? BorderRadiuses.br40 : BorderRadiuses.br10;
   return StyleSheet.create({
     container: {
       width,
       height,
-      ...shadowStyle,
       backgroundColor: Constants.isIOS ? 'transparent' : Colors.white,
       borderRadius,
       elevation: 2,
