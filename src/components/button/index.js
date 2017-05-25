@@ -298,7 +298,7 @@ function createStyles({outline, outlineColor, link, color}) {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: Constants.isIOS ? BorderRadiuses.br100 : BorderRadiuses.br10,
+      borderRadius: BorderRadiuses.br100,
     },
     innerContainerDisabled: {
       backgroundColor: Colors.dark60,
