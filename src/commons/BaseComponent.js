@@ -2,6 +2,7 @@ import {Component, PropTypes} from 'react';
 import {StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {Typography, Colors, BorderRadiuses} from '../style';
+import {DocsGenerator} from '../helpers';
 
 export default class BaseComponent extends Component {
 
@@ -227,5 +228,9 @@ export default class BaseComponent extends Component {
 
   extractTextProps(props) {
     return _.pick(props, [..._.keys(Typography), ..._.keys(Colors), 'color']);
+  }
+
+  getSnippet() {
+    return DocsGenerator.generateSnippet(this);
   }
 }

@@ -25,6 +25,7 @@
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
     "lodash": "^4.0.0",
+    "prop-types": "^15.5.10",
     "react-native-animatable": "^1.1.0",
     "react-native-blur": "~1.0.0"
   },
