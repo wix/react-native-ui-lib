@@ -30,7 +30,7 @@ export default class ButtonsScreen extends Component {
           </Card.Section>
         </Card>
 
-        <Card row height={160} containerStyle={{marginBottom: 15}} onPress={() => {}}>
+        <Card shadowType="white10" row height={160} containerStyle={{marginBottom: 15}} onPress={() => {}}>
           <Card.Section body>
             <Card.Section>
               <Text text70 dark10>You’re Invited!</Text>
@@ -94,6 +94,6 @@ export default class ButtonsScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     padding: 15,
-    backgroundColor: Colors.dark80,
+    backgroundColor: Colors.white,
   },
 });

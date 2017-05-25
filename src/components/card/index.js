@@ -11,12 +11,16 @@ import CardSection from './CardSection';
 import CardItem from './CardItem';
 import CardImage from './CardImage';
 
+/**
+ * @description: Card component
+ */
 class Card extends BaseComponent {
 
   static displayName = 'Card';
 
   static propTypes = {
     ...View.propTypes,
+    ...MultipleShadow.propTypes,
     /**
      * card custom width
      */
@@ -71,7 +75,7 @@ class Card extends BaseComponent {
     const Container = onPress ? TouchableOpacity : View;
     return (
       <Container style={[this.styles.container, containerStyle]} onPress={onPress} testID={testID}>
-        <MultipleShadow>
+        <MultipleShadow {...others}>
           <View style={[this.styles.innerContainer, style]} {...others}>
             {this.renderChildren()}
           </View>
