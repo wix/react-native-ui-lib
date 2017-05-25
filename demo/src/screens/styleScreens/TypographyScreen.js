@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {ScrollView, View, Text, StyleSheet} from 'react-native';
-import {Typography, Colors} from 'react-native-ui-lib';//eslint-disable-line
+import {ScrollView, View, StyleSheet} from 'react-native';
+import {Text, Typography, Colors} from 'react-native-ui-lib';//eslint-disable-line
 
 export default class TypographyScreen extends Component {
 
@@ -11,10 +11,10 @@ export default class TypographyScreen extends Component {
         {_.map(Typography, (value, key) => {
           return (
             <View key={key} style={styles.typographyEntry}>
-              <Text style={value}>
+              <Text dark10 style={value}>
               {key}
               </Text>
-              <Text style={[{fontSize: 12, color: Colors.dark50, marginTop: -1}]}>
+              <Text dark10 style={[{fontSize: 12, color: Colors.dark50, marginTop: -1}]}>
                 font size of {value.fontSize}
               </Text>
             </View>
