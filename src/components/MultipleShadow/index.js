@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import {BaseComponent} from '../../commons';
 import View from '../view';
