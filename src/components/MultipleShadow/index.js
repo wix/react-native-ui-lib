@@ -23,7 +23,7 @@ export default class MultipleShadow extends BaseComponent {
     /**
      * a combination of top and bottom shadow based on shadow presets names
      */
-    shadowType: PropTypes.oneOf(_.mapKeys(Shadows)),
+    shadowType: PropTypes.oneOf(Object.keys(Shadows)),
   }
 
   static defaultProps = {
