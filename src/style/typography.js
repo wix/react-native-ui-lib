@@ -1,16 +1,67 @@
 import _ from 'lodash';
+import {Constants} from '../helpers';
 
 class Typography {
-  text10 = {fontSize: 64, fontWeight: '100', lineHeight: Math.floor(64 * 1.4)};
-  text20 = {fontSize: 50, fontWeight: '100', lineHeight: Math.floor(50 * 1.4)};
-  text30 = {fontSize: 36, fontWeight: '200', lineHeight: Math.floor(36 * 1.3)};
-  text40 = {fontSize: 28, fontWeight: '200', lineHeight: Math.floor(28 * 1.3)};
-  text50 = {fontSize: 22, fontWeight: '300', lineHeight: Math.floor(22 * 1.3)};
-  text60 = {fontSize: 20, fontWeight: '300', lineHeight: Math.floor(20 * 1.3)};
-  text70 = {fontSize: 17, fontWeight: '300', lineHeight: Math.floor(17 * 1.2)};
-  text80 = {fontSize: 15, fontWeight: '300', lineHeight: Math.floor(15 * 1.2)};
-  text90 = {fontSize: 13, fontWeight: '300', lineHeight: Math.floor(13 * 1.2)};
-  text100 = {fontSize: 11, fontWeight: '300', lineHeight: Math.floor(11 * 1.2)};
+  text10 = {
+    fontSize: 64,
+    fontWeight: '100',
+    // lineHeight: Constants.isAndroid ? undefined : Math.floor(64 * 1.4),
+    fontFamily: Constants.isAndroid ? 'sans-serif-thin' : undefined,
+  };
+  text20 = {
+    fontSize: 50,
+    fontWeight: '100',
+    // lineHeight: Constants.isAndroid ? undefined : Math.floor(50 * 1.4),
+    fontFamily: Constants.isAndroid ? 'sans-serif-thin' : undefined,
+  };
+  text30 = {
+    fontSize: 36,
+    fontWeight: Constants.isAndroid ? '100' : '200',
+    // lineHeight: Constants.isAndroid ? undefined : Math.floor(36 * 1.3),
+    fontFamily: Constants.isAndroid ? 'sans-serif-thin' : undefined,
+  };
+  text40 = {
+    fontSize: 28,
+    fontWeight: '300',
+    lineHeight: Constants.isAndroid ? Math.floor(28 * 1.4) : Math.floor(28 * 1.21),
+    fontFamily: Constants.isAndroid ? 'sans-serif-light' : undefined,
+  };
+  text50 = {
+    fontSize: Constants.isAndroid ? 24 : 22,
+    fontWeight: '300',
+    lineHeight: Constants.isAndroid ? Math.floor(24 * 1.17) : Math.floor(22 * 1.27),
+    fontFamily: Constants.isAndroid ? 'sans-serif-light' : undefined,
+  };
+  text60 = {
+    fontSize: 20,
+    fontWeight: '300',
+    lineHeight: Math.floor(20 * 1.2),
+    fontFamily: Constants.isAndroid ? 'sans-serif-light' : undefined,
+  };
+  text70 = {
+    fontSize: Constants.isAndroid ? 16 : 17,
+    fontWeight: '300',
+    lineHeight: Constants.isAndroid ? Math.floor(16 * 1.38) : Math.floor(17 * 1.29),
+    fontFamily: Constants.isAndroid ? 'sans-serif-light' : undefined,
+  };
+  text80 = {
+    fontSize: Constants.isAndroid ? 14 : 15,
+    fontWeight: '300',
+    lineHeight: Constants.isAndroid ? Math.floor(14 * 1.5) : Math.floor(15 * 1.33),
+    fontFamily: Constants.isAndroid ? 'sans-serif-light' : undefined,
+  };
+  text90 = {
+    fontSize: Constants.isAndroid ? 12 : 13,
+    fontWeight: '300',
+    lineHeight: Constants.isAndroid ? Math.floor(12 * 1.33) : Math.floor(13 * 1.38),
+    fontFamily: Constants.isAndroid ? 'sans-serif-light' : undefined,
+  };
+  text100 = {
+    fontSize: Constants.isAndroid ? 10 : 11,
+    fontWeight: '300',
+    lineHeight: Constants.isAndroid ? Math.floor(10 * 1.8) : Math.floor(11 * 1.18),
+    fontFamily: Constants.isAndroid ? 'sans-serif-light' : undefined,
+  };
 
   /**
    * Load custom set of typographies

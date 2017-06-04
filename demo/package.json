@@ -1,13 +1,12 @@
 {
   "name": "unicorn-demo-app",
-  "version": "1.0.10",
+  "version": "1.0.12",
   "main": "src/index.js",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "scripts": {
-  },
+  "scripts": {},
   "devDependencies": {
     "react-native-ui-lib": "*"
   },

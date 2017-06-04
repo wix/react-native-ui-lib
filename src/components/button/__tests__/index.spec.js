@@ -126,6 +126,11 @@ describe('Button', () => {
       expect(uut.getBorderRadiusStyle()).toEqual({borderRadius: 0});
     });
 
+    it('should return 0 border radius when button is full width', () => {
+      const uut = new Button({fullWidth: true});
+      expect(uut.getBorderRadiusStyle()).toEqual({borderRadius: 0});
+    });
+
     it('should return 0 border radius when border radius prop is 0', () => {
       const uut = new Button({borderRadius: 0});
       expect(uut.getBorderRadiusStyle()).toEqual({borderRadius: 0});

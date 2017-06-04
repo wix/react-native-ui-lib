@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Animated, Easing} from 'react-native';
-import _ from 'lodash';
-import {Assets, Constants, Card, Button, Colors, Typography, Text, AnimatedScanner} from 'react-native-ui-lib';//eslint-disable-line
+import {StyleSheet} from 'react-native';
+import {View, Assets, Constants, Card, Button, Colors, Typography, Text, AnimatedScanner} from 'react-native-ui-lib';//eslint-disable-line
 import posts from '../../data/posts';
 
 const featureIcon = require('../../assets/icons/star.png');
@@ -11,33 +10,55 @@ export default class CardScannerScreen extends Component {
 
   constructor(props) {
     super(props);
+
     this.start = this.start.bind(this);
+    this.reset = this.reset.bind(this);
+    this.onBreak = this.onBreak.bind(this);
+
     this.state = {
-      progress: new Animated.Value(0),
+      progress: 0,
       started: false,
+      reset: false,
+      isDone: false,
     };
   }
 
-  start() {
-    if (!this.state.started) {
-      this.setState({started: true});
-      Animated.timing(this.state.progress, {
-        toValue: 100,
-        duration: 7000,
-        easing: Easing.easeOut,
-      }).start(() => this.setState({done: true}));
+  onBreak({isDone, progress}) {
+    if (!isDone) {
+      this.start();
+    } else {
+      this.setState({
+        isDone,
+      });
     }
   }
 
+  start() {
+    const {progress} = this.state;
+    this.setState({
+      started: true,
+      reset: false,
+      progress: progress + 25,
+    });
+  }
+
+  reset() {
+    this.setState({
+      started: false,
+      progress: 0,
+      reset: true,
+    });
+  }
+
   render() {
+    const {reset} = this.state;
     const post = posts[0];
     const statusColor = post.status === 'Published' ? Colors.green30 : Colors.orange30;
     return (
       <View style={styles.container}>
-
-        <View style={{flex: 1}}>
+        <View flex>
           <Card containerStyle={{marginBottom: 15}} onPress={() => console.log('press on a card')}>
-            <Card.Image imageSource={post.coverImage}/>
+            <Card.Image height={115} imageSource={post.coverImage}/>
             <Card.Section body>
               <Card.Section>
                 <Text text40 color={Colors.dark10}>{post.title}</Text>
@@ -63,22 +84,25 @@ export default class CardScannerScreen extends Component {
               backgroundColor={Colors.orange70}
               opacity={0.7}
               progress={this.state.progress}
+              duration={reset ? 0 : 1500}
+              onBreakpoint={this.onBreak}
             />
           </Card>
 
-          {this.state.started && JSON.stringify(this.state.progress) !== '100' &&
+          {this.state.started && !this.state.isDone &&
           <Text text70 dark10 style={{alignSelf: 'center', marginTop: 20}}>
             Publishing Post...
           </Text>}
 
-          {JSON.stringify(this.state.progress) === '100' &&
+          {this.state.isDone &&
           <Text text70 dark10 style={{alignSelf: 'center', marginTop: 20}}>
             Done!
           </Text>}
         </View>
 
-        <View style={{alignItems: 'center'}}>
-          <Button size="medium" label="Publish" onPress={this.start} disabled={this.state.started}/>
+        <View row center>
+          <Button size="medium" label="Reset" onPress={this.reset} disabled={!this.state.isDone}/>
+          <Button marginL-10 size="medium" label="Publish" onPress={this.start} disabled={this.state.started}/>
         </View>
 
       </View>

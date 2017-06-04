@@ -1,20 +1,32 @@
 import React, {PropTypes} from 'react';
-import {Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {Image, TouchableOpacity, StyleSheet} from 'react-native';
+import _ from 'lodash';
 import {Colors, Typography, ThemeManager} from '../../style';
 import {BaseComponent} from '../../commons';
 import * as Assets from '../../assets';
+import View from '../view';
+import Text from '../text';
 
-
+// todo: fully deprecate label prop
 class PickerItem extends BaseComponent {
   static propTypes = {
     /**
-     * The item label
+     * [DEPRECATED - please include the label in the value prop] The item label
      */
     label: PropTypes.string,
     /**
-     * The item value
+     * The item value with the following format - {value: ..., label: ...},
+     * for custom shape use getItemLabel, getItemValue props
      */
-    value: PropTypes.any,
+    value: PropTypes.object,
+    /**
+     * function to return the label out of the item value prop when value is custom shaped.
+     */
+    getItemLabel: PropTypes.func,
+    /**
+     * function to return the value out of the item value prop when value is custom shaped.
+     */
+    getItemValue: PropTypes.func,
     /**
      * Is the item selected
      */
@@ -23,29 +35,75 @@ class PickerItem extends BaseComponent {
      * Is the item disabled
      */
     disabled: PropTypes.bool,
+    /**
+     * render custom item
+     */
+    renderItem: PropTypes.func,
     onPress: PropTypes.func,
   };
+
+  constructor(props) {
+    super(props);
+
+    if (props.label) {
+      console.warn('PickerItem \'label\' prop will be deprecated soon. please include label in \'value\' prop. (refer docs)'); //eslint-disable-line
+    }
+
+    if (!_.isObject(props.value)) {
+      console.warn('PickerItem \'value\' prop type has changed to object, please use it with the following format: {value: ..., label: ...} or use getItemValue & getItemLabel props'); //eslint-disable-line
+    }
+  }
 
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
+  getLabel() {
+    const {value, label} = this.props;
+    if (_.isObject(value)) {
+      return _.invoke(this.props, 'getItemLabel', value) || _.get(value, 'label');
+    }
+    return label;
+  }
+
+  renderSelectedIndicator() {
+    const {isSelected, disabled} = this.props;
+    if (isSelected) {
+      return (
+        <Image
+          style={[this.styles.checkIcon, disabled && this.styles.checkIconDisabled]}
+          source={Assets.icons.check}
+        />
+      );
+    }
+  }
+
+  renderItem() {
+    const {disabled} = this.props;
+    return (
+      <View style={this.styles.container} flex row spread centerV>
+        <Text
+          numberOfLines={1}
+          style={[this.styles.labelText, disabled && this.styles.labelTextDisabled]}
+        >
+          {this.getLabel()}
+        </Text>
+        {this.renderSelectedIndicator()}
+      </View>
+    );
+  }
+
   render() {
-    const {label, value, isSelected, disabled, onPress} = this.props;
+    const {renderItem, label, value, disabled, onPress} = this.props;
+
     return (
       <TouchableOpacity
         activeOpacity={0.5}
-        style={this.styles.container}
-        onPress={() => onPress({value, label})}
+        // todo: deprecate the check for object
+        onPress={() => onPress(_.isObject(value) ? value : {value, label})}
         disabled={disabled}
       >
-        <Text style={[this.styles.labelText, disabled && this.styles.labelTextDisabled]}>{label}</Text>
-        {isSelected &&
-          <Image
-            style={[this.styles.checkIcon, disabled && this.styles.checkIconDisabled]}
-            source={Assets.icons.check}
-          />
-        }
+        {renderItem ? renderItem(value, this.props) : this.renderItem()}
       </TouchableOpacity>
     );
   }
@@ -54,9 +112,6 @@ class PickerItem extends BaseComponent {
 function createStyles() {
   return StyleSheet.create({
     container: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
       height: 56.5,
       paddingHorizontal: 23,
       borderColor: Colors.rgba(Colors.dark10, 0.1),
@@ -65,6 +120,7 @@ function createStyles() {
     labelText: {
       ...Typography.text70,
       color: Colors.dark10,
+      flex: 1,
     },
     labelTextDisabled: {
       color: Colors.dark60,

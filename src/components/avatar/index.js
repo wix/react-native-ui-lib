@@ -115,7 +115,7 @@ function createStyles({size, backgroundColor, labelColor, imageSource}) {
       backgroundColor: imageSource ? Colors.white : 'transparent',
       position: 'absolute',
       right: imageSource ? -1.5 : 0,
-      top: -1,
+      top: 4.5,
     },
     onlineBadgeInner: {
       flex: 1,

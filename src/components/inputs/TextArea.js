@@ -20,6 +20,7 @@ export default class TextArea extends BaseInput {
           multiline
           style={inputStyle}
           onChangeText={this.onChangeText}
+          ref={(input) => { this.input = input; }}
         />
       </View>
     );

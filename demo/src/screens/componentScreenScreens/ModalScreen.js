@@ -16,6 +16,13 @@ export default class LoadingScreen extends Component {
     };
   }
 
+  closeScreen() {
+    const {navigator} = this.props;
+    navigator.pop({
+      animated: true
+    });
+  }
+
   render() {
     return (
       <View flex>
@@ -30,8 +37,11 @@ export default class LoadingScreen extends Component {
           <View bg-green50 flex style={styles.page}>
             <Modal.TopBar
               title="modal title"
-              onCancel={() => alert('cancel')}
+              onCancel={() => this.closeScreen()}
               onDone={() => alert('done')}
+              doneButtonProps={{
+                disabled: true,
+              }}
             />
             <View padding-20>
               <Text text70>
@@ -82,7 +92,6 @@ export default class LoadingScreen extends Component {
               onDone={() => alert('done')}
               doneButtonProps={{color: Colors.orange30}}
               cancelButtonProps={{iconStyle: {tintColor: Colors.orange30}}}
-
             />
             <View padding-20>
               <Text text70>

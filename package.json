@@ -25,6 +25,7 @@
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
     "lodash": "^4.0.0",
+    "prop-types": "^15.5.10",
     "react-native-animatable": "^1.1.0",
     "react-native-blur": "^3.0.0-alpha",
     "react-native-interactable": "^0.0.8"
@@ -48,6 +49,7 @@
     "react-addons-test-utils": "^15.4.2",
     "react-autobind": "^1.0.6",
     "react-dom": "^15.4.2",
+    "react-native-keyboard-aware-scrollview": "^1.1.6",
     "react-native": "^0.43.4",
     "react-native-navigation": "^1.1.19"
   },

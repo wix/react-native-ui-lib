@@ -92,7 +92,7 @@ const conversations = [
     "isNew": false,
   },
   {
-    "name": "Rebecka",
+    "name": "Rebecka Joyce",
     "text": "Yep",
     "timestamp": "3 hours",
     "count": "12",

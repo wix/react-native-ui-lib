@@ -2,6 +2,7 @@ import {Component, PropTypes} from 'react';
 import {StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {Typography, Colors, BorderRadiuses} from '../style';
+import {DocsGenerator} from '../helpers';
 
 export default class BaseComponent extends Component {
 
@@ -24,6 +25,10 @@ export default class BaseComponent extends Component {
     this.state = {
       ...this.extractStyleProps(),
     };
+  }
+
+  getSnippet() {
+    return DocsGenerator.generateSnippet(this);
   }
 
   styles;

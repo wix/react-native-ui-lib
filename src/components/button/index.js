@@ -7,7 +7,8 @@ import Text from '../text';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 
 /**
- * Basic button component
+ * @description: Basic button component
+ * @modifiers: margins
  */
 export default class Button extends BaseComponent {
   static displayName = 'Button';
@@ -65,6 +66,10 @@ export default class Button extends BaseComponent {
      * Additional styles for label text
      */
     labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * should the button act as a coast to coast button (no border radius)
+     */
+    fullWidth: PropTypes.bool,
     /**
      * Control shadow visibility
      */
@@ -181,11 +186,19 @@ export default class Button extends BaseComponent {
   }
 
   getBorderRadiusStyle() {
-    const {link, borderRadius} = this.props;
-    if (link) {
+    const {link, borderRadius, fullWidth} = this.props;
+    if (link || fullWidth) {
       return {borderRadius: 0};
     } else if (!_.isUndefined(borderRadius)) {
       return {borderRadius};
+    }
+  }
+
+  getShadowStyle() {
+    const backgroundColor = this.getBackgroundColor();
+    const {enableShadow} = this.props;
+    if (enableShadow) {
+      return [this.styles.shadowStyle, backgroundColor && {shadowColor: backgroundColor}];
     }
   }
 
@@ -231,9 +244,8 @@ export default class Button extends BaseComponent {
   }
 
   render() {
-    const {onPress, disabled, link, enableShadow, style, testID} = this.props;
-    const containerStyle = this.extractContainerStyle(this.props);
-    const shadowStyle = enableShadow ? this.styles.shadowStyle : {};
+    const {onPress, disabled, link, style, containerStyle, testID} = this.props;
+    const shadowStyle = this.getShadowStyle();
     const {margins} = this.state;
     const backgroundColor = this.getBackgroundColor();
     const outlineStyle = this.getOutlineStyle();
@@ -286,7 +298,7 @@ function createStyles({outline, outlineColor, link, color}) {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: Constants.isIOS ? BorderRadiuses.br100 : BorderRadiuses.br10,
+      borderRadius: BorderRadiuses.br100,
     },
     innerContainerDisabled: {
       backgroundColor: Colors.dark60,

@@ -1,18 +1,26 @@
 import React, {PropTypes} from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {Colors, Shadows, BorderRadiuses} from '../../style';
+import {TouchableOpacity, StyleSheet} from 'react-native';
+import _ from 'lodash';
+import {Colors, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
+import View from '../view';
+import MultipleShadow from '../MultipleShadow';
 
 import CardSection from './CardSection';
 import CardItem from './CardItem';
 import CardImage from './CardImage';
 
+/**
+ * @description: Card component
+ */
 class Card extends BaseComponent {
 
   static displayName = 'Card';
 
   static propTypes = {
+    ...View.propTypes,
+    ...MultipleShadow.propTypes,
     /**
      * card custom width
      */
@@ -32,42 +40,66 @@ class Card extends BaseComponent {
     /**
      * Use to identify the button in tests
      */
-    testId: PropTypes.string,
+    testID: PropTypes.string,
   };
 
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
+  // todo: add unit test
+  calcImagePosition(childIndex) {
+    const {row, children} = this.props;
+    const childrenCount = React.Children.count(children);
+    if (childIndex === 0) {
+      return row ? 'left' : 'top';
+    } else if (childIndex === childrenCount - 1) {
+      return row ? 'right' : 'bottom';
+    }
+  }
+
+  renderChildren() {
+    const children = React.Children.map(this.props.children, (child, index) => {
+      if (_.get(child, 'type') === CardImage) {
+        const position = this.calcImagePosition(index);
+        return React.cloneElement(child, {key: index, position});
+      }
+
+      return child;
+    });
+    return children;
+  }
+
   render() {
-    const {onPress, style, containerStyle, testId} = this.props;
-    // const containerStyle =  this.extractContainerStyle(this.props);
+    const {onPress, style, containerStyle, testID, ...others} = this.props;
     const Container = onPress ? TouchableOpacity : View;
     return (
-      <Container style={[this.styles.container, containerStyle]} onPress={onPress} testId={testId}>
-        <View style={[this.styles.innerContainer, style]}>
-          {this.props.children}
-        </View>
+      <Container style={[this.styles.container, containerStyle]} onPress={onPress} testID={testID}>
+        <MultipleShadow {...others}>
+          <View style={[this.styles.innerContainer, style]} {...others}>
+            {this.renderChildren()}
+          </View>
+        </MultipleShadow>
       </Container>
     );
   }
 }
 
 function createStyles({width, height}) {
+  const borderRadius = Constants.isIOS ? BorderRadiuses.br40 : BorderRadiuses.br10;
   return StyleSheet.create({
     container: {
       width,
       height,
-      backgroundColor: 'transparent',
-      ...Shadows.white40.bottom,
-      padding: Constants.isAndroid ? 2 : undefined,
+      backgroundColor: Constants.isIOS ? 'transparent' : Colors.white,
+      borderRadius,
+      elevation: 2,
     },
     innerContainer: {
       backgroundColor: Colors.white,
-      borderRadius: Constants.isIOS ? BorderRadiuses.br40 : BorderRadiuses.br10,
+      borderRadius,
       overflow: 'hidden',
       flexGrow: 1,
-      elevation: 2,
     },
   });
 }

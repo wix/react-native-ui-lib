@@ -2,9 +2,14 @@ import React, {PropTypes} from 'react';
 import {View as RNView, StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
 
+/**
+ * @description: Wrapper component for React Native View component
+ * @modifiers: margins, paddings, alignments, background, borderRadius
+ */
 export default class View extends BaseComponent {
 
   static displayName = 'View';
+
   static propTypes = {
     ...RNView.propTypes,
     ...BaseComponent.propTypes,

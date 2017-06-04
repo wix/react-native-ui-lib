@@ -25,9 +25,9 @@ class Picker extends TextInput {
   static propTypes = {
     ...TextInput.propTypes,
     /**
-     * picker current value
+     * picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
      */
-    value: PropTypes.oneOfType(ItemType, PropTypes.arrayOf(ItemType)),
+    value: PropTypes.oneOfType([ItemType, PropTypes.arrayOf(ItemType), PropTypes.object]),
     /**
      * callback for when picker value change
      */
@@ -48,6 +48,10 @@ class Picker extends TextInput {
      * add onPress callback for when pressing the picker
      */
     onPress: PropTypes.func,
+    /**
+     * a function that extract the unique value out of the value prop in case value has a custom structure.
+     */
+    getItemValue: PropTypes.func,
     /**
      * Use to identify the picker in tests
      */
@@ -114,14 +118,17 @@ class Picker extends TextInput {
   }
 
   appendPropsToChildren() {
-    const {children, mode} = this.props;
+    const {children, mode, getItemValue} = this.props;
     const {value} = this.state;
-    const childrenWithProps = React.Children.map(children,
-      child => React.cloneElement(child, {
-        isSelected: PickerPresenter.isItemSelected(child.props.value, value),
+    const childrenWithProps = React.Children.map(children, (child) => {
+      const childValue = PickerPresenter.getItemValue({getItemValue, ...child.props});
+      const selectedValue = PickerPresenter.getItemValue({value, getItemValue});
+      return React.cloneElement(child, {
+        isSelected: PickerPresenter.isItemSelected(childValue, selectedValue),
         onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
-      }),
-    );
+        getItemValue: child.props.getItemValue || getItemValue,
+      });
+    });
 
     return childrenWithProps;
   }

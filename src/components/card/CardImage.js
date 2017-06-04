@@ -1,16 +1,18 @@
 import React, {PropTypes} from 'react';
 import {View, Image, StyleSheet} from 'react-native';
-import {Constants} from '../../helpers';
-import {BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
+import * as CardPresenter from './CardPresenter';
 
+/**
+ * CardImage belongs inside the Card component
+ */
 export default class CardImage extends BaseComponent {
 
-  static displayName = 'Card Image';
+  static displayName = 'CardImage';
 
   static propTypes = {
     /**
-     * Image soruce, either remove source or local
+     * Image source, either remote source or local
      */
     imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
@@ -18,30 +20,24 @@ export default class CardImage extends BaseComponent {
      */
     height: PropTypes.number,
     /**
-     * determing the top border radius (for Android)
+     * Image position to determine the right flex-ness of the image and border radius (for Android)
+     * this prop derived automatically from Card parent component
      */
-    top: PropTypes.bool,
-    /**
-     * determing the bottom border radius (for Android)
-     */
-    bottom: PropTypes.bool,
-    testId: PropTypes.string,
+    position: PropTypes.string,
+    testID: PropTypes.string,
   };
-
-  static defaultProps = {
-    height: 150,
-  }
 
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
   render() {
-    const {imageSource, style} = this.props;
+    const {imageSource, style, position} = this.props;
+    const borderStyle = CardPresenter.generateBorderRadiusStyle({position});
     if (imageSource) {
       return (
-        <View style={[this.styles.container, style]}>
-          <Image source={imageSource} style={this.styles.image}/>
+        <View style={[this.styles.container, borderStyle, style]}>
+          <Image source={imageSource} style={[this.styles.image, borderStyle]}/>
         </View>
       );
     }
@@ -50,36 +46,18 @@ export default class CardImage extends BaseComponent {
   }
 }
 
-function generateBorderRadiusStyle({top, bottom}) {
-  const borderRaidusStyle = {};
-  if (Constants.isAndroid) {
-    if (top) {
-      borderRaidusStyle.borderTopLeftRadius = BorderRadiuses.br10;
-      borderRaidusStyle.borderTopRightRadius = BorderRadiuses.br10;
-    }
-
-    if (bottom) {
-      borderRaidusStyle.borderBottomLeftRadius = BorderRadiuses.br10;
-      borderRaidusStyle.borderBottomRightRadius = BorderRadiuses.br10;
-    }
-  }
-
-  return borderRaidusStyle;
-}
-
-function createStyles({height, top, bottom}) {
-  const borderRadiusStyle = generateBorderRadiusStyle({top, bottom});
+function createStyles({width, height, position}) {
+  const {top, left, right, bottom} = CardPresenter.extractPositionValues(position);
   return StyleSheet.create({
     container: {
-      height,
-      ...borderRadiusStyle,
+      height: (left || right) ? undefined : height,
+      width: (top || bottom) ? undefined : width,
     },
     image: {
       width: null,
       height: null,
       flex: 1,
       resizeMode: 'cover',
-      ...borderRadiusStyle,
     },
   });
 }
