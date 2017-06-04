@@ -29,7 +29,7 @@ export default class InputScreen extends Component {
     return (
       <KeyboardAwareScrollView
         contentContainerStyle={styles.container}
-        keyboardShouldPersistTaps
+        keyboardShouldPersistTaps="always"
         getTextInputRefs={() => [this.noUnderline, this.hugeText]}
       >
         <Text style={{marginBottom: 20}} text40>Inputs</Text>
