@@ -72,10 +72,12 @@ class Card extends BaseComponent {
 
   render() {
     const {onPress, style, containerStyle, testID, ...others} = this.props;
+    const multipleShadowProps = _.pickBy(this.props,
+      (value, key) => _.includes(Object.keys(MultipleShadow.propTypes), key));
     const Container = onPress ? TouchableOpacity : View;
     return (
       <Container style={[this.styles.container, containerStyle]} onPress={onPress} testID={testID}>
-        <MultipleShadow {...others}>
+        <MultipleShadow flex {...multipleShadowProps}>
           <View style={[this.styles.innerContainer, style]} {...others}>
             {this.renderChildren()}
           </View>
