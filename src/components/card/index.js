@@ -72,8 +72,7 @@ class Card extends BaseComponent {
 
   render() {
     const {onPress, style, containerStyle, testID, ...others} = this.props;
-    const multipleShadowProps = _.pickBy(this.props,
-      (value, key) => _.includes(Object.keys(MultipleShadow.propTypes), key));
+    const multipleShadowProps = MultipleShadow.extractOwnProps(this.props);
     const Container = onPress ? TouchableOpacity : View;
     return (
       <Container style={[this.styles.container, containerStyle]} onPress={onPress} testID={testID}>

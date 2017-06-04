@@ -16,6 +16,12 @@ export default class BaseComponent extends Component {
     useNativeDriver: true,
   }
 
+  static extractOwnProps(props) {
+    const ownPropTypes = this.propTypes;
+    const ownProps = _.pickBy(props, (value, key) => _.includes(Object.keys(ownPropTypes), key));
+    return ownProps;
+  }
+
   constructor(props) {
     super(props);
     if (!this.styles) {

@@ -1,6 +1,7 @@
 // import React from 'react';
 // import {shallow} from 'enzyme';
 import BaseComponent from '../BaseComponent';
+import MultipleShadow from '../../components/MultipleShadow';
 import {Colors, BorderRadiuses} from '../../style';
 
 describe('BaseComponent', () => {
@@ -157,6 +158,13 @@ describe('BaseComponent', () => {
       expect(uut.extractBorderRadiusValue()).toEqual(BorderRadiuses.br10);
       uut = new BaseComponent({br20: true});
       expect(uut.extractBorderRadiusValue()).toEqual(BorderRadiuses.br20);
+    });
+  });
+
+  describe('extractOwnProps', () => {
+    it('should extract the component props from a props object', () => {
+      const props = {color: 'red', topShadow: 1, bottomShadow: 2};
+      expect(MultipleShadow.extractOwnProps(props)).toEqual({topShadow: 1, bottomShadow: 2});
     });
   });
 });
