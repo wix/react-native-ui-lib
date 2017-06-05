@@ -8,6 +8,7 @@ import Carousel from './carousel';
 import ConnectionStatusBar from './connectionStatusBar';
 import Inputs from './inputs';
 import ListItem from './listItem';
+import Notification from './notification';
 import PageControl from './pageControl';
 import Picker from './picker';
 import Stepper from './stepper';
@@ -24,6 +25,7 @@ module.exports = {
   ConnectionStatusBar,
   ...Inputs,
   ListItem,
+  Notification,
   PageControl,
   Picker,
   Stepper,

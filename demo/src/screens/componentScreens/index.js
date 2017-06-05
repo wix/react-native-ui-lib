@@ -9,6 +9,7 @@ import ConnectionStatusBarScreen from './ConnectionStatusBarScreen';
 import FormScreen from './FormScreen';
 import InputsScreen from './InputsScreen';
 import PageControlScreen from './PageControlScreen';
+import NotificationsScreen from './NotificationsScreen';
 
 Navigation.registerComponent('unicorn.components.AvatarsScreen', () => AvatarsScreen);
 Navigation.registerComponent('unicorn.components.ActionBarScreen', () => ActionBarScreen);
@@ -20,3 +21,4 @@ Navigation.registerComponent('unicorn.components.ConnectionStatusBar', () => Con
 Navigation.registerComponent('unicorn.components.FormScreen', () => FormScreen);
 Navigation.registerComponent('unicorn.components.InputsScreen', () => InputsScreen);
 Navigation.registerComponent('unicorn.components.PageControlScreen', () => PageControlScreen);
+Navigation.registerComponent('unicorn.components.NotificationsScreen', () => NotificationsScreen);
