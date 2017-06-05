@@ -178,7 +178,7 @@ export default class Button extends BaseComponent {
     const {outline, outlineColor, link} = this.props;
     if ((outline || outlineColor) && !link) {
       return {
-        borderWidth: 1,
+        borderWidth: StyleSheet.hairlineWidth,
         borderColor: outlineColor || Colors.dark70,
       };
     }
