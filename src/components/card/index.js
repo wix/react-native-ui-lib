@@ -75,7 +75,7 @@ class Card extends BaseComponent {
     const multipleShadowProps = MultipleShadow.extractOwnProps(this.props);
     const Container = onPress ? TouchableOpacity : View;
     return (
-      <Container style={[this.styles.container, containerStyle]} onPress={onPress} testID={testID}>
+      <Container style={[this.styles.container, containerStyle]} onPress={onPress} testID={testID} delayPressIn={10}>
         <MultipleShadow flex {...multipleShadowProps}>
           <View style={[this.styles.innerContainer, style]} {...others}>
             {this.renderChildren()}
