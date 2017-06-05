@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {ScrollView, View, StyleSheet} from 'react-native';
-import {Assets, Constants, Button, Colors, Text, TextInput, TextArea, Typography} from 'react-native-ui-lib';//eslint-disable-line
+import {ScrollView, StyleSheet} from 'react-native';
+import {View, Assets, Constants, Button, Colors, Text, TextInput, TextArea, Typography} from 'react-native-ui-lib';//eslint-disable-line
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 
 const LONG_TEXT = 'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer Martín Bollati. In this piece';
@@ -52,6 +52,12 @@ export default class InputScreen extends Component {
           value={LONG_TEXT}
           expandable
           containerStyle={{marginBottom: INPUT_SPACING}}
+        />
+
+        <TextInput
+          multiline
+          text70
+          placeholder="Share your story"
         />
 
         <TextInput

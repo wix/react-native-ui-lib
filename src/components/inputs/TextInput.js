@@ -1,12 +1,12 @@
 import React, {PropTypes} from 'react';
-import {View, TextInput as RNTextInput, StyleSheet, Animated} from 'react-native';
+import {TextInput as RNTextInput, StyleSheet, Animated} from 'react-native';
 import _ from 'lodash';
 import BaseInput from './BaseInput';
 import Text from '../text';
 import {Colors, Typography} from '../../style';
-import {Constants} from '../../helpers';
 import {Modal} from '../../screensComponents';
 import TextArea from './TextArea';
+import View from '../view';
 
 const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
   default: Colors.dark80,
@@ -118,46 +118,43 @@ export default class TextInput extends BaseInput {
 
   hasText(value) {
     return !_.isEmpty(value || this.state.value);
-    // const {value} = this.state;
-    // return value && value.length > 0;
+  }
+
+  shouldFakePlaceholder() {
+    const {floatingPlaceholder, centered, expandable} = this.props;
+    return Boolean(expandable || (floatingPlaceholder && !centered));
   }
 
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
-    const {floatingPlaceholder, centered, expandable, placeholder} = this.props;
+    const {centered, expandable, placeholder} = this.props;
     const typography = this.getTypography();
 
-    if (!floatingPlaceholder && !centered && !expandable) {
-      return null;
+    if (this.shouldFakePlaceholder()) {
+      return (
+        <Animated.Text
+          style={[
+            this.styles.placeholder,
+            typography,
+            centered && this.styles.placeholderCentered,
+            !centered && {
+              top: floatingPlaceholderState.interpolate({
+                inputRange: [0, 1],
+                outputRange: [20, 0],
+              }),
+              fontSize: floatingPlaceholderState.interpolate({
+                inputRange: [0, 1],
+                outputRange: [typography.fontSize, Typography.text80.fontSize],
+              }),
+              lineHeight: this.hasText() ? Typography.text80.lineHeight : typography.lineHeight,
+            },
+          ]}
+          onPress={() => expandable && this.toggleExpandableModal(true)}
+        >
+          {placeholder}
+        </Animated.Text>
+      );
     }
-
-    if (centered && this.hasText()) {
-      return null;
-    }
-
-    return (
-      <Animated.Text
-        style={[
-          this.styles.placeholder,
-          typography,
-          centered && this.styles.placeholderCentered,
-          !centered && {
-            top: floatingPlaceholderState.interpolate({
-              inputRange: [0, 1],
-              outputRange: [20, 0],
-            }),
-            fontSize: floatingPlaceholderState.interpolate({
-              inputRange: [0, 1],
-              outputRange: [typography.fontSize, Typography.text80.fontSize],
-            }),
-            lineHeight: this.hasText() ? Typography.text80.lineHeight : typography.lineHeight,
-          },
-        ]}
-        onPress={() => expandable && this.toggleExpandableModal(true)}
-      >
-        {placeholder}
-      </Animated.Text>
-    );
   }
 
   renderError() {
@@ -195,10 +192,11 @@ export default class TextInput extends BaseInput {
   renderExpandableInput() {
     const typography = this.getTypography();
     const {value} = this.state;
+    const minHeight = typography.lineHeight;
 
     return (
       <Text
-        style={[this.styles.input, typography]}
+        style={[this.styles.input, typography, {minHeight}]}
         numberOfLines={3}
         onPress={() => this.toggleExpandableModal(true)}
       >
@@ -216,16 +214,16 @@ export default class TextInput extends BaseInput {
       this.styles.input,
       typography,
       color && {color},
-      style,
       {height: (multiline && !centered) ? typography.lineHeight * 3 : typography.lineHeight},
       centered && {width: inputWidth},
+      style,
     ];
 
     return (
       <RNTextInput
         {...others}
         value={value}
-        placeholder={(floatingPlaceholder || centered) ? undefined : placeholder}
+        placeholder={(floatingPlaceholder && !centered) ? undefined : placeholder}
         underlineColorAndroid="transparent"
         style={inputStyle}
         multiline={centered || multiline}
@@ -339,11 +337,10 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
       borderColor: Colors.red30,
     },
     input: {
-      flex: (centered && Constants.isIOS) ? undefined : 1,
+      flex: 1,
       marginBottom: 10,
       padding: 0,
       textAlign: centered ? 'center' : undefined,
-      minWidth: 40,
       backgroundColor: 'transparent',
     },
     placeholder: {

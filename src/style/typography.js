@@ -5,19 +5,19 @@ class Typography {
   text10 = {
     fontSize: 64,
     fontWeight: '100',
-    // lineHeight: Constants.isAndroid ? undefined : Math.floor(64 * 1.4),
+    lineHeight: Math.floor(64 * 1.4),
     fontFamily: Constants.isAndroid ? 'sans-serif-thin' : undefined,
   };
   text20 = {
     fontSize: 50,
     fontWeight: '100',
-    // lineHeight: Constants.isAndroid ? undefined : Math.floor(50 * 1.4),
+    lineHeight: Math.floor(50 * 1.4),
     fontFamily: Constants.isAndroid ? 'sans-serif-thin' : undefined,
   };
   text30 = {
     fontSize: 36,
     fontWeight: Constants.isAndroid ? '100' : '200',
-    // lineHeight: Constants.isAndroid ? undefined : Math.floor(36 * 1.3),
+    lineHeight: Math.floor(36 * 1.3),
     fontFamily: Constants.isAndroid ? 'sans-serif-thin' : undefined,
   };
   text40 = {
