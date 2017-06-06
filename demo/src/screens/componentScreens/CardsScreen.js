@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import React, { Component } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
 import _ from 'lodash';
-import {Assets, Constants, Card, Button, Colors, Typography, Text} from 'react-native-ui-lib';//eslint-disable-line
+import { View, Assets, Constants, Card, Button, Colors, Typography, Text } from 'react-native-ui-lib';//eslint-disable-line
 import posts from '../../data/posts';
 
 const featureIcon = require('../../assets/icons/star.png');
@@ -13,10 +13,22 @@ export default class ButtonsScreen extends Component {
 
   render() {
     return (
+
       <ScrollView contentContainerStyle={styles.container}>
 
-        <Card row height={160} containerStyle={{marginBottom: 15}} onPress={() => {}}>
-          <Card.Image width={115} imageSource={cardImage}/>
+        <ScrollView horizontal height={100} style={{marginBottom: 20, padding: 10 }} showsHorizontalScrollIndicator={false}>
+          {_.times(4, (i) => {
+            return (
+              <Card shadowType="white10" key={i} width={100} containerStyle={{marginRight: 20}}>
+                <View padding-15>
+                  <Text text30 dark30>{i}</Text>
+                </View>
+              </Card>);
+          })}
+        </ScrollView>
+
+        <Card row height={160} containerStyle={{ marginBottom: 15 }} onPress={() => { }}>
+          <Card.Image width={115} imageSource={cardImage} />
           <Card.Section body>
             <Card.Section>
               <Text text70 dark10>You’re Invited!</Text>
@@ -30,7 +42,7 @@ export default class ButtonsScreen extends Component {
           </Card.Section>
         </Card>
 
-        <Card shadowType="white10" row height={160} containerStyle={{marginBottom: 15}} onPress={() => {}}>
+        <Card shadowType="white10" row height={160} containerStyle={{ marginBottom: 15 }} onPress={() => { }}>
           <Card.Section body>
             <Card.Section>
               <Text text70 dark10>You’re Invited!</Text>
@@ -42,10 +54,10 @@ export default class ButtonsScreen extends Component {
               <Text text90 dark50>wix.to/A465c</Text>
             </Card.Section>
           </Card.Section>
-          <Card.Image width={115} imageSource={cardImage}/>
+          <Card.Image width={115} imageSource={cardImage} />
         </Card>
 
-        <Card containerStyle={{marginBottom: 15}} onPress={() => {}}>
+        <Card containerStyle={{ marginBottom: 15 }} onPress={() => { }}>
           <Card.Section body>
             <Card.Section>
               <Text text70 dark10>You’re Invited!</Text>
@@ -54,14 +66,14 @@ export default class ButtonsScreen extends Component {
               <Text text90 dark50>join now</Text>
             </Card.Section>
           </Card.Section>
-          <Card.Image height={120} imageSource={cardImage2}/>
+          <Card.Image height={120} imageSource={cardImage2} />
         </Card>
 
         {_.map(posts, (post, i) => {
           const statusColor = post.status === 'Published' ? Colors.green30 : Colors.orange30;
           return (
-            <Card key={i} containerStyle={{marginBottom: 15}} onPress={() => console.log('press on a card')}>
-              <Card.Image height={160} imageSource={post.coverImage}/>
+            <Card key={i} containerStyle={{ marginBottom: 15 }} onPress={() => console.log('press on a card')}>
+              <Card.Image height={160} imageSource={post.coverImage} />
               <Card.Section body>
                 <Card.Section>
                   <Text text40 color={Colors.dark10}>{post.title}</Text>
@@ -78,8 +90,8 @@ export default class ButtonsScreen extends Component {
                 <Card.Section footer>
                   <Text text90 color={Colors.dark50}>{post.likes} Likes</Text>
                   <Card.Item>
-                    <Button containerStyle={{marginRight: 10}} text90 link iconSource={featureIcon} label="Feature"/>
-                    <Button text90 link iconSource={shareIcon} label="Share"/>
+                    <Button containerStyle={{ marginRight: 10 }} text90 link iconSource={featureIcon} label="Feature" />
+                    <Button text90 link iconSource={shareIcon} label="Share" />
                   </Card.Item>
                 </Card.Section>
               </Card.Section>

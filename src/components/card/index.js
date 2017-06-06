@@ -76,7 +76,7 @@ class Card extends BaseComponent {
     const Container = onPress ? TouchableOpacity : View;
     return (
       <Container style={[this.styles.container, containerStyle]} onPress={onPress} testID={testID} delayPressIn={10}>
-        <MultipleShadow flex {...multipleShadowProps}>
+        <MultipleShadow {...multipleShadowProps}>
           <View style={[this.styles.innerContainer, style]} {...others}>
             {this.renderChildren()}
           </View>
