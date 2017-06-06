@@ -244,7 +244,7 @@ export default class Button extends BaseComponent {
   }
 
   render() {
-    const {onPress, disabled, link, style, containerStyle, testID} = this.props;
+    const {onPress, disabled, link, style, containerStyle, testID, ...others} = this.props;
     const shadowStyle = this.getShadowStyle();
     const {margins} = this.state;
     const backgroundColor = this.getBackgroundColor();
@@ -263,6 +263,7 @@ export default class Button extends BaseComponent {
         onPress={onPress}
         disabled={disabled}
         testID={testID}
+        {...others}
       >
         <View
           style={[
