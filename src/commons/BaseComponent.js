@@ -208,7 +208,7 @@ export default class BaseComponent extends Component {
                            .filter(key => KEY_PATTERN.test(key))
                            .last()
                            .value();
-    if (flexPropKey) {
+    if (flexPropKey && this.props[flexPropKey] === true) {
       const value = flexPropKey.split('-').pop();
       if (value === 'flex' || value === '') {
         return 1;
