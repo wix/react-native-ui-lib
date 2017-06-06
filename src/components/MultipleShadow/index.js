@@ -52,8 +52,8 @@ export default class MultipleShadow extends BaseComponent {
     const {style, ...others} = this.props;
     const {topShadow, bottomShadow} = this.getShadowStyles();
     return (
-      <View style={[this.styles.wrapper, {...topShadow}, style]}>
-        <View style={[this.styles.wrapper, {...bottomShadow}, style]}>
+      <View {...others} style={[this.styles.wrapper, {...topShadow}, style]}>
+        <View {...others} style={[this.styles.wrapper, {...bottomShadow}, style]}>
           {this.props.children}
         </View>
       </View>
