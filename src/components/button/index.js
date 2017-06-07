@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import _ from 'lodash';
-import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import Text from '../text';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
@@ -236,7 +235,7 @@ export default class Button extends BaseComponent {
           ]}
           numberOfLines={1}
         >
-          {Constants.isAndroid ? _.toUpper(label) : label}
+          {label}
         </Text>
       );
     }
