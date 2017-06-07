@@ -15,10 +15,10 @@ export function generateBorderRadiusStyle({position}) {
 
   const borderRadiusStyle = {};
   if (Constants.isAndroid) {
-    borderRadiusStyle.borderTopLeftRadius = (top || left) ? BorderRadiuses.br10 : undefined;
-    borderRadiusStyle.borderTopRightRadius = (top || right) ? BorderRadiuses.br10 : undefined;
-    borderRadiusStyle.borderBottomLeftRadius = (bottom || left) ? BorderRadiuses.br10 : undefined;
-    borderRadiusStyle.borderBottomRightRadius = (bottom || right) ? BorderRadiuses.br10 : undefined;
+    borderRadiusStyle.borderTopLeftRadius = (top || left) ? BorderRadiuses.br40 : undefined;
+    borderRadiusStyle.borderTopRightRadius = (top || right) ? BorderRadiuses.br40 : undefined;
+    borderRadiusStyle.borderBottomLeftRadius = (bottom || left) ? BorderRadiuses.br40 : undefined;
+    borderRadiusStyle.borderBottomRightRadius = (bottom || right) ? BorderRadiuses.br40 : undefined;
   }
 
   return borderRadiusStyle;

@@ -86,7 +86,6 @@ export default class CardScannerScreen extends Component {
               </Card.Section>
             </Card.Section>
             <AnimatedScanner
-              backgroundColor={Colors.orange70}
               opacity={0.7}
               progress={this.state.progress}
               duration={reset ? 0 : 1500}

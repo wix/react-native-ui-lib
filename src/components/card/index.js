@@ -87,7 +87,7 @@ class Card extends BaseComponent {
 }
 
 function createStyles({width, height}) {
-  const borderRadius = Constants.isIOS ? BorderRadiuses.br40 : BorderRadiuses.br10;
+  const borderRadius = BorderRadiuses.br40;
   return StyleSheet.create({
     container: {
       width,
