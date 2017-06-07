@@ -14,11 +14,12 @@ class Colors {
   blue10 = '#3182C8';
   blue20 = '#4196E0';
   blue30 = '#459FED';
-  blue40 = '#4EB7F5';
-  blue50 = '#7FCCF7';
-  blue60 = '#B2E0FA';
-  blue70 = '#D3EDFF';
-  blue80 = '#EAF7FF';
+  blue40 = '#57a8ef';
+  blue50 = '#8fc5f4';
+  blue60 = '#b5d9f8';
+  blue70 = '#daecfb';
+  blue80 = '#ecf5fd';
+
   // CYANS
   cyan10 = '#00AAAF';
   cyan20 = '#32BABC';
