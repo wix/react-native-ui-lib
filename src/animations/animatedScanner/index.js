@@ -97,20 +97,22 @@ export default class AnimatedScanner extends BaseComponent {
     const {opacity, backgroundColor} = this.props;
     const {isDone, animatedProgress} = this.state;
     return (
-      <Animated.View
-        style={[this.styles.container,
-          opacity && {opacity},
-          backgroundColor && {backgroundColor},
-          {
-            right: animatedProgress.interpolate({
-              inputRange: [0, 50, 100],
-              outputRange: [Constants.screenWidth, Constants.screenWidth / 2, 0],
-            }),
-          },
-        ]}
-      >
-        {!isDone && <View style={this.styles.scanner}/>}
-      </Animated.View>
+      <View style={{...StyleSheet.absoluteFillObject}}>
+        <Animated.View
+          style={[this.styles.container,
+            opacity && {opacity},
+            backgroundColor && {backgroundColor},
+            {
+              right: animatedProgress.interpolate({
+                inputRange: [0, 100],
+                outputRange: ['100%', '0%'],
+              }),
+            },
+          ]}
+        >
+          {!isDone && <View style={this.styles.scanner}/>}
+        </Animated.View>
+      </View>
     );
   }
 

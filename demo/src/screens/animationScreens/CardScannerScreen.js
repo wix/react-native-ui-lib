@@ -57,6 +57,11 @@ export default class CardScannerScreen extends Component {
     return (
       <View style={styles.container}>
         <View flex>
+
+          <View paddingL-40 height={6} width={'100%'} bg-violet50 marginB-20>
+            <AnimatedScanner backgroundColor={Colors.purple30} progress={98} duration={1600}/>
+          </View>
+
           <Card containerStyle={{marginBottom: 15}} onPress={() => console.log('press on a card')}>
             <Card.Image height={115} imageSource={post.coverImage}/>
             <Card.Section body>
