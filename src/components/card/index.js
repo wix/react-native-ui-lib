@@ -19,7 +19,6 @@ class Card extends BaseComponent {
   static displayName = 'Card';
 
   static propTypes = {
-    ...View.propTypes,
     ...MultipleShadow.propTypes,
     /**
      * card custom width

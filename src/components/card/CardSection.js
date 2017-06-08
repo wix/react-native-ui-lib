@@ -13,7 +13,6 @@ export default class CardSection extends BaseComponent {
   static displayName = 'CardSection';
 
   static propTypes = {
-    ...View.propTypes,
     /**
      * Enable blur view for the section
      */

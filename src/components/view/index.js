@@ -11,7 +11,7 @@ export default class View extends BaseComponent {
   static displayName = 'View';
 
   static propTypes = {
-    ...(ViewPropTypes || RNView.propTypes),
+    ...ViewPropTypes,
     ...BaseComponent.propTypes,
     testId: PropTypes.string,
   };

@@ -1601,6 +1601,10 @@ domutils@1.5.1, domutils@^1.5.1:
     dom-serializer "0"
     domelementtype "1"
 
+double-ended-queue@^2.1.0-0:
+  version "2.1.0-0"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/double-ended-queue/-/double-ended-queue-2.1.0-0.tgz#103d3527fd31528f40188130c841efdd78264e5c"
+
 duplexer2@0.0.2:
   version "0.0.2"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/duplexer2/-/duplexer2-0.0.2.tgz#c614dcf67e2fb14995a91711e5a617e8a60a31db"
@@ -1683,8 +1687,8 @@ es-to-primitive@^1.1.1:
     is-symbol "^1.0.1"
 
 es5-ext@^0.10.14, es5-ext@^0.10.9, es5-ext@~0.10.14:
-  version "0.10.22"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/es5-ext/-/es5-ext-0.10.22.tgz#1876c51f990769c112c781ea3ebe89f84fd39071"
+  version "0.10.23"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/es5-ext/-/es5-ext-0.10.23.tgz#7578b51be974207a5487821b56538c224e4e7b38"
   dependencies:
     es6-iterator "2"
     es6-symbol "~3.1"
@@ -2255,8 +2259,8 @@ global@^4.3.0:
     process "~0.5.1"
 
 globals@^9.0.0, globals@^9.14.0:
-  version "9.17.0"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/globals/-/globals-9.17.0.tgz#0c0ca696d9b9bb694d2e5470bd37777caad50286"
+  version "9.18.0"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/globals/-/globals-9.18.0.tgz#aa3896b3e69b487f17e31ed2143d69a8e30c2d8a"
 
 globby@^5.0.0:
   version "5.0.0"
@@ -2936,12 +2940,6 @@ jest@18.1.0:
   dependencies:
     jest-cli "^18.1.0"
 
-jodid25519@^1.0.0:
-  version "1.0.2"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/jodid25519/-/jodid25519-1.0.2.tgz#06d4912255093419477d425633606e0e90782967"
-  dependencies:
-    jsbn "~0.1.0"
-
 joi@^6.6.1:
   version "6.10.1"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/joi/-/joi-6.10.1.tgz#4d50c318079122000fe5f16af1ff8e1917b77e06"
@@ -3317,8 +3315,8 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.3.1:
     js-tokens "^3.0.0"
 
 lru-cache@^4.0.1:
-  version "4.0.2"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/lru-cache/-/lru-cache-4.0.2.tgz#1d17679c069cda5d040991a09dbc2c0db377e55e"
+  version "4.1.0"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/lru-cache/-/lru-cache-4.1.0.tgz#59be49a683b8d986a939f1ca60fdb6989f4b2046"
   dependencies:
     pseudomap "^1.0.1"
     yallist "^2.0.0"
@@ -3962,8 +3960,8 @@ react-deep-force-update@^1.0.0:
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
 
 react-devtools-core@^2.0.8:
-  version "2.3.0"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-devtools-core/-/react-devtools-core-2.3.0.tgz#412b73bcb33cca758d82af2f1ba7178bce57b51d"
+  version "2.3.1"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-devtools-core/-/react-devtools-core-2.3.1.tgz#dc83aba85735effe5e1dc386a1614cb5e8d0047d"
   dependencies:
     shell-quote "^1.6.1"
     ws "^2.0.3"
@@ -3994,8 +3992,8 @@ react-native-keyboard-aware-scrollview@^1.1.6:
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-native-keyboard-aware-scrollview/-/react-native-keyboard-aware-scrollview-1.1.6.tgz#3b3524ee829f19974738dc589595a2981189a662"
 
 react-native-navigation@^1.1.19:
-  version "1.1.86"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-native-navigation/-/react-native-navigation-1.1.86.tgz#6130386c0b8ec36e3aca57228843651bf3e4f8ed"
+  version "1.1.89"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-native-navigation/-/react-native-navigation-1.1.89.tgz#cf00910248186bdeca8858de8c5ef1233abf4d4f"
   dependencies:
     lodash "4.x.x"
 
@@ -4142,14 +4140,14 @@ read-pkg@^2.0.0:
     path-type "^2.0.0"
 
 readable-stream@^2.0.2, readable-stream@^2.0.6, readable-stream@^2.1.4, readable-stream@^2.1.5, readable-stream@^2.2.2:
-  version "2.2.10"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/readable-stream/-/readable-stream-2.2.10.tgz#effe72bb7c884c0dd335e2379d526196d9d011ee"
+  version "2.2.11"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/readable-stream/-/readable-stream-2.2.11.tgz#0796b31f8d7688007ff0b93a8088d34aa17c0f72"
   dependencies:
     core-util-is "~1.0.0"
     inherits "~2.0.1"
     isarray "~1.0.0"
     process-nextick-args "~1.0.6"
-    safe-buffer "^5.0.1"
+    safe-buffer "~5.0.1"
     string_decoder "~1.0.0"
     util-deprecate "~1.0.1"
 
@@ -4241,8 +4239,8 @@ regjsparser@^0.1.4:
     jsesc "~0.5.0"
 
 remove-trailing-separator@^1.0.1:
-  version "1.0.1"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/remove-trailing-separator/-/remove-trailing-separator-1.0.1.tgz#615ebb96af559552d4bf4057c8436d486ab63cc4"
+  version "1.0.2"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/remove-trailing-separator/-/remove-trailing-separator-1.0.2.tgz#69b062d978727ad14dc6b56ba4ab772fd8d70511"
 
 repeat-element@^1.1.2:
   version "1.1.2"
@@ -4473,8 +4471,8 @@ shell-quote@1.6.1, shell-quote@^1.6.1:
     jsonify "~0.0.0"
 
 shelljs@^0.7.5:
-  version "0.7.7"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/shelljs/-/shelljs-0.7.7.tgz#b2f5c77ef97148f4b4f6e22682e10bba8667cff1"
+  version "0.7.8"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/shelljs/-/shelljs-0.7.8.tgz#decbcf874b0d1e5fb72e14b164a9683048e9acb3"
   dependencies:
     glob "^7.0.0"
     interpret "^1.0.0"
@@ -4559,8 +4557,8 @@ sprintf-js@~1.0.2:
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
 
 sshpk@^1.7.0:
-  version "1.13.0"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/sshpk/-/sshpk-1.13.0.tgz#ff2a3e4fd04497555fed97b39a0fd82fafb3a33c"
+  version "1.13.1"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/sshpk/-/sshpk-1.13.1.tgz#512df6da6287144316dc4c18fe1cf1d940739be3"
   dependencies:
     asn1 "~0.2.3"
     assert-plus "^1.0.0"
@@ -4569,7 +4567,6 @@ sshpk@^1.7.0:
   optionalDependencies:
     bcrypt-pbkdf "^1.0.0"
     ecc-jsbn "~0.1.1"
-    jodid25519 "^1.0.0"
     jsbn "~0.1.0"
     tweetnacl "~0.14.0"
 
@@ -4619,10 +4616,10 @@ string_decoder@~0.10.x:
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/string_decoder/-/string_decoder-0.10.31.tgz#62e203bc41766c6c28c9fc84301dab1c5310fa94"
 
 string_decoder@~1.0.0:
-  version "1.0.1"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/string_decoder/-/string_decoder-1.0.1.tgz#62e200f039955a6810d8df0a33ffc0f013662d98"
+  version "1.0.2"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/string_decoder/-/string_decoder-1.0.2.tgz#b29e1f4e1125fa97a10382b8a533737b7491e179"
   dependencies:
-    safe-buffer "^5.0.1"
+    safe-buffer "~5.0.1"
 
 stringstream@~0.0.4:
   version "0.0.5"
@@ -4716,8 +4713,10 @@ text-table@~0.2.0:
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
 
 throat@^3.0.0:
-  version "3.0.0"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/throat/-/throat-3.0.0.tgz#e7c64c867cbb3845f10877642f7b60055b8ec0d6"
+  version "3.1.0"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/throat/-/throat-3.1.0.tgz#ef22d8855963b3fdc626d043508f24c4cdf7d3c3"
+  dependencies:
+    double-ended-queue "^2.1.0-0"
 
 through2@^2.0.0:
   version "2.0.3"
