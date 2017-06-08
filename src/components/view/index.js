@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {View as RNView, StyleSheet} from 'react-native';
+import {View as RNView, StyleSheet, ViewPropTypes} from 'react-native';
 import {BaseComponent} from '../../commons';
 
 /**
@@ -11,7 +11,7 @@ export default class View extends BaseComponent {
   static displayName = 'View';
 
   static propTypes = {
-    ...RNView.propTypes,
+    ...(ViewPropTypes || RNView.propTypes),
     ...BaseComponent.propTypes,
     testId: PropTypes.string,
   };
