@@ -2,6 +2,7 @@
 // import {shallow} from 'enzyme';
 import BaseComponent from '../BaseComponent';
 import MultipleShadow from '../../components/MultipleShadow';
+import View from '../../components/view';
 import {Colors, BorderRadiuses} from '../../style';
 
 describe('BaseComponent', () => {
@@ -165,6 +166,19 @@ describe('BaseComponent', () => {
     it('should extract the component props from a props object', () => {
       const props = {color: 'red', topShadow: 1, bottomShadow: 2};
       expect(MultipleShadow.extractOwnProps(props)).toEqual({topShadow: 1, bottomShadow: 2});
+    });
+  });
+
+  describe('extractModifiersProps', () => {
+    it('should return all modifiers props', () => {
+      let uut = new View({'paddingL-20': true, 'bg-red30': true, other: 'some-value'});
+      expect(uut.extractModifierProps()).toEqual({'paddingL-20': true, 'bg-red30': true});
+
+      uut = new View({'margin-50': true, 'background-blue20': true, other: 'some-value'});
+      expect(uut.extractModifierProps()).toEqual({'margin-50': true, 'background-blue20': true});
+
+      uut = new View({left: true, 'bg-red10': false, other: 'some-value'});
+      expect(uut.extractModifierProps()).toEqual({left: true, 'bg-red10': false});
     });
   });
 });

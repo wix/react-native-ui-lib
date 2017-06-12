@@ -4,6 +4,17 @@ import _ from 'lodash';
 import {Typography, Colors, BorderRadiuses} from '../style';
 import {DocsGenerator} from '../helpers';
 
+const FLEX_KEY_PATTERN = /flex-?[0-9]*/;
+const PADDING_KEY_PATTERN = /padding[LTRBHV]?-[0-9]*/;
+const MARGIN_KEY_PATTERN = /margin[LTRBHV]?-[0-9]*/;
+const ALIGNMENT_KEY_PATTERN = /(left|top|right|bottom|center|centerV|centerH|spread)/;
+const BACKGROUND_KEY_PATTERN = new RegExp(_.chain(Colors)
+                                            .keys()
+                                            .map(key => [`bg-${key}`, `background-${key}`])
+                                            .flatten()
+                                            .join('|')
+                                            .value());
+
 export default class BaseComponent extends Component {
 
   static propTypes = {
@@ -89,6 +100,7 @@ export default class BaseComponent extends Component {
     return color;
   }
 
+  // todo: refactor this and use BACKGROUND_KEY_PATTERN
   extractBackgroundColorValue() {
     let backgroundColor;
     _.forEach(Colors, (value, key) => {
@@ -119,9 +131,8 @@ export default class BaseComponent extends Component {
       paddingH: 'paddingHorizontal',
       paddingV: 'paddingVertical',
     };
-    const KEY_PATTERN = /padding[LTRBHV]?-[0-9]*/;
     const paddings = {};
-    const paddingPropsKeys = _.chain(this.props).keys(this.props).filter(key => KEY_PATTERN.test(key)).value();
+    const paddingPropsKeys = _.chain(this.props).keys(this.props).filter(key => PADDING_KEY_PATTERN.test(key)).value();
 
     _.forEach(paddingPropsKeys, (key) => {
       if (this.props[key] === true) {
@@ -146,9 +157,9 @@ export default class BaseComponent extends Component {
       marginH: 'marginHorizontal',
       marginV: 'marginVertical',
     };
-    const KEY_PATTERN = /margin[LTRBHV]?-[0-9]*/;
+
     const margins = {};
-    const marginPropsKeys = _.chain(this.props).keys(this.props).filter(key => KEY_PATTERN.test(key)).value();
+    const marginPropsKeys = _.chain(this.props).keys(this.props).filter(key => MARGIN_KEY_PATTERN.test(key)).value();
 
     _.forEach(marginPropsKeys, (key) => {
       if (this.props[key] === true) {
@@ -202,10 +213,9 @@ export default class BaseComponent extends Component {
   }
 
   extractFlexValue() {
-    const KEY_PATTERN = /flex-?[0-9]*/;
     const flexPropKey = _.chain(this.props)
                            .keys(this.props)
-                           .filter(key => KEY_PATTERN.test(key))
+                           .filter(key => FLEX_KEY_PATTERN.test(key))
                            .last()
                            .value();
     if (flexPropKey && this.props[flexPropKey] === true) {
@@ -238,5 +248,14 @@ export default class BaseComponent extends Component {
 
   extractTextProps(props) {
     return _.pick(props, [..._.keys(Typography), ..._.keys(Colors), 'color']);
+  }
+
+  extractModifierProps() {
+    const patterns = [FLEX_KEY_PATTERN, PADDING_KEY_PATTERN, MARGIN_KEY_PATTERN, ALIGNMENT_KEY_PATTERN, BACKGROUND_KEY_PATTERN];
+    const modifierProps = _.pickBy(this.props, (value, key) => {
+      const isModifier = _.find(patterns, pattern => pattern.test(key));
+      return !!isModifier;
+    });
+    return modifierProps;
   }
 }
