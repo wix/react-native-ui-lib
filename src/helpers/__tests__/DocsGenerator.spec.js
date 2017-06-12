@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import * as uut from '../DocsGenerator';
 
 class ExampleComponent extends React.Component {
+  static displayName = 'ExampleComponent';
   static propTypes = {
     color: PropTypes.string,
     label: PropTypes.string,
