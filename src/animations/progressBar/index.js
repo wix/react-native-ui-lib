@@ -29,8 +29,8 @@ export default class ProgressBar extends BaseComponent {
   }
 
   static defaultProps = {
-    backgroundColor: Colors.dark10,
-    progressBackgroundColor: Colors.dark60,
+    backgroundColor: Colors.dark60,
+    progressBackgroundColor: Colors.dark10,
   }
 
   render() {

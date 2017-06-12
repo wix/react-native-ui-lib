@@ -50,8 +50,8 @@ export default class ProgressBarScreen extends Component {
                   ref={element => this.elements[index] = element}
                   progress={value}
                   height={[10, 15, 22, 30][index]}
-                  backgroundColor={[Colors.red40, Colors.purple40, Colors.blue30, Colors.green40][index]}
-                  progressBackgroundColor={[Colors.red70, Colors.purple70, Colors.blue70, Colors.green70][index]}
+                  backgroundColor={[Colors.red70, Colors.purple70, Colors.blue70, Colors.green70][index]}
+                  progressBackgroundColor={[Colors.red40, Colors.purple40, Colors.blue30, Colors.green40][index]}
                 />
 
                 <View bg-dark10 padding-12>
