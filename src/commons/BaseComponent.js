@@ -251,7 +251,12 @@ export default class BaseComponent extends Component {
   }
 
   extractModifierProps() {
-    const patterns = [FLEX_KEY_PATTERN, PADDING_KEY_PATTERN, MARGIN_KEY_PATTERN, ALIGNMENT_KEY_PATTERN, BACKGROUND_KEY_PATTERN];
+    const patterns = [
+      FLEX_KEY_PATTERN,
+      PADDING_KEY_PATTERN,
+      MARGIN_KEY_PATTERN,
+      ALIGNMENT_KEY_PATTERN,
+      BACKGROUND_KEY_PATTERN];
     const modifierProps = _.pickBy(this.props, (value, key) => {
       const isModifier = _.find(patterns, pattern => pattern.test(key));
       return !!isModifier;
