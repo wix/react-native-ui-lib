@@ -4,7 +4,7 @@ const TAB = '    ';
 const LINE_BREAK = '\n';
 
 export function generateSnippet(instance) {
-  const componentName = instance.constructor.name;
+  const componentName = instance.constructor.displayName;
   const defaultProps = instance.constructor.defaultProps || {};
   const componentProps = instance.props || {};
   let snippet = `<${componentName}`;
