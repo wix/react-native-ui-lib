@@ -34,5 +34,6 @@ export const navigationData = {
   ],
   Animations: [
     {title: 'Card Scanner', tags: 'card scanner process', screen: 'unicorn.animations.CardScannerScreen'},
+    {title: 'ProgressBar', tags: 'progress bar animated', screen: 'unicorn.animations.ProgressBarScreen'},
   ],
 };
