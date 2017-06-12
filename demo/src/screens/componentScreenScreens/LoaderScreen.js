@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
-import {LoaderScreen} from 'react-native-ui-lib';//eslint-disable-line
+import {LoaderScreen, Colors} from 'react-native-ui-lib';//eslint-disable-line
 
 export default class LoadingScreen extends Component {
 
   render() {
     return (
-      <LoaderScreen />
+      <LoaderScreen
+        color={Colors.blue60}
+        message="Loading..."
+      />
     );
   }
 }
