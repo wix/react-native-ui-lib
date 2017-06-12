@@ -34,6 +34,10 @@ export default class AnimatedScanner extends BaseComponent {
      * breakpoint callback - ({progress, isDone}) => {}
      */
     onBreakpoint: PropTypes.func,
+    /**
+     * should hide the scanner line
+     */
+    hideScannerLine: PropTypes.bool,
     testID: PropTypes.string,
   };
 
@@ -94,7 +98,7 @@ export default class AnimatedScanner extends BaseComponent {
   }
 
   renderNew() {
-    const {opacity, backgroundColor} = this.props;
+    const {opacity, backgroundColor, hideScannerLine} = this.props;
     const {isDone, animatedProgress} = this.state;
     return (
       <View style={{...StyleSheet.absoluteFillObject}}>
@@ -110,7 +114,7 @@ export default class AnimatedScanner extends BaseComponent {
             },
           ]}
         >
-          {!isDone && <View style={this.styles.scanner}/>}
+          {!isDone && !hideScannerLine && <View style={this.styles.scanner}/>}
         </Animated.View>
       </View>
     );

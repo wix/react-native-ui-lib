@@ -40,7 +40,7 @@ export default class ProgressBar extends BaseComponent {
 
     return (
       <View height={height} {...modifiers} style={{backgroundColor}}>
-        <AnimatedScanner {...animatedScannerProps} backgroundColor={progressBackgroundColor}/>
+        <AnimatedScanner {...animatedScannerProps} backgroundColor={progressBackgroundColor} hideScannerLine/>
       </View>
     );
   }
