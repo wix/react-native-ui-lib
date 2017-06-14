@@ -40,7 +40,7 @@ export default class Avatar extends BaseComponent {
     /**
      * Use to identify the avatar in tests
      */
-    testId: PropTypes.string,
+    testID: PropTypes.string,
   };
 
   static defaultProps = {
@@ -54,10 +54,10 @@ export default class Avatar extends BaseComponent {
   }
 
   render() {
-    const {label, imageSource, isOnline, testId} = this.props;
+    const {label, imageSource, isOnline, testID} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     return (
-      <View style={[this.styles.container, containerStyle]} testId={testId}>
+      <View style={[this.styles.container, containerStyle]} testID={testID}>
         <View style={this.styles.initialsContainer}>
           <Text numberOfLines={1} style={this.styles.initials}>
             {label}
@@ -66,7 +66,7 @@ export default class Avatar extends BaseComponent {
 
         <Image style={this.styles.image} source={imageSource} />
         {isOnline &&
-        <View style={this.styles.onlineBadge}>
+        <View style={this.styles.onlineBadge} testID={`${testID}.isOnline`}>
           <View style={this.styles.onlineBadgeInner}/>
         </View>}
       </View>
