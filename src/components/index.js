@@ -12,6 +12,7 @@ import Notification from './notification';
 import PageControl from './pageControl';
 import Picker from './picker';
 import Stepper from './stepper';
+import TabBar from './tabBar';
 import Text from './text';
 import View from './view';
 
@@ -29,6 +30,7 @@ module.exports = {
   PageControl,
   Picker,
   Stepper,
+  TabBar,
   Text,
   View,
 };

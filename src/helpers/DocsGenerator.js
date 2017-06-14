@@ -10,6 +10,9 @@ export function generateSnippet(instance) {
   let snippet = `<${componentName}`;
 
   _.forEach(componentProps, (value, key) => {
+    if (key === 'children') {
+      return;
+    }
     let formattedValue = `{${value}}`;
     if (_.isObject(value)) {
       formattedValue = `{${JSON.stringify(value)}}`;

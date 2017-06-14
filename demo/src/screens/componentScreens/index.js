@@ -10,6 +10,7 @@ import FormScreen from './FormScreen';
 import InputsScreen from './InputsScreen';
 import PageControlScreen from './PageControlScreen';
 import NotificationsScreen from './NotificationsScreen';
+import TabBarScreen from './TabBarScreen';
 
 Navigation.registerComponent('unicorn.components.AvatarsScreen', () => AvatarsScreen);
 Navigation.registerComponent('unicorn.components.ActionBarScreen', () => ActionBarScreen);
@@ -22,3 +23,4 @@ Navigation.registerComponent('unicorn.components.FormScreen', () => FormScreen);
 Navigation.registerComponent('unicorn.components.InputsScreen', () => InputsScreen);
 Navigation.registerComponent('unicorn.components.PageControlScreen', () => PageControlScreen);
 Navigation.registerComponent('unicorn.components.NotificationsScreen', () => NotificationsScreen);
+Navigation.registerComponent('unicorn.components.TabBarScreen', () => TabBarScreen);
