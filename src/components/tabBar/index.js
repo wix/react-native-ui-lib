@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, ViewPropTypes} from 'react-native';
+import {StyleSheet, ViewPropTypes, Animated} from 'react-native';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import {Colors} from '../../style';
@@ -24,11 +24,29 @@ export default class TabBar extends BaseComponent {
     super(props);
     this.state = {
       selectedIndex: props.selectedIndex,
+      selectedIndicatorPosition: new Animated.Value(this.calcPosition(props.selectedIndex, props.children.length)),
     };
   }
 
   generateStyles() {
     this.styles = createStyles(this.props);
+  }
+
+  calcPosition(index, tabsCount) {
+    return index * (100 / tabsCount);
+  }
+
+  onSelectingTab(index) {
+    const {selectedIndicatorPosition} = this.state;
+    Animated.spring(selectedIndicatorPosition, {
+      toValue: this.calcPosition(index, this.props.children.length),
+      tension: 30,
+      friction: 8,
+    }).start();
+
+    this.setState({
+      selectedIndex: index,
+    });
   }
 
   renderChildren() {
@@ -37,9 +55,7 @@ export default class TabBar extends BaseComponent {
       return React.cloneElement(child, {
         selected: selectedIndex === index,
         onPress: () => {
-          this.setState({
-            selectedIndex: index,
-          });
+          this.onSelectingTab(index);
           _.invoke(child.props, 'onPress');
         },
       });
@@ -49,11 +65,13 @@ export default class TabBar extends BaseComponent {
   }
 
   renderSelectedIndicator() {
-    const {selectedIndex} = this.state;
-    const tabsCount = _.size(this.props.children);
-    const left = `${selectedIndex * (100 / tabsCount)}%`;
+    const {selectedIndicatorPosition} = this.state;
+    const left = selectedIndicatorPosition.interpolate({
+      inputRange: [0, 100],
+      outputRange: ['0%', '100%'],
+    });
     return (
-      <View style={[this.styles.selectedIndicator, {left}]}/>
+      <Animated.View style={[this.styles.selectedIndicator, {left}]}/>
     );
   }
 
