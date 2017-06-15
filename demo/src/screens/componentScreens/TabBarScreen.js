@@ -3,39 +3,38 @@ import _ from 'lodash';
 import {TabBar, View, Text} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class TabBarScreen extends Component {
-
-  elements = new Array(3);
-
   state = {
-    snippets: new Array(3),
+    snippet: '',
   }
 
-  // componentDidMount() {
-  //   const snippets = [];
-  //   _.forEach(this.elements, (element) => {
-  //     snippets.push(element.getSnippet());
-  //   });
-
-  //   this.setState({
-  //     snippets,
-  //   });
-  // }
+  componentDidMount() {
+    const snippet = this.tabbar.getSnippet();
+    this.setState({
+      snippet,
+    });
+  }
 
   render() {
-    const {snippets} = this.state;
+    const {snippet} = this.state;
 
     return (
       <View flex bg-dark80>
         <View padding-18>
           <Text text30 dark10>TabBar</Text>
         </View>
-      
-        <TabBar selectedIndex={1} ref={element => this.elements[0] = element}>
+
+        <TabBar selectedIndex={1} ref={element => this.tabbar = element}>
           <TabBar.Item label="FEED" onPress={() => alert('pressed on FEED tab')}/>
           <TabBar.Item label="SERVICES"/>
           <TabBar.Item label="CHAT"/>
           <TabBar.Item label="ABOUT"/>
         </TabBar>
+
+        <View padding-12 bg-dark20 marginT-5>
+          <Text white>
+            {snippet}
+          </Text>
+        </View>
       </View>
     );
   }

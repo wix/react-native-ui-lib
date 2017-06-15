@@ -1,15 +1,20 @@
+import React from 'react';
 import _ from 'lodash';
 
 const TAB = '    ';
 const LINE_BREAK = '\n';
 
-export function generateSnippet(instance) {
+export function extractComponentInfo(instance) {
   const componentName = instance.constructor.displayName;
   const defaultProps = instance.constructor.defaultProps || {};
-  const componentProps = instance.props || {};
+  const props = instance.props || {};
+  return {componentName, defaultProps, props};
+}
+
+export function generateSnippet({componentName, defaultProps, props}) {
   let snippet = `<${componentName}`;
 
-  _.forEach(componentProps, (value, key) => {
+  _.forEach(props, (value, key) => {
     if (key === 'children') {
       return;
     }
@@ -32,8 +37,16 @@ export function generateSnippet(instance) {
     }
   });
 
-  if (componentProps.children) {
-    snippet += `>${LINE_BREAK}</${componentName}>`;
+  if (props.children) {
+    const childrenSnippets = React.Children.map(props.children, (child) => {
+      const childSnippet = TAB + generateSnippet({
+        componentName: child.type.displayName,
+        props: child.props || {},
+        defaultProps: child.type.defaultProps || {},
+      });
+      return childSnippet;
+    });
+    snippet += `>${LINE_BREAK}${childrenSnippets.join(LINE_BREAK)}${LINE_BREAK}</${componentName}>`;
   } else {
     snippet += '/>';
   }

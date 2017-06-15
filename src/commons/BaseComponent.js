@@ -45,7 +45,7 @@ export default class BaseComponent extends Component {
   }
 
   getSnippet() {
-    return DocsGenerator.generateSnippet(this);
+    return DocsGenerator.generateSnippet(DocsGenerator.extractComponentInfo(this));
   }
 
   styles;
