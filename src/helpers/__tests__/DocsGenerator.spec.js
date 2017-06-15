@@ -12,16 +12,18 @@ class ExampleComponent extends React.Component {
   }
 
   static defaultProps = {
-    color: 'blue'
+    color: 'blue',
   }
 }
 
 describe('DocsGenerator Helper', () => {
-
   it('should extract component info from instance', () => {
     const instance = new ExampleComponent({color: 'red'});
     const componentInfo = uut.extractComponentInfo(instance);
-    expect(componentInfo).toEqual({componentName: 'ExampleComponent', defaultProps: {color: 'blue'}, props: {color: 'red'}})
+    expect(componentInfo).toEqual({
+      componentName: 'ExampleComponent',
+      defaultProps: {color: 'blue'},
+      props: {color: 'red'}});
   });
 
   it('should generateSnippet handle basic usage with no props', () => {
