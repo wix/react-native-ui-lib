@@ -28,9 +28,9 @@ class ListItem extends BaseComponent {
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
-     * Use to identify the button in tests
+     * Use to identify the ListItem in tests
      */
-    testId: PropTypes.string,
+    testID: PropTypes.string,
   };
 
   static defaultProps = {
@@ -49,7 +49,7 @@ class ListItem extends BaseComponent {
   }
 
   render() {
-    const {style, onPress, onLongPress, testId} = this.props;
+    const {style, onPress, onLongPress, testID} = this.props;
     const {pressed} = this.state;
     const containerStyle = this.extractContainerStyle(this.props);
     const animationProps = this.extractAnimationProps();
@@ -63,7 +63,7 @@ class ListItem extends BaseComponent {
         onLongPress={onLongPress}
         onHideUnderlay={() => this.setState({pressed: false})}
         onShowUnderlay={() => this.setState({pressed: true})}
-        testId={testId}
+        testID={testID}
       >
         <Animatable.View
           {...animationProps}
