@@ -4,6 +4,7 @@ import './componentScreenScreens';
 import './listScreens';
 import './styleScreens';
 import './animationScreens';
+import './realExamples';
 import './PlaygroundScreen';
 import MainScreen from './MainScreen';
 
