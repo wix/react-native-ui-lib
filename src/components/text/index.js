@@ -1,14 +1,26 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {Text as RNText, StyleSheet} from 'react-native';
+import PropTypes from 'prop-types';
 import {BaseComponent} from '../../commons';
 
+/**
+ * @description: a Wrapper for Text component with extra functionality like modifiers support
+ * @modifiers: margins, color
+ */
 export default class Text extends BaseComponent {
 
   static displayName = 'Text';
   static propTypes = {
     ...RNText.propTypes,
     ...BaseComponent.propTypes,
+    /**
+     * color of the text
+     */
     color: PropTypes.string,
+    /**
+     * whether to center the text (using textAlign)
+     */
+    center: PropTypes.bool,
     testID: PropTypes.string,
   };
 
@@ -27,9 +39,15 @@ export default class Text extends BaseComponent {
   render() {
     const color = this.props.color || this.extractColorValue();
     const typography = this.extractTypographyValue();
-    const {style, ...others} = this.props;
+    const {style, center, ...others} = this.props;
     const {margins} = this.state;
-    const textStyle = [this.styles.container, typography, color && {color}, margins, style];
+    const textStyle = [
+      this.styles.container,
+      typography,
+      color && {color},
+      margins,
+      center && {textAlign: 'center'},
+      style];
     return (
       <RNText {...others} style={textStyle}>
         {this.props.children}
