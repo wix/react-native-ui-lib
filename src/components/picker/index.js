@@ -9,6 +9,11 @@ import * as PickerPresenter from './PickerPresenter';
 import Button from '../../components/button';
 import View from '../../components/view';
 
+const PICKER_MODES = {
+  SINGLE: 'SINGLE',
+  MULTI: 'MULTI',
+};
+
 const ItemType = PropTypes.shape({value: PropTypes.any, label: PropTypes.string});
 
 /**
@@ -17,10 +22,7 @@ const ItemType = PropTypes.shape({value: PropTypes.any, label: PropTypes.string}
 class Picker extends TextInput {
   static displayName = 'Picker';
 
-  static modes = {
-    SINGLE: 'SINGLE',
-    MULTI: 'MULTI',
-  }
+  static modes = PICKER_MODES;
 
   static propTypes = {
     ...TextInput.propTypes,
@@ -35,7 +37,7 @@ class Picker extends TextInput {
     /**
      * SINGLE mode or MULTI mode
      */
-    mode: PropTypes.oneOf(Object.keys(Picker.modes)),
+    mode: PropTypes.oneOf(Object.keys(PICKER_MODES)),
     /**
      * Adds blur effect to picker modal (only iOS)
      */
@@ -60,7 +62,7 @@ class Picker extends TextInput {
 
   static defaultProps = {
     ...TextInput.defaultProps,
-    mode: Picker.modes.SINGLE,
+    mode: PICKER_MODES.SINGLE,
     enableModalBlur: true,
     expandable: true,
     text70: true,
