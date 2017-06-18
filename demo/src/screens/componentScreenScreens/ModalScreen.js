@@ -19,7 +19,7 @@ export default class LoadingScreen extends Component {
   closeScreen() {
     const {navigator} = this.props;
     navigator.pop({
-      animated: true
+      animated: true,
     });
   }
 

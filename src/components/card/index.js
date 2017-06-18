@@ -33,6 +33,10 @@ class Card extends BaseComponent {
      */
     onPress: PropTypes.func,
     /**
+     * whether the card should have shadow or not
+     */
+    enableShadow: PropTypes.bool,
+    /**
      * Additional styles for the top container
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
@@ -41,6 +45,10 @@ class Card extends BaseComponent {
      */
     testID: PropTypes.string,
   };
+
+  static defaultProps = {
+    enableShadow: true,
+  }
 
   generateStyles() {
     this.styles = createStyles(this.props);
@@ -70,22 +78,23 @@ class Card extends BaseComponent {
   }
 
   render() {
-    const {onPress, style, containerStyle, testID, ...others} = this.props;
+    const {onPress, style, containerStyle, enableShadow, testID, ...others} = this.props;
     const multipleShadowProps = MultipleShadow.extractOwnProps(this.props);
     const Container = onPress ? TouchableOpacity : View;
+    const ShadowContainer = enableShadow ? MultipleShadow : View;
     return (
       <Container style={[this.styles.container, containerStyle]} onPress={onPress} testID={testID} delayPressIn={10}>
-        <MultipleShadow {...multipleShadowProps}>
+        <ShadowContainer {...multipleShadowProps}>
           <View style={[this.styles.innerContainer, style]} {...others}>
             {this.renderChildren()}
           </View>
-        </MultipleShadow>
+        </ShadowContainer>
       </Container>
     );
   }
 }
 
-function createStyles({width, height}) {
+function createStyles({width, height, enableShadow}) {
   const borderRadius = BorderRadiuses.br40;
   return StyleSheet.create({
     container: {
@@ -93,7 +102,7 @@ function createStyles({width, height}) {
       height,
       backgroundColor: Constants.isIOS ? 'transparent' : Colors.white,
       borderRadius,
-      elevation: 2,
+      elevation: enableShadow ? 2 : 0,
     },
     innerContainer: {
       backgroundColor: Colors.white,
