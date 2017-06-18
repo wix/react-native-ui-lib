@@ -64,14 +64,14 @@ export default class TextInput extends BaseInput {
     super(props);
 
     this.onChangeText = this.onChangeText.bind(this);
-    this.onContentSizeChange = this.onContentSizeChange.bind(this);
+    // this.onContentSizeChange = this.onContentSizeChange.bind(this);
     this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(this);
     this.toggleExpandableModal = this.toggleExpandableModal.bind(this);
     this.onDoneEditingExpandableInput = this.onDoneEditingExpandableInput.bind(this);
 
-    const typography = this.getTypography();
+    // const typography = this.getTypography();
     this.state = {
-      inputWidth: typography.fontSize * 2,
+      // inputWidth: typography.fontSize * 2,
       widthExtendBreaks: [],
       value: props.value,
       floatingPlaceholderState: new Animated.Value(this.hasText(props.value) ? 1 : 0),
@@ -209,13 +209,12 @@ export default class TextInput extends BaseInput {
     const color = this.props.color || this.extractColorValue();
     const typography = this.getTypography();
     const {style, placeholder, floatingPlaceholder, centered, multiline, ...others} = this.props;
-    const {inputWidth, value} = this.state;
+    const {value} = this.state;
     const inputStyle = [
       this.styles.input,
       typography,
       color && {color},
-      {height: (multiline && !centered) ? typography.lineHeight * 3 : typography.lineHeight},
-      centered && {width: inputWidth},
+      {height: (multiline) ? typography.lineHeight * 3 : typography.lineHeight},
       style,
     ];
 
@@ -226,9 +225,8 @@ export default class TextInput extends BaseInput {
         placeholder={(floatingPlaceholder && !centered) ? undefined : placeholder}
         underlineColorAndroid="transparent"
         style={inputStyle}
-        multiline={centered || multiline}
+        multiline={multiline}
         onChangeText={this.onChangeText}
-        onContentSizeChange={this.onContentSizeChange}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         ref={(input) => { this.input = input; }}
@@ -293,30 +291,31 @@ export default class TextInput extends BaseInput {
       value: transformedText,
     }, this.updateFloatingPlaceholderState);
 
-    const {widthExtendBreaks, width} = this.state;
-    if (transformedText.length < _.last(widthExtendBreaks)) {
-      const typography = this.getTypography();
-      this.setState({
-        inputWidth: width - typography.fontSize,
-        widthExtendBreaks: widthExtendBreaks.slice(-1),
-      });
-    }
+    // const {widthExtendBreaks, width} = this.state;
+    // if (transformedText.length < _.last(widthExtendBreaks)) {
+    //   const typography = this.getTypography();
+    //   this.setState({
+    //     inputWidth: width - typography.fontSize,
+    //     widthExtendBreaks: widthExtendBreaks.slice(-1),
+    //   });
+    // }
   }
 
-  onContentSizeChange(event) {
-    const {multiline, centered} = this.props;
-    if (multiline && !centered) return;
-    const typography = this.getTypography();
-    const initialHeight = typography.lineHeight + 10;
-    const {width, height} = event.nativeEvent.contentSize;
-    const {widthExtendBreaks, value} = this.state;
-    if (height > initialHeight) {
-      this.setState({
-        inputWidth: width + typography.fontSize,
-        widthExtendBreaks: widthExtendBreaks.concat(value.length),
-      });
-    }
-  }
+  // todo: deprecate this
+  // onContentSizeChange(event) {
+  //   const {multiline, centered} = this.props;
+  //   if (multiline && !centered) return;
+  //   const typography = this.getTypography();
+  //   const initialHeight = typography.lineHeight + 10;
+  //   const {width, height} = event.nativeEvent.contentSize;
+  //   const {widthExtendBreaks, value} = this.state;
+  //   if (height > initialHeight) {
+  //     this.setState({
+  //       inputWidth: width + typography.fontSize,
+  //       widthExtendBreaks: widthExtendBreaks.concat(value.length),
+  //     });
+  //   }
+  // }
 }
 
 function createStyles({placeholderTextColor, hideUnderline, centered}) {

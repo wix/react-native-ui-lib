@@ -13,7 +13,6 @@ export default class View extends BaseComponent {
   static propTypes = {
     ...ViewPropTypes,
     ...BaseComponent.propTypes,
-    testId: PropTypes.string,
   };
 
   generateStyles() {
