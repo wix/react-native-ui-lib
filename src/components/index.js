@@ -14,6 +14,7 @@ import Picker from './picker';
 import Stepper from './stepper';
 import TabBar from './tabBar';
 import Text from './text';
+import TouchableOpacity from './touchableOpacity';
 import View from './view';
 
 module.exports = {
@@ -32,5 +33,6 @@ module.exports = {
   Stepper,
   TabBar,
   Text,
+  TouchableOpacity,
   View,
 };

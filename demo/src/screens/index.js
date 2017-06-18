@@ -5,6 +5,7 @@ import './listScreens';
 import './styleScreens';
 import './animationScreens';
 import './realExamples';
+import './wrapperScreens';
 import './PlaygroundScreen';
 import MainScreen from './MainScreen';
 

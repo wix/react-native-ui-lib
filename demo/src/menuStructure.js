@@ -6,6 +6,11 @@ export const navigationData = {
     {title: 'Colors', tags: 'palette rgb hex', screen: 'unicorn.style.ColorsScreen'},
     {title: 'Shadows (iOS)', tags: 'shadow', screen: 'unicorn.style.ShadowsScreen'},
   ],
+  Wrappers: [
+    // {title: 'View', tags: 'view wrapper', screen: 'unicorn.wrappers.ViewScreen'},
+    // {title: 'Text', tags: 'text wrapper', screen: 'unicorn.wrappers.TextScreen'},
+    {title: 'TouchableOpacity', tags: 'touchableOpacity wrapper', screen: 'unicorn.wrappers.TouchableOpacityScreen'},
+  ],
   Components: [
     {title: 'Avatars', tags: 'avatar contact', screen: 'unicorn.components.AvatarsScreen'},
     {title: 'Animated Image', tags: 'animated image', screen: 'unicorn.components.AnimatedImageScreen'},
@@ -35,5 +40,8 @@ export const navigationData = {
   Animations: [
     {title: 'Card Scanner', tags: 'card scanner process', screen: 'unicorn.animations.CardScannerScreen'},
     {title: 'ProgressBar', tags: 'progress bar animated', screen: 'unicorn.animations.ProgressBarScreen'},
+  ],
+  Examples: [
+    {title: 'Apple Music', tags: 'apple music demo screen', screen: 'unicorn.examples.AppleMusic'},
   ],
 };
