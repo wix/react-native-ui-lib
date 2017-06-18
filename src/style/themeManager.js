@@ -13,10 +13,20 @@ class ThemeManager {
     titleColor: Colors.dark10,
     subtitleColor: Colors.dark40,
     dividerColor: Colors.dark70,
+    components: {
+      TouchableOpacity: {
+        throttleTime: 0,
+        throttleOptions: {leading: true, trailing: false},
+      },
+    },
   };
 
   setTheme(overrides) {
     this.theme = _.merge(this.theme, overrides);
+  }
+
+  get components() {
+    return this.theme.components;
   }
 
   get primaryColor() {

@@ -3,6 +3,7 @@ import {TouchableOpacity as RNTouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
+import {ThemeManager} from '../../style';
 
 export default class TouchableOpacity extends BaseComponent {
   static displayName = 'TouchableOpacity';
@@ -13,8 +14,8 @@ export default class TouchableOpacity extends BaseComponent {
   }
 
   static defaultProps = {
-    throttleTime: 0,
-    throttleOptions: {leading: true, trailing: false},
+    throttleTime: ThemeManager.components.TouchableOpacity.throttleTime,
+    throttleOptions: ThemeManager.components.TouchableOpacity.throttleOptions,
   }
 
   constructor(props) {
