@@ -20,12 +20,13 @@ export default class TopBar extends BaseComponent {
     titleStyle: PropTypes.object,
     doneButtonProps: PropTypes.shape(Button.propTypes),
     doneLabel: PropTypes.string,
-    donelIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    doneIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     onDone: PropTypes.func,
     cancelButtonProps: PropTypes.shape(Button.propTypes),
     cancelLabel: PropTypes.string,
     cancelIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     onCancel: PropTypes.func,
+    includeStatusBar: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -33,6 +34,7 @@ export default class TopBar extends BaseComponent {
     cancelIcon: Assets.icons.x,
     doneButtonProps: {},
     cancelButtonProps: {},
+    includeStatusBar: Constants.isIOS,
   }
 
   generateStyles() {
@@ -74,18 +76,21 @@ export default class TopBar extends BaseComponent {
   }
 
   render() {
-    const {title} = this.props;
+    const {title, includeStatusBar} = this.props;
 
     return (
-      <View style={this.styles.container}>
-        <View row flex bottom paddingL-15>
-          {this.renderCancel()}
-        </View>
-        <View row flex-3 bottom centerH>
-          <Text numberOfLines={1} text70 style={this.styles.title}>{title}</Text>
-        </View>
-        <View row flex bottom right paddingR-15>
-          {this.renderDone()}
+      <View>
+        {includeStatusBar && <View style={this.styles.statusBar}/>}
+        <View style={this.styles.container}>
+          <View row flex bottom paddingL-15 centerV>
+            {this.renderCancel()}
+          </View>
+          <View row flex-3 bottom centerH centerV>
+            <Text numberOfLines={1} text70 style={this.styles.title}>{title}</Text>
+          </View>
+          <View row flex bottom right paddingR-15 centerV>
+            {this.renderDone()}
+          </View>
         </View>
       </View>
     );
@@ -97,6 +102,9 @@ function createStyles() {
     container: {
       flexDirection: 'row',
       height: 32 + Constants.statusBarHeight,
+    },
+    statusBar: {
+      height: Constants.statusBarHeight,
     },
     title: {
       fontWeight: '500',
