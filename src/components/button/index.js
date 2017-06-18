@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react';
-import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
 import Text from '../text';
+import TouchableOpacity from '../touchableOpacity';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 
 /**
