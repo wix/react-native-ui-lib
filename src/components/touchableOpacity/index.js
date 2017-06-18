@@ -13,15 +13,13 @@ export default class TouchableOpacity extends BaseComponent {
     throttleOptions: PropTypes.shape({leading: PropTypes.bool, trailing: PropTypes.bool}),
   }
 
-  static defaultProps = {
-    throttleTime: ThemeManager.components.TouchableOpacity.throttleTime,
-    throttleOptions: ThemeManager.components.TouchableOpacity.throttleOptions,
-  }
-
   constructor(props) {
     super(props);
 
-    this.onPress = _.throttle(this.onPress.bind(this), props.throttleTime, props.throttleOptions);
+    const throttleTime = props.throttleTime || ThemeManager.components.TouchableOpacity.throttleTime;
+    const throttleOptions = props.throttleOptions || ThemeManager.components.TouchableOpacity.throttleOptions;
+
+    this.onPress = _.throttle(this.onPress.bind(this), throttleTime, throttleOptions);
   }
 
   render() {
