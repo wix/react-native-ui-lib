@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {View as RNView, StyleSheet, ViewPropTypes} from 'react-native';
 import {BaseComponent} from '../../commons';
 
