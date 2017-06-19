@@ -54,10 +54,6 @@ class Picker extends TextInput {
      * a function that extract the unique value out of the value prop in case value has a custom structure.
      */
     getItemValue: PropTypes.func,
-    /**
-     * Use to identify the picker in tests
-     */
-    testId: PropTypes.string,
   };
 
   static defaultProps = {
@@ -179,12 +175,12 @@ class Picker extends TextInput {
   }
 
   render() {
-    const {renderPicker} = this.props;
+    const {renderPicker, testID} = this.props;
     if (_.isFunction(renderPicker)) {
       const {value} = this.state;
       return (
         <View left>
-          <Button link onPress={this.handlePickerOnPress}>
+          <Button link onPress={this.handlePickerOnPress} testID={testID}>
             {renderPicker(value)}
           </Button>
           {this.renderExpandableModal()}
