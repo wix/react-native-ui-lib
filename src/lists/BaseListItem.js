@@ -1,9 +1,10 @@
 import React, {PropTypes} from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import _ from 'lodash';
 import {BaseComponent} from '../commons';
 import {ThemeManager} from '../style';
+import TouchableOpacity from '../components/touchableOpacity';
 
 /**
  * BaseListItem component

@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react';
-import {View, TouchableHighlight, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
+import TouchableOpacity from '../../components/touchableOpacity';
 
 import ListItemPart from './ListItemPart';
 
@@ -53,7 +54,7 @@ class ListItem extends BaseComponent {
     const {pressed} = this.state;
     const containerStyle = this.extractContainerStyle(this.props);
     const animationProps = this.extractAnimationProps();
-    const Container = (onPress || onLongPress) ? TouchableHighlight : View;
+    const Container = (onPress || onLongPress) ? TouchableOpacity : View;
 
     return (
       <Container

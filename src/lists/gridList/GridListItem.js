@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Image} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {BaseComponent} from '../../commons';
 import createStyles from './style';
+import TouchableOpacity from '../../components/touchableOpacity';
 
 
 /** THIS IS DEPRECATED */

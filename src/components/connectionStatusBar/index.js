@@ -1,9 +1,10 @@
 import React, {PropTypes} from 'react';
 import _ from 'lodash';
-import {View, StyleSheet, Text, TouchableOpacity, NetInfo} from 'react-native';
+import {View, StyleSheet, Text, NetInfo} from 'react-native';
 import * as Constants from '../../helpers/Constants';
 import {BaseComponent} from '../../commons';
 import {Colors, Typography} from '../../style';
+import TouchableOpacity from '../touchableOpacity';
 
 /**
  * Top bar to show a "no internet" connection status

@@ -1,9 +1,10 @@
 import React, {PropTypes} from 'react';
 import _ from 'lodash';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import * as Constants from '../../helpers/Constants';
 import {Typography, ThemeManager} from '../../style';
 import {BaseComponent} from '../../commons';
+import TouchableOpacity from '../../components/touchableOpacity';
 
 /**
  * Component that shows a full screen for a certain state like an empty state

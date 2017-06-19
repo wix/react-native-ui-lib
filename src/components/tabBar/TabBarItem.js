@@ -1,11 +1,12 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import View from '../view';
 import Text from '../text';
 import {Colors, Typography} from '../../style';
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
+import TouchableOpacity from '../touchableOpacity';
 
 /**
  * @description: TabBarItem inner component of TabBar
@@ -43,11 +44,12 @@ export default class TabBarItem extends BaseComponent {
   render() {
     const {label, labelStyle, selected, selectedLabelStyle, onPress} = this.props;
     return (
-      <View flex center>
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={onPress}
-        >
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={onPress}
+        style={this.styles.container}
+      >
+        <View flex center>
           <Text
             style={[
               this.styles.label,
@@ -56,8 +58,8 @@ export default class TabBarItem extends BaseComponent {
           >
             {label}
           </Text>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
     );
   }
 }
@@ -65,6 +67,7 @@ export default class TabBarItem extends BaseComponent {
 function createStyles() {
   return StyleSheet.create({
     container: {
+      flex: 1,
     },
     label: {
       color: Colors.dark10,

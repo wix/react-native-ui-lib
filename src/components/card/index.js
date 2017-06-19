@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react';
-import {TouchableOpacity, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {Colors, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import View from '../view';
+import TouchableOpacity from '../touchableOpacity';
 import MultipleShadow from '../MultipleShadow';
 
 import CardSection from './CardSection';
@@ -83,7 +84,13 @@ class Card extends BaseComponent {
     const Container = onPress ? TouchableOpacity : View;
     const ShadowContainer = enableShadow ? MultipleShadow : View;
     return (
-      <Container style={[this.styles.container, containerStyle]} onPress={onPress} testID={testID} delayPressIn={10}>
+      <Container
+        style={[this.styles.container, containerStyle]}
+        onPress={onPress}
+        delayPressIn={10}
+        activeOpacity={0.6}
+        testID={testID}
+      >
         <ShadowContainer {...multipleShadowProps}>
           <View style={[this.styles.innerContainer, style]} {...others}>
             {this.renderChildren()}
