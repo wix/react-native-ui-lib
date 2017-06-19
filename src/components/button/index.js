@@ -325,8 +325,6 @@ function createStyles({outline, outlineColor, link, color}) {
       fontWeight: '100',
     },
     icon: {
-      width: 18,
-      resizeMode: 'contain',
       tintColor: color,
     },
     iconDisabled: {
