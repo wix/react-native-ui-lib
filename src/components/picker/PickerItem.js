@@ -94,7 +94,7 @@ class PickerItem extends BaseComponent {
   }
 
   render() {
-    const {renderItem, label, value, disabled, onPress} = this.props;
+    const {renderItem, label, value, disabled, onPress, testID} = this.props;
 
     return (
       <TouchableOpacity
@@ -102,6 +102,7 @@ class PickerItem extends BaseComponent {
         // todo: deprecate the check for object
         onPress={() => onPress(_.isObject(value) ? value : {value, label})}
         disabled={disabled}
+        testID={testID}
       >
         {renderItem ? renderItem(value, this.props) : this.renderItem()}
       </TouchableOpacity>
