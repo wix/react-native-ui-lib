@@ -76,7 +76,7 @@ class Colors {
   purple80 = '#F7EBF7';
   // VIOLETS
   violet10 = '#48217B';
-  violet20 = '#733CA6';
+  violet20 = '#542790';
   violet30 = '#733CA6';
   violet40 = '#8F63B8';
   violet50 = '#AB8ACA';
