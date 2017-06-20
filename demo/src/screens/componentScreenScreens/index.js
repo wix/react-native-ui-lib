@@ -1,6 +1,6 @@
 import {Navigation} from 'react-native-navigation';
 import EmptyStateScreen from './EmptyStateScreen';
-import LoadingScreen from './LoaderScreen';
+import LoadingScreen from './LoadingScreen';
 import ModalScreen from './ModalScreen';
 
 Navigation.registerComponent('unicorn.screens.EmptyStateScreen', () => EmptyStateScreen);

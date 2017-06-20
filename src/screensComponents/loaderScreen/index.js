@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, ActivityIndicator} from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import {Colors, Typography, ThemeManager} from '../../style';
 import * as Constants from '../../helpers/Constants';
 import {BaseComponent} from '../../commons';
@@ -36,16 +37,22 @@ export default class LoaderScreen extends BaseComponent {
 
   render() {
     const {message, messageStyle, loaderColor, overlay, ...others} = this.props;
+    const animationProps = this.extractAnimationProps();
     return (
-      <View center style={[overlay ? styles.overlayContainer : styles.container]}>
-        <ActivityIndicator
-          size={'large'}
-          animating
-          color={loaderColor || (Constants.isIOS ? Colors.dark60 : ThemeManager.primaryColor)}
-          {...others}
-        />
-        {message && <Text style={[styles.message, messageStyle]}>{message}</Text>}
-      </View>
+      <Animatable.View
+        style={[overlay ? styles.overlayContainer : styles.container]}
+        {...animationProps}
+      >
+        <View flex center>
+          <ActivityIndicator
+            size={'large'}
+            animating
+            color={loaderColor || (Constants.isIOS ? Colors.dark60 : ThemeManager.primaryColor)}
+            {...others}
+          />
+          {message && <Text style={[styles.message, messageStyle]}>{message}</Text>}
+        </View>
+      </Animatable.View>
     );
   }
 }
