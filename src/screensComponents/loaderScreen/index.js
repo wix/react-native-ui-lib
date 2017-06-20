@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, ActivityIndicator} from 'react-native';
+import {StyleSheet, ActivityIndicator} from 'react-native';
 import {Colors, Typography, ThemeManager} from '../../style';
 import * as Constants from '../../helpers/Constants';
 import {BaseComponent} from '../../commons';
 import Text from '../../components/text';
+import View from '../../components/view';
 
 /**
  * Component that shows a full screen with an activity indicator
@@ -27,12 +28,16 @@ export default class LoaderScreen extends BaseComponent {
      * message style
      */
     messageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+    * Show the screen as an overlay
+    */
+    overlay: PropTypes.bool,
   };
 
   render() {
-    const {message, messageStyle, loaderColor, ...others} = this.props;
+    const {message, messageStyle, loaderColor, overlay, ...others} = this.props;
     return (
-      <View style={styles.container}>
+      <View center style={[overlay ? styles.overlayContainer : styles.container]}>
         <ActivityIndicator
           size={'large'}
           animating
@@ -45,15 +50,18 @@ export default class LoaderScreen extends BaseComponent {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  overlayContainer: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: Colors.rgba(Colors.white, 0.85),
+    zIndex: 100,
   },
   message: {
     ...Typography.text70,
     marginTop: 18,
     color: Colors.dark10,
   },
-};
+});
