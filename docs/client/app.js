@@ -6,7 +6,7 @@ import {BrowserRouter} from 'react-router-dom';
 import Intro from './containers/Intro';
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/react-native-ui-lib">
     <Intro/>
   </BrowserRouter>,
   document.getElementById('root'),

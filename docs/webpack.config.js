@@ -1,10 +1,12 @@
+const webpack = require('webpack');
+
 const BASE_DIR = __dirname;
 
 module.exports = {
   entry: `${BASE_DIR}/client/app.js`,
   output: {
     filename: 'bundle.js',
-    publicPath: '/build/',
+    publicPath: '/react-native-ui-lib/build/',
     path: `${BASE_DIR}/build`,
   },
   module: {
@@ -14,13 +16,13 @@ module.exports = {
       use: {
         loader: 'babel-loader',
         options: {
-          presets: ['stage-0', 'react'],
+          presets: ['react', 'es2015'],
         },
       },
     },
     {
       test: /\.scss$/,
-      use: ['style-loader', 'css-loader', 'sass-loader',{
+      use: ['style-loader', 'css-loader', 'sass-loader', {
         loader: 'sass-resources-loader',
         options: {
           resources: [`${BASE_DIR}/client/styles/_vars.scss`],
@@ -33,4 +35,11 @@ module.exports = {
     // }
     ],
   },
+  plugins: process.argv.indexOf('-p') === -1 ? [] : [
+    new webpack.optimize.UglifyJsPlugin({
+      output: {
+        comments: false,
+      },
+    }),
+  ],
 };
