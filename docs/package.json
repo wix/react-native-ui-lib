@@ -1,0 +1,32 @@
+{
+  "name": "uilib-docs",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "bundle.js",
+  "scripts": {
+    "start": "webpack-dev-server --watch --open",
+    "build": "webpack -p"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-preset-react": "^6.22.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^0.28.4",
+    "node-sass": "^4.5.3",
+    "recursive-readdir": "^2.2.1",
+    "sass-loader": "^6.0.6",
+    "sass-resources-loader": "^1.2.1",
+    "style-loader": "^0.18.2",
+    "webpack": "^3.0.0",
+    "webpack-dev-server": "^2.5.0"
+  },
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-docgen": "^2.16.0",
+    "react-dom": "^15.6.1",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1"
+  }
+}

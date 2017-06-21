@@ -1,0 +1,17 @@
+html, body, #root {
+  font-family: 'Open Sans';
+  margin: 0;
+  // background: $color2;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
