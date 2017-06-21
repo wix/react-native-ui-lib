@@ -51,11 +51,10 @@ export default class FormScreen extends Component {
           value={this.state.language}
           enableModalBlur={false}
           onChange={item => this.setState({language: item})}
+          topBarProps={{title: 'Languages'}}
         >
-          {_.map(options, option => <Picker.Item key={option.value} label={option.label} value={option.value} disabled={option.disabled}/>)}
+          {_.map(options, option => <Picker.Item key={option.value} value={option} disabled={option.disabled}/>)}
         </Picker>
-
-        {/*<Text text80 purple50>Selected Value: {_.get(this.state.language, 'value')}</Text>*/}
 
         <View marginT-20>
           <Picker
@@ -67,8 +66,7 @@ export default class FormScreen extends Component {
             {_.map(options, option => (
               <Picker.Item
                 key={option.value}
-                label={option.label}
-                value={option.value}
+                value={option}
                 disabled={option.disabled}
               />
             ))}
@@ -117,7 +115,7 @@ export default class FormScreen extends Component {
               key={contact.name}
               value={contact}
               renderItem={(item, props) => (
-                <View style={{height: 56, borderBottomWidth: 1, borderColor: Colors.orange60}} paddingH-15 row centerV spread>
+                <View style={{height: 56, borderBottomWidth: 1, borderColor: Colors.dark80}} paddingH-15 row centerV spread>
                   <View row centerV>
                     <Avatar size={45} imageSource={{uri: item.thumbnail}}/>
                     <Text marginL-10 text70 dark10>{item.name}</Text>

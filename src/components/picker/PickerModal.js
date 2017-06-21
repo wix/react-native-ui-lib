@@ -7,9 +7,8 @@ import {Modal} from '../../screensComponents';
 class PickerModal extends BaseComponent {
 
   static propTypes = {
-    onCancel: PropTypes.func,
-    onDone: PropTypes.func,
     ...Modal.propTypes,
+    topBarProps: PropTypes.shape(Modal.TopBar.propTypes),
   };
 
   generateStyles() {
@@ -17,16 +16,16 @@ class PickerModal extends BaseComponent {
   }
 
   render() {
-    const {visible, onCancel, onDone, enableModalBlur, children} = this.props;
+    const {visible, enableModalBlur, topBarProps, children} = this.props;
     return (
       <Modal
         animationType={'slide'}
         transparent={(Constants.isIOS && enableModalBlur)}
         enableModalBlur={Constants.isIOS && enableModalBlur}
         visible={visible}
-        onRequestClose={onCancel}
+        onRequestClose={topBarProps.onCancel}
       >
-        <Modal.TopBar onDone={onDone} onCancel={onCancel}/>
+        <Modal.TopBar {...topBarProps}/>
         <ScrollView>
           <View style={this.styles.modalBody}>
             {children}

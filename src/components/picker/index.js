@@ -1,5 +1,6 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {Text} from 'react-native';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {Colors} from '../../style';
 import {TextInput} from '../inputs';
@@ -8,6 +9,7 @@ import PickerItem from './PickerItem';
 import * as PickerPresenter from './PickerPresenter';
 import Button from '../../components/button';
 import View from '../../components/view';
+import Modal from '../../screensComponents/modal';
 
 const PICKER_MODES = {
   SINGLE: 'SINGLE',
@@ -54,6 +56,10 @@ class Picker extends TextInput {
      * a function that extract the unique value out of the value prop in case value has a custom structure.
      */
     getItemValue: PropTypes.func,
+    /**
+     * The picker modal top bar props
+     */
+    topBarProps: PropTypes.shape(Modal.TopBar.propTypes),
   };
 
   static defaultProps = {
@@ -161,14 +167,18 @@ class Picker extends TextInput {
   }
 
   renderExpandableModal() {
-    const {mode, enableModalBlur} = this.props;
+    const {mode, enableModalBlur, topBarProps} = this.props;
     const {showExpandableModal} = this.state;
     return (
       <PickerModal
         visible={showExpandableModal}
-        onCancel={this.cancelSelect}
-        onDone={mode === Picker.modes.MULTI ? () => this.onDoneSelecting(this.state.value) : undefined}
+
         enableModalBlur={enableModalBlur}
+        topBarProps={{
+          ...topBarProps,
+          onCancel: this.cancelSelect,
+          onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(this.state.value) : undefined,
+        }}
       >
         {this.appendPropsToChildren(this.props.children)}
       </PickerModal>);

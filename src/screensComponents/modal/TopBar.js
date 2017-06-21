@@ -76,7 +76,7 @@ export default class TopBar extends BaseComponent {
   }
 
   render() {
-    const {title, includeStatusBar} = this.props;
+    const {title, titleStyle, includeStatusBar} = this.props;
 
     return (
       <View>
@@ -86,7 +86,7 @@ export default class TopBar extends BaseComponent {
             {this.renderCancel()}
           </View>
           <View row flex-3 bottom centerH centerV>
-            <Text numberOfLines={1} text70 style={this.styles.title}>{title}</Text>
+            <Text numberOfLines={1} text70 style={[this.styles.title, titleStyle]}>{title}</Text>
           </View>
           <View row flex bottom right paddingR-15 centerV>
             {this.renderDone()}
