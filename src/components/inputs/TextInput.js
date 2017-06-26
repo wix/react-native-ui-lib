@@ -337,7 +337,7 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
     },
     input: {
       flex: 1,
-      marginBottom: 13,
+      marginBottom: 10,
       padding: 0,
       textAlign: centered ? 'center' : undefined,
       backgroundColor: 'transparent',
@@ -356,7 +356,7 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
       ...Typography.text90,
       height: Typography.text90.lineHeight,
       textAlign: centered ? 'center' : undefined,
-      marginTop: 3,
+      marginTop: 1,
     },
     expandableModalContent: {
       flex: 1,
