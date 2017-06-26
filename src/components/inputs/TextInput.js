@@ -140,7 +140,7 @@ export default class TextInput extends BaseInput {
             !centered && {
               top: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [20, 0],
+                outputRange: [25, 0],
               }),
               fontSize: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
@@ -327,7 +327,7 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
       borderBottomWidth: hideUnderline ? 0 : 1,
       borderColor: Colors.dark80,
       justifyContent: centered ? 'center' : undefined,
-      paddingTop: 20,
+      paddingTop: 25,
     },
     focusedUnderline: {
       borderColor: Colors.blue30,
@@ -337,7 +337,7 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
     },
     input: {
       flex: 1,
-      marginBottom: 10,
+      marginBottom: 13,
       padding: 0,
       textAlign: centered ? 'center' : undefined,
       backgroundColor: 'transparent',
@@ -356,7 +356,7 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
       ...Typography.text90,
       height: Typography.text90.lineHeight,
       textAlign: centered ? 'center' : undefined,
-      marginTop: 1,
+      marginTop: 3,
     },
     expandableModalContent: {
       flex: 1,
