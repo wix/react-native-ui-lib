@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ViewPropTypes} from 'react-native';
 import _ from 'lodash';
 import {Colors, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
@@ -24,11 +24,11 @@ class Card extends BaseComponent {
     /**
      * card custom width
      */
-    width: PropTypes.number,
+    ...ViewPropTypes.width,
     /**
      * card custom height
      */
-    height: PropTypes.number,
+    ...ViewPropTypes.height,
     /**
      * action for when pressing the card
      */
