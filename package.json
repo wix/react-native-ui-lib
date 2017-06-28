@@ -27,7 +27,7 @@
     "lodash": "^4.0.0",
     "prop-types": "^15.5.10",
     "react-native-animatable": "^1.1.0",
-    "react-native-blur": "~3.0.0",
+    "react-native-blur": "^3.1.1",
     "react-native-interactable": "^0.0.8"
   },
   "devDependencies": {
