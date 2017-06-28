@@ -59,7 +59,7 @@ class Typography {
   text100 = {
     fontSize: Constants.isAndroid ? 10 : 11,
     fontWeight: '300',
-    lineHeight: Constants.isAndroid ? Math.floor(10 * 1.8) : Math.floor(11 * 1.18),
+    lineHeight: Constants.isAndroid ? Math.floor(10 * 1.18) : Math.floor(11 * 1.18),
     fontFamily: Constants.isAndroid ? 'sans-serif-light' : undefined,
   };
 
