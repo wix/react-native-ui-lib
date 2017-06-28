@@ -1,7 +1,10 @@
 import React, {PropTypes} from 'react';
-import {Text, View, Image, StyleSheet} from 'react-native';
+import {Image, StyleSheet, ViewPropTypes} from 'react-native';
 import {BaseComponent} from '../../commons';
-import {Colors} from '../../style';
+import {Constants} from '../../helpers';
+import {Colors, BorderRadiuses} from '../../style';
+import View from '../view';
+import Text from '../text';
 
 /**
  * Avatar component
@@ -16,7 +19,7 @@ export default class Avatar extends BaseComponent {
     /**
      * Additional spacing styles for the container
      */
-    containerStyle: PropTypes.object,
+    containerStyle: ViewPropTypes.style,
     /**
      * The image source (external or assets)
      */
@@ -29,6 +32,18 @@ export default class Avatar extends BaseComponent {
      * The label color
      */
     labelColor: PropTypes.string,
+    /**
+     * ribbon label to display on the avatar
+     */
+    ribbonLabel: PropTypes.string,
+    /**
+     * ribbon custom style
+     */
+    ribbonStyle: ViewPropTypes.style,
+    /**
+     * ribbon label custom style
+     */
+    ribbonLabelStyle: Text.propTypes.style,
     /**
      * Determine if to show online badge
      */
@@ -53,6 +68,19 @@ export default class Avatar extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
+  renderRibbon() {
+    const {ribbonLabel, ribbonStyle, ribbonLabelStyle} = this.props;
+    if (ribbonLabel) {
+      return (
+        <View style={[this.styles.ribbon, ribbonStyle]}>
+          <Text numberOfLines={1} text100 white style={[ribbonLabelStyle]}>
+            {ribbonLabel}
+          </Text>
+        </View>
+      );
+    }
+  }
+
   render() {
     const {label, imageSource, isOnline, testID} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
@@ -69,6 +97,8 @@ export default class Avatar extends BaseComponent {
         <View style={this.styles.onlineBadge} testID={`${testID}.onlineBadge`}>
           <View style={this.styles.onlineBadgeInner}/>
         </View>}
+
+        {this.renderRibbon()}
       </View>
     );
   }
@@ -126,6 +156,15 @@ function createStyles({size, backgroundColor, labelColor, imageSource}) {
       position: undefined,
       left: undefined,
       bottom: undefined,
+    },
+    ribbon: {
+      position: 'absolute',
+      right: Constants.isIOS ? '-15%' : 0,
+      top: Constants.isIOS ? '-10%' : 0,
+      backgroundColor: Colors.blue30,
+      borderRadius: BorderRadiuses.br100,
+      paddingHorizontal: 6,
+      paddingVertical: 3,
     },
   });
 
