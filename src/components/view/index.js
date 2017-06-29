@@ -1,5 +1,6 @@
 import React from 'react';
 import {View as RNView, StyleSheet, ViewPropTypes} from 'react-native';
+import PropTypes from 'prop-types';
 import {BaseComponent} from '../../commons';
 
 /**
@@ -24,8 +25,9 @@ export default class View extends BaseComponent {
   }
 
   render() {
-    const {backgroundColor, borderRadius, paddings, margins, alignments, flex} = this.state;
-    const {style, left, top, right, bottom, ...others} = this.props;
+    const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle} = this.state;
+    const {style, left, top, right, bottom, flex: propsFlex, ...others} = this.props;
+
     return (
       <RNView
         {...others}
@@ -33,7 +35,7 @@ export default class View extends BaseComponent {
           this.styles.container,
           backgroundColor && {backgroundColor},
           borderRadius && {borderRadius},
-          flex && {flex},
+          flexStyle,
           paddings,
           margins,
           alignments,

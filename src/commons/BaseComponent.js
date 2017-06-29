@@ -4,7 +4,7 @@ import _ from 'lodash';
 import {Typography, Colors, BorderRadiuses} from '../style';
 import {DocsGenerator} from '../helpers';
 
-const FLEX_KEY_PATTERN = /flex-?[0-9]*/;
+const FLEX_KEY_PATTERN = /^flex(G|S)?(-\d*)?$/;
 const PADDING_KEY_PATTERN = /padding[LTRBHV]?-[0-9]*/;
 const MARGIN_KEY_PATTERN = /margin[LTRBHV]?-[0-9]*/;
 const ALIGNMENT_KEY_PATTERN = /(left|top|right|bottom|center|centerV|centerH|spread)/;
@@ -212,6 +212,7 @@ export default class BaseComponent extends Component {
     return alignments;
   }
 
+  // todo: deprecate this, use extractFlexStyle instead
   extractFlexValue() {
     const flexPropKey = _.chain(this.props)
                            .keys(this.props)
@@ -228,13 +229,34 @@ export default class BaseComponent extends Component {
     }
   }
 
+  extractFlexStyle() {
+    const STYLE_KEY_CONVERTERS = {
+      flex: 'flex',
+      flexG: 'flexGrow',
+      flexS: 'flexShrink',
+    };
+    const flexPropKey = _.chain(this.props)
+                           .keys(this.props)
+                           .filter(key => FLEX_KEY_PATTERN.test(key))
+                           .last()
+                           .value();
+    if (flexPropKey && this.props[flexPropKey] === true) {
+      let [flexKey, flexValue] = flexPropKey.split('-');
+      flexKey = STYLE_KEY_CONVERTERS[flexKey];
+      flexValue = _.isEmpty(flexValue) ? 1 : Number(flexValue);
+
+      return {[flexKey]: flexValue};
+    }
+  }
+
   extractStyleProps() {
     const backgroundColor = this.extractBackgroundColorValue();
     const borderRadius = this.extractBorderRadiusValue();
     const paddings = this.extractPaddingValues();
     const margins = this.extractMarginValues();
     const alignments = this.extractAlignmentsValues();
-    const flex = this.extractFlexValue();
+    // const flex = this.extractFlexValue();
+    const flexStyle = this.extractFlexStyle();
 
     return {
       backgroundColor,
@@ -242,7 +264,7 @@ export default class BaseComponent extends Component {
       paddings,
       margins,
       alignments,
-      flex,
+      flexStyle,
     };
   }
 

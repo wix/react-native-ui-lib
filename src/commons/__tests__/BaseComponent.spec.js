@@ -147,9 +147,51 @@ describe('BaseComponent', () => {
       expect(uut.extractFlexValue()).toEqual(1);
     });
 
+    it('should return undefined when prop sent with false value', () => {
+      const uut = new BaseComponent({flex: false});
+      expect(uut.extractFlexValue()).toEqual(undefined);
+    });
+
     it('should ignore non numeric values', () => {
       const uut = new BaseComponent({'flex-1a2': true});
       expect(uut.extractFlexValue()).toEqual(undefined);
+    });
+  });
+
+  describe('flexStyle modifier', () => {
+    it('should return flex style according to flex-? prop', () => {
+      let uut = new BaseComponent({'flex-2': true});
+      expect(uut.extractFlexStyle()).toEqual({flex: 2});
+      uut = new BaseComponent({'flex': true});
+      expect(uut.extractFlexStyle()).toEqual({flex: 1});
+      uut = new BaseComponent({'flex-0': true});
+      expect(uut.extractFlexStyle()).toEqual({flex: 0});
+      uut = new BaseComponent({});
+      expect(uut.extractFlexStyle()).toEqual(undefined);
+    });
+
+    it('should handle flexG and flexS props', () => {
+      let uut = new BaseComponent({'flexG-2': true});
+      expect(uut.extractFlexStyle()).toEqual({flexGrow: 2});
+      uut = new BaseComponent({'flexG': true});
+      expect(uut.extractFlexStyle()).toEqual({flexGrow: 1});
+      uut = new BaseComponent({'flexS-3': true});
+      expect(uut.extractFlexStyle()).toEqual({flexShrink: 3});
+      uut = new BaseComponent({'flexS': true});
+      expect(uut.extractFlexStyle()).toEqual({flexShrink: 1});
+      uut = new BaseComponent({'flexG': false, 'flexS': false});
+      expect(uut.extractFlexStyle()).toEqual(undefined);
+    });
+
+    it('should handle bad usage', () => {
+      let uut = new BaseComponent({'flexG-2s': true});
+      expect(uut.extractFlexStyle()).toEqual(undefined);
+      uut = new BaseComponent({'flex-aaa': true});
+      expect(uut.extractFlexStyle()).toEqual(undefined);
+      uut = new BaseComponent({'flexB-12': true});
+      expect(uut.extractFlexStyle()).toEqual(undefined);
+      uut = new BaseComponent({'flex-': true});
+      expect(uut.extractFlexStyle()).toEqual({flex: 1});
     });
   });
 
