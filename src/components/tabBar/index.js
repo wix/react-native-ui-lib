@@ -13,9 +13,18 @@ export default class TabBar extends BaseComponent {
 
   static propTypes = {
     ...ViewPropTypes.height,
+    /**
+     * current selected tab index
+     */
     selectedIndex: PropTypes.number,
-    containerStyle: PropTypes.object,
-    indicatorStyle: PropTypes.object,
+    /**
+     * custom style for the tab bar
+     */
+    style: ViewPropTypes.style,
+    /**
+     * custom style for the selected indicator
+     */
+    indicatorStyle: ViewPropTypes.style,
   }
 
   static defaultProps = {
@@ -67,20 +76,21 @@ export default class TabBar extends BaseComponent {
   }
 
   renderSelectedIndicator() {
+    const {indicatorStyle} = this.props;
     const {selectedIndicatorPosition} = this.state;
     const left = selectedIndicatorPosition.interpolate({
       inputRange: [0, 100],
       outputRange: ['0%', '100%'],
     });
     return (
-      <Animated.View style={[this.styles.selectedIndicator, {left}, this.props.indicatorStyle]}/>
+      <Animated.View style={[this.styles.selectedIndicator, {left}, indicatorStyle]}/>
     );
   }
 
   render() {
-    const {height} = this.props;
+    const {height, style} = this.props;
     return (
-      <View style={[this.styles.container, this.props.containerStyle]} bg-white row height={height}>
+      <View style={[this.styles.container, style]} bg-white row height={height}>
         {this.renderChildren()}
         {this.renderSelectedIndicator()}
       </View>
