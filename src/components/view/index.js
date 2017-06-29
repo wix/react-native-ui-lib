@@ -1,6 +1,5 @@
 import React from 'react';
 import {View as RNView, StyleSheet, ViewPropTypes} from 'react-native';
-import PropTypes from 'prop-types';
 import {BaseComponent} from '../../commons';
 
 /**

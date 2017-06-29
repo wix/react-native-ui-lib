@@ -162,7 +162,7 @@ describe('BaseComponent', () => {
     it('should return flex style according to flex-? prop', () => {
       let uut = new BaseComponent({'flex-2': true});
       expect(uut.extractFlexStyle()).toEqual({flex: 2});
-      uut = new BaseComponent({'flex': true});
+      uut = new BaseComponent({flex: true});
       expect(uut.extractFlexStyle()).toEqual({flex: 1});
       uut = new BaseComponent({'flex-0': true});
       expect(uut.extractFlexStyle()).toEqual({flex: 0});
@@ -173,13 +173,13 @@ describe('BaseComponent', () => {
     it('should handle flexG and flexS props', () => {
       let uut = new BaseComponent({'flexG-2': true});
       expect(uut.extractFlexStyle()).toEqual({flexGrow: 2});
-      uut = new BaseComponent({'flexG': true});
+      uut = new BaseComponent({flexG: true});
       expect(uut.extractFlexStyle()).toEqual({flexGrow: 1});
       uut = new BaseComponent({'flexS-3': true});
       expect(uut.extractFlexStyle()).toEqual({flexShrink: 3});
-      uut = new BaseComponent({'flexS': true});
+      uut = new BaseComponent({flexS: true});
       expect(uut.extractFlexStyle()).toEqual({flexShrink: 1});
-      uut = new BaseComponent({'flexG': false, 'flexS': false});
+      uut = new BaseComponent({flexG: false, flexS: false});
       expect(uut.extractFlexStyle()).toEqual(undefined);
     });
 
