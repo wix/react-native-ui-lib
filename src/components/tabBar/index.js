@@ -14,6 +14,8 @@ export default class TabBar extends BaseComponent {
   static propTypes = {
     ...ViewPropTypes.height,
     selectedIndex: PropTypes.number,
+    containerStyle: PropTypes.object,
+    indicatorStyle: PropTypes.object,
   }
 
   static defaultProps = {
@@ -71,14 +73,14 @@ export default class TabBar extends BaseComponent {
       outputRange: ['0%', '100%'],
     });
     return (
-      <Animated.View style={[this.styles.selectedIndicator, {left}]}/>
+      <Animated.View style={[this.styles.selectedIndicator, {left}, this.props.indicatorStyle]}/>
     );
   }
 
   render() {
     const {height} = this.props;
     return (
-      <View style={this.styles.container} bg-white row height={height}>
+      <View style={[this.styles.container, this.props.containerStyle]} bg-white row height={height}>
         {this.renderChildren()}
         {this.renderSelectedIndicator()}
       </View>
