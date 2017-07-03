@@ -28,6 +28,7 @@ export default class TabBar extends BaseComponent {
   }
 
   static defaultProps = {
+    selectedIndex: 0,
     height: 51,
   }
 
