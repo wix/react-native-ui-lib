@@ -33,9 +33,10 @@ export default class TabBar extends BaseComponent {
 
   constructor(props) {
     super(props);
+    const childrenCount = React.Children.count(this.props.children);
     this.state = {
       selectedIndex: props.selectedIndex,
-      selectedIndicatorPosition: new Animated.Value(this.calcPosition(props.selectedIndex, props.children.length)),
+      selectedIndicatorPosition: new Animated.Value(this.calcPosition(props.selectedIndex, childrenCount)),
     };
   }
 
@@ -44,7 +45,17 @@ export default class TabBar extends BaseComponent {
   }
 
   calcPosition(index, tabsCount) {
-    return index * (100 / tabsCount);
+    const position = index * (100 / tabsCount);
+    return position;
+  }
+
+  calcIndicatorWidth() {
+    const childrenCount = React.Children.count(this.props.children);
+    if (childrenCount === 0) {
+      return '0%';
+    }
+    const width = Math.floor(100 / childrenCount);
+    return `${width}%`;
   }
 
   onSelectingTab(index) {
@@ -78,12 +89,13 @@ export default class TabBar extends BaseComponent {
   renderSelectedIndicator() {
     const {indicatorStyle} = this.props;
     const {selectedIndicatorPosition} = this.state;
+    const width = this.calcIndicatorWidth();
     const left = selectedIndicatorPosition.interpolate({
       inputRange: [0, 100],
       outputRange: ['0%', '100%'],
     });
     return (
-      <Animated.View style={[this.styles.selectedIndicator, {left}, indicatorStyle]}/>
+      <Animated.View style={[this.styles.selectedIndicator, {left, width}, indicatorStyle]}/>
     );
   }
 
@@ -110,7 +122,6 @@ function createStyles() {
       left: 0,
       borderBottomWidth: 1.5,
       borderColor: Colors.blue30,
-      width: '25%',
     },
   });
 }

@@ -24,7 +24,7 @@ export default class TabBarScreen extends Component {
         </View>
 
         <TabBar selectedIndex={1} ref={element => this.tabbar = element}>
-          <TabBar.Item label="FEED" onPress={() => alert('pressed on FEED tab')}/>
+          <TabBar.Item label="FEED"/>
           <TabBar.Item label="SERVICES"/>
           <TabBar.Item label="CHAT"/>
           <TabBar.Item label="ABOUT"/>
