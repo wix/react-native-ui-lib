@@ -77,7 +77,7 @@ export default class UiLibExplorerMenu extends Component {
         style={{justifyContent: 'center', paddingVertical: 20, paddingHorizontal: 25}}
         onPress={() => this.openScreen(row)}
       >
-        <Text>
+        <Text text70>
           {row.title}
         </Text>
       </TouchableOpacity>
