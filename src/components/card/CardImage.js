@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {View, Image, StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
 import * as CardPresenter from './CardPresenter';
@@ -16,14 +17,18 @@ export default class CardImage extends BaseComponent {
      */
     imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
+     * Image width
+     */
+    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    /**
      * Image height
      */
-    height: PropTypes.number,
+    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * Image position to determine the right flex-ness of the image and border radius (for Android)
      * this prop derived automatically from Card parent component
      */
-    position: PropTypes.string,
+    position: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
     testID: PropTypes.string,
   };
 

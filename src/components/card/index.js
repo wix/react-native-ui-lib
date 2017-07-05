@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {StyleSheet, ViewPropTypes} from 'react-native';
+import {StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {Colors, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
@@ -24,11 +24,11 @@ class Card extends BaseComponent {
     /**
      * card custom width
      */
-    ...ViewPropTypes.width,
+    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * card custom height
      */
-    ...ViewPropTypes.height,
+    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * action for when pressing the card
      */
@@ -59,11 +59,17 @@ class Card extends BaseComponent {
   calcImagePosition(childIndex) {
     const {row, children} = this.props;
     const childrenCount = React.Children.count(children);
+    const position = [];
+
     if (childIndex === 0) {
-      return row ? 'left' : 'top';
-    } else if (childIndex === childrenCount - 1) {
-      return row ? 'right' : 'bottom';
+      position.push(row ? 'left' : 'top');
     }
+
+    if (childIndex === childrenCount - 1) {
+      position.push(row ? 'right' : 'bottom');
+    }
+
+    return position;
   }
 
   renderChildren() {

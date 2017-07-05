@@ -27,6 +27,12 @@ export default class ButtonsScreen extends Component {
           })}
         </ScrollView>
 
+        <View marginV-20>
+        <Card height={120} width={120}>
+            <Card.Image height={'100%'} imageSource={cardImage} />
+          </Card>
+        </View>
+
         <Card row height={160} containerStyle={{ marginBottom: 15 }} onPress={() => { }}>
           <Card.Image width={115} imageSource={cardImage} />
           <Card.Section body>

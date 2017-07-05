@@ -1,11 +1,12 @@
+import _ from 'lodash';
 import {Constants} from '../../helpers';
 import {BorderRadiuses} from '../../style';
 
 export function extractPositionValues(position) {
-  const top = position === 'top';
-  const left = position === 'left';
-  const right = position === 'right';
-  const bottom = position === 'bottom';
+  const top = _.includes(position, 'top');
+  const left = _.includes(position, 'left');
+  const right = _.includes(position, 'right');
+  const bottom = _.includes(position, 'bottom');
 
   return {top, left, right, bottom};
 }
