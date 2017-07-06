@@ -25,6 +25,10 @@ export default class TextInput extends BaseInput {
      */
     floatingPlaceholder: PropTypes.bool,
     /**
+     * floating placeholder color
+     */
+    floatingPlaceholderColor: PropTypes.string,
+    /**
      * hide text input underline, by default false
      */
     hideUnderline: PropTypes.bool,
@@ -56,7 +60,8 @@ export default class TextInput extends BaseInput {
   };
 
   static defaultProps = {
-    placeholderTextColor: Colors.dark60,
+    placeholderTextColor: Colors.dark10,
+    floatingPlaceholderColor: Colors.dark60,
     enableErrors: true,
   }
 
@@ -127,7 +132,7 @@ export default class TextInput extends BaseInput {
 
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
-    const {centered, expandable, placeholder} = this.props;
+    const {centered, expandable, placeholder, placeholderTextColor, floatingPlaceholderColor} = this.props;
     const typography = this.getTypography();
 
     if (this.shouldFakePlaceholder()) {
@@ -145,6 +150,10 @@ export default class TextInput extends BaseInput {
               fontSize: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
                 outputRange: [typography.fontSize, Typography.text80.fontSize],
+              }),
+              color: floatingPlaceholderState.interpolate({
+                inputRange: [0, 1],
+                outputRange: [placeholderTextColor, floatingPlaceholderColor],
               }),
               lineHeight: this.hasText() ? Typography.text80.lineHeight : typography.lineHeight,
             },
