@@ -52,14 +52,14 @@ export default class Carousel extends BaseComponent {
       });
 
       if (presenter.isOutOfBounds(offsetX, this.props)) {
-        this.updateOffset(newPage);
+        this.updateOffset();
       }
     }
   }
 
-  updateOffset() {
+  updateOffset(animated = false) {
     const x = presenter.calcOffset(this.props, this.state);
-    this.carousel.scrollTo({x, animated: false});
+    this.carousel.scrollTo({x, animated});
   }
 
   componentDidMount() {
@@ -104,6 +104,12 @@ export default class Carousel extends BaseComponent {
         </ScrollView>
       </View>
     );
+  }
+
+  goToPage(pageIndex, animated = true) {
+    this.setState({
+      currentPage: pageIndex,
+    }, () => this.updateOffset(animated));
   }
 }
 
