@@ -6,6 +6,7 @@ import Card from './card';
 // import Carousel from './carousel/Carousel';
 import Carousel from './carousel';
 import ConnectionStatusBar from './connectionStatusBar';
+import Image from './image';
 import Inputs from './inputs';
 import ListItem from './listItem';
 import Notification from './notification';
@@ -25,6 +26,7 @@ module.exports = {
   Card,
   Carousel,
   ConnectionStatusBar,
+  Image,
   ...Inputs,
   ListItem,
   Notification,
