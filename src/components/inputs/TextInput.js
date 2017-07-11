@@ -60,8 +60,8 @@ export default class TextInput extends BaseInput {
   };
 
   static defaultProps = {
-    placeholderTextColor: Colors.dark10,
-    floatingPlaceholderColor: Colors.dark60,
+    placeholderTextColor: Colors.dark40,
+    floatingPlaceholderColor: Colors.dark40,
     enableErrors: true,
   }
 
@@ -134,6 +134,7 @@ export default class TextInput extends BaseInput {
     const {floatingPlaceholderState} = this.state;
     const {centered, expandable, placeholder, placeholderTextColor, floatingPlaceholderColor} = this.props;
     const typography = this.getTypography();
+    const floatingTypography = Typography.text90;
 
     if (this.shouldFakePlaceholder()) {
       return (
@@ -145,17 +146,17 @@ export default class TextInput extends BaseInput {
             !centered && {
               top: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [25, 0],
+                outputRange: [23, 0],
               }),
               fontSize: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [typography.fontSize, Typography.text80.fontSize],
+                outputRange: [typography.fontSize, floatingTypography.fontSize],
               }),
               color: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
                 outputRange: [placeholderTextColor, floatingPlaceholderColor],
               }),
-              lineHeight: this.hasText() ? Typography.text80.lineHeight : typography.lineHeight,
+              lineHeight: this.hasText() ? floatingTypography.lineHeight : typography.lineHeight,
             },
           ]}
           onPress={() => expandable && this.toggleExpandableModal(true)}
