@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react';
 import {StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {Colors, BorderRadiuses} from '../../style';
-import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
@@ -97,7 +96,7 @@ class Card extends BaseComponent {
         activeOpacity={0.6}
         testID={testID}
       >
-        <ShadowContainer {...multipleShadowProps}>
+        <ShadowContainer {...multipleShadowProps} style={{borderRadius: BorderRadiuses.br40}}>
           <View style={[this.styles.innerContainer, style]} {...others}>
             {this.renderChildren()}
           </View>
@@ -113,7 +112,8 @@ function createStyles({width, height, enableShadow}) {
     container: {
       width,
       height,
-      backgroundColor: Constants.isIOS ? 'transparent' : Colors.white,
+      // backgroundColor: Constants.isIOS ? 'transparent' : Colors.white,
+      overflow: 'visible',
       borderRadius,
       elevation: enableShadow ? 2 : 0,
     },
