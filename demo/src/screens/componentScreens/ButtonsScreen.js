@@ -199,6 +199,15 @@ export default class ButtonsScreen extends DemoScreen {
               ref={(element) => this.button_16 = element}
               onPress={() => this.showSnippet(this.button_16)}
             />
+            
+            <Button
+              label="Outline S"
+              size={Button.sizes.small}
+              outline
+              containerStyle={{marginBottom: ButtonSpace}}
+              ref={(element) => this.button_16a = element}
+              onPress={() => this.showSnippet(this.button_16a)}
+            />
             <Button
               label="Red Outline"
               outline
