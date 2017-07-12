@@ -19,11 +19,10 @@ export default class Image extends BaseComponent {
   }
 
   getImageSource() {
-    const {source} = this.props;
     if (this.sourceTransformer) {
-      return this.sourceTransformer(source);
+      return this.sourceTransformer(this.props);
     }
-    return source;
+    return this.props.source;
   }
 
   render() {

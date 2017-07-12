@@ -25,5 +25,15 @@ describe('Image', () => {
       const uut = new Image({source: 1});
       expect(uut.getImageSource()).toBe(3);
     });
+
+    it('should return transformed source prop, according to sourceTransform prop and other given props', () => {
+      const sourceTransformer = jest.fn(
+        ({size, source}) => (size === 'small' ? source : 3),
+      );
+      let uut = new Image({source: 1, size: 'small', sourceTransformer});
+      expect(uut.getImageSource()).toBe(1);
+      uut = new Image({source: 1, size: 'large', sourceTransformer});
+      expect(uut.getImageSource()).toBe(3);
+    });
   });
 });
