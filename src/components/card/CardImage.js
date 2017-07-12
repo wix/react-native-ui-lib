@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, Image, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import Image from '../image';
 import {BaseComponent} from '../../commons';
 import * as CardPresenter from './CardPresenter';
 

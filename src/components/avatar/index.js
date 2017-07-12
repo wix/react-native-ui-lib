@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react';
-import {Image, StyleSheet, ViewPropTypes} from 'react-native';
+import {StyleSheet, ViewPropTypes} from 'react-native';
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import View from '../view';
 import Text from '../text';
+import Image from '../image';
 
 /**
  * Avatar component
