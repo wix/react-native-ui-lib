@@ -29,6 +29,10 @@ class ListItem extends BaseComponent {
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
+     * The container element to wrap the ListItem
+     */
+    containerElement: PropTypes.func,
+    /**
      * Use to identify the ListItem in tests
      */
     testID: PropTypes.string,
@@ -36,6 +40,8 @@ class ListItem extends BaseComponent {
 
   static defaultProps = {
     height: 63,
+    containerElement: TouchableOpacity,
+    underlayColor: Colors.dark70,
   }
 
   constructor(props) {
@@ -50,11 +56,13 @@ class ListItem extends BaseComponent {
   }
 
   render() {
-    const {style, onPress, onLongPress, testID} = this.props;
+    const {containerElement, style, onPress, onLongPress, underlayColor, testID, ...others} = this.props;
     const {pressed} = this.state;
     const containerStyle = this.extractContainerStyle(this.props);
     const animationProps = this.extractAnimationProps();
-    const Container = (onPress || onLongPress) ? TouchableOpacity : View;
+    const Container = (onPress || onLongPress) ? containerElement : View;
+
+    const pressedStyle = {backgroundColor: underlayColor};
 
     return (
       <Container
@@ -65,10 +73,11 @@ class ListItem extends BaseComponent {
         onHideUnderlay={() => this.setState({pressed: false})}
         onShowUnderlay={() => this.setState({pressed: true})}
         testID={testID}
+        {...others}
       >
         <Animatable.View
           {...animationProps}
-          style={[this.styles.innerContainer, style, pressed && this.styles.pressed]}
+          style={[this.styles.innerContainer, style, pressed && pressedStyle]}
         >
           {this.props.children}
         </Animatable.View>
@@ -80,9 +89,6 @@ class ListItem extends BaseComponent {
 function createStyles({height}) {
   return StyleSheet.create({
     container: {
-    },
-    pressed: {
-      backgroundColor: Colors.dark70,
     },
     innerContainer: {
       flexDirection: 'row',
