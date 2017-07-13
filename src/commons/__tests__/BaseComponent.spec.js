@@ -3,7 +3,7 @@
 import BaseComponent from '../BaseComponent';
 import MultipleShadow from '../../components/MultipleShadow';
 import View from '../../components/view';
-import {Colors, BorderRadiuses} from '../../style';
+import {Colors, Typography, BorderRadiuses} from '../../style';
 
 describe('BaseComponent', () => {
   describe('background modifiers', () => {
@@ -17,6 +17,23 @@ describe('BaseComponent', () => {
     it('should return undefined value for unfamiliar color const', () => {
       const uut = new BaseComponent({'background-uknown30': true});
       expect(uut.extractBackgroundColorValue()).toBe(undefined);
+    });
+  });
+
+  describe('extractTypographyValue', () => {
+    it('should extract typography value according to typography modifier', () => {
+      expect(new BaseComponent({text40: true}).extractTypographyValue()).toEqual(Typography.text40);
+      expect(new BaseComponent({text70: true}).extractTypographyValue()).toEqual(Typography.text70);
+    });
+
+    it('should return undefined if not typography modifier was sent', () => {
+      expect(new BaseComponent({}).extractTypographyValue()).toEqual(undefined);
+    });
+
+    it('should return take the last typography modifier prop in case there is more than one', () => {
+      expect(new BaseComponent({text40: true, text70: true}).extractTypographyValue()).toEqual(Typography.text70);
+      expect(new BaseComponent({text70: true, text40: true}).extractTypographyValue()).toEqual(Typography.text40);
+      expect(new BaseComponent({text40: true, text70: false}).extractTypographyValue()).toEqual(Typography.text40);
     });
   });
 

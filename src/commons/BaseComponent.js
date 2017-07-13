@@ -14,6 +14,12 @@ const BACKGROUND_KEY_PATTERN = new RegExp(_.chain(Colors)
                                             .flatten()
                                             .join('|')
                                             .value());
+const TYPOGRAPHY_KEY_PATTERN = new RegExp(_.chain(Typography)
+                                            .keys()
+                                            .map(key => [`${key}`])
+                                            .flatten()
+                                            .join('|')
+                                            .value());
 
 export default class BaseComponent extends Component {
 
@@ -81,10 +87,13 @@ export default class BaseComponent extends Component {
   }
 
   extractTypographyValue() {
+    const typographyPropsKeys = _.chain(this.props)
+      .keys(this.props)
+      .filter(key => TYPOGRAPHY_KEY_PATTERN.test(key)).value();
     let typography;
-    _.forEach(Typography, (value, key) => {
+    _.forEach(typographyPropsKeys, (key) => {
       if (this.props[key] === true) {
-        typography = value;
+        typography = Typography[key];
       }
     });
     return typography;
