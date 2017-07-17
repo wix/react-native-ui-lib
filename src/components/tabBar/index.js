@@ -25,6 +25,10 @@ export default class TabBar extends BaseComponent {
      * custom style for the selected indicator
      */
     indicatorStyle: ViewPropTypes.style,
+    /**
+     * disable the animated transition of the tab indicator
+     */
+    disableAnimatedTransition: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -60,12 +64,20 @@ export default class TabBar extends BaseComponent {
   }
 
   onSelectingTab(index) {
+    const {disableAnimatedTransition} = this.props;
     const {selectedIndicatorPosition} = this.state;
-    Animated.spring(selectedIndicatorPosition, {
-      toValue: this.calcPosition(index, this.props.children.length),
-      tension: 30,
-      friction: 8,
-    }).start();
+
+    const newPosition = this.calcPosition(index, this.props.children.length);
+
+    if (disableAnimatedTransition) {
+      selectedIndicatorPosition.setValue(newPosition);
+    } else {
+      Animated.spring(selectedIndicatorPosition, {
+        toValue: this.calcPosition(index, this.props.children.length),
+        tension: 30,
+        friction: 8,
+      }).start();
+    }
 
     this.setState({
       selectedIndex: index,
