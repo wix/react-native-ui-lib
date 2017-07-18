@@ -132,7 +132,7 @@ export default class TextInput extends BaseInput {
 
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
-    const {centered, expandable, placeholder, placeholderTextColor, floatingPlaceholderColor} = this.props;
+    const {centered, expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} = this.props;
     const typography = this.getTypography();
     const floatingTypography = Typography.text90;
 
@@ -146,7 +146,7 @@ export default class TextInput extends BaseInput {
             !centered && {
               top: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [23, 0],
+                outputRange: [multiline ? 30 : 23, multiline ? 7 : 0],
               }),
               fontSize: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
@@ -224,7 +224,8 @@ export default class TextInput extends BaseInput {
       this.styles.input,
       typography,
       color && {color},
-      {height: (multiline) ? typography.lineHeight * 3 : typography.lineHeight},
+      // {height: (multiline) ? typography.lineHeight * 3 : typography.lineHeight},
+      {height: (multiline) ? undefined : typography.lineHeight},
       style,
     ];
 
@@ -337,7 +338,7 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
       borderBottomWidth: hideUnderline ? 0 : 1,
       borderColor: Colors.dark80,
       justifyContent: centered ? 'center' : undefined,
-      paddingTop: 25,
+      paddingTop: 25, // todo: remove this in cases we dont have floating placeholder
     },
     focusedUnderline: {
       borderColor: Colors.blue30,
@@ -347,7 +348,7 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
     },
     input: {
       flex: 1,
-      marginBottom: 10,
+      marginBottom: 10, // todo: remove this in cases we dont have floating placeholder
       padding: 0,
       textAlign: centered ? 'center' : undefined,
       backgroundColor: 'transparent',
