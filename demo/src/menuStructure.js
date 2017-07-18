@@ -22,6 +22,7 @@ export const navigationData = {
     {title: 'Form Controls', tags: 'form stepper', screen: 'unicorn.components.FormScreen'},
     {title: 'Action Bar', tags: 'action bar floating bottom', screen: 'unicorn.components.ActionBarScreen'},
     {title: 'Notifications', tags: 'notification top bottom', screen: 'unicorn.components.NotificationsScreen'},
+    {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
   ],
   Form: [
     {title: 'Inputs', tags: 'text input form', screen: 'unicorn.components.InputsScreen'},
