@@ -4,6 +4,7 @@ import _ from 'lodash';
 import BaseInput from './BaseInput';
 import Text from '../text';
 import {Colors, Typography} from '../../style';
+import {Constants} from '../../helpers';
 import {Modal} from '../../screensComponents';
 import TextArea from './TextArea';
 import View from '../view';
@@ -69,7 +70,7 @@ export default class TextInput extends BaseInput {
     super(props);
 
     this.onChangeText = this.onChangeText.bind(this);
-    // this.onContentSizeChange = this.onContentSizeChange.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(this);
     this.toggleExpandableModal = this.toggleExpandableModal.bind(this);
     this.onDoneEditingExpandableInput = this.onDoneEditingExpandableInput.bind(this);
@@ -128,6 +129,17 @@ export default class TextInput extends BaseInput {
   shouldFakePlaceholder() {
     const {floatingPlaceholder, centered, expandable} = this.props;
     return Boolean(expandable || (floatingPlaceholder && !centered));
+  }
+
+  getHeight() {
+    const {multiline} = this.props;
+    const {height} = this.state;
+    const typography = this.getTypography();
+
+    if (multiline) {
+      return height; // alway undefined for ios
+    }
+    return typography.lineHeight;
   }
 
   renderPlaceholder() {
@@ -225,7 +237,7 @@ export default class TextInput extends BaseInput {
       typography,
       color && {color},
       // {height: (multiline) ? typography.lineHeight * 3 : typography.lineHeight},
-      {height: (multiline) ? undefined : typography.lineHeight},
+      {height: this.getHeight()},
       style,
     ];
 
@@ -238,6 +250,7 @@ export default class TextInput extends BaseInput {
         style={inputStyle}
         multiline={multiline}
         onChangeText={this.onChangeText}
+        onChange={this.onChange}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         ref={(input) => { this.input = input; }}
@@ -310,6 +323,14 @@ export default class TextInput extends BaseInput {
     //     widthExtendBreaks: widthExtendBreaks.slice(-1),
     //   });
     // }
+  }
+
+  onChange(event) {
+    if (Constants.isAndroid) {
+      const {height} = event.nativeEvent.contentSize;
+      this.setState({height});
+    }
+    _.invoke(this.props, 'onChange', event);
   }
 
   // todo: deprecate this
