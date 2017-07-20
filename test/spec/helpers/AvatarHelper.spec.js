@@ -27,5 +27,6 @@ describe('services/AvatarService', () => {
     expect(uut.getInitials('Sarah Michelle Galler')).toBe('SM');
     expect(uut.getInitials('Keith')).toBe('K');
     expect(uut.getInitials()).toBe('');
+    expect(uut.getInitials(' Austin ')).toBe('A');
   });
 });
