@@ -89,6 +89,10 @@ export default class BaseInput extends BaseComponent {
     this.input.blur();
   }
 
+  clear() {
+    this.input.clear();
+  }
+
   isFocused() {
     return this.input.isFocused();
   }

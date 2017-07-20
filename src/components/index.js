@@ -14,6 +14,7 @@ import PageControl from './pageControl';
 import Picker from './picker';
 import Stepper from './stepper';
 import TabBar from './tabBar';
+import TagsInput from './tagsInput';
 import Text from './text';
 import TouchableOpacity from './touchableOpacity';
 import View from './view';
@@ -34,6 +35,7 @@ module.exports = {
   Picker,
   Stepper,
   TabBar,
+  TagsInput,
   Text,
   TouchableOpacity,
   View,
