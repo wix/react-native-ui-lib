@@ -15,17 +15,52 @@ const DEFAULT_BUTTON_PROPS = {
 
 export default class TopBar extends BaseComponent {
 
+  static displayName = 'Moda.TopBar';
+
   static propTypes = {
+    /**
+     * title to display in the center of the top bar
+     */
     title: PropTypes.string,
+    /**
+     * title custom style
+     */
     titleStyle: PropTypes.object,
+    /**
+     * done action props (Button props)
+     */
     doneButtonProps: PropTypes.shape(Button.propTypes),
+    /**
+     * done action label
+     */
     doneLabel: PropTypes.string,
+    /**
+     * done action icon
+     */
     doneIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * done action callback
+     */
     onDone: PropTypes.func,
+    /**
+     * cancel action props (Button props)
+     */
     cancelButtonProps: PropTypes.shape(Button.propTypes),
+    /**
+     * cancel action label
+     */
     cancelLabel: PropTypes.string,
+    /**
+     * cancel action icon
+     */
     cancelIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * cancel action callback
+     */
     onCancel: PropTypes.func,
+    /**
+     * whether to include status bar or not (height claculations)
+     */
     includeStatusBar: PropTypes.bool,
   }
 
