@@ -30,6 +30,10 @@ export default class CardImage extends BaseComponent {
      * this prop derived automatically from Card parent component
      */
     position: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+    /**
+     * border radius, basically for Android since overflow doesn't work well
+     */
+    borderRadius: PropTypes.number,
     testID: PropTypes.string,
   };
 
@@ -38,8 +42,8 @@ export default class CardImage extends BaseComponent {
   }
 
   render() {
-    const {imageSource, style, position} = this.props;
-    const borderStyle = CardPresenter.generateBorderRadiusStyle({position});
+    const {imageSource, style, position, borderRadius} = this.props;
+    const borderStyle = CardPresenter.generateBorderRadiusStyle({position, borderRadius});
     if (imageSource) {
       return (
         <View style={[this.styles.container, borderStyle, style]}>

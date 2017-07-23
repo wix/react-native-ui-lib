@@ -29,6 +29,10 @@ class Card extends BaseComponent {
      */
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
+     * card border radius
+     */
+    borderRadius: PropTypes.number,
+    /**
      * action for when pressing the card
      */
     onPress: PropTypes.func,
@@ -47,6 +51,7 @@ class Card extends BaseComponent {
   };
 
   static defaultProps = {
+    borderRadius: BorderRadiuses.br40,
     enableShadow: true,
   }
 
@@ -72,10 +77,11 @@ class Card extends BaseComponent {
   }
 
   renderChildren() {
+    const {borderRadius} = this.props;
     const children = React.Children.map(this.props.children, (child, index) => {
       if (_.get(child, 'type') === CardImage) {
         const position = this.calcImagePosition(index);
-        return React.cloneElement(child, {key: index, position});
+        return React.cloneElement(child, {key: index, position, borderRadius});
       }
 
       return child;
@@ -84,20 +90,20 @@ class Card extends BaseComponent {
   }
 
   render() {
-    const {onPress, style, containerStyle, enableShadow, testID, ...others} = this.props;
+    const {onPress, style, containerStyle, enableShadow, borderRadius, testID, ...others} = this.props;
     const multipleShadowProps = MultipleShadow.extractOwnProps(this.props);
     const Container = onPress ? TouchableOpacity : View;
     const ShadowContainer = enableShadow ? MultipleShadow : View;
     return (
       <Container
-        style={[this.styles.container, containerStyle]}
+        style={[this.styles.container, {borderRadius}, containerStyle]}
         onPress={onPress}
         delayPressIn={10}
         activeOpacity={0.6}
         testID={testID}
       >
-        <ShadowContainer {...multipleShadowProps} style={{borderRadius: BorderRadiuses.br40}}>
-          <View style={[this.styles.innerContainer, style]} {...others}>
+        <ShadowContainer {...multipleShadowProps} style={{borderRadius}}>
+          <View style={[this.styles.innerContainer, {borderRadius}, style]} {...others}>
             {this.renderChildren()}
           </View>
         </ShadowContainer>
@@ -107,19 +113,19 @@ class Card extends BaseComponent {
 }
 
 function createStyles({width, height, enableShadow}) {
-  const borderRadius = BorderRadiuses.br40;
+  // const borderRadius = BorderRadiuses.br40;
   return StyleSheet.create({
     container: {
       width,
       height,
       // backgroundColor: Constants.isIOS ? 'transparent' : Colors.white,
       overflow: 'visible',
-      borderRadius,
+      // borderRadius,
       elevation: enableShadow ? 2 : 0,
     },
     innerContainer: {
       backgroundColor: Colors.white,
-      borderRadius,
+      // borderRadius,
       overflow: 'hidden',
       flexGrow: 1,
     },

@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import {Constants} from '../../helpers';
-import {BorderRadiuses} from '../../style';
 
 export function extractPositionValues(position) {
   const top = _.includes(position, 'top');
@@ -11,15 +10,15 @@ export function extractPositionValues(position) {
   return {top, left, right, bottom};
 }
 
-export function generateBorderRadiusStyle({position}) {
+export function generateBorderRadiusStyle({position, borderRadius}) {
   const {top, left, right, bottom} = extractPositionValues(position);
 
   const borderRadiusStyle = {};
   if (Constants.isAndroid) {
-    borderRadiusStyle.borderTopLeftRadius = (top || left) ? BorderRadiuses.br40 : undefined;
-    borderRadiusStyle.borderTopRightRadius = (top || right) ? BorderRadiuses.br40 : undefined;
-    borderRadiusStyle.borderBottomLeftRadius = (bottom || left) ? BorderRadiuses.br40 : undefined;
-    borderRadiusStyle.borderBottomRightRadius = (bottom || right) ? BorderRadiuses.br40 : undefined;
+    borderRadiusStyle.borderTopLeftRadius = (top || left) ? borderRadius : undefined;
+    borderRadiusStyle.borderTopRightRadius = (top || right) ? borderRadius : undefined;
+    borderRadiusStyle.borderBottomLeftRadius = (bottom || left) ? borderRadius : undefined;
+    borderRadiusStyle.borderBottomRightRadius = (bottom || right) ? borderRadius : undefined;
   }
 
   return borderRadiusStyle;
