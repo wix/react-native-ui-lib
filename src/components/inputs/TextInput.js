@@ -127,8 +127,8 @@ export default class TextInput extends BaseInput {
   }
 
   shouldFakePlaceholder() {
-    const {floatingPlaceholder, centered, expandable} = this.props;
-    return Boolean(expandable || (floatingPlaceholder && !centered));
+    const {floatingPlaceholder, centered} = this.props;
+    return Boolean(floatingPlaceholder && !centered);
   }
 
   getHeight() {
@@ -213,16 +213,18 @@ export default class TextInput extends BaseInput {
 
   renderExpandableInput() {
     const typography = this.getTypography();
+    const {floatingPlaceholder, placeholder} = this.props;
     const {value} = this.state;
     const minHeight = typography.lineHeight;
+    const shouldShowPlaceholder = _.isEmpty(value) && !floatingPlaceholder;
 
     return (
       <Text
-        style={[this.styles.input, typography, {minHeight}]}
+        style={[this.styles.input, typography, {minHeight}, shouldShowPlaceholder && this.styles.placeholder]}
         numberOfLines={3}
         onPress={() => this.toggleExpandableModal(true)}
       >
-        {value}
+        {shouldShowPlaceholder ? placeholder : value}
       </Text>
     );
   }
@@ -314,15 +316,6 @@ export default class TextInput extends BaseInput {
     this.setState({
       value: transformedText,
     }, this.updateFloatingPlaceholderState);
-
-    // const {widthExtendBreaks, width} = this.state;
-    // if (transformedText.length < _.last(widthExtendBreaks)) {
-    //   const typography = this.getTypography();
-    //   this.setState({
-    //     inputWidth: width - typography.fontSize,
-    //     widthExtendBreaks: widthExtendBreaks.slice(-1),
-    //   });
-    // }
   }
 
   onChange(event) {
@@ -332,25 +325,9 @@ export default class TextInput extends BaseInput {
     }
     _.invoke(this.props, 'onChange', event);
   }
-
-  // todo: deprecate this
-  // onContentSizeChange(event) {
-  //   const {multiline, centered} = this.props;
-  //   if (multiline && !centered) return;
-  //   const typography = this.getTypography();
-  //   const initialHeight = typography.lineHeight + 10;
-  //   const {width, height} = event.nativeEvent.contentSize;
-  //   const {widthExtendBreaks, value} = this.state;
-  //   if (height > initialHeight) {
-  //     this.setState({
-  //       inputWidth: width + typography.fontSize,
-  //       widthExtendBreaks: widthExtendBreaks.concat(value.length),
-  //     });
-  //   }
-  // }
 }
 
-function createStyles({placeholderTextColor, hideUnderline, centered}) {
+function createStyles({placeholderTextColor, hideUnderline, centered, floatingPlaceholder}) {
   return StyleSheet.create({
     container: {
     },
@@ -359,7 +336,7 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
       borderBottomWidth: hideUnderline ? 0 : 1,
       borderColor: Colors.dark80,
       justifyContent: centered ? 'center' : undefined,
-      paddingTop: 25, // todo: remove this in cases we dont have floating placeholder
+      paddingTop: floatingPlaceholder ? 25 : undefined, // todo: remove this in cases we dont have floating placeholder
     },
     focusedUnderline: {
       borderColor: Colors.blue30,
@@ -369,7 +346,7 @@ function createStyles({placeholderTextColor, hideUnderline, centered}) {
     },
     input: {
       flex: 1,
-      marginBottom: 10, // todo: remove this in cases we dont have floating placeholder
+      marginBottom: !hideUnderline ? 10 : undefined, // todo: remove this in cases we dont show underline
       padding: 0,
       textAlign: centered ? 'center' : undefined,
       backgroundColor: 'transparent',

@@ -49,6 +49,7 @@ export default class InputScreen extends Component {
         <TextInput
           text70
           placeholder="Tell us about yourself"
+          floatingPlaceholder
           value={LONG_TEXT}
           expandable
           containerStyle={{marginBottom: INPUT_SPACING}}

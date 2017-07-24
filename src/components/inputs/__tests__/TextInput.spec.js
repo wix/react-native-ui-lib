@@ -10,8 +10,5 @@ describe('TextInput', () => {
 
     uut = new TextInput({floatingPlaceholder: true, centered: true});
     expect(uut.shouldFakePlaceholder()).toBe(false);
-
-    uut = new TextInput({expandable: true});
-    expect(uut.shouldFakePlaceholder()).toBe(true);
   });
 });
