@@ -1,11 +1,10 @@
 import {PropTypes} from 'react';
-import {TextInput as RNTextInput, Animated} from 'react-native';
+import {TextInput as RNTextInput, Animated, ViewPropTypes} from 'react-native';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
 import {Colors, Typography} from '../../style';
 
 export default class BaseInput extends BaseComponent {
-
   static displayName = 'TextInput';
   static propTypes = {
     ...RNTextInput.propTypes,
@@ -17,13 +16,13 @@ export default class BaseInput extends BaseComponent {
     /**
      * text input container style
      */
-    containerStyle: PropTypes.object,
+    containerStyle: ViewPropTypes.style,
     testId: PropTypes.string,
   };
 
   static defaultProps = {
     placeholderTextColor: Colors.dark60,
-  }
+  };
 
   constructor(props) {
     super(props);
