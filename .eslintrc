@@ -19,7 +19,8 @@
     "no-plusplus": "off",
     "import/prefer-default-export": "off",
     "global-require": "off",
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "no-return-assign": "off"
   },
   "env": {
     "browser": true,
