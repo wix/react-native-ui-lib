@@ -320,8 +320,10 @@ export default class TextInput extends BaseInput {
 
   onChange(event) {
     if (Constants.isAndroid) {
-      const {height} = event.nativeEvent.contentSize;
-      this.setState({height});
+      const height = _.get(event, 'nativeEvent.contentSize.height');
+      if (height) {
+        this.setState({height});
+      }
     }
     _.invoke(this.props, 'onChange', event);
   }
