@@ -49,7 +49,12 @@ export default class FormScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TagsInput placeholder="Enter Tags" tags={this.state.tags} />
+        <TagsInput
+          hideUnderline
+          containerStyle={{marginBottom: 20}}
+          placeholder="Enter Tags"
+          tags={this.state.tags}
+        />
 
         <Text style={{...Typography.text60}}>Stepper</Text>
         <Stepper

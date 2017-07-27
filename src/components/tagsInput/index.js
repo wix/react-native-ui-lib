@@ -1,20 +1,45 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ViewPropTypes} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
 import {TextInput} from '../inputs';
 import View from '../view';
 import Text from '../text';
-import {Colors, BorderRadiuses} from '../../style';
+import {Colors, BorderRadiuses, ThemeManager} from '../../style';
 
+// todo: support backspace to remove tags
+// todo: support updating tags externally
+
+/**
+ * Tags input component (chips)
+ * @modifiers: text, color
+ */
 export default class TagsInput extends BaseComponent {
+  static displayName = 'TagsInput';
   static propTypes = {
+    /**
+     * list of tags. can be string or custom object when implementing getLabel
+     */
     tags: PropTypes.arrayOf(
       PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     ),
+    /**
+     * callback for extracting the label out of the tag item
+     */
     getLabel: PropTypes.func,
+    /**
+     * callback for onChangeTags event
+     */
     onChangeTags: PropTypes.func,
+    /**
+     * custom styling fot the component container
+     */
+    containerStyle: ViewPropTypes.style,
+    /**
+     * should hide input underline
+     */
+    hideUnderline: PropTypes.bool,
   };
 
   constructor(props) {
@@ -65,57 +90,72 @@ export default class TagsInput extends BaseComponent {
   }
 
   renderTag(tag, index) {
+    const typography = this.extractTypographyValue();
     return (
       <View key={index} style={styles.tag}>
-        <Text style={styles.tagLabel}>
+        <Text style={[styles.tagLabel, typography]}>
           {this.getLabel(tag)}
         </Text>
       </View>
     );
   }
 
-  render() {
-    const {tags, value} = this.state;
+  renderTextInput() {
+    const {containerStyle, ...others} = this.props;
+    const {value} = this.state;
     return (
-      <View>
+      <View style={styles.inputWrapper}>
+        <TextInput
+          ref={r => (this.input = r)}
+          {...others}
+          value={value}
+          onSubmitEditing={this.addTag}
+          onChangeText={this.onChangeText}
+          blurOnSubmit={false}
+          enableErrors={false}
+          hideUnderline
+        />
+      </View>
+    );
+  }
+
+  render() {
+    const {containerStyle, hideUnderline} = this.props;
+    const {tags} = this.state;
+    return (
+      <View style={[!hideUnderline && styles.withUnderline, containerStyle]}>
         <View style={styles.tagsList}>
           {_.map(tags, this.renderTag)}
-          <View style={styles.inputWrapper}>
-            <TextInput
-              ref={r => (this.input = r)}
-              {...this.props}
-              value={value}
-              onSubmitEditing={this.addTag}
-              onChangeText={this.onChangeText}
-              blurOnSubmit={false}
-              enableErrors={false}
-              text80
-              hideUnderline
-            />
-          </View>
+          {this.renderTextInput()}
         </View>
       </View>
     );
   }
 }
 
+const GUTTER_SPACING = 8;
 const styles = StyleSheet.create({
+  withUnderline: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: ThemeManager.dividerColor,
+  },
   tagsList: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'flex-end',
+    alignItems: 'center',
   },
   inputWrapper: {
     flexGrow: 1,
     minWidth: 120,
+    marginBottom: GUTTER_SPACING,
   },
   tag: {
     backgroundColor: Colors.blue30,
     borderRadius: BorderRadiuses.br100,
-    paddingVertical: 6,
+    paddingVertical: 4,
     paddingHorizontal: 12,
-    marginRight: 6,
-    marginBottom: 6,
+    marginRight: GUTTER_SPACING,
+    marginBottom: GUTTER_SPACING,
   },
   tagLabel: {
     color: Colors.white,
