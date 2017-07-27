@@ -151,6 +151,46 @@ Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where
 - Stepper
 - Text
 - TextInput
+- [TagsInput](https://github.com/wix/react-native-ui-lib#tagsinput)
+
+#### TagsInput
+```
+<TagsInput
+  containerStyle={{marginBottom: 20}}
+  placeholder="Enter Tags"
+  tags={this.state.tags} // array of strings/objects
+  onChangeTags={(tags) => this.setState({tags})}
+  getLabel={(tag) => tag.label}
+  hideUnderline={true/false}
+/>
+```
+
+Since Android does not support TextInput _onKeyPress_ callback, the feature that removes tags on Backspace won't work. <br>
+In Order to fix it, please add the following to your _MainActivity_
+
+```
+public void onCreate() {
+    super.onCreate();
+    setBackspaceListener();
+}
+
+private void setBackspaceListener() {
+    setActivityCallbacks(new ActivityCallbacks() {
+        @Override
+        public void onKeyUp(int keyCode, KeyEvent event) {
+            if (event.getKeyCode() == KeyEvent.KEYCODE_DEL) {
+                ReactContext reactContext = getReactNativeHost().getReactInstanceManager().getCurrentReactContext();
+                if (reactContext != null) {
+                    reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                            .emit("onBackspacePress", Arguments.createMap());
+                }
+            }
+        }
+    });
+}
+```
+
+
 
 ## Helpers
 
