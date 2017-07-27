@@ -42,15 +42,22 @@ export default class FormScreen extends Component {
       contact: contacts[0],
       tags: [{label: 'Amit'}, {label: 'Ethan'}],
       // tags: [{value: 'Amit'}, {value: 'Ethan'}],
-      tags: ['Amit', 'Ethan'],
+      tags: ['Tags', 'Input'],
     };
   }
+
+  // componentDidMount() {
+  //   setTimeout(() => {
+  //     this.setState({
+  //       tags: [...this.state.tags, 'NEW'],
+  //     });
+  //   }, 3000);
+  // }
 
   render() {
     return (
       <View style={styles.container}>
         <TagsInput
-          hideUnderline
           containerStyle={{marginBottom: 20}}
           placeholder="Enter Tags"
           tags={this.state.tags}
