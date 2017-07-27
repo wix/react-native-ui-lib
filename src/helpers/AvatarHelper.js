@@ -30,7 +30,11 @@ export function getColorById(id) {
 export function getInitials(name) {
   let initials = '';
   if (name && _.isString(name)) {
-    const nameSplitted = _.chain(name).split(/\s+/g).take(2).value();
+    const nameSplitted = _.chain(name)
+      .split(/\s+/g)
+      .filter(word => word.length > 0)
+      .take(2)
+      .value();
     _.each(nameSplitted, (str) => {
       initials += str[0];
     });
