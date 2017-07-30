@@ -99,7 +99,6 @@ export default class TagsInput extends BaseComponent {
   }
 
   onChangeText(value) {
-    console.log('ethan - onChangeText', value);
     this.setState({value, prepareToRemoveLastTag: false});
     _.invoke(this.props, 'onChangeText', value);
   }
