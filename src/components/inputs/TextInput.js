@@ -16,7 +16,6 @@ const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
 };
 
 export default class TextInput extends BaseInput {
-
   static displayName = 'TextInput';
   static propTypes = {
     ...RNTextInput.propTypes,
@@ -64,32 +63,42 @@ export default class TextInput extends BaseInput {
     placeholderTextColor: Colors.dark40,
     floatingPlaceholderColor: Colors.dark40,
     enableErrors: true,
-  }
+  };
 
   constructor(props) {
     super(props);
 
     this.onChangeText = this.onChangeText.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(this);
+    this.onContentSizeChange = this.onContentSizeChange.bind(this);
+    this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(
+      this,
+    );
     this.toggleExpandableModal = this.toggleExpandableModal.bind(this);
-    this.onDoneEditingExpandableInput = this.onDoneEditingExpandableInput.bind(this);
+    this.onDoneEditingExpandableInput = this.onDoneEditingExpandableInput.bind(
+      this,
+    );
 
     // const typography = this.getTypography();
     this.state = {
       // inputWidth: typography.fontSize * 2,
       widthExtendBreaks: [],
       value: props.value,
-      floatingPlaceholderState: new Animated.Value(this.hasText(props.value) ? 1 : 0),
+      floatingPlaceholderState: new Animated.Value(
+        this.hasText(props.value) ? 1 : 0,
+      ),
       showExpandableModal: false,
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
-      this.setState({
-        value: nextProps.value,
-      }, this.updateFloatingPlaceholderState);
+      this.setState(
+        {
+          value: nextProps.value,
+        },
+        this.updateFloatingPlaceholderState,
+      );
     }
   }
 
@@ -144,7 +153,14 @@ export default class TextInput extends BaseInput {
 
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
-    const {centered, expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} = this.props;
+    const {
+      centered,
+      expandable,
+      placeholder,
+      placeholderTextColor,
+      floatingPlaceholderColor,
+      multiline,
+    } = this.props;
     const typography = this.getTypography();
     const floatingTypography = Typography.text90;
 
@@ -168,7 +184,9 @@ export default class TextInput extends BaseInput {
                 inputRange: [0, 1],
                 outputRange: [placeholderTextColor, floatingPlaceholderColor],
               }),
-              lineHeight: this.hasText() ? floatingTypography.lineHeight : typography.lineHeight,
+              lineHeight: this.hasText()
+                ? floatingTypography.lineHeight
+                : typography.lineHeight,
             },
           ]}
           onPress={() => expandable && this.toggleExpandableModal(true)}
@@ -183,7 +201,9 @@ export default class TextInput extends BaseInput {
     const {enableErrors, error} = this.props;
     if (enableErrors) {
       return (
-        <Text style={this.styles.errorMessage}>{error}</Text>
+        <Text style={this.styles.errorMessage}>
+          {error}
+        </Text>
       );
     }
   }
@@ -202,7 +222,9 @@ export default class TextInput extends BaseInput {
         />
         <View style={this.styles.expandableModalContent}>
           <TextArea
-            ref={(textarea) => { this.expandableInput = textarea; }}
+            ref={(textarea) => {
+              this.expandableInput = textarea;
+            }}
             {...this.props}
             value={this.state.value}
           />
@@ -220,7 +242,12 @@ export default class TextInput extends BaseInput {
 
     return (
       <Text
-        style={[this.styles.input, typography, {minHeight}, shouldShowPlaceholder && this.styles.placeholder]}
+        style={[
+          this.styles.input,
+          typography,
+          {minHeight},
+          shouldShowPlaceholder && this.styles.placeholder,
+        ]}
         numberOfLines={3}
         onPress={() => this.toggleExpandableModal(true)}
       >
@@ -232,7 +259,14 @@ export default class TextInput extends BaseInput {
   renderTextInput() {
     const color = this.props.color || this.extractColorValue();
     const typography = this.getTypography();
-    const {style, placeholder, floatingPlaceholder, centered, multiline, ...others} = this.props;
+    const {
+      style,
+      placeholder,
+      floatingPlaceholder,
+      centered,
+      multiline,
+      ...others
+    } = this.props;
     const {value} = this.state;
     const inputStyle = [
       this.styles.input,
@@ -247,15 +281,18 @@ export default class TextInput extends BaseInput {
       <RNTextInput
         {...others}
         value={value}
-        placeholder={(floatingPlaceholder && !centered) ? undefined : placeholder}
+        placeholder={floatingPlaceholder && !centered ? undefined : placeholder}
         underlineColorAndroid="transparent"
         style={inputStyle}
         multiline={multiline}
         onChangeText={this.onChangeText}
         onChange={this.onChange}
+        onContentSizeChange={this.onContentSizeChange}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
-        ref={(input) => { this.input = input; }}
+        ref={(input) => {
+          this.input = input;
+        }}
       />
     );
   }
@@ -284,13 +321,10 @@ export default class TextInput extends BaseInput {
     if (withoutAnimation) {
       this.state.floatingPlaceholderState.setValue(this.hasText() ? 1 : 0);
     } else {
-      Animated.spring(
-        this.state.floatingPlaceholderState,
-        {
-          toValue: this.hasText() ? 1 : 0,
-          duration: 150,
-        },
-      ).start();
+      Animated.spring(this.state.floatingPlaceholderState, {
+        toValue: this.hasText() ? 1 : 0,
+        duration: 150,
+      }).start();
     }
   }
 
@@ -313,26 +347,43 @@ export default class TextInput extends BaseInput {
 
     _.invoke(this.props, 'onChangeText', transformedText);
 
-    this.setState({
-      value: transformedText,
-    }, this.updateFloatingPlaceholderState);
+    this.setState(
+      {
+        value: transformedText,
+      },
+      this.updateFloatingPlaceholderState,
+    );
+  }
+
+  onContentSizeChange(event) {
+    this.calcMultilineInputHeight(event);
+    _.invoke(this.props, 'onChange', event);
   }
 
   onChange(event) {
+    this.calcMultilineInputHeight(event);
+    _.invoke(this.props, 'onChange', event);
+  }
+
+  // this is just for android
+  calcMultilineInputHeight(event) {
     if (Constants.isAndroid) {
       const height = _.get(event, 'nativeEvent.contentSize.height');
       if (height) {
         this.setState({height});
       }
     }
-    _.invoke(this.props, 'onChange', event);
   }
 }
 
-function createStyles({placeholderTextColor, hideUnderline, centered, floatingPlaceholder}) {
+function createStyles({
+  placeholderTextColor,
+  hideUnderline,
+  centered,
+  floatingPlaceholder,
+}) {
   return StyleSheet.create({
-    container: {
-    },
+    container: {},
     innerContainer: {
       flexDirection: 'row',
       borderBottomWidth: hideUnderline ? 0 : 1,

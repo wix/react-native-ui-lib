@@ -1,16 +1,29 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {View, Assets, Constants, Button, Colors, Text, TextInput, TextArea, Typography} from 'react-native-ui-lib';//eslint-disable-line
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
+import {
+  View,
+  Assets,
+  Constants,
+  Button,
+  Colors,
+  Text,
+  TextInput,
+  TextArea,
+  Typography,
+} from 'react-native-ui-lib'; //eslint-disable-line
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 
-const LONG_TEXT = 'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer Martín Bollati. In this piece';
+const LONG_TEXT =
+  'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer Martín Bollati. In this piece';
 const INPUT_SPACING = 10;
 
-const transformPrice = (value) => {
+const transformPrice = value => {
   let cleanValue;
   let priceText = '';
   if (value) {
-    [cleanValue] = value.match(/^(?:(?:-?(?:0|\d{1,9}))(?:\.\d{0,2})?)|-/) || [''];
+    [cleanValue] = value.match(/^(?:(?:-?(?:0|\d{1,9}))(?:\.\d{0,2})?)|-/) || [
+      '',
+    ];
     priceText = cleanValue;
   }
   return priceText;
@@ -32,19 +45,42 @@ export default class InputScreen extends Component {
         keyboardShouldPersistTaps="always"
         getTextInputRefs={() => [this.noUnderline, this.hugeText]}
       >
-        <Text style={{marginBottom: 20}} text40>Inputs</Text>
+        <Text style={{marginBottom: 20}} text40>
+          Inputs
+        </Text>
         <TextInput
           floatingPlaceholder
           text70
           placeholder="write something.."
-          onChangeText={text => this.setState({error: text ? '' : 'This field is required' })}
+          onChangeText={text =>
+            this.setState({error: text ? '' : 'This field is required'})}
           error={this.state.error}
           underlineColor={{focus: Colors.orange60, error: Colors.purple50}}
         />
 
-        <TextInput containerStyle={{marginBottom: INPUT_SPACING}} text40 hideUnderline placeholder="write something.."/>
+        <TextInput
+          containerStyle={{marginBottom: INPUT_SPACING}}
+          text40
+          hideUnderline
+          placeholder="write something.."
+        />
 
-        <TextInput containerStyle={{marginBottom: INPUT_SPACING}} centered text30 hideUnderline placeholder="write something.."/>
+        <TextInput
+          containerStyle={{marginBottom: INPUT_SPACING}}
+          centered
+          text30
+          hideUnderline
+          placeholder="write something.."
+        />
+
+        <TextInput
+          multiline
+          text70
+          placeholder="Share your story"
+          value={
+            "Share Your Story exists to provide spaces to hear people's stories, in order to inspire us to live better ones ourselves."
+          }
+        />
 
         <TextInput
           text70
@@ -56,12 +92,6 @@ export default class InputScreen extends Component {
         />
 
         <TextInput
-          multiline
-          text70
-          placeholder="Share your story"
-        />
-
-        <TextInput
           floatingPlaceholder
           text70
           placeholder="with price transformer"
@@ -70,8 +100,16 @@ export default class InputScreen extends Component {
         />
 
         <Text dark40>Text Area</Text>
-        <View style={{height: 150, borderWidth: 1, marginBottom: INPUT_SPACING, padding: 10, borderColor: Colors.dark60}}>
-          <TextArea placeholder="write something.."/>
+        <View
+          style={{
+            height: 150,
+            borderWidth: 1,
+            marginBottom: INPUT_SPACING,
+            padding: 10,
+            borderColor: Colors.dark60,
+          }}
+        >
+          <TextArea placeholder="write something.." />
         </View>
 
         <TextInput
@@ -84,7 +122,7 @@ export default class InputScreen extends Component {
           text20
           placeholder="Huge Text"
           containerStyle={{marginBottom: INPUT_SPACING}}
-          ref={(input) => this.hugeText = input}
+          ref={input => (this.hugeText = input)}
         />
 
         <TextInput
@@ -92,7 +130,7 @@ export default class InputScreen extends Component {
           hideUnderline
           placeholder="No Underline"
           containerStyle={{marginBottom: INPUT_SPACING}}
-          ref={(input) => this.noUnderline = input}
+          ref={input => (this.noUnderline = input)}
         />
 
         <TextInput
@@ -102,7 +140,6 @@ export default class InputScreen extends Component {
           placeholder="Centered"
           containerStyle={{marginBottom: INPUT_SPACING}}
         />
-
       </KeyboardAwareScrollView>
     );
   }
