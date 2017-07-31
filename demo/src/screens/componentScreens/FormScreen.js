@@ -46,13 +46,20 @@ export default class FormScreen extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   setTimeout(() => {
-  //     this.setState({
-  //       tags: [...this.state.tags, 'NEW'],
-  //     });
-  //   }, 3000);
-  // }
+  renderCustomTag(tag, index, shouldMarkToRemove) {
+    return (
+      <View
+        style={[
+          styles.customTag,
+          shouldMarkToRemove && {backgroundColor: Colors.purple70},
+        ]}
+      >
+        <Text white>
+          {tag}
+        </Text>
+      </View>
+    );
+  }
 
   render() {
     return (
@@ -61,6 +68,13 @@ export default class FormScreen extends Component {
           containerStyle={{marginBottom: 20}}
           placeholder="Enter Tags"
           tags={this.state.tags}
+        />
+        
+        <TagsInput
+          containerStyle={{marginBottom: 20}}
+          placeholder="With custom tags"
+          tags={this.state.tags}
+          renderTag={this.renderCustomTag}
         />
 
         <Text style={{...Typography.text60}}>Stepper</Text>
@@ -192,5 +206,13 @@ const styles = StyleSheet.create({
     ...Typography.text80,
     marginTop: 25,
     marginBottom: 5,
+  },
+  customTag: {
+    backgroundColor: Colors.purple30,
+    paddingVertical: 2,
+    paddingHorizontal: 8,
+    borderRadius: 3,
+    marginRight: 10,
+    marginBottom: 10,
   },
 });
