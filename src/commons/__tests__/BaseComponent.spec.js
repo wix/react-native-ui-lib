@@ -226,6 +226,12 @@ describe('BaseComponent', () => {
       const props = {color: 'red', topShadow: 1, bottomShadow: 2};
       expect(MultipleShadow.extractOwnProps(props)).toEqual({topShadow: 1, bottomShadow: 2});
     });
+
+    it('should omit props that were required to ignore', () => {
+      const props = {color: 'red', topShadow: 1, bottomShadow: 2};
+      expect(MultipleShadow.extractOwnProps(props, 'topShadow')).toEqual({bottomShadow: 2});
+      expect(MultipleShadow.extractOwnProps(props, ['topShadow', 'bottomShadow'])).toEqual({});
+    });
   });
 
   describe('extractModifiersProps', () => {
