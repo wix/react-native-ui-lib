@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flexGrow: 1,
     minWidth: 120,
-    marginBottom: GUTTER_SPACING,
+    marginVertical: GUTTER_SPACING / 2,
   },
   tag: {
     backgroundColor: Colors.blue30,
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4.5,
     paddingHorizontal: 12,
     marginRight: GUTTER_SPACING,
-    marginBottom: GUTTER_SPACING,
+    marginVertical: GUTTER_SPACING / 2,
   },
   tagMarked: {
     backgroundColor: Colors.dark10,
