@@ -45,6 +45,10 @@ export default class TagsInput extends BaseComponent {
      */
     onChangeTags: PropTypes.func,
     /**
+     * callback for creating new tag out of input value (good for composing tag object)
+     */
+    onCreateTag: PropTypes.func,
+    /**
      * custom styling for the component container
      */
     containerStyle: ViewPropTypes.style,
@@ -95,10 +99,12 @@ export default class TagsInput extends BaseComponent {
   }
 
   addTag() {
+    const {onCreateTag} = this.props;
     const {value, tags} = this.state;
     if (_.isEmpty(value.trim())) return;
 
-    const newTags = [...tags, value];
+    const newTag = _.isFunction(onCreateTag) ? onCreateTag(value) : value;
+    const newTags = [...tags, newTag];
     this.setState({
       value: '',
       tags: newTags,

@@ -42,7 +42,7 @@ export default class FormScreen extends Component {
       contact: contacts[0],
       tags: [{label: 'Amit'}, {label: 'Ethan'}],
       // tags: [{value: 'Amit'}, {value: 'Ethan'}],
-      tags: ['Tags', 'Input'],
+      tags2: ['Tags', 'Input'],
     };
   }
 
@@ -55,7 +55,7 @@ export default class FormScreen extends Component {
         ]}
       >
         <Text white>
-          {tag}
+          {tag.label}
         </Text>
       </View>
     );
@@ -67,14 +67,16 @@ export default class FormScreen extends Component {
         <TagsInput
           containerStyle={{marginBottom: 20}}
           placeholder="Enter Tags"
-          tags={this.state.tags}
+          tags={this.state.tags2}
         />
-        
+
         <TagsInput
           containerStyle={{marginBottom: 20}}
           placeholder="With custom tags"
           tags={this.state.tags}
           renderTag={this.renderCustomTag}
+          onCreateTag={value => ({label: value})}
+          inputStyle={{...Typography.text60, color: Colors.blue30}}
         />
 
         <Text style={{...Typography.text60}}>Stepper</Text>
