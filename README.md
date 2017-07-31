@@ -143,7 +143,6 @@ Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where
 - Card
 - Connection Status Bar
 - List Item
-- Grid List
 - State Screen
 - Loader Screen
 - Page Control
@@ -151,16 +150,41 @@ Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where
 - Stepper
 - Text
 - TextInput
-- [TagsInput](https://github.com/wix/react-native-ui-lib#tagsinput)
+- [TagsInput](https://github.com/wix/react-native-ui-lib#tags-input)
 
-#### TagsInput
+#### Card
+
 ```
+import {Card} from 'react-native-ui-lib';
+
+<Card 
+  row // control the children flow direction
+  borderRadius={12}
+  height={150}
+  containerStyle={{marginRight: 20}}
+  onPress={...}
+  enableShadows={true/false}
+
+>
+  <Card.Image width={80} imageSource={cardImage} />
+  <View>
+  ...
+  </View>
+</Card>
+```
+
+#### Tags Input
+```
+import {TagsInput} from 'react-native-ui-lib';
+
 <TagsInput
   containerStyle={{marginBottom: 20}}
   placeholder="Enter Tags"
   tags={this.state.tags} // array of strings/objects
   onChangeTags={(tags) => this.setState({tags})}
   getLabel={(tag) => tag.label}
+  inputStyle={{fontSize: 22, color: 'blue'}}
+  renderTag={(tag, index, shouldMarkTagToRemove) => <View>...</View>}
   hideUnderline={true/false}
 />
 ```
