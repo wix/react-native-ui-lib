@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TextInput as RNTextInput} from 'react-native';
+import {StyleSheet} from 'react-native';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import TextInput from './TextInput';
