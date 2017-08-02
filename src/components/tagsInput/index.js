@@ -240,6 +240,7 @@ export default class TagsInput extends BaseComponent {
           hideUnderline
           selectionColor={isLastTagMarked ? 'transparent' : undefined}
           style={inputStyle}
+          containerStyle={{flexGrow: 0}}
         />
       </View>
     );
