@@ -140,7 +140,7 @@ Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where
 - Badge
 - Basic List
 - Button
-- [Card] (https://github.com/wix/react-native-ui-lib#card)
+- [Card](https://github.com/wix/react-native-ui-lib#card)
 - Connection Status Bar
 - List Item
 - State Screen
@@ -150,7 +150,7 @@ Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where
 - Stepper
 - Text
 - TextInput
-- [MaskedInput]((https://github.com/wix/react-native-ui-lib#masked-input))
+- [MaskedInput](https://github.com/wix/react-native-ui-lib#masked-input)
 - [TagsInput](https://github.com/wix/react-native-ui-lib#tags-input)
 
 #### Card
