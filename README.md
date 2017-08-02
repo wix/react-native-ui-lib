@@ -140,7 +140,7 @@ Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where
 - Badge
 - Basic List
 - Button
-- Card
+- [Card] (https://github.com/wix/react-native-ui-lib#card)
 - Connection Status Bar
 - List Item
 - State Screen
@@ -150,6 +150,7 @@ Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where
 - Stepper
 - Text
 - TextInput
+- [MaskedInput]((https://github.com/wix/react-native-ui-lib#masked-input))
 - [TagsInput](https://github.com/wix/react-native-ui-lib#tags-input)
 
 #### Card
@@ -172,6 +173,36 @@ import {Card} from 'react-native-ui-lib';
   </View>
 </Card>
 ```
+
+#### Masked Input
+import {MaskedInput} from 'react-native-ui-lib';
+
+```
+<MaskedInput
+  renderMaskedText={this.renderTimeText}
+  caretHidden
+  keyboardType={'numeric'}
+  maxLength={4}
+/>
+
+renderTimeText(value) {
+  const paddedValue = _.padStart(value, 4, '0');
+  const hours = paddedValue.substr(0, 2);
+  const minutes = paddedValue.substr(2, 2);
+
+  return (
+    <Text text20 dark20 center>
+      {hours}
+      <Text red10>h</Text>
+      {minutes}
+      <Text red10>m</Text>
+    </Text>
+  );
+}
+```
+
+![Masked Input](https://media.giphy.com/media/KZZtFfoHoEK3K/giphy.gif)
+
 
 #### Tags Input
 ```
