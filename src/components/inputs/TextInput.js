@@ -383,13 +383,16 @@ function createStyles({
   floatingPlaceholder,
 }) {
   return StyleSheet.create({
-    container: {},
+    container: {
+      flexGrow: 1,
+    },
     innerContainer: {
       flexDirection: 'row',
       borderBottomWidth: hideUnderline ? 0 : 1,
       borderColor: Colors.dark80,
       justifyContent: centered ? 'center' : undefined,
-      paddingTop: floatingPlaceholder ? 25 : undefined, // todo: remove this in cases we dont have floating placeholder
+      paddingTop: floatingPlaceholder ? 25 : undefined,
+      flexGrow: 1,
     },
     focusedUnderline: {
       borderColor: Colors.blue30,
@@ -399,7 +402,7 @@ function createStyles({
     },
     input: {
       flex: 1,
-      marginBottom: !hideUnderline ? 10 : undefined, // todo: remove this in cases we dont show underline
+      marginBottom: hideUnderline ? undefined : 10,
       padding: 0,
       textAlign: centered ? 'center' : undefined,
       backgroundColor: 'transparent',
