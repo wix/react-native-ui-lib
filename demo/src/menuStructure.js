@@ -26,6 +26,7 @@ export const navigationData = {
   ],
   Form: [
     {title: 'Inputs', tags: 'text input form', screen: 'unicorn.components.InputsScreen'},
+    {title: 'Masked Inputs', tags: 'text input form mask', screen: 'unicorn.components.MaskedInputScreen'},
   ],
   Screens: [
     {title: 'State Screen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
