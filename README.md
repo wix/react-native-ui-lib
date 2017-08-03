@@ -220,6 +220,8 @@ import {TagsInput} from 'react-native-ui-lib';
 />
 ```
 
+![Tags Input](https://media.giphy.com/media/3oEhn7JyhT1VfXticE/giphy.gif)
+
 Since Android does not support TextInput _onKeyPress_ callback, the feature that removes tags on Backspace won't work. <br>
 In Order to fix it, please add the following to your _MainActivity_
 
