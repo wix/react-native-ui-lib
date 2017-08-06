@@ -28,6 +28,7 @@ better lookings apps (:
 
 
 ## Usage
+This is a quick example of how to use our basic components, modifiers and presets to generate a good looking screen.
 
 <img style="float: right; margin-top: -70px" src="https://cloud.githubusercontent.com/assets/1780255/24791489/f5db80f4-1b82-11e7-8538-5a3388fb4345.png" width=300 /> 
 
@@ -58,7 +59,7 @@ export default class Example extends Component {
 # Style
 The base foundation of each UI component is its style. <br>
 We use basic style presets to define the rules and the style guide we follow. <br>
-Our presetes includes: **Colors**, **Typography**, **Shadows**, **Border Radiuses** and more..
+Our presetes includes: **Colors**, **Typography**, **Shadows**, **Border Radius** and more..
 
 The UILib already comes with a set of predefined constants and [presets](./src/style). <br>
 You can easily use it anywhere in your code as you would have used any other constant value, or as a component modifier. <br>
@@ -87,7 +88,9 @@ and so for example, the following line <br>
 Will generate this text <br>
 <img src="https://cloud.githubusercontent.com/assets/1780255/24792314/296b7ebc-1b86-11e7-8580-9252d1ddf5d9.png" width="250"/> 
 
+It will use the _h1_ preset for typography and the _pink_ color value we set to style the Text element.
 <br>
+
 
 # Modifiers
 As you probably noticed already, we translate our style presets into modifiers. <br>
@@ -124,14 +127,26 @@ Use our alignment props to quickly position your content without getting confuse
 Same goes here... space, stretch and color in a more readable way. <br>
 
 - **[colorKey]**(text color), **background-[colorKey]** <br>
+`<Text pink>...</Text>` <br>
+`<View bg-pink>...</View>`
 
-- **[typographyPresetKey]** (text components)
+- **[typographyPresetKey]** (text components)  <br>
+`<Text h1>...</Text>` <br>
 
 - **flex**, **flex-[value]**
+```
+<View flex> // be default is flex=1
+  <View flex-2/>
+  <View flex-3/>
+  <View flex-4/>
+</View>
+```
 
-- **padding-[value]**, **paddingL-[value]**, **paddingT-[value]**, **paddingR-[value]**, **paddingB-[value]**, **paddingH-[value]**, **paddingV-[value]**
+- **padding-[value]**, **paddingL-[value]**, **paddingT-[value]**, **paddingR-[value]**, **paddingB-[value]**, **paddingH-[value]**, **paddingV-[value]** <br>
+`<View paddingV-20 paddingH-30>...</View>`
 
-- **margin-[value]**, **marginL-[value]**, **marginT-[value]**, **marginR-[value]**, **marginB-[value]**, **marginH-[value]**, **marginV-[value]**
+- **margin-[value]**, **marginL-[value]**, **marginT-[value]**, **marginR-[value]**, **marginB-[value]**, **marginH-[value]**, **marginV-[value]** <br>
+`<View marginT-5 marginB-10>...</View>`
 
 Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where we use most of these props
 
