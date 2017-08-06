@@ -15,7 +15,7 @@ class ListItem extends BaseComponent {
     /**
      * the list item height
      */
-    height: PropTypes.number,
+    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * action for when pressing the item
      */
