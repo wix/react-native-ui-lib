@@ -74,6 +74,15 @@ class Typography {
       this[key] = value;
     });
   }
+
+  getKeysPattern() {
+    return new RegExp(_.chain(this)
+        .keys()
+        .map(key => [`${key}`])
+        .flatten()
+        .join('|')
+        .value());
+  }
 }
 
 export default new Typography();

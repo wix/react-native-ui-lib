@@ -132,6 +132,15 @@ class Colors {
 
     return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
   }
+
+  getBackgroundKeysPattern() {
+    return new RegExp(_.chain(this)
+        .keys()
+        .map(key => [`bg-${key}`, `background-${key}`])
+        .flatten()
+        .join('|')
+        .value());
+  }
 }
 
 function validateRGB(value) {

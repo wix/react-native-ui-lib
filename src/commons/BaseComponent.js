@@ -8,18 +8,6 @@ const FLEX_KEY_PATTERN = /^flex(G|S)?(-\d*)?$/;
 const PADDING_KEY_PATTERN = /padding[LTRBHV]?-[0-9]*/;
 const MARGIN_KEY_PATTERN = /margin[LTRBHV]?-[0-9]*/;
 const ALIGNMENT_KEY_PATTERN = /(left|top|right|bottom|center|centerV|centerH|spread)/;
-const BACKGROUND_KEY_PATTERN = new RegExp(_.chain(Colors)
-                                            .keys()
-                                            .map(key => [`bg-${key}`, `background-${key}`])
-                                            .flatten()
-                                            .join('|')
-                                            .value());
-const TYPOGRAPHY_KEY_PATTERN = new RegExp(_.chain(Typography)
-                                            .keys()
-                                            .map(key => [`${key}`])
-                                            .flatten()
-                                            .join('|')
-                                            .value());
 
 export default class BaseComponent extends Component {
 
@@ -92,7 +80,7 @@ export default class BaseComponent extends Component {
   extractTypographyValue() {
     const typographyPropsKeys = _.chain(this.props)
       .keys(this.props)
-      .filter(key => TYPOGRAPHY_KEY_PATTERN.test(key)).value();
+      .filter(key => Typography.getKeysPattern().test(key)).value();
     let typography;
     _.forEach(typographyPropsKeys, (key) => {
       if (this.props[key] === true) {
@@ -290,7 +278,7 @@ export default class BaseComponent extends Component {
       PADDING_KEY_PATTERN,
       MARGIN_KEY_PATTERN,
       ALIGNMENT_KEY_PATTERN,
-      BACKGROUND_KEY_PATTERN];
+      Colors.getBackgroundKeysPattern()];
     const modifierProps = _.pickBy(this.props, (value, key) => {
       const isModifier = _.find(patterns, pattern => pattern.test(key));
       return !!isModifier;
