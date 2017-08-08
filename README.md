@@ -98,7 +98,7 @@ As you probably noticed already, we translate our style presets into modifiers. 
 
 ### Align Faster
 Use our alignment props to quickly position your content without getting confused calculating all these flex rules. <br>
-**left**, **top**, **right**, **bottom**, **row**, **center**, **centerH (Horizontal Center)**, **centerV (Vertical Center)**
+**left**, **top**, **right**, **bottom**, **row**, **center**, **centerH (Horizontal Center)**, **centerV (Vertical Center)**, **spread**
 
 ```
 <View left>
