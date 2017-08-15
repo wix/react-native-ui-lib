@@ -15,9 +15,7 @@ export function getAvatarColors() {
     Colors.orange20, Colors.red20, Colors.purple20, Colors.violet20];
 }
 
-export function getColorById(id) {
-  const avatarColors = getAvatarColors();
-
+export function getColorById(id, avatarColors = getAvatarColors()) {
   if (!id) {
     return avatarColors[0];
   }
