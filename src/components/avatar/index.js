@@ -93,7 +93,7 @@ export default class Avatar extends BaseComponent {
           </Text>
         </View>
 
-        <Image style={this.styles.image} source={imageSource} />
+        <Image style={this.styles.image} source={imageSource} testID={`${testID}.image`}/>
         {isOnline &&
         <View style={this.styles.onlineBadge} testID={`${testID}.onlineBadge`}>
           <View style={this.styles.onlineBadgeInner}/>
