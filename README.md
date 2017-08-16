@@ -1,21 +1,17 @@
 # react-native-ui-lib [![Build Status](https://travis-ci.org/wix/react-native-ui-lib.svg?branch=master)](https://travis-ci.org/wix/react-native-ui-lib)
 UI Toolset & Components Library for React Native
-###### Lateset version support RN44
-
+###### Latest version support RN44
 
 * [Style](https://github.com/wix/react-native-ui-lib#style)
 * [Modifiers](https://github.com/wix/react-native-ui-lib#modifiers)
 * [Components](https://github.com/wix/react-native-ui-lib#components-wip)
 * [Helpers](https://github.com/wix/react-native-ui-lib#helpers)
 
-
 # Getting Started
 ## Installation
 `yarn add react-native-ui-lib`
 
-
 or
-
 
 `npm i --save react-native-ui-lib`
 
@@ -26,13 +22,12 @@ better lookings apps (:
 * react-native-animatable
 * react-native-blur
 
-
 ## Usage
 This is a quick example of how to use our basic components, modifiers and presets to generate a good looking screen.
 
 <img style="float: right; margin-top: -70px" src="https://cloud.githubusercontent.com/assets/1780255/24791489/f5db80f4-1b82-11e7-8538-5a3388fb4345.png" width=300 /> 
 
-```javascript 
+```js 
 import React, {Component} from 'react';
 import {View, TextInput, Text, Button} from 'react-native-ui-lib';
 
@@ -54,19 +49,19 @@ export default class Example extends Component {
 }
 ```
 
-<br>
-
 # Style
-The base foundation of each UI component is its style. <br>
-We use basic style presets to define the rules and the style guide we follow. <br>
+The base foundation of each UI component is its style.
+We use basic style presets to define the rules and the style guide we follow.
+
 Our presetes includes: **Colors**, **Typography**, **Shadows**, **Border Radius** and more..
 
-The UILib already comes with a set of predefined constants and [presets](./src/style). <br>
-You can easily use it anywhere in your code as you would have used any other constant value, or as a component modifier. <br>
+The UILib already comes with a set of predefined constants and [presets](./src/style).
+
+You can easily use it anywhere in your code as you would have used any other constant value, or as a component modifier.
 
 It's also very easy to define your own presets..
 
-```
+```js
 import {Typography, Colors} from 'react-native-ui-lib';
 
 Colors.loadColors({
@@ -80,27 +75,25 @@ Typography.loadTypographies({
 });
 ```
 
+and so for example, the following line
 
-and so for example, the following line <br>
-```
+```js
 <Text h1 pink>Hello World</Text>
 ```
-Will generate this text <br>
+Will generate this text
 <img src="https://cloud.githubusercontent.com/assets/1780255/24792314/296b7ebc-1b86-11e7-8580-9252d1ddf5d9.png" width="250"/> 
 
 It will use the _h1_ preset for typography and the _pink_ color value we set to style the Text element.
-<br>
-
 
 # Modifiers
-As you probably noticed already, we translate our style presets into modifiers. <br>
+As you probably noticed already, we translate our style presets into modifiers.
 **Modifiers** will help you create a stunning UI easily and quickly.
 
 ### Align Faster
-Use our alignment props to quickly position your content without getting confused calculating all these flex rules. <br>
+Use our alignment props to quickly position your content without getting confused calculating all these flex rules.
 **left**, **top**, **right**, **bottom**, **row**, **center**, **centerH (Horizontal Center)**, **centerV (Vertical Center)**, **spread**
 
-```
+```js
 <View left>
   <Button label="Button">
 </View>
@@ -124,17 +117,17 @@ Use our alignment props to quickly position your content without getting confuse
 <img src="https://cloud.githubusercontent.com/assets/1780255/24798566/4de91efc-1b9f-11e7-9974-e06e3daa7c63.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798569/50dc99a4-1b9f-11e7-8231-fbcbb139a010.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798571/52766d08-1b9f-11e7-95a3-b2b262e81170.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798572/545b7abe-1b9f-11e7-9098-409ceee6ff22.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798575/55e3c4f4-1b9f-11e7-998d-7986a038abb6.png" width="160"/> 
 
 ### Spacing & Styling
-Same goes here... space, stretch and color in a more readable way. <br>
+Same goes here... space, stretch and color in a more readable way.
 
-- **[colorKey]**(text color), **background-[colorKey]** <br>
-`<Text pink>...</Text>` <br>
+- **[colorKey]** (text color), **background-[colorKey]**
+`<Text pink>...</Text>`
 `<View bg-pink>...</View>`
 
-- **[typographyPresetKey]** (text components)  <br>
-`<Text h1>...</Text>` <br>
+- **[typographyPresetKey]** (text components)
+`<Text h1>...</Text>`
 
 - **flex**, **flex-[value]**
-```
+```js
 <View flex> // be default is flex=1
   <View flex-2/>
   <View flex-3/>
@@ -142,10 +135,10 @@ Same goes here... space, stretch and color in a more readable way. <br>
 </View>
 ```
 
-- **padding-[value]**, **paddingL-[value]**, **paddingT-[value]**, **paddingR-[value]**, **paddingB-[value]**, **paddingH-[value]**, **paddingV-[value]** <br>
+- **padding-[value]**, **paddingL-[value]**, **paddingT-[value]**, **paddingR-[value]**, **paddingB-[value]**, **paddingH-[value]**, **paddingV-[value]**
 `<View paddingV-20 paddingH-30>...</View>`
 
-- **margin-[value]**, **marginL-[value]**, **marginT-[value]**, **marginR-[value]**, **marginB-[value]**, **marginH-[value]**, **marginV-[value]** <br>
+- **margin-[value]**, **marginL-[value]**, **marginT-[value]**, **marginR-[value]**, **marginB-[value]**, **marginH-[value]**, **marginV-[value]**
 `<View marginT-5 marginB-10>...</View>`
 
 Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where we use most of these props
@@ -170,7 +163,7 @@ Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where
 
 #### Card
 
-```
+```js
 import {Card} from 'react-native-ui-lib';
 
 <Card 
@@ -190,9 +183,10 @@ import {Card} from 'react-native-ui-lib';
 ```
 
 #### Masked Input
+
+```js
 import {MaskedInput} from 'react-native-ui-lib';
 
-```
 <MaskedInput
   renderMaskedText={this.renderTimeText}
   caretHidden
@@ -218,9 +212,8 @@ renderTimeText(value) {
 
 ![Masked Input](https://media.giphy.com/media/KZZtFfoHoEK3K/giphy.gif)
 
-
 #### Tags Input
-```
+```js
 import {TagsInput} from 'react-native-ui-lib';
 
 <TagsInput
@@ -237,10 +230,10 @@ import {TagsInput} from 'react-native-ui-lib';
 
 ![Tags Input](https://media.giphy.com/media/3oEhn7JyhT1VfXticE/giphy.gif)
 
-Since Android does not support TextInput _onKeyPress_ callback, the feature that removes tags on Backspace won't work. <br>
+Since Android does not support TextInput _onKeyPress_ callback, the feature that removes tags on Backspace won't work.
 In Order to fix it, please add the following to your _MainActivity_
 
-```
+```js
 public void onCreate() {
     super.onCreate();
     setBackspaceListener();
@@ -262,14 +255,12 @@ private void setBackspaceListener() {
 }
 ```
 
-
-
 ## Helpers
 
 ### AvatarHelpers
 #### getInitials
-usage: </br>
-```
+usage:
+```js
 import {AvatarHelper} from 'react-native-ui-lib';
 
 AvatarHelper.getInitials('Lilly Wheeler'); // LW
@@ -279,8 +270,8 @@ AvatarHelper.getInitials('Andrew'); // A
 
 ### Colors
 #### rgba
-usage: </br>
-```
+usage:
+```js
 import {Colors} from 'react-native-ui-lib';
 
 Colors.rgba('#ff2442', 0.05); // 'rgb(255, 36, 66, 0.05)'
