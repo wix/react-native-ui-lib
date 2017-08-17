@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import View from '../view';
 import Text from '../text';
 import {Colors, Typography} from '../../style';
@@ -35,14 +36,20 @@ export default class TabBarItem extends BaseComponent {
      * callback for when pressing a tab
      */
     onPress: PropTypes.func,
-  }
+  };
 
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
   render() {
-    const {label, labelStyle, selected, selectedLabelStyle, onPress} = this.props;
+    const {
+      label,
+      labelStyle,
+      selected,
+      selectedLabelStyle,
+      onPress,
+    } = this.props;
     return (
       <TouchableOpacity
         activeOpacity={1}
@@ -50,14 +57,18 @@ export default class TabBarItem extends BaseComponent {
         style={this.styles.container}
       >
         <View flex center>
-          <Text
-            style={[
-              this.styles.label,
-              labelStyle, selected && this.styles.labelSelected,
-              selected && selectedLabelStyle]}
-          >
-            {label}
-          </Text>
+          {!_.isEmpty(label) &&
+            <Text
+              style={[
+                this.styles.label,
+                labelStyle,
+                selected && this.styles.labelSelected,
+                selected && selectedLabelStyle,
+              ]}
+            >
+              {label}
+            </Text>}
+          {this.props.children}
         </View>
       </TouchableOpacity>
     );

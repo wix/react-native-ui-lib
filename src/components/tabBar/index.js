@@ -29,6 +29,10 @@ export default class TabBar extends BaseComponent {
      * disable the animated transition of the tab indicator
      */
     disableAnimatedTransition: PropTypes.bool,
+    /**
+     * callback for when index has change
+     */
+    onChangeIndex: PropTypes.func,
   }
 
   static defaultProps = {
@@ -82,6 +86,8 @@ export default class TabBar extends BaseComponent {
     this.setState({
       selectedIndex: index,
     });
+
+    _.invoke(this.props, 'onChangeIndex', index);
   }
 
   renderChildren() {
