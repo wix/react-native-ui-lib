@@ -83,10 +83,10 @@ export default class Avatar extends BaseComponent {
   }
 
   render() {
-    const {label, imageSource, isOnline, testID} = this.props;
+    const {label, imageSource, isOnline, backgroundColor, testID} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     return (
-      <View style={[this.styles.container, containerStyle]} testID={testID}>
+      <View style={[this.styles.container, containerStyle, {backgroundColor}]} testID={testID}>
         <View style={this.styles.initialsContainer}>
           <Text numberOfLines={1} style={this.styles.initials}>
             {label}
