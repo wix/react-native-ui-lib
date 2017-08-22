@@ -24,6 +24,12 @@ export default class MaskedInputScreen extends Component {
     };
   }
 
+  componentDidMount() {
+    setTimeout(() => {
+      this.minput.focus();
+    }, 500);
+  }
+
   renderTimeText(value) {
     const paddedValue = _.padStart(value, 4, '0');
     const hours = paddedValue.substr(0, 2);
@@ -43,11 +49,15 @@ export default class MaskedInputScreen extends Component {
     const hasValue = Boolean(value && value.length > 0);
     return (
       <View row center>
-        <Text text30 dark50>-</Text>
+        <Text text30 dark50>
+          -
+        </Text>
         <Text text30 dark10={hasValue} dark60={!hasValue}>
           {hasValue ? value : '00'}
         </Text>
-        <Text text80 dark60>$</Text>
+        <Text text80 dark60>
+          $
+        </Text>
       </View>
     );
   }
@@ -67,10 +77,12 @@ export default class MaskedInputScreen extends Component {
           Time Format
         </Text>
         <MaskedInput
+          ref={r => (this.minput = r)}
           renderMaskedText={this.renderTimeText}
           caretHidden
           keyboardType={'numeric'}
           maxLength={4}
+          value={'15'}
         />
         <Text text70 marginT-40>
           Price/Discount

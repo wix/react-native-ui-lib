@@ -20,7 +20,6 @@ export default class MaskedInput extends BaseInput {
      */
     renderMaskedText: PropTypes.func.isRequired,
   };
-  state = {};
 
   renderMaskedText() {
     const {renderMaskedText} = this.props;
@@ -42,6 +41,9 @@ export default class MaskedInput extends BaseInput {
       <View>
         <TextInput
           {...this.props}
+          ref={(input) => {
+            this.input = input;
+          }}
           containerStyle={styles.hiddenInputContainer}
           style={styles.hiddenInput}
           enableErrors={false}
