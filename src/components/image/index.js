@@ -1,11 +1,12 @@
 import React from 'react';
 import {Image as RNImage} from 'react-native';
 import PropTypes from 'prop-types';
+import hoistNonReactStatic from 'hoist-non-react-statics';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
 import {ThemeManager} from '../../style';
 
-export default class Image extends BaseComponent {
+class Image extends BaseComponent {
   static propTypes = {
     sourceTransformer: PropTypes.func,
   };
@@ -27,6 +28,9 @@ export default class Image extends BaseComponent {
 
   render() {
     const source = this.getImageSource();
-    return <RNImage {...this.props} source={source}/>;
+    return <RNImage {...this.props} source={source} />;
   }
 }
+
+hoistNonReactStatic(Image, RNImage);
+export default Image;
