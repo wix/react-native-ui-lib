@@ -1,4 +1,5 @@
 import ActionBar from './actionBar';
+import ActionSheet from './actionSheet';
 import Avatar from './avatar';
 import Badge from './badge';
 import Button from './button';
@@ -21,6 +22,7 @@ import View from './view';
 
 module.exports = {
   ActionBar,
+  ActionSheet,
   Avatar,
   Badge,
   Button,

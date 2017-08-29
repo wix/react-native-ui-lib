@@ -1,4 +1,5 @@
 import {Navigation} from 'react-native-navigation';
+import ActionSheetScreen from './ActionSheetScreen';
 import AvatarsScreen from './AvatarsScreen';
 import ActionBarScreen from './ActionBarScreen';
 import AnimatedImageScreen from './AnimatedImageScreen';
@@ -13,7 +14,9 @@ import PageControlScreen from './PageControlScreen';
 import NotificationsScreen from './NotificationsScreen';
 import TabBarScreen from './TabBarScreen';
 
-Navigation.registerComponent('unicorn.components.AvatarsScreen', () => AvatarsScreen);
+
+Navigation.registerComponent('unicorn.components.ActionSheetScreen', () => ActionSheetScreen);
+Navigation.registerComponent('unicorn.components.ActionBarScreen', () => ActionBarScreen);
 Navigation.registerComponent('unicorn.components.ActionBarScreen', () => ActionBarScreen);
 Navigation.registerComponent('unicorn.components.AnimatedImageScreen', () => AnimatedImageScreen);
 Navigation.registerComponent('unicorn.components.ButtonsScreen', () => ButtonsScreen);

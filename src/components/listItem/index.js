@@ -56,9 +56,18 @@ class ListItem extends BaseComponent {
   }
 
   render() {
-    const {containerElement, style, onPress, onLongPress, underlayColor, testID, ...others} = this.props;
+    const {
+      containerElement,
+      containerStyle,
+      style,
+      onPress,
+      onLongPress,
+      underlayColor,
+      testID,
+      ...others
+    } = this.props;
     const {pressed} = this.state;
-    const containerStyle = this.extractContainerStyle(this.props);
+    // const containerStyle = this.extractContainerStyle(this.props);
     const animationProps = this.extractAnimationProps();
     const Container = (onPress || onLongPress) ? containerElement : View;
 

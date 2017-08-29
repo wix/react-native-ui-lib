@@ -12,6 +12,7 @@ export const navigationData = {
     {title: 'TouchableOpacity', tags: 'touchableOpacity wrapper', screen: 'unicorn.wrappers.TouchableOpacityScreen'},
   ],
   Components: [
+    {title: 'Action Sheet', tags: 'action sheet cross-platform', screen: 'unicorn.components.ActionSheetScreen'},
     {title: 'Avatars', tags: 'avatar contact', screen: 'unicorn.components.AvatarsScreen'},
     {title: 'Animated Image', tags: 'animated image', screen: 'unicorn.components.AnimatedImageScreen'},
     {title: 'Buttons', tags: 'button cta', screen: 'unicorn.components.ButtonsScreen'},
