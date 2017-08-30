@@ -17,7 +17,7 @@ import TabBarScreen from './TabBarScreen';
 
 Navigation.registerComponent('unicorn.components.ActionSheetScreen', () => ActionSheetScreen);
 Navigation.registerComponent('unicorn.components.ActionBarScreen', () => ActionBarScreen);
-Navigation.registerComponent('unicorn.components.ActionBarScreen', () => ActionBarScreen);
+Navigation.registerComponent('unicorn.components.AvatarsScreen', () => AvatarsScreen);
 Navigation.registerComponent('unicorn.components.AnimatedImageScreen', () => AnimatedImageScreen);
 Navigation.registerComponent('unicorn.components.ButtonsScreen', () => ButtonsScreen);
 Navigation.registerComponent('unicorn.components.BadgesScreen', () => BadgesScreen);
