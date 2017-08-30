@@ -144,6 +144,8 @@ Same goes here... space, stretch and color in a more readable way.
 Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where we use most of these props
 
 ## Components (WIP)
+- Action Bar
+- Action Sheet (cross-platform)
 - Avatar
 - Badge
 - Basic List
