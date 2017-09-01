@@ -16,7 +16,7 @@ import Button from '../button';
 import ListItem from '../listItem';
 
 /**
- * Cross platform Action sheet that also support the native iOS solution
+ * @description: Cross platform Action sheet that also support the native iOS solution
  * @gif: http://www.giphy.com/gifs/3o7aCZHbWJX9CiOV6o
  */
 export default class ActionSheet extends BaseComponent {
