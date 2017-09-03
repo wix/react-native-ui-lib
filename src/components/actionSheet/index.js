@@ -17,7 +17,7 @@ import ListItem from '../listItem';
 
 /**
  * @description: Cross platform Action sheet that also support the native iOS solution
- * @gif: http://www.giphy.com/gifs/3o7aCZHbWJX9CiOV6o
+ * @gif: https://media.giphy.com/media/3o7aCZHbWJX9CiOV6o/giphy.gif
  */
 export default class ActionSheet extends BaseComponent {
   static displayName = 'ActionSheet';
