@@ -67,7 +67,6 @@ export default class MaskedInputScreen extends Component {
       <KeyboardAwareScrollView
         contentContainerStyle={styles.container}
         keyboardShouldPersistTaps="always"
-        getTextInputRefs={() => [this.noUnderline, this.hugeText]}
       >
         <Text text40 marginB-20>
           Masked Inputs
@@ -92,6 +91,7 @@ export default class MaskedInputScreen extends Component {
           caretHidden
           keyboardType={'numeric'}
         />
+
       </KeyboardAwareScrollView>
     );
   }

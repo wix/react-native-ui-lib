@@ -6,6 +6,7 @@ import TextInput from './TextInput';
 import BaseInput from './BaseInput';
 import View from '../view';
 import Text from '../text';
+import TouchableOpacity from '../touchableOpacity';
 
 /**
  * Mask Input to create custom looking inputs with custom formats
@@ -21,6 +22,12 @@ export default class MaskedInput extends BaseInput {
     renderMaskedText: PropTypes.func.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.focusInput = this.focusInput.bind(this);
+  }
+
   renderMaskedText() {
     const {renderMaskedText} = this.props;
     const {value} = this.state;
@@ -29,11 +36,11 @@ export default class MaskedInput extends BaseInput {
       return renderMaskedText(value);
     }
 
-    return (
-      <Text>
-        {value}
-      </Text>
-    );
+    return <Text>{value}</Text>;
+  }
+
+  focusInput() {
+    this.input.focus();
   }
 
   render() {
@@ -51,9 +58,13 @@ export default class MaskedInput extends BaseInput {
           placeholder=""
           onChangeText={this.onChangeText}
         />
-        <View>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.maskedInputWrapper}
+          onPress={this.focusInput}
+        >
           {this.renderMaskedText()}
-        </View>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -67,5 +78,8 @@ const styles = StyleSheet.create({
   hiddenInput: {
     color: 'transparent',
     height: undefined,
+  },
+  maskedInputWrapper: {
+    zIndex: 1,
   },
 });
