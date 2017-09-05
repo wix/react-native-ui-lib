@@ -33,6 +33,15 @@ export default class ButtonsScreen extends Component {
           </Card>
         </View>
 
+        <View marginB-20>
+          <Card height={150} shadowType="white10" style={{backgroundColor: Colors.dark60}} padding-20 shadowColor={Colors.purple10}>
+            <Text text50 white>
+              With custom shadow color (purple shadow)
+            </Text>
+          </Card>
+        </View>
+
+
         <Card row height={160} containerStyle={{ marginBottom: 15 }} onPress={() => { }}>
           <Card.Image width={115} imageSource={cardImage} />
           <Card.Section body>

@@ -23,6 +23,10 @@ export default class MultipleShadow extends BaseComponent {
      * a combination of top and bottom shadow based on shadow presets names
      */
     shadowType: PropTypes.oneOf(Object.keys(Shadows)),
+    /**
+     * Custom shadow color to be applied on both top and bottom shadows
+     */
+    shadowColor: PropTypes.string,
   }
 
   static defaultProps = {
@@ -49,11 +53,11 @@ export default class MultipleShadow extends BaseComponent {
   }
 
   render() {
-    const {style, ...others} = this.props;
+    const {style, shadowColor, ...others} = this.props;
     const {topShadow, bottomShadow} = this.getShadowStyles();
     return (
-      <View {...others} style={[this.styles.wrapper, {...topShadow}, style]}>
-        <View {...others} style={[this.styles.wrapper, {...bottomShadow}, style]}>
+      <View {...others} style={[this.styles.wrapper, {...topShadow}, shadowColor && {shadowColor}, style]}>
+        <View {...others} style={[this.styles.wrapper, {...bottomShadow}, shadowColor && {shadowColor}, style]}>
           {this.props.children}
         </View>
       </View>
