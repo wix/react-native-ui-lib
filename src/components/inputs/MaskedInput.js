@@ -22,12 +22,6 @@ export default class MaskedInput extends BaseInput {
     renderMaskedText: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.focusInput = this.focusInput.bind(this);
-  }
-
   renderMaskedText() {
     const {renderMaskedText} = this.props;
     const {value} = this.state;
@@ -37,10 +31,6 @@ export default class MaskedInput extends BaseInput {
     }
 
     return <Text>{value}</Text>;
-  }
-
-  focusInput() {
-    this.input.focus();
   }
 
   render() {
@@ -61,7 +51,7 @@ export default class MaskedInput extends BaseInput {
         <TouchableOpacity
           activeOpacity={1}
           style={styles.maskedInputWrapper}
-          onPress={this.focusInput}
+          onPress={this.focus}
         >
           {this.renderMaskedText()}
         </TouchableOpacity>

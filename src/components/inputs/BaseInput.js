@@ -30,6 +30,7 @@ export default class BaseInput extends BaseComponent {
     this.onChangeText = this.onChangeText.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
+    this.focus = this.focus.bind(this);
 
     const typography = this.getTypography();
     this.state = {
