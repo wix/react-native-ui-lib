@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ViewPropTypes} from 'react-native';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import TextInput from './TextInput';
@@ -20,6 +20,10 @@ export default class MaskedInput extends BaseInput {
      * callback for rendering the custom input out of the value returns from the actual input
      */
     renderMaskedText: PropTypes.func.isRequired,
+    /**
+     * container style for the masked input container
+     */
+    containerStyle: ViewPropTypes.style,
   };
 
   renderMaskedText() {
@@ -34,8 +38,9 @@ export default class MaskedInput extends BaseInput {
   }
 
   render() {
+    const {containerStyle} = this.props;
     return (
-      <View>
+      <View style={[containerStyle]}>
         <TextInput
           {...this.props}
           ref={(input) => {
