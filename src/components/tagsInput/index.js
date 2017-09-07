@@ -49,6 +49,10 @@ export default class TagsInput extends BaseComponent {
      */
     onCreateTag: PropTypes.func,
     /**
+     * if true, tags *removal* Ux won't be available
+     */
+    disableTagRemoval: PropTypes.bool,
+    /**
      * custom styling for the component container
      */
     containerStyle: ViewPropTypes.style,
@@ -72,6 +76,7 @@ export default class TagsInput extends BaseComponent {
     this.addTag = this.addTag.bind(this);
     this.onChangeText = this.onChangeText.bind(this);
     this.renderTagWrapper = this.renderTagWrapper.bind(this);
+    this.renderTag = this.renderTag.bind(this);
     this.getLabel = this.getLabel.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
 
@@ -147,6 +152,12 @@ export default class TagsInput extends BaseComponent {
   }
 
   onKeyPress(event) {
+    _.invoke(this.props, 'onKeyPress', event);
+
+    if (this.props.disableTagRemoval) {
+      return;
+    }
+
     const {value, tags} = this.state;
     const tagsCount = _.size(tags);
     const keyCode = _.get(event, 'nativeEvent.key');
@@ -164,7 +175,6 @@ export default class TagsInput extends BaseComponent {
         this.removeMarkedTag();
       }
     }
-    _.invoke(this.props, 'onKeyPress', event);
   }
 
   getLabel(item) {
@@ -247,12 +257,15 @@ export default class TagsInput extends BaseComponent {
   }
 
   render() {
+    const {disableTagRemoval} = this.props;
+    const tagRenderFn = disableTagRemoval ? this.renderTag : this.renderTagWrapper;
+
     const {containerStyle, hideUnderline} = this.props;
     const {tags} = this.state;
     return (
       <View style={[!hideUnderline && styles.withUnderline, containerStyle]}>
         <View style={styles.tagsList}>
-          {_.map(tags, this.renderTagWrapper)}
+          {_.map(tags, tagRenderFn)}
           {this.renderTextInput()}
         </View>
       </View>
