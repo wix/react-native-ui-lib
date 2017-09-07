@@ -43,6 +43,7 @@ export default class FormScreen extends Component {
       tags: [{label: 'Amit'}, {label: 'Ethan'}],
       // tags: [{value: 'Amit'}, {value: 'Ethan'}],
       tags2: ['Tags', 'Input'],
+      tags3: ['Non', 'Removable', 'Tags']
     };
   }
 
@@ -68,6 +69,13 @@ export default class FormScreen extends Component {
           containerStyle={{marginBottom: 20}}
           placeholder="Enter Tags"
           tags={this.state.tags2}
+        />
+
+        <TagsInput
+          containerStyle={{marginBottom: 20}}
+          placeholder="Enter Tags"
+          tags={this.state.tags3}
+          disableTagRemoval
         />
 
         <TagsInput
