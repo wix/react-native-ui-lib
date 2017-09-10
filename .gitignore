@@ -42,3 +42,4 @@ android/app/libs
 
 # UILib
 dist
+yarn.lock
