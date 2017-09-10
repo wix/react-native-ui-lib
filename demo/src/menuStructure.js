@@ -5,6 +5,7 @@ export const navigationData = {
     {title: 'Border Radius', tags: 'corener border radius circle', screen: 'unicorn.style.BorderRadiusesScreen'},
     {title: 'Colors', tags: 'palette rgb hex', screen: 'unicorn.style.ColorsScreen'},
     {title: 'Shadows (iOS)', tags: 'shadow', screen: 'unicorn.style.ShadowsScreen'},
+    {title: 'Spacings', tags: 'space margins paddings gutter', screen: 'unicorn.style.SpacingsScreen'},
   ],
   Wrappers: [
     // {title: 'View', tags: 'view wrapper', screen: 'unicorn.wrappers.ViewScreen'},
