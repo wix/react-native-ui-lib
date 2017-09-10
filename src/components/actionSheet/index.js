@@ -17,7 +17,8 @@ import ListItem from '../listItem';
 
 /**
  * @description: Cross platform Action sheet that also support the native iOS solution
- * @gif: https://media.giphy.com/media/3o7aCZHbWJX9CiOV6o/giphy.gif
+ * @gif: http://gph.is/2go66Ze
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionSheetScreen.js
  */
 export default class ActionSheet extends BaseComponent {
   static displayName = 'ActionSheet';
