@@ -1,6 +1,6 @@
 {
   "name": "unicorn-demo-app",
-  "version": "1.0.40",
+  "version": "1.0.42",
   "main": "src/index.js",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "publishConfig": {
