@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {StyleSheet, ViewPropTypes} from 'react-native';
+import {StyleSheet, ViewPropTypes, TouchableOpacity} from 'react-native';
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
@@ -57,6 +57,10 @@ export default class Avatar extends BaseComponent {
      * Use to identify the avatar in tests
      */
     testID: PropTypes.string,
+    /**
+     * Press handler
+     */
+    onPress: PropTypes.func,
   };
 
   static defaultProps = {
@@ -83,10 +87,11 @@ export default class Avatar extends BaseComponent {
   }
 
   render() {
-    const {label, labelColor: color, imageSource, isOnline, backgroundColor, testID} = this.props;
+    const {label, labelColor: color, imageSource, isOnline, backgroundColor, testID, onPress} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
+    const Container = onPress ? TouchableOpacity : View;
     return (
-      <View style={[this.styles.container, containerStyle, {backgroundColor}]} testID={testID}>
+      <Container style={[this.styles.container, containerStyle, {backgroundColor}]} testID={testID} onPress={onPress}>
         <View style={this.styles.initialsContainer}>
           <Text numberOfLines={1} style={[this.styles.initials, {color}]}>
             {label}
@@ -100,7 +105,7 @@ export default class Avatar extends BaseComponent {
         </View>}
 
         {this.renderRibbon()}
-      </View>
+      </Container>
     );
   }
 }
