@@ -1,7 +1,7 @@
 import {Component, PropTypes} from 'react';
 import {StyleSheet} from 'react-native';
 import _ from 'lodash';
-import {Typography, Colors, BorderRadiuses} from '../style';
+import {Typography, Colors, BorderRadiuses, ThemeManager} from '../style';
 import {DocsGenerator} from '../helpers';
 
 const FLEX_KEY_PATTERN = /^flex(G|S)?(-\d*)?$/;
@@ -10,23 +10,23 @@ const MARGIN_KEY_PATTERN = /margin[LTRBHV]?-[0-9]*/;
 const ALIGNMENT_KEY_PATTERN = /(left|top|right|bottom|center|centerV|centerH|spread)/;
 
 export default class BaseComponent extends Component {
-
+  static displayName = 'BaseComponent';
   static propTypes = {
     ..._.mapValues(Typography, () => PropTypes.bool),
     ..._.mapValues(Colors, () => PropTypes.bool),
     useNativeDriver: PropTypes.bool, // eslint-disable-line
-  }
+  };
 
   static defaultProps = {
     useNativeDriver: true,
-  }
+  };
 
   static extractOwnProps(props, ignoreProps) {
     const ownPropTypes = this.propTypes;
     const ownProps = _.chain(props)
-                      .pickBy((value, key) => _.includes(Object.keys(ownPropTypes), key))
-                      .omit(ignoreProps)
-                      .value();
+      .pickBy((value, key) => _.includes(Object.keys(ownPropTypes), key))
+      .omit(ignoreProps)
+      .value();
     return ownProps;
   }
 
@@ -41,11 +41,15 @@ export default class BaseComponent extends Component {
     };
   }
 
+  getThemeProps() {
+    const componentName = this.constructor.displayName;
+    const componentThemeProps = ThemeManager.components[componentName];
+    return {...componentThemeProps, ...this.props};
+  }
+
   getSnippet() {
     return DocsGenerator.generateSnippet(DocsGenerator.extractComponentInfo(this));
   }
-
-  styles;
 
   generateStyles() {
     this.styles = StyleSheet.create({});
@@ -80,7 +84,8 @@ export default class BaseComponent extends Component {
   extractTypographyValue() {
     const typographyPropsKeys = _.chain(this.props)
       .keys(this.props)
-      .filter(key => Typography.getKeysPattern().test(key)).value();
+      .filter(key => Typography.getKeysPattern().test(key))
+      .value();
     let typography;
     _.forEach(typographyPropsKeys, (key) => {
       if (this.props[key] === true) {
@@ -132,7 +137,10 @@ export default class BaseComponent extends Component {
       paddingV: 'paddingVertical',
     };
     const paddings = {};
-    const paddingPropsKeys = _.chain(this.props).keys(this.props).filter(key => PADDING_KEY_PATTERN.test(key)).value();
+    const paddingPropsKeys = _.chain(this.props)
+      .keys(this.props)
+      .filter(key => PADDING_KEY_PATTERN.test(key))
+      .value();
 
     _.forEach(paddingPropsKeys, (key) => {
       if (this.props[key] === true) {
@@ -159,7 +167,10 @@ export default class BaseComponent extends Component {
     };
 
     const margins = {};
-    const marginPropsKeys = _.chain(this.props).keys(this.props).filter(key => MARGIN_KEY_PATTERN.test(key)).value();
+    const marginPropsKeys = _.chain(this.props)
+      .keys(this.props)
+      .filter(key => MARGIN_KEY_PATTERN.test(key))
+      .value();
 
     _.forEach(marginPropsKeys, (key) => {
       if (this.props[key] === true) {
@@ -215,10 +226,10 @@ export default class BaseComponent extends Component {
   // todo: deprecate this, use extractFlexStyle instead
   extractFlexValue() {
     const flexPropKey = _.chain(this.props)
-                           .keys(this.props)
-                           .filter(key => FLEX_KEY_PATTERN.test(key))
-                           .last()
-                           .value();
+      .keys(this.props)
+      .filter(key => FLEX_KEY_PATTERN.test(key))
+      .last()
+      .value();
     if (flexPropKey && this.props[flexPropKey] === true) {
       const value = flexPropKey.split('-').pop();
       if (value === 'flex' || value === '') {
@@ -236,10 +247,10 @@ export default class BaseComponent extends Component {
       flexS: 'flexShrink',
     };
     const flexPropKey = _.chain(this.props)
-                           .keys(this.props)
-                           .filter(key => FLEX_KEY_PATTERN.test(key))
-                           .last()
-                           .value();
+      .keys(this.props)
+      .filter(key => FLEX_KEY_PATTERN.test(key))
+      .last()
+      .value();
     if (flexPropKey && this.props[flexPropKey] === true) {
       let [flexKey, flexValue] = flexPropKey.split('-');
       flexKey = STYLE_KEY_CONVERTERS[flexKey];
@@ -278,7 +289,8 @@ export default class BaseComponent extends Component {
       PADDING_KEY_PATTERN,
       MARGIN_KEY_PATTERN,
       ALIGNMENT_KEY_PATTERN,
-      Colors.getBackgroundKeysPattern()];
+      Colors.getBackgroundKeysPattern(),
+    ];
     const modifierProps = _.pickBy(this.props, (value, key) => {
       const isModifier = _.find(patterns, pattern => pattern.test(key));
       return !!isModifier;

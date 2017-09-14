@@ -3,7 +3,7 @@
 import BaseComponent from '../BaseComponent';
 import MultipleShadow from '../../components/MultipleShadow';
 import View from '../../components/view';
-import {Colors, Typography, BorderRadiuses} from '../../style';
+import {Colors, Typography, BorderRadiuses, ThemeManager} from '../../style';
 
 describe('BaseComponent', () => {
   describe('background modifiers', () => {
@@ -22,12 +22,8 @@ describe('BaseComponent', () => {
 
   describe('extractTypographyValue', () => {
     it('should extract typography value according to typography modifier', () => {
-      expect(
-        new BaseComponent({text40: true}).extractTypographyValue(),
-      ).toEqual(Typography.text40);
-      expect(
-        new BaseComponent({text70: true}).extractTypographyValue(),
-      ).toEqual(Typography.text70);
+      expect(new BaseComponent({text40: true}).extractTypographyValue()).toEqual(Typography.text40);
+      expect(new BaseComponent({text70: true}).extractTypographyValue()).toEqual(Typography.text70);
     });
 
     it('should return undefined if not typography modifier was sent', () => {
@@ -58,9 +54,7 @@ describe('BaseComponent', () => {
     it('should return value of the custom made typography', () => {
       const customTypography = {fontSize: 34, fontWeight: '400'};
       Typography.loadTypographies({customTypography});
-      expect(
-        new BaseComponent({customTypography: true}).extractTypographyValue(),
-      ).toEqual(customTypography);
+      expect(new BaseComponent({customTypography: true}).extractTypographyValue()).toEqual(customTypography);
       expect(
         new BaseComponent({
           text40: true,
@@ -307,9 +301,7 @@ describe('BaseComponent', () => {
       expect(MultipleShadow.extractOwnProps(props, 'topShadow')).toEqual({
         bottomShadow: 2,
       });
-      expect(
-        MultipleShadow.extractOwnProps(props, ['topShadow', 'bottomShadow']),
-      ).toEqual({});
+      expect(MultipleShadow.extractOwnProps(props, ['topShadow', 'bottomShadow'])).toEqual({});
     });
   });
 
@@ -340,6 +332,27 @@ describe('BaseComponent', () => {
         left: true,
         'bg-red10': false,
       });
+    });
+  });
+
+  describe('getThemeProps', () => {
+    it('should return props values from the Theme Manager if were defined', () => {
+      ThemeManager.setComponentTheme('BaseComponent', {someProp: 'themeValue'});
+      const uut = new BaseComponent({});
+      expect(uut.getThemeProps()).toEqual({someProp: 'themeValue'});
+    });
+
+    it('should return override theme values with passed props values', () => {
+      ThemeManager.setComponentTheme('BaseComponent', {someProp: 'themeValue'});
+      const uut = new BaseComponent({someProp: 'someValue'});
+      expect(uut.getThemeProps()).toEqual({someProp: 'someValue'});
+    });
+
+
+    it('should return props values from the Theme Manager merged with values from passed props', () => {
+      ThemeManager.setComponentTheme('BaseComponent', {someProp: 'themeValue'});
+      const uut = new BaseComponent({anotherProps: 'anotherValue'});
+      expect(uut.getThemeProps()).toEqual({someProp: 'themeValue', anotherProps: 'anotherValue'});
     });
   });
 });

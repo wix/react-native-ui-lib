@@ -25,6 +25,10 @@ class ThemeManager {
     this.theme = _.merge(this.theme, overrides);
   }
 
+  setComponentTheme(componentName, overrides) {
+    this.theme.components[componentName] = _.merge(this.theme.components[componentName], overrides);
+  }
+
   get components() {
     return this.theme.components;
   }
