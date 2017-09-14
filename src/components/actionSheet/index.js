@@ -1,15 +1,10 @@
 import React, {PropTypes} from 'react';
-import {
-  StyleSheet,
-  ActionSheetIOS,
-  TouchableWithoutFeedback,
-  Modal,
-} from 'react-native';
+import {StyleSheet, ActionSheetIOS, TouchableWithoutFeedback, Modal} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
-import {Colors, ThemeManager} from '../../style';
+import {Colors} from '../../style';
 import View from '../view';
 import Text from '../text';
 import Button from '../button';
@@ -71,8 +66,10 @@ export default class ActionSheet extends BaseComponent {
         duration={600}
         easing="ease-out-quint"
       >
-        {this.renderTitle()}
-        {this.renderActions()}
+        <View paddingB-8 bg-white>
+          {this.renderTitle()}
+          {this.renderActions()}
+        </View>
       </Animatable.View>
     );
   }
@@ -81,8 +78,8 @@ export default class ActionSheet extends BaseComponent {
     const {title} = this.props;
     if (!_.isEmpty(title)) {
       return (
-        <View bg-dark80 height={35} center>
-          <Text dark50>
+        <View height={56} paddingL-16 centerV>
+          <Text dark40 text70>
             {title}
           </Text>
         </View>
@@ -91,27 +88,21 @@ export default class ActionSheet extends BaseComponent {
   }
 
   renderActions() {
-    const {options} = this.props;
-    return (
-      <View bg-white>
-        {_.map(options, this.renderAction)}
-      </View>
-    );
+    const {options, cancelButtonIndex} = this.props;
+    const optionsToRender = _.filter(options, (option, index) => index !== cancelButtonIndex);
+    return <View>{_.map(optionsToRender, this.renderAction)}</View>;
   }
 
   renderAction(option, index) {
-    const {cancelButtonIndex} = this.props;
-    const isCancelAction = cancelButtonIndex === index;
-
     return (
       <ListItem
-        height={isCancelAction ? 48 : 56.5}
-        style={styles.action}
+        style={{backgroundColor: 'transparent'}}
+        height={48}
         key={index}
         onPress={() => this.onOptionPress(index)}
       >
-        <View paddingL-20 flex centerV centerH={isCancelAction}>
-          <Text text70 dark10 blue30={isCancelAction}>
+        <View paddingL-20 flex centerV>
+          <Text text70 dark10>
             {option.label}
           </Text>
         </View>
@@ -120,22 +111,12 @@ export default class ActionSheet extends BaseComponent {
   }
 
   componentWillReceiveProps(nextProps) {
+    const {useNativeIOS} = this.getThemeProps();
     const wasVisible = this.props.visible;
     const willBeVisible = nextProps.visible;
 
-    if (
-      !wasVisible &&
-      willBeVisible &&
-      nextProps.useNativeIOS &&
-      Constants.isIOS
-    ) {
-      const {
-        title,
-        message,
-        cancelButtonIndex,
-        destructiveButtonIndex,
-        options,
-      } = nextProps;
+    if (!wasVisible && willBeVisible && useNativeIOS && Constants.isIOS) {
+      const {title, message, cancelButtonIndex, destructiveButtonIndex, options} = nextProps;
 
       ActionSheetIOS.showActionSheetWithOptions(
         {
@@ -156,7 +137,7 @@ export default class ActionSheet extends BaseComponent {
   }
 
   render() {
-    const {visible, useNativeIOS, onDismiss} = this.props;
+    const {visible, useNativeIOS, onDismiss} = this.getThemeProps();
 
     if (Constants.isIOS && useNativeIOS) return null;
 
@@ -188,10 +169,6 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: Colors.rgba(Colors.dark10, 0.3),
-  },
-  action: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: ThemeManager.dividerColor,
+    backgroundColor: Colors.rgba(Colors.black, 0.4),
   },
 });

@@ -2,14 +2,12 @@ import React, {Component} from 'react';
 import {View, Text, Button, ActionSheet} from 'react-native-ui-lib'; //eslint-disable-line
 import _ from 'lodash';
 
-const useCases = [
-  {label: 'Default (Android/iOS)', useNativeIOS: false},
-  {label: 'Native IOS', useNativeIOS: true},
-];
+const useCases = [{label: 'Default (Android/iOS)', useNativeIOS: false}, {label: 'Native IOS', useNativeIOS: true}];
 
 export default class ActionSheetScreen extends Component {
   state = {
-    show: false,
+    showNative: false,
+    showCustom: false,
   };
 
   pickOption(index) {
@@ -19,7 +17,7 @@ export default class ActionSheetScreen extends Component {
   }
 
   render() {
-    const {show, useNativeIOS, pickedOption} = this.state;
+    const {showCustom, showNative, pickedOption} = this.state;
     return (
       <View flex padding-25>
         <Text text30>Action Sheet</Text>
@@ -36,19 +34,18 @@ export default class ActionSheetScreen extends Component {
                 label={`> ${useCase.label}`}
                 onPress={() =>
                   this.setState({
-                    show: true,
-                    useNativeIOS: useCase.useNativeIOS,
+                    showNative: useCase.useNativeIOS,
+                    showCustom: !useCase.useNativeIOS,
                   })}
               />
             );
           })}
         </View>
-        {!_.isUndefined(pickedOption) &&
+        {!_.isUndefined(pickedOption) && (
           <View>
-            <Text>
-              User picked {pickedOption}
-            </Text>
-          </View>}
+            <Text>User picked {pickedOption}</Text>
+          </View>
+        )}
 
         <ActionSheet
           title="Title"
@@ -61,9 +58,24 @@ export default class ActionSheetScreen extends Component {
             {label: 'option 3', onPress: () => this.pickOption('option 3')},
             {label: 'cancel', onPress: () => this.pickOption('cancel')},
           ]}
-          visible={show}
-          useNativeIOS={useNativeIOS}
-          onDismiss={() => this.setState({show: false})}
+          visible={showCustom}
+          onDismiss={() => this.setState({showCustom: false})}
+        />
+
+        <ActionSheet
+          title="Title"
+          message="Message of action sheet"
+          cancelButtonIndex={3}
+          destructiveButtonIndex={0}
+          options={[
+            {label: 'option 1', onPress: () => this.pickOption('option 1')},
+            {label: 'option 2', onPress: () => this.pickOption('option 2')},
+            {label: 'option 3', onPress: () => this.pickOption('option 3')},
+            {label: 'cancel', onPress: () => this.pickOption('cancel')},
+          ]}
+          visible={showNative}
+          useNativeIOS
+          onDismiss={() => this.setState({showNative: false})}
         />
       </View>
     );
