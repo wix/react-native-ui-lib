@@ -59,6 +59,10 @@ export default class Button extends BaseComponent {
      */
     link: PropTypes.bool,
     /**
+     * label color for when it's displayed as link
+     */
+    linkColor: PropTypes.string,
+    /**
      * Additional styles for the top container
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
@@ -112,15 +116,17 @@ export default class Button extends BaseComponent {
   }
 
   getLabelColor() {
-    const {link, outline, disabled} = this.props;
+    const {link, linkColor, outline, disabled} = this.getThemeProps(); // this.props;
 
     let color = ThemeManager.CTATextColor;
-    if (link || outline) {
+    if (link) {
+      color = linkColor || Colors.blue30;
+    } else if (outline) {
       color = Colors.dark10;
+    }
 
-      if (disabled) {
-        return ThemeManager.CTADisabledColor;
-      }
+    if (disabled && (link || outline)) {
+      return ThemeManager.CTADisabledColor;
     }
 
     color = this.props.color || this.extractColorValue() || color;

@@ -35,9 +35,22 @@ describe('Button', () => {
       expect(uut.getLabelColor()).toEqual(ThemeManager.CTATextColor);
     });
 
-    it('should return dark10 color for link', () => {
+    it('should return blue30 color for link', () => {
       const uut = new Button({link: true});
-      expect(uut.getLabelColor()).toEqual(Colors.dark10);
+      expect(uut.getLabelColor()).toEqual(Colors.blue30);
+    });
+
+    it('should return Theme linkColor color for link', () => {
+      ThemeManager.setComponentTheme('Button', {
+        linkColor: Colors.yellow40,
+      });
+      const uut = new Button({link: true});
+      expect(uut.getLabelColor()).toEqual(Colors.yellow40);
+    });
+
+    it('should return linkColor color for link', () => {
+      const uut = new Button({link: true, linkColor: Colors.orange50});
+      expect(uut.getLabelColor()).toEqual(Colors.orange50);
     });
 
     it('should return dark10 color for outline', () => {

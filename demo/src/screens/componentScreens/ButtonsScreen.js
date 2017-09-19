@@ -278,7 +278,7 @@ export default class ButtonsScreen extends DemoScreen {
               label="disabled link"
             />
 
-            <Button blue30 label="link button" link/>
+            <Button label="link button" link/>
           </View>
 
           <View marginT-20>
