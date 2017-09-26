@@ -98,10 +98,10 @@ class ListItem extends BaseComponent {
 function createStyles({height}) {
   return StyleSheet.create({
     container: {
+      backgroundColor: Colors.white,
     },
     innerContainer: {
       flexDirection: 'row',
-      backgroundColor: Colors.white,
       height,
     },
   });
