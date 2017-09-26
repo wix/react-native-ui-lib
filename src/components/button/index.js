@@ -65,10 +65,6 @@ export default class Button extends BaseComponent {
      */
     linkColor: PropTypes.string,
     /**
-     * Additional styles for the top container
-     */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
      * Additional styles for label text
      */
     labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
