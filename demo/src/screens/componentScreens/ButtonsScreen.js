@@ -103,7 +103,13 @@ export default class ButtonsScreen extends DemoScreen {
               ref={(element) => this.button_4 = element}
               onPress={() => this.showSnippet(this.button_4)}
             />
-
+            <Button
+              label={'xSmall'}
+              size={Button.sizes.xSmall}
+              containerStyle={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_81 = element)}
+              onPress={() => this.showSnippet(this.button_81)}
+            />
             <Button
               backgroundColor="#3C9BF0"
               label="Follow"

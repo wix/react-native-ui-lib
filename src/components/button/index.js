@@ -9,6 +9,8 @@ import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 /**
  * @description: Basic button component
  * @modifiers: margins
+ * @extends TouchableOpacity
+ * @example https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.js
  */
 export default class Button extends BaseComponent {
   static displayName = 'Button';
@@ -33,7 +35,7 @@ export default class Button extends BaseComponent {
     /**
      * Size of the button [large, medium, small]
      */
-    size: PropTypes.oneOf(['small', 'medium', 'large']),
+    size: PropTypes.oneOf(['xSmall', 'small', 'medium', 'large']),
     /**
      * Custom border radius.
      */
@@ -89,20 +91,24 @@ export default class Button extends BaseComponent {
     labelStyle: {},
     size: 'large',
     outline: false,
+
+    borderRadius: BorderRadiuses.br100,
+    // backgroundColor: ThemeManager.CTABackgroundColor,
   };
 
   static sizes = {
+    xSmall: 'xSmall',
     small: 'small',
     medium: 'medium',
     large: 'large',
-  }
+  };
 
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
   getBackgroundColor() {
-    const {disabled, outline, link, backgroundColor: propsBackgroundColor} = this.props;
+    const {disabled, outline, link, backgroundColor: propsBackgroundColor} = this.getThemeProps();
     const {backgroundColor: stateBackgroundColor} = this.state;
 
     if (!outline && !link) {
@@ -110,7 +116,7 @@ export default class Button extends BaseComponent {
         return ThemeManager.CTADisabledColor;
       }
 
-      return propsBackgroundColor || stateBackgroundColor;
+      return propsBackgroundColor || stateBackgroundColor || Colors.blue30;
     }
     return 'transparent';
   }
@@ -135,49 +141,31 @@ export default class Button extends BaseComponent {
 
   getLabelSizeStyle() {
     const {size, link} = this.props;
-    let style = {
-      paddingHorizontal: 36,
-    };
 
-    if (size === 'small') {
-      style = {
-        paddingHorizontal: 15,
-        ...Typography.text80,
-      };
-    } else if (size === 'medium') {
-      style = {
-        paddingHorizontal: 24,
-        ...Typography.text80,
-      };
-    }
+    const LABEL_STYLE_BY_SIZE = {};
+    LABEL_STYLE_BY_SIZE[Button.sizes.xSmall] = {paddingHorizontal: 12, ...Typography.text80};
+    LABEL_STYLE_BY_SIZE[Button.sizes.small] = {paddingHorizontal: 15, ...Typography.text80};
+    LABEL_STYLE_BY_SIZE[Button.sizes.medium] = {paddingHorizontal: 24, ...Typography.text80};
+    LABEL_STYLE_BY_SIZE[Button.sizes.large] = {paddingHorizontal: 36};
 
+    const labelSizeStyle = LABEL_STYLE_BY_SIZE[size];
     if (link) {
-      style.paddingHorizontal = 0;
+      labelSizeStyle.paddingHorizontal = 0;
     }
 
-    return style;
+    return labelSizeStyle;
   }
 
   getContainerSizeStyle() {
     const {size} = this.props;
-    let style = {
-      paddingVertical: 16,
-      minWidth: 138,
-    };
 
-    if (size === 'small') {
-      style = {
-        paddingVertical: 5,
-        minWidth: 74,
-      };
-    } else if (size === 'medium') {
-      style = {
-        paddingVertical: 11,
-        minWidth: 125,
-      };
-    }
+    const CONTAINER_STYLE_BY_SIZE = {};
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = {paddingVertical: 4, minWidth: 60};
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = {paddingVertical: 5, minWidth: 74};
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = {paddingVertical: 11, minWidth: 125};
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = {paddingVertical: 16, minWidth: 138};
 
-    return style;
+    return CONTAINER_STYLE_BY_SIZE[size];
   }
 
   getOutlineStyle() {
@@ -195,9 +183,8 @@ export default class Button extends BaseComponent {
     const {link, borderRadius, fullWidth} = this.props;
     if (link || fullWidth) {
       return {borderRadius: 0};
-    } else if (!_.isUndefined(borderRadius)) {
-      return {borderRadius};
     }
+    return {borderRadius: _.isUndefined(borderRadius) ? BorderRadiuses.br100 : borderRadius};
   }
 
   getShadowStyle() {
@@ -216,11 +203,12 @@ export default class Button extends BaseComponent {
           source={iconSource}
           style={[
             this.styles.icon,
-            (link && disabled) && this.styles.iconDisabled,
+            link && disabled && this.styles.iconDisabled,
             label && this.styles.iconSpacing,
             iconStyle,
           ]}
-        />);
+        />
+      );
     }
     return null;
   }
@@ -232,16 +220,7 @@ export default class Button extends BaseComponent {
     const color = this.getLabelColor();
     if (label) {
       return (
-        <Text
-          style={[
-            this.styles.text,
-            color && {color},
-            sizeStyle,
-            {...typography},
-            labelStyle,
-          ]}
-          numberOfLines={1}
-        >
+        <Text style={[this.styles.text, color && {color}, sizeStyle, {...typography}, labelStyle]} numberOfLines={1}>
           {label}
         </Text>
       );
@@ -250,7 +229,7 @@ export default class Button extends BaseComponent {
   }
 
   render() {
-    const {onPress, disabled, link, style, containerStyle, testID, ...others} = this.props;
+    const {onPress, disabled, link, style, containerStyle, testID, ...others} = this.getThemeProps(); // this.props;
     const shadowStyle = this.getShadowStyle();
     const {margins} = this.state;
     const backgroundColor = this.getBackgroundColor();
@@ -264,7 +243,11 @@ export default class Button extends BaseComponent {
           this.styles.container,
           shadowStyle,
           margins,
-          containerStyle]}
+          containerStyle,
+          backgroundColor && {backgroundColor},
+          borderRadiusStyle,
+          outlineStyle,
+        ]}
         activeOpacity={0.6}
         onPress={onPress}
         disabled={disabled}
@@ -275,10 +258,6 @@ export default class Button extends BaseComponent {
           style={[
             this.styles.innerContainer,
             containerSizeStyle,
-            backgroundColor && {backgroundColor},
-            borderRadiusStyle,
-            outlineStyle,
-            disabled && this.styles.innerContainerDisabled,
             link && this.styles.innerContainerLink,
             style,
           ]}
@@ -292,22 +271,17 @@ export default class Button extends BaseComponent {
   }
 }
 
-function createStyles({outline, outlineColor, link, color}) {
-  const showBorder = outline && !link;
+function createStyles({color}) {
   return StyleSheet.create({
     container: {
       backgroundColor: 'transparent',
     },
     innerContainer: {
-      backgroundColor: ThemeManager.CTABackgroundColor,
-      borderWidth: showBorder ? 1 : 0,
-      borderColor: showBorder ? outlineColor : undefined,
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: BorderRadiuses.br100,
     },
-    innerContainerDisabled: {
+    containerDisabled: {
       backgroundColor: Colors.dark60,
     },
     innerContainerLink: {
