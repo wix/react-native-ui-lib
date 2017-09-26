@@ -26,7 +26,7 @@ class ThemeManager {
   }
 
   setComponentTheme(componentName, overrides) {
-    this.theme.components[componentName] = _.merge(this.theme.components[componentName], overrides);
+    this.theme.components[componentName] = _.cloneDeep(overrides);
   }
 
   get components() {
