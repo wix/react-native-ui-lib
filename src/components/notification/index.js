@@ -197,7 +197,7 @@ export default class Notification extends BaseComponent {
         <View row flex centerV spread>
           {this.renderMessage()}
           {(hasOneAction || allowDismiss) &&
-          <View row>
+          <View row height="100%">
             {hasOneAction && this.renderOneAction()}
             {this.renderDismissButton()}
           </View>}
