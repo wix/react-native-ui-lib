@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {View, Image, StyleSheet} from 'react-native';
+import {Image, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
 import Text from '../text';
@@ -87,7 +87,6 @@ export default class Button extends BaseComponent {
   };
 
   static defaultProps = {
-    containerStyle: {},
     labelStyle: {},
     size: 'large',
     outline: false,
@@ -102,6 +101,14 @@ export default class Button extends BaseComponent {
     medium: 'medium',
     large: 'large',
   };
+
+  constructor(props) {
+    super(props);
+
+    if (!_.isUndefined(props.containerStyle)) {
+      console.warn('Button "containerStyle" prop will be deprecated soon, please use "style" instead');
+    }
+  }
 
   generateStyles() {
     this.styles = createStyles(this.props);
@@ -172,7 +179,7 @@ export default class Button extends BaseComponent {
     const {outline, outlineColor, link} = this.props;
     if ((outline || outlineColor) && !link) {
       return {
-        borderWidth: StyleSheet.hairlineWidth,
+        borderWidth: 1,
         borderColor: outlineColor || Colors.dark70,
       };
     }
@@ -229,7 +236,7 @@ export default class Button extends BaseComponent {
   }
 
   render() {
-    const {onPress, disabled, link, style, containerStyle, testID, ...others} = this.getThemeProps(); // this.props;
+    const {onPress, disabled, link, style, containerStyle, testID, ...others} = this.getThemeProps();
     const shadowStyle = this.getShadowStyle();
     const {margins} = this.state;
     const backgroundColor = this.getBackgroundColor();
@@ -241,12 +248,16 @@ export default class Button extends BaseComponent {
       <TouchableOpacity
         style={[
           this.styles.container,
+          this.styles.innerContainer,
+          containerSizeStyle,
+          link && this.styles.innerContainerLink,
           shadowStyle,
           margins,
           containerStyle,
           backgroundColor && {backgroundColor},
           borderRadiusStyle,
           outlineStyle,
+          style,
         ]}
         activeOpacity={0.6}
         onPress={onPress}
@@ -254,7 +265,10 @@ export default class Button extends BaseComponent {
         testID={testID}
         {...others}
       >
-        <View
+        {this.props.children}
+        {this.renderIcon()}
+        {this.renderLabel()}
+        {/* <View
           style={[
             this.styles.innerContainer,
             containerSizeStyle,
@@ -262,10 +276,7 @@ export default class Button extends BaseComponent {
             style,
           ]}
         >
-          {this.props.children}
-          {this.renderIcon()}
-          {this.renderLabel()}
-        </View>
+        </View> */}
       </TouchableOpacity>
     );
   }
