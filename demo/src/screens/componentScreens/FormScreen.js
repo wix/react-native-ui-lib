@@ -76,6 +76,7 @@ export default class FormScreen extends Component {
           placeholder="Enter Tags"
           tags={this.state.tags3}
           disableTagRemoval
+          disableTagAdding
         />
 
         <TagsInput
