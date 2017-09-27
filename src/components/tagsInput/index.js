@@ -53,6 +53,10 @@ export default class TagsInput extends BaseComponent {
      */
     disableTagRemoval: PropTypes.bool,
     /**
+     * if true, tags *adding* Ux (i.e. by 'submitting' the input text) won't be available
+     */
+    disableTagAdding: PropTypes.bool,
+    /**
      * custom styling for the component container
      */
     containerStyle: ViewPropTypes.style,
@@ -104,8 +108,9 @@ export default class TagsInput extends BaseComponent {
   }
 
   addTag() {
-    const {onCreateTag} = this.props;
+    const {onCreateTag, disableTagAdding} = this.props;
     const {value, tags} = this.state;
+    if (disableTagAdding) return;
     if (_.isEmpty(value.trim())) return;
 
     const newTag = _.isFunction(onCreateTag) ? onCreateTag(value) : value;
