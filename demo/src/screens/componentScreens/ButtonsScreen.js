@@ -1,17 +1,28 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Alert, Image} from 'react-native';
-import {Text, View, Assets, Constants, Button, Colors, Typography} from 'react-native-ui-lib';//eslint-disable-line
+import {Text, View, Assets, Constants, Button, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
 import DemoScreen from '../DemoScreen';
+
 const plusIcon = require('../../assets/icons/plus.png');
 
 const ButtonSpace = 20;
 
 export default class ButtonsScreen extends DemoScreen {
-
   constructor(props) {
     super(props);
 
-    this.propsToRender = ['label', 'color', 'backgroundColor', 'size', 'outlineColor', 'outline', 'disabled', 'link', 'enableShadow', 'borderRadius'];
+    this.propsToRender = [
+      'label',
+      'color',
+      'backgroundColor',
+      'size',
+      'outlineColor',
+      'outline',
+      'disabled',
+      'link',
+      'enableShadow',
+      'borderRadius',
+    ];
 
     this.state = {
       snippet: '',
@@ -37,7 +48,12 @@ export default class ButtonsScreen extends DemoScreen {
   }
 
   render() {
-    /*return (
+    // return (
+    //   <View flex center>
+    //     <Button style={{borderWidth: 1, maxWidth: 80  }} style2={{padding: 50}} label="asdasd" />
+    //   </View>
+    // );
+    /* return (
       <View flex>
         <View center paddingV-20>
           <Button
@@ -49,12 +65,12 @@ export default class ButtonsScreen extends DemoScreen {
           {this.renderComponentSettings()}
         </View>
       </View>
-    );*/
+    ); */
 
     const {snippet} = this.state;
     return (
       <View>
-        {!!snippet && <SnippetBlock snippet={snippet} onClose={() => this.hideSnippet()}/>}
+        {!!snippet && <SnippetBlock snippet={snippet} onClose={() => this.hideSnippet()} />}
         <ScrollView>
           <View centerH>
             <Text style={styles.title}>Buttons</Text>
@@ -62,9 +78,9 @@ export default class ButtonsScreen extends DemoScreen {
               backgroundColor="#30B650"
               label="SHUFFLE PLAY"
               labelStyle={{fontWeight: '600'}}
-              containerStyle={{marginBottom: ButtonSpace}}
+              style={{marginBottom: ButtonSpace}}
               enableShadow
-              ref={(element) => this.button_1 = element}
+              ref={element => (this.button_1 = element)}
               onPress={() => this.showSnippet(this.button_1)}
             />
 
@@ -72,9 +88,8 @@ export default class ButtonsScreen extends DemoScreen {
               backgroundColor="#FB3C62"
               label="Get 3 Months Free"
               borderRadius={7}
-              style={{height: 45}}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_2 = element}
+              style={{height: 45, marginBottom: ButtonSpace}}
+              ref={element => (this.button_2 = element)}
               onPress={() => this.showSnippet(this.button_2)}
             />
 
@@ -86,9 +101,8 @@ export default class ButtonsScreen extends DemoScreen {
               size="medium"
               text60
               labelStyle={{fontWeight: '700', letterSpacing: 4}}
-              style={{borderWidth: 2}}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_3 = element}
+              style={{borderWidth: 3, marginBottom: ButtonSpace}}
+              ref={element => (this.button_3 = element)}
               onPress={() => this.showSnippet(this.button_3)}
             />
 
@@ -99,16 +113,9 @@ export default class ButtonsScreen extends DemoScreen {
               borderRadius={0}
               text90
               labelStyle={{fontWeight: '500', letterSpacing: -0.5}}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_4 = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_4 = element)}
               onPress={() => this.showSnippet(this.button_4)}
-            />
-            <Button
-              label={'xSmall'}
-              size={Button.sizes.xSmall}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={element => (this.button_81 = element)}
-              onPress={() => this.showSnippet(this.button_81)}
             />
             <Button
               backgroundColor="#3C9BF0"
@@ -117,44 +124,51 @@ export default class ButtonsScreen extends DemoScreen {
               borderRadius={3}
               text90
               labelStyle={{fontWeight: '500'}}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_5 = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_5 = element)}
               onPress={() => this.showSnippet(this.button_5)}
             />
 
             <Text style={styles.header}>Do you have it in small?</Text>
             <Button
               label={'Default'}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_6 = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_6 = element)}
               onPress={() => this.showSnippet(this.button_6)}
             />
             <Button
               label={'Medium'}
               size={Button.sizes.medium}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_7 = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_7 = element)}
               onPress={() => this.showSnippet(this.button_7)}
             />
             <Button
               label={'Small'}
               size={Button.sizes.small}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_8 = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_8 = element)}
               onPress={() => this.showSnippet(this.button_8)}
             />
             <Button
+              label={'xSmall'}
+              size={Button.sizes.xSmall}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_81 = element)}
+              onPress={() => this.showSnippet(this.button_81)}
+            />
+            <Button
               label={'This is a button with long text'}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_9 = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_9 = element)}
               onPress={() => this.showSnippet(this.button_9)}
             />
 
             <Button
               label={'Disabled'}
               disabled
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_10 = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_10 = element)}
               onPress={() => this.showSnippet(this.button_10)}
             />
 
@@ -162,30 +176,30 @@ export default class ButtonsScreen extends DemoScreen {
             <Button
               label={'Bold!'}
               labelStyle={{fontWeight: '800'}}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_11 = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_11 = element)}
               onPress={() => this.showSnippet(this.button_11)}
             />
             <Button
               label={'Red Button'}
               backgroundColor={Colors.red30}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_12 = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_12 = element)}
               onPress={() => this.showSnippet(this.button_12)}
             />
             <Button
               label={'Dark Label'}
               red10
               backgroundColor={Colors.red50}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_13 = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_13 = element)}
               onPress={() => this.showSnippet(this.button_13)}
             />
             <Button
               label={'With Shadow'}
               enableShadow
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_14 = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_14 = element)}
               onPress={() => this.showSnippet(this.button_14)}
             />
 
@@ -193,118 +207,115 @@ export default class ButtonsScreen extends DemoScreen {
             <Button
               label="Outline"
               outline
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_15 = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_15 = element)}
               onPress={() => this.showSnippet(this.button_15)}
             />
             <Button
               label="Outline M"
               size={Button.sizes.medium}
               outline
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_16 = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_16 = element)}
               onPress={() => this.showSnippet(this.button_16)}
             />
-            
+
             <Button
               label="Outline S"
               size={Button.sizes.small}
               outline
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_16a = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_16a = element)}
               onPress={() => this.showSnippet(this.button_16a)}
             />
             <Button
               label="Red Outline"
               outline
               outlineColor={Colors.red10}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_16 = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_16 = element)}
               onPress={() => this.showSnippet(this.button_16)}
             />
 
             <Text style={styles.header}>Let your curves show</Text>
-            {Constants.isIOS ? <Button
-              label={'Squarish'}
-              borderRadius={2}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_17 = element}
-              onPress={() => this.showSnippet(this.button_17)}
-            /> : <Button
-              label={'Roundish'}
-              borderRadius={15}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_17 = element}
-              onPress={() => this.showSnippet(this.button_17)}
-            />}
+            {Constants.isIOS ? (
+              <Button
+                label={'Squarish'}
+                borderRadius={2}
+                style={{marginBottom: ButtonSpace}}
+                ref={element => (this.button_17 = element)}
+                onPress={() => this.showSnippet(this.button_17)}
+              />
+            ) : (
+              <Button
+                label={'Roundish'}
+                borderRadius={15}
+                style={{marginBottom: ButtonSpace}}
+                ref={element => (this.button_17 = element)}
+                onPress={() => this.showSnippet(this.button_17)}
+              />
+            )}
             <Button
               label={'Custom'}
               borderRadius={22}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_18 = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_18 = element)}
               onPress={() => this.showSnippet(this.button_18)}
             />
             <Button
               label={'No Radius'}
               borderRadius={0}
-              containerStyle={{marginBottom: ButtonSpace}}
-              ref={(element) => this.button_19 = element}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_19 = element)}
               onPress={() => this.showSnippet(this.button_19)}
             />
             <Text style={styles.header}>Special Cases</Text>
-            <Button
-              onPress={() => Alert.alert('Button #3')}
-              containerStyle={{marginBottom: ButtonSpace}}
-            >
-              <Text>{Assets.emojis.cloud} {Assets.emojis.airplane} {Assets.emojis.sunny}</Text>
+            <Button onPress={() => Alert.alert('Button #3')} style={{marginBottom: ButtonSpace}}>
+              <Text>
+                {Assets.emojis.cloud} {Assets.emojis.airplane} {Assets.emojis.sunny}
+              </Text>
             </Button>
-            <Button
-              outline
-              onPress={() => Alert.alert('Button #3')}
-              containerStyle={{marginBottom: ButtonSpace}}
-            >
-              <Image source={plusIcon}/>
+            <Button outline onPress={() => Alert.alert('Button #3')} style={{marginBottom: ButtonSpace}}>
+              <Image source={plusIcon} />
               <Text style={{marginLeft: 10, color: Colors.blue30}}>Custom Icon</Text>
             </Button>
 
-            <Button
-              text90
-              link
-              containerStyle={{marginBottom: ButtonSpace}}
-              iconSource={plusIcon}
-              label="link icon"
-            />
+            <Button text90 link style={{marginBottom: ButtonSpace}} iconSource={plusIcon} label="link icon" />
 
             <Button
               text90
               link
               disabled
-              containerStyle={{marginBottom: ButtonSpace}}
+              style={{marginBottom: ButtonSpace}}
               iconSource={plusIcon}
               label="disabled link"
             />
 
-            <Button label="link button" link/>
+            <Button label="link button" link />
           </View>
 
           <View marginT-20>
             <View centerH marginB-10>
-              <Text text50 dark10>Full Width Buttons</Text>
+              <Text text50 dark10>
+                Full Width Buttons
+              </Text>
             </View>
             <Button
               fullWidth
               label="Full Width"
               marginB-10
-              ref={(element) => this.button_20 = element}
+              ref={element => (this.button_20 = element)}
               onPress={() => this.showSnippet(this.button_20)}
             />
 
             <Button
               fullWidth
               size="medium"
-              bg-red70 dark10
-              label="Medium Size Full Width" marginB-10
-              ref={(element) => this.button_21 = element}
+              bg-red70
+              dark10
+              label="Medium Size Full Width"
+              marginB-10
+              ref={element => (this.button_21 = element)}
               onPress={() => this.showSnippet(this.button_21)}
             />
             <Button
@@ -313,11 +324,10 @@ export default class ButtonsScreen extends DemoScreen {
               bg-green70
               green10
               label="Small Size Full Width"
-              ref={(element) => this.button_22 = element}
+              ref={element => (this.button_22 = element)}
               onPress={() => this.showSnippet(this.button_22)}
             />
           </View>
-
         </ScrollView>
       </View>
     );
@@ -328,17 +338,20 @@ const SnippetBlock = ({snippet, onClose}) => {
   return (
     <View flex spread bg-dark10 padding-15 style={{...StyleSheet.absoluteFillObject, zIndex: 1}}>
       <View>
-        <Text white text40 marginB-20>Snippet Code</Text>
-        <Text white text70>{snippet}</Text>
+        <Text white text40 marginB-20>
+          Snippet Code
+        </Text>
+        <Text white text70>
+          {snippet}
+        </Text>
       </View>
       <View row centerH>
-        {/*<Button marginR-10 white outline outlineColor={Colors.white} size="small" label="copy"/>*/}
-        <Button white outline outlineColor={Colors.white} size="small" label="close" onPress={onClose}/>
+        {/* <Button marginR-10 white outline outlineColor={Colors.white} size="small" label="copy"/> */}
+        <Button white outline outlineColor={Colors.white} size="small" label="close" onPress={onClose} />
       </View>
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
