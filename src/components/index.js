@@ -17,6 +17,7 @@ import Stepper from './stepper';
 import TabBar from './tabBar';
 import TagsInput from './tagsInput';
 import Text from './text';
+import Toast from './toast';
 import TouchableOpacity from './touchableOpacity';
 import View from './view';
 
@@ -39,6 +40,7 @@ module.exports = {
   TabBar,
   TagsInput,
   Text,
+  Toast,
   TouchableOpacity,
   View,
 };
