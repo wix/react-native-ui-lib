@@ -77,7 +77,9 @@ export default class ConnectionStatusBar extends BaseComponent {
       }
 
       if (!isConnected) {
-        this.getInitialConnectionState();
+        setTimeout(() => {
+          this.getInitialConnectionState();
+        }, 3000);
       }
 
       if (!isConnected && _.isFunction(ConnectionStatusBar.onConnectionLost)) {
