@@ -56,10 +56,7 @@ export default class ConnectionStatusBar extends BaseComponent {
   }
 
   componentDidMount() {
-    this.netInfoListener = NetInfo.addEventListener(
-      'change',
-      this.onConnectionChange,
-    );
+    this.netInfoListener = NetInfo.addEventListener('change', this.onConnectionChange);
   }
 
   componentWillUnmount() {
@@ -77,6 +74,10 @@ export default class ConnectionStatusBar extends BaseComponent {
       });
       if (this.props.onConnectionChange) {
         this.props.onConnectionChange(isConnected, false);
+      }
+
+      if (!isConnected) {
+        this.getInitialConnectionState();
       }
 
       if (!isConnected && _.isFunction(ConnectionStatusBar.onConnectionLost)) {
@@ -108,16 +109,12 @@ export default class ConnectionStatusBar extends BaseComponent {
     return (
       <View style={this.styles.container}>
         <View style={{flex: 1, flexDirection: 'row'}}>
-          <Text style={this.styles.text}>
-            {this.props.label}
-          </Text>
-          {this.props.allowDismiss &&
-            <TouchableOpacity
-              style={this.styles.xContainer}
-              onPress={() => this.setState({isCancelled: true})}
-            >
+          <Text style={this.styles.text}>{this.props.label}</Text>
+          {this.props.allowDismiss && (
+            <TouchableOpacity style={this.styles.xContainer} onPress={() => this.setState({isCancelled: true})}>
               <Text style={this.styles.x}>✕</Text>
-            </TouchableOpacity>}
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     );
@@ -125,9 +122,7 @@ export default class ConnectionStatusBar extends BaseComponent {
 }
 
 function createStyles() {
-  const typography = Constants.isSmallScreen
-    ? Typography.text90
-    : Typography.text80;
+  const typography = Constants.isSmallScreen ? Typography.text90 : Typography.text80;
   return StyleSheet.create({
     container: {
       backgroundColor: Colors.dark30,
