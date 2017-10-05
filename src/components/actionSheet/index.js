@@ -66,7 +66,7 @@ export default class ActionSheet extends BaseComponent {
         duration={600}
         easing="ease-out-quint"
       >
-        <View paddingB-8 bg-white>
+        <View paddingV-8 bg-white>
           {this.renderTitle()}
           {this.renderActions()}
         </View>
@@ -78,8 +78,8 @@ export default class ActionSheet extends BaseComponent {
     const {title} = this.props;
     if (!_.isEmpty(title)) {
       return (
-        <View height={56} paddingL-16 centerV>
-          <Text dark40 text70>
+        <View height={48} paddingL-20 centerV>
+          <Text dark40 text80>
             {title}
           </Text>
         </View>
