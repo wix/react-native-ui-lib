@@ -132,8 +132,8 @@ export default class ActionSheet extends BaseComponent {
   }
 
   onOptionPress(optionIndex) {
-    _.invoke(this.props, 'onDismiss');
     _.invoke(this.props, `options[${optionIndex}].onPress`);
+    _.invoke(this.props, 'onDismiss');
   }
 
   render() {
