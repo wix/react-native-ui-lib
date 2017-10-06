@@ -172,7 +172,7 @@ export default class Toast extends BaseComponent {
   }
 
   render() {
-    const {backgroundColor, actions, allowDismiss } = this.props;
+    const {backgroundColor, actions, allowDismiss } = this.getThemeProps();
     const {animationConfig} = this.state;
     const hasOneAction = _.size(actions) === 1;
     const hasTwoActions = _.size(actions) === 2;

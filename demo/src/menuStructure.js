@@ -23,7 +23,7 @@ export const navigationData = {
     {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
     {title: 'Form Controls', tags: 'form stepper', screen: 'unicorn.components.FormScreen'},
     {title: 'Action Bar', tags: 'action bar floating bottom', screen: 'unicorn.components.ActionBarScreen'},
-    {title: 'Notifications', tags: 'notification top bottom', screen: 'unicorn.components.NotificationsScreen'},
+    {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'},
     {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
   ],
   Form: [
