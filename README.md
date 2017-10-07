@@ -4,6 +4,7 @@ UI Toolset & Components Library for React Native
 
 * [Style](https://github.com/wix/react-native-ui-lib#style)
 * [Modifiers](https://github.com/wix/react-native-ui-lib#modifiers)
+* [Assets](https://github.com/wix/react-native-ui-lib#assets)
 * [Components](https://github.com/wix/react-native-ui-lib#components-wip)
 * [Helpers](https://github.com/wix/react-native-ui-lib#helpers)
 
@@ -25,9 +26,9 @@ better lookings apps (:
 ## Usage
 This is a quick example of how to use our basic components, modifiers and presets to generate a good looking screen.
 
-<img style="float: right; margin-top: -70px" src="https://cloud.githubusercontent.com/assets/1780255/24791489/f5db80f4-1b82-11e7-8538-5a3388fb4345.png" width=300 /> 
+<img style="float: right; margin-top: -70px" src="https://cloud.githubusercontent.com/assets/1780255/24791489/f5db80f4-1b82-11e7-8538-5a3388fb4345.png" width=300 />
 
-```js 
+```js
 import React, {Component} from 'react';
 import {View, TextInput, Text, Button} from 'react-native-ui-lib';
 
@@ -81,7 +82,7 @@ and so for example, the following line
 <Text h1 pink>Hello World</Text>
 ```
 Will generate this text
-<img src="https://cloud.githubusercontent.com/assets/1780255/24792314/296b7ebc-1b86-11e7-8580-9252d1ddf5d9.png" width="250"/> 
+<img src="https://cloud.githubusercontent.com/assets/1780255/24792314/296b7ebc-1b86-11e7-8580-9252d1ddf5d9.png" width="250"/>
 
 It will use the _h1_ preset for typography and the _pink_ color value we set to style the Text element.
 
@@ -114,7 +115,7 @@ Use our alignment props to quickly position your content without getting confuse
   <Button label="Button">
 </View>
 ```
-<img src="https://cloud.githubusercontent.com/assets/1780255/24798566/4de91efc-1b9f-11e7-9974-e06e3daa7c63.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798569/50dc99a4-1b9f-11e7-8231-fbcbb139a010.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798571/52766d08-1b9f-11e7-95a3-b2b262e81170.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798572/545b7abe-1b9f-11e7-9098-409ceee6ff22.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798575/55e3c4f4-1b9f-11e7-998d-7986a038abb6.png" width="160"/> 
+<img src="https://cloud.githubusercontent.com/assets/1780255/24798566/4de91efc-1b9f-11e7-9974-e06e3daa7c63.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798569/50dc99a4-1b9f-11e7-8231-fbcbb139a010.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798571/52766d08-1b9f-11e7-95a3-b2b262e81170.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798572/545b7abe-1b9f-11e7-9098-409ceee6ff22.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798575/55e3c4f4-1b9f-11e7-998d-7986a038abb6.png" width="160"/>
 
 ### Spacing & Styling
 Same goes here... space, stretch and color in a more readable way.
@@ -143,6 +144,39 @@ Same goes here... space, stretch and color in a more readable way.
 
 Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where we use most of these props
 
+# Assets
+Assets are big part of the whole UI system, whether it's an icon, placeholder or an illustration, we use them everywhere. <br>
+Load assets groups and easily render them with the _Image_ component.
+
+```
+import {Assets, Image} from 'react-native-ui-lib'; //eslint-disable-line
+
+Assets.loadAssetsGroup('icons', {
+  icon1: require('icon1.png'),
+  icon2: require('icon2.png'),
+  icon3: require('icon3.png'),
+});
+
+// or as a nested group to create your own hierarchy
+Assets.loadAssetsGroup('illustrations.placeholders', {
+  emptyCart: require('emptyCart.png'),
+  emptyProduct: require('emptyProduct.png'),
+});
+Assets.loadAssetsGroup('illustrations.emptyStates.', {
+  noMessages: require('noMessages.png'),
+  noContacts: require('noContacts.png'),
+});
+
+// Use them with the Image component (our Image component)
+<Image assetName="icon1"/> // default assetGroup is "icons"
+<Image assetName="emptyCart" assetGroup="illustrations.placeholders"/>
+
+// The old fashion way will work as well
+<Image source={Assets.icons.icon1}/>
+```
+
+
+
 ## Components (WIP)
 - Action Bar
 - Action Sheet (cross-platform)
@@ -168,7 +202,7 @@ Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where
 ```js
 import {Card} from 'react-native-ui-lib';
 
-<Card 
+<Card
   row // control the children flow direction
   borderRadius={12}
   height={150}
