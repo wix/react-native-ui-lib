@@ -1,5 +1,5 @@
 import Animations from './animations';
-import * as Assets from './assets';
+import Assets from './assets';
 import Components from './components';
 import Commons from './commons';
 import GridList from './lists/gridList';

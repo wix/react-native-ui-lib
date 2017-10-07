@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
-import * as Assets from '../../assets';
+import Assets from '../../assets';
 import {Colors, Typography} from '../../style';
 import View from '../../components/view';
 

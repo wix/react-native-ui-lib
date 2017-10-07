@@ -3,7 +3,7 @@ import {Image, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {Colors, Typography, ThemeManager} from '../../style';
 import {BaseComponent} from '../../commons';
-import * as Assets from '../../assets';
+import Assets from '../../assets';
 import View from '../view';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';

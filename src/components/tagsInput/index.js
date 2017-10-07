@@ -14,7 +14,7 @@ import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
 import {Colors, BorderRadiuses, ThemeManager, Typography} from '../../style';
-import * as Assets from '../../assets';
+import Assets from '../../assets';
 
 // todo: support backspace to remove tags
 // todo: support updating tags externally

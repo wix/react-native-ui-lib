@@ -1,5 +1,5 @@
 import {Navigation} from 'react-native-navigation';
-import {Typography, Colors, Button, Badge, ThemeManager} from 'react-native-ui-lib'; //eslint-disable-line
+import {Typography, Colors, Assets, Button, Badge, ThemeManager} from 'react-native-ui-lib'; //eslint-disable-line
 import * as Animatable from 'react-native-animatable';
 import './screens';
 
@@ -22,6 +22,10 @@ import './screens';
 //   titleColor: Colors.blue10,
 //   subtitleColor: Colors.blue40,
 // });
+
+Assets.loadAssetsGroup('icons.general', {
+  camera: require('./assets/icons/cameraSelected.png'),
+});
 
 Animatable.initializeRegistryWithDefinitions({
   gridListEntrance: {

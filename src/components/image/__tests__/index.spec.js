@@ -1,5 +1,6 @@
 import Image from '../index';
 import {ThemeManager} from '../../../style';
+import Assets from '../../../assets';
 
 describe('Image', () => {
   describe('getImageSource', () => {
@@ -27,13 +28,27 @@ describe('Image', () => {
     });
 
     it('should return transformed source prop, according to sourceTransform prop and other given props', () => {
-      const sourceTransformer = jest.fn(
-        ({size, source}) => (size === 'small' ? source : 3),
-      );
+      const sourceTransformer = jest.fn(({size, source}) => (size === 'small' ? source : 3));
       let uut = new Image({source: 1, size: 'small', sourceTransformer});
       expect(uut.getImageSource()).toBe(1);
       uut = new Image({source: 1, size: 'large', sourceTransformer});
       expect(uut.getImageSource()).toBe(3);
+    });
+
+    it('should return asset according to assetName', () => {
+      Assets.loadAssetsGroup('icons', {
+        test: 'test.png',
+      });
+
+      Assets.loadAssetsGroup('icons.general', {
+        test: 'test.png',
+      });
+
+      let uut = new Image({assetGroup: 'icons', assetName: 'test'});
+      expect(uut.getImageSource()).toBe('test.png');
+
+      uut = new Image({assetGroup: 'icons.general', assetName: 'test'});
+      expect(uut.getImageSource()).toBe('test.png');
     });
   });
 });

@@ -8,7 +8,7 @@ import View from '../view';
 import Text from '../text';
 import Button from '../button';
 import { ThemeManager, Colors, Typography, BorderRadiuses } from '../../style';
-import * as Assets from '../../assets';
+import Assets from '../../assets';
 
 /**
  * @description Toast component for showing a feedback about a user action.

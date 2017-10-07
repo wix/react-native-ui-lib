@@ -3,7 +3,7 @@ import {View, StyleSheet, Image} from 'react-native';
 import _ from 'lodash';
 import BaseComponent from './BaseComponent';
 import {Colors, BorderRadiuses} from '../style';
-import * as Assets from '../assets';
+import Assets from '../assets';
 
 // todo: add nice animation
 export default class SelectableComponent extends BaseComponent {
