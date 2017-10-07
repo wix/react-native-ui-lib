@@ -149,7 +149,7 @@ Assets are big part of the whole UI system, whether it's an icon, placeholder or
 Load assets groups and easily render them with the _Image_ component.
 
 ```
-import {Assets, Image} from 'react-native-ui-lib'; //eslint-disable-line
+import {Assets, Image} from 'react-native-ui-lib';
 
 Assets.loadAssetsGroup('icons', {
   icon1: require('icon1.png'),
