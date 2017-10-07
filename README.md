@@ -208,7 +208,7 @@ import {Card} from 'react-native-ui-lib';
   height={150}
   containerStyle={{marginRight: 20}}
   onPress={...}
-  enableShadows={true/false}
+  enableShadow={true/false}
 
 >
   <Card.Image width={80} imageSource={cardImage} />
