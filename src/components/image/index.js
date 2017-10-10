@@ -47,7 +47,13 @@ class Image extends BaseComponent {
     if (this.sourceTransformer) {
       return this.sourceTransformer(this.props);
     }
-    return this.props.source;
+
+    const {source} = this.props;
+    if (_.get(source, 'uri') === null) {
+      return {...source, uri: undefined};
+    }
+
+    return source;
   }
 
   render() {

@@ -3,6 +3,10 @@ import {ThemeManager} from '../../../style';
 import Assets from '../../../assets';
 
 describe('Image', () => {
+  beforeEach(() => {
+    ThemeManager.setComponentTheme('Image', {});
+  });
+
   describe('getImageSource', () => {
     it('should return source prop, if no transformer was sent', () => {
       const uut = new Image({source: 1});
@@ -49,6 +53,11 @@ describe('Image', () => {
 
       uut = new Image({assetGroup: 'icons.general', assetName: 'test'});
       expect(uut.getImageSource()).toBe('test.png');
+    });
+
+    it('should handle when source sent with uri=null', () => {
+      const uut = new Image({source: {uri: null}});
+      expect(uut.getImageSource()).toEqual({uri: undefined});
     });
   });
 });
