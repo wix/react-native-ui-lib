@@ -1,4 +1,5 @@
-import {PropTypes} from 'react';
+import 'react';
+import PropTypes from 'prop-types';
 import {TextInput as RNTextInput, Animated, ViewPropTypes} from 'react-native';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';

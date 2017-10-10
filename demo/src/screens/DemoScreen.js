@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {ScrollView, StyleSheet, Switch} from 'react-native';
 import {View, TextInput, Text, Badge, Colors} from 'react-native-ui-lib';//eslint-disable-line

@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {StyleSheet, ActionSheetIOS, TouchableWithoutFeedback, Modal} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import _ from 'lodash';

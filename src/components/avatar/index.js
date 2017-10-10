@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {StyleSheet, ViewPropTypes, TouchableOpacity} from 'react-native';
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';

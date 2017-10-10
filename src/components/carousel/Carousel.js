@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {StyleSheet, View, Animated} from 'react-native';
 import Interactable from 'react-native-interactable';
 import _ from 'lodash';

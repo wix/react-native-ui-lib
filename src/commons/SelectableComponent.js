@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {View, StyleSheet, Image} from 'react-native';
 import _ from 'lodash';
 import BaseComponent from './BaseComponent';

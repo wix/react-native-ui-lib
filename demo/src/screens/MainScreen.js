@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {TouchableOpacity, View, Text, ListView, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import autobind from 'react-autobind';

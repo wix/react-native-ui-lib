@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
