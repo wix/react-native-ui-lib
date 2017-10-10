@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet} from 'react-native';
 import Image from '../image';
+import {BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 import * as CardPresenter from './CardPresenter';
 
 /**
- * CardImage belongs inside the Card component
+ * @description: CardImage belongs inside the Card component (better be a direct child).
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
  */
 export default class CardImage extends BaseComponent {
 
@@ -26,8 +28,9 @@ export default class CardImage extends BaseComponent {
      */
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
-     * Image position to determine the right flex-ness of the image and border radius (for Android)
-     * this prop derived automatically from Card parent component
+     * The Image position which determines the appropriate flex-ness of the image and border radius (for Android)
+     * this prop derived automatically from Card parent component if it rendered as a direct child of the
+     * Card component
      */
     position: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
     /**
@@ -36,6 +39,10 @@ export default class CardImage extends BaseComponent {
     borderRadius: PropTypes.number,
     testID: PropTypes.string,
   };
+
+  static defaultProps = {
+    borderRadius: BorderRadiuses.br40,
+  }
 
   generateStyles() {
     this.styles = createStyles(this.props);

@@ -14,6 +14,7 @@ import CardImage from './CardImage';
 
 /**
  * @description: Card component
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
  */
 class Card extends BaseComponent {
 
@@ -30,7 +31,7 @@ class Card extends BaseComponent {
      */
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
-     * card border radius
+     * card border radius (will be passed to inner Card.Image component)
      */
     borderRadius: PropTypes.number,
     /**
