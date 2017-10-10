@@ -62,12 +62,8 @@ export default class ActionSheet extends BaseComponent {
 
   renderSheet() {
     return (
-      <Animatable.View
-        animation="slideInUp"
-        duration={600}
-        easing="ease-out-quint"
-      >
-        <View paddingB-8 bg-white>
+      <Animatable.View animation="slideInUp" duration={600} easing="ease-out-quint">
+        <View bg-white>
           {this.renderTitle()}
           {this.renderActions()}
         </View>
@@ -89,9 +85,13 @@ export default class ActionSheet extends BaseComponent {
   }
 
   renderActions() {
-    const {options, cancelButtonIndex} = this.props;
+    const {title, options, cancelButtonIndex} = this.props;
     const optionsToRender = _.filter(options, (option, index) => index !== cancelButtonIndex);
-    return <View>{_.map(optionsToRender, this.renderAction)}</View>;
+    return (
+      <View paddingB-8 paddingT-8={_.isEmpty(title)}>
+        {_.map(optionsToRender, this.renderAction)}
+      </View>
+    );
   }
 
   renderAction(option, index) {
@@ -101,9 +101,10 @@ export default class ActionSheet extends BaseComponent {
         height={48}
         key={index}
         onPress={() => this.onOptionPress(index)}
+        activeBackgroundColor={Colors.dark80}
       >
-        <View paddingL-20 flex centerV>
-          <Text text70 dark10>
+        <View paddingH-20 flex centerV>
+          <Text text70 dark10 numberOfLines={1}>
             {option.label}
           </Text>
         </View>
