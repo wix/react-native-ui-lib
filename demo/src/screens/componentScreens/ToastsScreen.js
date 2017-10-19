@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {ScrollView, Text, StyleSheet} from 'react-native';
 import {View, Constants, PageControl, Toast, Carousel, Button, Colors} from 'react-native-ui-lib'; // eslint-disable-line
 
 export default class AvatarsScreen extends Component {
@@ -48,6 +48,23 @@ export default class AvatarsScreen extends Component {
               visible
               message="Notfication with different color"
               backgroundColor={Colors.white}
+              color={Colors.dark10}
+              allowDismiss
+            />
+          </View>
+
+          <View style={styles.page} bg-white>
+            <ScrollView>
+              <Text>Some text</Text>
+              <View style={{height: 40, backgroundColor: Colors.orange30}}/>
+              <Text>Some text</Text>
+              <Text>Some text</Text>
+            </ScrollView>
+            <Toast
+              visible
+              message="Notification blurring underlying content"
+              backgroundColor={Colors.rgba(Colors.white, 0.3)}
+              blur={{type: 'light', amount: 5}}
               color={Colors.dark10}
               allowDismiss
             />

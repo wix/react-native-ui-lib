@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as Animatable from 'react-native-animatable';
+import {BlurView} from 'react-native-blur';
 import { BaseComponent } from '../../commons';
 import View from '../view';
 import Text from '../text';
@@ -172,7 +173,7 @@ export default class Toast extends BaseComponent {
   }
 
   render() {
-    const {backgroundColor, actions, allowDismiss } = this.getThemeProps();
+    const {backgroundColor, actions, allowDismiss, blur} = this.getThemeProps();
     const {animationConfig} = this.state;
     const hasOneAction = _.size(actions) === 1;
     const hasTwoActions = _.size(actions) === 2;
@@ -195,6 +196,7 @@ export default class Toast extends BaseComponent {
         ]}
         {...animationConfig}
       >
+        {blur && <BlurView style={this.styles.blur} blurType={blur.type || 'light'} blurAmount={blur.amount || 3}/>}
         <View row flex centerV spread>
           {this.renderMessage()}
           {(hasOneAction || allowDismiss) &&
@@ -251,6 +253,13 @@ function createStyles() {
       width: 12,
       height: 12,
       tintColor: Colors.white,
+    },
+    blur: {
+      bottom: 0,
+      left: 0,
+      position: 'absolute',
+      right: 0,
+      top: 0,
     },
   });
 }
