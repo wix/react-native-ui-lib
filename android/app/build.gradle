@@ -56,6 +56,7 @@ dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"
+    compile 'com.facebook.fresco:animated-gif:0.14.1'
     compile project(':react-native-navigation')
 }
 
