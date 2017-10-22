@@ -92,7 +92,7 @@ class Card extends BaseComponent {
   }
 
   render() {
-    const {onPress, style, containerStyle, enableShadow, borderRadius, testID, ...others} = this.props;
+    const {onPress, style, containerStyle, enableShadow, borderRadius, testID, ...others} = this.getThemeProps();
     const multipleShadowProps = MultipleShadow.extractOwnProps(this.props);
     const Container = onPress ? TouchableOpacity : View;
     const ShadowContainer = enableShadow ? MultipleShadow : View;
@@ -103,9 +103,10 @@ class Card extends BaseComponent {
         delayPressIn={10}
         activeOpacity={0.6}
         testID={testID}
+        {...others}
       >
         <ShadowContainer {...multipleShadowProps} style={{borderRadius}}>
-          <View style={[this.styles.innerContainer, {borderRadius}, style]} {...others}>
+          <View style={[this.styles.innerContainer, {borderRadius}, style]}>
             {this.renderChildren()}
           </View>
         </ShadowContainer>
