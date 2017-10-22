@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {ScrollView, Text, StyleSheet} from 'react-native';
-import {View, Constants, PageControl, Toast, Carousel, Button, Colors} from 'react-native-ui-lib'; // eslint-disable-line
+import {ScrollView, StyleSheet} from 'react-native';
+import {View, Text, Constants, PageControl, Toast, Carousel, Button, Colors} from 'react-native-ui-lib'; // eslint-disable-line
 
 export default class AvatarsScreen extends Component {
   state = {
@@ -53,18 +53,14 @@ export default class AvatarsScreen extends Component {
             />
           </View>
 
-          <View style={styles.page} bg-white>
-            <ScrollView>
-              <Text>Some text</Text>
-              <View style={{height: 40, backgroundColor: Colors.orange30}}/>
-              <Text>Some text</Text>
-              <Text>Some text</Text>
-            </ScrollView>
+          <View style={styles.page} bg-red80 padding-10>
+            <Text text20>Blurred Text</Text>
             <Toast
               visible
-              message="Notification blurring underlying content"
+              message="Notification With Blur Effect"
               backgroundColor={Colors.rgba(Colors.white, 0.3)}
-              blur={{type: 'light', amount: 5}}
+              enableBlur
+              blurOption={{type: 'light', amount: 5}}
               color={Colors.dark10}
               allowDismiss
             />
