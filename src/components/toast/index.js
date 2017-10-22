@@ -1,17 +1,19 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as Animatable from 'react-native-animatable';
-import { BaseComponent } from '../../commons';
+import {BlurView} from 'react-native-blur';
+import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
 import Button from '../button';
-import { ThemeManager, Colors, Typography, BorderRadiuses } from '../../style';
+import {ThemeManager, Colors, Typography, BorderRadiuses} from '../../style';
 import Assets from '../../assets';
 
 /**
  * @description Toast component for showing a feedback about a user action.
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ToastsScreen.js
  */
 export default class Toast extends BaseComponent {
   static displayName = 'Toast';
@@ -65,18 +67,26 @@ export default class Toast extends BaseComponent {
      * should the toast appear/disappear with animation
      */
     animated: PropTypes.bool,
-  }
+    /**
+     * enable blur effect for Toast
+     */
+    enableBlur: PropTypes.bool,
+    /**
+     * blur option for blur effect according to react-native-blur lib (make sure enableBlur is on)
+     */
+    blurOptions: PropTypes.object,
+  };
 
   static defaultProps = {
     position: 'top',
     color: Colors.white,
     animated: true,
-  }
+  };
 
   state = {
     isVisible: false,
     animationConfig: this.getAnimationConfig(true),
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     const {visible} = nextProps;
@@ -93,11 +103,11 @@ export default class Toast extends BaseComponent {
   }
 
   getPositionStyle() {
-    const { position } = this.props;
+    const {position} = this.props;
     if (position === 'top') {
-      return { top: 0 };
+      return {top: 0};
     }
-    return { bottom: 0 };
+    return {bottom: 0};
   }
 
   calcHeight() {
@@ -123,13 +133,20 @@ export default class Toast extends BaseComponent {
     }
   }
 
+  getBlurOptions() {
+    const {blurOptions} = this.getThemeProps();
+    return {
+      blurType: 'light',
+      amount: 5,
+      ...blurOptions,
+    };
+  }
+
   renderMessage() {
-    const { message, messageStyle, centerMessage, color } = this.props;
+    const {message, messageStyle, centerMessage, color} = this.props;
     return (
       <View flex centerH={centerMessage}>
-        <Text style={[this.styles.message, color && {color}, messageStyle]}>
-          {message}
-        </Text>
+        <Text style={[this.styles.message, color && {color}, messageStyle]}>{message}</Text>
       </View>
     );
   }
@@ -137,13 +154,7 @@ export default class Toast extends BaseComponent {
   renderOneAction() {
     const action = _.first(this.props.actions);
     if (action) {
-      return (
-        <Button
-          style={this.styles.oneActionStyle}
-          size="medium"
-          {...action}
-        />
-      );
+      return <Button style={this.styles.oneActionStyle} size="medium" {...action} />;
     }
   }
 
@@ -158,7 +169,7 @@ export default class Toast extends BaseComponent {
   }
 
   renderDismissButton() {
-    const { allowDismiss, onDismiss, color } = this.props;
+    const {allowDismiss, onDismiss, color} = this.props;
     if (allowDismiss) {
       return (
         <Button
@@ -172,12 +183,13 @@ export default class Toast extends BaseComponent {
   }
 
   render() {
-    const {backgroundColor, actions, allowDismiss } = this.getThemeProps();
+    const {backgroundColor, actions, allowDismiss, enableBlur} = this.getThemeProps();
     const {animationConfig} = this.state;
     const hasOneAction = _.size(actions) === 1;
     const hasTwoActions = _.size(actions) === 2;
     const positionStyle = this.getPositionStyle();
     const height = this.calcHeight();
+    const blurOptions = this.getBlurOptions();
 
     const shouldShowToast = this.shouldShowToast();
     if (!shouldShowToast) {
@@ -195,18 +207,17 @@ export default class Toast extends BaseComponent {
         ]}
         {...animationConfig}
       >
+        {enableBlur && <BlurView style={this.styles.blurView} {...blurOptions} />}
         <View row flex centerV spread>
           {this.renderMessage()}
-          {(hasOneAction || allowDismiss) &&
-          <View row height="100%">
-            {hasOneAction && this.renderOneAction()}
-            {this.renderDismissButton()}
-          </View>}
+          {(hasOneAction || allowDismiss) && (
+            <View row height="100%">
+              {hasOneAction && this.renderOneAction()}
+              {this.renderDismissButton()}
+            </View>
+          )}
         </View>
-        {hasTwoActions &&
-          <View>
-            {this.renderTwoActions()}
-          </View>}
+        {hasTwoActions && <View>{this.renderTwoActions()}</View>}
       </Animatable.View>
     );
   }
@@ -251,6 +262,9 @@ function createStyles() {
       width: 12,
       height: 12,
       tintColor: Colors.white,
+    },
+    blurView: {
+      ...StyleSheet.absoluteFillObject,
     },
   });
 }
