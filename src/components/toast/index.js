@@ -136,7 +136,7 @@ export default class Toast extends BaseComponent {
 
   getAnimation(shouldShow) {
     const {position} = this.props;
-    const animationDescriptor = createAnimationDescriptor(position, this.state);
+    const animationDescriptor = getAnimationDescriptor(position, this.state);
     const {animation, duration, delay} = shouldShow ? animationDescriptor.enter : animationDescriptor.exit;
 
     return {animation, duration, delay, onAnimationEnd: () => this.onAnimationEnd()};
@@ -163,12 +163,6 @@ export default class Toast extends BaseComponent {
       amount: 5,
       ...blurOptions,
     };
-  }
-
-  getHeight() {
-    const {height, actions} = this.props;
-
-    return height || calcHeight(actions);
   }
 
   renderMessage() {
@@ -315,7 +309,7 @@ function createStyles() {
   });
 }
 
-function createAnimationDescriptor(name, {duration = DURATION, delay = DELAY}) {
+function getAnimationDescriptor(name, {duration = DURATION, delay = DELAY}) {
   const defaultProps = {duration, delay: 0};
   const animationDescriptorMap = {
     top: {
@@ -336,21 +330,13 @@ function createAnimationDescriptor(name, {duration = DURATION, delay = DELAY}) {
 }
 
 function getAbsolutePositionStyle(location) {
-  const defaultStyle = {
+  return {
     position: 'absolute',
     left: 0,
     right: 0,
-  };
-
-  return {
-    ...defaultStyle,
     [location]: 0,
   };
 }
-
-// function wasHeightChanged({height: nextHeight, actions: nextActions}, {height, actions}) {
-//   return nextHeight !== height || _.size(nextActions) !== _.size(actions);
-// }
 
 function setupRelativeAnimation(height) {
   Animatable.initializeRegistryWithDefinitions({
@@ -366,9 +352,5 @@ function setupRelativeAnimation(height) {
 }
 
 function getHeight({height, actions}) {
-  return height || calcHeight(actions);
-}
-
-function calcHeight(actions) {
-  return (_.size(actions) === 2) ? 92 : 48;
+  return height || (_.size(actions) === 2) ? 92 : 48;
 }
