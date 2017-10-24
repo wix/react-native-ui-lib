@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {View, Text, Constants, PageControl, Toast, Carousel, Button, Colors} from 'react-native-ui-lib'; // eslint-disable-line
 
 export default class AvatarsScreen extends Component {
@@ -23,6 +23,7 @@ export default class AvatarsScreen extends Component {
               actions={[{label: 'Undo', onPress: () => alert('undo')}]}
             />
           </View>
+
           <View style={styles.page} bg-dark50>
             <Toast
               visible
@@ -32,15 +33,88 @@ export default class AvatarsScreen extends Component {
             />
           </View>
 
-          <View flex center style={styles.page} bg-violet70>
+          <View center flex style={styles.page} bg-violet70>
             <Toast
+              message="Toast can appear from top"
+              allowDismiss
+              onDismiss={() => this.setState({showToast: false})}
               visible={this.state.showToast}
-              message="Toast can appear at the bottom"
+            />
+            <Button size="medium" label="Show Toast" onPress={() => this.setState({showToast: true})} />
+
+            <Toast
+              message="Toast can appear from bottom"
               position="bottom"
               allowDismiss
               onDismiss={() => this.setState({showToast: false})}
+              visible={this.state.showToast}
             />
-            <Button size="medium" label="Show Toast" onPress={() => this.setState({showToast: true})} />
+          </View>
+
+          <View flex spread centerH style={styles.page} bg-violet70>
+            <View flex spread style={styles.page}>
+              <Text>relative position</Text>
+
+              <View style={{position: 'absolute', top: 0, width: Constants.screenWidth}}>
+                <Toast
+                  visible={this.state.showToast}
+                  message="Toast can move content relative to it to the bottom"
+                  position="relative"
+                  actions={[{label: 'Close', onPress: () => this.setState({showToast: false})}]}
+                />
+
+                <View style={{height: 50, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
+                  <Button size="medium" label="Show Toast" onPress={() => this.setState({showToast: true})}/>
+                </View>
+              </View>
+            </View>
+
+            <View flex spread style={[styles.page, {justifyContent: 'flex-end', alignItems: 'center'}]}>
+              <Text style={{marginBottom: 50}}>relative position</Text>
+
+              <View style={{position: 'absolute', bottom: 0, width: Constants.screenWidth}}>
+                <Toast
+                  visible={this.state.showToast}
+                  message="Toast can appear at the top (expanding its relative parent height"
+                  position="relative"
+                  allowDismiss
+                  onDismiss={() => this.setState({showToast: false})}
+                />
+
+                <View style={{height: 50, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
+                  <Button size="medium" label="Show Toast" onPress={() => this.setState({showToast: true})}/>
+                </View>
+              </View>
+            </View>
+
+            <View flex spread style={[styles.page, {justifyContent: 'flex-end', alignItems: 'center'}]}>
+              <Text>relative position</Text>
+
+              <View style={{position: 'absolute', bottom: 0, width: Constants.screenWidth}}>
+                <View style={{height: 50, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
+                  <Button size="medium" label="Show Toast" onPress={() => this.setState({showToast: true})}/>
+                </View>
+
+                <Toast
+                  visible={this.state.showToast}
+                  message="Toast can move content relative to it to the top"
+                  position="relative"
+                  centerMessage
+                  backgroundColor={Colors.white}
+                  color={Colors.blue30}
+                  actions={[
+                    {
+                      label: 'No, close it',
+                      outline: true,
+                      outlineColor: Colors.blue30,
+                      color: Colors.blue30,
+                      onPress: () => this.setState({showToast: false}),
+                    },
+                    {label: 'Yes, close it', onPress: () => this.setState({showToast: false})},
+                  ]}
+                />
+              </View>
+            </View>
           </View>
 
           <View style={styles.page} bg-yellow70>
@@ -85,20 +159,10 @@ export default class AvatarsScreen extends Component {
               ]}
             />
           </View>
-
-          <View center flex style={styles.page} bg-violet70>
-            <Toast
-              message="Do you approve user request?"
-              allowDismiss
-              onDismiss={() => this.setState({showToast: false})}
-              visible={this.state.showToast}
-            />
-            <Button size="medium" label="Show Toast" onPress={() => this.setState({showToast: true})} />
-          </View>
         </Carousel>
         <PageControl
           containerStyle={styles.pageControl}
-          numOfPages={6}
+          numOfPages={8}
           currentPage={this.state.currentPage}
           color={Colors.dark10}
           size={15}

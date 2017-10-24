@@ -6,7 +6,6 @@ import * as Animatable from 'react-native-animatable';
 import {BlurView} from 'react-native-blur';
 import {BaseComponent} from '../../commons';
 import View from '../view';
-import Text from '../text';
 import Button from '../button';
 import {ThemeManager, Colors, Typography, BorderRadiuses} from '../../style';
 import Assets from '../../assets';
@@ -15,6 +14,10 @@ import Assets from '../../assets';
  * @description Toast component for showing a feedback about a user action.
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ToastsScreen.js
  */
+
+const DURATION = 300;
+const DELAY = 100;
+
 export default class Toast extends BaseComponent {
   static displayName = 'Toast';
 
@@ -26,7 +29,7 @@ export default class Toast extends BaseComponent {
     /**
      * The position of the toast. top or bottom
      */
-    position: PropTypes.oneOf(['top', 'bottom']),
+    position: PropTypes.oneOf(['relative', 'top', 'bottom']),
     /**
      * The height of the toast
      */
@@ -85,16 +88,39 @@ export default class Toast extends BaseComponent {
 
   state = {
     isVisible: false,
-    animationConfig: this.getAnimationConfig(true),
+    animationConfig: this.getAnimation(true),
+    contentAnimation: this.getContentAnimation(true),
+    duration: DURATION,
+    delay: DELAY,
   };
 
+  constructor(props) {
+    super(props);
+
+    const {animated, position} = this.props;
+
+    if (animated && position === 'relative') {
+      setupRelativeAnimation(getHeight(this.props));
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
-    const {visible} = nextProps;
+    const {visible, animated, position} = nextProps;
     const {isVisible} = this.state;
     if (visible !== isVisible) {
-      this.setState({
-        animationConfig: this.getAnimationConfig(visible),
-      });
+      if (animated && position === 'relative') {
+        setupRelativeAnimation(getHeight(nextProps));
+      }
+
+      const newState = animated ? {
+        animationConfig: this.getAnimation(visible),
+        contentAnimation: this.getContentAnimation(visible),
+      } : {
+        animationConfig: {},
+        contentAnimation: {},
+      };
+
+      this.setState(newState);
     }
   }
 
@@ -104,30 +130,27 @@ export default class Toast extends BaseComponent {
 
   getPositionStyle() {
     const {position} = this.props;
-    if (position === 'top') {
-      return {top: 0};
-    }
-    return {bottom: 0};
+
+    return (position === 'relative') ? {position} : getAbsolutePositionStyle(position);
   }
 
-  calcHeight() {
-    const {height, actions} = this.props;
-    const hasTwoActions = _.size(actions) === 2;
-    if (height) {
-      return height;
-    }
-    return hasTwoActions ? 92 : 48;
+  getAnimation(shouldShow) {
+    const {position} = this.props;
+    const animationDescriptor = getAnimationDescriptor(position, this.state);
+    const {animation, duration, delay} = shouldShow ? animationDescriptor.enter : animationDescriptor.exit;
+
+    return {animation, duration, delay, onAnimationEnd: () => this.onAnimationEnd()};
   }
 
-  getAnimationConfig(shouldShow) {
-    const {animated, position} = this.props;
-    const isPositionedTop = position === 'top';
-    const enterAnimation = isPositionedTop ? 'slideInDown' : 'slideInUp';
-    const exitAnimation = isPositionedTop ? 'slideOutUp' : 'slideOutDown';
-    if (animated) {
+  getContentAnimation(shouldShow) {
+    const {position} = this.props;
+    const {duration, delay} = this.state;
+
+    if (position === 'relative') {
       return {
-        animation: shouldShow ? enterAnimation : exitAnimation,
-        duration: 300,
+        animation: shouldShow ? 'fadeIn' : 'fadeOut',
+        duration,
+        delay: shouldShow ? delay : 0,
         onAnimationEnd: () => this.onAnimationEnd(),
       };
     }
@@ -144,40 +167,54 @@ export default class Toast extends BaseComponent {
 
   renderMessage() {
     const {message, messageStyle, centerMessage, color} = this.props;
+    const {contentAnimation} = this.state;
     return (
       <View flex centerH={centerMessage}>
-        <Text style={[this.styles.message, color && {color}, messageStyle]}>{message}</Text>
+        <Animatable.Text style={[this.styles.message, color && {color}, messageStyle]} {...contentAnimation}>
+          {message}
+        </Animatable.Text>
       </View>
     );
   }
 
   renderOneAction() {
     const action = _.first(this.props.actions);
+    const {contentAnimation} = this.state;
+
     if (action) {
-      return <Button style={this.styles.oneActionStyle} size="medium" {...action} />;
+      return (
+        <Animatable.View {...contentAnimation}>
+          <Button style={this.styles.oneActionStyle} size="medium" {...action} />
+        </Animatable.View>
+      );
     }
   }
 
   renderTwoActions() {
     const {actions} = this.props;
+    const {contentAnimation} = this.state;
+
     return (
-      <View row center paddingB-14>
+      <Animatable.View style={this.styles.containerWithTwoActions} {...contentAnimation}>
         <Button size="small" {...actions[0]} />
         <Button marginL-12 size="small" {...actions[1]} />
-      </View>
+      </Animatable.View>
     );
   }
 
   renderDismissButton() {
     const {allowDismiss, onDismiss, color} = this.props;
+    const {contentAnimation} = this.state;
     if (allowDismiss) {
       return (
-        <Button
-          link
-          iconStyle={[this.styles.dismissIconStyle, color && {tintColor: color}]}
-          iconSource={Assets.icons.x}
-          onPress={onDismiss}
-        />
+        <Animatable.View style={{justifyContent: 'center'}} {...contentAnimation}>
+          <Button
+            link
+            iconStyle={[this.styles.dismissIconStyle, color && {tintColor: color}]}
+            iconSource={Assets.icons.x}
+            onPress={onDismiss}
+          />
+        </Animatable.View>
       );
     }
   }
@@ -188,7 +225,7 @@ export default class Toast extends BaseComponent {
     const hasOneAction = _.size(actions) === 1;
     const hasTwoActions = _.size(actions) === 2;
     const positionStyle = this.getPositionStyle();
-    const height = this.calcHeight();
+    const height = getHeight(this.props);
     const blurOptions = this.getBlurOptions();
 
     const shouldShowToast = this.shouldShowToast();
@@ -239,14 +276,17 @@ export default class Toast extends BaseComponent {
 function createStyles() {
   return StyleSheet.create({
     container: {
-      position: 'absolute',
-      left: 0,
-      right: 0,
       backgroundColor: Colors.rgba(ThemeManager.primaryColor, 0.8),
       paddingHorizontal: 15,
     },
     containerWithOneAction: {
       paddingRight: 0,
+    },
+    containerWithTwoActions: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingBottom: 14,
     },
     message: {
       color: Colors.white,
@@ -267,4 +307,50 @@ function createStyles() {
       ...StyleSheet.absoluteFillObject,
     },
   });
+}
+
+function getAnimationDescriptor(name, {duration = DURATION, delay = DELAY}) {
+  const defaultProps = {duration, delay: 0};
+  const animationDescriptorMap = {
+    top: {
+      enter: {...defaultProps, animation: 'slideInDown'},
+      exit: {...defaultProps, animation: 'slideOutUp'},
+    },
+    bottom: {
+      enter: {...defaultProps, animation: 'slideInUp'},
+      exit: {...defaultProps, animation: 'slideOutDown'},
+    },
+    relative: {
+      enter: {...defaultProps, animation: 'growUp'},
+      exit: {...defaultProps, animation: 'growDown', delay},
+    },
+  };
+
+  return animationDescriptorMap[name] || {};
+}
+
+function getAbsolutePositionStyle(location) {
+  return {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    [location]: 0,
+  };
+}
+
+function setupRelativeAnimation(height) {
+  Animatable.initializeRegistryWithDefinitions({
+    growUp: {
+      from: {height: 0},
+      to: {height},
+    },
+    growDown: {
+      from: {height},
+      to: {height: 0},
+    },
+  });
+}
+
+function getHeight({height, actions}) {
+  return height || (_.size(actions) === 2) ? 92 : 48;
 }
