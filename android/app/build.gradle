@@ -58,6 +58,7 @@ dependencies {
     compile "com.facebook.react:react-native:+"
     compile 'com.facebook.fresco:animated-gif:0.14.1'
     compile project(':react-native-navigation')
+    compile project(':react-native-android-shadow')
 }
 
 // Run this once to be able to run the application with BUCK
