@@ -17,7 +17,6 @@ import CardImage from './CardImage';
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
  */
 class Card extends BaseComponent {
-
   static displayName = 'Card';
 
   static propTypes = {
@@ -30,6 +29,10 @@ class Card extends BaseComponent {
      * card custom height
      */
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    /**
+     * should inner card flow direction be horizontal
+     */
+    row: PropTypes.bool,
     /**
      * card border radius (will be passed to inner Card.Image component)
      */
@@ -55,7 +58,7 @@ class Card extends BaseComponent {
   static defaultProps = {
     borderRadius: BorderRadiuses.br40,
     enableShadow: true,
-  }
+  };
 
   generateStyles() {
     this.styles = createStyles(this.props);
@@ -92,7 +95,18 @@ class Card extends BaseComponent {
   }
 
   render() {
-    const {onPress, style, containerStyle, enableShadow, borderRadius, testID, ...others} = this.getThemeProps();
+    const {
+      row,
+      width,
+      height,
+      onPress,
+      style,
+      containerStyle,
+      enableShadow,
+      borderRadius,
+      testID,
+      ...others
+    } = this.getThemeProps();
     const multipleShadowProps = MultipleShadow.extractOwnProps(this.props);
     const Container = onPress ? TouchableOpacity : View;
     const ShadowContainer = enableShadow ? MultipleShadow : View;
@@ -106,7 +120,7 @@ class Card extends BaseComponent {
         {...others}
       >
         <ShadowContainer {...multipleShadowProps} style={{borderRadius}}>
-          <View style={[this.styles.innerContainer, {borderRadius}, style]}>
+          <View width={width} height={height} row={row} style={[this.styles.innerContainer, {borderRadius}, style]}>
             {this.renderChildren()}
           </View>
         </ShadowContainer>
