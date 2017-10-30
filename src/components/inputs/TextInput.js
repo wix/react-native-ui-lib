@@ -385,7 +385,6 @@ function createStyles({
 }) {
   return StyleSheet.create({
     container: {
-      flexGrow: 1,
     },
     innerContainer: {
       flexDirection: 'row',
