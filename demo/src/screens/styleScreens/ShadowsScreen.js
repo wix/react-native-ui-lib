@@ -1,10 +1,15 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {ScrollView, View, Text, StyleSheet, Dimensions} from 'react-native';
+import {ScrollView, View, Text, StyleSheet, Dimensions,Platform} from 'react-native';
 import {Colors, Shadows} from 'react-native-ui-lib'; // eslint-disable-line
 // import {Cards} from '../../src';
 
+import { AndroidShadowManager, ShadowParentView } from 'react-native-android-shadow';
+
 const {height} = Dimensions.get('window');
+
+const ANDROID_PLATFORM = (Platform.OS === 'android');
+const ShapeContainer = ANDROID_PLATFORM ? ShadowParentView : View;
 
 const shadowsOverWhiteBkg = _.reduce(Shadows, (results, value, key) => {
   if (key.startsWith('white')) {
@@ -57,21 +62,21 @@ export default class ShadowsScreen extends Component {
 
   renderCircleWithShadow(shadow, name) {
     return (
-      <View key={`${name}_circle`} style={[styles.shadowCircle, shadow.top]}>
-        <View style={[styles.innerCircle, shadow.bottom]}>
+      <ShapeContainer key={`${name}_circle`} style={[styles.shadowCircle, shadow.top]}>
+        <ShapeContainer style={[styles.innerCircle, shadow.bottom]}>
           <Text style={styles.shadowLabel}>{name}</Text>
-        </View>
-      </View>
+        </ShapeContainer>
+      </ShapeContainer>
     );
   }
 
   renderSquareWithShadow(shadow, name) {
     return (
-      <View key={`${name}_square`} style={[styles.shadowSquare, shadow.top]}>
-        <View style={[styles.innerSquare, shadow.bottom]}>
+      <ShapeContainer key={`${name}_square`} style={[styles.shadowSquare, shadow.top]}>
+        <ShapeContainer style={[styles.innerSquare, shadow.bottom]}>
           <Text style={styles.shadowLabel}>{name}</Text>
-        </View>
-      </View>
+        </ShapeContainer>
+      </ShapeContainer>
     );
   }
 

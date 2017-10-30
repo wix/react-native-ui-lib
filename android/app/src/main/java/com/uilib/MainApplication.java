@@ -9,6 +9,7 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.controllers.ActivityCallbacks;
+import com.wix.androidshadow.RNReactNativeAndoridShadowPackage;
 
 import java.util.List;
 //import com.wix.interactable.Interactable;
@@ -49,7 +50,10 @@ public class MainApplication extends NavigationApplication {
         // Add the packages you require here.
         // No need to add RnnPackage and MainReactPackage
         return Arrays.<ReactPackage>asList(
+                new RNReactNativeAndoridShadowPackage()
 //                new Interactable()
         );
     }
+
+
 }
