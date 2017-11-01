@@ -15,7 +15,7 @@
     "ios": "react-native run-ios",
     "android": "react-native run-android",
     "pretest": "npm run lint",
-    "test": "jest",
+    "test": "jest --maxWorkers=4",
     "test:watch": "jest --watch",
     "lint": "eslint src -c .eslintrc",
     "xcode": "open ./ios/uilib.xcodeproj",
