@@ -67,7 +67,7 @@ export default class TouchableOpacity extends BaseComponent {
   }
 
   render() {
-    const {throttle, ...others} = this.props;
+    const {throttle, ...others} = this.getThemeProps();
 
     return (
       <RNTouchableOpacity

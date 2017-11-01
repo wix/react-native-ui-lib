@@ -1,6 +1,6 @@
 {
   "name": "react-native-ui-lib",
-  "version": "2.0.117",
+  "version": "2.0.118",
   "main": "index.js",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "publishConfig": {
@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "watchman watch-del-all && export DEV_MODE=true && react-native start",
-    "ios": "react-native run-ios",
+    "ios": "react-native run-ios --simulator=\"iPhone 8\"",
     "android": "react-native run-android",
     "pretest": "npm run lint",
     "test": "jest",
