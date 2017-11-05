@@ -293,6 +293,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     minWidth: 120,
     marginVertical: GUTTER_SPACING / 2,
+    paddingVertical: 4.5,
   },
   tag: {
     backgroundColor: Colors.blue30,
