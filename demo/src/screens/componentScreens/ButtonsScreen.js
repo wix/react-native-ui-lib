@@ -53,7 +53,7 @@ export default class ButtonsScreen extends DemoScreen {
 
   wrapViewInShadow(view,shadow) {
     if (ANDROID_PLATFORM) {
-      return <ShadowParentView style={shadow}>{view}</ShadowParentView>;
+      return <ShadowParentView shadowSrc={'shadow_button_medium'} style={shadow}>{view}</ShadowParentView>;
     }
     else {
       return view;
@@ -93,11 +93,11 @@ export default class ButtonsScreen extends DemoScreen {
                 backgroundColor="#30B650"
                 label="SHUFFLE PLAY"
                 labelStyle={{ fontWeight: '600' }}
-                style={[styles.shadowStyleNoColor,{ marginBottom: ButtonSpace }]}
+                style={[styles.shadowStyle,{ marginBottom: ButtonSpace }]}
                 enableShadow
                 ref={element => (this.button_1 = element)}
                 onPress={() => this.showSnippet(this.button_1)}
-              />,styles.shadowStyleNoColor)}
+              />,styles.shadowStyle)}
             <Button
               backgroundColor="#FB3C62"
               label="Get 3 Months Free"

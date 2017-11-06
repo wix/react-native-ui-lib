@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet,Platform } from 'react-native';
 import _ from 'lodash';
 import { View, Assets, Constants, Card, Button, Colors, Typography, Text } from 'react-native-ui-lib';//eslint-disable-line
 import posts from '../../data/posts';
+import { AndroidShadowManager, ShadowParentView } from 'react-native-android-shadow';
+
+const ANDROID_PLATFORM = (Platform.OS === 'android');
 
 const featureIcon = require('../../assets/icons/star.png');
 const shareIcon = require('../../assets/icons/share.png');
@@ -12,6 +15,28 @@ const cardImage2 = require('../../assets/images/empty-state.jpg');
 export default class ButtonsScreen extends Component {
 
   render() {
+    var resolveAssetSource = require('resolveAssetSource');
+var imgSrc = resolveAssetSource(require('../../assets/images/shadow_rounded_rec12off5.9.png'));
+console.log(imgSrc.width, imgSrc.height);
+
+    /*return (
+      <View padding-20>
+        <ShadowParentView shadowSrc={'shadow_card'} >
+        <Card height={200} enableShadow={false}>
+          <Text>
+            asdsad
+            </Text>
+          </Card>
+          </ShadowParentView>
+
+          <Card height={200}>
+          <Text>
+            asdsad
+            </Text>
+          </Card>
+      </View>
+    )*/
+
     return (
 
       <ScrollView contentContainerStyle={styles.container}>
@@ -19,11 +44,13 @@ export default class ButtonsScreen extends Component {
         <ScrollView horizontal height={100} style={{marginBottom: 20, padding: 10 }} showsHorizontalScrollIndicator={false}>
           {_.times(4, (i) => {
             return (
+              <ShadowParentView shadowSrc={'shadow_card'}>
               <Card shadowType="white10" key={i} width={100} containerStyle={{marginRight: 20}}>
                 <View padding-15>
                   <Text text30 dark30>{i}</Text>
                 </View>
-              </Card>);
+              </Card>
+              </ShadowParentView>);
           })}
         </ScrollView>
 
