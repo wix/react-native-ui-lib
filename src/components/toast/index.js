@@ -352,5 +352,8 @@ function setupRelativeAnimation(height) {
 }
 
 function getHeight({height, actions}) {
-  return height || (_.size(actions) === 2) ? 92 : 48;
+  if (_.isUndefined(height)) {
+    return (_.size(actions) === 2) ? 92 : 48;
+  }
+  return height;
 }
