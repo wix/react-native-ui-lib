@@ -179,14 +179,19 @@ export default class Button extends BaseComponent {
   }
 
   getOutlineStyle() {
-    const {outline, outlineColor, link} = this.props;
+    const {outline, outlineColor, link, disabled} = this.props;
+    let outlineStyle;
     if ((outline || outlineColor) && !link) {
-      return {
+      outlineStyle = {
         borderWidth: 1,
-        borderColor: outlineColor || Colors.dark70,
+        borderColor: outlineColor || Colors.blue30,
       };
+
+      if (disabled) {
+        outlineStyle.borderColor = Colors.dark70;
+      }
     }
-    return undefined;
+    return outlineStyle;
   }
 
   getBorderRadiusStyle() {

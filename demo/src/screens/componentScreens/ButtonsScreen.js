@@ -237,6 +237,15 @@ export default class ButtonsScreen extends DemoScreen {
               onPress={() => this.showSnippet(this.button_16)}
             />
 
+            <Button
+              label="Disabled Outline"
+              outline
+              disabled
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_16 = element)}
+              onPress={() => this.showSnippet(this.button_16)}
+            />
+
             <Text style={styles.header}>Let your curves show</Text>
             {Constants.isIOS ? (
               <Button

@@ -126,7 +126,7 @@ describe('Button', () => {
 
     it('should return borderWidth style with default borderColor when outline is true', () => {
       const uut = new Button({outline: true});
-      expect(uut.getOutlineStyle()).toEqual({borderWidth: 1, borderColor: Colors.dark70});
+      expect(uut.getOutlineStyle()).toEqual({borderWidth: 1, borderColor: Colors.blue30});
     });
 
     it('should return undefined when link is true, even when outline is true', () => {
@@ -142,6 +142,11 @@ describe('Button', () => {
     it('should return outline even if only got outlineColor prop', () => {
       const uut = new Button({outlineColor: 'yellow'});
       expect(uut.getOutlineStyle()).toEqual({borderWidth: 1, borderColor: 'yellow'});
+    });
+
+    it('should return disabled color for outline if button is disabled', () => {
+      const uut = new Button({disabled: true, outline: true});
+      expect(uut.getOutlineStyle()).toEqual({borderWidth: 1, borderColor: Colors.dark70});
     });
   });
 
