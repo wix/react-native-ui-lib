@@ -80,7 +80,7 @@ export default class CardScannerScreen extends Component {
               <Card.Section footer>
                 <Text text90 color={Colors.dark50}>{post.likes} Likes</Text>
                 <Card.Item>
-                  <Button containerStyle={{marginRight: 10}} text90 link iconSource={featureIcon} label="Feature"/>
+                  <Button style={{marginRight: 10}} text90 link iconSource={featureIcon} label="Feature"/>
                   <Button text90 link iconSource={shareIcon} label="Share"/>
                 </Card.Item>
               </Card.Section>

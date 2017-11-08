@@ -108,14 +108,14 @@ export default class AnimatedScanner extends BaseComponent {
             opacity && {opacity},
             backgroundColor && {backgroundColor},
             {
-              right: animatedProgress.interpolate({
+              left: animatedProgress.interpolate({
                 inputRange: [0, 100],
-                outputRange: ['100%', '0%'],
+                outputRange: ['0%', '100%'],
               }),
             },
           ]}
         >
-          {!isDone && !hideScannerLine && <View style={this.styles.scanner}/>}
+          {isDone && !hideScannerLine && <View style={this.styles.scanner}/>}
         </Animated.View>
       </View>
     );
@@ -164,6 +164,7 @@ function createStyles() {
     },
     scanner: {
       position: 'absolute',
+      left: 0,
       top: 0,
       bottom: 0,
       right: 0,
