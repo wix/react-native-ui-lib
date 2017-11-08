@@ -161,13 +161,19 @@ export default class Button extends BaseComponent {
   }
 
   getContainerSizeStyle() {
-    const {size} = this.props;
+    const {size, outline} = this.props;
 
     const CONTAINER_STYLE_BY_SIZE = {};
     CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = {paddingVertical: 4, minWidth: 60};
     CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = {paddingVertical: 5, minWidth: 74};
     CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = {paddingVertical: 11, minWidth: 125};
     CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = {paddingVertical: 16, minWidth: 138};
+
+    if (outline) {
+      _.forEach(CONTAINER_STYLE_BY_SIZE, (style) => {
+        style.paddingVertical -= 1; // eslint-disable-line
+      });
+    }
 
     return CONTAINER_STYLE_BY_SIZE[size];
   }

@@ -174,23 +174,31 @@ describe('Button', () => {
 
   describe('getContainerSizeStyle', () => {
     it('should return style for large button', () => {
-      const uut = new Button({size: 'large'});
+      let uut = new Button({size: 'large'});
       expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 16, minWidth: 138});
+      uut = new Button({size: 'large', outline: true});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 15, minWidth: 138});
     });
 
     it('should return style for medium button', () => {
-      const uut = new Button({size: 'medium'});
+      let uut = new Button({size: 'medium'});
       expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 11, minWidth: 125});
+      uut = new Button({size: 'medium', outline: true});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 10, minWidth: 125});
     });
 
     it('should return style for small button', () => {
-      const uut = new Button({size: 'small'});
+      let uut = new Button({size: 'small'});
       expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 5, minWidth: 74});
+      uut = new Button({size: 'small', outline: true});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 4, minWidth: 74});
     });
 
     it('should return style for xSmall button', () => {
-      const uut = new Button({size: Button.sizes.xSmall});
+      let uut = new Button({size: Button.sizes.xSmall});
       expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 4, minWidth: 60});
+      uut = new Button({size: Button.sizes.xSmall, outline: true});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 3, minWidth: 60});
     });
   });
 });
