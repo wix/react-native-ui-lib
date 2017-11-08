@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Alert, Image, Platform } from 'react-native';
+import ReactNative, { ScrollView, StyleSheet, Alert, Image, Platform } from 'react-native';
 import { Text, View, Assets, Constants, Button, Colors, Typography } from 'react-native-ui-lib'; //eslint-disable-line
 import DemoScreen from '../DemoScreen';
 import { AndroidShadowManager, ShadowParentView } from 'react-native-android-shadow';
@@ -51,12 +51,28 @@ export default class ButtonsScreen extends DemoScreen {
     return Button;
   }
 
-  wrapViewInShadow(view,shadow) {
+  wrapViewInShadow(view, shadow) {
     if (ANDROID_PLATFORM) {
       return <ShadowParentView shadowSrc={'shadow_button_medium'} style={shadow}>{view}</ShadowParentView>;
     }
     else {
       return view;
+    }
+  }
+
+  applyShadowForButton(button) {
+    if (ANDROID_PLATFORM) {
+      const buttonTag = ReactNative.findNodeHandle(button);
+      if (buttonTag) {
+        AndroidShadowManager.applyShadowForView(buttonTag, {
+          insetX: 4,
+          insetY: 4,
+          offsetX: 0,
+          offsetY: 0,
+          cornerRadius: 99,
+          elevation: 9
+        });
+      }
     }
   }
 
@@ -88,16 +104,16 @@ export default class ButtonsScreen extends DemoScreen {
           <View centerH>
             <Text style={styles.title}>Buttons</Text>
 
-            {this.wrapViewInShadow(
-              <Button
-                backgroundColor="#30B650"
-                label="SHUFFLE PLAY"
-                labelStyle={{ fontWeight: '600' }}
-                style={[styles.shadowStyle,{ marginBottom: ButtonSpace }]}
-                enableShadow
-                ref={element => (this.button_1 = element)}
-                onPress={() => this.showSnippet(this.button_1)}
-              />,styles.shadowStyle)}
+
+            <Button
+              backgroundColor="#30B650"
+              label="SHUFFLE PLAY"
+              labelStyle={{ fontWeight: '600' }}
+              style={[styles.shadowStyle, { marginBottom: ButtonSpace, elevation: 15 }]}
+              enableShadow
+              ref={element => {this.button_1 = element; this.applyShadowForButton(element)}}
+              onPress={() => this.showSnippet(this.button_1)}
+            />
             <Button
               backgroundColor="#FB3C62"
               label="Get 3 Months Free"
@@ -146,7 +162,7 @@ export default class ButtonsScreen extends DemoScreen {
             <Text style={styles.header}>Do you have it in small?</Text>
             <Button
               label={'Default'}
-              style={{ marginBottom: ButtonSpace }}
+              style={{ marginBottom: ButtonSpace, elevation: 5 }}
               ref={element => (this.button_6 = element)}
               onPress={() => this.showSnippet(this.button_6)}
             />

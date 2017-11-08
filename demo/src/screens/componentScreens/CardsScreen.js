@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet,Platform } from 'react-native';
+import ReactNative,  { ScrollView, StyleSheet,Platform } from 'react-native';
 import _ from 'lodash';
 import { View, Assets, Constants, Card, Button, Colors, Typography, Text } from 'react-native-ui-lib';//eslint-disable-line
 import posts from '../../data/posts';
@@ -14,22 +14,33 @@ const cardImage2 = require('../../assets/images/empty-state.jpg');
 
 export default class ButtonsScreen extends Component {
 
+  applyShadowForCard(card) {
+    if (ANDROID_PLATFORM) {
+      const cardTag = ReactNative.findNodeHandle(card);
+      AndroidShadowManager.applyShadowForView(cardTag,{
+        insetX : 4,
+        insetY : 4,
+        offsetX : 0,
+        offsetY : 0,
+        cornerRadius: 12,
+        elevation: 9
+        
+      });
+    }
+  }
+
   render() {
-    var resolveAssetSource = require('resolveAssetSource');
-var imgSrc = resolveAssetSource(require('../../assets/images/shadow_rounded_rec12off5.9.png'));
-console.log(imgSrc.width, imgSrc.height);
 
     /*return (
       <View padding-20>
-        <ShadowParentView shadowSrc={'shadow_card'} >
-        <Card height={200} enableShadow={false}>
+        <Card height={200} style={{marginBottom: 30, padding: 10 }} enableShadow={true}>
           <Text>
             asdsad
             </Text>
           </Card>
-          </ShadowParentView>
 
-          <Card height={200}>
+          <Card height={200} style={{marginTop: 0, padding: 10 }} 
+          ref={element => (this.applyShadowForCard(element))}>
           <Text>
             asdsad
             </Text>
@@ -41,16 +52,18 @@ console.log(imgSrc.width, imgSrc.height);
 
       <ScrollView contentContainerStyle={styles.container}>
 
-        <ScrollView horizontal height={100} style={{marginBottom: 20, padding: 10 }} showsHorizontalScrollIndicator={false}>
+        <ScrollView horizontal height={100} style={{marginBottom: 20}} 
+          contentContainerStyle={{alignItems:'center' }} 
+          showsHorizontalScrollIndicator={false}>
           {_.times(4, (i) => {
             return (
-              <ShadowParentView shadowSrc={'shadow_card'}>
-              <Card shadowType="white10" key={i} width={100} containerStyle={{marginRight: 20}}>
+            
+              <Card shadowType="white10" key={i} width={100} height={80} containerStyle={{marginRight: 10,marginLeft:10}} 
+                    ref={element => (this.applyShadowForCard(element))} >
                 <View padding-15>
                   <Text text30 dark30>{i}</Text>
                 </View>
-              </Card>
-              </ShadowParentView>);
+              </Card>);
           })}
         </ScrollView>
 
