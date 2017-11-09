@@ -62,7 +62,6 @@ class Card extends BaseComponent {
   static defaultProps = {
     borderRadius: BorderRadiuses.br40,
     enableShadow: true,
-    elevation: 2,
   };
 
   generateStyles() {
@@ -89,7 +88,7 @@ class Card extends BaseComponent {
   get elevationStyle() {
     const {elevation, enableShadow} = this.getThemeProps();
     if (enableShadow) {
-      return {elevation};
+      return {elevation: elevation || 2};
     }
   }
 
