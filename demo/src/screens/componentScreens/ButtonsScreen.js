@@ -279,6 +279,22 @@ export default class ButtonsScreen extends DemoScreen {
               onPress={() => this.showSnippet(this.button_19)}
             />
             <Text style={styles.header}>Special Cases</Text>
+
+            <Button
+              style={{marginBottom: ButtonSpace}}
+              iconSource={plusIcon}
+              iconStyle={{tintColor: 'white'}}
+              label="Icon"
+            />
+
+            <Button
+              style={{marginBottom: ButtonSpace}}
+              blue30
+              outline
+              iconSource={plusIcon}
+              label="Icon"
+            />
+
             <Button onPress={() => Alert.alert('Button #3')} style={{marginBottom: ButtonSpace}}>
               <Text>
                 {Assets.emojis.cloud} {Assets.emojis.airplane} {Assets.emojis.sunny}

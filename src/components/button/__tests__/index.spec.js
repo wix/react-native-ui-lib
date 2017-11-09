@@ -91,30 +91,52 @@ describe('Button', () => {
     });
   });
 
-  describe('getLabelSizeStyle', () => {
+  describe('getContentSizeStyle', () => {
     it('should return style for large button', () => {
       const uut = new Button({size: 'large'});
-      expect(uut.getLabelSizeStyle()).toEqual({paddingHorizontal: 36});
+      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 36});
     });
 
     it('should return style for medium button', () => {
       const uut = new Button({size: 'medium'});
-      expect(uut.getLabelSizeStyle()).toEqual({paddingHorizontal: 24, ...Typography.text80});
+      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 24});
     });
 
     it('should return style for small button', () => {
       const uut = new Button({size: 'small'});
-      expect(uut.getLabelSizeStyle()).toEqual({paddingHorizontal: 15, ...Typography.text80});
+      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 15});
     });
 
     it('should return style for xSmall button', () => {
       const uut = new Button({size: Button.sizes.xSmall});
-      expect(uut.getLabelSizeStyle()).toEqual({paddingHorizontal: 12, ...Typography.text80});
+      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 12});
     });
 
     it('should have no padding of button is a link', () => {
       const uut = new Button({size: 'medium', link: true});
-      expect(uut.getLabelSizeStyle()).toEqual({paddingHorizontal: 0, ...Typography.text80});
+      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 0});
+    });
+  });
+
+  describe('getLabelSizeStyle', () => {
+    it('should return style for large button', () => {
+      const uut = new Button({size: 'large'});
+      expect(uut.getLabelSizeStyle()).toEqual({});
+    });
+
+    it('should return style for medium button', () => {
+      const uut = new Button({size: 'medium'});
+      expect(uut.getLabelSizeStyle()).toEqual({...Typography.text80});
+    });
+
+    it('should return style for small button', () => {
+      const uut = new Button({size: 'small'});
+      expect(uut.getLabelSizeStyle()).toEqual({...Typography.text80});
+    });
+
+    it('should return style for xSmall button', () => {
+      const uut = new Button({size: Button.sizes.xSmall});
+      expect(uut.getLabelSizeStyle()).toEqual({...Typography.text80});
     });
   });
 
