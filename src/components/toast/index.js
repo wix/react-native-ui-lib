@@ -78,12 +78,17 @@ export default class Toast extends BaseComponent {
      * blur option for blur effect according to react-native-blur lib (make sure enableBlur is on)
      */
     blurOptions: PropTypes.object,
+    /**
+     * custom zIndex for toast
+     */
+    zIndex: PropTypes.number,
   };
 
   static defaultProps = {
     position: 'top',
     color: Colors.white,
     animated: true,
+    zIndex: 100,
   };
 
   state = {
@@ -220,7 +225,7 @@ export default class Toast extends BaseComponent {
   }
 
   render() {
-    const {backgroundColor, actions, allowDismiss, enableBlur} = this.getThemeProps();
+    const {backgroundColor, actions, allowDismiss, enableBlur, zIndex} = this.getThemeProps();
     const {animationConfig} = this.state;
     const hasOneAction = _.size(actions) === 1;
     const hasTwoActions = _.size(actions) === 2;
@@ -241,6 +246,7 @@ export default class Toast extends BaseComponent {
           positionStyle,
           backgroundColor && {backgroundColor},
           {height},
+          {zIndex},
         ]}
         {...animationConfig}
       >
