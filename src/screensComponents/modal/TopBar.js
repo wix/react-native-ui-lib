@@ -91,7 +91,7 @@ export default class TopBar extends BaseComponent {
           iconStyle={[this.styles.icon, iconStyle]}
           {...DEFAULT_BUTTON_PROPS}
           {...otherButtonProps}
-          hitSlop={{top: 6, bottom: 6, left: 6, right: 6}}
+          hitSlop={{top: 10, bottom: 10, left: 20, right: 20}}
         />
       );
     }
