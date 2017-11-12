@@ -245,12 +245,12 @@ export default class TagsInput extends BaseComponent {
         <TextInput
           ref={r => (this.input = r)}
           text80
+          blurOnSubmit={false}
           {...others}
           value={value}
           onSubmitEditing={this.addTag}
           onChangeText={this.onChangeText}
           onKeyPress={this.onKeyPress}
-          blurOnSubmit={false}
           enableErrors={false}
           hideUnderline
           selectionColor={isLastTagMarked ? 'transparent' : undefined}
