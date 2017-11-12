@@ -112,6 +112,16 @@ export default class Button extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
+  get isOutline() {
+    const {outline, outlineColor} = this.getThemeProps();
+    return Boolean(outline || outlineColor);
+  }
+
+  get isFilled() {
+    const {link} = this.getThemeProps();
+    return !this.isOutline && !link;
+  }
+
   getBackgroundColor() {
     const {disabled, outline, link, backgroundColor: propsBackgroundColor} = this.getThemeProps();
     const {backgroundColor: stateBackgroundColor} = this.state;
@@ -225,14 +235,14 @@ export default class Button extends BaseComponent {
   }
 
   renderIcon() {
-    const {iconSource, iconStyle, label, link, disabled} = this.props;
+    const {iconSource, iconStyle, label, disabled} = this.props;
     if (iconSource) {
       return (
         <Image
           source={iconSource}
           style={[
             this.styles.icon,
-            link && disabled && this.styles.iconDisabled,
+            !this.isFilled && disabled && this.styles.iconDisabled,
             label && this.styles.iconSpacing,
             iconStyle,
           ]}

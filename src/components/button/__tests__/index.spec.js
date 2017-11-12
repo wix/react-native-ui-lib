@@ -6,6 +6,34 @@ describe('Button', () => {
     ThemeManager.setComponentTheme('Button', {});
   });
 
+  describe('isOutline', () => {
+    it('should return false when outline or outlineColor props were not sent', () => {
+      const uut = new Button({});
+      expect(uut.isOutline).toBe(false);
+    });
+
+    it('should return true if either outline or outlineColor props were sent', () => {
+      expect(new Button({outline: true}).isOutline).toBe(true);
+      expect(new Button({outlineColor: 'blue'}).isOutline).toBe(true);
+      expect(new Button({outline: true, outlineColor: 'blue'}).isOutline).toBe(true);
+    });
+  });
+
+  describe('isFilled', () => {
+    it('should return true if button is not a link or outline', () => {
+      expect(new Button({}).isFilled).toBe(true);
+    });
+
+    it('should return false if button is an outline button', () => {
+      expect(new Button({outline: true}).isFilled).toBe(false);
+      expect(new Button({outlineColor: 'blue'}).isFilled).toBe(false);
+    });
+
+    it('should return false if button is a link', () => {
+      expect(new Button({link: true}).isFilled).toBe(false);
+    });
+  });
+
   describe('getBackgroundColor', () => {
     it('should return by default blue30 color', () => {
       const uut = new Button({});
