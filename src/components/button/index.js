@@ -253,7 +253,7 @@ export default class Button extends BaseComponent {
   }
 
   renderLabel() {
-    const {label, labelStyle} = this.props;
+    const {label, labelStyle, allowFontScaling} = this.props;
     const typography = this.extractTypographyValue();
     const color = this.getLabelColor();
     const labelSizeStyle = this.getLabelSizeStyle();
@@ -262,6 +262,7 @@ export default class Button extends BaseComponent {
         <Text
           style={[this.styles.text, color && {color}, labelSizeStyle, {...typography}, labelStyle]}
           numberOfLines={1}
+          allowFontScaling={allowFontScaling}
         >
           {label}
         </Text>
