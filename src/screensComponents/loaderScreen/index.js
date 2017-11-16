@@ -20,7 +20,7 @@ export default class LoaderScreen extends BaseComponent {
     /**
      * Color of the loading indicator
      */
-    loaderColor: React.PropTypes.string,
+    loaderColor: PropTypes.string,
     /**
      * loader message
      */

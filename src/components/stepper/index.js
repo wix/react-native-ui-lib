@@ -3,6 +3,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import createStyles from './style';
 import {BaseComponent} from '../../commons';
@@ -17,27 +18,27 @@ export default class Stepper extends BaseComponent {
     /**
      * Text to show next to the current number
      */
-    label: React.PropTypes.string,
+    label: PropTypes.string,
     /**
      * Minimum value
      */
-    min: React.PropTypes.number.isRequired,
+    min: PropTypes.number.isRequired,
     /**
      * Maximum value
      */
-    max: React.PropTypes.number,
+    max: PropTypes.number,
     /**
      * Additional styles for the top container
      */
-    containerStyle: React.PropTypes.object,
+    containerStyle: PropTypes.object,
     /**
      * Handler function to receive updates when the value changes
      */
-    onValueChange: React.PropTypes.func,
+    onValueChange: PropTypes.func,
     /**
      * the initial value
      */
-    initialValue: React.PropTypes.number.isRequired,
+    initialValue: PropTypes.number.isRequired,
   };
 
   constructor(props) {

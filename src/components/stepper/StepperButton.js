@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   TouchableOpacity,
   Text,
@@ -15,23 +16,23 @@ StepperButton.propTypes = {
   /**
    * Text to show on the button
    */
-  label: React.PropTypes.string,
+  label: PropTypes.string,
   /**
    * Use to identify the button in tests
    */
-  testId: React.PropTypes.string,
+  testId: PropTypes.string,
   /**
    * Style from the parent component with `button` style, `buttonText` style and `disableText` style
    */
-  styles: React.PropTypes.object.isRequired,
+  styles: PropTypes.object.isRequired,
   /**
    * Disabled state of the button
    */
-  disabled: React.PropTypes.bool,
+  disabled: PropTypes.bool,
   /**
    * Handler function to receive updates when the value changes
    */
-  onPress: React.PropTypes.func,
+  onPress: PropTypes.func,
 };
 
 StepperButton.displayName = 'StepperButton';
