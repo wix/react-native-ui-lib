@@ -37,7 +37,7 @@ export default class PageControl extends BaseComponent {
     /**
      * Color of the selected page dot and the border of the not selected pages
      */
-    color: React.PropTypes.string,
+    color: PropTypes.string,
     /**
      * The size of the page indicator
      */
