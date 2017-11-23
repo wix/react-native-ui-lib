@@ -112,7 +112,7 @@ export default class Button extends BaseComponent {
     super(props);
 
     if (!_.isUndefined(props.containerStyle)) {
-      console.warn('Button "containerStyle" prop will be deprecated soon, please use "style" instead');
+      console.error('Button "containerStyle" prop will be deprecated soon, please use "style" instead');
     }
   }
 
