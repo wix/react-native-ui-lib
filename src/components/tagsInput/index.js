@@ -49,6 +49,10 @@ export default class TagsInput extends BaseComponent {
      */
     onCreateTag: PropTypes.func,
     /**
+     * callback for when pressing a tag in the following format (tagIndex, markedTagIndex) => {...}
+     */
+    onTagPress: PropTypes.func,
+    /**
      * if true, tags *removal* Ux won't be available
      */
     disableTagRemoval: PropTypes.bool,
@@ -83,6 +87,7 @@ export default class TagsInput extends BaseComponent {
     this.renderTag = this.renderTag.bind(this);
     this.getLabel = this.getLabel.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
+    this.markTagIndex = this.markTagIndex.bind(this);
 
     this.state = {
       value: props.value,
@@ -135,17 +140,30 @@ export default class TagsInput extends BaseComponent {
     }
   }
 
+  markTagIndex(tagIndex) {
+    this.setState({tagIndexToRemove: tagIndex});
+  }
+
   onChangeText(value) {
     this.setState({value, tagIndexToRemove: undefined});
     _.invoke(this.props, 'onChangeText', value);
   }
 
   onTagPress(index) {
+    const {onTagPress} = this.props;
     const {tagIndexToRemove} = this.state;
+
+    // custom press handler
+    if (onTagPress) {
+      onTagPress(index, tagIndexToRemove);
+      return;
+    }
+
+    // default press handler
     if (tagIndexToRemove === index) {
       this.removeMarkedTag();
     } else {
-      this.setState({tagIndexToRemove: index});
+      this.markTagIndex(index);
     }
   }
 
@@ -163,20 +181,19 @@ export default class TagsInput extends BaseComponent {
       return;
     }
 
-    const {value, tags} = this.state;
+    const {value, tags, tagIndexToRemove} = this.state;
     const tagsCount = _.size(tags);
     const keyCode = _.get(event, 'nativeEvent.key');
     const hasNoValue = _.isEmpty(value);
     const pressedBackspace = Constants.isAndroid || keyCode === 'Backspace';
     const hasTags = tagsCount > 0;
-    const isLastTagAlreadyMarked = this.isLastTagMarked();
 
     if (pressedBackspace) {
-      if (hasNoValue && hasTags && !isLastTagAlreadyMarked) {
+      if (hasNoValue && hasTags && _.isUndefined(tagIndexToRemove)) {
         this.setState({
           tagIndexToRemove: tagsCount - 1,
         });
-      } else if (isLastTagAlreadyMarked) {
+      } else if (!_.isUndefined(tagIndexToRemove)) {
         this.removeMarkedTag();
       }
     }
