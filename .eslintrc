@@ -1,9 +1,7 @@
 {
   "parser": "babel-eslint",
-  "plugins": ["react-native"],
-  "extends": [
-    "airbnb"
-  ],
+  "plugins": ["react-native", "uilib"],
+  "extends": ["airbnb"],
   "rules": {
     "object-curly-spacing": "off",
     "react/prefer-stateless-function": "off",

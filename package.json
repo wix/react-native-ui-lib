@@ -45,6 +45,7 @@
     "eslint-plugin-jsx-a11y": "4.0.0",
     "eslint-plugin-react": "^6.9.0",
     "eslint-plugin-react-native": "^2.0.0",
+    "eslint-plugin-uilib": "file:./eslint-rules",
     "jest": "^20.0.4",
     "react": "16.0.0-alpha.6",
     "react-addons-test-utils": "^15.4.2",
