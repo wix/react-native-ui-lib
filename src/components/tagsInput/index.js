@@ -212,7 +212,7 @@ export default class TagsInput extends BaseComponent {
     const {tagIndexToRemove} = this.state;
     const shouldMarkTag = tagIndexToRemove === index;
     if (_.isFunction(renderTag)) {
-      return renderTag(tag, index, shouldMarkTag);
+      return renderTag(tag, index, shouldMarkTag, this.getLabel(tag));
     }
     return (
       <View
