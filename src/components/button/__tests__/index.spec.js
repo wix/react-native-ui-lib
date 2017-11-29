@@ -144,6 +144,11 @@ describe('Button', () => {
       const uut = new Button({size: 'medium', link: true});
       expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 0});
     });
+
+    it('should have no padding if avoidInnerPadding prop was sent', () => {
+      const uut = new Button({size: 'medium', avoidInnerPadding: true});
+      expect(uut.getContentSizeStyle()).toEqual();
+    });
   });
 
   describe('getLabelSizeStyle', () => {
@@ -254,6 +259,11 @@ describe('Button', () => {
       expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 4, minWidth: 60});
       uut = new Button({size: Button.sizes.xSmall, outline: true});
       expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 3, minWidth: 60});
+    });
+
+    it('should avoid minWidth limitation if avoidMinWidth was sent', () => {
+      const uut = new Button({size: Button.sizes.medium, avoidMinWidth: true});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 11});
     });
   });
 });

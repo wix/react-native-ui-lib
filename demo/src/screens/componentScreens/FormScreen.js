@@ -33,6 +33,9 @@ const filters = [
 export default class FormScreen extends Component {
   constructor(props) {
     super(props);
+
+    this.onTagPress = this.onTagPress.bind(this);
+
     this.state = {
       itemsCount: 1,
       // language: {value: 'java', label: 'Java'},
@@ -62,6 +65,10 @@ export default class FormScreen extends Component {
     );
   }
 
+  onTagPress(tagIndex, markedTagIndex) {
+    this.customTagsInput.markTagIndex(tagIndex === markedTagIndex ? undefined : tagIndex);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -80,11 +87,13 @@ export default class FormScreen extends Component {
         />
 
         <TagsInput
+          ref={r => this.customTagsInput = r}
           containerStyle={{marginBottom: 20}}
           placeholder="With custom tags"
           tags={this.state.tags}
           renderTag={this.renderCustomTag}
           onCreateTag={value => ({label: value})}
+          onTagPress={this.onTagPress}
           inputStyle={{...Typography.text60, color: Colors.blue30}}
         />
 

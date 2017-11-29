@@ -76,7 +76,7 @@ function createStyles({selectableIndicatorSize}) {
       width: selectableIndicatorSize,
       height: selectableIndicatorSize,
       borderRadius: BorderRadiuses.br100,
-      borderWidth: StyleSheet.hairlineWidth,
+      borderWidth: 1,
       borderColor: Colors.blue30,
       justifyContent: 'center',
     },

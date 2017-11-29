@@ -83,6 +83,14 @@ export default class Button extends BaseComponent {
      */
     labelProps: PropTypes.object,
     /**
+     * avoid inner button padding
+     */
+    avoidInnerPadding: PropTypes.bool,
+    /**
+     * avoid minimum width constraints
+     */
+    avoidMinWidth: PropTypes.bool,
+    /**
      * Use to identify the button in tests
      */
     testID: PropTypes.string,
@@ -108,7 +116,7 @@ export default class Button extends BaseComponent {
     super(props);
 
     if (!_.isUndefined(props.containerStyle)) {
-      console.warn('Button "containerStyle" prop will be deprecated soon, please use "style" instead');
+      console.error('Button "containerStyle" prop will be deprecated soon, please use "style" instead');
     }
   }
 
@@ -159,7 +167,11 @@ export default class Button extends BaseComponent {
   }
 
   getContentSizeStyle() {
-    const {size, link} = this.props;
+    const {size, link, avoidInnerPadding} = this.props;
+
+    if (avoidInnerPadding) {
+      return;
+    }
 
     const LABEL_STYLE_BY_SIZE = {};
     LABEL_STYLE_BY_SIZE[Button.sizes.xSmall] = {paddingHorizontal: 12};
@@ -168,6 +180,8 @@ export default class Button extends BaseComponent {
     LABEL_STYLE_BY_SIZE[Button.sizes.large] = {paddingHorizontal: 36};
 
     const labelSizeStyle = LABEL_STYLE_BY_SIZE[size];
+
+    // todo: treat the same as avoidInnerPadding
     if (link) {
       labelSizeStyle.paddingHorizontal = 0;
     }
@@ -189,7 +203,7 @@ export default class Button extends BaseComponent {
   }
 
   getContainerSizeStyle() {
-    const {size, outline} = this.props;
+    const {size, outline, avoidMinWidth} = this.props;
 
     const CONTAINER_STYLE_BY_SIZE = {};
     CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = {paddingVertical: 4, minWidth: 60};
@@ -203,7 +217,13 @@ export default class Button extends BaseComponent {
       });
     }
 
-    return CONTAINER_STYLE_BY_SIZE[size];
+
+    const containerSizeStyle = CONTAINER_STYLE_BY_SIZE[size];
+    if (avoidMinWidth) {
+      containerSizeStyle.minWidth = undefined;
+    }
+
+    return containerSizeStyle;
   }
 
   getOutlineStyle() {
