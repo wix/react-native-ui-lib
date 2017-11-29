@@ -79,6 +79,10 @@ export default class Button extends BaseComponent {
      */
     enableShadow: PropTypes.bool, // iOS-only
     /**
+     * Props that will be passed to the button's Text label.
+     */
+    labelProps: PropTypes.object,
+    /**
      * avoid inner button padding
      */
     avoidInnerPadding: PropTypes.bool,
@@ -273,7 +277,7 @@ export default class Button extends BaseComponent {
   }
 
   renderLabel() {
-    const {label, labelStyle} = this.props;
+    const {label, labelStyle, labelProps} = this.props;
     const typography = this.extractTypographyValue();
     const color = this.getLabelColor();
     const labelSizeStyle = this.getLabelSizeStyle();
@@ -282,6 +286,7 @@ export default class Button extends BaseComponent {
         <Text
           style={[this.styles.text, color && {color}, labelSizeStyle, {...typography}, labelStyle]}
           numberOfLines={1}
+          {...labelProps}
         >
           {label}
         </Text>
