@@ -1,0 +1,60 @@
+@import 'src/styles/constants';
+
+@mixin navbar() {
+  .navbar {
+    width: 200px;
+    border-right: 1px solid $dark60;
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      border-bottom: 1px solid $dark60;
+      padding: 9px 15px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $dark60;
+      }
+    }
+  }
+}
+
+@mixin component-props() {
+  .component-props {
+    table {
+      text-align: left;
+      width: 100%;
+      border-collapse: collapse;
+
+      tr {
+        &:first-child {
+          background-color: $violet50;
+        }
+
+        th {
+          padding: 9px;
+        }
+        td {
+          padding: 9px;
+          border-bottom: 1px solid $dark10;
+        }
+      }
+    }
+  }
+}
+
+.docs-page {
+  @include navbar();
+  @include component-props();
+
+  display: flex;
+
+  .docs-page__content {
+    padding: 24px;
+    flex: 1;
+  }
+}

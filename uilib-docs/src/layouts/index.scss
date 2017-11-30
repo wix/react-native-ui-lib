@@ -1,0 +1,31 @@
+html,
+body {
+  margin: 0;
+  font-family: sans-serif;
+  height: 100%;
+}
+
+#___gatsby,
+[data-reactroot] {
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  padding: 24px;
+  background: #b3679b;
+  color: #6c4b5e;
+  justify-content: space-between;
+  align-items: center;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+.main {
+  margin: 0 auto;
+  // max-width: 960px;
+  height: 100%;
+}

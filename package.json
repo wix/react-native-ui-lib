@@ -20,7 +20,9 @@
     "lint": "eslint src -c .eslintrc",
     "xcode": "open ./ios/uilib.xcodeproj",
     "build": "mkdir -p dist && cp -r src/assets dist/ && babel src --out-dir dist",
-    "log": "react-native log-ios | grep 'ethan -'"
+    "log": "react-native log-ios | grep 'ethan -'",
+    "gatsby:deploy": "(cd ./uilib-docs && gatsby build --prefix-paths && gh-pages -d public --branch gh-pages)",
+    "gatsby:develop": "(cd ./uilib-docs && gatsby develop)"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
