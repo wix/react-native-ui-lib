@@ -2,8 +2,8 @@
 
 @mixin navbar() {
   .navbar {
-    width: 200px;
-    border-right: 1px solid $dark60;
+    background: $dark80;
+    width: 300px;
 
     ul {
       list-style-type: none;
@@ -12,12 +12,12 @@
     }
 
     li {
-      border-bottom: 1px solid $dark60;
-      padding: 9px 15px;
+      padding: 18px 15px;
+      padding-left: 36px;
       cursor: pointer;
 
       &:hover {
-        background-color: $dark60;
+        text-decoration: underline;
       }
     }
   }
@@ -32,7 +32,7 @@
 
       tr {
         &:first-child {
-          background-color: $violet50;
+          background-color: $violet60;
         }
 
         th {
@@ -40,7 +40,7 @@
         }
         td {
           padding: 9px;
-          border-bottom: 1px solid $dark10;
+          border-bottom: 1px solid $dark60;
         }
       }
     }
@@ -54,7 +54,7 @@
   display: flex;
 
   .docs-page__content {
-    padding: 24px;
+    padding: 24px 72px;
     flex: 1;
   }
 }

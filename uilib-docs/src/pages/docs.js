@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Link from 'gatsby-link';
 import _ from 'lodash';
 import './docs.scss';
 
@@ -9,7 +10,7 @@ class Docs extends Component {
   };
 
   extractComponentsInfo(component) {
-    const statementPattern = /@.*\:/; //eslint-disable-line
+    const statementPattern = /@\w*\:/; //eslint-disable-line
 
     const info = {
       description: _.get(component, 'description.text'),
@@ -20,10 +21,13 @@ class Docs extends Component {
       _.forEach(infoRaw, (statement) => {
         if (statement && statementPattern.test(statement)) {
           const key = statement.match(statementPattern)[0].slice(1, -1);
+          console.log('ethan - split', key, statement.split(statementPattern));
           info[key] = statement.split(statementPattern)[1].trim();
         }
       });
     }
+
+    return info;
   }
 
   render() {
@@ -32,17 +36,42 @@ class Docs extends Component {
     const components = data.allComponentMetadata.edges;
     const selectedComponent = components[selectedComponentIndex].node;
     const componentInfo = this.extractComponentsInfo(selectedComponent);
-    const componentsDescription = _.get(selectedComponent, 'description.text');
     const componentProps = _.get(selectedComponent, 'props');
     return (
       <div className="docs-page">
         <Navbar components={components} onItemClick={index => this.setState({selectedComponentIndex: index})} />
         <div className="docs-page__content">
           <h1>{selectedComponent.displayName}</h1>
-          <p>{componentsDescription}</p>
-          <p>{selectedComponent.docblock}</p>
+          <h3>{componentInfo.description}</h3>
+          {componentInfo.modifiers && (
+            <div>
+              <p>
+                Supported modifiers: <b>{componentInfo.modifiers}</b>. <br />
+                Read more about modifiers <Link to="/modifiers/">here</Link>.
+              </p>
+            </div>
+          )}
           <h3>PROPS</h3>
           <Props props={componentProps} />
+
+          {componentInfo.gif && (
+            <div>
+              <h3>LIVE EXAMPLE</h3>
+              <img src={componentInfo.gif} />
+            </div>
+          )}
+
+          {componentInfo.example && (
+            <div>
+              <h3>EXAMPLE</h3>
+              <p>
+                See example{' '}
+                <a target="_blank" href={componentInfo.example}>
+                  here
+                </a>.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     );

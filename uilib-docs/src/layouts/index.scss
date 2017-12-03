@@ -1,8 +1,14 @@
+@import 'src/styles/constants';
+
 html,
 body {
   margin: 0;
-  font-family: sans-serif;
+  font-family: Avenir;
   height: 100%;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 #___gatsby,
@@ -11,16 +17,21 @@ body {
 }
 
 .header {
-  display: flex;
   padding: 24px;
-  background: #b3679b;
-  color: #6c4b5e;
-  justify-content: space-between;
-  align-items: center;
+  background: $cyan50;
+  color: $dark10;
+  
+  .links {
+    display: flex;
+    align-items: center;
+  }
 
   a {
+    display: inline-block;
     text-decoration: none;
     color: inherit;
+    margin-right: 10px;
+    
   }
 }
 

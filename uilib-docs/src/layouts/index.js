@@ -7,12 +7,8 @@ import './index.scss';
 
 const Header = () => (
   <div className="header">
-    <div>
-      <h1 style={{margin: 0}}>
-        <Link to="/">{'<RNUILIB/>'}</Link>
-      </h1>
-    </div>
-    <div>
+    <div className="links">
+      <Link to="/">HOME</Link>
       <Link to="/docs/">DOCS</Link>
     </div>
   </div>
