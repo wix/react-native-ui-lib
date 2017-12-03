@@ -3,6 +3,7 @@ node_js:
 - "8"
 install: npm install
 before_deploy: npm run build
+after_deploy: npm run docs:deploy
 deploy:
   provider: npm
   email: "${NPM_EMAIL}"
