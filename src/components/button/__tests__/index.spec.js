@@ -1,9 +1,11 @@
 import Button from '../index';
 import {Colors, BorderRadiuses, Typography, ThemeManager} from '../../../style';
+import {Constants} from '../../../helpers';
 
 describe('Button', () => {
   beforeEach(() => {
     ThemeManager.setComponentTheme('Button', {});
+    mockIOS();
   });
 
   describe('isOutline', () => {
@@ -74,6 +76,19 @@ describe('Button', () => {
     });
   });
 
+  describe('getActiveBackgroundColor', () => {
+    it('should return undefined by default', () => {
+      const uut = new Button({});
+      expect(uut.getActiveBackgroundColor()).toBe(undefined);
+    });
+
+    it('should return value according to getActiveBackgroundColor callback prop', () => {
+      const getActiveBackgroundColor = () => 'red';
+      const uut = new Button({getActiveBackgroundColor});
+      expect(uut.getActiveBackgroundColor()).toBe('red');
+    });
+  });
+
   describe('getLabelColor', () => {
     it('should return theme ctaTextColor by default', () => {
       const uut = new Button({});
@@ -123,11 +138,15 @@ describe('Button', () => {
     it('should return style for large button', () => {
       const uut = new Button({size: 'large'});
       expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 36});
+      mockAndroid();
+      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 28});
     });
 
     it('should return style for medium button', () => {
       const uut = new Button({size: 'medium'});
-      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 24});
+      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 22});
+      mockAndroid();
+      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 20});
     });
 
     it('should return style for small button', () => {
@@ -267,3 +286,13 @@ describe('Button', () => {
     });
   });
 });
+
+function mockIOS() {
+  Constants.isIOS = true;
+  Constants.isAndroid = false;
+}
+
+function mockAndroid() {
+  Constants.isIOS = false;
+  Constants.isAndroid = true;
+}

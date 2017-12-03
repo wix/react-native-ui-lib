@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Image, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
+import {Constants} from '../../helpers';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
@@ -91,6 +92,10 @@ export default class Button extends BaseComponent {
      */
     avoidMinWidth: PropTypes.bool,
     /**
+     * callback for getting activeBackgroundColor (e.g. (calculatedBackgroundColor, prop) => {...})
+     */
+    getActiveBackgroundColor: PropTypes.func,
+    /**
      * Use to identify the button in tests
      */
     testID: PropTypes.string,
@@ -148,6 +153,13 @@ export default class Button extends BaseComponent {
     return 'transparent';
   }
 
+  getActiveBackgroundColor() {
+    const {getActiveBackgroundColor} = this.props;
+    if (getActiveBackgroundColor) {
+      return getActiveBackgroundColor(this.getBackgroundColor(), this.props);
+    }
+  }
+
   getLabelColor() {
     const {link, linkColor, outline, disabled} = this.getThemeProps(); // this.props;
 
@@ -176,8 +188,8 @@ export default class Button extends BaseComponent {
     const LABEL_STYLE_BY_SIZE = {};
     LABEL_STYLE_BY_SIZE[Button.sizes.xSmall] = {paddingHorizontal: 12};
     LABEL_STYLE_BY_SIZE[Button.sizes.small] = {paddingHorizontal: 15};
-    LABEL_STYLE_BY_SIZE[Button.sizes.medium] = {paddingHorizontal: 24};
-    LABEL_STYLE_BY_SIZE[Button.sizes.large] = {paddingHorizontal: 36};
+    LABEL_STYLE_BY_SIZE[Button.sizes.medium] = {paddingHorizontal: Constants.isIOS ? 22 : 20};
+    LABEL_STYLE_BY_SIZE[Button.sizes.large] = {paddingHorizontal: Constants.isIOS ? 36 : 28};
 
     const labelSizeStyle = LABEL_STYLE_BY_SIZE[size];
 
@@ -216,7 +228,6 @@ export default class Button extends BaseComponent {
         style.paddingVertical -= 1; // eslint-disable-line
       });
     }
-
 
     const containerSizeStyle = CONTAINER_STYLE_BY_SIZE[size];
     if (avoidMinWidth) {
@@ -321,6 +332,7 @@ export default class Button extends BaseComponent {
           style,
         ]}
         activeOpacity={0.6}
+        activeBackgroundColor={this.getActiveBackgroundColor()}
         onPress={onPress}
         disabled={disabled}
         testID={testID}
