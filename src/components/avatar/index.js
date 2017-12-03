@@ -9,7 +9,7 @@ import Text from '../text';
 import Image from '../image';
 
 /**
- * Avatar component
+ * Avatar component for displaying user profile images
  */
 export default class Avatar extends BaseComponent {
   static displayName = 'Avatar';

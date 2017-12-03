@@ -7,12 +7,12 @@ import {BaseComponent} from '../../commons';
 import * as CardPresenter from './CardPresenter';
 
 /**
- * @description: CardImage belongs inside the Card component (better be a direct child).
+ * @description: Card.Image part of the Card component belongs inside a Card (better be a direct child).
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
  */
 export default class CardImage extends BaseComponent {
 
-  static displayName = 'CardImage';
+  static displayName = 'Card.Image';
 
   static propTypes = {
     /**

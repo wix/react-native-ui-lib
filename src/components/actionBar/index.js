@@ -9,7 +9,7 @@ import {Colors, Shadows} from '../../style';
 
 
 /**
- * Action Bar
+ * Quick actions bar, each action support Button component props
  */
 export default class ActionBar extends BaseComponent {
   static displayName = 'ActionBar';

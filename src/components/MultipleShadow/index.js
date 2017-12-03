@@ -5,7 +5,9 @@ import {BaseComponent} from '../../commons';
 import View from '../view';
 import {Shadows} from '../../style';
 
-// todo: add support for shadow modifiers
+/**
+ * @description: A multiple layer for multiple shadow effect for iOS
+ */
 export default class MultipleShadow extends BaseComponent {
 
   displayName = 'MultipleShadow';

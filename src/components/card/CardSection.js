@@ -7,11 +7,11 @@ import {Constants} from '../../helpers';
 import View from '../view';
 
 /**
- * CardSection, a sub Card component for layout-ing inside a card
+ * Card.Section, a sub Card component for layout-ing inside a card
  */
 export default class CardSection extends BaseComponent {
 
-  static displayName = 'CardSection';
+  static displayName = 'Card.Section';
 
   static propTypes = {
     /**
