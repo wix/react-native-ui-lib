@@ -1,5 +1,6 @@
 import React from 'react';
-import {
+import ReactNative, {
+  NativeModules,
   StyleSheet,
   ViewPropTypes,
   Image,
@@ -97,7 +98,11 @@ export default class TagsInput extends BaseComponent {
   }
 
   componentDidMount() {
-    DeviceEventEmitter.addListener('onBackspacePress', this.onKeyPress);
+    const textInputHandle = ReactNative.findNodeHandle(this.input);
+    if (textInputHandle && NativeModules.TextInputDelKeyHandler) {
+      NativeModules.TextInputDelKeyHandler.register(textInputHandle);
+      DeviceEventEmitter.addListener('onBackspacePress', this.onKeyPress);
+    }
   }
 
   componentWillUnmount() {
