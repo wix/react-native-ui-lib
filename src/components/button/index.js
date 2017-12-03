@@ -219,10 +219,10 @@ export default class Button extends BaseComponent {
     const {size, outline, avoidMinWidth} = this.props;
 
     const CONTAINER_STYLE_BY_SIZE = {};
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = {paddingVertical: 4, minWidth: 60};
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = {paddingVertical: 5, minWidth: 74};
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = {paddingVertical: 11, minWidth: 125};
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = {paddingVertical: 16, minWidth: 138};
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = {paddingVertical: Constants.isIOS ? 5 : 4, minWidth: 60};
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = {paddingVertical: Constants.isIOS ? 5 : 6, minWidth: 74};
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = {paddingVertical: Constants.isIOS ? 11 : 10, minWidth: 125};
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = {paddingVertical: Constants.isIOS ? 16 : 15, minWidth: 138};
 
     if (outline) {
       _.forEach(CONTAINER_STYLE_BY_SIZE, (style) => {
