@@ -2,8 +2,8 @@ language: node_js
 node_js:
 - "8"
 install: npm install
+script: npm run docs:install && npm run docs:deploy
 before_deploy: npm run build
-after_deploy: (cd ./uilib-docs && npm install) && npm run docs:deploy
 deploy:
   provider: npm
   email: "${NPM_EMAIL}"
