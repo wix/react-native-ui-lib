@@ -93,6 +93,7 @@ export default class Button extends BaseComponent {
     avoidMinWidth: PropTypes.bool,
     /**
      * callback for getting activeBackgroundColor (e.g. (calculatedBackgroundColor, prop) => {...})
+     * better set using ThemeManager
      */
     getActiveBackgroundColor: PropTypes.func,
     /**
@@ -154,9 +155,9 @@ export default class Button extends BaseComponent {
   }
 
   getActiveBackgroundColor() {
-    const {getActiveBackgroundColor} = this.props;
+    const {getActiveBackgroundColor} = this.getThemeProps();
     if (getActiveBackgroundColor) {
-      return getActiveBackgroundColor(this.getBackgroundColor(), this.props);
+      return getActiveBackgroundColor(this.getBackgroundColor(), this.getThemeProps());
     }
   }
 
