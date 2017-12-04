@@ -189,7 +189,7 @@ export default class Button extends BaseComponent {
     const LABEL_STYLE_BY_SIZE = {};
     LABEL_STYLE_BY_SIZE[Button.sizes.xSmall] = {paddingHorizontal: 12};
     LABEL_STYLE_BY_SIZE[Button.sizes.small] = {paddingHorizontal: 15};
-    LABEL_STYLE_BY_SIZE[Button.sizes.medium] = {paddingHorizontal: Constants.isIOS ? 22 : 20};
+    LABEL_STYLE_BY_SIZE[Button.sizes.medium] = {paddingHorizontal: Constants.isIOS ? 18 : 20};
     LABEL_STYLE_BY_SIZE[Button.sizes.large] = {paddingHorizontal: Constants.isIOS ? 36 : 28};
 
     const labelSizeStyle = LABEL_STYLE_BY_SIZE[size];
@@ -219,10 +219,22 @@ export default class Button extends BaseComponent {
     const {size, outline, avoidMinWidth} = this.props;
 
     const CONTAINER_STYLE_BY_SIZE = {};
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = {paddingVertical: Constants.isIOS ? 5 : 4, minWidth: 60};
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = {paddingVertical: Constants.isIOS ? 5 : 6, minWidth: 74};
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = {paddingVertical: Constants.isIOS ? 11 : 10, minWidth: 125};
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = {paddingVertical: Constants.isIOS ? 16 : 15, minWidth: 138};
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = {
+      paddingVertical: Constants.isIOS ? 5 : 4,
+      minWidth: Constants.isIOS ? 66 : 60,
+    };
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = {
+      paddingVertical: Constants.isIOS ? 5 : 6,
+      minWidth: Constants.isIOS ? 74 : 72,
+    };
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = {
+      paddingVertical: Constants.isIOS ? 11 : 10,
+      minWidth: Constants.isIOS ? 95 : 88,
+    };
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = {
+      paddingVertical: Constants.isIOS ? 16 : 15,
+      minWidth: Constants.isIOS ? 138 : 128,
+    };
 
     if (outline) {
       _.forEach(CONTAINER_STYLE_BY_SIZE, (style) => {

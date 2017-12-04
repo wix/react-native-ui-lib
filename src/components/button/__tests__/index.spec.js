@@ -144,7 +144,7 @@ describe('Button', () => {
 
     it('should return style for medium button', () => {
       const uut = new Button({size: 'medium'});
-      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 22});
+      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 18});
       mockAndroid();
       expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 20});
     });
@@ -259,19 +259,19 @@ describe('Button', () => {
       expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 15, minWidth: 138});
 
       mockAndroid();
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 15, minWidth: 138});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 14, minWidth: 138});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 15, minWidth: 128});
+      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 14, minWidth: 128});
     });
 
     it('should return style for medium button', () => {
       const uut = new Button({size: 'medium'});
       const uut2 = new Button({size: 'medium', outline: true});
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 11, minWidth: 125});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 10, minWidth: 125});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 11, minWidth: 95});
+      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 10, minWidth: 95});
 
       mockAndroid();
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 10, minWidth: 125});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 9, minWidth: 125});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 10, minWidth: 88});
+      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 9, minWidth: 88});
     });
 
     it('should return style for small button', () => {
@@ -281,15 +281,15 @@ describe('Button', () => {
       expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 4, minWidth: 74});
 
       mockAndroid();
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 6, minWidth: 74});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 5, minWidth: 74});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 6, minWidth: 72});
+      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 5, minWidth: 72});
     });
 
     it('should return style for xSmall button', () => {
       const uut = new Button({size: Button.sizes.xSmall});
       const uut2 = new Button({size: Button.sizes.xSmall, outline: true});
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 5, minWidth: 60});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 4, minWidth: 60});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 5, minWidth: 66});
+      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 4, minWidth: 66});
 
       mockAndroid();
       expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 4, minWidth: 60});
