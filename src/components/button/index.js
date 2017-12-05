@@ -224,7 +224,7 @@ export default class Button extends BaseComponent {
       minWidth: Constants.isIOS ? 66 : 60,
     };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = {
-      paddingVertical: Constants.isIOS ? 5 : 6,
+      paddingVertical: 6,
       minWidth: Constants.isIOS ? 74 : 72,
     };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = {

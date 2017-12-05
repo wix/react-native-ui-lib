@@ -277,8 +277,8 @@ describe('Button', () => {
     it('should return style for small button', () => {
       const uut = new Button({size: 'small'});
       const uut2 = new Button({size: 'small', outline: true});
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 5, minWidth: 74});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 4, minWidth: 74});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 6, minWidth: 74});
+      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 5, minWidth: 74});
 
       mockAndroid();
       expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 6, minWidth: 72});
