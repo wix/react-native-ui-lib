@@ -7,7 +7,6 @@ import {BaseComponent} from '../../commons';
  * @modifiers: margins, paddings, alignments, background, borderRadius
  */
 export default class View extends BaseComponent {
-
   static displayName = 'View';
 
   static propTypes = {
@@ -40,16 +39,24 @@ export default class View extends BaseComponent {
           alignments,
           style,
         ]}
+        ref={r => (this.view = r)}
       >
         {this.props.children}
       </RNView>
     );
   }
+
+  measure(...args) {
+    this.view.measure(...args);
+  }
+
+  measureInWindow(...args) {
+    this.view.measureInWindow(...args);
+  }
 }
 
 function createStyles() {
   return StyleSheet.create({
-    container: {
-    },
+    container: {},
   });
 }
