@@ -19,7 +19,9 @@ import TagsInput from './tagsInput';
 import Text from './text';
 import Toast from './toast';
 import TouchableOpacity from './touchableOpacity';
+import Tour from './tour';
 import View from './view';
+
 
 module.exports = {
   ActionBar,
@@ -42,5 +44,6 @@ module.exports = {
   Text,
   Toast,
   TouchableOpacity,
+  Tour,
   View,
 };

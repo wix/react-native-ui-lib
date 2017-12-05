@@ -13,6 +13,7 @@ import MaskedInputScreen from './MaskedInputScreen';
 import PageControlScreen from './PageControlScreen';
 import ToastsScreen from './ToastsScreen';
 import TabBarScreen from './TabBarScreen';
+import TourScreen from './TourScreen';
 
 
 Navigation.registerComponent('unicorn.components.ActionSheetScreen', () => ActionSheetScreen);
@@ -29,3 +30,4 @@ Navigation.registerComponent('unicorn.components.MaskedInputScreen', () => Maske
 Navigation.registerComponent('unicorn.components.PageControlScreen', () => PageControlScreen);
 Navigation.registerComponent('unicorn.components.ToastsScreen', () => ToastsScreen);
 Navigation.registerComponent('unicorn.components.TabBarScreen', () => TabBarScreen);
+Navigation.registerComponent('unicorn.components.TourScreen', () => TourScreen);
