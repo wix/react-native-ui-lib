@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, ViewPropTypes, TouchableOpacity} from 'react-native';
+import _ from 'lodash';
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
@@ -68,7 +69,7 @@ export default class Avatar extends BaseComponent {
     backgroundColor: Colors.dark80,
     size: 50,
     labelColor: Colors.dark10,
-  }
+  };
 
   generateStyles() {
     this.styles = createStyles(this.props);
@@ -91,19 +92,26 @@ export default class Avatar extends BaseComponent {
     const {label, labelColor: color, imageSource, isOnline, backgroundColor, testID, onPress} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const Container = onPress ? TouchableOpacity : View;
+
+    const hasImage = !_.isUndefined(imageSource);
     return (
-      <Container style={[this.styles.container, containerStyle, {backgroundColor}]} testID={testID} onPress={onPress}>
+      <Container
+        style={[this.styles.container, containerStyle, !hasImage && {backgroundColor}]}
+        testID={testID}
+        onPress={onPress}
+      >
         <View style={this.styles.initialsContainer}>
           <Text numberOfLines={1} style={[this.styles.initials, {color}]}>
             {label}
           </Text>
         </View>
 
-        {imageSource && <Image style={this.styles.image} source={imageSource} testID={`${testID}.image`}/>}
-        {isOnline &&
-        <View style={this.styles.onlineBadge} testID={`${testID}.onlineBadge`}>
-          <View style={this.styles.onlineBadgeInner}/>
-        </View>}
+        {imageSource && <Image style={this.styles.image} source={imageSource} testID={`${testID}.image`} />}
+        {isOnline && (
+          <View style={this.styles.onlineBadge} testID={`${testID}.onlineBadge`}>
+            <View style={this.styles.onlineBadgeInner} />
+          </View>
+        )}
 
         {this.renderRibbon()}
       </Container>
@@ -111,7 +119,7 @@ export default class Avatar extends BaseComponent {
   }
 }
 
-function createStyles({size, backgroundColor, labelColor, imageSource}) {
+function createStyles({size, labelColor, imageSource}) {
   const borderRadius = size / 2;
   const fontSizeToImageSizeRatio = 0.32;
   const styles = StyleSheet.create({
@@ -120,7 +128,6 @@ function createStyles({size, backgroundColor, labelColor, imageSource}) {
       justifyContent: 'center',
       width: size,
       height: size,
-      backgroundColor,
       borderRadius,
     },
     initialsContainer: {
