@@ -282,20 +282,30 @@ export default class Button extends BaseComponent {
     }
   }
 
+  getIconStyle() {
+    const {size, disabled, iconStyle: propsIconStyle} = this.props;
+    const iconStyle = {
+      tintColor: this.getLabelColor(),
+    };
+
+    if ([Button.sizes.large, Button.sizes.medium].includes(size)) {
+      iconStyle.marginRight = 8;
+    } else {
+      iconStyle.marginRight = 4;
+    }
+
+    if (disabled && !this.isFilled) {
+      iconStyle.tintColor = Colors.dark60;
+    }
+
+    return {...iconStyle, ...propsIconStyle};
+  }
+
   renderIcon() {
-    const {iconSource, iconStyle, label, disabled} = this.props;
+    const {iconSource} = this.props;
     if (iconSource) {
-      return (
-        <Image
-          source={iconSource}
-          style={[
-            this.styles.icon,
-            !this.isFilled && disabled && this.styles.iconDisabled,
-            label && this.styles.iconSpacing,
-            iconStyle,
-          ]}
-        />
-      );
+      const iconStyle = this.getIconStyle();
+      return <Image source={iconSource} style={iconStyle} />;
     }
     return null;
   }
@@ -370,7 +380,7 @@ export default class Button extends BaseComponent {
   }
 }
 
-function createStyles({color}) {
+function createStyles() {
   return StyleSheet.create({
     container: {
       backgroundColor: 'transparent',
@@ -402,16 +412,6 @@ function createStyles({color}) {
       flexDirection: 'row',
       ...Typography.text70,
       fontWeight: '100',
-    },
-    icon: {
-      tintColor: color,
-    },
-    iconDisabled: {
-      tintColor: Colors.dark60,
-    },
-    iconSpacing: {
-      marginRight: 7,
-      paddingRight: 0,
     },
   });
 }
