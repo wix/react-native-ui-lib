@@ -19,6 +19,7 @@ export const navigationData = {
     {title: 'Buttons', tags: 'button cta', screen: 'unicorn.components.ButtonsScreen'},
     {title: 'Badges', tags: 'badge', screen: 'unicorn.components.BadgesScreen'},
     {title: 'Cards', tags: 'cards feed', screen: 'unicorn.components.CardsScreen'},
+    {title: 'Carousel', tags: 'carousel', screen: 'unicorn.components.CarouselScreen'},
     {title: 'Connection Status Bar', tags: 'connection status bar', screen: 'unicorn.components.ConnectionStatusBar'},
     {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
     {title: 'Form Controls', tags: 'form stepper', screen: 'unicorn.components.FormScreen'},

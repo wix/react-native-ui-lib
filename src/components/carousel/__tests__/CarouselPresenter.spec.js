@@ -7,17 +7,34 @@ describe('Carousel presenter', () => {
     expect(uut.getChildrenLength({})).toBe(0);
   });
 
-  it('should calcOffset', () => {
-    expect(uut.calcOffset({pageWidth: 120, children: [{}, {}, {}]}, {currentPage: 0})).toBe(120);
-    expect(uut.calcOffset({pageWidth: 120, children: [{}, {}, {}]}, {currentPage: 1})).toBe(240);
-    expect(uut.calcOffset({pageWidth: 120, children: [{}, {}, {}]}, {currentPage: 2})).toBe(360);
+  describe('calcOffset', () => {
+    it('should calcOffset (default mode)', () => {
+      expect(uut.calcOffset({pageWidth: 120, children: [{}, {}, {}]}, {currentPage: 0})).toBe(0);
+      expect(uut.calcOffset({pageWidth: 120, children: [{}, {}, {}]}, {currentPage: 1})).toBe(120);
+      expect(uut.calcOffset({pageWidth: 120, children: [{}, {}, {}]}, {currentPage: 2})).toBe(240);
+    });
+
+    it('should calcOffset (loop mode)', () => {
+      expect(uut.calcOffset({loop: true, pageWidth: 120, children: [{}, {}, {}]}, {currentPage: 0})).toBe(120);
+      expect(uut.calcOffset({loop: true, pageWidth: 120, children: [{}, {}, {}]}, {currentPage: 1})).toBe(240);
+      expect(uut.calcOffset({loop: true, pageWidth: 120, children: [{}, {}, {}]}, {currentPage: 2})).toBe(360);
+    });
   });
 
-  it('should calcPageIndex', () => {
-    expect(uut.calcPageIndex(120, {pageWidth: 120, children: [{}, {}, {}]})).toBe(0);
-    expect(uut.calcPageIndex(245, {pageWidth: 120, children: [{}, {}, {}]})).toBe(1);
-    expect(uut.calcPageIndex(481, {pageWidth: 120, children: [{}, {}, {}]})).toBe(0);
-    expect(uut.calcPageIndex(5, {pageWidth: 120, children: [{}, {}, {}]})).toBe(2);
+  describe('calcPageIndex', () => {
+    it('should calcPageIndex', () => {
+      expect(uut.calcPageIndex(120, {pageWidth: 120, children: [{}, {}, {}]})).toBe(1);
+      expect(uut.calcPageIndex(245, {pageWidth: 120, children: [{}, {}, {}]})).toBe(2);
+      expect(uut.calcPageIndex(481, {pageWidth: 120, children: [{}, {}, {}]})).toBe(2);
+      expect(uut.calcPageIndex(5, {pageWidth: 120, children: [{}, {}, {}]})).toBe(0);
+    });
+
+    it('should calcPageIndex (loop mode)', () => {
+      expect(uut.calcPageIndex(120, {loop: true, pageWidth: 120, children: [{}, {}, {}]})).toBe(0);
+      expect(uut.calcPageIndex(245, {loop: true, pageWidth: 120, children: [{}, {}, {}]})).toBe(1);
+      expect(uut.calcPageIndex(481, {loop: true, pageWidth: 120, children: [{}, {}, {}]})).toBe(0);
+      expect(uut.calcPageIndex(5, {loop: true, pageWidth: 120, children: [{}, {}, {}]})).toBe(2);
+    });
   });
 
   it('should return isOutsideLimits', () => {
@@ -34,4 +51,3 @@ describe('Carousel presenter', () => {
     expect(uut.calcCarouselWidth({pageWidth: 150, loop: true, children: [{}, {}, {}]})).toBe(750);
   });
 });
-

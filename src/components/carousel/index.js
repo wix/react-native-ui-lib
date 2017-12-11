@@ -8,21 +8,33 @@ import {Constants} from '../../helpers';
 import * as presenter from './CarouselPresenter';
 
 /**
- * Carousel for scrolling pages horizontally
+ * @description: Carousel for scrolling pages horizontally
  */
 export default class Carousel extends BaseComponent {
   static displayName = 'Carousel';
   static propTypes = {
+    /**
+     * this first page to start with
+     */
     initialPage: PropTypes.number,
+    /**
+     * the page width (all pages should have the same page)
+     */
     pageWidth: PropTypes.number,
+    /**
+     * callback for when page has changed
+     */
     onChangePage: PropTypes.func,
+    /**
+     * the carousel style
+     */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
   };
 
   static defaultProps = {
     initialPage: 0,
     pageWidth: Constants.screenWidth,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -39,20 +51,25 @@ export default class Carousel extends BaseComponent {
   }
 
   onScroll(event) {
+    const {loop} = this.props;
     const offsetX = event.nativeEvent.contentOffset.x;
     if (offsetX >= 0) {
       const {currentPage} = this.state;
       const newPage = presenter.calcPageIndex(offsetX, this.props);
 
-      this.setState({
-        currentPage: newPage,
-      }, () => {
-        if (currentPage !== newPage) {
-          _.invoke(this.props, 'onChangePage', newPage, currentPage);
-        }
-      });
+      this.setState(
+        {
+          currentPage: newPage,
+        },
+        () => {
+          console.log('ethan - got here!!');
+          if (currentPage !== newPage) {
+            _.invoke(this.props, 'onChangePage', newPage, currentPage);
+          }
+        },
+      );
 
-      if (presenter.isOutOfBounds(offsetX, this.props)) {
+      if (loop && presenter.isOutOfBounds(offsetX, this.props)) {
         this.updateOffset();
       }
     }
@@ -79,14 +96,16 @@ export default class Carousel extends BaseComponent {
   }
 
   renderChildren() {
-    const {children} = this.props;
+    const {children, loop} = this.props;
     const length = presenter.getChildrenLength(this.props);
 
-    return [
-      this.cloneChild(children[length - 1]),
-      ...children,
-      this.cloneChild(children[0]),
-    ];
+    const childrenArray = React.Children.toArray(children);
+    if (loop) {
+      childrenArray.unshift(this.cloneChild(children[length - 1]));
+      childrenArray.push(this.cloneChild(children[0]));
+    }
+
+    return childrenArray;
   }
 
   render() {
@@ -94,7 +113,9 @@ export default class Carousel extends BaseComponent {
     return (
       <View flex style={containerStyle}>
         <ScrollView
-          ref={(scrollView) => { this.carousel = scrollView; }}
+          ref={(scrollView) => {
+            this.carousel = scrollView;
+          }}
           horizontal
           showsHorizontalScrollIndicator={false}
           pagingEnabled
@@ -108,9 +129,12 @@ export default class Carousel extends BaseComponent {
   }
 
   goToPage(pageIndex, animated = true) {
-    this.setState({
-      currentPage: pageIndex,
-    }, () => this.updateOffset(animated));
+    this.setState(
+      {
+        currentPage: pageIndex,
+      },
+      () => this.updateOffset(animated),
+    );
   }
 }
 
