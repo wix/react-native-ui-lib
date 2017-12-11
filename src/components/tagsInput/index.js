@@ -79,6 +79,11 @@ export default class TagsInput extends BaseComponent {
     hideUnderline: PropTypes.bool,
   };
 
+  static onChangeTagsActions = {
+    ADDED: 'added',
+    REMOVED: 'removed'
+  };
+
   constructor(props) {
     super(props);
 
@@ -129,19 +134,20 @@ export default class TagsInput extends BaseComponent {
       value: '',
       tags: newTags,
     });
-    _.invoke(this.props, 'onChangeTags', newTags);
+    _.invoke(this.props, 'onChangeTags', newTags, TagsInput.onChangeTagsActions.ADDED, newTag);
     this.input.clear();
   }
 
   removeMarkedTag() {
     const {tags, tagIndexToRemove} = this.state;
     if (!_.isUndefined(tagIndexToRemove)) {
+      const removedTag = tags[tagIndexToRemove];
       tags.splice(tagIndexToRemove, 1);
       this.setState({
         tags,
         tagIndexToRemove: undefined,
       });
-      _.invoke(this.props, 'onChangeTags', tags);
+      _.invoke(this.props, 'onChangeTags', tags, TagsInput.onChangeTagsActions.REMOVED, removedTag);
     }
   }
 
