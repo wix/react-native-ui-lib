@@ -95,12 +95,10 @@ export default class Avatar extends BaseComponent {
 
     const hasImage = !_.isUndefined(imageSource);
     return (
-      <Container
-        style={[this.styles.container, containerStyle, !hasImage && {backgroundColor}]}
-        testID={testID}
-        onPress={onPress}
-      >
-        <View style={this.styles.initialsContainer}>
+      <Container style={[this.styles.container, containerStyle]} testID={testID} onPress={onPress}>
+        <View
+          style={[this.styles.initialsContainer, {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
+        >
           <Text numberOfLines={1} style={[this.styles.initials, {color}]}>
             {label}
           </Text>
@@ -131,8 +129,16 @@ function createStyles({size, labelColor, imageSource}) {
       borderRadius,
     },
     initialsContainer: {
+      ...StyleSheet.absoluteFillObject,
       alignItems: 'center',
       justifyContent: 'center',
+      borderRadius,
+    },
+    initialsContainerWithInset: {
+      top: 1,
+      right: 1,
+      bottom: 1,
+      left: 1,
     },
     initials: {
       fontSize: size * fontSizeToImageSizeRatio,
