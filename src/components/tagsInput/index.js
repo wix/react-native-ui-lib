@@ -81,7 +81,7 @@ export default class TagsInput extends BaseComponent {
 
   static onChangeTagsActions = {
     ADDED: 'added',
-    REMOVED: 'removed'
+    REMOVED: 'removed',
   };
 
   constructor(props) {

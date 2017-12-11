@@ -120,10 +120,12 @@ describe('TagsInput', () => {
 
     it('should remove tag according to the tagIndexToRemove in state and invoke ', () => {
       const tags = [{}, {}, {}];
-      _.set(uut, 'state', {tagIndexToRemove: 2, tags});
+      const tagIndexToRemove = 2;
+      const removedTag = tags[tagIndexToRemove];
+      _.set(uut, 'state', {tagIndexToRemove, tags});
       uut.removeMarkedTag();
       expect(uut.state.tags).toEqual([tags[0], tags[1]]);
-      expect(onChangeTagsCallback).toHaveBeenCalledWith([tags[0], tags[1]]);
+      expect(onChangeTagsCallback).toHaveBeenCalledWith([tags[0], tags[1]], 'removed', removedTag);
       expect(uut.state.tagIndexToRemove).toBeUndefined();
     });
   });
