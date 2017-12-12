@@ -62,7 +62,6 @@ export default class Carousel extends BaseComponent {
           currentPage: newPage,
         },
         () => {
-          console.log('ethan - got here!!');
           if (currentPage !== newPage) {
             _.invoke(this.props, 'onChangePage', newPage, currentPage);
           }
