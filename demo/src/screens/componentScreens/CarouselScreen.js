@@ -4,10 +4,15 @@ import {Constants, View, Text, Carousel} from 'react-native-ui-lib'; // eslint-d
 
 class CarouselScreen extends Component {
   state = {};
+
+  onChangePage(index) {
+    console.log('page index changed', index);
+  }
+
   render() {
     return (
       <View flex>
-        <Carousel loop>
+        <Carousel loop onChangePage={this.onChangePage}>
           <Page bg-red50>
             <Text>PAGE 1</Text>
           </Page>

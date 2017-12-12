@@ -26,6 +26,10 @@ export default class Carousel extends BaseComponent {
      */
     onChangePage: PropTypes.func,
     /**
+     * callback for onScroll event of the internall ScrollView
+     */
+    onScroll: PropTypes.func,
+    /**
      * the carousel style
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
@@ -40,6 +44,7 @@ export default class Carousel extends BaseComponent {
     super(props);
     this.state = {
       currentPage: props.initialPage,
+      currentStandingPage: props.initialPage,
     };
 
     this.onScroll = this.onScroll.bind(this);
@@ -54,24 +59,25 @@ export default class Carousel extends BaseComponent {
     const {loop} = this.props;
     const offsetX = event.nativeEvent.contentOffset.x;
     if (offsetX >= 0) {
-      const {currentPage} = this.state;
+      const {currentStandingPage} = this.state;
       const newPage = presenter.calcPageIndex(offsetX, this.props);
 
-      this.setState(
-        {
-          currentPage: newPage,
-        },
-        () => {
-          if (currentPage !== newPage) {
-            _.invoke(this.props, 'onChangePage', newPage, currentPage);
+      this.setState({currentPage: newPage});
+
+      // finished full page scroll
+      if (offsetX % this.props.pageWidth === 0) {
+        this.setState({currentStandingPage: newPage});
+        if (currentStandingPage !== newPage) {
+          _.invoke(this.props, 'onChangePage', newPage, currentStandingPage);
+        }
+      }
           }
-        },
-      );
 
       if (loop && presenter.isOutOfBounds(offsetX, this.props)) {
         this.updateOffset();
       }
-    }
+
+    _.invoke(this.props, 'onScroll', event);
   }
 
   updateOffset(animated = false) {
