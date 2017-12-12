@@ -71,11 +71,11 @@ export default class Carousel extends BaseComponent {
           _.invoke(this.props, 'onChangePage', newPage, currentStandingPage);
         }
       }
-          }
+    }
 
-      if (loop && presenter.isOutOfBounds(offsetX, this.props)) {
-        this.updateOffset();
-      }
+    if (loop && presenter.isOutOfBounds(offsetX, this.props)) {
+      this.updateOffset();
+    }
 
     _.invoke(this.props, 'onScroll', event);
   }
