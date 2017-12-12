@@ -1,56 +1,7 @@
 @import 'src/styles/constants';
 
-@mixin navbar() {
-  .navbar {
-    background: $dark80;
-    width: 300px;
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    li {
-      padding: 18px 15px;
-      padding-left: 36px;
-      cursor: pointer;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-}
-
-@mixin component-props() {
-  .component-props {
-    table {
-      text-align: left;
-      width: 100%;
-      border-collapse: collapse;
-
-      tr {
-        &:first-child {
-          background-color: $violet60;
-        }
-
-        th {
-          padding: 9px;
-        }
-        td {
-          padding: 9px;
-          border-bottom: 1px solid $dark60;
-        }
-      }
-    }
-  }
-}
 
 .docs-page {
-  @include navbar();
-  @include component-props();
-
   display: flex;
 
   .docs-page__content {

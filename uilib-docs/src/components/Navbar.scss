@@ -1,0 +1,23 @@
+@import 'src/styles/constants';
+
+.navbar {
+  background: $dark80;
+  width: 300px;
+  overflow-y: auto;
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    padding: 18px 15px;
+    padding-left: 36px;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
