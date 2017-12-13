@@ -1,4 +1,4 @@
-import uut from '../../../src/style/colors';
+import uut from '../colors';
 
 describe('services/AvatarService', () => {
   it('should add alpha to hex color value', () => {
@@ -24,8 +24,12 @@ describe('services/AvatarService', () => {
   });
 
   it('should handle invalid rgb code', () => {
-    expect(() => uut.rgba(-12, 128, 136, 0.7)).toThrow(new Error('-12 is invalid rgb code, please use number between 0-255'));
-    expect(() => uut.rgba(12, 128, 256, 0.7)).toThrow(new Error('256 is invalid rgb code, please use number between 0-255'));
+    expect(() => uut.rgba(-12, 128, 136, 0.7)).toThrow(
+      new Error('-12 is invalid rgb code, please use number between 0-255'),
+    );
+    expect(() => uut.rgba(12, 128, 256, 0.7)).toThrow(
+      new Error('256 is invalid rgb code, please use number between 0-255'),
+    );
   });
 
   it('should handle invalid hex code', () => {

@@ -1,4 +1,4 @@
-import * as uut from '../../../../src/components/picker/PickerPresenter';
+import * as uut from '../PickerPresenter';
 
 describe('components/PickerPresenter', () => {
   it('should isItemSelected, handle single mode', () => {
