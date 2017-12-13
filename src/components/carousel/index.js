@@ -7,6 +7,9 @@ import View from '../view';
 import {Constants} from '../../helpers';
 import * as presenter from './CarouselPresenter';
 
+
+const OFFSET_PIXEL_CORRECTION = 5;
+
 /**
  * @description: Carousel for scrolling pages horizontally
  */
@@ -55,6 +58,10 @@ export default class Carousel extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
+  get pageWidth() {
+    return Math.floor(this.props.pageWidth);
+  }
+
   onScroll(event) {
     const {loop} = this.props;
     const offsetX = event.nativeEvent.contentOffset.x;
@@ -65,7 +72,7 @@ export default class Carousel extends BaseComponent {
       this.setState({currentPage: newPage});
 
       // finished full page scroll
-      if (offsetX % this.props.pageWidth === 0) {
+      if (offsetX % this.pageWidth <= OFFSET_PIXEL_CORRECTION) {
         this.setState({currentStandingPage: newPage});
         if (currentStandingPage !== newPage) {
           _.invoke(this.props, 'onChangePage', newPage, currentStandingPage);
@@ -88,7 +95,7 @@ export default class Carousel extends BaseComponent {
   componentDidMount() {
     setTimeout(() => {
       this.updateOffset();
-    }, Constants.isIOS ? 0 : 50);
+    }, 0);
   }
 
   cloneChild(child) {
