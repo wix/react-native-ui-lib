@@ -10,10 +10,10 @@ import {Constants} from '../../helpers';
 import TouchableOpacity from '../touchableOpacity';
 
 /**
- * @description: TabBarItem inner component of TabBar
+ * @description: TabBar.Item inner component of TabBar
  */
 export default class TabBarItem extends BaseComponent {
-  static displayName = 'TabBarItem';
+  static displayName = 'TabBar.Item';
 
   static propTypes = {
     /**
