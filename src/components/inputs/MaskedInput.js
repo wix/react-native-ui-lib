@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, ViewPropTypes} from 'react-native';
+import {StyleSheet, ViewPropTypes, Keyboard} from 'react-native';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import TextInput from './TextInput';
@@ -25,6 +25,18 @@ export default class MaskedInput extends BaseInput {
      */
     containerStyle: ViewPropTypes.style,
   };
+
+  componentDidMount() {
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      if (_.invoke(this, 'isFocused')) {
+        _.invoke(this, 'blur');
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.keyboardDidHideListener.remove();
+  }
 
   renderMaskedText() {
     const {renderMaskedText} = this.props;
