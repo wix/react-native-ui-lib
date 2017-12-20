@@ -38,6 +38,11 @@ export default class SelectableComponent extends BaseComponent {
     this.onSelect = this.onSelect.bind(this);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    const {selected} = this.state;
+    return (nextProps.selected !== selected || nextState.selected !== selected);
+  }
+
   componentWillReceiveProps(newProps) {
     if (newProps.selected !== this.state.selected) {
       this.setState({
