@@ -298,7 +298,7 @@ export default class Button extends BaseComponent {
       iconStyle.tintColor = Colors.dark60;
     }
 
-    return {...iconStyle, ...propsIconStyle};
+    return [iconStyle, propsIconStyle];
   }
 
   renderIcon() {

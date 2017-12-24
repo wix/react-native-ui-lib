@@ -305,34 +305,39 @@ describe('Button', () => {
   describe('getIconStyle', () => {
     it('should return the right spacing according to button size when label exists', () => {
       let uut = new Button({size: Button.sizes.large});
-      expect(uut.getIconStyle()).toEqual({tintColor: Colors.white, marginRight: 8});
+      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginRight: 8}, undefined]);
       uut = new Button({size: Button.sizes.medium});
-      expect(uut.getIconStyle()).toEqual({tintColor: Colors.white, marginRight: 8});
+      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginRight: 8}, undefined]);
       uut = new Button({size: Button.sizes.small});
-      expect(uut.getIconStyle()).toEqual({tintColor: Colors.white, marginRight: 4});
+      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginRight: 4}, undefined]);
       uut = new Button({size: Button.sizes.xSmall});
-      expect(uut.getIconStyle()).toEqual({tintColor: Colors.white, marginRight: 4});
+      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginRight: 4}, undefined]);
     });
 
     it('should return icon style according to button size when label exists', () => {
       let uut = new Button({size: Button.sizes.large, disabled: true, outline: true});
-      expect(uut.getIconStyle()).toEqual({marginRight: 8, tintColor: Colors.dark60});
+      expect(uut.getIconStyle()).toEqual([{marginRight: 8, tintColor: Colors.dark60}, undefined]);
       uut = new Button({size: Button.sizes.large, disabled: true, link: true});
-      expect(uut.getIconStyle()).toEqual({marginRight: 8, tintColor: Colors.dark60});
+      expect(uut.getIconStyle()).toEqual([{marginRight: 8, tintColor: Colors.dark60}, undefined]);
       uut = new Button({size: Button.sizes.large, disabled: true});
-      expect(uut.getIconStyle()).toEqual({tintColor: Colors.white, marginRight: 8});
+      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginRight: 8}, undefined]);
     });
 
     it('should set tintColor according to getLabelColor logic', () => {
       const uut = new Button({size: Button.sizes.large});
       jest.spyOn(uut, 'getLabelColor');
       uut.getLabelColor.mockReturnValue('red');
-      expect(uut.getIconStyle()).toEqual({marginRight: 8, tintColor: 'red'});
+      expect(uut.getIconStyle()).toEqual([{marginRight: 8, tintColor: 'red'}, undefined]);
     });
 
     it('should include custom iconStyle provided as a prop', () => {
-      const uut = new Button({size: Button.sizes.large, iconStyle: {marginRight: 9, tintColor: 'red'}});
-      expect(uut.getIconStyle()).toEqual({marginRight: 9, tintColor: 'red'});
+      let uut = new Button({size: Button.sizes.large, iconStyle: {marginRight: 9, tintColor: 'red'}});
+      expect(uut.getIconStyle()).toEqual([
+        {marginRight: 8, tintColor: Colors.white},
+        {marginRight: 9, tintColor: 'red'},
+      ]);
+      uut = new Button({size: Button.sizes.large, iconStyle: 123}); // style can be StyleSheet id
+      expect(uut.getIconStyle()).toEqual([{marginRight: 8, tintColor: Colors.white}, 123]);
     });
   });
 });
