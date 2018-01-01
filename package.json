@@ -51,11 +51,11 @@
     "gatsby": "^1.9.128",
     "gh-pages": "^1.1.0",
     "jest": "^20.0.4",
-    "react": "16.0.0-alpha.6",
+    "react": "16.0.0",
     "react-addons-test-utils": "^15.4.2",
     "react-autobind": "^1.0.6",
     "react-dom": "^15.4.2",
-    "react-native": "0.44.2",
+    "react-native": "0.51.0",
     "react-native-keyboard-aware-scrollview": "^1.1.6",
     "react-native-navigation": "^1.1.19"
   },
