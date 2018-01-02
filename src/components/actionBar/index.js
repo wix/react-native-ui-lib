@@ -7,9 +7,10 @@ import View from '../view';
 import Button from '../button';
 import {Colors, Shadows} from '../../style';
 
-
 /**
- * Quick actions bar, each action support Button component props
+ * @description: Quick actions bar, each action support Button component props
+ * @gif: https://media.giphy.com/media/l49JVl82vrdEaRnRm/giphy.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionBarScreen.js
  */
 export default class ActionBar extends BaseComponent {
   static displayName = 'ActionBar';
