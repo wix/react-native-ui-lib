@@ -22,7 +22,7 @@ export default class CardItem extends BaseComponent {
     column: PropTypes.bool,
   };
 
-  defaultProps = {
+  static defaultProps = {
     row: true,
   };
 
