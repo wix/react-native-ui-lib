@@ -8,7 +8,9 @@ import {Colors, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
 
 /**
- * Top bar to show a "no internet" connection status
+ * @description: Top bar to show a "no internet" connection status
+ * @image: https://user-images.githubusercontent.com/33805983/34484206-edc6c6e4-efcb-11e7-88b2-cd394c19dd5e.png
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ConnectionStatusBarScreen.js
  */
 export default class ConnectionStatusBar extends BaseComponent {
   static displayName = 'ConnectionStatusBar';

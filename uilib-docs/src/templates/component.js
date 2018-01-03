@@ -30,11 +30,20 @@ export default class ComponentTemplate extends Component {
     return info;
   }
 
+  createImage(image) {
+    return <img src={image} style={{marginRight: 20}}/>;
+  }
+
+  createImages(images) {
+    return images.map(this.createImage);
+  }
+
   render() {
     const {pathContext} = this.props;
     const selectedComponent = pathContext.component;
     const componentInfo = this.extractComponentsInfo(selectedComponent);
     const componentProps = _.get(selectedComponent, 'props');
+    const gifs = (componentInfo.gif) ? (componentInfo.gif).split(',') : undefined;
     return (
       <div className="docs-page">
         <div className="docs-page__content">
@@ -51,16 +60,27 @@ export default class ComponentTemplate extends Component {
           <h3>PROPS</h3>
           <Props props={componentProps} />
 
-          {componentInfo.gif && (
+          {componentInfo.image && (
             <div>
-              <h3>LIVE EXAMPLE</h3>
-              <img src={componentInfo.gif} />
+              <h3>EXAMPLE</h3>
+              <img src={componentInfo.image} style={{width: 320}}/>
             </div>
+          )}
+
+          {gifs && (
+              <div className="container">
+                <h3>LIVE EXAMPLE</h3>
+                <div className="row">
+                  <div className="col-sm-12 text-center">
+                    {this.createImages(gifs)}
+                  </div>
+                </div>
+              </div>
           )}
 
           {componentInfo.example && (
             <div>
-              <h3>EXAMPLE</h3>
+              <h3>CODE SAMPLE</h3>
               <p>
                 See example{' '}
                 <a target="_blank" href={componentInfo.example}>

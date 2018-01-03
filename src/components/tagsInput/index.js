@@ -21,8 +21,10 @@ import Assets from '../../assets';
 // todo: support updating tags externally
 
 /**
- * Tags input component (chips)
- * @modifiers: text, color
+ * @description: Tags input component (chips)
+ * @modifiers: text
+ * @gif: https://media.giphy.com/media/3oFzlXJF7FAQJNqGQw/giphy.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FormScreen.js
  */
 export default class TagsInput extends BaseComponent {
   static displayName = 'TagsInput';
