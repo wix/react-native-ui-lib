@@ -16,7 +16,7 @@ public class TextInputDelKeyHandlerPackage implements ReactPackage {
         return Arrays.<NativeModule>asList(new TextInputDelKeyHandlerModule(reactContext));
     }
 
-    @Override
+    // Deprecated in RN 0.47
     public List<Class<? extends JavaScriptModule>> createJSModules() {
         return Collections.emptyList();
     }
