@@ -9,6 +9,7 @@ import Assets from '../../assets';
 
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
+ * @extends: Image
  */
 class Image extends BaseComponent {
   static displayName = 'Image';

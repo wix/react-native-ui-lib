@@ -9,8 +9,10 @@ import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
 
 /**
- * Mask Input to create custom looking inputs with custom formats
+ * @description: Mask Input to create custom looking inputs with custom formats
  * @extends: TextInput
+ * @image: https://user-images.githubusercontent.com/33805983/34515770-6a106a4c-f07c-11e7-99c9-616020e9ba7d.png
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/MaskedInputScreen.js
  */
 export default class MaskedInput extends BaseInput {
   static displayName = 'MaskedInput';

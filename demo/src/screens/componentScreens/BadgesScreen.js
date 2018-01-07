@@ -4,7 +4,7 @@ import {View, Badge, Colors} from 'react-native-ui-lib';//eslint-disable-line
 
 const BadgesSpace = 30;
 
-export default class ButtonsScreen extends Component {
+export default class BadgesScreen extends Component {
 
   render() {
     return (

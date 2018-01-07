@@ -7,7 +7,9 @@ import {Constants} from '../../helpers';
 import View from '../view';
 
 /**
- * Card.Section, a sub Card component for layout-ing inside a card
+ * @description: Card.Section, a sub Card component for layout-ing inside a card
+ * @extends: Container
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
  */
 export default class CardSection extends BaseComponent {
 

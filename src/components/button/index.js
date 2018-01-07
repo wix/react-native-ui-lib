@@ -11,9 +11,10 @@ import View from '../view';
 
 /**
  * @description: Basic button component
- * @modifiers: margins
- * @extends TouchableOpacity
- * @example https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.js
+ * @modifiers: margin, backgroundColor
+ * @extends: TouchableOpacity
+ * @gif: https://media.giphy.com/media/3ohc1fKbeuR1EGhLqw/giphy.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.js
  */
 export default class Button extends BaseComponent {
   static displayName = 'Button';
