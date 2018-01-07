@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {ScrollView, View, Text, StyleSheet, Dimensions} from 'react-native';
+import {ScrollView, View, Text, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
 import {Colors, Typography} from 'react-native-ui-lib';//eslint-disable-line
 
 const {width} = Dimensions.get('window');
@@ -9,12 +9,14 @@ export default class ColorsScreen extends Component {
 
   render() {
     return (
-      <ScrollView >
+      <ScrollView style={{backgroundColor: Colors.dark80}}>
         <View style={styles.pallete}>
           {_.map(Colors, (value, key) => {
             if (!_.isFunction(value)) {
               return (
-                <View key={key} style={[styles.palletEeColor, {backgroundColor: value}]} />
+                <TouchableOpacity key={key} onPress={() => this.onPress(key)}>
+                  <View style={[styles.palletEeColor, {backgroundColor: value}]}/>
+                </TouchableOpacity>
               );
             }
           })}
@@ -24,13 +26,13 @@ export default class ColorsScreen extends Component {
           const baseColorTints = _.pickBy(Colors, (color, key) => key.includes(baseColor));
           return (
             <View key={baseColor} style={{paddingLeft: 10}}>
-              <Text style={[Typography.text4, {marginBottom: 2, color: Colors.dark30}]}>{baseColor}s</Text>
+              <Text style={[Typography.text60, {marginBottom: 2, color: Colors.dark30}]}>{baseColor}s</Text>
               <ScrollView horizontal contentContainerStyle={{marginBottom: 20}} showsHorizontalScrollIndicator={false}>
                 {_.map(baseColorTints, (value, key) => {
                   return (
                     <View key={key} style={[styles.colorBlock, {backgroundColor: value}]}>
                       <Text style={styles.colorBlockLabel}>
-                        {key}
+                        {value}
                       </Text>
                     </View>
                   );
@@ -41,6 +43,10 @@ export default class ColorsScreen extends Component {
         })}
       </ScrollView>
     );
+  }
+
+  onPress(key) {
+    alert(key);
   }
 }
 

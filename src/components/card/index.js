@@ -14,7 +14,7 @@ import CardImage from './CardImage';
 
 /**
  * @description: Card component
- * @extends: Container
+ * @extends: TouchableOpacity / View
  * @modifiers: margin, padding
  * @gif: https://media.giphy.com/media/l0HU9SKWmv0VTOYMM/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js

@@ -6,7 +6,8 @@ import View from '../view';
 import {Shadows} from '../../style';
 
 /**
- * @description: A multiple layer for multiple shadow effect for iOS
+ * @description: A multiple layer for multiple shadow effect for iOS only
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/styleScreens/ShadowsScreen.js
  */
 export default class MultipleShadow extends BaseComponent {
 
@@ -29,11 +30,11 @@ export default class MultipleShadow extends BaseComponent {
      * Custom shadow color to be applied on both top and bottom shadows
      */
     shadowColor: PropTypes.string,
-  }
+  };
 
   static defaultProps = {
     shadowType: 'white40',
-  }
+  };
 
   generateStyles() {
     this.styles = createStyles(this.props);

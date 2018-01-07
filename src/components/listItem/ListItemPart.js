@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import {View, StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
 
+/**
+ * @description: ListItem.part, a sub List component for layout-ing inside a ListItem
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/listScreens/BasicListScreen.js
+ */
 export default class ListItemPart extends BaseComponent {
-
   static displayName = 'ListItemPart';
-
   static propTypes = {
     /**
      * this part content will be aligned to left
