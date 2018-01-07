@@ -8,6 +8,7 @@ import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 import View from '../view';
+import {isAndroid} from '../../helpers/Constants';
 
 /**
  * @description: Basic button component
@@ -128,7 +129,7 @@ export default class Button extends BaseComponent {
 
   // This method will be called more than once in case of layout change!
   getComponentDimensions(event) {
-    if (Platform.OS === 'android' && Platform.Version <= 17) {
+    if (isAndroid && Platform.Version <= 17) {
       const height = event.nativeEvent.layout.height;
       this.setState({borderRadius: height / 2});
     }
