@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Image, StyleSheet} from 'react-native';
+import {Platform, Image, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
@@ -107,8 +107,7 @@ export default class Button extends BaseComponent {
     labelStyle: {},
     size: 'large',
     outline: false,
-
-    borderRadius: BorderRadiuses.br100,
+    // borderRadius: BorderRadiuses.br100,
     // backgroundColor: ThemeManager.CTABackgroundColor,
   };
 
@@ -124,6 +123,14 @@ export default class Button extends BaseComponent {
 
     if (!_.isUndefined(props.containerStyle)) {
       console.error('Button "containerStyle" prop will be deprecated soon, please use "style" instead');
+    }
+  }
+
+  // This method will be called more than once in case of layout change!
+  getComponentDimensions(event) {
+    if (Platform.OS === 'android' && Platform.Version <= 17) {
+      const height = event.nativeEvent.layout.height;
+      this.setState({borderRadius: height / 2});
     }
   }
 
@@ -268,11 +275,14 @@ export default class Button extends BaseComponent {
   }
 
   getBorderRadiusStyle() {
-    const {link, borderRadius, fullWidth} = this.props;
-    if (link || fullWidth) {
+    const {link, fullWidth, borderRadius: borderRadiusFromProps} = this.props;
+    if (link || fullWidth || borderRadiusFromProps === 0) {
       return {borderRadius: 0};
     }
-    return {borderRadius: _.isUndefined(borderRadius) ? BorderRadiuses.br100 : borderRadius};
+
+    const {borderRadius: borderRadiusFromState} = this.state;
+    const borderRadius = borderRadiusFromProps || borderRadiusFromState || BorderRadiuses.br100;
+    return {borderRadius};
   }
 
   getShadowStyle() {
@@ -357,6 +367,7 @@ export default class Button extends BaseComponent {
         ]}
         activeOpacity={0.6}
         activeBackgroundColor={this.getActiveBackgroundColor()}
+        onLayout={this.getComponentDimensions}
         onPress={onPress}
         disabled={disabled}
         testID={testID}
