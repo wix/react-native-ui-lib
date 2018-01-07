@@ -30,12 +30,12 @@ export default class ComponentTemplate extends Component {
     return info;
   }
 
-  createImage(image) {
+  renderImage(image) {
     return <img alt={''} src={image} style={{marginRight: 20, width: 320}} />;
   }
 
-  createImages(images) {
-    return images.map(this.createImage);
+  renderImages(images) {
+    return images.map(this.renderImage);
   }
 
   render() {
@@ -67,7 +67,7 @@ export default class ComponentTemplate extends Component {
               <h3>EXAMPLE</h3>
               <div className="row">
                 <div className="col-sm-12 text-center">
-                  {this.createImages(imgs)}
+                  {this.renderImages(imgs)}
                 </div>
               </div>
             </div>
@@ -78,7 +78,7 @@ export default class ComponentTemplate extends Component {
               <h3>LIVE EXAMPLE</h3>
               <div className="row">
                 <div className="col-sm-12 text-center">
-                  {this.createImages(gifs)}
+                  {this.renderImages(gifs)}
                 </div>
               </div>
             </div>
