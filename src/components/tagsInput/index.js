@@ -104,11 +104,17 @@ export default class TagsInput extends BaseComponent {
 
   componentDidMount() {
     const textInputHandle = ReactNative.findNodeHandle(this.input);
+    console.log("componentDidMount! tag " + textInputHandle);
     if (textInputHandle && NativeModules.TextInputDelKeyHandler) {
       NativeModules.TextInputDelKeyHandler.register(textInputHandle);
       DeviceEventEmitter.addListener('onBackspacePress', this.onKeyPress);
     }
   }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   const textInputHandle = ReactNative.findNodeHandle(this.input);
+  //   console.log("componentDidUpdate! tag " + textInputHandle);
+  // }
 
   componentWillUnmount() {
     DeviceEventEmitter.removeListener('onBackspacePress', this.onKeyPress);
@@ -198,6 +204,7 @@ export default class TagsInput extends BaseComponent {
     const hasNoValue = _.isEmpty(value);
     const pressedBackspace = Constants.isAndroid || keyCode === 'Backspace';
     const hasTags = tagsCount > 0;
+    console.log("onKeyPress! keyCode " + keyCode);
 
     if (pressedBackspace) {
       if (hasNoValue && hasTags && _.isUndefined(tagIndexToRemove)) {
@@ -265,13 +272,14 @@ export default class TagsInput extends BaseComponent {
   }
 
   renderTextInput() {
+    console.log("renderTextInput!");
     const {containerStyle, inputStyle, ...others} = this.props;
     const {value} = this.state;
     const isLastTagMarked = this.isLastTagMarked();
     return (
       <View style={styles.inputWrapper}>
         <TextInput
-          ref={r => (this.input = r)}
+          ref={r => {this.input = r;     console.log("got ref! " + ReactNative.findNodeHandle(this.input));}}
           text80
           blurOnSubmit={false}
           {...others}
@@ -284,6 +292,7 @@ export default class TagsInput extends BaseComponent {
           selectionColor={isLastTagMarked ? 'transparent' : undefined}
           style={inputStyle}
           containerStyle={{flexGrow: 0}}
+          collapsable={false}
         />
       </View>
     );

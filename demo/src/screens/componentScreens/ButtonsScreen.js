@@ -48,6 +48,7 @@ export default class ButtonsScreen extends DemoScreen {
   }
 
   render() {
+    console.log("button screen render");
     // return (
     //   <View flex center>
     //     <Button style={{borderWidth: 1, maxWidth: 80  }} style2={{padding: 50}} label="asdasd" />

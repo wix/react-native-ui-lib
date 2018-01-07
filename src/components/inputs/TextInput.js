@@ -303,7 +303,7 @@ export default class TextInput extends BaseInput {
     const underlineStyle = this.getUnderlineStyle();
 
     return (
-      <View style={[this.styles.container, containerStyle]}>
+      <View style={[this.styles.container, containerStyle]} collapsable={false}>
         <View style={[this.styles.innerContainer, underlineStyle]}>
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
