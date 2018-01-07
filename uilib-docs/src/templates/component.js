@@ -51,6 +51,11 @@ export default class ComponentTemplate extends Component {
         <div className="docs-page__content">
           <h1>{selectedComponent.displayName}</h1>
           <h3>{componentInfo.description}</h3>
+          {componentInfo.extends && (
+            <div>
+              Extends: <b>{componentInfo.extends}</b>. <br />
+            </div>
+          )}
           {componentInfo.modifiers && (
             <div>
               <p>
