@@ -129,7 +129,7 @@ export default class Button extends BaseComponent {
 
   // This method will be called more than once in case of layout change!
   getComponentDimensions(event) {
-    if (isAndroid && Platform.Version <= 17) {
+    if (Constants.isAndroid && Platform.Version <= 17) {
       const height = event.nativeEvent.layout.height;
       this.setState({borderRadius: height / 2});
     }
