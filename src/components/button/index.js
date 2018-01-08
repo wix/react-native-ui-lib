@@ -8,7 +8,6 @@ import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 import View from '../view';
-import {isAndroid} from '../../helpers/Constants';
 
 /**
  * @description: Basic button component
