@@ -6,12 +6,12 @@ const containerStyle = {
   marginBottom: 40,
 };
 
-export default class ButtonsScreen extends Component {
+export default class PageControlScreen extends Component {
 
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <PageControl containerStyle={containerStyle} numOfPages={2} currentPage={0}/>
+        <PageControl text10 containerStyle={containerStyle} numOfPages={2} currentPage={0}/>
         <PageControl containerStyle={containerStyle} numOfPages={5} currentPage={2}/>
         <PageControl containerStyle={containerStyle} numOfPages={3} currentPage={2} color={Colors.red40}/>
         <PageControl containerStyle={containerStyle} numOfPages={10} currentPage={4} color={Colors.purple40}/>
