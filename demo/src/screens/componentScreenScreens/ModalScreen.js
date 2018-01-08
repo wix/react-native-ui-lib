@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
 import {Colors, Carousel, PageControl, Modal, View, Text, Constants} from 'react-native-ui-lib';//eslint-disable-line
 
-export default class LoadingScreen extends Component {
+export default class ModalScreen extends Component {
 
   static navigatorStyle = {
     navBarHidden: true,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -95,7 +95,7 @@ export default class LoadingScreen extends Component {
             />
             <View padding-20>
               <Text text70>
-                use doneButtonProps/cancelButtonProps properties to have custom behaviour or style for done/canel actions
+                use doneButtonProps/cancelButtonProps properties to have custom behaviour or style for done/cancel actions
               </Text>
             </View>
           </View>
@@ -116,4 +116,4 @@ const styles = StyleSheet.create({
     left: 20,
     zIndex: 1,
   },
-})
+});

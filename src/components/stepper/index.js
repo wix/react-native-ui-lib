@@ -10,7 +10,9 @@ import {BaseComponent} from '../../commons';
 import StepperButton from './StepperButton';
 
 /**
- * Stepper component with increase and decrease buttons
+ * @description: Stepper component with increase and decrease buttons
+ * @gif: https://media.giphy.com/media/3oFzm47bk0v4WV15O8/giphy.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FormScreen.js
  */
 export default class Stepper extends BaseComponent {
   static displayName = 'Stepper';

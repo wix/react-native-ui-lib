@@ -4,6 +4,7 @@ import {BaseComponent} from '../../commons';
 
 /**
  * @description: Wrapper component for React Native View component
+ * @extends: View
  * @modifiers: margins, paddings, alignments, background, borderRadius
  */
 export default class View extends BaseComponent {

@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {ConnectionStatusBar, Typography, Colors} from 'react-native-ui-lib'; //eslint-disable-line
 
 ConnectionStatusBar.registerGlobalOnConnectionLost(() => {
-  console.warn('what what?!? connection has been lost');
+  // console.warn('what what?!? connection has been lost');
 });
 
 export default class ConnectionStatusBarScreen extends Component {

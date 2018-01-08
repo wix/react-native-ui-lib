@@ -14,10 +14,12 @@ const DEFAULT_BUTTON_PROPS = {
   color: Colors.blue30,
 };
 
+/**
+ * @description: Modal.TopBar, inner component for configuring the Modal component's title, buttons and statusBar
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.js
+ */
 export default class TopBar extends BaseComponent {
-
-  static displayName = 'Moda.TopBar';
-
+  static displayName = 'Modal.TopBar';
   static propTypes = {
     /**
      * title to display in the center of the top bar
@@ -63,7 +65,7 @@ export default class TopBar extends BaseComponent {
      * whether to include status bar or not (height claculations)
      */
     includeStatusBar: PropTypes.bool,
-  }
+  };
 
   static defaultProps = {
     doneLabel: 'Save',
@@ -71,7 +73,7 @@ export default class TopBar extends BaseComponent {
     doneButtonProps: {},
     cancelButtonProps: {},
     includeStatusBar: Constants.isIOS,
-  }
+  };
 
   generateStyles() {
     this.styles = createStyles(this.props);

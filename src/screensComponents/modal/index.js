@@ -5,11 +5,17 @@ import {View, Modal as RNModal} from 'react-native';
 import {BaseComponent} from '../../commons';
 import TopBar from './TopBar';
 
+/**
+ * @description: Component that present content on top of the invoking screen
+ * @extends: Modal
+ * @gif: https://media.giphy.com/media/3oFzmfSX8KgvctI4Ks/giphy.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.js
+ */
 export default class Modal extends BaseComponent {
-
+  static displayName = 'Modal';
   static propTypes = {
     enableModalBlur: PropTypes.bool,
-  }
+  };
 
   render() {
     const {enableModalBlur, ...others} = this.props;

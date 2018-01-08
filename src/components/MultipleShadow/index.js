@@ -9,9 +9,7 @@ import {Shadows} from '../../style';
  * @description: A multiple layer for multiple shadow effect for iOS only
  */
 export default class MultipleShadow extends BaseComponent {
-
-  displayName = 'MultipleShadow';
-
+  static displayName = 'IGNORE';
   static propTypes = {
     /**
      * top shadow style to use

@@ -3,7 +3,7 @@ import {BaseComponent} from '../../commons';
 import Toast from '../toast';
 
 /**
- * @description: "Notification" component will be changed soon, please use the "Toast" component instead
+ * @description: The Notification component will be changed soon, please use the Toast component instead
  */
 export default class Notification extends BaseComponent {
   constructor(props) {

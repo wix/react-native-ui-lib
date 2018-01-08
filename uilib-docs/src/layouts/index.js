@@ -19,6 +19,10 @@ const Header = () => (
 const TemplateWrapper = ({children, data, location}) => {
   const components = data.allComponentMetadata.edges;
   const inDocs = location.pathname.includes('/docs');
+  const filteredComponents = _.chain(components)
+      .filter(component => component.node.displayName !== 'IGNORE')
+      .sortBy(components, 'node.displayName')
+      .value();
   return (
     <div>
       <Helmet
@@ -32,7 +36,7 @@ const TemplateWrapper = ({children, data, location}) => {
       <div className="main">
         {inDocs && (
           <div className="sidebar">
-            <Navbar components={components} />
+            <Navbar components={filteredComponents} />
           </div>
         )}
         <div className="content">{children()}</div>

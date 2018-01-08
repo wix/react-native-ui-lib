@@ -5,6 +5,7 @@ import {Colors, Typography, Toast} from 'react-native-ui-lib';//eslint-disable-l
 
 const {width} = Dimensions.get('window');
 const baseColors = ['dark', 'blue', 'cyan', 'green', 'yellow', 'orange', 'red', 'purple', 'violet'];
+
 export default class ColorsScreen extends Component {
 
   constructor(props) {
@@ -12,59 +13,74 @@ export default class ColorsScreen extends Component {
 
     this.state = {
       key: '',
+      color: Colors.white,
+      background: Colors.blue40,
       showToast: false,
     };
   }
 
+  onPress(key, value) {
+    this.setState({key});
+    if (_.includes(key, '60') || _.includes(key, '70') || _.includes(key, '80') || _.includes(key, 'white')) {
+      this.setState({color: Colors.dark10});
+    } else {
+      this.setState({color: Colors.white});
+    }
+    this.setState({background: value});
+    this.setState({showToast: true});
+  }
+
   render() {
     return (
-      <ScrollView style={{backgroundColor: Colors.dark80}}>
-        <View style={styles.pallete}>
-          {_.map(Colors, (value, key) => {
-            if (!_.isFunction(value)) {
-              return (
-                <TouchableOpacity key={key} onPress={() => this.onPress(key)}>
-                  <View style={[styles.palletEeColor, {backgroundColor: value}]}/>
-                </TouchableOpacity>
-              );
-            }
-          })}
-        </View>
-
-        {_.map(baseColors, (baseColor) => {
-          const baseColorTints = _.pickBy(Colors, (color, key) => key.includes(baseColor));
-          return (
-            <View key={baseColor} style={{paddingLeft: 10}}>
-              <Text style={[Typography.text60, {marginBottom: 2, color: Colors.dark30}]}>{baseColor}s</Text>
-              <ScrollView horizontal contentContainerStyle={{marginBottom: 20}} showsHorizontalScrollIndicator={false}>
-                {_.map(baseColorTints, (value, key) => {
-                  return (
-                    <View key={key} style={[styles.colorBlock, {backgroundColor: value}]}>
-                      <Text style={styles.colorBlockLabel}>
-                        {key}: {value}
-                      </Text>
-                    </View>
-                  );
-                })}
-              </ScrollView>
-            </View>
-          );
-        })}
+      <View>
         <Toast
           message={this.state.key}
+          color={this.state.color}
+          backgroundColor={this.state.background}
           allowDismiss
           onDismiss={() => this.setState({showToast: false})}
           visible={this.state.showToast}
         />
-      </ScrollView>
+        <ScrollView style={{backgroundColor: Colors.dark80}}>
+          <View style={styles.pallete}>
+            {_.map(Colors, (value, key) => {
+              if (!_.isFunction(value)) {
+                return (
+                  <TouchableOpacity key={key} onPress={() => this.onPress(key, value)}>
+                    <View style={[styles.palletEeColor, {backgroundColor: value}]}/>
+                  </TouchableOpacity>
+                );
+              }
+            })}
+          </View>
+
+          {_.map(baseColors, (baseColor) => {
+            const baseColorTints = _.pickBy(Colors, (color, key) => key.includes(baseColor));
+            return (
+              <View key={baseColor} style={{paddingLeft: 10}}>
+                <Text style={[Typography.text60, {marginBottom: 2, color: Colors.dark30}]}>{baseColor}s</Text>
+                <ScrollView
+                  horizontal
+                  contentContainerStyle={{marginBottom: 20}}
+                  showsHorizontalScrollIndicator={false}
+                >
+                  {_.map(baseColorTints, (value, key) => {
+                    return (
+                      <View key={key} style={[styles.colorBlock, {backgroundColor: value}]}>
+                        <Text style={styles.colorBlockLabel}>
+                          {key}: {value}
+                        </Text>
+                      </View>
+                    );
+                  })}
+                </ScrollView>
+              </View>
+            );
+          })}
+        </ScrollView>
+      </View>
     );
   }
-
-  onPress(key) {
-    this.setState({key});
-    this.setState({showToast: true});
-  }
-
 }
 
 const PALLETE_COLOR_MARGIN = 5;

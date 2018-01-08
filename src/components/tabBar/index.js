@@ -7,10 +7,13 @@ import {BaseComponent} from '../../commons';
 import View from '../view';
 import TabBarItem from './TabBarItem';
 
+/**
+ * @description: Basic TabBar component
+ * @gif: https://media.giphy.com/media/3o751YHFZVlv3Ay4k8/giphy.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabBarScreen.js
+ */
 export default class TabBar extends BaseComponent {
-
   static displayName = 'TabBar';
-
   static propTypes = {
     ...ViewPropTypes.height,
     /**
@@ -33,12 +36,12 @@ export default class TabBar extends BaseComponent {
      * callback for when index has change
      */
     onChangeIndex: PropTypes.func,
-  }
+  };
 
   static defaultProps = {
     selectedIndex: 0,
     height: 51,
-  }
+  };
 
   constructor(props) {
     super(props);
