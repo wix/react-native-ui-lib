@@ -1,11 +1,20 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, View, Text, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
-import {Colors, Typography} from 'react-native-ui-lib';//eslint-disable-line
+import {Colors, Typography, Toast} from 'react-native-ui-lib';//eslint-disable-line
 
 const {width} = Dimensions.get('window');
 const baseColors = ['dark', 'blue', 'cyan', 'green', 'yellow', 'orange', 'red', 'purple', 'violet'];
 export default class ColorsScreen extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      key: '',
+      showToast: false,
+    };
+  }
 
   render() {
     return (
@@ -32,7 +41,7 @@ export default class ColorsScreen extends Component {
                   return (
                     <View key={key} style={[styles.colorBlock, {backgroundColor: value}]}>
                       <Text style={styles.colorBlockLabel}>
-                        {value}
+                        {key}: {value}
                       </Text>
                     </View>
                   );
@@ -41,13 +50,21 @@ export default class ColorsScreen extends Component {
             </View>
           );
         })}
+        <Toast
+          message={this.state.key}
+          allowDismiss
+          onDismiss={() => this.setState({showToast: false})}
+          visible={this.state.showToast}
+        />
       </ScrollView>
     );
   }
 
   onPress(key) {
-    alert(key);
+    this.setState({key});
+    this.setState({showToast: true});
   }
+
 }
 
 const PALLETE_COLOR_MARGIN = 5;
@@ -67,7 +84,7 @@ const styles = StyleSheet.create({
     margin: PALLETE_COLOR_MARGIN,
   },
   colorBlock: {
-    width: width * 0.28,
+    width: width * 0.35,
     height: width * 0.25,
     marginRight: 10,
     justifyContent: 'flex-end',
@@ -75,6 +92,7 @@ const styles = StyleSheet.create({
   colorBlockLabel: {
     backgroundColor: Colors.white,
     opacity: 0.5,
-    ...Typography.text80,
+    ...Typography.text90,
+    fontWeight: '500',
   },
 });

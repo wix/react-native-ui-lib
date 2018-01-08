@@ -8,7 +8,7 @@ import {BaseComponent} from '../../commons';
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/listScreens/BasicListScreen.js
  */
 export default class ListItemPart extends BaseComponent {
-  static displayName = 'ListItemPart';
+  static displayName = 'ListItem.Part';
   static propTypes = {
     /**
      * this part content will be aligned to left
