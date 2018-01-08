@@ -104,7 +104,6 @@ export default class TagsInput extends BaseComponent {
 
   componentDidMount() {
     const textInputHandle = ReactNative.findNodeHandle(this.input);
-    console.log("componentDidMount! tag " + textInputHandle);
     if (textInputHandle && NativeModules.TextInputDelKeyHandler) {
       NativeModules.TextInputDelKeyHandler.register(textInputHandle);
       DeviceEventEmitter.addListener('onBackspacePress', this.onKeyPress);
@@ -204,7 +203,6 @@ export default class TagsInput extends BaseComponent {
     const hasNoValue = _.isEmpty(value);
     const pressedBackspace = Constants.isAndroid || keyCode === 'Backspace';
     const hasTags = tagsCount > 0;
-    console.log("onKeyPress! keyCode " + keyCode);
 
     if (pressedBackspace) {
       if (hasNoValue && hasTags && _.isUndefined(tagIndexToRemove)) {
@@ -272,14 +270,13 @@ export default class TagsInput extends BaseComponent {
   }
 
   renderTextInput() {
-    console.log("renderTextInput!");
     const {containerStyle, inputStyle, ...others} = this.props;
     const {value} = this.state;
     const isLastTagMarked = this.isLastTagMarked();
     return (
       <View style={styles.inputWrapper}>
         <TextInput
-          ref={r => {this.input = r;     console.log("got ref! " + ReactNative.findNodeHandle(this.input));}}
+          ref={r => this.input = r}
           text80
           blurOnSubmit={false}
           {...others}
