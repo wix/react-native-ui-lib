@@ -9,6 +9,13 @@ import View from '../view';
 import Text from '../text';
 import Image from '../image';
 
+const STATUS_MODES = {
+  ONLINE: 'ONLINE',
+  OFFLINE: 'OFFLINE',
+  AWAY: 'AWAY',
+  NONE: 'NONE',
+};
+
 /**
  * @description: Avatar component for displaying user profile images
  * @image: https://user-images.githubusercontent.com/33805983/34480603-197d7f64-efb6-11e7-9feb-db8ba756f055.png
@@ -16,6 +23,7 @@ import Image from '../image';
  */
 export default class Avatar extends BaseComponent {
   static displayName = 'Avatar';
+  static modes = STATUS_MODES;
   static propTypes = {
     /**
      * Background color for Avatar
@@ -54,6 +62,10 @@ export default class Avatar extends BaseComponent {
      */
     isOnline: PropTypes.bool,
     /**
+     * AWAY, ONLINE, OFFLINE or NONE mode (if set to a value other then 'NONE' will override isOnline prop)
+     */
+    status: PropTypes.oneOf(Object.keys(STATUS_MODES)),
+    /**
      * Custom size for the Avatar
      */
     size: PropTypes.number,
@@ -71,10 +83,25 @@ export default class Avatar extends BaseComponent {
     backgroundColor: Colors.dark80,
     size: 50,
     labelColor: Colors.dark10,
+    status: STATUS_MODES.NONE,
   };
 
   generateStyles() {
     this.styles = createStyles(this.props);
+  }
+
+  getBadgeColor() {
+    const {status} = this.props;
+    switch (status) {
+      case Avatar.modes.AWAY:
+        return Colors.yellow30;
+      case Avatar.modes.ONLINE:
+        return Colors.green30;
+      case Avatar.modes.OFFLINE:
+        return Colors.red30;
+      default:
+        return 'transparent';
+    }
   }
 
   renderRibbon() {
@@ -91,9 +118,11 @@ export default class Avatar extends BaseComponent {
   }
 
   render() {
-    const {label, labelColor: color, imageSource, isOnline, backgroundColor, testID, onPress} = this.props;
+    const {label, labelColor: color, imageSource, isOnline, backgroundColor, testID, onPress, status} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const Container = onPress ? TouchableOpacity : View;
+    const isOnlineOverride = (status === STATUS_MODES.NONE) ? isOnline : false;
+    const badgeColor = this.getBadgeColor();
 
     const hasImage = !_.isUndefined(imageSource);
     return (
@@ -107,9 +136,14 @@ export default class Avatar extends BaseComponent {
         </View>
 
         {imageSource && <Image style={this.styles.image} source={imageSource} testID={`${testID}.image`} />}
-        {isOnline && (
+        {isOnlineOverride && (
           <View style={this.styles.onlineBadge} testID={`${testID}.onlineBadge`}>
             <View style={this.styles.onlineBadgeInner} />
+          </View>
+        )}
+        {status !== STATUS_MODES.NONE && (
+          <View style={this.styles.onlineBadge} testID={`${testID}.status`}>
+            <View style={[this.styles.onlineBadgeInner, {backgroundColor: badgeColor}]} />
           </View>
         )}
 

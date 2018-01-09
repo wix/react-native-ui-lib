@@ -5,8 +5,8 @@ import {Avatar, Colors, Typography} from 'react-native-ui-lib';//eslint-disable-
 
 const examples = [
   {title: 'Empty Avatar', ribbonLabel: 'New'},
-  {title: 'Custom Background', backgroundColor: Colors.violet60},
-  {title: 'Initials (online)', label: 'ES', isOnline: true},
+  {title: 'Custom Background', backgroundColor: Colors.violet60, status: Avatar.modes.NONE},
+  {title: 'Initials (online)', label: 'ES', isOnline: true, status: Avatar.modes.OFFLINE},
   {title: 'Initials with Color', label: 'AD', backgroundColor: Colors.yellow60, labelColor: Colors.orange20, ribbonLabel: 'New', ribbonStyle: {backgroundColor: Colors.purple30}},
   {title: 'Image (online)', imageSource: {uri: 'https://lh3.googleusercontent.com/-cw77lUnOvmI/AAAAAAAAAAI/AAAAAAAAAAA/WMNck32dKbc/s181-c/104220521160525129167.jpg'}, isOnline: true},
   {title: 'Smaller', size: 40, imageSource: {uri: 'https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg'}},
