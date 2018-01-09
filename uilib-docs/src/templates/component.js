@@ -40,7 +40,7 @@ export default class ComponentTemplate extends Component {
   }
 
   renderGif(image) {
-    return <img alt={''} src={image} />;
+    return <img alt={''} src={image} style={{ marginRight: 20, width: 320}} />;
   }
 
   renderImages(images, type) {

@@ -12,7 +12,7 @@ const OFFSET_PIXEL_CORRECTION = 5;
 
 /**
  * @description: Carousel for scrolling pages horizontally
- * @gif: https://media.giphy.com/media/l0HU7f8gjpRlMRhKw/giphy.gif
+ * @gif: https://media.giphy.com/media/l0HU7f8gjpRlMRhKw/giphy.gif, https://media.giphy.com/media/3oFzmcjX9OhpyckhcQ/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CarouselScreen.js
  */
 export default class Carousel extends BaseComponent {

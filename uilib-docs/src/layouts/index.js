@@ -21,7 +21,7 @@ const TemplateWrapper = ({children, data, location}) => {
   const inDocs = location.pathname.includes('/docs');
   const filteredComponents = _.chain(components)
       .filter(component => component.node.displayName !== 'IGNORE')
-      .sortBy(components, 'node.displayName')
+      .sortBy(components, 'node.displayName', ['asc'])
       .value();
   return (
     <div>

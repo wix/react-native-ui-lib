@@ -26,8 +26,8 @@ export const navigationData = {
     {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
     {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'},
   ],
-  Form: [
-    {title: 'Inputs', tags: 'text input form', screen: 'unicorn.components.InputsScreen'},
+  Inputs: [
+    {title: 'Text Inputs', tags: 'text input form', screen: 'unicorn.components.InputsScreen'},
     {title: 'Masked Inputs', tags: 'text input form mask', screen: 'unicorn.components.MaskedInputScreen'},
   ],
   Screens: [
