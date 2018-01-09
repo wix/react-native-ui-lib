@@ -19,7 +19,7 @@ const PICKER_MODES = {
 const ItemType = PropTypes.shape({value: PropTypes.any, label: PropTypes.string});
 
 /**
- * @description: Picker Component, support single and multiple selection, blur model and floating placeholder.
+ * @description: Picker Component, support single or multiple selection, blurModel and floatingPlaceholder
  * @extends: TextInput
  * @gif: https://media.giphy.com/media/3o751SiuZZiByET2lq/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FormScreen.js

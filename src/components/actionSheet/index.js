@@ -12,8 +12,8 @@ import Button from '../button';
 import ListItem from '../listItem';
 
 /**
- * @description: Cross platform Action sheet that also support the native iOS solution
- * @gif: https://media.giphy.com/media/3o7aCZHbWJX9CiOV6o/giphy.gif
+ * @description: Cross platform Action sheet, with a support for native iOS solution
+ * @gif: https://media.giphy.com/media/l0HUpXOR6RqB2ct5S/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionSheetScreen.js
  */
 export default class ActionSheet extends BaseComponent {

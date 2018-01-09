@@ -36,7 +36,7 @@ export default class ComponentTemplate extends Component {
   }
 
   renderImage(image) {
-    return <img alt={''} src={image} style={{marginRight: 20, width: 320, borderColor: 'black'}} />;
+    return <img alt={''} src={image} style={{ marginRight: 20, width: 320, border: '1px solid black' }} />;
   }
 
   renderGif(image) {
@@ -85,7 +85,7 @@ export default class ComponentTemplate extends Component {
             <div className="container">
               <h3>EXAMPLE</h3>
               <div className="row">
-                <div className="col-sm-12 text-center">
+                <div className="col-sm-12 text-center" >
                   {this.renderImages(imgs, IMAGE_TYPES.PNG)}
                 </div>
               </div>
