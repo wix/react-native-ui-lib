@@ -9,7 +9,7 @@ import View from '../view';
 import Text from '../text';
 import Image from '../image';
 
-const STATUS_MODES = {
+export const STATUS_MODES = {
   ONLINE: 'ONLINE',
   OFFLINE: 'OFFLINE',
   AWAY: 'AWAY',
@@ -90,18 +90,38 @@ export default class Avatar extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
-  getBadgeColor() {
-    const {status} = this.props;
+  getStatusBadgeColor(status) {
     switch (status) {
+      case Avatar.modes.NONE:
+        return 'transparent';
       case Avatar.modes.AWAY:
         return Colors.yellow30;
       case Avatar.modes.ONLINE:
         return Colors.green30;
       case Avatar.modes.OFFLINE:
-        return Colors.red30;
+        return Colors.dark60;
       default:
         return 'transparent';
     }
+  }
+
+  getBadgeColor(isOnline, status) {
+    const onlineOverride = (status === STATUS_MODES.NONE) ? isOnline : false;
+    const badgeColor = onlineOverride ? Colors.green30 : this.getStatusBadgeColor(status);
+    return badgeColor;
+  }
+
+  renderBadge() {
+    const {testID, isOnline, status} = this.props;
+    const badgeColor = this.getBadgeColor(isOnline, status);
+    if (badgeColor === 'transparent') {
+      return false;
+    }
+    return (
+      <View style={this.styles.onlineBadge} testID={`${testID}.onlineBadge`}>
+        <View style={[this.styles.onlineBadgeInner, {backgroundColor: badgeColor}]} />
+      </View>
+    );
   }
 
   renderRibbon() {
@@ -118,13 +138,11 @@ export default class Avatar extends BaseComponent {
   }
 
   render() {
-    const {label, labelColor: color, imageSource, isOnline, backgroundColor, testID, onPress, status} = this.props;
+    const {label, labelColor: color, imageSource, backgroundColor, testID, onPress} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const Container = onPress ? TouchableOpacity : View;
-    const isOnlineOverride = (status === STATUS_MODES.NONE) ? isOnline : false;
-    const badgeColor = this.getBadgeColor();
-
     const hasImage = !_.isUndefined(imageSource);
+
     return (
       <Container style={[this.styles.container, containerStyle]} testID={testID} onPress={onPress}>
         <View
@@ -134,19 +152,8 @@ export default class Avatar extends BaseComponent {
             {label}
           </Text>
         </View>
-
         {imageSource && <Image style={this.styles.image} source={imageSource} testID={`${testID}.image`} />}
-        {isOnlineOverride && (
-          <View style={this.styles.onlineBadge} testID={`${testID}.onlineBadge`}>
-            <View style={this.styles.onlineBadgeInner} />
-          </View>
-        )}
-        {status !== STATUS_MODES.NONE && (
-          <View style={this.styles.onlineBadge} testID={`${testID}.status`}>
-            <View style={[this.styles.onlineBadgeInner, {backgroundColor: badgeColor}]} />
-          </View>
-        )}
-
+        {this.renderBadge()}
         {this.renderRibbon()}
       </Container>
     );
@@ -206,7 +213,7 @@ function createStyles({size, labelColor, imageSource}) {
     onlineBadgeInner: {
       flex: 1,
       borderRadius: 999,
-      backgroundColor: Colors.green30,
+      // backgroundColor: Colors.green30,
     },
     fixAbsolutePosition: {
       position: undefined,
