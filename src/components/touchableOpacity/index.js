@@ -6,9 +6,10 @@ import {BaseComponent} from '../../commons';
 import {ThemeManager} from '../../style';
 
 /**
- * @description wrapper for React Native TouchableOpacity component.
- * support onPress throttling and activeBackgroundColor.
- * @example https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.js
+ * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
+ * @extends: TouchableOpacity
+ * @gif: https://media.giphy.com/media/xULW8AMIgw7l31zjm8/giphy.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.js
  */
 export default class TouchableOpacity extends BaseComponent {
   static displayName = 'TouchableOpacity';

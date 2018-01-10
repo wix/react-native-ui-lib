@@ -5,6 +5,11 @@ import Link from 'gatsby-link';
 
 import './components.scss';
 
+const IMAGE_TYPES = {
+  GIF: 'GIF',
+  PNG: 'PNG',
+};
+
 export default class ComponentTemplate extends Component {
   static propTypes = {
     pathContext: PropTypes.object,
@@ -31,11 +36,20 @@ export default class ComponentTemplate extends Component {
   }
 
   renderImage(image) {
-    return <img alt={''} src={image} style={{marginRight: 20, width: 320}} />;
+    return <img alt={''} src={image} style={{ marginRight: 20, width: 320, border: '1px solid black' }} />;
   }
 
-  renderImages(images) {
-    return images.map(this.renderImage);
+  renderGif(image) {
+    return <img alt={''} src={image} style={{ marginRight: 20, width: 320}} />;
+  }
+
+  renderImages(images, type) {
+    switch (type) {
+      case IMAGE_TYPES.GIF:
+        return images.map(this.renderGif);
+      default:
+        return images.map(this.renderImage);
+    }
   }
 
   render() {
@@ -51,6 +65,11 @@ export default class ComponentTemplate extends Component {
         <div className="docs-page__content">
           <h1>{selectedComponent.displayName}</h1>
           <h3>{componentInfo.description}</h3>
+          {componentInfo.extends && (
+            <div>
+              Extends: <b>{componentInfo.extends}</b>. <br />
+            </div>
+          )}
           {componentInfo.modifiers && (
             <div>
               <p>
@@ -66,8 +85,8 @@ export default class ComponentTemplate extends Component {
             <div className="container">
               <h3>EXAMPLE</h3>
               <div className="row">
-                <div className="col-sm-12 text-center">
-                  {this.renderImages(imgs)}
+                <div className="col-sm-12 text-center" >
+                  {this.renderImages(imgs, IMAGE_TYPES.PNG)}
                 </div>
               </div>
             </div>
@@ -78,7 +97,7 @@ export default class ComponentTemplate extends Component {
               <h3>LIVE EXAMPLE</h3>
               <div className="row">
                 <div className="col-sm-12 text-center">
-                  {this.renderImages(gifs)}
+                  {this.renderImages(gifs, IMAGE_TYPES.GIF)}
                 </div>
               </div>
             </div>

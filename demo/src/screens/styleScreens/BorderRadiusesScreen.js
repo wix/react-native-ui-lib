@@ -13,16 +13,16 @@ export default class ColorsScreen extends Component {
         <View>
           {_.map(BorderRadiuses, (value, key) => {
             return (
-              <View center key={key} height={150} width={150} bg-dark40 marginB-20>
+              <View center key={key} height={150} width={150}>
                 <View style={styles.labelContainer}>
-                  <Text white text50>
+                  <Text dark30 text50>
                     {key}
                   </Text>
-                  <Text white text70>
-                    {value}
+                  <Text dark30 text70>
+                    ({value})
                   </Text>
                 </View>
-                <View style={{borderRadius: value}} bg-white width="40%" height="40%" />
+                <View style={{borderRadius: value}} bg-yellow30 width="40%" height="40%" />
               </View>
             );
           })}
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 25,
     alignItems: 'center',
+    backgroundColor: Colors.dark80,
   },
   labelContainer: {
     position: 'absolute',

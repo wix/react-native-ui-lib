@@ -7,12 +7,16 @@ import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import View from '../../components/view';
 
-// todo: add finisher animation (check icon animation or something)
-// todo: remove deprecated functionality
+// TODO: add finisher animation (check icon animation or something)
+// TODO: remove deprecated functionality
+/**
+ * @description: Scanner component for progress indication
+ * @extends: Animated.View
+ * @gif: https://media.giphy.com/media/l49JVcxoclUXbryiA/giphy.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/animationScreens/CardScannerScreen.js
+ */
 export default class AnimatedScanner extends BaseComponent {
-
   static displayName = 'AnimatedScanner';
-
   static propTypes = {
     /**
      * animated value between 0 and 100
@@ -45,7 +49,7 @@ export default class AnimatedScanner extends BaseComponent {
   static defaultProps = {
     progress: 0,
     duration: 1000,
-  }
+  };
 
   constructor(props) {
     super(props);

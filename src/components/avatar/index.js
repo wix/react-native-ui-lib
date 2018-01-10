@@ -11,6 +11,7 @@ import Image from '../image';
 
 /**
  * @description: Avatar component for displaying user profile images
+ * @extends: TouchableOpacity (when passing onPress)
  * @image: https://user-images.githubusercontent.com/33805983/34480603-197d7f64-efb6-11e7-9feb-db8ba756f055.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.js
  */

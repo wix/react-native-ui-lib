@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ListView, Image, StyleSheet, Alert} from 'react-native';
+import {ListView, StyleSheet, Alert} from 'react-native';
 import {ListItem, Avatar, Text, BasicList, BorderRadiuses, Badge, AvatarHelper, Colors, ThemeManager} from 'react-native-ui-lib';//eslint-disable-line
 import _ from 'lodash';
 import * as Animatable from 'react-native-animatable';
@@ -28,6 +28,8 @@ export default class BasicListScreen extends Component {
     const statusColor = row.inventory.status === 'Paid' ? Colors.green30 : Colors.red30;
     return (
       <ListItem
+        activeBackgroundColor={Colors.dark60}
+        activeOpacity={0.3}
         height={77.5}
         onPress={() => Alert.alert(`pressed on contact # ${id}`)}
         animation="fadeIn"

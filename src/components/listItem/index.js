@@ -8,6 +8,12 @@ import TouchableOpacity from '../../components/touchableOpacity';
 
 import ListItemPart from './ListItemPart';
 
+/**
+ * @description: List item component to render inside a ListView component
+ * @extends: TouchableOpacity
+ * @gif: https://media.giphy.com/media/l1IBjHowyPcOTWAY8/giphy.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/listScreens/BasicListScreen.js
+ */
 class ListItem extends BaseComponent {
 
   static displayName = 'ListItem';
@@ -43,7 +49,7 @@ class ListItem extends BaseComponent {
     height: 63,
     containerElement: TouchableOpacity,
     underlayColor: Colors.dark70,
-  }
+  };
 
   constructor(props) {
     super(props);

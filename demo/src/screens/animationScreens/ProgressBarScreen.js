@@ -7,7 +7,7 @@ export default class ProgressBarScreen extends Component {
 
   state = {
     progresses: [0, 0, 0, 0],
-  }
+  };
 
   elements = new Array(4);
 

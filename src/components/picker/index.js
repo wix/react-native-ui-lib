@@ -19,13 +19,14 @@ const PICKER_MODES = {
 const ItemType = PropTypes.shape({value: PropTypes.any, label: PropTypes.string});
 
 /**
- * Picker Component
+ * @description: Picker Component, support single or multiple selection, blurModel and floatingPlaceholder
+ * @extends: TextInput
+ * @gif: https://media.giphy.com/media/3o751SiuZZiByET2lq/giphy.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FormScreen.js
  */
 class Picker extends TextInput {
   static displayName = 'Picker';
-
   static modes = PICKER_MODES;
-
   static propTypes = {
     ...TextInput.propTypes,
     /**
@@ -69,7 +70,7 @@ class Picker extends TextInput {
     expandable: true,
     text70: true,
     floatingPlaceholder: true,
-  }
+  };
 
   constructor(props) {
     super(props);

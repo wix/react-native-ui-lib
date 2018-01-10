@@ -22,7 +22,7 @@ import Assets from '../../assets';
 
 /**
  * @description: Tags input component (chips)
- * @modifiers: text
+ * @modifiers: Typography
  * @gif: https://media.giphy.com/media/3oFzlXJF7FAQJNqGQw/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FormScreen.js
  */
