@@ -7,22 +7,26 @@ import {Colors} from '../../style';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
+/** THIS IS DEPRECATED */
+/**
+ * GridList component
+ */
 class GridList extends BaseComponent {
-
+  static displayName = 'IGNORE';
   static propTypes = {
     ...BaseComponent.propTypes,
     backgroundColor: PropTypes.string,
     items: PropTypes.array,
     renderItem: PropTypes.func,
     itemsInRow: PropTypes.number,
-  }
+  };
 
   static defaultProps = {
     ...BaseComponent.defaultProps,
     backgroundColor: Colors.dark80,
     items: [],
     itemsInRow: 2,
-  }
+  };
 
   constructor(props) {
     super(props);

@@ -7,11 +7,13 @@ import {BaseComponent} from '../commons';
 import {ThemeManager} from '../style';
 import TouchableOpacity from '../components/touchableOpacity';
 
+
+/** THIS IS DEPRECATED */
 /**
  * BaseListItem component
  */
 export default class BaseListItem extends BaseComponent {
-  static displayName = 'BaseList';
+  static displayName = 'IGNORE';
   static propTypes = {
     onPress: PropTypes.func,
   };
