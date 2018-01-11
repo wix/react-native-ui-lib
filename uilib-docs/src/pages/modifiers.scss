@@ -5,11 +5,22 @@
   height: 100%;
   margin: 30px;
 }
-table, th, td {
-  border: 1px solid black;
+table {
+  text-align: left;
+  width: 100%;
   border-collapse: collapse;
-  padding: 5px;
-}
-b {
-  display: inline;
+
+  tr {
+    &:first-child {
+      background-color: $violet60;
+    }
+
+    th {
+      padding: 9px;
+    }
+    td {
+      padding: 9px;
+      border-bottom: 1px solid $dark60;
+    }
+  }
 }

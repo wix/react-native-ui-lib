@@ -12,7 +12,7 @@ class Modifiers extends Component {
             Modifiers are essentially shortcuts used to layout and style RNUILIB's components.<br />
             They can be helpful when facing a new design or a complex layout by simplify the style prop composition.
             <br />For example, when you want to align sub-components horizontally,
-            instead of writing this:
+            instead of writing:
             <b>{this.renderHTML('<View style={{flexDirection: \'row\'}}>')}</b> you will use this ALIGNMENT modifier:
             <b>{this.renderHTML('<View row>')}</b>
             The ‘row’ modifier will simply change the view direction from its default direction (column) to a row,
