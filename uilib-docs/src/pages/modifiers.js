@@ -9,7 +9,7 @@ class Modifiers extends Component {
         <h1>Modifiers</h1>
         <div style={{flexDirection: 'row'}}>
           <div style={{width: '50%', paddingRight: '50'}}>
-            Modifiers are essentially shortcuts used to layout and style React Native components.<br />
+            Modifiers are essentially shortcuts used to layout and style RNUILIB's components.<br />
             They can be helpful when facing a new design or a complex layout by simplify the style prop composition.
             <br />For example, when you want to align sub-components horizontally,
             instead of writing this:
@@ -22,7 +22,9 @@ class Modifiers extends Component {
             instead of writing this:
             <b>{this.renderHTML('<Text style={{fontFamily: \'Helvetica\', fontSize: \'64\'}}>Some text</Text>')}</b>
             <br />
-            For closer look at the presets run the demo project on a mobile device or simulator.
+            For closer look at the presets run the demo project on a mobile device or simulator.<br />
+            <span> See <a href="https://medium.com/the-react-native-log/easy-layouting-with-react-native-b96c4c6fae7/">this</a> blog post for an elaborate discussion.</span>
+
           </div>
           <div>
             <table>
