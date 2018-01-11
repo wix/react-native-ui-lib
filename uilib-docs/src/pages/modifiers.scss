@@ -1,0 +1,15 @@
+@import 'src/styles/constants';
+
+.modifiers-page {
+  text-align: left;
+  height: 100%;
+  margin: 30px;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 5px;
+}
+b {
+  display: inline;
+}
