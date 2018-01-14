@@ -67,7 +67,7 @@ export default class ComponentTemplate extends Component {
           <h3>{componentInfo.description}</h3>
           {componentInfo.extends && (
             <div>
-              Extends: <b>{componentInfo.extends}</b>. <br />
+              Extends: <b>{componentInfo.extends}</b> <br />
               (meaning you can pass the super component's props as well).
             </div>
           )}
@@ -79,8 +79,12 @@ export default class ComponentTemplate extends Component {
               </p>
             </div>
           )}
-          <h3>PROPS</h3>
-          <Props props={componentProps} />
+          {componentProps.length > 0 && (
+            <div>
+              <h3>PROPS</h3>
+              <Props props={componentProps} />
+            </div>
+            )}
 
           {imgs && (
             <div className="container">
