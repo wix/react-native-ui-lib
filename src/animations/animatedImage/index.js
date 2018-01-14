@@ -6,6 +6,7 @@ import {BaseComponent} from '../../commons';
 /**
  * @description: Image component that fades-in the image with animation once it's loaded
  * @extends: Animated.Image
+ * @extendslink: https://github.com/oblador/react-native-animatable
  * @gif: https://media.giphy.com/media/l0HU7jj0ivEFyZIA0/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AnimatedImageScreen.js
  */

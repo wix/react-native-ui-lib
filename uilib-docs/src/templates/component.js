@@ -41,7 +41,7 @@ export default class ComponentTemplate extends Component {
       if (link.includes('http')) {
         return (
           <span>
-            <a href={componentInfo.extendslink}>
+            <a href={componentInfo.extendslink} rel="noopener noreferrer" target="_blank">
               <b>{componentInfo.extends}</b>
             </a>{' '}
             {componentInfo.extendsnotes}
