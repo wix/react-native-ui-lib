@@ -19,6 +19,7 @@ const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
 /**
  * @description: A wrapper for Text Input component with extra functionality like floating placeholder
  * @extends: TextInput
+ * @extendslink: https://facebook.github.io/react-native/docs/textinput.html
  * @modifiers: Typography
  * @gif: https://media.giphy.com/media/xULW8su8Cs5Z9Fq4PS/giphy.gif, https://media.giphy.com/media/3ohc1dhDcLS9FvWLJu/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/InputsScreen.js

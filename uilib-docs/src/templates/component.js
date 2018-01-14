@@ -35,6 +35,23 @@ export default class ComponentTemplate extends Component {
     return info;
   }
 
+  renderLink(componentInfo) {
+    const link = String(componentInfo.extendslink);
+    if (link.includes('http')) {
+      return (
+        <span>
+          <a href={componentInfo.extendslink}><b>{componentInfo.extends}</b></a> {componentInfo.extendsnotes}<br />
+        </span>
+      )
+    } else {
+      return (
+        <span>
+          <Link to={componentInfo.extendslink}><b>{componentInfo.extends}</b></Link> {componentInfo.extendsnotes}<br />
+        </span>
+      )
+    }
+  }
+
   renderImage(image) {
     return <img alt={''} src={image} style={{ marginRight: 20, width: 320, border: '1px solid black' }} />;
   }
@@ -67,7 +84,7 @@ export default class ComponentTemplate extends Component {
           <h3>{componentInfo.description}</h3>
           {componentInfo.extends && (
             <div>
-              Extends: <Link to={componentInfo.extendslink}><b>{componentInfo.extends}</b></Link> {componentInfo.extendsnotes}<br />
+              Extends: {this.renderLink(componentInfo)}
               (meaning you can pass the super component's props as well).
             </div>
           )}
