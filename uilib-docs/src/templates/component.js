@@ -67,7 +67,7 @@ export default class ComponentTemplate extends Component {
           <h3>{componentInfo.description}</h3>
           {componentInfo.extends && (
             <div>
-              Extends: <b>{componentInfo.extends}</b> <br />
+              Extends: <Link to={componentInfo.extendslink}><b>{componentInfo.extends}</b></Link> {componentInfo.extendsnotes}<br />
               (meaning you can pass the super component's props as well).
             </div>
           )}
