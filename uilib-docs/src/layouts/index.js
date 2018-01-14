@@ -24,8 +24,6 @@ const TemplateWrapper = ({children, data, location}) => {
       .filter(component => component.node.displayName !== 'IGNORE')
       .sortBy('node.displayName')
       .value();
-
-  console.log('ethan - components', components);
   return (
     <div>
       <Helmet
