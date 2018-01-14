@@ -11,7 +11,7 @@ describe('Avatar Badge', () => {
       const uut = new Avatar({status: Avatar.modes.ONLINE});
       expect(uut.getStatusBadgeColor(uut.props.status)).toEqual(Colors.green30);
     });
-    it('sshould return yellow when passed OFFLINE', () => {
+    it('should return yellow when passed OFFLINE', () => {
       const uut = new Avatar({status: Avatar.modes.OFFLINE});
       expect(uut.getStatusBadgeColor(uut.props.status)).toEqual(Colors.dark60);
     });

@@ -93,7 +93,7 @@ export default class Avatar extends BaseComponent {
   getStatusBadgeColor(status) {
     switch (status) {
       case Avatar.modes.NONE:
-        return 'transparent';
+        return null;
       case Avatar.modes.AWAY:
         return Colors.yellow30;
       case Avatar.modes.ONLINE:
@@ -101,7 +101,7 @@ export default class Avatar extends BaseComponent {
       case Avatar.modes.OFFLINE:
         return Colors.dark60;
       default:
-        return 'transparent';
+        return null;
     }
   }
 
@@ -114,7 +114,7 @@ export default class Avatar extends BaseComponent {
   renderBadge() {
     const {testID, isOnline, status} = this.props;
     const badgeColor = this.getBadgeColor(isOnline, status);
-    if (badgeColor === 'transparent') {
+    if (badgeColor === null) {
       return false;
     }
     return (
