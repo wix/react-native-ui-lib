@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'gatsby-link';
 import Helmet from 'react-helmet';
+import _ from 'lodash';
 
 import './index.scss';
 
@@ -21,8 +22,10 @@ const TemplateWrapper = ({children, data, location}) => {
   const inDocs = location.pathname.includes('/docs');
   const filteredComponents = _.chain(components)
       .filter(component => component.node.displayName !== 'IGNORE')
-      .sortBy(components, 'node.displayName', ['asc'])
+      .sortBy('node.displayName')
       .value();
+
+  console.log('ethan - components', components);
   return (
     <div>
       <Helmet
