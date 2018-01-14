@@ -20,15 +20,15 @@ describe('Avatar Badge', () => {
   describe('getBadgeColor', () => {
     it('should rerun transparent when either isOnline nor status is passed', () => {
       const uut = new Avatar({});
-      expect(uut.getBadgeColor(uut.props.isOnline, uut.props.status)).toEqual('transparent');
+      expect(uut.getBadgeColor(uut.props.isOnline, uut.props.status)).toEqual(null);
     });
     it('should rerun transparent when isOnline is false and status not passed', () => {
       const uut = new Avatar({isOnline: false});
-      expect(uut.getBadgeColor(uut.props.isOnline, uut.props.status)).toEqual('transparent');
+      expect(uut.getBadgeColor(uut.props.isOnline, uut.props.status)).toEqual(null);
     });
     it('should rerun transparent when isOnline not passed and status is NONE', () => {
       const uut = new Avatar({status: Avatar.modes.NONE});
-      expect(uut.getBadgeColor(uut.props.isOnline, uut.props.status)).toEqual('transparent');
+      expect(uut.getBadgeColor(uut.props.isOnline, uut.props.status)).toEqual(null);
     });
     it('should rerun green when isOnline is true and status is NONE', () => {
       const uut = new Avatar({isOnline: true, status: Avatar.modes.NONE});
