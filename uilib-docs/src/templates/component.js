@@ -58,6 +58,14 @@ export default class ComponentTemplate extends Component {
           <br />
         </span>
       );
+    } else {
+      return (
+        <span>
+          <b>{componentInfo.extends}</b>
+          {componentInfo.extendsnotes}
+          <br />
+        </span>
+      );
     }
   }
 

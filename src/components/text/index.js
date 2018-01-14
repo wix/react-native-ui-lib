@@ -6,6 +6,7 @@ import {BaseComponent} from '../../commons';
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
  * @extends: Text
+ * @extendslink: https://facebook.github.io/react-native/docs/text.html
  * @modifiers: margins, color, typography
  */
 export default class Text extends BaseComponent {
