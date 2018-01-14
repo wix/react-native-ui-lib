@@ -171,13 +171,13 @@ export default class Button extends BaseComponent {
   }
 
   getLabelColor() {
-    const {link, linkColor, outline, disabled} = this.getThemeProps(); // this.props;
+    const {link, linkColor, outline, outlineColor, disabled} = this.getThemeProps(); // this.props;
 
     let color = ThemeManager.CTATextColor;
     if (link) {
       color = linkColor || Colors.blue30;
     } else if (outline) {
-      color = Colors.dark10;
+      color = outlineColor || Colors.blue30;
     }
 
     if (disabled && (link || outline)) {
