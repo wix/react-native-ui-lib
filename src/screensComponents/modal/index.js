@@ -8,6 +8,7 @@ import TopBar from './TopBar';
 /**
  * @description: Component that present content on top of the invoking screen
  * @extends: Modal
+ * @extendslink: https://facebook.github.io/react-native/docs/modal.html
  * @gif: https://media.giphy.com/media/3oFzmfSX8KgvctI4Ks/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.js
  */

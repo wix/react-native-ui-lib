@@ -11,6 +11,7 @@ import ListItemPart from './ListItemPart';
 /**
  * @description: List item component to render inside a ListView component
  * @extends: TouchableOpacity
+ * @extendslink: docs/TouchableOpacity
  * @gif: https://media.giphy.com/media/l1IBjHowyPcOTWAY8/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/listScreens/BasicListScreen.js
  */

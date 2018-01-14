@@ -7,8 +7,8 @@ class Modifiers extends Component {
     return (
       <div className="modifiers-page">
         <h1>Modifiers</h1>
-        <div style={{flexDirection: 'row'}}>
-          <div style={{width: '50%', paddingRight: '50'}}>
+        <div style={{flex: 1, flexDirection: 'row'}}>
+          <div style={{width: '60%', paddingRight: '50'}}>
             Modifiers are essentially shortcuts used to layout and style RNUILIB's components.<br />
             They can be helpful when facing a new design or a complex layout by simplify the style prop composition.
             <br />For example, when you want to align sub-components horizontally,
@@ -24,7 +24,25 @@ class Modifiers extends Component {
             <br />
             For closer look at the presets run the demo project on a mobile device or simulator.<br />
             <span> See <a href="https://medium.com/the-react-native-log/easy-layouting-with-react-native-b96c4c6fae7/">this</a> blog post for an elaborate discussion.</span>
-
+            <h2>Style</h2>
+            <div>
+              The base foundation of each UI component is its style. We use basic style presets to define the rules and the style guide we follow.
+              Our style presetes includes: Colors, Typography, Shadows, Border Radius and more..
+              You can easily use them anywhere in your code as you would have used any other constant value, or as a component modifier.
+              You can also define your own presets and use them as you would the ui lib ones.<br />
+              <b>{this.renderHTML(
+                'Colors.loadColors({\n' +
+                '  pink: \'#FF69B4\',\n' +
+                '  gold: \'#FFD700\',\n' +
+                '});')}
+              </b>
+              <b>{this.renderHTML('Typography.loadTypographies({ h1: {fontSize: 26, fontWeight: \'300\', lineHeight: 80}, });')}</b>
+              <span>
+                To generate this text: <h1 style={{color: '#FF69B4', fontSize: '26', display: 'inline'}}>Hello World</h1> use this line: <b>{this.renderHTML('<Text h1 pink>Hello World</Text>')}</b><br />
+                It will use the h1 typography preset and the pink color preset to style the Text element.<br /><br />
+                Our style presets are translated into modifiers that will help you create a stunning UI easily and quickly.
+              </span>
+            </div>
           </div>
           <div>
             <table>

@@ -8,12 +8,11 @@ import TouchableOpacity from '../../components/touchableOpacity';
 
 
 /** THIS IS DEPRECATED */
-
 /**
  * GridListItem component
  */
 export default class GridListItem extends BaseComponent {
-  static displayName = 'Grid List Item';
+  static displayName = 'IGNORE';
   static propTypes = {
     ...BaseComponent.propTypes,
     // ...Animatable.propTypes,
@@ -33,7 +32,7 @@ export default class GridListItem extends BaseComponent {
   static defaultProps = {
     ...BaseComponent.defaultProps,
     height: 210,
-  }
+  };
 
   generateStyles() {
     this.styles = createStyles(this.props);

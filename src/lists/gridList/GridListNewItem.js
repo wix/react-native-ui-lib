@@ -6,12 +6,11 @@ import createStyles from './style';
 import {Colors} from '../../style';
 
 /** THIS IS DEPRECATED */
-
 /**
  * GridListNewItem component
  */
 export default class GridListNewItem extends GridListItem {
-  static displayName = 'Grid List New Item';
+  static displayName = 'IGNORE';
   static propTypes = {
     index: PropTypes.number.isRequired,
     imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
@@ -25,7 +24,7 @@ export default class GridListNewItem extends GridListItem {
   static defaultProps = {
     ...GridListItem.defaultProps,
     imageSize: 46,
-  }
+  };
 
   generateStyles() {
     this.styles = createStyles(this.props, customStyle);
