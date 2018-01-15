@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {TouchableOpacity, View, Text, ListView, StyleSheet} from 'react-native';
+import {TouchableOpacity, Text, ListView, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import autobind from 'react-autobind';
-import {Colors, Typography, TextInput} from 'react-native-ui-lib';//eslint-disable-line
+import {Colors, Typography, TextInput, View} from 'react-native-ui-lib';//eslint-disable-line
 import {navigationData} from '../menuStructure';
 
 const ds = new ListView.DataSource({
