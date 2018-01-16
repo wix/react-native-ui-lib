@@ -36,11 +36,13 @@ export default class ActionSheet extends BaseComponent {
      */
     cancelButtonIndex: PropTypes.number,
     /**
-     * Index of the option represents the destructive action (will display red text. Usually used for 'delete' or 'abort' actions)
+     * Index of the option represents the destructive action (will display red text. Usually used for 'delete' or
+     * 'abort' actions)
      */
     destructiveButtonIndex: PropTypes.number,
     /**
-     * List of options for the action sheet, follows the Button prop types (supply 'label' string and 'onPress' function)
+     * List of options for the action sheet, follows the Button prop types (supply 'label' string and 'onPress'
+     * function)
      */
     options: PropTypes.arrayOf(PropTypes.shape(Button.propTypes)),
     /**
