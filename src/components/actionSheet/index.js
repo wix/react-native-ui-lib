@@ -24,7 +24,7 @@ export default class ActionSheet extends BaseComponent {
      */
     visible: PropTypes.bool,
     /**
-     * Title of the action sheet
+     * Title of the action sheet. Note: if both title and message are not passed will not render the title view at all
      */
     title: PropTypes.string,
     /**
@@ -32,15 +32,15 @@ export default class ActionSheet extends BaseComponent {
      */
     message: PropTypes.string,
     /**
-     * Index of the option represents the cancel action
+     * Index of the option represents the cancel action (to be displayed as the separated bottom bold button)
      */
     cancelButtonIndex: PropTypes.number,
     /**
-     * Index of the option represents the destructive action (usually used to delete items or abort important actions)
+     * Index of the option represents the destructive action (will display red text. Usually used for 'delete' or 'abort' actions)
      */
     destructiveButtonIndex: PropTypes.number,
     /**
-     * List of options for the action sheet, follows the Button prop types
+     * List of options for the action sheet, follows the Button prop types (supply 'label' string and 'onPress' function)
      */
     options: PropTypes.arrayOf(PropTypes.shape(Button.propTypes)),
     /**
@@ -51,6 +51,10 @@ export default class ActionSheet extends BaseComponent {
      * Should use the native action sheet for iOS
      */
     useNativeIOS: PropTypes.bool,
+    /**
+     * When passed (only with useNativeIOS), will display a cancel button at the bottom (overrides cancelButtonIndex)
+     */
+    showCancelButton: PropTypes.bool,
   };
 
   constructor(props) {
@@ -59,6 +63,12 @@ export default class ActionSheet extends BaseComponent {
     this.onOptionPress = this.onOptionPress.bind(this);
     this.renderAction = this.renderAction.bind(this);
   }
+
+  static defaultProps = {
+    title: undefined,
+    message: undefined,
+    showCancelButton: false,
+  };
 
   renderSheet() {
     return (
@@ -118,14 +128,21 @@ export default class ActionSheet extends BaseComponent {
     const willBeVisible = nextProps.visible;
 
     if (!wasVisible && willBeVisible && useNativeIOS && Constants.isIOS) {
-      const {title, message, cancelButtonIndex, destructiveButtonIndex, options} = nextProps;
+      const {title, message, cancelButtonIndex, destructiveButtonIndex, options, showCancelButton} = nextProps;
+
+      const optionsArray = options !== undefined ? options : [];
+      let cancelBtnIndex = cancelButtonIndex;
+      if (showCancelButton) {
+        optionsArray.push({label: 'Cancel'});
+        cancelBtnIndex = optionsArray.length - 1;
+      }
 
       ActionSheetIOS.showActionSheetWithOptions(
         {
           title,
           message,
-          options: _.map(options, 'label'),
-          cancelButtonIndex,
+          options: _.map(optionsArray, 'label'),
+          cancelButtonIndex: cancelBtnIndex,
           destructiveButtonIndex,
         },
         this.onOptionPress,
