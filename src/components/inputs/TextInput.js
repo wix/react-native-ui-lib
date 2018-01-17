@@ -150,12 +150,14 @@ export default class TextInput extends BaseInput {
   }
 
   getHeight() {
-    const {multiline} = this.props;
+    const {multiline, numberOfLines} = this.props;
+    if (multiline && numberOfLines && Constants.isAndroid) {
+      return undefined;
+    }
     const {height} = this.state;
     const typography = this.getTypography();
-
     if (multiline) {
-      return height; // alway undefined for ios
+      return height; // always undefined for ios
     }
     return typography.lineHeight;
   }
@@ -274,6 +276,7 @@ export default class TextInput extends BaseInput {
       floatingPlaceholder,
       centered,
       multiline,
+      numberOfLines,
       ...others
     } = this.props;
     const {value} = this.state;
@@ -294,6 +297,7 @@ export default class TextInput extends BaseInput {
         underlineColorAndroid="transparent"
         style={inputStyle}
         multiline={multiline}
+        numberOfLines={numberOfLines}
         onChangeText={this.onChangeText}
         onChange={this.onChange}
         onContentSizeChange={this.onContentSizeChange}
