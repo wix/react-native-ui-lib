@@ -89,7 +89,7 @@ export default class Toast extends BaseComponent {
     position: 'top',
     color: Colors.white,
     animated: true,
-    zIndex: 100,
+    zIndex: 0,
   };
 
   state = {
@@ -247,7 +247,7 @@ export default class Toast extends BaseComponent {
           positionStyle,
           backgroundColor && {backgroundColor},
           {height},
-          {zIndex},
+          zIndex && {zIndex},
         ]}
         {...animationConfig}
       >
