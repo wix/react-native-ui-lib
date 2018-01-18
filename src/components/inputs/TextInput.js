@@ -158,7 +158,6 @@ export default class TextInput extends BaseInput {
     }
     const {height} = this.state;
     if (multiline) {
-      // always undefined for ios (now gets value on onContentSizeChange's calcMultilineInputHeight call)
       return height;
     }
     const typography = this.getTypography();
@@ -383,20 +382,20 @@ export default class TextInput extends BaseInput {
 
   // this is just for android
   calcMultilineInputHeight(event) {
+    let height;
     if (Constants.isAndroid) {
-      const height = _.get(event, 'nativeEvent.contentSize.height');
-      if (height) {
-        this.setState({height});
-      }
+      height = _.get(event, 'nativeEvent.contentSize.height');
     }
     // In iOS, limit the number of lines when numberOfLines passed
     if (Constants.isIOS) {
       const {multiline, numberOfLines} = this.props;
       if (multiline && numberOfLines) {
         const typography = this.getTypography();
-        const height = typography.lineHeight * numberOfLines;
-        this.setState({height});
+        height = typography.lineHeight * numberOfLines;
       }
+    }
+    if (height) {
+      this.setState({height});
     }
   }
 }
