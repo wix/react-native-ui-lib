@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {TouchableOpacity, Text, ListView, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import autobind from 'react-autobind';
-import {Colors, Typography, TextInput, View} from 'react-native-ui-lib';//eslint-disable-line
+import {Colors, Typography, View, TextInput} from 'react-native-ui-lib';//eslint-disable-line
 import {navigationData} from '../menuStructure';
 
 const ds = new ListView.DataSource({
