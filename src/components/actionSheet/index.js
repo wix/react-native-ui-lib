@@ -103,7 +103,7 @@ export default class ActionSheet extends BaseComponent {
         onPress={() => this.onOptionPress(index)}
         activeBackgroundColor={Colors.dark80}
       >
-        <View paddingH-20 flex centerV>
+        <View paddingL-16 flex centerV>
           <Text text70 dark10 numberOfLines={1}>
             {option.label}
           </Text>
