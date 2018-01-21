@@ -228,7 +228,6 @@ export default class Toast extends BaseComponent {
   render() {
     const {backgroundColor, actions, allowDismiss, enableBlur, zIndex} = this.getThemeProps();
     const {animationConfig} = this.state;
-    const isAbsolute = this.props.position !== 'relative';
     const hasOneAction = _.size(actions) === 1;
     const hasTwoActions = _.size(actions) === 2;
     const positionStyle = this.getPositionStyle();
@@ -248,7 +247,7 @@ export default class Toast extends BaseComponent {
           positionStyle,
           backgroundColor && {backgroundColor},
           {height},
-          isAbsolute && {zIndex},
+          {zIndex},
         ]}
         {...animationConfig}
       >
