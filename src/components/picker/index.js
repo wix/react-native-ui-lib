@@ -88,11 +88,11 @@ class Picker extends TextInput {
     };
 
     if (props.mode === Picker.modes.SINGLE && Array.isArray(props.value)) {
-      console.warn('Picker in SINGLE mode cannot accpet an array for value');
+      console.warn('Picker in SINGLE mode cannot accept an array for value');
     }
 
     if (props.mode === Picker.modes.MULTI && !Array.isArray(props.value)) {
-      console.warn('Picker in MULTI mode must accpet an array for value');
+      console.warn('Picker in MULTI mode must accept an array for value');
     }
   }
 
