@@ -26,6 +26,9 @@ export const navigationData = {
     {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
     {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'},
   ],
+  NativeComponents: [
+    {title: 'Highlight Overlay', tags: 'native overlay', screen: 'unicorn.nativeComponents.HighlightOverlayViewScreen'},
+  ],
   Inputs: [
     {title: 'Text Inputs', tags: 'text input form', screen: 'unicorn.components.InputsScreen'},
     {title: 'Masked Inputs', tags: 'text input form mask', screen: 'unicorn.components.MaskedInputScreen'},

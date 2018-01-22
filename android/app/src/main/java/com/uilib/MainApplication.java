@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.facebook.react.ReactPackage;
 import com.reactnativenavigation.NavigationApplication;
+import com.wix.reactnativeuilib.highlighterview.HighlighterViewPackage;
 import com.wix.reactnativeuilib.textinput.TextInputDelKeyHandlerPackage;
 
 import java.util.Arrays;
@@ -21,7 +22,8 @@ public class MainApplication extends NavigationApplication {
     @Override
     public List<ReactPackage> createAdditionalReactPackages() {
         return Arrays.<ReactPackage>asList(
-                new TextInputDelKeyHandlerPackage()
+                new TextInputDelKeyHandlerPackage(),
+                new HighlighterViewPackage()
 //                new Interactable()
         );
     }
