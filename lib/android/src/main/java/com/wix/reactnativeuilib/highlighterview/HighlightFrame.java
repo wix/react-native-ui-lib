@@ -12,10 +12,12 @@ public class HighlightFrame {
     public float height;
 
     public HighlightFrame(Resources resources, ReadableMap highlightFrameMap) {
-        x = UiUtils.pxToDp(resources, highlightFrameMap.getDouble("x"));
-        y = UiUtils.pxToDp(resources, highlightFrameMap.getDouble("y"));
-        width = UiUtils.pxToDp(resources, highlightFrameMap.getDouble("width"));
-        height = UiUtils.pxToDp(resources, highlightFrameMap.getDouble("height"));
+        if (highlightFrameMap != null) {
+            x = UiUtils.pxToDp(resources, highlightFrameMap.getDouble("x"));
+            y = UiUtils.pxToDp(resources, highlightFrameMap.getDouble("y"));
+            width = UiUtils.pxToDp(resources, highlightFrameMap.getDouble("width"));
+            height = UiUtils.pxToDp(resources, highlightFrameMap.getDouble("height"));
+        }
     }
 
     public HighlightFrame(float x, float y, float width, float height) {

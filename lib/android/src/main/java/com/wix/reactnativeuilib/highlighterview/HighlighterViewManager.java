@@ -17,7 +17,6 @@ import javax.annotation.Nullable;
 
 class HighlighterViewManager extends SimpleViewManager<HighlighterView> {
     private static final String REACT_CLASS = "HighlighterView";
-    private static final int HighlightViewFrameExpand = 5;
 
     private ThemedReactContext context;
 
@@ -89,6 +88,11 @@ class HighlighterViewManager extends SimpleViewManager<HighlighterView> {
         }
     }
 
+    @ReactProp(name = "highlightViewTagParams")
+    public void setHighlightViewTagParams(HighlighterView view, ReadableMap highlightViewTagParams) {
+        view.setHighlightViewTagParams(new HighlightViewTagParams(view.getResources(), highlightViewTagParams));
+    }
+
     private void setViewBasedHighlightFrame(HighlighterView view, View resolvedView) {
         Activity currentActivity = context.getCurrentActivity();
         if (currentActivity == null) {
@@ -96,8 +100,7 @@ class HighlighterViewManager extends SimpleViewManager<HighlighterView> {
         }
 
         final float topOffset = UiUtils.getStatusBarHeight(view, currentActivity.getWindow());
-        final float frameExpand = UiUtils.pxToDp(view.getResources(), HighlightViewFrameExpand);
         Rect myViewRect = UiUtils.getVisibleRect(resolvedView);
-        view.setViewBasedHighlightFrame(new HighlightFrame(myViewRect.left - frameExpand, myViewRect.top - frameExpand - topOffset, resolvedView.getWidth() + frameExpand * 2, resolvedView.getHeight() + frameExpand * 2));
+        view.setViewBasedHighlightFrame(new HighlightFrame(myViewRect.left, myViewRect.top - topOffset, resolvedView.getWidth(), resolvedView.getHeight()));
     }
 }

@@ -3,7 +3,6 @@
 #import <React/RCTUIManager.h>
 
 #define kDefaultOverlayColor [UIColor colorWithWhite:0 alpha:0.8]
-#define kHighlightViewFrameExpand 5
 
 @interface HighlighterView ()
 {
@@ -39,10 +38,54 @@
     return !CGRectIsNull(frame) && frame.size.width > 0 && frame.size.height > 0;
 }
 
+-(CGRect)gerHighlightRect
+{
+    CGRect highlightRect = self.highlightFrame;
+    if ([self isFrameValid:_viewBasedHighlightFrame]) {
+        highlightRect = _viewBasedHighlightFrame;
+        if (_highlightViewTagParams != nil) {
+            id padding = _highlightViewTagParams[@"padding"];
+            if (padding != nil) {
+                if ([padding isKindOfClass:[NSNumber class]]) {
+                    CGFloat paddingValue = [(NSNumber*)padding floatValue];
+                    highlightRect = CGRectMake(_viewBasedHighlightFrame.origin.x - paddingValue,
+                                               _viewBasedHighlightFrame.origin.y - paddingValue,
+                                               _viewBasedHighlightFrame.size.width + paddingValue * 2,
+                                               _viewBasedHighlightFrame.size.height + paddingValue * 2);
+                } else if ([padding isKindOfClass:[NSDictionary class]]) {
+                    NSDictionary *paddingDic = (NSDictionary*)padding;
+                    CGFloat top = [paddingDic[@"top"] floatValue];
+                    CGFloat left = [paddingDic[@"left"] floatValue];
+                    CGFloat bottom = [paddingDic[@"bottom"] floatValue];
+                    CGFloat right = [paddingDic[@"right"] floatValue];
+                    highlightRect = CGRectMake(_viewBasedHighlightFrame.origin.x - left,
+                                               _viewBasedHighlightFrame.origin.y - top,
+                                               _viewBasedHighlightFrame.size.width + right + left,
+                                               _viewBasedHighlightFrame.size.height + bottom + top);
+                }
+            }
+            
+            NSDictionary *offset = _highlightViewTagParams[@"offset"];
+            if (offset != nil) {
+                highlightRect = CGRectOffset(highlightRect, [offset[@"x"] floatValue], [offset[@"y"] floatValue]);
+            }
+        }
+    }
+    return highlightRect;
+}
+
+- (CGSize)getCornerRadiiForHighlightRect:(CGRect)highlightRect {
+    CGSize cornerRadii = CGSizeMake(highlightRect.size.width/2, highlightRect.size.height/2);
+    if (self.borderRadius != nil) {
+        CGFloat radius = [self.borderRadius floatValue];
+        cornerRadii = CGSizeMake(radius, radius);
+    }
+    return cornerRadii;
+}
+
 - (void)drawRect:(CGRect)rect
 {
-    BOOL viewBasedHighlightFrameIsValid = [self isFrameValid:_viewBasedHighlightFrame];
-    if (![self isFrameValid:self.highlightFrame] && !viewBasedHighlightFrameIsValid) {
+    if (![self isFrameValid:self.highlightFrame] && ![self isFrameValid:_viewBasedHighlightFrame]) {
         UIColor *color = self.overlayColor ? self.overlayColor : [UIColor clearColor];
         [color setFill];
         UIRectFill(rect);
@@ -52,14 +95,10 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextClearRect(context, rect);
 
-    CGRect highlightRect = viewBasedHighlightFrameIsValid ? _viewBasedHighlightFrame : self.highlightFrame;
+    CGRect highlightRect = [self gerHighlightRect];
+    CGSize cornerRadii = [self getCornerRadiiForHighlightRect:highlightRect];
     
     UIBezierPath *clipPath = [UIBezierPath bezierPathWithRect:CGRectInfinite];
-    CGSize cornerRadii = CGSizeMake(highlightRect.size.width/2, highlightRect.size.height/2);
-    if (self.borderRadius != nil) {
-        CGFloat radius = [self.borderRadius floatValue];
-        cornerRadii = CGSizeMake(radius, radius);
-    }
     UIBezierPath* roundPath = [UIBezierPath bezierPathWithRoundedRect:highlightRect byRoundingCorners:UIRectCornerAllCorners cornerRadii:cornerRadii];
     [clipPath appendPath:roundPath];
     clipPath.usesEvenOddFillRule = YES;
@@ -93,8 +132,7 @@
 }
 
 -(void)setViewBasedHighlightFrameFromView:(UIView*)view {
-    CGRect convertedRect = [self convertRect:view.frame fromView:view.superview];
-    _viewBasedHighlightFrame = CGRectMake(convertedRect.origin.x - kHighlightViewFrameExpand, convertedRect.origin.y - kHighlightViewFrameExpand, convertedRect.size.width + kHighlightViewFrameExpand * 2,convertedRect.size.height + kHighlightViewFrameExpand * 2);
+    _viewBasedHighlightFrame = [self convertRect:view.frame fromView:view.superview];
     [self setNeedsDisplay];
 }
 
@@ -112,6 +150,12 @@
             }
         }
     }
+}
+
+-(void)setHighlightViewTagParams:(NSDictionary*)highlightViewTagParams
+{
+    _highlightViewTagParams = highlightViewTagParams;
+    [self setNeedsDisplay];
 }
 
 #pragma mark - KVO

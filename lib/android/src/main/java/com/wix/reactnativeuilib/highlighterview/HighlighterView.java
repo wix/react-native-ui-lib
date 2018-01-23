@@ -12,11 +12,13 @@ import android.view.View;
 public class HighlighterView extends View {
     private RectF highlightFrame;
     private RectF viewBasedHighlightFrame;
+    HighlightViewTagParams highlightViewTagParams;
     private @ColorInt int overlayColor;
     private @ColorInt int strokeColor;
     private float strokeWidth;
-    private float borderRadius;
+    private float borderRadius = -1;
     private float radius;
+
     private static final PorterDuffXfermode porterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
     private static final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
@@ -27,15 +29,36 @@ public class HighlighterView extends View {
 
     private RectF rectToDraw() {
         if (viewBasedHighlightFrame != null && viewBasedHighlightFrame.width() > 0 && viewBasedHighlightFrame.height() > 0) {
-            return viewBasedHighlightFrame;
+            if (highlightViewTagParams == null) {
+                return viewBasedHighlightFrame;
+            }
+
+            RectF highlightRect = new RectF(viewBasedHighlightFrame);
+            highlightRect.left -= highlightViewTagParams.paddingLeft;
+            highlightRect.top -= highlightViewTagParams.paddingTop;
+            highlightRect.right += highlightViewTagParams.paddingRight;
+            highlightRect.bottom += highlightViewTagParams.paddingBottom;
+
+            if (highlightViewTagParams.offsetX > 0) {
+                highlightRect.left += highlightViewTagParams.offsetX;
+                highlightRect.right += highlightViewTagParams.offsetX;
+            }
+            if (highlightViewTagParams.offsetY > 0) {
+                highlightRect.top += highlightViewTagParams.offsetY;
+                highlightRect.bottom += highlightViewTagParams.offsetY;
+            }
+            return highlightRect;
         } else {
             return highlightFrame;
         }
     }
 
     private void updateRadius() {
-        float newRadius = borderRadius;
-        if(newRadius <= 0) {
+        float newRadius = 0;
+        if (borderRadius >= 0) {
+            newRadius = borderRadius;
+        }
+        else {
             RectF rect = rectToDraw();
             if (rect != null) {
                 newRadius = Math.min(rect.width() / 2, rect.height() / 2);
@@ -43,8 +66,6 @@ public class HighlighterView extends View {
         }
         radius = newRadius;
     }
-
-
 
     public void setHighlightFrame(HighlightFrame frame) {
         highlightFrame = frame.toRect();
@@ -75,6 +96,12 @@ public class HighlighterView extends View {
 
     public void setViewBasedHighlightFrame(HighlightFrame viewBasedHighlightFrame) {
         this.viewBasedHighlightFrame = viewBasedHighlightFrame.toRect();
+        updateRadius();
+        invalidate();
+    }
+
+    public void setHighlightViewTagParams(HighlightViewTagParams highlightViewTagParams) {
+        this.highlightViewTagParams = highlightViewTagParams;
         updateRadius();
         invalidate();
     }

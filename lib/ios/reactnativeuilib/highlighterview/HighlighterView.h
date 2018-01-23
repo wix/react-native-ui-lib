@@ -10,5 +10,7 @@
 @property (nonatomic, strong) UIColor *overlayColor;
 @property (nonatomic, strong) UIColor *strokeColor;
 @property (nonatomic, strong) NSNumber *strokeWidth;
+@property (nonatomic, strong) NSNumber *highlightViewTag;
+@property (nonatomic, strong) NSDictionary *highlightViewTagParams;
 
 @end

@@ -16,6 +16,7 @@ RCT_EXPORT_MODULE()
 
 RCT_REMAP_VIEW_PROPERTY(highlightFrame, highlightFrame, CGRect)
 RCT_REMAP_VIEW_PROPERTY(highlightViewTag, highlightViewTag, NSNumber)
+RCT_REMAP_VIEW_PROPERTY(highlightViewTagParams, highlightViewTagParams, NSDictionary)
 RCT_REMAP_VIEW_PROPERTY(overlayColor, overlayColor, UIColor)
 RCT_REMAP_VIEW_PROPERTY(borderRadius, borderRadius, NSNumber)
 RCT_REMAP_VIEW_PROPERTY(strokeColor, strokeColor, UIColor)
