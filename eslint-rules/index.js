@@ -1,5 +1,5 @@
 module.exports = {
   rules: {
-    'hard-coded-font': require('./lib/rules/hard-coded-font'),
-  }
+    'no-hard-coded-font': require('./lib/rules/no-hard-coded-font'),
+  },
 };

@@ -36,7 +36,7 @@ export default class Badge extends BaseComponent {
 
   static defaultProps = {
     size: 'default',
-  }
+  };
 
   generateStyles() {
     this.styles = createStyles(this.props);

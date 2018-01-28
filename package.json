@@ -53,7 +53,7 @@
     "react-dom": "^15.4.2",
     "react-native": "0.44.2",
     "react-native-keyboard-aware-scrollview": "^1.1.6",
-    "react-native-navigation": "^1.1.19"
+    "react-native-navigation": "^1.1.352"
   },
   "peerDependencies": {
     "react": "15.4.2",

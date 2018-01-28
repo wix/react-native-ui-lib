@@ -1,4 +1,4 @@
-const rule = require('../../../lib/rules/hard-coded-font');
+const rule = require('../../../lib/rules/no-hard-coded-font-style');
 const RuleTester = require('eslint').RuleTester;
 
 const ERROR_MESSAGE = `Please don't use hard coded fontSize prop in style objects, instead use Typography presets`;

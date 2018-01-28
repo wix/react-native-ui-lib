@@ -127,11 +127,13 @@ function createStyles({size, backgroundColor, labelColor, imageSource}) {
       alignItems: 'center',
       justifyContent: 'center',
     },
+    /*eslint-disable*/
     initials: {
       fontSize: size * fontSizeToImageSizeRatio,
       color: labelColor,
       backgroundColor: 'rgba(0,0,0,0)',
     },
+    /*eslint-enable*/
     defaultImage: {
       width: size,
       height: size,

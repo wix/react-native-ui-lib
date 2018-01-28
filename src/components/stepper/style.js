@@ -42,7 +42,7 @@ export default function createStyles() {
       borderColor: separatorColor,
     },
     buttonText: {
-      fontSize: 30,
+      ...Typography.text40,
       fontWeight: '200',
       color: ThemeManager.primaryColor,
       backgroundColor: 'transparent',
