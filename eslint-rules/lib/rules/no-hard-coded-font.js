@@ -9,14 +9,15 @@
 // Rule Definition
 //------------------------------------------------------------------------------
 
-const REPORT_MESSAGE = 'Please do not use hard coded fontSize prop in style objects, instead use Typography presets';
-
 module.exports = {
   meta: {
     docs: {
       description: 'disallow hard coded font style',
       category: 'Possible Errors',
       recommended: true,
+    },
+    messages: {
+      reportMessage: 'Please do not use hard coded fontSize prop in style objects, instead use Typography presets',
     },
     fixable: 'code',
     schema: [], // no options
@@ -40,7 +41,7 @@ module.exports = {
               // console.log(`${property.value.value} should be fixed!`);
               context.report({
                 node,
-                message: REPORT_MESSAGE,
+                messageId: 'reportMessage',
               });
             }
           }

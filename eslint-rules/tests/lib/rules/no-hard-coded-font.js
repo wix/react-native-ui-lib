@@ -1,7 +1,5 @@
-const rule = require('../../../lib/rules/no-hard-coded-font-style');
+const rule = require('../../../lib/rules/no-hard-coded-font');
 const RuleTester = require('eslint').RuleTester;
-
-const ERROR_MESSAGE = `Please don't use hard coded fontSize prop in style objects, instead use Typography presets`;
 
 RuleTester.setDefaultConfig({
   parserOptions: {
@@ -15,18 +13,33 @@ RuleTester.setDefaultConfig({
 
 const ruleTester = new RuleTester();
 
-ruleTester.run('no-hard-coded-fonts', rule, {
+ruleTester.run('no-hard-coded-font', rule, {
   valid: [
-    {
-      code: `const goodUsage = <Text style={{color: 'red'}}/>;`,
-    },
+    { code: 'const goodUsage = <Text style={{color: \'red\'}}/>;' },
+    { code: 'const goodUsage = <Text style={{fontSize: Typography.text10.fontSize}}/>;' },
   ],
   invalid: [
     {
-      code: `const badUsage = <Text style={{fontSize: 15, color: 'red'}}/>;`,
+      code: 'const badUsage = <Text style={{fontSize: 15}}/>;',
       errors: [
         {
-          message: ERROR_MESSAGE,
+          messageId: 'foo',
+        },
+      ],
+    },
+    {
+      code: 'const badUsage = <Text style={{fontSize: Constants.isAndroid ? 16 : 17}}/>;',
+      errors: [
+        {
+          messageId: 'foo',
+        },
+      ],
+    },
+    {
+      code: 'const badUsage = <Text style={{fontSize: size}}/>;',
+      errors: [
+        {
+          messageId: 'foo',
         },
       ],
     },
