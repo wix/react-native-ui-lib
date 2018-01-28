@@ -7,17 +7,25 @@ export function getChildrenLength(props) {
 
 export function calcOffset(props, state) {
   const {currentPage} = state;
-  const {pageWidth} = props;
+  const {pageWidth, loop} = props;
 
-  return pageWidth * (currentPage + 1);
+  const actualCurrentPage = loop ? currentPage + 1 : currentPage;
+
+  return pageWidth * actualCurrentPage;
 }
 
-// todo: differentiate between loop mode and default mode
 export function calcPageIndex(offset, props) {
-  const length = getChildrenLength(props);
-  const {pageWidth} = props;
+  const pagesCount = getChildrenLength(props);
+  const {pageWidth, loop} = props;
   const pageIndexIncludingClonedPages = Math.round(offset / pageWidth);
-  const actualPageIndex = (pageIndexIncludingClonedPages + (length - 1)) % length;
+
+  let actualPageIndex;
+  if (loop) {
+    actualPageIndex = (pageIndexIncludingClonedPages + (pagesCount - 1)) % pagesCount;
+  } else {
+    actualPageIndex = Math.min(pagesCount - 1, pageIndexIncludingClonedPages);
+  }
+
   return actualPageIndex;
 }
 

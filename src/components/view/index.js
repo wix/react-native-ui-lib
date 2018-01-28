@@ -4,10 +4,11 @@ import {BaseComponent} from '../../commons';
 
 /**
  * @description: Wrapper component for React Native View component
+ * @extends: View
+ * @extendslink: https://facebook.github.io/react-native/docs/view.html
  * @modifiers: margins, paddings, alignments, background, borderRadius
  */
 export default class View extends BaseComponent {
-
   static displayName = 'View';
 
   static propTypes = {
@@ -40,16 +41,24 @@ export default class View extends BaseComponent {
           alignments,
           style,
         ]}
+        ref={r => (this.view = r)}
       >
         {this.props.children}
       </RNView>
     );
   }
+
+  measure(...args) {
+    this.view.measure(...args);
+  }
+
+  measureInWindow(...args) {
+    this.view.measureInWindow(...args);
+  }
 }
 
 function createStyles() {
   return StyleSheet.create({
-    container: {
-    },
+    container: {},
   });
 }

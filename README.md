@@ -1,5 +1,9 @@
 # react-native-ui-lib [![Build Status](https://travis-ci.org/wix/react-native-ui-lib.svg?branch=master)](https://travis-ci.org/wix/react-native-ui-lib)
 UI Toolset & Components Library for React Native
+
+check out our [Docs Site](https://wix.github.io/react-native-ui-lib/)
+
+
 ###### Latest version support RN44
 
 * [Style](https://github.com/wix/react-native-ui-lib#style)
@@ -267,29 +271,39 @@ import {TagsInput} from 'react-native-ui-lib';
 ![Tags Input](https://media.giphy.com/media/3oEhn7JyhT1VfXticE/giphy.gif)
 
 Since Android does not support TextInput _onKeyPress_ callback, the feature that removes tags on Backspace won't work.
-In Order to fix it, please add the following to your _MainActivity_
+In Order to fix it, follow these instructions:
 
-```js
-public void onCreate() {
-    super.onCreate();
-    setBackspaceListener();
-}
+Update your dependencies in `android/app/build.gradle`:
 
-private void setBackspaceListener() {
-    setActivityCallbacks(new ActivityCallbacks() {
-        @Override
-        public void onKeyUp(int keyCode, KeyEvent event) {
-            if (event.getKeyCode() == KeyEvent.KEYCODE_DEL) {
-                ReactContext reactContext = getReactNativeHost().getReactInstanceManager().getCurrentReactContext();
-                if (reactContext != null) {
-                    reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                            .emit("onBackspacePress", Arguments.createMap());
-                }
-            }
-        }
-    });
+```gradle
+dependencies {
+  // Add this dependency:
+  compile project(":react-native-ui-lib")
 }
 ```
+
+Update your `android/settings.gradle`:
+
+```gradle
+include ':react-native-ui-lib'
+project(':react-native-ui-lib').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-ui-lib/lib/android')
+```
+
+In your `MainApplication.java`, add to the `getPackages()` list:
+
+```java
+import com.wix.reactnativeuilib.textinput.TextInputDelKeyHandlerPackage;
+
+@Override
+protected List<ReactPackage> getPackages() {
+  return Arrays.<ReactPackage>asList(
+      // Add this package:
+      new TextInputDelKeyHandlerPackage()
+    );
+}
+```
+
+
 
 ## Helpers
 

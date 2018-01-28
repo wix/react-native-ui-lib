@@ -9,8 +9,15 @@ import View from '../view';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
 
-// todo: fully deprecate label prop
+// TODO: fully deprecate label prop
+/**
+ * @description: Picker.Item, for configuring the Picker's selectable options
+ * @extends: TouchableOpacity
+ * @extendslink: docs/TouchableOpacity
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FormScreen.js
+ */
 class PickerItem extends BaseComponent {
+  static displayName = 'Picker.Item';
   static propTypes = {
     /**
      * [DEPRECATED - please include the label in the value prop] The item label

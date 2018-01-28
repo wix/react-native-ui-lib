@@ -14,6 +14,11 @@ import CardImage from './CardImage';
 
 /**
  * @description: Card component
+ * @extends: TouchableOpacity
+ * @extendsnotes: (when passing onPress)
+ * @extendslink: docs/TouchableOpacity
+ * @modifiers: margin, padding
+ * @gif: https://media.giphy.com/media/l0HU9SKWmv0VTOYMM/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
  */
 class Card extends BaseComponent {

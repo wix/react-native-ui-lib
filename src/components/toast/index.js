@@ -10,17 +10,18 @@ import Button from '../button';
 import {ThemeManager, Colors, Typography, BorderRadiuses} from '../../style';
 import Assets from '../../assets';
 
-/**
- * @description Toast component for showing a feedback about a user action.
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ToastsScreen.js
- */
-
 const DURATION = 300;
 const DELAY = 100;
 
+/**
+ * @description Toast component for showing a feedback about a user action.
+ * @extends: Animatable.View
+ * @extendslink: https://github.com/oblador/react-native-animatable
+ * @gif: https://media.giphy.com/media/3oFzm1pKqGXybiDUre/giphy.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ToastsScreen.js
+ */
 export default class Toast extends BaseComponent {
   static displayName = 'Toast';
-
   static propTypes = {
     /**
      * Whether to show or hide the toast

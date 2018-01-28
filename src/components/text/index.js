@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import {BaseComponent} from '../../commons';
 
 /**
- * @description: a Wrapper for Text component with extra functionality like modifiers support
- * @modifiers: margins, color
+ * @description: A wrapper for Text component with extra functionality like modifiers support
+ * @extends: Text
+ * @extendslink: https://facebook.github.io/react-native/docs/text.html
+ * @modifiers: margins, color, typography
  */
 export default class Text extends BaseComponent {
 

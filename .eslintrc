@@ -25,5 +25,12 @@
     "browser": true,
     "node": true,
     "jest": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ios.js", ".android.js"]
+      }
+    }
   }
 }

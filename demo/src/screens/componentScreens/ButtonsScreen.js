@@ -292,6 +292,7 @@ export default class ButtonsScreen extends DemoScreen {
 
             <Button
               style={{marginBottom: ButtonSpace}}
+              size="small"
               iconSource={plusIcon}
               iconStyle={{tintColor: 'white'}}
               label="Icon"

@@ -1,6 +1,6 @@
 {
   "name": "react-native-ui-lib",
-  "version": "2.0.132",
+  "version": "2.0.160",
   "main": "index.js",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "publishConfig": {
@@ -20,7 +20,10 @@
     "lint": "eslint src -c .eslintrc",
     "xcode": "open ./ios/uilib.xcodeproj",
     "build": "mkdir -p dist && cp -r src/assets dist/ && babel src --out-dir dist",
-    "log": "react-native log-ios | grep 'ethan -'"
+    "log": "react-native log-ios | grep 'ethan -'",
+    "docs:install": "(cd ./uilib-docs && npm install)",
+    "docs:deploy": "(cd ./uilib-docs && gatsby build --prefix-paths && gh-pages -d public --branch gh-pages)",
+    "docs:develop": "(cd ./uilib-docs && gatsby develop)"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
@@ -46,6 +49,8 @@
     "eslint-plugin-react": "^6.9.0",
     "eslint-plugin-react-native": "^2.0.0",
     "eslint-plugin-uilib": "file:./eslint-rules",
+    "gatsby": "^1.9.128",
+    "gh-pages": "^1.1.0",
     "jest": "^20.0.4",
     "react": "16.0.0-alpha.6",
     "react-addons-test-utils": "^15.4.2",

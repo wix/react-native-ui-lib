@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {
   View,
-  Assets,
-  Constants,
-  Button,
   Colors,
   Text,
   TextInput,
@@ -13,11 +10,11 @@ import {
 } from 'react-native-ui-lib'; //eslint-disable-line
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 
-const LONG_TEXT =
-  'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer Martín Bollati. In this piece';
+const LONG_TEXT = 'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer' +
+  'Martín Bollati. In this piece';
 const INPUT_SPACING = 10;
 
-const transformPrice = value => {
+const transformPrice = (value) => {
   let cleanValue;
   let priceText = '';
   if (value) {
@@ -48,12 +45,14 @@ export default class InputScreen extends Component {
         <Text style={{marginBottom: 20}} text40>
           Inputs
         </Text>
+
         <TextInput
+          multiline
+          numberOfLines={2}
           floatingPlaceholder
           text70
           placeholder="write something.."
-          onChangeText={text =>
-            this.setState({error: text ? '' : 'This field is required'})}
+          onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
           error={this.state.error}
           underlineColor={{focus: Colors.orange60, error: Colors.purple50}}
         />
@@ -77,8 +76,8 @@ export default class InputScreen extends Component {
           multiline
           text70
           placeholder="Share your story"
-          value={
-            "Share Your Story exists to provide spaces to hear people's stories, in order to inspire us to live better ones ourselves."
+          value={'Share Your Story exists to provide spaces to hear people\'s stories, in order to inspire us to live' +
+          'better ones ourselves.'
           }
         />
 

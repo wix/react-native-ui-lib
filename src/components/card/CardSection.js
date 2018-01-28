@@ -7,11 +7,15 @@ import {Constants} from '../../helpers';
 import View from '../view';
 
 /**
- * CardSection, a sub Card component for layout-ing inside a card
+ * @description: Card.Section, a sub Card component for layout-ing inside a card
+ * @extends: BlurView
+ * @extendsnotes: (iOS only)
+ * @extendslink: https://github.com/react-native-community/react-native-blur/blob/master/src/BlurView.ios.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
  */
 export default class CardSection extends BaseComponent {
 
-  static displayName = 'CardSection';
+  static displayName = 'Card.Section';
 
   static propTypes = {
     /**

@@ -1,0 +1,44 @@
+@import 'src/styles/constants';
+
+@mixin component-props() {
+  .component-props {
+    table {
+      text-align: left;
+      width: 100%;
+      border-collapse: collapse;
+
+      tr {
+        &:first-child {
+          background-color: $violet60;
+        }
+
+        th {
+          padding: 9px;
+        }
+        td {
+          padding: 9px;
+          border-bottom: 1px solid $dark60;
+        }
+      }
+    }
+  }
+}
+
+.docs-page {
+  @include component-props();
+
+  div {
+    display: block;
+  }
+
+
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+
+  .docs-page__content {
+    padding: 24px 72px;
+    flex: 1;
+    overflow-y: auto;
+  }
+}

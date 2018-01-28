@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, ViewPropTypes} from 'react-native';
+import {StyleSheet, ViewPropTypes, Keyboard} from 'react-native';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import TextInput from './TextInput';
@@ -9,8 +9,11 @@ import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
 
 /**
- * Mask Input to create custom looking inputs with custom formats
+ * @description: Mask Input to create custom looking inputs with custom formats
  * @extends: TextInput
+ * @extendslink: docs/TagsInput
+ * @gif: https://camo.githubusercontent.com/61eedb65e968845d5eac713dcd21a69691571fb1/68747470733a2f2f6d656469612e67697068792e636f6d2f6d656469612f4b5a5a7446666f486f454b334b2f67697068792e676966
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/MaskedInputScreen.js
  */
 export default class MaskedInput extends BaseInput {
   static displayName = 'MaskedInput';
@@ -25,6 +28,18 @@ export default class MaskedInput extends BaseInput {
      */
     containerStyle: ViewPropTypes.style,
   };
+
+  componentDidMount() {
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      if (_.invoke(this, 'isFocused')) {
+        _.invoke(this, 'blur');
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.keyboardDidHideListener.remove();
+  }
 
   renderMaskedText() {
     const {renderMaskedText} = this.props;
