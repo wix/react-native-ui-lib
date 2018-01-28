@@ -131,7 +131,7 @@ export default class Carousel2 extends BaseComponent {
       // const titleStyle = {
       //   color: this.deltaX.interpolate({
       //     inputRange,
-      //     outputRange: this.generateOutputRange(pageIndex, ['#C2C7CB', '#20303C']),
+      //     outputRange: this.generateOutputRange(pageIndex, [Colors.dark60, Colors.dark10]),
       //   }),
       //   transform: [{
       //     scale: this.deltaX.interpolate({

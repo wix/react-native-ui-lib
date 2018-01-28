@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import _ from 'lodash';
 import {Constants} from '../helpers';
 
