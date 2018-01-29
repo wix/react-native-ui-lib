@@ -110,11 +110,6 @@ export default class TagsInput extends BaseComponent {
     }
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   const textInputHandle = ReactNative.findNodeHandle(this.input);
-  //   console.log("componentDidUpdate! tag " + textInputHandle);
-  // }
-
   componentWillUnmount() {
     DeviceEventEmitter.removeListener('onBackspacePress', this.onKeyPress);
   }
