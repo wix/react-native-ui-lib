@@ -2,6 +2,7 @@ package com.uilib;
 
 import android.support.annotation.Nullable;
 
+import com.cmcewen.blurview.BlurViewPackage;
 import com.facebook.react.ReactPackage;
 import com.reactnativenavigation.NavigationApplication;
 import com.wix.reactnativeuilib.highlighterview.HighlighterViewPackage;
@@ -9,8 +10,6 @@ import com.wix.reactnativeuilib.textinput.TextInputDelKeyHandlerPackage;
 
 import java.util.Arrays;
 import java.util.List;
-
-//import com.wix.interactable.Interactable;
 
 public class MainApplication extends NavigationApplication {
     @Override
@@ -23,8 +22,8 @@ public class MainApplication extends NavigationApplication {
     public List<ReactPackage> createAdditionalReactPackages() {
         return Arrays.<ReactPackage>asList(
                 new TextInputDelKeyHandlerPackage(),
+                new BlurViewPackage(),
                 new HighlighterViewPackage()
-//                new Interactable()
         );
     }
 }

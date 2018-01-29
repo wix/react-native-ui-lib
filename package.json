@@ -1,6 +1,6 @@
 {
   "name": "react-native-ui-lib",
-  "version": "2.0.160",
+  "version": "3.0.0",
   "main": "index.js",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "publishConfig": {
@@ -54,13 +54,13 @@
     "gh-pages": "^1.1.0",
     "jest": "^20.0.4",
     "mocha": "^5.0.0",
-    "react": "16.0.0-alpha.6",
+    "react": "16.0.0",
     "react-addons-test-utils": "^15.4.2",
     "react-autobind": "^1.0.6",
     "react-dom": "^15.4.2",
-    "react-native": "0.44.2",
-    "react-native-keyboard-aware-scrollview": "^1.1.6",
-    "react-native-navigation": "^1.1.352"
+    "react-native": "0.51.0",
+    "react-native-keyboard-aware-scrollview": "^2.0.0",
+    "react-native-navigation": "^1.1.19"
   },
   "peerDependencies": {
     "react": "15.4.2",
