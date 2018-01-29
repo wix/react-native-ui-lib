@@ -7,7 +7,7 @@
     "eslintplugin",
     "eslint-plugin"
   ],
-  "author": "Ethan",
+  "author": "Tnbal Tish <inbalti@wix.com>",
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha tests --recursive"
