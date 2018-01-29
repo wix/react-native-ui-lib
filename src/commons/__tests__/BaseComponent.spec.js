@@ -52,7 +52,7 @@ describe('BaseComponent', () => {
     });
 
     it('should return value of the custom made typography', () => {
-      const customTypography = {fontSize: 34, fontWeight: '400'};
+      const customTypography = {fontSize: Typography.text30.fontSize, fontWeight: '400'};
       Typography.loadTypographies({customTypography});
       expect(new BaseComponent({customTypography: true}).extractTypographyValue()).toEqual(customTypography);
       expect(

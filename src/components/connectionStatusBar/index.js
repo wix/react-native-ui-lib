@@ -153,7 +153,7 @@ function createStyles() {
       alignSelf: 'center',
     },
     x: {
-      fontSize: 15,
+      fontSize: Typography.text80.fontSize,
       color: 'black',
     },
   });
