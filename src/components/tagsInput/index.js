@@ -19,10 +19,14 @@ import Assets from '../../assets';
 
 // todo: support backspace to remove tags
 // todo: support updating tags externally
+// todo: support char array as tag creators (like comma)
+// todo: add notes to Docs about the Android fix for onKeyPress
 
 /**
- * Tags input component (chips)
- * @modifiers: text, color
+ * @description: Tags input component (chips)
+ * @modifiers: Typography
+ * @gif: https://camo.githubusercontent.com/9c2671024f60566b980638ea01b517f6fb509d0b/68747470733a2f2f6d656469612e67697068792e636f6d2f6d656469612f336f45686e374a79685431566658746963452f67697068792e676966
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FormScreen.js
  */
 export default class TagsInput extends BaseComponent {
   static displayName = 'TagsInput';

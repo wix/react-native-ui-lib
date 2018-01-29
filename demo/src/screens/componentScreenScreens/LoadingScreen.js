@@ -5,7 +5,7 @@ export default class LoadingScreen extends Component {
 
   state = {
     loading: true,
-  }
+  };
 
   componentDidMount() {
     setTimeout(() => {

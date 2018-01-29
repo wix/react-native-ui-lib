@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'gatsby-link';
 import Helmet from 'react-helmet';
+import _ from 'lodash';
 
 import './index.scss';
 
@@ -19,6 +20,10 @@ const Header = () => (
 const TemplateWrapper = ({children, data, location}) => {
   const components = data.allComponentMetadata.edges;
   const inDocs = location.pathname.includes('/docs');
+  const filteredComponents = _.chain(components)
+      .filter(component => component.node.displayName !== 'IGNORE')
+      .sortBy('node.displayName')
+      .value();
   return (
     <div>
       <Helmet
@@ -32,7 +37,7 @@ const TemplateWrapper = ({children, data, location}) => {
       <div className="main">
         {inDocs && (
           <div className="sidebar">
-            <Navbar components={components} />
+            <Navbar components={filteredComponents} />
           </div>
         )}
         <div className="content">{children()}</div>

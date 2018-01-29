@@ -6,7 +6,7 @@ const containerStyle = {
   marginBottom: 40,
 };
 
-export default class ButtonsScreen extends Component {
+export default class PageControlScreen extends Component {
 
   render() {
     return (

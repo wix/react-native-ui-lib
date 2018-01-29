@@ -12,6 +12,8 @@ const OFFSET_PIXEL_CORRECTION = 5;
 
 /**
  * @description: Carousel for scrolling pages horizontally
+ * @gif: https://media.giphy.com/media/l0HU7f8gjpRlMRhKw/giphy.gif, https://media.giphy.com/media/3oFzmcjX9OhpyckhcQ/giphy.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CarouselScreen.js
  */
 export default class Carousel extends BaseComponent {
   static displayName = 'Carousel';
@@ -24,6 +26,10 @@ export default class Carousel extends BaseComponent {
      * the page width (all pages should have the same page)
      */
     pageWidth: PropTypes.number,
+    /**
+     * if true, will have infinite scroll
+     */
+    loop: PropTypes.bool,
     /**
      * callback for when page has changed
      */

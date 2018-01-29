@@ -6,7 +6,7 @@ import {BaseComponent} from '../../commons';
 import {Modal} from '../../screensComponents';
 
 class PickerModal extends BaseComponent {
-
+  static displayName = 'IGNORE';
   static propTypes = {
     ...Modal.propTypes,
     topBarProps: PropTypes.shape(Modal.TopBar.propTypes),

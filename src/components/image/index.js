@@ -9,6 +9,8 @@ import Assets from '../../assets';
 
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
+ * @extends: Image
+ * @extendslink: https://facebook.github.io/react-native/docs/image.html
  */
 class Image extends BaseComponent {
   static displayName = 'Image';

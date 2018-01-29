@@ -10,7 +10,8 @@ import {Constants} from '../../helpers';
 import TouchableOpacity from '../touchableOpacity';
 
 /**
- * @description: TabBar.Item inner component of TabBar
+ * @description: TabBar.Item, inner component of TabBar for configuring the tabs
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabBarScreen.js
  */
 export default class TabBarItem extends BaseComponent {
   static displayName = 'TabBar.Item';

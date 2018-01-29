@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import com.cmcewen.blurview.BlurViewPackage;
 import com.facebook.react.ReactPackage;
 import com.reactnativenavigation.NavigationApplication;
+import com.wix.reactnativeuilib.highlighterview.HighlighterViewPackage;
 import com.wix.reactnativeuilib.textinput.TextInputDelKeyHandlerPackage;
 
 import java.util.Arrays;
@@ -21,7 +22,8 @@ public class MainApplication extends NavigationApplication {
     public List<ReactPackage> createAdditionalReactPackages() {
         return Arrays.<ReactPackage>asList(
                 new TextInputDelKeyHandlerPackage(),
-                new BlurViewPackage()
+                new BlurViewPackage(),
+                new HighlighterViewPackage()
         );
     }
 }

@@ -7,18 +7,18 @@ import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import * as presenter from './CarouselPresenter';
 
-export default class Carousel extends BaseComponent {
-
+export default class Carousel2 extends BaseComponent {
+  static displayName = 'IGNORE';
   static propTypes = {
     pageWidth: PropTypes.number,
     initialPage: PropTypes.number,
     loop: PropTypes.bool,
-  }
+  };
 
   static defaultProps = {
     pageWidth: Constants.screenWidth,
     initialPage: 0,
-  }
+  };
 
   constructor(props) {
     super(props);

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Image, StyleSheet} from 'react-native';
+import {Platform, Image, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
@@ -11,9 +11,11 @@ import View from '../view';
 
 /**
  * @description: Basic button component
- * @modifiers: margins
- * @extends TouchableOpacity
- * @example https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.js
+ * @extends: TouchableOpacity
+ * @extendslink: docs/TouchableOpacity
+ * @modifiers: margin, background
+ * @gif: https://media.giphy.com/media/xULW8j5WzsuPytqklq/giphy.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.js
  */
 export default class Button extends BaseComponent {
   static displayName = 'Button';
@@ -106,8 +108,7 @@ export default class Button extends BaseComponent {
     labelStyle: {},
     size: 'large',
     outline: false,
-
-    borderRadius: BorderRadiuses.br100,
+    // borderRadius: BorderRadiuses.br100,
     // backgroundColor: ThemeManager.CTABackgroundColor,
   };
 
@@ -123,6 +124,14 @@ export default class Button extends BaseComponent {
 
     if (!_.isUndefined(props.containerStyle)) {
       console.error('Button "containerStyle" prop will be deprecated soon, please use "style" instead');
+    }
+  }
+
+  // This method will be called more than once in case of layout change!
+  getComponentDimensions(event) {
+    if (Constants.isAndroid && Platform.Version <= 17) {
+      const height = event.nativeEvent.layout.height;
+      this.setState({borderRadius: height / 2});
     }
   }
 
@@ -162,13 +171,13 @@ export default class Button extends BaseComponent {
   }
 
   getLabelColor() {
-    const {link, linkColor, outline, disabled} = this.getThemeProps(); // this.props;
+    const {link, linkColor, outline, outlineColor, disabled} = this.getThemeProps(); // this.props;
 
     let color = ThemeManager.CTATextColor;
     if (link) {
       color = linkColor || Colors.blue30;
     } else if (outline) {
-      color = Colors.dark10;
+      color = outlineColor || Colors.blue30;
     }
 
     if (disabled && (link || outline)) {
@@ -267,11 +276,14 @@ export default class Button extends BaseComponent {
   }
 
   getBorderRadiusStyle() {
-    const {link, borderRadius, fullWidth} = this.props;
-    if (link || fullWidth) {
+    const {link, fullWidth, borderRadius: borderRadiusFromProps} = this.props;
+    if (link || fullWidth || borderRadiusFromProps === 0) {
       return {borderRadius: 0};
     }
-    return {borderRadius: _.isUndefined(borderRadius) ? BorderRadiuses.br100 : borderRadius};
+
+    const {borderRadius: borderRadiusFromState} = this.state;
+    const borderRadius = borderRadiusFromProps || borderRadiusFromState || BorderRadiuses.br100;
+    return {borderRadius};
   }
 
   getShadowStyle() {
@@ -356,6 +368,7 @@ export default class Button extends BaseComponent {
         ]}
         activeOpacity={0.6}
         activeBackgroundColor={this.getActiveBackgroundColor()}
+        onLayout={this.getComponentDimensions}
         onPress={onPress}
         disabled={disabled}
         testID={testID}

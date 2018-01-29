@@ -1,0 +1,26 @@
+@import 'src/styles/constants';
+
+.modifiers-page {
+  text-align: left;
+  height: 100%;
+  margin: 30px;
+}
+table {
+  text-align: left;
+  width: 100%;
+  border-collapse: collapse;
+
+  tr {
+    &:first-child {
+      background-color: $violet60;
+    }
+
+    th {
+      padding: 9px;
+    }
+    td {
+      padding: 9px;
+      border-bottom: 1px solid $dark60;
+    }
+  }
+}

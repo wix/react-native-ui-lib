@@ -6,7 +6,7 @@ import {BaseComponent} from '../../commons';
 import {Colors, Typography} from '../../style';
 
 export default class BaseInput extends BaseComponent {
-  static displayName = 'TextInput';
+  static displayName = 'BaseInput';
   static propTypes = {
     ...RNTextInput.propTypes,
     ...BaseComponent.propTypes,

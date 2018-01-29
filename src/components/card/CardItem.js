@@ -4,7 +4,8 @@ import {View, StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
 
 /**
- * Card.Item, a sub Card component for layout-ing inside a card
+ * @description: Card.Item, a sub Card component for layout-ing inside a card
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
  */
 export default class CardItem extends BaseComponent {
 
@@ -21,9 +22,9 @@ export default class CardItem extends BaseComponent {
     column: PropTypes.bool,
   };
 
-  defaultProps = {
+  static defaultProps = {
     row: true,
-  }
+  };
 
   generateStyles() {
     this.styles = createStyles(this.props);

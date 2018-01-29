@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {TouchableOpacity, View, Text, ListView, StyleSheet} from 'react-native';
+import {TouchableOpacity, Text, ListView, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import autobind from 'react-autobind';
-import {Colors, Typography} from 'react-native-ui-lib';//eslint-disable-line
+import {Colors, Typography, View, TextInput} from 'react-native-ui-lib';//eslint-disable-line
 import {navigationData} from '../menuStructure';
 
 const ds = new ListView.DataSource({
@@ -33,6 +33,7 @@ export default class UiLibExplorerMenu extends Component {
       // overrideBackPress: row.overrideBackPress,
       backButtonTitle: '',
     });
+    this.filterExplorerScreens('');
   }
 
   filterExplorerScreens(filterText) {
@@ -54,8 +55,8 @@ export default class UiLibExplorerMenu extends Component {
         }
       });
     }
-
     this.setState({
+      filterText,
       dataSource: ds.cloneWithRowsAndSections(filteredNavigationData),
     });
   }
@@ -72,9 +73,10 @@ export default class UiLibExplorerMenu extends Component {
     return (<View style={styles.separator} key={`s${sId}_${id}`} />);
   }
 
-  renderRow(row) {
+  renderRow(row, index) {
     return (
       <TouchableOpacity
+        testID={index}
         style={{justifyContent: 'center', paddingVertical: 20, paddingHorizontal: 25}}
         onPress={() => this.openScreen(row)}
       >
@@ -87,22 +89,29 @@ export default class UiLibExplorerMenu extends Component {
 
   render() {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
-        renderSeparator={this.renderSeparator}
-        renderSectionHeader={this.renderSectionHeader}
-      />
+      <View flex>
+        <View style={{marginLeft: 20, marginTop: 20}} >
+          <TextInput
+            style={styles.textInput}
+            value={this.state.filterText}
+            hideUnderline
+            text80
+            placeholder="Search your component.."
+            onChangeText={this.filterExplorerScreens}
+          />
+        </View>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow}
+          renderSeparator={this.renderSeparator}
+          renderSectionHeader={this.renderSectionHeader}
+        />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  text: {
-    textAlign: 'left',
-    fontSize: 22,
-    padding: 20,
-  },
   row: {
     height: 56,
     justifyContent: 'center',
@@ -112,12 +121,16 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.dark70,
   },
   sectionContainer: {
-    backgroundColor: Colors.violet40,
+    backgroundColor: Colors.violet30,
     paddingVertical: 4,
     paddingLeft: 12,
   },
   sectionText: {
-    ...Typography.text60,
+    ...Typography.text70,
     color: Colors.white,
+  },
+  textInput: {
+    textAlign: 'left',
+    fontSize: 15,
   },
 });

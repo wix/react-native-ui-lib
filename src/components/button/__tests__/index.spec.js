@@ -113,9 +113,11 @@ describe('Button', () => {
       expect(uut.getLabelColor()).toEqual(Colors.orange50);
     });
 
-    it('should return dark10 color for outline', () => {
-      const uut = new Button({outline: true});
-      expect(uut.getLabelColor()).toEqual(Colors.dark10);
+    it('should return blue30 color for outline by default or the outlineColor passed', () => {
+      let uut = new Button({outline: true});
+      expect(uut.getLabelColor()).toEqual(Colors.blue30);
+      uut = new Button({outline: true, outlineColor: 'red'});
+      expect(uut.getLabelColor()).toEqual('red');
     });
 
     it('should return color according to color modifier', () => {
