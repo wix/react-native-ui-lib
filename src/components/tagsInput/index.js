@@ -275,7 +275,7 @@ export default class TagsInput extends BaseComponent {
     return (
       <View style={styles.inputWrapper}>
         <TextInput
-          ref={r => (this.input = r)}
+          ref={r => this.input = r}
           text80
           blurOnSubmit={false}
           {...others}
@@ -288,6 +288,7 @@ export default class TagsInput extends BaseComponent {
           selectionColor={isLastTagMarked ? 'transparent' : undefined}
           style={inputStyle}
           containerStyle={{flexGrow: 0}}
+          collapsable={false}
         />
       </View>
     );
