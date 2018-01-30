@@ -65,8 +65,8 @@ HighlighterOverlayView.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
   highlightViewTag: PropTypes.number,
   children: PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.node),
-    React.PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
   ]),
   highlightViewTagParams: PropTypes.shape({
     padding: PropTypes.oneOfType([
