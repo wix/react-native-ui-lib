@@ -59,7 +59,7 @@ export default class ConnectionStatusBar extends BaseComponent {
   }
 
   componentDidMount() {
-    this.netInfoListener = NetInfo.addEventListener('change', this.onConnectionChange);
+    this.netInfoListener = NetInfo.addEventListener('connectionChange', this.onConnectionChange);
   }
 
   componentWillUnmount() {
@@ -92,7 +92,7 @@ export default class ConnectionStatusBar extends BaseComponent {
   }
 
   async getInitialConnectionState() {
-    const state = await NetInfo.fetch();
+    const state = await NetInfo.getConnectionInfo();
     const isConnected = this.isStateConnected(state);
     this.setState({isConnected});
     if (this.props.onConnectionChange) {
@@ -101,7 +101,7 @@ export default class ConnectionStatusBar extends BaseComponent {
   }
 
   isStateConnected(state) {
-    const lowerCaseState = _.lowerCase(state);
+    const lowerCaseState = _.lowerCase(state.type);
     const isConnected = lowerCaseState !== 'none';
     return isConnected;
   }
