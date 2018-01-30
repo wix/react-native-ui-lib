@@ -5,6 +5,7 @@ describe('ConnectionStatusBar', () => {
   let uut;
   beforeEach(() => {
     uut = new ConnectionStatusBar({});
+    ConnectionStatusBar.unregisterGlobalOnConnectionLost();
   });
 
   describe('registerGlobalOnConnectionLost', () => {
@@ -22,7 +23,7 @@ describe('ConnectionStatusBar', () => {
       ConnectionStatusBar.registerGlobalOnConnectionLost(callback);
       _.set(uut, 'state.isConnected', true);
 
-      uut.onConnectionChange('none');
+      uut.onConnectionChange({type: 'none'});
 
       expect(callback).toHaveBeenCalled();
     });
@@ -32,7 +33,7 @@ describe('ConnectionStatusBar', () => {
       ConnectionStatusBar.registerGlobalOnConnectionLost(callback);
       _.set(uut, 'state.isConnected', false);
 
-      uut.onConnectionChange('wifi');
+      uut.onConnectionChange({type: 'wifi'});
 
       expect(callback).not.toHaveBeenCalled();
     });
