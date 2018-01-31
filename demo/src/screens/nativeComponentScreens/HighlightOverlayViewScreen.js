@@ -1,7 +1,6 @@
 import React, {PureComponent} from 'react';
 import ReactNative from 'react-native';
-import {Text, Button, View, Colors} from 'react-native-ui-lib';
-import {HighlighterOverlayView} from '../../../../src/nativeComponents';
+import {Text, Button, View, Colors, HighlighterOverlayView} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class HighlightOverlayViewScreen extends PureComponent {
 
