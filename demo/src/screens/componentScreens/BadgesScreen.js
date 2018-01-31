@@ -10,7 +10,7 @@ export default class BadgesScreen extends Component {
     super(props);
 
     this.state = {
-      value: 1,
+      value: 10,
     };
   }
 
