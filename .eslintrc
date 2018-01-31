@@ -8,6 +8,7 @@
     "consistent-return": "off",
     "global-require": "off",
     "import/prefer-default-export": "off",
+    "no-nested-ternary": "off",
     "no-plusplus": "off",
     "no-return-assign": "off",
     "no-use-before-define": "off",

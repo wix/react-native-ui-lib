@@ -46,17 +46,26 @@ export default class Badge extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
+  getBadgeWidthStyle({label, size}) {
+    const isOneLetter = label.length < 2;
+    const isSmallBadge = size === 'small';
+    const width = isSmallBadge ? (isOneLetter ? 18 : 25) : (isOneLetter ? 21 : 30);
+    return {width};
+  }
+
   render() {
     const {size} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
     const animationProps = this.extractAnimationProps();
     const isSmallBadge = size === 'small';
+    const width = this.getBadgeWidthStyle(this.props);
 
     return (
       <Animatable.View
         testID={this.props.testId}
         style={[
+          width,
           this.styles.badge,
           isSmallBadge && this.styles.badgeSmall,
           containerStyle,
@@ -77,11 +86,9 @@ export default class Badge extends BaseComponent {
   }
 }
 
-function createStyles({label}) {
-  const isOneLetter = label.length < 2;
+function createStyles() {
   return StyleSheet.create({
     badge: {
-      width: isOneLetter ? 21 : 30,
       height: 21,
       borderRadius: BorderRadiuses.br100,
       backgroundColor: ThemeManager.primaryColor,
@@ -89,7 +96,6 @@ function createStyles({label}) {
       justifyContent: 'center',
     },
     badgeSmall: {
-      width: isOneLetter ? 18 : 25,
       height: 18,
     },
     label: {
