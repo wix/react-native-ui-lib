@@ -47,6 +47,7 @@ export default class Badge extends BaseComponent {
   }
 
   render() {
+    this.generateStyles();
     const {size} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
