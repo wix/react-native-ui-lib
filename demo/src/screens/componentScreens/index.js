@@ -15,6 +15,7 @@ import PageControlScreen from './PageControlScreen';
 import ToastsScreen from './ToastsScreen';
 import TabBarScreen from './TabBarScreen';
 import TourScreen from './TourScreen';
+import FeatureHighlightScreen from './FeatureHighlightScreen';
 
 
 Navigation.registerComponent('unicorn.components.ActionSheetScreen', () => ActionSheetScreen);
@@ -33,3 +34,4 @@ Navigation.registerComponent('unicorn.components.PageControlScreen', () => PageC
 Navigation.registerComponent('unicorn.components.ToastsScreen', () => ToastsScreen);
 Navigation.registerComponent('unicorn.components.TabBarScreen', () => TabBarScreen);
 Navigation.registerComponent('unicorn.components.TourScreen', () => TourScreen);
+Navigation.registerComponent('unicorn.components.FeatureHighlightScreen', () => FeatureHighlightScreen);
