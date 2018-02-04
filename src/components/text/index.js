@@ -10,7 +10,6 @@ import {BaseComponent} from '../../commons';
  * @modifiers: margins, color, typography
  */
 export default class Text extends BaseComponent {
-
   static displayName = 'Text';
   static propTypes = {
     ...RNText.propTypes,
@@ -49,12 +48,21 @@ export default class Text extends BaseComponent {
       color && {color},
       margins,
       center && {textAlign: 'center'},
-      style];
+      style,
+    ];
     return (
-      <RNText {...others} style={textStyle}>
+      <RNText {...others} style={textStyle} ref={r => (this.text = r)}>
         {this.props.children}
       </RNText>
     );
+  }
+
+  measure(...args) {
+    this.text.measure(...args);
+  }
+
+  measureInWindow(...args) {
+    this.text.measureInWindow(...args);
   }
 }
 
