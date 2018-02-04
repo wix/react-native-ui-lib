@@ -45,7 +45,7 @@ class FeatureHighlight extends BaseComponent {
 
   getContentPositionStyle() {
     const {targetPosition} = this.state;
-    const {top, left, height} = targetPosition || {};
+    const {top, height} = targetPosition || {};
 
     return {
       top: top + height,
