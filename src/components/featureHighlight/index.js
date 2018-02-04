@@ -34,7 +34,6 @@ class FeatureHighlight extends BaseComponent {
 
       setTimeout(() => {
         target.measureInWindow((x, y, width, height) => {
-          console.log('ethan - position', x, y);
           this.setState({
             targetPosition: {left: x, top: y, width, height},
           });
