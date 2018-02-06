@@ -64,9 +64,11 @@ class FeatureHighlight extends BaseComponent {
         }, 0);
       } else {
         const frame = props.highlightFrame;
-        this.setState({
-          targetPosition: {left: frame.x, top: frame.y, width: frame.width, height: frame.height},
-        });
+        if (frame) {
+          this.setState({
+            targetPosition: {left: frame.x, top: frame.y, width: frame.width, height: frame.height},
+          });
+        }
       }
     }
   }
