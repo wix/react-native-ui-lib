@@ -11,7 +11,7 @@ describe('FeatureHighlight', () => {
       const uut = new FeatureHighlight({});
       uut.state = {
         targetPosition: {left: 0, top: 500, width: 80, height: 80},
-        viewHeight: 200,
+        contentViewHeight: 200,
       };
       expect(uut.getContentPositionStyle()).toEqual({top: 300});
     });
@@ -19,7 +19,7 @@ describe('FeatureHighlight', () => {
       const uut = new FeatureHighlight({});
       uut.state = {
         targetPosition: {left: 0, top: 200, width: 80, height: 80},
-        viewHeight: 200,
+        contentViewHeight: 200,
       };
       expect(uut.getContentPositionStyle()).toEqual({top: 280});
     });
