@@ -10,6 +10,7 @@ import {Constants} from '../../helpers';
 import {HighlighterOverlayView} from '../../nativeComponents';
 
 const defaultOverlayColor = Colors.rgba(Colors.black, 0.82);
+const defaultTextColor = Colors.rgba(Colors.white, 1);
 const defaultStrokeColor = Colors.rgba(Colors.white, 0.12);
 const defaultStrokeWidth = 12;
 const contentViewPadding = Constants.isIOS ? 35 : 32;
@@ -17,20 +18,63 @@ const titleBottomMargin = Constants.isIOS ? 15 : 12;
 const messageBottomMargin = Constants.isIOS ? 30 : 24;
 const defaultButtonLabel = 'Got it';
 
-
+/**
+ * @description: FeatureHighlight component
+ * @extends: HighlighterOverlayView
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.js
+ */
 class FeatureHighlight extends BaseComponent {
+  static displayName = 'FeatureHighlight';
   static propTypes = {
+    /**
+     * Boolean to determine if to present the feature highlight component
+     */
     visible: PropTypes.bool,
+    /**
+     * Frame of the area to highlight
+     */
     highlightFrame: PropTypes.shape({
       x: PropTypes.number,
       y: PropTypes.number,
       width: PropTypes.number,
       height: PropTypes.number,
     }),
+    /**
+     * Callback that extract the ref of the element to be highlighted
+     */
     getTarget: PropTypes.func,
+    /**
+     * Title of the content to be displayed
+     */
     title: PropTypes.string,
+    /**
+     * Message to be displayed
+     */
     message: PropTypes.string,
+    /**
+     * Props that will be passed to the dismiss button
+     */
     confirmButtonProps: PropTypes.object,
+    /**
+     * Color of the overlay (usually includes alpha for transparency)
+     */
+    overlayColor: PropTypes.string,
+    /**
+     * Color of the content's text
+     */
+    textColor: PropTypes.string,
+    /**
+     * Color of the border around the highlighted element
+     */
+    borderColor: PropTypes.string,
+    /**
+     * Width of the border around the highlighted element
+     */
+    borderWidth: PropTypes.number,
+    /**
+     * Use to identify the component in tests
+     */
+    testID: PropTypes.string,
   };
 
   state = {};
@@ -93,16 +137,18 @@ class FeatureHighlight extends BaseComponent {
   }
 
   renderHighlightMessage() {
-    const {title, message, confirmButtonProps} = this.props;
+    const {title, message, confirmButtonProps, textColor} = this.getThemeProps();
+    const color = textColor || defaultTextColor;
+
     return (
       <View style={[styles.highlightContent, this.getContentPositionStyle()]} onLayout={this.getComponentDimensions}>
         {title && (
-          <Text text60 white style={styles.title}>
+          <Text text60 style={[styles.title, {color}]}>
             {title}
           </Text>
         )}
         {message && (
-          <Text text70 white style={styles.message}>
+          <Text text70 style={[styles.message, {color}]}>
             {message}
           </Text>
         )}
@@ -110,7 +156,7 @@ class FeatureHighlight extends BaseComponent {
           label={defaultButtonLabel}
           size="small"
           outline
-          outlineColor={Colors.white}
+          outlineColor={textColor || defaultTextColor}
           {...confirmButtonProps}
         />
       </View>
@@ -118,7 +164,7 @@ class FeatureHighlight extends BaseComponent {
   }
 
   render() {
-    const {visible, highlightFrame} = this.props;
+    const {visible, highlightFrame, overlayColor, borderColor, borderWidth} = this.getThemeProps();
     const {node} = this.state;
 
     return (
@@ -126,9 +172,9 @@ class FeatureHighlight extends BaseComponent {
         highlightViewTag={node}
         highlightFrame={highlightFrame}
         visible={visible}
-        overlayColor={defaultOverlayColor}
-        strokeColor={defaultStrokeColor}
-        strokeWidth={defaultStrokeWidth}
+        overlayColor={overlayColor || defaultOverlayColor}
+        strokeColor={borderColor || defaultStrokeColor}
+        strokeWidth={borderWidth || defaultStrokeWidth}
       >
         {this.renderHighlightMessage()}
       </HighlighterOverlayView>
