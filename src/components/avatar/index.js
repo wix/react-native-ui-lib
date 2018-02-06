@@ -51,6 +51,11 @@ export default class Avatar extends BaseComponent {
      */
     onImageLoadEnd: PropTypes.func,
     /**
+     * Listener-callback for when an image's (uri) loading
+     * fails (equiv. to Image.onError()).
+     */
+    onImageLoadError: PropTypes.func,
+    /**
      * Label that can represent initials
      */
     label: PropTypes.string,
@@ -151,7 +156,7 @@ export default class Avatar extends BaseComponent {
   }
 
   renderImage() {
-    const {imageSource, onImageLoadStart, onImageLoadEnd, testID} = this.props;
+    const {imageSource, onImageLoadStart, onImageLoadEnd, onImageLoadError, testID} = this.props;
     const hasImage = !_.isUndefined(imageSource);
     if (hasImage) {
       return (
@@ -160,6 +165,7 @@ export default class Avatar extends BaseComponent {
           source={imageSource}
           onLoadStart={onImageLoadStart}
           onLoadEnd={onImageLoadEnd}
+          onError={onImageLoadError}
           testID={`${testID}.image`}
         />
       );
