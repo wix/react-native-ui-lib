@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {URL} from 'url';
+import URL from 'url-parse';
 import Colors from '../style/colors';
 
 function hashStringToNumber(str) {
@@ -48,10 +48,10 @@ export function isGravatarUrl(url) {
 }
 
 export function patchGravatarUrl(gravatarUrl) {
-  const flatUrl = gravatarUrl.split('?')[0];
-  const {searchParams, hash} = new URL(gravatarUrl);
-  searchParams.set('d', '404');
-  searchParams.delete('default');
-
-  return `${flatUrl}?${searchParams}${hash}`;
+  const url = new URL(gravatarUrl, true);
+  const {query} = url;
+  query.d = '404';
+  delete query.default;
+  url.set('query', query);
+  return url.toString();
 }

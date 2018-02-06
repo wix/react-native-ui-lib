@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {ScrollView, View, Text, StyleSheet} from 'react-native';
+import {ScrollView, View, Text, StyleSheet, Alert} from 'react-native';
 import _ from 'lodash';
-import {Avatar, Colors, Typography} from 'react-native-ui-lib';//eslint-disable-line
+import {Avatar, AvatarHelper, Colors, Typography} from 'react-native-ui-lib';//eslint-disable-line
 
 const examples = [
   {title: 'Empty Avatar', ribbonLabel: 'New'},
@@ -14,19 +14,19 @@ const examples = [
     label: '?!',
     backgroundColor: Colors.blue20,
     imageSource: {uri: 'https://static.altomusic.com/media/catalog/product/M/A/MAJ100SBK_0.jpg'},
-    onImageLoadStart: () => console.log('Monitored avatar load STARTED...'), // eslint-disable-line
-    onImageLoadEnd: () => console.log('Monitored avatar load ENDED'), // eslint-disable-line
+    onImageLoadStart: () => console.log('AvatarScreen: Monitored avatar load STARTED...'), // eslint-disable-line
+    onImageLoadEnd: () => console.log('AvatarScreen: Monitored avatar load ENDED'), // eslint-disable-line
   },
   {
     title: 'Invalid Gravatar (see logs)',
     label: '🤦',
     backgroundColor: Colors.dark60,
     imageSource: {uri: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=404'},
-    onImageLoadStart: () => console.log('Invalid avatar load STARTED...'), // eslint-disable-line
-    onImageLoadEnd: () => console.log('Invalid avatar load ENDED'), // eslint-disable-line
-    onImageLoadError: () => console.log('Invalid avatar load FAILED'), // eslint-disable-line
+    onImageLoadStart: () => console.log('AvatarScreen: Invalid avatar load STARTED...'), // eslint-disable-line
+    onImageLoadEnd: () => console.log('AvatarScreen: Invalid avatar load ENDED'), // eslint-disable-line
+    onImageLoadError: () => console.log('AvatarScreen: Invalid avatar load FAILED'), // eslint-disable-line
   },
-  {title: 'Empty Gravatar', backgroundColor: Colors.red60, imageSource: {uri: 'https://gravatar.com/avatar/2497473d558a37020c558bf26e380a7c?d=blank'}},
+  {title: 'Empty Gravatar', backgroundColor: Colors.red60, imageSource: {uri: 'https://www.gravatar.com/avatar/2497473d558a37020c558bf26e380a7c?d=blank'}},
   {title: 'Smaller', size: 40, imageSource: {uri: 'https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg'}},
   {title: 'Bigger', size: 60, backgroundColor: 'red', imageSource: {uri: 'https://lh3.googleusercontent.com/-NQvYunR8V0U/AAAAAAAAAAI/AAAAAAAAAAA/lGLfZ92rPeE/s181-c/108911355181327993622.jpg'}},
   {title: 'Status (offline)', status: Avatar.modes.OFFLINE},
@@ -35,13 +35,28 @@ const examples = [
 
 export default class AvatarsScreen extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.onAvatarPress = this.onAvatarPress.bind(this);
+  }
+
+  onAvatarPress(item) {
+    const {title, imageSource, label} = item;
+    const uri = _.get(imageSource, 'uri');
+    const isGravatar = !!uri && AvatarHelper.isGravatarUrl(uri);
+    const patchedGravatar = isGravatar ? AvatarHelper.patchGravatarUrl(uri) : undefined;
+    const message = `Label: ${label}\n\nImage-source: ${uri}\n\nIs Gravatar: ${isGravatar}\n\n${patchedGravatar ? `Patched-uri: ${patchedGravatar}` : ''}`;
+    Alert.alert(title, message);
+  }
+
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
         {_.map(examples, (example, i) => (
           <View key={i} style={styles.section}>
             <Text style={{...Typography.text70}}>{example.title}</Text>
-            <Avatar containerStyle={{marginVertical: 5}} {...example}/>
+            <Avatar containerStyle={{marginVertical: 5}} {...example} onPress={() => this.onAvatarPress(example)}/>
           </View>
         ))}
       </ScrollView>
