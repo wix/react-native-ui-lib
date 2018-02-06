@@ -21,7 +21,12 @@ const defaultButtonLabel = 'Got it';
 class FeatureHighlight extends BaseComponent {
   static propTypes = {
     visible: PropTypes.bool,
-    highlightFrame: PropTypes.object,
+    highlightFrame: PropTypes.shape({
+      x: PropTypes.number,
+      y: PropTypes.number,
+      width: PropTypes.number,
+      height: PropTypes.number,
+    }),
     getTarget: PropTypes.func,
     title: PropTypes.string,
     message: PropTypes.string,

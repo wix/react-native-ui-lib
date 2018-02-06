@@ -13,7 +13,6 @@ describe('FeatureHighlight', () => {
         targetPosition: {left: 0, top: 500, width: 80, height: 80},
         viewHeight: 200,
       };
-      console.log('INBAL screenHeight', Constants.screenHeight);
       expect(uut.getContentPositionStyle()).toEqual({top: 300});
     });
     it('massage should be placed below element positioned above screen\'s vertical center', () => {
@@ -22,7 +21,6 @@ describe('FeatureHighlight', () => {
         targetPosition: {left: 0, top: 200, width: 80, height: 80},
         viewHeight: 200,
       };
-      console.log('INBAL screenHeight', Constants.screenHeight);
       expect(uut.getContentPositionStyle()).toEqual({top: 280});
     });
   });
