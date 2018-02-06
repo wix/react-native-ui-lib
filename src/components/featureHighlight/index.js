@@ -72,12 +72,12 @@ class FeatureHighlight extends BaseComponent {
   }
 
   getContentPositionStyle() {
-    const {targetPosition} = this.state;
+    const {targetPosition, contentViewHeight} = this.state;
     const {top, height} = targetPosition || {};
     const screenVerticalCenter = Constants.screenHeight / 2;
     const targetCenter = top + (height / 2);
-    const topPosition = (targetCenter > screenVerticalCenter) ? top - this.state.viewHeight : top + height;
-    if (topPosition < 0 || topPosition + this.state.viewHeight > Constants.screenHeight) {
+    const topPosition = (targetCenter > screenVerticalCenter) ? top - contentViewHeight : top + height;
+    if (topPosition < 0 || topPosition + contentViewHeight > Constants.screenHeight) {
       console.warn('Content is too long and might appear off screen. ' +
         'Please adjust the message length for better results.');
     }
@@ -87,7 +87,7 @@ class FeatureHighlight extends BaseComponent {
   // This method will be called more than once in case of layout change!
   getComponentDimensions(event) {
     const height = event.nativeEvent.layout.height;
-    this.setState({viewHeight: height});
+    this.setState({contentViewHeight: height});
   }
 
   renderHighlightMessage() {
