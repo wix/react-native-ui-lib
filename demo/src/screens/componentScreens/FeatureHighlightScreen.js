@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {FeatureHighlight, Constants, View, Text, Carousel, Button} from 'react-native-ui-lib'; // eslint-disable-line
+import {Constants, View, Text, Button, Image, FeatureHighlight} from 'react-native-ui-lib'; // eslint-disable-line
 
 class FeatureHighlightScreen extends Component {
 
@@ -28,15 +28,17 @@ class FeatureHighlightScreen extends Component {
             electronic typesetting, <Text>remaining</Text> essentially unchanged.
           </Text>
         </View>
-        <View ref={r => (this.target = r)}>
-          <Button label="Keep Reading" />
+        <View marginT-20 ref={r => (this.target = r)}>
+          <Button label="Keep Reading"/>
         </View>
         <FeatureHighlight
           visible={showFeatureHighlight}
-          message="To edit your services or add new ones, tap here"
+          title="Get Notified"
+          message="Important notifications appear right on your clubs and groups.
+           Tap them to get more information about the most important things that you should pay attention to."
           confirmButtonProps={{label: 'Got It', onPress: this.closeHighlight}}
-          target={this.target}
           getTarget={() => this.target}
+          highlightFrame={{x: 99.5, y: 200, width: 176.5, height: 53}}
         />
       </View>
     );

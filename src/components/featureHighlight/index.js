@@ -6,17 +6,83 @@ import View from '../view';
 import Text from '../text';
 import Button from '../button';
 import {Colors} from '../../style';
+import {Constants} from '../../helpers';
 import {HighlighterOverlayView} from '../../nativeComponents';
 
+const defaultOverlayColor = Colors.rgba(Colors.black, 0.82);
+const defaultTextColor = Colors.rgba(Colors.white, 1);
+const defaultStrokeColor = Colors.rgba(Colors.white, 0.12);
+const defaultStrokeWidth = 12;
+const contentViewPadding = Constants.isIOS ? 35 : 32;
+const titleBottomMargin = Constants.isIOS ? 15 : 12;
+const messageBottomMargin = Constants.isIOS ? 30 : 24;
+const defaultButtonLabel = 'Got it';
+
+/**
+ * @description: FeatureHighlight component
+ * @extends: HighlighterOverlayView
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.js
+ */
 class FeatureHighlight extends BaseComponent {
+  static displayName = 'FeatureHighlight';
   static propTypes = {
+    /**
+     * Boolean to determine if to present the feature highlight component
+     */
     visible: PropTypes.bool,
+    /**
+     * Frame of the area to highlight
+     */
+    highlightFrame: PropTypes.shape({
+      x: PropTypes.number,
+      y: PropTypes.number,
+      width: PropTypes.number,
+      height: PropTypes.number,
+    }),
+    /**
+     * Callback that extract the ref of the element to be highlighted
+     */
     getTarget: PropTypes.func,
+    /**
+     * Title of the content to be displayed
+     */
+    title: PropTypes.string,
+    /**
+     * Message to be displayed
+     */
     message: PropTypes.string,
+    /**
+     * Props that will be passed to the dismiss button
+     */
     confirmButtonProps: PropTypes.object,
+    /**
+     * Color of the overlay (usually includes alpha for transparency)
+     */
+    overlayColor: PropTypes.string,
+    /**
+     * Color of the content's text
+     */
+    textColor: PropTypes.string,
+    /**
+     * Color of the border around the highlighted element
+     */
+    borderColor: PropTypes.string,
+    /**
+     * Width of the border around the highlighted element
+     */
+    borderWidth: PropTypes.number,
+    /**
+     * Use to identify the component in tests
+     */
+    testID: PropTypes.string,
   };
 
   state = {};
+
+  constructor(props) {
+    super(props);
+    this.getComponentDimensions = this.getComponentDimensions.bind(this);
+  }
 
   componentDidMount() {
     this.findTargetsNodes();
@@ -28,50 +94,88 @@ class FeatureHighlight extends BaseComponent {
 
   findTargetsNodes(props = this.props) {
     if (!this.state.node) {
-      const target = props.getTarget();
-      const node = findNodeHandle(target);
-      this.setState({node});
+      if (props.getTarget !== undefined) {
+        const target = props.getTarget();
+        const node = findNodeHandle(target);
+        this.setState({node});
 
-      setTimeout(() => {
-        target.measureInWindow((x, y, width, height) => {
-          this.setState({
-            targetPosition: {left: x, top: y, width, height},
+        setTimeout(() => {
+          target.measureInWindow((x, y, width, height) => {
+            this.setState({
+              targetPosition: {left: x, top: y, width, height},
+            });
           });
-        });
-      }, 0);
+        }, 0);
+      } else {
+        const frame = props.highlightFrame;
+        if (frame) {
+          this.setState({
+            targetPosition: {left: frame.x, top: frame.y, width: frame.width, height: frame.height},
+          });
+        }
+      }
     }
   }
 
   getContentPositionStyle() {
-    const {targetPosition} = this.state;
+    const {targetPosition, contentViewHeight} = this.state;
     const {top, height} = targetPosition || {};
+    const screenVerticalCenter = Constants.screenHeight / 2;
+    const targetCenter = top + (height / 2);
+    const topPosition = (targetCenter > screenVerticalCenter) ? top - contentViewHeight : top + height;
+    if (topPosition < 0 || topPosition + contentViewHeight > Constants.screenHeight) {
+      console.warn('Content is too long and might appear off screen. ' +
+        'Please adjust the message length for better results.');
+    }
+    return {top: topPosition};
+  }
 
-    return {
-      top: top + height,
-      left: 0,
-      right: 0,
-      marginTop: 20,
-    };
+  // This method will be called more than once in case of layout change!
+  getComponentDimensions(event) {
+    const height = event.nativeEvent.layout.height;
+    this.setState({contentViewHeight: height});
   }
 
   renderHighlightMessage() {
-    const {message, confirmButtonProps} = this.props;
+    const {title, message, confirmButtonProps, textColor} = this.getThemeProps();
+    const color = textColor || defaultTextColor;
+
     return (
-      <View style={[styles.highlightContent, this.getContentPositionStyle()]}>
-        <Text text70 dark10>
-          {message}
-        </Text>
-        <Button marginT-20 label="Got It" link {...confirmButtonProps} />
+      <View style={[styles.highlightContent, this.getContentPositionStyle()]} onLayout={this.getComponentDimensions}>
+        {title && (
+          <Text text60 style={[styles.title, {color}]}>
+            {title}
+          </Text>
+        )}
+        {message && (
+          <Text text70 style={[styles.message, {color}]}>
+            {message}
+          </Text>
+        )}
+        <Button
+          label={defaultButtonLabel}
+          size="small"
+          outline
+          outlineColor={textColor || defaultTextColor}
+          {...confirmButtonProps}
+        />
       </View>
     );
   }
 
   render() {
-    const {visible} = this.props;
+    const {visible, highlightFrame, overlayColor, borderColor, borderWidth} = this.getThemeProps();
     const {node} = this.state;
 
     return (
-      <HighlighterOverlayView highlightViewTag={node} visible={visible} overlayColor={Colors.rgba(Colors.dark80, 0.93)}>
+      <HighlighterOverlayView
+        highlightViewTag={node}
+        highlightFrame={highlightFrame}
+        visible={visible}
+        overlayColor={overlayColor || defaultOverlayColor}
+        strokeColor={borderColor || defaultStrokeColor}
+        strokeWidth={borderWidth || defaultStrokeWidth}
+      >
         {this.renderHighlightMessage()}
       </HighlighterOverlayView>
     );
@@ -81,8 +185,15 @@ class FeatureHighlight extends BaseComponent {
 const styles = StyleSheet.create({
   highlightContent: {
     position: 'absolute',
-    padding: 14,
+    padding: contentViewPadding,
     alignItems: 'flex-start',
+  },
+  title: {
+    fontWeight: 'bold',
+    marginBottom: titleBottomMargin,
+  },
+  message: {
+    marginBottom: messageBottomMargin,
   },
 });
 
