@@ -10,7 +10,7 @@ import {Constants} from '../../helpers';
 import {HighlighterOverlayView} from '../../nativeComponents';
 
 const defaultOverlayColor = Colors.rgba(Colors.black, 0.82);
-const defaultTextColor = Colors.rgba(Colors.white, 1);
+const defaultTextColor = Colors.white;
 const defaultStrokeColor = Colors.rgba(Colors.white, 0.12);
 const defaultStrokeWidth = 12;
 const contentViewPadding = Constants.isIOS ? 35 : 32;
@@ -19,7 +19,7 @@ const messageBottomMargin = Constants.isIOS ? 30 : 24;
 const defaultButtonLabel = 'Got it';
 
 /**
- * @description: FeatureHighlight component
+ * @description: FeatureHighlight component for feature discovery
  * @extends: HighlighterOverlayView
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.js
  */
@@ -56,7 +56,7 @@ class FeatureHighlight extends BaseComponent {
      */
     confirmButtonProps: PropTypes.object,
     /**
-     * Color of the overlay (usually includes alpha for transparency)
+     * Color of the content's background (usually includes alpha for transparency)
      */
     overlayColor: PropTypes.string,
     /**
@@ -156,7 +156,7 @@ class FeatureHighlight extends BaseComponent {
           label={defaultButtonLabel}
           size="small"
           outline
-          outlineColor={textColor || defaultTextColor}
+          outlineColor={color}
           {...confirmButtonProps}
         />
       </View>
@@ -164,11 +164,12 @@ class FeatureHighlight extends BaseComponent {
   }
 
   render() {
-    const {visible, highlightFrame, overlayColor, borderColor, borderWidth} = this.getThemeProps();
+    const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth} = this.getThemeProps();
     const {node} = this.state;
 
     return (
       <HighlighterOverlayView
+        testID={testID}
         highlightViewTag={node}
         highlightFrame={highlightFrame}
         visible={visible}
