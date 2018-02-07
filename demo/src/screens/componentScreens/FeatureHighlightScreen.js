@@ -6,6 +6,7 @@ class FeatureHighlightScreen extends Component {
   constructor(props) {
     super(props);
     this.closeHighlight = this.closeHighlight.bind(this);
+    this.showHighlight = this.showHighlight.bind(this);
   }
 
   state = {
@@ -16,12 +17,16 @@ class FeatureHighlightScreen extends Component {
     this.setState({showFeatureHighlight: false});
   }
 
+  showHighlight() {
+    this.setState({showFeatureHighlight: true});
+  }
+
   render() {
     const {showFeatureHighlight} = this.state;
     return (
       <View flex center padding-25>
         <View marginT-20>
-          <Button label="Keep Reading"/>
+          <Button label="Show Overlay" onPress={this.showHighlight}/>
         </View>
         <View>
           <Text marginT-20>
