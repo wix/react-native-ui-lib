@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import URL from 'url-parse';
 import Colors from '../style/colors';
 
 function hashStringToNumber(str) {
@@ -39,4 +40,18 @@ export function getInitials(name) {
   }
 
   return _.toUpper(initials);
+}
+
+export function isGravatarUrl(url) {
+  const {hostname, pathname} = new URL(url);
+  return hostname === 'www.gravatar.com' && pathname.startsWith('/avatar/');
+}
+
+export function patchGravatarUrl(gravatarUrl) {
+  const url = new URL(gravatarUrl, true);
+  const {query} = url;
+  query.d = '404';
+  delete query.default;
+  url.set('query', query);
+  return url.toString();
 }

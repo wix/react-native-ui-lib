@@ -1,7 +1,11 @@
-import * as uut from '../../../src/helpers/AvatarHelper';
 import Colors from '../../../src/style/colors';
 
 describe('services/AvatarService', () => {
+  let uut;
+  beforeEach(() => {
+    uut = require('../../../src/helpers/AvatarHelper');
+  });
+
   it('should getAvatarColors', () => {
     const avatarColors = uut.getAvatarColors();
     expect(avatarColors).toEqual([
@@ -46,5 +50,47 @@ describe('services/AvatarService', () => {
     expect(uut.getInitials('Keith')).toBe('K');
     expect(uut.getInitials()).toBe('');
     expect(uut.getInitials(' Austin ')).toBe('A');
+  });
+
+  describe('Is-gravatar query function', () => {
+    it('should return true for a valid gravatar url', () => {
+      expect(uut.isGravatarUrl('https://www.gravatar.com/avatar/00000000000000000000000000000000')).toEqual(true);
+      expect(uut.isGravatarUrl('http://www.gravatar.com/avatar/00000000000000000000000000000000')).toEqual(true);
+    });
+
+    it('should return false for a url with a broken path', () => {
+      expect(uut.isGravatarUrl('https://www.gravatar.com')).toEqual(false);
+    });
+
+    it('should return false for a url with an invalid domain', () => {
+      expect(uut.isGravatarUrl('https://www.gravatar.org/avatar/00000000000000000000000000000000')).toEqual(false);
+    });
+  });
+
+  describe('Patch-fix function', () => {
+    const gravatarUrl = 'https://www.gravatar.com/avatar/00000000000000000000000000000000';
+    it('should be applied for valid gravatar links without a default url-param', () => {
+      expect(uut.patchGravatarUrl(gravatarUrl)).toEqual(`${gravatarUrl}?d=404`);
+    });
+
+    it('should be applied for valid gravatar links with an existing default url-param', () => {
+      const url = `${gravatarUrl}?d=mock`;
+      expect(uut.patchGravatarUrl(url)).toEqual(`${gravatarUrl}?d=404`);
+    });
+
+    it('should be applied for valid gravatar links with an existing default url-param and a hash', () => {
+      const url = `${gravatarUrl}?d=mock#hash-mock`;
+      expect(uut.patchGravatarUrl(url)).toEqual(`${gravatarUrl}?d=404#hash-mock`);
+    });
+
+    it('should be applied for valid gravatar links with both short- and longhand default url-param', () => {
+      const url = `${gravatarUrl}?d=mock&default=mock-long`;
+      expect(uut.patchGravatarUrl(url)).toEqual(`${gravatarUrl}?d=404`);
+    });
+
+    it('should keep existing non-default params', () => {
+      const url = `${gravatarUrl}?d=mock&mock1=param1&mock2=param2`;
+      expect(uut.patchGravatarUrl(url)).toEqual(`${gravatarUrl}?d=404&mock1=param1&mock2=param2`);
+    });
   });
 });
