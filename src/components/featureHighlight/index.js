@@ -77,11 +77,13 @@ class FeatureHighlight extends BaseComponent {
     testID: PropTypes.string,
   };
 
-  state = {};
-
   constructor(props) {
     super(props);
     this.getComponentDimensions = this.getComponentDimensions.bind(this);
+
+    this.state = {
+      ready: false,
+    };
   }
 
   componentDidMount() {
@@ -103,6 +105,7 @@ class FeatureHighlight extends BaseComponent {
           target.measureInWindow((x, y, width, height) => {
             this.setState({
               targetPosition: {left: x, top: y, width, height},
+              ready: true,
             });
           });
         }, 0);
@@ -111,6 +114,7 @@ class FeatureHighlight extends BaseComponent {
         if (frame) {
           this.setState({
             targetPosition: {left: frame.x, top: frame.y, width: frame.width, height: frame.height},
+            ready: true,
           });
         }
       }
@@ -165,14 +169,14 @@ class FeatureHighlight extends BaseComponent {
 
   render() {
     const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth} = this.getThemeProps();
-    const {node} = this.state;
+    const {node, ready} = this.state;
 
     return (
       <HighlighterOverlayView
         testID={testID}
         highlightViewTag={node}
         highlightFrame={highlightFrame}
-        visible={visible}
+        visible={visible && ready}
         overlayColor={overlayColor || defaultOverlayColor}
         strokeColor={borderColor || defaultStrokeColor}
         strokeWidth={borderWidth || defaultStrokeWidth}
