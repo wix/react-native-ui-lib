@@ -53,44 +53,64 @@ describe('services/AvatarService', () => {
   });
 
   describe('Is-gravatar query function', () => {
-    it('should return true for a valid gravatar url', () => {
+    it('should return true for a valid (known) gravatar url', () => {
       expect(uut.isGravatarUrl('https://www.gravatar.com/avatar/00000000000000000000000000000000')).toEqual(true);
       expect(uut.isGravatarUrl('http://www.gravatar.com/avatar/00000000000000000000000000000000')).toEqual(true);
+      expect(uut.isGravatarUrl('http://gravatar.com/avatar/00000000000000000000000000000000')).toEqual(true);
+    });
+
+    it('should return true for a gravatar-ish url', () => {
+      expect(uut.isGravatarUrl('http://gravatar.org/avatar/00000000000000000000000000000000')).toEqual(true);
+      expect(uut.isGravatarUrl('http://gravatar/avatar/00000000000000000000000000000000')).toEqual(true);
     });
 
     it('should return false for a url with a broken path', () => {
       expect(uut.isGravatarUrl('https://www.gravatar.com')).toEqual(false);
     });
 
-    it('should return false for a url with an invalid domain', () => {
-      expect(uut.isGravatarUrl('https://www.gravatar.org/avatar/00000000000000000000000000000000')).toEqual(false);
+    it('should return false for a non-gravatar url', () => {
+      expect(uut.isGravatarUrl('https://www._gravatar.com/avatar/00000000000000000000000000000000')).toEqual(false);
+      expect(uut.isGravatarUrl('https://www.avatar.com/avatar/00000000000000000000000000000000')).toEqual(false);
+      expect(uut.isGravatarUrl('https://www.gravatars.com/avatar/00000000000000000000000000000000')).toEqual(false);
+      expect(uut.isGravatarUrl('https://www.grava.tar/avatar/00000000000000000000000000000000')).toEqual(false);
     });
   });
 
   describe('Patch-fix function', () => {
     const gravatarUrl = 'https://www.gravatar.com/avatar/00000000000000000000000000000000';
+    const shortGravatarUrl = 'https://gravatar.com/avatar/00000000000000000000000000000000';
+
     it('should be applied for valid gravatar links without a default url-param', () => {
       expect(uut.patchGravatarUrl(gravatarUrl)).toEqual(`${gravatarUrl}?d=404`);
+      expect(uut.patchGravatarUrl(shortGravatarUrl)).toEqual(`${shortGravatarUrl}?d=404`);
     });
 
     it('should be applied for valid gravatar links with an existing default url-param', () => {
       const url = `${gravatarUrl}?d=mock`;
+      const urlShort = `${shortGravatarUrl}?d=mock`;
       expect(uut.patchGravatarUrl(url)).toEqual(`${gravatarUrl}?d=404`);
+      expect(uut.patchGravatarUrl(urlShort)).toEqual(`${shortGravatarUrl}?d=404`);
     });
 
     it('should be applied for valid gravatar links with an existing default url-param and a hash', () => {
       const url = `${gravatarUrl}?d=mock#hash-mock`;
+      const urlShort = `${shortGravatarUrl}?d=mock#hash-mock`;
       expect(uut.patchGravatarUrl(url)).toEqual(`${gravatarUrl}?d=404#hash-mock`);
+      expect(uut.patchGravatarUrl(urlShort)).toEqual(`${shortGravatarUrl}?d=404#hash-mock`);
     });
 
     it('should be applied for valid gravatar links with both short- and longhand default url-param', () => {
       const url = `${gravatarUrl}?d=mock&default=mock-long`;
+      const urlShort = `${shortGravatarUrl}?d=mock&default=mock-long`;
       expect(uut.patchGravatarUrl(url)).toEqual(`${gravatarUrl}?d=404`);
+      expect(uut.patchGravatarUrl(urlShort)).toEqual(`${shortGravatarUrl}?d=404`);
     });
 
     it('should keep existing non-default params', () => {
       const url = `${gravatarUrl}?d=mock&mock1=param1&mock2=param2`;
+      const urlShort = `${shortGravatarUrl}?d=mock&mock1=param1&mock2=param2`;
       expect(uut.patchGravatarUrl(url)).toEqual(`${gravatarUrl}?d=404&mock1=param1&mock2=param2`);
+      expect(uut.patchGravatarUrl(urlShort)).toEqual(`${shortGravatarUrl}?d=404&mock1=param1&mock2=param2`);
     });
   });
 });
