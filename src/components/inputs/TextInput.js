@@ -79,7 +79,6 @@ export default class TextInput extends BaseInput {
 
     this.onChangeText = this.onChangeText.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.onContentSizeChange = this.onContentSizeChange.bind(this);
     this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(
       this,
     );
@@ -302,7 +301,6 @@ export default class TextInput extends BaseInput {
         numberOfLines={numberOfLines}
         onChangeText={this.onChangeText}
         onChange={this.onChange}
-        onContentSizeChange={this.onContentSizeChange}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         ref={(input) => {
@@ -368,11 +366,6 @@ export default class TextInput extends BaseInput {
       },
       this.updateFloatingPlaceholderState,
     );
-  }
-
-  onContentSizeChange(event) {
-    this.calcMultilineInputHeight(event);
-    _.invoke(this.props, 'onChange', event);
   }
 
   onChange(event) {
