@@ -44,7 +44,7 @@ export function getInitials(name) {
 
 export function isGravatarUrl(url) {
   const {hostname, pathname} = new URL(url);
-  return hostname === 'www.gravatar.com' && pathname.startsWith('/avatar/');
+  return _.split(hostname, '.').includes('gravatar') && pathname.startsWith('/avatar/');
 }
 
 export function patchGravatarUrl(gravatarUrl) {
