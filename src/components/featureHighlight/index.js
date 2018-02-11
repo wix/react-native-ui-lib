@@ -161,6 +161,7 @@ class FeatureHighlight extends BaseComponent {
           size="small"
           outline
           outlineColor={color}
+          activeBackgroundColor={Colors.rgba(color, 0.3)}
           {...confirmButtonProps}
         />
       </View>
