@@ -243,7 +243,7 @@ function createStyles({size, labelColor, imageSource}) {
       width: 13.5,
       padding: 1.5,
       borderRadius: 999,
-      backgroundColor: imageSource ? Colors.white : 'transparent',
+      backgroundColor: Colors.white,
       position: 'absolute',
       right: imageSource ? -1.5 : 0,
       top: 4.5,
