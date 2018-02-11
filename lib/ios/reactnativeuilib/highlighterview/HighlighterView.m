@@ -24,8 +24,8 @@
         _viewBasedHighlightFrame = CGRectNull;
         self.backgroundColor = [UIColor clearColor];
         self.overlayColor = kDefaultOverlayColor;
-        self.minimumRectSize = CGSizeMake(56, 56);
-        self.innerPadding = 10;
+        self.minimumRectSize = CGSizeZero;
+        self.innerPadding = 0;
     }
     return self;
 }
@@ -146,6 +146,18 @@
 -(void)setOverlayColor:(UIColor *)overlayColor
 {
     _overlayColor = overlayColor;
+    [self setNeedsDisplay];
+}
+
+-(void)setMinimumRectSize:(CGSize)minimumRectSize
+{
+    _minimumRectSize = minimumRectSize;
+    [self setNeedsDisplay];
+}
+
+-(void)setInnerPadding:(CGFloat)innerPadding
+{
+    _innerPadding = innerPadding;
     [self setNeedsDisplay];
 }
 

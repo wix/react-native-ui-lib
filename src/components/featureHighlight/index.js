@@ -181,6 +181,8 @@ class FeatureHighlight extends BaseComponent {
         overlayColor={overlayColor || defaultOverlayColor}
         strokeColor={borderColor || defaultStrokeColor}
         strokeWidth={borderWidth || defaultStrokeWidth}
+        minimumRectSize={{width: 56, height: 56}}
+        innerPadding={10}
       >
         {this.renderHighlightMessage()}
       </HighlighterOverlayView>
