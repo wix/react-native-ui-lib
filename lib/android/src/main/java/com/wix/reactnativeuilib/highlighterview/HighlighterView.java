@@ -124,7 +124,7 @@ public class HighlighterView extends View {
                 paint.setXfermode(null);
                 paint.setColor(strokeColor);
                 paint.setStrokeWidth(strokeWidth);
-                paint.setStyle(Paint.Style.STROKE);
+                paint.setStyle(Paint.Style.FILL_AND_STROKE);
                 canvas.drawRoundRect(rect, radius, radius, paint);
             }
         }
