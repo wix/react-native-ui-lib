@@ -12,5 +12,8 @@
 @property (nonatomic, strong) NSNumber *strokeWidth;
 @property (nonatomic, strong) NSNumber *highlightViewTag;
 @property (nonatomic, strong) NSDictionary *highlightViewTagParams;
+@property (nonatomic) CGSize minimumRectSize;
+@property (nonatomic) CGFloat innerPadding;
+
 
 @end

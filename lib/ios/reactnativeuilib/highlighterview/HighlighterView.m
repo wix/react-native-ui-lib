@@ -24,6 +24,8 @@
         _viewBasedHighlightFrame = CGRectNull;
         self.backgroundColor = [UIColor clearColor];
         self.overlayColor = kDefaultOverlayColor;
+        self.minimumRectSize = CGSizeMake(56, 56);
+        self.innerPadding = 10;
     }
     return self;
 }
@@ -38,11 +40,26 @@
     return !CGRectIsNull(frame) && frame.size.width > 0 && frame.size.height > 0;
 }
 
+-(CGRect)adjustFrame:(CGRect)frame {
+    CGFloat x = frame.origin.x;
+    CGFloat y = frame.origin.y;
+    CGFloat width = frame.size.width + self.innerPadding * 2;
+    CGFloat height = frame.size.height + self.innerPadding * 2;
+    
+    width = width < self.minimumRectSize.width ? self.minimumRectSize.width : width;
+    height = height < self.minimumRectSize.height ? self.minimumRectSize.height : height;
+    x = x - ((width - frame.size.width) / 2);
+    y = y - ((height - frame.size.height) / 2);
+    
+    return CGRectMake(x, y, width, height);
+}
+
 -(CGRect)getHighlightRect
 {
     CGRect highlightRect = self.highlightFrame;
     if ([self isFrameValid:_viewBasedHighlightFrame]) {
-        highlightRect = _viewBasedHighlightFrame;
+//        highlightRect = _viewBasedHighlightFrame;
+        highlightRect = [self adjustFrame: _viewBasedHighlightFrame];
         if (_highlightViewTagParams != nil) {
             id padding = _highlightViewTagParams[@"padding"];
             if (padding != nil) {
