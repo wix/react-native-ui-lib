@@ -45,7 +45,9 @@ export default class HighlightOverlayViewScreen extends PureComponent {
   render() {
     return (
       <View flex center>
-        <Text ref={this.onRefUpdated}>{'Highlight Me'}</Text>
+        <View collapsable={false} ref={this.onRefUpdated}>
+          <Text>{'Highlight Me'}</Text>
+        </View>
         {this.renderHighlighterOverlay()}
       </View>
     );

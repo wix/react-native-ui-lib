@@ -79,42 +79,36 @@ class FeatureHighlight extends BaseComponent {
 
   constructor(props) {
     super(props);
+
     this.getComponentDimensions = this.getComponentDimensions.bind(this);
-
-    this.state = {
-      ready: false,
-    };
-  }
-
-  componentDidMount() {
-    this.findTargetsNodes();
   }
 
   componentWillReceiveProps(nextProps) {
-    this.findTargetsNodes(nextProps);
+    this.setTargetPosition(nextProps);
   }
 
-  findTargetsNodes(props = this.props) {
+  setTargetPosition(props = this.props) {
     if (!this.state.node) {
       if (props.getTarget !== undefined) {
         const target = props.getTarget();
+
         const node = findNodeHandle(target);
         this.setState({node});
 
-        setTimeout(() => {
-          target.measureInWindow((x, y, width, height) => {
-            this.setState({
-              targetPosition: {left: x, top: y, width, height},
-              ready: true,
+        if (target) {
+          setTimeout(() => {
+            target.measureInWindow((x, y, width, height) => {
+              this.setState({
+                targetPosition: {left: x, top: y, width, height},
+              });
             });
-          });
-        }, 0);
+          }, 0);
+        }
       } else {
         const frame = props.highlightFrame;
         if (frame) {
           this.setState({
             targetPosition: {left: frame.x, top: frame.y, width: frame.width, height: frame.height},
-            ready: true,
           });
         }
       }
@@ -170,14 +164,14 @@ class FeatureHighlight extends BaseComponent {
 
   render() {
     const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth} = this.getThemeProps();
-    const {node, ready} = this.state;
+    const {node} = this.state;
 
     return (
       <HighlighterOverlayView
         testID={testID}
         highlightViewTag={node}
         highlightFrame={highlightFrame}
-        visible={visible && ready}
+        visible={visible}
         overlayColor={overlayColor || defaultOverlayColor}
         strokeColor={borderColor || defaultStrokeColor}
         strokeWidth={borderWidth || defaultStrokeWidth}
