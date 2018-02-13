@@ -20,12 +20,14 @@ const titleBottomMargin = Constants.isIOS ? 15 : 12;
 const messageBottomMargin = Constants.isIOS ? 30 : 24;
 const defaultButtonLabel = 'Got it';
 
+/*eslint-disable*/
 /**
  * @description: FeatureHighlight component for feature discovery
  * @notes: 1) FeatureHighlight component must be a direct child of the root view returned in render()., 2) If the element to be highlighted doesn't have a style attribute add 'style={{opacity: 1}}' so the Android OS can detect it.
  * @extends: HighlighterOverlayView
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.js
  */
+/*eslint-enable*/
 class FeatureHighlight extends BaseComponent {
   static displayName = 'FeatureHighlight';
   static propTypes = {
