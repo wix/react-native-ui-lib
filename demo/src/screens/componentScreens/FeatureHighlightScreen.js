@@ -55,10 +55,9 @@ class FeatureHighlightScreen extends Component {
     return (
       <View flex>
         <View row flex>
-          <View bg-green10 style={{height: 47}}/>
           <View left>
-            <View marginT-40 bg-yellow10 style={{width: 32, height: 32}}/>
-            <View marginT-40 bg-red10 style={{width: 12, height: 12}}/>
+            <View marginT-40 br100 bg-yellow10 style={{width: 32, height: 32}}/>
+            <View marginT-40 bg-red10 style={{width: 12, height: 12}} ref={r => (this.target = r)}/>
           </View>
           <View right flex>
             <View row flex>
@@ -82,7 +81,7 @@ class FeatureHighlightScreen extends Component {
               into electronic typesetting, <Text>remaining</Text> essentially unchanged.
             </Text>
           </View>
-          <View marginT-20 ref={r => (this.target = r)} style={{opacity: 1}}>
+          <View marginT-20>
             <Button label="Show Overlay" onPress={this.showHighlight}/>
           </View>
         </View>

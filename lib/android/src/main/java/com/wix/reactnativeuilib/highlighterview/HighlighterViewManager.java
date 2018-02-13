@@ -1,8 +1,10 @@
 package com.wix.reactnativeuilib.highlighterview;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Rect;
 import android.util.Log;
+import android.util.SizeF;
 import android.view.View;
 
 import com.facebook.react.bridge.ReadableMap;
@@ -54,6 +56,19 @@ class HighlighterViewManager extends SimpleViewManager<HighlighterView> {
     @ReactProp(name = "strokeWidth")
     public void setStrokeWidth(HighlighterView view, @Nullable Integer strokeWidth) {
         view.setStrokeWidth((strokeWidth == null) ? 0 : strokeWidth);
+    }
+
+    @TargetApi(21)
+    @ReactProp(name = "minimumRectSize")
+    public void setMinimumRectSize(HighlighterView view, ReadableMap minimumRectSize) {
+        float width = (float) minimumRectSize.getDouble("width");
+        float height = (float) minimumRectSize.getDouble("height");
+        view.setMinimumRectSize(new SizeF(width, height));
+    }
+
+    @ReactProp(name = "innerPadding")
+    public void setInnerPadding(HighlighterView view, @Nullable Integer innerPadding) {
+        view.setInnerPadding((innerPadding == null) ? 0 : innerPadding);
     }
 
     @ReactProp(name = "highlightViewTag")

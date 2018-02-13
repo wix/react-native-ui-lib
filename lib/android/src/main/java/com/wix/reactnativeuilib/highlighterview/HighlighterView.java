@@ -1,5 +1,6 @@
 package com.wix.reactnativeuilib.highlighterview;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -8,6 +9,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.support.annotation.ColorInt;
 import android.view.View;
+import android.util.SizeF;
 
 public class HighlighterView extends View {
     private RectF highlightFrame;
@@ -18,6 +20,8 @@ public class HighlighterView extends View {
     private float strokeWidth;
     private float borderRadius = -1;
     private float radius;
+    private SizeF minimumRectSize;
+    private float innerPadding;
 
     private static final PorterDuffXfermode porterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
     private static final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -30,6 +34,7 @@ public class HighlighterView extends View {
     private RectF rectToDraw() {
         if (viewBasedHighlightFrame != null && viewBasedHighlightFrame.width() > 0 && viewBasedHighlightFrame.height() > 0) {
             if (highlightViewTagParams == null) {
+                viewBasedHighlightFrame = adjustFrame(viewBasedHighlightFrame);
                 return viewBasedHighlightFrame;
             }
 
@@ -106,6 +111,37 @@ public class HighlighterView extends View {
         invalidate();
     }
 
+    @TargetApi(21)
+    public void setMinimumRectSize(SizeF minimumRectSize) {
+        float width = UiUtils.pxToDp(getResources(), minimumRectSize.getWidth());
+        float height = UiUtils.pxToDp(getResources(), minimumRectSize.getHeight());
+        this.minimumRectSize = new SizeF(width, height);
+        invalidate();
+    }
+
+    public void setInnerPadding(int innerPadding) {
+        this.innerPadding = innerPadding;
+        invalidate();
+    }
+
+    @TargetApi(21)
+    public RectF adjustFrame(RectF frame) {
+        float x = frame.left;
+        float y = frame.top;
+        float fWidth = frame.right - frame.left;
+        float fHeight = frame.bottom - frame.top;
+        float width = fWidth + (innerPadding * 2);
+        float height = fHeight + (innerPadding * 2);
+
+        width = width < minimumRectSize.getWidth() ? minimumRectSize.getWidth() : width;
+        height = height < minimumRectSize.getHeight() ? minimumRectSize.getHeight() : height;
+
+        x = x - ((width - fWidth) / 2);
+        y = y - ((height - fHeight) / 2);
+
+        return new RectF(x, y, x + width, y + height); // float left, float top, float right, float bottom
+    }
+
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -115,6 +151,7 @@ public class HighlighterView extends View {
         canvas.drawPaint(paint);
 
         RectF rect = rectToDraw();
+
         if(rect != null) {
             paint.setXfermode(porterDuffXfermode);
 
@@ -124,7 +161,7 @@ public class HighlighterView extends View {
                 paint.setXfermode(null);
                 paint.setColor(strokeColor);
                 paint.setStrokeWidth(strokeWidth);
-                paint.setStyle(Paint.Style.FILL_AND_STROKE);
+                paint.setStyle(Paint.Style.STROKE); // FILL_AND_STROKE
                 canvas.drawRoundRect(rect, radius, radius, paint);
             }
         }

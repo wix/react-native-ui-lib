@@ -75,14 +75,14 @@ class FeatureHighlight extends BaseComponent {
      */
     borderWidth: PropTypes.number,
     /**
-     * The minimum size of the highlighted component
+     * The minimum size of the highlighted component (Android API 21+)
      */
     minimumRectSize: PropTypes.shape({
       width: PropTypes.number,
       height: PropTypes.number,
     }),
     /**
-     * The padding of the highlight frame related to the highlighted element's frame
+     * Integer to represent the padding of the highlight frame related to the highlighted element's frame
      */
     innerPadding: PropTypes.number,
     /**
