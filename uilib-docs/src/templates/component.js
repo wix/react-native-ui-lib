@@ -86,6 +86,14 @@ export default class ComponentTemplate extends Component {
     }
   }
 
+  renderNote(note, index) {
+    return <div key={index} alt={''} style={{marginBottom: 10}}>{note}</div>;
+  }
+
+  renderNotes(notes) {
+    return notes.map(this.renderNote);
+  }
+
   render() {
     const {pathContext} = this.props;
     const selectedComponent = pathContext.component;
@@ -93,6 +101,9 @@ export default class ComponentTemplate extends Component {
     const componentProps = _.get(selectedComponent, 'props');
     const gifs = componentInfo.gif ? componentInfo.gif.split(',') : undefined;
     const imgs = componentInfo.image ? componentInfo.image.split(',') : undefined;
+    console.log('INBAL: ', componentInfo.notes);
+    const notes = componentInfo.notes ? componentInfo.notes.split(',') : undefined;
+
 
     return (
       <div className="docs-page">
@@ -111,6 +122,12 @@ export default class ComponentTemplate extends Component {
                 Supported modifiers: <b>{componentInfo.modifiers}</b>. <br />
                 Read more about modifiers <Link to="/modifiers/">here</Link>.
               </p>
+            </div>
+          )}
+          {componentInfo.notes && (
+            <div>
+              <h4 style={{marginBottom: 10}}>NOTES</h4>
+              {this.renderNotes(notes)}
             </div>
           )}
           {componentProps.length > 0 && (
