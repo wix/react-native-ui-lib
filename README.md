@@ -32,7 +32,7 @@ This is a quick example of how to use our basic components, modifiers and preset
 
 <img style="float: right; margin-top: -70px" src="https://cloud.githubusercontent.com/assets/1780255/24791489/f5db80f4-1b82-11e7-8538-5a3388fb4345.png" width=300 />
 
-```js
+```jsx
 import React, {Component} from 'react';
 import {View, TextInput, Text, Button} from 'react-native-ui-lib';
 
@@ -66,7 +66,7 @@ You can easily use it anywhere in your code as you would have used any other con
 
 It's also very easy to define your own presets..
 
-```js
+```jsx
 import {Typography, Colors} from 'react-native-ui-lib';
 
 Colors.loadColors({
@@ -82,7 +82,7 @@ Typography.loadTypographies({
 
 and so for example, the following line
 
-```js
+```jsx
 <Text h1 pink>Hello World</Text>
 ```
 Will generate this text
@@ -98,7 +98,7 @@ As you probably noticed already, we translate our style presets into modifiers.
 Use our alignment props to quickly position your content without getting confused calculating all these flex rules.
 **left**, **top**, **right**, **bottom**, **row**, **center**, **centerH (Horizontal Center)**, **centerV (Vertical Center)**, **spread**
 
-```js
+```jsx
 <View left>
   <Button label="Button">
 </View>
@@ -132,7 +132,7 @@ Same goes here... space, stretch and color in a more readable way.
 `<Text h1>...</Text>`
 
 - **flex**, **flex-[value]**
-```js
+```jsx
 <View flex> // be default is flex=1
   <View flex-2/>
   <View flex-3/>
@@ -152,7 +152,7 @@ Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where
 Assets are big part of the whole UI system, whether it's an icon, placeholder or an illustration, we use them everywhere. <br>
 Load assets groups and easily render them with the _Image_ component.
 
-```
+```jsx
 import {Assets, Image} from 'react-native-ui-lib';
 
 Assets.loadAssetsGroup('icons', {
@@ -203,7 +203,7 @@ Assets.loadAssetsGroup('illustrations.emptyStates.', {
 
 #### Card
 
-```js
+```jsx
 import {Card} from 'react-native-ui-lib';
 
 <Card
@@ -224,7 +224,7 @@ import {Card} from 'react-native-ui-lib';
 
 #### Masked Input
 
-```js
+```jsx
 import {MaskedInput} from 'react-native-ui-lib';
 
 <MaskedInput
@@ -253,7 +253,7 @@ renderTimeText(value) {
 ![Masked Input](https://media.giphy.com/media/KZZtFfoHoEK3K/giphy.gif)
 
 #### Tags Input
-```js
+```jsx
 import {TagsInput} from 'react-native-ui-lib';
 
 <TagsInput
@@ -310,7 +310,7 @@ protected List<ReactPackage> getPackages() {
 ### AvatarHelpers
 #### getInitials
 usage:
-```js
+```jsx
 import {AvatarHelper} from 'react-native-ui-lib';
 
 AvatarHelper.getInitials('Lilly Wheeler'); // LW
@@ -321,7 +321,7 @@ AvatarHelper.getInitials('Andrew'); // A
 ### Colors
 #### rgba
 usage:
-```js
+```jsx
 import {Colors} from 'react-native-ui-lib';
 
 Colors.rgba('#ff2442', 0.05); // 'rgb(255, 36, 66, 0.05)'
