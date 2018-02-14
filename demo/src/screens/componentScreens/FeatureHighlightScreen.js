@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ReactNative from 'react-native';
 import {Constants, View, Text, Button, Image, FeatureHighlight} from 'react-native-ui-lib'; // eslint-disable-line
 
 class FeatureHighlightScreen extends Component {
@@ -8,23 +7,14 @@ class FeatureHighlightScreen extends Component {
     super(props);
     this.closeHighlight = this.closeHighlight.bind(this);
     this.showHighlight = this.showHighlight.bind(this);
-    this.onRefUpdated = this.onRefUpdated.bind(this);
 
     this.state = {
       showFTE: false,
-      fteHighlightViewTag: undefined,
     };
   }
 
   componentDidMount() {
     this.showHighlight();
-  }
-
-  onRefUpdated(ref) {
-    if (ref) {
-      this.setState({fteHighlightViewTag: ReactNative.findNodeHandle(ref)});
-      this.target = ref;
-    }
   }
 
   closeHighlight() {
