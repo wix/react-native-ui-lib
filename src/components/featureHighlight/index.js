@@ -23,8 +23,11 @@ const defaultButtonLabel = 'Got it';
 /*eslint-disable*/
 /**
  * @description: FeatureHighlight component for feature discovery
- * @notes: 1) FeatureHighlight component must be a direct child of the root view returned in render()., 2) If the element to be highlighted doesn't have a style attribute add 'style={{opacity: 1}}' so the Android OS can detect it.
  * @extends: HighlighterOverlayView
+ * @extendslink: docs/HighlighterOverlayView
+ * @notes: 1) The component MUST be a direct child of the root view returned in render()., 2) If the element to be highlighted doesn't have a style attribute add 'style={{opacity: 1}}' so the Android OS can detect it.
+ * @extends: HighlighterOverlayView
+ * @gif: https://media.giphy.com/media/3ohs4D5irZm5GojsDS/giphy.gif, https://media.giphy.com/media/3oxQNaDQckPZI78rWo/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.js
  */
 /*eslint-enable*/
@@ -77,14 +80,14 @@ class FeatureHighlight extends BaseComponent {
      */
     borderWidth: PropTypes.number,
     /**
-     * The minimum size of the highlighted component (Android API 21+)
+     * The minimum size of the highlighted component (Android API 21+, and only when passing a ref in 'getTarget')
      */
     minimumRectSize: PropTypes.shape({
       width: PropTypes.number,
       height: PropTypes.number,
     }),
     /**
-     * Integer to represent the padding of the highlight frame related to the highlighted element's frame
+     * The padding of the highlight frame around the highlighted element's frame (only when passing ref in 'getTarget')
      */
     innerPadding: PropTypes.number,
     /**
