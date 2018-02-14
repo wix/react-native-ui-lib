@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, findNodeHandle} from 'react-native';
+import {StyleSheet, findNodeHandle, TouchableWithoutFeedback} from 'react-native';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
@@ -182,9 +182,10 @@ class FeatureHighlight extends BaseComponent {
   }
 
   render() {
-    const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding}
-    = this.getThemeProps();
+    const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding,
+      confirmButtonProps} = this.getThemeProps();
     const {node} = this.state;
+    const {onPress} = confirmButtonProps;
 
     return (
       <HighlighterOverlayView
@@ -198,7 +199,9 @@ class FeatureHighlight extends BaseComponent {
         minimumRectSize={minimumRectSize || defaultMinimumRectSize}
         innerPadding={innerPadding || defaultInnerPadding}
       >
-        {this.renderHighlightMessage()}
+        <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onPress}>
+          {this.renderHighlightMessage()}
+        </TouchableWithoutFeedback>
       </HighlighterOverlayView>
     );
   }
@@ -216,6 +219,9 @@ const styles = StyleSheet.create({
   },
   message: {
     marginBottom: messageBottomMargin,
+  },
+  touchableOverlay: {
+    flex: 1,
   },
 });
 
