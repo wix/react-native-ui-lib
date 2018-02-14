@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, findNodeHandle} from 'react-native';
+import {StyleSheet, findNodeHandle, TouchableWithoutFeedback} from 'react-native';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
@@ -25,6 +25,10 @@ const defaultButtonLabel = 'Got it';
  * @description: FeatureHighlight component for feature discovery
  * @notes: 1) FeatureHighlight component must be a direct child of the root view returned in render()., 2) If the element to be highlighted doesn't have a style attribute add 'style={{opacity: 1}}' so the Android OS can detect it.
  * @extends: HighlighterOverlayView
+ * @extendslink: docs/HighlighterOverlayView
+ * @notes: 1) The component MUST be a direct child of the root view returned in render()., 2) If the element to be highlighted doesn't have a style attribute add 'style={{opacity: 1}}' so the Android OS can detect it.
+ * @extends: HighlighterOverlayView
+ * @gif: https://media.giphy.com/media/3ohs4D5irZm5GojsDS/giphy.gif, https://media.giphy.com/media/3oxQNaDQckPZI78rWo/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.js
  */
 /*eslint-enable*/
@@ -77,14 +81,14 @@ class FeatureHighlight extends BaseComponent {
      */
     borderWidth: PropTypes.number,
     /**
-     * The minimum size of the highlighted component (Android API 21+)
+     * The minimum size of the highlighted component (Android API 21+, and only when passing a ref in 'getTarget')
      */
     minimumRectSize: PropTypes.shape({
       width: PropTypes.number,
       height: PropTypes.number,
     }),
     /**
-     * Integer to represent the padding of the highlight frame related to the highlighted element's frame
+     * The padding of the highlight frame around the highlighted element's frame (only when passing ref in 'getTarget')
      */
     innerPadding: PropTypes.number,
     /**
@@ -179,9 +183,10 @@ class FeatureHighlight extends BaseComponent {
   }
 
   render() {
-    const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding}
-    = this.getThemeProps();
+    const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding,
+      confirmButtonProps} = this.getThemeProps();
     const {node} = this.state;
+    const {onPress} = confirmButtonProps;
 
     return (
       <HighlighterOverlayView
@@ -195,7 +200,9 @@ class FeatureHighlight extends BaseComponent {
         minimumRectSize={minimumRectSize || defaultMinimumRectSize}
         innerPadding={innerPadding || defaultInnerPadding}
       >
-        {this.renderHighlightMessage()}
+        <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onPress}>
+          {this.renderHighlightMessage()}
+        </TouchableWithoutFeedback>
       </HighlighterOverlayView>
     );
   }
@@ -213,6 +220,9 @@ const styles = StyleSheet.create({
   },
   message: {
     marginBottom: messageBottomMargin,
+  },
+  touchableOverlay: {
+    flex: 1,
   },
 });
 
