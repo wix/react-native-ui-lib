@@ -13,16 +13,21 @@ const defaultOverlayColor = Colors.rgba(Colors.black, 0.82);
 const defaultTextColor = Colors.white;
 const defaultStrokeColor = Colors.rgba(Colors.white, 0.12);
 const defaultStrokeWidth = 12;
+const defaultMinimumRectSize = {width: 56, height: 56};
+const defaultInnerPadding = 10;
 const contentViewPadding = Constants.isIOS ? 35 : 32;
 const titleBottomMargin = Constants.isIOS ? 15 : 12;
 const messageBottomMargin = Constants.isIOS ? 30 : 24;
 const defaultButtonLabel = 'Got it';
 
+/*eslint-disable*/
 /**
  * @description: FeatureHighlight component for feature discovery
+ * @notes: 1) FeatureHighlight component must be a direct child of the root view returned in render()., 2) If the element to be highlighted doesn't have a style attribute add 'style={{opacity: 1}}' so the Android OS can detect it.
  * @extends: HighlighterOverlayView
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.js
  */
+/*eslint-enable*/
 class FeatureHighlight extends BaseComponent {
   static displayName = 'FeatureHighlight';
   static propTypes = {
@@ -72,6 +77,17 @@ class FeatureHighlight extends BaseComponent {
      */
     borderWidth: PropTypes.number,
     /**
+     * The minimum size of the highlighted component (Android API 21+)
+     */
+    minimumRectSize: PropTypes.shape({
+      width: PropTypes.number,
+      height: PropTypes.number,
+    }),
+    /**
+     * Integer to represent the padding of the highlight frame related to the highlighted element's frame
+     */
+    innerPadding: PropTypes.number,
+    /**
      * Use to identify the component in tests
      */
     testID: PropTypes.string,
@@ -79,42 +95,36 @@ class FeatureHighlight extends BaseComponent {
 
   constructor(props) {
     super(props);
+
     this.getComponentDimensions = this.getComponentDimensions.bind(this);
-
-    this.state = {
-      ready: false,
-    };
-  }
-
-  componentDidMount() {
-    this.findTargetsNodes();
   }
 
   componentWillReceiveProps(nextProps) {
-    this.findTargetsNodes(nextProps);
+    this.setTargetPosition(nextProps);
   }
 
-  findTargetsNodes(props = this.props) {
+  setTargetPosition(props = this.props) {
     if (!this.state.node) {
       if (props.getTarget !== undefined) {
         const target = props.getTarget();
+
         const node = findNodeHandle(target);
         this.setState({node});
 
-        setTimeout(() => {
-          target.measureInWindow((x, y, width, height) => {
-            this.setState({
-              targetPosition: {left: x, top: y, width, height},
-              ready: true,
+        if (target) {
+          setTimeout(() => {
+            target.measureInWindow((x, y, width, height) => {
+              this.setState({
+                targetPosition: {left: x, top: y, width, height},
+              });
             });
-          });
-        }, 0);
+          }, 0);
+        }
       } else {
         const frame = props.highlightFrame;
         if (frame) {
           this.setState({
             targetPosition: {left: frame.x, top: frame.y, width: frame.width, height: frame.height},
-            ready: true,
           });
         }
       }
@@ -161,6 +171,7 @@ class FeatureHighlight extends BaseComponent {
           size="small"
           outline
           outlineColor={color}
+          activeBackgroundColor={Colors.rgba(color, 0.3)}
           {...confirmButtonProps}
         />
       </View>
@@ -168,18 +179,21 @@ class FeatureHighlight extends BaseComponent {
   }
 
   render() {
-    const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth} = this.getThemeProps();
-    const {node, ready} = this.state;
+    const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding}
+    = this.getThemeProps();
+    const {node} = this.state;
 
     return (
       <HighlighterOverlayView
         testID={testID}
         highlightViewTag={node}
         highlightFrame={highlightFrame}
-        visible={visible && ready}
+        visible={visible}
         overlayColor={overlayColor || defaultOverlayColor}
         strokeColor={borderColor || defaultStrokeColor}
         strokeWidth={borderWidth || defaultStrokeWidth}
+        minimumRectSize={minimumRectSize || defaultMinimumRectSize}
+        innerPadding={innerPadding || defaultInnerPadding}
       >
         {this.renderHighlightMessage()}
       </HighlighterOverlayView>

@@ -21,5 +21,8 @@ RCT_REMAP_VIEW_PROPERTY(overlayColor, overlayColor, UIColor)
 RCT_REMAP_VIEW_PROPERTY(borderRadius, borderRadius, NSNumber)
 RCT_REMAP_VIEW_PROPERTY(strokeColor, strokeColor, UIColor)
 RCT_REMAP_VIEW_PROPERTY(strokeWidth, strokeWidth, NSNumber)
+RCT_REMAP_VIEW_PROPERTY(minimumRectSize, minimumRectSize, CGSize)
+RCT_REMAP_VIEW_PROPERTY(innerPadding, innerPadding, CGFloat)
+
 
 @end
