@@ -189,7 +189,7 @@ class FeatureHighlight extends BaseComponent {
   render() {
     const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding,
       confirmButtonProps} = this.getThemeProps();
-    const {node} = this.state;
+    const {node, targetPosition} = this.state;
     const {onPress} = confirmButtonProps;
 
     return (
@@ -204,9 +204,11 @@ class FeatureHighlight extends BaseComponent {
         minimumRectSize={minimumRectSize || defaultMinimumRectSize}
         innerPadding={innerPadding || defaultInnerPadding}
       >
+        {targetPosition && (
         <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onPress}>
           {this.renderHighlightMessage()}
         </TouchableWithoutFeedback>
+        )}
       </HighlighterOverlayView>
     );
   }
