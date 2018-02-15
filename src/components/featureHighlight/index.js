@@ -107,12 +107,16 @@ class FeatureHighlight extends BaseComponent {
     this.setTargetPosition(nextProps);
   }
 
+  findTargetNode(target) {
+    return findNodeHandle(target);
+  }
+
   setTargetPosition(props = this.props) {
     if (!this.state.node) {
       if (props.getTarget !== undefined) {
         const target = props.getTarget();
 
-        const node = findNodeHandle(target);
+        const node = this.findTargetNode(target);
         this.setState({node});
 
         if (target) {
