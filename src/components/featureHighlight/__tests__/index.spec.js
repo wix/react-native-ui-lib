@@ -18,12 +18,20 @@ describe('FeatureHighlight', () => {
       expect(uut.getContentPositionStyle()).toEqual({top: 300});
     });
     it('massage should be placed below element positioned above screen\'s vertical center', () => {
-      const uut = new FeatureHighlight({});
+      const uut = new FeatureHighlight({minimumRectSize: {width: 56, height: 56}, innerPadding: 10});
+      uut.state = {
+        targetPosition: {left: 0, top: 200, width: 20, height: 20},
+        contentViewHeight: 200,
+      };
+      expect(uut.getContentPositionStyle()).toEqual({top: 243});
+    });
+    it('massage should be placed below element positioned above screen\'s vertical center', () => {
+      const uut = new FeatureHighlight({minimumRectSize: {width: 56, height: 56}, innerPadding: 10});
       uut.state = {
         targetPosition: {left: 0, top: 200, width: 80, height: 80},
         contentViewHeight: 200,
       };
-      expect(uut.getContentPositionStyle()).toEqual({top: 280});
+      expect(uut.getContentPositionStyle()).toEqual({top: 290});
     });
   });
 
