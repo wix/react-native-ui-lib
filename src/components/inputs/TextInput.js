@@ -83,7 +83,7 @@ export default class TextInput extends BaseInput {
     placeholderTextColor: Colors.dark40,
     floatingPlaceholderColor: Colors.dark40,
     enableErrors: true,
-    titleColor: Colors.blue30,
+    titleColor: Colors.dark40,
   };
 
   constructor(props) {
