@@ -17,7 +17,7 @@ const contentViewPadding = Constants.isIOS ? 35 : 32;
 const contentViewRightMargin = Constants.isIOS ? 45 : 46;
 const titleBottomMargin = Constants.isIOS ? 15 : 12;
 const messageBottomMargin = Constants.isIOS ? 30 : 24;
-const messageLineHeight = Constants.isIOS ? 24 : 26;
+const messageLineHeight = 22;
 const defaultButtonLabel = 'Got it';
 
 /*eslint-disable*/
@@ -155,11 +155,18 @@ class FeatureHighlight extends BaseComponent {
   }
 
   getContentPositionStyle() {
+    const {highlightFrame, minimumRectSize, innerPadding} = this.props;
     const {targetPosition, contentViewHeight} = this.state;
     const {top, height} = targetPosition || {};
     const screenVerticalCenter = Constants.screenHeight / 2;
     const targetCenter = top + (height / 2);
-    const topPosition = (targetCenter > screenVerticalCenter) ? top - contentViewHeight : top + height;
+    const isAlignedTop = targetCenter > screenVerticalCenter;
+    let topPosition = isAlignedTop ? top - contentViewHeight : top + height;
+    if (!highlightFrame && !isAlignedTop) {
+      const minRectHeight = minimumRectSize.height;
+      const isUnderMin = height >= minRectHeight;
+      topPosition = isUnderMin ? topPosition + innerPadding : targetCenter + (minRectHeight / 2) + (innerPadding / 2);
+    }
     if (topPosition < 0 || topPosition + contentViewHeight > Constants.screenHeight) {
       console.warn('Content is too long and might appear off screen. ' +
         'Please adjust the message length for better results.');
