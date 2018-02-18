@@ -74,6 +74,10 @@ export default class TextInput extends BaseInput {
      */
     titleColor: PropTypes.string,
     /**
+     * Limits the maximum number of characters that can be entered
+     */
+    maxLength: PropTypes.number,
+    /**
      * Use to identify the component in tests
      */
     testId: PropTypes.string,
@@ -175,10 +179,6 @@ export default class TextInput extends BaseInput {
     return typography.lineHeight;
   }
 
-  capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
     const {
@@ -226,19 +226,32 @@ export default class TextInput extends BaseInput {
   }
 
   renderTitle() {
-    const {floatingPlaceholder, title, titleColor} = this.props;
-
+    const {floatingPlaceholder, title} = this.props;
     if (!floatingPlaceholder && title) {
-      const marginBottom = Constants.isIOS ? 5 : 4;
-      const titleFontSize = 13;
-      const capitalizedTitle = this.capitalize(title);
-
+      const capitalizedTitle = _.capitalize(title);
       return (
         <Text
-          style={{top: 0, color: titleColor, marginBottom}}
-          fontSize={titleFontSize}
+          style={this.styles.title}
+          text90
         >
           {capitalizedTitle}
+        </Text>
+      );
+    }
+  }
+
+  renderCharCounter() {
+    const {maxLength} = this.props;
+    if (maxLength) {
+      const {value} = this.state || '';
+      const counter = value !== undefined ? value.length : 0;
+      const color = maxLength === counter ? Colors.red30 : Colors.dark40;
+      return (
+        <Text
+          style={{color}}
+          text90
+        >
+          {counter} / {maxLength}
         </Text>
       );
     }
@@ -357,7 +370,12 @@ export default class TextInput extends BaseInput {
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
           {this.renderExpandableModal()}
         </View>
-        {this.renderError()}
+        <View row flex>
+          <View flex-1>
+            {this.renderError()}
+          </View>
+          {this.renderCharCounter()}
+        </View>
       </View>
     );
   }
@@ -432,6 +450,7 @@ function createStyles({
   hideUnderline,
   centered,
   floatingPlaceholder,
+  titleColor,
 }) {
   return StyleSheet.create({
     container: {
@@ -477,6 +496,11 @@ function createStyles({
       flex: 1,
       paddingTop: 15,
       paddingHorizontal: 20,
+    },
+    title: {
+      top: 0,
+      color: titleColor,
+      marginBottom: Constants.isIOS ? 5 : 4,
     },
   });
 }
