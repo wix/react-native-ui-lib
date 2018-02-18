@@ -13,11 +13,11 @@ const defaultOverlayColor = Colors.rgba(Colors.black, 0.82);
 const defaultTextColor = Colors.white;
 const defaultStrokeColor = Colors.rgba(Colors.white, 0.12);
 const defaultStrokeWidth = 12;
-const defaultMinimumRectSize = {width: 56, height: 56};
-const defaultInnerPadding = 10;
 const contentViewPadding = Constants.isIOS ? 35 : 32;
+const contentViewRightMargin = Constants.isIOS ? 45 : 46;
 const titleBottomMargin = Constants.isIOS ? 15 : 12;
 const messageBottomMargin = Constants.isIOS ? 30 : 24;
+const messageLineHeight = 22;
 const defaultButtonLabel = 'Got it';
 
 /*eslint-disable*/
@@ -61,6 +61,14 @@ class FeatureHighlight extends BaseComponent {
      */
     message: PropTypes.string,
     /**
+     * Title's max number of lines
+     */
+    titleNumberOfLines: PropTypes.number,
+    /**
+     * Message's max number of lines
+     */
+    messageNumberOfLines: PropTypes.number,
+    /**
      * Props that will be passed to the dismiss button
      */
     confirmButtonProps: PropTypes.object,
@@ -103,6 +111,13 @@ class FeatureHighlight extends BaseComponent {
     this.getComponentDimensions = this.getComponentDimensions.bind(this);
   }
 
+  static defaultProps = {
+    titleNumberOfLines: 1,
+    messageNumberOfLines: 5,
+    minimumRectSize: {width: 56, height: 56},
+    innerPadding: 10,
+  };
+
   componentWillReceiveProps(nextProps) {
     this.setTargetPosition(nextProps);
   }
@@ -140,11 +155,18 @@ class FeatureHighlight extends BaseComponent {
   }
 
   getContentPositionStyle() {
+    const {highlightFrame, minimumRectSize, innerPadding} = this.props;
     const {targetPosition, contentViewHeight} = this.state;
     const {top, height} = targetPosition || {};
     const screenVerticalCenter = Constants.screenHeight / 2;
     const targetCenter = top + (height / 2);
-    const topPosition = (targetCenter > screenVerticalCenter) ? top - contentViewHeight : top + height;
+    const isAlignedTop = targetCenter > screenVerticalCenter;
+    let topPosition = isAlignedTop ? top - contentViewHeight : top + height;
+    if (!highlightFrame && !isAlignedTop) {
+      const minRectHeight = minimumRectSize.height;
+      const isUnderMin = height >= minRectHeight;
+      topPosition = isUnderMin ? topPosition + innerPadding : targetCenter + (minRectHeight / 2) + (innerPadding / 2);
+    }
     if (topPosition < 0 || topPosition + contentViewHeight > Constants.screenHeight) {
       console.warn('Content is too long and might appear off screen. ' +
         'Please adjust the message length for better results.');
@@ -159,18 +181,19 @@ class FeatureHighlight extends BaseComponent {
   }
 
   renderHighlightMessage() {
-    const {title, message, confirmButtonProps, textColor} = this.getThemeProps();
+    const {title, message, confirmButtonProps, textColor, titleNumberOfLines, messageNumberOfLines}
+      = this.getThemeProps();
     const color = textColor || defaultTextColor;
 
     return (
       <View style={[styles.highlightContent, this.getContentPositionStyle()]} onLayout={this.getComponentDimensions}>
         {title && (
-          <Text text60 style={[styles.title, {color}]}>
+          <Text text60 style={[styles.title, {color}]} numberOfLines={titleNumberOfLines}>
             {title}
           </Text>
         )}
         {message && (
-          <Text text70 style={[styles.message, {color}]}>
+          <Text text70 style={[styles.message, {color}]} numberOfLines={messageNumberOfLines}>
             {message}
           </Text>
         )}
@@ -189,7 +212,7 @@ class FeatureHighlight extends BaseComponent {
   render() {
     const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding,
       confirmButtonProps} = this.getThemeProps();
-    const {node} = this.state;
+    const {node, targetPosition} = this.state;
     const {onPress} = confirmButtonProps;
 
     return (
@@ -201,12 +224,14 @@ class FeatureHighlight extends BaseComponent {
         overlayColor={overlayColor || defaultOverlayColor}
         strokeColor={borderColor || defaultStrokeColor}
         strokeWidth={borderWidth || defaultStrokeWidth}
-        minimumRectSize={minimumRectSize || defaultMinimumRectSize}
-        innerPadding={innerPadding || defaultInnerPadding}
+        minimumRectSize={minimumRectSize}
+        innerPadding={innerPadding}
       >
+        {targetPosition && (
         <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onPress}>
           {this.renderHighlightMessage()}
         </TouchableWithoutFeedback>
+        )}
       </HighlighterOverlayView>
     );
   }
@@ -216,14 +241,16 @@ const styles = StyleSheet.create({
   highlightContent: {
     position: 'absolute',
     padding: contentViewPadding,
+    marginRight: contentViewRightMargin,
     alignItems: 'flex-start',
   },
   title: {
-    fontWeight: 'bold',
+    fontWeight: '500',
     marginBottom: titleBottomMargin,
   },
   message: {
     marginBottom: messageBottomMargin,
+    lineHeight: messageLineHeight,
   },
   touchableOverlay: {
     flex: 1,
