@@ -255,6 +255,9 @@ const styles = StyleSheet.create({
   touchableOverlay: {
     flex: 1,
   },
+  touchableOverlay: {
+    flex: 1,
+  },
 });
 
 export default FeatureHighlight;

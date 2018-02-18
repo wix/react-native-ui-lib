@@ -61,6 +61,33 @@ describe('FeatureHighlight', () => {
       expect(mockTarget.measureInWindow).toBeCalled();
     });
   });
+
+  describe('setTargetPosition', () => {
+    it('targetPosition should be equal to component position', () => {
+      // Arrange
+      const mockTarget = {measureInWindow: jest.fn()};
+      const getTargetMock = jest.fn();
+      getTargetMock.mockReturnValue(mockTarget);
+      const uut = new FeatureHighlight({getTarget: getTargetMock});
+      jest.spyOn(uut, 'findTargetNode').mockImplementation(() => 23);
+      jest.spyOn(uut, 'setState').mockImplementation(() => {});
+      jest.useFakeTimers();
+
+      // Act
+      uut.setTargetPosition();
+
+      // Assert
+      expect(uut.findTargetNode).toHaveBeenCalledWith(mockTarget);
+      expect(uut.setState).toHaveBeenCalledWith({node: 23});
+
+      expect(mockTarget.measureInWindow).not.toBeCalled();
+      // expect(setTimeout).toHaveBeenCalledTimes(0);
+      jest.runAllTimers();
+      // jest.advanceTimersByTime(0); // available in Jest 21
+      expect(setTimeout).toHaveBeenCalledTimes(1);
+      expect(mockTarget.measureInWindow).toBeCalled();
+    });
+  });
 });
 
 function mockScreenDimentions() {
