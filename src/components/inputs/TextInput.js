@@ -65,6 +65,17 @@ export default class TextInput extends BaseInput {
      * transform function executed on value and return transformed value
      */
     transformer: PropTypes.func,
+    /**
+     * Fixed title that will displayed above the input (note: floatingPlaceholder MUST be 'false')
+     */
+    title: PropTypes.string,
+    /**
+     * The title's color
+     */
+    titleColor: PropTypes.string,
+    /**
+     * Use to identify the component in tests
+     */
     testId: PropTypes.string,
   };
 
@@ -72,6 +83,7 @@ export default class TextInput extends BaseInput {
     placeholderTextColor: Colors.dark40,
     floatingPlaceholderColor: Colors.dark40,
     enableErrors: true,
+    titleColor: Colors.blue30,
   };
 
   constructor(props) {
@@ -163,6 +175,10 @@ export default class TextInput extends BaseInput {
     return typography.lineHeight;
   }
 
+  capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
     const {
@@ -205,6 +221,25 @@ export default class TextInput extends BaseInput {
         >
           {placeholder}
         </Animated.Text>
+      );
+    }
+  }
+
+  renderTitle() {
+    const {floatingPlaceholder, title, titleColor} = this.props;
+
+    if (!floatingPlaceholder && title) {
+      const marginBottom = Constants.isIOS ? 5 : 4;
+      const titleFontSize = 13;
+      const capitalizedTitle = this.capitalize(title);
+
+      return (
+        <Text
+          style={{top: 0, color: titleColor, marginBottom}}
+          fontSize={titleFontSize}
+        >
+          {capitalizedTitle}
+        </Text>
       );
     }
   }
@@ -316,6 +351,7 @@ export default class TextInput extends BaseInput {
 
     return (
       <View style={[this.styles.container, containerStyle]} collapsable={false}>
+        {this.renderTitle()}
         <View style={[this.styles.innerContainer, underlineStyle]}>
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
@@ -373,13 +409,11 @@ export default class TextInput extends BaseInput {
     _.invoke(this.props, 'onChange', event);
   }
 
-  // this is just for android
   calcMultilineInputHeight(event) {
     let height;
     if (Constants.isAndroid) {
       height = _.get(event, 'nativeEvent.contentSize.height');
     }
-    // In iOS, limit the number of lines when numberOfLines passed
     if (Constants.isIOS) {
       const {multiline, numberOfLines} = this.props;
       if (multiline && numberOfLines) {
