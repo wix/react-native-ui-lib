@@ -41,20 +41,20 @@ describe('TextInput', () => {
     });
 
     const underlines = {default: Colors.cyan40, focus: Colors.orange60, error: Colors.purple50};
-    it('should return cyan40 when blur (inactive)', () => {
+    it('should return cyan40 when passing underlineColor and when blur (inactive)', () => {
       const uut = new TextInput({underlineColor: underlines});
       expect(uut.getUnderlineStyle()).toEqual({borderColor: Colors.cyan40});
     });
-    it('should return purple50 when error', () => {
+    it('should return purple50 when passing underlineColor and when error', () => {
       const uut = new TextInput({underlineColor: underlines, error: 'test error'});
       expect(uut.getUnderlineStyle()).toEqual({borderColor: Colors.purple50});
     });
-    it('should return orange60 when focused', () => {
+    it('should return orange60 when passing underlineColor and when focused', () => {
       const uut = new TextInput({underlineColor: underlines});
       uut.state = {focused: true};
       expect(uut.getUnderlineStyle()).toEqual({borderColor: Colors.orange60});
     });
-    it('should return red30 when isCounterLimit', () => {
+    it('should return red30 when passing underlineColor and isCounterLimit', () => {
       const uut = new TextInput({underlineColor: underlines, showCharacterCounter: true});
       jest.spyOn(uut, 'isCounterLimit').mockImplementation(() => true);
       expect(uut.getUnderlineStyle()).toEqual({borderColor: Colors.red30});
