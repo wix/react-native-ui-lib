@@ -257,7 +257,6 @@ const styles = StyleSheet.create({
   },
   touchableOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'red',
   },
 });
 
