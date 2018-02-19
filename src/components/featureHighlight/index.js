@@ -127,7 +127,6 @@ class FeatureHighlight extends BaseComponent {
   }
 
   setTargetPosition(props = this.props) {
-    console.log('INBAL: setTargetPosition');
     if (!this.state.node) {
       if (props.getTarget !== undefined) {
         const target = props.getTarget();
@@ -156,7 +155,6 @@ class FeatureHighlight extends BaseComponent {
   }
 
   getContentPositionStyle() {
-    console.log('INBAL: getContentPositionStyle');
     const {highlightFrame, minimumRectSize, innerPadding} = this.props;
     const {targetPosition, contentViewHeight} = this.state;
     const {top, height} = targetPosition || {};
@@ -178,13 +176,11 @@ class FeatureHighlight extends BaseComponent {
 
   // This method will be called more than once in case of layout change!
   getComponentDimensions(event) {
-    console.log('INBAL: getComponentDimensions');
     const height = event.nativeEvent.layout.height;
     this.setState({contentViewHeight: height});
   }
 
   renderHighlightMessage() {
-    console.log('INBAL: renderHighlightMessage');
     const {title, message, confirmButtonProps, textColor, titleNumberOfLines, messageNumberOfLines}
       = this.getThemeProps();
     const color = textColor || defaultTextColor;
@@ -218,7 +214,6 @@ class FeatureHighlight extends BaseComponent {
   }
 
   render() {
-    console.log('INBAL: render');
     const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding,
       confirmButtonProps} = this.getThemeProps();
     const {node, targetPosition} = this.state;
