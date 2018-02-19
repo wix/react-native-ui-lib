@@ -88,6 +88,28 @@ describe('TextInput', () => {
       expect(uut.setState).toHaveBeenCalledWith({height: 77});
     });
   });
+
+  describe('getCharCount', () => {
+    it('should return 5 when value is "inbal"', () => {
+      const uut = new TextInput({value: 'inbal'});
+      expect(uut.getCharCount()).toBe(5);
+    });
+  });
+
+  describe('isCounterLimit', () => {
+    it('should return true when character count = 10 and maxLength = 10', () => {
+      const uut = new TextInput({maxLength: 10});
+      jest.spyOn(uut, 'getCharCount').mockImplementation(() => 10);
+      expect(uut.isCounterLimit()).toBe(true);
+      expect(uut.getCharCount).toHaveBeenCalledTimes(1);
+    });
+    it('should return false when character count = 5 and maxLength = 10', () => {
+      const uut = new TextInput({maxLength: 10});
+      jest.spyOn(uut, 'getCharCount').mockImplementation(() => 5);
+      expect(uut.isCounterLimit()).toBe(false);
+      expect(uut.getCharCount).toHaveBeenCalledTimes(1);
+    });
+  });
 });
 
 function mockAndroid() {
