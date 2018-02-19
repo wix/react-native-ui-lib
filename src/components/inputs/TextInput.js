@@ -77,10 +77,6 @@ export default class TextInput extends BaseInput {
      */
     titleColor: PropTypes.string,
     /**
-     * Limits the maximum number of characters that can be entered
-     */
-    maxLength: PropTypes.number,
-    /**
      * should the input display a character counter (only when passing 'maxLength')
      */
     showCharacterCounter: PropTypes.bool,
@@ -120,6 +116,8 @@ export default class TextInput extends BaseInput {
       ),
       showExpandableModal: false,
     };
+
+    this.generatePropsWarnings(props);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -131,8 +129,14 @@ export default class TextInput extends BaseInput {
         this.updateFloatingPlaceholderState,
       );
     }
-    if (nextProps.maxLength === 0) {
-      console.warn('setting maxLength to zero will block typing in this input');
+  }
+
+  generatePropsWarnings(props) {
+    if (props.maxLength === 0) {
+      console.warn('Setting maxLength to zero will block typing in this input');
+    }
+    if (props.showCharacterCounter && !props.maxLength) {
+      console.warn("In order to use showCharacterCount please pass 'maxLength' prop");
     }
   }
 
