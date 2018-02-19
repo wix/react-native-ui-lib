@@ -11,10 +11,13 @@ import TextArea from './TextArea';
 import View from '../view';
 
 const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
-  default: Colors.dark80,
+  default: Colors.dark70,
   focus: Colors.blue30,
   error: Colors.red30,
 };
+const charCountColorDefault = Colors.dark40;
+const charCountColorLimit = Colors.red30;
+
 
 /**
  * @description: A wrapper for Text Input component with extra functionality like floating placeholder
@@ -80,7 +83,7 @@ export default class TextInput extends BaseInput {
     /**
      * should the input display a character counter (only when passing 'maxLength')
      */
-    characterCounter: PropTypes.bool,
+    showCharacterCounter: PropTypes.bool,
     /**
      * Use to identify the component in tests
      */
@@ -128,6 +131,9 @@ export default class TextInput extends BaseInput {
         this.updateFloatingPlaceholderState,
       );
     }
+    if (nextProps.maxLength === 0) {
+      console.warn('setting maxLength to zero will block typing in this input');
+    }
   }
 
   generateStyles() {
@@ -137,7 +143,7 @@ export default class TextInput extends BaseInput {
   // todo: add tests
   getUnderlineStyle() {
     const {focused} = this.state;
-    const {error, underlineColor} = this.props;
+    const {error, underlineColor, showCharacterCounter} = this.props;
 
     const underlineColorByState = _.cloneDeep(DEFAULT_UNDERLINE_COLOR_BY_STATE);
     if (underlineColor) {
@@ -151,12 +157,25 @@ export default class TextInput extends BaseInput {
     let borderColor = underlineColorByState.default;
     if (error) {
       borderColor = underlineColorByState.error;
+    } else if (showCharacterCounter && this.isCounterLimit()) {
+      borderColor = charCountColorLimit;
     } else if (focused) {
       borderColor = underlineColorByState.focus;
     }
 
     // return the right color for the current state
     return {borderColor};
+  }
+
+  getCharCount() {
+    const {value} = this.state;
+    return _.size(value);
+  }
+
+  isCounterLimit() {
+    const {maxLength} = this.props;
+    const counter = this.getCharCount();
+    return counter === 0 ? false : maxLength === counter;
   }
 
   hasText(value) {
@@ -245,11 +264,10 @@ export default class TextInput extends BaseInput {
   }
 
   renderCharCounter() {
-    const {maxLength, characterCounter} = this.props;
-    if (maxLength && characterCounter) {
-      const {value} = this.state || '';
-      const counter = value !== undefined ? value.length : 0;
-      const color = maxLength === counter ? Colors.red30 : Colors.dark40;
+    const {maxLength, showCharacterCounter} = this.props;
+    if (maxLength && showCharacterCounter) {
+      const counter = this.getCharCount();
+      const color = this.isCounterLimit() ? charCountColorLimit : charCountColorDefault;
       return (
         <Text
           style={{color}}
@@ -462,7 +480,7 @@ function createStyles({
     innerContainer: {
       flexDirection: 'row',
       borderBottomWidth: hideUnderline ? 0 : 1,
-      borderColor: Colors.dark80,
+      borderColor: Colors.dark70,
       justifyContent: centered ? 'center' : undefined,
       paddingTop: floatingPlaceholder ? 25 : undefined,
       flexGrow: 1,
