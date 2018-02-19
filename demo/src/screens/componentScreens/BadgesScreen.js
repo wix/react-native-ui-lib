@@ -46,6 +46,18 @@ export default class BadgesScreen extends Component {
           <Badge size="small" label={'272'} containerStyle={{marginRight: BadgesSpace}} />
         </View>
 
+        <View row marginT-20>
+          <Badge label={'1'} containerStyle={{marginRight: BadgesSpace}} borderWidth={2} borderColor={Colors.blue50} />
+          <Badge
+            label={this.state.value.toString()}
+            containerStyle={{marginRight: BadgesSpace}}
+            backgroundColor={Colors.red40}
+            borderWidth={1}
+            borderColor={Colors.red10}
+          />
+          <Badge label={'272'} containerStyle={{marginRight: BadgesSpace}} borderWidth={3}/>
+        </View>
+
         <View row marginT-50 marginB-15>
           <Button
             label={'+'} bg-dark60 text40 dark10 style={{marginRight: 15, width: 40, height: 40}}
