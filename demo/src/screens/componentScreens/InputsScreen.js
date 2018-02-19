@@ -47,13 +47,43 @@ export default class InputScreen extends Component {
         </Text>
 
         <TextInput
+          text70
+          title="Title"
+          placeholder="Placeholder text"
+          onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
+          error={this.state.error}
+          maxLength={3}
+          showCharacterCounter
+        />
+        <View style={{height: 10}}/>
+        <TextInput
+          text70
+          title="Title for multiline(2)"
           multiline
           numberOfLines={2}
+          maxLength={32}
+          showCharacterCounter
+          placeholder="Placeholder text"
+          onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
+          error={this.state.error}
+          underlineColor={{focus: Colors.orange60, error: Colors.purple50}}
+        />
+
+        <TextInput
           floatingPlaceholder
           text70
           placeholder="write something.."
           onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
-          error={this.state.error}
+          underlineColor={{focus: Colors.orange60, error: Colors.purple50}}
+        />
+
+        <TextInput
+          multiline
+          numberOfLines={2}
+          floatingPlaceholder
+          text70
+          placeholder="floatingPlaceholder for multilined(2)"
+          onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
           underlineColor={{focus: Colors.orange60, error: Colors.purple50}}
         />
 
