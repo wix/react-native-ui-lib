@@ -140,7 +140,6 @@ export default class TextInput extends BaseInput {
     this.styles = createStyles(this.props);
   }
 
-  // todo: add tests
   getUnderlineStyle() {
     const {focused} = this.state;
     const {error, underlineColor, showCharacterCounter} = this.props;
