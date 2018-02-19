@@ -53,6 +53,7 @@ export default class InputScreen extends Component {
           onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
           error={this.state.error}
           maxLength={3}
+          characterCounter
           underlineColor={{focus: Colors.orange60, error: Colors.purple50}}
         />
         <View style={{height: 10}}/>
@@ -61,8 +62,11 @@ export default class InputScreen extends Component {
           title="Title for multiline(2)"
           multiline
           numberOfLines={2}
+          maxLength={32}
+          characterCounter
           placeholder="write something multilined(2).."
           onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
+          error={this.state.error}
           underlineColor={{focus: Colors.orange60, error: Colors.purple50}}
         />
 

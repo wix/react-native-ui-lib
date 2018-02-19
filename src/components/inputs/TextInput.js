@@ -78,6 +78,10 @@ export default class TextInput extends BaseInput {
      */
     maxLength: PropTypes.number,
     /**
+     * should the input display a character counter (only when passing 'maxLength')
+     */
+    characterCounter: PropTypes.bool,
+    /**
      * Use to identify the component in tests
      */
     testId: PropTypes.string,
@@ -241,8 +245,8 @@ export default class TextInput extends BaseInput {
   }
 
   renderCharCounter() {
-    const {maxLength} = this.props;
-    if (maxLength) {
+    const {maxLength, characterCounter} = this.props;
+    if (maxLength && characterCounter) {
       const {value} = this.state || '';
       const counter = value !== undefined ? value.length : 0;
       const color = maxLength === counter ? Colors.red30 : Colors.dark40;
