@@ -18,7 +18,6 @@ const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
 const charCountColorDefault = Colors.dark40;
 const charCountColorLimit = Colors.red30;
 
-
 /**
  * @description: A wrapper for Text Input component with extra functionality like floating placeholder
  * @extends: TextInput

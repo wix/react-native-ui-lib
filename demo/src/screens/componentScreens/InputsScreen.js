@@ -49,12 +49,11 @@ export default class InputScreen extends Component {
         <TextInput
           text70
           title="Title"
-          placeholder="maxLength = 3"
+          placeholder="Placeholder text"
           onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
           error={this.state.error}
           maxLength={3}
           showCharacterCounter
-          underlineColor={{focus: Colors.orange60, error: Colors.purple50}}
         />
         <View style={{height: 10}}/>
         <TextInput
@@ -64,7 +63,7 @@ export default class InputScreen extends Component {
           numberOfLines={2}
           maxLength={32}
           showCharacterCounter
-          placeholder="write something multilined(2).."
+          placeholder="Placeholder text"
           onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
           error={this.state.error}
           underlineColor={{focus: Colors.orange60, error: Colors.purple50}}

@@ -15,7 +15,7 @@ export default class BaseComponent extends Component {
   static propTypes = {
     ..._.mapValues(Typography, () => PropTypes.bool),
     ..._.mapValues(Colors, () => PropTypes.bool),
-    useNativeDriver: PropTypes.bool, // eslint-disable-line
+    useNativeDriver: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -28,6 +28,7 @@ export default class BaseComponent extends Component {
       .pickBy((value, key) => _.includes(Object.keys(ownPropTypes), key))
       .omit(ignoreProps)
       .value();
+
     return ownProps;
   }
 
@@ -93,6 +94,7 @@ export default class BaseComponent extends Component {
         typography = Typography[key];
       }
     });
+
     return typography;
   }
 
@@ -103,6 +105,7 @@ export default class BaseComponent extends Component {
         color = value;
       }
     });
+
     return color;
   }
 
@@ -114,6 +117,7 @@ export default class BaseComponent extends Component {
         backgroundColor = value;
       }
     });
+
     return backgroundColor;
   }
 
@@ -124,6 +128,7 @@ export default class BaseComponent extends Component {
         borderRadius = value;
       }
     });
+
     return borderRadius;
   }
 
@@ -296,6 +301,7 @@ export default class BaseComponent extends Component {
       const isModifier = _.find(patterns, pattern => pattern.test(key));
       return !!isModifier;
     });
+
     return modifierProps;
   }
 }
