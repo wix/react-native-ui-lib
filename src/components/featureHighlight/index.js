@@ -127,6 +127,7 @@ class FeatureHighlight extends BaseComponent {
   }
 
   setTargetPosition(props = this.props) {
+    console.log('INBAL: setTargetPosition');
     if (!this.state.node) {
       if (props.getTarget !== undefined) {
         const target = props.getTarget();
@@ -155,6 +156,7 @@ class FeatureHighlight extends BaseComponent {
   }
 
   getContentPositionStyle() {
+    console.log('INBAL: getContentPositionStyle');
     const {highlightFrame, minimumRectSize, innerPadding} = this.props;
     const {targetPosition, contentViewHeight} = this.state;
     const {top, height} = targetPosition || {};
@@ -176,24 +178,30 @@ class FeatureHighlight extends BaseComponent {
 
   // This method will be called more than once in case of layout change!
   getComponentDimensions(event) {
+    console.log('INBAL: getComponentDimensions');
     const height = event.nativeEvent.layout.height;
     this.setState({contentViewHeight: height});
   }
 
   renderHighlightMessage() {
+    console.log('INBAL: renderHighlightMessage');
     const {title, message, confirmButtonProps, textColor, titleNumberOfLines, messageNumberOfLines}
       = this.getThemeProps();
     const color = textColor || defaultTextColor;
 
     return (
-      <View style={[styles.highlightContent, this.getContentPositionStyle()]} onLayout={this.getComponentDimensions}>
+      <View
+        style={[styles.highlightContent, this.getContentPositionStyle()]}
+        onLayout={this.getComponentDimensions}
+        pointerEvents="box-none"
+      >
         {title && (
-          <Text text60 style={[styles.title, {color}]} numberOfLines={titleNumberOfLines}>
+          <Text text60 style={[styles.title, {color}]} numberOfLines={titleNumberOfLines} pointerEvents="none">
             {title}
           </Text>
         )}
         {message && (
-          <Text text70 style={[styles.message, {color}]} numberOfLines={messageNumberOfLines}>
+          <Text text70 style={[styles.message, {color}]} numberOfLines={messageNumberOfLines} pointerEvents="none">
             {message}
           </Text>
         )}
@@ -210,6 +218,7 @@ class FeatureHighlight extends BaseComponent {
   }
 
   render() {
+    console.log('INBAL: render');
     const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding,
       confirmButtonProps} = this.getThemeProps();
     const {node, targetPosition} = this.state;
@@ -227,11 +236,10 @@ class FeatureHighlight extends BaseComponent {
         minimumRectSize={minimumRectSize}
         innerPadding={innerPadding}
       >
-        {targetPosition && (
         <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onPress}>
-          {this.renderHighlightMessage()}
+          <View flex/>
         </TouchableWithoutFeedback>
-        )}
+        {targetPosition && this.renderHighlightMessage()}
       </HighlighterOverlayView>
     );
   }
@@ -253,7 +261,8 @@ const styles = StyleSheet.create({
     lineHeight: messageLineHeight,
   },
   touchableOverlay: {
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'red',
   },
 });
 
