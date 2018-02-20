@@ -13,6 +13,10 @@ const Header = () => (
     <div className="links">
       <Link to="/">HOME</Link>
       <Link to="/docs/">DOCS</Link>
+      <a target="_blank" href="https://github.com/wix/react-native-ui-lib">
+      GITHUB
+      </a>
+      {/* <Link to="https://github.com/wix/react-native-ui-lib">GITHUB</Link> */}
     </div>
   </div>
 );

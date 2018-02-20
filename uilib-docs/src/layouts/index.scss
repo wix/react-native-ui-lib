@@ -5,6 +5,7 @@ body {
   margin: 0;
   font-family: Avenir;
   height: 100%;
+  background: linear-gradient(to bottom, #000046, #1cb5e0);
 }
 
 * {
@@ -28,8 +29,7 @@ div {
 
 .header {
   padding: 24px;
-  background: $cyan50;
-  color: $dark10;
+  color: $white;
 
   .links {
     display: flex;
