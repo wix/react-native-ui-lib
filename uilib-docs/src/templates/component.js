@@ -101,7 +101,6 @@ export default class ComponentTemplate extends Component {
     const componentProps = _.get(selectedComponent, 'props');
     const gifs = componentInfo.gif ? componentInfo.gif.split(',') : undefined;
     const imgs = componentInfo.image ? componentInfo.image.split(',') : undefined;
-    console.log('INBAL: ', componentInfo.notes);
     const notes = componentInfo.notes ? componentInfo.notes.split(',') : undefined;
 
 

@@ -186,14 +186,18 @@ class FeatureHighlight extends BaseComponent {
     const color = textColor || defaultTextColor;
 
     return (
-      <View style={[styles.highlightContent, this.getContentPositionStyle()]} onLayout={this.getComponentDimensions}>
+      <View
+        style={[styles.highlightContent, this.getContentPositionStyle()]}
+        onLayout={this.getComponentDimensions}
+        pointerEvents="box-none"
+      >
         {title && (
-          <Text text60 style={[styles.title, {color}]} numberOfLines={titleNumberOfLines}>
+          <Text text60 style={[styles.title, {color}]} numberOfLines={titleNumberOfLines} pointerEvents="none">
             {title}
           </Text>
         )}
         {message && (
-          <Text text70 style={[styles.message, {color}]} numberOfLines={messageNumberOfLines}>
+          <Text text70 style={[styles.message, {color}]} numberOfLines={messageNumberOfLines} pointerEvents="none">
             {message}
           </Text>
         )}
@@ -227,11 +231,10 @@ class FeatureHighlight extends BaseComponent {
         minimumRectSize={minimumRectSize}
         innerPadding={innerPadding}
       >
-        {targetPosition && (
         <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onPress}>
-          {this.renderHighlightMessage()}
+          <View flex/>
         </TouchableWithoutFeedback>
-        )}
+        {targetPosition && this.renderHighlightMessage()}
       </HighlighterOverlayView>
     );
   }
@@ -253,7 +256,7 @@ const styles = StyleSheet.create({
     lineHeight: messageLineHeight,
   },
   touchableOverlay: {
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
   },
 });
 
