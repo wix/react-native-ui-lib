@@ -28,7 +28,6 @@ class FeatureHighlightScreen extends Component {
 
   renderHighlighterOverlay() {
     const {showFTE} = this.state;
-    console.log('INBAL: ', this.targets.length);
     return (
       <FeatureHighlight
         visible={showFTE}
