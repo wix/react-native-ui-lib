@@ -49,80 +49,77 @@ export default class InputScreen extends Component {
         <TextInput
           text70
           title="Title"
-          placeholder="Placeholder text"
-          onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
-          error={this.state.error}
+          placeholder="character counter && error"
           maxLength={3}
           showCharacterCounter
-        />
-        <View style={{height: 10}}/>
-        <TextInput
-          text70
-          title="Title for multiline(2)"
-          multiline
-          numberOfLines={2}
-          maxLength={32}
-          showCharacterCounter
-          placeholder="Placeholder text"
           onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
           error={this.state.error}
-          underlineColor={{focus: Colors.orange60, error: Colors.purple50}}
         />
 
         <TextInput
-          floatingPlaceholder
           text70
-          placeholder="write something.."
-          onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
-          underlineColor={{focus: Colors.orange60, error: Colors.purple50}}
-        />
-
-        <TextInput
+          title="Title"
+          placeholder="character counter && error && multiline"
           multiline
-          numberOfLines={2}
-          floatingPlaceholder
-          text70
-          placeholder="floatingPlaceholder for multilined(2)"
+          maxLength={32}
+          showCharacterCounter
           onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
-          underlineColor={{focus: Colors.orange60, error: Colors.purple50}}
+          error={this.state.error}
         />
 
         <TextInput
-          containerStyle={{marginBottom: INPUT_SPACING}}
+          text70
+          floatingPlaceholder
+          placeholder="underline colors && error"
+          onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
+          error={this.state.error}
+          underlineColor={{focus: Colors.purple50, error: Colors.yellow60}}
+        />
+
+        <TextInput
+          text70
+          floatingPlaceholder
+          placeholder="multiline && numberOfLines = 3"
+          multiline
+          numberOfLines={3}
+        />
+
+        <TextInput
           text40
-          hideUnderline
           placeholder="write something.."
+          containerStyle={{marginBottom: INPUT_SPACING}}
+          hideUnderline
         />
 
         <TextInput
+          text30
+          placeholder="write something.."
           containerStyle={{marginBottom: INPUT_SPACING}}
           centered
-          text30
           hideUnderline
-          placeholder="write something.."
         />
 
         <TextInput
-          multiline
           text70
           placeholder="Share your story"
           value={'Share Your Story exists to provide spaces to hear people\'s stories, in order to inspire us to live' +
           'better ones ourselves.'
           }
+          multiline
         />
 
         <TextInput
           text70
-          placeholder="Tell us about yourself"
           floatingPlaceholder
+          placeholder="Tell us about yourself"
           value={LONG_TEXT}
           expandable
           containerStyle={{marginBottom: INPUT_SPACING}}
         />
 
         <TextInput
-          floatingPlaceholder
           text70
+          floatingPlaceholder
           placeholder="with price transformer"
           value={this.state.value}
           transformer={transformPrice}
@@ -143,8 +140,8 @@ export default class InputScreen extends Component {
 
         <TextInput
           text50
-          placeholder="Big Title Text"
           floatingPlaceholder
+          placeholder="Big Title Text"
           containerStyle={{marginBottom: INPUT_SPACING}}
         />
         <TextInput
@@ -156,18 +153,18 @@ export default class InputScreen extends Component {
 
         <TextInput
           text70
-          hideUnderline
           placeholder="No Underline"
           containerStyle={{marginBottom: INPUT_SPACING}}
           ref={input => (this.noUnderline = input)}
+          hideUnderline
         />
 
         <TextInput
           text10
-          hideUnderline
-          centered
           placeholder="Centered"
+          centered
           containerStyle={{marginBottom: INPUT_SPACING}}
+          hideUnderline
         />
       </KeyboardAwareScrollView>
     );

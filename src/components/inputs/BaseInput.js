@@ -1,7 +1,7 @@
-import 'react';
-import PropTypes from 'prop-types';
-import {TextInput as RNTextInput, Animated, ViewPropTypes} from 'react-native';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import 'react';
+import {TextInput as RNTextInput, Animated, ViewPropTypes} from 'react-native';
 import {BaseComponent} from '../../commons';
 import {Colors, Typography} from '../../style';
 
@@ -18,6 +18,9 @@ export default class BaseInput extends BaseComponent {
      * text input container style
      */
     containerStyle: ViewPropTypes.style,
+    /**
+     * Use to identify the component in tests
+     */
     testId: PropTypes.string,
   };
 
@@ -36,7 +39,6 @@ export default class BaseInput extends BaseComponent {
     const typography = this.getTypography();
     this.state = {
       inputWidth: typography.fontSize * 2,
-      widthExtendBreaks: [],
       value: props.value,
       floatingPlaceholderState: new Animated.Value(props.value ? 1 : 0),
       showExpandableModal: !false,

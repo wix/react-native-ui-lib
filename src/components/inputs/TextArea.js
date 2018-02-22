@@ -16,6 +16,9 @@ export default class TextArea extends BaseInput {
   static propTypes = {
     ...RNTextInput.propTypes,
     ...BaseInput.propTypes,
+    /**
+     * Use to identify the component in tests
+     */
     testId: PropTypes.string,
   };
 
@@ -34,6 +37,7 @@ export default class TextArea extends BaseInput {
           value={value}
           multiline
           style={inputStyle}
+          underlineColorAndroid="transparent"
           onChangeText={this.onChangeText}
           ref={(input) => { this.input = input; }}
         />
