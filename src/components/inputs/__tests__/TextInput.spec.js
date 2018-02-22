@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import TextInput from '../TextInput';
 import {Constants} from '../../../helpers';
 import {Typography, Colors} from '../../../style';
@@ -61,18 +60,18 @@ describe('TextInput', () => {
     });
   });
 
-  describe('calcMultilineInputHeight', () => {
-    it('should setState height with undefined', () => {
+  describe('getHeight', () => {
+    it('when not multiline, should setState not be called', () => {
       const uut = new TextInput({});
       jest.spyOn(uut, 'setState').mockImplementation(() => {});
-      uut.calcMultilineInputHeight();
-      expect(uut.setState.height).toBeUndefined();
+      uut.getHeight();
+      expect(uut.setState).not.toHaveBeenCalled();
     });
 
     it('should iOS, when only multiline, setState height with undefined', () => {
       const uut = new TextInput({multiline: true});
       jest.spyOn(uut, 'setState').mockImplementation(() => {});
-      uut.calcMultilineInputHeight();
+      uut.getHeight();
       expect(uut.setState.height).toBeUndefined();
     });
 
@@ -84,18 +83,16 @@ describe('TextInput', () => {
       const lineHeight = Typography.text70.lineHeight;
       const {numberOfLines} = uut.props;
       const boxHeight = lineHeight * numberOfLines;
-      uut.calcMultilineInputHeight();
+      uut.getHeight();
       expect(uut.setState).toHaveBeenCalledWith({height: boxHeight});
     });
 
-    it('should Android setState height with native event height', () => {
+    it('should Android, when multiline and numberOfLines, setState not be called', () => {
       mockAndroid();
-      const event = {};
-      _.set(event, 'nativeEvent.contentSize.height', 77);
-      const uut = new TextInput({});
+      const uut = new TextInput({multiline: true, numberOfLines: 2});
       jest.spyOn(uut, 'setState').mockImplementation(() => {});
-      uut.calcMultilineInputHeight(event);
-      expect(uut.setState).toHaveBeenCalledWith({height: 77});
+      uut.getHeight();
+      expect(uut.setState).not.toHaveBeenCalled();
     });
   });
 
