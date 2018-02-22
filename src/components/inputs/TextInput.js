@@ -88,8 +88,8 @@ export default class TextInput extends BaseInput {
   static defaultProps = {
     placeholderTextColor: Colors.dark40,
     floatingPlaceholderColor: Colors.dark40,
-    enableErrors: true,
     titleColor: Colors.dark40,
+    enableErrors: true,
   };
 
   constructor(props) {
@@ -97,18 +97,13 @@ export default class TextInput extends BaseInput {
 
     this.onChangeText = this.onChangeText.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(
-      this,
-    );
+    this.onDoneEditingExpandableInput = this.onDoneEditingExpandableInput.bind(this);
+    this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(this);
     this.toggleExpandableModal = this.toggleExpandableModal.bind(this);
-    this.onDoneEditingExpandableInput = this.onDoneEditingExpandableInput.bind(
-      this,
-    );
 
     // const typography = this.getTypography();
     this.state = {
       // inputWidth: typography.fontSize * 2,
-      widthExtendBreaks: [],
       value: props.value,
       floatingPlaceholderState: new Animated.Value(
         this.hasText(props.value) ? 1 : 0,
@@ -150,7 +145,8 @@ export default class TextInput extends BaseInput {
     const underlineColorByState = _.cloneDeep(DEFAULT_UNDERLINE_COLOR_BY_STATE);
     if (underlineColor) {
       if (_.isString(underlineColor)) {
-        return {borderColor: underlineColor}; // use given color for any state
+        // use given color for any state
+        return {borderColor: underlineColor};
       } else if (_.isObject(underlineColor)) {
         _.merge(underlineColorByState, underlineColor);
       }
@@ -194,14 +190,29 @@ export default class TextInput extends BaseInput {
     if (multiline && numberOfLines) {
       if (Constants.isAndroid) {
         return undefined;
+      } else if (!this.state.height) {
+        // get numberOfLines support for iOS
+        this.setState({height: this.getLinesHeightLimit()});
       }
     }
-    const {height} = this.state;
+
     if (multiline) {
+      const {height} = this.state;
       return height;
     }
+
     const typography = this.getTypography();
     return typography.lineHeight;
+  }
+
+  getLinesHeightLimit() {
+    let maxHeight;
+    const {multiline, numberOfLines} = this.props;
+    if (multiline && numberOfLines) {
+      const typography = this.getTypography();
+      maxHeight = typography.lineHeight * numberOfLines;
+    }
+    return maxHeight;
   }
 
   renderPlaceholder() {
@@ -318,9 +329,9 @@ export default class TextInput extends BaseInput {
   }
 
   renderExpandableInput() {
-    const typography = this.getTypography();
     const {floatingPlaceholder, placeholder} = this.props;
     const {value} = this.state;
+    const typography = this.getTypography();
     const minHeight = typography.lineHeight;
     const shouldShowPlaceholder = _.isEmpty(value) && !floatingPlaceholder;
 
@@ -341,6 +352,7 @@ export default class TextInput extends BaseInput {
   }
 
   renderTextInput() {
+    const {value} = this.state;
     const color = this.props.color || this.extractColorValue();
     const typography = this.getTypography();
     const {
@@ -352,7 +364,6 @@ export default class TextInput extends BaseInput {
       numberOfLines,
       ...others
     } = this.props;
-    const {value} = this.state;
     const inputStyle = [
       this.styles.input,
       typography,
@@ -447,25 +458,7 @@ export default class TextInput extends BaseInput {
   }
 
   onChange(event) {
-    this.calcMultilineInputHeight(event);
     _.invoke(this.props, 'onChange', event);
-  }
-
-  calcMultilineInputHeight(event) {
-    let height;
-    if (Constants.isAndroid) {
-      height = _.get(event, 'nativeEvent.contentSize.height');
-    }
-    if (Constants.isIOS) {
-      const {multiline, numberOfLines} = this.props;
-      if (multiline && numberOfLines) {
-        const typography = this.getTypography();
-        height = typography.lineHeight * numberOfLines;
-      }
-    }
-    if (height) {
-      this.setState({height});
-    }
   }
 }
 
