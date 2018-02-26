@@ -43,6 +43,7 @@ Animatable.initializeRegistryWithDefinitions({
 
 export function startApp() {
   Navigation.startSingleScreenApp({
+    appStyle: {autoAdjustScrollViewInsets: true},
     screen: {
       screen: 'unicorn.MainScreen',
       title: 'Wix UI Lib',
