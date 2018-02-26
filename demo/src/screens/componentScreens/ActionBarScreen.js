@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, ScrollView} from 'react-native';
+import {StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {View, ActionBar, Constants, Colors, Typography, PageControl, Carousel} from 'react-native-ui-lib';//eslint-disable-line
 
@@ -18,7 +18,7 @@ export default class ActionBarScreen extends Component {
 
   render() {
     return (
-      <View flex bg-dark80>
+      <View flex bg-dark80 useSafeArea>
         <PageControl
           containerStyle={styles.pageControl}
           numOfPages={6}

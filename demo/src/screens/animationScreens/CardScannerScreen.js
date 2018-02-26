@@ -55,7 +55,7 @@ export default class CardScannerScreen extends Component {
     const post = posts[0];
     const statusColor = post.status === 'Published' ? Colors.green30 : Colors.orange30;
     return (
-      <View style={styles.container}>
+      <View style={styles.container} useSafeArea>
         <View flex>
 
           <View paddingL-40 height={6} width={'100%'} bg-violet50 marginB-20>

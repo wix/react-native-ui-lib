@@ -48,28 +48,10 @@ export default class ButtonsScreen extends DemoScreen {
   }
 
   render() {
-    // return (
-    //   <View flex center>
-    //     <Button style={{borderWidth: 1, maxWidth: 80  }} style2={{padding: 50}} label="asdasd" />
-    //   </View>
-    // );
-    /* return (
-      <View flex>
-        <View center paddingV-20>
-          <Button
-            ref={(component) => { this.component = component; }}
-            {...this.state}
-          />
-        </View>
-        <View flex>
-          {this.renderComponentSettings()}
-        </View>
-      </View>
-    ); */
-
     const {snippet} = this.state;
+
     return (
-      <View>
+      <View useSafeArea>
         {!!snippet && <SnippetBlock snippet={snippet} onClose={() => this.hideSnippet()} />}
         <ScrollView>
           <View centerH>

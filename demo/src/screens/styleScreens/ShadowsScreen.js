@@ -77,7 +77,7 @@ export default class ShadowsScreen extends Component {
 
   render() {
     return (
-      <View>
+      <View useSafeArea>
         <View style={{flexDirection: 'row', position: 'absolute', top: 0, left: 0, bottom: 0, right: 0}}>
           <View style={[styles.subContainer, {backgroundColor: Colors.dark80}]}/>
           <View style={[styles.subContainer, {backgroundColor: Colors.white}]}/>
