@@ -28,7 +28,7 @@ export default class SelectableComponent extends BaseComponent {
     /**
      * color of selectable indicator
      */
-    selectableIndicatorColor: PropTypes.color,
+    selectableIndicatorColor: PropTypes.string,
   };
 
   static defaultProps = {
