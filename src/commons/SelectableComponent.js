@@ -6,6 +6,11 @@ import BaseComponent from './BaseComponent';
 import {Colors, BorderRadiuses} from '../style';
 import Assets from '../assets';
 
+const INDICATOR_TYPES = {
+  CIRCLE: 'circle',
+  CLEAN: 'clean',
+};
+
 // todo: add nice animation
 export default class SelectableComponent extends BaseComponent {
   static propTypes = {
@@ -24,7 +29,7 @@ export default class SelectableComponent extends BaseComponent {
     /**
      * selectable indicator look (circle, clean)
      */
-    selectableIndicatorType: PropTypes.oneOf(['circle', 'clean']),
+    selectableIndicatorType: PropTypes.oneOf([INDICATOR_TYPES.CIRCLE, INDICATOR_TYPES.CLEAN]),
     /**
      * color of selectable indicator
      */
@@ -33,9 +38,11 @@ export default class SelectableComponent extends BaseComponent {
 
   static defaultProps = {
     selectableIndicatorSize: 36,
-    selectableIndicatorType: 'circle',
+    selectableIndicatorType: INDICATOR_TYPES.CIRCLE,
     selectableIndicatorColor: Colors.blue30,
   };
+
+  static indicatorTypes = INDICATOR_TYPES;
 
   constructor(props) {
     super(props);
@@ -63,7 +70,7 @@ export default class SelectableComponent extends BaseComponent {
     const {selectableIndicatorType, selectableIndicatorColor} = this.props;
     const {selected} = this.state;
     const style = [this.styles.container];
-    if (selectableIndicatorType === 'circle') {
+    if (selectableIndicatorType === INDICATOR_TYPES.CIRCLE) {
       style.push(this.styles.circleContainer);
       style.push(selected && {backgroundColor: selectableIndicatorColor});
     }
@@ -74,7 +81,7 @@ export default class SelectableComponent extends BaseComponent {
   getIndicatorIconStyle() {
     const {selectableIndicatorType, selectableIndicatorColor} = this.props;
     const style = [this.styles.checkIcon];
-    if (selectableIndicatorType === 'circle') {
+    if (selectableIndicatorType === INDICATOR_TYPES.CIRCLE) {
       style.push(this.styles.checkIconInCircle);
     } else {
       style.push({tintColor: selectableIndicatorColor});
@@ -117,10 +124,10 @@ function createStyles({selectableIndicatorSize}) {
     },
     checkIcon: {
       alignSelf: 'center',
-      width: selectableIndicatorSize / 2,
       resizeMode: 'contain',
     },
     checkIconInCircle: {
+      width: selectableIndicatorSize / 2,
       tintColor: Colors.white,
     },
   });
