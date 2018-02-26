@@ -44,6 +44,7 @@ export default class BasicListScreen extends Component {
       // duration: (Number(id) % 6) * 200,
       // animationDelay: _.sample([100, 200]),
       // disabled: true,
+      selectableIndicatorType: 'clean'
     };
 
     return (
