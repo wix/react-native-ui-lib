@@ -116,6 +116,8 @@ export default class InputScreen extends Component {
           expandable
           expandableModalTitle="Modal Title"
           containerStyle={{marginBottom: INPUT_SPACING}}
+          maxLength={180}
+          showCharacterCounter
         />
 
         <TextInput

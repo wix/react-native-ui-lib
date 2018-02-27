@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {TextInput as RNTextInput, StyleSheet, Animated} from 'react-native';
+import {TextInput as RNTextInput, StyleSheet, Animated, SafeAreaView, KeyboardAvoidingView} from 'react-native';
 import _ from 'lodash';
 import BaseInput from './BaseInput';
 import Text from '../text';
@@ -318,17 +318,26 @@ export default class TextInput extends BaseInput {
         <Modal.TopBar
           onCancel={() => this.toggleExpandableModal(false)}
           onDone={this.onDoneEditingExpandableInput}
-          title={this.props.expandableModalTitle}         
+          title={this.props.expandableModalTitle}
         />
-        <View style={this.styles.expandableModalContent}>
+        <KeyboardAvoidingView
+          behavior={Constants.isIOS ? 'padding' : undefined}
+          style={this.styles.expandableModalContent}
+        >
           <TextArea
             ref={(textarea) => {
               this.expandableInput = textarea;
             }}
             {...this.props}
             value={this.state.value}
+            onChangeText={this.onChangeText}
           />
-        </View>
+          <SafeAreaView>
+            <View style={this.styles.expandableModalCounter}>
+              {this.renderCharCounter()}
+            </View>
+          </SafeAreaView>
+        </KeyboardAvoidingView>
       </Modal>
     );
   }
@@ -516,8 +525,15 @@ function createStyles({
     },
     expandableModalContent: {
       flex: 1,
+      justifyContent: 'space-between',
       paddingTop: 15,
       paddingHorizontal: 20,
+    },
+    expandableModalCounter: {
+      position: 'absolute',
+      right: 0,
+      bottom: 0,
+      paddingBottom: 10,
     },
     title: {
       top: 0,
