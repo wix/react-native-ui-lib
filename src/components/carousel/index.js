@@ -95,9 +95,7 @@ export default class Carousel extends BaseComponent {
 
   updateOffset(animated = false) {
     const x = presenter.calcOffset(this.props, this.state);
-    if (this.carousel) {
-      this.carousel.scrollTo({x, animated});
-    }
+    this.carousel.scrollTo({x, animated});
   }
 
   componentDidMount() {
