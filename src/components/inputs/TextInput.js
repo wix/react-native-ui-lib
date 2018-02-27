@@ -140,7 +140,7 @@ export default class TextInput extends BaseInput {
 
   getUnderlineStyle() {
     const {focused} = this.state;
-    const {error, underlineColor, showCharacterCounter} = this.props;
+    const {error, underlineColor} = this.props;
 
     const underlineColorByState = _.cloneDeep(DEFAULT_UNDERLINE_COLOR_BY_STATE);
     if (underlineColor) {
@@ -155,8 +155,6 @@ export default class TextInput extends BaseInput {
     let borderColor = underlineColorByState.default;
     if (error) {
       borderColor = underlineColorByState.error;
-    } else if (showCharacterCounter && this.isCounterLimit()) {
-      borderColor = charCountColorLimit;
     } else if (focused) {
       borderColor = underlineColorByState.focus;
     }
