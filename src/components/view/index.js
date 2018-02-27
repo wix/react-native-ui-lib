@@ -1,6 +1,8 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import {View as RNView, StyleSheet, ViewPropTypes} from 'react-native';
+import {View as RNView, StyleSheet, ViewPropTypes, SafeAreaView} from 'react-native';
 import {BaseComponent} from '../../commons';
+import * as Constants from '../../helpers/Constants';
 
 /**
  * @description: Wrapper component for React Native View component
@@ -14,6 +16,10 @@ export default class View extends BaseComponent {
   static propTypes = {
     ...ViewPropTypes,
     ...BaseComponent.propTypes,
+    /**
+     * if true, will add SafeAreaView as a wrapper
+     */
+    useSafeArea: PropTypes.bool,
   };
 
   generateStyles() {
@@ -24,12 +30,13 @@ export default class View extends BaseComponent {
     this._root.setNativeProps(nativeProps); // eslint-disable-line
   }
 
-  render() {
+  renderView() {
     const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle} = this.state;
-    const {style, left, top, right, bottom, flex: propsFlex, ...others} = this.props;
+    const {useSafeArea, style, left, top, right, bottom, flex: propsFlex, ...others} = this.props;
+    const Element = (useSafeArea && Constants.isIOS) ? SafeAreaView : RNView;
 
     return (
-      <RNView
+      <Element
         {...others}
         style={[
           this.styles.container,
@@ -44,8 +51,12 @@ export default class View extends BaseComponent {
         ref={r => (this.view = r)}
       >
         {this.props.children}
-      </RNView>
+      </Element>
     );
+  }
+
+  render() {
+    return this.renderView();
   }
 
   measure(...args) {

@@ -32,7 +32,7 @@ export default class ColorsScreen extends Component {
 
   render() {
     return (
-      <View>
+      <View useSafeArea>
         <Toast
           message={this.state.key}
           color={this.state.color}
