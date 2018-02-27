@@ -64,6 +64,10 @@ export default class TextInput extends BaseInput {
      */
     expandable: PropTypes.bool,
     /**
+     * set the modal title when expandable prop is set to 'true'
+     */
+    expandableModalTitle: PropTypes.string,
+    /**
      * transform function executed on value and return transformed value
      */
     transformer: PropTypes.func,
@@ -314,6 +318,7 @@ export default class TextInput extends BaseInput {
         <Modal.TopBar
           onCancel={() => this.toggleExpandableModal(false)}
           onDone={this.onDoneEditingExpandableInput}
+          title={this.props.expandableModalTitle}         
         />
         <View style={this.styles.expandableModalContent}>
           <TextArea

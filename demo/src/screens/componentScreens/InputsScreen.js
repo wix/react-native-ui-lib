@@ -114,6 +114,7 @@ export default class InputScreen extends Component {
           placeholder="Tell us about yourself"
           value={LONG_TEXT}
           expandable
+          expandableModalTitle="Modal Title"
           containerStyle={{marginBottom: INPUT_SPACING}}
         />
 
