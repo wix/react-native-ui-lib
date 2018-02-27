@@ -32,6 +32,10 @@ export default class TextInput extends BaseInput {
     ...RNTextInput.propTypes,
     ...BaseInput.propTypes,
     /**
+     * make component rtl
+     */
+    rtl: PropTypes.bool,
+    /**
      * should placeholder have floating behavior
      */
     floatingPlaceholder: PropTypes.bool,
@@ -403,7 +407,7 @@ export default class TextInput extends BaseInput {
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
           {this.renderExpandableModal()}
         </View>
-        <View row flex>
+        <View row flex style={this.styles.errorContainer}>
           <View flex-1>
             {this.renderError()}
           </View>
@@ -461,6 +465,7 @@ export default class TextInput extends BaseInput {
 }
 
 function createStyles({
+  rtl,
   placeholderTextColor,
   hideUnderline,
   centered,
@@ -474,7 +479,7 @@ function createStyles({
       flexDirection: 'row',
       borderBottomWidth: hideUnderline ? 0 : 1,
       borderColor: Colors.dark70,
-      justifyContent: centered ? 'center' : undefined,
+      justifyContent: centered ? 'center' : (rtl ? 'flex-end' : undefined),
       paddingTop: floatingPlaceholder ? 25 : undefined,
       flexGrow: 1,
     },
@@ -488,23 +493,30 @@ function createStyles({
       flex: 1,
       marginBottom: hideUnderline ? undefined : 10,
       padding: 0,
-      textAlign: centered ? 'center' : undefined,
+      textAlign: centered ? 'center' : (rtl ? 'right' : undefined),
+      writingDirection: rtl ? 'rtl' : undefined,
       backgroundColor: 'transparent',
     },
     placeholder: {
       position: 'absolute',
       color: placeholderTextColor,
+      textAlign: rtl ? 'right' : undefined,
+      writingDirection: rtl ? 'rtl' : undefined,
     },
     placeholderCentered: {
       left: 0,
       right: 0,
       textAlign: 'center',
     },
+    errorContainer: {
+      flexDirection: rtl ? 'row-reverse' : 'row',
+    },
     errorMessage: {
       color: Colors.red30,
       ...Typography.text90,
       height: Typography.text90.lineHeight,
-      textAlign: centered ? 'center' : undefined,
+      textAlign: centered ? 'center' : (rtl ? 'right' : undefined),
+      writingDirection: rtl ? 'rtl' : undefined,
       marginTop: 1,
     },
     expandableModalContent: {
@@ -516,6 +528,8 @@ function createStyles({
       top: 0,
       color: titleColor,
       marginBottom: Constants.isIOS ? 5 : 4,
+      textAlign: rtl ? 'right' : undefined,
+      writingDirection: rtl ? 'rtl' : undefined,
     },
   });
 }
