@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import {View, StyleSheet, Text, NetInfo} from 'react-native';
+import {StyleSheet, Text, NetInfo} from 'react-native';
 import * as Constants from '../../helpers/Constants';
 import {BaseComponent} from '../../commons';
 import {Colors, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
+import View from '../view';
 
 /**
  * @description: Top bar to show a "no internet" connection status. Note: Run on real device for best results
@@ -112,14 +113,16 @@ export default class ConnectionStatusBar extends BaseComponent {
     }
 
     return (
-      <View style={this.styles.container}>
-        <View style={{flex: 1, flexDirection: 'row'}}>
-          <Text style={this.styles.text}>{this.props.label}</Text>
-          {this.props.allowDismiss && (
-            <TouchableOpacity style={this.styles.xContainer} onPress={() => this.setState({isCancelled: true})}>
-              <Text style={this.styles.x}>✕</Text>
-            </TouchableOpacity>
-          )}
+      <View useFaseArea style={this.styles.absoluteContainer}>
+        <View style={this.styles.container}>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <Text style={this.styles.text}>{this.props.label}</Text>
+            {this.props.allowDismiss && (
+              <TouchableOpacity style={this.styles.xContainer} onPress={() => this.setState({isCancelled: true})}>
+                <Text style={this.styles.x}>✕</Text>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
       </View>
     );
@@ -129,12 +132,14 @@ export default class ConnectionStatusBar extends BaseComponent {
 function createStyles() {
   const typography = Constants.isSmallScreen ? Typography.text90 : Typography.text80;
   return StyleSheet.create({
-    container: {
+    absoluteContainer: {
       backgroundColor: Colors.dark30,
       position: 'absolute',
       top: 0,
       left: 0,
       right: 0,
+    },
+    container: {
       flexDirection: 'column',
       justifyContent: 'center',
     },

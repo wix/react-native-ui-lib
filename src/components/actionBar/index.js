@@ -62,7 +62,13 @@ export default class ActionBar extends BaseComponent {
     const {actions, centered, style, ...others} = this.props;
 
     return (
-      <View row centerV paddingH-20={!centered} style={[this.styles.container, style]} {...others}>
+      <View
+        row
+        centerV
+        paddingH-20={!centered}
+        style={[this.styles.container, this.styles.absoluteContainer, style]}
+        {...others}
+      >
         {_.map(actions, (action, i) => (
           <View
             key={i}
@@ -81,12 +87,14 @@ function createStyles({height, backgroundColor}) {
   return StyleSheet.create({
     container: {
       height,
-      backgroundColor,
+      ...Shadows.white40.top,
+    },
+    absoluteContainer: {
       position: 'absolute',
       bottom: 0,
       left: 0,
       right: 0,
-      ...Shadows.white40.top,
+      backgroundColor,
     },
   });
 }

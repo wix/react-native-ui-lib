@@ -25,6 +25,10 @@ export default class UiLibExplorerMenu extends Component {
     };
   }
 
+  componentDidMount() {
+    // this._showPlaygroundScreen();
+  }
+
   openScreen(row) {
     const {navigator} = this.props;
     navigator.push({
@@ -34,6 +38,14 @@ export default class UiLibExplorerMenu extends Component {
       backButtonTitle: '',
     });
     this.filterExplorerScreens('');
+  }
+
+  _showPlaygroundScreen() {
+    this.props.navigator.showModal({
+      screen: 'unicorn.PlaygroundScreen',
+      title: 'Playground',
+      passProps: {},
+    });
   }
 
   filterExplorerScreens(filterText) {

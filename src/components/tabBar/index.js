@@ -117,14 +117,16 @@ export default class TabBar extends BaseComponent {
       outputRange: ['0%', '100%'],
     });
     return (
-      <Animated.View style={[this.styles.selectedIndicator, {left, width}, indicatorStyle]}/>
+      <Animated.View
+        style={[this.styles.selectedIndicator, this.styles.absoluteContainer, {left, width}, indicatorStyle]}
+      />
     );
   }
 
   render() {
     const {height, style} = this.props;
     return (
-      <View style={[this.styles.container, style]} bg-white row height={height}>
+      <View style={[this.styles.container, style]} bg-white row height={height} useSafeArea>
         {this.renderChildren()}
         {this.renderSelectedIndicator()}
       </View>
@@ -139,11 +141,13 @@ function createStyles() {
       borderColor: Colors.dark70,
     },
     selectedIndicator: {
+      borderBottomWidth: 1.5,
+      borderColor: Colors.blue30,
+    },
+    absoluteContainer: {
       position: 'absolute',
       bottom: 0,
       left: 0,
-      borderBottomWidth: 1.5,
-      borderColor: Colors.blue30,
     },
   });
 }

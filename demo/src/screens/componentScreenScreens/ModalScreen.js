@@ -27,7 +27,7 @@ export default class ModalScreen extends Component {
     return (
       <View flex>
         <PageControl
-          containerStyle={styles.pageControl}
+          containerStyle={[styles.pageControl, styles.absoluteContainer]}
           numOfPages={4}
           currentPage={this.state.currentPage}
           color={Colors.dark10}
@@ -84,7 +84,6 @@ export default class ModalScreen extends Component {
             </View>
           </View>
 
-
           <View bg-dark70 flex style={styles.page}>
             <Modal.TopBar
               title="Custom Style"
@@ -111,9 +110,12 @@ const styles = StyleSheet.create({
     width: Constants.screenWidth,
   },
   pageControl: {
+    zIndex: 1,
+  },
+  absoluteContainer: {
     position: 'absolute',
     bottom: 20,
     left: 20,
-    zIndex: 1,
+    right: 0,
   },
 });

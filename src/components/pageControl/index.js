@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import _ from 'lodash';
 import * as Constants from '../../helpers/Constants';
 import {ThemeManager} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
+import View from '../view';
 
 function getColorStyle(color, index, currentPage) {
   const compColor = color || ThemeManager.primaryColor;
