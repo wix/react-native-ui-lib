@@ -89,7 +89,7 @@ export default class UiLibExplorerMenu extends Component {
 
   render() {
     return (
-      <View flex useSafeArea>
+      <View flex>
         <View style={{marginLeft: 20, marginTop: 20}} >
           <TextInput
             style={styles.textInput}
