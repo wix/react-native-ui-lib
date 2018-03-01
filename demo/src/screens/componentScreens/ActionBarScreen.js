@@ -18,7 +18,7 @@ export default class ActionBarScreen extends Component {
 
   render() {
     return (
-      <View flex bg-dark80 useSafeArea>
+      <View flex bg-dark80>
         <PageControl
           containerStyle={[styles.pageControl, styles.absoluteContainer]}
           numOfPages={6}
