@@ -25,7 +25,7 @@
     "docs:install": "(cd ./uilib-docs && npm install)",
     "docs:deploy": "(cd ./uilib-docs && gatsby build --prefix-paths && gh-pages -d public --branch gh-pages)",
     "docs:develop": "(cd ./uilib-docs && gatsby develop)",
-    "bump:patch": "npm version patch"
+    "bump:patch": "npm version patch --git-tag-version"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
