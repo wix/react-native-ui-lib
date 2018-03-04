@@ -135,7 +135,7 @@ function createStyles() {
     absoluteContainer: {
       backgroundColor: Colors.dark30,
       ...StyleSheet.absoluteFillObject,
-      bottom: undefined
+      bottom: undefined,
     },
     container: {
       flexDirection: 'column',
