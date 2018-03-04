@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D8D93E7520161B1F00A39331 /* HighlighterView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D93E7220161B1F00A39331 /* HighlighterView.m */; };
 		D8D93E7620161B1F00A39331 /* HighlighterViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D93E7420161B1F00A39331 /* HighlighterViewManager.m */; };
+		D8E5A538204C4F170000DA01 /* SafeAreaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E5A537204C4F170000DA01 /* SafeAreaManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,6 +30,8 @@
 		D8D93E7220161B1F00A39331 /* HighlighterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlighterView.m; sourceTree = "<group>"; };
 		D8D93E7320161B1F00A39331 /* HighlighterViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlighterViewManager.h; sourceTree = "<group>"; };
 		D8D93E7420161B1F00A39331 /* HighlighterViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlighterViewManager.m; sourceTree = "<group>"; };
+		D8E5A536204C4F170000DA01 /* SafeAreaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SafeAreaManager.h; sourceTree = "<group>"; };
+		D8E5A537204C4F170000DA01 /* SafeAreaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SafeAreaManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +64,7 @@
 		D8D93E6620161A7F00A39331 /* reactnativeuilib */ = {
 			isa = PBXGroup;
 			children = (
+				D8E5A535204C4F170000DA01 /* safearea */,
 				D8D93E7020161B1F00A39331 /* highlighterview */,
 			);
 			path = reactnativeuilib;
@@ -75,6 +79,15 @@
 				D8D93E7420161B1F00A39331 /* HighlighterViewManager.m */,
 			);
 			path = highlighterview;
+			sourceTree = "<group>";
+		};
+		D8E5A535204C4F170000DA01 /* safearea */ = {
+			isa = PBXGroup;
+			children = (
+				D8E5A536204C4F170000DA01 /* SafeAreaManager.h */,
+				D8E5A537204C4F170000DA01 /* SafeAreaManager.m */,
+			);
+			path = safearea;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8D93E7620161B1F00A39331 /* HighlighterViewManager.m in Sources */,
+				D8E5A538204C4F170000DA01 /* SafeAreaManager.m in Sources */,
 				D8D93E7520161B1F00A39331 /* HighlighterView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

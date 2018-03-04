@@ -29,6 +29,7 @@ export const navigationData = {
   ],
   NativeComponents: [
     {title: 'Highlight Overlay', tags: 'native overlay', screen: 'unicorn.nativeComponents.HighlightOverlayViewScreen'},
+    {title: 'SafeArea Sapcer', tags: 'native safe area', screen: 'unicorn.nativeComponents.SafeAreaSpacerViewScreen'},
   ],
   Inputs: [
     {title: 'Text Inputs', tags: 'text input form', screen: 'unicorn.components.InputsScreen'},
