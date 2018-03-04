@@ -125,6 +125,10 @@ export default class TextInput extends BaseInput {
     }
   }
 
+  componentDidMount() {
+    this.getHeight();
+  }
+
   generatePropsWarnings(props) {
     if (props.maxLength === 0) {
       console.warn('Setting maxLength to zero will block typing in this input');
@@ -140,7 +144,7 @@ export default class TextInput extends BaseInput {
 
   getUnderlineStyle() {
     const {focused} = this.state;
-    const {error, underlineColor, showCharacterCounter} = this.props;
+    const {error, underlineColor} = this.props;
 
     const underlineColorByState = _.cloneDeep(DEFAULT_UNDERLINE_COLOR_BY_STATE);
     if (underlineColor) {
@@ -155,8 +159,6 @@ export default class TextInput extends BaseInput {
     let borderColor = underlineColorByState.default;
     if (error) {
       borderColor = underlineColorByState.error;
-    } else if (showCharacterCounter && this.isCounterLimit()) {
-      borderColor = charCountColorLimit;
     } else if (focused) {
       borderColor = underlineColorByState.focus;
     }
@@ -352,7 +354,7 @@ export default class TextInput extends BaseInput {
   }
 
   renderTextInput() {
-    const {value} = this.state;
+    const {value, height} = this.state;
     const color = this.props.color || this.extractColorValue();
     const typography = this.getTypography();
     const {
@@ -368,8 +370,7 @@ export default class TextInput extends BaseInput {
       this.styles.input,
       typography,
       color && {color},
-      // {height: (multiline) ? typography.lineHeight * 3 : typography.lineHeight},
-      {height: this.getHeight()},
+      {height},
       style,
     ];
 

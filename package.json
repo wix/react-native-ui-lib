@@ -1,6 +1,6 @@
 {
   "name": "react-native-ui-lib",
-  "version": "3.2.24",
+  "version": "3.3.24",
   "main": "index.js",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "publishConfig": {
@@ -24,7 +24,8 @@
     "log": "react-native log-ios | grep 'ethan -'",
     "docs:install": "(cd ./uilib-docs && npm install)",
     "docs:deploy": "(cd ./uilib-docs && gatsby build --prefix-paths && gh-pages -d public --branch gh-pages)",
-    "docs:develop": "(cd ./uilib-docs && gatsby develop)"
+    "docs:develop": "(cd ./uilib-docs && gatsby develop)",
+    "bump:patch": "npm version patch"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
