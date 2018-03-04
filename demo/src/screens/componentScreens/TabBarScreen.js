@@ -20,12 +20,6 @@ export default class TabBarScreen extends Component {
 
     return (
       <View flex bg-dark80>
-        <View padding-18>
-          <Text text30 dark10>
-            TabBar
-          </Text>
-        </View>
-
         <TabBar
           selectedIndex={selectedIndex}
           onChangeIndex={index => this.setState({selectedIndex: index})}

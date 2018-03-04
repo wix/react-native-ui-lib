@@ -1,9 +1,7 @@
-import {Navigation} from 'react-native-navigation';
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {Carousel, Colors, Constants, View, TextInput, Text, Button} from 'react-native-ui-lib';//eslint-disable-line
+import {Colors, Constants, View, TabBar, Text} from 'react-native-ui-lib'; //eslint-disable-line
 
-const PAGE_WIDTH = Constants.screenWidth;
 export default class PlaygroundScreen extends Component {
 
   static id = 'example.Playground';
@@ -11,45 +9,30 @@ export default class PlaygroundScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      selectedIndex: 1,
     };
-
-    this.updateUsername = this.updateUsername.bind(this);
   }
 
-  updateUsername(username) {
-    this.setState({
-      username,
-    });
+  componentDidMount() {
   }
 
   render() {
-    return (
-      <View flex bg-dark40>
-        <Carousel loop pageWidth={PAGE_WIDTH}>
-          <View bg-red30 style={styles.page}><Text>1</Text></View>
-          <View bg-green30 style={styles.page}><Text>2</Text></View>
-          <View bg-blue30 style={styles.page}><Text>3</Text></View>
-          {/*<View bg-orange30 style={styles.page}><Text>4</Text></View>
-          <View bg-yellow30 style={styles.page}><Text>5</Text></View>*/}
-        </Carousel>
-      </View>
-    );
+    const {selectedIndex} = this.state;
 
-
-    const {username} = this.state;
     return (
-      <View flex paddingH-25 paddingT-120>
-        <View>
-          <Text left blue50 text20>Welcome</Text>
-        </View>
-        <TextInput text50 placeholder="username" dark10 value={username} onChangeText={this.updateUsername}/>
-        <TextInput text50 placeholder="password" secureTextEntry dark10/>
-        <View marginT-100 center>
-          <Button text70 white background-orange30 label="Login"/>
-          <Button link text70 orange30 label="Sign Up" marginT-20/>
-        </View>
+      <View flex style={styles.container}>
+        <TabBar
+          selectedIndex={selectedIndex}
+          onChangeIndex={index => this.setState({selectedIndex: index})}
+          ref={element => (this.tabbar = element)}
+        >
+          <TabBar.Item label="FEED" />
+          <TabBar.Item label="SERVICES" />
+          <TabBar.Item label="CHAT" />
+          <TabBar.Item>
+            <Text text90 purple30={selectedIndex === 3}>ABOUT</Text>
+          </TabBar.Item>
+        </TabBar>
       </View>
     );
   }
@@ -58,15 +41,6 @@ export default class PlaygroundScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
     backgroundColor: Colors.dark80,
   },
-  page: {
-    flex: 1,
-    width: PAGE_WIDTH,
-    borderWidth: 1,
-  },
 });
-
-
-Navigation.registerComponent('unicorn.PlaygroundScreen', () => PlaygroundScreen);

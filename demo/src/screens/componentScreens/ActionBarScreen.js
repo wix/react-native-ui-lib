@@ -20,13 +20,12 @@ export default class ActionBarScreen extends Component {
     return (
       <View flex bg-dark80 useSafeArea>
         <PageControl
-          containerStyle={styles.pageControl}
+          containerStyle={[styles.pageControl, styles.absoluteContainer]}
           numOfPages={6}
           currentPage={this.state.currentPage}
           color={Colors.dark10}
           size={15}
         />
-
         <Carousel
           onChangePage={currentPage => this.setState({currentPage})}
           initialPage={this.state.currentPage}
@@ -95,8 +94,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   pageControl: {
+    zIndex: 1,
+    width: Constants.screenWidth,
+  },
+  absoluteContainer: {
     position: 'absolute',
     bottom: 70,
-    width: Constants.screenWidth,
+    left: 0,
+    right: 0,
   },
 });
