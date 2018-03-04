@@ -18,7 +18,7 @@ export default class ActionBarScreen extends Component {
 
   render() {
     return (
-      <View flex bg-dark80 useSafeArea>
+      <View flex bg-dark80>
         <PageControl
           containerStyle={[styles.pageControl, styles.absoluteContainer]}
           numOfPages={6}
@@ -42,7 +42,7 @@ export default class ActionBarScreen extends Component {
 
           <View style={styles.page}>
             <ActionBar
-              style={{backgroundColor: Colors.blue30}}
+              backgroundColor={Colors.blue30}
               actions={[
                 {label: 'Hide', onPress: () => alert('hide'), white: true},
                 {label: 'Add Discount', onPress: () => alert('add discount'), white: true},
