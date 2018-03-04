@@ -113,7 +113,7 @@ export default class ConnectionStatusBar extends BaseComponent {
     }
 
     return (
-      <View useFaseArea style={this.styles.absoluteContainer}>
+      <View useSafeArea style={this.styles.absoluteContainer}>
         <View style={this.styles.container}>
           <View style={{flex: 1, flexDirection: 'row'}}>
             <Text style={this.styles.text}>{this.props.label}</Text>
