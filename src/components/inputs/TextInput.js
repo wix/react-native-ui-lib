@@ -270,7 +270,6 @@ export default class TextInput extends BaseInput {
       return (
         <Text
           style={this.styles.title}
-          text90
         >
           {capitalizedTitle}
         </Text>
@@ -285,8 +284,7 @@ export default class TextInput extends BaseInput {
       const color = this.isCounterLimit() ? charCountColorLimit : charCountColorDefault;
       return (
         <Text
-          style={{color}}
-          text90
+          style={[{color}, this.styles.charCounter]}
         >
           {counter} / {maxLength}
         </Text>
@@ -406,8 +404,8 @@ export default class TextInput extends BaseInput {
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
           {this.renderExpandableModal()}
         </View>
-        <View row flex>
-          <View flex-1>
+        <View row>
+          <View flex>
             {this.renderError()}
           </View>
           {this.renderCharCounter()}
@@ -505,9 +503,9 @@ function createStyles({
     },
     errorMessage: {
       color: Colors.red30,
+      textAlign: centered ? 'center' : undefined,
       ...Typography.text90,
       height: Typography.text90.lineHeight,
-      textAlign: centered ? 'center' : undefined,
       marginTop: 1,
     },
     expandableModalContent: {
@@ -518,7 +516,14 @@ function createStyles({
     title: {
       top: 0,
       color: titleColor,
+      ...Typography.text90,
+      height: Typography.text90.lineHeight,
       marginBottom: Constants.isIOS ? 5 : 4,
+    },
+    charCounter: {
+      ...Typography.text90,
+      height: Typography.text90.lineHeight,
+      marginTop: 1,
     },
   });
 }
