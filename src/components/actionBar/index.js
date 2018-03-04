@@ -91,10 +91,8 @@ function createStyles({height, backgroundColor}) {
       height,
     },
     absoluteContainer: {
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
+      ...StyleSheet.absoluteFillObject,
+      top: undefined,
       backgroundColor,
       ...Shadows.white40.top,
     },
