@@ -13,6 +13,13 @@ class SafeAreaInsetsManager {
     this._safeAreaInsets = this._defaultInsets;
     this._safeAreaChangedDelegates = [];
 
+    this.addSafeAreaChangedListener();
+  }
+
+  addSafeAreaChangedListener() {
+    if (!NativeSafeAreaManager) {
+      return;
+    }
     const NativeSafeAreaEvents = new NativeEventEmitter(NativeSafeAreaManager);
     NativeSafeAreaEvents.addListener('SafeAreaInsetsDidChangeEvent', (safeAreaInsets) => {
       SafeAreaInsetsCache = safeAreaInsets;
