@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {
   View,
   Colors,
@@ -8,7 +8,7 @@ import {
   TextArea,
   Typography,
 } from 'react-native-ui-lib'; //eslint-disable-line
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import {KeyboardAwareInsetsView} from 'react-native-keyboard-tracking-view';
 
 const LONG_TEXT = 'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer' +
   'Martín Bollati. In this piece';
@@ -37,136 +37,139 @@ export default class InputScreen extends Component {
 
   render() {
     return (
-      <KeyboardAwareScrollView
-        contentContainerStyle={styles.container}
-        keyboardShouldPersistTaps="always"
-        getTextInputRefs={() => [this.noUnderline, this.hugeText]}
-      >
-        <Text style={{marginBottom: 20}} text40>
-          Inputs
-        </Text>
-
-        <TextInput
-          text70
-          title="Title"
-          placeholder="character counter && error"
-          maxLength={3}
-          showCharacterCounter
-          onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
-          error={this.state.error}
-        />
-
-        <TextInput
-          text70
-          title="Title"
-          placeholder="character counter && error && multiline"
-          multiline
-          maxLength={32}
-          showCharacterCounter
-          onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
-          error={this.state.error}
-        />
-
-        <TextInput
-          text70
-          floatingPlaceholder
-          placeholder="underline colors && error"
-          onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
-          error={this.state.error}
-          underlineColor={{focus: Colors.purple50, error: Colors.yellow60}}
-        />
-
-        <TextInput
-          text70
-          floatingPlaceholder
-          placeholder="multiline && numberOfLines = 3"
-          multiline
-          numberOfLines={3}
-        />
-
-        <TextInput
-          text40
-          placeholder="write something.."
-          containerStyle={{marginBottom: INPUT_SPACING}}
-          hideUnderline
-        />
-
-        <TextInput
-          text30
-          placeholder="write something.."
-          containerStyle={{marginBottom: INPUT_SPACING}}
-          centered
-          hideUnderline
-        />
-
-        <TextInput
-          text70
-          placeholder="Share your story"
-          value={'Share Your Story exists to provide spaces to hear people\'s stories, in order to inspire us to live' +
-          'better ones ourselves.'
-          }
-          multiline
-        />
-
-        <TextInput
-          text70
-          floatingPlaceholder
-          placeholder="Tell us about yourself"
-          value={LONG_TEXT}
-          expandable
-          containerStyle={{marginBottom: INPUT_SPACING}}
-        />
-
-        <TextInput
-          text70
-          floatingPlaceholder
-          placeholder="with price transformer"
-          value={this.state.value}
-          transformer={transformPrice}
-        />
-
-        <Text dark40>Text Area</Text>
-        <View
-          style={{
-            height: 150,
-            borderWidth: 1,
-            marginBottom: INPUT_SPACING,
-            padding: 10,
-            borderColor: Colors.dark60,
-          }}
+      <View flex>
+        <ScrollView
+          contentContainerStyle={styles.container}
+          keyboardShouldPersistTaps="always"
+          getTextInputRefs={() => [this.noUnderline, this.hugeText]}
         >
-          <TextArea placeholder="write something.." />
-        </View>
+          <Text style={{marginBottom: 20}} text40>
+            Inputs
+          </Text>
 
-        <TextInput
-          text50
-          floatingPlaceholder
-          placeholder="Big Title Text"
-          containerStyle={{marginBottom: INPUT_SPACING}}
-        />
-        <TextInput
-          text20
-          placeholder="Huge Text"
-          containerStyle={{marginBottom: INPUT_SPACING}}
-          ref={input => (this.hugeText = input)}
-        />
+          <TextInput
+            text70
+            title="Title"
+            placeholder="character counter && error"
+            maxLength={3}
+            showCharacterCounter
+            onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
+            error={this.state.error}
+          />
 
-        <TextInput
-          text70
-          placeholder="No Underline"
-          containerStyle={{marginBottom: INPUT_SPACING}}
-          ref={input => (this.noUnderline = input)}
-          hideUnderline
-        />
+          <TextInput
+            text70
+            title="Title"
+            placeholder="character counter && error && multiline"
+            multiline
+            maxLength={32}
+            showCharacterCounter
+            onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
+            error={this.state.error}
+          />
 
-        <TextInput
-          text10
-          placeholder="Centered"
-          centered
-          containerStyle={{marginBottom: INPUT_SPACING}}
-          hideUnderline
-        />
-      </KeyboardAwareScrollView>
+          <TextInput
+            text70
+            floatingPlaceholder
+            placeholder="underline colors && error"
+            onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
+            error={this.state.error}
+            underlineColor={{focus: Colors.purple50, error: Colors.yellow60}}
+          />
+
+          <TextInput
+            text70
+            floatingPlaceholder
+            placeholder="multiline && numberOfLines = 3"
+            multiline
+            numberOfLines={3}
+          />
+
+          <TextInput
+            text40
+            placeholder="write something.."
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            hideUnderline
+          />
+
+          <TextInput
+            text30
+            placeholder="write something.."
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            centered
+            hideUnderline
+          />
+
+          <TextInput
+            text70
+            placeholder="Share your story"
+            value={'Share Your Story exists to provide spaces to hear people\'s stories, in order to inspire us to live' +
+            'better ones ourselves.'
+            }
+            multiline
+          />
+
+          <TextInput
+            text70
+            floatingPlaceholder
+            placeholder="Tell us about yourself"
+            value={LONG_TEXT}
+            expandable
+            containerStyle={{marginBottom: INPUT_SPACING}}
+          />
+
+          <TextInput
+            text70
+            floatingPlaceholder
+            placeholder="with price transformer"
+            value={this.state.value}
+            transformer={transformPrice}
+          />
+
+          <Text dark40>Text Area</Text>
+          <View
+            style={{
+              height: 150,
+              borderWidth: 1,
+              marginBottom: INPUT_SPACING,
+              padding: 10,
+              borderColor: Colors.dark60,
+            }}
+          >
+            <TextArea placeholder="write something.." />
+          </View>
+
+          <TextInput
+            text50
+            floatingPlaceholder
+            placeholder="Big Title Text"
+            containerStyle={{marginBottom: INPUT_SPACING}}
+          />
+          <TextInput
+            text20
+            placeholder="Huge Text"
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            ref={input => (this.hugeText = input)}
+          />
+
+          <TextInput
+            text70
+            placeholder="No Underline"
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            ref={input => (this.noUnderline = input)}
+            hideUnderline
+          />
+
+          <TextInput
+            text10
+            placeholder="Centered"
+            centered
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            hideUnderline
+          />
+        </ScrollView>
+        <KeyboardAwareInsetsView/>
+      </View>
     );
   }
 }

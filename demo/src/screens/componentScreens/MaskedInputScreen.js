@@ -13,7 +13,6 @@ import {
   Typography,
   MaskedInput,
 } from 'react-native-ui-lib'; //eslint-disable-line
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 
 export default class MaskedInputScreen extends Component {
   constructor(props) {
@@ -64,35 +63,37 @@ export default class MaskedInputScreen extends Component {
 
   render() {
     return (
-      <KeyboardAwareScrollView
-        contentContainerStyle={styles.container}
-        keyboardShouldPersistTaps="always"
-      >
-        <Text text40 marginB-20>
-          Masked Inputs
-        </Text>
+      <View flex>
+        <ScrollView
+          contentContainerStyle={styles.container}
+          keyboardShouldPersistTaps="always"
+        >
+          <Text text40 marginB-20>
+            Masked Inputs
+          </Text>
 
-        <Text text70 marginT-20>
-          Time Format
-        </Text>
-        <MaskedInput
-          ref={r => (this.minput = r)}
-          renderMaskedText={this.renderTimeText}
-          caretHidden
-          keyboardType={'numeric'}
-          maxLength={4}
-          value={'15'}
-        />
-        <Text text70 marginT-40>
-          Price/Discount
-        </Text>
-        <MaskedInput
-          renderMaskedText={this.renderPrice}
-          caretHidden
-          keyboardType={'numeric'}
-        />
+          <Text text70 marginT-20>
+            Time Format
+          </Text>
+          <MaskedInput
+            ref={r => (this.minput = r)}
+            renderMaskedText={this.renderTimeText}
+            caretHidden
+            keyboardType={'numeric'}
+            maxLength={4}
+            value={'15'}
+          />
+          <Text text70 marginT-40>
+            Price/Discount
+          </Text>
+          <MaskedInput
+            renderMaskedText={this.renderPrice}
+            caretHidden
+            keyboardType={'numeric'}
+          />
 
-      </KeyboardAwareScrollView>
+        </ScrollView>
+      </View>
     );
   }
 }
