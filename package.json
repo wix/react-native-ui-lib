@@ -62,6 +62,7 @@
     "react-dom": "^15.4.2",
     "react-native": "0.51.0",
     "react-native-keyboard-aware-scrollview": "^2.0.0",
+    "react-native-keyboard-tracking-view": "^5.3.2",
     "react-native-navigation": "^1.1.19"
   },
   "peerDependencies": {
