@@ -41,7 +41,11 @@ RCT_EXPORT_MODULE()
     UIEdgeInsets currentSafeAreaInsets = [self getCurrentSafeAreaInsets];
     if (!UIEdgeInsetsEqualToEdgeInsets(currentSafeAreaInsets, _cachedSafeAreaInsets)) {
         _cachedSafeAreaInsets = currentSafeAreaInsets;
-        [self sendEventWithName:SafeAreaInsetsDidChangeEvent body:[self getResultDicFromSafeArea:_cachedSafeAreaInsets]];
+        
+        NSUInteger listenerCount = [[self valueForKey:@"_listenerCount"] unsignedIntegerValue];
+        if (listenerCount > 0) {
+            [self sendEventWithName:SafeAreaInsetsDidChangeEvent body:[self getResultDicFromSafeArea:_cachedSafeAreaInsets]];
+        }
     }
 }
 

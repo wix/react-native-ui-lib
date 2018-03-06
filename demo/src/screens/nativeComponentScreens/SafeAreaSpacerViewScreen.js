@@ -21,7 +21,7 @@ export default class SafeAreaSpacerViewScreen extends PureComponent {
           </View>
         </ScrollView>
         <View style={styles.topView}>
-          <SafeAreaSpacerView spacerType={SafeAreaSpacerView.type.TOP}/>
+          <SafeAreaSpacerView/>
           <Text>{'This is an absolute position top view'}</Text>
         </View>
         <View style={styles.bottomView}>
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   topView: {
     position: 'absolute',
-    top: 20,
+    top: 0,
     left: 0,
   },
   bottomView: {
