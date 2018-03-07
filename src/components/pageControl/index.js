@@ -8,9 +8,10 @@ import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 
-function getColorStyle(color, index, currentPage) {
+function getColorStyle(color, inactiveColor, index, currentPage) {
   const compColor = color || ThemeManager.primaryColor;
-  return {borderColor: compColor, backgroundColor: (index === currentPage) ? compColor : 'transparent'};
+  return {borderColor: (index === currentPage) ? compColor : inactiveColor || compColor,
+    backgroundColor: (index === currentPage) ? compColor : inactiveColor || 'transparent'};
 }
 
 /**
@@ -38,9 +39,13 @@ export default class PageControl extends BaseComponent {
      */
     onPagePress: PropTypes.func,
     /**
-     * Color of the selected page dot and the border of the not selected pages
+     * Color of the selected page dot and, if inactiveColor not passed, the border of the not selected pages
      */
     color: PropTypes.string,
+    /**
+     * Color of the unselected page dots and the border of the not selected pages
+     */
+    inactiveColor: PropTypes.string,
     /**
      * The size of the page indicator
      */
@@ -52,7 +57,7 @@ export default class PageControl extends BaseComponent {
   }
 
   render() {
-    const {numOfPages, currentPage, color, containerStyle, onPagePress} = this.props;
+    const {numOfPages, currentPage, color, inactiveColor, containerStyle, onPagePress} = this.props;
     return (
       <View style={[this.styles.container, containerStyle]}>
         {
@@ -61,7 +66,7 @@ export default class PageControl extends BaseComponent {
               disabled={_.isUndefined(onPagePress)}
               onPress={() => onPagePress && onPagePress(index)}
               key={index}
-              style={[this.styles.pageIndicator, getColorStyle(color, index, currentPage)]}
+              style={[this.styles.pageIndicator, getColorStyle(color, inactiveColor, index, currentPage)]}
             />)
         }
       </View>
@@ -76,10 +81,10 @@ function createStyles(size = 10) {
       alignItems: 'center',
       justifyContent: 'center',
     },
-    pageView: {
-      width: Constants.screenWidth,
-      height: Constants.screenHeight,
-    },
+    // pageView: {
+    //   width: Constants.screenWidth,
+    //   height: Constants.screenHeight,
+    // },
     pageIndicator: {
       backgroundColor: 'transparent',
       borderWidth: 1,
