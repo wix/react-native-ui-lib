@@ -31,7 +31,7 @@ export default class LoaderScreen extends BaseComponent {
      */
     messageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
-    * Show the screen as an overlay
+    * Show the screen as an absolute overlay
     */
     overlay: PropTypes.bool,
   };
