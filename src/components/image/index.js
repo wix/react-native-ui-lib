@@ -51,7 +51,7 @@ class Image extends BaseComponent {
     }
 
     const {source} = this.props;
-    if (_.get(source, 'uri') === null) {
+    if (_.get(source, 'uri') === null || _.get(source, 'uri') === '') {
       return {...source, uri: undefined};
     }
 

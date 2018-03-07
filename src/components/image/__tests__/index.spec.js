@@ -59,5 +59,10 @@ describe('Image', () => {
       const uut = new Image({source: {uri: null}});
       expect(uut.getImageSource()).toEqual({uri: undefined});
     });
+
+    it('should handle when source sent with uri is empty string', () => {
+      const uut = new Image({source: {uri: ''}});
+      expect(uut.getImageSource()).toEqual({uri: undefined});
+    });
   });
 });
