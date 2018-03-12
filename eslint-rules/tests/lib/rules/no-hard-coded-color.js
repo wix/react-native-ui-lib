@@ -1,37 +1,85 @@
 
-const _ = require('lodash');
-const Colors  = require('../../../../dist/style/colors').colorsPallete;
+const _ = require('lodash')
+const Colors = require('../../../../dist/style/colors').colorsPallete
+
 const invertedColorsDict = _.invert(Colors)
-const rule = require('../../../lib/rules/no-hard-coded-color');
-const RuleTester = require('eslint').RuleTester;
+const rule = require('../../../lib/rules/no-hard-coded-color')
+const RuleTester = require('eslint').RuleTester
 
 RuleTester.setDefaultConfig({
-  parser: "babel-eslint",
-  parserOptions: { ecmaVersion: 6, ecmaFeatures: { jsx: true } },
-});
+  parser: 'babel-eslint',
+  parserOptions: { ecmaVersion: 6, ecmaFeatures: { jsx: true } }
+})
+const invalidStyleSheetExample = `StyleSheet.create({
+  container: {
+    padding: 5,
+    backgroundColor: '${Colors.dark30}'
+  }
+})
+`
 
-const ruleTester = new RuleTester();
+const validStyleSheetExample = `StyleSheet.create({
+  container: {
+    padding: 5,
+    backgroundColor: Colors.dark30
+  }
+})
+`
+
+const invalidConditionalExpression = `const test = <Text style = {{ color: true ? '${Colors.dark10}' : '${Colors.dark20}'}}> </Text>;`
+const validConditionalExpression = `const test = <Text style = {{ color: true ? Colors.dark10 : Colors.dark20}}> </Text>;`
+
+const invalidIdentifierExample = `
+  const x = true ? '${Colors.dark10}' : '${Colors.dark20}'
+  const test = <Text style = {{ color: x }}> </Text>;
+`
+const validIdentifierExample = `
+  const x = true ? Colors.dark10 : Colors.dark20
+  const test = <Text style = {{ color: x }}> </Text>;
+`
+const ruleTester = new RuleTester()
 
 ruleTester.run('no-hard-coded-color', rule, {
   valid: [
     { code: 'const goodUsage = <Text style={{color: Constants.dark10}}/>;' },
-    { code: 'const goodUsage = <View style={{backgroundColor: Constants.blue20}}/>;' },
+    { code: 'const goodUsage = <View style={{backgroundColor: Constants.blue20}}/>;' }
   ],
   invalid: [
     {
-      code: `const badUsage = <Text style = {{ color: \'${Colors.dark10}\'}}> </Text>;`,
-      output: `const badUsage = <Text style = {{ color: Colors.dark10}}> </Text>;`,
-      parserOptions: { ecmaVersion: 6, ecmaFeatures: { jsx: true } },
+      code: invalidStyleSheetExample,
+      output: validStyleSheetExample,
       errors: [
-          { message: "Use UILib colors instead of hardcoded colors." }
-      ] 
+        { messageId: 'uiLib' }
+      ]
+    },
+    {
+      code: invalidConditionalExpression,
+      output: validConditionalExpression,
+      errors: [
+        { messageId: 'uiLib' },
+        { messageId: 'uiLib' }
+      ]
+    },
+    {
+      code: invalidIdentifierExample,
+      output: validIdentifierExample,
+      errors: [
+        { messageId: 'uiLib' },
+        { messageId: 'uiLib' }
+      ]
+    },
+    {
+      code: `const badUsage = <Text style = {{ color: '${Colors.dark10}'}}> </Text>;`,
+      output: `const badUsage = <Text style = {{ color: Colors.dark10}}> </Text>;`,
+      errors: [
+        { messageId: 'uiLib' }
+      ]
     },
     {
       code: 'const badUsage = <Text style={{color: \'#123456\'}}/>;',
-      parserOptions: { ecmaVersion: 6, ecmaFeatures: { jsx: true } },
       errors: [
-          { message: "Use UILib colors instead of hardcoded colors." }
+        { messageId: 'uiLib' }
       ]
-    },
-  ],
-});
+    }
+  ]
+})
