@@ -71,6 +71,8 @@ export default class InputScreen extends Component {
           <TextInput
             text70
             floatingPlaceholder
+            placeholderTextColor={Colors.cyan30}
+            floatingPlaceholderColor={Colors.cyan30}
             placeholder="underline colors && error"
             onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
             error={this.state.error}

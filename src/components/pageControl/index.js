@@ -1,16 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {StyleSheet} from 'react-native';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {StyleSheet} from 'react-native';
 import {ThemeManager} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 
+
 function getColorStyle(color, inactiveColor, index, currentPage) {
   const compColor = color || ThemeManager.primaryColor;
   return {borderColor: (index === currentPage) ? compColor : inactiveColor || compColor,
     backgroundColor: (index === currentPage) ? compColor : inactiveColor || 'transparent'};
+}
+
+function getSizeStyle(size, enlargeActive, index, currentPage) {
+  const temp = enlargeActive ? ((index === currentPage) ? size + 3 : size) : size;
+  return {width: temp, height: temp, borderRadius: temp / 2};
 }
 
 /**
@@ -49,23 +55,34 @@ export default class PageControl extends BaseComponent {
      * The size of the page indicator
      */
     size: PropTypes.number,
+    /**
+     * Whether to enlarge the active page indicator
+     */
+    enlargeActive: PropTypes.bool,
   };
 
-  generateStyles() {
-    this.styles = createStyles(this.props.size);
-  }
+  static defaultProps = {
+    size: 10,
+    enlargeActive: false,
+  };
 
   render() {
-    const {numOfPages, currentPage, color, inactiveColor, containerStyle, onPagePress} = this.props;
+    const {numOfPages, currentPage, color, inactiveColor, containerStyle, onPagePress, size, enlargeActive}
+      = this.props;
+
     return (
-      <View style={[this.styles.container, containerStyle]}>
+      <View style={[styles.container, containerStyle]}>
         {
           _.map([...new Array(numOfPages)], (item, index) =>
             <TouchableOpacity
               disabled={_.isUndefined(onPagePress)}
               onPress={() => onPagePress && onPagePress(index)}
               key={index}
-              style={[this.styles.pageIndicator, getColorStyle(color, inactiveColor, index, currentPage)]}
+              style={[
+                styles.pageIndicator,
+                getColorStyle(color, inactiveColor, index, currentPage),
+                getSizeStyle(size, enlargeActive, index, currentPage),
+              ]}
             />)
         }
       </View>
@@ -73,25 +90,16 @@ export default class PageControl extends BaseComponent {
   }
 }
 
-function createStyles(size = 10) {
-  return StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    // pageView: {
-    //   width: Constants.screenWidth,
-    //   height: Constants.screenHeight,
-    // },
-    pageIndicator: {
-      backgroundColor: 'transparent',
-      borderWidth: 1,
-      marginRight: 2,
-      marginLeft: 2,
-      width: size,
-      height: size,
-      borderRadius: size / 2,
-    },
-  });
-}
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  pageIndicator: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    marginRight: 2,
+    marginLeft: 2,
+  },
+});

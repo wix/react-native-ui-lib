@@ -17,7 +17,7 @@ export default class PageControlScreen extends Component {
         <PageControl containerStyle={containerStyle} numOfPages={10} currentPage={4} color={Colors.purple40}/>
         <PageControl containerStyle={containerStyle} numOfPages={10} currentPage={5} color={Colors.violet40} size={20}/>
         <PageControl containerStyle={containerStyle} numOfPages={10} currentPage={6} color={Colors.orange40} size={20}/>
-        <PageControl containerStyle={containerStyle} numOfPages={10} currentPage={6} inactiveColor={Colors.dark70}/>
+        <PageControl containerStyle={containerStyle} numOfPages={10} currentPage={6} inactiveColor={Colors.dark70} enlargeActive/>
       </ScrollView>
     );
   }
