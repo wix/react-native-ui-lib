@@ -59,15 +59,20 @@ export default class PageControl extends BaseComponent {
      * Whether to enlarge the active page indicator
      */
     enlargeActive: PropTypes.bool,
+    /**
+     * The space between the siblings page indicators
+     */
+    spacing: PropTypes.number,
   };
 
   static defaultProps = {
     size: 10,
+    spacing: 4,
     enlargeActive: false,
   };
 
   render() {
-    const {numOfPages, currentPage, color, inactiveColor, containerStyle, onPagePress, size, enlargeActive}
+    const {numOfPages, currentPage, color, inactiveColor, containerStyle, onPagePress, size, spacing, enlargeActive}
       = this.props;
 
     return (
@@ -80,6 +85,7 @@ export default class PageControl extends BaseComponent {
               key={index}
               style={[
                 styles.pageIndicator,
+                {marginRight: spacing / 2, marginLeft: spacing / 2},
                 getColorStyle(color, inactiveColor, index, currentPage),
                 getSizeStyle(size, enlargeActive, index, currentPage),
               ]}
@@ -99,7 +105,5 @@ const styles = StyleSheet.create({
   pageIndicator: {
     backgroundColor: 'transparent',
     borderWidth: 1,
-    marginRight: 2,
-    marginLeft: 2,
   },
 });
