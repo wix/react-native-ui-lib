@@ -15,7 +15,7 @@ function getColorStyle(color, inactiveColor, index, currentPage) {
 }
 
 function getSizeStyle(size, enlargeActive, index, currentPage) {
-  const temp = enlargeActive ? ((index === currentPage) ? size + 3 : size) : size;
+  const temp = enlargeActive ? ((index === currentPage) ? size + 2 : size) : size;
   return {width: temp, height: temp, borderRadius: temp / 2};
 }
 
