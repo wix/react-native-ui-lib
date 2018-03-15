@@ -2,7 +2,7 @@ language: node_js
 node_js:
 - "8"
 install: npm install
-# before_deploy: npm run bump:patch
+before_deploy: npm run travis:patch
 deploy:
   provider: npm
   email: "${NPM_EMAIL}"
@@ -13,3 +13,4 @@ deploy:
     repo: wix/react-native-ui-lib
     # script: scripts/deploy.sh
   skip_cleanup: true
+after_deploy: npm run unicorn:publish

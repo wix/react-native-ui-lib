@@ -6,7 +6,10 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "scripts": {},
+  "scripts": {
+    "bump:patch": "npm version from-git patch -m 'Bumping unicorn version'",
+    "publish": "npm-public && npm publish && npm-wix"
+  },
   "devDependencies": {
     "react-native-ui-lib": "*"
   },
