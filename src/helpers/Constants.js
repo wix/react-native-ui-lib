@@ -10,3 +10,4 @@ export const screenHeight = height;
 export const isSmallScreen = isIOS ? (screenWidth <= 320) : (screenWidth <= 360);
 export const isShortScreen = screenHeight <= 600;
 export const statusBarHeight = isIOS ? 20 : StatusBarManager.HEIGHT;
+export const isIphoneX = isIOS && !Platform.isPad && !Platform.isTVOS && (screenHeight === 812 || screenWidth === 812);

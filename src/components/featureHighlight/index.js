@@ -40,7 +40,7 @@ class FeatureHighlight extends BaseComponent {
      */
     visible: PropTypes.bool,
     /**
-     * Frame of the area to highlight
+     * Frame of the area to highlight {x, y, width, height}
      */
     highlightFrame: PropTypes.shape({
       x: PropTypes.number,
