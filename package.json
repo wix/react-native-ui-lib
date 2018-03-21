@@ -1,6 +1,6 @@
 {
   "name": "react-native-ui-lib",
-  "version": "3.3.33",
+  "version": "3.3.34",
   "main": "index.js",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "publishConfig": {
@@ -71,22 +71,16 @@
   },
   "jest": {
     "preset": "react-native",
-    "testPathIgnorePatterns": [
-      "/e2e/",
-      "/node_modules/"
-    ]
+    "testPathIgnorePatterns": ["/e2e/", "/node_modules/"],
+    "setupFiles": ["./jest-setup.js"]
   },
   "babel": {
     "env": {
       "test": {
-        "presets": [
-          "react-native"
-        ],
+        "presets": ["react-native"],
         "retainLines": true
       }
     },
-    "plugins": [
-      "transform-inline-environment-variables"
-    ]
+    "plugins": ["transform-inline-environment-variables"]
   }
 }
