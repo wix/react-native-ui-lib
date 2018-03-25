@@ -278,10 +278,11 @@ export default class TextInput extends BaseInput {
   }
 
   renderCharCounter() {
+    const {focused} = this.state;
     const {maxLength, showCharacterCounter} = this.props;
     if (maxLength && showCharacterCounter) {
       const counter = this.getCharCount();
-      const color = this.isCounterLimit() ? charCountColorLimit : charCountColorDefault;
+      const color = this.isCounterLimit() && focused ? charCountColorLimit : charCountColorDefault;
       return (
         <Text
           style={[{color}, this.styles.charCounter]}
