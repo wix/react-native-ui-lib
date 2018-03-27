@@ -1,7 +1,5 @@
 import TextInput from '../TextInput';
-import {Constants} from '../../../helpers';
-import {Typography, Colors} from '../../../style';
-
+import {Colors} from '../../../style';
 
 describe('TextInput', () => {
   // beforeEach(() => {});
@@ -50,42 +48,6 @@ describe('TextInput', () => {
     });
   });
 
-  describe('getHeight', () => {
-    it('when not multiline, should setState not be called', () => {
-      const uut = new TextInput({});
-      jest.spyOn(uut, 'setState').mockImplementation(() => {});
-      uut.getHeight();
-      expect(uut.setState).not.toHaveBeenCalled();
-    });
-
-    it('should iOS, when only multiline, setState height with undefined', () => {
-      const uut = new TextInput({multiline: true});
-      jest.spyOn(uut, 'setState').mockImplementation(() => {});
-      uut.getHeight();
-      expect(uut.setState.height).toBeUndefined();
-    });
-
-    it('should iOS, when multiline and numberOfLines, setState height with typography * numberOfLines', () => {
-      const uut = new TextInput({multiline: true, numberOfLines: 2});
-      jest.spyOn(uut, 'setState').mockImplementation(() => {});
-      jest.spyOn(uut, 'getTypography');
-      uut.getTypography.mockReturnValue(Typography.text70);
-      const lineHeight = Typography.text70.lineHeight;
-      const {numberOfLines} = uut.props;
-      const boxHeight = lineHeight * numberOfLines;
-      uut.getHeight();
-      expect(uut.setState).toHaveBeenCalledWith({height: boxHeight});
-    });
-
-    it('should Android, when multiline and numberOfLines, setState not be called', () => {
-      mockAndroid();
-      const uut = new TextInput({multiline: true, numberOfLines: 2});
-      jest.spyOn(uut, 'setState').mockImplementation(() => {});
-      uut.getHeight();
-      expect(uut.setState).not.toHaveBeenCalled();
-    });
-  });
-
   describe('getCharCount', () => {
     it('should return 5 when value is "inbal"', () => {
       const uut = new TextInput({value: 'inbal'});
@@ -108,8 +70,3 @@ describe('TextInput', () => {
     });
   });
 });
-
-function mockAndroid() {
-  Constants.isIOS = false;
-  Constants.isAndroid = true;
-}

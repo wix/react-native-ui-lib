@@ -188,23 +188,11 @@ export default class TextInput extends BaseInput {
   }
 
   getHeight() {
-    const {multiline, numberOfLines} = this.props;
-    if (multiline && numberOfLines) {
-      if (Constants.isAndroid) {
-        return undefined;
-      } else if (!this.state.height) {
-        // get numberOfLines support for iOS
-        this.setState({height: this.getLinesHeightLimit()});
-      }
+    const {multiline} = this.props;
+    if (!multiline) {
+      const typography = this.getTypography();
+      return typography.lineHeight;
     }
-
-    if (multiline) {
-      const {height} = this.state;
-      return height;
-    }
-
-    const typography = this.getTypography();
-    return typography.lineHeight;
   }
 
   getLinesHeightLimit() {
@@ -353,7 +341,7 @@ export default class TextInput extends BaseInput {
   }
 
   renderTextInput() {
-    const {value, height} = this.state;
+    const {value} = this.state;
     const color = this.props.color || this.extractColorValue();
     const typography = this.getTypography();
     const {
@@ -369,7 +357,7 @@ export default class TextInput extends BaseInput {
       this.styles.input,
       typography,
       color && {color},
-      {height},
+      {height: this.getHeight()},
       style,
     ];
 
