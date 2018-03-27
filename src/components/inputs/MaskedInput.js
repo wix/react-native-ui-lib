@@ -54,10 +54,7 @@ export default class MaskedInput extends BaseInput {
   }
 
   render() {
-
-    const { hideUnderline } = this.props;
-
-    const {containerStyle} = this.props;
+    const {containerStyle, hideUnderline} = this.props;
     return (
       <View style={[containerStyle]}>
         <TextInput
@@ -85,8 +82,9 @@ export default class MaskedInput extends BaseInput {
 }
 
 MaskedInput.defaultProps = {
-  hideUnderline: true
-}
+  hideUnderline: true;
+};
+
 const styles = StyleSheet.create({
   hiddenInputContainer: {
     ...StyleSheet.absoluteFillObject,
