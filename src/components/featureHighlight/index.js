@@ -118,6 +118,10 @@ class FeatureHighlight extends BaseComponent {
     innerPadding: 10,
   };
 
+  componentDidMount() {
+    this.setTargetPosition();
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setTargetPosition(nextProps);
   }
@@ -127,29 +131,27 @@ class FeatureHighlight extends BaseComponent {
   }
 
   setTargetPosition(props = this.props) {
-    if (!this.state.node) {
-      if (props.getTarget !== undefined) {
-        const target = props.getTarget();
+    if (props.getTarget !== undefined) {
+      const target = props.getTarget();
 
-        const node = this.findTargetNode(target);
-        this.setState({node});
+      const node = this.findTargetNode(target);
+      this.setState({node});
 
-        if (target) {
-          setTimeout(() => {
-            target.measureInWindow((x, y, width, height) => {
-              this.setState({
-                targetPosition: {left: x, top: y, width, height},
-              });
+      if (target) {
+        setTimeout(() => {
+          target.measureInWindow((x, y, width, height) => {
+            this.setState({
+              targetPosition: {left: x, top: y, width, height},
             });
-          }, 0);
-        }
-      } else {
-        const frame = props.highlightFrame;
-        if (frame) {
-          this.setState({
-            targetPosition: {left: frame.x, top: frame.y, width: frame.width, height: frame.height},
           });
-        }
+        }, 0);
+      }
+    } else {
+      const frame = props.highlightFrame;
+      if (frame) {
+        this.setState({
+          targetPosition: {left: frame.x, top: frame.y, width: frame.width, height: frame.height},
+        });
       }
     }
   }
