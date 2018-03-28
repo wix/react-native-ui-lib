@@ -118,9 +118,13 @@ class FeatureHighlight extends BaseComponent {
     innerPadding: 10,
   };
 
-  componentWillReceiveProps(nextProps) {
-    this.setTargetPosition(nextProps);
+  componentDidMount() {
+    this.setTargetPosition();
   }
+
+  // componentWillReceiveProps(nextProps) {
+  //   this.setTargetPosition(nextProps);
+  // }
 
   findTargetNode(target) {
     return findNodeHandle(target);
