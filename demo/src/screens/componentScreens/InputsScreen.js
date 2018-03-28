@@ -66,6 +66,7 @@ export default class InputScreen extends Component {
             showCharacterCounter
             onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
             error={this.state.error}
+            autoCapitalize="words"
           />
 
           <TextInput
