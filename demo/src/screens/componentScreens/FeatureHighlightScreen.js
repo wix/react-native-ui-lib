@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {Constants, View, Text, Button, Image, FeatureHighlight} from 'react-native-ui-lib'; // eslint-disable-line
 
@@ -26,6 +27,14 @@ class FeatureHighlightScreen extends Component {
     this.setState({showFTE: true});
   }
 
+  addTarget(ref) {
+    if (ref != null) {
+      if (!_.find(this.targets, {props: {testID: ref.props.testID}})) {
+        this.targets.push(ref);
+      }
+    }
+  }
+
   renderHighlighterOverlay() {
     const {showFTE} = this.state;
     return (
@@ -47,19 +56,20 @@ class FeatureHighlightScreen extends Component {
       <View flex>
         <View row flex>
           <View left>
-            <View marginT-40 br100 bg-yellow10 style={{width: 32, height: 32}} ref={r => (this.targets.push(r))}/>
-            <View marginT-40 bg-red10 style={{width: 12, height: 12}} ref={r => (this.targets.push(r))}/>
+            <View marginT-40 br100 bg-yellow10 style={{width: 32, height: 32}} testID={'0'} ref={r => (this.addTarget(r))}/>
+            <View marginT-40 bg-red10 style={{width: 12, height: 12}} testID={'1'} ref={r => (this.addTarget(r))}/>
           </View>
           <View right flex>
             <View row flex>
-              <View marginT-40 marginR-60 bg-cyan30 style={{width: 50, height: 70}} ref={r => (this.targets.push(r))}/>
-              <View marginT-40 bg-violet30 style={{width: 70, height: 50}} ref={r => (this.targets.push(r))}/>
+              <View marginT-40 marginR-60 bg-cyan30 style={{width: 50, height: 70}} testID={'2'} ref={r => (this.addTarget(r))}/>
+              <View marginT-40 bg-violet30 style={{width: 70, height: 50}} testID={'3'} ref={r => (this.addTarget(r))}/>
             </View>
             <View
               marginT-40 marginR-50
               bg-purple40
               style={{width: 150, height: 56}}
-              ref={r => (this.targets.push(r))}
+              testID={'4'}
+              ref={r => (this.addTarget(r))}
             />
           </View>
         </View>
@@ -72,7 +82,7 @@ class FeatureHighlightScreen extends Component {
               into electronic typesetting, <Text>remaining</Text> essentially unchanged.
             </Text>
           </View>
-          <View marginT-20 ref={r => (this.targets.push(r))}>
+          <View marginT-20 testID={'5'} ref={r => (this.addTarget(r))}>
             <Button label="Show Overlay" onPress={this.showHighlight}/>
           </View>
         </View>
