@@ -254,12 +254,11 @@ export default class TextInput extends BaseInput {
   renderTitle() {
     const {floatingPlaceholder, title} = this.props;
     if (!floatingPlaceholder && title) {
-      const capitalizedTitle = _.capitalize(title);
       return (
         <Text
           style={this.styles.title}
         >
-          {capitalizedTitle}
+          {title}
         </Text>
       );
     }
