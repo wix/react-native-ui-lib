@@ -8,7 +8,7 @@
   },
   "scripts": {
     "bump:patch": "npm version patch -m 'Update unicorn-demo-app to v%s'",
-    "publish": "npm-public && npm publish && npm-wix"
+    "release:patch": "npm run bump:patch && git push"
   },
   "devDependencies": {
     "react-native-ui-lib": "*"
