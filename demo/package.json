@@ -7,7 +7,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "bump:patch": "npm version from-git patch -m 'Bumping unicorn version'",
+    "bump:patch": "npm version patch -m 'Update unicorn-demo-app to v%s'",
     "publish": "npm-public && npm publish && npm-wix"
   },
   "devDependencies": {

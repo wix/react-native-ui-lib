@@ -26,8 +26,8 @@
     "docs:deploy": "(cd ./uilib-docs && gatsby build --prefix-paths && gh-pages -d public --branch gh-pages)",
     "docs:develop": "(cd ./uilib-docs && gatsby develop)",
     "bump:patch": "npm version patch -m 'Update module to v%s'",
-    "unicorn:bump:patch": "cd ./demo && bump:patch",
-    "travis:patch": "bump:patch && unicorn:bump:patch && docs:deploy",
+    "unicorn:bump:patch": "(cd ./demo && bump:patch)",
+    "release:patch": "bump:patch && unicorn:bump:patch && docs:deploy && git push",
     "unicorn:publish": "cd ./demo && npm run publish"
   },
   "dependencies": {
