@@ -27,7 +27,7 @@
     "docs:develop": "(cd ./uilib-docs && gatsby develop)",
     "bump:patch": "npm version patch -m 'Update module to v%s'",
     "unicorn:bump:patch": "(cd ./demo && npm run bump:patch)",
-    "release:patch": "npm run bump:patch && npm run unicorn:bump:patch && git push",
+    "release:patch": "npm run bump:patch && git push",
     "unicorn:publish": "cd ./demo && npm run publish"
   },
   "dependencies": {
