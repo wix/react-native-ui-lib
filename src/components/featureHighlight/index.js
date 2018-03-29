@@ -73,6 +73,10 @@ class FeatureHighlight extends BaseComponent {
      */
     confirmButtonProps: PropTypes.object,
     /**
+     * Callback for the background press
+     */
+    onBackgroundPress: PropTypes.func,
+    /**
      * Color of the content's background (usually includes alpha for transparency)
      */
     overlayColor: PropTypes.string,
@@ -217,9 +221,8 @@ class FeatureHighlight extends BaseComponent {
 
   render() {
     const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding,
-      confirmButtonProps} = this.getThemeProps();
+      onBackgroundPress} = this.getThemeProps();
     const {node, targetPosition} = this.state;
-    const {onPress} = confirmButtonProps;
 
     return (
       <HighlighterOverlayView
@@ -233,7 +236,7 @@ class FeatureHighlight extends BaseComponent {
         minimumRectSize={minimumRectSize}
         innerPadding={innerPadding}
       >
-        <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onPress}>
+        <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onBackgroundPress}>
           <View flex/>
         </TouchableWithoutFeedback>
         {targetPosition && this.renderHighlightMessage()}

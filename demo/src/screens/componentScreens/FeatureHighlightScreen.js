@@ -2,6 +2,20 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {Constants, View, Text, Button, Image, FeatureHighlight} from 'react-native-ui-lib'; // eslint-disable-line
 
+const titles = ['Get Notified', 'Title two is a long title that will get cut', 'Title number three',
+  'Title number four', 'Title number five', 'Title number six'];
+const messages = [
+  'Important notifications appear right on your clubs and groups. Tap them to get more information about the most' +
+  'important things that you should pay attention to.',
+  'Short message with information about the above highlighted feature',
+  'A long message, that will get cut, with information about the highlighted feature, like: Important notifications' +
+  ' appear right on your clubs and groups. Tap them to get the important things that you should pay attention to.',
+  'Very short message',
+  'Short message with information about the below highlighted feature',
+  'Important notifications appear right on your clubs and groups. Tap them to get more information about the most' +
+  'important things that you should pay attention to.',
+];
+
 class FeatureHighlightScreen extends Component {
 
   constructor(props) {
@@ -51,15 +65,15 @@ class FeatureHighlightScreen extends Component {
   }
 
   renderHighlighterOverlay() {
-    const {showFTE} = this.state;
+    const {showFTE, currentTargetIndex} = this.state;
     return (
       <FeatureHighlight
         visible={showFTE}
-        title="Get Notified"
-        message="Important notifications appear right on your clubs and groups.
-            Tap them to get more information about the most important things that you should pay attention to."
+        title={titles[currentTargetIndex]}
+        message={messages[currentTargetIndex]}
         confirmButtonProps={{label: 'Got It', onPress: this.moveNext}}
-        getTarget={() => this.targets[this.state.currentTargetIndex]}
+        onBackgroundPress={this.closeHighlight}
+        getTarget={() => this.targets[currentTargetIndex]}
         // highlightFrame={{x: 30, y: 70, width: 150, height: 30}}
         // highlightFrame={{x: 175, y: 334, width: 150, height: 56}}
       />
@@ -85,7 +99,8 @@ class FeatureHighlightScreen extends Component {
                 marginT-40 marginR-60 bg-cyan30
                 style={{width: 50, height: 70}}
                 testID={'2'}
-                ref={r => (this.addTarget(r))}/>
+                ref={r => (this.addTarget(r))}
+              />
               <View marginT-40 bg-violet30 style={{width: 70, height: 50}} testID={'3'} ref={r => (this.addTarget(r))}/>
             </View>
             <View
