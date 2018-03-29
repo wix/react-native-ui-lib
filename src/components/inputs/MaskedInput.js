@@ -82,7 +82,7 @@ export default class MaskedInput extends BaseInput {
 }
 
 MaskedInput.defaultProps = {
-  hideUnderline: true
+  hideUnderline: true,
 };
 
 const styles = StyleSheet.create({
