@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {BlurView} from 'react-native-blur';
 import {View, Modal as RNModal} from 'react-native';
+import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import TopBar from './TopBar';
 
@@ -20,7 +21,7 @@ export default class Modal extends BaseComponent {
 
   render() {
     const {enableModalBlur, ...others} = this.props;
-    const Container = enableModalBlur ? BlurView : View;
+    const Container = enableModalBlur && Constants.isIOS ? BlurView : View;
     return (
       <RNModal {...others}>
         <Container style={{flex: 1}} blurType="light">
