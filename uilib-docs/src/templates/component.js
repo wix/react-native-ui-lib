@@ -96,7 +96,7 @@ export default class ComponentTemplate extends Component {
 
   render() {
     const {pathContext} = this.props;
-    const selectedComponent = pathContext.component;
+    const selectedComponent = pathContext.componentNode;
     const componentInfo = this.extractComponentsInfo(selectedComponent);
     const componentProps = _.get(selectedComponent, 'props');
     const gifs = componentInfo.gif ? componentInfo.gif.split(',') : undefined;
