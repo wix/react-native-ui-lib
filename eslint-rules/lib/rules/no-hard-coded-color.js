@@ -45,6 +45,7 @@ module.exports = {
         if (property.key) {
           const propName = property.key.name
           if (propIsColor(propName)) {
+            //context.getAncestors()[0].body.filter(a => a.type === 'VariableDeclaration').map(vardec => vardec.declarations[0].id.name)
             findAndReportHardCodedValues(property.value, reportAndFixHardCodedColorString, context.getScope())
           }
         }
