@@ -16,6 +16,9 @@ import TopBar from './TopBar';
 export default class Modal extends BaseComponent {
   static displayName = 'Modal';
   static propTypes = {
+    /**
+     * Blurs the modal background when transparent (iOS only)
+     */
     enableModalBlur: PropTypes.bool,
   };
 
