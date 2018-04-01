@@ -174,8 +174,7 @@ export default class Avatar extends BaseComponent {
   }
 
   render() {
-    const {label, labelColor: color, imageSource, backgroundColor, onPress, testID} = this.props;
-    const containerStyle = this.extractContainerStyle(this.props);
+    const {label, labelColor: color, imageSource, backgroundColor, onPress, containerStyle, testID} = this.props;
     const Container = onPress ? TouchableOpacity : View;
     const hasImage = !_.isUndefined(imageSource);
 
