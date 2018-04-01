@@ -24,10 +24,10 @@ const defaultButtonLabel = 'Got it';
 /**
  * @description: FeatureHighlight component for feature discovery
  * @notes: 1) FeatureHighlight component must be a direct child of the root view returned in render()., 2) If the element to be highlighted doesn't have a style attribute add 'style={{opacity: 1}}' so the Android OS can detect it.
+ * @important: FeatureHighlight uses a native library. You MUST add and link the native library to both iOS and Android projects. For instruction please see
+ * @importantLink: https://facebook.github.io/react-native/docs/linking-libraries-ios.html
  * @extends: HighlighterOverlayView
  * @extendslink: docs/HighlighterOverlayView
- * @notes: 1) The component MUST be a direct child of the root view returned in render()., 2) If the element to be highlighted doesn't have a style attribute add 'style={{opacity: 1}}' so the Android OS can detect it.
- * @extends: HighlighterOverlayView
  * @gif: https://media.giphy.com/media/3ohs4D5irZm5GojsDS/giphy.gif, https://media.giphy.com/media/3oxQNaDQckPZI78rWo/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.js
  */
@@ -38,7 +38,7 @@ class FeatureHighlight extends BaseComponent {
     /**
      * Boolean to determine if to present the feature highlight component
      */
-    visible: PropTypes.bool,
+    visible: PropTypes.bool.isRequired,
     /**
      * Frame of the area to highlight {x, y, width, height}
      */
