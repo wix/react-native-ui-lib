@@ -2,9 +2,9 @@ const utils = require('../utils')
 
 const { findAndReportHardCodedValues, colorProps } = utils
 const _ = require('lodash')
-const colors = require('../../../dist/style/colors').colorsPallete
+// const colors = require('../../../dist/style/colors').colorsPallete
 
-const invertedColorsDict = _.invert(colors)
+// const invertedColorsDict = _.invert(colors)
 
 module.exports = {
   meta: {
@@ -32,8 +32,12 @@ module.exports = {
         fix (fixer) {
           if (node.extra) {
             const colorString = node.extra.rawValue
-            if (invertedColorsDict[colorString]) {
-              return fixer.replaceText(node, `Colors.${invertedColorsDict[colorString]}`)
+            if (context.settings && context.settings.colors) {
+              const colors = context.settings.colors
+              const invertedColorsDict = _.invert(colors)
+              if (invertedColorsDict[colorString]) {
+                return fixer.replaceText(node, `Colors.${invertedColorsDict[colorString]}`)
+              }
             }
           }
         }
@@ -51,10 +55,11 @@ module.exports = {
         }
       })
     }
-
+    
     return {
       'CallExpression[callee.object.name=StyleSheet][callee.property.name=create] ObjectExpression': node => noHardCodedColors(node),
       'JSXAttribute[name.name = style] ObjectExpression': node => noHardCodedColors(node)
     }
+    
   }
 }
