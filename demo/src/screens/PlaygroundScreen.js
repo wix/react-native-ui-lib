@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {Colors, Constants, View, TabBar, Text} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, Constants, View, Text, Button, Modal} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class PlaygroundScreen extends Component {
 
@@ -8,31 +8,50 @@ export default class PlaygroundScreen extends Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
-      selectedIndex: 1,
+      showModal: false,
     };
+
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
   componentDidMount() {
+
+  }
+
+  toggleModal() {
+    const {showModal} = this.state;
+    this.setState({showModal: !showModal});
+  }
+
+  renderModal() {
+    return (
+      <Modal
+        animationType={'slide'}
+        visible
+        onRequestClose={() => this.toggleModal}
+        transparent
+        enableModalBlur
+      >
+        <Modal.TopBar
+          onCancel={this.toggleModal}
+          onDone={this.toggleModal}
+        />
+        <View flex>
+          <Text>MODAL</Text>
+        </View>
+      </Modal>
+    );
   }
 
   render() {
-    const {selectedIndex} = this.state;
+    const {showModal} = this.state;
 
     return (
-      <View flex style={styles.container}>
-        <TabBar
-          selectedIndex={selectedIndex}
-          onChangeIndex={index => this.setState({selectedIndex: index})}
-          ref={element => (this.tabbar = element)}
-        >
-          <TabBar.Item label="FEED" />
-          <TabBar.Item label="SERVICES" />
-          <TabBar.Item label="CHAT" />
-          <TabBar.Item>
-            <Text text90 purple30={selectedIndex === 3}>ABOUT</Text>
-          </TabBar.Item>
-        </TabBar>
+      <View flex center style={styles.container}>
+        <Button onPress={this.toggleModal} label={'Show'}/>
+        {showModal && this.renderModal()}
       </View>
     );
   }
@@ -41,6 +60,6 @@ export default class PlaygroundScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.dark80,
+    backgroundColor: Colors.cyan60,
   },
 });
