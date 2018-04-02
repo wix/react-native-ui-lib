@@ -40,6 +40,11 @@ export default class TextInput extends BaseInput {
      */
     floatingPlaceholderColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     /**
+     * This text will appear as a placeholder when the textInput becomes focused, only when passing floatingPlaceholder
+     * as well (NOT for multiline or expandable textInputs)
+     */
+    helperText: PropTypes.string,
+    /**
      * hide text input underline, by default false
      */
     hideUnderline: PropTypes.bool,
@@ -95,16 +100,16 @@ export default class TextInput extends BaseInput {
 
     this.onChangeText = this.onChangeText.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
     this.onDoneEditingExpandableInput = this.onDoneEditingExpandableInput.bind(this);
     this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(this);
     this.toggleExpandableModal = this.toggleExpandableModal.bind(this);
 
-    // const typography = this.getTypography();
     this.state = {
-      // inputWidth: typography.fontSize * 2,
       value: props.value,
       floatingPlaceholderState: new Animated.Value(
-        this.hasText(props.value) ? 1 : 0,
+        this.hasText(props.value) || this.useHelperText() ? 1 : 0,
       ),
       showExpandableModal: false,
     };
@@ -181,6 +186,12 @@ export default class TextInput extends BaseInput {
     return !_.isEmpty(value || this.state.value);
   }
 
+  useHelperText() {
+    const {focused} = this.state;
+    const {helperText} = this.props;
+    return focused && helperText;
+  }
+
   shouldFakePlaceholder() {
     const {floatingPlaceholder, centered} = this.props;
     return Boolean(floatingPlaceholder && !centered);
@@ -237,7 +248,7 @@ export default class TextInput extends BaseInput {
                 inputRange: [0, 1],
                 outputRange: [placeholderTextColor, this.getStateColor(floatingPlaceholderColor)],
               }),
-              lineHeight: this.hasText()
+              lineHeight: this.hasText() || this.useHelperText()
                 ? floatingTypography.lineHeight
                 : typography.lineHeight,
             },
@@ -351,6 +362,7 @@ export default class TextInput extends BaseInput {
       centered,
       multiline,
       numberOfLines,
+      helperText,
       ...others
     } = this.props;
     const inputStyle = [
@@ -360,12 +372,14 @@ export default class TextInput extends BaseInput {
       {height: this.getHeight()},
       style,
     ];
+    const placeholderText = floatingPlaceholder && !centered ?
+      (this.useHelperText() ? helperText : undefined) : placeholder;
 
     return (
       <RNTextInput
         {...others}
         value={value}
-        placeholder={floatingPlaceholder && !centered ? undefined : placeholder}
+        placeholder={placeholderText}
         underlineColorAndroid="transparent"
         style={inputStyle}
         multiline={multiline}
@@ -409,10 +423,10 @@ export default class TextInput extends BaseInput {
 
   updateFloatingPlaceholderState(withoutAnimation) {
     if (withoutAnimation) {
-      this.state.floatingPlaceholderState.setValue(this.hasText() ? 1 : 0);
+      this.state.floatingPlaceholderState.setValue(this.hasText() || this.useHelperText() ? 1 : 0);
     } else {
       Animated.spring(this.state.floatingPlaceholderState, {
-        toValue: this.hasText() ? 1 : 0,
+        toValue: this.hasText() || this.useHelperText() ? 1 : 0,
         duration: 150,
       }).start();
     }
@@ -429,8 +443,9 @@ export default class TextInput extends BaseInput {
   }
 
   onChangeText(text) {
-    let transformedText = text;
     const {transformer} = this.props;
+    let transformedText = text;
+
     if (_.isFunction(transformer)) {
       transformedText = transformer(text);
     }
@@ -447,6 +462,16 @@ export default class TextInput extends BaseInput {
 
   onChange(event) {
     _.invoke(this.props, 'onChange', event);
+  }
+
+  onFocus(...args) {
+    _.invoke(this.props, 'onFocus', ...args);
+    this.setState({focused: true}, this.updateFloatingPlaceholderState);
+  }
+
+  onBlur(...args) {
+    _.invoke(this.props, 'onBlur', ...args);
+    this.setState({focused: false}, this.updateFloatingPlaceholderState);
   }
 }
 
@@ -503,7 +528,6 @@ function createStyles({
     },
     title: {
       top: 0,
-      // color: titleColor,
       ...Typography.text90,
       height: Typography.text90.lineHeight,
       marginBottom: Constants.isIOS ? 5 : 4,

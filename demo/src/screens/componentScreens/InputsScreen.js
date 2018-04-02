@@ -49,6 +49,15 @@ export default class InputScreen extends Component {
 
           <TextInput
             text70
+            floatingPlaceholder
+            placeholder="floatingPlaceholder with helperText"
+            helperText="this is an helper text"
+            onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
+            error={this.state.error}
+          />
+
+          <TextInput
+            text70
             title="title"
             placeholder="character counter && error"
             maxLength={3}
@@ -78,6 +87,7 @@ export default class InputScreen extends Component {
             onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
             error={this.state.error}
             underlineColor={{focus: Colors.purple50, error: Colors.yellow60}}
+            helperText="this is an helper text"
           />
 
           <TextInput
@@ -86,6 +96,7 @@ export default class InputScreen extends Component {
             placeholder="multiline && numberOfLines = 3"
             multiline
             numberOfLines={3}
+            helperText="this is an helper text"
           />
 
           <TextInput
@@ -147,6 +158,7 @@ export default class InputScreen extends Component {
             floatingPlaceholder
             placeholder="Big Title Text"
             containerStyle={{marginBottom: INPUT_SPACING}}
+            helperText="this is an helper text"
           />
           <TextInput
             text20
