@@ -85,6 +85,4 @@ const colorsPalette = {
   black: '#000000',
 };
 
-module.exports = {
-  colorsPalette,
-};
+module.exports = colorsPalette;

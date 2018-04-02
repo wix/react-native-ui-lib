@@ -1,7 +1,8 @@
-{
+const validColors = require("./src/style/colorsPalette")
+module.exports = {
   "parser": "babel-eslint",
   "plugins": ["react-native", "uilib"],
-  "extends": ["airbnb"],
+  "extends": ["airbnb", "./eslint-rules/.eslintrc.js"],
   "rules": {
     "arrow-body-style": "off",
     "class-methods-use-this": "off",
@@ -33,6 +34,10 @@
       "node": {
         "extensions": [".js", ".ios.js", ".android.js"]
       }
+    },
+    "uiLib": {
+     "validColors": validColors
+
     }
   }
 }

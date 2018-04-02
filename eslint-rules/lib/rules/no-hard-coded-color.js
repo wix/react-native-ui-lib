@@ -1,7 +1,7 @@
 const utils = require('../utils');
 
-const { findAndReportHardCodedValues, colorProps } = utils
-const _ = require('lodash')
+const { findAndReportHardCodedValues, colorProps } = utils;
+const _ = require('lodash');
 
 
 module.exports = {
@@ -26,16 +26,15 @@ module.exports = {
     function reportAndFixHardCodedColorString(node) {
       context.report({
         node,
-        // messageId: 'uiLib',
         message: 'Use UILib colors instead of hardcoded colors.',
         fix(fixer) {
           if (node.extra) {
-            const colorString = node.extra.rawValue
-            if (context.settings && context.settings.colors) {
-              const colors = context.settings.colors
-              const invertedColorsDict = _.invert(colors)
+            const colorString = node.extra.rawValue;
+            const validColors = _.get(context, 'settings.uiLib.validColors');
+            if (validColors) {
+              const invertedColorsDict = _.invert(validColors);
               if (invertedColorsDict[colorString]) {
-                return fixer.replaceText(node, `Colors.${invertedColorsDict[colorString]}`)
+                return fixer.replaceText(node, `Colors.${invertedColorsDict[colorString]}`);
               }
             }
           }
@@ -44,17 +43,16 @@ module.exports = {
     }
 
     function noHardCodedColors(node) {
-      node.properties.forEach(property => {
+      node.properties.forEach((property) => {
         if (property.key) {
           const propName = property.key.name;
           if (propIsColor(propName)) {
-            //context.getAncestors()[0].body.filter(a => a.type === 'VariableDeclaration').map(vardec => vardec.declarations[0].id.name)
-            findAndReportHardCodedValues(property.value, reportAndFixHardCodedColorString, context.getScope())
+            findAndReportHardCodedValues(property.value, reportAndFixHardCodedColorString, context.getScope());
           }
         }
       });
     }
-    
+
     return {
       'CallExpression[callee.object.name=StyleSheet][callee.property.name=create] ObjectExpression': node =>
         noHardCodedColors(node),
