@@ -84,5 +84,12 @@ ruleTester.run('no-hard-coded-color', rule, {
         { messageId: 'uiLib' },
       ],
     },
+    {
+      code: `const badUsage = <Text style = {{ color: '${Colors.dark10.toLowerCase()}'}}> </Text>;`,
+      output: 'const badUsage = <Text style = {{ color: Colors.dark10}}> </Text>;',
+      errors: [
+        { messageId: 'uiLib' },
+      ],
+    },
   ],
 });

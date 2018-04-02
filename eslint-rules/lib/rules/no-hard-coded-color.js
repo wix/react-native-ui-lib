@@ -32,9 +32,10 @@ module.exports = {
             const colorString = node.extra.rawValue;
             const validColors = _.get(context, 'settings.uiLib.validColors');
             if (validColors) {
-              const invertedColorsDict = _.invert(validColors);
-              if (invertedColorsDict[colorString]) {
-                return fixer.replaceText(node, `Colors.${invertedColorsDict[colorString]}`);
+              const invertedColorsDict = _.chain(validColors).mapValues(value => value.toLowerCase()).invert().value();
+              const lowerCaseColorString = colorString.toLowerCase();
+              if (invertedColorsDict[lowerCaseColorString]) {
+                return fixer.replaceText(node, `Colors.${invertedColorsDict[lowerCaseColorString]}`);
               }
             }
           }
