@@ -49,12 +49,14 @@ class Colors {
   }
 
   getBackgroundKeysPattern() {
-    return new RegExp(_.chain(this)
+    return new RegExp(
+      _.chain(this)
         .keys()
         .map(key => [`bg-${key}`, `background-${key}`])
         .flatten()
         .join('|')
-        .value());
+        .value(),
+    );
   }
 }
 
@@ -75,6 +77,3 @@ function validateHex(value) {
 const colorObject = new Colors();
 colorObject.loadColors(colorsPalette);
 export default colorObject;
-
-
-

@@ -21,8 +21,8 @@ module.exports = {
     "react/jsx-tag-spacing": "off",
     "react/prefer-stateless-function": "off",
     "react/require-default-props": "off",
-    "uilib/no-hard-coded-font": "error",
-    "uilib/no-hard-coded-color": "error"
+    // "uilib/no-hard-coded-font": "error",
+    // "uilib/no-hard-coded-color": "error"
   },
   "env": {
     "browser": true,
@@ -37,7 +37,6 @@ module.exports = {
     },
     "uiLib": {
      "validColors": validColors
-
     }
   }
 }
