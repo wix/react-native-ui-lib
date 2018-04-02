@@ -144,6 +144,7 @@ export default class TextInput extends BaseInput {
     const {focused} = this.state;
     const {error} = this.props;
     const colorByState = _.cloneDeep(DEFAULT_COLOR_BY_STATE);
+    colorByState.default = isUndeline ? Colors.dark70 : colorByState.default;
 
     if (colorProp) {
       if (_.isString(colorProp)) {
@@ -156,7 +157,7 @@ export default class TextInput extends BaseInput {
     }
 
     // return the right color for the current state
-    let color = isUndeline ? Colors.dark70 : colorByState.default;
+    let color = colorByState.default;
     if (error) {
       color = colorByState.error;
     } else if (focused) {
