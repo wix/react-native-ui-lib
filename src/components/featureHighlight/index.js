@@ -113,6 +113,10 @@ class FeatureHighlight extends BaseComponent {
     super(props);
 
     this.getComponentDimensions = this.getComponentDimensions.bind(this);
+
+    this.state = {
+      targetPosition: {left: 0, top: 0, width: 250, height: 268},
+    };
   }
 
   static defaultProps = {
