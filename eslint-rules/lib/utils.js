@@ -1,5 +1,6 @@
 function findAndReportHardCodedValues (value, reporter, scope, depthOfSearch = 4) {
   if (depthOfSearch === 0) return
+  if (value === undefined || value === false) return
   if (isLiteral(value.type)) {
     reporter(value)
   } else if (value.type === 'ConditionalExpression') {
