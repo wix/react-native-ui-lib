@@ -59,6 +59,10 @@ class Picker extends TextInput {
      */
     getItemValue: PropTypes.func,
     /**
+     * a function that returns the label to show for the selected Picker value
+     */
+    getLabel: PropTypes.func,
+    /**
      * The picker modal top bar props
      */
     topBarProps: PropTypes.shape(Modal.TopBar.propTypes),
@@ -140,11 +144,12 @@ class Picker extends TextInput {
   }
 
   getLabel() {
+    const {getLabel} = this.props;
     const {value} = this.state;
     if (_.isArray(value)) {
       return _.chain(value).map('label').join(', ').value();
     }
-    return _.get(value, 'label');
+    return _.isFunction(getLabel) ? getLabel(value) : _.get(value, 'label');
   }
 
   handlePickerOnPress() {
