@@ -89,6 +89,7 @@ class Picker extends TextInput {
     this.state = {
       ...this.state,
       showModal: false,
+      selectedItemPosition: 0,
     };
 
     if (props.mode === Picker.modes.SINGLE && Array.isArray(props.value)) {
@@ -127,6 +128,10 @@ class Picker extends TextInput {
     this.toggleExpandableModal(false);
   }
 
+  onSelectedItemLayout = ({nativeEvent: {layout: {y}}}) => {
+    this.setState({selectedItemPosition: y});
+  };
+
   appendPropsToChildren() {
     const {children, mode, getItemValue} = this.props;
     const {value} = this.state;
@@ -137,6 +142,7 @@ class Picker extends TextInput {
         isSelected: PickerPresenter.isItemSelected(childValue, selectedValue),
         onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
         getItemValue: child.props.getItemValue || getItemValue,
+        onSelectedLayout: this.onSelectedItemLayout,
       });
     });
 
@@ -147,7 +153,10 @@ class Picker extends TextInput {
     const {getLabel} = this.props;
     const {value} = this.state;
     if (_.isArray(value)) {
-      return _.chain(value).map('label').join(', ').value();
+      return _.chain(value)
+        .map('label')
+        .join(', ')
+        .value();
     }
     return _.isFunction(getLabel) ? getLabel(value) : _.get(value, 'label');
   }
@@ -163,11 +172,7 @@ class Picker extends TextInput {
     const label = this.getLabel();
 
     return (
-      <Text
-        style={[this.styles.input, typography, {color}]}
-        numberOfLines={3}
-        onPress={this.handlePickerOnPress}
-      >
+      <Text style={[this.styles.input, typography, {color}]} numberOfLines={3} onPress={this.handlePickerOnPress}>
         {label}
       </Text>
     );
@@ -175,11 +180,11 @@ class Picker extends TextInput {
 
   renderExpandableModal() {
     const {mode, enableModalBlur, topBarProps} = this.props;
-    const {showExpandableModal} = this.state;
+    const {showExpandableModal, selectedItemPosition} = this.state;
     return (
       <PickerModal
         visible={showExpandableModal}
-
+        scrollPosition={selectedItemPosition}
         enableModalBlur={enableModalBlur}
         topBarProps={{
           ...topBarProps,
@@ -188,7 +193,8 @@ class Picker extends TextInput {
         }}
       >
         {this.appendPropsToChildren(this.props.children)}
-      </PickerModal>);
+      </PickerModal>
+    );
   }
 
   render() {
