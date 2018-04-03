@@ -163,7 +163,7 @@ export default class TextInput extends BaseInput {
 
     // return the right color for the current state
     let color = colorByState.default;
-    if (error) {
+    if (error && isUndeline) {
       color = colorByState.error;
     } else if (focused) {
       color = colorByState.focus;
