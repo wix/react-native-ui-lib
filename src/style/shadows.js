@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import Colors from './colors';
 
 const Shadows = {
