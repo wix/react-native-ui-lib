@@ -41,7 +41,7 @@ export default class TextInput extends BaseInput {
     floatingPlaceholderColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     /**
      * This text will appear as a placeholder when the textInput becomes focused, only when passing floatingPlaceholder
-     * as well (NOT for multiline or expandable textInputs)
+     * as well (NOT for expandable textInputs)
      */
     helperText: PropTypes.string,
     /**
@@ -109,7 +109,7 @@ export default class TextInput extends BaseInput {
     this.state = {
       value: props.value,
       floatingPlaceholderState: new Animated.Value(
-        this.hasText(props.value) || this.useHelperText() ? 1 : 0,
+        this.hasText(props.value) || this.shouldShowHelperText() ? 1 : 0,
       ),
       showExpandableModal: false,
     };
@@ -186,7 +186,7 @@ export default class TextInput extends BaseInput {
     return !_.isEmpty(value || this.state.value);
   }
 
-  useHelperText() {
+  shouldShowHelperText() {
     const {focused} = this.state;
     const {helperText} = this.props;
     return focused && helperText;
@@ -203,17 +203,17 @@ export default class TextInput extends BaseInput {
       const typography = this.getTypography();
       return typography.lineHeight;
     }
+    return this.getLinesHeightLimit();
   }
 
-  // getLinesHeightLimit() {
-  //   let maxHeight;
-  //   const {multiline, numberOfLines} = this.props;
-  //   if (multiline && numberOfLines) {
-  //     const typography = this.getTypography();
-  //     maxHeight = typography.lineHeight * numberOfLines;
-  //   }
-  //   return maxHeight;
-  // }
+  // numberOfLines support for both platforms
+  getLinesHeightLimit() {
+    const {multiline, numberOfLines} = this.props;
+    if (multiline && numberOfLines) {
+      const typography = this.getTypography();
+      return typography.lineHeight * numberOfLines;
+    }
+  }
 
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
@@ -248,7 +248,7 @@ export default class TextInput extends BaseInput {
                 inputRange: [0, 1],
                 outputRange: [placeholderTextColor, this.getStateColor(floatingPlaceholderColor)],
               }),
-              lineHeight: this.hasText() || this.useHelperText()
+              lineHeight: this.hasText() || this.shouldShowHelperText()
                 ? floatingTypography.lineHeight
                 : typography.lineHeight,
             },
@@ -372,8 +372,8 @@ export default class TextInput extends BaseInput {
       {height: this.getHeight()},
       style,
     ];
-    const placeholderText = floatingPlaceholder && !centered ?
-      (this.useHelperText() ? helperText : undefined) : placeholder;
+    const placeholderText = this.shouldFakePlaceholder() ?
+      (this.shouldShowHelperText() ? helperText : undefined) : placeholder;
 
     return (
       <RNTextInput
@@ -423,10 +423,10 @@ export default class TextInput extends BaseInput {
 
   updateFloatingPlaceholderState(withoutAnimation) {
     if (withoutAnimation) {
-      this.state.floatingPlaceholderState.setValue(this.hasText() || this.useHelperText() ? 1 : 0);
+      this.state.floatingPlaceholderState.setValue(this.hasText() || this.shouldShowHelperText() ? 1 : 0);
     } else {
       Animated.spring(this.state.floatingPlaceholderState, {
-        toValue: this.hasText() || this.useHelperText() ? 1 : 0,
+        toValue: this.hasText() || this.shouldShowHelperText() ? 1 : 0,
         duration: 150,
       }).start();
     }

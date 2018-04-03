@@ -50,7 +50,7 @@ export default class InputScreen extends Component {
           <TextInput
             text70
             floatingPlaceholder
-            placeholder="floatingPlaceholder with helperText"
+            placeholder="floatingPlaceholder & helperText"
             helperText="this is an helper text"
             onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
             error={this.state.error}
@@ -58,8 +58,16 @@ export default class InputScreen extends Component {
 
           <TextInput
             text70
+            floatingPlaceholder
+            placeholder={this.state.placeholder}
+            multiline
+            helperText="this is an helper text"
+          />
+
+          <TextInput
+            text70
             title="title"
-            placeholder="character counter && error"
+            placeholder="character counter & error"
             maxLength={3}
             showCharacterCounter
             onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
@@ -69,7 +77,7 @@ export default class InputScreen extends Component {
           <TextInput
             text70
             title="Title"
-            placeholder="character counter && error && multiline"
+            placeholder="character counter & error & multiline"
             multiline
             maxLength={32}
             showCharacterCounter
@@ -83,17 +91,16 @@ export default class InputScreen extends Component {
             floatingPlaceholder
             placeholderTextColor={Colors.cyan30}
             floatingPlaceholderColor={Colors.cyan30}
-            placeholder="underline colors && error"
+            placeholder="underline colors & error"
             onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
             error={this.state.error}
             underlineColor={{focus: Colors.purple50, error: Colors.yellow60}}
-            helperText="this is an helper text"
           />
 
           <TextInput
             text70
             floatingPlaceholder
-            placeholder="multiline && numberOfLines = 3"
+            placeholder="multiline & numberOfLines = 3"
             multiline
             numberOfLines={3}
             helperText="this is an helper text"
