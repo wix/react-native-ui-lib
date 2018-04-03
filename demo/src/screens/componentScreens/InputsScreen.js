@@ -59,7 +59,7 @@ export default class InputScreen extends Component {
           <TextInput
             text70
             floatingPlaceholder
-            placeholder={this.state.placeholder}
+            placeholder="multiline & helperText"
             multiline
             helperText="this is an helper text"
           />
