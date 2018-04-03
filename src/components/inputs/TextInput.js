@@ -105,6 +105,7 @@ export default class TextInput extends BaseInput {
     this.onDoneEditingExpandableInput = this.onDoneEditingExpandableInput.bind(this);
     this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(this);
     this.toggleExpandableModal = this.toggleExpandableModal.bind(this);
+    this.shouldShowHelperText = this.shouldShowHelperText.bind(this);
 
     this.state = {
       value: props.value,

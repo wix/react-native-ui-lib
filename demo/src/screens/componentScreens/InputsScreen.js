@@ -103,7 +103,6 @@ export default class InputScreen extends Component {
             placeholder="multiline & numberOfLines = 3"
             multiline
             numberOfLines={3}
-            helperText="this is an helper text"
           />
 
           <TextInput
