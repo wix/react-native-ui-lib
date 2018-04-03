@@ -89,6 +89,16 @@ export default class InputScreen extends Component {
           <TextInput
             text70
             floatingPlaceholder
+            placeholder="character counter & expandable"
+            expandable
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            maxLength={20}
+            showCharacterCounter
+          />
+
+          <TextInput
+            text70
+            floatingPlaceholder
             placeholderTextColor={Colors.cyan30}
             floatingPlaceholderColor={Colors.cyan30}
             placeholder="underline colors & error"
@@ -123,8 +133,8 @@ export default class InputScreen extends Component {
           <TextInput
             text70
             placeholder="Share your story"
-            value={'Share Your Story exists to provide spaces to hear people\'s stories, in order to inspire us to live' +
-            'better ones ourselves.'
+            value={'Share Your Story exists to provide spaces to hear people\'s stories, in order to inspire us to' +
+            'live better ones ourselves.'
             }
             multiline
           />
