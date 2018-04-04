@@ -26,7 +26,7 @@ const transformPrice = (value) => {
   return priceText;
 };
 
-export default class InputScreen extends Component {
+export default class InputsScreen extends Component {
   constructor(props) {
     super(props);
 

@@ -16,6 +16,11 @@ const DEFAULT_COLOR_BY_STATE = {
   focus: Colors.blue30,
   error: Colors.red30,
 };
+const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
+  default: Colors.dark70,
+  focus: Colors.blue30,
+  error: Colors.red30,
+};
 
 
 /**
@@ -99,7 +104,6 @@ export default class TextInput extends BaseInput {
     super(props);
 
     this.onChangeText = this.onChangeText.bind(this);
-    this.onChange = this.onChange.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.onDoneEditingExpandableInput = this.onDoneEditingExpandableInput.bind(this);
@@ -146,11 +150,10 @@ export default class TextInput extends BaseInput {
     this.styles = createStyles(this.props);
   }
 
-  getStateColor(colorProp, isUndeline) {
+  getStateColor(colorProp, isUnderline) {
     const {focused} = this.state;
     const {error} = this.props;
-    const colorByState = _.cloneDeep(DEFAULT_COLOR_BY_STATE);
-    colorByState.default = isUndeline ? Colors.dark70 : colorByState.default;
+    const colorByState = _.cloneDeep(isUnderline ? DEFAULT_UNDERLINE_COLOR_BY_STATE : DEFAULT_COLOR_BY_STATE);
 
     if (colorProp) {
       if (_.isString(colorProp)) {
@@ -164,7 +167,7 @@ export default class TextInput extends BaseInput {
 
     // return the right color for the current state
     let color = colorByState.default;
-    if (error && isUndeline) {
+    if (error && isUnderline) {
       color = colorByState.error;
     } else if (focused) {
       color = colorByState.focus;
@@ -398,12 +401,12 @@ export default class TextInput extends BaseInput {
 
   render() {
     const {expandable, containerStyle, underlineColor} = this.props;
-    const underlineStyle = this.getStateColor(underlineColor, true);
+    const underlineStateColor = this.getStateColor(underlineColor, true);
 
     return (
       <View style={[this.styles.container, containerStyle]} collapsable={false}>
         {this.renderTitle()}
-        <View style={[this.styles.innerContainer, {borderColor: underlineStyle}]}>
+        <View style={[this.styles.innerContainer, {borderColor: underlineStateColor}]}>
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
           {this.renderExpandableModal()}
@@ -459,10 +462,6 @@ export default class TextInput extends BaseInput {
       },
       this.updateFloatingPlaceholderState,
     );
-  }
-
-  onChange(event) {
-    _.invoke(this.props, 'onChange', event);
   }
 
   onFocus(...args) {
