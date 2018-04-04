@@ -24,10 +24,10 @@ const defaultButtonLabel = 'Got it';
 /**
  * @description: FeatureHighlight component for feature discovery
  * @notes: 1) FeatureHighlight component must be a direct child of the root view returned in render()., 2) If the element to be highlighted doesn't have a style attribute add 'style={{opacity: 1}}' so the Android OS can detect it.
+ * @important: FeatureHighlight uses a native library. You MUST add and link the native library to both iOS and Android projects. For instruction please see
+ * @importantLink: https://facebook.github.io/react-native/docs/linking-libraries-ios.html
  * @extends: HighlighterOverlayView
  * @extendslink: docs/HighlighterOverlayView
- * @notes: 1) The component MUST be a direct child of the root view returned in render()., 2) If the element to be highlighted doesn't have a style attribute add 'style={{opacity: 1}}' so the Android OS can detect it.
- * @extends: HighlighterOverlayView
  * @gif: https://media.giphy.com/media/3ohs4D5irZm5GojsDS/giphy.gif, https://media.giphy.com/media/3oxQNaDQckPZI78rWo/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.js
  */
@@ -38,9 +38,9 @@ class FeatureHighlight extends BaseComponent {
     /**
      * Boolean to determine if to present the feature highlight component
      */
-    visible: PropTypes.bool,
+    visible: PropTypes.bool.isRequired,
     /**
-     * Frame of the area to highlight
+     * Frame of the area to highlight {x, y, width, height}
      */
     highlightFrame: PropTypes.shape({
       x: PropTypes.number,
@@ -72,6 +72,10 @@ class FeatureHighlight extends BaseComponent {
      * Props that will be passed to the dismiss button
      */
     confirmButtonProps: PropTypes.object,
+    /**
+     * Callback for the background press
+     */
+    onBackgroundPress: PropTypes.func,
     /**
      * Color of the content's background (usually includes alpha for transparency)
      */
@@ -109,6 +113,10 @@ class FeatureHighlight extends BaseComponent {
     super(props);
 
     this.getComponentDimensions = this.getComponentDimensions.bind(this);
+
+    this.state = {
+      targetPosition: {left: 0, top: 0, width: 250, height: 268},
+    };
   }
 
   static defaultProps = {
@@ -117,6 +125,10 @@ class FeatureHighlight extends BaseComponent {
     minimumRectSize: {width: 56, height: 56},
     innerPadding: 10,
   };
+
+  componentDidMount() {
+    this.setTargetPosition();
+  }
 
   componentWillReceiveProps(nextProps) {
     this.setTargetPosition(nextProps);
@@ -127,29 +139,27 @@ class FeatureHighlight extends BaseComponent {
   }
 
   setTargetPosition(props = this.props) {
-    if (!this.state.node) {
-      if (props.getTarget !== undefined) {
-        const target = props.getTarget();
+    if (props.getTarget !== undefined) {
+      const target = props.getTarget();
 
-        const node = this.findTargetNode(target);
-        this.setState({node});
+      const node = this.findTargetNode(target);
+      this.setState({node});
 
-        if (target) {
-          setTimeout(() => {
-            target.measureInWindow((x, y, width, height) => {
-              this.setState({
-                targetPosition: {left: x, top: y, width, height},
-              });
+      if (target) {
+        setTimeout(() => {
+          target.measureInWindow((x, y, width, height) => {
+            this.setState({
+              targetPosition: {left: x, top: y, width, height},
             });
-          }, 0);
-        }
-      } else {
-        const frame = props.highlightFrame;
-        if (frame) {
-          this.setState({
-            targetPosition: {left: frame.x, top: frame.y, width: frame.width, height: frame.height},
           });
-        }
+        }, 0);
+      }
+    } else {
+      const frame = props.highlightFrame;
+      if (frame) {
+        this.setState({
+          targetPosition: {left: frame.x, top: frame.y, width: frame.width, height: frame.height},
+        });
       }
     }
   }
@@ -215,9 +225,8 @@ class FeatureHighlight extends BaseComponent {
 
   render() {
     const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding,
-      confirmButtonProps} = this.getThemeProps();
+      onBackgroundPress} = this.getThemeProps();
     const {node, targetPosition} = this.state;
-    const {onPress} = confirmButtonProps;
 
     return (
       <HighlighterOverlayView
@@ -231,7 +240,7 @@ class FeatureHighlight extends BaseComponent {
         minimumRectSize={minimumRectSize}
         innerPadding={innerPadding}
       >
-        <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onPress}>
+        <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onBackgroundPress}>
           <View flex/>
         </TouchableWithoutFeedback>
         {targetPosition && this.renderHighlightMessage()}

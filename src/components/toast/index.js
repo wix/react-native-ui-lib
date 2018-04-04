@@ -118,13 +118,15 @@ export default class Toast extends BaseComponent {
         setupRelativeAnimation(getHeight(nextProps));
       }
 
-      const newState = animated ? {
-        animationConfig: this.getAnimation(visible),
-        contentAnimation: this.getContentAnimation(visible),
-      } : {
-        animationConfig: {},
-        contentAnimation: {},
-      };
+      const newState = animated
+        ? {
+          animationConfig: this.getAnimation(visible),
+          contentAnimation: this.getContentAnimation(visible),
+        }
+        : {
+          animationConfig: {},
+          contentAnimation: {},
+        };
 
       this.setState(newState);
     }
@@ -137,7 +139,7 @@ export default class Toast extends BaseComponent {
   getPositionStyle() {
     const {position} = this.props;
 
-    return (position === 'relative') ? {position} : getAbsolutePositionStyle(position);
+    return position === 'relative' ? {position} : getAbsolutePositionStyle(position);
   }
 
   getAnimation(shouldShow) {
@@ -225,6 +227,7 @@ export default class Toast extends BaseComponent {
     }
   }
 
+  // This weird layout should support iphoneX safe are
   render() {
     const {backgroundColor, actions, allowDismiss, enableBlur, zIndex} = this.getThemeProps();
     const {animationConfig} = this.state;
@@ -240,29 +243,33 @@ export default class Toast extends BaseComponent {
     }
 
     return (
-      <Animatable.View
-        style={[
-          this.styles.container,
-          hasOneAction && this.styles.containerWithOneAction,
-          positionStyle,
-          backgroundColor && {backgroundColor},
-          {height},
-          {zIndex},
-        ]}
-        {...animationConfig}
-      >
-        {enableBlur && <BlurView style={this.styles.blurView} {...blurOptions} />}
-        <View row flex centerV spread>
-          {this.renderMessage()}
-          {(hasOneAction || allowDismiss) && (
-            <View row height="100%">
-              {hasOneAction && this.renderOneAction()}
-              {this.renderDismissButton()}
-            </View>
-          )}
-        </View>
-        {hasTwoActions && <View>{this.renderTwoActions()}</View>}
-      </Animatable.View>
+      <View style={[positionStyle]} useSafeArea>
+        <View height={height} />
+
+        <Animatable.View
+          style={[
+            this.styles.container,
+            backgroundColor && {backgroundColor},
+            hasOneAction && this.styles.containerWithOneAction,
+            {zIndex},
+          ]}
+          {...animationConfig}
+        >
+          {enableBlur && <BlurView style={this.styles.blurView} {...blurOptions} />}
+
+          <View row height={height} centerV spread>
+            {this.renderMessage()}
+            {(hasOneAction || allowDismiss) && (
+              <View row height="100%">
+                {hasOneAction && this.renderOneAction()}
+                {this.renderDismissButton()}
+              </View>
+            )}
+          </View>
+
+          {hasTwoActions && <View>{this.renderTwoActions()}</View>}
+        </Animatable.View>
+      </View>
     );
   }
 
@@ -283,6 +290,7 @@ export default class Toast extends BaseComponent {
 function createStyles() {
   return StyleSheet.create({
     container: {
+      ...StyleSheet.absoluteFillObject,
       backgroundColor: Colors.rgba(ThemeManager.primaryColor, 0.8),
       paddingHorizontal: 15,
     },
@@ -360,7 +368,7 @@ function setupRelativeAnimation(height) {
 
 function getHeight({height, actions}) {
   if (_.isUndefined(height)) {
-    return (_.size(actions) === 2) ? 92 : 48;
+    return _.size(actions) === 2 ? 92 : 48;
   }
   return height;
 }

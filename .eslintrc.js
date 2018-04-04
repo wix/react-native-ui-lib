@@ -1,7 +1,8 @@
-{
+const validColors = require("./src/style/colorsPalette")
+module.exports = {
   "parser": "babel-eslint",
   "plugins": ["react-native", "uilib"],
-  "extends": ["airbnb"],
+  "extends": ["airbnb", "./eslint-rules/.eslintrc.js"],
   "rules": {
     "arrow-body-style": "off",
     "class-methods-use-this": "off",
@@ -20,8 +21,8 @@
     "react/jsx-tag-spacing": "off",
     "react/prefer-stateless-function": "off",
     "react/require-default-props": "off",
-    "uilib/no-hard-coded-font": "error",
-    "uilib/no-hard-coded-color": "error"
+    // "uilib/no-hard-coded-font": "error",
+    // "uilib/no-hard-coded-color": "error"
   },
   "env": {
     "browser": true,
@@ -33,6 +34,9 @@
       "node": {
         "extensions": [".js", ".ios.js", ".android.js"]
       }
+    },
+    "uiLib": {
+     "validColors": validColors
     }
   }
 }

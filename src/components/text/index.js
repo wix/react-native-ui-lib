@@ -40,7 +40,7 @@ export default class Text extends BaseComponent {
   render() {
     const color = this.props.color || this.extractColorValue();
     const typography = this.extractTypographyValue();
-    const {style, center, ...others} = this.props;
+    const {style, center, ...others} = this.getThemeProps();
     const {margins} = this.state;
     const textStyle = [
       this.styles.container,

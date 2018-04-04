@@ -16,7 +16,7 @@ export default class CardImage extends BaseComponent {
 
   static propTypes = {
     /**
-     * Image source, either remote source or local
+     * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
      */
     imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
@@ -42,7 +42,7 @@ export default class CardImage extends BaseComponent {
 
   static defaultProps = {
     borderRadius: BorderRadiuses.br40,
-  }
+  };
 
   generateStyles() {
     this.styles = createStyles(this.props);

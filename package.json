@@ -1,6 +1,6 @@
 {
   "name": "react-native-ui-lib",
-  "version": "3.3.30",
+  "version": "3.3.45",
   "main": "index.js",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "publishConfig": {
@@ -17,12 +17,12 @@
     "pretest": "npm run lint",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "eslint src -c .eslintrc",
+    "lint": "eslint src -c .eslintrc.js",
     "lint:test": "mocha eslint-rules/tests/lib/rules",
     "xcode": "open ./ios/uilib.xcodeproj",
     "build": "mkdir -p dist && cp -r src/assets dist/ && babel src --out-dir dist",
     "log": "react-native log-ios | grep 'ethan -'",
-    "docs:install": "(cd ./uilib-docs && npm install)",
+    "docs:install": "(cd ./uilib-docs && rm -rf node_modules && rm -rf package-lock.json && npm install)",
     "docs:deploy": "(cd ./uilib-docs && gatsby build --prefix-paths && gh-pages -d public --branch gh-pages)",
     "docs:develop": "(cd ./uilib-docs && gatsby develop)",
     "bump:patch": "npm version patch"
@@ -71,22 +71,16 @@
   },
   "jest": {
     "preset": "react-native",
-    "testPathIgnorePatterns": [
-      "/e2e/",
-      "/node_modules/"
-    ]
+    "testPathIgnorePatterns": ["/e2e/", "/node_modules/"],
+    "setupFiles": ["./jest-setup.js"]
   },
   "babel": {
     "env": {
       "test": {
-        "presets": [
-          "react-native"
-        ],
+        "presets": ["react-native"],
         "retainLines": true
       }
     },
-    "plugins": [
-      "transform-inline-environment-variables"
-    ]
+    "plugins": ["transform-inline-environment-variables"]
   }
 }

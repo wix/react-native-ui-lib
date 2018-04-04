@@ -37,7 +37,7 @@ exports.createPages = ({graphql, boundActionCreators}) => {
           component: path.resolve('./src/templates/component.js'),
           context: {
             // Data passed to context is available in page queries as GraphQL variables.
-            component: node,
+            componentNode: node,
             components: result.data.allComponentMetadata.edges,
           },
         });

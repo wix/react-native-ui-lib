@@ -10,7 +10,7 @@ export default class AvatarsScreen extends Component {
 
   render() {
     return (
-      <View flex useSafeArea>
+      <View flex>
         <Carousel onChangePage={currentPage => this.setState({currentPage})} initialPage={this.state.currentPage}>
           <View style={styles.page} bg-red50>
             <Toast visible message="Discount was added to 3 products" />

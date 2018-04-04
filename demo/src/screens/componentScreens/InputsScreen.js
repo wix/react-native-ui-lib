@@ -26,7 +26,7 @@ const transformPrice = (value) => {
   return priceText;
 };
 
-export default class InputScreen extends Component {
+export default class InputsScreen extends Component {
   constructor(props) {
     super(props);
 
@@ -49,8 +49,25 @@ export default class InputScreen extends Component {
 
           <TextInput
             text70
-            title="Title"
-            placeholder="character counter && error"
+            floatingPlaceholder
+            placeholder="floatingPlaceholder & helperText"
+            helperText="this is an helper text"
+            onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
+            error={this.state.error}
+          />
+
+          <TextInput
+            text70
+            floatingPlaceholder
+            placeholder="multiline & helperText"
+            multiline
+            helperText="this is an helper text"
+          />
+
+          <TextInput
+            text70
+            title="title"
+            placeholder="character counter & error"
             maxLength={3}
             showCharacterCounter
             onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
@@ -60,18 +77,31 @@ export default class InputScreen extends Component {
           <TextInput
             text70
             title="Title"
-            placeholder="character counter && error && multiline"
+            placeholder="character counter & error & multiline"
             multiline
             maxLength={32}
             showCharacterCounter
             onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
             error={this.state.error}
+            autoCapitalize="words"
           />
 
           <TextInput
             text70
             floatingPlaceholder
-            placeholder="underline colors && error"
+            placeholder="character counter & expandable"
+            expandable
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            maxLength={20}
+            showCharacterCounter
+          />
+
+          <TextInput
+            text70
+            floatingPlaceholder
+            placeholderTextColor={Colors.cyan30}
+            floatingPlaceholderColor={Colors.cyan30}
+            placeholder="underline colors & error"
             onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
             error={this.state.error}
             underlineColor={{focus: Colors.purple50, error: Colors.yellow60}}
@@ -80,7 +110,7 @@ export default class InputScreen extends Component {
           <TextInput
             text70
             floatingPlaceholder
-            placeholder="multiline && numberOfLines = 3"
+            placeholder="multiline & numberOfLines = 3"
             multiline
             numberOfLines={3}
           />
@@ -103,8 +133,8 @@ export default class InputScreen extends Component {
           <TextInput
             text70
             placeholder="Share your story"
-            value={'Share Your Story exists to provide spaces to hear people\'s stories, in order to inspire us to live' +
-            'better ones ourselves.'
+            value={'Share Your Story exists to provide spaces to hear people\'s stories, in order to inspire us to' +
+            'live better ones ourselves.'
             }
             multiline
           />
@@ -144,6 +174,7 @@ export default class InputScreen extends Component {
             floatingPlaceholder
             placeholder="Big Title Text"
             containerStyle={{marginBottom: INPUT_SPACING}}
+            helperText="this is an helper text"
           />
           <TextInput
             text20

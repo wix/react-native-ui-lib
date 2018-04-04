@@ -1,3 +1,9 @@
 module.exports = {
-    "extends": "standard"
+    "settings": {
+        "import/resolver": {
+          "node": {
+            "extensions": [".js", ".ios.js", ".android.js"]
+          }
+        }
+    }
 };

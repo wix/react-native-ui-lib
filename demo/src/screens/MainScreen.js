@@ -105,6 +105,7 @@ export default class UiLibExplorerMenu extends Component {
             text80
             placeholder="Search your component.."
             onChangeText={this.filterExplorerScreens}
+            autoCorrect={false}
           />
         </View>
         <ListView
