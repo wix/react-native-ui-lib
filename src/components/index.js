@@ -22,6 +22,7 @@ import Toast from './toast';
 import TouchableOpacity from './touchableOpacity';
 import Tour from './tour';
 import View from './view';
+import WheelPickerDialog from './wheelPickerDialog';
 
 
 module.exports = {
@@ -48,4 +49,5 @@ module.exports = {
   TouchableOpacity,
   Tour,
   View,
+  WheelPickerDialog,
 };

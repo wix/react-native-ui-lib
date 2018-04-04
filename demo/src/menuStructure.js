@@ -26,6 +26,7 @@ export const navigationData = {
     {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
     {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
     {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'},
+    {title: 'Wheel Picker Dialog', tags: 'wheel picker dialog', screen: 'unicorn.components.WheelPickerDialogScreen'},
   ],
   NativeComponents: [
     {title: 'Highlight Overlay', tags: 'native overlay', screen: 'unicorn.nativeComponents.HighlightOverlayViewScreen'},
