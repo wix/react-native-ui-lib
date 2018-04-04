@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {requireNativeComponent} from 'react-native';
+import {requireNativeComponent, Picker} from 'react-native';
+import { Constants} from '../helpers';
 
 const WheelPicker = requireNativeComponent('WheelPicker', null);
 
@@ -32,7 +33,7 @@ class WheelPickerView extends React.Component {
         label: child.props.label,
       });
     });
-    console.warn(selectedIndex, items);
+
     return {selectedIndex, items};
   }
 
@@ -41,7 +42,7 @@ class WheelPickerView extends React.Component {
   }
 
   _onValueChange(event) {
-    console.warn(event.nativeEvent.itemIndex);
+    // console.warn(event.nativeEvent.itemIndex);
     if (!this.props.onValueChange) {
       return;
     }
@@ -49,8 +50,16 @@ class WheelPickerView extends React.Component {
   }
 
   render() {
-    console.warn(this.state);
-    console.warn(this.extractLabelsFromItems());
+    if (Constants.isIOS) {
+      return (
+        <Picker
+          selectedValue={this.props.selectedValue}
+          onValueChange={this.props.onValueChange} style={this.props.style}
+        >
+          {this.props.children}
+        </Picker>
+      );
+    }
     return (
       <WheelPicker data={this.extractLabelsFromItems()} selectedIndex={this.state.selectedIndex} onChange={this._onValueChange} style={this.props.style}/>
     );
@@ -58,7 +67,10 @@ class WheelPickerView extends React.Component {
 }
 
 WheelPickerView.propTypes = {
-  selectedValue: PropTypes.any,
+  selectedValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   onValueChange: PropTypes.func,
   style: PropTypes.object,
 };

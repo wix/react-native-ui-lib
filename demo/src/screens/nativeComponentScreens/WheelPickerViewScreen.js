@@ -7,7 +7,13 @@ export default class WheelPickerViewScreen extends PureComponent {
     super(props);
     this.state = {
       value: 'python',
-      options: ['python', 'javascript', 'common lisp', 'objective c', 'java'],
+      items: [
+        { value: 'python', label: 'python'},
+        { value: 'javascript', label: 'javascript'},
+        { value: 'common lisp', label: 'lisp'},
+        { value: 'objective c', label: 'objective c'},
+        { value: 'java', label: 'java'},
+      ],
     };
     this.onValueChange = this.onValueChange.bind(this);
   }
@@ -17,29 +23,16 @@ export default class WheelPickerViewScreen extends PureComponent {
     this.setState({ value: itemValue});
   }
   render() {
-    if (Constants.isIOS) {
-      return (
-        <View flex center>
-          <Text>{'Wheel Picker'}</Text>
-          <Text>{`Selected Value is: ${this.state.value}`}</Text>
-          <Picker data={this.state.options} onValueChange={this.onValueChange} style={{height: 200, width: 200}}>
-            <Picker.Item label="Java" value="java" />
-            <Picker.Item label="JavaScript" value="js" />
-          </Picker>
-        </View>
-      );
-    }
     return (
       <View flex center>
         <Text>{'Wheel Picker'}</Text>
         <Text>{`Selected Value is: ${this.state.value}`}</Text>
-        <WheelPicker data={this.state.options} onValueChange={this.onValueChange} style={{height: 200, width: 200}}>
-          <WheelPicker.Item label="Java" value="java" />
-          <WheelPicker.Item label="JavaScript" value="js" />
-          <WheelPicker.Item label="Java" value="java" />
-          <WheelPicker.Item label="JavaScript" value="js" />
-          <WheelPicker.Item label="Java" value="java" />
-          <WheelPicker.Item label="JavaScript" value="js" />
+        <WheelPicker selectedValue={this.state.value} onValueChange={this.onValueChange} style={{height: 200, width: 200}}>
+          {this.state.items.map((item) => {
+            return (
+              <WheelPicker.Item key={item.value} value={item.value} label={item.label} />
+            );
+          })}
         </WheelPicker>
       </View>
     );
