@@ -8,7 +8,7 @@ import TopBar from './TopBar';
 
 // EXPO.io Workaround - use BlurView from 'expo'
 let BlurView;
-if(Expo) {
+if (Expo) {
   BlurView = require('expo').BlurView;
 } else {
   BlurView = require('react-native-blur').BlurView;
