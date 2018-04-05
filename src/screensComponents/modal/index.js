@@ -1,10 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {BlurView} from 'react-native-blur';
+
 import {View, Modal as RNModal} from 'react-native';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import TopBar from './TopBar';
+
+// EXPO.io Workaround - use BlurView from 'expo'
+let BlurView;
+if(Expo) {
+  BlurView = require('expo').BlurView;
+} else {
+  BlurView = require('react-native-blur').BlurView;
+}
 
 /**
  * @description: Component that present content on top of the invoking screen
