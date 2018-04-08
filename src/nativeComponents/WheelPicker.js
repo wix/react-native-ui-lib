@@ -9,7 +9,7 @@ const WheelPicker = requireNativeComponent('WheelPicker', null);
 class WheelPickerView extends React.Component {
   constructor(props) {
     super(props);
-    this._onValueChange = this._onValueChange.bind(this);  //eslint-disable-line
+    this.onValueChange = this.onValueChange.bind(this);  //eslint-disable-line
   }
 
   state = {
@@ -41,7 +41,7 @@ class WheelPickerView extends React.Component {
     return this.state.items.map(item => item.label);
   }
 
-  _onValueChange(event) {
+  onValueChange(event) {
     if (!this.props.onValueChange) {
       return;
     }
@@ -60,7 +60,12 @@ class WheelPickerView extends React.Component {
       );
     }
     return (
-      <WheelPicker data={this.extractLabelsFromItems()} selectedIndex={this.state.selectedIndex} onChange={this._onValueChange} style={this.props.style}/>
+      <WheelPicker
+        data={this.extractLabelsFromItems()}
+        selectedIndex={this.state.selectedIndex}
+        onChange={this.onValueChange}
+        style={this.props.style}
+      />
     );
   }
 }
@@ -71,7 +76,10 @@ WheelPickerView.propTypes = {
     PropTypes.number,
   ]),
   onValueChange: PropTypes.func,
-  style: PropTypes.object,
+  style: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.number,
+  ]),
   children: PropTypes.any,
 };
 

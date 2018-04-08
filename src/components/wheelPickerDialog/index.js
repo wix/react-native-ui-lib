@@ -23,9 +23,9 @@ export default class WheelPickerDialog extends Component {
           selectedValue={this.props.selectedValue}
           style={styles.picker}
         >
-          {this.props.items.map((item) => {
+          {this.props.items.map((item, idx) => {
             return (
-              <WheelPicker.Item value={item.value} label={item.label} />
+              <WheelPicker.Item key={String(idx) + String(item.value)} value={item.value} label={item.label} />
             );
           })}
         </WheelPicker>
