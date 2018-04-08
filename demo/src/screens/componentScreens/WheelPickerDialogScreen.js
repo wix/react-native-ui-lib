@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, WheelPickerDialog} from 'react-native-ui-lib'; //eslint-disable-line
+import { View, Text, WheelPickerDialog} from 'react-native-ui-lib'; //eslint-disable-line
 
 
 export default class WheelPickerDialogScreen extends Component {
@@ -19,22 +19,27 @@ export default class WheelPickerDialogScreen extends Component {
        { value: 72, label: '72 hr' },
       ],
     };
-    this.onValueChange = this.onValueChange.bind(this);
+    this.onSelect = this.onSelect.bind(this);
   }
 
-
-  onValueChange(itemValue) {
+  onSelect(itemValue) {
     this.setState({ selectedValue: itemValue});
+  }
+  onCancel() {
   }
   render() {
     return (
       <View flex center >
         <WheelPickerDialog
-          onValueChange={this.onValueChange}
           selectedValue={this.state.selectedValue}
           items={this.state.items}
           title={this.state.title}
+          onSelect={this.onSelect}
+          onCancel={this.onCancel}
         />
+        <Text test60 style={{width: 280}}>
+          {`The result value is ${this.state.selectedValue}. Roll the picker and press OK to change it`}
+        </Text>
       </View>
     );
   }

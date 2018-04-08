@@ -33,8 +33,8 @@ class WheelPickerView extends React.Component {
         label: child.props.label,
       });
     });
-
-    return {selectedIndex, items};
+    const orderedItems = [...items.slice(selectedIndex), ...items.slice(0, selectedIndex)];
+    return {selectedIndex, items: orderedItems};
   }
 
   extractLabelsFromItems() {
@@ -54,6 +54,7 @@ class WheelPickerView extends React.Component {
         <Picker
           selectedValue={this.props.selectedValue}
           onValueChange={this.props.onValueChange} style={this.props.style}
+          itemStyle={this.props.itemStyle}
         >
           {this.props.children}
         </Picker>
@@ -62,7 +63,6 @@ class WheelPickerView extends React.Component {
     return (
       <WheelPicker
         data={this.extractLabelsFromItems()}
-        selectedIndex={this.state.selectedIndex}
         onChange={this.onValueChange}
         style={this.props.style}
       />
@@ -77,6 +77,10 @@ WheelPickerView.propTypes = {
   ]),
   onValueChange: PropTypes.func,
   style: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.number,
+  ]),
+  itemStyle: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.number,
   ]),

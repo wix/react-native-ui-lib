@@ -5,7 +5,7 @@ export default class WheelPickerViewScreen extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'python',
+      value: 'common lisp',
       items: [
         { value: 'python', label: 'python'},
         { value: 'javascript', label: 'javascript'},
