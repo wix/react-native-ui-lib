@@ -18,12 +18,8 @@ export default class WheelPickerDialog extends Component {
   }
 
   state = {
-    currentValue: this.props.selectedValue,
-
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {  //eslint-disable-line
-    this.setState({currentValue: this.props.selectedValue});
+    initalSelectedValue: this.props.selectedValue,
+    currentValue: false,
   }
 
   onValueChange(value, index) {
@@ -50,7 +46,7 @@ export default class WheelPickerDialog extends Component {
 
         <WheelPicker
           onValueChange={this.onValueChange}
-          selectedValue={this.state.currentValue}
+          selectedValue={this.state.currentValue || this.state.initalSelectedValue}
           style={styles.picker}
         >
           {this.props.items.map((item, idx) => {
