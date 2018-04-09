@@ -120,8 +120,6 @@ class FeatureHighlight extends BaseComponent {
   }
 
   static defaultProps = {
-    titleNumberOfLines: 1,
-    messageNumberOfLines: 5,
     minimumRectSize: {width: 56, height: 56},
     innerPadding: 10,
   };
