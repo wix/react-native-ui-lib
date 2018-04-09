@@ -232,7 +232,7 @@ android/
 typings/
 demo/
 uilib-docs/
-eslint-rules/
+# eslint-rules/
 scripts/
 demo-app.component.js
 index.android.js

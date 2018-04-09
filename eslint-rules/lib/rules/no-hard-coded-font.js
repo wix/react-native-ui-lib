@@ -3,50 +3,52 @@
  * @author Inbal Tish
  */
 
-'use strict';
-
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 // Rule Definition
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
+
+const utils = require('../utils')
+
+const { findAndReportHardCodedValues } = utils
 
 module.exports = {
   meta: {
     docs: {
       description: 'disallow hard coded font style',
-      category: 'Possible Errors',
-      recommended: true,
+      category: 'Best Practices',
+      recommended: true
     },
     messages: {
-      reportMessage: 'Please do not use hard coded fontSize prop in style objects, instead use Typography presets',
+      avoidName: 'Please do not use hard coded fontSize prop in style objects, instead use Typography presets'
     },
     fixable: 'code',
-    schema: [], // no options
+    schema: [] // no options
   },
-  create(context) {
-    return {
-      ObjectExpression: function (node) {
-        node.properties.forEach((property) => {
-          if (property.key) {
-            const propName = property.key.name;
-            if (propName === 'fontSize') {
-              if (property.value.type === 'CallExpression') {
-                return;
-              }
-              if (property.value.type === 'MemberExpression') {
-                const objectName = property.value.object.object.name;
-                if (objectName.toLowerCase() === 'typography') {
-                  return;
-                }
-              }
-              // console.log(`${property.value.value} should be fixed!`);
-              context.report({
-                node,
-                messageId: 'reportMessage',
-              });
-            }
+  create (context) {
+    function reportAndFixHardCodedFont (node) {
+      context.report({
+        node,
+        message: 'Please do not use hard coded fontSize prop in style objects, instead use Typography presets'
+      })
+    }
+
+    function isPropFont (propName) {
+      return (['fontSize', 'fontWeight', 'lineHeight', 'fontFamily'].indexOf(propName) !== -1)
+    }
+    function noHardCodedFont (node) {
+      node.properties.forEach((property) => {
+        if (property.key) {
+          const propName = property.key.name
+          if (isPropFont(propName)) {
+            findAndReportHardCodedValues(property.value, reportAndFixHardCodedFont, context.getScope())
           }
-        });
-      },
-    };
-  },
-};
+        }
+      })
+    }
+
+    return {
+      'CallExpression[callee.object.name=StyleSheet][callee.property.name=create] ObjectExpression': node => noHardCodedFont(node),
+      'JSXAttribute[name.name = style] ObjectExpression': node => noHardCodedFont(node)
+    }
+  }
+}

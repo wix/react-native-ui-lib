@@ -17,34 +17,34 @@ describe('TextInput', () => {
     });
   });
 
-  describe('getUnderlineStyle', () => {
+  describe('getStateColor', () => {
     it('should return dark70 when blur (inactive)', () => {
       const uut = new TextInput({});
-      expect(uut.getUnderlineStyle()).toEqual({borderColor: Colors.dark70});
+      expect(uut.getStateColor(undefined, true)).toEqual(Colors.dark70);
     });
     it('should return red30 when error', () => {
       const uut = new TextInput({error: 'test error'});
-      expect(uut.getUnderlineStyle()).toEqual({borderColor: Colors.red30});
+      expect(uut.getStateColor(undefined, true)).toEqual(Colors.red30);
     });
     it('should return blue30 when focused', () => {
       const uut = new TextInput({});
       uut.state = {focused: true};
-      expect(uut.getUnderlineStyle()).toEqual({borderColor: Colors.blue30});
+      expect(uut.getStateColor(undefined, true)).toEqual(Colors.blue30);
     });
 
     const underlines = {default: Colors.cyan40, focus: Colors.orange60, error: Colors.purple50};
     it('should return cyan40 when passing underlineColor and when blur (inactive)', () => {
       const uut = new TextInput({underlineColor: underlines});
-      expect(uut.getUnderlineStyle()).toEqual({borderColor: Colors.cyan40});
+      expect(uut.getStateColor(uut.props.underlineColor, true)).toEqual(Colors.cyan40);
     });
     it('should return purple50 when passing underlineColor and when error', () => {
       const uut = new TextInput({underlineColor: underlines, error: 'test error'});
-      expect(uut.getUnderlineStyle()).toEqual({borderColor: Colors.purple50});
+      expect(uut.getStateColor(uut.props.underlineColor, true)).toEqual(Colors.purple50);
     });
     it('should return orange60 when passing underlineColor and when focused', () => {
       const uut = new TextInput({underlineColor: underlines});
       uut.state = {focused: true};
-      expect(uut.getUnderlineStyle()).toEqual({borderColor: Colors.orange60});
+      expect(uut.getStateColor(uut.props.underlineColor, true)).toEqual(Colors.orange60);
     });
   });
 

@@ -49,6 +49,7 @@ class PickerItem extends BaseComponent {
      */
     renderItem: PropTypes.func,
     onPress: PropTypes.func,
+    onSelectedLayout: PropTypes.func,
   };
 
   constructor(props) {
@@ -102,14 +103,19 @@ class PickerItem extends BaseComponent {
     );
   }
 
+  onSelectedLayout = (...args) => {
+    _.invoke(this.props, 'onSelectedLayout', ...args);
+  }
+
   render() {
-    const {renderItem, label, value, disabled, onPress, testID} = this.props;
+    const {renderItem, label, value, disabled, onPress, isSelected, testID} = this.props;
 
     return (
       <TouchableOpacity
         activeOpacity={0.5}
         // todo: deprecate the check for object
         onPress={() => onPress(_.isObject(value) ? value : {value, label})}
+        onLayout={isSelected ? this.onSelectedLayout : undefined}
         disabled={disabled}
         testID={testID}
       >
