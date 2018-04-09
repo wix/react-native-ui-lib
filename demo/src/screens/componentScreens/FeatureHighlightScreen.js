@@ -2,14 +2,15 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {Constants, View, Text, Button, Image, FeatureHighlight} from 'react-native-ui-lib'; // eslint-disable-line
 
-const titles = ['Get Notified', 'Title two is a long title that will get cut', 'Title number three',
+const titles = ['Get Notified', 'Title two is a long title that will not get cut by default, but can be limited', 'Title number three',
   'Title number four', 'Title number five', 'Title number six'];
 const messages = [
   'Important notifications appear right on your clubs and groups. Tap them to get more information about the most' +
   'important things that you should pay attention to.',
   'Short message with information about the above highlighted feature',
-  'A long message, that will get cut, with information about the highlighted feature, like: Important notifications' +
-  ' appear right on your clubs and groups. Tap them to get the important things that you should pay attention to.',
+  'A long message, that will not get cut (but can be limited) with information about the highlighted feature.' +
+  ' Please note that if the message is too long and will cause the content box to render off screen, you will get a' +
+  ' warning about it',
   'Very short message',
   'Short message with information about the below highlighted feature',
   'Important notifications appear right on your clubs and groups. Tap them to get more information about the most' +
