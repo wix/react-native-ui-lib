@@ -74,6 +74,12 @@ export default class TextInput extends BaseInput {
      */
     expandable: PropTypes.bool,
     /**
+     * allow custom rending of expandable content when clicking on the input (useful for pickers)
+     * accept props and state as params, ex. (props, state) => {...}
+     * use toggleExpandableModal(false) method to toggle off the expandable content
+     */
+    renderExpandable: PropTypes.func,
+    /**
      * transform function executed on value and return transformed value
      */
     transformer: PropTypes.func,
@@ -308,7 +314,13 @@ export default class TextInput extends BaseInput {
   }
 
   renderExpandableModal() {
+    const {renderExpandable} = this.props;
     const {showExpandableModal} = this.state;
+
+    if (_.isFunction(renderExpandable) && showExpandableModal) {
+      return renderExpandable(this.props, this.state);
+    }
+
     return (
       <Modal
         animationType={'slide'}
