@@ -74,7 +74,7 @@ export default class TextInput extends BaseInput {
      */
     expandable: PropTypes.bool,
     /**
-     * allow custom rending of expandable content when clicking on the input (useful for pickers)
+     * allow custom rendering of expandable content when clicking on the input (useful for pickers)
      * accept props and state as params, ex. (props, state) => {...}
      * use toggleExpandableModal(false) method to toggle off the expandable content
      */
