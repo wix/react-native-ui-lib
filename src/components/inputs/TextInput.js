@@ -242,6 +242,7 @@ export default class TextInput extends BaseInput {
       return (
         <Animated.Text
           style={[
+            this.styles.floatingPlaceholder,
             this.styles.placeholder,
             typography,
             centered && this.styles.placeholderCentered,
@@ -517,8 +518,10 @@ function createStyles({
       textAlign: centered ? 'center' : undefined,
       backgroundColor: 'transparent',
     },
-    placeholder: {
+    floatingPlaceholder: {
       position: 'absolute',
+    },
+    placeholder: {
       color: placeholderTextColor,
     },
     placeholderCentered: {
