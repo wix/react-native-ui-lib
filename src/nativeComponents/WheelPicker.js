@@ -89,7 +89,10 @@ WheelPickerView.propTypes = {
 
 WheelPickerView.Item = class extends React.Component { // eslint-disable-line react/no-multi-comp
   static propTypes = {
-    value: PropTypes.any, // string or integer basically
+    value: PropTypes.PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
     label: PropTypes.string,
   };
 
