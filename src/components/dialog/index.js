@@ -93,7 +93,7 @@ function createStyles({width, height}) {
     dialogContainer: {
       width,
       height,
-    }
+    },
   });
 }
 
