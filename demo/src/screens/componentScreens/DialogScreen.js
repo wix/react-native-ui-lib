@@ -1,11 +1,5 @@
 import React, {Component} from 'react';
 import {View, Dialog, Button, Text} from 'react-native-ui-lib'; // eslint-disable-line
-
-const dialogProps = {
-  width: '90%',
-  height: '60%',
-};
-
 class DialogScreen extends Component {
   state = {
     showDialog1: false,
@@ -29,7 +23,7 @@ class DialogScreen extends Component {
     const {showDialog1, showDialog2, showDialog3, showDialog4} = this.state;
     return (
       <View flex bg-dark80 padding-12 center>
-        <Button size={'small'} label="show default dialog" onPress={() => this.setState({showDialog1: true})} />
+        <Button size={'small'} label="show default dialog in center" onPress={() => this.setState({showDialog1: true})} />
         <Button
           marginT-20
           size={'small'}
@@ -48,24 +42,27 @@ class DialogScreen extends Component {
           label="show top dialog different animation"
           onPress={() => this.setState({showDialog4: true})}
         />
-        <Dialog visible={showDialog1} {...dialogProps} onBackgroundPress={() => this.setState({showDialog1: false})}>
+        <Dialog visible={showDialog1} width="90%" height="60%" onDismiss={() => this.setState({showDialog1: false})}>
           {this.renderDialogContent(1)}
         </Dialog>
         <Dialog
           visible={showDialog2}
-          {...dialogProps}
+          width="100%"
+          height="35%"
           bottom
           centerH
-          onBackgroundPress={() => this.setState({showDialog2: false})}
+          onDismiss={() => this.setState({showDialog2: false})}
+          animationConfig={{duration: 250}}
         >
-          {this.renderDialogContent(2)}
+          {this.renderDialogContent(2, {br0: true})}
         </Dialog>
         <Dialog
           visible={showDialog3}
-          {...dialogProps}
+          width="90%"
+          height="60%"
           bottom
           centerH
-          onBackgroundPress={() => this.setState({showDialog3: false})}
+          onDismiss={() => this.setState({showDialog3: false})}
         >
           {this.renderDialogContent(3, {'marginV-20': true})}
         </Dialog>
@@ -75,7 +72,7 @@ class DialogScreen extends Component {
           width="100%"
           top
           centerH
-          onBackgroundPress={() => this.setState({showDialog4: false})}
+          onDismiss={() => this.setState({showDialog4: false})}
           animationConfig={{animation: 'slideInDown', duration: 250}}
         >
           {this.renderDialogContent(4, {br0: true})}

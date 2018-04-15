@@ -15,17 +15,13 @@ class Dialog extends BaseComponent {
      */
     visible: PropTypes.bool,
     /**
-     * allow dismissing a dialog when clicking on the background
+     * dismiss callback for when clicking on the background
      */
-    onBackgroundPress: PropTypes.func,
+    onDismiss: PropTypes.func,
     /**
      * The color of the overlay background
      */
     overlayBackgroundColor: PropTypes.string,
-    /**
-     * The dialog background color (default: white)
-     */
-    dialogBackgroundColor: PropTypes.string,
     /**
      * The dialog width (default: 90%)
      */
@@ -47,7 +43,6 @@ class Dialog extends BaseComponent {
 
   static defaultProps = {
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
-    dialogBackgroundColor: Colors.white,
     width: '90%',
     height: '70%',
   };
@@ -67,7 +62,7 @@ class Dialog extends BaseComponent {
   }
 
   render() {
-    const {visible, overlayBackgroundColor, onBackgroundPress} = this.props;
+    const {visible, overlayBackgroundColor, onDismiss} = this.getThemeProps();
     const {alignments} = this.state;
     const centerByDefault = _.isEmpty(alignments);
 
@@ -76,7 +71,8 @@ class Dialog extends BaseComponent {
         transparent
         visible={visible}
         animationType={'fade'}
-        onBackgroundPress={onBackgroundPress}
+        onBackgroundPress={onDismiss}
+        onRequestClose={onDismiss}
         overlayBackgroundColor={overlayBackgroundColor}
       >
         <View center={centerByDefault} style={[this.styles.overlay, alignments]} pointerEvents="box-none">
@@ -89,7 +85,7 @@ class Dialog extends BaseComponent {
   }
 }
 
-function createStyles({dialogBackgroundColor, width, height}) {
+function createStyles({width, height}) {
   return StyleSheet.create({
     overlay: {
       flex: 1,
@@ -97,11 +93,7 @@ function createStyles({dialogBackgroundColor, width, height}) {
     dialogContainer: {
       width,
       height,
-    },
-    dialog: {
-      flex: 1,
-      backgroundColor: dialogBackgroundColor,
-    },
+    }
   });
 }
 
