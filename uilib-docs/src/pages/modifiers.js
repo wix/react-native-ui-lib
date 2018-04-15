@@ -8,19 +8,19 @@ class Modifiers extends Component {
       <div className="modifiers-page">
         <h1>Modifiers</h1>
         <div style={{flex: 1, flexDirection: 'row'}}>
-          <div style={{width: '60%', paddingRight: '50'}}>
+          <div className="article">
             Modifiers are essentially shortcuts used to layout and style RNUILIB's components.<br />
             They can be helpful when facing a new design or a complex layout by simplify the style prop composition.
             <br />For example, when you want to align sub-components horizontally,
             instead of writing:
-            <b>{this.renderHTML('<View style={{flexDirection: \'row\'}}>')}</b> you will use this ALIGNMENT modifier:
-            <b>{this.renderHTML('<View row>')}</b>
+            <pre>{this.renderHTML('<View style={{flexDirection: \'row\'}}>')}</pre> you will use this ALIGNMENT modifier:
+            <pre>{this.renderHTML('<View row>')}</pre>
             The ‘row’ modifier will simply change the view direction from its default direction (column) to a row,
             horizontal, direction.<br />
             Another example is using this TYPOGRAPHY modifier:
-            <b>{this.renderHTML('<Text text10>Some text</Text>')}</b>
+            <pre>{this.renderHTML('<Text text10>Some text</Text>')}</pre>
             instead of writing this:
-            <b>{this.renderHTML('<Text style={{fontFamily: \'Helvetica\', fontSize: \'64\'}}>Some text</Text>')}</b>
+            <pre>{this.renderHTML('<Text style={{fontFamily: \'Helvetica\', fontSize: \'64\'}}>Some text</Text>')}</pre>
             <br />
             For closer look at the presets run the demo project on a mobile device or simulator.<br />
             <span> See <a href="https://medium.com/the-react-native-log/easy-layouting-with-react-native-b96c4c6fae7/">this</a> blog post for an elaborate discussion.</span>
@@ -30,15 +30,15 @@ class Modifiers extends Component {
               Our style presetes includes: Colors, Typography, Shadows, Border Radius and more..
               You can easily use them anywhere in your code as you would have used any other constant value, or as a component modifier.
               You can also define your own presets and use them as you would the ui lib ones.<br />
-              <b>{this.renderHTML(
+              <pre>{this.renderHTML(
                 'Colors.loadColors({\n' +
                 '  pink: \'#FF69B4\',\n' +
                 '  gold: \'#FFD700\',\n' +
                 '});')}
-              </b>
-              <b>{this.renderHTML('Typography.loadTypographies({ h1: {fontSize: 26, fontWeight: \'300\', lineHeight: 80}, });')}</b>
+              </pre>
+              <pre>{this.renderHTML('Typography.loadTypographies({ h1: {fontSize: 26, fontWeight: \'300\', lineHeight: 80}, });')}</pre>
               <span>
-                To generate this text: <h1 style={{color: '#FF69B4', fontSize: '26', display: 'inline'}}>Hello World</h1> use this line: <b>{this.renderHTML('<Text h1 pink>Hello World</Text>')}</b><br />
+                To generate this text: <h1 style={{color: '#FF69B4', fontSize: '26', display: 'inline'}}>Hello World</h1> use this line: <pre>{this.renderHTML('<Text h1 pink>Hello World</Text>')}</pre><br />
                 It will use the h1 typography preset and the pink color preset to style the Text element.<br /><br />
                 Our style presets are translated into modifiers that will help you create a stunning UI easily and quickly.
               </span>

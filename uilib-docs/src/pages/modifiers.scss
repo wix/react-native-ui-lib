@@ -2,8 +2,18 @@
 
 .modifiers-page {
   text-align: left;
-  height: 100%;
-  margin: 30px;
+  padding: 48px;
+  background: #f2f4f5;
+  overflow-y: auto;
+
+  .article {
+    width: 60%;
+    margin-right: 50px;
+  }
+
+  pre {
+    font-size: 16px;
+  }
 }
 table {
   text-align: left;

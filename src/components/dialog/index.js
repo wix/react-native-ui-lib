@@ -8,7 +8,16 @@ import {Colors} from '../../style';
 import Modal from '../../screensComponents/modal';
 import View from '../view';
 
+/*eslint-disable*/
+/**
+ * @description: Dialog component for displaying custom content inside a popup dialog
+ * @notes: Use alignment modifiers to control the dialog positon (top, bottom, centerV, centerH, etc... by default the dialog is align to center)
+ * @modifiers: alignment
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DialogScreen.js
+ */
+/*eslint-enable*/
 class Dialog extends BaseComponent {
+  static displayName = 'Dialog'
   static propTypes = {
     /**
      * Control visibility of the dialog
