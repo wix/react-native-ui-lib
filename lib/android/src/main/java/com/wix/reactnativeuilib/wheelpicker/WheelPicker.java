@@ -18,12 +18,6 @@ import static android.view.View.inflate;
 
 public class WheelPicker extends ThemedNumberPicker{
     private Context context;
-
-    private void onValueChangeListener() {
-
-    }
-
-
     public WheelPicker(final Context context) {
         super(context);//ADD THIS
         this.context = context;
