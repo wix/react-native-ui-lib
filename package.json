@@ -1,6 +1,6 @@
 {
   "name": "react-native-ui-lib",
-  "version": "3.3.52",
+  "version": "3.3.53",
   "main": "index.js",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "publishConfig": {
@@ -28,7 +28,6 @@
     "bump:patch": "npm version patch"
   },
   "dependencies": {
-    "babel-plugin-transform-inline-environment-variables": "^0.0.2",
     "hoist-non-react-statics": "^2.3.0",
     "lodash": "^4.0.0",
     "prop-types": "^15.5.10",
@@ -38,6 +37,7 @@
     "react-native-interactable": "latest"
   },
   "devDependencies": {
+    "babel-plugin-transform-inline-environment-variables": "^0.0.2",
     "babel-cli": "^6.23.0",
     "babel-eslint": "^7.0.0",
     "babel-jest": "^20.0.3",
@@ -66,21 +66,30 @@
     "react-native-navigation": "^1.1.19"
   },
   "peerDependencies": {
-    "react": "16.0.0",
-    "react-native": "0.51.0"
+    "react": "^16.0.0",
+    "react-native": "^0.51.0"
   },
   "jest": {
     "preset": "react-native",
-    "testPathIgnorePatterns": ["/e2e/", "/node_modules/"],
-    "setupFiles": ["./jest-setup.js"]
+    "testPathIgnorePatterns": [
+      "/e2e/",
+      "/node_modules/"
+    ],
+    "setupFiles": [
+      "./jest-setup.js"
+    ]
   },
   "babel": {
     "env": {
       "test": {
-        "presets": ["react-native"],
+        "presets": [
+          "react-native"
+        ],
         "retainLines": true
       }
     },
-    "plugins": ["transform-inline-environment-variables"]
+    "plugins": [
+      "transform-inline-environment-variables"
+    ]
   }
 }
