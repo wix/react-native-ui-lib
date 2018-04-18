@@ -167,12 +167,17 @@ class Picker extends TextInput {
   }
 
   renderExpandableInput() {
+    const {style} = this.props;
     const typography = this.getTypography();
     const color = this.extractColorValue() || Colors.dark10;
     const label = this.getLabel();
 
     return (
-      <Text style={[this.styles.input, typography, {color}]} numberOfLines={3} onPress={this.handlePickerOnPress}>
+      <Text
+        style={[this.styles.input, typography, {color}, style]}
+        numberOfLines={3}
+        onPress={this.handlePickerOnPress}
+      >
         {label}
       </Text>
     );
