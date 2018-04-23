@@ -1,5 +1,5 @@
 import Typography from './typography';
-import BorderRadiuses from './BorderRadiuses';
+import BorderRadiuses from './borderRadiuses';
 import Colors from './colors';
 import Shadows from './shadows';
 import Spacings from './spacings';

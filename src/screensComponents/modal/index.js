@@ -1,10 +1,12 @@
 import React from 'react';
+import {Modal as RNModal, TouchableWithoutFeedback, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import {BlurView} from 'react-native-blur';
-import {View, Modal as RNModal} from 'react-native';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import TopBar from './TopBar';
+import View from '../../components/view';
 
 /**
  * @description: Component that present content on top of the invoking screen
@@ -20,7 +22,28 @@ export default class Modal extends BaseComponent {
      * Blurs the modal background when transparent (iOS only)
      */
     enableModalBlur: PropTypes.bool,
+    /**
+     * allow dismissing a modal when clicking on its background
+     */
+    onBackgroundPress: PropTypes.func,
+    /**
+     * the background color of the overlay
+     */
+    overlayBackgroundColor: PropTypes.string,
   };
+
+  renderTouchableOverlay() {
+    const {overlayBackgroundColor, onBackgroundPress} = this.props;
+    if (_.isFunction(onBackgroundPress) || !!overlayBackgroundColor) {
+      return (
+        <View style={[styles.touchableOverlay, {backgroundColor: overlayBackgroundColor}]}>
+          <TouchableWithoutFeedback onPress={onBackgroundPress}>
+            <View flex />
+          </TouchableWithoutFeedback>
+        </View>
+      );
+    }
+  }
 
   render() {
     const {enableModalBlur, ...others} = this.props;
@@ -28,11 +51,18 @@ export default class Modal extends BaseComponent {
     return (
       <RNModal {...others}>
         <Container style={{flex: 1}} blurType="light">
+          {this.renderTouchableOverlay()}
           {this.props.children}
         </Container>
       </RNModal>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  touchableOverlay: {
+    ...StyleSheet.absoluteFillObject,
+  },
+});
 
 Modal.TopBar = TopBar;

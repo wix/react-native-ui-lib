@@ -1,16 +1,10 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {
-  View,
-  Colors,
-  Text,
-  TextInput,
-  TextArea,
-  Typography,
-} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Colors, Text, TextInput, TextArea, Typography, Modal, Button} from 'react-native-ui-lib'; //eslint-disable-line
 import {KeyboardAwareInsetsView} from 'react-native-keyboard-tracking-view';
 
-const LONG_TEXT = 'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer' +
+const LONG_TEXT =
+  'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer' +
   'Martín Bollati. In this piece';
 const INPUT_SPACING = 10;
 
@@ -18,9 +12,7 @@ const transformPrice = (value) => {
   let cleanValue;
   let priceText = '';
   if (value) {
-    [cleanValue] = value.match(/^(?:(?:-?(?:0|\d{1,9}))(?:\.\d{0,2})?)|-/) || [
-      '',
-    ];
+    [cleanValue] = value.match(/^(?:(?:-?(?:0|\d{1,9}))(?:\.\d{0,2})?)|-/) || [''];
     priceText = cleanValue;
   }
   return priceText;
@@ -32,6 +24,7 @@ export default class InputsScreen extends Component {
 
     this.state = {
       error: '',
+      customExpandableValue: 'Custom Expandable',
     };
   }
 
@@ -133,8 +126,9 @@ export default class InputsScreen extends Component {
           <TextInput
             text70
             placeholder="Share your story"
-            value={'Share Your Story exists to provide spaces to hear people\'s stories, in order to inspire us to' +
-            'live better ones ourselves.'
+            value={
+              "Share Your Story exists to provide spaces to hear people's stories, in order to inspire us to" +
+              'live better ones ourselves.'
             }
             multiline
           />
@@ -146,6 +140,32 @@ export default class InputsScreen extends Component {
             value={LONG_TEXT}
             expandable
             containerStyle={{marginBottom: INPUT_SPACING}}
+          />
+
+          <TextInput
+            ref={r => (this.input = r)}
+            placeholder="placeholder"
+            expandable
+            value={this.state.customExpandableValue}
+            renderExpandable={() => {
+              return (
+                <Modal visible animationType={'slide'}>
+                  <View flex bg-orange70 center>
+                    <Text marginB-20 text50>
+                      Do Whatever you want here
+                    </Text>
+                    <Button
+                      label="Close Me"
+                      onPress={() => {
+                        this.setState({customExpandableValue: 'New Value'}, () => {
+                          this.input.toggleExpandableModal(false);
+                        });
+                      }}
+                    />
+                  </View>
+                </Modal>
+              );
+            }}
           />
 
           <TextInput
@@ -199,7 +219,7 @@ export default class InputsScreen extends Component {
             hideUnderline
           />
         </ScrollView>
-        <KeyboardAwareInsetsView/>
+        <KeyboardAwareInsetsView />
       </View>
     );
   }

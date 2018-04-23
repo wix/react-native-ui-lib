@@ -112,7 +112,7 @@ export default class ComponentTemplate extends Component {
     const componentProps = _.get(selectedComponent, 'props');
     const gifs = componentInfo.gif ? componentInfo.gif.split(',') : undefined;
     const imgs = componentInfo.image ? componentInfo.image.split(',') : undefined;
-    const notes = componentInfo.notes ? componentInfo.notes.split(',') : undefined;
+    const notes = componentInfo.notes ? componentInfo.notes.split(';') : undefined;
 
     return (
       <div className="docs-page">

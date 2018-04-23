@@ -8,6 +8,7 @@ import BadgesScreen from './BadgesScreen';
 import CardsScreen from './CardsScreen';
 import CarouselScreen from './CarouselScreen';
 import ConnectionStatusBarScreen from './ConnectionStatusBarScreen';
+import DialogScreen from './DialogScreen'
 import FormScreen from './FormScreen';
 import InputsScreen from './InputsScreen';
 import MaskedInputScreen from './MaskedInputScreen';
@@ -27,6 +28,7 @@ Navigation.registerComponent('unicorn.components.BadgesScreen', () => BadgesScre
 Navigation.registerComponent('unicorn.components.CardsScreen', () => CardsScreen);
 Navigation.registerComponent('unicorn.components.CarouselScreen', () => CarouselScreen);
 Navigation.registerComponent('unicorn.components.ConnectionStatusBar', () => ConnectionStatusBarScreen);
+Navigation.registerComponent('unicorn.components.DialogScreen', () => DialogScreen);
 Navigation.registerComponent('unicorn.components.FormScreen', () => FormScreen);
 Navigation.registerComponent('unicorn.components.InputsScreen', () => InputsScreen);
 Navigation.registerComponent('unicorn.components.MaskedInputScreen', () => MaskedInputScreen);

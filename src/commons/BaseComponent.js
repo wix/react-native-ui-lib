@@ -123,10 +123,14 @@ export default class BaseComponent extends Component {
   }
 
   extractBorderRadiusValue() {
+    const borderRadiusPropsKeys = _.chain(this.props)
+      .keys(this.props)
+      .filter(key => BorderRadiuses.getKeysPattern().test(key))
+      .value();
     let borderRadius;
-    _.forEach(BorderRadiuses, (value, key) => {
+    _.forEach(borderRadiusPropsKeys, (key) => {
       if (this.props[key] === true) {
-        borderRadius = value;
+        borderRadius = BorderRadiuses[key];
       }
     });
 

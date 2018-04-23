@@ -7,6 +7,7 @@ import Card from './card';
 // import Carousel from './carousel/Carousel';
 import Carousel from './carousel';
 import ConnectionStatusBar from './connectionStatusBar';
+import Dialog from './dialog';
 import FeatureHighlight from './featureHighlight';
 import Image from './image';
 import Inputs from './inputs';
@@ -33,6 +34,7 @@ module.exports = {
   Card,
   Carousel,
   ConnectionStatusBar,
+  Dialog,
   FeatureHighlight,
   Image,
   ...Inputs,
