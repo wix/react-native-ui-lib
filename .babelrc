@@ -1,5 +1,5 @@
 {
-  "presets": ["react-native"],
+  "presets": ["flow", "react-native"],
   "retainLines": true,
   "plugins": ["transform-inline-environment-variables"]
 }

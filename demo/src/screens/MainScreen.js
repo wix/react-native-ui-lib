@@ -26,10 +26,10 @@ export default class UiLibExplorerMenu extends Component {
   }
 
   componentDidMount() {
-    // this.openScreen({
-    //   screen: 'unicorn.PlaygroundScreen',
-    //   title: 'Playground',
-    // });
+    this.openScreen({
+      screen: 'unicorn.PlaygroundScreen',
+      title: 'Playground',
+    });
   }
 
   openScreen(row) {

@@ -25,7 +25,9 @@
     "docs:install": "(cd ./uilib-docs && rm -rf node_modules && rm -rf package-lock.json && npm install)",
     "docs:deploy": "(cd ./uilib-docs && gatsby build --prefix-paths && gh-pages -d public --branch gh-pages)",
     "docs:develop": "(cd ./uilib-docs && gatsby develop)",
-    "bump:patch": "npm version patch"
+    "bump:patch": "npm version patch",
+    "flow": "flow",
+    "flow-stop": "flow stop"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
@@ -38,10 +40,11 @@
     "react-native-interactable": "latest"
   },
   "devDependencies": {
-    "babel-cli": "^6.23.0",
+    "babel-cli": "^6.26.0",
     "babel-eslint": "^7.0.0",
     "babel-jest": "^20.0.3",
     "babel-preset-es2015": "^6.22.0",
+    "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.22.0",
     "babel-preset-react-native": "1.9.1",
     "enzyme": "^2.7.1",
@@ -52,6 +55,7 @@
     "eslint-plugin-react": "^6.9.0",
     "eslint-plugin-react-native": "^2.0.0",
     "eslint-plugin-uilib": "file:./eslint-rules",
+    "flow-bin": "^0.69.0",
     "gatsby": "^1.9.128",
     "gh-pages": "^1.1.0",
     "jest": "^20.0.4",
@@ -71,16 +75,25 @@
   },
   "jest": {
     "preset": "react-native",
-    "testPathIgnorePatterns": ["/e2e/", "/node_modules/"],
-    "setupFiles": ["./jest-setup.js"]
+    "testPathIgnorePatterns": [
+      "/e2e/",
+      "/node_modules/"
+    ],
+    "setupFiles": [
+      "./jest-setup.js"
+    ]
   },
   "babel": {
     "env": {
       "test": {
-        "presets": ["react-native"],
+        "presets": [
+          "react-native"
+        ],
         "retainLines": true
       }
     },
-    "plugins": ["transform-inline-environment-variables"]
+    "plugins": [
+      "transform-inline-environment-variables"
+    ]
   }
 }

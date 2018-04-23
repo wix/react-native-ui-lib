@@ -23,6 +23,8 @@ import Toast from './toast';
 import TouchableOpacity from './touchableOpacity';
 import Tour from './tour';
 import View from './view';
+import FlowComponent from './flowComponents';
+import FlowComponentTyped from './flowComponents/flowComponentTyped';
 
 
 module.exports = {
@@ -50,4 +52,6 @@ module.exports = {
   TouchableOpacity,
   Tour,
   View,
+  FlowComponent,
+  FlowComponentTyped,
 };

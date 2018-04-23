@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {Colors, Constants, View, Text, Button, Modal} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, Constants, View, Text, Button, Modal, FlowComponent} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class PlaygroundScreen extends Component {
 
@@ -46,12 +46,11 @@ export default class PlaygroundScreen extends Component {
   }
 
   render() {
-    const {showModal} = this.state;
+    // const {showModal} = this.state;
 
     return (
-      <View flex center style={styles.container}>
-        <Button onPress={this.toggleModal} label={'Show'}/>
-        {showModal && this.renderModal()}
+      <View style={styles.container}>
+        <FlowComponent/>
       </View>
     );
   }
