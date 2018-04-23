@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, ScrollView, TextInput} from 'react-native';
+import _ from 'lodash';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import {Modal} from '../../screensComponents';
@@ -49,7 +50,7 @@ class PickerModal extends BaseComponent {
   };
 
   scrollToSelected(scrollPosition = this.props.scrollPosition) {
-    if (!scrollPosition) return;
+    if (!scrollPosition || this.search.isFocused()) return;
 
     const {scrollHeight, scrollContentHeight} = this.state;
     if (this.scrollView && scrollHeight && scrollContentHeight) {
@@ -71,9 +72,10 @@ class PickerModal extends BaseComponent {
         <View style={this.styles.searchInputContainer}>
           <Image style={this.styles.searchIcon} source={Assets.icons.search}/>
           <TextInput
+            ref={r => this.search = r}
             style={this.styles.searchInput}
             placeholder="Search..."
-            onChangeText={onSearchChange}
+            onChangeText={_.throttle(onSearchChange, 300)}
             autoCorrect={false}
           />
         </View>
