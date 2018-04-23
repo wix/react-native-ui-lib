@@ -1,6 +1,7 @@
 package com.wix.reactnativeuilib.wheelpicker;
 
 import android.content.Context;
+import android.view.ContextThemeWrapper;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 
@@ -16,10 +17,10 @@ import static android.view.View.inflate;
  * Created by eladbo on 01/04/2018.
  */
 
-public class WheelPicker extends ThemedNumberPicker{
+public class WheelPicker extends NumberPicker{
     private Context context;
     public WheelPicker(final Context context) {
-        super(context);//ADD THIS
+        super(new ContextThemeWrapper(context, R.style.NumberPickerTextColorStyle));
         this.context = context;
         this.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         this.setOnValueChangedListener(new OnValueChangeListener() {
