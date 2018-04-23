@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import {StyleSheet, findNodeHandle, TouchableWithoutFeedback} from 'react-native';
 import {BaseComponent} from '../../commons';
 import View from '../view';
@@ -17,8 +18,10 @@ const contentViewPadding = Constants.isIOS ? 35 : 32;
 const contentViewRightMargin = Constants.isIOS ? 45 : 46;
 const titleBottomMargin = Constants.isIOS ? 15 : 12;
 const messageBottomMargin = Constants.isIOS ? 30 : 24;
+const titleLineHeight = Constants.isAndroid ? 26 : 24;
 const messageLineHeight = 22;
 const defaultButtonLabel = 'Got it';
+const contentViewHeight = Constants.isAndroid ? 268 : 282;
 
 /*eslint-disable*/
 /**
@@ -113,10 +116,14 @@ class FeatureHighlight extends BaseComponent {
     super(props);
 
     this.getComponentDimensions = this.getComponentDimensions.bind(this);
+    this.setTargetPosition = this.setTargetPosition.bind(this);
 
     this.state = {
-      targetPosition: {left: 0, top: 0, width: 250, height: 268},
+      contentViewStyle: {opacity: 0},
+      targetPosition: {},
     };
+
+    this.contentHeight = contentViewHeight;
   }
 
   static defaultProps = {
@@ -142,92 +149,93 @@ class FeatureHighlight extends BaseComponent {
 
       const node = this.findTargetNode(target);
       this.setState({node});
-
       if (target) {
         setTimeout(() => {
           target.measureInWindow((x, y, width, height) => {
-            this.setState({
-              targetPosition: {left: x, top: y, width, height},
-            });
+            const style = this.getContentPositionStyle({left: x, top: y, width, height});
+            this.setState({contentViewStyle: style});
           });
         }, 0);
       }
     } else {
       const frame = props.highlightFrame;
       if (frame) {
-        this.setState({
-          targetPosition: {left: frame.x, top: frame.y, width: frame.width, height: frame.height},
-        });
+        const style = this.getContentPositionStyle({left: frame.x, top: frame.y, width: frame.width, height: frame.height});
+        this.setState({contentViewStyle: style});
       }
     }
   }
 
-  getContentPositionStyle() {
+  getContentPositionStyle(targetPosition) {
     const {highlightFrame, minimumRectSize, innerPadding} = this.props;
-    const {targetPosition, contentViewHeight} = this.state;
-    const {top, height} = targetPosition || {};
+    const {top, height} = targetPosition;
     const screenVerticalCenter = Constants.screenHeight / 2;
     const targetCenter = top + (height / 2);
     const isAlignedTop = targetCenter > screenVerticalCenter;
-    let topPosition = isAlignedTop ? top - contentViewHeight : top + height;
+    let topPosition = isAlignedTop ? top - this.contentHeight : top + height;
     if (!highlightFrame && !isAlignedTop) {
       const minRectHeight = minimumRectSize.height;
       const isUnderMin = height >= minRectHeight;
       topPosition = isUnderMin ? topPosition + innerPadding : targetCenter + (minRectHeight / 2) + (innerPadding / 2);
     }
-    if (topPosition < 0 || topPosition + contentViewHeight > Constants.screenHeight) {
+    if (topPosition < 0 || topPosition + this.contentHeight > Constants.screenHeight) {
       console.warn('Content is too long and might appear off screen. ' +
         'Please adjust the message length for better results.');
     }
-    return {top: topPosition};
+    return {opacity: 1, top: topPosition};
   }
 
   // This method will be called more than once in case of layout change!
   getComponentDimensions(event) {
-    const height = event.nativeEvent.layout.height;
-    this.setState({contentViewHeight: height});
+    this.contentHeight = event.nativeEvent.layout.height;
   }
 
   renderHighlightMessage() {
-    const {contentViewHeight} = this.state;
     const {title, message, confirmButtonProps, textColor, titleNumberOfLines, messageNumberOfLines}
       = this.getThemeProps();
     const color = textColor || defaultTextColor;
 
     return (
       <View
-        style={[styles.highlightContent, contentViewHeight && this.getContentPositionStyle()]}
+        style={[styles.highlightContent, this.state.contentViewStyle]}
         onLayout={this.getComponentDimensions}
         pointerEvents="box-none"
       >
-        {contentViewHeight && title && (
+        {title && (
           <Text text60 style={[styles.title, {color}]} numberOfLines={titleNumberOfLines} pointerEvents="none">
             {title}
           </Text>
         )}
-        {contentViewHeight && message && (
+        {message && (
           <Text text70 style={[styles.message, {color}]} numberOfLines={messageNumberOfLines} pointerEvents="none">
             {message}
           </Text>
         )}
-        {contentViewHeight && (
-          <Button
-            label={defaultButtonLabel}
-            size="small"
-            outline
-            outlineColor={color}
-            activeBackgroundColor={Colors.rgba(color, 0.3)}
-            {...confirmButtonProps}
-          />
-        )}
+        <Button
+          label={defaultButtonLabel}
+          size="small"
+          outline
+          outlineColor={color}
+          activeBackgroundColor={Colors.rgba(color, 0.3)}
+          {...confirmButtonProps}
+          onPress={this.onCustomPress}
+        />
       </View>
     );
+  }
+
+  onCustomPress = () => {
+    this.setState({contentViewStyle: {opacity: 0}}, () => {
+      this.contentHeight = contentViewHeight;
+      const {confirmButtonProps} = this.props;
+      _.invoke(confirmButtonProps, 'onPress');
+    });
   }
 
   render() {
     const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding,
       onBackgroundPress} = this.getThemeProps();
-    const {node, targetPosition} = this.state;
+    const {node} = this.state;
 
     return (
       <HighlighterOverlayView
@@ -244,7 +252,7 @@ class FeatureHighlight extends BaseComponent {
         <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onBackgroundPress}>
           <View flex/>
         </TouchableWithoutFeedback>
-        {targetPosition && this.renderHighlightMessage()}
+        {this.renderHighlightMessage()}
       </HighlighterOverlayView>
     );
   }
@@ -260,6 +268,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: '500',
     marginBottom: titleBottomMargin,
+    lineHeight: titleLineHeight,
   },
   message: {
     marginBottom: messageBottomMargin,
