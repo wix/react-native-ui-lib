@@ -189,34 +189,37 @@ class FeatureHighlight extends BaseComponent {
   }
 
   renderHighlightMessage() {
+    const {contentViewHeight} = this.state;
     const {title, message, confirmButtonProps, textColor, titleNumberOfLines, messageNumberOfLines}
       = this.getThemeProps();
     const color = textColor || defaultTextColor;
 
     return (
       <View
-        style={[styles.highlightContent, this.getContentPositionStyle()]}
+        style={[styles.highlightContent, contentViewHeight && this.getContentPositionStyle()]}
         onLayout={this.getComponentDimensions}
         pointerEvents="box-none"
       >
-        {title && (
+        {contentViewHeight && title && (
           <Text text60 style={[styles.title, {color}]} numberOfLines={titleNumberOfLines} pointerEvents="none">
             {title}
           </Text>
         )}
-        {message && (
+        {contentViewHeight && message && (
           <Text text70 style={[styles.message, {color}]} numberOfLines={messageNumberOfLines} pointerEvents="none">
             {message}
           </Text>
         )}
-        <Button
-          label={defaultButtonLabel}
-          size="small"
-          outline
-          outlineColor={color}
-          activeBackgroundColor={Colors.rgba(color, 0.3)}
-          {...confirmButtonProps}
-        />
+        {contentViewHeight && (
+          <Button
+            label={defaultButtonLabel}
+            size="small"
+            outline
+            outlineColor={color}
+            activeBackgroundColor={Colors.rgba(color, 0.3)}
+            {...confirmButtonProps}
+          />
+        )}
       </View>
     );
   }
