@@ -121,7 +121,6 @@ class FeatureHighlight extends BaseComponent {
     this.state = {
       fadeAnim: new Animated.Value(0),  // Initial value for opacity: 0
       contentTopPosition: 0,
-      targetPosition: {},
     };
 
     this.contentHeight = contentViewHeight;
@@ -166,7 +165,7 @@ class FeatureHighlight extends BaseComponent {
         setTimeout(() => {
           target.measureInWindow((x, y, width, height) => {
             this.targetPosition = {left: x, top: y, width, height};
-            this.getContentPositionStyle();
+            this.setContentPosition();
           });
         }, 0);
       }
@@ -174,12 +173,12 @@ class FeatureHighlight extends BaseComponent {
       const frame = props.highlightFrame;
       if (frame) {
         this.targetPosition = {left: frame.x, top: frame.y, width: frame.width, height: frame.height};
-        this.getContentPositionStyle();
+        this.setContentPosition();
       }
     }
   }
 
-  getContentPositionStyle() {
+  getContentPosition() {
     if (this.didLayout) {
       const {highlightFrame, minimumRectSize, innerPadding} = this.props;
       const {top, height} = this.targetPosition;
@@ -196,9 +195,14 @@ class FeatureHighlight extends BaseComponent {
         console.warn('Content is too long and might appear off screen. ' +
           'Please adjust the message length for better results.');
       }
-      this.setState({contentTopPosition: topPosition});
-      this.animate(1);
+      return topPosition;
     }
+  }
+
+  setContentPosition() {
+    const top = this.getContentPosition();
+    this.setState({contentViewStyle: top});
+    this.animate(1);
   }
 
   // This method will be called more than once in case of layout change!
@@ -206,8 +210,17 @@ class FeatureHighlight extends BaseComponent {
     this.didLayout = true;
     this.contentHeight = event.nativeEvent.layout.height;
     if (this.targetPosition !== undefined) {
-      this.getContentPositionStyle();
+      this.setContentPosition();
     }
+  }
+
+  onCustomPress = () => {
+    this.animate(0);
+    this.contentHeight = contentViewHeight;
+    this.didLayout = false;
+    this.targetPosition = undefined;
+    const {confirmButtonProps} = this.props;
+    _.invoke(confirmButtonProps, 'onPress');
   }
 
   renderHighlightMessage() {
@@ -217,7 +230,7 @@ class FeatureHighlight extends BaseComponent {
 
     return (
       <Animated.View
-        style={[styles.highlightContent, {opacity: this.state.fadeAnim, top: this.state.contentTopPosition}]}
+        style={[styles.highlightContent, {opacity: this.state.fadeAnim, top: this.state.contentViewStyle}]}
         onLayout={this.getComponentDimensions}
         pointerEvents="box-none"
       >
@@ -242,15 +255,6 @@ class FeatureHighlight extends BaseComponent {
         />
       </Animated.View>
     );
-  }
-
-  onCustomPress = () => {
-    this.animate(0);
-    this.contentHeight = contentViewHeight;
-    this.didLayout = false;
-    this.targetPosition = undefined;
-    const {confirmButtonProps} = this.props;
-    _.invoke(confirmButtonProps, 'onPress');
   }
 
   render() {
