@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import {StyleSheet, findNodeHandle, TouchableWithoutFeedback} from 'react-native';
+import {StyleSheet, findNodeHandle, TouchableWithoutFeedback, Animated} from 'react-native';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
@@ -119,11 +119,14 @@ class FeatureHighlight extends BaseComponent {
     this.setTargetPosition = this.setTargetPosition.bind(this);
 
     this.state = {
-      contentViewStyle: {opacity: 0},
+      fadeAnim: new Animated.Value(0),  // Initial value for opacity: 0
+      contentTopPosition: 0,
       targetPosition: {},
     };
 
     this.contentHeight = contentViewHeight;
+    this.targetPosition = undefined;
+    this.didLayout = false;
   }
 
   static defaultProps = {
@@ -143,6 +146,16 @@ class FeatureHighlight extends BaseComponent {
     return findNodeHandle(target);
   }
 
+  animate(toValue) {
+    Animated.timing(                  // Animate over time
+      this.state.fadeAnim,            // The animated value to drive
+      {
+        toValue,                      // Animate to value
+        duration: toValue === 0 ? 0 : 100,   // Make it take a while
+      },
+    ).start();                        // Starts the animation
+  }
+
   setTargetPosition(props = this.props) {
     if (props.getTarget !== undefined) {
       const target = props.getTarget();
@@ -152,42 +165,49 @@ class FeatureHighlight extends BaseComponent {
       if (target) {
         setTimeout(() => {
           target.measureInWindow((x, y, width, height) => {
-            const style = this.getContentPositionStyle({left: x, top: y, width, height});
-            this.setState({contentViewStyle: style});
+            this.targetPosition = {left: x, top: y, width, height};
+            this.getContentPositionStyle();
           });
         }, 0);
       }
     } else {
       const frame = props.highlightFrame;
       if (frame) {
-        const style = this.getContentPositionStyle({left: frame.x, top: frame.y, width: frame.width, height: frame.height});
-        this.setState({contentViewStyle: style});
+        this.targetPosition = {left: frame.x, top: frame.y, width: frame.width, height: frame.height};
+        this.getContentPositionStyle();
       }
     }
   }
 
-  getContentPositionStyle(targetPosition) {
-    const {highlightFrame, minimumRectSize, innerPadding} = this.props;
-    const {top, height} = targetPosition;
-    const screenVerticalCenter = Constants.screenHeight / 2;
-    const targetCenter = top + (height / 2);
-    const isAlignedTop = targetCenter > screenVerticalCenter;
-    let topPosition = isAlignedTop ? top - this.contentHeight : top + height;
-    if (!highlightFrame && !isAlignedTop) {
-      const minRectHeight = minimumRectSize.height;
-      const isUnderMin = height >= minRectHeight;
-      topPosition = isUnderMin ? topPosition + innerPadding : targetCenter + (minRectHeight / 2) + (innerPadding / 2);
+  getContentPositionStyle() {
+    if (this.didLayout) {
+      const {highlightFrame, minimumRectSize, innerPadding} = this.props;
+      const {top, height} = this.targetPosition;
+      const screenVerticalCenter = Constants.screenHeight / 2;
+      const targetCenter = top + (height / 2);
+      const isAlignedTop = targetCenter > screenVerticalCenter;
+      let topPosition = isAlignedTop ? top - this.contentHeight : top + height;
+      if (!highlightFrame && !isAlignedTop) {
+        const minRectHeight = minimumRectSize.height;
+        const isUnderMin = height >= minRectHeight;
+        topPosition = isUnderMin ? topPosition + innerPadding : targetCenter + (minRectHeight / 2) + (innerPadding / 2);
+      }
+      if (topPosition < 0 || topPosition + this.contentHeight > Constants.screenHeight) {
+        console.warn('Content is too long and might appear off screen. ' +
+          'Please adjust the message length for better results.');
+      }
+      this.setState({contentTopPosition: topPosition});
+      this.animate(1);
     }
-    if (topPosition < 0 || topPosition + this.contentHeight > Constants.screenHeight) {
-      console.warn('Content is too long and might appear off screen. ' +
-        'Please adjust the message length for better results.');
-    }
-    return {opacity: 1, top: topPosition};
   }
 
   // This method will be called more than once in case of layout change!
   getComponentDimensions(event) {
+    this.didLayout = true;
     this.contentHeight = event.nativeEvent.layout.height;
+    if (this.targetPosition !== undefined) {
+      this.getContentPositionStyle();
+    }
   }
 
   renderHighlightMessage() {
@@ -196,8 +216,8 @@ class FeatureHighlight extends BaseComponent {
     const color = textColor || defaultTextColor;
 
     return (
-      <View
-        style={[styles.highlightContent, this.state.contentViewStyle]}
+      <Animated.View
+        style={[styles.highlightContent, {opacity: this.state.fadeAnim, top: this.state.contentTopPosition}]}
         onLayout={this.getComponentDimensions}
         pointerEvents="box-none"
       >
@@ -220,16 +240,17 @@ class FeatureHighlight extends BaseComponent {
           {...confirmButtonProps}
           onPress={this.onCustomPress}
         />
-      </View>
+      </Animated.View>
     );
   }
 
   onCustomPress = () => {
-    this.setState({contentViewStyle: {opacity: 0}}, () => {
-      this.contentHeight = contentViewHeight;
-      const {confirmButtonProps} = this.props;
-      _.invoke(confirmButtonProps, 'onPress');
-    });
+    this.animate(0);
+    this.contentHeight = contentViewHeight;
+    this.didLayout = false;
+    this.targetPosition = undefined;
+    const {confirmButtonProps} = this.props;
+    _.invoke(confirmButtonProps, 'onPress');
   }
 
   render() {
