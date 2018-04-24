@@ -150,7 +150,7 @@ class FeatureHighlight extends BaseComponent {
       this.state.fadeAnim,            // The animated value to drive
       {
         toValue,                      // Animate to value
-        duration: toValue === 0 ? 0 : 100,   // Make it take a while
+        duration: toValue ? 100 : 0,   // Make it take a while
       },
     ).start();                        // Starts the animation
   }
@@ -214,7 +214,7 @@ class FeatureHighlight extends BaseComponent {
     }
   }
 
-  onCustomPress = () => {
+  onPress = () => {
     this.animate(0);
     this.contentHeight = contentViewHeight;
     this.didLayout = false;
@@ -251,7 +251,7 @@ class FeatureHighlight extends BaseComponent {
           outlineColor={color}
           activeBackgroundColor={Colors.rgba(color, 0.3)}
           {...confirmButtonProps}
-          onPress={this.onCustomPress}
+          onPress={this.onPress}
         />
       </Animated.View>
     );
