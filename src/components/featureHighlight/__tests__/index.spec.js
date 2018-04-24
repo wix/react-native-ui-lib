@@ -8,30 +8,33 @@ describe('FeatureHighlight', () => {
     FeatureHighlight = require('../index').default;
   });
 
-  describe('getContentPositionStyle', () => {
+  describe('getContentPosition', () => {
     it('massage should be placed above element positioned below screen\'s vertical center', () => {
       const uut = new FeatureHighlight({});
       uut.state = {
-        targetPosition: {left: 0, top: 500, width: 80, height: 80},
-        contentViewHeight: 200,
+        contentTopPosition: 0,
       };
-      expect(uut.getContentPositionStyle()).toEqual({top: 300});
+      uut.targetPosition = {left: 0, top: 500, width: 80, height: 80};
+      uut.didLayout = true;
+      expect(uut.getContentPosition()).toEqual(218);
     });
     it('massage should be placed below element positioned above screen\'s vertical center', () => {
       const uut = new FeatureHighlight({minimumRectSize: {width: 56, height: 56}, innerPadding: 10});
       uut.state = {
-        targetPosition: {left: 0, top: 200, width: 20, height: 20},
-        contentViewHeight: 200,
+        contentTopPosition: 0,
       };
-      expect(uut.getContentPositionStyle()).toEqual({top: 243});
+      uut.targetPosition = {left: 0, top: 200, width: 20, height: 20};
+      uut.didLayout = true;
+      expect(uut.getContentPosition()).toEqual(243);
     });
     it('massage should be placed below element positioned above screen\'s vertical center', () => {
       const uut = new FeatureHighlight({minimumRectSize: {width: 56, height: 56}, innerPadding: 10});
       uut.state = {
-        targetPosition: {left: 0, top: 200, width: 80, height: 80},
-        contentViewHeight: 200,
+        contentTopPosition: 0,
       };
-      expect(uut.getContentPositionStyle()).toEqual({top: 290});
+      uut.targetPosition = {left: 0, top: 200, width: 80, height: 80};
+      uut.didLayout = true;
+      expect(uut.getContentPosition()).toEqual(290);
     });
   });
 
