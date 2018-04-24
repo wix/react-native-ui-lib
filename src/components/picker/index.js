@@ -121,6 +121,7 @@ class Picker extends TextInput {
   }
 
   onDoneSelecting(item) {
+    this.setState({searchValue: ''}); // clean search when done selecting
     this.onChangeText(item);
     this.toggleExpandableModal(false);
     _.invoke(this.props, 'onChange', item);
