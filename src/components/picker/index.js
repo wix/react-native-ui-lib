@@ -10,6 +10,7 @@ import * as PickerPresenter from './PickerPresenter';
 import Button from '../../components/button';
 import View from '../../components/view';
 import Modal from '../../screensComponents/modal';
+import {Constants} from '../../helpers';
 
 const PICKER_MODES = {
   SINGLE: 'SINGLE',
@@ -191,7 +192,13 @@ class Picker extends TextInput {
 
     return (
       <Text
-        style={[this.styles.input, typography, {color}, style]}
+        style={[
+          this.styles.input,
+          typography,
+          {color},
+          style,
+          {height: Constants.isAndroid ? typography.lineHeight : undefined},
+        ]}
         numberOfLines={3}
         onPress={this.handlePickerOnPress}
       >

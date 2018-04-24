@@ -50,7 +50,8 @@ class PickerModal extends BaseComponent {
   };
 
   scrollToSelected(scrollPosition = this.props.scrollPosition) {
-    if (!scrollPosition || this.search.isFocused()) return;
+    const isSearchFocused = _.invoke(this.search, 'isFocused');
+    if (!scrollPosition || isSearchFocused) return;
 
     const {scrollHeight, scrollContentHeight} = this.state;
     if (this.scrollView && scrollHeight && scrollContentHeight) {
@@ -77,6 +78,7 @@ class PickerModal extends BaseComponent {
             placeholder="Search..."
             onChangeText={_.throttle(onSearchChange, 300)}
             autoCorrect={false}
+            underlineColorAndroid="transparent"
           />
         </View>
       );
