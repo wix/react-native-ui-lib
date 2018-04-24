@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, findNodeHandle, TouchableWithoutFeedback} from 'react-native';
+import _ from 'lodash';
+import {StyleSheet, findNodeHandle, TouchableWithoutFeedback, Animated} from 'react-native';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
@@ -17,8 +18,10 @@ const contentViewPadding = Constants.isIOS ? 35 : 32;
 const contentViewRightMargin = Constants.isIOS ? 45 : 46;
 const titleBottomMargin = Constants.isIOS ? 15 : 12;
 const messageBottomMargin = Constants.isIOS ? 30 : 24;
+const titleLineHeight = Constants.isAndroid ? 26 : 24;
 const messageLineHeight = 22;
 const defaultButtonLabel = 'Got it';
+const contentViewHeight = Constants.isAndroid ? 268 : 282;
 
 /*eslint-disable*/
 /**
@@ -113,10 +116,16 @@ class FeatureHighlight extends BaseComponent {
     super(props);
 
     this.getComponentDimensions = this.getComponentDimensions.bind(this);
+    this.setTargetPosition = this.setTargetPosition.bind(this);
 
     this.state = {
-      targetPosition: {left: 0, top: 0, width: 250, height: 268},
+      fadeAnim: new Animated.Value(0),  // Initial value for opacity: 0
+      contentTopPosition: 0,
     };
+
+    this.contentHeight = contentViewHeight;
+    this.targetPosition = undefined;
+    this.didLayout = false;
   }
 
   static defaultProps = {
@@ -136,56 +145,82 @@ class FeatureHighlight extends BaseComponent {
     return findNodeHandle(target);
   }
 
+  animate(toValue) {
+    Animated.timing(                  // Animate over time
+      this.state.fadeAnim,            // The animated value to drive
+      {
+        toValue,                      // Animate to value
+        duration: toValue ? 100 : 0,   // Make it take a while
+      },
+    ).start();                        // Starts the animation
+  }
+
   setTargetPosition(props = this.props) {
     if (props.getTarget !== undefined) {
       const target = props.getTarget();
 
       const node = this.findTargetNode(target);
       this.setState({node});
-
       if (target) {
         setTimeout(() => {
           target.measureInWindow((x, y, width, height) => {
-            this.setState({
-              targetPosition: {left: x, top: y, width, height},
-            });
+            this.targetPosition = {left: x, top: y, width, height};
+            this.setContentPosition();
           });
         }, 0);
       }
     } else {
       const frame = props.highlightFrame;
       if (frame) {
-        this.setState({
-          targetPosition: {left: frame.x, top: frame.y, width: frame.width, height: frame.height},
-        });
+        this.targetPosition = {left: frame.x, top: frame.y, width: frame.width, height: frame.height};
+        this.setContentPosition();
       }
     }
   }
 
-  getContentPositionStyle() {
-    const {highlightFrame, minimumRectSize, innerPadding} = this.props;
-    const {targetPosition, contentViewHeight} = this.state;
-    const {top, height} = targetPosition || {};
-    const screenVerticalCenter = Constants.screenHeight / 2;
-    const targetCenter = top + (height / 2);
-    const isAlignedTop = targetCenter > screenVerticalCenter;
-    let topPosition = isAlignedTop ? top - contentViewHeight : top + height;
-    if (!highlightFrame && !isAlignedTop) {
-      const minRectHeight = minimumRectSize.height;
-      const isUnderMin = height >= minRectHeight;
-      topPosition = isUnderMin ? topPosition + innerPadding : targetCenter + (minRectHeight / 2) + (innerPadding / 2);
+  getContentPosition() {
+    if (this.didLayout) {
+      const {highlightFrame, minimumRectSize, innerPadding} = this.props;
+      const {top, height} = this.targetPosition;
+      const screenVerticalCenter = Constants.screenHeight / 2;
+      const targetCenter = top + (height / 2);
+      const isAlignedTop = targetCenter > screenVerticalCenter;
+      let topPosition = isAlignedTop ? top - this.contentHeight : top + height;
+      if (!highlightFrame && !isAlignedTop) {
+        const minRectHeight = minimumRectSize.height;
+        const isUnderMin = height >= minRectHeight;
+        topPosition = isUnderMin ? topPosition + innerPadding : targetCenter + (minRectHeight / 2) + (innerPadding / 2);
+      }
+      if (topPosition < 0 || topPosition + this.contentHeight > Constants.screenHeight) {
+        console.warn('Content is too long and might appear off screen. ' +
+          'Please adjust the message length for better results.');
+      }
+      return topPosition;
     }
-    if (topPosition < 0 || topPosition + contentViewHeight > Constants.screenHeight) {
-      console.warn('Content is too long and might appear off screen. ' +
-        'Please adjust the message length for better results.');
-    }
-    return {top: topPosition};
+  }
+
+  setContentPosition() {
+    const top = this.getContentPosition();
+    this.setState({contentViewStyle: top});
+    this.animate(1);
   }
 
   // This method will be called more than once in case of layout change!
   getComponentDimensions(event) {
-    const height = event.nativeEvent.layout.height;
-    this.setState({contentViewHeight: height});
+    this.didLayout = true;
+    this.contentHeight = event.nativeEvent.layout.height;
+    if (this.targetPosition !== undefined) {
+      this.setContentPosition();
+    }
+  }
+
+  onPress = () => {
+    this.animate(0);
+    this.contentHeight = contentViewHeight;
+    this.didLayout = false;
+    this.targetPosition = undefined;
+    const {confirmButtonProps} = this.props;
+    _.invoke(confirmButtonProps, 'onPress');
   }
 
   renderHighlightMessage() {
@@ -194,8 +229,8 @@ class FeatureHighlight extends BaseComponent {
     const color = textColor || defaultTextColor;
 
     return (
-      <View
-        style={[styles.highlightContent, this.getContentPositionStyle()]}
+      <Animated.View
+        style={[styles.highlightContent, {opacity: this.state.fadeAnim, top: this.state.contentViewStyle}]}
         onLayout={this.getComponentDimensions}
         pointerEvents="box-none"
       >
@@ -216,15 +251,16 @@ class FeatureHighlight extends BaseComponent {
           outlineColor={color}
           activeBackgroundColor={Colors.rgba(color, 0.3)}
           {...confirmButtonProps}
+          onPress={this.onPress}
         />
-      </View>
+      </Animated.View>
     );
   }
 
   render() {
     const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding,
       onBackgroundPress} = this.getThemeProps();
-    const {node, targetPosition} = this.state;
+    const {node} = this.state;
 
     return (
       <HighlighterOverlayView
@@ -241,7 +277,7 @@ class FeatureHighlight extends BaseComponent {
         <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onBackgroundPress}>
           <View flex/>
         </TouchableWithoutFeedback>
-        {targetPosition && this.renderHighlightMessage()}
+        {this.renderHighlightMessage()}
       </HighlighterOverlayView>
     );
   }
@@ -257,6 +293,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: '500',
     marginBottom: titleBottomMargin,
+    lineHeight: titleLineHeight,
   },
   message: {
     marginBottom: messageBottomMargin,
