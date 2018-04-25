@@ -107,18 +107,18 @@ export default class Toast extends BaseComponent {
   constructor(props) {
     super(props);
 
-    const {animated, position} = this.props;
+    const {animated} = this.props;
 
-    if (animated && position === 'relative') {
+    if (animated) {
       setupRelativeAnimation(getHeight(this.props));
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const {visible, animated, position} = nextProps;
+    const {visible, animated} = nextProps;
     const {isVisible} = this.state;
     if (visible !== isVisible) {
-      if (animated && position === 'relative') {
+      if (animated) {
         setupRelativeAnimation(getHeight(nextProps));
       }
 
@@ -147,11 +147,11 @@ export default class Toast extends BaseComponent {
   }
 
   getAnimation(shouldShow) {
-    const {position} = this.props;
+    const {position, useNativeDriver} = this.props;
     const animationDescriptor = getAnimationDescriptor(position, this.state);
     const {animation, duration, delay} = shouldShow ? animationDescriptor.enter : animationDescriptor.exit;
 
-    return {animation, duration, delay, onAnimationEnd: () => this.onAnimationEnd()};
+    return {animation, duration, delay, useNativeDriver, onAnimationEnd: () => this.onAnimationEnd()};
   }
 
   getContentAnimation(shouldShow) {
@@ -347,16 +347,16 @@ function getAnimationDescriptor(name, {duration = DURATION, delay = DELAY}) {
   const defaultProps = {duration, delay: 0};
   const animationDescriptorMap = {
     top: {
-      enter: {...defaultProps, animation: 'slideInDown'},
-      exit: {...defaultProps, animation: 'slideOutUp'},
+      enter: {...defaultProps, animation: 'slideInDown_toast'},
+      exit: {...defaultProps, animation: 'slideOutUp_toast'},
     },
     bottom: {
-      enter: {...defaultProps, animation: 'slideInUp'},
-      exit: {...defaultProps, animation: 'slideOutDown'},
+      enter: {...defaultProps, animation: 'slideInUp_toast'},
+      exit: {...defaultProps, animation: 'slideOutDown_toast'},
     },
     relative: {
-      enter: {...defaultProps, animation: 'growUp'},
-      exit: {...defaultProps, animation: 'growDown', delay},
+      enter: {...defaultProps, animation: 'growUp_toast'},
+      exit: {...defaultProps, animation: 'growDown_toast', delay},
     },
   };
 
@@ -374,11 +374,30 @@ function getAbsolutePositionStyle(location) {
 
 function setupRelativeAnimation(height) {
   Animatable.initializeRegistryWithDefinitions({
-    growUp: {
+    // bottom
+    slideInUp_toast: {
+      from: {translateY: height},
+      to: {translateY: 0},
+    },
+    slideOutDown_toast: {
+      from: {translateY: 0},
+      to: {translateY: height},
+    },
+    // top
+    slideInDown_toast: {
+      from: {translateY: -height},
+      to: {translateY: 0},
+    },
+    slideOutUp_toast: {
+      from: {translateY: 0},
+      to: {translateY: -height},
+    },
+    // relative
+    growUp_toast: {
       from: {height: 0},
       to: {height},
     },
-    growDown: {
+    growDown_toast: {
       from: {height},
       to: {height: 0},
     },
