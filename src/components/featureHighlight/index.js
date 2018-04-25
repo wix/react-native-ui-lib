@@ -201,7 +201,7 @@ class FeatureHighlight extends BaseComponent {
 
   setContentPosition() {
     const top = this.getContentPosition();
-    this.setState({contentViewStyle: top});
+    this.setState({contentTopPosition: top});
     this.animate(1);
   }
 
@@ -230,7 +230,7 @@ class FeatureHighlight extends BaseComponent {
 
     return (
       <Animated.View
-        style={[styles.highlightContent, {opacity: this.state.fadeAnim, top: this.state.contentViewStyle}]}
+        style={[styles.highlightContent, {opacity: this.state.fadeAnim, top: this.state.contentTopPosition}]}
         onLayout={this.getComponentDimensions}
         pointerEvents="box-none"
       >
