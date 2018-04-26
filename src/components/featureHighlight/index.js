@@ -255,7 +255,6 @@ class FeatureHighlight extends BaseComponent {
 
   render() {
     const {node, contentTopPosition} = this.state;
-    console.log('UILib - contentTopPosition', contentTopPosition);
     if (contentTopPosition === undefined) return null;
 
     const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding,
