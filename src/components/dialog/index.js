@@ -72,7 +72,7 @@ class Dialog extends BaseComponent {
   }
 
   render() {
-    const {visible, overlayBackgroundColor, onDismiss} = this.getThemeProps();
+    const {visible, overlayBackgroundColor, style, onDismiss} = this.getThemeProps();
     const {alignments} = this.state;
     const centerByDefault = _.isEmpty(alignments);
 
@@ -86,7 +86,7 @@ class Dialog extends BaseComponent {
         overlayBackgroundColor={overlayBackgroundColor}
       >
         <View center={centerByDefault} style={[this.styles.overlay, alignments]} pointerEvents="box-none">
-          <Animatable.View style={this.styles.dialogContainer} {...this.getAnimationConfig()}>
+          <Animatable.View style={[this.styles.dialogContainer, style]} {...this.getAnimationConfig()}>
             {this.props.children}
           </Animatable.View>
         </View>
