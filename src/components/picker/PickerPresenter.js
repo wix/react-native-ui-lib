@@ -21,3 +21,7 @@ export function getItemValue(props) {
   }
   return _.invoke(props, 'getItemValue', props.value) || _.get(props.value, 'value');
 }
+
+export function getItemLabel(props) {
+  return _.invoke(props, 'getLabel', props.value) || _.get(props.value, 'label');
+}

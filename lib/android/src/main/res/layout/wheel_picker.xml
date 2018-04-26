@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wix.reactnativeuilib.wheelpicker.ThemedNumberPicker
+    android:id="@+id/numberPicker"
+    android:layout_height="148dp"
+    android:layout_width="56dp"
+    android:divider="@color/dividerColor"
+    android:editTextColor="@color/dividerColor"
+    android:textSize="20dp"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
