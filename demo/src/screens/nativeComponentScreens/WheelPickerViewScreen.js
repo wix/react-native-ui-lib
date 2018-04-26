@@ -28,7 +28,7 @@ export default class WheelPickerViewScreen extends PureComponent {
         <Text>{`Selected Value is: ${this.state.value}`}</Text>
         <WheelPicker
           selectedValue={this.state.value}
-          onValueChange={this.onValueChange} style={{height: 200, width: 200}}
+          onValueChange={this.onValueChange} style={{width: 200}}
         >
           {this.state.items.map((item) => {
             return (
