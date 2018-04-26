@@ -71,7 +71,7 @@ export default class FormScreen extends Component {
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="always">
         <View style={styles.container}>
           <TagsInput
             containerStyle={{marginBottom: 20}}
@@ -113,6 +113,9 @@ export default class FormScreen extends Component {
             enableModalBlur={false}
             onChange={item => this.setState({language: item})}
             topBarProps={{title: 'Languages'}}
+            style={{color: 'red', fontSize: 23}}
+            hideUnderline
+            showSearch
           >
             {_.map(options, option =>
               <Picker.Item

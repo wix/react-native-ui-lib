@@ -38,4 +38,17 @@ describe('components/PickerPresenter', () => {
       expect(uut.getItemValue(itemProps)).toEqual('item-value');
     });
   });
+
+  describe('getItemLabel', () => {
+    it('should return item label when value is an object', () => {
+      const itemProps = {value: {value: 'value', label: 'label'}};
+      expect(uut.getItemLabel(itemProps)).toEqual('label');
+    });
+
+    it('should return item label according to getLabel function ', () => {
+      const getLabel = itemValue => `${itemValue.value} - ${itemValue.label}`;
+      const itemProps = {value: {value: 'value', label: 'label'}, getLabel};
+      expect(uut.getItemLabel(itemProps)).toEqual('value - label');
+    });
+  });
 });

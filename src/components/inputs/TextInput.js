@@ -533,7 +533,7 @@ function createStyles({
       color: Colors.red30,
       textAlign: centered ? 'center' : undefined,
       ...Typography.text90,
-      height: Typography.text90.lineHeight,
+      // height: Typography.text90.lineHeight,
       marginTop: 1,
     },
     expandableModalContent: {
