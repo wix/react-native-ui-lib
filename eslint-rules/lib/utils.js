@@ -1,8 +1,19 @@
-function findAndReportHardCodedValues (value, reporter, scope, depthOfSearch = 4) {
-  if (depthOfSearch === 0) return
-  if (value === undefined || value === false) return
+const colorProps = [
+  'color', 'backgroundColor', 'borderColor', 'borderRightColor',
+  'borderBottomColor', 'borderEndColor', 'borderLeftColor', 'borderStartColor',
+  'borderTopColor', 'textShadowColor', 'textDecorationColor', 'tintColor',
+  'placeholderTextColor', 'selectionColor', 'underlineColorAndroid',
+];
+
+const colorExceptions = [
+  'transparent', 'rgba(0,0,0,0)',
+];
+
+function findAndReportHardCodedValues(value, reporter, scope, depthOfSearch = 4) {
+  if (depthOfSearch === 0) return;
+  if (value === undefined || value === false) return;
   if (isLiteral(value.type)) {
-    reporter(value)
+    reporter(value);
   } else if (value.type === 'ConditionalExpression') {
     findAndReportHardCodedValues(value.consequent, reporter, scope, depthOfSearch - 1)
     findAndReportHardCodedValues(value.alternate, reporter, scope, depthOfSearch - 1)
@@ -11,33 +22,36 @@ function findAndReportHardCodedValues (value, reporter, scope, depthOfSearch = 4
   }
 }
 
-function isLiteral (type) {
-  return (type === 'Literal' || type === 'TemplateLiteral')
+function propIsColor(propName) {
+  return colorProps.indexOf(propName) !== -1;
 }
 
-function findValueNodeOfIdentifier (identifierName, scope) {
-  const varsInScope = scope.variables
-  let valueNode = false
+function isLiteral(type) {
+  return (type === 'Literal' || type === 'TemplateLiteral');
+}
+
+function isColorException(colorString) {
+  const lowerCaseColorString = colorString.toLowerCase();
+  return colorExceptions.indexOf(lowerCaseColorString) !== -1;
+}
+
+function findValueNodeOfIdentifier(identifierName, scope) {
+  const varsInScope = scope.variables;
+  let valueNode = false;
   varsInScope.forEach((variable) => {
     if (variable.name === identifierName) {
       if (variable.defs) {
         valueNode = variable.defs[variable.defs.length - 1].node.init;
       }
     }
-  })
-  return valueNode
+  });
+  return valueNode;
 }
-
-const colorProps = [
-  'color', 'backgroundColor', 'borderColor', 'borderRightColor',
-  'borderBottomColor', 'borderEndColor', 'borderLeftColor', 'borderStartColor',
-  'borderTopColor', 'textShadowColor', 'textDecorationColor', 'tintColor',
-  'placeholderTextColor', 'selectionColor', 'underlineColorAndroid'
-]
 
 module.exports = {
-  colorProps,
   findAndReportHardCodedValues,
+  propIsColor,
   isLiteral,
-  findValueNodeOfIdentifier
-}
+  isColorException,
+  findValueNodeOfIdentifier,
+};
