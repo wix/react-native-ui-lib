@@ -1,7 +1,7 @@
+const _ = require('lodash');
 const utils = require('../utils');
 
-const { findAndReportHardCodedValues, colorProps } = utils;
-const _ = require('lodash');
+const { findAndReportHardCodedValues, propIsColor, isColorException } = utils;
 
 
 module.exports = {
@@ -18,29 +18,26 @@ module.exports = {
     schema: [], // no options
   },
   create(context) {
-    // Helpers
-    function propIsColor(propName) {
-      return colorProps.indexOf(propName) !== -1;
-    }
-
     function reportAndFixHardCodedColorString(node) {
-      context.report({
-        node,
-        message: 'Use UILib colors instead of hardcoded colors.',
-        fix(fixer) {
-          if (node.extra) {
-            const colorString = node.extra.rawValue;
-            const validColors = _.get(context, 'settings.uiLib.validColors');
-            if (validColors) {
-              const invertedColorsDict = _.chain(validColors).mapValues(value => value.toLowerCase()).invert().value();
-              const lowerCaseColorString = colorString.toLowerCase();
-              if (invertedColorsDict[lowerCaseColorString]) {
-                return fixer.replaceText(node, `Colors.${invertedColorsDict[lowerCaseColorString]}`);
+      const colorString = node.extra.rawValue;
+      if (!isColorException(colorString)) {
+        context.report({
+          node,
+          message: `Found '${colorString}'. Use UILib colors instead of hardcoded colors.`,
+          fix(fixer) {
+            if (node.extra) {
+              const validColors = _.get(context, 'settings.uiLib.validColors');
+              if (validColors) {
+                const invertedColorsDict = _.chain(validColors).mapValues(value => value.toLowerCase()).invert().value();
+                const lowerCaseColorString = colorString.toLowerCase();
+                if (invertedColorsDict[lowerCaseColorString]) {
+                  return fixer.replaceText(node, `Colors.${invertedColorsDict[lowerCaseColorString]}`);
+                }
               }
             }
-          }
-        },
-      });
+          },
+        });
+      }
     }
 
     function noHardCodedColors(node) {

@@ -157,7 +157,7 @@ function createStyles() {
     },
     x: {
       fontSize: Typography.text80.fontSize,
-      color: 'black',
+      color: Colors.black,
     },
   });
 }
