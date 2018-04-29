@@ -9,6 +9,17 @@ const colorExceptions = [
   'transparent', 'rgba(0,0,0,0)',
 ];
 
+const extraColorsDict = {
+  black: 'black',
+  white: 'white',
+  green: 'green30',
+  red: 'red30',
+  blue: 'blue30',
+  '#000': 'black',
+  '#fff': 'white',
+  '#ddd': 'dark70',
+};
+
 function findAndReportHardCodedValues(value, reporter, scope, depthOfSearch = 4) {
   if (depthOfSearch === 0) return;
   if (value === undefined || value === false) return;
@@ -54,4 +65,5 @@ module.exports = {
   isLiteral,
   isColorException,
   findValueNodeOfIdentifier,
+  extraColorsDict,
 };

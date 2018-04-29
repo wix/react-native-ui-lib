@@ -18,6 +18,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint src -c .eslintrc.js",
+    "lint:fix": "eslint src -c .eslintrc.js --fix",
     "lint:test": "mocha eslint-rules/tests/lib/rules",
     "xcode": "open ./ios/uilib.xcodeproj",
     "build": "mkdir -p dist && cp -r src/assets dist/ && babel src --out-dir dist",
