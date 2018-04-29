@@ -10,6 +10,8 @@ import WheelPicker from '../../nativeComponents/WheelPicker';
 
 
 export default class WheelPickerDialog extends Component {
+  static displayName = 'IGNORE';
+
   constructor(props) {
     super(props);
 

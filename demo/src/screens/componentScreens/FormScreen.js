@@ -1,17 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView, Image} from 'react-native';
 import _ from 'lodash';
-import {
-  View,
-  Colors,
-  Text,
-  Stepper,
-  Typography,
-  Picker,
-  Avatar,
-  Assets,
-  TagsInput,
-} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Colors, Text, Stepper, Typography, Picker, Avatar, Assets, TagsInput} from 'react-native-ui-lib'; //eslint-disable-line
 import tagIcon from '../../assets/icons/tags.png';
 import contacts from '../../data/conversations';
 
@@ -40,7 +30,7 @@ export default class FormScreen extends Component {
       itemsCount: 1,
       // language: {value: 'java', label: 'Java'},
       language: undefined,
-      languages: [options[3]],
+      languages: [],
       filter: filters[0],
       contact: contacts[0],
       tags: [{label: 'Amit'}, {label: 'Ethan'}],
@@ -52,15 +42,8 @@ export default class FormScreen extends Component {
 
   renderCustomTag(tag, index, shouldMarkToRemove) {
     return (
-      <View
-        style={[
-          styles.customTag,
-          shouldMarkToRemove && {backgroundColor: Colors.purple70},
-        ]}
-      >
-        <Text white>
-          {tag.label}
-        </Text>
+      <View style={[styles.customTag, shouldMarkToRemove && {backgroundColor: Colors.purple70}]}>
+        <Text white>{tag.label}</Text>
       </View>
     );
   }
@@ -73,11 +56,7 @@ export default class FormScreen extends Component {
     return (
       <ScrollView keyboardShouldPersistTaps="always">
         <View style={styles.container}>
-          <TagsInput
-            containerStyle={{marginBottom: 20}}
-            placeholder="Enter Tags"
-            tags={this.state.tags2}
-          />
+          <TagsInput containerStyle={{marginBottom: 20}} placeholder="Enter Tags" tags={this.state.tags2} />
 
           <TagsInput
             containerStyle={{marginBottom: 20}}
@@ -88,7 +67,7 @@ export default class FormScreen extends Component {
           />
 
           <TagsInput
-            ref={r => this.customTagsInput = r}
+            ref={r => (this.customTagsInput = r)}
             containerStyle={{marginBottom: 20}}
             placeholder="With custom tags"
             tags={this.state.tags}
@@ -117,13 +96,7 @@ export default class FormScreen extends Component {
             hideUnderline
             showSearch
           >
-            {_.map(options, option =>
-              <Picker.Item
-                key={option.value}
-                value={option}
-                disabled={option.disabled}
-              />,
-            )}
+            {_.map(options, option => <Picker.Item key={option.value} value={option} disabled={option.disabled} />)}
           </Picker>
 
           <View marginT-20>
@@ -133,17 +106,19 @@ export default class FormScreen extends Component {
               onChange={items => this.setState({languages: items})}
               mode={Picker.modes.MULTI}
             >
-              {_.map(options, option =>
-                <Picker.Item
-                  key={option.value}
-                  value={option}
-                  disabled={option.disabled}
-                />,
-              )}
+              {_.map(options, option => <Picker.Item key={option.value} value={option} disabled={option.disabled} />)}
             </Picker>
           </View>
 
-          {/*<Text text80 purple50>Selected Languages: {_.chain(this.state.languages).map('value').join(', ').value()}</Text>*/}
+          <Picker
+            floatingPlaceholder
+            placeholder="Native Picker"
+            useNativePicker
+            value={this.state.nativePickerValue}
+            onChange={nativePickerValue => this.setState({nativePickerValue})}
+          >
+            {_.map(options, option => <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled} />)}
+          </Picker>
 
           <Text marginT-20 marginB-10 text70 dark60>
             Custom Picker:
@@ -154,10 +129,7 @@ export default class FormScreen extends Component {
             renderPicker={({label}) => {
               return (
                 <View row center>
-                  <Image
-                    style={{marginRight: 1, height: 16, resizeMode: 'contain'}}
-                    source={tagIcon}
-                  />
+                  <Image style={{marginRight: 1, height: 16, resizeMode: 'contain'}} source={tagIcon} />
                   <Text dark10 text80>
                     {label} Posts
                   </Text>
@@ -165,9 +137,7 @@ export default class FormScreen extends Component {
               );
             }}
           >
-            {_.map(filters, filter =>
-              <Picker.Item key={filter.value} value={filter} />,
-            )}
+            {_.map(filters, filter => <Picker.Item key={filter.value} value={filter} />)}
           </Picker>
 
           <Text marginT-20 marginB-10 text70 dark60>
@@ -188,11 +158,11 @@ export default class FormScreen extends Component {
               );
             }}
           >
-            {_.map(contacts, contact =>
+            {_.map(contacts, contact => (
               <Picker.Item
                 key={contact.name}
                 value={contact}
-                renderItem={(item, props) =>
+                renderItem={(item, props) => (
                   <View
                     style={{
                       height: 56,
@@ -211,10 +181,11 @@ export default class FormScreen extends Component {
                       </Text>
                     </View>
                     {props.isSelected && <Image source={Assets.icons.check} />}
-                  </View>}
+                  </View>
+                )}
                 getItemLabel={item => item.name}
-              />,
-            )}
+              />
+            ))}
           </Picker>
         </View>
       </ScrollView>
