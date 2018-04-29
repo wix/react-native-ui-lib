@@ -14,7 +14,7 @@ module.exports = {
     "no-plusplus": "off",
     "no-return-assign": "off",
     "no-use-before-define": "off",
-    "max-len": [2, 120, 4, {"ignoreUrls": true}],
+    "max-len": [2, 150, 4, {"ignoreUrls": true}],
     "object-curly-spacing": "off",
     "react/forbid-prop-types": "off",
     "react/jsx-filename-extension": "off",
