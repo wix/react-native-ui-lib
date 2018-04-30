@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const utils = require('../utils');
 
-const { findAndReportHardCodedValues, propIsColor, isColorException, extraColorsDict } = utils;
+const { findAndReportHardCodedValues, propIsColor, isColorException } = utils;
 
 
 module.exports = {
@@ -27,9 +27,10 @@ module.exports = {
           fix(fixer) {
             if (node.extra) {
               const validColors = _.get(context, 'settings.uiLib.validColors');
+              const extraColors = _.get(context, 'settings.uiLib.extraFixColorMap');
               if (validColors) {
                 const validColorsDic = _.chain(validColors).mapValues(value => value.toLowerCase()).invert().value();
-                const invertedColorsDict = _.assign({}, validColorsDic, extraColorsDict);
+                const invertedColorsDict = _.assign({}, validColorsDic, extraColors);
                 const lowerCaseColorString = colorString.toLowerCase();
                 if (invertedColorsDict[lowerCaseColorString]) {
                   return fixer.replaceText(node, `Colors.${invertedColorsDict[lowerCaseColorString]}`);

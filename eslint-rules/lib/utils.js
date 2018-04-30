@@ -9,27 +9,16 @@ const colorExceptions = [
   'transparent', 'rgba(0,0,0,0)',
 ];
 
-const extraColorsDict = {
-  black: 'black',
-  white: 'white',
-  green: 'green30',
-  red: 'red30',
-  blue: 'blue30',
-  '#000': 'black',
-  '#fff': 'white',
-  '#ddd': 'dark70',
-};
-
 function findAndReportHardCodedValues(value, reporter, scope, depthOfSearch = 4) {
   if (depthOfSearch === 0) return;
   if (value === undefined || value === false) return;
   if (isLiteral(value.type)) {
     reporter(value);
   } else if (value.type === 'ConditionalExpression') {
-    findAndReportHardCodedValues(value.consequent, reporter, scope, depthOfSearch - 1)
-    findAndReportHardCodedValues(value.alternate, reporter, scope, depthOfSearch - 1)
+    findAndReportHardCodedValues(value.consequent, reporter, scope, depthOfSearch - 1);
+    findAndReportHardCodedValues(value.alternate, reporter, scope, depthOfSearch - 1);
   } else if (value.type === 'Identifier') {
-    findAndReportHardCodedValues(findValueNodeOfIdentifier(value.name, scope), reporter, scope, depthOfSearch - 1)
+    findAndReportHardCodedValues(findValueNodeOfIdentifier(value.name, scope), reporter, scope, depthOfSearch - 1);
   }
 }
 
@@ -65,5 +54,4 @@ module.exports = {
   isLiteral,
   isColorException,
   findValueNodeOfIdentifier,
-  extraColorsDict,
 };
