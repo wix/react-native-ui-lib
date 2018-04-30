@@ -74,6 +74,8 @@ function validateHex(value) {
   }
   return value.replace('#', '');
 }
+
 const colorObject = new Colors();
 colorObject.loadColors(colorsPalette);
+
 export default colorObject;

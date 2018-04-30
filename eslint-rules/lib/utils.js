@@ -15,10 +15,10 @@ function findAndReportHardCodedValues(value, reporter, scope, depthOfSearch = 4)
   if (isLiteral(value.type)) {
     reporter(value);
   } else if (value.type === 'ConditionalExpression') {
-    findAndReportHardCodedValues(value.consequent, reporter, scope, depthOfSearch - 1)
-    findAndReportHardCodedValues(value.alternate, reporter, scope, depthOfSearch - 1)
+    findAndReportHardCodedValues(value.consequent, reporter, scope, depthOfSearch - 1);
+    findAndReportHardCodedValues(value.alternate, reporter, scope, depthOfSearch - 1);
   } else if (value.type === 'Identifier') {
-    findAndReportHardCodedValues(findValueNodeOfIdentifier(value.name, scope), reporter, scope, depthOfSearch - 1)
+    findAndReportHardCodedValues(findValueNodeOfIdentifier(value.name, scope), reporter, scope, depthOfSearch - 1);
   }
 }
 
