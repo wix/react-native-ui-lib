@@ -1,10 +1,5 @@
 const validColors = require("./src/style/colorsPalette");
-const extraFixColorsMap = {
-  black: 'black',
-  white: 'white',
-  '#000': 'black',
-  '#fff': 'white',
-};
+const extraFixColorsMap = require("./src/style/colorsPalette").extraFixColorsMap;
 
 
 module.exports = {
