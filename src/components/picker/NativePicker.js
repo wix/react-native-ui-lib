@@ -39,7 +39,12 @@ class Picker extends BaseComponent {
   };
 
   getLabel() {
-    const {value} = this.props;
+    const {value, getLabel} = this.props;
+
+    if (_.isFunction(getLabel)) {
+      return getLabel(value);
+    }
+
     const {items} = this.state;
     const selectedItem = _.find(items, {value});
     return _.get(selectedItem, 'label');
