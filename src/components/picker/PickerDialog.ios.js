@@ -1,33 +1,37 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
+
+import {BaseComponent} from '../../commons';
 import Dialog from '../dialog';
 import View from '../view';
 import Text from '../text';
 import {Colors} from '../../style';
 import WheelPicker from '../../nativeComponents/WheelPicker';
 
-class PickerDialog extends Component {
+class PickerDialog extends BaseComponent {
   static propTypes = {
     selectedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     onValueChange: PropTypes.func,
     onDone: PropTypes.func,
     onCancel: PropTypes.func,
+    topBarProps: PropTypes.object,
     children: PropTypes.array,
   };
 
   state = {};
 
   renderHeader() {
-    const {onDone, onCancel} = this.props;
+    const {onDone, onCancel, topBarProps} = this.props;
 
     return (
       <View style={styles.header}>
         <Text text70 blue30 onPress={onCancel}>
-          Cancel
+          {_.get(topBarProps, 'cancelLabel', 'Cancel')}
         </Text>
         <Text text70 blue30 onPress={onDone}>
-          Done
+          {_.get(topBarProps, 'doneLabel', 'Done')}
         </Text>
       </View>
     );

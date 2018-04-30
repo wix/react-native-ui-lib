@@ -96,6 +96,7 @@ class Picker extends TextInput {
     expandable: true,
     text70: true,
     // floatingPlaceholder: true,
+    enableErrors: false,
   };
 
   constructor(props) {
@@ -232,7 +233,7 @@ class Picker extends TextInput {
   }
 
   renderExpandableModal() {
-    const {mode, enableModalBlur, topBarProps, showSearch} = this.props;
+    const {mode, enableModalBlur, topBarProps, showSearch} = this.getThemeProps();
     const {showExpandableModal, selectedItemPosition} = this.state;
     return (
       <PickerModal

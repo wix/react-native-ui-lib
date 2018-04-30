@@ -92,7 +92,7 @@ export default class FormScreen extends Component {
             enableModalBlur={false}
             onChange={item => this.setState({language: item})}
             topBarProps={{title: 'Languages'}}
-            style={{color: 'red', fontSize: 23}}
+            style={{color: Colors.red20}}
             hideUnderline
             showSearch
           >
@@ -116,6 +116,7 @@ export default class FormScreen extends Component {
             useNativePicker
             value={this.state.nativePickerValue}
             onChange={nativePickerValue => this.setState({nativePickerValue})}
+            // topBarProps={{doneLabel: 'YES', cancelLabel: 'NO'}}
           >
             {_.map(options, option => <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled} />)}
           </Picker>

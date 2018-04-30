@@ -49,7 +49,7 @@ class Picker extends BaseComponent {
     const {selectedValue} = this.state;
     return (
       <PickerDialog
-        {...this.props}
+        {...this.getThemeProps()}
         onDismiss={this.onCancel}
         onValueChange={this.onValueChange}
         selectedValue={selectedValue}
