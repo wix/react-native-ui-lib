@@ -2,12 +2,8 @@ const validColors = require("./src/style/colorsPalette");
 const extraColorsDict = {
   black: 'black',
   white: 'white',
-  green: 'green30',
-  red: 'red30',
-  blue: 'blue30',
   '#000': 'black',
   '#fff': 'white',
-  '#ddd': 'dark70',
 };
 
 
