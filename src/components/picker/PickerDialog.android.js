@@ -1,14 +1,16 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+
+import {BaseComponent} from '../../commons';
 import Dialog from '../dialog';
 import View from '../view';
 import Text from '../text';
 import {Colors, BorderRadiuses} from '../../style';
 import WheelPicker from '../../nativeComponents/WheelPicker';
 
-class PickerDialog extends Component {
+class PickerDialog extends BaseComponent {
   static propTypes = {
     selectedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     onValueChange: PropTypes.func,
@@ -20,43 +22,57 @@ class PickerDialog extends Component {
   state = {};
 
   renderHeader() {
-    const title = _.get(this.props, 'topBarProps.title');
+    const {topBarProps} = this.props;
+    const title = _.get(topBarProps, 'title');
 
     if (title) {
       return (
         <View style={styles.header}>
-          <Text text60 dark10>{title}</Text>
+          <Text text60 dark10>
+            {title}
+          </Text>
         </View>
       );
     }
   }
 
   renderFooter() {
-    const {onDone, onCancel} = this.props;
+    const {onDone, onCancel, topBarProps} = this.props;
+    const doneLabel = _.get(topBarProps, 'doneLabel', 'OK');
+    const cancelLabel = _.get(topBarProps, 'cancelLabel', 'CANCEL');
 
     return (
       <View style={styles.footer}>
         <Text text80 blue30 onPress={onCancel}>
-          CANCEL
+          {cancelLabel}
         </Text>
         <Text text80 blue30 marginL-15 onPress={onDone}>
-          OK
+          {doneLabel}
         </Text>
       </View>
     );
   }
 
+  renderPicker() {
+    const {children, onValueChange, selectedValue, renderNativePicker} = this.props;
+    if (_.isFunction(renderNativePicker)) {
+      return renderNativePicker(this.props);
+    }
+    return (
+      <WheelPicker onValueChange={onValueChange} selectedValue={selectedValue}>
+        {children}
+      </WheelPicker>
+    );
+  }
+
   render() {
-    const {children, onValueChange, selectedValue} = this.props;
     const dialogProps = Dialog.extractOwnProps(this.props);
     return (
       <Dialog {...dialogProps} visible height="50%" width="77%">
         <View style={styles.dialog}>
           {this.renderHeader()}
           <View flex centerV paddingH-24>
-            <WheelPicker onValueChange={onValueChange} selectedValue={selectedValue}>
-              {children}
-            </WheelPicker>
+            {this.renderPicker()}
           </View>
           {this.renderFooter()}
         </View>

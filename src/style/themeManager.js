@@ -26,7 +26,11 @@ class ThemeManager {
   }
 
   setComponentTheme(componentName, overrides) {
-    this.theme.components[componentName] = _.cloneDeep(overrides);
+    if (_.isFunction(overrides)) {
+      this.theme.components[componentName] = overrides;
+    } else {
+      this.theme.components[componentName] = _.cloneDeep(overrides);
+    }
   }
 
   get components() {
