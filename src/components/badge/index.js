@@ -116,7 +116,7 @@ function createStyles() {
     label: {
       ...Typography.text90,
       color: Colors.white,
-      backgroundColor: 'rgba(0,0,0,0)',
+      backgroundColor: 'transparent',
     },
     labelSmall: {
       ...Typography.text100,

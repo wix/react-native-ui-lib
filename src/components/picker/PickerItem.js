@@ -1,3 +1,4 @@
+// TODO: deprecate passing an an object as a value, use label and value props separately
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Image, StyleSheet} from 'react-native';
@@ -9,7 +10,6 @@ import View from '../view';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
 
-// TODO: fully deprecate label prop
 /**
  * @description: Picker.Item, for configuring the Picker's selectable options
  * @extends: TouchableOpacity
@@ -27,7 +27,7 @@ class PickerItem extends BaseComponent {
      * The item value with the following format - {value: ..., label: ...},
      * for custom shape use getItemLabel, getItemValue props
      */
-    value: PropTypes.object,
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
     /**
      * function to return the label out of the item value prop when value is custom shaped.
      */
@@ -50,19 +50,22 @@ class PickerItem extends BaseComponent {
     renderItem: PropTypes.func,
     onPress: PropTypes.func,
     onSelectedLayout: PropTypes.func,
+    useNativePicker: PropTypes.bool,
   };
 
-  constructor(props) {
+  /* eslint-disable */
+  /* constructor(props) {
     super(props);
 
     if (props.label) {
-      console.warn('PickerItem \'label\' prop will be deprecated soon. please include label in \'value\' prop. (refer docs)'); //eslint-disable-line
+      console.warn('PickerItem \'label\' prop will be deprecated soon. please include label in \'value\' prop. (refer docs)');  //eslint-disable-line
     }
 
     if (!_.isObject(props.value)) {
       console.warn('PickerItem \'value\' prop type has changed to object, please use it with the following format: {value: ..., label: ...} or use getItemValue & getItemLabel props'); //eslint-disable-line
     }
-  }
+  } */
+  /* eslint-enable */
 
   generateStyles() {
     this.styles = createStyles(this.props);
