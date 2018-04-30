@@ -2,7 +2,10 @@ const _ = require('lodash');
 const utils = require('../utils');
 
 const { findAndReportHardCodedValues, propIsColor, isColorException } = utils;
-
+const MAP_SCHEMA = {
+  "type": "object",
+  "additionalProperties": true
+};
 
 module.exports = {
   meta: {
@@ -15,7 +18,10 @@ module.exports = {
       uiLib: 'Use UILib colors instead of hardcoded colors.',
     },
     fixable: 'whitespace',
-    schema: [], // no options
+    schema: [
+      MAP_SCHEMA,
+      MAP_SCHEMA
+    ],
   },
   create(context) {
     function reportAndFixHardCodedColorString(node) {
@@ -26,8 +32,8 @@ module.exports = {
           message: `Found '${colorString}'. Use UILib colors instead of hardcoded colors.`,
           fix(fixer) {
             if (node.extra) {
-              const validColors = _.get(context, 'settings.uiLib.validColors');
-              const extraColors = _.get(context, 'settings.uiLib.extraFixColorMap');
+              const validColors = context.options[0]; // _.get(context, 'settings.uiLib.validColors');
+              const extraColors = context.options[1]; // _.get(context, 'settings.uiLib.extraFixColorMap');
               if (validColors) {
                 const validColorsDic = _.chain(validColors).mapValues(value => value.toLowerCase()).invert().value();
                 const invertedColorsDict = _.assign({}, validColorsDic, extraColors);

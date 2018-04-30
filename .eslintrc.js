@@ -1,5 +1,5 @@
 const validColors = require("./src/style/colorsPalette");
-const extraColorsDict = {
+const extraFixColorsMap = {
   black: 'black',
   white: 'white',
   '#000': 'black',
@@ -31,7 +31,7 @@ module.exports = {
     "react/require-default-props": "off",
     "no-else-return": "off",
     // "uilib/no-hard-coded-font": "error",
-    "uilib/no-hard-coded-color": "error"
+    "uilib/no-hard-coded-color": ["error", validColors, extraFixColorsMap]
   },
   "env": {
     "browser": true,
@@ -43,10 +43,6 @@ module.exports = {
       "node": {
         "extensions": [".js", ".ios.js", ".android.js"]
       }
-    },
-    "uiLib": {
-     "validColors": validColors,
-     "extraFixColorMap": extraColorsDict
     }
   }
 }
