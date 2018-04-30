@@ -348,11 +348,19 @@ describe('BaseComponent', () => {
       expect(uut.getThemeProps()).toEqual({someProp: 'someValue'});
     });
 
-
     it('should return props values from the Theme Manager merged with values from passed props', () => {
       ThemeManager.setComponentTheme('BaseComponent', {someProp: 'themeValue'});
       const uut = new BaseComponent({anotherProps: 'anotherValue'});
       expect(uut.getThemeProps()).toEqual({someProp: 'themeValue', anotherProps: 'anotherValue'});
+    });
+
+    it('should support getThemeProps callback that accepts current props and can condition returned props', () => {
+      ThemeManager.setComponentTheme('BaseComponent', props => ({someProp: props.test ? 'yes' : 'no'}));
+      let uut = new BaseComponent({test: true});
+      expect(uut.getThemeProps()).toEqual({someProp: 'yes', test: true});
+
+      uut = new BaseComponent({test: false});
+      expect(uut.getThemeProps()).toEqual({someProp: 'no', test: false});
     });
   });
 });

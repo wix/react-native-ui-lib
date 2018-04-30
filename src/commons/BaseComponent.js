@@ -45,8 +45,13 @@ export default class BaseComponent extends Component {
 
   getThemeProps() {
     const componentName = this.constructor.displayName;
-    const componentThemeProps = ThemeManager.components[componentName];
-    return {...componentThemeProps, ...this.props};
+    let themeProps;
+    if (_.isFunction(ThemeManager.components[componentName])) {
+      themeProps = ThemeManager.components[componentName](this.props);
+    } else {
+      themeProps = ThemeManager.components[componentName];
+    }
+    return {...themeProps, ...this.props};
   }
 
   getSnippet() {
