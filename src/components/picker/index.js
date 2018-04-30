@@ -87,6 +87,10 @@ class Picker extends TextInput {
      * Allow to use the native picker solution (different for iOS and Android)
      */
     useNativePicker: PropTypes.bool,
+    /**
+     * callback for rendering a custom native picker inside the dialog (relevant to native picker only)
+     */
+    renderNativePicker: PropTypes.func,
   };
 
   static defaultProps = {

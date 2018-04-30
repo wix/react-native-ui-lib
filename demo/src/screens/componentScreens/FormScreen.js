@@ -13,12 +13,7 @@ const options = [
   {label: 'Perl', value: 'perl'},
 ];
 
-const filters = [
-  {label: 'All', value: 0},
-  {label: 'Draft', value: 1},
-  {label: 'Published', value: 2},
-  {label: 'Scheduled', value: 3},
-];
+const filters = [{label: 'All', value: 0}, {label: 'Draft', value: 1}, {label: 'Published', value: 2}, {label: 'Scheduled', value: 3}];
 
 export default class FormScreen extends Component {
   constructor(props) {
@@ -116,6 +111,13 @@ export default class FormScreen extends Component {
             useNativePicker
             value={this.state.nativePickerValue}
             onChange={nativePickerValue => this.setState({nativePickerValue})}
+            // renderNativePicker={(props) => {
+            //   return (
+            //     <View flex bg-red50>
+            //       <Text>CUSTOM NATIVE PICKER</Text>
+            //     </View>
+            //   );
+            // }}
             // topBarProps={{doneLabel: 'YES', cancelLabel: 'NO'}}
           >
             {_.map(options, option => <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled} />)}

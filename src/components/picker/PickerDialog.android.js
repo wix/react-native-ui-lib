@@ -28,7 +28,9 @@ class PickerDialog extends BaseComponent {
     if (title) {
       return (
         <View style={styles.header}>
-          <Text text60 dark10>{title}</Text>
+          <Text text60 dark10>
+            {title}
+          </Text>
         </View>
       );
     }
@@ -51,17 +53,26 @@ class PickerDialog extends BaseComponent {
     );
   }
 
+  renderPicker() {
+    const {children, onValueChange, selectedValue, renderNativePicker} = this.props;
+    if (_.isFunction(renderNativePicker)) {
+      return renderNativePicker(this.props);
+    }
+    return (
+      <WheelPicker onValueChange={onValueChange} selectedValue={selectedValue}>
+        {children}
+      </WheelPicker>
+    );
+  }
+
   render() {
-    const {children, onValueChange, selectedValue} = this.props;
     const dialogProps = Dialog.extractOwnProps(this.props);
     return (
       <Dialog {...dialogProps} visible height="50%" width="77%">
         <View style={styles.dialog}>
           {this.renderHeader()}
           <View flex centerV paddingH-24>
-            <WheelPicker onValueChange={onValueChange} selectedValue={selectedValue}>
-              {children}
-            </WheelPicker>
+            {this.renderPicker()}
           </View>
           {this.renderFooter()}
         </View>
