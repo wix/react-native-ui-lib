@@ -24,11 +24,12 @@ class PickerDialog extends BaseComponent {
   renderHeader() {
     const {topBarProps} = this.props;
     const title = _.get(topBarProps, 'title');
+    const titleStyle = _.get(topBarProps, 'titleStyle');
 
     if (title) {
       return (
         <View style={styles.header}>
-          <Text text60 dark10>
+          <Text text60 dark10 style={titleStyle}>
             {title}
           </Text>
         </View>
