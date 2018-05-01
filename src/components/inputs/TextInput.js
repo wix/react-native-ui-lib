@@ -346,18 +346,24 @@ export default class TextInput extends BaseInput {
   }
 
   renderExpandableInput() {
-    const {floatingPlaceholder, placeholder} = this.props;
+    const {style, floatingPlaceholder, placeholder} = this.props;
     const {value} = this.state;
     const typography = this.getTypography();
+    const color = this.props.color || this.extractColorValue();
     const minHeight = typography.lineHeight;
     const shouldShowPlaceholder = _.isEmpty(value) && !floatingPlaceholder;
+    const inputStyle = [
+      this.styles.input,
+      typography,
+      color && {color},
+      style,
+    ];
 
     return (
       <Text
         style={[
-          this.styles.input,
-          typography,
           {minHeight},
+          inputStyle,
           shouldShowPlaceholder && this.styles.placeholder,
         ]}
         numberOfLines={3}
