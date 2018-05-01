@@ -249,7 +249,7 @@ export default class TextInput extends BaseInput {
             !centered && {
               top: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [multiline ? 30 : 23, multiline ? 7 : 0],
+                outputRange: [multiline ? 30 : 28, multiline ? 7 : 0],
               }),
               fontSize: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
@@ -386,7 +386,8 @@ export default class TextInput extends BaseInput {
       this.styles.input,
       typography,
       color && {color},
-      {height: this.getHeight()},
+      // with the right flex on the tree hierarchy we might not need this
+      // {height: this.getHeight()},
       style,
     ];
     const placeholderText = this.shouldFakePlaceholder() ?
@@ -512,11 +513,13 @@ function createStyles({
       borderColor: Colors.red30,
     },
     input: {
-      flex: 1,
-      marginBottom: hideUnderline ? undefined : 10,
+      flexGrow: 1,
+      marginBottom: hideUnderline ? undefined : (Constants.isIOS ? 10 : 5),
       padding: 0,
       textAlign: centered ? 'center' : undefined,
       backgroundColor: 'transparent',
+
+      // backgroundColor: 'red'
     },
     floatingPlaceholder: {
       position: 'absolute',
