@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import colorsPalette from './colorsPalette';
+import {colorsPalette} from './colorsPalette';
 
 class Colors {
   /**

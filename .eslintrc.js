@@ -1,4 +1,4 @@
-const validColors = require("./src/style/colorsPalette");
+const validColors = require("./src/style/colorsPalette").colorsPalette;
 const extraFixColorsMap = require("./src/style/colorsPalette").extraFixColorsMap;
 
 
