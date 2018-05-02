@@ -307,8 +307,11 @@ export default class Button extends BaseComponent {
 
     const marginSide =
       [Button.sizes.large, Button.sizes.medium].includes(size) ? 8 : 4;
-    iconOnRight ? // eslint-disable-line
-      iconStyle.marginLeft = marginSide : iconStyle.marginRight = marginSide;
+    if (iconOnRight) {
+      iconStyle.marginLeft = marginSide;
+    } else {
+      iconStyle.marginRight = marginSide;
+    }
 
     if (disabled && !this.isFilled) {
       iconStyle.tintColor = Colors.dark60;
