@@ -199,6 +199,9 @@ class FeatureHighlight extends BaseComponent {
   setContentPosition() {
     const top = this.getContentPosition();
     this.setState({contentTopPosition: top});
+    if (this.contentHeight) {
+      this.animate(1);
+    }
   }
 
   // This method will be called more than once in case of layout change!
@@ -206,7 +209,6 @@ class FeatureHighlight extends BaseComponent {
     this.contentHeight = event.nativeEvent.layout.height;
     if (this.targetPosition !== undefined) {
       this.setContentPosition();
-      this.animate(1);
     }
   }
 
