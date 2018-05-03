@@ -309,7 +309,16 @@ export default class ButtonsScreen extends DemoScreen {
               label="disabled link"
             />
 
-            <Button label="link button" link />
+            <Button
+              label="link button" link
+              style={{marginBottom: ButtonSpace}}
+            />
+
+            <Button
+              label="Icon on right"
+              iconSource={plusIcon}
+              iconOnRight
+            />
           </View>
 
           <View marginT-20>

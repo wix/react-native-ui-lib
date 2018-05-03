@@ -85,4 +85,15 @@ const colorsPalette = {
   black: '#000000',
 };
 
-module.exports = colorsPalette;
+// For Eslint --fix
+const extraFixColorsMap = {
+  black: 'black',
+  white: 'white',
+  '#000': 'black',
+  '#fff': 'white',
+};
+
+module.exports = {
+  colorsPalette,
+  extraFixColorsMap,
+};

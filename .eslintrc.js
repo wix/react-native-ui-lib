@@ -1,4 +1,6 @@
-const validColors = require("./src/style/colorsPalette")
+const validColors = require("./src/style/colorsPalette").colorsPalette;
+const extraFixColorsMap = require("./src/style/colorsPalette").extraFixColorsMap;
+
 
 module.exports = {
   "parser": "babel-eslint",
@@ -24,7 +26,7 @@ module.exports = {
     "react/require-default-props": "off",
     "no-else-return": "off",
     // "uilib/no-hard-coded-font": "error",
-    "uilib/no-hard-coded-color": "error"
+    "uilib/no-hard-coded-color": ["error", validColors, extraFixColorsMap]
   },
   "env": {
     "browser": true,
@@ -36,9 +38,6 @@ module.exports = {
       "node": {
         "extensions": [".js", ".ios.js", ".android.js"]
       }
-    },
-    "uiLib": {
-     "validColors": validColors
     }
   }
 }

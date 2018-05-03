@@ -316,6 +316,17 @@ describe('Button', () => {
       expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginRight: 4}, undefined]);
     });
 
+    it('should return the right spacing according to button size when label exists and icon on the right', () => {
+      let uut = new Button({size: Button.sizes.large, iconOnRight: true});
+      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginLeft: 8}, undefined]);
+      uut = new Button({size: Button.sizes.medium, iconOnRight: true});
+      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginLeft: 8}, undefined]);
+      uut = new Button({size: Button.sizes.small, iconOnRight: true});
+      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginLeft: 4}, undefined]);
+      uut = new Button({size: Button.sizes.xSmall, iconOnRight: true});
+      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginLeft: 4}, undefined]);
+    });
+
     it('should return icon style according to button size when label exists', () => {
       let uut = new Button({size: Button.sizes.large, disabled: true, outline: true});
       expect(uut.getIconStyle()).toEqual([{marginRight: 8, tintColor: Colors.dark60}, undefined]);

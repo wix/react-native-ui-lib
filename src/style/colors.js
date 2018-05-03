@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import colorsPalette from './colorsPalette';
+import {colorsPalette} from './colorsPalette';
 
 class Colors {
   /**
@@ -74,6 +74,8 @@ function validateHex(value) {
   }
   return value.replace('#', '');
 }
+
 const colorObject = new Colors();
 colorObject.loadColors(colorsPalette);
+
 export default colorObject;
