@@ -4,6 +4,7 @@ import _ from 'lodash';
 import {View, Colors, Text, Stepper, Typography, Picker, Avatar, Assets, TagsInput} from 'react-native-ui-lib'; //eslint-disable-line
 import tagIcon from '../../assets/icons/tags.png';
 import contacts from '../../data/conversations';
+import dropdown from '../../assets/icons/chevronDown.png';
 
 const options = [
   {label: 'JavaScript', value: 'js'},
@@ -100,6 +101,7 @@ export default class FormScreen extends Component {
               value={this.state.languages}
               onChange={items => this.setState({languages: items})}
               mode={Picker.modes.MULTI}
+              rightIconSource={dropdown}
             >
               {_.map(options, option => <Picker.Item key={option.value} value={option} disabled={option.disabled} />)}
             </Picker>
