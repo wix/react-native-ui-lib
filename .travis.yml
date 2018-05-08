@@ -14,3 +14,7 @@ deploy:
     repo: wix/react-native-ui-lib
     # script: scripts/deploy.sh
   skip_cleanup: true
+
+after_deploy:
+  script:
+    - ./scripts/install_demo.sh
