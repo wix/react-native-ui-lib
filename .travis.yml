@@ -16,5 +16,4 @@ deploy:
   skip_cleanup: true
 
 after_script:
-  script:
     - ./scripts/install_demo.sh
