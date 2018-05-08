@@ -4,7 +4,7 @@
 // TODO: simplify this component, stop inherit from TextInput
 
 import React from 'react';
-import {Text} from 'react-native';
+import {StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import NativePicker from './NativePicker';
@@ -14,7 +14,10 @@ import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
 import * as PickerPresenter from './PickerPresenter';
 import Button from '../../components/button';
+import Text from '../../components/text';
+import TouchableOpacity from '../../components/touchableOpacity';
 import View from '../../components/view';
+import Image from '../../components/image';
 import Modal from '../../screensComponents/modal';
 import {Constants} from '../../helpers';
 
@@ -40,13 +43,7 @@ class Picker extends TextInput {
     /**
      * picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
      */
-    value: PropTypes.oneOfType([
-      ItemType,
-      PropTypes.arrayOf(ItemType),
-      PropTypes.object,
-      PropTypes.string,
-      PropTypes.number,
-    ]),
+    value: PropTypes.oneOfType([ItemType, PropTypes.arrayOf(ItemType), PropTypes.object, PropTypes.string, PropTypes.number]),
     /**
      * callback for when picker value change
      */
@@ -91,6 +88,10 @@ class Picker extends TextInput {
      * callback for rendering a custom native picker inside the dialog (relevant to native picker only)
      */
     renderNativePicker: PropTypes.func,
+    /**
+     * icon asset source for showing on the right side, appropriate for dropdown icon and such
+     */
+    rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
   };
 
   static defaultProps = {
@@ -212,27 +213,29 @@ class Picker extends TextInput {
 
   renderExpandableInput() {
     const {value} = this.state;
-    const {placeholder, style} = this.props;
+    const {placeholder, rightIconSource, style} = this.props;
     const typography = this.getTypography();
     const color = this.extractColorValue() || Colors.dark10;
     const label = this.getLabel();
     const shouldShowPlaceholder = _.isEmpty(value);
 
     return (
-      <Text
-        style={[
-          this.styles.input,
-          typography,
-          {color},
-          style,
-          {height: Constants.isAndroid ? typography.lineHeight : undefined},
-          shouldShowPlaceholder && this.styles.placeholder,
-        ]}
-        numberOfLines={3}
-        onPress={this.handlePickerOnPress}
-      >
-        {shouldShowPlaceholder ? placeholder : label}
-      </Text>
+      <TouchableOpacity style={styles.pickerInputWrapper} activeOpacity={1} onPress={this.handlePickerOnPress}>
+        <Text
+          style={[
+            this.styles.input,
+            typography,
+            {color},
+            style,
+            {height: Constants.isAndroid ? typography.lineHeight : undefined},
+            shouldShowPlaceholder && this.styles.placeholder,
+          ]}
+          numberOfLines={3}
+        >
+          {shouldShowPlaceholder ? placeholder : label}
+        </Text>
+        {rightIconSource && <Image source={rightIconSource} />}
+      </TouchableOpacity>
     );
   }
 
@@ -277,6 +280,14 @@ class Picker extends TextInput {
     return super.render();
   }
 }
+
+const styles = StyleSheet.create({
+  pickerInputWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+});
 
 Picker.Item = PickerItem;
 export default Picker;
