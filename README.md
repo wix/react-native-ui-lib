@@ -150,6 +150,8 @@ Same goes here... space, stretch and color in a more readable way.
 - **margin-[value]**, **marginL-[value]**, **marginT-[value]**, **marginR-[value]**, **marginB-[value]**, **marginH-[value]**, **marginV-[value]**
 `<View marginT-5 marginB-10>...</View>`
 
+* padding and margin modifiers can also take [Spacing](https://github.com/wix/react-native-ui-lib/blob/master/src/style/spacings.js) constants. `<View margin-s5 padding-s2>...</View>`
+
 Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where we use most of these props
 
 # Assets
