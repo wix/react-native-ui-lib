@@ -2,12 +2,12 @@ import {Component} from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet} from 'react-native';
 import _ from 'lodash';
-import {Typography, Colors, BorderRadiuses, ThemeManager} from '../style';
+import {Typography, Colors, BorderRadiuses, Spacings, ThemeManager} from '../style';
 import {DocsGenerator} from '../helpers';
 
 const FLEX_KEY_PATTERN = /^flex(G|S)?(-\d*)?$/;
-const PADDING_KEY_PATTERN = /padding[LTRBHV]?-[0-9]*/;
-const MARGIN_KEY_PATTERN = /margin[LTRBHV]?-[0-9]*/;
+const PADDING_KEY_PATTERN = new RegExp(`padding[LTRBHV]?-([0-9]*|${Spacings.getKeysPattern()})`);
+const MARGIN_KEY_PATTERN = new RegExp(`margin[LTRBHV]?-([0-9]*|${Spacings.getKeysPattern()})`);
 const ALIGNMENT_KEY_PATTERN = /(left|top|right|bottom|center|centerV|centerH|spread)/;
 
 export default class BaseComponent extends Component {
@@ -164,6 +164,8 @@ export default class BaseComponent extends Component {
         const paddingVariation = PADDING_VARIATIONS[paddingKey];
         if (!isNaN(paddingValue)) {
           paddings[paddingVariation] = Number(paddingValue);
+        } else if (Spacings.getKeysPattern().test(paddingValue)) {
+          paddings[paddingVariation] = Spacings[paddingValue];
         }
       }
     });
@@ -194,6 +196,8 @@ export default class BaseComponent extends Component {
         const paddingVariation = MARGIN_VARIATIONS[marginKey];
         if (!isNaN(marginValue)) {
           margins[paddingVariation] = Number(marginValue);
+        } else if (Spacings.getKeysPattern().test(marginValue)) {
+          margins[paddingVariation] = Spacings[marginValue];
         }
       }
     });

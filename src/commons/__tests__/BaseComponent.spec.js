@@ -101,6 +101,11 @@ describe('BaseComponent', () => {
       const uut = new BaseComponent({'padding-2a5': true});
       expect(uut.extractPaddingValues()).toEqual({});
     });
+
+    it('should support Spacing preset for padding', () => {
+      const uut = new BaseComponent({'padding-s3': true});
+      expect(uut.extractPaddingValues()).toEqual({padding: 9});
+    });
   });
 
   describe('margins modifiers', () => {
@@ -133,6 +138,11 @@ describe('BaseComponent', () => {
     it('should ignore non numeric margin values', () => {
       const uut = new BaseComponent({'margin-2a5': true});
       expect(uut.extractMarginValues()).toEqual({});
+    });
+
+    it('should support Spacing preset for margin', () => {
+      const uut = new BaseComponent({'marginL-s4': true});
+      expect(uut.extractMarginValues()).toEqual({marginLeft: 12});
     });
   });
 
