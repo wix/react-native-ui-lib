@@ -26,17 +26,19 @@
     "docs:install": "(cd ./uilib-docs && rm -rf node_modules && rm -rf package-lock.json && npm install)",
     "docs:deploy": "(cd ./uilib-docs && gatsby build --prefix-paths && gh-pages -d public --branch gh-pages)",
     "docs:develop": "(cd ./uilib-docs && gatsby develop)",
-    "bump:patch": "npm version patch"
+    "bump:patch": "npm version patch",
+    "release": "node ./scripts/release.js"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
     "hoist-non-react-statics": "^2.3.0",
     "lodash": "^4.0.0",
     "prop-types": "^15.5.10",
-    "url-parse": "^1.2.0",
     "react-native-animatable": "^1.1.0",
     "react-native-blur": "^3.1.1",
-    "react-native-interactable": "latest"
+    "react-native-interactable": "latest",
+    "semver": "^5.5.0",
+    "url-parse": "^1.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
@@ -64,8 +66,7 @@
     "react-native": "0.51.0",
     "react-native-keyboard-aware-scrollview": "^2.0.0",
     "react-native-keyboard-tracking-view": "^5.3.2",
-    "react-native-navigation": "^1.1.19",
-    "shell-utils": "1.x.x"
+    "react-native-navigation": "^1.1.19"
   },
   "peerDependencies": {
     "react": "^16.0.0",
