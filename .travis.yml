@@ -18,3 +18,4 @@ script:
    local-dir: uilib-docs/public
    on:
      branch: master
+
