@@ -20,7 +20,7 @@ module.exports = {
     fixable: 'whitespace',
     schema: [
       MAP_SCHEMA,
-      MAP_SCHEMA
+      MAP_SCHEMA,
     ],
   },
   create(context) {

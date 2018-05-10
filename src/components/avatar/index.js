@@ -222,7 +222,7 @@ function createStyles({size, labelColor, imageSource}) {
     initials: {
       fontSize: size * fontSizeToImageSizeRatio,
       color: labelColor,
-      backgroundColor: 'rgba(0,0,0,0)',
+      backgroundColor: 'transparent',
     },
     /*eslint-enable*/
     defaultImage: {
