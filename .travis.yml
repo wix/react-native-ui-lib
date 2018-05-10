@@ -9,11 +9,11 @@ script:
   - npm run demo
   - npm run docs:install
 
-deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GIT_TOKEN
-  keep-history: true
-  local-dir: uilib-docs
-  on:
-    branch: master
+# deploy:
+#   provider: pages
+#   skip-cleanup: true
+#   github-token: $GIT_TOKEN
+#   keep-history: true
+#   local-dir: uilib-docs
+#   on:
+#     branch: master
