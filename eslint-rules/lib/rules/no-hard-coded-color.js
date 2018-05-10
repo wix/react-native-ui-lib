@@ -3,8 +3,8 @@ const utils = require('../utils');
 
 const { findAndReportHardCodedValues, propIsColor, isColorException } = utils;
 const MAP_SCHEMA = {
-  "type": "object",
-  "additionalProperties": true
+  type: 'object',
+  additionalProperties: true,
 };
 
 module.exports = {
@@ -25,26 +25,30 @@ module.exports = {
   },
   create(context) {
     function reportAndFixHardCodedColorString(node) {
-      const colorString = node.extra.rawValue;
-      if (!isColorException(colorString)) {
-        context.report({
-          node,
-          message: `Found '${colorString}'. Use UILib colors instead of hardcoded colors.`,
-          fix(fixer) {
-            if (node.extra) {
-              const validColors = context.options[0]; // _.get(context, 'settings.uiLib.validColors');
-              const extraColors = context.options[1]; // _.get(context, 'settings.uiLib.extraFixColorMap');
-              if (validColors) {
-                const validColorsDic = _.chain(validColors).mapValues(value => value.toLowerCase()).invert().value();
-                const invertedColorsDict = _.assign({}, validColorsDic, extraColors);
-                const lowerCaseColorString = colorString.toLowerCase();
-                if (invertedColorsDict[lowerCaseColorString]) {
-                  return fixer.replaceText(node, `Colors.${invertedColorsDict[lowerCaseColorString]}`);
+      try {
+        const colorString = _.get(node, 'extra.rawValue') || _.get(node, 'value');
+        if (!isColorException(colorString)) {
+          context.report({
+            node,
+            message: `Found '${colorString}'. Use UILib colors instead of hardcoded colors.`,
+            fix(fixer) {
+              if (node) {
+                const validColors = context.options[0]; // _.get(context, 'settings.uiLib.validColors');
+                const extraColors = context.options[1]; // _.get(context, 'settings.uiLib.extraFixColorMap');
+                if (validColors) {
+                  const validColorsDic = _.chain(validColors).mapValues(value => value.toLowerCase()).invert().value();
+                  const invertedColorsDict = _.assign({}, validColorsDic, extraColors);
+                  const lowerCaseColorString = colorString.toLowerCase();
+                  if (invertedColorsDict[lowerCaseColorString]) {
+                    return fixer.replaceText(node, `Colors.${invertedColorsDict[lowerCaseColorString]}`);
+                  }
                 }
               }
-            }
-          },
-        });
+            },
+          });
+        }
+      } catch (err) {
+        console.log('Found error in: ', context.getFilename());
       }
     }
 
