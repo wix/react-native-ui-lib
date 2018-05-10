@@ -42,7 +42,7 @@ function setupGit() {
 }
 
 function calcNewVersion() {
-  const latestVersion = execSyncRead(`npm view ${process.env.npm_package_name}@next version`);
+  const latestVersion = execSyncRead(`npm view ${process.env.npm_package_name}@latest version`);
   console.log(`latest version is: ${latestVersion}`);
   console.log(`package version is: ${process.env.npm_package_version}`);
   if (semver.gt(process.env.npm_package_version, latestVersion)) {
@@ -61,7 +61,7 @@ function copyNpmRc() {
 function tagAndPublish(newVersion) {
   console.log(`new version is: ${newVersion}`);
   execSync(`npm version ${newVersion} -m "v${newVersion} [ci skip]"`);
-  execSync(`npm publish --tag next`);
+  execSync(`npm publish --tag latest`);
   execSyncSilently(`git push deploy --tags`);
 }
 
