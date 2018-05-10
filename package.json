@@ -25,6 +25,7 @@
     "log": "react-native log-ios | grep 'ethan -'",
     "docs:install": "(cd ./uilib-docs && rm -rf node_modules && rm -rf package-lock.json && npm install)",
     "docs:deploy": "(cd ./uilib-docs && gatsby build --prefix-paths && gh-pages -d public --branch gh-pages)",
+    "docs:build": "(cd ./uilib-docs && gatsby build --prefix-paths)",
     "docs:develop": "(cd ./uilib-docs && gatsby develop)",
     "bump:patch": "npm version patch",
     "demo": "./scripts/demo.sh",
