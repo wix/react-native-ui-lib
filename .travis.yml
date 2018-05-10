@@ -8,5 +8,12 @@ script:
   - npm run release
   - npm run demo
   - npm run docs:install
-  - npm run docs:deploy
 
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GIT_TOKEN
+  keep-history: true
+  local-dir: uilib-docs
+  on:
+    branch: master
