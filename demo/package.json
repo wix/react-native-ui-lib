@@ -6,13 +6,16 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "scripts": {},
+  "scripts": {
+    "release": "node ./scripts/release.js"
+  },
   "devDependencies": {
     "react-native-ui-lib": "*"
   },
   "peerDependencies": {
     "react": "15.4.2",
     "react-native": "0.38.0",
-    "react-native-ui-lib": "*"
+    "react-native-ui-lib": "*",
+    "semver": "^5.5.0"
   }
 }

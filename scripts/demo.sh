@@ -2,4 +2,5 @@
 
 pushd demo
 npm install
+npm run release
 popd

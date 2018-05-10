@@ -6,5 +6,7 @@ install:
 script:
   - npm run test
   - npm run release
-  - ./scripts/install_demo.sh
+  - npm run demo
+  - npm run docs:install
+  - npm run docs:deploy
 
