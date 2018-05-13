@@ -8,6 +8,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.support.annotation.ColorInt;
+import android.util.Log;
 import android.view.View;
 import android.util.SizeF;
 
@@ -132,9 +133,10 @@ public class HighlighterView extends View {
         float fHeight = frame.bottom - frame.top;
         float width = fWidth + (innerPadding * 2);
         float height = fHeight + (innerPadding * 2);
-
-        width = width < minimumRectSize.getWidth() ? minimumRectSize.getWidth() : width;
-        height = height < minimumRectSize.getHeight() ? minimumRectSize.getHeight() : height;
+        if (minimumRectSize != null) {
+            width = width < minimumRectSize.getWidth() ? minimumRectSize.getWidth() : width;
+            height = height < minimumRectSize.getHeight() ? minimumRectSize.getHeight() : height;
+        }
 
         x = x - ((width - fWidth) / 2);
         y = y - ((height - fHeight) / 2);
@@ -151,6 +153,7 @@ public class HighlighterView extends View {
         canvas.drawPaint(paint);
 
         RectF rect = rectToDraw();
+        updateRadius();
 
         if(rect != null) {
             paint.setXfermode(porterDuffXfermode);
