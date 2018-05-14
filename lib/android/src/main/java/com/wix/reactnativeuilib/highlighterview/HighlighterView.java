@@ -22,7 +22,6 @@ public class HighlighterView extends View {
     private float radius;
     private SizeF minimumRectSize;
     private float innerPadding;
-    private RectF rect;
 
     private static final PorterDuffXfermode porterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
     private static final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -59,13 +58,13 @@ public class HighlighterView extends View {
         }
     }
 
-    private void updateRadius() {
+    private void updateRadius(RectF rect) {
         float newRadius = 0;
         if (borderRadius > 0) {
             newRadius = borderRadius;
         }
         else {
-            rect = rectToDraw(); // IMPORTANT!
+//            rect = rectToDraw();
             if (rect != null) {
                 newRadius = Math.min(rect.width() / 2, rect.height() / 2);
             }
@@ -152,8 +151,8 @@ public class HighlighterView extends View {
         paint.setStyle(Paint.Style.FILL);
         canvas.drawPaint(paint);
 
-//        RectF rect = rectToDraw();
-        updateRadius(); // IMPORTANT!
+        RectF rect = rectToDraw();
+        updateRadius(rect); // IMPORTANT!
 
         if(rect != null) {
             paint.setXfermode(porterDuffXfermode);
