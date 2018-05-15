@@ -18,6 +18,15 @@ class Spacings {
       this[key] = value;
     });
   }
+
+  getKeysPattern() {
+    return new RegExp(
+      _.chain(this)
+        .keys()
+        .join('|')
+        .value(),
+    );
+  }
 }
 
 export default new Spacings();

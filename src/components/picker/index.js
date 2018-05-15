@@ -1,14 +1,23 @@
+// TODO: depreacte value allowing passing an object, allow only string or number
+// TODO: extract picker labels from children in order to obtain the
+// correct label to render (similar to what we do in NativePicker)
+// TODO: simplify this component, stop inherit from TextInput
+
 import React from 'react';
-import {Text} from 'react-native';
+import {StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import NativePicker from './NativePicker';
 import {Colors} from '../../style';
 import {TextInput} from '../inputs';
 import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
 import * as PickerPresenter from './PickerPresenter';
 import Button from '../../components/button';
+import Text from '../../components/text';
+import TouchableOpacity from '../../components/touchableOpacity';
 import View from '../../components/view';
+import Image from '../../components/image';
 import Modal from '../../screensComponents/modal';
 import {Constants} from '../../helpers';
 
@@ -23,7 +32,7 @@ const ItemType = PropTypes.shape({value: PropTypes.any, label: PropTypes.string}
  * @description: Picker Component, support single or multiple selection, blurModel and floatingPlaceholder
  * @extends: TextInput
  * @extendslink: docs/TextInput
- * @gif: https://media.giphy.com/media/3o751SiuZZiByET2lq/giphy.gif
+ * @gif: https://media.giphy.com/media/3o751SiuZZiByET2lq/giphy.gif, https://media.giphy.com/media/TgMQnyw5grJIDohzvx/giphy.gif, https://media.giphy.com/media/5hsdmVptBRskZKn787/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FormScreen.js
  */
 class Picker extends TextInput {
@@ -34,7 +43,7 @@ class Picker extends TextInput {
     /**
      * picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
      */
-    value: PropTypes.oneOfType([ItemType, PropTypes.arrayOf(ItemType), PropTypes.object]),
+    value: PropTypes.oneOfType([ItemType, PropTypes.arrayOf(ItemType), PropTypes.object, PropTypes.string, PropTypes.number]),
     /**
      * callback for when picker value change
      */
@@ -71,15 +80,28 @@ class Picker extends TextInput {
      * show search input to filter picker items by label
      */
     showSearch: PropTypes.bool,
+    /**
+     * Allow to use the native picker solution (different for iOS and Android)
+     */
+    useNativePicker: PropTypes.bool,
+    /**
+     * callback for rendering a custom native picker inside the dialog (relevant to native picker only)
+     */
+    renderNativePicker: PropTypes.func,
+    /**
+     * icon asset source for showing on the right side, appropriate for dropdown icon and such
+     */
+    rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
   };
 
   static defaultProps = {
     ...TextInput.defaultProps,
     mode: PICKER_MODES.SINGLE,
-    enableModalBlur: true,
+    // enableModalBlur: true,
     expandable: true,
     text70: true,
-    floatingPlaceholder: true,
+    // floatingPlaceholder: true,
+    enableErrors: false,
   };
 
   constructor(props) {
@@ -103,6 +125,10 @@ class Picker extends TextInput {
 
     if (props.mode === Picker.modes.MULTI && !Array.isArray(props.value)) {
       console.warn('Picker in MULTI mode must accept an array for value');
+    }
+
+    if (props.useNativePicker && _.isPlainObject(props.value)) {
+      console.warn('UILib Picker: dont use object as value for native picker, use either string or a number');
     }
   }
 
@@ -131,7 +157,7 @@ class Picker extends TextInput {
     this.setState({
       searchValue,
     });
-  }
+  };
 
   cancelSelect() {
     this.setState({
@@ -186,30 +212,35 @@ class Picker extends TextInput {
   }
 
   renderExpandableInput() {
-    const {style} = this.props;
+    const {value} = this.state;
+    const {placeholder, rightIconSource, style} = this.props;
     const typography = this.getTypography();
     const color = this.extractColorValue() || Colors.dark10;
     const label = this.getLabel();
+    const shouldShowPlaceholder = _.isEmpty(value);
 
     return (
-      <Text
-        style={[
-          this.styles.input,
-          typography,
-          {color},
-          style,
-          {height: Constants.isAndroid ? typography.lineHeight : undefined},
-        ]}
-        numberOfLines={3}
-        onPress={this.handlePickerOnPress}
-      >
-        {label}
-      </Text>
+      <TouchableOpacity style={styles.pickerInputWrapper} activeOpacity={1} onPress={this.handlePickerOnPress}>
+        <Text
+          style={[
+            this.styles.input,
+            typography,
+            {color},
+            style,
+            {height: Constants.isAndroid ? typography.lineHeight : undefined},
+            shouldShowPlaceholder && this.styles.placeholder,
+          ]}
+          numberOfLines={3}
+        >
+          {shouldShowPlaceholder ? placeholder : label}
+        </Text>
+        {rightIconSource && <Image source={rightIconSource} />}
+      </TouchableOpacity>
     );
   }
 
   renderExpandableModal() {
-    const {mode, enableModalBlur, topBarProps, showSearch} = this.props;
+    const {mode, enableModalBlur, topBarProps, showSearch} = this.getThemeProps();
     const {showExpandableModal, selectedItemPosition} = this.state;
     return (
       <PickerModal
@@ -230,7 +261,10 @@ class Picker extends TextInput {
   }
 
   render() {
-    const {renderPicker, testID} = this.props;
+    const {useNativePicker, renderPicker, testID} = this.props;
+
+    if (useNativePicker) return <NativePicker {...this.props} />;
+
     if (_.isFunction(renderPicker)) {
       const {value} = this.state;
       return (
@@ -246,6 +280,14 @@ class Picker extends TextInput {
     return super.render();
   }
 }
+
+const styles = StyleSheet.create({
+  pickerInputWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+});
 
 Picker.Item = PickerItem;
 export default Picker;

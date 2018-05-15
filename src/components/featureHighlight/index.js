@@ -120,12 +120,11 @@ class FeatureHighlight extends BaseComponent {
 
     this.state = {
       fadeAnim: new Animated.Value(0),  // Initial value for opacity: 0
-      contentTopPosition: 0,
+      contentTopPosition: undefined,
     };
 
     this.contentHeight = contentViewHeight;
     this.targetPosition = undefined;
-    this.didLayout = false;
   }
 
   static defaultProps = {
@@ -179,35 +178,32 @@ class FeatureHighlight extends BaseComponent {
   }
 
   getContentPosition() {
-    if (this.didLayout) {
-      const {highlightFrame, minimumRectSize, innerPadding} = this.props;
-      const {top, height} = this.targetPosition;
-      const screenVerticalCenter = Constants.screenHeight / 2;
-      const targetCenter = top + (height / 2);
-      const isAlignedTop = targetCenter > screenVerticalCenter;
-      let topPosition = isAlignedTop ? top - this.contentHeight : top + height;
-      if (!highlightFrame && !isAlignedTop) {
-        const minRectHeight = minimumRectSize.height;
-        const isUnderMin = height >= minRectHeight;
-        topPosition = isUnderMin ? topPosition + innerPadding : targetCenter + (minRectHeight / 2) + (innerPadding / 2);
-      }
-      if (topPosition < 0 || topPosition + this.contentHeight > Constants.screenHeight) {
-        console.warn('Content is too long and might appear off screen. ' +
-          'Please adjust the message length for better results.');
-      }
-      return topPosition;
+    const {highlightFrame, minimumRectSize, innerPadding} = this.props;
+    const {top, height} = this.targetPosition;
+    const screenVerticalCenter = Constants.screenHeight / 2;
+    const targetCenter = top + (height / 2);
+    const isAlignedTop = targetCenter > screenVerticalCenter;
+    let topPosition = isAlignedTop ? top - this.contentHeight : top + height;
+    if (!highlightFrame && !isAlignedTop) {
+      const minRectHeight = minimumRectSize.height;
+      const isUnderMin = height >= minRectHeight;
+      topPosition = isUnderMin ? topPosition + innerPadding : targetCenter + (minRectHeight / 2) + (innerPadding / 2);
     }
+    if (topPosition < 0 || topPosition + this.contentHeight > Constants.screenHeight) {
+      console.warn('Content is too long and might appear off screen. ' +
+        'Please adjust the message length for better results.');
+    }
+    return topPosition;
   }
 
   setContentPosition() {
     const top = this.getContentPosition();
-    this.setState({contentViewStyle: top});
+    this.setState({contentTopPosition: top});
     this.animate(1);
   }
 
   // This method will be called more than once in case of layout change!
   getComponentDimensions(event) {
-    this.didLayout = true;
     this.contentHeight = event.nativeEvent.layout.height;
     if (this.targetPosition !== undefined) {
       this.setContentPosition();
@@ -230,7 +226,7 @@ class FeatureHighlight extends BaseComponent {
 
     return (
       <Animated.View
-        style={[styles.highlightContent, {opacity: this.state.fadeAnim, top: this.state.contentViewStyle}]}
+        style={[styles.highlightContent, {opacity: this.state.fadeAnim, top: this.state.contentTopPosition}]}
         onLayout={this.getComponentDimensions}
         pointerEvents="box-none"
       >
@@ -258,9 +254,11 @@ class FeatureHighlight extends BaseComponent {
   }
 
   render() {
+    const {node, contentTopPosition} = this.state;
+    if (contentTopPosition === undefined) return null;
+
     const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding,
       onBackgroundPress} = this.getThemeProps();
-    const {node} = this.state;
 
     return (
       <HighlighterOverlayView

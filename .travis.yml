@@ -1,15 +1,21 @@
 language: node_js
 node_js:
-- "8"
-install: npm install
-# before_deploy: npm run bump:patch
+  - "8"
+install:
+  - npm install
+script:
+  - npm run test
+  - npm run release
+  - npm run demo
+  - npm run docs:install
+  - npm run docs:build
+
 deploy:
-  provider: npm
-  email: "${NPM_EMAIL}"
-  api_key:
-    secure: HCUbD49eP3lKAXVgBOYtchCzuDqqXmpZoCzK97M2OGuQmFPR5Ffkj1ka8bqeVuDovO2JlkwcAr2cjHpjQlpCmuUkYAu9MbVj+KfwjM05m2cwoK2WqnKc2ttt3hP6pFKIYxKMVUa2w7O6ATyX2NG/MsR9VY7VywMgNxAqp5abCG7g4b95p3NCjlHfuiFq4CUZvet6zImoGhmTnIvnupzDhW8S/OL1M5UJjkiq7XDZ+9cZmltks2xgcPZfoDV6UYQVtsGespAM8DIttbN89wKZWvi/TG8Q+HSeEZi8AKs9RYUQLM69Kz9FlEEPonQ+BYrzavwBKXfAW3XYt+sMSdQE1M3dY2LNJlg64O17B0YLTLyaQMMYFfaHdB/dmja1dg5H+VzJknUQDHqoNv8d+wc4mortmNlclVjEB3lvt46YCegTZcfXyJGDdM8t8JnbitkUSnNmUJSI6r7NzQIsHT6rYT39Qx503YggNCwo+VK8tQoVhLRCaOnHHB98Xq+ihumQhk0x6987Wb/TkUwCF3wldlh8vQcMbDri26qE4gYA0wV+rT4SjOGY7HlPCyYCZgAfH6oCb4ytgggIWs424T/MY3W7YPzBN8rtJaByJ/p1oCuTzeyNNkIxz7mjG/sDczZNN+jU75BV6aivoT7vwSBUSXk6aQrgIQ5zkEodLGCvrCI=
+  provider: pages
+  skip-cleanup: true
+  github-token: $GIT_TOKEN
+  keep-history: true
+  local-dir: uilib-docs/public
   on:
     branch: master
-    repo: wix/react-native-ui-lib
-    # script: scripts/deploy.sh
-  skip_cleanup: true
+

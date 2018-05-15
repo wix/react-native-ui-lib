@@ -28,7 +28,7 @@ export default class TopBar extends BaseComponent {
     /**
      * title custom style
      */
-    titleStyle: PropTypes.object,
+    titleStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * done action props (Button props)
      */

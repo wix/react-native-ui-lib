@@ -76,7 +76,7 @@ class FeatureHighlightScreen extends Component {
         onBackgroundPress={this.closeHighlight}
         getTarget={() => this.targets[currentTargetIndex]}
         // highlightFrame={{x: 30, y: 70, width: 150, height: 30}}
-        // highlightFrame={{x: 175, y: 334, width: 150, height: 56}}
+        // highlightFrame={{x: 160, y: 336, width: 150, height: 56}}
       />
     );
   }

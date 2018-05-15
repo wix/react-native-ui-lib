@@ -1,5 +1,5 @@
 import {Navigation} from 'react-native-navigation';
-import {Typography, Colors, Assets, Button, Badge, ThemeManager, Text} from 'react-native-ui-lib'; //eslint-disable-line
+import {Typography, Constants, Colors, Assets, Button, Badge, ThemeManager, Text} from 'react-native-ui-lib'; //eslint-disable-line
 import * as Animatable from 'react-native-animatable';
 import './screens';
 
@@ -23,8 +23,15 @@ import './screens';
 //   subtitleColor: Colors.blue40,
 // });
 
-// ThemeManager.setComponentTheme('Text', {
-//   dark10: true,
+// ThemeManager.setComponentTheme('Picker', (props) => {
+//   if (props.useNativePicker) {
+//     return {
+//       topBarProps: {
+//         doneLabel: Constants.isIOS ? 'Done2' : 'OK2',
+//         cancelLabel: Constants.isIOS ? 'Cancel2' : 'CANCEL2',
+//       },
+//     };
+//   }
 // });
 
 Assets.loadAssetsGroup('icons.general', {

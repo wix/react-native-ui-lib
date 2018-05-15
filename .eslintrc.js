@@ -1,8 +1,11 @@
-const validColors = require("./src/style/colorsPalette")
+const validColors = require("./src/style/colorsPalette").colorsPalette;
+const extraFixColorsMap = require("./src/style/colorsPalette").extraFixColorsMap;
+
+
 module.exports = {
   "parser": "babel-eslint",
   "plugins": ["react-native", "uilib"],
-  "extends": ["airbnb", "./eslint-rules/.eslintrc.js"],
+  "extends": ["airbnb"],
   "rules": {
     "arrow-body-style": "off",
     "class-methods-use-this": "off",
@@ -13,7 +16,7 @@ module.exports = {
     "no-plusplus": "off",
     "no-return-assign": "off",
     "no-use-before-define": "off",
-    "max-len": [2, 120, 4, {"ignoreUrls": true}],
+    "max-len": [2, 150, 4, {"ignoreUrls": true}],
     "object-curly-spacing": "off",
     "react/forbid-prop-types": "off",
     "react/jsx-filename-extension": "off",
@@ -21,8 +24,9 @@ module.exports = {
     "react/jsx-tag-spacing": "off",
     "react/prefer-stateless-function": "off",
     "react/require-default-props": "off",
+    "no-else-return": "off",
     // "uilib/no-hard-coded-font": "error",
-    // "uilib/no-hard-coded-color": "error"
+    "uilib/no-hard-coded-color": ["error", validColors, extraFixColorsMap]
   },
   "env": {
     "browser": true,
@@ -34,9 +38,6 @@ module.exports = {
       "node": {
         "extensions": [".js", ".ios.js", ".android.js"]
       }
-    },
-    "uiLib": {
-     "validColors": validColors
     }
   }
 }

@@ -1,18 +1,16 @@
 
 const _ = require('lodash');
-const Colors = require('../../../../src/style/colorsPalette');
+const Colors = require('../../../../src/style/colorsPalette').colorsPalette;
+const extraFixColorsMap = require('../../../../src/style/colorsPalette').extraFixColorsMap;
 const rule = require('../../../lib/rules/no-hard-coded-color');
 const RuleTester = require('eslint').RuleTester;
 
 RuleTester.setDefaultConfig({
   parser: 'babel-eslint',
   parserOptions: { ecmaVersion: 6, ecmaFeatures: { jsx: true } },
-  settings: {
-    uiLib: {
-      validColors: Colors,
-    },
-  },
 });
+const ruleOptions = [Colors, extraFixColorsMap];
+
 const invalidStyleSheetExample = `StyleSheet.create({
   container: {
     padding: 5,
@@ -49,46 +47,52 @@ ruleTester.run('no-hard-coded-color', rule, {
   ],
   invalid: [
     {
+      options: ruleOptions,
       code: invalidStyleSheetExample,
       output: validStyleSheetExample,
       errors: [
-        { messageId: 'uiLib' },
+        { message: "Found '#66737C'. Use UILib colors instead of hardcoded colors." },
       ],
     },
     {
+      options: ruleOptions,
       code: invalidConditionalExpression,
       output: validConditionalExpression,
       errors: [
-        { messageId: 'uiLib' },
-        { messageId: 'uiLib' },
+        { message: "Found '#20303C'. Use UILib colors instead of hardcoded colors." },
+        { message: "Found '#43515C'. Use UILib colors instead of hardcoded colors." },
       ],
     },
     {
+      options: ruleOptions,
       code: invalidIdentifierExample,
       output: validIdentifierExample,
       errors: [
-        { messageId: 'uiLib' },
-        { messageId: 'uiLib' },
+        { message: "Found '#20303C'. Use UILib colors instead of hardcoded colors." },
+        { message: "Found '#43515C'. Use UILib colors instead of hardcoded colors." },
       ],
     },
     {
+      options: ruleOptions,
       code: `const badUsage = <Text style = {{ color: '${Colors.dark10}'}}> </Text>;`,
       output: 'const badUsage = <Text style = {{ color: Colors.dark10}}> </Text>;',
       errors: [
-        { messageId: 'uiLib' },
+        { message: "Found '#20303C'. Use UILib colors instead of hardcoded colors." },
       ],
     },
     {
+      options: ruleOptions,
       code: 'const badUsage = <Text style={{color: \'#123456\'}}/>;',
       errors: [
-        { messageId: 'uiLib' },
+        { message: "Found '#123456'. Use UILib colors instead of hardcoded colors." },
       ],
     },
     {
+      options: ruleOptions,
       code: `const badUsage = <Text style = {{ color: '${Colors.dark10.toLowerCase()}'}}> </Text>;`,
       output: 'const badUsage = <Text style = {{ color: Colors.dark10}}> </Text>;',
       errors: [
-        { messageId: 'uiLib' },
+        { message: "Found '#20303c'. Use UILib colors instead of hardcoded colors." },
       ],
     },
   ],
