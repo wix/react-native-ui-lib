@@ -6,7 +6,7 @@ const colorProps = [
 ];
 
 const colorExceptions = [
-  'transparent', 'rgba(0,0,0,0)',
+  'transparent',
 ];
 
 function findAndReportHardCodedValues(value, reporter, scope, depthOfSearch = 4) {
