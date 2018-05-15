@@ -19,7 +19,6 @@ public class HighlighterView extends View {
     private @ColorInt int strokeColor;
     private float strokeWidth;
     private float borderRadius;
-    private float radius;
     private SizeF minimumRectSize;
     private float innerPadding;
 
@@ -58,23 +57,21 @@ public class HighlighterView extends View {
         }
     }
 
-    private void updateRadius(RectF rect) {
+    private float getRadius(RectF rect) {
         float newRadius = 0;
         if (borderRadius > 0) {
             newRadius = borderRadius;
         }
         else {
-//            rect = rectToDraw();
             if (rect != null) {
                 newRadius = Math.min(rect.width() / 2, rect.height() / 2);
             }
         }
-        radius = newRadius;
+        return newRadius;
     }
 
     public void setHighlightFrame(HighlightFrame frame) {
         highlightFrame = frame.toRect();
-//        updateRadius();
         invalidate();
     }
 
@@ -95,19 +92,16 @@ public class HighlighterView extends View {
 
     public void setBorderRadius(int borderRadius) {
         this.borderRadius = UiUtils.pxToDp(getResources(), borderRadius);
-//        updateRadius();
         invalidate();
     }
 
     public void setViewBasedHighlightFrame(HighlightFrame viewBasedHighlightFrame) {
         this.viewBasedHighlightFrame = viewBasedHighlightFrame.toRect();
-//        updateRadius();
         invalidate();
     }
 
     public void setHighlightViewTagParams(HighlightViewTagParams highlightViewTagParams) {
         this.highlightViewTagParams = highlightViewTagParams;
-//        updateRadius();
         invalidate();
     }
 
@@ -152,7 +146,7 @@ public class HighlighterView extends View {
         canvas.drawPaint(paint);
 
         RectF rect = rectToDraw();
-        updateRadius(rect); // IMPORTANT!
+        float radius = getRadius(rect);
 
         if(rect != null) {
             paint.setXfermode(porterDuffXfermode);
@@ -163,7 +157,7 @@ public class HighlighterView extends View {
                 paint.setXfermode(null);
                 paint.setColor(strokeColor);
                 paint.setStrokeWidth(strokeWidth);
-                paint.setStyle(Paint.Style.STROKE); // FILL_AND_STROKE
+                paint.setStyle(Paint.Style.STROKE);
                 canvas.drawRoundRect(rect, radius, radius, paint);
             }
         }

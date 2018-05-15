@@ -30,7 +30,9 @@ class HighlighterViewManager extends SimpleViewManager<HighlighterView> {
     @Override
     public HighlighterView createViewInstance(ThemedReactContext context) {
         this.context = context;
-        return new HighlighterView(context);
+        HighlighterView view = new HighlighterView(context);
+        view.setFitsSystemWindows(true);
+        return view;
     }
 
     @ReactProp(name = "highlightFrame")
