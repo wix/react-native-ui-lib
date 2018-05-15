@@ -29,7 +29,9 @@
     "docs:develop": "(cd ./uilib-docs && gatsby develop)",
     "bump:patch": "npm version patch",
     "demo": "./scripts/demo.sh",
-    "release": "node ./scripts/release.js"
+    "release": "node ./scripts/release.js",
+    "flow": "flow",
+    "flow:stop": "flow stop"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
