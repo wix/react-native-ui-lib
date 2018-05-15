@@ -38,7 +38,7 @@ module.exports = {
                 if (validColors) {
                   const validColorsDic = _.chain(validColors).mapValues(value => value.toLowerCase()).invert().value();
                   const invertedColorsDict = _.assign({}, validColorsDic, extraColors);
-                  const lowerCaseColorString = colorString.toLowerCase();
+                  const lowerCaseColorString = colorString.toLowerCase().replace(/ /g, '');
                   if (invertedColorsDict[lowerCaseColorString]) {
                     return fixer.replaceText(node, `Colors.${invertedColorsDict[lowerCaseColorString]}`);
                   }
