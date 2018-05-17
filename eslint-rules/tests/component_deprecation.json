@@ -1,0 +1,13 @@
+[
+  {
+    "component": "Avatar",
+    "message": "",
+    "props": [
+      {
+        "prop": "color",
+        "message": "Please use the 'backgroundColor' prop instead.",
+        "fix": "backgroundColor"
+      }
+    ]
+  }
+]

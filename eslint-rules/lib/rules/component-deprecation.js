@@ -69,11 +69,11 @@ module.exports = {
     }
 
     const deprecations = context.options[0];
-
     const deprecatedComponentsList = getDeprecatedComponentsList();
 
     function getDeprecatedComponentsList() {
       const arr = [];
+      if (!deprecations) { return arr; }
       deprecations.forEach((element) => {
         arr.push(element.component);
       });
@@ -96,7 +96,6 @@ module.exports = {
 
     return {
       JSXOpeningElement: node => deprecationCheck(node),
-      // JSXAttribute: node => deprecationCheck(node),
     };
   },
 };
