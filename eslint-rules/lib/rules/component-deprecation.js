@@ -6,12 +6,12 @@ const MAP_SCHEMA = {
 module.exports = {
   meta: {
     docs: {
-      description: 'component or some of the component\'s props are defrecated',
+      description: 'component or some of the component\'s props are deprecated',
       category: 'Best Practices',
       recommended: true,
     },
     messages: {
-      uiLib: 'This component is deprecated or containes defrecated props.',
+      uiLib: 'This component is deprecated or containes deprecated props.',
     },
     fixable: 'whitespace',
     schema: [
@@ -22,8 +22,8 @@ module.exports = {
     function reportDeprecatedComponentOrProps(node, options) {
       try {
         const msg = options.prop === undefined ?
-          `The '${options.name}' component is defrecated. ${options.message}` :
-          `The '${options.name}' component's prop '${options.prop}' is defrecated. ${options.message}`;
+          `The '${options.name}' component is deprecated. ${options.message}` :
+          `The '${options.name}' component's prop '${options.prop}' is deprecated. ${options.message}`;
         context.report({
           node,
           message: `${msg}`,

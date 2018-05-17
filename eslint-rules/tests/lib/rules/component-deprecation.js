@@ -27,7 +27,7 @@ ruleTester.run('component-deprecation', rule, {
       options: ruleOptions,
       code: invalideExample,
       errors: [
-        { message: 'The \'Avatar\' component\'s prop \'color\' is defrecated. Please use the \'backgroundColor\' prop instead.' },
+        { message: 'The \'Avatar\' component\'s prop \'color\' is deprecated. Please use the \'backgroundColor\' prop instead.' },
       ],
     },
   ],
