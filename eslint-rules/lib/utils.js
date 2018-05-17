@@ -1,3 +1,4 @@
+// no-hard-coded-color
 const colorProps = [
   'color', 'backgroundColor', 'borderColor', 'borderRightColor',
   'borderBottomColor', 'borderEndColor', 'borderLeftColor', 'borderStartColor',
@@ -26,13 +27,14 @@ function propIsColor(propName) {
   return colorProps.indexOf(propName) !== -1;
 }
 
-function isLiteral(type) {
-  return (type === 'Literal' || type === 'TemplateLiteral');
-}
-
 function isColorException(colorString) {
   const lowerCaseColorString = colorString.toLowerCase();
   return colorExceptions.indexOf(lowerCaseColorString) !== -1;
+}
+
+// GENERAL
+function isLiteral(type) {
+  return (type === 'Literal' || type === 'TemplateLiteral');
 }
 
 function findValueNodeOfIdentifier(identifierName, scope) {
@@ -51,7 +53,7 @@ function findValueNodeOfIdentifier(identifierName, scope) {
 module.exports = {
   findAndReportHardCodedValues,
   propIsColor,
-  isLiteral,
   isColorException,
+  isLiteral,
   findValueNodeOfIdentifier,
 };
