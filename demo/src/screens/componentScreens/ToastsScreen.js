@@ -63,7 +63,7 @@ export default class AvatarsScreen extends Component {
                   actions={[{label: 'Close', onPress: () => this.setState({showToast: false})}]}
                 />
 
-                <View style={{height: 50, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
+                <View style={{height: 50, backgroundColor: Colors.white, justifyContent: 'center', alignItems: 'center'}}>
                   <Button size="medium" label="Show Toast" onPress={() => this.setState({showToast: true})}/>
                 </View>
               </View>
@@ -81,7 +81,7 @@ export default class AvatarsScreen extends Component {
                   onDismiss={() => this.setState({showToast: false})}
                 />
 
-                <View style={{height: 50, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
+                <View style={{height: 50, backgroundColor: Colors.white, justifyContent: 'center', alignItems: 'center'}}>
                   <Button size="medium" label="Show Toast" onPress={() => this.setState({showToast: true})}/>
                 </View>
               </View>
@@ -91,7 +91,7 @@ export default class AvatarsScreen extends Component {
               <Text>relative position</Text>
 
               <View style={{position: 'absolute', bottom: 0, width: Constants.screenWidth}}>
-                <View style={{height: 50, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
+                <View style={{height: 50, backgroundColor: Colors.white, justifyContent: 'center', alignItems: 'center'}}>
                   <Button size="medium" label="Show Toast" onPress={() => this.setState({showToast: true})}/>
                 </View>
 
