@@ -23,7 +23,7 @@ class FeatureHighlightScreen extends Component {
     super(props);
 
     this.state = {
-      showFTE: true,
+      showFTE: false,
       currentTargetIndex: 0,
     };
 
@@ -32,6 +32,14 @@ class FeatureHighlightScreen extends Component {
     this.closeHighlight = this.closeHighlight.bind(this);
     this.showHighlight = this.showHighlight.bind(this);
     this.moveNext = this.moveNext.bind(this);
+
+    props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+  onNavigatorEvent(event) {
+    if (event.id === 'didAppear') {
+      this.showHighlight();
+    }
   }
 
   componentDidMount() {
