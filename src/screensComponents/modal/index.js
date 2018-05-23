@@ -46,10 +46,11 @@ export default class Modal extends BaseComponent {
   }
 
   render() {
-    const {enableModalBlur, ...others} = this.props;
+    const {enableModalBlur, visible, ...others} = this.props;
     const Container = enableModalBlur && Constants.isIOS ? BlurView : View;
+
     return (
-      <RNModal {...others}>
+      <RNModal visible={Boolean(visible)} {...others}>
         <Container style={{flex: 1}} blurType="light">
           {this.renderTouchableOverlay()}
           {this.props.children}
