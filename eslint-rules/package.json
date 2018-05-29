@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-uilib",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "uilib set of eslint rules",
   "keywords": [
     "eslint",
@@ -10,7 +10,8 @@
   "author": "Tnbal Tish <inbalti@wix.com>",
   "main": "lib/index.js",
   "scripts": {
-    "test": "mocha tests --recursive"
+    "test": "mocha tests --recursive",
+    "test:watch": "mocha tests --recursive --watch"
   },
   "dependencies": {
     "lodash": "^4.0.0",

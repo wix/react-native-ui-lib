@@ -27,14 +27,16 @@ module.exports = {
     function reportAndFixHardCodedColorString(node) {
       try {
         const colorString = _.get(node, 'extra.rawValue') || _.get(node, 'value');
+        const dueDate = _.get(context, 'options[0].dueDate');
+        const dueDateNotice = dueDate ? ` Please fix this issue by ${dueDate}!` : '';
         if (!isColorException(colorString)) {
           context.report({
             node,
-            message: `Found '${colorString}'. Use UILib colors instead of hardcoded colors.`,
+            message: `Found '${colorString}'. Use UILib colors instead of hardcoded colors.${dueDateNotice}`,
             fix(fixer) {
               if (node) {
-                const validColors = context.options[0]; // _.get(context, 'settings.uiLib.validColors');
-                const extraColors = context.options[1]; // _.get(context, 'settings.uiLib.extraFixColorMap');
+                const {validColors} = context.options[0];
+                const {customColors: extraColors} = context.options[0];
                 if (validColors) {
                   const validColorsDic = _.chain(validColors).mapValues(value => value.toLowerCase()).invert().value();
                   const invertedColorsDict = _.assign({}, validColorsDic, extraColors);

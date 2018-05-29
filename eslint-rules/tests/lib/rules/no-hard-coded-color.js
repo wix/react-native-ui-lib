@@ -1,5 +1,4 @@
 
-const _ = require('lodash');
 const Colors = require('../../../../src/style/colorsPalette').colorsPalette;
 const extraFixColorsMap = require('../../../../src/style/colorsPalette').extraFixColorsMap;
 const rule = require('../../../lib/rules/no-hard-coded-color');
@@ -9,7 +8,7 @@ RuleTester.setDefaultConfig({
   parser: 'babel-eslint',
   parserOptions: { ecmaVersion: 6, ecmaFeatures: { jsx: true } },
 });
-const ruleOptions = [Colors, extraFixColorsMap];
+const ruleOptions = [{validColors: Colors, customColors: extraFixColorsMap}];
 
 const invalidStyleSheetExample = `StyleSheet.create({
   container: {
@@ -93,6 +92,22 @@ ruleTester.run('no-hard-coded-color', rule, {
       output: 'const badUsage = <Text style = {{ color: Colors.dark10}}> </Text>;',
       errors: [
         { message: "Found '#20303c'. Use UILib colors instead of hardcoded colors." },
+      ],
+    },
+    {
+      options: ruleOptions,
+      code: 'const badUsage = <Text style = {{ color: \'#fff\'}}> </Text>;',
+      output: 'const badUsage = <Text style = {{ color: Colors.white}}> </Text>;',
+      errors: [
+        { message: "Found '#fff'. Use UILib colors instead of hardcoded colors." },
+      ],
+    },
+    {
+      options: [{...ruleOptions[0], dueDate: 'Thursday, 12 August'}],
+      code: 'const badUsage = <Text style = {{ color: \'#ffffff\'}}> </Text>;',
+      output: 'const badUsage = <Text style = {{ color: Colors.white}}> </Text>;',
+      errors: [
+        { message: "Found '#ffffff'. Use UILib colors instead of hardcoded colors. Please fix this issue by Thursday, 12 August!" },
       ],
     },
   ],
