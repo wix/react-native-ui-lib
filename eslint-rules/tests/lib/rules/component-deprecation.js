@@ -1,9 +1,8 @@
-const _ = require('lodash');
 const RuleTester = require('eslint').RuleTester;
 const rule = require('../../../lib/rules/component-deprecation');
 const deprecationsJson = require('../../component_deprecation.json');
 
-const ruleOptions = [deprecationsJson];
+const ruleOptions = [{deprecations: deprecationsJson}];
 
 RuleTester.setDefaultConfig({
   parser: 'babel-eslint',
@@ -28,6 +27,13 @@ ruleTester.run('component-deprecation', rule, {
       code: invalideExample,
       errors: [
         { message: 'The \'Avatar\' component\'s prop \'color\' is deprecated. Please use the \'backgroundColor\' prop instead.' },
+      ],
+    },
+    {
+      options: [{...ruleOptions[0], dueDate: '10/11/18'}],
+      code: invalideExample,
+      errors: [
+        { message: 'The \'Avatar\' component\'s prop \'color\' is deprecated. Please use the \'backgroundColor\' prop instead. Please fix this issue by 10/11/18!' },
       ],
     },
   ],

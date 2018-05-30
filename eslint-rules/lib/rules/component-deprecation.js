@@ -1,5 +1,5 @@
 const MAP_SCHEMA = {
-  type: 'array',
+  type: 'object',
   additionalProperties: true,
 };
 
@@ -21,9 +21,11 @@ module.exports = {
   create(context) {
     function reportDeprecatedComponentOrProps(node, options) {
       try {
+        const {dueDate} = context.options[0];
+        const dueDateNotice = dueDate ? ` Please fix this issue by ${dueDate}!` : '';
         const msg = options.prop === undefined ?
-          `The '${options.name}' component is deprecated. ${options.message}` :
-          `The '${options.name}' component's prop '${options.prop}' is deprecated. ${options.message}`;
+          `The '${options.name}' component is deprecated. ${options.message}${dueDateNotice}` :
+          `The '${options.name}' component's prop '${options.prop}' is deprecated. ${options.message}${dueDateNotice}`;
         context.report({
           node,
           message: `${msg}`,
@@ -68,7 +70,7 @@ module.exports = {
       }
     }
 
-    const deprecations = context.options[0];
+    const {deprecations} = context.options[0];
     const deprecatedComponentsList = getDeprecatedComponentsList();
 
     function getDeprecatedComponentsList() {
