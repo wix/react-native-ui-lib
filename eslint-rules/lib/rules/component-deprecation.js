@@ -3,6 +3,10 @@ const MAP_SCHEMA = {
   additionalProperties: true,
 };
 
+const FIX_TYPES = {
+  PROP_NAME: 'propName',
+};
+
 module.exports = {
   meta: {
     docs: {
@@ -32,7 +36,14 @@ module.exports = {
           message: `${msg}`,
           fix(fixer) {
             if (options.fix) {
-              return fixer.replaceText(node.name, options.fix);
+              const type = Object.keys(options.fix)[0];
+              const fix = Object.values(options.fix)[0];
+              switch (type) {
+                case FIX_TYPES.PROP_NAME:
+                  // Fix for prop name change only (when prop's value and type does not change)
+                  return fixer.replaceText(node.name, fix);
+                default: break;
+              }
             }
           },
         });
