@@ -1,4 +1,3 @@
-
 const Colors = require('../../../../src/style/colorsPalette').colorsPalette;
 const extraFixColorsMap = require('../../../../src/style/colorsPalette').extraFixColorsMap;
 const rule = require('../../../lib/rules/no-hard-coded-color');

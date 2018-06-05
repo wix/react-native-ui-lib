@@ -11,8 +11,9 @@ RuleTester.setDefaultConfig({
 
 const ruleTester = new RuleTester();
 
-const valideExample = 'const test = <Avatar backgroundColor={Colors.red30}/>';
-const invalideExample = 'const test = <Avatar color={Colors.red30}/>';
+const valideExample = `const test = <Avatar imageSource={{uri: 'some_uri_string'}}/>`;
+const valideImportExample = `import {Avatar} from 'another-module'; const test = <Avatar url={'some_uri_string'}/>`;
+const invalideExample = `import {Avatar} from 'module-with-deprecations'; const test = <Avatar url={'some_uri_string'}/>`;
 
 ruleTester.run('component-deprecation', rule, {
   valid: [
@@ -20,20 +21,24 @@ ruleTester.run('component-deprecation', rule, {
       options: ruleOptions,
       code: valideExample,
     },
+    {
+      options: ruleOptions,
+      code: valideImportExample,
+    },
   ],
   invalid: [
     {
       options: ruleOptions,
       code: invalideExample,
       errors: [
-        { message: 'The \'Avatar\' component\'s prop \'color\' is deprecated. Please use the \'backgroundColor\' prop instead.' },
+        { message: `The 'Avatar' component's prop 'url' is deprecated. Please use the 'imageSource' prop instead.` },
       ],
     },
     {
       options: [{...ruleOptions[0], dueDate: '10/11/18'}],
       code: invalideExample,
       errors: [
-        { message: 'The \'Avatar\' component\'s prop \'color\' is deprecated. Please use the \'backgroundColor\' prop instead. Please fix this issue by 10/11/18!' },
+        { message: `The 'Avatar' component's prop 'url' is deprecated. Please use the 'imageSource' prop instead. Please fix this issue by 10/11/18!` },
       ],
     },
   ],

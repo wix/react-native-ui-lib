@@ -1,12 +1,12 @@
 [
   {
     "component": "Avatar",
+    "source": "module-with-deprecations",
     "message": "",
     "props": [
       {
-        "prop": "color",
-        "message": "Please use the 'backgroundColor' prop instead.",
-        "fix": "backgroundColor"
+        "prop": "url",
+        "message": "Please use the 'imageSource' prop instead."
       }
     ]
   }
