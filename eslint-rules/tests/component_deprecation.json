@@ -1,7 +1,7 @@
 [
   {
     "component": "Avatar",
-    "source": "wix-react-native-ui-lib",
+    "source": "module-with-deprecations",
     "message": "",
     "props": [
       {

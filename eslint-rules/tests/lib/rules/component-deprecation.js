@@ -12,13 +12,18 @@ RuleTester.setDefaultConfig({
 const ruleTester = new RuleTester();
 
 const valideExample = `const test = <Avatar imageSource={{uri: 'some_uri_string'}}/>`;
-const invalideExample = `import {Avatar} from 'wix-react-native-ui-lib'; const test = <Avatar url={'some_uri_string'}/>`;
+const valideImportExample = `import {Avatar} from 'another-module'; const test = <Avatar url={'some_uri_string'}/>`;
+const invalideExample = `import {Avatar} from 'module-with-deprecations'; const test = <Avatar url={'some_uri_string'}/>`;
 
 ruleTester.run('component-deprecation', rule, {
   valid: [
     {
       options: ruleOptions,
       code: valideExample,
+    },
+    {
+      options: ruleOptions,
+      code: valideImportExample,
     },
   ],
   invalid: [
