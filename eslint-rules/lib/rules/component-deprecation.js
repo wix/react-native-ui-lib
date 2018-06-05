@@ -13,7 +13,6 @@ module.exports = {
     messages: {
       uiLib: 'This component is deprecated or containes deprecated props.',
     },
-    fixable: 'whitespace',
     schema: [
       MAP_SCHEMA,
     ],
