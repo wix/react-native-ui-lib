@@ -1,3 +1,16 @@
+const MAP_SCHEMA = {
+  type: 'object',
+  properties: {
+    origin: {
+      type: 'string'
+    },
+    destination: {
+      type: 'string'
+    }
+  },
+  additionalProperties: false
+};
+
 module.exports = {
   meta: {
     docs: {
@@ -6,23 +19,26 @@ module.exports = {
       recommended: true,
     },
     messages: {
-      uiLib: "Do not import directly from the open source project. Please use 'wix-react-native-ui-lib' (autofix available).",
+      uiLib: "Do not import directly from this source. Please use another import source (autofix available).",
     },
     fixable: 'code',
-    schema: [],
+    schema: [
+      MAP_SCHEMA
+    ],
   },
   create(context) {
 
     function reportDirectImport(node, options) {
       try {
-        const msg = "Do not import directly from the open source project. Please use 'wix-react-native-ui-lib' (autofix available).";
+        const origin = context.options[0].origin;
+        const destination = context.options[0].destination;
+        const msg = `Do not import directly from '${origin}'. Please use '${destination}' (autofix available).`;
         context.report({
           node,
           message: `${msg}`,
           fix(fixer) {
-            if (node) {
-              const source = options[0];
-              return fixer.replaceText(node.source, `'wix-${source}'`);
+            if (node && destination) {
+              return fixer.replaceText(node.source, `'${destination}'`);
             }
           },
         });
@@ -32,9 +48,10 @@ module.exports = {
     }
 
     function checkImportDeclaretion(node) {
+      const origin = context.options[0].origin;
       const source = node.source.value;
-      if (source && source === 'react-native-ui-lib') {
-        reportDirectImport(node, [source]);
+      if (source && origin && source === origin) {
+        reportDirectImport(node);
       }
     }
 
