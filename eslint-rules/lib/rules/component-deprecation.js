@@ -13,6 +13,7 @@ module.exports = {
     messages: {
       uiLib: 'This component is deprecated or containes deprecated props.',
     },
+    fixable: 'code',
     schema: [
       MAP_SCHEMA,
     ],
@@ -29,6 +30,11 @@ module.exports = {
         context.report({
           node,
           message: `${msg}`,
+          fix(fixer) {
+            if (options.fix) {
+              return fixer.replaceText(node.name, options.fix);
+            }
+          },
         });
       } catch (err) {
         console.log('Found error in: ', context.getFilename());
