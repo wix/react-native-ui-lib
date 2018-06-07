@@ -5,8 +5,19 @@
 
 UI Toolset & Components Library for React Native
 
-Check out our [Docs Site](https://wix.github.io/react-native-ui-lib/)
+### Documentation
 
+Check out our [Docs Site](https://wix.github.io/react-native-ui-lib/).
+
+### Demo
+
+The demo is located [here](https://github.com/wix/react-native-ui-lib/tree/master/demo). To run it:
+
+- install dependencies: `npm install` (only the first time)
+
+- start the packager: `npm start` 
+
+- run: `react-native run-ios` or `react-native run-android` (or within Xcode or Android Studio)
 
 ###### Latest version support RN44
 
