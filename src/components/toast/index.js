@@ -243,7 +243,7 @@ export default class Toast extends BaseComponent {
   }
 
   renderDismissButton() {
-    const {allowDismiss, onDismiss, color} = this.props;
+    const {allowDismiss, color} = this.props;
     const {contentAnimation} = this.state;
     if (allowDismiss) {
       return (
@@ -321,7 +321,7 @@ export default class Toast extends BaseComponent {
   }
 
   onDismiss() {
-    if (this.timer) { clearTimeout(this.timer) };
+    if (this.timer) { clearTimeout(this.timer); }
     _.invoke(this.props, 'onDismiss');
   }
 
