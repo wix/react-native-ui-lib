@@ -16,6 +16,7 @@ import TouchableOpacity from '../touchableOpacity';
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/MaskedInputScreen.js
  */
 export default class MaskedInput extends BaseInput {
+
   static displayName = 'MaskedInput';
   static propTypes = {
     ...TextInput.propTypes,
@@ -53,7 +54,7 @@ export default class MaskedInput extends BaseInput {
   }
 
   render() {
-    const {containerStyle} = this.props;
+    const {containerStyle, hideUnderline} = this.props;
     return (
       <View style={[containerStyle]}>
         <TextInput
@@ -64,7 +65,7 @@ export default class MaskedInput extends BaseInput {
           containerStyle={styles.hiddenInputContainer}
           style={styles.hiddenInput}
           enableErrors={false}
-          hideUnderline
+          hideUnderline={hideUnderline}
           placeholder=""
           onChangeText={this.onChangeText}
         />
@@ -79,6 +80,10 @@ export default class MaskedInput extends BaseInput {
     );
   }
 }
+
+MaskedInput.defaultProps = {
+  hideUnderline: true,
+};
 
 const styles = StyleSheet.create({
   hiddenInputContainer: {
