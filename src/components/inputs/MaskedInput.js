@@ -54,6 +54,7 @@ export default class MaskedInput extends BaseInput {
 
   render() {
     const {containerStyle} = this.props;
+    const TextInputProps = TextInput.extractOwnProps(this.props, ['containerStyle']);
     return (
       <View style={[containerStyle]}>
         <TextInput
@@ -66,6 +67,7 @@ export default class MaskedInput extends BaseInput {
           enableErrors={false}
           hideUnderline
           placeholder=""
+          {...TextInputProps}
           onChangeText={this.onChangeText}
         />
         <TouchableOpacity
