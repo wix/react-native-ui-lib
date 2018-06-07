@@ -12,8 +12,19 @@ export default class AvatarsScreen extends Component {
     return (
       <View flex>
         <Carousel onChangePage={currentPage => this.setState({currentPage})} initialPage={this.state.currentPage}>
+          <View center flex style={styles.page} bg-red50>
+            <Toast
+              visible={this.state.showToast}
+              message="This toast will auto dismiss after 3 seconds"
+              allowDismiss
+              onDismiss={() => this.setState({showToast: false})}
+              autoDismiss={3000}
+            />
+            <Button size="medium" label="Show Toast" onPress={() => this.setState({showToast: true})} />
+          </View>
+
           <View style={styles.page} bg-red50>
-            <Toast visible message="Discount was added to 3 products" />
+            <Toast visible message="Discount was added to 3 products"/>
           </View>
 
           <View style={styles.page} bg-green50>
