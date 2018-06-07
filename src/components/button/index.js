@@ -375,7 +375,7 @@ export default class Button extends BaseComponent {
         ]}
         activeOpacity={0.6}
         activeBackgroundColor={this.getActiveBackgroundColor()}
-        onLayout={(event)=>this.getComponentDimensions(event)}
+        onLayout={(event) => this.getComponentDimensions(event)}
         onPress={onPress}
         disabled={disabled}
         testID={testID}
