@@ -50,12 +50,14 @@ export default class TabBarItem extends BaseComponent {
       selected,
       selectedLabelStyle,
       onPress,
+      testID,
     } = this.props;
     return (
       <TouchableOpacity
         activeOpacity={1}
         onPress={onPress}
         style={this.styles.container}
+        testID={testID}
       >
         <View flex center>
           {!_.isEmpty(label) &&

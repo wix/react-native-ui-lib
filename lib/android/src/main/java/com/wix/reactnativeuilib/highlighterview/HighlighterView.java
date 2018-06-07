@@ -18,8 +18,7 @@ public class HighlighterView extends View {
     private @ColorInt int overlayColor;
     private @ColorInt int strokeColor;
     private float strokeWidth;
-    private float borderRadius = -1;
-    private float radius;
+    private float borderRadius;
     private SizeF minimumRectSize;
     private float innerPadding;
 
@@ -34,8 +33,8 @@ public class HighlighterView extends View {
     private RectF rectToDraw() {
         if (viewBasedHighlightFrame != null && viewBasedHighlightFrame.width() > 0 && viewBasedHighlightFrame.height() > 0) {
             if (highlightViewTagParams == null) {
-                viewBasedHighlightFrame = adjustFrame(viewBasedHighlightFrame);
-                return viewBasedHighlightFrame;
+                RectF frame = adjustFrame(viewBasedHighlightFrame);
+                return frame;
             }
 
             RectF highlightRect = new RectF(viewBasedHighlightFrame);
@@ -58,23 +57,21 @@ public class HighlighterView extends View {
         }
     }
 
-    private void updateRadius() {
+    private float getRadius(RectF rect) {
         float newRadius = 0;
-        if (borderRadius >= 0) {
+        if (borderRadius > 0) {
             newRadius = borderRadius;
         }
         else {
-            RectF rect = rectToDraw();
             if (rect != null) {
                 newRadius = Math.min(rect.width() / 2, rect.height() / 2);
             }
         }
-        radius = newRadius;
+        return newRadius;
     }
 
     public void setHighlightFrame(HighlightFrame frame) {
         highlightFrame = frame.toRect();
-        updateRadius();
         invalidate();
     }
 
@@ -95,19 +92,16 @@ public class HighlighterView extends View {
 
     public void setBorderRadius(int borderRadius) {
         this.borderRadius = UiUtils.pxToDp(getResources(), borderRadius);
-        updateRadius();
         invalidate();
     }
 
     public void setViewBasedHighlightFrame(HighlightFrame viewBasedHighlightFrame) {
         this.viewBasedHighlightFrame = viewBasedHighlightFrame.toRect();
-        updateRadius();
         invalidate();
     }
 
     public void setHighlightViewTagParams(HighlightViewTagParams highlightViewTagParams) {
         this.highlightViewTagParams = highlightViewTagParams;
-        updateRadius();
         invalidate();
     }
 
@@ -120,7 +114,7 @@ public class HighlighterView extends View {
     }
 
     public void setInnerPadding(int innerPadding) {
-        this.innerPadding = innerPadding;
+        this.innerPadding = UiUtils.pxToDp(getResources(), innerPadding); //innerPadding;
         invalidate();
     }
 
@@ -132,9 +126,10 @@ public class HighlighterView extends View {
         float fHeight = frame.bottom - frame.top;
         float width = fWidth + (innerPadding * 2);
         float height = fHeight + (innerPadding * 2);
-
-        width = width < minimumRectSize.getWidth() ? minimumRectSize.getWidth() : width;
-        height = height < minimumRectSize.getHeight() ? minimumRectSize.getHeight() : height;
+        if (minimumRectSize != null) {
+            width = width < minimumRectSize.getWidth() ? minimumRectSize.getWidth() : width;
+            height = height < minimumRectSize.getHeight() ? minimumRectSize.getHeight() : height;
+        }
 
         x = x - ((width - fWidth) / 2);
         y = y - ((height - fHeight) / 2);
@@ -151,6 +146,7 @@ public class HighlighterView extends View {
         canvas.drawPaint(paint);
 
         RectF rect = rectToDraw();
+        float radius = getRadius(rect);
 
         if(rect != null) {
             paint.setXfermode(porterDuffXfermode);
@@ -161,7 +157,7 @@ public class HighlighterView extends View {
                 paint.setXfermode(null);
                 paint.setColor(strokeColor);
                 paint.setStrokeWidth(strokeWidth);
-                paint.setStyle(Paint.Style.STROKE); // FILL_AND_STROKE
+                paint.setStyle(Paint.Style.STROKE);
                 canvas.drawRoundRect(rect, radius, radius, paint);
             }
         }

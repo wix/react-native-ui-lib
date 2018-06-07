@@ -1,5 +1,5 @@
 import {Navigation} from 'react-native-navigation';
-import {Typography, Colors, Assets, Button, Badge, ThemeManager} from 'react-native-ui-lib'; //eslint-disable-line
+import {Typography, Constants, Colors, Assets, Button, Badge, ThemeManager, Text} from 'react-native-ui-lib'; //eslint-disable-line
 import * as Animatable from 'react-native-animatable';
 import './screens';
 
@@ -23,21 +23,32 @@ import './screens';
 //   subtitleColor: Colors.blue40,
 // });
 
+// ThemeManager.setComponentTheme('Picker', (props) => {
+//   if (props.useNativePicker) {
+//     return {
+//       topBarProps: {
+//         doneLabel: Constants.isIOS ? 'Done2' : 'OK2',
+//         cancelLabel: Constants.isIOS ? 'Cancel2' : 'CANCEL2',
+//       },
+//     };
+//   }
+// });
+
 Assets.loadAssetsGroup('icons.general', {
   camera: require('./assets/icons/cameraSelected.png'),
 });
 
 Animatable.initializeRegistryWithDefinitions({
   gridListEntrance: {
-    from: {opacity: 0, ['translateY']: 15},
-    to: {opacity: 1, ['translateY']: 0},
+    from: {opacity: 0, translateY: 15},
+    to: {opacity: 1, translateY: 0},
   },
 });
 
 Animatable.initializeRegistryWithDefinitions({
   basicListEntrance: {
-    from: {opacity: 0, ['translateY']: 20},
-    to: {opacity: 1, ['translateY']: 0},
+    from: {opacity: 0, translateY: 20},
+    to: {opacity: 1, translateY: 0},
   },
 });
 
@@ -51,4 +62,3 @@ export function startApp() {
     },
   });
 }
-

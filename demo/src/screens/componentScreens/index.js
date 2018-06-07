@@ -8,6 +8,7 @@ import BadgesScreen from './BadgesScreen';
 import CardsScreen from './CardsScreen';
 import CarouselScreen from './CarouselScreen';
 import ConnectionStatusBarScreen from './ConnectionStatusBarScreen';
+import DialogScreen from './DialogScreen'
 import FormScreen from './FormScreen';
 import InputsScreen from './InputsScreen';
 import MaskedInputScreen from './MaskedInputScreen';
@@ -16,6 +17,7 @@ import ToastsScreen from './ToastsScreen';
 import TabBarScreen from './TabBarScreen';
 import TourScreen from './TourScreen';
 import FeatureHighlightScreen from './FeatureHighlightScreen';
+import WheelPickerDialogScreen from './WheelPickerDialogScreen';
 
 
 Navigation.registerComponent('unicorn.components.ActionSheetScreen', () => ActionSheetScreen);
@@ -27,6 +29,7 @@ Navigation.registerComponent('unicorn.components.BadgesScreen', () => BadgesScre
 Navigation.registerComponent('unicorn.components.CardsScreen', () => CardsScreen);
 Navigation.registerComponent('unicorn.components.CarouselScreen', () => CarouselScreen);
 Navigation.registerComponent('unicorn.components.ConnectionStatusBar', () => ConnectionStatusBarScreen);
+Navigation.registerComponent('unicorn.components.DialogScreen', () => DialogScreen);
 Navigation.registerComponent('unicorn.components.FormScreen', () => FormScreen);
 Navigation.registerComponent('unicorn.components.InputsScreen', () => InputsScreen);
 Navigation.registerComponent('unicorn.components.MaskedInputScreen', () => MaskedInputScreen);
@@ -35,3 +38,4 @@ Navigation.registerComponent('unicorn.components.ToastsScreen', () => ToastsScre
 Navigation.registerComponent('unicorn.components.TabBarScreen', () => TabBarScreen);
 Navigation.registerComponent('unicorn.components.TourScreen', () => TourScreen);
 Navigation.registerComponent('unicorn.components.FeatureHighlightScreen', () => FeatureHighlightScreen);
+Navigation.registerComponent('unicorn.components.WheelPickerDialogScreen', () => WheelPickerDialogScreen);

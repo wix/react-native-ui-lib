@@ -1,16 +1,10 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {
-  View,
-  Colors,
-  Text,
-  TextInput,
-  TextArea,
-  Typography,
-} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Colors, Text, TextInput, TextArea, Typography, Modal, Button} from 'react-native-ui-lib'; //eslint-disable-line
 import {KeyboardAwareInsetsView} from 'react-native-keyboard-tracking-view';
 
-const LONG_TEXT = 'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer' +
+const LONG_TEXT =
+  'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer' +
   'Martín Bollati. In this piece';
 const INPUT_SPACING = 10;
 
@@ -18,20 +12,19 @@ const transformPrice = (value) => {
   let cleanValue;
   let priceText = '';
   if (value) {
-    [cleanValue] = value.match(/^(?:(?:-?(?:0|\d{1,9}))(?:\.\d{0,2})?)|-/) || [
-      '',
-    ];
+    [cleanValue] = value.match(/^(?:(?:-?(?:0|\d{1,9}))(?:\.\d{0,2})?)|-/) || [''];
     priceText = cleanValue;
   }
   return priceText;
 };
 
-export default class InputScreen extends Component {
+export default class InputsScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       error: '',
+      customExpandableValue: 'Custom Expandable',
     };
   }
 
@@ -49,8 +42,25 @@ export default class InputScreen extends Component {
 
           <TextInput
             text70
-            title="Title"
-            placeholder="character counter && error"
+            floatingPlaceholder
+            placeholder="floatingPlaceholder & helperText"
+            helperText="this is an helper text"
+            onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
+            error={this.state.error}
+          />
+
+          <TextInput
+            text70
+            floatingPlaceholder
+            placeholder="multiline & helperText"
+            multiline
+            helperText="this is an helper text"
+          />
+
+          <TextInput
+            text70
+            title="title"
+            placeholder="character counter & error"
             maxLength={3}
             showCharacterCounter
             onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
@@ -60,18 +70,31 @@ export default class InputScreen extends Component {
           <TextInput
             text70
             title="Title"
-            placeholder="character counter && error && multiline"
+            placeholder="character counter & error & multiline"
             multiline
             maxLength={32}
             showCharacterCounter
             onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
             error={this.state.error}
+            autoCapitalize="words"
           />
 
           <TextInput
             text70
             floatingPlaceholder
-            placeholder="underline colors && error"
+            placeholder="character counter & expandable"
+            expandable
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            maxLength={20}
+            showCharacterCounter
+          />
+
+          <TextInput
+            text70
+            floatingPlaceholder
+            placeholderTextColor={Colors.cyan30}
+            floatingPlaceholderColor={Colors.cyan30}
+            placeholder="underline colors & error"
             onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
             error={this.state.error}
             underlineColor={{focus: Colors.purple50, error: Colors.yellow60}}
@@ -80,7 +103,7 @@ export default class InputScreen extends Component {
           <TextInput
             text70
             floatingPlaceholder
-            placeholder="multiline && numberOfLines = 3"
+            placeholder="multiline & numberOfLines = 3"
             multiline
             numberOfLines={3}
           />
@@ -103,8 +126,9 @@ export default class InputScreen extends Component {
           <TextInput
             text70
             placeholder="Share your story"
-            value={'Share Your Story exists to provide spaces to hear people\'s stories, in order to inspire us to live' +
-            'better ones ourselves.'
+            value={
+              "Share Your Story exists to provide spaces to hear people's stories, in order to inspire us to" +
+              'live better ones ourselves.'
             }
             multiline
           />
@@ -116,6 +140,32 @@ export default class InputScreen extends Component {
             value={LONG_TEXT}
             expandable
             containerStyle={{marginBottom: INPUT_SPACING}}
+          />
+
+          <TextInput
+            ref={r => (this.input = r)}
+            placeholder="placeholder"
+            expandable
+            value={this.state.customExpandableValue}
+            renderExpandable={() => {
+              return (
+                <Modal visible animationType={'slide'}>
+                  <View flex bg-orange70 center>
+                    <Text marginB-20 text50>
+                      Do Whatever you want here
+                    </Text>
+                    <Button
+                      label="Close Me"
+                      onPress={() => {
+                        this.setState({customExpandableValue: 'New Value'}, () => {
+                          this.input.toggleExpandableModal(false);
+                        });
+                      }}
+                    />
+                  </View>
+                </Modal>
+              );
+            }}
           />
 
           <TextInput
@@ -144,6 +194,7 @@ export default class InputScreen extends Component {
             floatingPlaceholder
             placeholder="Big Title Text"
             containerStyle={{marginBottom: INPUT_SPACING}}
+            helperText="this is an helper text"
           />
           <TextInput
             text20
@@ -168,7 +219,7 @@ export default class InputScreen extends Component {
             hideUnderline
           />
         </ScrollView>
-        <KeyboardAwareInsetsView/>
+        <KeyboardAwareInsetsView />
       </View>
     );
   }

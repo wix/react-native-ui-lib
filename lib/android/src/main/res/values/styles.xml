@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="NumberPickerTextColorStyle">
+        <item name="android:textColorPrimary">@color/dividerColor</item>
+        <item name="android:editTextColor">@color/dividerColor</item>
+        <item name="android:textSize">20dp</item>
+        <item name="colorControlNormal">@color/dividerColor</item>
+    </style>
+</resources>

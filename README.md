@@ -1,10 +1,13 @@
-# react-native-ui-lib [![Build Status](https://travis-ci.org/wix/react-native-ui-lib.svg?branch=master)](https://travis-ci.org/wix/react-native-ui-lib)
+# react-native-ui-lib 
+[![Build Status](https://travis-ci.org/wix/react-native-ui-lib.svg?branch=master)](https://travis-ci.org/wix/react-native-ui-lib)
+[![npm](https://img.shields.io/npm/v/react-native-ui-lib.svg)](https://www.npmjs.com/package/react-native-ui-lib)
+[![NPM Downloads](https://img.shields.io/npm/dm/react-native-ui-lib.svg?style=flat)](https://www.npmjs.com/package/react-native-ui-lib)
+
 UI Toolset & Components Library for React Native
 
 ### Documentation
 
 Check out our [Docs Site](https://wix.github.io/react-native-ui-lib/).
-
 
 ### Demo
 
@@ -15,7 +18,6 @@ The demo is located [here](https://github.com/wix/react-native-ui-lib/tree/maste
 - start the packager: `npm start` 
 
 - run: `react-native run-ios` or `react-native run-android` (or within Xcode or Android Studio)
-
 
 ###### Latest version support RN44
 
@@ -158,6 +160,8 @@ Same goes here... space, stretch and color in a more readable way.
 
 - **margin-[value]**, **marginL-[value]**, **marginT-[value]**, **marginR-[value]**, **marginB-[value]**, **marginH-[value]**, **marginV-[value]**
 `<View marginT-5 marginB-10>...</View>`
+
+* padding and margin modifiers can also take [Spacing](https://github.com/wix/react-native-ui-lib/blob/master/src/style/spacings.js) constants. `<View margin-s5 padding-s2>...</View>`
 
 Check out [this example](https://github.com/wix/react-native-ui-lib#usage) where we use most of these props
 

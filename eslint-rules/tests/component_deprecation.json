@@ -1,0 +1,13 @@
+[
+  {
+    "component": "Avatar",
+    "source": "module-with-deprecations",
+    "message": "",
+    "props": [
+      {
+        "prop": "url",
+        "message": "Please use the 'imageSource' prop instead."
+      }
+    ]
+  }
+]

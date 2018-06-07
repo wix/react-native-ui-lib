@@ -28,7 +28,7 @@ export default class TopBar extends BaseComponent {
     /**
      * title custom style
      */
-    titleStyle: PropTypes.object,
+    titleStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * done action props (Button props)
      */
@@ -117,7 +117,7 @@ export default class TopBar extends BaseComponent {
     const {title, titleStyle, includeStatusBar} = this.props;
 
     return (
-      <View useSafeArea>
+      <View>
         {includeStatusBar && <View style={this.styles.statusBar}/>}
         <View style={this.styles.container}>
           <View row flex bottom paddingL-15 centerV>

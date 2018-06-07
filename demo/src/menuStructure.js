@@ -21,14 +21,17 @@ export const navigationData = {
     {title: 'Cards', tags: 'cards feed', screen: 'unicorn.components.CardsScreen'},
     {title: 'Carousel', tags: 'carousel', screen: 'unicorn.components.CarouselScreen'},
     {title: 'Connection Status Bar', tags: 'connection status bar', screen: 'unicorn.components.ConnectionStatusBar'},
+    {title: 'Dialog', tags: 'dialog modal popup alert', screen: 'unicorn.components.DialogScreen'},
     {title: 'Feature Highlight', tags: 'feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
     {title: 'Form Controls', tags: 'form stepper', screen: 'unicorn.components.FormScreen'},
     {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
     {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
     {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'},
+    {title: 'Wheel Picker Dialog', tags: 'wheel picker dialog', screen: 'unicorn.components.WheelPickerDialogScreen'},
   ],
   NativeComponents: [
     {title: 'Highlight Overlay', tags: 'native overlay', screen: 'unicorn.nativeComponents.HighlightOverlayViewScreen'},
+    {title: 'Wheel Picker', tags: 'wheel picker', screen: 'unicorn.nativeComponents.WheelPickerViewScreen'},
     {title: 'SafeArea Sapcer', tags: 'native safe area', screen: 'unicorn.nativeComponents.SafeAreaSpacerViewScreen'},
   ],
   Inputs: [

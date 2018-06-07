@@ -32,6 +32,7 @@ export default class BaseInput extends BaseComponent {
     super(props);
 
     this.onChangeText = this.onChangeText.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.focus = this.focus.bind(this);
@@ -74,6 +75,10 @@ export default class BaseInput extends BaseComponent {
   onBlur(...args) {
     _.invoke(this.props, 'onBlur', ...args);
     this.setState({focused: false});
+  }
+
+  onChange(event) {
+    _.invoke(this.props, 'onChange', event);
   }
 
   onChangeText(text) {

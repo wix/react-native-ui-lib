@@ -101,6 +101,11 @@ describe('BaseComponent', () => {
       const uut = new BaseComponent({'padding-2a5': true});
       expect(uut.extractPaddingValues()).toEqual({});
     });
+
+    it('should support Spacing preset for padding', () => {
+      const uut = new BaseComponent({'padding-s3': true});
+      expect(uut.extractPaddingValues()).toEqual({padding: 9});
+    });
   });
 
   describe('margins modifiers', () => {
@@ -133,6 +138,11 @@ describe('BaseComponent', () => {
     it('should ignore non numeric margin values', () => {
       const uut = new BaseComponent({'margin-2a5': true});
       expect(uut.extractMarginValues()).toEqual({});
+    });
+
+    it('should support Spacing preset for margin', () => {
+      const uut = new BaseComponent({'marginL-s4': true});
+      expect(uut.extractMarginValues()).toEqual({marginLeft: 12});
     });
   });
 
@@ -348,11 +358,19 @@ describe('BaseComponent', () => {
       expect(uut.getThemeProps()).toEqual({someProp: 'someValue'});
     });
 
-
     it('should return props values from the Theme Manager merged with values from passed props', () => {
       ThemeManager.setComponentTheme('BaseComponent', {someProp: 'themeValue'});
       const uut = new BaseComponent({anotherProps: 'anotherValue'});
       expect(uut.getThemeProps()).toEqual({someProp: 'themeValue', anotherProps: 'anotherValue'});
+    });
+
+    it('should support getThemeProps callback that accepts current props and can condition returned props', () => {
+      ThemeManager.setComponentTheme('BaseComponent', props => ({someProp: props.test ? 'yes' : 'no'}));
+      let uut = new BaseComponent({test: true});
+      expect(uut.getThemeProps()).toEqual({someProp: 'yes', test: true});
+
+      uut = new BaseComponent({test: false});
+      expect(uut.getThemeProps()).toEqual({someProp: 'no', test: false});
     });
   });
 });

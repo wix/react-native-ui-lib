@@ -17,7 +17,7 @@ export default class View extends BaseComponent {
     ...ViewPropTypes,
     ...BaseComponent.propTypes,
     /**
-     * if true, will add SafeAreaView as a wrapper
+     * if true, will render as SafeAreaView
      */
     useSafeArea: PropTypes.bool,
   };

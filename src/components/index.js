@@ -7,6 +7,7 @@ import Card from './card';
 // import Carousel from './carousel/Carousel';
 import Carousel from './carousel';
 import ConnectionStatusBar from './connectionStatusBar';
+import Dialog from './dialog';
 import FeatureHighlight from './featureHighlight';
 import Image from './image';
 import Inputs from './inputs';
@@ -22,6 +23,7 @@ import Toast from './toast';
 import TouchableOpacity from './touchableOpacity';
 import Tour from './tour';
 import View from './view';
+import WheelPickerDialog from './wheelPickerDialog';
 
 
 module.exports = {
@@ -33,6 +35,7 @@ module.exports = {
   Card,
   Carousel,
   ConnectionStatusBar,
+  Dialog,
   FeatureHighlight,
   Image,
   ...Inputs,
@@ -48,4 +51,5 @@ module.exports = {
   TouchableOpacity,
   Tour,
   View,
+  WheelPickerDialog,
 };
