@@ -29,11 +29,11 @@ class PickerItem extends BaseComponent {
      */
     value: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
     /**
-     * function to return the label out of the item value prop when value is custom shaped.
+     * Function to return the label out of the item value prop when value is custom shaped.
      */
     getItemLabel: PropTypes.func,
     /**
-     * function to return the value out of the item value prop when value is custom shaped.
+     * Function to return the value out of the item value prop when value is custom shaped.
      */
     getItemValue: PropTypes.func,
     /**
@@ -45,12 +45,17 @@ class PickerItem extends BaseComponent {
      */
     disabled: PropTypes.bool,
     /**
-     * render custom item
+     * Render custom item
      */
     renderItem: PropTypes.func,
+    /**
+     * Callback for onPress action
+     */
     onPress: PropTypes.func,
+    /**
+     * Callback for onLayout event
+     */
     onSelectedLayout: PropTypes.func,
-    useNativePicker: PropTypes.bool,
   };
 
   /* eslint-disable */

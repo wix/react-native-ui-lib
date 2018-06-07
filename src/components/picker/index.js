@@ -41,11 +41,11 @@ class Picker extends TextInput {
   static propTypes = {
     ...TextInput.propTypes,
     /**
-     * picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
+     * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
      */
     value: PropTypes.oneOfType([ItemType, PropTypes.arrayOf(ItemType), PropTypes.object, PropTypes.string, PropTypes.number]),
     /**
-     * callback for when picker value change
+     * Callback for when picker value change
      */
     onChange: PropTypes.func,
     /**
@@ -57,19 +57,19 @@ class Picker extends TextInput {
      */
     enableModalBlur: PropTypes.bool,
     /**
-     * render custom picker
+     * Render custom picker
      */
     renderPicker: PropTypes.func,
     /**
-     * add onPress callback for when pressing the picker
+     * Add onPress callback for when pressing the picker
      */
     onPress: PropTypes.func,
     /**
-     * a function that extract the unique value out of the value prop in case value has a custom structure.
+     * A function that extract the unique value out of the value prop in case value has a custom structure.
      */
     getItemValue: PropTypes.func,
     /**
-     * a function that returns the label to show for the selected Picker value
+     * A function that returns the label to show for the selected Picker value
      */
     getLabel: PropTypes.func,
     /**
@@ -77,19 +77,31 @@ class Picker extends TextInput {
      */
     topBarProps: PropTypes.shape(Modal.TopBar.propTypes),
     /**
-     * show search input to filter picker items by label
+     * Show search input to filter picker items by label
      */
     showSearch: PropTypes.bool,
+    /**
+     * Style object for the search input (only when passing showSearch)
+     */
+    searchStyle: PropTypes.shape({
+      color: PropTypes.string,
+      placeholderTextColor: PropTypes.string,
+      selectionColor: PropTypes.string,
+    }),
+    /**
+     * Placeholder text for the search input (only when passing showSearch)
+     */
+    searchPlaceholder: PropTypes.string,
     /**
      * Allow to use the native picker solution (different for iOS and Android)
      */
     useNativePicker: PropTypes.bool,
     /**
-     * callback for rendering a custom native picker inside the dialog (relevant to native picker only)
+     * Callback for rendering a custom native picker inside the dialog (relevant to native picker only)
      */
     renderNativePicker: PropTypes.func,
     /**
-     * icon asset source for showing on the right side, appropriate for dropdown icon and such
+     * Icon asset source for showing on the right side, appropriate for dropdown icon and such
      */
     rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
   };
@@ -240,7 +252,7 @@ class Picker extends TextInput {
   }
 
   renderExpandableModal() {
-    const {mode, enableModalBlur, topBarProps, showSearch} = this.getThemeProps();
+    const {mode, enableModalBlur, topBarProps, showSearch, searchStyle, searchPlaceholder} = this.getThemeProps();
     const {showExpandableModal, selectedItemPosition} = this.state;
     return (
       <PickerModal
@@ -253,6 +265,8 @@ class Picker extends TextInput {
           onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(this.state.value) : undefined,
         }}
         showSearch={showSearch}
+        searchStyle={searchStyle}
+        searchPlaceholder={searchPlaceholder}
         onSearchChange={this.onSearchChange}
       >
         {this.appendPropsToChildren(this.props.children)}
