@@ -7,6 +7,7 @@ module.exports = {
   "plugins": ["react-native", "uilib"],
   "extends": ["airbnb"],
   "rules": {
+    "no-unneeded-ternary": "off",
     "arrow-body-style": "off",
     "class-methods-use-this": "off",
     "consistent-return": "off",
@@ -25,7 +26,6 @@ module.exports = {
     "react/prefer-stateless-function": "off",
     "react/require-default-props": "off",
     "no-else-return": "off",
-    // "uilib/no-hard-coded-font": "error",
     "uilib/no-hard-coded-color": ["error", validColors, extraFixColorsMap]
   },
   "env": {
