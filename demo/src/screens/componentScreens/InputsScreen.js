@@ -42,6 +42,7 @@ export default class InputsScreen extends Component {
 
           <TextInput
             text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
             placeholder="floatingPlaceholder & helperText"
             helperText="this is an helper text"
@@ -51,6 +52,7 @@ export default class InputsScreen extends Component {
 
           <TextInput
             text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
             placeholder="multiline & helperText"
             multiline
@@ -59,6 +61,7 @@ export default class InputsScreen extends Component {
 
           <TextInput
             text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
             title="title"
             placeholder="character counter & error"
             maxLength={3}
@@ -69,6 +72,7 @@ export default class InputsScreen extends Component {
 
           <TextInput
             text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
             title="Title"
             placeholder="character counter & error & multiline"
             multiline
@@ -81,6 +85,7 @@ export default class InputsScreen extends Component {
 
           <TextInput
             text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
             placeholder="character counter & expandable"
             expandable
@@ -91,6 +96,7 @@ export default class InputsScreen extends Component {
 
           <TextInput
             text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
             placeholderTextColor={Colors.cyan30}
             floatingPlaceholderColor={Colors.cyan30}
@@ -102,6 +108,7 @@ export default class InputsScreen extends Component {
 
           <TextInput
             text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
             placeholder="multiline & numberOfLines = 3"
             multiline
@@ -110,21 +117,22 @@ export default class InputsScreen extends Component {
 
           <TextInput
             text40
-            placeholder="write something.."
             containerStyle={{marginBottom: INPUT_SPACING}}
+            placeholder="write something.."
             hideUnderline
           />
 
           <TextInput
             text30
-            placeholder="write something.."
             containerStyle={{marginBottom: INPUT_SPACING}}
+            placeholder="write something.."
             centered
             hideUnderline
           />
 
           <TextInput
             text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
             placeholder="Share your story"
             value={
               "Share Your Story exists to provide spaces to hear people's stories, in order to inspire us to" +
@@ -135,14 +143,15 @@ export default class InputsScreen extends Component {
 
           <TextInput
             text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
             placeholder="Tell us about yourself"
             value={LONG_TEXT}
             expandable
-            containerStyle={{marginBottom: INPUT_SPACING}}
           />
 
           <TextInput
+            containerStyle={{marginBottom: INPUT_SPACING}}
             ref={r => (this.input = r)}
             placeholder="placeholder"
             expandable
@@ -170,6 +179,7 @@ export default class InputsScreen extends Component {
 
           <TextInput
             text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
             placeholder="with price transformer"
             value={this.state.value}
