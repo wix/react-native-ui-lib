@@ -223,34 +223,6 @@ describe('BaseComponent', () => {
     });
   });
 
-  describe('flex modifiers', () => {
-    it('should return flex value according to flex-? prop', () => {
-      let uut = new BaseComponent({'flex-2': true});
-      expect(uut.extractFlexValue()).toEqual(2);
-      uut = new BaseComponent({'flex-0': true});
-      expect(uut.extractFlexValue()).toEqual(0);
-      uut = new BaseComponent({});
-      expect(uut.extractFlexValue()).toEqual(undefined);
-    });
-
-    it('should return 1 flex value according when only flex sent', () => {
-      let uut = new BaseComponent({flex: true});
-      expect(uut.extractFlexValue()).toEqual(1);
-      uut = new BaseComponent({'flex-': true});
-      expect(uut.extractFlexValue()).toEqual(1);
-    });
-
-    it('should return undefined when prop sent with false value', () => {
-      const uut = new BaseComponent({flex: false});
-      expect(uut.extractFlexValue()).toEqual(undefined);
-    });
-
-    it('should ignore non numeric values', () => {
-      const uut = new BaseComponent({'flex-1a2': true});
-      expect(uut.extractFlexValue()).toEqual(undefined);
-    });
-  });
-
   describe('flexStyle modifier', () => {
     it('should return flex style according to flex-? prop', () => {
       let uut = new BaseComponent({'flex-2': true});
@@ -371,6 +343,35 @@ describe('BaseComponent', () => {
 
       uut = new BaseComponent({test: false});
       expect(uut.getThemeProps()).toEqual({someProp: 'no', test: false});
+    });
+  });
+
+  describe('updateModifiers', () => {
+    it('should update state with new modifiers values if modifiers props have changed', () => {
+      const uut = new BaseComponent({});
+      jest.spyOn(uut, 'setState');
+
+      uut.updateModifiers({someProp: true, 'bg-dark20': true}, {someProp: true, 'bg-dark30': true});
+      expect(uut.setState).toHaveBeenCalledWith({backgroundColor: Colors.dark30});
+
+      uut.updateModifiers({someProp: 'text'}, {'bg-red50': true, 'padding-20': true});
+      expect(uut.setState).toHaveBeenCalledWith({backgroundColor: Colors.red50, paddings: {padding: 20}});
+    });
+
+    it('should not update state if modifiers prop have not changed', () => {
+      const uut = new BaseComponent({});
+      jest.spyOn(uut, 'setState');
+
+      uut.updateModifiers({someProp: true, 'bg-dark20': true}, {someProp: false, 'bg-dark20': true});
+      expect(uut.setState).not.toHaveBeenCalled();
+    });
+
+    it('should not update state if any prop value has changed', () => {
+      const uut = new BaseComponent({});
+      jest.spyOn(uut, 'setState');
+
+      uut.updateModifiers({someProp: true, 'bg-dark20': true}, {someProp: true, 'bg-dark20': true});
+      expect(uut.setState).not.toHaveBeenCalled();
     });
   });
 });
