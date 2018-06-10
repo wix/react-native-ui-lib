@@ -91,6 +91,8 @@ export default class FormScreen extends Component {
             style={{color: Colors.red20}}
             hideUnderline
             showSearch
+            searchPlaceholder={"Search a language"}
+            searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.dark50}}
           >
             {_.map(options, option => <Picker.Item key={option.value} value={option} disabled={option.disabled} />)}
           </Picker>
