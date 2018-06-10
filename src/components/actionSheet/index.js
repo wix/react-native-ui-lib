@@ -127,7 +127,7 @@ export default class ActionSheet extends BaseComponent {
   }
 
   renderIcon(icon) {
-    return(
+    return (
       <View>
         <Image source={icon} resizeMode={'contain'} style={{flex: 1, width: 20, height: 20, marginRight: 16}}/>
       </View>
@@ -201,5 +201,5 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: Colors.rgba(Colors.black, 0.4),
-  }
+  },
 });
