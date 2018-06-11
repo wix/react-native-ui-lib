@@ -224,6 +224,11 @@ describe('Button', () => {
       const uut = new Button({disabled: true, outline: true});
       expect(uut.getOutlineStyle()).toEqual({borderWidth: 1, borderColor: Colors.dark70});
     });
+
+    it('should return custom borderWidth according to outlineWidth passed', () => {
+      const uut = new Button({outline: true, outlineWidth: 3});
+      expect(uut.getOutlineStyle()).toEqual({borderWidth: 3, borderColor: Colors.blue30});
+    });
   });
 
   describe('getBorderRadiusStyle', () => {

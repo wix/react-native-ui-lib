@@ -66,6 +66,10 @@ export default class Button extends BaseComponent {
      */
     outlineColor: PropTypes.string,
     /**
+     * The outline width
+     */
+    outlineWidth: PropTypes.number,
+    /**
      * Button will look like a link
      */
     link: PropTypes.bool,
@@ -265,11 +269,11 @@ export default class Button extends BaseComponent {
   }
 
   getOutlineStyle() {
-    const {outline, outlineColor, link, disabled} = this.props;
+    const {outline, outlineColor, outlineWidth, link, disabled} = this.getThemeProps();
     let outlineStyle;
     if ((outline || outlineColor) && !link) {
       outlineStyle = {
-        borderWidth: 1,
+        borderWidth: outlineWidth || 1,
         borderColor: outlineColor || Colors.blue30,
       };
 
