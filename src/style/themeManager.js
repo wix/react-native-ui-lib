@@ -25,6 +25,19 @@ class ThemeManager {
     this.theme = _.merge(this.theme, overrides);
   }
 
+  getTheme() {
+    return this.theme;
+  }
+
+  setItem(key, value) {
+    if (key === 'components') throw new Error('Overriding the "components" key is not possible.');
+    this.theme[key] = value;
+  }
+
+  getItem(key) {
+    return this.theme[key];
+  }
+
   setComponentTheme(componentName, overrides) {
     if (_.isFunction(overrides)) {
       this.theme.components[componentName] = overrides;
