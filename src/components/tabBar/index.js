@@ -1,13 +1,13 @@
-import React from 'react';
-import {StyleSheet, ViewPropTypes, Animated, ScrollView} from 'react-native';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
+import React from 'react';
+import {StyleSheet, ViewPropTypes, Animated, ScrollView} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import TabBarItem from './TabBarItem';
 import {Constants} from '../../helpers';
-import LinearGradient from 'react-native-linear-gradient';
 
 const LAYOUT_MODES = {
   FIT: 'FIT',
