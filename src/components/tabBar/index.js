@@ -7,6 +7,7 @@ import {BaseComponent} from '../../commons';
 import View from '../view';
 import TabBarItem from './TabBarItem';
 import {Constants} from '../../helpers';
+import LinearGradient from 'react-native-linear-gradient';
 
 const LAYOUT_MODES = {
   FIT: 'FIT',
@@ -47,12 +48,17 @@ export default class TabBar extends BaseComponent {
      * FIT to force the content to fit to screen, or SCROLL to allow content overflow
      */
     layoutMode: PropTypes.oneOf(Object.keys(LAYOUT_MODES)),
+    /**
+     * IMPORTANT: must have native module available!
+     */
+    useGradientFinish: PropTypes.bool,
   };
 
   static defaultProps = {
     mode: LAYOUT_MODES.FIT,
     selectedIndex: 0,
     height: 51,
+    useGradientFinish: true,
   };
 
   static modes = LAYOUT_MODES;
@@ -182,7 +188,7 @@ export default class TabBar extends BaseComponent {
   }
 
   renderScrollBar() {
-    const {height, style} = this.props;
+    const {height, style, useGradientFinish} = this.props;
     return (
       <View row style={{opacity: this.state.fadeAnim, height}} useSafeArea>
         <ScrollView
@@ -196,15 +202,22 @@ export default class TabBar extends BaseComponent {
             {(Object.keys(this.state.widths).length === this.childrenCount) && this.renderSelectedIndicator()}
           </View>
         </ScrollView>
-        <Animated.View
+        {useGradientFinish && <Animated.View
           pointerEvents="none"
           style={{
-            backgroundColor: Colors.rgba(Colors.red30, 0.5),
             width: gradientWidth,
             height: height - 3,
             position: 'absolute',
             left: this.state.gradientViewPosition}}
-        />
+        >
+          <LinearGradient
+            start={{x: 0.0, y: 0.0}} end={{x: 1.0, y: 0.0}}
+            locations={[0, 0.2, 0.6]}
+            colors={[Colors.rgba(Colors.white, 0.3), Colors.rgba(Colors.white, 0.5), Colors.rgba(Colors.white, 0.7)]}
+            style={this.styles.linearGradient}
+          />
+        </Animated.View>
+        }
       </View>
     );
   }
@@ -260,6 +273,9 @@ function createStyles() {
       position: 'absolute',
       bottom: 0,
       left: 0,
+    },
+    linearGradient: {
+      flex: 1,
     },
   });
 }
