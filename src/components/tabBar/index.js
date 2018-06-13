@@ -1,11 +1,18 @@
 import React from 'react';
-import {StyleSheet, ViewPropTypes, Animated} from 'react-native';
+import {StyleSheet, ViewPropTypes, Animated, ScrollView} from 'react-native';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import TabBarItem from './TabBarItem';
+import {Constants} from '../../helpers';
+
+const LAYOUT_MODES = {
+  FIT: 'FIT',
+  SCROLL: 'SCROLL',
+};
+const gradientWidth = 36;
 
 /**
  * @description: Basic TabBar component
@@ -36,19 +43,35 @@ export default class TabBar extends BaseComponent {
      * callback for when index has change
      */
     onChangeIndex: PropTypes.func,
+    /**
+     * FIT to force the content to fit to screen, or SCROLL to allow content overflow
+     */
+    layoutMode: PropTypes.oneOf(Object.keys(LAYOUT_MODES)),
   };
 
   static defaultProps = {
+    mode: LAYOUT_MODES.FIT,
     selectedIndex: 0,
     height: 51,
   };
 
+  static modes = LAYOUT_MODES;
+
   constructor(props) {
     super(props);
-    const childrenCount = React.Children.count(this.props.children);
+
+    this.widthsArray = {};
+    this.contentWidth = Constants.screenWidth;
+    this.childrenCount = React.Children.count(this.props.children);
+    this.initialPosition = Constants.screenWidth - gradientWidth;
+    
     this.state = {
       selectedIndex: props.selectedIndex,
-      selectedIndicatorPosition: new Animated.Value(this.calcPosition(props.selectedIndex, childrenCount)),
+      selectedIndicatorPosition: new Animated.Value(0),
+      gradientViewPosition: new Animated.Value(this.initialPosition),
+      currentMode: props.mode,
+      fadeAnim: 0,
+      widths: {},
     };
   }
 
@@ -57,16 +80,31 @@ export default class TabBar extends BaseComponent {
   }
 
   calcPosition(index, tabsCount) {
-    const position = index * (100 / tabsCount);
+    let position = 0;
+    if (!_.isEmpty(this.state.widths)) {
+      let itemPosition = 0;
+      for(var i = 0; i < index; i++) {
+        itemPosition += this.state.widths[i]
+      }
+      position = Math.floor((itemPosition / this.contentWidth) * 100);
+    } else {
+      position = index * (100 / tabsCount);
+    }
     return position;
   }
 
-  calcIndicatorWidth() {
-    const childrenCount = React.Children.count(this.props.children);
-    if (childrenCount === 0) {
+  // calcPosition(index, tabsCount) {
+  //   const position = index * (100 / tabsCount);
+  //   return position;
+  // }
+
+  calcIndicatorWidth = () => {
+    if (this.childrenCount === 0) {
       return '0%';
     }
-    const width = Math.floor(100 / childrenCount);
+    const itemWidth = this.state.widths[this.state.selectedIndex];
+    const width = Math.floor((itemWidth / this.contentWidth) * 100);
+    // const width = Math.floor(100 / this.childrenCount);
     return `${width}%`;
   }
 
@@ -80,7 +118,7 @@ export default class TabBar extends BaseComponent {
       selectedIndicatorPosition.setValue(newPosition);
     } else {
       Animated.spring(selectedIndicatorPosition, {
-        toValue: this.calcPosition(index, this.props.children.length),
+        toValue: newPosition,
         tension: 30,
         friction: 8,
       }).start();
@@ -98,13 +136,24 @@ export default class TabBar extends BaseComponent {
     const children = React.Children.map(this.props.children, (child, index) => {
       return React.cloneElement(child, {
         selected: selectedIndex === index,
+        // width: this.state.widths[index] || child.props.width,
         onPress: () => {
           this.onSelectingTab(index);
           _.invoke(child.props, 'onPress');
         },
+        onLayout: (event) => {
+          // console.log('UILib: onLayout: ', index, this.state.widths);
+          const {width} = event.nativeEvent.layout;
+          if (_.isUndefined(this.state.widths[index])) {
+            this.widthsArray[index] = width;
+            this.setState({widths: this.widthsArray});
+            if (_.keys(this.widthsArray).length === this.childrenCount) {
+              this.setState({selectedIndicatorPosition:  new Animated.Value(this.calcPosition(this.state.selectedIndex, this.childrenCount))})
+            }
+          }
+        }
       });
     });
-
     return children;
   }
 
@@ -123,14 +172,70 @@ export default class TabBar extends BaseComponent {
     );
   }
 
-  render() {
-    const {height, style} = this.props;
+  renderBar() {    
+    const {height, style} = this.props;    
     return (
       <View style={[this.styles.container, style]} bg-white row height={height} useSafeArea>
         {this.renderChildren()}
-        {this.renderSelectedIndicator()}
+        {(Object.keys(this.state.widths).length === this.childrenCount) && this.renderSelectedIndicator()}
+      </View>  
+    );
+  }
+
+  renderScrollBar() {
+    const {height, style} = this.props;
+    return (
+      <View row style={{opacity: this.state.fadeAnim, height: height}} useSafeArea>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          onContentSizeChange={this.onContentSizeChange}
+          onScroll={this.onScroll}
+        >
+          <View style={[this.styles.container, style]} bg-white row height={height}>
+            {this.renderChildren()}
+            {(Object.keys(this.state.widths).length === this.childrenCount) && this.renderSelectedIndicator()}
+          </View>
+        </ScrollView>
+        <Animated.View pointerEvents="none" style={{backgroundColor: Colors.rgba(Colors.white, 0.5), width: gradientWidth, height: height - 3, position: 'absolute', left: this.state.gradientViewPosition}}/>
       </View>
     );
+  }
+
+  render() {
+    switch (this.state.currentMode) {
+      case LAYOUT_MODES.FIT:
+        return (
+          this.renderBar() 
+        );
+      case LAYOUT_MODES.SCROLL:
+        return (
+          this.renderScrollBar()
+        );
+      default: break;
+    }
+  }
+
+  onContentSizeChange = (width, height) => {
+    if (width < Constants.screenWidth) {
+      this.widthsArray = {};
+      this.setState({currentMode: LAYOUT_MODES.FIT, widths: {}});
+    } else {
+      this.contentWidth = width;
+      this.setState({fadeAnim: 1});
+    }
+  }
+
+  onScroll = (event) => {
+    const x = event.nativeEvent.contentOffset.x;
+    const overflow = this.contentWidth - Constants.screenWidth;
+
+    const {gradientViewPosition} = this.state;
+    const newPosition = (x > 0 &&  x >= overflow) ? Constants.screenWidth : this.initialPosition;
+    Animated.spring(gradientViewPosition, {
+      toValue: newPosition,
+      friction: 8,
+    }).start();
   }
 }
 
