@@ -64,7 +64,6 @@ export default class TabBar extends BaseComponent {
     this.contentWidth = Constants.screenWidth;
     this.childrenCount = React.Children.count(this.props.children);
     this.initialPosition = Constants.screenWidth - gradientWidth;
-    
     this.state = {
       selectedIndex: props.selectedIndex,
       selectedIndicatorPosition: new Animated.Value(0),
@@ -83,8 +82,8 @@ export default class TabBar extends BaseComponent {
     let position = 0;
     if (!_.isEmpty(this.state.widths)) {
       let itemPosition = 0;
-      for(var i = 0; i < index; i++) {
-        itemPosition += this.state.widths[i]
+      for (let i = 0; i < index; i++) {
+        itemPosition += this.state.widths[i];
       }
       position = Math.floor((itemPosition / this.contentWidth) * 100);
     } else {
@@ -148,10 +147,10 @@ export default class TabBar extends BaseComponent {
             this.widthsArray[index] = width;
             this.setState({widths: this.widthsArray});
             if (_.keys(this.widthsArray).length === this.childrenCount) {
-              this.setState({selectedIndicatorPosition:  new Animated.Value(this.calcPosition(this.state.selectedIndex, this.childrenCount))})
+              this.setState({selectedIndicatorPosition: new Animated.Value(this.calcPosition(this.state.selectedIndex, this.childrenCount))});
             }
           }
-        }
+        },
       });
     });
     return children;
@@ -172,20 +171,20 @@ export default class TabBar extends BaseComponent {
     );
   }
 
-  renderBar() {    
-    const {height, style} = this.props;    
+  renderBar() {
+    const {height, style} = this.props;
     return (
       <View style={[this.styles.container, style]} bg-white row height={height} useSafeArea>
         {this.renderChildren()}
         {(Object.keys(this.state.widths).length === this.childrenCount) && this.renderSelectedIndicator()}
-      </View>  
+      </View>
     );
   }
 
   renderScrollBar() {
     const {height, style} = this.props;
     return (
-      <View row style={{opacity: this.state.fadeAnim, height: height}} useSafeArea>
+      <View row style={{opacity: this.state.fadeAnim, height}} useSafeArea>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -197,7 +196,15 @@ export default class TabBar extends BaseComponent {
             {(Object.keys(this.state.widths).length === this.childrenCount) && this.renderSelectedIndicator()}
           </View>
         </ScrollView>
-        <Animated.View pointerEvents="none" style={{backgroundColor: Colors.rgba(Colors.white, 0.5), width: gradientWidth, height: height - 3, position: 'absolute', left: this.state.gradientViewPosition}}/>
+        <Animated.View
+          pointerEvents="none"
+          style={{
+            backgroundColor: Colors.rgba(Colors.red30, 0.5),
+            width: gradientWidth,
+            height: height - 3,
+            position: 'absolute',
+            left: this.state.gradientViewPosition}}
+        />
       </View>
     );
   }
@@ -206,7 +213,7 @@ export default class TabBar extends BaseComponent {
     switch (this.state.currentMode) {
       case LAYOUT_MODES.FIT:
         return (
-          this.renderBar() 
+          this.renderBar()
         );
       case LAYOUT_MODES.SCROLL:
         return (
@@ -216,7 +223,7 @@ export default class TabBar extends BaseComponent {
     }
   }
 
-  onContentSizeChange = (width, height) => {
+  onContentSizeChange = (width) => {
     if (width < Constants.screenWidth) {
       this.widthsArray = {};
       this.setState({currentMode: LAYOUT_MODES.FIT, widths: {}});
@@ -231,7 +238,7 @@ export default class TabBar extends BaseComponent {
     const overflow = this.contentWidth - Constants.screenWidth;
 
     const {gradientViewPosition} = this.state;
-    const newPosition = (x > 0 &&  x >= overflow) ? Constants.screenWidth : this.initialPosition;
+    const newPosition = (x > 0 && x >= overflow - 1) ? Constants.screenWidth : this.initialPosition;
     Animated.spring(gradientViewPosition, {
       toValue: newPosition,
       friction: 8,

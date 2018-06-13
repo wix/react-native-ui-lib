@@ -54,7 +54,7 @@ export default class TabBarScreen extends Component {
           <TabBar.Item divider>
             <Image source={starIcon} resizeMode={'contain'} style={[{width: 20, height: 20}, selectedIndex2 === 3 && {tintColor: Colors.purple30}]}/>
           </TabBar.Item>
-          <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="OVERFLOW"/>
+          <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="OVERFLOW"/>
           <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="OVERFLOW"/>
         </TabBar>
 

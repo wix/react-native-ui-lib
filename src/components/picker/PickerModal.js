@@ -29,7 +29,7 @@ class PickerModal extends BaseComponent {
 
   static defaultProps = {
     searchPlaceholder: 'Search...',
-    searchStyle: {}
+    searchStyle: {},
   }
 
   state = {

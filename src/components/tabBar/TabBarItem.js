@@ -26,7 +26,7 @@ export default class TabBarItem extends BaseComponent {
      */
     labelStyle: Text.propTypes.style,
     /**
-     * maximun number of lines the label can break 
+     * maximun number of lines the label can break
      */
     maxLines: PropTypes.number,
     /**
@@ -64,7 +64,7 @@ export default class TabBarItem extends BaseComponent {
     _.invoke(this.props, 'onLayout', event);
   }
 
-  render() {    
+  render() {   
     const {
       label,
       labelStyle,
@@ -74,7 +74,6 @@ export default class TabBarItem extends BaseComponent {
       divider,
       width,
       onPress,
-      onLayout,
       testID,
     } = this.props;
     return (
