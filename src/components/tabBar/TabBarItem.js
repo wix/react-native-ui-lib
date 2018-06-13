@@ -120,7 +120,7 @@ function createStyles() {
     divider: {
       borderRightWidth: 1,
       borderRightColor: Colors.dark70,
-      marginVertical: 14, // cuts the text in Android
+      marginVertical: 14, // will not cut long text at the top and bottom in iOS if TabBar not height enough
     },
   });
 }

@@ -6,7 +6,8 @@ export default class TabBarScreen extends Component {
   state = {
     snippet: '',
     selectedIndex: 0,
-    selectedIndex2: 1,
+    selectedIndex1: 1,
+    selectedIndex2: 2,
     selectedIndex3: 3,
   };
 
@@ -18,22 +19,22 @@ export default class TabBarScreen extends Component {
   }
 
   render() {
-    const {snippet, selectedIndex, selectedIndex2, selectedIndex3} = this.state;
+    const {snippet, selectedIndex, selectedIndex1, selectedIndex2, selectedIndex3} = this.state;
     const starIcon = require('../../assets/icons/star.png');
     const fontWeightBold = Constants.isIOS ? '600' : '700';
     return (
       <View bg-dark80>
         {/* fit */}
         <TabBar
-          selectedIndex={selectedIndex}
-          onChangeIndex={index => this.setState({selectedIndex: index})}
+          selectedIndex={selectedIndex1}
+          onChangeIndex={index => this.setState({selectedIndex1: index})}
           ref={element => (this.tabbar = element)}
         >
           <TabBar.Item label="FEED"/>
           <TabBar.Item label="SERVICES"/>
           <TabBar.Item label="CHAT"/>
           <TabBar.Item>
-            <Text text90 purple30={selectedIndex === 3} style={selectedIndex === 3 && {fontWeight: fontWeightBold}}>ABOUT</Text>
+            <Text text90 purple30={selectedIndex1 === 3} style={selectedIndex1 === 3 && {fontWeight: fontWeightBold}}>ABOUT</Text>
           </TabBar.Item>
         </TabBar>
 
@@ -88,7 +89,7 @@ export default class TabBarScreen extends Component {
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.orange30}}
         >
           <TabBar.Item divider labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="ACTIVE"/>
-          <TabBar.Item divider maxLines={2} labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="LONGEST TEXT EVER"/>
+          <TabBar.Item divider maxLines={2} labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="LONGEST TEXT EVER AND EVER AND EVER"/>
           <TabBar.Item labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="INACTIVE"/>
         </TabBar>
 

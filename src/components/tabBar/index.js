@@ -206,7 +206,7 @@ export default class TabBar extends BaseComponent {
           pointerEvents="none"
           style={{
             width: gradientWidth,
-            height: height - 3,
+            height: height - 5,
             position: 'absolute',
             left: this.state.gradientViewPosition}}
         >
