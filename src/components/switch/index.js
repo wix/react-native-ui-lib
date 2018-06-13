@@ -84,7 +84,7 @@ class Switch extends BaseComponent {
     const props = this.getThemeProps();
     const width = props.width || DEFAULT_WIDTH;
     const thumbSize = props.thumbSize || DEFAULT_THUMB_SIZE;
-    const position = width - (2 * INNER_PADDING + thumbSize);
+    const position = width - ((2 * INNER_PADDING) + thumbSize);
     return position;
   }
 
