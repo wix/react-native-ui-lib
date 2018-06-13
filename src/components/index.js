@@ -16,6 +16,7 @@ import Notification from './notification';
 import PageControl from './pageControl';
 import Picker from './picker';
 import Stepper from './stepper';
+import Switch from './switch';
 import TabBar from './tabBar';
 import TagsInput from './tagsInput';
 import Text from './text';
@@ -48,6 +49,7 @@ module.exports = {
   TagsInput,
   Text,
   Toast,
+  Switch,
   TouchableOpacity,
   Tour,
   View,

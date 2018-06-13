@@ -25,6 +25,7 @@ export const navigationData = {
     {title: 'Feature Highlight', tags: 'feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
     {title: 'Form Controls', tags: 'form stepper', screen: 'unicorn.components.FormScreen'},
     {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
+    {title: 'Switch', tags: 'switch toggle', screen: 'unicorn.components.SwitchScreen'},
     {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
     {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'},
     {title: 'Wheel Picker Dialog', tags: 'wheel picker dialog', screen: 'unicorn.components.WheelPickerDialogScreen'},
