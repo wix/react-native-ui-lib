@@ -15,6 +15,7 @@ import ListItem from './listItem';
 import Notification from './notification';
 import PageControl from './pageControl';
 import Picker from './picker';
+import {RadioButton, RadioGroup} from './radioButton';
 import Stepper from './stepper';
 import Switch from './switch';
 import TabBar from './tabBar';
@@ -47,9 +48,11 @@ module.exports = {
   Stepper,
   TabBar,
   TagsInput,
+  RadioButton,
+  RadioGroup,
+  Switch,
   Text,
   Toast,
-  Switch,
   TouchableOpacity,
   Tour,
   View,
