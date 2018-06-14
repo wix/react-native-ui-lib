@@ -49,7 +49,7 @@ export default class TabBar extends BaseComponent {
      */
     layoutMode: PropTypes.oneOf(Object.keys(LAYOUT_MODES)),
     /**
-     * IMPORTANT: must have native module available!
+     * Add gradiant effect for scroll overflow. IMPORTANT: must have a native module available!
      */
     useGradientFinish: PropTypes.bool,
   };
@@ -58,7 +58,7 @@ export default class TabBar extends BaseComponent {
     mode: LAYOUT_MODES.FIT,
     selectedIndex: 0,
     height: 51,
-    useGradientFinish: true,
+    useGradientFinish: false,
   };
 
   static modes = LAYOUT_MODES;
@@ -150,7 +150,7 @@ export default class TabBar extends BaseComponent {
     const children = React.Children.map(this.props.children, (child, index) => {
       return React.cloneElement(child, {
         selected: selectedIndex === index,
-        // width: this.state.widths[index] || child.props.width,
+        width: this.state.widths[index] || child.props.width, // HACK: keep initial width for indicator width
         onPress: () => {
           this.onSelectingTab(index);
           _.invoke(child.props, 'onPress');

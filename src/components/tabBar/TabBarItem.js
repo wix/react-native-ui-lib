@@ -46,9 +46,12 @@ export default class TabBarItem extends BaseComponent {
      */
     divider: PropTypes.bool,
     /**
-     * A fited width for the item
+     * A fixed width for the item
      */
     width: PropTypes.number,
+    /**
+     * A callback to invoke for onLayout event
+     */
     onLayout: PropTypes.func,
   };
 
@@ -56,12 +59,29 @@ export default class TabBarItem extends BaseComponent {
     maxLines: 1,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      fontStyle: this.getFontStyle(props),
+    };
+  }
+
+  // HACK: for indicator width in TabBar
+  getFontStyle(props) {
+    const userProp = props.selectedLabelStyle ? props.selectedLabelStyle.fontWeight : undefined;
+    const fontStyle = {fontWeight: userProp || Constants.isIOS ? '600' : '700'};   
+    return fontStyle;
+  }
+
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
   onLayout = (event) => {
     _.invoke(this.props, 'onLayout', event);
+    // HACK: for indicator width in TabBar
+    this.setState({fontStyle: {}});
   }
 
   render() {   
@@ -93,6 +113,7 @@ export default class TabBarItem extends BaseComponent {
                 labelStyle,
                 selected && this.styles.labelSelected,
                 selected && selectedLabelStyle,
+                this.state.fontStyle, // HACK: for indicator width in TabBar
               ]}
             >
               {label}
@@ -120,7 +141,7 @@ function createStyles() {
     divider: {
       borderRightWidth: 1,
       borderRightColor: Colors.dark70,
-      marginVertical: 14, // will not cut long text at the top and bottom in iOS if TabBar not height enough
+      marginVertical: 14, // NOTE: will not cut long text at the top and bottom in iOS if TabBar not height enough
     },
   });
 }

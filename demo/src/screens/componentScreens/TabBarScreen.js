@@ -48,6 +48,7 @@ export default class TabBarScreen extends Component {
           ref={element => (this.tabbar = element)}
           style={{height: 48}}
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.purple30}}
+          useGradientFinish
         >
           <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="ACTIVE"/>
           <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="PHOTO ALBUM"/>
@@ -55,7 +56,10 @@ export default class TabBarScreen extends Component {
           <TabBar.Item divider>
             <Image source={starIcon} resizeMode={'contain'} style={[{width: 20, height: 20}, selectedIndex2 === 3 && {tintColor: Colors.purple30}]}/>
           </TabBar.Item>
-          <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="OVERFLOW"/>
+          <TabBar.Item divider>
+            <Text text90 purple30={selectedIndex2 === 4}>OVERFLOW</Text>
+          </TabBar.Item>
+          {/* <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="OVERFLOW"/> */}
           <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="OVERFLOW"/>
         </TabBar>
 
@@ -68,6 +72,7 @@ export default class TabBarScreen extends Component {
           ref={element => (this.tabbar = element)}
           style={{height: 48}}
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.violet30}}
+          useGradientFinish
         >
           <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.violet30}} label="ACTIVE"/>
           <TabBar.Item divider>
@@ -87,6 +92,7 @@ export default class TabBarScreen extends Component {
           ref={element => (this.tabbar = element)}
           style={{height: 48}}
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.orange30}}
+          useGradientFinish
         >
           <TabBar.Item divider labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="ACTIVE"/>
           <TabBar.Item divider maxLines={2} labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="LONGEST TEXT EVER"/>
@@ -102,6 +108,7 @@ export default class TabBarScreen extends Component {
           ref={element => (this.tabbar = element)}
           style={{height: 48}}
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.green30}}
+          useGradientFinish
         >
           <TabBar.Item divider labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="ACTIVE"/>
           <TabBar.Item divider labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="PHOTO ALBUM"/>
