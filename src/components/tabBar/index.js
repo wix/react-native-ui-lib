@@ -7,7 +7,7 @@ import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import TabBarItem from './TabBarItem';
-import {Constants} from '../../helpers';
+
 
 const LAYOUT_MODES = {
   FIT: 'FIT',
@@ -67,8 +67,8 @@ export default class TabBar extends BaseComponent {
     super(props);
 
     this.widthsArray = {};
-    this.contentWidth = Constants.screenWidth;
-    this.containerWidth = Constants.screenWidth;
+    this.contentWidth = undefined;
+    this.containerWidth = undefined;
     this.childrenCount = React.Children.count(this.props.children);
 
     this.state = {
@@ -91,13 +91,13 @@ export default class TabBar extends BaseComponent {
     return _.keys(this.widthsArray).length === this.childrenCount;
   }
 
-  updateSelectedIndicatorPosition() {
+  updateSelectedIndicatorPosition = () => {
     if (this.hasMeasurements()) {
       this.setState({selectedIndicatorPosition: new Animated.Value(this.calcPosition(this.state.selectedIndex, this.childrenCount))});
     }
   }
 
-  calcIndicatorWidth = () => {
+  calcIndicatorWidth() {    
     if (this.childrenCount === 0) {
       return '0%';
     }
@@ -186,7 +186,7 @@ export default class TabBar extends BaseComponent {
   renderBar() {
     const {height, style} = this.props;
     return (
-      <View style={[this.styles.container, style]} bg-white row height={height} useSafeArea>
+      <View style={[this.styles.container, style]} bg-white row height={height} onLayout={this.onLayout} useSafeArea>
         {this.renderChildren()}
         {(Object.keys(this.state.widths).length === this.childrenCount) && this.renderSelectedIndicator()}
       </View>
@@ -195,15 +195,21 @@ export default class TabBar extends BaseComponent {
 
   renderScrollBar() {
     const {height, style, useGradientFinish} = this.props;
+    const gradientColor = style['backgroundColor'] || Colors.white;
+    const sizeStyle = _.pick(style, ['width']);
+    const otherStyle = _.omit(style, ['width','height']);
+
     return (
       <View row style={{opacity: this.state.fadeAnim, height}} useSafeArea>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
+          onLayout={this.onLayout}
           onContentSizeChange={this.onContentSizeChange}
           onScroll={this.onScroll}
+          style={sizeStyle}
         >
-          <View style={[this.styles.container, style]} bg-white row height={height}>
+          <View style={[this.styles.container, otherStyle]} bg-white row>
             {this.renderChildren()}
             {(Object.keys(this.state.widths).length === this.childrenCount) && this.renderSelectedIndicator()}
           </View>
@@ -212,7 +218,7 @@ export default class TabBar extends BaseComponent {
           pointerEvents="none"
           style={{
             width: gradientWidth,
-            height: height - 5,
+            height: height - 2,
             position: 'absolute',
             left: this.containerWidth - gradientWidth,
             opacity: this.state.gradientValue}}
@@ -220,7 +226,7 @@ export default class TabBar extends BaseComponent {
           <LinearGradient
             start={{x: 0.0, y: 0.0}} end={{x: 1.0, y: 0.0}}
             locations={[0, 0.2, 0.6]}
-            colors={[Colors.rgba(Colors.white, 0.3), Colors.rgba(Colors.white, 0.5), Colors.rgba(Colors.white, 0.7)]}
+            colors={[Colors.rgba(gradientColor, 0.3), Colors.rgba(gradientColor, 0.5), Colors.rgba(gradientColor, 0.7)]}
             style={this.styles.linearGradient}
           />
         </Animated.View>
@@ -243,14 +249,36 @@ export default class TabBar extends BaseComponent {
     }
   }
 
-  // ScrollView events
+  // render events
+
+  onLayout = (event) => {
+    this.containerWidth = event.nativeEvent.layout.width;
+    switch (this.state.currentMode) {
+      case LAYOUT_MODES.FIT:
+        this.contentWidth = this.containerWidth;
+        break;
+      case LAYOUT_MODES.SCROLL:
+        if (this.contentWidth) {
+          this.calcLayoutMode();
+        }
+        break;
+      default: break;
+    }
+  }
 
   onContentSizeChange = (width) => {
-    if (width < this.containerWidth) {
+    this.contentWidth = width;
+
+    if (this.containerWidth) {
+      this.calcLayoutMode();
+    }
+  }
+
+  calcLayoutMode() {
+    if (this.contentWidth < this.containerWidth) {
       this.widthsArray = {};
       this.setState({currentMode: LAYOUT_MODES.FIT, widths: {}});
     } else {
-      this.contentWidth = width;
       this.updateSelectedIndicatorPosition();
       this.setState({fadeAnim: 1});
     }
