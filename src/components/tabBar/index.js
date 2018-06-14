@@ -195,9 +195,9 @@ export default class TabBar extends BaseComponent {
 
   renderScrollBar() {
     const {height, style, useGradientFinish} = this.props;
-    const gradientColor = style['backgroundColor'] || Colors.white;
+    const gradientColor = style.backgroundColor || Colors.white;
     const sizeStyle = _.pick(style, ['width']);
-    const otherStyle = _.omit(style, ['width','height']);
+    const otherStyle = _.omit(style, ['width', 'height']);
 
     return (
       <View row style={{opacity: this.state.fadeAnim, height}} useSafeArea>
