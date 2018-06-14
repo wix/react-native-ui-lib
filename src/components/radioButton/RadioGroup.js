@@ -18,7 +18,7 @@ class RadioGroup extends BaseComponent {
      */
     value: PropTypes.string,
     /**
-     * Invoked once the value has changed, by selecting once of the radio buttons in the group
+     * Invoked by selecting once of the radio buttons in the group
      */
     onValueChange: PropTypes.func,
   };

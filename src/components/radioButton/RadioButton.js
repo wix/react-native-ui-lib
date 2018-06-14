@@ -67,7 +67,7 @@ class RadioButton extends BaseComponent {
     const {style} = this.getThemeProps();
     return (
       <TouchableOpacity activeOpacity={1} style={[this.styles.container, style]} onPress={this.onPress}>
-        {this.isSelected() && <View style={this.styles.checkmark} />}
+        {this.isSelected() && <View style={this.styles.selectedIndicator} />}
       </TouchableOpacity>
     );
   }
@@ -83,7 +83,7 @@ function createStyles({size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, col
       borderRadius,
       padding: 3,
     },
-    checkmark: {
+    selectedIndicator: {
       backgroundColor: color,
       flex: 1,
       borderRadius,
