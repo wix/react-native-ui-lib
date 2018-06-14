@@ -24,6 +24,6 @@ export default class PlaygroundScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.cyan60,
+    backgroundColor: Colors.dark80,
   },
 });
