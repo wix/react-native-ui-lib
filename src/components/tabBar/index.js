@@ -68,16 +68,15 @@ export default class TabBar extends BaseComponent {
 
     this.widthsArray = {};
     this.contentWidth = Constants.screenWidth;
+    this.containerWidth = Constants.screenWidth;
     this.childrenCount = React.Children.count(this.props.children);
-    this.initialValue = 1; // Constants.screenWidth - gradientWidth;
-    this.toValue = 0; // Constants.screenWidth
 
     this.state = {
       selectedIndex: props.selectedIndex,
       selectedIndicatorPosition: new Animated.Value(0),
-      gradientValue: new Animated.Value(this.initialValue),
-      currentMode: props.mode,
+      gradientValue: new Animated.Value(1),
       fadeAnim: 0,
+      currentMode: props.mode,
       widths: {},
     };
   }
@@ -86,28 +85,17 @@ export default class TabBar extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
-  calcPosition(index, tabsCount) {
-    let position = 0;
-    if (!_.isEmpty(this.state.widths)) {
-      let itemPosition = 0;
-      for (let i = 0; i < index; i++) {
-        console.log('UILib: this.state.widths[i]: ', this.state.widths[i]);
-        itemPosition += this.state.widths[i];
-      }
-      console.log('UILib: Constants.screenWidth: ', Constants.screenWidth);
-      console.log('UILib: this.contentWidth: ', this.contentWidth);
-      position = (itemPosition / this.contentWidth) * 100;
-    } else {
-      position = index * (100 / tabsCount);
-    }
-    console.log('UILib: position: ', position);
-    return position;
+  // Indicator
+
+  hasMeasurements() {
+    return _.keys(this.widthsArray).length === this.childrenCount;
   }
 
-  // calcPosition(index, tabsCount) {
-  //   const position = index * (100 / tabsCount);
-  //   return position;
-  // }
+  updateSelectedIndicatorPosition() {
+    if (this.hasMeasurements()) {
+      this.setState({selectedIndicatorPosition: new Animated.Value(this.calcPosition(this.state.selectedIndex, this.childrenCount))});
+    }
+  }
 
   calcIndicatorWidth = () => {
     if (this.childrenCount === 0) {
@@ -115,8 +103,21 @@ export default class TabBar extends BaseComponent {
     }
     const itemWidth = this.state.widths[this.state.selectedIndex];
     const width = (itemWidth / this.contentWidth) * 100;
-    // const width = Math.floor(100 / this.childrenCount);
     return `${width}%`;
+  }
+
+  calcPosition(index, tabsCount) {
+    let position = 0;
+    if (!_.isEmpty(this.state.widths)) {
+      let itemPosition = 0;
+      for (let i = 0; i < index; i++) {
+        itemPosition += this.state.widths[i];
+      }
+      position = (itemPosition / this.contentWidth) * 100;
+    } else {
+      position = index * (100 / tabsCount);
+    }
+    return position;
   }
 
   onSelectingTab(index) {
@@ -142,6 +143,8 @@ export default class TabBar extends BaseComponent {
     _.invoke(this.props, 'onChangeIndex', index);
   }
 
+  // Renders
+
   renderChildren() {
     const {selectedIndex} = this.state;
     const children = React.Children.map(this.props.children, (child, index) => {
@@ -153,14 +156,11 @@ export default class TabBar extends BaseComponent {
           _.invoke(child.props, 'onPress');
         },
         onLayout: (event) => {
-          // console.log('UILib: onLayout: ', index, this.state.widths);
           const {width} = event.nativeEvent.layout;
           if (_.isUndefined(this.state.widths[index])) {
             this.widthsArray[index] = width;
             this.setState({widths: this.widthsArray});
-            if (_.keys(this.widthsArray).length === this.childrenCount) {
-              this.setState({selectedIndicatorPosition: new Animated.Value(this.calcPosition(this.state.selectedIndex, this.childrenCount))});
-            }
+            this.updateSelectedIndicatorPosition();
           }
         },
       });
@@ -214,7 +214,7 @@ export default class TabBar extends BaseComponent {
             width: gradientWidth,
             height: height - 5,
             position: 'absolute',
-            left: Constants.screenWidth - gradientWidth,
+            left: this.containerWidth - gradientWidth,
             opacity: this.state.gradientValue}}
         >
           <LinearGradient
@@ -243,27 +243,26 @@ export default class TabBar extends BaseComponent {
     }
   }
 
+  // ScrollView events
+
   onContentSizeChange = (width) => {
-    if (width < Constants.screenWidth) {
+    if (width < this.containerWidth) {
       this.widthsArray = {};
       this.setState({currentMode: LAYOUT_MODES.FIT, widths: {}});
     } else {
       this.contentWidth = width;
-      if (_.keys(this.widthsArray).length === this.childrenCount) {
-        this.setState({selectedIndicatorPosition: new Animated.Value(this.calcPosition(this.state.selectedIndex, this.childrenCount))});
-      }
+      this.updateSelectedIndicatorPosition();
       this.setState({fadeAnim: 1});
     }
   }
 
   onScroll = (event) => {
     const x = event.nativeEvent.contentOffset.x;
-    const overflow = this.contentWidth - Constants.screenWidth;
-    console.log('UILib: speed: ', event.nativeEvent);
+    const overflow = this.contentWidth - this.containerWidth;
     
-    const {gradientValue} = this.state;
-    const newValue = (x > 0 && x >= overflow - 1) ? this.toValue : this.initialValue;
-    Animated.spring(gradientValue, {
+    const newValue = (x > 0 && x >= overflow - 1) ? 0 : 1;
+
+    Animated.spring(this.state.gradientValue, {
       toValue: newValue,
       speed: 20,
     }).start();
