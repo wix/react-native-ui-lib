@@ -230,8 +230,7 @@ export default class TabBar extends BaseComponent {
             colors={[Colors.rgba(gradientColor, 0.3), Colors.rgba(gradientColor, 0.5), Colors.rgba(gradientColor, 0.7)]}
             style={this.styles.linearGradient}
           />
-        </Animated.View>
-        }
+        </Animated.View>}
       </View>
     );
   }
@@ -290,8 +289,10 @@ export default class TabBar extends BaseComponent {
   }
 
   onScroll = (event) => {
-    const x = event.nativeEvent.contentOffset.x;
-    this.animateGradientOpacity(x);
+    if (this.props.useGradientFinish) {
+      const x = event.nativeEvent.contentOffset.x;
+      this.animateGradientOpacity(x);
+    }
   }
 
   animateGradientOpacity = (x) => {
