@@ -77,7 +77,7 @@ export default class TabBar extends BaseComponent {
       gradientValue: new Animated.Value(1),
       fadeAnim: 0,
       currentMode: props.mode,
-      widths: {},
+      widths: {}, // not used in render
     };
   }
 
@@ -88,12 +88,12 @@ export default class TabBar extends BaseComponent {
   // Indicator
 
   hasMeasurements() {
-    return _.keys(this.widthsArray).length === this.childrenCount;
+    return (_.keys(this.state.widths).length === this.childrenCount);
   }
 
-  updateSelectedIndicatorPosition = () => {
-    if (this.hasMeasurements()) {
-      this.setState({selectedIndicatorPosition: new Animated.Value(this.calcPosition(this.state.selectedIndex, this.childrenCount))});
+  updateIndicatorPosition = () => {
+    if (this.hasMeasurements() && this.contentWidth) {
+      this.setState({selectedIndicatorPosition: new Animated.Value(this.calcIndicatorPosition(this.state.selectedIndex))});
     }
   }
 
@@ -106,7 +106,7 @@ export default class TabBar extends BaseComponent {
     return `${width}%`;
   }
 
-  calcPosition(index, tabsCount) {
+  calcIndicatorPosition(index) {
     let position = 0;
     if (!_.isEmpty(this.state.widths)) {
       let itemPosition = 0;
@@ -115,16 +115,16 @@ export default class TabBar extends BaseComponent {
       }
       position = (itemPosition / this.contentWidth) * 100;
     } else {
-      position = index * (100 / tabsCount);
+      position = index * (100 / this.childrenCount);
     }
     return position;
   }
 
-  onSelectingTab(index) {
+  animateIndicatorPosition = (index) => {
     const {disableAnimatedTransition} = this.props;
     const {selectedIndicatorPosition} = this.state;
 
-    const newPosition = this.calcPosition(index, this.props.children.length);
+    const newPosition = this.calcIndicatorPosition(index);
 
     if (disableAnimatedTransition) {
       selectedIndicatorPosition.setValue(newPosition);
@@ -135,22 +135,22 @@ export default class TabBar extends BaseComponent {
         friction: 8,
       }).start();
     }
+  }
 
-    this.setState({
-      selectedIndex: index,
-    });
-
+  onSelectingTab(index) {
+    this.animateIndicatorPosition(index);
+    this.setState({selectedIndex: index});
     _.invoke(this.props, 'onChangeIndex', index);
   }
 
-  // Renders
+  // renders
 
   renderChildren() {
     const {selectedIndex} = this.state;
     const children = React.Children.map(this.props.children, (child, index) => {
       return React.cloneElement(child, {
         selected: selectedIndex === index,
-        width: this.state.widths[index] || child.props.width, // HACK: keep initial width for indicator width
+        width: this.state.widths[index] || child.props.width, // HACK: keep initial item's width for indicator's width
         onPress: () => {
           this.onSelectingTab(index);
           _.invoke(child.props, 'onPress');
@@ -160,7 +160,8 @@ export default class TabBar extends BaseComponent {
           if (_.isUndefined(this.state.widths[index])) {
             this.widthsArray[index] = width;
             this.setState({widths: this.widthsArray});
-            this.updateSelectedIndicatorPosition();
+
+            this.updateIndicatorPosition();
           }
         },
       });
@@ -188,7 +189,7 @@ export default class TabBar extends BaseComponent {
     return (
       <View style={[this.styles.container, style]} bg-white row height={height} onLayout={this.onLayout} useSafeArea>
         {this.renderChildren()}
-        {(Object.keys(this.state.widths).length === this.childrenCount) && this.renderSelectedIndicator()}
+        {this.hasMeasurements() && this.renderSelectedIndicator()}
       </View>
     );
   }
@@ -196,7 +197,7 @@ export default class TabBar extends BaseComponent {
   renderScrollBar() {
     const {height, style, useGradientFinish} = this.props;
     const gradientColor = style.backgroundColor || Colors.white;
-    const sizeStyle = _.pick(style, ['width']);
+    const sizeStyle = _.pick(style, ['width', 'height']);
     const otherStyle = _.omit(style, ['width', 'height']);
 
     return (
@@ -211,7 +212,7 @@ export default class TabBar extends BaseComponent {
         >
           <View style={[this.styles.container, otherStyle]} bg-white row>
             {this.renderChildren()}
-            {(Object.keys(this.state.widths).length === this.childrenCount) && this.renderSelectedIndicator()}
+            {this.hasMeasurements() && this.renderSelectedIndicator()}
           </View>
         </ScrollView>
         {useGradientFinish && <Animated.View
@@ -253,9 +254,11 @@ export default class TabBar extends BaseComponent {
 
   onLayout = (event) => {
     this.containerWidth = event.nativeEvent.layout.width;
+
     switch (this.state.currentMode) {
       case LAYOUT_MODES.FIT:
         this.contentWidth = this.containerWidth;
+        this.updateIndicatorPosition();
         break;
       case LAYOUT_MODES.SCROLL:
         if (this.contentWidth) {
@@ -268,7 +271,6 @@ export default class TabBar extends BaseComponent {
 
   onContentSizeChange = (width) => {
     this.contentWidth = width;
-
     if (this.containerWidth) {
       this.calcLayoutMode();
     }
@@ -276,20 +278,26 @@ export default class TabBar extends BaseComponent {
 
   calcLayoutMode() {
     if (this.contentWidth < this.containerWidth) {
+      // clean and change to FIT layout
       this.widthsArray = {};
+      this.contentWidth = undefined;
       this.setState({currentMode: LAYOUT_MODES.FIT, widths: {}});
     } else {
-      this.updateSelectedIndicatorPosition();
+      // display SCROLL layout
+      this.updateIndicatorPosition();
       this.setState({fadeAnim: 1});
     }
   }
 
   onScroll = (event) => {
     const x = event.nativeEvent.contentOffset.x;
-    const overflow = this.contentWidth - this.containerWidth;
-    
-    const newValue = (x > 0 && x >= overflow - 1) ? 0 : 1;
+    this.animateGradientOpacity(x);
+  }
 
+  animateGradientOpacity = (x) => {
+    const overflow = this.contentWidth - this.containerWidth;
+    const newValue = (x > 0 && x >= overflow - 1) ? 0 : 1;
+  
     Animated.spring(this.state.gradientValue, {
       toValue: newValue,
       speed: 20,
