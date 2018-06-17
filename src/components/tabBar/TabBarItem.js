@@ -44,7 +44,7 @@ export default class TabBarItem extends BaseComponent {
     /**
      * whether the tab will have a divider on its right
      */
-    divider: PropTypes.bool,
+    showDivider: PropTypes.bool,
     /**
      * A fixed width for the item
      */
@@ -69,9 +69,7 @@ export default class TabBarItem extends BaseComponent {
 
   // HACK: for indicator width in TabBar
   getFontStyle(props) {
-    const userProp = props.selectedLabelStyle ? props.selectedLabelStyle.fontWeight : undefined;
-    const fontStyle = {fontWeight: userProp || Constants.isIOS ? '600' : '700'};   
-    return fontStyle;
+    return props.selectedLabelStyle || this.styles.labelSelected;
   }
 
   generateStyles() {
@@ -91,7 +89,7 @@ export default class TabBarItem extends BaseComponent {
       maxLines,
       selected,
       selectedLabelStyle,
-      divider,
+      showDivider,
       width,
       onPress,
       testID,
@@ -104,7 +102,7 @@ export default class TabBarItem extends BaseComponent {
         testID={testID}
         onLayout={this.onLayout}
       >
-        <View flex center style={[divider && this.styles.divider, {paddingHorizontal: Spacings.s4}]}>
+        <View flex center style={[showDivider && this.styles.divider, {paddingHorizontal: Spacings.s4}]}>
           {!_.isEmpty(label) &&
             <Text
               numberOfLines={maxLines}
