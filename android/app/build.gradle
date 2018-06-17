@@ -65,6 +65,7 @@ dependencies {
     compile project(':react-native-blur')
     compile project(':react-native-navigation')
     compile project(':react-native-ui-lib')
+    compile project(':react-native-linear-gradient')
 }
 
 // Run this once to be able to run the application with BUCK

@@ -22,6 +22,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		3947336F20D136C90053148D /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3947334420D136730053148D /* libBVLinearGradient.a */; };
 		39AF297F204DA0D200910FE4 /* libKeyboardTrackingView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39AF2958204DA0C000910FE4 /* libKeyboardTrackingView.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8E55EF781EAE5CE300F4EF64 /* libInteractable.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E55EF5B1EAE5CCC00F4EF64 /* libInteractable.a */; };
@@ -94,6 +95,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
+		};
+		3947334320D136730053148D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3947333E20D136720053148D /* BVLinearGradient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = BVLinearGradient;
+		};
+		3947334520D136730053148D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3947333E20D136720053148D /* BVLinearGradient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 64AA15081EF7F30100718508;
+			remoteInfo = "BVLinearGradient-tvOS";
 		};
 		39AF26D72044691500910FE4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -341,6 +356,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = uilib/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = uilib/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		3947333E20D136720053148D /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		39AF2952204DA0BF00910FE4 /* KeyboardTrackingView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KeyboardTrackingView.xcodeproj; path = "../node_modules/react-native-keyboard-tracking-view/lib/KeyboardTrackingView.xcodeproj"; sourceTree = "<group>"; };
 		58CA453CF9884711B2FC29AF /* RNBlur.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
@@ -365,6 +381,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3947336F20D136C90053148D /* libBVLinearGradient.a in Frameworks */,
 				39AF297F204DA0D200910FE4 /* libKeyboardTrackingView.a in Frameworks */,
 				D8D93EAD20161B5000A39331 /* libreactnativeuilib.a in Frameworks */,
 				8E55EF781EAE5CE300F4EF64 /* libInteractable.a in Frameworks */,
@@ -502,6 +519,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3947333F20D136720053148D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3947334420D136730053148D /* libBVLinearGradient.a */,
+				3947334620D136730053148D /* libBVLinearGradient.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		39AF2953204DA0BF00910FE4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -522,6 +548,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				3947333E20D136720053148D /* BVLinearGradient.xcodeproj */,
 				39AF2952204DA0BF00910FE4 /* KeyboardTrackingView.xcodeproj */,
 				D8D93E8620161B4600A39331 /* reactnativeuilib.xcodeproj */,
 				8E55EF561EAE5CCB00F4EF64 /* Interactable.xcodeproj */,
@@ -700,6 +727,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 3947333F20D136720053148D /* Products */;
+					ProjectRef = 3947333E20D136720053148D /* BVLinearGradient.xcodeproj */;
+				},
+				{
 					ProductGroup = 8E55EF571EAE5CCB00F4EF64 /* Products */;
 					ProjectRef = 8E55EF561EAE5CCB00F4EF64 /* Interactable.xcodeproj */;
 				},
@@ -831,6 +862,20 @@
 			fileType = archive.ar;
 			path = libReact.a;
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3947334420D136730053148D /* libBVLinearGradient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBVLinearGradient.a;
+			remoteRef = 3947334320D136730053148D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3947334620D136730053148D /* libBVLinearGradient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBVLinearGradient.a;
+			remoteRef = 3947334520D136730053148D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		39AF26D82044691500910FE4 /* libfishhook.a */ = {

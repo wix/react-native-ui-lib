@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import View from '../view';
 import Text from '../text';
-import {Colors, Typography} from '../../style';
+import {Colors, Typography, Spacings} from '../../style';
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 import TouchableOpacity from '../touchableOpacity';
@@ -26,6 +26,10 @@ export default class TabBarItem extends BaseComponent {
      */
     labelStyle: Text.propTypes.style,
     /**
+     * maximun number of lines the label can break
+     */
+    maxLines: PropTypes.number,
+    /**
      * custom selected tab label style
      */
     selectedLabelStyle: Text.propTypes.style,
@@ -37,18 +41,58 @@ export default class TabBarItem extends BaseComponent {
      * callback for when pressing a tab
      */
     onPress: PropTypes.func,
+    /**
+     * whether the tab will have a divider on its right
+     */
+    divider: PropTypes.bool,
+    /**
+     * A fixed width for the item
+     */
+    width: PropTypes.number,
+    /**
+     * A callback to invoke for onLayout event
+     */
+    onLayout: PropTypes.func,
   };
+
+  static defaultProps = {
+    maxLines: 1,
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      fontStyle: this.getFontStyle(props),
+    };
+  }
+
+  // HACK: for indicator width in TabBar
+  getFontStyle(props) {
+    const userProp = props.selectedLabelStyle ? props.selectedLabelStyle.fontWeight : undefined;
+    const fontStyle = {fontWeight: userProp || Constants.isIOS ? '600' : '700'};   
+    return fontStyle;
+  }
 
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
-  render() {
+  onLayout = (event) => {
+    _.invoke(this.props, 'onLayout', event);
+    // HACK: for indicator width in TabBar
+    this.setState({fontStyle: {}});
+  }
+
+  render() {   
     const {
       label,
       labelStyle,
+      maxLines,
       selected,
       selectedLabelStyle,
+      divider,
+      width,
       onPress,
       testID,
     } = this.props;
@@ -56,17 +100,20 @@ export default class TabBarItem extends BaseComponent {
       <TouchableOpacity
         activeOpacity={1}
         onPress={onPress}
-        style={this.styles.container}
+        style={width ? {width} : this.styles.container}
         testID={testID}
+        onLayout={this.onLayout}
       >
-        <View flex center>
+        <View flex center style={[divider && this.styles.divider, {paddingHorizontal: Spacings.s4}]}>
           {!_.isEmpty(label) &&
             <Text
+              numberOfLines={maxLines}
               style={[
                 this.styles.label,
                 labelStyle,
                 selected && this.styles.labelSelected,
                 selected && selectedLabelStyle,
+                this.state.fontStyle, // HACK: for indicator width in TabBar
               ]}
             >
               {label}
@@ -90,6 +137,11 @@ function createStyles() {
     labelSelected: {
       color: Colors.blue30,
       fontWeight: Constants.isIOS ? '600' : '700',
+    },
+    divider: {
+      borderRightWidth: 1,
+      borderRightColor: Colors.dark70,
+      marginVertical: 14, // NOTE: will not cut long text at the top and bottom in iOS if TabBar not height enough
     },
   });
 }

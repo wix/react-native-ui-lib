@@ -26,6 +26,8 @@ module.exports = {
     "react/prefer-stateless-function": "off",
     "react/require-default-props": "off",
     "no-else-return": "off",
+    "no-trailing-spaces": "off",
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": true}],
     "uilib/no-hard-coded-color": ["error", validColors, extraFixColorsMap]
   },
   "env": {
