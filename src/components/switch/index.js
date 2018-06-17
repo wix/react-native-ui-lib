@@ -11,6 +11,10 @@ const DEFAULT_WIDTH = 42;
 const DEFAULT_HEIGHT = 24;
 const DEFAULT_THUMB_SIZE = 20;
 
+
+/**
+ * Switch component for toggling boolean value related to some context
+ */
 class Switch extends BaseComponent {
   static displayName = 'Switch';
 
