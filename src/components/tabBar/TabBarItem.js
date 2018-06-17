@@ -44,7 +44,7 @@ export default class TabBarItem extends BaseComponent {
     /**
      * whether the tab will have a divider on its right
      */
-    divider: PropTypes.bool,
+    showDivider: PropTypes.bool,
     /**
      * A fixed width for the item
      */
@@ -91,7 +91,7 @@ export default class TabBarItem extends BaseComponent {
       maxLines,
       selected,
       selectedLabelStyle,
-      divider,
+      showDivider,
       width,
       onPress,
       testID,
@@ -104,7 +104,7 @@ export default class TabBarItem extends BaseComponent {
         testID={testID}
         onLayout={this.onLayout}
       >
-        <View flex center style={[divider && this.styles.divider, {paddingHorizontal: Spacings.s4}]}>
+        <View flex center style={[showDivider && this.styles.divider, {paddingHorizontal: Spacings.s4}]}>
           {!_.isEmpty(label) &&
             <Text
               numberOfLines={maxLines}

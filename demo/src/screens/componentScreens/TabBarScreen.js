@@ -119,16 +119,16 @@ export default class TabBarScreen extends Component {
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.purple30}}
           useGradientFinish
         >
-          <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="ACTIVE"/>
-          <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="PHOTO ALBUM"/>
-          <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="INACTIVE"/>
-          <TabBar.Item divider>
+          <TabBar.Item showDivider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="ACTIVE"/>
+          <TabBar.Item showDivider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="PHOTO ALBUM"/>
+          <TabBar.Item showDivider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="INACTIVE"/>
+          <TabBar.Item showDivider>
             <Image source={starIcon} resizeMode={'contain'} style={[{width: 20, height: 20}, selectedIndex2 === 3 && {tintColor: Colors.purple30}]}/>
           </TabBar.Item>
-          <TabBar.Item divider>
+          <TabBar.Item showDivider>
             <Text text90 purple30={selectedIndex2 === 4}>OVERFLOW</Text>
           </TabBar.Item>
-          {/* <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="OVERFLOW"/> */}
+          {/* <TabBar.Item showDivider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="OVERFLOW"/> */}
           <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="OVERFLOW"/>
         </TabBar>
 
@@ -143,8 +143,8 @@ export default class TabBarScreen extends Component {
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.violet30}}
           useGradientFinish
         >
-          <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.violet30}} label="ACTIVE"/>
-          <TabBar.Item divider>
+          <TabBar.Item showDivider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.violet30}} label="ACTIVE"/>
+          <TabBar.Item showDivider>
             <View row center>
               <Image source={starIcon} resizeMode={'contain'} style={{width: 20, height: 20, tintColor: Colors.violet30}}/>
               <Text marginL-8 text90 violet30 style={{fontWeight: fontWeightBold}}>Add More Apps</Text>
@@ -163,8 +163,8 @@ export default class TabBarScreen extends Component {
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.orange30}}
           useGradientFinish
         >
-          <TabBar.Item divider labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="ACTIVE"/>
-          <TabBar.Item divider maxLines={2} labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="LONGEST TEXT EVER"/>
+          <TabBar.Item showDivider labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="ACTIVE"/>
+          <TabBar.Item showDivider maxLines={2} labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="LONGEST TEXT EVER"/>
           <TabBar.Item labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="INACTIVE"/>
         </TabBar>
 
@@ -179,10 +179,10 @@ export default class TabBarScreen extends Component {
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.green30}}
           useGradientFinish
         >
-          <TabBar.Item divider labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="ACTIVE"/>
-          <TabBar.Item divider labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="PHOTO ALBUM"/>
-          <TabBar.Item divider labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="INACTIVE"/>
-          <TabBar.Item divider width={48}>
+          <TabBar.Item showDivider labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="ACTIVE"/>
+          <TabBar.Item showDivider labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="PHOTO ALBUM"/>
+          <TabBar.Item showDivider labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="INACTIVE"/>
+          <TabBar.Item showDivider width={48}>
             <Image source={starIcon} resizeMode={'contain'} style={{width: 20, height: 20, tintColor: Colors.green30}}/>
           </TabBar.Item>
         </TabBar>
