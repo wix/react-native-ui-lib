@@ -6,6 +6,7 @@ import Button from './button';
 import Card from './card';
 // import Carousel from './carousel/Carousel';
 import Carousel from './carousel';
+import Checkbox from './checkbox';
 import ConnectionStatusBar from './connectionStatusBar';
 import Dialog from './dialog';
 import FeatureHighlight from './featureHighlight';
@@ -36,6 +37,7 @@ module.exports = {
   Button,
   Card,
   Carousel,
+  Checkbox,
   ConnectionStatusBar,
   Dialog,
   FeatureHighlight,
