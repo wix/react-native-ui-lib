@@ -26,6 +26,7 @@ class CheckboxScreen extends Component {
               borderRadius={5}
               size={18}
               color={Colors.dark10}
+              iconColor={Colors.green10}
             />
           </View>
           <Text text40 dark10>

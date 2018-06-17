@@ -9,6 +9,7 @@ import {Colors} from '../../style';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
+const DEFAULT_ICON_COLOR = Colors.white;
 
 /**
  * Checkbox component for toggling boolean value related to some context
@@ -41,9 +42,11 @@ class Checkbox extends BaseComponent {
      * The icon asset to use for the selected indication (accept only local assets)
      */
     selectedIcon: PropTypes.number,
+    /**
+     * The selected icon color
+     */
+    iconColor: PropTypes.string,
   };
-
-  state = {};
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
@@ -67,7 +70,7 @@ class Checkbox extends BaseComponent {
   }
 }
 
-function createStyles({color = DEFAULT_COLOR, size = DEFAULT_SIZE, borderRadius}) {
+function createStyles({color = DEFAULT_COLOR, iconColor = DEFAULT_ICON_COLOR, size = DEFAULT_SIZE, borderRadius}) {
   return StyleSheet.create({
     container: {
       width: size,
@@ -82,7 +85,7 @@ function createStyles({color = DEFAULT_COLOR, size = DEFAULT_SIZE, borderRadius}
       backgroundColor: color,
     },
     selectedIcon: {
-      tintColor: Colors.white,
+      tintColor: iconColor,
     },
   });
 }
