@@ -1,7 +1,7 @@
 import BaseComponent from './BaseComponent';
 import SelectableComponent from './SelectableComponent';
 
-export {
+module.exports = {
   BaseComponent,
   SelectableComponent,
 };

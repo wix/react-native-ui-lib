@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
-import {icons} from './icons';
-import {emojis} from './emojis';
+const icons = require('./icons');
+const emojis = require('./emojis');
 
 class Assets {
   icons = icons;

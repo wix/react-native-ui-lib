@@ -2,7 +2,7 @@ import AnimatedImage from './animatedImage';
 import AnimatedScanner from './animatedScanner';
 import ProgressBar from './progressBar';
 
-export {
+module.exports = {
   AnimatedImage,
   AnimatedScanner,
   ProgressBar,

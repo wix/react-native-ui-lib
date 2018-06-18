@@ -11,7 +11,7 @@ import ConnectionStatusBar from './connectionStatusBar';
 import Dialog from './dialog';
 import FeatureHighlight from './featureHighlight';
 import Image from './image';
-import {TextArea, TextField, TextInput, MaskedInput} from './inputs';
+import Inputs from './inputs';
 import ListItem from './listItem';
 import Notification from './notification';
 import PageControl from './pageControl';
@@ -28,7 +28,8 @@ import Tour from './tour';
 import View from './view';
 import WheelPickerDialog from './wheelPickerDialog';
 
-export {
+
+module.exports = {
   ActionBar,
   ActionSheet,
   Avatar,
@@ -41,11 +42,7 @@ export {
   Dialog,
   FeatureHighlight,
   Image,
-  // Inputs
-  TextArea,
-  TextField,
-  TextInput,
-  MaskedInput,
+  ...Inputs,
   ListItem,
   Notification,
   PageControl,
