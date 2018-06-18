@@ -2,7 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, ViewPropTypes, Animated, ScrollView} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+// import LinearGradient from 'react-native-linear-gradient';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../view';
@@ -13,7 +13,7 @@ const LAYOUT_MODES = {
   FIT: 'FIT',
   SCROLL: 'SCROLL',
 };
-const gradientWidth = 36;
+// const gradientWidth = 36;
 
 /**
  * @description: Basic TabBar component
@@ -195,8 +195,8 @@ export default class TabBar extends BaseComponent {
   }
 
   renderScrollBar() {
-    const {height, style, useGradientFinish} = this.props;
-    const gradientColor = style.backgroundColor || Colors.white;
+    const {height, style/* , useGradientFinish */} = this.props;
+    // const gradientColor = style.backgroundColor || Colors.white;
     const sizeStyle = _.pick(style, ['width', 'height']);
     const otherStyle = _.omit(style, ['width', 'height']);
 
@@ -215,7 +215,7 @@ export default class TabBar extends BaseComponent {
             {this.hasMeasurements() && this.renderSelectedIndicator()}
           </View>
         </ScrollView>
-        {useGradientFinish && <Animated.View
+        {/* {useGradientFinish && <Animated.View
           pointerEvents="none"
           style={{
             width: gradientWidth,
@@ -230,7 +230,7 @@ export default class TabBar extends BaseComponent {
             colors={[Colors.rgba(gradientColor, 0.3), Colors.rgba(gradientColor, 0.5), Colors.rgba(gradientColor, 0.7)]}
             style={this.styles.linearGradient}
           />
-        </Animated.View>}
+        </Animated.View>} */}
       </View>
     );
   }
