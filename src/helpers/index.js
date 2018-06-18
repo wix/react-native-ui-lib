@@ -2,7 +2,7 @@ import * as AvatarHelper from './AvatarHelper';
 import * as Constants from './Constants';
 import * as DocsGenerator from './DocsGenerator';
 
-module.exports = {
+export {
   AvatarHelper,
   Constants,
   DocsGenerator,

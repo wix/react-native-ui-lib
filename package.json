@@ -29,7 +29,9 @@
     "docs:develop": "(cd ./uilib-docs && gatsby develop)",
     "bump:patch": "npm version patch",
     "demo": "./scripts/demo.sh",
-    "release": "node ./scripts/release.js"
+    "release": "node ./scripts/release.js",
+    "build:ts": "rm -rf dist-ts && ./scripts/build-ts.sh",
+    "build:dist": "rm -rf ./dist && ./scripts/build-dist.sh && tsc"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
@@ -43,6 +45,8 @@
     "url-parse": "^1.2.0"
   },
   "devDependencies": {
+    "@types/prop-types": "^15.5.3",
+    "@types/react-native": "^0.55.21",
     "babel-cli": "^6.23.0",
     "babel-eslint": "^7.0.0",
     "babel-jest": "^20.0.3",
@@ -65,11 +69,13 @@
     "react-addons-test-utils": "^15.4.2",
     "react-autobind": "^1.0.6",
     "react-dom": "^15.4.2",
+    "react-js-to-ts": "^1.4.0",
     "react-native": "0.51.0",
     "react-native-keyboard-aware-scrollview": "^2.0.0",
     "react-native-keyboard-tracking-view": "^5.3.2",
     "react-native-linear-gradient": "^2.4.0",
-    "react-native-navigation": "^1.1.19"
+    "react-native-navigation": "^1.1.19",
+    "typescript": "^2.9.2"
   },
   "peerDependencies": {
     "react": "^16.0.0",

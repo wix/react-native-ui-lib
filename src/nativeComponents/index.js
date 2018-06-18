@@ -3,7 +3,7 @@ import SafeAreaSpacerView from './SafeArea/SafeAreaSpacerView';
 import WheelPicker from './WheelPicker';
 import SafeAreaInsetsManager from './SafeArea/SafeAreaInsetsManager';
 
-module.exports = {
+export {
   HighlighterOverlayView,
   SafeAreaSpacerView,
   WheelPicker,

@@ -42,4 +42,5 @@ android/app/libs
 
 # UILib
 dist
+dist-ts
 yarn.lock
