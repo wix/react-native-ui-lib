@@ -31,7 +31,7 @@
     "demo": "./scripts/demo.sh",
     "release": "node ./scripts/release.js",
     "build:ts": "rm -rf dist-ts && ./scripts/build-ts.sh",
-    "build:dist": "rm -rf ./dist && ./scripts/build-dist.sh && tsc"
+    "build:typings": "rm -rf ./typings && ./scripts/build-typings.sh && tsc"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
@@ -85,7 +85,8 @@
     "preset": "react-native",
     "testPathIgnorePatterns": [
       "/e2e/",
-      "/node_modules/"
+      "/node_modules/",
+      "/typings/"
     ],
     "setupFiles": [
       "./jest-setup.js"

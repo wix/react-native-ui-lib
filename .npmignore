@@ -229,7 +229,6 @@ android/keystores/debug.keystore
 test/
 ios/
 android/
-typings/
 demo/
 uilib-docs/
 # eslint-rules/
