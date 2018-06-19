@@ -3,7 +3,7 @@ import TextField from './TextField';
 import TextInput from './TextInput';
 import MaskedInput from './MaskedInput';
 
-module.exports = {
+export {
   TextArea,
   TextField,
   TextInput,

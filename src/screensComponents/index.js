@@ -2,8 +2,7 @@ import StateScreen from './stateScreen';
 import Modal from './modal';
 import LoaderScreen from './loaderScreen';
 
-
-module.exports = {
+export {
   LoaderScreen,
   Modal,
   StateScreen,

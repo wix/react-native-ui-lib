@@ -1,6 +1,6 @@
 /*eslint-disable*/
 
-const emojis = {
+export const emojis = {
   "100": "💯",
   "1234": "🔢",
   "interrobang": "⁉️",
@@ -1344,4 +1344,3 @@ const emojis = {
   "woman-kiss-woman": "👩‍❤️‍💋‍👩"
 }
 
-module.exports = emojis;

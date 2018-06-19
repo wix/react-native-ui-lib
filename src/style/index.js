@@ -7,7 +7,7 @@ import ComponentsColors from './componentsColors';
 import Components from './components';
 import ThemeManager from './themeManager';
 
-module.exports = {
+export {
   Colors,
   BorderRadiuses,
   Shadows,

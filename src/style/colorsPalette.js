@@ -93,7 +93,7 @@ const extraFixColorsMap = {
   '#fff': 'white',
 };
 
-module.exports = {
+export {
   colorsPalette,
   extraFixColorsMap,
 };
