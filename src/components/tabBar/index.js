@@ -13,7 +13,6 @@ const LAYOUT_MODES = {
   FIT: 'FIT',
   SCROLL: 'SCROLL',
 };
-// const gradientWidth = 36;
 
 /**
  * @description: Basic TabBar component
@@ -215,25 +214,32 @@ export default class TabBar extends BaseComponent {
             {this.hasMeasurements() && this.renderSelectedIndicator()}
           </View>
         </ScrollView>
-        {/* {useGradientFinish && <Animated.View
-          pointerEvents="none"
-          style={{
-            width: gradientWidth,
-            height: height - 2,
-            position: 'absolute',
-            left: this.containerWidth - gradientWidth,
-            opacity: this.state.gradientValue}}
-        >
-          <LinearGradient
-            start={{x: 0.0, y: 0.0}} end={{x: 1.0, y: 0.0}}
-            locations={[0, 0.2, 0.6]}
-            colors={[Colors.rgba(gradientColor, 0.3), Colors.rgba(gradientColor, 0.5), Colors.rgba(gradientColor, 0.7)]}
-            style={this.styles.linearGradient}
-          />
-        </Animated.View>} */}
+        {/* {useGradientFinish && this.renderGradient(height, gradientColor)} */}
       </View>
     );
   }
+
+  // renderGradient(height, gradientColor) {
+  //   const gradientWidth = 36;
+  //   return (
+  //     <Animated.View
+  //       pointerEvents="none"
+  //       style={{
+  //         width: gradientWidth,
+  //         height: height - 2,
+  //         position: 'absolute',
+  //         left: this.containerWidth - gradientWidth,
+  //         opacity: this.state.gradientValue}}
+  //     >
+  //       <LinearGradient
+  //         start={{x: 0.0, y: 0.0}} end={{x: 1.0, y: 0.0}}
+  //         locations={[0, 0.2, 0.6]}
+  //         colors={[Colors.rgba(gradientColor, 0.3), Colors.rgba(gradientColor, 0.5), Colors.rgba(gradientColor, 0.7)]}
+  //         style={this.styles.linearGradient}
+  //       />
+  //     </Animated.View>
+  //   );
+  // }
 
   render() {
     switch (this.state.currentMode) {
