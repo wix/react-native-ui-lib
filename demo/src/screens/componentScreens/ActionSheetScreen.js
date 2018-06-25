@@ -2,12 +2,21 @@ import React, {Component} from 'react';
 import {View, Text, Button, ActionSheet} from 'react-native-ui-lib'; //eslint-disable-line
 import _ from 'lodash';
 
-const useCases = [{label: 'Default (Android/iOS)', useNativeIOS: false}, {label: 'Native IOS', useNativeIOS: true}];
+const useCases = [
+  {label: 'Default (Android/iOS)', useNativeIOS: false, icons: false},
+  {label: 'Default with icons', useNativeIOS: false, icons: true},
+  {label: 'Native IOS', useNativeIOS: true}
+];
+const collectionsIcon = require('../../assets/icons/collections.png');
+const starIcon = require('../../assets/icons/star.png');
+const shareIcon = require('../../assets/icons/share.png');
+
 
 export default class ActionSheetScreen extends Component {
   state = {
     showNative: false,
     showCustom: false,
+    showCustomIcons: false,
   };
 
   pickOption(index) {
@@ -17,7 +26,7 @@ export default class ActionSheetScreen extends Component {
   }
 
   render() {
-    const {showCustom, showNative, pickedOption} = this.state;
+    const {showCustom, showCustomIcons, showNative, pickedOption} = this.state;
     return (
       <View flex padding-25>
         <Text text30>Action Sheet</Text>
@@ -35,7 +44,8 @@ export default class ActionSheetScreen extends Component {
                 onPress={() =>
                   this.setState({
                     showNative: useCase.useNativeIOS,
-                    showCustom: !useCase.useNativeIOS,
+                    showCustom: !useCase.useNativeIOS && !useCase.icons,
+                    showCustomIcons: !useCase.useNativeIOS && useCase.icons
                   })}
               />
             );
@@ -60,6 +70,21 @@ export default class ActionSheetScreen extends Component {
           ]}
           visible={showCustom}
           onDismiss={() => this.setState({showCustom: false})}
+        />
+
+        <ActionSheet
+          title="Title"
+          message="Message of action sheet"
+          cancelButtonIndex={3}
+          destructiveButtonIndex={0}
+          options={[
+            {label: 'option 1', onPress: () => this.pickOption('option 1'), icon: collectionsIcon},
+            {label: 'option 2', onPress: () => this.pickOption('option 2'), icon: shareIcon},
+            {label: 'option 3', onPress: () => this.pickOption('option 3'), icon: starIcon},
+            {label: 'cancel', onPress: () => this.pickOption('cancel')},
+          ]}
+          visible={showCustomIcons}
+          onDismiss={() => this.setState({showCustomIcons: false})}
         />
 
         <ActionSheet
