@@ -159,7 +159,8 @@ export default class Button extends BaseComponent {
   }
 
   getBackgroundColor() {
-    const {disabled, outline, link, backgroundColor: propsBackgroundColor} = this.getThemeProps();
+    const {backgroundColor: themeBackgroundColor} = this.getThemeProps();
+    const {disabled, outline, link, backgroundColor: propsBackgroundColor} = this.props;
     const {backgroundColor: stateBackgroundColor} = this.state;
 
     if (!outline && !link) {
@@ -167,7 +168,7 @@ export default class Button extends BaseComponent {
         return ThemeManager.CTADisabledColor;
       }
 
-      return propsBackgroundColor || stateBackgroundColor || Colors.blue30;
+      return propsBackgroundColor || stateBackgroundColor || themeBackgroundColor || Colors.blue30;
     }
     return 'transparent';
   }
