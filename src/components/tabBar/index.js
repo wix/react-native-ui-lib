@@ -46,7 +46,7 @@ export default class TabBar extends BaseComponent {
     /**
      * FIT to force the content to fit to screen, or SCROLL to allow content overflow
      */
-    layoutMode: PropTypes.oneOf(Object.keys(LAYOUT_MODES)),
+    mode: PropTypes.oneOf(Object.keys(LAYOUT_MODES)),
     /**
      * Add gradiant effect for scroll overflow. IMPORTANT: must have a native module available!
      */
