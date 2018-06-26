@@ -3,7 +3,6 @@ import {TouchableOpacity as RNTouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
-import {ThemeManager} from '../../style';
 
 /**
  * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
@@ -33,8 +32,7 @@ export default class TouchableOpacity extends BaseComponent {
   constructor(props) {
     super(props);
 
-    const throttleTime = props.throttleTime || ThemeManager.components.TouchableOpacity.throttleTime;
-    const throttleOptions = props.throttleOptions || ThemeManager.components.TouchableOpacity.throttleOptions;
+    const {throttleTime, throttleOptions} = this.getThemeProps();
 
     this.onPress = _.throttle(this.onPress.bind(this), throttleTime, throttleOptions);
     this.onPressIn = this.onPressIn.bind(this);
