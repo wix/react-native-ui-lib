@@ -64,9 +64,9 @@ class RadioButton extends BaseComponent {
   }
 
   render() {
-    const {style} = this.getThemeProps();
+    const {style, ...others} = this.getThemeProps();
     return (
-      <TouchableOpacity activeOpacity={1} style={[this.styles.container, style]} onPress={this.onPress}>
+      <TouchableOpacity activeOpacity={1} {...others} style={[this.styles.container, style]} onPress={this.onPress}>
         {this.isSelected() && <View style={this.styles.selectedIndicator} />}
       </TouchableOpacity>
     );
