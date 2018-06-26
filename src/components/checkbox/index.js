@@ -57,10 +57,11 @@ class Checkbox extends BaseComponent {
   };
 
   render() {
-    const {value, selectedIcon, style} = this.getThemeProps();
+    const {value, selectedIcon, style, ...others} = this.getThemeProps();
     return (
       <TouchableOpacity
         activeOpacity={1}
+        {...others}
         style={[this.styles.container, value && this.styles.containerSelected, style]}
         onPress={this.onPress}
       >
