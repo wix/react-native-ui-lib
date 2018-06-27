@@ -74,6 +74,11 @@ describe('Button', () => {
       const uut = new Button({'bg-orange30': true, disabled: true});
       expect(uut.getBackgroundColor()).toEqual(ThemeManager.CTADisabledColor);
     });
+    
+    it('should return transparent if iconSource was sent without a label', () => {
+      const uut = new Button({iconSource: 4});
+      expect(uut.getBackgroundColor()).toEqual('transparent');
+    });
   });
 
   describe('getActiveBackgroundColor', () => {
@@ -90,9 +95,9 @@ describe('Button', () => {
   });
 
   describe('getLabelColor', () => {
-    it('should return theme ctaTextColor by default', () => {
+    it('should return white color by default', () => {
       const uut = new Button({});
-      expect(uut.getLabelColor()).toEqual(ThemeManager.CTATextColor);
+      expect(uut.getLabelColor()).toEqual(Colors.white);
     });
 
     it('should return blue30 color for link', () => {
@@ -134,6 +139,11 @@ describe('Button', () => {
       const uut = new Button({red10: true, color: 'green', link: true, disabled: true});
       expect(uut.getLabelColor()).toEqual(ThemeManager.CTADisabledColor);
     });
+    
+    it('should return dark10 color if this is an icon button (without label)', () => {
+      const uut = new Button({iconSource: 12});
+      expect(uut.getLabelColor()).toEqual(Colors.dark10);
+    });
   });
 
   describe('getContentSizeStyle', () => {
@@ -163,6 +173,11 @@ describe('Button', () => {
 
     it('should have no padding of button is a link', () => {
       const uut = new Button({size: 'medium', link: true});
+      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 0});
+    });
+    
+    it('should have no padding of button is an icon button', () => {
+      const uut = new Button({size: 'medium', iconSource: 14});
       expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 0});
     });
 

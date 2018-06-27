@@ -218,6 +218,15 @@ export default class ButtonsScreen extends DemoScreen {
               ref={element => (this.button_16 = element)}
               onPress={() => this.showSnippet(this.button_16)}
             />
+            
+            <Button
+              label="Outline with background"
+              outlineColor={Colors.dark10}
+              backgroundColor={Colors.dark40}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_24 = element)}
+              onPress={() => this.showSnippet(this.button_24)}
+            />
 
             <Button
               label="Disabled Outline"
@@ -271,6 +280,13 @@ export default class ButtonsScreen extends DemoScreen {
               onPress={() => this.showSnippet(this.button_19)}
             />
             <Text style={styles.header}>Special Cases</Text>
+
+            <Button
+              iconSource={plusIcon}
+              style={{marginBottom: ButtonSpace}}
+              ref={element => (this.button_23 = element)}
+              onPress={() => this.showSnippet(this.button_23)}
+            />
 
             <Button
               style={{marginBottom: ButtonSpace}}

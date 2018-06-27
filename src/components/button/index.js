@@ -26,6 +26,10 @@ export default class Button extends BaseComponent {
      */
     label: PropTypes.string,
     /**
+     * The Button text color (inherited from Text component)
+     */
+    color: PropTypes.string,
+    /**
      * Icon image source
      */
     iconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
@@ -158,12 +162,17 @@ export default class Button extends BaseComponent {
     return !this.isOutline && !link;
   }
 
+  get isIconButton() {
+    const {iconSource, label} = this.props;
+    return (iconSource && !label);
+  }
+
   getBackgroundColor() {
     const {backgroundColor: themeBackgroundColor} = this.getThemeProps();
     const {disabled, outline, link, backgroundColor: propsBackgroundColor} = this.props;
     const {backgroundColor: stateBackgroundColor} = this.state;
 
-    if (!outline && !link) {
+    if (!outline && !link && !(this.isIconButton)) {
       if (disabled) {
         return ThemeManager.CTADisabledColor;
       }
@@ -183,11 +192,13 @@ export default class Button extends BaseComponent {
   getLabelColor() {
     const {link, linkColor, outline, outlineColor, disabled} = this.getThemeProps(); // this.props;
 
-    let color = ThemeManager.CTATextColor;
+    let color = Colors.white;
     if (link) {
       color = linkColor || Colors.blue30;
     } else if (outline) {
       color = outlineColor || Colors.blue30;
+    } else if (this.isIconButton) {
+      color = Colors.dark10;
     }
 
     if (disabled && (link || outline)) {
@@ -214,7 +225,7 @@ export default class Button extends BaseComponent {
     const labelSizeStyle = LABEL_STYLE_BY_SIZE[size];
 
     // todo: treat the same as avoidInnerPadding
-    if (link) {
+    if (link || this.isIconButton) {
       labelSizeStyle.paddingHorizontal = 0;
     }
 
@@ -312,10 +323,12 @@ export default class Button extends BaseComponent {
 
     const marginSide =
       [Button.sizes.large, Button.sizes.medium].includes(size) ? 8 : 4;
-    if (iconOnRight) {
-      iconStyle.marginLeft = marginSide;
-    } else {
-      iconStyle.marginRight = marginSide;
+    if (!this.isIconButton) {
+      if (iconOnRight) {
+        iconStyle.marginLeft = marginSide;
+      } else {
+        iconStyle.marginRight = marginSide;
+      }
     }
 
     if (disabled && !this.isFilled) {
@@ -369,7 +382,7 @@ export default class Button extends BaseComponent {
           this.styles.container,
           this.styles.innerContainer,
           containerSizeStyle,
-          link && this.styles.innerContainerLink,
+          (link || this.isIconButton) && this.styles.innerContainerLink,
           shadowStyle,
           margins,
           containerStyle,
