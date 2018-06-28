@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
+import View from '../view';
 
 /**
  * @description: ListItem.Part, a sub ListItem component for layout-ing inside a ListItem
@@ -42,9 +43,9 @@ export default class ListItemPart extends BaseComponent {
   }
 
   render() {
-    const {containerStyle} = this.props;
+    const {containerStyle, ...others} = this.props;
     return (
-      <View style={[this.styles.container, containerStyle]}>
+      <View style={[this.styles.container, containerStyle]} {...others}>
         {this.props.children}
       </View>
     );

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../../components/touchableOpacity';
-
+import View from '../view';
 import ListItemPart from './ListItemPart';
 
 /**
