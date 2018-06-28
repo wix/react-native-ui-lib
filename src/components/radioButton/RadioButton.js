@@ -21,11 +21,15 @@ class RadioButton extends BaseComponent {
     /**
      * The identifier value of the radio button. must be different than other RadioButtons in the same group
      */
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
     /**
-     * Invoked with the new value when the value changes.
+     * When using RadioButton without a RadioGroup, use this prop to toggle selection
      */
-    onValueChange: PropTypes.func,
+    selected: PropTypes.bool,
+    /**
+     * Invoked when pressing the button
+     */
+    onPress: PropTypes.func,
     /**
      * The color of the radio button
      */
@@ -54,21 +58,27 @@ class RadioButton extends BaseComponent {
   onPress = () => {
     const {value} = this.props;
     _.invoke(this.context, 'onValueChange', value);
-    _.invoke(this.props, 'onValueChange', value);
+    _.invoke(this.props, 'onPress', this.isSelected());
   };
 
   isSelected() {
-    const {value} = this.props;
+    const {value, selected} = this.props;
+    // Individual Radio Button
+    if (_.isUndefined(value)) {
+      return Boolean(selected);
+    }
+    // Grouped Radio Button
     const {value: selectedValue} = this.context;
     return value === selectedValue;
   }
 
   render() {
-    const {style, ...others} = this.getThemeProps();
+    const {style, onPress, ...others} = this.getThemeProps();
+    const Container = (onPress || this.context.onValueChange) ? TouchableOpacity : View;
     return (
-      <TouchableOpacity activeOpacity={1} {...others} style={[this.styles.container, style]} onPress={this.onPress}>
+      <Container activeOpacity={1} {...others} style={[this.styles.container, style]} onPress={this.onPress}>
         {this.isSelected() && <View style={this.styles.selectedIndicator} />}
-      </TouchableOpacity>
+      </Container>
     );
   }
 }
