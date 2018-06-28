@@ -115,8 +115,6 @@ export default class Toast extends BaseComponent {
     if (animated) {
       setupRelativeAnimation(getHeight(this.props));
     }
-
-    this.onDismiss = this.onDismiss.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -314,14 +312,16 @@ export default class Toast extends BaseComponent {
   setDismissTimer() {
     const {autoDismiss, onDismiss} = this.props;
     if (autoDismiss && onDismiss) {
-      this.timer = setTimeout(() => {
-        _.invoke(this.props, 'onDismiss');
+      const timer = setTimeout(() => {
+        this.onDismiss(timer);
       }, autoDismiss);
     }
   }
 
-  onDismiss() {
-    if (this.timer) { clearTimeout(this.timer); }
+  onDismiss = (timer) => {
+    if (timer) { 
+      clearTimeout(timer); 
+    }
     _.invoke(this.props, 'onDismiss');
   }
 

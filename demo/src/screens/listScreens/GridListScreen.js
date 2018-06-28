@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import {ListView, View, Alert} from 'react-native';
 import {GridList, Avatar, Badge, AvatarHelper, Colors, Card, Constants, Text} from 'react-native-ui-lib';//eslint-disable-line
 import products from '../../data/products';
-
 import * as GridItemExamples from './GridItemExamples';
+
 
 const plusIcon = require('../../assets/icons/plus.png');
 
-export default class BasicListScreen extends Component {
+export default class GridListScreen extends Component {
 
   constructor(props) {
     super(props);

@@ -42,7 +42,7 @@ export default class TabBarScreen extends Component {
 
         <View style={{height: 30}}/>
 
-        {/* relative FIX - Don't forget to set flex! */}
+        {/* relative FIT - Don't forget to set flex! */}
         <View row>
           <TabBar
             style={{flex: 1, height: 48}}
