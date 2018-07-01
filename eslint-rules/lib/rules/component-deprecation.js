@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const MAP_SCHEMA = {
   type: 'object',
   additionalProperties: true,
@@ -10,7 +12,7 @@ const FIX_TYPES = {
 module.exports = {
   meta: {
     docs: {
-      description: 'component or some of the component\'s props are deprecated',
+      description: "component or some of the component's props are deprecated",
       category: 'Best Practices',
       recommended: true,
     },
@@ -18,19 +20,17 @@ module.exports = {
       uiLib: 'This component is deprecated or containes deprecated props.',
     },
     fixable: 'code',
-    schema: [
-      MAP_SCHEMA,
-    ],
+    schema: [MAP_SCHEMA],
   },
   create(context) {
-    
     function reportDeprecatedComponentOrProps(node, options) {
       try {
         const {dueDate} = context.options[0];
         const dueDateNotice = dueDate ? ` Please fix this issue by ${dueDate}!` : '';
-        const msg = options.prop === undefined ?
-          `The '${options.name}' component is deprecated. ${options.message}${dueDateNotice}` :
-          `The '${options.name}' component's prop '${options.prop}' is deprecated. ${options.message}${dueDateNotice}`;
+        const msg =
+          options.prop === undefined
+            ? `The '${options.name}' component is deprecated. ${options.message}${dueDateNotice}`
+            : `The '${options.name}' component's prop '${options.prop}' is deprecated. ${options.message}${dueDateNotice}`;
         context.report({
           node,
           message: `${msg}`,
@@ -42,7 +42,8 @@ module.exports = {
                 case FIX_TYPES.PROP_NAME:
                   // Fix for prop name change only (when prop's value and type does not change)
                   return fixer.replaceText(node.name, fix);
-                default: break;
+                default:
+                  break;
               }
             }
           },
@@ -53,7 +54,13 @@ module.exports = {
     }
 
     function deprecationCheck(node) {
-      const component = node.name.name;
+      let component;
+      if (node.name.object) {
+        component = `${node.name.object.name}.${node.name.property.name}`;
+      } else {
+        component = node.name.name;
+      }
+
       if (component && isComponentDeprecated(component)) {
         const deprecatedComponent = getDeprecatedObject(component);
         if (isComponentImportMatch(deprecatedComponent)) {
@@ -83,7 +90,7 @@ module.exports = {
       }
     }
 
-    let importSpecifiers = {};
+    const importSpecifiers = {};
 
     function createImportsObject(node) {
       const source = node.source.value;
@@ -105,7 +112,9 @@ module.exports = {
 
     function createDeprecationSourcesObject() {
       const obj = {};
-      if (!deprecations) { return obj; }
+      if (!deprecations) {
+        return obj;
+      }
       deprecations.forEach((element) => {
         if (!(element.source in obj)) {
           obj[element.source] = [element.component];
@@ -117,13 +126,18 @@ module.exports = {
     }
 
     function isComponentDeprecated(component) {
-      var values = [].concat.apply([], Object.values(deprecationSources));
-      return (values.indexOf(component) !== -1);
+      const values = _.chain(deprecationSources)
+        .values()
+        .flatten()
+        .value();
+      return _.includes(values, component);
     }
-    
+
     function isComponentImportMatch(component) {
+      // in case it's a sub component like List.Item
+      const componentName = _.split(component.component, '.')[0];
       if (component.source in importSpecifiers) {
-        return importSpecifiers[component.source].indexOf(component.component) !== -1;
+        return _.includes(importSpecifiers[component.source], componentName);
       }
       return false;
     }
@@ -140,7 +154,7 @@ module.exports = {
 
     return {
       JSXOpeningElement: node => deprecationCheck(node),
-      ImportDeclaration: node => createImportsObject(node)
+      ImportDeclaration: node => createImportsObject(node),
     };
   },
 };

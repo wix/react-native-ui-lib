@@ -25,7 +25,11 @@
   {
     "component": "TextInput",
     "source": "module-with-deprecations",
-    "message": "Please use the 'TextField' component instead",
-    "fix": {"componentName": "TextField"}
+    "message": "Please use the 'TextField' component instead"
+  },
+  {
+    "component": "List.Part",
+    "source": "module-with-deprecations",
+    "message": "Please use the 'List.Item' component instead"
   }
 ]

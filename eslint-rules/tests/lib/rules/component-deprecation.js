@@ -53,5 +53,10 @@ ruleTester.run('component-deprecation', rule, {
       code: 'import {TextInput} from \'module-with-deprecations\'; <TextInput placeholder="first name" />',
       errors: [{message: "The 'TextInput' component is deprecated. Please use the 'TextField' component instead"}],
     },
+    {
+      options: ruleOptions,
+      code: 'import {List} from \'module-with-deprecations\'; <List.Part />',
+      errors: [{message: "The 'List.Part' component is deprecated. Please use the 'List.Item' component instead"}],
+    },
   ],
 });
