@@ -6,40 +6,52 @@ const ruleOptions = [{deprecations: deprecationsJson}];
 
 RuleTester.setDefaultConfig({
   parser: 'babel-eslint',
-  parserOptions: { ecmaVersion: 6, ecmaFeatures: { jsx: true } },
+  parserOptions: {ecmaVersion: 6, ecmaFeatures: {jsx: true}},
 });
 
 const ruleTester = new RuleTester();
 
-const valideExample = `const test = <Avatar imageSource={{uri: 'some_uri_string'}}/>`;
-const valideImportExample = `import {Avatar} from 'another-module'; const test = <Avatar url={'some_uri_string'}/>`;
-const invalideExample = `import {Avatar} from 'module-with-deprecations'; const test = <Avatar url={'some_uri_string'}/>`;
+const validExample = "const test = <Avatar imageSource={{uri: 'some_uri_string'}}/>";
+const validImportExample = "import {Avatar} from 'another-module'; const test = <Avatar url={'some_uri_string'}/>";
+const invalidExample = "import {Avatar} from 'module-with-deprecations'; const test = <Avatar url={'some_uri_string'}/>";
 
 ruleTester.run('component-deprecation', rule, {
   valid: [
     {
       options: ruleOptions,
-      code: valideExample,
+      code: validExample,
     },
     {
       options: ruleOptions,
-      code: valideImportExample,
+      code: validImportExample,
     },
   ],
   invalid: [
     {
       options: ruleOptions,
-      code: invalideExample,
-      errors: [
-        { message: `The 'Avatar' component's prop 'url' is deprecated. Please use the 'imageSource' prop instead.` },
-      ],
+      code: invalidExample,
+      errors: [{message: "The 'Avatar' component's prop 'url' is deprecated. Please use the 'imageSource' prop instead."}],
     },
     {
       options: [{...ruleOptions[0], dueDate: '10/11/18'}],
-      code: invalideExample,
+      code: invalidExample,
       errors: [
-        { message: `The 'Avatar' component's prop 'url' is deprecated. Please use the 'imageSource' prop instead. Please fix this issue by 10/11/18!` },
+        {
+          message:
+            "The 'Avatar' component's prop 'url' is deprecated. Please use the 'imageSource' prop instead. Please fix this issue by 10/11/18!",
+        },
       ],
+    },
+    {
+      options: ruleOptions,
+      code: 'import {Button} from \'module-with-deprecations\'; <Button text="my button" />',
+      output: 'import {Button} from \'module-with-deprecations\'; <Button label="my button" />',
+      errors: [{message: "The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead."}],
+    },
+    {
+      options: ruleOptions,
+      code: 'import {TextInput} from \'module-with-deprecations\'; <TextInput placeholder="first name" />',
+      errors: [{message: "The 'TextInput' component is deprecated. Please use the 'TextField' component instead"}],
     },
   ],
 });
