@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const utils = require('../utils');
 
 const MAP_SCHEMA = {
   type: 'object',
@@ -53,6 +54,14 @@ module.exports = {
       }
     }
 
+    function checkPropDeprecation(node, propName, deprecatedPropList, componentName) {
+      const deprecatedProp = _.find(deprecatedPropList, {prop: propName});
+      if (deprecatedProp) {
+        const {prop, message, fix} = deprecatedProp;
+        reportDeprecatedComponentOrProps(node, {name: componentName, prop, message, fix});
+      }
+    }
+
     function deprecationCheck(node) {
       let component;
       if (node.name.object) {
@@ -65,8 +74,8 @@ module.exports = {
         const deprecatedComponent = getDeprecatedObject(component);
         if (isComponentImportMatch(deprecatedComponent)) {
           const name = deprecatedComponent.component;
-          let message = deprecatedComponent.message;
-          let fix = deprecatedComponent.fix;
+          const message = deprecatedComponent.message;
+          const fix = deprecatedComponent.fix;
           const props = deprecatedComponent.props;
 
           if (!props) {
@@ -75,13 +84,11 @@ module.exports = {
             const nodeAttributes = node.attributes;
             nodeAttributes.forEach((att) => {
               if (att.type === 'JSXAttribute') {
-                props.forEach((p) => {
-                  if (att.name.name === p.prop) {
-                    const prop = p.prop;
-                    message = p.message;
-                    fix = p.fix;
-                    reportDeprecatedComponentOrProps(att, {name, prop, message, fix});
-                  }
+                checkPropDeprecation(att, att.name.name, props, name);
+              } else if (att.type === 'JSXSpreadAttribute') {
+                const spreadSource = utils.findValueNodeOfIdentifier(att.argument.name, context.getScope());
+                _.forEach(spreadSource.properties, (property) => {
+                  checkPropDeprecation(property.key, property.key.name, props, name);
                 });
               }
             });

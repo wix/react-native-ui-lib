@@ -48,6 +48,7 @@ ruleTester.run('component-deprecation', rule, {
       output: 'import {Button} from \'module-with-deprecations\'; <Button label="my button" />',
       errors: [{message: "The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead."}],
     },
+
     {
       options: ruleOptions,
       code: 'import {TextInput} from \'module-with-deprecations\'; <TextInput placeholder="first name" />',
@@ -55,8 +56,16 @@ ruleTester.run('component-deprecation', rule, {
     },
     {
       options: ruleOptions,
-      code: 'import {List} from \'module-with-deprecations\'; <List.Part />',
+      code: "import {List} from 'module-with-deprecations'; <List.Part />",
       errors: [{message: "The 'List.Part' component is deprecated. Please use the 'List.Item' component instead"}],
+    },
+    {
+      options: ruleOptions,
+      code:
+        'import {Button} from \'module-with-deprecations\'; const props = {text: "button", color: "red"}; <Button {...props} value="value" />',
+      // output:
+      //   'import {Button} from \'module-with-deprecations\'; const props = {label: "button", color: "red"}; <Button {...props} value="value" />',
+      errors: [{message: "The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead."}],
     },
   ],
 });
