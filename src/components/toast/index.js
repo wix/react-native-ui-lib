@@ -68,6 +68,10 @@ export default class Toast extends BaseComponent {
      */
     allowDismiss: PropTypes.bool,
     /**
+     * callback for end of component animation
+     */
+    onAnimationEnd: PropTypes.func,
+    /**
      * render a custom toast content (better use with StyleSheet.absoluteFillObject to support safe area)
      */
     renderContent: PropTypes.func,
@@ -308,6 +312,7 @@ export default class Toast extends BaseComponent {
       isVisible: visible,
     });
     this.setDismissTimer();
+    _.invoke(this.props, 'onAnimationEnd', visible);
   }
 
   setDismissTimer() {
