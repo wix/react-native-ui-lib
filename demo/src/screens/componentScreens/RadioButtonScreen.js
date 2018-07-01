@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {TouchableOpacity} from 'react-native';
 import {Assets, RadioButton, Colors, RadioGroup, View, Text, Image} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class RadioButtonScreen extends Component {
@@ -54,6 +55,17 @@ export default class RadioButtonScreen extends Component {
               </View>
               <Text marginT-10>You chose: {this.state.value}</Text>
             </RadioGroup>
+
+            <Text marginV-20 text60 dark10>
+              Use it without RaduiGroup
+            </Text>
+
+            <TouchableOpacity activeOpacity={1} onPress={() => this.setState({individualValue: !this.state.individualValue})}>
+              <View row centerV>
+                <RadioButton selected={this.state.individualValue} />
+                <Text marginL-10>Individual Radio Button</Text>
+              </View>
+            </TouchableOpacity>
           </View>
           <View>
             <Text text40 dark10>
