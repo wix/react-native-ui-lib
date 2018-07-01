@@ -259,7 +259,7 @@ export default class Toast extends BaseComponent {
 
   // This weird layout should support iphoneX safe are
   render() {
-    const {backgroundColor, actions, enableBlur, testID, zIndex} = this.getThemeProps();
+    const {backgroundColor, actions, enableBlur, testID, zIndex, renderContent} = this.getThemeProps();
     const {animationConfig} = this.state;
     const hasOneAction = _.size(actions) === 1;
     const hasTwoActions = _.size(actions) === 2;
@@ -279,6 +279,7 @@ export default class Toast extends BaseComponent {
         <Animatable.View
           style={[
             this.styles.container,
+            !renderContent && {paddingHorizontal: 15},
             backgroundColor && {backgroundColor},
             hasOneAction && this.styles.containerWithOneAction,
             {zIndex},
@@ -332,7 +333,7 @@ function createStyles() {
     container: {
       ...StyleSheet.absoluteFillObject,
       backgroundColor: Colors.rgba(ThemeManager.primaryColor, 0.8),
-      paddingHorizontal: 15,
+      // paddingHorizontal: 15,
     },
     containerWithOneAction: {
       paddingRight: 0,
