@@ -1,6 +1,6 @@
 {
   "name": "react-native-ui-lib",
-  "version": "3.3.132",
+  "version": "3.3.140",
   "main": "index.js",
   "typings": "typings/index.d.ts",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
