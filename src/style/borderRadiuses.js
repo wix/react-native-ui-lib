@@ -11,6 +11,12 @@ class BorderRadiuses {
   br60 = 20;
   br100 = 999;
 
+  loadBorders(borders) {
+    _.forEach(borders, (value, key) => {
+      this[key] = value;
+    });
+  }
+
   getKeysPattern() {
     return new RegExp(
       _.chain(this)
