@@ -12,6 +12,8 @@ import CardSection from './CardSection';
 import CardItem from './CardItem';
 import CardImage from './CardImage';
 
+const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
+
 /**
  * @description: Card component
  * @extends: TouchableOpacity
@@ -65,12 +67,12 @@ class Card extends BaseComponent {
   };
 
   static defaultProps = {
-    borderRadius: BorderRadiuses.br40,
+    // borderRadius: BorderRadiuses.br40,
     enableShadow: true,
   };
 
   generateStyles() {
-    this.styles = createStyles(this.props);
+    this.styles = createStyles(this.getThemeProps());
   }
 
   // todo: add unit test
@@ -128,7 +130,7 @@ class Card extends BaseComponent {
     const ShadowContainer = enableShadow ? MultipleShadow : View;
     return (
       <Container
-        style={[this.styles.container, {borderRadius}, this.elevationStyle, containerStyle]}
+        style={[this.styles.container, /* {borderRadius}, */ this.elevationStyle, containerStyle]}
         onPress={onPress}
         delayPressIn={10}
         activeOpacity={0.6}
@@ -136,7 +138,7 @@ class Card extends BaseComponent {
         {...others}
       >
         <ShadowContainer {...multipleShadowProps} style={{borderRadius}}>
-          <View width={width} height={height} row={row} style={[this.styles.innerContainer, {borderRadius}, style]}>
+          <View width={width} height={height} row={row} style={[this.styles.innerContainer, /* {borderRadius}, */ style]}>
             {this.renderChildren()}
           </View>
         </ShadowContainer>
@@ -145,20 +147,18 @@ class Card extends BaseComponent {
   }
 }
 
-function createStyles({width, height, enableShadow}) {
-  // const borderRadius = BorderRadiuses.br40;
+function createStyles({width, height, enableShadow, borderRadius = DEFAULT_BORDER_RADIUS}) {
   return StyleSheet.create({
     container: {
       width,
       height,
-      // backgroundColor: Constants.isIOS ? 'transparent' : Colors.white,
       overflow: 'visible',
-      // borderRadius,
+      borderRadius,
       elevation: enableShadow ? 2 : 0,
     },
     innerContainer: {
       backgroundColor: Colors.white,
-      // borderRadius,
+      borderRadius,
       overflow: 'hidden',
       flexGrow: 1,
     },
