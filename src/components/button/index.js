@@ -164,7 +164,7 @@ export default class Button extends BaseComponent {
 
   get isIconButton() {
     const {iconSource, label} = this.props;
-    return (iconSource && !label);
+    return iconSource && !label;
   }
 
   getBackgroundColor() {
@@ -172,7 +172,7 @@ export default class Button extends BaseComponent {
     const {disabled, outline, link, backgroundColor: propsBackgroundColor} = this.props;
     const {backgroundColor: stateBackgroundColor} = this.state;
 
-    if (!outline && !link && !(this.isIconButton)) {
+    if (!outline && !link && !this.isIconButton) {
       if (disabled) {
         return ThemeManager.CTADisabledColor;
       }
@@ -209,29 +209,6 @@ export default class Button extends BaseComponent {
     return color;
   }
 
-  getContentSizeStyle() {
-    const {size, link, avoidInnerPadding} = this.props;
-
-    if (avoidInnerPadding) {
-      return;
-    }
-
-    const LABEL_STYLE_BY_SIZE = {};
-    LABEL_STYLE_BY_SIZE[Button.sizes.xSmall] = {paddingHorizontal: 12};
-    LABEL_STYLE_BY_SIZE[Button.sizes.small] = {paddingHorizontal: 15};
-    LABEL_STYLE_BY_SIZE[Button.sizes.medium] = {paddingHorizontal: Constants.isIOS ? 18 : 20};
-    LABEL_STYLE_BY_SIZE[Button.sizes.large] = {paddingHorizontal: Constants.isIOS ? 36 : 28};
-
-    const labelSizeStyle = LABEL_STYLE_BY_SIZE[size];
-
-    // todo: treat the same as avoidInnerPadding
-    if (link || this.isIconButton) {
-      labelSizeStyle.paddingHorizontal = 0;
-    }
-
-    return labelSizeStyle;
-  }
-
   getLabelSizeStyle() {
     const {size} = this.props;
 
@@ -246,24 +223,28 @@ export default class Button extends BaseComponent {
   }
 
   getContainerSizeStyle() {
-    const {size, outline, avoidMinWidth} = this.props;
+    const {size, outline, link, avoidMinWidth, avoidInnerPadding} = this.props;
 
     const CONTAINER_STYLE_BY_SIZE = {};
     CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = {
       paddingVertical: Constants.isIOS ? 5 : 4,
       minWidth: Constants.isIOS ? 66 : 60,
+      paddingHorizontal: 12,
     };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = {
       paddingVertical: 6,
       minWidth: Constants.isIOS ? 74 : 72,
+      paddingHorizontal: 15,
     };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = {
       paddingVertical: Constants.isIOS ? 11 : 10,
       minWidth: Constants.isIOS ? 95 : 88,
+      paddingHorizontal: Constants.isIOS ? 18 : 20,
     };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = {
       paddingVertical: Constants.isIOS ? 16 : 15,
       minWidth: Constants.isIOS ? 138 : 128,
+      paddingHorizontal: Constants.isIOS ? 36 : 28,
     };
 
     if (outline) {
@@ -273,8 +254,20 @@ export default class Button extends BaseComponent {
     }
 
     const containerSizeStyle = CONTAINER_STYLE_BY_SIZE[size];
+
+    if (link || this.isIconButton) {
+      containerSizeStyle.paddingVertical = undefined;
+      containerSizeStyle.paddingHorizontal = undefined;
+      containerSizeStyle.minWidth = undefined;
+    }
+
     if (avoidMinWidth) {
       containerSizeStyle.minWidth = undefined;
+    }
+
+    if (avoidInnerPadding) {
+      containerSizeStyle.paddingVertical = undefined;
+      containerSizeStyle.paddingHorizontal = undefined;
     }
 
     return containerSizeStyle;
@@ -321,8 +314,7 @@ export default class Button extends BaseComponent {
       tintColor: this.getLabelColor(),
     };
 
-    const marginSide =
-      [Button.sizes.large, Button.sizes.medium].includes(size) ? 8 : 4;
+    const marginSide = [Button.sizes.large, Button.sizes.medium].includes(size) ? 8 : 4;
     if (!this.isIconButton) {
       if (iconOnRight) {
         iconStyle.marginLeft = marginSide;
@@ -373,14 +365,12 @@ export default class Button extends BaseComponent {
     const backgroundColor = this.getBackgroundColor();
     const outlineStyle = this.getOutlineStyle();
     const containerSizeStyle = this.getContainerSizeStyle();
-    const contentSizeStyle = this.getContentSizeStyle();
     const borderRadiusStyle = this.getBorderRadiusStyle();
 
     return (
       <TouchableOpacity
         style={[
           this.styles.container,
-          this.styles.innerContainer,
           containerSizeStyle,
           (link || this.isIconButton) && this.styles.innerContainerLink,
           shadowStyle,
@@ -399,7 +389,7 @@ export default class Button extends BaseComponent {
         testID={testID}
         {...others}
       >
-        <View row centerV style={contentSizeStyle}>
+        <View row centerV>
           {this.props.children}
           {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
           {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
@@ -413,9 +403,6 @@ function createStyles() {
   return StyleSheet.create({
     container: {
       backgroundColor: 'transparent',
-    },
-    innerContainer: {
-      flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
     },

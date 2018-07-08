@@ -146,47 +146,6 @@ describe('Button', () => {
     });
   });
 
-  describe('getContentSizeStyle', () => {
-    it('should return style for large button', () => {
-      const uut = new Button({size: 'large'});
-      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 36});
-      mockAndroid();
-      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 28});
-    });
-
-    it('should return style for medium button', () => {
-      const uut = new Button({size: 'medium'});
-      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 18});
-      mockAndroid();
-      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 20});
-    });
-
-    it('should return style for small button', () => {
-      const uut = new Button({size: 'small'});
-      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 15});
-    });
-
-    it('should return style for xSmall button', () => {
-      const uut = new Button({size: Button.sizes.xSmall});
-      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 12});
-    });
-
-    it('should have no padding of button is a link', () => {
-      const uut = new Button({size: 'medium', link: true});
-      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 0});
-    });
-    
-    it('should have no padding of button is an icon button', () => {
-      const uut = new Button({size: 'medium', iconSource: 14});
-      expect(uut.getContentSizeStyle()).toEqual({paddingHorizontal: 0});
-    });
-
-    it('should have no padding if avoidInnerPadding prop was sent', () => {
-      const uut = new Button({size: 'medium', avoidInnerPadding: true});
-      expect(uut.getContentSizeStyle()).toEqual();
-    });
-  });
-
   describe('getLabelSizeStyle', () => {
     it('should return style for large button', () => {
       const uut = new Button({size: 'large'});
@@ -277,50 +236,65 @@ describe('Button', () => {
     it('should return style for large button', () => {
       const uut = new Button({size: 'large'});
       const uut2 = new Button({size: 'large', outline: true});
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 16, minWidth: 138});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 15, minWidth: 138});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 16, paddingHorizontal: 36, minWidth: 138});
+      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 15, paddingHorizontal: 36, minWidth: 138});
 
       mockAndroid();
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 15, minWidth: 128});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 14, minWidth: 128});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 15, paddingHorizontal: 28, minWidth: 128});
+      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 14, paddingHorizontal: 28, minWidth: 128});
     });
 
     it('should return style for medium button', () => {
       const uut = new Button({size: 'medium'});
       const uut2 = new Button({size: 'medium', outline: true});
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 11, minWidth: 95});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 10, minWidth: 95});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 11, paddingHorizontal: 18, minWidth: 95});
+      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 10, paddingHorizontal: 18, minWidth: 95});
 
       mockAndroid();
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 10, minWidth: 88});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 9, minWidth: 88});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 10, paddingHorizontal: 20, minWidth: 88});
+      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 9, paddingHorizontal: 20, minWidth: 88});
     });
 
     it('should return style for small button', () => {
       const uut = new Button({size: 'small'});
       const uut2 = new Button({size: 'small', outline: true});
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 6, minWidth: 74});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 5, minWidth: 74});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 6, paddingHorizontal: 15, minWidth: 74});
+      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 5, paddingHorizontal: 15, minWidth: 74});
 
       mockAndroid();
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 6, minWidth: 72});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 5, minWidth: 72});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 6, paddingHorizontal: 15, minWidth: 72});
+      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 5, paddingHorizontal: 15, minWidth: 72});
     });
 
     it('should return style for xSmall button', () => {
       const uut = new Button({size: Button.sizes.xSmall});
       const uut2 = new Button({size: Button.sizes.xSmall, outline: true});
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 5, minWidth: 66});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 4, minWidth: 66});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 5, paddingHorizontal: 12, minWidth: 66});
+      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 4, paddingHorizontal: 12, minWidth: 66});
 
       mockAndroid();
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 4, minWidth: 60});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 3, minWidth: 60});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 4, paddingHorizontal: 12, minWidth: 60});
+      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 3, paddingHorizontal: 12, minWidth: 60});
     });
 
     it('should avoid minWidth limitation if avoidMinWidth was sent', () => {
       const uut = new Button({size: Button.sizes.medium, avoidMinWidth: true});
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 11});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 11, paddingHorizontal: 18});
+    });
+
+    it('should have no padding of button is a link nor min width', () => {
+      const uut = new Button({size: 'medium', link: true});
+      expect(uut.getContainerSizeStyle()).toEqual({});
+    });
+    
+    it('should have no padding of button is an icon button', () => {
+      const uut = new Button({size: 'medium', iconSource: 14});
+      expect(uut.getContainerSizeStyle()).toEqual({});
+    });
+
+    it('should have no padding if avoidInnerPadding prop was sent', () => {
+      const uut = new Button({size: 'medium', avoidInnerPadding: true});
+      expect(uut.getContainerSizeStyle()).toEqual({minWidth: 95});
     });
   });
 
