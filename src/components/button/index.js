@@ -117,7 +117,7 @@ export default class Button extends BaseComponent {
   };
 
   static defaultProps = {
-    labelStyle: {},
+    // labelStyle: {},
     size: 'large',
     outline: false,
     iconOnRight: false,
