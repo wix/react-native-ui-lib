@@ -172,7 +172,7 @@ export default class Button extends BaseComponent {
     const {disabled, outline, link, backgroundColor: propsBackgroundColor} = this.props;
     const {backgroundColor: stateBackgroundColor} = this.state;
 
-    if (!outline && !link && !this.isIconButton) {
+    if (!outline && !link) {
       if (disabled) {
         return ThemeManager.CTADisabledColor;
       }
@@ -227,29 +227,30 @@ export default class Button extends BaseComponent {
 
     const CONTAINER_STYLE_BY_SIZE = {};
     CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = {
-      paddingVertical: Constants.isIOS ? 5 : 4,
-      minWidth: Constants.isIOS ? 66 : 60,
-      paddingHorizontal: 12,
+      paddingVertical: 3,
+      paddingHorizontal: 11,
+      minWidth: 66,
     };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = {
-      paddingVertical: 6,
-      minWidth: Constants.isIOS ? 74 : 72,
-      paddingHorizontal: 15,
+      paddingVertical: 4.5,
+      paddingHorizontal: 14,
+      minWidth: 70,
     };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = {
-      paddingVertical: Constants.isIOS ? 11 : 10,
-      minWidth: Constants.isIOS ? 95 : 88,
-      paddingHorizontal: Constants.isIOS ? 18 : 20,
+      paddingVertical: 6.5,
+      paddingHorizontal: 16,
+      minWidth: 77,
     };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = {
-      paddingVertical: Constants.isIOS ? 16 : 15,
-      minWidth: Constants.isIOS ? 138 : 128,
-      paddingHorizontal: Constants.isIOS ? 36 : 28,
+      paddingVertical: 9.5,
+      paddingHorizontal: 20,
+      minWidth: 90,
     };
 
     if (outline) {
       _.forEach(CONTAINER_STYLE_BY_SIZE, (style) => {
         style.paddingVertical -= 1; // eslint-disable-line
+        style.paddingHorizontal -= 1; // eslint-disable-line
       });
     }
 
@@ -372,7 +373,7 @@ export default class Button extends BaseComponent {
         style={[
           this.styles.container,
           containerSizeStyle,
-          (link || this.isIconButton) && this.styles.innerContainerLink,
+          (link) && this.styles.innerContainerLink,
           shadowStyle,
           margins,
           containerStyle,

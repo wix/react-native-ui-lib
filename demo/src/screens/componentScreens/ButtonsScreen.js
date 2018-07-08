@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {ScrollView, StyleSheet, Alert, Image} from 'react-native';
 import {Text, View, Assets, Constants, Button, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
 import DemoScreen from '../DemoScreen';
@@ -218,7 +218,7 @@ export default class ButtonsScreen extends DemoScreen {
               ref={element => (this.button_16 = element)}
               onPress={() => this.showSnippet(this.button_16)}
             />
-            
+
             <Button
               label="Outline with background"
               outlineColor={Colors.dark10}
@@ -281,12 +281,29 @@ export default class ButtonsScreen extends DemoScreen {
             />
             <Text style={styles.header}>Special Cases</Text>
 
-            <Button
-              iconSource={plusIcon}
-              style={{marginBottom: ButtonSpace}}
-              ref={element => (this.button_23 = element)}
-              onPress={() => this.showSnippet(this.button_23)}
-            />
+            <View marginB-20 row>
+              <Button
+                iconSource={plusIcon}
+                style={{padding: 10}}
+                color={Colors.white}
+                ref={element => (this.button_23 = element)}
+                onPress={() => this.showSnippet(this.button_23)}
+              />
+              
+              <Button
+                iconSource={plusIcon}
+                
+                style={{padding: 10}}
+                link
+              />
+              
+              <Button
+                iconSource={plusIcon}
+                outline
+                style={{padding: 10}}
+                outlineColor={Colors.red50}
+              />
+            </View>
 
             <Button
               style={{marginBottom: ButtonSpace}}
@@ -296,13 +313,7 @@ export default class ButtonsScreen extends DemoScreen {
               label="Icon"
             />
 
-            <Button
-              style={{marginBottom: ButtonSpace}}
-              blue30
-              outline
-              iconSource={plusIcon}
-              label="Icon"
-            />
+            <Button style={{marginBottom: ButtonSpace}} blue30 outline iconSource={plusIcon} label="Icon" />
 
             <Button onPress={() => Alert.alert('Button #3')} style={{marginBottom: ButtonSpace}}>
               <Text>
@@ -316,25 +327,11 @@ export default class ButtonsScreen extends DemoScreen {
 
             <Button text90 link style={{marginBottom: ButtonSpace}} iconSource={plusIcon} label="link icon" />
 
-            <Button
-              text90
-              link
-              disabled
-              style={{marginBottom: ButtonSpace}}
-              iconSource={plusIcon}
-              label="disabled link"
-            />
+            <Button text90 link disabled style={{marginBottom: ButtonSpace}} iconSource={plusIcon} label="disabled link" />
 
-            <Button
-              label="link button" link
-              style={{marginBottom: ButtonSpace}}
-            />
+            <Button label="link button" link style={{marginBottom: ButtonSpace}} />
 
-            <Button
-              label="Icon on right"
-              iconSource={plusIcon}
-              iconOnRight
-            />
+            <Button label="Icon on right" iconSource={plusIcon} iconOnRight />
           </View>
 
           <View marginT-20>
