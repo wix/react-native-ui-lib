@@ -32,18 +32,13 @@ class FeatureHighlightScreen extends Component {
     this.closeHighlight = this.closeHighlight.bind(this);
     this.showHighlight = this.showHighlight.bind(this);
     this.moveNext = this.moveNext.bind(this);
-
-    props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-  }
-
-  onNavigatorEvent(event) {
-    if (event.id === 'didAppear') {
-      this.showHighlight();
-    }
   }
 
   componentDidMount() {
-    // this.showHighlight();
+    // setting timeout to allow Android's transition animation to complete
+    setTimeout(() => {
+      this.showHighlight();
+    }, 1000);
   }
 
   closeHighlight() {
