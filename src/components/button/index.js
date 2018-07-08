@@ -404,15 +404,6 @@ export default class Button extends BaseComponent {
           {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
           {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
         </View>
-        {/* <View
-          style={[
-            this.styles.innerContainer,
-            containerSizeStyle,
-            link && this.styles.innerContainerLink,
-            style,
-          ]}
-        >
-        </View> */}
       </TouchableOpacity>
     );
   }
