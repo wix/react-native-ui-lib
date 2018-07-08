@@ -29,7 +29,7 @@ module.exports = {
     "no-trailing-spaces": "off",
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": true}],
     // "uilib/no-hard-coded-color": ["error", validColors, extraFixColorsMap],
-    "uilib/no-hard-coded-font": "error"
+    // "uilib/no-hard-coded-font": "warn"
   },
   "env": {
     "browser": true,
