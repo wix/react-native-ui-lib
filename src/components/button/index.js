@@ -341,7 +341,7 @@ export default class Button extends BaseComponent {
   }
 
   renderLabel() {
-    const {label, labelStyle, labelProps} = this.props;
+    const {label, labelStyle, labelProps} = this.getThemeProps();
     const typography = this.extractTypographyValue();
     const color = this.getLabelColor();
     const labelSizeStyle = this.getLabelSizeStyle();
