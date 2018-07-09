@@ -2,7 +2,7 @@ import _ from 'lodash';
 import {Constants} from '../helpers';
 
 const WEIGHT_TYPES = {
-  SLIM: '100',
+  ULIGHT: '100',
   THIN: '200',
   LIGHT: '300',
   REGULAR: '400',
@@ -15,19 +15,20 @@ const WEIGHT_TYPES = {
 class Typography {
   text10 = {
     fontSize: 64,
-    fontWeight: WEIGHT_TYPES.SLIM,
+  ULIGHT: '100',
+  fontWeight: WEIGHT_TYPES.ULIGHT,
     lineHeight: Math.floor(64 * 1.4),
     fontFamily: Constants.isAndroid ? 'sans-serif-thin' : undefined,
   };
   text20 = {
     fontSize: 50,
-    fontWeight: WEIGHT_TYPES.SLIM,
+    fontWeight: WEIGHT_TYPES.ULIGHT,
     lineHeight: Math.floor(50 * 1.4),
     fontFamily: Constants.isAndroid ? 'sans-serif-thin' : undefined,
   };
   text30 = {
     fontSize: 36,
-    fontWeight: Constants.isAndroid ? WEIGHT_TYPES.SLIM : WEIGHT_TYPES.THIN,
+    fontWeight: Constants.isAndroid ? WEIGHT_TYPES.ULIGHT : WEIGHT_TYPES.THIN,
     lineHeight: Math.floor(36 * 1.3),
     fontFamily: Constants.isAndroid ? 'sans-serif-thin' : undefined,
   };
