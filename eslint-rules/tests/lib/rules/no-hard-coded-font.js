@@ -13,35 +13,41 @@ RuleTester.setDefaultConfig({
 
 const ruleTester = new RuleTester();
 
-// ruleTester.run('no-hard-coded-font', rule, {
-//   valid: [
-//     { code: 'const goodUsage = <Text style={{color: \'red\'}}/>;' },
-//     { code: 'const goodUsage = <Text style={{fontSize: Typography.text10.fontSize}}/>;' },
-//   ],
-//   invalid: [
-//     {
-//       code: 'const badUsage = <Text style={{fontSize: 15}}/>;',
-//       errors: [
-//         {
-//           messageId: 'foo',
-//         },
-//       ],
-//     },
-//     {
-//       code: 'const badUsage = <Text style={{fontSize: Constants.isAndroid ? 16 : 17}}/>;',
-//       errors: [
-//         {
-//           messageId: 'foo',
-//         },
-//       ],
-//     },
-//     {
-//       code: 'const badUsage = <Text style={{fontSize: size}}/>;',
-//       errors: [
-//         {
-//           messageId: 'foo',
-//         },
-//       ],
-//     },
-//   ],
-// });
+ruleTester.run('no-hard-coded-font', rule, {
+  valid: [
+    { 
+      code: 'const goodUsage = <Text style={{fontSize: Typography.text10.fontSize}}/>;'
+    }
+  ],
+  invalid: [
+    {
+      // fontWeight as a string
+      code: 'const badUsage = <Text style={{fontWeight: \'100\'}}/>;',
+      errors: [
+        {message: 'Found value \'100\' in font style prop. Use UILib typography instead of hardcoded font styles.'}
+      ],
+    },
+    {
+      // fontSize as a number
+      code: 'const badUsage = <Text style={{fontSize: 24}}/>;',
+      errors: [
+        {message: 'Found value \'24\' in font style prop. Use UILib typography instead of hardcoded font styles.'}
+      ],
+    },
+    {
+      // fontSize as a trinry
+      code: 'const badUsage = <Text style={{fontSize: isAndroid ? 16 : 17}}/>;',
+      errors: [
+        {message: 'Found value \'16\' in font style prop. Use UILib typography instead of hardcoded font styles.'},
+        {message: 'Found value \'17\' in font style prop. Use UILib typography instead of hardcoded font styles.'}
+      ],
+    },
+    {
+      // fontSize as a string variable
+      code: 'const size = 22; const badUsage = <Text style={{fontSize: size}}/>;',
+      errors: [
+        {message: 'Found value \'22\' in font style prop. Use UILib typography instead of hardcoded font styles.'}
+      ],
+    },
+  ],
+});
