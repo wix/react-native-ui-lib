@@ -15,9 +15,8 @@ const ruleTester = new RuleTester();
 
 ruleTester.run('no-hard-coded-font', rule, {
   valid: [
-    { 
-      code: 'const goodUsage = <Text style={{fontSize: Typography.text10.fontSize}}/>;'
-    }
+    {code: 'const goodUsage = <Text style={{fontSize: Typography.text10.fontSize}}/>;'},
+    {code: 'const goodUsage = <View style={{...Typography.text10}}/>;'}
   ],
   invalid: [
     {
