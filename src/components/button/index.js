@@ -224,6 +224,7 @@ export default class Button extends BaseComponent {
 
   getContainerSizeStyle() {
     const {size, outline, link, avoidMinWidth, avoidInnerPadding} = this.props;
+    const outlineWidth = this.getThemeProps().outlineWidth || 1;
 
     const CONTAINER_STYLE_BY_SIZE = {};
     CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = {
@@ -249,8 +250,8 @@ export default class Button extends BaseComponent {
 
     if (outline) {
       _.forEach(CONTAINER_STYLE_BY_SIZE, (style) => {
-        style.paddingVertical -= 1; // eslint-disable-line
-        style.paddingHorizontal -= 1; // eslint-disable-line
+        style.paddingVertical -= outlineWidth; // eslint-disable-line
+        style.paddingHorizontal -= outlineWidth; // eslint-disable-line
       });
     }
 

@@ -255,6 +255,11 @@ describe('Button', () => {
       expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 3, paddingHorizontal: 11, minWidth: 66});
       expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 2, paddingHorizontal: 10, minWidth: 66});
     });
+    
+    it('should reduce padding by outlineWidth in case of outline button', () => {
+      const uut = new Button({size: Button.sizes.large, outline: true, outlineWidth: 2});
+      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 7.5, paddingHorizontal: 18, minWidth: 90});
+    });
 
     it('should avoid minWidth limitation if avoidMinWidth was sent', () => {
       const uut = new Button({size: Button.sizes.medium, avoidMinWidth: true});

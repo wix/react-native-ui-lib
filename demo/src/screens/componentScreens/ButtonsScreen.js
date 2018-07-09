@@ -213,6 +213,7 @@ export default class ButtonsScreen extends DemoScreen {
             <Button
               label="Red Outline"
               outline
+              outlineWidth={3}
               outlineColor={Colors.red10}
               style={{marginBottom: ButtonSpace}}
               ref={element => (this.button_16 = element)}
@@ -284,7 +285,7 @@ export default class ButtonsScreen extends DemoScreen {
             <View marginB-20 row>
               <Button
                 iconSource={plusIcon}
-                style={{padding: 10}}
+                style={{width: 44, height: 44}}
                 color={Colors.white}
                 ref={element => (this.button_23 = element)}
                 onPress={() => this.showSnippet(this.button_23)}
@@ -293,14 +294,14 @@ export default class ButtonsScreen extends DemoScreen {
               <Button
                 iconSource={plusIcon}
                 
-                style={{padding: 10}}
+                style={{width: 44, height: 44}}
                 link
               />
               
               <Button
                 iconSource={plusIcon}
                 outline
-                style={{padding: 10}}
+                style={{width: 44, height: 44}}
                 outlineColor={Colors.red50}
               />
             </View>
