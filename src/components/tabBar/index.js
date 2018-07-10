@@ -81,7 +81,7 @@ export default class TabBar extends BaseComponent {
   }
 
   generateStyles() {
-    this.styles = createStyles(this.props);
+    this.styles = createStyles(this.getThemeProps());
   }
 
   // Indicator
@@ -120,7 +120,7 @@ export default class TabBar extends BaseComponent {
   }
 
   animateIndicatorPosition = (index) => {
-    const {disableAnimatedTransition} = this.props;
+    const {disableAnimatedTransition} = this.getThemeProps();
     const {selectedIndicatorPosition} = this.state;
 
     const newPosition = this.calcIndicatorPosition(index);
@@ -169,7 +169,7 @@ export default class TabBar extends BaseComponent {
   }
 
   renderSelectedIndicator() {
-    const {indicatorStyle} = this.props;
+    const {indicatorStyle} = this.getThemeProps();
     const {selectedIndicatorPosition} = this.state;
     const width = this.calcIndicatorWidth();
     const left = selectedIndicatorPosition.interpolate({
@@ -184,7 +184,7 @@ export default class TabBar extends BaseComponent {
   }
 
   renderBar() {
-    const {height, style} = this.props;
+    const {height, style} = this.getThemeProps();
     return (
       <View style={[this.styles.container, style]} bg-white row height={height} onLayout={this.onLayout} useSafeArea>
         {this.renderChildren()}
@@ -194,7 +194,7 @@ export default class TabBar extends BaseComponent {
   }
 
   renderScrollBar() {
-    const {height, style/* , useGradientFinish */} = this.props;
+    const {height, style/* , useGradientFinish */} = this.getThemeProps();
     // const gradientColor = style.backgroundColor || Colors.white;
     const sizeStyle = _.pick(style, ['width', 'height']);
     const otherStyle = _.omit(style, ['width', 'height']);
@@ -295,7 +295,8 @@ export default class TabBar extends BaseComponent {
   }
 
   onScroll = (event) => {
-    if (this.props.useGradientFinish) {
+    const {useGradientFinish} = this.getThemeProps();
+    if (useGradientFinish) {
       const x = event.nativeEvent.contentOffset.x;
       this.animateGradientOpacity(x);
     }
