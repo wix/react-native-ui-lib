@@ -1,32 +1,27 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {ScrollView} from 'react-native';
-import {Constants, Colors, Shadows, TabBar, View, Text, Image} from 'react-native-ui-lib'; //eslint-disable-line
+import {StyleSheet, ScrollView} from 'react-native';
+import {Constants, Colors, TabBar, View, Text, Image} from 'react-native-ui-lib'; //eslint-disable-line
+
+
+const starIcon = require('../../assets/icons/star.png');
+const fontWeightBold = Constants.isIOS ? '600' : '700';
 
 export default class TabBarScreen extends Component {
   state = {
-    snippet: '',
     selectedIndex: 0,
     selectedIndex1: 1,
     selectedIndex2: 2,
     selectedIndex3: 3,
   };
 
-  componentDidMount() {
-    const snippet = this.tabbar.getSnippet();
-    this.setState({
-      snippet,
-    });
-  }
-
   render() {
-    const {snippet, selectedIndex, selectedIndex1, selectedIndex2, selectedIndex3} = this.state;
-    const starIcon = require('../../assets/icons/star.png');
-    const fontWeightBold = Constants.isIOS ? '600' : '700';
+    const {selectedIndex, selectedIndex1, selectedIndex2, selectedIndex3} = this.state;
     
     return (
       <ScrollView style={{backgroundColor: Colors.dark80}}>
-        {/* fit */}
+        <Text style={styles.text}>FIT Mode - items will get equal space</Text>
+
         <TabBar
           selectedIndex={selectedIndex1}
           onChangeIndex={index => this.setState({selectedIndex1: index})}
@@ -40,9 +35,8 @@ export default class TabBarScreen extends Component {
           </TabBar.Item>
         </TabBar>
 
-        <View style={{height: 30}}/>
+        <Text style={styles.text}>Relative FIT mode - Don't forget to set flex!</Text>
 
-        {/* relative FIT - Don't forget to set flex! */}
         <View row>
           <TabBar
             style={{flex: 1, height: 48}}
@@ -59,9 +53,8 @@ export default class TabBarScreen extends Component {
           </View>
         </View>
 
-        <View style={{height: 30}}/>
+        <Text style={styles.text}>Relative SCROLL mode - Don't forget to set width!</Text>
 
-        {/* relative SCROLL - Don't forget to set the width! */}
         <View row>
           <TabBar
             mode={TabBar.modes.SCROLL}
@@ -84,31 +77,7 @@ export default class TabBarScreen extends Component {
           </View>
         </View>
 
-        <View style={{height: 30}}/>
-
-        {/* scroll*/}
-        <TabBar
-          mode={TabBar.modes.SCROLL}
-          selectedIndex={selectedIndex2}
-          onChangeIndex={index => this.setState({selectedIndex2: index})}
-          ref={element => (this.tabbar = element)}
-          style={{height: 48, backgroundColor: Colors.red80}}
-          indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.cyan30}}
-          useGradientFinish
-        >
-          <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.cyan30}} label="ACTIVE"/>
-          <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.cyan30}} label="PHOTO ALBUM"/>
-          <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.cyan30}} label="INACTIVE"/>
-          <TabBar.Item>
-            <Image source={starIcon} resizeMode={'contain'} style={[{width: 20, height: 20}, selectedIndex2 === 3 && {tintColor: Colors.cyan30}]}/>
-          </TabBar.Item>
-          <TabBar.Item>
-            <Text text90 cyan30={selectedIndex2 === 4}>OVERFLOW</Text>
-          </TabBar.Item>
-          <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.cyan30}} label="OVERFLOW"/>
-        </TabBar>
-
-        <View style={{height: 30}}/>
+        <Text style={styles.text}>SCROLL mode - items will fit their content</Text>
 
         <TabBar
           mode={TabBar.modes.SCROLL}
@@ -132,7 +101,30 @@ export default class TabBarScreen extends Component {
           <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="OVERFLOW"/>
         </TabBar>
 
-        <View style={{height: 30}}/>
+        <Text style={styles.text}>Style the TabBar</Text>
+
+        <TabBar
+          mode={TabBar.modes.SCROLL}
+          selectedIndex={selectedIndex2}
+          onChangeIndex={index => this.setState({selectedIndex2: index})}
+          ref={element => (this.tabbar = element)}
+          style={{height: 48, backgroundColor: Colors.red80}}
+          indicatorStyle={{borderBottomWidth: 4, borderColor: Colors.cyan30}}
+          useGradientFinish
+        >
+          <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.cyan30}} label="ACTIVE"/>
+          <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.cyan30}} label="PHOTO ALBUM"/>
+          <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.cyan30}} label="INACTIVE"/>
+          <TabBar.Item>
+            <Image source={starIcon} resizeMode={'contain'} style={[{width: 20, height: 20}, selectedIndex2 === 3 && {tintColor: Colors.cyan30}]}/>
+          </TabBar.Item>
+          <TabBar.Item>
+            <Text text90 cyan30={selectedIndex2 === 4}>OVERFLOW</Text>
+          </TabBar.Item>
+          <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.cyan30}} label="OVERFLOW"/>
+        </TabBar>
+
+        <Text style={styles.text}>SCROLL turned to FIT when content is too short</Text>
 
         <TabBar
           mode={TabBar.modes.SCROLL}
@@ -152,7 +144,7 @@ export default class TabBarScreen extends Component {
           </TabBar.Item>
         </TabBar>
 
-        <View style={{height: 30}}/>
+        <Text style={styles.text}>Allow two lines</Text>
 
         <TabBar
           mode={TabBar.modes.SCROLL}
@@ -168,7 +160,7 @@ export default class TabBarScreen extends Component {
           <TabBar.Item labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="INACTIVE"/>
         </TabBar>
 
-        <View style={{height: 30}}/>
+        <Text style={styles.text}>Give some items fixed width</Text>
 
         <TabBar
           mode={TabBar.modes.SCROLL}
@@ -192,3 +184,13 @@ export default class TabBarScreen extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  text: {
+    height: 30,
+    paddingTop: 8,
+    paddingLeft: 8,
+    color: Colors.dark30,
+    fontSize: 11
+  }
+});
