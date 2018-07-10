@@ -32,6 +32,13 @@ function isColorException(colorString) {
   return colorExceptions.indexOf(lowerCaseColorString) !== -1;
 }
 
+//no-hard-coded-font-styles
+const fontProps = ['fontSize', 'fontWeight', 'lineHeight', 'fontFamily'];
+
+function isPropFont (propName) {
+  return (fontProps.indexOf(propName) !== -1);
+}
+
 // GENERAL
 function isLiteral(type) {
   return (type === 'Literal' || type === 'TemplateLiteral');
@@ -51,6 +58,7 @@ function findValueNodeOfIdentifier(identifierName, scope) {
 }
 
 module.exports = {
+  isPropFont,
   findAndReportHardCodedValues,
   propIsColor,
   isColorException,

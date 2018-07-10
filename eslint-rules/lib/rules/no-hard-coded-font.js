@@ -1,15 +1,6 @@
-/**
- * @fileoverview Rule to disallow hard coded font style
- * @author Inbal Tish
- */
-
-// ------------------------------------------------------------------------------
-// Rule Definition
-// ------------------------------------------------------------------------------
-
 const utils = require('../utils')
 
-const { findAndReportHardCodedValues } = utils
+const { findAndReportHardCodedValues, isPropFont } = utils
 
 module.exports = {
   meta: {
@@ -19,22 +10,21 @@ module.exports = {
       recommended: true
     },
     messages: {
-      avoidName: 'Please do not use hard coded fontSize prop in style objects, instead use Typography presets'
+      avoidName: 'Please do not use hard coded font style objects.'
     },
     fixable: 'code',
     schema: [] // no options
   },
   create (context) {
     function reportAndFixHardCodedFont (node) {
-      context.report({
-        node,
-        message: 'Please do not use hard coded fontSize prop in style objects, instead use Typography presets'
-      })
+      if (node.value) {
+        context.report({
+          node,
+          message: `Found value '${node.value}' in font style prop. Use UILib typography instead of hardcoded font styles.`,
+        })
+      }
     }
 
-    function isPropFont (propName) {
-      return (['fontSize', 'fontWeight', 'lineHeight', 'fontFamily'].indexOf(propName) !== -1)
-    }
     function noHardCodedFont (node) {
       node.properties.forEach((property) => {
         if (property.key) {
