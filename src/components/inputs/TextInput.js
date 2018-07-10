@@ -389,6 +389,7 @@ export default class TextInput extends BaseInput {
       // {height: this.getHeight()},
       style,
     ];
+    // HACK: passing whitespace instead of undefined. Issue fixed in RN56
     const placeholderText = this.shouldFakePlaceholder() ?
       (this.shouldShowHelperText() ? helperText : ' ') : placeholder;
 
