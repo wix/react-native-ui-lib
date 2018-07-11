@@ -61,7 +61,7 @@ export default class TabBar extends BaseComponent {
     mode: LAYOUT_MODES.FIT,
     selectedIndex: 0,
     height: 51,
-    useGradientFinish: false
+    useGradientFinish: false,
   };
 
   static modes = LAYOUT_MODES;
@@ -105,7 +105,7 @@ export default class TabBar extends BaseComponent {
     if (this.childrenCount === 0) {
       return '0%';
     }
-    const itemWidth = this.state.widths[this.state.selectedIndex] - this.itemContentSpacing * 2;
+    const itemWidth = this.state.widths[this.state.selectedIndex] - (this.itemContentSpacing * 2);
     const width = (itemWidth / this.contentWidth) * 100;
     return `${width}%`;
   }
@@ -113,7 +113,6 @@ export default class TabBar extends BaseComponent {
   calcIndicatorPosition(index) {
     let position = 0;
     if (!_.isEmpty(this.state.widths)) {
-      console.log('UILIB position 1');
       let itemPosition = 0;
       for (let i = 0; i < index; i++) {
         itemPosition += this.state.widths[i];
@@ -121,8 +120,7 @@ export default class TabBar extends BaseComponent {
       itemPosition += this.itemContentSpacing;
       position = (itemPosition / this.contentWidth) * 100;
     } else {
-      console.log('UILIB position 2');
-      position = index * (100 / this.childrenCount) + this.itemContentSpacing;
+      position = (index * (100 / this.childrenCount)) + this.itemContentSpacing;
     }
     return position;
   }
