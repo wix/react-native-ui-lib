@@ -125,7 +125,7 @@ export default class TabBarScreen extends Component {
           useGradientFinish
         >
           <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.violet30}} label="ACTIVE"/>
-          <TabBar.Item divider label="Add More Apps" icon={starIcon} iconSelectedColor={Colors.violet30} selectedLabelStyle={{color: Colors.violet30}}/>
+          <TabBar.Item divider label="Add More Apps" icon={starIcon} labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.violet30}}/>
         </TabBar>
 
         <Text style={styles.text}>Allow two lines</Text>

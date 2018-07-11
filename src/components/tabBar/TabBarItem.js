@@ -96,6 +96,15 @@ export default class TabBarItem extends BaseComponent {
     this.setState({fontStyle: {}});
   }
 
+  getColorFromStyle(style) {
+    const flatten = StyleSheet.flatten(style);
+    if (flatten) {
+      const color = flatten.color;
+      return color;
+    }
+    return undefined;
+  }
+
   render() {   
     const {
       children,
@@ -112,6 +121,10 @@ export default class TabBarItem extends BaseComponent {
       onPress,
       testID,
     } = this.getThemeProps();
+
+    const iconTint = iconColor || this.getColorFromStyle(labelStyle) || this.getColorFromStyle(this.styles.label);
+    const iconSelectedTint = iconSelectedColor || this.getColorFromStyle(selectedLabelStyle) || 
+      this.getColorFromStyle(this.styles.labelSelected);
     
     return (
       <TouchableOpacity
@@ -126,7 +139,7 @@ export default class TabBarItem extends BaseComponent {
             <View padding-6>
               <Image
                 source={icon}
-                tintColor={selected ? iconSelectedColor : iconColor}
+                tintColor={selected ? iconSelectedTint : iconTint}
               />
             </View>
           }
