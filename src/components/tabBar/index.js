@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, ViewPropTypes, Animated, ScrollView} from 'react-native';
 // import LinearGradient from 'react-native-linear-gradient';
-import {Colors} from '../../style';
+import {Colors, Spacings} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import TabBarItem from './TabBarItem';
@@ -35,6 +35,10 @@ export default class TabBar extends BaseComponent {
      * custom style for the selected indicator
      */
     indicatorStyle: ViewPropTypes.style,
+    /**
+     * whethere the indicator should mark item's content instead of the whole item's width
+     */
+    isContentIndicator: PropTypes.bool,
     /**
      * disable the animated transition of the tab indicator
      */
@@ -69,6 +73,7 @@ export default class TabBar extends BaseComponent {
     this.contentWidth = undefined;
     this.containerWidth = undefined;
     this.childrenCount = React.Children.count(this.props.children);
+    this.itemContentSpacing = props.isContentIndicator ? Spacings.s4 : 0;
 
     this.state = {
       selectedIndex: props.selectedIndex,
@@ -100,7 +105,7 @@ export default class TabBar extends BaseComponent {
     if (this.childrenCount === 0) {
       return '0%';
     }
-    const itemWidth = this.state.widths[this.state.selectedIndex];
+    const itemWidth = this.state.widths[this.state.selectedIndex] - (this.itemContentSpacing * 2);
     const width = (itemWidth / this.contentWidth) * 100;
     return `${width}%`;
   }
@@ -112,9 +117,10 @@ export default class TabBar extends BaseComponent {
       for (let i = 0; i < index; i++) {
         itemPosition += this.state.widths[i];
       }
+      itemPosition += this.itemContentSpacing;
       position = (itemPosition / this.contentWidth) * 100;
     } else {
-      position = index * (100 / this.childrenCount);
+      position = (index * (100 / this.childrenCount)) + this.itemContentSpacing;
     }
     return position;
   }

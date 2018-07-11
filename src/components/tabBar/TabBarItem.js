@@ -136,7 +136,7 @@ export default class TabBarItem extends BaseComponent {
       >
         <View row flex center style={[showDivider && this.styles.divider, {paddingHorizontal: Spacings.s4}]}>
           {icon &&
-            <View padding-6>
+            <View paddingR-6={!_.isEmpty(label)}>
               <Image
                 source={icon}
                 tintColor={selected ? iconSelectedTint : iconTint}
