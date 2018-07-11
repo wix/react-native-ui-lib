@@ -28,6 +28,10 @@ class Image extends BaseComponent {
      * the asset group, default is "icons"
      */
     assetGroup: PropTypes.string,
+    /**
+     * the asset tint
+     */
+    tintColor: PropTypes.string,
   };
 
   static defaultProps = {
@@ -60,7 +64,9 @@ class Image extends BaseComponent {
 
   render() {
     const source = this.getImageSource();
-    return <RNImage {...this.props} source={source} />;
+    const {tintColor} = this.getThemeProps();
+    
+    return <RNImage {...this.props} source={source} style={{tintColor}}/>;
   }
 }
 
