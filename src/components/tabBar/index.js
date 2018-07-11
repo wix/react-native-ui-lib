@@ -282,15 +282,17 @@ export default class TabBar extends BaseComponent {
   }
 
   calcLayoutMode() {
-    if (this.contentWidth < this.containerWidth) {
-      // clean and change to FIT layout
-      this.widthsArray = {};
-      this.contentWidth = undefined;
-      this.setState({currentMode: LAYOUT_MODES.FIT, widths: {}});
-    } else {
-      // display SCROLL layout
-      this.updateIndicatorPosition();
-      this.setState({fadeAnim: 1});
+    if (this.contentWidth && this.containerWidth) {
+      if (this.contentWidth < this.containerWidth) {
+        // clean and change to FIT layout
+        this.widthsArray = {};
+        this.contentWidth = this.containerWidth;
+        this.setState({currentMode: LAYOUT_MODES.FIT, widths: {}});
+      } else {
+        // display SCROLL layout
+        this.updateIndicatorPosition();
+        this.setState({fadeAnim: 1});
+      }
     }
   }
 
