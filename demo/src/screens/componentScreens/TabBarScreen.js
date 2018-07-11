@@ -25,7 +25,6 @@ export default class TabBarScreen extends Component {
         <TabBar
           selectedIndex={selectedIndex1}
           onChangeIndex={index => this.setState({selectedIndex1: index})}
-          ref={element => (this.tabbar = element)}
         >
           <TabBar.Item label="FEED"/>
           <TabBar.Item label="SERVICES"/>
@@ -42,7 +41,6 @@ export default class TabBarScreen extends Component {
             style={{flex: 1, height: 48}}
             selectedIndex={selectedIndex1}
             onChangeIndex={index => this.setState({selectedIndex1: index})}
-            ref={element => (this.tabbar = element)}
           >
             <TabBar.Item label="FEED"/>
             <TabBar.Item label="SERVICES"/>
@@ -60,7 +58,6 @@ export default class TabBarScreen extends Component {
             mode={TabBar.modes.SCROLL}
             selectedIndex={selectedIndex1}
             onChangeIndex={index => this.setState({selectedIndex1: index})}
-            ref={element => (this.tabbar = element)}
             style={{height: 48, width: Constants.screenWidth - 40}}
             useGradientFinish
           >
@@ -83,7 +80,6 @@ export default class TabBarScreen extends Component {
           mode={TabBar.modes.SCROLL}
           selectedIndex={selectedIndex2}
           onChangeIndex={index => this.setState({selectedIndex2: index})}
-          ref={element => (this.tabbar = element)}
           style={{height: 48}}
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.purple30}}
           useGradientFinish
@@ -107,7 +103,6 @@ export default class TabBarScreen extends Component {
           mode={TabBar.modes.SCROLL}
           selectedIndex={selectedIndex2}
           onChangeIndex={index => this.setState({selectedIndex2: index})}
-          ref={element => (this.tabbar = element)}
           style={{height: 48, backgroundColor: Colors.red80}}
           indicatorStyle={{borderBottomWidth: 4, borderColor: Colors.cyan30}}
           useGradientFinish
@@ -130,7 +125,6 @@ export default class TabBarScreen extends Component {
           mode={TabBar.modes.SCROLL}
           selectedIndex={selectedIndex}
           onChangeIndex={index => this.setState({selectedIndex: index})}
-          ref={element => (this.tabbar = element)}
           style={{height: 48}}
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.violet30}}
           useGradientFinish
@@ -150,7 +144,6 @@ export default class TabBarScreen extends Component {
           mode={TabBar.modes.SCROLL}
           selectedIndex={selectedIndex2}
           onChangeIndex={index => this.setState({selectedIndex2: index})}
-          ref={element => (this.tabbar = element)}
           style={{height: 48}}
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.orange30}}
           useGradientFinish
@@ -166,7 +159,6 @@ export default class TabBarScreen extends Component {
           mode={TabBar.modes.SCROLL}
           selectedIndex={selectedIndex3}
           onChangeIndex={index => this.setState({selectedIndex3: index})}
-          ref={element => (this.tabbar = element)}
           style={{height: 48}}
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.green30}}
           useGradientFinish
