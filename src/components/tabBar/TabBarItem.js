@@ -1,13 +1,14 @@
+import _ from 'lodash';
+import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import PropTypes from 'prop-types';
-import _ from 'lodash';
 import View from '../view';
 import Text from '../text';
+import Image from '../image';
+import TouchableOpacity from '../touchableOpacity';
 import {Colors, Typography, Spacings} from '../../style';
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
-import TouchableOpacity from '../touchableOpacity';
 
 /**
  * @description: TabBar.Item, inner component of TabBar for configuring the tabs
@@ -17,6 +18,18 @@ export default class TabBarItem extends BaseComponent {
   static displayName = 'TabBar.Item';
 
   static propTypes = {
+    /**
+     * icon of the tab
+     */
+    icon: PropTypes.number,
+    /**
+     * icon tint color
+     */
+    iconColor: PropTypes.string,
+    /**
+     * icon selected tint color
+     */
+    iconSelectedColor: PropTypes.string,
     /**
      * label of the tab
      */
@@ -83,9 +96,21 @@ export default class TabBarItem extends BaseComponent {
     this.setState({fontStyle: {}});
   }
 
+  getColorFromStyle(style) {
+    const flatten = StyleSheet.flatten(style);
+    if (flatten) {
+      const color = flatten.color;
+      return color;
+    }
+    return undefined;
+  }
+
   render() {   
     const {
       children,
+      icon,
+      iconColor,
+      iconSelectedColor,
       label,
       labelStyle,
       maxLines,
@@ -96,6 +121,10 @@ export default class TabBarItem extends BaseComponent {
       onPress,
       testID,
     } = this.getThemeProps();
+
+    const iconTint = iconColor || this.getColorFromStyle(labelStyle) || this.getColorFromStyle(this.styles.label);
+    const iconSelectedTint = iconSelectedColor || this.getColorFromStyle(selectedLabelStyle) || 
+      this.getColorFromStyle(this.styles.labelSelected);
     
     return (
       <TouchableOpacity
@@ -105,7 +134,15 @@ export default class TabBarItem extends BaseComponent {
         testID={testID}
         onLayout={this.onLayout}
       >
-        <View flex center style={[showDivider && this.styles.divider, {paddingHorizontal: Spacings.s4}]}>
+        <View row flex center style={[showDivider && this.styles.divider, {paddingHorizontal: Spacings.s4}]}>
+          {icon &&
+            <View padding-6>
+              <Image
+                source={icon}
+                tintColor={selected ? iconSelectedTint : iconTint}
+              />
+            </View>
+          }
           {!_.isEmpty(label) &&
             <Text
               numberOfLines={maxLines}

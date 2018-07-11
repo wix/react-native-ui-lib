@@ -87,13 +87,10 @@ export default class TabBarScreen extends Component {
           <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="ACTIVE"/>
           <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="PHOTO ALBUM"/>
           <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="INACTIVE"/>
-          <TabBar.Item divider>
-            <Image source={starIcon} resizeMode={'contain'} style={[{width: 20, height: 20}, selectedIndex2 === 3 && {tintColor: Colors.purple30}]}/>
-          </TabBar.Item>
+          <TabBar.Item divider icon={starIcon} iconSelectedColor={Colors.purple30}/>
           <TabBar.Item divider>
             <Text text90 purple30={selectedIndex2 === 4}>OVERFLOW</Text>
           </TabBar.Item>
-          {/* <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="OVERFLOW"/> */}
           <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="OVERFLOW"/>
         </TabBar>
 
@@ -110,9 +107,7 @@ export default class TabBarScreen extends Component {
           <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.cyan30}} label="ACTIVE"/>
           <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.cyan30}} label="PHOTO ALBUM"/>
           <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.cyan30}} label="INACTIVE"/>
-          <TabBar.Item>
-            <Image source={starIcon} resizeMode={'contain'} style={[{width: 20, height: 20}, selectedIndex2 === 3 && {tintColor: Colors.cyan30}]}/>
-          </TabBar.Item>
+          <TabBar.Item icon={starIcon} iconSelectedColor={Colors.cyan30}/>
           <TabBar.Item>
             <Text text90 cyan30={selectedIndex2 === 4}>OVERFLOW</Text>
           </TabBar.Item>
@@ -130,12 +125,7 @@ export default class TabBarScreen extends Component {
           useGradientFinish
         >
           <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.violet30}} label="ACTIVE"/>
-          <TabBar.Item divider>
-            <View row center>
-              <Image source={starIcon} resizeMode={'contain'} style={{width: 20, height: 20, tintColor: Colors.violet30}}/>
-              <Text marginL-8 text90 violet30 style={{fontWeight: fontWeightBold}}>Add More Apps</Text>
-            </View>
-          </TabBar.Item>
+          <TabBar.Item divider label="Add More Apps" icon={starIcon} labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.violet30}}/>
         </TabBar>
 
         <Text style={styles.text}>Allow two lines</Text>
@@ -166,9 +156,7 @@ export default class TabBarScreen extends Component {
           <TabBar.Item divider labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="ACTIVE"/>
           <TabBar.Item divider labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="PHOTO ALBUM"/>
           <TabBar.Item divider labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="INACTIVE"/>
-          <TabBar.Item divider width={48}>
-            <Image source={starIcon} resizeMode={'contain'} style={{width: 20, height: 20, tintColor: Colors.green30}}/>
-          </TabBar.Item>
+          <TabBar.Item divider width={48} icon={starIcon} iconSelectedColor={Colors.green30}/>
         </TabBar>
 
         <View style={{height: 30}}/>
