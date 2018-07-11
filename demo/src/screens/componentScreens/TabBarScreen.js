@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Constants, Colors, TabBar, View, Text, Image} from 'react-native-ui-lib'; //eslint-disable-line
+import {Constants, Assets, Colors, TabBar, View, Text, Image} from 'react-native-ui-lib'; //eslint-disable-line
 
 
 const starIcon = require('../../assets/icons/star.png');
@@ -46,7 +46,7 @@ export default class TabBarScreen extends Component {
             <TabBar.Item label="SERVICES"/>
             <TabBar.Item label="CHAT"/>
           </TabBar>
-          <View center style={{backgroundColor: Colors.dark70}}>
+          <View center style={{backgroundColor: Colors.dark70, width: 50}}>
             <Image source={starIcon} resizeMode={'contain'} style={[{marginHorizontal: 10, width: 20, height: 20, tintColor: Colors.blue30}]}/>
           </View>
         </View>
@@ -69,7 +69,7 @@ export default class TabBarScreen extends Component {
             <TabBar.Item label="WHY"/>
           </TabBar>
           <View style={{width: 10}}/>
-          <View center style={{backgroundColor: Colors.dark70}}>
+          <View center style={{backgroundColor: Colors.dark70, height: 47.5}}>
             <Image source={starIcon} resizeMode={'contain'} style={[{marginHorizontal: 5, width: 20, height: 20, tintColor: Colors.blue30}]}/>
           </View>
         </View>
@@ -84,11 +84,11 @@ export default class TabBarScreen extends Component {
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.purple30}}
           useGradientFinish
         >
-          <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="ACTIVE"/>
-          <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="PHOTO ALBUM"/>
-          <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="INACTIVE"/>
-          <TabBar.Item divider icon={starIcon} iconSelectedColor={Colors.purple30}/>
-          <TabBar.Item divider>
+          <TabBar.Item showDivider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="ACTIVE"/>
+          <TabBar.Item showDivider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="PHOTO ALBUM"/>
+          <TabBar.Item showDivider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="INACTIVE"/>
+          <TabBar.Item showDivider icon={starIcon} iconSelectedColor={Colors.purple30}/>
+          <TabBar.Item showDivider>
             <Text text90 purple30={selectedIndex2 === 4}>OVERFLOW</Text>
           </TabBar.Item>
           <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="OVERFLOW"/>
@@ -124,8 +124,8 @@ export default class TabBarScreen extends Component {
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.violet30}}
           useGradientFinish
         >
-          <TabBar.Item divider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.violet30}} label="ACTIVE"/>
-          <TabBar.Item divider label="Add More Apps" icon={starIcon} labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.violet30}}/>
+          <TabBar.Item showDivider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.violet30}} label="ACTIVE"/>
+          <TabBar.Item showDivider label="Add More Apps" icon={starIcon} labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.violet30}}/>
         </TabBar>
 
         <Text style={styles.text}>Allow two lines</Text>
@@ -138,8 +138,8 @@ export default class TabBarScreen extends Component {
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.orange30}}
           useGradientFinish
         >
-          <TabBar.Item divider labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="ACTIVE"/>
-          <TabBar.Item divider maxLines={2} labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="LONGEST TEXT EVER"/>
+          <TabBar.Item labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="ACTIVE"/>
+          <TabBar.Item maxLines={2} labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="LONGEST TEXT EVER"/>
           <TabBar.Item labelStyle={{color: Colors.orange30}} selectedLabelStyle={{color: Colors.orange30}} label="INACTIVE"/>
         </TabBar>
 
@@ -153,13 +153,50 @@ export default class TabBarScreen extends Component {
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.green30}}
           useGradientFinish
         >
-          <TabBar.Item divider labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="ACTIVE"/>
-          <TabBar.Item divider labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="PHOTO ALBUM"/>
-          <TabBar.Item divider labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="INACTIVE"/>
-          <TabBar.Item divider width={48} icon={starIcon} iconSelectedColor={Colors.green30}/>
+          <TabBar.Item labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="ACTIVE"/>
+          <TabBar.Item labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="PHOTO ALBUM"/>
+          <TabBar.Item labelStyle={{color: Colors.green30, fontWeight: fontWeightBold}} selectedLabelStyle={{color: Colors.green30, fontWeight: '900'}} label="INACTIVE"/>
+          <TabBar.Item width={48} icon={starIcon} iconSelectedColor={Colors.green30}/>
+        </TabBar>
+
+        <Text style={styles.text}>Pass 'isContentIndicator' to mark only the item's content</Text>
+
+        <TabBar
+          selectedIndex={selectedIndex}
+          onChangeIndex={index => this.setState({selectedIndex: index})}
+          isContentIndicator
+        >
+          <TabBar.Item label="INACTIVE" showDivider/>
+          <TabBar.Item showDivider label="ADD APPS" icon={Assets.icons.check} labelStyle={{color: Colors.red30}} selectedLabelStyle={{color: Colors.green30}} iconColor={Colors.blue30}/>
+          <TabBar.Item icon={Assets.icons.check} iconColor={Colors.yellow30}/>
         </TabBar>
 
         <View style={{height: 30}}/>
+
+        <TabBar
+          selectedIndex={selectedIndex}
+          onChangeIndex={index => this.setState({selectedIndex: index})}
+          isContentIndicator
+        >
+          <TabBar.Item label="INACTIVE"/>
+          <TabBar.Item label="ADD APPS" icon={Assets.icons.check} labelStyle={{color: Colors.red30}} selectedLabelStyle={{color: Colors.green30}} iconColor={Colors.blue30}/>
+          <TabBar.Item width={48} icon={Assets.icons.check} iconColor={Colors.yellow30}/>
+        </TabBar>
+
+        <View style={{height: 30}}/>
+
+        <TabBar
+          mode={TabBar.modes.SCROLL}
+          selectedIndex={selectedIndex}
+          onChangeIndex={index => this.setState({selectedIndex: index})}
+          isContentIndicator
+        >
+          <TabBar.Item label="INACTIVE"/>
+          <TabBar.Item label="ADD APPS" icon={Assets.icons.check} labelStyle={{color: Colors.red30}} selectedLabelStyle={{color: Colors.green30}}/>
+          <TabBar.Item icon={Assets.icons.check} iconColor={Colors.yellow30}/>
+          <TabBar.Item label="INACTIVE"/>
+          <TabBar.Item label="INACTIVE"/>
+        </TabBar>
       </ScrollView>
     );
   }
