@@ -93,13 +93,4 @@ export default class DemoScreen extends Component {
       </ScrollView>
     );
   }
-
-  // static navigatorButtons = {
-  //   rightButtons: [
-  //     {
-  //       title: 'Search',
-  //       id: 'search',
-  //     },
-  //   ],
-  // }
 }

@@ -63,7 +63,8 @@ export default class TabBarItem extends BaseComponent {
     super(props);
 
     this.state = {
-      fontStyle: this.getFontStyle(props),
+      // HACK: for indicator width in TabBar
+      fontStyle: this.getFontStyle(this.getThemeProps()),
     };
   }
 
@@ -73,7 +74,7 @@ export default class TabBarItem extends BaseComponent {
   }
 
   generateStyles() {
-    this.styles = createStyles(this.props);
+    this.styles = createStyles(this.getThemeProps());
   }
 
   onLayout = (event) => {
@@ -84,6 +85,7 @@ export default class TabBarItem extends BaseComponent {
 
   render() {   
     const {
+      children,
       label,
       labelStyle,
       maxLines,
@@ -93,7 +95,8 @@ export default class TabBarItem extends BaseComponent {
       width,
       onPress,
       testID,
-    } = this.props;
+    } = this.getThemeProps();
+    
     return (
       <TouchableOpacity
         activeOpacity={1}
@@ -116,7 +119,7 @@ export default class TabBarItem extends BaseComponent {
             >
               {label}
             </Text>}
-          {this.props.children}
+          {children}
         </View>
       </TouchableOpacity>
     );
