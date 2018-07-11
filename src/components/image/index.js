@@ -64,9 +64,9 @@ class Image extends BaseComponent {
 
   render() {
     const source = this.getImageSource();
-    const {tintColor} = this.getThemeProps();
+    const {tintColor, style, ...others} = this.getThemeProps();
     
-    return <RNImage {...this.props} source={source} style={{tintColor}}/>;
+    return <RNImage style={[{tintColor}, style]} {...others} source={source}/>;
   }
 }
 
