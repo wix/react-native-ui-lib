@@ -22,7 +22,6 @@ const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
   error: Colors.red30,
 };
 
-
 /**
  * @description: A wrapper for Text Input component with extra functionality like floating placeholder
  * @extends: TextInput
@@ -140,7 +139,7 @@ export default class TextInput extends BaseInput {
   }
 
   componentDidMount() {
-    this.getHeight();
+    // this.getHeight();
   }
 
   generatePropsWarnings(props) {
@@ -196,7 +195,7 @@ export default class TextInput extends BaseInput {
     return !_.isEmpty(value || this.state.value);
   }
 
-  shouldShowHelperText() {
+  shouldShowHelperText() {    
     const {focused} = this.state;
     const {helperText} = this.props;
     return focused && helperText;
@@ -207,23 +206,17 @@ export default class TextInput extends BaseInput {
     return Boolean(floatingPlaceholder && !centered);
   }
 
-  getHeight() {
-    const {multiline} = this.props;
-    if (!multiline) {
-      const typography = this.getTypography();
-      return typography.lineHeight;
-    }
-    return this.getLinesHeightLimit();
-  }
-
-  // numberOfLines support for both platforms
-  getLinesHeightLimit() {
-    const {multiline, numberOfLines} = this.props;
-    if (multiline && numberOfLines) {
-      const typography = this.getTypography();
-      return typography.lineHeight * numberOfLines;
-    }
-  }
+  // getHeight() {
+  //   const {multiline, numberOfLines} = this.props;
+  //   const typography = this.getTypography();
+  //   if (!multiline) {
+  //     return typography.lineHeight;
+  //   }
+  //   // numberOfLines support for both platforms
+  //   if (multiline && numberOfLines) {
+  //     return typography.lineHeight * numberOfLines;
+  //   }
+  // }
 
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
@@ -237,7 +230,7 @@ export default class TextInput extends BaseInput {
     } = this.props;
     const typography = this.getTypography();
     const floatingTypography = Typography.text90;
-
+    
     if (this.shouldFakePlaceholder()) {
       return (
         <Animated.Text
@@ -374,7 +367,7 @@ export default class TextInput extends BaseInput {
     );
   }
 
-  renderTextInput() {
+  renderTextInput() {    
     const {value} = this.state;
     const color = this.props.color || this.extractColorValue();
     const typography = this.getTypography();
@@ -396,8 +389,9 @@ export default class TextInput extends BaseInput {
       // {height: this.getHeight()},
       style,
     ];
+    // HACK: passing whitespace instead of undefined. Issue fixed in RN56
     const placeholderText = this.shouldFakePlaceholder() ?
-      (this.shouldShowHelperText() ? helperText : undefined) : placeholder;
+      (this.shouldShowHelperText() ? helperText : ' ') : placeholder;
 
     return (
       <RNTextInput
@@ -524,8 +518,6 @@ function createStyles({
       padding: 0,
       textAlign: centered ? 'center' : undefined,
       backgroundColor: 'transparent',
-
-      // backgroundColor: 'red'
     },
     floatingPlaceholder: {
       position: 'absolute',
@@ -542,7 +534,6 @@ function createStyles({
       color: Colors.red30,
       textAlign: centered ? 'center' : undefined,
       ...Typography.text90,
-      // height: Typography.text90.lineHeight,
       marginTop: 1,
     },
     expandableModalContent: {
