@@ -73,7 +73,7 @@ export default class TabBar extends BaseComponent {
     this.contentWidth = undefined;
     this.containerWidth = undefined;
     this.childrenCount = React.Children.count(this.props.children);
-    this.itemContentSpacing = props.isContentIndicator ? Spacings.s4 : 0;
+    this.itemContentSpacing = this.getThemeProps().isContentIndicator ? Spacings.s4 : 0;
 
     this.state = {
       selectedIndex: props.selectedIndex,
