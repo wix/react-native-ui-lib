@@ -66,7 +66,7 @@ export default class TabBar extends BaseComponent {
     selectedIndex: 0,
     height: 51,
     useGradientFinish: false,
-    ignoreLastTab: false
+    ignoreLastTab: false,
   };
 
   static modes = LAYOUT_MODES;
@@ -200,7 +200,7 @@ export default class TabBar extends BaseComponent {
     const {selectedIndicatorPosition} = this.state;
     
     // if only one tab - don't render indicator at all
-    if (this.childrenCount - 1 === 0) { return }
+    if (this.childrenCount - 1 === 0) { return; }
     
     const width = this.calcIndicatorWidth();
     const left = selectedIndicatorPosition.interpolate({
