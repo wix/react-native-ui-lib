@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, ScrollView} from 'react-native';
+import {StyleSheet, ScrollView, Alert} from 'react-native';
 import {Constants, Assets, Colors, TabBar, View, Text, Image} from 'react-native-ui-lib'; //eslint-disable-line
 
 
@@ -15,13 +15,31 @@ export default class TabBarScreen extends Component {
     selectedIndex3: 3,
   };
 
+  onChangeIndex = (index) => {
+    this.setState({selectedIndex: index}); 
+    Alert.alert(`index changed to ${index}`);
+  }
+
   render() {
     const {selectedIndex, selectedIndex1, selectedIndex2, selectedIndex3} = this.state;
     
     return (
       <ScrollView style={{backgroundColor: Colors.dark80}}>
-        <Text style={styles.text}>FIT Mode - items will get equal space</Text>
+        <Text style={styles.text}>FIT Mode (default) - items will get equal space</Text>
 
+        <TabBar>
+          <TabBar.Item label="FEED"/>
+          <TabBar.Item label="SERVICES"/>
+          <TabBar.Item label="CHAT"/>
+          <TabBar.Item label="ABOUT"/>
+        </TabBar>
+
+        <Text style={styles.text}>Even a single tab. Note: this tab will get the selected label style</Text>
+        <TabBar>
+          <TabBar.Item showDivider label="ADD APPS" icon={Assets.icons.check} labelStyle={{color: Colors.blue30}} iconColor={Colors.blue30}/>
+        </TabBar>
+
+        <Text style={styles.text}>Items can render children</Text>
         <TabBar
           selectedIndex={selectedIndex1}
           onChangeIndex={index => this.setState({selectedIndex1: index})}
@@ -147,8 +165,8 @@ export default class TabBarScreen extends Component {
 
         <TabBar
           mode={TabBar.modes.SCROLL}
-          selectedIndex={selectedIndex3}
-          onChangeIndex={index => this.setState({selectedIndex3: index})}
+          selectedIndex={selectedIndex2}
+          onChangeIndex={index => this.setState({selectedIndex2: index})}
           style={{height: 48}}
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.green30}}
           useGradientFinish
@@ -171,15 +189,16 @@ export default class TabBarScreen extends Component {
           <TabBar.Item icon={Assets.icons.check} iconColor={Colors.yellow30}/>
         </TabBar>
 
-        <View style={{height: 30}}/>
+        <Text style={styles.text}>Pass 'ignoreLastTab' to limit the indicator (tab is NOT disabled)</Text>
 
         <TabBar
           selectedIndex={selectedIndex}
-          onChangeIndex={index => this.setState({selectedIndex: index})}
+          onChangeIndex={this.onChangeIndex}
           isContentIndicator
+          ignoreLastTab
         >
           <TabBar.Item label="INACTIVE"/>
-          <TabBar.Item label="ADD APPS" icon={Assets.icons.check} labelStyle={{color: Colors.red30}} selectedLabelStyle={{color: Colors.green30}} iconColor={Colors.blue30}/>
+          <TabBar.Item label="ADD APPS" icon={Assets.icons.check} selectedLabelStyle={{color: Colors.green30}}/>
           <TabBar.Item width={48} icon={Assets.icons.check} iconColor={Colors.yellow30}/>
         </TabBar>
 
@@ -187,8 +206,8 @@ export default class TabBarScreen extends Component {
 
         <TabBar
           mode={TabBar.modes.SCROLL}
-          selectedIndex={selectedIndex}
-          onChangeIndex={index => this.setState({selectedIndex: index})}
+          selectedIndex={selectedIndex3}
+          onChangeIndex={index => this.setState({selectedIndex3: index})}
           isContentIndicator
         >
           <TabBar.Item label="INACTIVE"/>

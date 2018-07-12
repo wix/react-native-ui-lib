@@ -40,6 +40,10 @@ export default class TabBar extends BaseComponent {
      */
     isContentIndicator: PropTypes.bool,
     /**
+     * whethere the indicator should mark the last tab or not
+     */
+    ignoreLastTab: PropTypes.bool,
+    /**
      * disable the animated transition of the tab indicator
      */
     disableAnimatedTransition: PropTypes.bool,
@@ -62,6 +66,7 @@ export default class TabBar extends BaseComponent {
     selectedIndex: 0,
     height: 51,
     useGradientFinish: false,
+    ignoreLastTab: false
   };
 
   static modes = LAYOUT_MODES;
@@ -83,13 +88,24 @@ export default class TabBar extends BaseComponent {
       currentMode: props.mode,
       widths: {}, // not used in render
     };
+
+    this.checkPropsMatch();
+  }
+
+  checkPropsMatch() {
+    const {ignoreLastTab} = this.getThemeProps();
+    const {selectedIndex} = this.state;
+    
+    if (ignoreLastTab && selectedIndex === this.childrenCount - 1) {
+      console.warn('Your selectedIndex is the last tab. Please change it or remove the ignoreLastTab prop');
+    }
   }
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  // Indicator
+  /** Indicator */
 
   hasMeasurements() {
     return (_.keys(this.state.widths).length === this.childrenCount);
@@ -143,12 +159,17 @@ export default class TabBar extends BaseComponent {
   }
 
   onSelectingTab(index) {
-    this.animateIndicatorPosition(index);
-    this.setState({selectedIndex: index});
+    const {ignoreLastTab} = this.getThemeProps();
+    if (ignoreLastTab && index === this.childrenCount - 1) {
+      // ignoring the last tab selection
+    } else {
+      this.animateIndicatorPosition(index);
+      this.setState({selectedIndex: index});
+    }
     _.invoke(this.props, 'onChangeIndex', index);
   }
 
-  // renders
+  /** Renders */
 
   renderChildren() {
     const {selectedIndex} = this.state;
@@ -177,6 +198,10 @@ export default class TabBar extends BaseComponent {
   renderSelectedIndicator() {
     const {indicatorStyle} = this.getThemeProps();
     const {selectedIndicatorPosition} = this.state;
+    
+    // if only one tab - don't render indicator at all
+    if (this.childrenCount - 1 === 0) { return }
+    
     const width = this.calcIndicatorWidth();
     const left = selectedIndicatorPosition.interpolate({
       inputRange: [0, 100],
@@ -261,7 +286,7 @@ export default class TabBar extends BaseComponent {
     }
   }
 
-  // render events
+  /** Render Events */
 
   onLayout = (event) => {
     this.containerWidth = event.nativeEvent.layout.width;
