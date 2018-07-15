@@ -15,9 +15,9 @@ export default class TabBarScreen extends Component {
     selectedIndex3: 3,
   };
 
-  onChangeIndex = (index) => {
+  onTabSelected = (index) => {
     this.setState({selectedIndex: index}); 
-    Alert.alert(`index changed to ${index}`);
+    Alert.alert(`selected tab index: ${index}`);
   }
 
   render() {
@@ -36,7 +36,7 @@ export default class TabBarScreen extends Component {
 
         <Text style={styles.text}>Even a single tab. Note: this tab will get the selected label style</Text>
         <TabBar>
-          <TabBar.Item showDivider label="ADD APPS" icon={Assets.icons.check} labelStyle={{color: Colors.blue30}} iconColor={Colors.blue30}/>
+          <TabBar.Item label="ADD APPS" icon={Assets.icons.check} labelStyle={{color: Colors.blue30}} iconColor={Colors.blue30}/>
         </TabBar>
 
         <Text style={styles.text}>Items can render children</Text>
@@ -165,7 +165,7 @@ export default class TabBarScreen extends Component {
 
         <TabBar
           mode={TabBar.modes.SCROLL}
-          selectedIndex={selectedIndex2}
+          selectedIndex={selectedIndex3}
           onChangeIndex={index => this.setState({selectedIndex2: index})}
           style={{height: 48}}
           indicatorStyle={{borderBottomWidth: 2, borderColor: Colors.green30}}
@@ -189,11 +189,11 @@ export default class TabBarScreen extends Component {
           <TabBar.Item icon={Assets.icons.check} iconColor={Colors.yellow30}/>
         </TabBar>
 
-        <Text style={styles.text}>Pass 'ignoreLastTab' to limit the indicator (tab is NOT disabled)</Text>
+        <Text style={styles.text}>Pass 'ignoreLastTab' to limit the indicator (tab is NOT disabled. Get it's index from onTabSelected)</Text>
 
         <TabBar
           selectedIndex={selectedIndex}
-          onChangeIndex={this.onChangeIndex}
+          onTabSelected={this.onTabSelected}
           isContentIndicator
           ignoreLastTab
         >
