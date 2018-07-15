@@ -40,7 +40,7 @@ export default class TabBar extends BaseComponent {
      */
     isContentIndicator: PropTypes.bool,
     /**
-     * whethere the indicator should mark the last tab or not
+     * whethere the indicator should mark the last tab or not (onTabSelected will return tab's index when selected)
      */
     ignoreLastTab: PropTypes.bool,
     /**
@@ -48,9 +48,13 @@ export default class TabBar extends BaseComponent {
      */
     disableAnimatedTransition: PropTypes.bool,
     /**
-     * callback for when index has change
+     * callback for when index has change (will not be called on last tab when passing ignoreLastTab)
      */
     onChangeIndex: PropTypes.func,
+    /**
+     * callback for when tab selected
+     */
+    onTabSelected: PropTypes.func,
     /**
      * FIT to force the content to fit to screen, or SCROLL to allow content overflow
      */
@@ -158,15 +162,19 @@ export default class TabBar extends BaseComponent {
     }
   }
 
-  onSelectingTab(index) {
+  onChangeIndex(index) {
     const {ignoreLastTab} = this.getThemeProps();
     if (ignoreLastTab && index === this.childrenCount - 1) {
       // ignoring the last tab selection
     } else {
       this.animateIndicatorPosition(index);
       this.setState({selectedIndex: index});
+      _.invoke(this.props, 'onChangeIndex', index);
     }
-    _.invoke(this.props, 'onChangeIndex', index);
+  }
+
+  onTabSelected(index) {
+    _.invoke(this.props, 'onTabSelected', index);
   }
 
   /** Renders */
@@ -178,7 +186,8 @@ export default class TabBar extends BaseComponent {
         selected: selectedIndex === index,
         width: this.state.widths[index] || child.props.width, // HACK: keep initial item's width for indicator's width
         onPress: () => {
-          this.onSelectingTab(index);
+          this.onChangeIndex(index);
+          this.onTabSelected(index);
           _.invoke(child.props, 'onPress');
         },
         onLayout: (event) => {
