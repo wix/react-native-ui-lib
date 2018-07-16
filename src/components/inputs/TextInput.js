@@ -182,13 +182,16 @@ export default class TextInput extends BaseInput {
 
   getCharCount() {
     const {value} = this.state;
-    return _.size(value);
+    if (value) {
+      return value.length;
+    }
+    return 0;
   }
 
   isCounterLimit() {
     const {maxLength} = this.props;
     const counter = this.getCharCount();
-    return counter === 0 ? false : maxLength === counter;
+    return counter === 0 ? false : maxLength <= counter;
   }
 
   hasText(value) {
