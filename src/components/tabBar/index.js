@@ -2,10 +2,11 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, ViewPropTypes, Animated, ScrollView} from 'react-native';
-// import LinearGradient from 'react-native-linear-gradient';
 import {Colors, Spacings} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../view';
+import Image from '../image';
+import Assets from '../../assets';
 import TabBarItem from './TabBarItem';
 
 
@@ -234,8 +235,13 @@ export default class TabBar extends BaseComponent {
   }
 
   renderScrollBar() {
-    const {height, style/* , useGradientFinish */} = this.getThemeProps();
-    // const gradientColor = style.backgroundColor || Colors.white;
+    const {height, style, useGradientFinish} = this.getThemeProps();
+    let backgroundColor = undefined;
+    const flatten = StyleSheet.flatten(style);
+    if (flatten) {
+      backgroundColor = flatten.backgroundColor;
+    }
+    const gradientColor = backgroundColor || Colors.white;
     const sizeStyle = _.pick(style, ['width', 'height']);
     const otherStyle = _.omit(style, ['width', 'height']);
 
@@ -254,32 +260,27 @@ export default class TabBar extends BaseComponent {
             {this.hasMeasurements() && this.renderSelectedIndicator()}
           </View>
         </ScrollView>
-        {/* {useGradientFinish && this.renderGradient(height, gradientColor)} */}
+        {useGradientFinish && this.renderGradient(height, gradientColor)}
       </View>
     );
   }
 
-  // renderGradient(height, gradientColor) {
-  //   const gradientWidth = 36;
-  //   return (
-  //     <Animated.View
-  //       pointerEvents="none"
-  //       style={{
-  //         width: gradientWidth,
-  //         height: height - 2,
-  //         position: 'absolute',
-  //         left: this.containerWidth - gradientWidth,
-  //         opacity: this.state.gradientValue}}
-  //     >
-  //       <LinearGradient
-  //         start={{x: 0.0, y: 0.0}} end={{x: 1.0, y: 0.0}}
-  //         locations={[0, 0.2, 0.6]}
-  //         colors={[Colors.rgba(gradientColor, 0.3), Colors.rgba(gradientColor, 0.5), Colors.rgba(gradientColor, 0.7)]}
-  //         style={this.styles.linearGradient}
-  //       />
-  //     </Animated.View>
-  //   );
-  // }
+  renderGradient(height, tintColor) {
+    const gradientWidth = 28;
+    return (
+      <Animated.View
+        pointerEvents="none"
+        style={{
+          width: gradientWidth,
+          height: height - 2,
+          position: 'absolute',
+          left: this.containerWidth - gradientWidth,
+          opacity: this.state.gradientValue}}
+      >
+        <Image source={Assets.images.gradient} style={{width: gradientWidth, height: height - 3, tintColor}}/>
+      </Animated.View>
+    );
+  }
 
   render() {
     switch (this.state.currentMode) {
