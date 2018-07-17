@@ -35,7 +35,7 @@ class ListItem extends BaseComponent {
     /**
      * Additional styles for the top container
      */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * The container element to wrap the ListItem
      */
