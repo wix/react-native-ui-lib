@@ -107,6 +107,18 @@ export default class InputsScreen extends Component {
           />
 
           <TextInput
+            rtl
+            text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            title="title"
+            placeholder="character counter & error"
+            maxLength={20}
+            showCharacterCounter
+            onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
+            error={this.state.error}
+          />
+
+          <TextInput
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
