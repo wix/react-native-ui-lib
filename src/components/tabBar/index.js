@@ -69,9 +69,7 @@ export default class TabBar extends BaseComponent {
   static defaultProps = {
     mode: LAYOUT_MODES.FIT,
     selectedIndex: 0,
-    height: 51,
-    useGradientFinish: false,
-    ignoreLastTab: false,
+    height: 51
   };
 
   static modes = LAYOUT_MODES;
@@ -79,10 +77,11 @@ export default class TabBar extends BaseComponent {
   constructor(props) {
     super(props);
 
-    this.widthsArray = {};
+    this.itemsWidths = {};
     this.contentWidth = undefined;
     this.containerWidth = undefined;
-    this.childrenCount = React.Children.count(this.props.children);
+    this.childrenCount = React.Children.count(props.children);
+
     this.itemContentSpacing = this.getThemeProps().isContentIndicator ? Spacings.s4 : 0;
 
     this.state = {
@@ -95,6 +94,24 @@ export default class TabBar extends BaseComponent {
     };
 
     this.checkPropsMatch();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.itemsWidths = {};
+    // this.contentWidth = undefined;
+    // this.containerWidth = undefined;
+    this.childrenCount = React.Children.count(nextProps.children);
+    // this.itemContentSpacing = this.getThemeProps().isContentIndicator ? Spacings.s4 : 0;
+
+    this.setState(
+      {
+        // selectedIndex: nextProps.selectedIndex, // will reset the indicator
+        // selectedIndicatorPosition: new Animated.Value(0),
+        // gradientValue: new Animated.Value(1),
+        // fadeAnim: 0,
+        currentMode: nextProps.mode, // importent to turn fit to scroll when needed
+        widths: {}, // not used in render
+      });
   }
 
   checkPropsMatch() {
@@ -183,6 +200,8 @@ export default class TabBar extends BaseComponent {
   renderChildren() {
     const {selectedIndex} = this.state;
     const children = React.Children.map(this.props.children, (child, index) => {
+      console.log('UILIB child.props.width: ', child.props.width);
+      
       return React.cloneElement(child, {
         selected: selectedIndex === index,
         width: this.state.widths[index] || child.props.width, // HACK: keep initial item's width for indicator's width
@@ -194,8 +213,8 @@ export default class TabBar extends BaseComponent {
         onLayout: (event) => {
           const {width} = event.nativeEvent.layout;
           if (_.isUndefined(this.state.widths[index])) {
-            this.widthsArray[index] = width;
-            this.setState({widths: this.widthsArray});
+            this.itemsWidths[index] = width;
+            this.setState({widths: this.itemsWidths});
 
             this.updateIndicatorPosition();
           }
@@ -322,11 +341,11 @@ export default class TabBar extends BaseComponent {
     }
   }
 
-  calcLayoutMode() {
+  calcLayoutMode() {    
     if (this.contentWidth && this.containerWidth) {
       if (this.contentWidth < this.containerWidth) {
         // clean and change to FIT layout
-        this.widthsArray = {};
+        this.itemsWidths = {};
         this.contentWidth = this.containerWidth;
         this.setState({currentMode: LAYOUT_MODES.FIT, widths: {}});
       } else {
