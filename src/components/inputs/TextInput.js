@@ -470,7 +470,7 @@ export default class TextInput extends BaseInput {
   onChangeText = (text) => {
     // when character count exceeds maxLength text will be empty string.
     // HACK: To avoid setting state value to '' we check the source of that deletion
-    if (text === '' && this.lastKey !== 'Backspace') {
+    if (text === '' && this.lastKey && this.lastKey !== 'Backspace') {
       return;
     }
     const {transformer} = this.props;
