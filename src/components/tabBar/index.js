@@ -236,7 +236,7 @@ export default class TabBar extends BaseComponent {
 
   renderScrollBar() {
     const {height, style, useGradientFinish} = this.getThemeProps();
-    let backgroundColor = undefined;
+    let backgroundColor;
     const flatten = StyleSheet.flatten(style);
     if (flatten) {
       backgroundColor = flatten.backgroundColor;
