@@ -108,7 +108,6 @@ export default class TextInput extends BaseInput {
   constructor(props) {
     super(props);
 
-    this.onChangeText = this.onChangeText.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.onDoneEditingExpandableInput = this.onDoneEditingExpandableInput.bind(this);
@@ -182,13 +181,16 @@ export default class TextInput extends BaseInput {
 
   getCharCount() {
     const {value} = this.state;
-    return _.size(value);
+    if (value) {
+      return value.length;
+    }
+    return 0;
   }
 
   isCounterLimit() {
     const {maxLength} = this.props;
     const counter = this.getCharCount();
-    return counter === 0 ? false : maxLength === counter;
+    return counter === 0 ? false : maxLength <= counter;
   }
 
   hasText(value) {
@@ -368,7 +370,7 @@ export default class TextInput extends BaseInput {
   }
 
   renderTextInput() {    
-    const {value} = this.state;
+    const {value} = this.state; // value set on state for floatingPlaceholder functionality
     const color = this.props.color || this.extractColorValue();
     const typography = this.getTypography();
     const {
@@ -402,6 +404,7 @@ export default class TextInput extends BaseInput {
         style={inputStyle}
         multiline={multiline}
         numberOfLines={numberOfLines}
+        onKeyPress={this.onKeyPress}
         onChangeText={this.onChangeText}
         onChange={this.onChange}
         onFocus={this.onFocus}
@@ -460,7 +463,16 @@ export default class TextInput extends BaseInput {
     this.toggleExpandableModal(false);
   }
 
-  onChangeText(text) {
+  onKeyPress = (event) => {
+    this.lastKey = event.nativeEvent.key;
+  }
+
+  onChangeText = (text) => {
+    // when character count exceeds maxLength text will be empty string.
+    // HACK: To avoid setting state value to '' we check the source of that deletion
+    if (text === '' && this.lastKey && this.lastKey !== 'Backspace') {
+      return;
+    }
     const {transformer} = this.props;
     let transformedText = text;
 
@@ -471,9 +483,7 @@ export default class TextInput extends BaseInput {
     _.invoke(this.props, 'onChangeText', transformedText);
 
     this.setState(
-      {
-        value: transformedText,
-      },
+      {value: transformedText},
       this.updateFloatingPlaceholderState,
     );
   }
