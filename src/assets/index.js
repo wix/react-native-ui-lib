@@ -2,10 +2,12 @@ import _ from 'lodash';
 
 import {icons} from './icons';
 import {emojis} from './emojis';
+import {images} from './images';
 
 class Assets {
   icons = icons;
   emojis = emojis;
+  images = images;
 
   loadAssetsGroup(groupName, assets) {
     if (!_.isString(groupName)) {
