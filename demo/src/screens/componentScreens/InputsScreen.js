@@ -74,7 +74,8 @@ export default class InputsScreen extends Component {
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             title="Title"
-            placeholder="character counter & error & multiline"
+            titleStyle={{fontSize: Typography.text70.fontSize}}
+            placeholder="multiline & titleStyle"
             multiline
             maxLength={32}
             showCharacterCounter
