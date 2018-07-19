@@ -274,7 +274,6 @@ export default class TextInput extends BaseInput {
   renderTitle() {
     const {floatingPlaceholder, title, titleColor, titleStyle} = this.props;
     const color = this.getStateColor(titleColor);
-    const style = _.omit(titleStyle, ['color']);
     
     if (!floatingPlaceholder && title) {
       return (
