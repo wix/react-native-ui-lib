@@ -91,8 +91,9 @@ export default class FormScreen extends Component {
             style={{color: Colors.red20}}
             hideUnderline
             showSearch
-            searchPlaceholder={"Search a language"}
+            searchPlaceholder={'Search a language'}
             searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.dark50}}
+            // onSearchChange={value => console.warn('value', value)}
           >
             {_.map(options, option => <Picker.Item key={option.value} value={option} disabled={option.disabled} />)}
           </Picker>
@@ -115,6 +116,7 @@ export default class FormScreen extends Component {
             useNativePicker
             value={this.state.nativePickerValue}
             onChange={nativePickerValue => this.setState({nativePickerValue})}
+            rightIconSource={dropdown}
             // renderNativePicker={(props) => {
             //   return (
             //     <View flex bg-red50>
