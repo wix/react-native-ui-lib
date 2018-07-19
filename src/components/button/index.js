@@ -391,7 +391,7 @@ export default class Button extends BaseComponent {
         testID={testID}
         {...others}
       >
-        <View row centerV useSafeArea>
+        <View row centerV>
           {this.props.children}
           {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
           {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
