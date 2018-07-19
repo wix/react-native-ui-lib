@@ -58,6 +58,26 @@ class Colors {
         .value(),
     );
   }
+
+  getColorTint(color, tintKey) {
+    const colorKey = _.findKey(this, (value, key) => this[key] === color);
+
+    if (_.isUndefined(tintKey)) {
+      throw new Error('"Colors.getColorTint" must accept a color and tintKey params');
+    }
+
+    if (colorKey) {
+      const requiredColorKey = `${colorKey.slice(0, -2)}${tintKey}`;
+      const requiredColor = this[requiredColorKey];
+      if (_.isUndefined(requiredColor)) {
+        console.warn('"Colors.getColorTint" could not find color with this tint');
+        return color;
+      }
+      return requiredColor;
+    } else {
+      throw new Error('"Colors.getColorTint" could not find this color');
+    }
+  }
 }
 
 function validateRGB(value) {
