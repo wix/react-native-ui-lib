@@ -129,10 +129,11 @@ export default class Carousel extends BaseComponent {
   }
 
   render() {
-    const {containerStyle} = this.props;
+    const {containerStyle, ...others} = this.props;
     return (
       <View flex style={containerStyle}>
         <ScrollView
+          {...others}
           ref={(scrollView) => {
             this.carousel = scrollView;
           }}
