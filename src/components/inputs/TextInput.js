@@ -278,7 +278,7 @@ export default class TextInput extends BaseInput {
     if (!floatingPlaceholder && title) {
       return (
         <Text
-          style={[{color}, this.styles.title, style]}
+          style={[{color}, this.styles.title, titleStyle]}
         >
           {title}
         </Text>
