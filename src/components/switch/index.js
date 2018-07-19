@@ -58,7 +58,7 @@ class Switch extends BaseComponent {
   };
 
   state = {
-    thumbPosition: new Animated.Value(0),
+    thumbPosition: new Animated.Value(this.props.value ? 1 : 0),
   };
 
   generateStyles() {

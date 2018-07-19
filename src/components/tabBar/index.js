@@ -70,8 +70,6 @@ export default class TabBar extends BaseComponent {
     mode: LAYOUT_MODES.FIT,
     selectedIndex: 0,
     height: 51,
-    useGradientFinish: false,
-    ignoreLastTab: false,
   };
 
   static modes = LAYOUT_MODES;

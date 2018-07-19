@@ -93,6 +93,10 @@ class Picker extends TextInput {
      */
     searchPlaceholder: PropTypes.string,
     /**
+     * callback for picker modal search input text change
+     */
+    onSearchChange: PropTypes.func,
+    /**
      * Allow to use the native picker solution (different for iOS and Android)
      */
     useNativePicker: PropTypes.bool,
@@ -169,6 +173,7 @@ class Picker extends TextInput {
     this.setState({
       searchValue,
     });
+    _.invoke(this.props, 'onSearchChange', searchValue);
   };
 
   cancelSelect() {
