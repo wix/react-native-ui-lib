@@ -92,6 +92,10 @@ export default class TextField extends BaseInput {
      */
     titleColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     /**
+     * Additional styles for the title (not including 'color')
+     */
+    titleStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
      * should the input display a character counter (only when passing 'maxLength')
      */
     showCharacterCounter: PropTypes.bool,
@@ -273,13 +277,13 @@ export default class TextField extends BaseInput {
   }
 
   renderTitle() {
-    const {floatingPlaceholder, title, titleColor} = this.props;
+    const {floatingPlaceholder, title, titleColor, titleStyle} = this.props;
     const color = this.getStateColor(titleColor);
 
     if (!floatingPlaceholder && title) {
       return (
         <Text
-          style={[{color}, this.styles.title]}
+          style={[{color}, this.styles.title, titleStyle]}
         >
           {title}
         </Text>
