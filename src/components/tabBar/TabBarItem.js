@@ -91,12 +91,11 @@ export default class TabBarItem extends BaseComponent {
   }
 
   onLayout = (event) => {
+    // HACK: for indicator width in TabBar
     if (this.state.fontStyle !== undefined) {
       _.invoke(this.props, 'onLayout', event);
+      this.setState({fontStyle: undefined});
     }
-
-    // HACK: for indicator width in TabBar
-    this.setState({fontStyle: undefined});
   }
 
   getColorFromStyle(style) {
