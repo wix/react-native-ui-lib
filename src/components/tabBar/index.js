@@ -189,8 +189,8 @@ export default class TabBar extends BaseComponent {
           _.invoke(child.props, 'onPress');
         },
         onLayout: (event) => {
-          const {width} = event.nativeEvent.layout;
           if (_.isUndefined(this.itemsWidths[index])) {
+            const {width} = event.nativeEvent.layout;
             this.itemsWidths[index] = width;
 
             this.updateIndicatorPosition();
