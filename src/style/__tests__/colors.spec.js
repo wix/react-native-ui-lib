@@ -37,4 +37,20 @@ describe('services/AvatarService', () => {
     expect(() => uut.rgba('ff2244', 0.7)).toThrow(new Error('ff2244 is invalid hex color'));
     expect(() => uut.rgba('#ff244', 0.7)).toThrow(new Error('#ff244 is invalid hex color'));
   });
+
+  describe('getColorTint', () => {
+    it('should return color with a specific tint', () => {
+      expect(uut.getColorTint(uut.green30, '40')).toEqual(uut.green40);
+      expect(uut.getColorTint(uut.blue20, '60')).toEqual(uut.blue60);
+      expect(uut.getColorTint(uut.blue20, 60)).toEqual(uut.blue60);
+    });
+
+    it('should throw error if the color could not be found', () => {
+      expect(() => uut.getColorTint('#ff115', '10')).toThrow(new Error('"Colors.getColorTint" could not find this color'));
+    });
+    
+    it('should throw error if tint key was not provided', () => {
+      expect(() => uut.getColorTint('#ff115')).toThrow(new Error('"Colors.getColorTint" must accept a color and tintKey params'));
+    });
+  });
 });
