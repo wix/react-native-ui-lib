@@ -109,16 +109,19 @@ export default class TabBar extends BaseComponent {
   }
 
   checkPropsMatch() {
-    const {ignoreLastTab} = this.getThemeProps();
     const {selectedIndex} = this.state;
-    
-    if (ignoreLastTab && selectedIndex === this.childrenCount - 1) {
+    if (this.isIgnoredTab(selectedIndex)) {
       console.warn('Your selectedIndex is the last tab. Please change it or remove the ignoreLastTab prop');
     }
   }
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
+  }
+
+  isIgnoredTab = (index) => {
+    const {ignoreLastTab} = this.getThemeProps();
+    return (ignoreLastTab && index === (this.childrenCount - 1));
   }
 
   /** Indicator */
@@ -175,8 +178,7 @@ export default class TabBar extends BaseComponent {
   }
 
   onChangeIndex(index) {
-    const {ignoreLastTab} = this.getThemeProps();
-    if (ignoreLastTab && index === this.childrenCount - 1) {
+    if (this.isIgnoredTab(index)) {
       // ignoring the last tab selection
     } else {
       this.animateIndicatorPosition(index);
@@ -191,7 +193,11 @@ export default class TabBar extends BaseComponent {
 
   onItemLayout = (index, width) => {
     if (_.isUndefined(this.itemsWidths[index])) {
-      this.itemsWidths[index] = width;
+      if (this.isIgnoredTab(index)) {
+        this.itemsWidths[index] = 0;
+      } else {
+        this.itemsWidths[index] = width;
+      }
     } else if (this.scrollLayout) {
       this.itemsWidths[index + 1] = this.itemsWidths[index];
       this.itemsWidths[index] = width;
@@ -206,7 +212,7 @@ export default class TabBar extends BaseComponent {
     const children = React.Children.map(this.props.children, (child, index) => {    
       return React.cloneElement(child, {
         selected: selectedIndex === index,
-        width: this.scrollLayout ? undefined : this.itemsWidths[index], // HACK: keep initial item's width for indicator's width
+        width: this.itemsWidths[index], // HACK: keep initial item's width for indicator's width
         onPress: () => {
           this.onChangeIndex(index);
           this.onTabSelected(index);
