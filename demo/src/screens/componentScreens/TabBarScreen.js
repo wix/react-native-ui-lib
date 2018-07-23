@@ -8,12 +8,21 @@ const starIcon = require('../../assets/icons/star.png');
 const fontWeightBold = Constants.isIOS ? '600' : '700';
 
 export default class TabBarScreen extends Component {
-  state = {
-    selectedIndex: 0,
-    selectedIndex1: 1,
-    selectedIndex2: 2,
-    selectedIndex3: 3,
-  };
+  constructor(props) {
+    super(props);
+
+    this.showAddTab = true;
+
+    this.state = {
+      selectedIndex: 0,
+      selectedIndex1: 1,
+      selectedIndex2: 2,
+      selectedIndex3: 3,
+      index: 0,
+      currentTabs: [],
+      selectedTabId: 0
+    };
+  }
 
   onTabSelected = (index) => {
     this.setState({selectedIndex: index}); 
@@ -25,6 +34,8 @@ export default class TabBarScreen extends Component {
     
     return (
       <ScrollView style={{backgroundColor: Colors.dark80}}>
+        {this.renderDynamicTabBar()}
+
         <Text style={styles.text}>FIT Mode (default) - items will get equal space</Text>
 
         <TabBar>
@@ -107,7 +118,7 @@ export default class TabBarScreen extends Component {
           <TabBar.Item showDivider labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="INACTIVE"/>
           <TabBar.Item showDivider icon={starIcon} iconSelectedColor={Colors.purple30}/>
           <TabBar.Item showDivider>
-            <Text text90 purple30={selectedIndex2 === 4}>OVERFLOW</Text>
+            <Text text90 red30={selectedIndex2 === 4}>OVERFLOW</Text>
           </TabBar.Item>
           <TabBar.Item labelStyle={{color: Colors.dark10}} selectedLabelStyle={{color: Colors.purple30}} label="OVERFLOW"/>
         </TabBar>
@@ -219,9 +230,67 @@ export default class TabBarScreen extends Component {
       </ScrollView>
     );
   }
+
+  /** dynamic tabbar */
+  onPressAddTab = () => {
+    const {index, currentTabs} = this.state;
+    const newTabs = currentTabs;
+    const newIndex = index + 1;
+    newTabs.push({id: index, displayLabel: `tab #${index}`});
+    this.setState({currentTabs: newTabs, index: newIndex});
+  }
+
+  getTabs() {
+    const tabs = _.map(this.state.currentTabs, (tab) => this.renderTabs(tab));
+    if (this.showAddTab) {
+      tabs.push(this.renderAddTabsTab());
+    }
+    return tabs;
+  }
+
+  renderTabs(tab) {
+    return (
+      <TabBar.Item
+        key={tab.id}
+        label={tab.displayLabel}
+        selected={tab.id === this.state.selectedTabId}
+        onChangeIndex={index => this.setState({selectedTabId: index})}
+      />
+    );
+  }
+
+  renderAddTabsTab() {
+    return (
+      <TabBar.Item
+        key={'ADD_TABS'}
+        label={this.state.currentTabs.length >= 2 ? undefined : 'Add Tabs'}
+        onPress={this.onPressAddTab}
+        icon={Assets.icons.search}
+      />
+    );
+  }
+
+  renderDynamicTabBar() {
+    return (
+      <View style={styles.container}>
+        <View style={{height: 50}}/>
+        <TabBar
+          ignoreLastTab={this.showAddTab}
+          mode={TabBar.modes.SCROLL}
+          selectedIndex={this.state.selectedTabId}
+          isContentIndicator
+        >
+          {this.getTabs()}
+        </TabBar>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.dark80,
+  },
   text: {
     height: 30,
     paddingTop: 8,

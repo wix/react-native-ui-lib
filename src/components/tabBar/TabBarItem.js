@@ -92,8 +92,10 @@ export default class TabBarItem extends BaseComponent {
 
   onLayout = (event) => {
     // HACK: for indicator width in TabBar
+    const {width} = event.nativeEvent.layout;
     if (this.state.fontStyle !== undefined) {
-      _.invoke(this.props, 'onLayout', event);
+      _.invoke(this.props, 'onLayout', width);
+
       this.setState({fontStyle: undefined});
     }
   }

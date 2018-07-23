@@ -94,6 +94,20 @@ export default class TabBar extends BaseComponent {
     this.checkPropsMatch();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (React.Children.count(nextProps.children) !== this.childrenCount) {
+      this.initializeValues(nextProps);
+    }
+  }
+
+  initializeValues(props) {
+    if (!this.scrollLayout) { this.itemsWidths = {}; }
+    this.contentWidth = undefined;
+    this.childrenCount = React.Children.count(props.children);
+
+    this.setState({currentMode: props.mode});
+  }
+
   checkPropsMatch() {
     const {ignoreLastTab} = this.getThemeProps();
     const {selectedIndex} = this.state;
@@ -175,6 +189,16 @@ export default class TabBar extends BaseComponent {
     _.invoke(this.props, 'onTabSelected', index);
   }
 
+  onItemLayout = (index, width) => {
+    if (_.isUndefined(this.itemsWidths[index])) {
+      this.itemsWidths[index] = width;
+    } else if (this.scrollLayout) {
+      this.itemsWidths[index + 1] = this.itemsWidths[index];
+      this.itemsWidths[index] = width;
+    }
+    this.updateIndicatorPosition();
+  }
+
   /** Renders */
 
   renderChildren() {
@@ -182,19 +206,14 @@ export default class TabBar extends BaseComponent {
     const children = React.Children.map(this.props.children, (child, index) => {    
       return React.cloneElement(child, {
         selected: selectedIndex === index,
-        width: this.itemsWidths[index], // HACK: keep initial item's width for indicator's width
+        width: this.scrollLayout ? undefined : this.itemsWidths[index], // HACK: keep initial item's width for indicator's width
         onPress: () => {
           this.onChangeIndex(index);
           this.onTabSelected(index);
           _.invoke(child.props, 'onPress');
         },
-        onLayout: (event) => {
-          if (_.isUndefined(this.itemsWidths[index])) {
-            const {width} = event.nativeEvent.layout;
-            this.itemsWidths[index] = width;
-
-            this.updateIndicatorPosition();
-          }
+        onLayout: (width) => {
+          this.onItemLayout(index, width);
         },
       });
     });
@@ -322,9 +341,11 @@ export default class TabBar extends BaseComponent {
         // clean and change to FIT layout
         this.contentWidth = this.containerWidth;
         this.itemsWidths = {};
+        this.scrollLayout = false;
         this.setState({currentMode: LAYOUT_MODES.FIT});
       } else {
         // display SCROLL layout
+        this.scrollLayout = true;
         this.updateIndicatorPosition();
         if (this.state.fadeAnim === 0) {
           this.setState({fadeAnim: 1});
