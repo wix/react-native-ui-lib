@@ -91,9 +91,11 @@ export default class TabBarItem extends BaseComponent {
   }
 
   onLayout = (event) => {
-    _.invoke(this.props, 'onLayout', event);
     // HACK: for indicator width in TabBar
-    this.setState({fontStyle: {}});
+    if (this.state.fontStyle !== undefined) {
+      _.invoke(this.props, 'onLayout', event);
+      this.setState({fontStyle: undefined});
+    }
   }
 
   getColorFromStyle(style) {
@@ -147,10 +149,8 @@ export default class TabBarItem extends BaseComponent {
             <Text
               numberOfLines={maxLines}
               style={[
-                this.styles.label,
-                labelStyle,
-                selected && this.styles.labelSelected,
-                selected && selectedLabelStyle,
+                labelStyle || this.styles.label,
+                selected && (selectedLabelStyle || this.styles.labelSelected),
                 this.state.fontStyle, // HACK: for indicator width in TabBar
               ]}
             >

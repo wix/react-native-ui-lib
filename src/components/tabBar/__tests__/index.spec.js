@@ -4,8 +4,8 @@ describe('TabBar', () => {
   describe('calcIndicatorWidth', () => {
     it('should equale 25%', () => {
       const uut = new TabBar({});
+      uut.itemsWidths = [80, 80, 80, 80];
       uut.state = {
-        widths: [80, 80, 80, 80],
         selectedIndex: 1,
       };
       uut.childrenCount = 4;
@@ -16,8 +16,8 @@ describe('TabBar', () => {
     
     it('should equale 50%', () => {
       const uut = new TabBar({});
+      uut.itemsWidths = [150, 150, 300];
       uut.state = {
-        widths: [150, 150, 300],
         selectedIndex: 2,
       };
       uut.childrenCount = 2;

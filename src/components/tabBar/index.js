@@ -77,7 +77,7 @@ export default class TabBar extends BaseComponent {
   constructor(props) {
     super(props);
 
-    this.widthsArray = {};
+    this.itemsWidths = {};
     this.contentWidth = undefined;
     this.containerWidth = undefined;
     this.childrenCount = React.Children.count(this.props.children);
@@ -89,7 +89,6 @@ export default class TabBar extends BaseComponent {
       gradientValue: new Animated.Value(1),
       fadeAnim: 0,
       currentMode: props.mode,
-      widths: {}, // not used in render
     };
 
     this.checkPropsMatch();
@@ -110,11 +109,11 @@ export default class TabBar extends BaseComponent {
 
   /** Indicator */
 
-  hasMeasurements() {
-    return (_.keys(this.state.widths).length === this.childrenCount);
+  hasMeasurements() {    
+    return (_.keys(this.itemsWidths).length === this.childrenCount);
   }
 
-  updateIndicatorPosition = () => {
+  updateIndicatorPosition = () => {    
     if (this.hasMeasurements() && this.contentWidth) {
       this.setState({selectedIndicatorPosition: new Animated.Value(this.calcIndicatorPosition(this.state.selectedIndex))});
     }
@@ -124,17 +123,17 @@ export default class TabBar extends BaseComponent {
     if (this.childrenCount === 0) {
       return '0%';
     }
-    const itemWidth = this.state.widths[this.state.selectedIndex] - (this.itemContentSpacing * 2);
+    const itemWidth = this.itemsWidths[this.state.selectedIndex] - (this.itemContentSpacing * 2);
     const width = (itemWidth / this.contentWidth) * 100;
     return `${width}%`;
   }
 
   calcIndicatorPosition(index) {
     let position = 0;
-    if (!_.isEmpty(this.state.widths)) {
+    if (!_.isEmpty(this.itemsWidths)) {
       let itemPosition = 0;
       for (let i = 0; i < index; i++) {
-        itemPosition += this.state.widths[i];
+        itemPosition += this.itemsWidths[i];
       }
       itemPosition += this.itemContentSpacing;
       position = (itemPosition / this.contentWidth) * 100;
@@ -172,7 +171,7 @@ export default class TabBar extends BaseComponent {
     }
   }
 
-  onTabSelected(index) {
+  onTabSelected(index) {    
     _.invoke(this.props, 'onTabSelected', index);
   }
 
@@ -180,20 +179,19 @@ export default class TabBar extends BaseComponent {
 
   renderChildren() {
     const {selectedIndex} = this.state;
-    const children = React.Children.map(this.props.children, (child, index) => {
+    const children = React.Children.map(this.props.children, (child, index) => {    
       return React.cloneElement(child, {
         selected: selectedIndex === index,
-        width: this.state.widths[index] || child.props.width, // HACK: keep initial item's width for indicator's width
+        width: this.itemsWidths[index], // HACK: keep initial item's width for indicator's width
         onPress: () => {
           this.onChangeIndex(index);
           this.onTabSelected(index);
           _.invoke(child.props, 'onPress');
         },
         onLayout: (event) => {
-          const {width} = event.nativeEvent.layout;
-          if (_.isUndefined(this.state.widths[index])) {
-            this.widthsArray[index] = width;
-            this.setState({widths: this.widthsArray});
+          if (_.isUndefined(this.itemsWidths[index])) {
+            const {width} = event.nativeEvent.layout;
+            this.itemsWidths[index] = width;
 
             this.updateIndicatorPosition();
           }
@@ -307,32 +305,30 @@ export default class TabBar extends BaseComponent {
         this.updateIndicatorPosition();
         break;
       case LAYOUT_MODES.SCROLL:
-        if (this.contentWidth) {
-          this.calcLayoutMode();
-        }
+        this.calcLayoutMode();
         break;
       default: break;
     }
   }
 
   onContentSizeChange = (width) => {
-    this.contentWidth = width;
-    if (this.containerWidth) {
-      this.calcLayoutMode();
-    }
+    this.contentWidth = width;    
+    this.calcLayoutMode();
   }
 
   calcLayoutMode() {
     if (this.contentWidth && this.containerWidth) {
       if (this.contentWidth < this.containerWidth) {
         // clean and change to FIT layout
-        this.widthsArray = {};
         this.contentWidth = this.containerWidth;
-        this.setState({currentMode: LAYOUT_MODES.FIT, widths: {}});
+        this.itemsWidths = {};
+        this.setState({currentMode: LAYOUT_MODES.FIT});
       } else {
         // display SCROLL layout
         this.updateIndicatorPosition();
-        this.setState({fadeAnim: 1});
+        if (this.state.fadeAnim === 0) {
+          this.setState({fadeAnim: 1});
+        }
       }
     }
   }
