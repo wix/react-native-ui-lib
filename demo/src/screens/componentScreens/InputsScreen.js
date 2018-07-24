@@ -24,11 +24,32 @@ export default class InputsScreen extends Component {
 
     this.state = {
       error: '',
+      topError: false,
       customExpandableValue: 'Custom Expandable',
     };
   }
 
+  onButtonPressed = () => {
+    const {topError} = this.state;
+    this.setState({topError: !topError});
+  }
+
+  onChangeText = (text) => {
+    let message = '';
+    if (text === '') {
+      message = 'This field is mandatory';
+    }
+    if (text === 'Zzz') {
+      message = 'Please enter a valid text'
+    }
+    this.setState({error: message});
+  }
+
   render() {
+    const {topError} = this.state;
+    const state = topError ? 'On' : 'Off';
+    const btnLabel = `Top Errors: ${state}`
+    
     return (
       <View flex>
         <ScrollView
@@ -36,18 +57,37 @@ export default class InputsScreen extends Component {
           keyboardShouldPersistTaps="always"
           getTextInputRefs={() => [this.noUnderline, this.hugeText]}
         >
-          <Text style={{marginBottom: 20}} text40>
-            Inputs
-          </Text>
+            <Text style={{marginBottom: 20, marginRight: 20}} text40>
+              Inputs
+            </Text>
+            <Button
+              style={{height: 28, alignSelf: 'flex-start', marginBottom: 20}}
+              outline={!topError}
+              size="small"
+              label={btnLabel}
+              onPress={this.onButtonPressed}
+            />
+          
+          <TextInput
+            text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            floatingPlaceholder
+            placeholder="floatingPlaceholder & error"
+            onChangeText={this.onChangeText}
+            error={this.state.error}
+            useTopErrors={this.state.topError}
+            clearOnFocus
+          />
 
           <TextInput
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
-            placeholder="floatingPlaceholder & helperText"
+            placeholder="& helperText"
             helperText="this is an helper text"
-            onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
+            onChangeText={this.onChangeText}
             error={this.state.error}
+            useTopErrors={this.state.topError}
           />
 
           <TextInput
@@ -66,8 +106,9 @@ export default class InputsScreen extends Component {
             placeholder="character counter & error"
             maxLength={3}
             showCharacterCounter
-            onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
+            onChangeText={this.onChangeText}
             error={this.state.error}
+            useTopErrors={this.state.topError}
           />
 
           <TextInput
@@ -79,8 +120,9 @@ export default class InputsScreen extends Component {
             multiline
             maxLength={32}
             showCharacterCounter
-            onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
+            onChangeText={this.onChangeText}
             error={this.state.error}
+            useTopErrors={this.state.topError}
             autoCapitalize="words"
           />
 
@@ -102,8 +144,9 @@ export default class InputsScreen extends Component {
             placeholderTextColor={Colors.cyan30}
             floatingPlaceholderColor={Colors.cyan30}
             placeholder="underline colors & error"
-            onChangeText={text => this.setState({error: text ? '' : 'This field is required'})}
+            onChangeText={this.onChangeText}
             error={this.state.error}
+            useTopErrors={this.state.topError}
             underlineColor={{focus: Colors.purple50, error: Colors.yellow60}}
           />
 

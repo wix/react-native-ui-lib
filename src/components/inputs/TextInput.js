@@ -104,6 +104,10 @@ export default class TextInput extends BaseInput {
      */
     clearOnFocus: PropTypes.bool,
     /**
+     * should the errors be displayed at the top
+     */
+    useTopErrors: PropTypes.bool,
+    /**
      * Use to identify the component in tests
      */
     testId: PropTypes.string,
@@ -241,7 +245,17 @@ export default class TextInput extends BaseInput {
 
   shouldFakePlaceholder() {
     const {floatingPlaceholder, centered} = this.props;
-    return Boolean(floatingPlaceholder && !centered);
+    return Boolean(floatingPlaceholder && !centered && !this.shouldShowTopError());
+  }
+
+  shouldShowError() {
+    const {enableErrors, error} = this.props;
+    return enableErrors && error;
+  }
+
+  shouldShowTopError() {
+    const {useTopErrors} = this.props;
+    return this.shouldShowError() && useTopErrors;
   }
 
   /** Renders */
@@ -298,7 +312,7 @@ export default class TextInput extends BaseInput {
     if (!floatingPlaceholder && title) {
       return (
         <Text
-          style={[{color}, this.styles.title, this.styles.label, titleStyle]}
+          style={[{color}, this.styles.topLabel, this.styles.label, titleStyle]}
         >
           {title}
         </Text>
@@ -315,7 +329,7 @@ export default class TextInput extends BaseInput {
       const color = this.isCounterLimit() && focused ? DEFAULT_COLOR_BY_STATE.error : DEFAULT_COLOR_BY_STATE.default;
       return (
         <Text
-          style={[{color}, this.styles.charCounter, this.styles.label]}
+          style={[{color}, this.styles.bottomLabel, this.styles.label]}
         >
           {counter} / {maxLength}
         </Text>
@@ -323,13 +337,14 @@ export default class TextInput extends BaseInput {
     }
   }
 
-  renderError() {
-    const {enableErrors, error} = this.props;
+  renderError(visible) {
+    const {enableErrors, error, useTopErrors} = this.props;
+    const positionStyle = useTopErrors ? this.styles.topLabel : this.styles.bottomLabel;
     
     if (enableErrors) {
       return (
-        <Text style={[this.styles.errorMessage, this.styles.label]}>
-          {error}
+        <Text style={[this.styles.errorMessage, this.styles.label, positionStyle]}>
+          {visible && error}
         </Text>
       );
     }
@@ -419,7 +434,8 @@ export default class TextInput extends BaseInput {
     ];
     // HACK: passing whitespace instead of undefined. Issue fixed in RN56
     const placeholderText = this.shouldFakePlaceholder() ?
-      (this.shouldShowHelperText() ? helperText : ' ') : placeholder;
+      (this.shouldShowHelperText() ? helperText : ' ') :
+      (this.shouldShowTopError() && this.shouldShowHelperText() ? helperText : placeholder);
 
     return (
       <RNTextInput
@@ -442,21 +458,28 @@ export default class TextInput extends BaseInput {
     );
   }
 
+  getTopPaddings() {
+    const {floatingPlaceholder} = this.props;
+    return floatingPlaceholder ? (this.shouldShowTopError() ? undefined : 25) : undefined;
+  }
+
   render() {
-    const {expandable, containerStyle, underlineColor} = this.props;
+    const {expandable, containerStyle, underlineColor, useTopErrors} = this.props;
     const underlineStateColor = this.getStateColor(underlineColor, true);
 
     return (
       <View style={[this.styles.container, containerStyle]} collapsable={false}>
-        {this.renderTitle()}
-        <View style={[this.styles.innerContainer, {borderColor: underlineStateColor}]}>
+        <View>
+          {this.shouldShowTopError() ? this.renderError(useTopErrors) : this.renderTitle()}
+        </View>
+        <View style={[this.styles.innerContainer, {borderColor: underlineStateColor}, {paddingTop: this.getTopPaddings()}]}>
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
           {this.renderExpandableModal()}
         </View>
         <View row>
           <View flex>
-            {this.renderError()}
+            {this.renderError(!useTopErrors)}
           </View>
           {this.renderCharCounter()}
         </View>
@@ -506,7 +529,6 @@ export default class TextInput extends BaseInput {
 }
 
 function createStyles({
-  floatingPlaceholder,
   placeholderTextColor,
   hideUnderline,
   centered,
@@ -519,7 +541,6 @@ function createStyles({
       borderBottomWidth: hideUnderline ? 0 : 1,
       borderColor: Colors.dark70,
       justifyContent: centered ? 'center' : undefined,
-      paddingTop: floatingPlaceholder ? 25 : undefined,
       flexGrow: 1,
     },
     input: {
@@ -543,18 +564,16 @@ function createStyles({
     errorMessage: {
       color: Colors.red30,
       textAlign: centered ? 'center' : undefined,
-      marginTop: 1,
     },
     expandableModalContent: {
       flex: 1,
       paddingTop: 15,
       paddingHorizontal: 20,
     },
-    title: {
-      top: 0,
+    topLabel: {
       marginBottom: Constants.isIOS ? 5 : 4,
     },
-    charCounter: {
+    bottomLabel: {
       marginTop: 1,
     },
     label: {
