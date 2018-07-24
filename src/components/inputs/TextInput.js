@@ -21,6 +21,7 @@ const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
   focus: Colors.blue30,
   error: Colors.red30,
 };
+const LABEL_TYPOGRAPHY = Typography.text90;
 
 /**
  * @description: A wrapper for Text Input component with extra functionality like floating placeholder
@@ -99,15 +100,6 @@ export default class TextInput extends BaseInput {
      */
     showCharacterCounter: PropTypes.bool,
     /**
-     * Typography object for all components extra labels (like title, error, charCounter etc.)
-     */
-    labelTypography: PropTypes.shape({
-      fontSize: PropTypes.number,
-      fontWeight: PropTypes.string,
-      lineHeight: PropTypes.number,
-      fontFamily: PropTypes.string
-    }),
-    /**
      * Use to identify the component in tests
      */
     testId: PropTypes.string,
@@ -116,7 +108,6 @@ export default class TextInput extends BaseInput {
   static defaultProps = {
     placeholderTextColor: DEFAULT_COLOR_BY_STATE.default,
     enableErrors: true,
-    labelTypography: Typography.text90,
   };
 
   constructor(props) {
@@ -241,7 +232,6 @@ export default class TextInput extends BaseInput {
       placeholderTextColor,
       floatingPlaceholderColor,
       multiline,
-      labelTypography
     } = this.props;
     const typography = this.getTypography();
     
@@ -260,14 +250,14 @@ export default class TextInput extends BaseInput {
               }),
               fontSize: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [typography.fontSize, labelTypography.fontSize],
+                outputRange: [typography.fontSize, LABEL_TYPOGRAPHY.fontSize],
               }),
               color: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
                 outputRange: [placeholderTextColor, this.getStateColor(floatingPlaceholderColor)],
               }),
               lineHeight: this.shouldFloatPlacholder()
-                ? labelTypography.lineHeight
+                ? LABEL_TYPOGRAPHY.lineHeight
                 : typography.lineHeight,
             },
           ]}
@@ -286,7 +276,7 @@ export default class TextInput extends BaseInput {
     if (!floatingPlaceholder && title) {
       return (
         <Text
-          style={[{color}, this.styles.title, , this.styles.label, titleStyle]}
+          style={[{color}, this.styles.title, this.styles.label, titleStyle]}
         >
           {title}
         </Text>
@@ -512,7 +502,6 @@ function createStyles({
   hideUnderline,
   centered,
   floatingPlaceholder,
-  labelTypography
 }) {
   return StyleSheet.create({
     container: {
@@ -567,8 +556,8 @@ function createStyles({
       marginTop: 1,
     },
     label: {
-      ...labelTypography,
-      height: labelTypography.lineHeight,
-    }
+      ...LABEL_TYPOGRAPHY,
+      height: LABEL_TYPOGRAPHY.lineHeight,
+    },
   });
 }
