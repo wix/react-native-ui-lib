@@ -51,6 +51,12 @@ class RadioButton extends BaseComponent {
 
   state = {};
 
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (this.isSelected() === this.isSelected(nextProps, nextContext)) {
+      this.generateStyles();
+    }
+  }
+
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
   }
@@ -61,14 +67,14 @@ class RadioButton extends BaseComponent {
     _.invoke(this.props, 'onPress', this.isSelected());
   };
 
-  isSelected() {
-    const {value, selected} = this.props;
+  isSelected(props = this.props, context = this.context) {
+    const {value, selected} = props;
     // Individual Radio Button
     if (_.isUndefined(value)) {
       return Boolean(selected);
     }
     // Grouped Radio Button
-    const {value: selectedValue} = this.context;
+    const {value: selectedValue} = context;
     return value === selectedValue;
   }
 

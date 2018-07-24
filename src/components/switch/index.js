@@ -69,6 +69,10 @@ class Switch extends BaseComponent {
     if (this.props.value !== nextProps.value) {
       this.toggle(nextProps.value);
     }
+
+    if (this.props.value === nextProps.value) {
+      this.generateStyles();
+    }
   }
 
   toggle(value) {

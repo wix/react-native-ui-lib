@@ -48,6 +48,12 @@ class Checkbox extends BaseComponent {
     iconColor: PropTypes.string,
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.value === nextProps.value) {
+      this.generateStyles();
+    }
+  }
+
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
   }
