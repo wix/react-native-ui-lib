@@ -1,6 +1,9 @@
 import React from 'react';
+import {StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
+import View from '../view';
+import Image from '../image';
 import TextInput from '../inputs/TextInput';
 import WheelPicker from '../../nativeComponents/WheelPicker';
 import PickerDialog from './PickerDialog';
@@ -64,22 +67,34 @@ class Picker extends BaseComponent {
     );
   };
   render() {
+    const {rightIconSource} = this.props;
     const textInputProps = TextInput.extractOwnProps(this.props);
     const label = this.getLabel();
     return (
-      <TextInput
-        ref={r => (this.input = r)}
-        floatingPlaceholder={false}
-        enableErrors={false}
-        {...textInputProps}
-        value={label}
-        expandable
-        editable={false}
-        renderExpandable={this.renderPickerDialog}
-      />
+      <View>
+        <TextInput
+          ref={r => (this.input = r)}
+          floatingPlaceholder={false}
+          enableErrors={false}
+          {...textInputProps}
+          value={label}
+          expandable
+          editable={false}
+          renderExpandable={this.renderPickerDialog}
+        />
+        {rightIconSource && <Image pointerEvents="none" style={styles.rightIcon} source={rightIconSource} />}
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  rightIcon: {
+    position: 'absolute',
+    bottom: 10,
+    right: 0,
+  },
+});
 
 Picker.Item = WheelPicker.Item;
 export default Picker;
