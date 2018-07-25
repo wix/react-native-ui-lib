@@ -172,6 +172,14 @@ export default class TextInput extends BaseInput {
     }
   }
 
+  getPlaceholderText() {
+    const {placeholder, helperText} = this.props;
+    const text = this.shouldFakePlaceholder() ?
+      (this.shouldShowHelperText() ? helperText : ' ') :
+      (this.shouldShowTopError() && this.shouldShowHelperText() ? helperText : placeholder);
+    return text;
+  }
+
   // getHeight() {
   //   const {multiline, numberOfLines} = this.props;
   //   const typography = this.getTypography();
@@ -433,9 +441,7 @@ export default class TextInput extends BaseInput {
       style,
     ];
     // HACK: passing whitespace instead of undefined. Issue fixed in RN56
-    const placeholderText = this.shouldFakePlaceholder() ?
-      (this.shouldShowHelperText() ? helperText : ' ') :
-      (this.shouldShowTopError() && this.shouldShowHelperText() ? helperText : placeholder);
+    const placeholderText = this.getPlaceholderText();
 
     return (
       <RNTextInput
