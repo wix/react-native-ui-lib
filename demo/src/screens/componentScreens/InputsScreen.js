@@ -76,7 +76,7 @@ export default class InputsScreen extends Component {
             onChangeText={this.onChangeText}
             error={this.state.error}
             useTopErrors={this.state.topError}
-            clearOnFocus
+            floatOnFocus
           />
 
           <TextInput
