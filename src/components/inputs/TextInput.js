@@ -21,6 +21,7 @@ const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
   focus: Colors.blue30,
   error: Colors.red30,
 };
+const LABEL_TYPOGRAPHY = Typography.text80;
 
 /**
  * @description: A wrapper for Text Input component with extra functionality like floating placeholder
@@ -99,6 +100,14 @@ export default class TextInput extends BaseInput {
      */
     showCharacterCounter: PropTypes.bool,
     /**
+     * should float the placeholer when focused (instead of when typing)
+     */
+    floatOnFocus: PropTypes.bool,
+    /**
+     * should the errors be displayed at the top
+     */
+    useTopErrors: PropTypes.bool,
+    /**
      * Use to identify the component in tests
      */
     testId: PropTypes.string,
@@ -112,18 +121,12 @@ export default class TextInput extends BaseInput {
   constructor(props) {
     super(props);
 
-    this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
-    this.onDoneEditingExpandableInput = this.onDoneEditingExpandableInput.bind(this);
     this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(this);
     this.toggleExpandableModal = this.toggleExpandableModal.bind(this);
-    this.shouldShowHelperText = this.shouldShowHelperText.bind(this);
 
     this.state = {
       value: props.value,
-      floatingPlaceholderState: new Animated.Value(
-        this.hasText(props.value) || this.shouldShowHelperText() ? 1 : 0,
-      ),
+      floatingPlaceholderState: new Animated.Value(this.shouldFloatPlacholder(props.value) ? 1 : 0),
       showExpandableModal: false,
     };
 
@@ -132,12 +135,7 @@ export default class TextInput extends BaseInput {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
-      this.setState(
-        {
-          value: nextProps.value,
-        },
-        this.updateFloatingPlaceholderState,
-      );
+      this.setState({value: nextProps.value}, this.updateFloatingPlaceholderState);
     }
   }
 
@@ -145,6 +143,7 @@ export default class TextInput extends BaseInput {
     // this.getHeight();
   }
 
+  /** Actions */
   generatePropsWarnings(props) {
     if (props.maxLength === 0) {
       console.warn('Setting maxLength to zero will block typing in this input');
@@ -157,6 +156,41 @@ export default class TextInput extends BaseInput {
   generateStyles() {
     this.styles = createStyles(this.props);
   }
+
+  toggleExpandableModal(value) {
+    this.setState({showExpandableModal: value});
+  }
+
+  updateFloatingPlaceholderState(withoutAnimation) {
+    if (withoutAnimation) {
+      this.state.floatingPlaceholderState.setValue(this.shouldFloatPlacholder() ? 1 : 0);
+    } else {
+      Animated.spring(this.state.floatingPlaceholderState, {
+        toValue: this.shouldFloatPlacholder() ? 1 : 0,
+        duration: 150,
+      }).start();
+    }
+  }
+
+  getPlaceholderText() {
+    const {placeholder, helperText} = this.props;
+    const text = this.shouldFakePlaceholder() ?
+      (this.shouldShowHelperText() ? helperText : ' ') :
+      (this.shouldShowTopError() && this.shouldShowHelperText() ? helperText : placeholder);
+    return text;
+  }
+
+  // getHeight() {
+  //   const {multiline, numberOfLines} = this.props;
+  //   const typography = this.getTypography();
+  //   if (!multiline) {
+  //     return typography.lineHeight;
+  //   }
+  //   // numberOfLines support for both platforms
+  //   if (multiline && numberOfLines) {
+  //     return typography.lineHeight * numberOfLines;
+  //   }
+  // }
 
   getStateColor(colorProp, isUnderline) {
     const {focused} = this.state;
@@ -207,23 +241,32 @@ export default class TextInput extends BaseInput {
     return focused && helperText;
   }
 
-  shouldFakePlaceholder() {
-    const {floatingPlaceholder, centered} = this.props;
-    return Boolean(floatingPlaceholder && !centered);
+  shouldFloatOnFocus() {
+    const {focused} = this.state;
+    const {floatOnFocus} = this.props;
+    return focused && floatOnFocus;
   }
 
-  // getHeight() {
-  //   const {multiline, numberOfLines} = this.props;
-  //   const typography = this.getTypography();
-  //   if (!multiline) {
-  //     return typography.lineHeight;
-  //   }
-  //   // numberOfLines support for both platforms
-  //   if (multiline && numberOfLines) {
-  //     return typography.lineHeight * numberOfLines;
-  //   }
-  // }
+  shouldFloatPlacholder(text) {
+    return this.hasText(text) || this.shouldShowHelperText() || this.shouldFloatOnFocus();
+  }
 
+  shouldFakePlaceholder() {
+    const {floatingPlaceholder, centered} = this.props;
+    return Boolean(floatingPlaceholder && !centered && !this.shouldShowTopError());
+  }
+
+  shouldShowError() {
+    const {enableErrors, error} = this.props;
+    return enableErrors && error;
+  }
+
+  shouldShowTopError() {
+    const {useTopErrors} = this.props;
+    return this.shouldShowError() && useTopErrors;
+  }
+
+  /** Renders */
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
     const {
@@ -235,7 +278,6 @@ export default class TextInput extends BaseInput {
       multiline,
     } = this.props;
     const typography = this.getTypography();
-    const floatingTypography = Typography.text90;
     
     if (this.shouldFakePlaceholder()) {
       return (
@@ -252,14 +294,14 @@ export default class TextInput extends BaseInput {
               }),
               fontSize: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [typography.fontSize, floatingTypography.fontSize],
+                outputRange: [typography.fontSize, LABEL_TYPOGRAPHY.fontSize],
               }),
               color: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
                 outputRange: [placeholderTextColor, this.getStateColor(floatingPlaceholderColor)],
               }),
-              lineHeight: this.hasText() || this.shouldShowHelperText()
-                ? floatingTypography.lineHeight
+              lineHeight: this.shouldFloatPlacholder()
+                ? LABEL_TYPOGRAPHY.lineHeight
                 : typography.lineHeight,
             },
           ]}
@@ -278,7 +320,7 @@ export default class TextInput extends BaseInput {
     if (!floatingPlaceholder && title) {
       return (
         <Text
-          style={[{color}, this.styles.title, titleStyle]}
+          style={[{color}, this.styles.topLabel, this.styles.label, titleStyle]}
         >
           {title}
         </Text>
@@ -289,12 +331,13 @@ export default class TextInput extends BaseInput {
   renderCharCounter() {
     const {focused} = this.state;
     const {maxLength, showCharacterCounter} = this.props;
+    
     if (maxLength && showCharacterCounter) {
       const counter = this.getCharCount();
       const color = this.isCounterLimit() && focused ? DEFAULT_COLOR_BY_STATE.error : DEFAULT_COLOR_BY_STATE.default;
       return (
         <Text
-          style={[{color}, this.styles.charCounter]}
+          style={[{color}, this.styles.bottomLabel, this.styles.label]}
         >
           {counter} / {maxLength}
         </Text>
@@ -302,11 +345,13 @@ export default class TextInput extends BaseInput {
     }
   }
 
-  renderError() {
-    const {enableErrors, error} = this.props;
-    if (enableErrors) {
+  renderError(visible) {
+    const {enableErrors, error, useTopErrors} = this.props;
+    const positionStyle = useTopErrors ? this.styles.topLabel : this.styles.bottomLabel;
+    
+    if (visible && enableErrors) {
       return (
-        <Text style={this.styles.errorMessage}>
+        <Text style={[this.styles.errorMessage, this.styles.label, positionStyle]}>
           {error}
         </Text>
       );
@@ -396,8 +441,7 @@ export default class TextInput extends BaseInput {
       style,
     ];
     // HACK: passing whitespace instead of undefined. Issue fixed in RN56
-    const placeholderText = this.shouldFakePlaceholder() ?
-      (this.shouldShowHelperText() ? helperText : ' ') : placeholder;
+    const placeholderText = this.getPlaceholderText();
 
     return (
       <RNTextInput
@@ -420,21 +464,28 @@ export default class TextInput extends BaseInput {
     );
   }
 
+  getTopPaddings() {
+    const {floatingPlaceholder} = this.props;
+    return floatingPlaceholder ? (this.shouldShowTopError() ? undefined : 25) : undefined;
+  }
+
   render() {
-    const {expandable, containerStyle, underlineColor} = this.props;
+    const {expandable, containerStyle, underlineColor, useTopErrors} = this.props;
     const underlineStateColor = this.getStateColor(underlineColor, true);
 
     return (
       <View style={[this.styles.container, containerStyle]} collapsable={false}>
-        {this.renderTitle()}
-        <View style={[this.styles.innerContainer, {borderColor: underlineStateColor}]}>
+        <View>
+          {this.shouldShowTopError() ? this.renderError(useTopErrors) : this.renderTitle()}
+        </View>
+        <View style={[this.styles.innerContainer, {borderColor: underlineStateColor}, {paddingTop: this.getTopPaddings()}]}>
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
           {this.renderExpandableModal()}
         </View>
         <View row>
           <View flex>
-            {this.renderError()}
+            {this.renderError(!useTopErrors)}
           </View>
           {this.renderCharCounter()}
         </View>
@@ -442,26 +493,10 @@ export default class TextInput extends BaseInput {
     );
   }
 
-  toggleExpandableModal(value) {
-    this.setState({showExpandableModal: value});
-  }
-
-  updateFloatingPlaceholderState(withoutAnimation) {
-    if (withoutAnimation) {
-      this.state.floatingPlaceholderState.setValue(this.hasText() || this.shouldShowHelperText() ? 1 : 0);
-    } else {
-      Animated.spring(this.state.floatingPlaceholderState, {
-        toValue: this.hasText() || this.shouldShowHelperText() ? 1 : 0,
-        duration: 150,
-      }).start();
-    }
-  }
-
-  onDoneEditingExpandableInput() {
+  /** Events */
+  onDoneEditingExpandableInput = () => {
     const expandableInputValue = _.get(this.expandableInput, 'state.value');
-    this.setState({
-      value: expandableInputValue,
-    });
+    this.setState({value: expandableInputValue});
     this.state.floatingPlaceholderState.setValue(expandableInputValue ? 1 : 0);
     _.invoke(this.props, 'onChangeText', expandableInputValue);
     this.toggleExpandableModal(false);
@@ -477,27 +512,23 @@ export default class TextInput extends BaseInput {
     if (text === '' && this.lastKey && this.lastKey !== 'Backspace') {
       return;
     }
+    
     const {transformer} = this.props;
     let transformedText = text;
-
     if (_.isFunction(transformer)) {
       transformedText = transformer(text);
     }
 
     _.invoke(this.props, 'onChangeText', transformedText);
-
-    this.setState(
-      {value: transformedText},
-      this.updateFloatingPlaceholderState,
-    );
+    this.setState({value: transformedText}, this.updateFloatingPlaceholderState);
   }
 
-  onFocus(...args) {
+  onFocus = (...args) => {
     _.invoke(this.props, 'onFocus', ...args);
     this.setState({focused: true}, this.updateFloatingPlaceholderState);
   }
 
-  onBlur(...args) {
+  onBlur = (...args) => {
     _.invoke(this.props, 'onBlur', ...args);
     this.setState({focused: false}, this.updateFloatingPlaceholderState);
   }
@@ -507,7 +538,6 @@ function createStyles({
   placeholderTextColor,
   hideUnderline,
   centered,
-  floatingPlaceholder,
 }) {
   return StyleSheet.create({
     container: {
@@ -517,14 +547,7 @@ function createStyles({
       borderBottomWidth: hideUnderline ? 0 : 1,
       borderColor: Colors.dark70,
       justifyContent: centered ? 'center' : undefined,
-      paddingTop: floatingPlaceholder ? 25 : undefined,
       flexGrow: 1,
-    },
-    focusedUnderline: {
-      borderColor: Colors.blue30,
-    },
-    errorUnderline: {
-      borderColor: Colors.red30,
     },
     input: {
       flexGrow: 1,
@@ -547,25 +570,21 @@ function createStyles({
     errorMessage: {
       color: Colors.red30,
       textAlign: centered ? 'center' : undefined,
-      ...Typography.text90,
-      height: Typography.text90.lineHeight,
-      marginTop: 1,
     },
     expandableModalContent: {
       flex: 1,
       paddingTop: 15,
       paddingHorizontal: 20,
     },
-    title: {
-      top: 0,
-      ...Typography.text90,
-      height: Typography.text90.lineHeight,
+    topLabel: {
       marginBottom: Constants.isIOS ? 5 : 4,
     },
-    charCounter: {
-      ...Typography.text90,
-      height: Typography.text90.lineHeight,
+    bottomLabel: {
       marginTop: 1,
+    },
+    label: {
+      ...LABEL_TYPOGRAPHY,
+      height: LABEL_TYPOGRAPHY.lineHeight,
     },
   });
 }
