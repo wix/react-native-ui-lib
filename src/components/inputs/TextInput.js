@@ -341,10 +341,10 @@ export default class TextInput extends BaseInput {
     const {enableErrors, error, useTopErrors} = this.props;
     const positionStyle = useTopErrors ? this.styles.topLabel : this.styles.bottomLabel;
     
-    if (enableErrors) {
+    if (visible && enableErrors) {
       return (
         <Text style={[this.styles.errorMessage, this.styles.label, positionStyle]}>
-          {visible && error}
+          {error}
         </Text>
       );
     }
