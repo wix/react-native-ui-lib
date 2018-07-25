@@ -100,9 +100,9 @@ export default class TextInput extends BaseInput {
      */
     showCharacterCounter: PropTypes.bool,
     /**
-     * should clear the input's placeholer when focused (instead of when typing)
+     * should float the placeholer when focused (instead of when typing)
      */
-    clearOnFocus: PropTypes.bool,
+    floatOnFocus: PropTypes.bool,
     /**
      * should the errors be displayed at the top
      */
@@ -241,14 +241,14 @@ export default class TextInput extends BaseInput {
     return focused && helperText;
   }
 
-  shouldClearOnFocus() {
+  shouldFloatOnFocus() {
     const {focused} = this.state;
-    const {clearOnFocus} = this.props;
-    return focused && clearOnFocus;
+    const {floatOnFocus} = this.props;
+    return focused && floatOnFocus;
   }
 
   shouldFloatPlacholder(text) {
-    return this.hasText(text) || this.shouldShowHelperText() || this.shouldClearOnFocus();
+    return this.hasText(text) || this.shouldShowHelperText() || this.shouldFloatOnFocus();
   }
 
   shouldFakePlaceholder() {
