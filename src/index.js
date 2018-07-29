@@ -37,7 +37,7 @@ import {
 import {BaseComponent, SelectableComponent} from './commons';
 // import GridList from './lists/gridList';
 import {LoaderScreen, Modal, StateScreen} from './screensComponents';
-import {HighlighterOverlayView, SafeAreaSpacerView, WheelPicker, SafeAreaInsetsManager} from './nativeComponents';
+import {HighlighterOverlayView, SafeAreaSpacerView, WheelPicker, SafeAreaInsetsManager, NonClippingView} from './nativeComponents';
 import {Colors, BorderRadiuses, Shadows, Spacings, Components, ComponentsColors, ThemeManager, Typography} from './style';
 import {AvatarHelper, Constants, DocsGenerator} from './helpers';
 
@@ -105,6 +105,7 @@ export {
   SafeAreaSpacerView,
   WheelPicker,
   SafeAreaInsetsManager,
+  NonClippingView,
 
   // Style
   Colors,
