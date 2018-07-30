@@ -577,7 +577,7 @@ function createStyles({
       paddingHorizontal: 20,
     },
     topLabel: {
-      marginBottom: Constants.isIOS ? 5 : 4,
+      marginBottom: Constants.isIOS ? 6 : 7,
     },
     bottomLabel: {
       marginTop: 1,
