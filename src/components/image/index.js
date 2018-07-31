@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
-import {ThemeManager} from '../../style';
 import Assets from '../../assets';
 
 /**
@@ -41,7 +40,7 @@ class Image extends BaseComponent {
   constructor(props) {
     super(props);
 
-    this.sourceTransformer = props.sourceTransformer || _.get(ThemeManager.components, 'Image.sourceTransformer');
+    this.sourceTransformer = this.getThemeProps().sourceTransformer;
   }
 
   getImageSource() {
