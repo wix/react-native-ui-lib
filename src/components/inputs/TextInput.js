@@ -300,7 +300,7 @@ export default class TextInput extends BaseInput {
             !centered && {
               top: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [multiline ? 34 : 28, multiline ? 0 : -5],
+                outputRange: [multiline ? 34 : 28, multiline ? 0 : 0],
               }),
               fontSize: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
