@@ -300,7 +300,7 @@ export default class TextInput extends BaseInput {
             !centered && {
               top: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [multiline ? 34 : 28, multiline ? 0 : 0],
+                outputRange: [multiline ? 34 : 28, multiline ? 0 : -5],
               }),
               fontSize: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
@@ -549,7 +549,6 @@ function createStyles({
   hideUnderline,
   centered,
   labelsTypography,
-  multiline,
 }) {
   return StyleSheet.create({
     container: {
