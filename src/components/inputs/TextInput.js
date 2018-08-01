@@ -548,7 +548,7 @@ function createStyles({
   placeholderTextColor,
   hideUnderline,
   centered,
-  labelsTypography,
+  labelsTypography = Typography.text80,
 }) {
   return StyleSheet.create({
     container: {
