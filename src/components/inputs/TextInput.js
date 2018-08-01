@@ -63,7 +63,7 @@ export default class TextInput extends BaseInput {
       fontSize: PropTypes.number,
       fontWeight: PropTypes.string,
       lineHeight: PropTypes.number,
-      fontFamily: PropTypes.string
+      fontFamily: PropTypes.string,
     }),
     /**
      * should text input be align to center
@@ -285,7 +285,7 @@ export default class TextInput extends BaseInput {
       placeholderTextColor,
       floatingPlaceholderColor,
       multiline,
-      labelsTypography
+      labelsTypography,
     } = this.props;
     const typography = this.getTypography();
     
@@ -588,7 +588,7 @@ function createStyles({
       paddingHorizontal: 20,
     },
     topLabel: {
-      marginBottom: Constants.isIOS ? 6 : 7 // labelsTypography.lineHeight / 4, // for Input10
+      marginBottom: Constants.isIOS ? 6 : 7, // labelsTypography.lineHeight / 4, // for Input10
     },
     bottomLabel: {
       marginTop: 8,
