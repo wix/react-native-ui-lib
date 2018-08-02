@@ -48,12 +48,6 @@ class Checkbox extends BaseComponent {
     iconColor: PropTypes.string,
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.value === nextProps.value) {
-      this.generateStyles();
-    }
-  }
-
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
   }
@@ -62,16 +56,41 @@ class Checkbox extends BaseComponent {
     _.invoke(this.props, 'onValueChange', !this.props.value);
   };
 
+  getContainerStyle() {
+    const {value, color, style: propsStyle} = this.getThemeProps();
+    const style = [this.styles.container];
+
+    if (value) {
+      if (color) {
+        style.push({backgroundColor: color});
+      } else {
+        style.push(this.styles.containerSelected);
+      }
+    }
+
+    if (color) {
+      style.push({borderColor: color});
+    }
+
+    style.push(propsStyle);
+    return style;
+  }
+
   render() {
-    const {value, selectedIcon, style, ...others} = this.getThemeProps();
+    const {value, selectedIcon, style, color, iconColor, ...others} = this.getThemeProps();
     return (
       <TouchableOpacity
         activeOpacity={1}
         {...others}
-        style={[this.styles.container, value && this.styles.containerSelected, style]}
+        style={this.getContainerStyle()}
         onPress={this.onPress}
       >
-        {value && <Image style={this.styles.selectedIcon} source={selectedIcon || Assets.icons.checkSmall} />}
+        {value && (
+          <Image
+            style={[this.styles.selectedIcon, color && {tintColor: iconColor}]}
+            source={selectedIcon || Assets.icons.checkSmall}
+          />
+        )}
       </TouchableOpacity>
     );
   }

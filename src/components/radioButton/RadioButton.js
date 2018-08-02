@@ -51,11 +51,6 @@ class RadioButton extends BaseComponent {
 
   state = {};
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    if (this.isSelected() === this.isSelected(nextProps, nextContext)) {
-      this.generateStyles();
-    }
-  }
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
@@ -78,12 +73,46 @@ class RadioButton extends BaseComponent {
     return value === selectedValue;
   }
 
+  getContainerStyle() {
+    const {color, size, borderRadius, style: propsStyle} = this.getThemeProps();
+    const style = [this.styles.container];
+    if (size) {
+      style.push({width: size, height: size});
+    }
+
+    if (borderRadius) {
+      style.push({borderRadius});
+    }
+
+    if (color) {
+      style.push({borderColor: color});
+    }
+
+    style.push(propsStyle);
+    return style;
+  }
+
+  getSelectedStyle() {
+    const {color, borderRadius} = this.getThemeProps();
+    const style = [this.styles.selectedIndicator];
+
+    if (borderRadius) {
+      style.push({borderRadius});
+    }
+
+    if (color) {
+      style.push({backgroundColor: color});
+    }
+
+    return style;
+  }
+
   render() {
     const {style, onPress, ...others} = this.getThemeProps();
     const Container = (onPress || this.context.onValueChange) ? TouchableOpacity : View;
     return (
-      <Container activeOpacity={1} {...others} style={[this.styles.container, style]} onPress={this.onPress}>
-        {this.isSelected() && <View style={this.styles.selectedIndicator} />}
+      <Container activeOpacity={1} {...others} style={this.getContainerStyle()} onPress={this.onPress}>
+        {this.isSelected() && <View style={this.getSelectedStyle()} />}
       </Container>
     );
   }

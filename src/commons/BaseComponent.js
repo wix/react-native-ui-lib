@@ -52,7 +52,7 @@ export default class BaseComponent extends Component {
     const componentName = this.constructor.displayName || this.constructor.name;
     let themeProps;
     if (_.isFunction(ThemeManager.components[componentName])) {
-      themeProps = ThemeManager.components[componentName](this.props);
+      themeProps = ThemeManager.components[componentName](this.props, this.context);
     } else {
       themeProps = ThemeManager.components[componentName];
     }

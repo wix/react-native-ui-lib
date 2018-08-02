@@ -69,10 +69,6 @@ class Switch extends BaseComponent {
     if (this.props.value !== nextProps.value) {
       this.toggle(nextProps.value);
     }
-
-    if (this.props.value === nextProps.value) {
-      this.generateStyles();
-    }
   }
 
   toggle(value) {
@@ -96,6 +92,20 @@ class Switch extends BaseComponent {
     return position;
   }
 
+  getSwitchStyle() {
+    const {value, onColor, offColor, style: propsStyle} = this.getThemeProps();
+    const style = [this.styles.switch];
+
+    if (value) {
+      style.push(onColor ? {backgroundColor: onColor} : this.styles.switchOn);
+    } else {
+      style.push(offColor ? {backgroundColor: offColor} : this.styles.switchOff);
+    }
+
+    style.push(propsStyle);
+    return style;
+  }
+
   renderThumb() {
     const {thumbStyle} = this.getThemeProps();
     const {thumbPosition} = this.state;
@@ -117,7 +127,7 @@ class Switch extends BaseComponent {
       <TouchableOpacity
         activeOpacity={1}
         {...others}
-        style={[this.styles.switch, value ? this.styles.switchOn : this.styles.switchOff, style]}
+        style={this.getSwitchStyle()}
         onPress={this.onPress}
       >
         {this.renderThumb()}
