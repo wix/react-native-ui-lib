@@ -31,11 +31,13 @@ class ThemeManager {
 
   setItem(key, value) {
     if (key === 'components') throw new Error('Overriding the "components" key is not possible.');
-    this.theme[key] = value;
+    // this.theme[key] = value;
+    _.set(this.theme, key, value);
   }
 
   getItem(key) {
-    return this.theme[key];
+    // return this.theme[key];
+    return _.get(this.theme, key);
   }
 
   setComponentTheme(componentName, overrides) {
