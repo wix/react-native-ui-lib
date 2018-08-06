@@ -61,6 +61,10 @@ class Picker extends TextInput {
      */
     renderPicker: PropTypes.func,
     /**
+     * Custom picker props (when using renderPicker, will apply on the button wrapper)
+     */
+    customPickerProps: PropTypes.object,
+    /**
      * Add onPress callback for when pressing the picker
      */
     onPress: PropTypes.func,
@@ -280,7 +284,7 @@ class Picker extends TextInput {
   }
 
   render() {
-    const {useNativePicker, renderPicker, testID} = this.props;
+    const {useNativePicker, renderPicker, customPickerProps, testID} = this.props;
 
     if (useNativePicker) return <NativePicker {...this.props} />;
 
@@ -288,7 +292,7 @@ class Picker extends TextInput {
       const {value} = this.state;
       return (
         <View left>
-          <Button link onPress={this.handlePickerOnPress} testID={testID}>
+          <Button {...customPickerProps} link onPress={this.handlePickerOnPress} testID={testID} style={{borderWidth: 1}}>
             {renderPicker(value)}
           </Button>
           {this.renderExpandableModal()}
