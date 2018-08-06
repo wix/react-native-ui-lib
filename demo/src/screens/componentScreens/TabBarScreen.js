@@ -22,6 +22,7 @@ export default class TabBarScreen extends Component {
       selectedIndex1: 1,
       selectedIndex2: 2,
       selectedIndex3: 3,
+      selectedIndex4: 0,
       index: 0,
       currentTabs: [],
       selectedTabId: 0,
@@ -240,7 +241,7 @@ export default class TabBarScreen extends Component {
 
         <Text style={styles.text}>Dynamic items' labels (click button twice to start)</Text>
         {this.renderDynamicLabelsTabBar()}
-
+        
         <View style={{height: 30}}/>
       </ScrollView>
     );
@@ -319,15 +320,15 @@ export default class TabBarScreen extends Component {
   }
 
   renderDynamicLabelsTabBar() {
-    const {selectedIndex, labels} = this.state;
+    const {selectedIndex4, labels} = this.state;
     
     return (
       <View center margin-10 style={{backgroundColor: Colors.dark60, borderWidth: 1}}>
         <Button marginV-10 label='change labels' onPress={this.changeLabels} link dark10/>
         <TabBar
           mode={TabBar.modes.SCROLL}
-          selectedIndex={selectedIndex}
-          onChangeIndex={index => this.setState({selectedIndex: index})}
+          selectedIndex={selectedIndex4}
+          onChangeIndex={index => this.setState({selectedIndex4: index})}
           isContentIndicator
         >
           <TabBar.Item label={labels[0]}/>
@@ -337,6 +338,17 @@ export default class TabBarScreen extends Component {
           <TabBar.Item label={labels[4]}/>
           <TabBar.Item label={labels[5]}/>
           <TabBar.Item label={labels[6]}/>
+        </TabBar>
+        <View style={{height: 30}}/>
+        <TabBar
+          mode={TabBar.modes.SCROLL}
+          selectedIndex={selectedIndex4}
+          onChangeIndex={index => this.setState({selectedIndex4: index})}
+          isContentIndicator
+        >
+          <TabBar.Item label={labels[0]}/>
+          <TabBar.Item label={labels[1]}/>
+          <TabBar.Item label={labels[2]}/>
         </TabBar>
       </View>
     );

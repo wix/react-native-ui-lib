@@ -100,7 +100,6 @@ export default class TabBar extends BaseComponent {
       items.forEach((element) => {
         lbls.push(element.props.label);
       });
-      console.log('UILIB lbls: ', lbls);
       return lbls;
     }
   }
@@ -125,7 +124,7 @@ export default class TabBar extends BaseComponent {
     if (React.Children.count(nextProps.children) !== this.childrenCount) {
       /** dynamic children count */
       this.initializeValues(nextProps);
-    } else {
+    } else if (this.scrollLayout) {
       const labels = this.getLabels(nextProps.children);
       if (!_.isEqual(this.labels, labels)) {
         /** dynamic items' labels */
