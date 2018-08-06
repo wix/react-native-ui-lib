@@ -292,7 +292,7 @@ class Picker extends TextInput {
       const {value} = this.state;
       return (
         <View left>
-          <Button {...customPickerProps} link onPress={this.handlePickerOnPress} testID={testID} style={{borderWidth: 1}}>
+          <Button {...customPickerProps} link onPress={this.handlePickerOnPress} testID={testID}>
             {renderPicker(value)}
           </Button>
           {this.renderExpandableModal()}
