@@ -80,7 +80,7 @@ export default class TabBar extends BaseComponent {
     this.itemsWidths = {};
     this.contentWidth = undefined;
     this.containerWidth = undefined;
-    this.childrenCount = React.Children.count(this.props.children);
+    this.childrenCount = React.Children.count(props.children);
     this.itemContentSpacing = this.getThemeProps().isContentIndicator ? Spacings.s4 : 0;
 
     this.state = {
@@ -94,9 +94,46 @@ export default class TabBar extends BaseComponent {
     this.checkPropsMatch();
   }
 
+  getLabels(items) {
+    if (Array.isArray(items)) {
+      const lbls = [];
+      items.forEach((element) => {
+        lbls.push(element.props.label);
+      });
+      return lbls;
+    }
+  }
+
+  getDifferences(array, array2) {
+    const dif = [];
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] !== array2[i]) {
+        if (dif.indexOf(i) === -1) {
+          dif.push(i);
+        }
+      }
+    }
+    return dif;
+  }
+
+  componentDidMount() {
+    this.labels = this.getLabels(this.props.children);
+  }
+
   componentWillReceiveProps(nextProps) {
     if (React.Children.count(nextProps.children) !== this.childrenCount) {
+      /** dynamic children count */
       this.initializeValues(nextProps);
+    } else if (this.scrollLayout) {
+      const labels = this.getLabels(nextProps.children);
+      if (!_.isEqual(this.labels, labels)) {
+        /** dynamic items' labels */
+        const differences = this.getDifferences(this.labels, labels);
+        differences.forEach((element) => {
+          this.itemsWidths[element] = undefined;
+        });
+        this.labels = labels;
+      }
     }
   }
 

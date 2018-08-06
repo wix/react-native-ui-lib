@@ -81,6 +81,13 @@ export default class TabBarItem extends BaseComponent {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (!_.isEqual(nextProps.label, this.props.label) && !_.isEqual(nextProps.width, this.props.width)) {
+      /** dynamic item's label */
+      this.setState({fontStyle: this.getFontStyle(this.getThemeProps())});
+    }
+  }
+
   // HACK: for indicator width in TabBar
   getFontStyle(props) {
     return props.selectedLabelStyle || this.styles.labelSelected;

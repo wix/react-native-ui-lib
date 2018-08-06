@@ -1,27 +1,35 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView, Alert} from 'react-native';
-import {Constants, Assets, Colors, TabBar, View, Text, Image} from 'react-native-ui-lib'; //eslint-disable-line
+import {Constants, Assets, Colors, TabBar, View, Text, Image, Button} from 'react-native-ui-lib'; //eslint-disable-line
 
 
 const starIcon = require('../../assets/icons/star.png');
 const fontWeightBold = Constants.isIOS ? '600' : '700';
-
+const labelsArray = [
+  ['ONE TWO', 'THREE', 'THREEEEEEEE', 'FOUR', 'FIVE FIVE', 'SIX', 'SEVEN-ELEVEN'],
+  ['ONE TWO', 'THREE', 'THREEEEEEEE', 'FOUR', 'FIVE FIVE', 'SIX', 'SEVEN-ELEVEN'],
+  ['SEVEN-ELEVEN', 'ONE TWO', 'THREE', 'THREEEEEEEE', 'FOUR', 'FIVE FIVE', 'SIX'],
+  ['SIX', 'ONE TWO', 'THREE', 'THREEEEEEEE', 'FOUR', 'FIVE FIVE', 'SEVEN-ELEVEN'],
+  ['FIVE FIVE', 'ONE TWO', 'THREE', 'THREEEEEEEE', 'FOUR', 'SIX', 'SEVEN-ELEVEN']
+];
 export default class TabBarScreen extends Component {
   constructor(props) {
     super(props);
-
-    this.showAddTab = true;
 
     this.state = {
       selectedIndex: 0,
       selectedIndex1: 1,
       selectedIndex2: 2,
       selectedIndex3: 3,
+      selectedIndex4: 0,
       index: 0,
       currentTabs: [],
-      selectedTabId: 0
+      selectedTabId: 0,
+      labels: labelsArray[0]
     };
+
+    this.counter = 0;
   }
 
   onTabSelected = (index) => {
@@ -34,8 +42,6 @@ export default class TabBarScreen extends Component {
     
     return (
       <ScrollView style={{backgroundColor: Colors.dark80}}>
-        {this.renderDynamicTabBar()}
-
         <Text style={styles.text}>FIT Mode (default) - items will get equal space</Text>
 
         <TabBar>
@@ -227,6 +233,16 @@ export default class TabBarScreen extends Component {
           <TabBar.Item label="INACTIVE"/>
           <TabBar.Item label="INACTIVE"/>
         </TabBar>
+
+        <Text style={styles.text}>Dynamic number of items (press last tab to add more tabs)</Text>
+        {this.renderDynamicTabBar(false)} 
+        <Text style={styles.text}>Dynamic number of items with 'ignoreLastTab'</Text>
+        {this.renderDynamicTabBar(true)}
+
+        <Text style={styles.text}>Dynamic items' labels (click button twice to start)</Text>
+        {this.renderDynamicLabelsTabBar()}
+        
+        <View style={{height: 30}}/>
       </ScrollView>
     );
   }
@@ -240,10 +256,13 @@ export default class TabBarScreen extends Component {
     this.setState({currentTabs: newTabs, index: newIndex});
   }
 
-  getTabs() {
-    const tabs = _.map(this.state.currentTabs, (tab) => this.renderTabs(tab));
-    if (this.showAddTab) {
+  getTabs(showAddTab) {
+    const {index, currentTabs} = this.state;
+    let tabs = _.map(currentTabs, (tab) => this.renderTabs(tab));
+    if (showAddTab) {
       tabs.push(this.renderAddTabsTab());
+    } else {
+      tabs.push(this.renderTabs({id: index, displayLabel: `tab #${index}`, onPress: this.onPressAddTab}));
     }
     return tabs;
   }
@@ -255,6 +274,7 @@ export default class TabBarScreen extends Component {
         label={tab.displayLabel}
         selected={tab.id === this.state.selectedTabId}
         onChangeIndex={index => this.setState({selectedTabId: index})}
+        onPress={tab.onPress}
       />
     );
   }
@@ -270,17 +290,65 @@ export default class TabBarScreen extends Component {
     );
   }
 
-  renderDynamicTabBar() {
+  renderDynamicTabBar(showAddTab) {
     return (
       <View style={styles.container}>
-        <View style={{height: 50}}/>
         <TabBar
-          ignoreLastTab={this.showAddTab}
+          ignoreLastTab={showAddTab}
           mode={TabBar.modes.SCROLL}
           selectedIndex={this.state.selectedTabId}
           isContentIndicator
         >
-          {this.getTabs()}
+          {this.getTabs(showAddTab)}
+        </TabBar>
+      </View>
+    );
+  }
+
+  /** dynamic labels */
+  changeLabels = () => {
+    this.count();
+    this.setState({labels: labelsArray[this.counter]});
+  }
+
+  count() {
+    if (this.counter < labelsArray.length - 1) {
+      this.counter++;
+    } else {
+      this.counter = 0;
+    }
+  }
+
+  renderDynamicLabelsTabBar() {
+    const {selectedIndex4, labels} = this.state;
+    
+    return (
+      <View center margin-10 style={{backgroundColor: Colors.dark60, borderWidth: 1}}>
+        <Button marginV-10 label='change labels' onPress={this.changeLabels} link dark10/>
+        <TabBar
+          mode={TabBar.modes.SCROLL}
+          selectedIndex={selectedIndex4}
+          onChangeIndex={index => this.setState({selectedIndex4: index})}
+          isContentIndicator
+        >
+          <TabBar.Item label={labels[0]}/>
+          <TabBar.Item label={labels[1]}/>
+          <TabBar.Item label={labels[2]}/>
+          <TabBar.Item label={labels[3]}/>
+          <TabBar.Item label={labels[4]}/>
+          <TabBar.Item label={labels[5]}/>
+          <TabBar.Item label={labels[6]}/>
+        </TabBar>
+        <View style={{height: 30}}/>
+        <TabBar
+          mode={TabBar.modes.SCROLL}
+          selectedIndex={selectedIndex4}
+          onChangeIndex={index => this.setState({selectedIndex4: index})}
+          isContentIndicator
+        >
+          <TabBar.Item label={labels[0]}/>
+          <TabBar.Item label={labels[1]}/>
+          <TabBar.Item label={labels[2]}/>
         </TabBar>
       </View>
     );
