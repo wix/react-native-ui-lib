@@ -82,7 +82,7 @@ export default class TabBarItem extends BaseComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(!_.isEqual(nextProps.label, this.props.label)) {
+    if (!_.isEqual(nextProps.label, this.props.label)) {
       /** dynamic item's label */
       this.setState({fontStyle: this.getFontStyle(this.getThemeProps())});
     }

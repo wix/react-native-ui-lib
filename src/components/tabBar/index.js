@@ -96,8 +96,8 @@ export default class TabBar extends BaseComponent {
 
   getLabels(items) {
     if (Array.isArray(items)) {
-      let lbls = [];
-      items.forEach(element => {
+      const lbls = [];
+      items.forEach((element) => {
         lbls.push(element.props.label);
       });
       console.log('UILIB lbls: ', lbls);
@@ -107,8 +107,8 @@ export default class TabBar extends BaseComponent {
 
   getDifferences(array, array2) {
     const dif = [];
-    for(i = 0; i < array.length; i++) {
-      if (array[i] != array2[i]) {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] !== array2[i]) {
         if (dif.indexOf(i) === -1) {
           dif.push(i);
         }
@@ -130,7 +130,7 @@ export default class TabBar extends BaseComponent {
       if (!_.isEqual(this.labels, labels)) {
         /** dynamic items' labels */
         const differences = this.getDifferences(this.labels, labels);
-        differences.forEach(element => {
+        differences.forEach((element) => {
           this.itemsWidths[element] = undefined;
         });
         this.labels = labels;
