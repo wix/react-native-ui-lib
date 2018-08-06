@@ -21,7 +21,6 @@ const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
   focus: Colors.blue30,
   error: Colors.red30,
 };
-const LABEL_TYPOGRAPHY = Typography.text80;
 
 /**
  * @description: A wrapper for Text Input component with extra functionality like floating placeholder
@@ -57,6 +56,15 @@ export default class TextInput extends BaseInput {
      * underline color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue'}
      */
     underlineColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    /**
+     * A typography object for all input label (title, characterCounter, and errors)
+     */
+    labelsTypography: PropTypes.shape({
+      fontSize: PropTypes.number,
+      fontWeight: PropTypes.string,
+      lineHeight: PropTypes.number,
+      fontFamily: PropTypes.string,
+    }),
     /**
      * should text input be align to center
      */
@@ -116,6 +124,7 @@ export default class TextInput extends BaseInput {
   static defaultProps = {
     placeholderTextColor: DEFAULT_COLOR_BY_STATE.default,
     enableErrors: true,
+    labelsTypography: Typography.text80,
   };
 
   constructor(props) {
@@ -276,6 +285,7 @@ export default class TextInput extends BaseInput {
       placeholderTextColor,
       floatingPlaceholderColor,
       multiline,
+      labelsTypography,
     } = this.props;
     const typography = this.getTypography();
     
@@ -290,18 +300,18 @@ export default class TextInput extends BaseInput {
             !centered && {
               top: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [multiline ? 30 : 28, multiline ? 7 : 0],
+                outputRange: [multiline ? 34 : 28, multiline ? 0 : 0],
               }),
               fontSize: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [typography.fontSize, LABEL_TYPOGRAPHY.fontSize],
+                outputRange: [typography.fontSize, labelsTypography.fontSize],
               }),
               color: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
                 outputRange: [placeholderTextColor, this.getStateColor(floatingPlaceholderColor)],
               }),
               lineHeight: this.shouldFloatPlacholder()
-                ? LABEL_TYPOGRAPHY.lineHeight
+                ? labelsTypography.lineHeight
                 : typography.lineHeight,
             },
           ]}
@@ -538,6 +548,7 @@ function createStyles({
   placeholderTextColor,
   hideUnderline,
   centered,
+  labelsTypography = Typography.text80,
 }) {
   return StyleSheet.create({
     container: {
@@ -577,14 +588,14 @@ function createStyles({
       paddingHorizontal: 20,
     },
     topLabel: {
-      marginBottom: Constants.isIOS ? 6 : 7,
+      marginBottom: Constants.isIOS ? 6 : 7, // labelsTypography.lineHeight / 4, // for Input10
     },
     bottomLabel: {
-      marginTop: 1,
+      marginTop: 8,
     },
     label: {
-      ...LABEL_TYPOGRAPHY,
-      height: LABEL_TYPOGRAPHY.lineHeight,
+      ...labelsTypography,
+      height: labelsTypography.lineHeight,
     },
   });
 }

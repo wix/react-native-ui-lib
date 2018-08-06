@@ -80,6 +80,18 @@ export default class InputsScreen extends Component {
           />
 
           <TextInput
+            multiline
+            text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            floatingPlaceholder
+            placeholder="multiline & error"
+            onChangeText={this.onChangeText}
+            error={this.state.error}
+            useTopErrors={this.state.topError}
+            floatOnFocus
+          />
+
+          <TextInput
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
@@ -97,6 +109,8 @@ export default class InputsScreen extends Component {
             placeholder="multiline & helperText"
             multiline
             helperText="this is an helper text"
+            error={this.state.error}
+            useTopErrors={this.state.topError}
           />
 
           <TextInput
