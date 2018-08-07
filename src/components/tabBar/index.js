@@ -4,6 +4,7 @@ import React from 'react';
 import {StyleSheet, ViewPropTypes, Animated, ScrollView} from 'react-native';
 import {Colors, Spacings} from '../../style';
 import {BaseComponent} from '../../commons';
+import {Constants} from '../../helpers';
 import View from '../view';
 import Image from '../image';
 import Assets from '../../assets';
@@ -323,7 +324,7 @@ export default class TabBar extends BaseComponent {
           onLayout={this.onLayout}
           onContentSizeChange={this.onContentSizeChange}
           onScroll={this.onScroll}
-          style={[sizeStyle, {overflow: 'visible'}]}
+          style={[sizeStyle, Constants.isIOS && {overflow: 'visible'}]}
         >
           <View style={[this.styles.container, enableShadow && this.styles.containerShadow, otherStyle]} bg-white row>
             {this.renderChildren()}
