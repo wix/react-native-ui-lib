@@ -306,6 +306,7 @@ export default class TextInput extends BaseInput {
             },
           ]}
           onPress={() => expandable && this.toggleExpandableModal(true)}
+          suppressHighlighting
         >
           {placeholder}
         </Animated.Text>
