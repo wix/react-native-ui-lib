@@ -125,7 +125,7 @@ class Card extends BaseComponent {
       testID,
       ...others
     } = this.getThemeProps();
-    const multipleShadowProps = MultipleShadow.extractOwnProps(this.props);
+    const multipleShadowProps = MultipleShadow.extractOwnProps(this.getThemeProps());
     const Container = onPress ? TouchableOpacity : View;
     const ShadowContainer = enableShadow ? MultipleShadow : View;
     return (
