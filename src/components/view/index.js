@@ -32,7 +32,7 @@ export default class View extends BaseComponent {
 
   renderView() {
     const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle} = this.state;
-    const {useSafeArea, style, left, top, right, bottom, flex: propsFlex, ...others} = this.props;
+    const {useSafeArea, style, left, top, right, bottom, flex: propsFlex, ...others} = this.getThemeProps();
     const Element = (useSafeArea && Constants.isIOS) ? SafeAreaView : RNView;
 
     return (
