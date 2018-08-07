@@ -9,7 +9,6 @@ import Image from '../image';
 import Assets from '../../assets';
 import TabBarItem from './TabBarItem';
 
-
 const LAYOUT_MODES = {
   FIT: 'FIT',
   SCROLL: 'SCROLL',
@@ -64,6 +63,10 @@ export default class TabBar extends BaseComponent {
      * Add gradiant effect for scroll overflow. IMPORTANT: must have a native module available!
      */
     useGradientFinish: PropTypes.bool,
+    /**
+     * Show Tab Bar bottom shadow (iOS only)
+     */
+    enableShadow: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -283,9 +286,16 @@ export default class TabBar extends BaseComponent {
   }
 
   renderBar() {
-    const {height, style} = this.getThemeProps();
+    const {height, style, enableShadow} = this.getThemeProps();
     return (
-      <View style={[this.styles.container, style]} bg-white row height={height} onLayout={this.onLayout} useSafeArea>
+      <View
+        style={[this.styles.container, enableShadow && this.styles.containerShadow, style]}
+        bg-white
+        row
+        height={height}
+        onLayout={this.onLayout}
+        useSafeArea
+      >
         {this.renderChildren()}
         {this.hasMeasurements() && this.renderSelectedIndicator()}
       </View>
@@ -293,7 +303,7 @@ export default class TabBar extends BaseComponent {
   }
 
   renderScrollBar() {
-    const {height, style, useGradientFinish} = this.getThemeProps();
+    const {height, style, enableShadow, useGradientFinish} = this.getThemeProps();
     let backgroundColor;
     let sizeStyle;
     let otherStyle;
@@ -313,9 +323,9 @@ export default class TabBar extends BaseComponent {
           onLayout={this.onLayout}
           onContentSizeChange={this.onContentSizeChange}
           onScroll={this.onScroll}
-          style={sizeStyle}
+          style={[sizeStyle, {overflow: 'visible'}]}
         >
-          <View style={[this.styles.container, otherStyle]} bg-white row>
+          <View style={[this.styles.container, enableShadow && this.styles.containerShadow, otherStyle]} bg-white row>
             {this.renderChildren()}
             {this.hasMeasurements() && this.renderSelectedIndicator()}
           </View>
@@ -421,6 +431,12 @@ function createStyles() {
     container: {
       borderBottomWidth: StyleSheet.hairlineWidth,
       borderColor: Colors.dark70,
+    },
+    containerShadow: {
+      shadowColor: Colors.dark10,
+      shadowOpacity: 0.09,
+      shadowRadius: 2,
+      shadowOffset: {height: 2, width: 0},
     },
     selectedIndicator: {
       borderBottomWidth: 1.5,

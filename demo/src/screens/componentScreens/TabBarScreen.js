@@ -95,6 +95,7 @@ export default class TabBarScreen extends Component {
             onChangeIndex={index => this.setState({selectedIndex1: index})}
             style={{height: 48, width: Constants.screenWidth - 40}}
             useGradientFinish
+            enableShadow
           >
             <TabBar.Item label="FEED"/>
             <TabBar.Item label="SERVICES"/>
