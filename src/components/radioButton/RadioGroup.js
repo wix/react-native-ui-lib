@@ -9,7 +9,6 @@ import View from '../view';
  * Wrap a group of Radio Buttons to automatically control their selection
  */
 class RadioGroup extends BaseComponent {
-
   static displayName = 'RadioGroup';
 
   static propTypes = {
@@ -34,6 +33,12 @@ class RadioGroup extends BaseComponent {
     this.state = {
       value: props.value,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.value !== nextProps.value) {
+      this.setState({value: nextProps.value});
+    }
   }
 
   getChildContext() {
