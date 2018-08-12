@@ -34,7 +34,7 @@ import {
   View,
   WheelPickerDialog,
 } from './components';
-import {BaseComponent, SelectableComponent} from './commons';
+import {BaseComponent, PureBaseComponent, SelectableComponent} from './commons';
 // import GridList from './lists/gridList';
 import {LoaderScreen, Modal, StateScreen} from './screensComponents';
 import {HighlighterOverlayView, SafeAreaSpacerView, WheelPicker, SafeAreaInsetsManager} from './nativeComponents';
@@ -86,6 +86,7 @@ export {
 
   // Commons
   BaseComponent,
+  PureBaseComponent,
   SelectableComponent,
 
   // GridList,

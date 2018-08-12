@@ -1,9 +1,11 @@
 // import React from 'react';
 // import {shallow} from 'enzyme';
-import BaseComponent from '../BaseComponent';
+import baseComponent from '../baseComponent';
 import MultipleShadow from '../../components/MultipleShadow';
 import View from '../../components/view';
 import {Colors, Typography, BorderRadiuses, ThemeManager} from '../../style';
+
+const BaseComponent = baseComponent(false);
 
 describe('BaseComponent', () => {
   describe('background modifiers', () => {

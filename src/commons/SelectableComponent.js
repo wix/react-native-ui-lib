@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet, Image} from 'react-native';
 import _ from 'lodash';
-import BaseComponent from './BaseComponent';
+import baseComponent from './baseComponent';
 import {Colors, BorderRadiuses} from '../style';
 import Assets from '../assets';
 
@@ -10,6 +10,8 @@ const INDICATOR_TYPES = {
   CIRCLE: 'circle',
   CLEAN: 'clean',
 };
+
+const BaseComponent = baseComponent(false);
 
 // todo: add nice animation
 export default class SelectableComponent extends BaseComponent {
