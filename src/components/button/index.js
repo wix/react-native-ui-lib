@@ -190,7 +190,7 @@ export default class Button extends BaseComponent {
   }
 
   getLabelColor() {
-    const {link, linkColor, outline, outlineColor, disabled} = this.getThemeProps(); // this.props;
+    const {link, linkColor, outline, outlineColor, disabled, color: propsColor} = this.getThemeProps();
 
     let color = Colors.white;
     if (link) {
@@ -205,7 +205,7 @@ export default class Button extends BaseComponent {
       return ThemeManager.CTADisabledColor;
     }
 
-    color = this.props.color || this.extractColorValue() || color;
+    color = propsColor || this.extractColorValue() || color;
     return color;
   }
 
