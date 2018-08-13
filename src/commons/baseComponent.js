@@ -141,15 +141,13 @@ export default function baseComponent(usePure) {
     }
 
     extractColorValue() {
-      let color;
       const props = this.getThemeProps();
-      _.forEach(Colors, (value, key) => {
-        if (props[key] === true) {
-          color = value;
-        }
-      });
-
-      return color;
+      const allColorsKeys = _.keys(Colors);
+      const colorPropsKeys = _.chain(props).keys().filter(key => _.includes(allColorsKeys, key)).value();
+      
+      
+      const color = _.findLast(colorPropsKeys, colorKey => props[colorKey] === true);
+      return Colors[color];
     }
 
     // todo: refactor this and use BACKGROUND_KEY_PATTERN
