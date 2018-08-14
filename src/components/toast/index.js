@@ -382,7 +382,7 @@ function createStyles() {
       width: 24,
       height: 24,
       marginRight: 16,
-    }
+    },
   });
 }
 
