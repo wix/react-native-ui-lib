@@ -1,15 +1,17 @@
-import React, {Component} from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
 import _ from 'lodash';
-import {View, Assets, Constants, Card, Button, Colors, Typography, Text} from 'react-native-ui-lib'; //eslint-disable-line
+import React, {Component} from 'react';
+import {StyleSheet, ScrollView} from 'react-native';
+import {Colors, View, Card, Button, Text} from 'react-native-ui-lib'; //eslint-disable-line
 import posts from '../../data/posts';
+
 
 const featureIcon = require('../../assets/icons/star.png');
 const shareIcon = require('../../assets/icons/share.png');
 const cardImage = require('../../assets/images/card-example.jpg');
 const cardImage2 = require('../../assets/images/empty-state.jpg');
 
-export default class ButtonsScreen extends Component {
+export default class CardsScreen extends Component {
+  
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
@@ -156,6 +158,6 @@ export default class ButtonsScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     padding: 15,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.yellow80,
   },
 });

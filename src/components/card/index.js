@@ -1,16 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {StyleSheet} from 'react-native';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {StyleSheet} from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import MultipleShadow from '../MultipleShadow';
-
 import CardSection from './CardSection';
 import CardItem from './CardItem';
 import CardImage from './CardImage';
+
 
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 
@@ -61,7 +61,7 @@ class Card extends BaseComponent {
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
-     * Use to identify the button in tests
+     * Use to identify the component in tests
      */
     testID: PropTypes.string,
   };
@@ -106,7 +106,6 @@ class Card extends BaseComponent {
         const position = this.calcImagePosition(index);
         return React.cloneElement(child, {key: index, position, borderRadius});
       }
-
       return child;
     });
     return children;
@@ -128,17 +127,19 @@ class Card extends BaseComponent {
     const multipleShadowProps = MultipleShadow.extractOwnProps(this.getThemeProps());
     const Container = onPress ? TouchableOpacity : View;
     const ShadowContainer = enableShadow ? MultipleShadow : View;
+    const brRadius = borderRadius || DEFAULT_BORDER_RADIUS;
+    
     return (
       <Container
-        style={[this.styles.container, /* {borderRadius}, */ this.elevationStyle, containerStyle]}
+        style={[this.styles.container, this.elevationStyle, containerStyle]}
         onPress={onPress}
         delayPressIn={10}
         activeOpacity={0.6}
         testID={testID}
         {...others}
       >
-        <ShadowContainer {...multipleShadowProps} style={{borderRadius}}>
-          <View width={width} height={height} row={row} style={[this.styles.innerContainer, /* {borderRadius}, */ style]}>
+        <ShadowContainer {...multipleShadowProps} borderRadius={brRadius} style={{borderRadius}}>
+          <View width={width} height={height} row={row} style={[this.styles.innerContainer, style]}>
             {this.renderChildren()}
           </View>
         </ShadowContainer>
