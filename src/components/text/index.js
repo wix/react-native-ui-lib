@@ -1,6 +1,6 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Text as RNText, StyleSheet} from 'react-native';
-import PropTypes from 'prop-types';
 import {BaseComponent} from '../../commons';
 
 /**
@@ -22,6 +22,10 @@ export default class Text extends BaseComponent {
      * whether to center the text (using textAlign)
      */
     center: PropTypes.bool,
+    /**
+     * whether to change the text to uppercase
+     */
+    uppercase: PropTypes.bool,
     testID: PropTypes.string,
   };
 
@@ -40,7 +44,7 @@ export default class Text extends BaseComponent {
   render() {
     const color = this.getThemeProps().color || this.extractColorValue();
     const typography = this.extractTypographyValue();
-    const {style, center, ...others} = this.getThemeProps();
+    const {style, center, uppercase, ...others} = this.getThemeProps();
     const {margins} = this.state;
     const textStyle = [
       this.styles.container,
@@ -50,11 +54,20 @@ export default class Text extends BaseComponent {
       center && {textAlign: 'center'},
       style,
     ];
+    const children = uppercase ? this.transformToUppercase(this.props.children) : this.props.children;
+    
     return (
       <RNText {...others} style={textStyle} ref={r => (this.text = r)}>
-        {this.props.children}
+        {children}
       </RNText>
     );
+  }
+
+  transformToUppercase(items) {
+    if (typeof items === 'string') {
+      return items.toUpperCase();
+    }
+    return items;
   }
 
   measure(...args) {
