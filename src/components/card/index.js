@@ -1,16 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {StyleSheet} from 'react-native';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {StyleSheet} from 'react-native';
+import {BlurView} from 'react-native-blur';
 import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import MultipleShadow from '../MultipleShadow';
-
 import CardSection from './CardSection';
 import CardItem from './CardItem';
 import CardImage from './CardImage';
+
 
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 
@@ -57,11 +58,19 @@ class Card extends BaseComponent {
      */
     elevation: PropTypes.number,
     /**
+     * enable blur effect for Toast
+     */
+    enableBlur: PropTypes.bool,
+    /**
+     * blur option for blur effect according to react-native-blur lib (make sure enableBlur is on)
+     */
+    blurOptions: PropTypes.object,
+    /**
      * Additional styles for the top container
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
-     * Use to identify the button in tests
+     * Use to identify the component in tests
      */
     testID: PropTypes.string,
   };
@@ -73,6 +82,15 @@ class Card extends BaseComponent {
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
+  }
+
+  getBlurOptions() {
+    const {blurOptions} = this.getThemeProps();
+    return {
+      blurType: 'light',
+      amount: 5,
+      ...blurOptions,
+    };
   }
 
   // todo: add unit test
@@ -106,7 +124,6 @@ class Card extends BaseComponent {
         const position = this.calcImagePosition(index);
         return React.cloneElement(child, {key: index, position, borderRadius});
       }
-
       return child;
     });
     return children;
@@ -122,23 +139,28 @@ class Card extends BaseComponent {
       containerStyle,
       enableShadow,
       borderRadius,
+      enableBlur,
       testID,
       ...others
     } = this.getThemeProps();
+    const blurOptions = this.getBlurOptions();
     const multipleShadowProps = MultipleShadow.extractOwnProps(this.getThemeProps());
     const Container = onPress ? TouchableOpacity : View;
     const ShadowContainer = enableShadow ? MultipleShadow : View;
+    const brRadius = borderRadius || DEFAULT_BORDER_RADIUS;
+    
     return (
       <Container
-        style={[this.styles.container, /* {borderRadius}, */ this.elevationStyle, containerStyle]}
+        style={[this.styles.container, this.elevationStyle, containerStyle]}
         onPress={onPress}
         delayPressIn={10}
         activeOpacity={0.6}
         testID={testID}
         {...others}
       >
-        <ShadowContainer {...multipleShadowProps} style={{borderRadius}}>
-          <View width={width} height={height} row={row} style={[this.styles.innerContainer, /* {borderRadius}, */ style]}>
+        {enableBlur && <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions}/>}
+        <ShadowContainer {...multipleShadowProps} borderRadius={brRadius} style={{borderRadius}}>
+          <View width={width} height={height} row={row} style={[this.styles.innerContainer, style]}>
             {this.renderChildren()}
           </View>
         </ShadowContainer>
@@ -155,12 +177,16 @@ function createStyles({width, height, enableShadow, borderRadius = DEFAULT_BORDE
       overflow: 'visible',
       borderRadius,
       elevation: enableShadow ? 2 : 0,
+      backgroundColor: 'transparent',
     },
     innerContainer: {
       backgroundColor: Colors.white,
       borderRadius,
       overflow: 'hidden',
       flexGrow: 1,
+    },
+    blurView: {
+      ...StyleSheet.absoluteFillObject,
     },
   });
 }

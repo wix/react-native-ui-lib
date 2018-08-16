@@ -27,6 +27,10 @@ export default class MultipleShadow extends BaseComponent {
      * Custom shadow color to be applied on both top and bottom shadows
      */
     shadowColor: PropTypes.string,
+    /**
+     * card border radius (will be passed to inner Card.Image component)
+     */
+    borderRadius: PropTypes.number,
   };
 
   static defaultProps = {
@@ -53,11 +57,15 @@ export default class MultipleShadow extends BaseComponent {
   }
 
   render() {
-    const {style, shadowColor, ...others} = this.props;
+    const {style, shadowColor, borderRadius, ...others} = this.props;
     const {topShadow, bottomShadow} = this.getShadowStyles();
+    
     return (
-      <View {...others} style={[this.styles.wrapper, {...topShadow}, shadowColor && {shadowColor}, style]}>
-        <View {...others} style={[this.styles.wrapper, {...bottomShadow}, shadowColor && {shadowColor}, style]}>
+      <View {...others} style={[this.styles.wrapper, {...topShadow}, shadowColor && {shadowColor}, style, {borderRadius}]}>
+        <View
+          {...others}
+          style={[this.styles.wrapper, {...bottomShadow}, shadowColor && {shadowColor}, style, {borderRadius}]}
+        >
           {this.props.children}
         </View>
       </View>
