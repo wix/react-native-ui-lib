@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {BlurView} from 'react-native-blur';
+import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../view';
@@ -58,7 +59,7 @@ class Card extends BaseComponent {
      */
     elevation: PropTypes.number,
     /**
-     * enable blur effect for Toast
+     * enable blur effect (iOS only)
      */
     enableBlur: PropTypes.bool,
     /**
@@ -76,7 +77,6 @@ class Card extends BaseComponent {
   };
 
   static defaultProps = {
-    // borderRadius: BorderRadiuses.br40,
     enableShadow: true,
   };
 
@@ -126,6 +126,7 @@ class Card extends BaseComponent {
       }
       return child;
     });
+    
     return children;
   }
 
@@ -158,8 +159,8 @@ class Card extends BaseComponent {
         testID={testID}
         {...others}
       >
-        {enableBlur && <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions}/>}
-        <ShadowContainer {...multipleShadowProps} borderRadius={brRadius} style={{borderRadius}}>
+        {Constants.isIOS && enableBlur && <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions}/>}
+        <ShadowContainer {...multipleShadowProps} borderRadius={brRadius}>
           <View width={width} height={height} row={row} style={[this.styles.innerContainer, style]}>
             {this.renderChildren()}
           </View>
@@ -169,7 +170,7 @@ class Card extends BaseComponent {
   }
 }
 
-function createStyles({width, height, enableShadow, borderRadius = DEFAULT_BORDER_RADIUS}) {
+function createStyles({width, height, enableShadow, enableBlur, borderRadius = DEFAULT_BORDER_RADIUS}) {
   return StyleSheet.create({
     container: {
       width,
@@ -177,10 +178,9 @@ function createStyles({width, height, enableShadow, borderRadius = DEFAULT_BORDE
       overflow: 'visible',
       borderRadius,
       elevation: enableShadow ? 2 : 0,
-      backgroundColor: 'transparent',
     },
     innerContainer: {
-      backgroundColor: Colors.white,
+      backgroundColor: Constants.isIOS && enableBlur ? Colors.rgba(Colors.white, 0.85) : Colors.white,
       borderRadius,
       overflow: 'hidden',
       flexGrow: 1,

@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {TouchableOpacity, Text, ListView, StyleSheet} from 'react-native';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 import autobind from 'react-autobind';
+import {TouchableOpacity, Text, ListView, StyleSheet} from 'react-native';
 import {Colors, Typography, View, TextInput} from 'react-native-ui-lib';//eslint-disable-line
 import {navigationData} from '../menuStructure';
+
 
 const ds = new ListView.DataSource({
   rowHasChanged: (r1, r2) => r1 !== r2,
@@ -26,10 +27,8 @@ export default class UiLibExplorerMenu extends Component {
   }
 
   componentDidMount() {
-    // this.openScreen({
-    //   screen: 'unicorn.PlaygroundScreen',
-    //   title: 'Playground',
-    // });
+    // this.openScreen({screen: 'unicorn.PlaygroundScreen', title: 'Playground'});
+    // this.openScreen({screen: 'unicorn.components.CardsScreen', title: 'Testing'});
   }
 
   openScreen(row) {

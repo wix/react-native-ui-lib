@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Colors, View, Card, Button, Text} from 'react-native-ui-lib'; //eslint-disable-line
+import {Constants, Colors, View, Card, Button, Text} from 'react-native-ui-lib'; //eslint-disable-line
 import posts from '../../data/posts';
 
 
@@ -43,10 +43,11 @@ export default class CardsScreen extends Component {
           <Card
             marginB-20
             height={150}
+            style={{backgroundColor: Colors.dark60}}
+            containerStyle={{backgroundColor: 'transparent'}}
             shadowType="white10"
-            style={{backgroundColor: Colors.rgba(Colors.dark60, 0.75)}}
-            // containerStyle={{backgroundColor: 'transparent'}}
             shadowColor={Colors.purple10}
+            enableShadow
           >
             <View flex padding-20>
               <Text text50 white>
@@ -58,22 +59,32 @@ export default class CardsScreen extends Component {
           <Card
             marginB-20
             height={80}
+            style={{backgroundColor: Colors.rgba(Colors.dark60, 0.75)}}
+          >
+            <View flex padding-20>
+              <Text text50 white>
+                With opacity
+              </Text>
+            </View>
+          </Card>
+
+          {Constants.isIOS && <Card
+            marginB-20
+            height={80}
             shadowType="white10"
-            style={{backgroundColor: Colors.rgba(Colors.dark60, 0.5)}}
-            // containerStyle={{backgroundColor: 'transparent'}}
             shadowColor={Colors.purple10}
             enableBlur
-            onPress={() => {}} 
+            // onPress={() => {}} 
           >
             <View flex padding-20>
               <Text text50 dark20>
-                With Blue effect
+                With Blur effect (iOS only)
               </Text>
               <Text text80 dark20>
                 Must pass style backgroundColor as rgba
               </Text>
             </View>
-          </Card>
+          </Card>}
 
           <Card row height={160} containerStyle={{marginBottom: 15}} onPress={() => {}} enableBlur>
             <Card.Image width={115} imageSource={cardImage} />
