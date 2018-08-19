@@ -25,7 +25,7 @@ export default class CardsScreen extends Component {
           >
             {_.times(4, (i) => {
               return (
-                <Card shadowType="white10" key={i} width={100} containerStyle={{marginRight: 20}}>
+                <Card key={i} width={100} style={{marginRight: 20}}>
                   <View padding-15>
                     <Text text30 dark30>
                       {i}
@@ -40,52 +40,31 @@ export default class CardsScreen extends Component {
             <Card.Image height={'100%'} imageSource={cardImage} />
           </Card>
           
-          <Card
-            marginB-20
-            height={150}
-            style={{backgroundColor: Colors.dark60}}
-            shadowType="white10"
-            shadowColor={Colors.purple10}
-            enableShadow
-          >
+          <Card marginB-20 height={80} style={{backgroundColor: Colors.dark60}}>
             <View flex padding-20>
-              <Text text50 white>
-                With custom shadow color (purple shadow)
-              </Text>
+              <Text text50 white>With custom background color</Text>
             </View>
           </Card>
 
-          <Card
-            marginB-20
-            height={80}
-            style={{backgroundColor: Colors.rgba(Colors.dark60, 0.75)}}
-          >
+          <Card marginB-20 height={80} style={{backgroundColor: Colors.rgba(Colors.dark60, 0.75)}}>
             <View flex padding-20>
-              <Text text50 white>
-                With opacity
-              </Text>
+              <Text text50 white>With opacity</Text>
             </View>
           </Card>
 
           {Constants.isIOS && <Card
             marginB-20
             height={80}
-            shadowType="white10"
-            shadowColor={Colors.purple10}
             enableBlur
             // onPress={() => {}} 
           >
             <View flex padding-20>
-              <Text text50 dark20>
-                With Blur effect (iOS only)
-              </Text>
-              <Text text80 dark20>
-                Must pass style backgroundColor as rgba
-              </Text>
+              <Text text50 dark20>With Blur effect</Text>
+              <Text text80 dark20>(iOS only)</Text>
             </View>
           </Card>}
 
-          <Card row height={160} containerStyle={{marginBottom: 15}} onPress={() => {}} enableBlur>
+          <Card row height={160} style={{marginBottom: 15}} onPress={() => {}} enableBlur>
             <Card.Image width={115} imageSource={cardImage} />
             <Card.Section body>
               <Card.Section>
@@ -106,7 +85,7 @@ export default class CardsScreen extends Component {
             </Card.Section>
           </Card>
 
-          <Card shadowType="white10" row height={160} containerStyle={{marginBottom: 15}} onPress={() => {}} br10>
+          <Card row height={160} style={{marginBottom: 15}} onPress={() => {}} br10>
             <Card.Section body>
               <Card.Section>
                 <Text text70 dark10>
@@ -127,7 +106,7 @@ export default class CardsScreen extends Component {
             <Card.Image width={115} imageSource={cardImage} />
           </Card>
 
-          <Card containerStyle={{marginBottom: 15}} onPress={() => {}}>
+          <Card style={{marginBottom: 15}} onPress={() => {}}>
             <Card.Section body>
               <Card.Section>
                 <Text text70 dark10>
@@ -146,7 +125,7 @@ export default class CardsScreen extends Component {
           {_.map(posts, (post, i) => {
             const statusColor = post.status === 'Published' ? Colors.green30 : Colors.orange30;
             return (
-              <Card key={i} containerStyle={{marginBottom: 15}} onPress={() => console.log('press on a card')}>
+              <Card key={i} style={{marginBottom: 15}} onPress={() => console.log('press on a card')}>
                 <Card.Image height={160} imageSource={post.coverImage} />
                 <Card.Section body>
                   <Card.Section>
