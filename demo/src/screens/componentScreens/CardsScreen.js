@@ -43,9 +43,9 @@ export default class CardsScreen extends Component {
           <Card
             marginB-20
             height={150}
-            style={{backgroundColor: Colors.dark60}}
-            containerStyle={{backgroundColor: 'transparent'}}
             shadowType="white10"
+            style={{backgroundColor: Colors.rgba(Colors.dark60, 0.75)}}
+            // containerStyle={{backgroundColor: 'transparent'}}
             shadowColor={Colors.purple10}
             enableShadow
           >

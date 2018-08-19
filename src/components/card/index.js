@@ -178,6 +178,7 @@ function createStyles({width, height, enableShadow, enableBlur, borderRadius = D
       overflow: 'visible',
       borderRadius,
       elevation: enableShadow ? 2 : 0,
+      backgroundColor: 'transparent',
     },
     innerContainer: {
       backgroundColor: Constants.isIOS && enableBlur ? Colors.rgba(Colors.white, 0.85) : Colors.white,
