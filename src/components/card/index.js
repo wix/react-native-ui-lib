@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {BlurView} from 'react-native-blur';
+import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
-import MultipleShadow from '../MultipleShadow';
 import CardSection from './CardSection';
 import CardItem from './CardItem';
 import CardImage from './CardImage';
@@ -28,7 +28,6 @@ class Card extends BaseComponent {
   static displayName = 'Card';
 
   static propTypes = {
-    ...MultipleShadow.propTypes,
     /**
      * card custom width
      */
@@ -58,7 +57,7 @@ class Card extends BaseComponent {
      */
     elevation: PropTypes.number,
     /**
-     * enable blur effect for Toast
+     * enable blur effect (iOS only)
      */
     enableBlur: PropTypes.bool,
     /**
@@ -76,9 +75,16 @@ class Card extends BaseComponent {
   };
 
   static defaultProps = {
-    // borderRadius: BorderRadiuses.br40,
     enableShadow: true,
   };
+
+  constructor(props) {
+    super(props);
+
+    if (props.containerStyle !== undefined) {
+      console.warn('containerStyle prop will be deprecated soon. Please use style prop instead');
+    }
+  }
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
@@ -117,6 +123,22 @@ class Card extends BaseComponent {
     }
   }
 
+  get shadowStyle() {
+    const {enableShadow} = this.getThemeProps();
+    if (enableShadow) {
+      return this.styles.containerShadow;
+    }
+  }
+
+  get blurBgStyle() {
+    const {enableBlur} = this.getThemeProps();
+    if (Constants.isIOS && enableBlur) {
+      return {backgroundColor: Colors.rgba(Colors.white, 0.85)}; 
+    } else {
+      return {backgroundColor: Colors.white}; 
+    }
+  }
+
   renderChildren() {
     const {borderRadius} = this.props;
     const children = React.Children.map(this.props.children, (child, index) => {
@@ -126,6 +148,7 @@ class Card extends BaseComponent {
       }
       return child;
     });
+    
     return children;
   }
 
@@ -144,49 +167,48 @@ class Card extends BaseComponent {
       ...others
     } = this.getThemeProps();
     const blurOptions = this.getBlurOptions();
-    const multipleShadowProps = MultipleShadow.extractOwnProps(this.getThemeProps());
     const Container = onPress ? TouchableOpacity : View;
-    const ShadowContainer = enableShadow ? MultipleShadow : View;
-    const brRadius = borderRadius || DEFAULT_BORDER_RADIUS;
     
     return (
       <Container
-        style={[this.styles.container, this.elevationStyle, containerStyle]}
+        style={[this.styles.container, this.elevationStyle, this.shadowStyle, this.blurBgStyle, containerStyle, style]}
         onPress={onPress}
         delayPressIn={10}
         activeOpacity={0.6}
         testID={testID}
         {...others}
       >
-        {enableBlur && <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions}/>}
-        <ShadowContainer {...multipleShadowProps} borderRadius={brRadius} style={{borderRadius}}>
-          <View width={width} height={height} row={row} style={[this.styles.innerContainer, style]}>
-            {this.renderChildren()}
-          </View>
-        </ShadowContainer>
+        {Constants.isIOS && enableBlur && <BlurView style={this.styles.blurView} {...blurOptions}/>}
+        <View width={width} height={height} row={row} style={[this.styles.innerContainer]}>
+          {this.renderChildren()}
+        </View>
       </Container>
     );
   }
 }
 
-function createStyles({width, height, enableShadow, borderRadius = DEFAULT_BORDER_RADIUS}) {
+function createStyles({width, height, borderRadius = DEFAULT_BORDER_RADIUS}) {
   return StyleSheet.create({
     container: {
       width,
       height,
       overflow: 'visible',
       borderRadius,
-      elevation: enableShadow ? 2 : 0,
-      backgroundColor: 'transparent',
+    },
+    containerShadow: { // sh30 bottom
+      shadowColor: Colors.dark40,
+      shadowOpacity: 0.25,
+      shadowRadius: 12,
+      shadowOffset: {height: 5, width: 0},
     },
     innerContainer: {
-      backgroundColor: Colors.white,
       borderRadius,
       overflow: 'hidden',
       flexGrow: 1,
     },
     blurView: {
       ...StyleSheet.absoluteFillObject,
+      borderRadius,
     },
   });
 }
