@@ -140,7 +140,7 @@ class Card extends BaseComponent {
   }
 
   renderChildren() {
-    const {borderRadius} = this.props;
+    const {borderRadius} = this.getThemeProps();
     const children = React.Children.map(this.props.children, (child, index) => {
       if (_.get(child, 'type') === CardImage) {
         const position = this.calcImagePosition(index);
@@ -168,18 +168,27 @@ class Card extends BaseComponent {
     } = this.getThemeProps();
     const blurOptions = this.getBlurOptions();
     const Container = onPress ? TouchableOpacity : View;
+    const brRadius = borderRadius || DEFAULT_BORDER_RADIUS;
     
     return (
       <Container
-        style={[this.styles.container, this.elevationStyle, this.shadowStyle, this.blurBgStyle, containerStyle, style]}
+        style={[
+          this.styles.container,
+          {borderRadius: brRadius},
+          this.elevationStyle,
+          this.shadowStyle,
+          this.blurBgStyle,
+          containerStyle,
+          style,
+        ]}
         onPress={onPress}
         delayPressIn={10}
         activeOpacity={0.6}
         testID={testID}
         {...others}
       >
-        {Constants.isIOS && enableBlur && <BlurView style={this.styles.blurView} {...blurOptions}/>}
-        <View width={width} height={height} row={row} style={[this.styles.innerContainer]}>
+        {Constants.isIOS && enableBlur && <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions}/>}
+        <View width={width} height={height} row={row} style={[this.styles.innerContainer, {borderRadius: brRadius}]}>
           {this.renderChildren()}
         </View>
       </Container>
