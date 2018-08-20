@@ -15,8 +15,7 @@ const WEIGHT_TYPES = {
 class Typography {
   text10 = {
     fontSize: 64,
-  ULIGHT: '100',
-  fontWeight: WEIGHT_TYPES.ULIGHT,
+    fontWeight: WEIGHT_TYPES.ULIGHT,
     lineHeight: Math.floor(64 * 1.4),
     fontFamily: Constants.isAndroid ? 'sans-serif-thin' : undefined,
   };
