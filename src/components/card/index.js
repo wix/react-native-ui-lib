@@ -140,7 +140,7 @@ class Card extends BaseComponent {
   }
 
   renderChildren() {
-    const {borderRadius} = this.props;
+    const {borderRadius} = this.getThemeProps();
     const children = React.Children.map(this.props.children, (child, index) => {
       if (_.get(child, 'type') === CardImage) {
         const position = this.calcImagePosition(index);
