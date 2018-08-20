@@ -172,7 +172,15 @@ class Card extends BaseComponent {
     
     return (
       <Container
-        style={[this.styles.container, {borderRadius: brRadius}, this.elevationStyle, this.shadowStyle, this.blurBgStyle, containerStyle, style]}
+        style={[
+          this.styles.container,
+          {borderRadius: brRadius},
+          this.elevationStyle,
+          this.shadowStyle,
+          this.blurBgStyle,
+          containerStyle,
+          style,
+        ]}
         onPress={onPress}
         delayPressIn={10}
         activeOpacity={0.6}
