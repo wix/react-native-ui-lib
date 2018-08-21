@@ -82,7 +82,7 @@ class Card extends BaseComponent {
     super(props);
 
     if (props.containerStyle !== undefined) {
-      console.warn('containerStyle prop will be deprecated soon. Please use style prop instead');
+      console.warn('Card\'s "containerStyle" prop will be deprecated soon. Please use style prop instead');
     }
   }
 
