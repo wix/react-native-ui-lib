@@ -94,7 +94,7 @@ class Card extends BaseComponent {
     const {blurOptions} = this.getThemeProps();
     return {
       blurType: 'light',
-      amount: 5,
+      blurAmount: 5,
       ...blurOptions,
     };
   }
