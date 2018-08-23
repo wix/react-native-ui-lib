@@ -391,7 +391,7 @@ export default class TextInput extends BaseInput {
   }
 
   renderExpandableInput() {
-    const {style, floatingPlaceholder, placeholder} = this.props;
+    const {style, floatingPlaceholder, placeholder, hideUnderline} = this.props;
     const {value} = this.state;
     const typography = this.getTypography();
     const color = this.props.color || this.extractColorValue();
@@ -399,6 +399,7 @@ export default class TextInput extends BaseInput {
     const shouldShowPlaceholder = _.isEmpty(value) && !floatingPlaceholder;
     const inputStyle = [
       this.styles.input,
+      hideUnderline && this.style.inputWithoutUnderline,
       typography,
       color && {color},
       style,
@@ -471,7 +472,7 @@ export default class TextInput extends BaseInput {
   }
 
   render() {
-    const {expandable, containerStyle, underlineColor, useTopErrors} = this.props;
+    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.props;
     const underlineStateColor = this.getStateColor(underlineColor, true);
 
     return (
@@ -479,7 +480,13 @@ export default class TextInput extends BaseInput {
         <View>
           {this.shouldShowTopError() ? this.renderError(useTopErrors) : this.renderTitle()}
         </View>
-        <View style={[this.styles.innerContainer, {borderColor: underlineStateColor}, {paddingTop: this.getTopPaddings()}]}>
+        <View
+          style={[
+            this.styles.innerContainer,
+            hideUnderline && this.styles.innerContainerWithoutUnderline,
+            {borderColor: underlineStateColor},
+            {paddingTop: this.getTopPaddings()}]}
+        >
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
           {this.renderExpandableModal()}
@@ -545,17 +552,23 @@ function createStyles({
     },
     innerContainer: {
       flexDirection: 'row',
-      borderBottomWidth: hideUnderline ? 0 : 1,
+      borderBottomWidth: 1,
       borderColor: Colors.dark70,
       justifyContent: centered ? 'center' : undefined,
       flexGrow: 1,
     },
+    innerContainerWithoutUnderline: {
+      borderBottomWidth: 0,
+    },
     input: {
       flexGrow: 1,
-      marginBottom: hideUnderline ? undefined : (Constants.isIOS ? 10 : 5),
+      marginBottom: Constants.isIOS ? 10 : 5,
       padding: 0,
       textAlign: centered ? 'center' : undefined,
       backgroundColor: 'transparent',
+    },
+    inputWithoutUnderline: {
+      marginBottom: undefined,
     },
     floatingPlaceholder: {
       position: 'absolute',
