@@ -544,7 +544,6 @@ export default class TextInput extends BaseInput {
 
 function createStyles({
   placeholderTextColor,
-  hideUnderline,
   centered,
 }) {
   return StyleSheet.create({
