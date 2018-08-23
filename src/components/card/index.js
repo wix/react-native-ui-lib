@@ -78,13 +78,14 @@ class Card extends BaseComponent {
     enableShadow: true,
   };
 
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    if (props.containerStyle !== undefined) {
-      console.warn('Card\'s "containerStyle" prop will be deprecated soon. Please use style prop instead');
-    }
-  }
+  //   // TODO: enable this warning 
+  //   // if (props.containerStyle !== undefined) {
+  //   //   console.warn('Card\'s "containerStyle" prop will be deprecated soon. Please use style prop instead');
+  //   // }
+  // }
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
