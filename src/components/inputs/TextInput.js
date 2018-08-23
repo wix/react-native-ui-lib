@@ -399,7 +399,7 @@ export default class TextInput extends BaseInput {
     const shouldShowPlaceholder = _.isEmpty(value) && !floatingPlaceholder;
     const inputStyle = [
       this.styles.input,
-      hideUnderline && this.style.inputWithoutUnderline,
+      hideUnderline && this.styles.inputWithoutUnderline,
       typography,
       color && {color},
       style,
