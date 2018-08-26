@@ -121,7 +121,7 @@ class RadioButton extends BaseComponent {
 function createStyles({size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, color = DEFAULT_COLOR}) {
   return StyleSheet.create({
     container: {
-      borderWidth: 1,
+      borderWidth: 2,
       borderColor: color,
       width: size,
       height: size,
