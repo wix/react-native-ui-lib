@@ -1,14 +1,16 @@
+import _ from 'lodash';
+import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import PropTypes from 'prop-types';
-import _ from 'lodash';
 import * as Animatable from 'react-native-animatable';
 import {BlurView} from 'react-native-blur';
 import {BaseComponent} from '../../commons';
-import View from '../view';
-import Button from '../button';
 import {ThemeManager, Colors, Typography, BorderRadiuses} from '../../style';
 import Assets from '../../assets';
+import View from '../view';
+import Button from '../button';
+import Image from '../image';
+
 
 const DURATION = 300;
 const DELAY = 100;
@@ -51,6 +53,10 @@ export default class Toast extends BaseComponent {
      * a custom style for the toast message
      */
     messageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * a left icon
+     */
+    icon: PropTypes.number,
     /**
      * one or two actions for the user to display in the toast
      */
@@ -104,16 +110,16 @@ export default class Toast extends BaseComponent {
     zIndex: 100,
   };
 
-  state = {
-    isVisible: false,
-    animationConfig: this.getAnimation(true),
-    contentAnimation: this.getContentAnimation(true),
-    duration: DURATION,
-    delay: DELAY,
-  };
-
   constructor(props) {
     super(props);
+
+    this.state = {
+      isVisible: false,
+      animationConfig: this.getAnimation(true),
+      contentAnimation: this.getContentAnimation(true),
+      duration: DURATION,
+      delay: DELAY,
+    };
 
     const {animated} = this.props;
     if (animated) {
@@ -185,7 +191,7 @@ export default class Toast extends BaseComponent {
   }
 
   renderContent() {
-    const {actions, allowDismiss, renderContent} = this.getThemeProps();
+    const {actions, allowDismiss, renderContent, icon, color} = this.getThemeProps();
 
     if (_.isFunction(renderContent)) {
       return renderContent(this.props);
@@ -196,6 +202,11 @@ export default class Toast extends BaseComponent {
 
     return (
       <View row height={height} centerV spread>
+        {icon && (
+          <View>
+            <Image source={icon} resizeMode={'contain'} style={this.styles.icon} tintColor={color}/>
+          </View>
+        )}
         {this.renderMessage()}
         {(hasOneAction || allowDismiss) && (
           <View row height="100%">
@@ -278,12 +289,12 @@ export default class Toast extends BaseComponent {
 
     return (
       <View style={[positionStyle]} useSafeArea testID={testID}>
-        <View height={height} />
+        <View height={height}/>
 
         <Animatable.View
           style={[
             this.styles.container,
-            !renderContent && {paddingHorizontal: 15},
+            !renderContent && {paddingHorizontal: 20},
             backgroundColor && {backgroundColor},
             hasOneAction && this.styles.containerWithOneAction,
             {zIndex},
@@ -338,7 +349,6 @@ function createStyles() {
     container: {
       ...StyleSheet.absoluteFillObject,
       backgroundColor: Colors.rgba(ThemeManager.primaryColor, 0.8),
-      // paddingHorizontal: 15,
     },
     containerWithOneAction: {
       paddingRight: 0,
@@ -366,6 +376,12 @@ function createStyles() {
     },
     blurView: {
       ...StyleSheet.absoluteFillObject,
+    },
+    icon: {
+      flex: 1,
+      width: 24,
+      height: 24,
+      marginRight: 16,
     },
   });
 }
