@@ -324,13 +324,11 @@ const styles = StyleSheet.create({
   tagsList: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'center',
   },
   inputWrapper: {
     flexGrow: 1,
     minWidth: 120,
-    marginVertical: GUTTER_SPACING / 2,
-    paddingVertical: 4.5,
+    justifyContent: 'center',
   },
   tag: {
     backgroundColor: Colors.blue30,

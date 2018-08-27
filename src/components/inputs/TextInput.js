@@ -430,12 +430,14 @@ export default class TextInput extends BaseInput {
       floatingPlaceholder,
       centered,
       multiline,
+      hideUnderline,
       numberOfLines,
       helperText,
       ...others
     } = this.props;
     const inputStyle = [
       this.styles.input,
+      hideUnderline && this.styles.inputWithoutUnderline,
       typography,
       color && {color},
       // with the right flex on the tree hierarchy we might not need this
