@@ -160,7 +160,7 @@ export default class Toast extends BaseComponent {
   }
 
   getAnimation(shouldShow) {
-    const {position, useNativeDriver} = this.props;
+    const {position, useNativeDriver, animated} = this.props;
     const animationDescriptor = getAnimationDescriptor(position, this.state);
     const {animation, duration, delay} = shouldShow ? animationDescriptor.enter : animationDescriptor.exit;
 
