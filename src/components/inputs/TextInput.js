@@ -512,6 +512,7 @@ export default class TextInput extends BaseInput {
 
   onKeyPress = (event) => {
     this.lastKey = event.nativeEvent.key;
+    _.invoke(this.props, 'onKeyPress', event);
   }
 
   onChangeText = (text) => {
