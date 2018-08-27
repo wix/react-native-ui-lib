@@ -30,10 +30,13 @@ export default class FormScreen extends Component {
       filter: filters[0],
       contact: contacts[0],
       tags: [{label: 'Amit'}, {label: 'Ethan'}],
-      // tags: [{value: 'Amit'}, {value: 'Ethan'}],
       tags2: ['Tags', 'Input'],
       tags3: ['Non', 'Removable', 'Tags'],
     };
+  }
+
+  onTagPress(tagIndex, markedTagIndex) {
+    this.customTagsInput.markTagIndex(tagIndex === markedTagIndex ? undefined : tagIndex);
   }
 
   renderCustomTag(tag, index, shouldMarkToRemove) {
@@ -42,10 +45,6 @@ export default class FormScreen extends Component {
         <Text white>{tag.label}</Text>
       </View>
     );
-  }
-
-  onTagPress(tagIndex, markedTagIndex) {
-    this.customTagsInput.markTagIndex(tagIndex === markedTagIndex ? undefined : tagIndex);
   }
 
   render() {
