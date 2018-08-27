@@ -170,7 +170,7 @@ export default class Toast extends BaseComponent {
       delay, 
       useNativeDriver, 
       onAnimationEnd: () => this.onAnimationEnd()
-    };    
+    };
   }
 
   getContentAnimation(shouldShow) {
