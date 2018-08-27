@@ -101,21 +101,25 @@ export default class TagsInput extends BaseComponent {
 
     this.state = {
       value: props.value,
-      tags: props.tags,
+      tags: props.tags || [],
       tagIndexToRemove: undefined,
     };
   }
 
   componentDidMount() {
-    const textInputHandle = ReactNative.findNodeHandle(this.input);
-    if (textInputHandle && NativeModules.TextInputDelKeyHandler) {
-      NativeModules.TextInputDelKeyHandler.register(textInputHandle);
-      DeviceEventEmitter.addListener('onBackspacePress', this.onKeyPress);
+    if (Constants.isAndroid) {
+      const textInputHandle = ReactNative.findNodeHandle(this.input);
+      if (textInputHandle && NativeModules.TextInputDelKeyHandler) {
+        NativeModules.TextInputDelKeyHandler.register(textInputHandle);
+        DeviceEventEmitter.addListener('onBackspacePress', this.onKeyPress);
+      }
     }
   }
 
   componentWillUnmount() {
-    DeviceEventEmitter.removeListener('onBackspacePress', this.onKeyPress);
+    if (Constants.isAndroid) {
+      DeviceEventEmitter.removeListener('onBackspacePress', this.onKeyPress);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -191,7 +195,7 @@ export default class TagsInput extends BaseComponent {
 
   onKeyPress(event) {
     _.invoke(this.props, 'onKeyPress', event);
-
+    
     if (this.props.disableTagRemoval) {
       return;
     }
