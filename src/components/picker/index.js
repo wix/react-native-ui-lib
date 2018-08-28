@@ -61,6 +61,10 @@ class Picker extends TextInput {
      */
     renderPicker: PropTypes.func,
     /**
+     * Render custom picker item
+     */
+    renderItem: PropTypes.func,
+    /**
      * Custom picker props (when using renderPicker, will apply on the button wrapper)
      */
     customPickerProps: PropTypes.object,
@@ -196,7 +200,7 @@ class Picker extends TextInput {
   };
 
   appendPropsToChildren() {
-    const {children, mode, getItemValue, showSearch} = this.props;
+    const {children, mode, getItemValue, showSearch, renderItem} = this.props;
     const {value, searchValue} = this.state;
     const childrenWithProps = React.Children.map(children, (child) => {
       const childValue = PickerPresenter.getItemValue({getItemValue, ...child.props});
@@ -208,6 +212,7 @@ class Picker extends TextInput {
           onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
           getItemValue: child.props.getItemValue || getItemValue,
           onSelectedLayout: this.onSelectedItemLayout,
+          renderItem: child.props.renderItem || renderItem,
         });
       }
     });
