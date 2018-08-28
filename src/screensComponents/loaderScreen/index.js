@@ -37,7 +37,7 @@ export default class LoaderScreen extends BaseComponent {
     /**
     * Styles for the container of this component
     */
-    containerStyle: View.propTypes.style
+    containerStyle: View.propTypes.style,
   };
 
   render() {
