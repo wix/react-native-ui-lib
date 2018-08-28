@@ -151,8 +151,8 @@ function createStyles() {
       ...Typography.text70,
     },
     icon: {
-      width: 16,
-      height: 16,
+      // width: 16,
+      // height: 16,
       tintColor: Colors.dark10,
       marginBottom: 2,
     },
