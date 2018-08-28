@@ -273,7 +273,7 @@ export default class TagsInput extends BaseComponent {
   }
 
   renderTextInput() {
-    const {containerStyle, inputStyle, ...others} = this.props;
+    const {containerStyle, inputStyle, selectionColor, ...others} = this.props;
     const {value} = this.state;
     const isLastTagMarked = this.isLastTagMarked();
     return (
@@ -289,7 +289,7 @@ export default class TagsInput extends BaseComponent {
           onKeyPress={this.onKeyPress}
           enableErrors={false}
           hideUnderline
-          selectionColor={isLastTagMarked ? 'transparent' : undefined}
+          selectionColor={isLastTagMarked ? 'transparent' : selectionColor}
           style={inputStyle}
           containerStyle={{flexGrow: 0}}
           collapsable={false}
