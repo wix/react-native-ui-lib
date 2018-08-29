@@ -15,11 +15,13 @@ const DEFAULT_COLOR_BY_STATE = {
   default: Colors.dark40,
   focus: Colors.blue30,
   error: Colors.red30,
+  disabled: Colors.dark70,
 };
 const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
   default: Colors.dark70,
   focus: Colors.blue30,
   error: Colors.red30,
+  disabled: Colors.dark70,
 };
 const LABEL_TYPOGRAPHY = Typography.text80;
 
@@ -194,7 +196,7 @@ export default class TextInput extends BaseInput {
 
   getStateColor(colorProp, isUnderline) {
     const {focused} = this.state;
-    const {error} = this.props;
+    const {error, editable} = this.props;
     const colorByState = _.cloneDeep(isUnderline ? DEFAULT_UNDERLINE_COLOR_BY_STATE : DEFAULT_COLOR_BY_STATE);
 
     if (colorProp) {
@@ -209,6 +211,9 @@ export default class TextInput extends BaseInput {
 
     // return the right color for the current state
     let color = colorByState.default;
+    if (editable === false) {
+      color = colorByState.disabled;
+    }
     if (error && isUnderline) {
       color = colorByState.error;
     } else if (focused) {
@@ -276,8 +281,11 @@ export default class TextInput extends BaseInput {
       placeholderTextColor,
       floatingPlaceholderColor,
       multiline,
+      editable,
     } = this.props;
     const typography = this.getTypography();
+    const placeholderColor = (editable === false) ? DEFAULT_COLOR_BY_STATE.disabled : placeholderTextColor;
+  
     
     if (this.shouldFakePlaceholder()) {
       return (
@@ -298,7 +306,7 @@ export default class TextInput extends BaseInput {
               }),
               color: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [placeholderTextColor, this.getStateColor(floatingPlaceholderColor)],
+                outputRange: [placeholderColor, this.getStateColor(floatingPlaceholderColor)],
               }),
               lineHeight: this.shouldFloatPlacholder()
                 ? LABEL_TYPOGRAPHY.lineHeight
@@ -331,11 +339,13 @@ export default class TextInput extends BaseInput {
 
   renderCharCounter() {
     const {focused} = this.state;
-    const {maxLength, showCharacterCounter} = this.props;
+    const {maxLength, showCharacterCounter, editable} = this.props;
     
     if (maxLength && showCharacterCounter) {
       const counter = this.getCharCount();
-      const color = this.isCounterLimit() && focused ? DEFAULT_COLOR_BY_STATE.error : DEFAULT_COLOR_BY_STATE.default;
+      const textColor = this.isCounterLimit() && focused ? DEFAULT_COLOR_BY_STATE.error : DEFAULT_COLOR_BY_STATE.default;
+      const color = (editable === false) ? DEFAULT_COLOR_BY_STATE.disabled : textColor;
+
       return (
         <Text
           style={[{color}, this.styles.bottomLabel, this.styles.label]}
@@ -422,17 +432,19 @@ export default class TextInput extends BaseInput {
 
   renderTextInput() {    
     const {value} = this.state; // value set on state for floatingPlaceholder functionality
-    const color = this.props.color || this.extractColorValue();
+    const color = (this.props.editable === false) ? DEFAULT_COLOR_BY_STATE.disabled : this.props.color || this.extractColorValue();
     const typography = this.getTypography();
     const {
       style,
       placeholder,
+      placeholderTextColor,
       floatingPlaceholder,
       centered,
       multiline,
       hideUnderline,
       numberOfLines,
       helperText,
+      editable,
       ...others
     } = this.props;
     const inputStyle = [
@@ -446,12 +458,15 @@ export default class TextInput extends BaseInput {
     ];
     // HACK: passing whitespace instead of undefined. Issue fixed in RN56
     const placeholderText = this.getPlaceholderText();
+    const placeholderColor = (editable === false) ? DEFAULT_COLOR_BY_STATE.disabled : placeholderTextColor;
 
     return (
       <RNTextInput
+        editable={editable}
         {...others}
         value={value}
         placeholder={placeholderText}
+        placeholderTextColor={placeholderColor}
         underlineColorAndroid="transparent"
         style={inputStyle}
         multiline={multiline}

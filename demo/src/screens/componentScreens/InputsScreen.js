@@ -57,16 +57,16 @@ export default class InputsScreen extends Component {
           keyboardShouldPersistTaps="always"
           getTextInputRefs={() => [this.noUnderline, this.hugeText]}
         >
-            <Text style={{marginBottom: 20, marginRight: 20}} text40>
-              Inputs
-            </Text>
-            <Button
-              style={{height: 28, alignSelf: 'flex-start', marginBottom: 20}}
-              outline={!topError}
-              size="small"
-              label={btnLabel}
-              onPress={this.onButtonPressed}
-            />
+          <Text style={{marginBottom: 20, marginRight: 20}} text40>
+            Inputs
+          </Text>
+          <Button
+            style={{height: 28, alignSelf: 'flex-start', marginBottom: 20}}
+            outline={!topError}
+            size="small"
+            label={btnLabel}
+            onPress={this.onButtonPressed}
+          />
           
           <TextInput
             text70
@@ -77,6 +77,8 @@ export default class InputsScreen extends Component {
             error={this.state.error}
             useTopErrors={this.state.topError}
             floatOnFocus
+            editable={false}
+            value="editable false"
           />
 
           <TextInput
@@ -132,7 +134,6 @@ export default class InputsScreen extends Component {
             floatingPlaceholder
             placeholder="character counter & expandable"
             expandable
-            containerStyle={{marginBottom: INPUT_SPACING}}
             maxLength={20}
             showCharacterCounter
           />
@@ -240,7 +241,7 @@ export default class InputsScreen extends Component {
               borderColor: Colors.dark60,
             }}
           >
-            <TextArea placeholder="write something.." />
+            <TextArea placeholder="write something.."/>
           </View>
 
           <TextInput
