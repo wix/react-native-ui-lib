@@ -127,7 +127,7 @@ class PickerItem extends BaseComponent {
         disabled={disabled}
         testID={testID}
       >
-        {renderItem ? renderItem(value, this.props) : this.renderItem()}
+        {renderItem ? renderItem(value, this.props, this.getLabel()) : this.renderItem()}
       </TouchableOpacity>
     );
   }

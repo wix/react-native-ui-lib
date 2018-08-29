@@ -7,7 +7,7 @@ UI Toolset & Components Library for React Native
 
 ### Documentation
 
-Check out our [Docs Site](https://wix.github.io/react-native-ui-lib/).
+Check out our [Docs Site](https://wix.github.io/react-native-ui-lib/docs/).
 
 ### Demo
 
