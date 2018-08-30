@@ -15,14 +15,13 @@ const DEFAULT_COLOR_BY_STATE = {
   default: Colors.dark40,
   focus: Colors.blue30,
   error: Colors.red30,
-  disabled: Colors.dark70,
 };
 const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
   default: Colors.dark70,
   focus: Colors.blue30,
   error: Colors.red30,
-  disabled: Colors.dark70,
 };
+const DISABLED_COLOR = Colors.dark70;
 const LABEL_TYPOGRAPHY = Typography.text80;
 
 /**
@@ -204,7 +203,7 @@ export default class TextInput extends BaseInput {
     const colorByState = _.cloneDeep(isUnderline ? DEFAULT_UNDERLINE_COLOR_BY_STATE : DEFAULT_COLOR_BY_STATE);
 
     if (this.isDisabled()) {
-      return colorByState.disabled;
+      return DISABLED_COLOR;
     }
 
     if (colorProp) {
@@ -348,7 +347,7 @@ export default class TextInput extends BaseInput {
     if (maxLength && showCharacterCounter) {
       const counter = this.getCharCount();
       const textColor = this.isCounterLimit() && focused ? DEFAULT_COLOR_BY_STATE.error : DEFAULT_COLOR_BY_STATE.default;
-      const color = this.isDisabled() ? DEFAULT_COLOR_BY_STATE.disabled : textColor;
+      const color = this.isDisabled() ? DISABLED_COLOR : textColor;
 
       return (
         <Text
@@ -408,7 +407,7 @@ export default class TextInput extends BaseInput {
     const {style, floatingPlaceholder, placeholder, hideUnderline} = this.props;
     const {value} = this.state;
     const typography = this.getTypography();
-    const color = this.isDisabled() ? DEFAULT_COLOR_BY_STATE.disabled : this.props.color || this.extractColorValue();
+    const color = this.getStateColor(this.props.color || this.extractColorValue());
     const minHeight = typography.lineHeight;
     const shouldShowPlaceholder = _.isEmpty(value) && !floatingPlaceholder;
     const inputStyle = [
@@ -436,7 +435,7 @@ export default class TextInput extends BaseInput {
 
   renderTextInput() {    
     const {value} = this.state; // value set on state for floatingPlaceholder functionality
-    const color = this.isDisabled() ? DEFAULT_COLOR_BY_STATE.disabled : this.props.color || this.extractColorValue();
+    const color = this.getStateColor(this.props.color || this.extractColorValue());
     const typography = this.getTypography();
     const {
       style,
