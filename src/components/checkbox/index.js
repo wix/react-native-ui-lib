@@ -101,8 +101,8 @@ function createStyles({color = DEFAULT_COLOR, iconColor = DEFAULT_ICON_COLOR, si
     container: {
       width: size,
       height: size,
-      borderRadius: borderRadius || size / 2,
-      borderWidth: 1,
+      borderRadius: borderRadius || 8,
+      borderWidth: 2,
       borderColor: color,
       alignItems: 'center',
       justifyContent: 'center',
