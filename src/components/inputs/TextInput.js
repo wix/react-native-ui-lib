@@ -58,6 +58,10 @@ export default class TextInput extends BaseInput {
      */
     underlineColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     /**
+     * the color of all text when the input is disabled (if undefined will not apply color)
+     */
+    disabledColor: PropTypes.string,
+    /**
      * should text input be align to center
      */
     centered: PropTypes.bool,
@@ -192,10 +196,18 @@ export default class TextInput extends BaseInput {
   //   }
   // }
 
+  isDisabled() {
+    return this.props.editable === false;
+  }
+
   getStateColor(colorProp, isUnderline) {
     const {focused} = this.state;
-    const {error} = this.props;
+    const {error, disabledColor} = this.props;
     const colorByState = _.cloneDeep(isUnderline ? DEFAULT_UNDERLINE_COLOR_BY_STATE : DEFAULT_COLOR_BY_STATE);
+
+    if (this.isDisabled() && disabledColor) {
+      return disabledColor;
+    }
 
     if (colorProp) {
       if (_.isString(colorProp)) {
@@ -278,6 +290,8 @@ export default class TextInput extends BaseInput {
       multiline,
     } = this.props;
     const typography = this.getTypography();
+    const placeholderColor = this.getStateColor(placeholderTextColor);
+  
     
     if (this.shouldFakePlaceholder()) {
       return (
@@ -298,7 +312,7 @@ export default class TextInput extends BaseInput {
               }),
               color: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [placeholderTextColor, this.getStateColor(floatingPlaceholderColor)],
+                outputRange: [placeholderColor, this.getStateColor(floatingPlaceholderColor)],
               }),
               lineHeight: this.shouldFloatPlacholder()
                 ? LABEL_TYPOGRAPHY.lineHeight
@@ -331,11 +345,13 @@ export default class TextInput extends BaseInput {
 
   renderCharCounter() {
     const {focused} = this.state;
-    const {maxLength, showCharacterCounter} = this.props;
+    const {maxLength, showCharacterCounter, disabledColor} = this.props;
     
     if (maxLength && showCharacterCounter) {
       const counter = this.getCharCount();
-      const color = this.isCounterLimit() && focused ? DEFAULT_COLOR_BY_STATE.error : DEFAULT_COLOR_BY_STATE.default;
+      const textColor = this.isCounterLimit() && focused ? DEFAULT_COLOR_BY_STATE.error : DEFAULT_COLOR_BY_STATE.default;
+      const color = (this.isDisabled() && disabledColor) ? disabledColor : textColor;
+
       return (
         <Text
           style={[{color}, this.styles.bottomLabel, this.styles.label]}
@@ -394,7 +410,7 @@ export default class TextInput extends BaseInput {
     const {style, floatingPlaceholder, placeholder, hideUnderline} = this.props;
     const {value} = this.state;
     const typography = this.getTypography();
-    const color = this.props.color || this.extractColorValue();
+    const color = this.getStateColor(this.props.color || this.extractColorValue());
     const minHeight = typography.lineHeight;
     const shouldShowPlaceholder = _.isEmpty(value) && !floatingPlaceholder;
     const inputStyle = [
@@ -413,7 +429,7 @@ export default class TextInput extends BaseInput {
           shouldShowPlaceholder && this.styles.placeholder,
         ]}
         numberOfLines={3}
-        onPress={() => this.toggleExpandableModal(true)}
+        onPress={() => !this.isDisabled() && this.toggleExpandableModal(true)}
       >
         {shouldShowPlaceholder ? placeholder : value}
       </Text>
@@ -422,11 +438,12 @@ export default class TextInput extends BaseInput {
 
   renderTextInput() {    
     const {value} = this.state; // value set on state for floatingPlaceholder functionality
-    const color = this.props.color || this.extractColorValue();
+    const color = this.getStateColor(this.props.color || this.extractColorValue());
     const typography = this.getTypography();
     const {
       style,
       placeholder,
+      placeholderTextColor,
       floatingPlaceholder,
       centered,
       multiline,
@@ -446,12 +463,14 @@ export default class TextInput extends BaseInput {
     ];
     // HACK: passing whitespace instead of undefined. Issue fixed in RN56
     const placeholderText = this.getPlaceholderText();
+    const placeholderColor = this.getStateColor(placeholderTextColor);
 
     return (
       <RNTextInput
         {...others}
         value={value}
         placeholder={placeholderText}
+        placeholderTextColor={placeholderColor}
         underlineColorAndroid="transparent"
         style={inputStyle}
         multiline={multiline}
