@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Checkbox, Assets, Text, View, Switch, Constants, Button, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
+import {Checkbox, Assets, Text, View, Colors} from 'react-native-ui-lib'; //eslint-disable-line
 
 class CheckboxScreen extends Component {
   state = {};
@@ -8,7 +8,11 @@ class CheckboxScreen extends Component {
       <View useSafeArea flex>
         <View flex padding-20>
           <View flex center row>
-            <Checkbox value={this.state.value1} onValueChange={value1 => this.setState({value1})} style={{marginRight: 10}} />
+            <Checkbox
+              value={this.state.value1}
+              onValueChange={value1 => this.setState({value1})}
+              style={{marginRight: 10}}
+            />
 
             <Checkbox
               value={this.state.value2}
