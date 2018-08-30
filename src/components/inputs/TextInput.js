@@ -21,7 +21,6 @@ const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
   focus: Colors.blue30,
   error: Colors.red30,
 };
-const DISABLED_COLOR = Colors.dark70;
 const LABEL_TYPOGRAPHY = Typography.text80;
 
 /**
@@ -58,6 +57,10 @@ export default class TextInput extends BaseInput {
      * underline color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue'}
      */
     underlineColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    /**
+     * the color of all text when the input is disabled (if undefined will not apply color)
+     */
+    disabledColor: PropTypes.string,
     /**
      * should text input be align to center
      */
@@ -199,11 +202,11 @@ export default class TextInput extends BaseInput {
 
   getStateColor(colorProp, isUnderline) {
     const {focused} = this.state;
-    const {error} = this.props;
+    const {error, disabledColor} = this.props;
     const colorByState = _.cloneDeep(isUnderline ? DEFAULT_UNDERLINE_COLOR_BY_STATE : DEFAULT_COLOR_BY_STATE);
 
-    if (this.isDisabled()) {
-      return DISABLED_COLOR;
+    if (this.isDisabled() && disabledColor) {
+      return disabledColor;
     }
 
     if (colorProp) {
@@ -342,12 +345,12 @@ export default class TextInput extends BaseInput {
 
   renderCharCounter() {
     const {focused} = this.state;
-    const {maxLength, showCharacterCounter} = this.props;
+    const {maxLength, showCharacterCounter, disabledColor} = this.props;
     
     if (maxLength && showCharacterCounter) {
       const counter = this.getCharCount();
       const textColor = this.isCounterLimit() && focused ? DEFAULT_COLOR_BY_STATE.error : DEFAULT_COLOR_BY_STATE.default;
-      const color = this.isDisabled() ? DISABLED_COLOR : textColor;
+      const color = (this.isDisabled() && disabledColor) ? disabledColor : textColor;
 
       return (
         <Text

@@ -89,6 +89,7 @@ export default class InputsScreen extends Component {
             showCharacterCounter
             expandable
             editable={false}
+            disabledColor={Colors.dark70}
           />
 
           <TextInput
