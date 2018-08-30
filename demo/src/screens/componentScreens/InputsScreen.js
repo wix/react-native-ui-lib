@@ -77,8 +77,18 @@ export default class InputsScreen extends Component {
             error={this.state.error}
             useTopErrors={this.state.topError}
             floatOnFocus
+          />
+
+          <TextInput
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            floatingPlaceholder
+            placeholder="placeholder"
+            helperText="helperText"
+            value="disabled with value"
+            maxLength={100}
+            showCharacterCounter
+            expandable
             editable={false}
-            value="editable false"
           />
 
           <TextInput
@@ -231,7 +241,7 @@ export default class InputsScreen extends Component {
             transformer={transformPrice}
           />
 
-          <Text dark40>Text Area</Text>
+          <Text dark10 marginB-5>Text Area</Text>
           <View
             style={{
               height: 150,

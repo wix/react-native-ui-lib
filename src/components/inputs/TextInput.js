@@ -194,10 +194,18 @@ export default class TextInput extends BaseInput {
   //   }
   // }
 
+  isDisabled() {
+    return this.props.editable === false;
+  }
+
   getStateColor(colorProp, isUnderline) {
     const {focused} = this.state;
-    const {error, editable} = this.props;
+    const {error} = this.props;
     const colorByState = _.cloneDeep(isUnderline ? DEFAULT_UNDERLINE_COLOR_BY_STATE : DEFAULT_COLOR_BY_STATE);
+
+    if (this.isDisabled()) {
+      return colorByState.disabled;
+    }
 
     if (colorProp) {
       if (_.isString(colorProp)) {
@@ -211,9 +219,6 @@ export default class TextInput extends BaseInput {
 
     // return the right color for the current state
     let color = colorByState.default;
-    if (editable === false) {
-      color = colorByState.disabled;
-    }
     if (error && isUnderline) {
       color = colorByState.error;
     } else if (focused) {
@@ -281,10 +286,9 @@ export default class TextInput extends BaseInput {
       placeholderTextColor,
       floatingPlaceholderColor,
       multiline,
-      editable,
     } = this.props;
     const typography = this.getTypography();
-    const placeholderColor = (editable === false) ? DEFAULT_COLOR_BY_STATE.disabled : placeholderTextColor;
+    const placeholderColor = this.getStateColor(placeholderTextColor);
   
     
     if (this.shouldFakePlaceholder()) {
@@ -339,12 +343,12 @@ export default class TextInput extends BaseInput {
 
   renderCharCounter() {
     const {focused} = this.state;
-    const {maxLength, showCharacterCounter, editable} = this.props;
+    const {maxLength, showCharacterCounter} = this.props;
     
     if (maxLength && showCharacterCounter) {
       const counter = this.getCharCount();
       const textColor = this.isCounterLimit() && focused ? DEFAULT_COLOR_BY_STATE.error : DEFAULT_COLOR_BY_STATE.default;
-      const color = (editable === false) ? DEFAULT_COLOR_BY_STATE.disabled : textColor;
+      const color = this.isDisabled() ? DEFAULT_COLOR_BY_STATE.disabled : textColor;
 
       return (
         <Text
@@ -404,7 +408,7 @@ export default class TextInput extends BaseInput {
     const {style, floatingPlaceholder, placeholder, hideUnderline} = this.props;
     const {value} = this.state;
     const typography = this.getTypography();
-    const color = this.props.color || this.extractColorValue();
+    const color = this.isDisabled() ? DEFAULT_COLOR_BY_STATE.disabled : this.props.color || this.extractColorValue();
     const minHeight = typography.lineHeight;
     const shouldShowPlaceholder = _.isEmpty(value) && !floatingPlaceholder;
     const inputStyle = [
@@ -423,7 +427,7 @@ export default class TextInput extends BaseInput {
           shouldShowPlaceholder && this.styles.placeholder,
         ]}
         numberOfLines={3}
-        onPress={() => this.toggleExpandableModal(true)}
+        onPress={() => !this.isDisabled() && this.toggleExpandableModal(true)}
       >
         {shouldShowPlaceholder ? placeholder : value}
       </Text>
@@ -432,7 +436,7 @@ export default class TextInput extends BaseInput {
 
   renderTextInput() {    
     const {value} = this.state; // value set on state for floatingPlaceholder functionality
-    const color = (this.props.editable === false) ? DEFAULT_COLOR_BY_STATE.disabled : this.props.color || this.extractColorValue();
+    const color = this.isDisabled() ? DEFAULT_COLOR_BY_STATE.disabled : this.props.color || this.extractColorValue();
     const typography = this.getTypography();
     const {
       style,
@@ -444,7 +448,6 @@ export default class TextInput extends BaseInput {
       hideUnderline,
       numberOfLines,
       helperText,
-      editable,
       ...others
     } = this.props;
     const inputStyle = [
@@ -458,11 +461,10 @@ export default class TextInput extends BaseInput {
     ];
     // HACK: passing whitespace instead of undefined. Issue fixed in RN56
     const placeholderText = this.getPlaceholderText();
-    const placeholderColor = (editable === false) ? DEFAULT_COLOR_BY_STATE.disabled : placeholderTextColor;
+    const placeholderColor = this.getStateColor(placeholderTextColor);
 
     return (
       <RNTextInput
-        editable={editable}
         {...others}
         value={value}
         placeholder={placeholderText}
