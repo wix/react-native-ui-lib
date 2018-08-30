@@ -50,16 +50,20 @@ export default class Badge extends BaseComponent {
     size: 'default',
   };
 
+  isSmallBadge() {
+    const {size} = this.props;
+    return size === 'small';
+  }
+
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
   getBadgeSizeStyle() {
-    const {label, size, borderWidth} = this.props;
+    const {label, borderWidth} = this.props;
     const isOneLetter = label.length < 2;
-    const isSmallBadge = size === 'small';
-    let width = isSmallBadge ? (isOneLetter ? 18 : 25) : (isOneLetter ? 21 : 30);
-    let height = isSmallBadge ? 18 : 21;
+    let width = this.isSmallBadge() ? (isOneLetter ? 18 : 25) : isOneLetter ? 21 : 30;
+    let height = this.isSmallBadge() ? 18 : 20;
     if (borderWidth) {
       width += borderWidth * 2;
       height += borderWidth * 2;
@@ -68,12 +72,25 @@ export default class Badge extends BaseComponent {
     return {width, height};
   }
 
+  renderLabel() {
+    const {label} = this.props;
+    return (
+      <Text
+        style={[this.styles.label, this.isSmallBadge() && this.styles.labelSmall]}
+        allowFontScaling={false}
+        numberOfLines={1}
+        testID="badge"
+      >
+        {label}
+      </Text>
+    );
+  }
+
   render() {
-    const {size, borderWidth, borderColor} = this.props;
+    const {borderWidth, borderColor} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
     const animationProps = this.extractAnimationProps();
-    const isSmallBadge = size === 'small';
     const sizeStyle = this.getBadgeSizeStyle();
 
     return (
@@ -89,14 +106,7 @@ export default class Badge extends BaseComponent {
         ]}
         {...animationProps}
       >
-        <Text
-          style={[this.styles.label, isSmallBadge && this.styles.labelSmall]}
-          allowFontScaling={false}
-          numberOfLines={1}
-          testID="badge"
-        >
-          {this.props.label}
-        </Text>
+        {this.renderLabel()}
       </Animatable.View>
     );
   }
