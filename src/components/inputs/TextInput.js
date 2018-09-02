@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {TextInput as RNTextInput, StyleSheet, Animated} from 'react-native';
+import {TextInput as RNTextInput, StyleSheet, Animated, TouchableOpacity} from 'react-native';
 import _ from 'lodash';
 import BaseInput from './BaseInput';
 import Text from '../text';
@@ -9,6 +9,7 @@ import {Constants} from '../../helpers';
 import {Modal} from '../../screensComponents';
 import TextArea from './TextArea';
 import View from '../view';
+import Image from '../image';
 
 
 const DEFAULT_COLOR_BY_STATE = {
@@ -78,6 +79,10 @@ export default class TextInput extends BaseInput {
      */
     expandable: PropTypes.bool,
     /**
+     * Render custom expandable input (requires expandable to be true)
+     */
+    renderExpandableInput: PropTypes.func,
+    /**
      * allow custom rendering of expandable content when clicking on the input (useful for pickers)
      * accept props and state as params, ex. (props, state) => {...}
      * use toggleExpandableModal(false) method to toggle off the expandable content
@@ -111,6 +116,10 @@ export default class TextInput extends BaseInput {
      * should the errors be displayed at the top
      */
     useTopErrors: PropTypes.bool,
+    /**
+     * Icon asset source for showing on the right side, appropriate for dropdown icon and such
+     */
+    rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
      * Use to identify the component in tests
      */
@@ -407,7 +416,7 @@ export default class TextInput extends BaseInput {
   }
 
   renderExpandableInput() {
-    const {style, floatingPlaceholder, placeholder, hideUnderline} = this.props;
+    const {style, floatingPlaceholder, placeholder, hideUnderline, renderExpandableInput, rightIconSource} = this.props;
     const {value} = this.state;
     const typography = this.getTypography();
     const color = this.getStateColor(this.props.color || this.extractColorValue());
@@ -421,18 +430,28 @@ export default class TextInput extends BaseInput {
       style,
     ];
 
+    if (_.isFunction(renderExpandableInput)) {
+      return renderExpandableInput(this.getThemeProps());
+    }
+
     return (
-      <Text
-        style={[
-          {minHeight},
-          inputStyle,
-          shouldShowPlaceholder && this.styles.placeholder,
-        ]}
-        numberOfLines={3}
+      <TouchableOpacity 
+        style={this.styles.expandableInput}
+        activeOpacity={1}
         onPress={() => !this.isDisabled() && this.toggleExpandableModal(true)}
       >
-        {shouldShowPlaceholder ? placeholder : value}
-      </Text>
+        <Text
+          style={[
+            {minHeight},
+            inputStyle,
+            shouldShowPlaceholder && this.styles.placeholder,
+          ]}
+          numberOfLines={3}
+        >
+          {shouldShowPlaceholder ? placeholder : value}
+        </Text>
+        {rightIconSource && <Image pointerEvents="none" source={rightIconSource} />}
+      </TouchableOpacity>
     );
   }
 
@@ -587,6 +606,11 @@ function createStyles({
       padding: 0,
       textAlign: centered ? 'center' : undefined,
       backgroundColor: 'transparent',
+    },
+    expandableInput: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      flex: 1,
     },
     inputWithoutUnderline: {
       marginBottom: undefined,
