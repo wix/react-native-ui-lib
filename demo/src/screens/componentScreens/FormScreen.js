@@ -110,12 +110,13 @@ export default class FormScreen extends Component {
           </View>
 
           <Picker
-            floatingPlaceholder
-            placeholder="Native Picker"
+            title="Native Picker"
+            placeholder="Pick a Language"
             useNativePicker
             value={this.state.nativePickerValue}
             onChange={nativePickerValue => this.setState({nativePickerValue})}
             rightIconSource={dropdown}
+            containerStyle={{marginTop: 20}}
             // renderNativePicker={(props) => {
             //   return (
             //     <View flex bg-red50>
