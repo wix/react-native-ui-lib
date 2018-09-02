@@ -34,7 +34,6 @@ export default class CardSection extends BaseComponent {
      * style as a footer, remove bottom spacing
      */
     footer: PropTypes.bool,
-    testId: PropTypes.string,
   };
 
   generateStyles() {

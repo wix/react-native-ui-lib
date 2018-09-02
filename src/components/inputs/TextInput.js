@@ -111,10 +111,6 @@ export default class TextInput extends BaseInput {
      * should the errors be displayed at the top
      */
     useTopErrors: PropTypes.bool,
-    /**
-     * Use to identify the component in tests
-     */
-    testId: PropTypes.string,
   };
 
   static defaultProps = {

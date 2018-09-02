@@ -99,10 +99,6 @@ export default class TextField extends BaseInput {
      * should the input display a character counter (only when passing 'maxLength')
      */
     showCharacterCounter: PropTypes.bool,
-    /**
-     * Use to identify the component in tests
-     */
-    testId: PropTypes.string,
   };
 
   static defaultProps = {

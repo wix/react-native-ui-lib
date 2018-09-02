@@ -16,10 +16,6 @@ export default class TextArea extends BaseInput {
   static propTypes = {
     ...RNTextInput.propTypes,
     ...BaseInput.propTypes,
-    /**
-     * Use to identify the component in tests
-     */
-    testId: PropTypes.string,
   };
 
   generateStyles() {
