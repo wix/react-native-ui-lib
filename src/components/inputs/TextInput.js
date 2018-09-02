@@ -610,7 +610,7 @@ function createStyles({
     expandableInput: {
       flexDirection: 'row',
       alignItems: 'center',
-      flex: 1,
+      flexGrow: 1,
     },
     inputWithoutUnderline: {
       marginBottom: undefined,
