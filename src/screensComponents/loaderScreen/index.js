@@ -23,6 +23,10 @@ export default class LoaderScreen extends BaseComponent {
      */
     loaderColor: PropTypes.string,
     /**
+     * Color of the loader background (only when passing 'overlay')
+     */
+    backgroundColor: PropTypes.string,
+    /**
      * loader message
      */
     message: PropTypes.string,
@@ -37,11 +41,12 @@ export default class LoaderScreen extends BaseComponent {
   };
 
   render() {
-    const {message, messageStyle, loaderColor, overlay, ...others} = this.props;
+    const {message, messageStyle, loaderColor, overlay, backgroundColor, ...others} = this.props;
     const animationProps = this.extractAnimationProps();
+    
     return (
       <Animatable.View
-        style={[overlay ? styles.overlayContainer : styles.container]}
+        style={[overlay ? [styles.overlayContainer, {backgroundColor}] : styles.container]}
         {...animationProps}
       >
         <View flex center>
