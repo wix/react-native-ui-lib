@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {View, TextInput as RNTextInput, StyleSheet} from 'react-native';
 import BaseInput from './BaseInput';
 
