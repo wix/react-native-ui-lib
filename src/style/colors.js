@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import {colorsPalette} from './colorsPalette';
 
+const Color = require('color');
+
 class Colors {
   /**
    * Load custom set of colors
@@ -60,10 +62,11 @@ class Colors {
   }
 
   getColorTint(color, tintKey) {
+    const BASE_COLOR_LEVEL = 30;
     const colorKey = _.findKey(this, (value, key) => this[key] === color);
 
     if (_.isUndefined(tintKey)) {
-      throw new Error('"Colors.getColorTint" must accept a color and tintKey params');
+      console.error('"Colors.getColorTint" must accept a color and tintKey params');
     }
 
     if (colorKey) {
@@ -75,9 +78,20 @@ class Colors {
       }
       return requiredColor;
     } else {
-      // throw new Error('"Colors.getColorTint" could not find this color');
-      console.warn('"Colors.getColorTint" could not find this color');
-      return color;
+      const tintLevel = Number(tintKey);
+      const baseColor = Color(color);
+
+      if (tintLevel === BASE_COLOR_LEVEL) {
+        return color;
+      } else if (tintLevel <= BASE_COLOR_LEVEL) {
+        const darkRatio = (3 - (tintLevel / 10)) * 0.09;
+        return baseColor.darken(darkRatio);
+      } else {
+        const lightRatio = ((tintLevel / 10) - 3) * 0.13;
+        return baseColor.lighten(lightRatio);
+      }
+      // console.warn('"Colors.getColorTint" could not find this color');
+      // return color;
     }
   }
 }
