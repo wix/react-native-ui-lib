@@ -75,7 +75,9 @@ class Colors {
       }
       return requiredColor;
     } else {
-      throw new Error('"Colors.getColorTint" could not find this color');
+      // throw new Error('"Colors.getColorTint" could not find this color');
+      console.warn('"Colors.getColorTint" could not find this color');
+      return color;
     }
   }
 }
