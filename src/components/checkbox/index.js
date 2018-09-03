@@ -47,7 +47,7 @@ class Checkbox extends BaseComponent {
      */
     iconColor: PropTypes.string,
     /**
-     * Use to identify the avatar in tests
+     * Use to identify the checkbox in tests
      */
     testID: PropTypes.string,
   };
