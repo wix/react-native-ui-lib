@@ -46,6 +46,10 @@ class Checkbox extends BaseComponent {
      * The selected icon color
      */
     iconColor: PropTypes.string,
+    /**
+     * Use to identify the avatar in tests
+     */
+    testID: PropTypes.string,
   };
 
   generateStyles() {
@@ -77,10 +81,11 @@ class Checkbox extends BaseComponent {
   }
 
   render() {
-    const {value, selectedIcon, style, color, iconColor, ...others} = this.getThemeProps();
+    const {value, selectedIcon, style, color, iconColor, testID, ...others} = this.getThemeProps();
     return (
       <TouchableOpacity
         activeOpacity={1}
+        testID={testID}
         {...others}
         style={this.getContainerStyle()}
         onPress={this.onPress}
@@ -89,6 +94,7 @@ class Checkbox extends BaseComponent {
           <Image
             style={[this.styles.selectedIcon, color && {tintColor: iconColor}]}
             source={selectedIcon || Assets.icons.checkSmall}
+            testID={`${testID}-selected`}
           />
         )}
       </TouchableOpacity>
