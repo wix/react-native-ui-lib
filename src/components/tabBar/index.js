@@ -139,6 +139,11 @@ export default class TabBar extends BaseComponent {
         this.labels = labels;
       }
     }
+
+    if (nextProps.selectedIndex !== this.state.selectedIndex && this.props.selectedIndex !== nextProps.selectedIndex) {
+      this.animateIndicatorPosition(nextProps.selectedIndex);
+      this.setState({selectedIndex: nextProps.selectedIndex});
+    }
   }
 
   initializeValues(props) {

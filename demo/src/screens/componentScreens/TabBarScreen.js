@@ -23,10 +23,11 @@ export default class TabBarScreen extends Component {
       selectedIndex2: 2,
       selectedIndex3: 3,
       selectedIndex4: 0,
+      randomIndex: 0,
       index: 0,
       currentTabs: [],
       selectedTabId: 0,
-      labels: labelsArray[0]
+      labels: labelsArray[0],
     };
 
     this.counter = 0;
@@ -243,9 +244,27 @@ export default class TabBarScreen extends Component {
         <Text style={styles.text}>Dynamic items' labels (click button twice to start)</Text>
         {this.renderDynamicLabelsTabBar()}
         
+        <Button size={'small'} margin-20 label={`Change index: ${this.state.randomIndex}`} onPress={this.changeIndex}/>
+        <TabBar
+          style={styles.tabbar}
+          selectedIndex={this.state.randomIndex}
+        >
+          <TabBar.Item label="LONG LABEL"/>
+          <TabBar.Item label="ACTIVE"/>
+          <TabBar.Item label="INACTIVE"/>
+        </TabBar>
         <View style={{height: 30}}/>
       </ScrollView>
     );
+  }
+
+  changeIndex = () => {
+    let index;
+    do {
+      index = Math.floor((Math.random() * 3));
+    } while (index === this.state.randomIndex);
+    
+    this.setState({randomIndex: index});
   }
 
   /** dynamic tabbar */
