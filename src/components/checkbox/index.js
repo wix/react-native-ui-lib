@@ -94,7 +94,7 @@ class Checkbox extends BaseComponent {
           <Image
             style={[this.styles.selectedIcon, color && {tintColor: iconColor}]}
             source={selectedIcon || Assets.icons.checkSmall}
-            testID={`${testID}-selected`}
+            testID={`${testID}.selected`}
           />
         )}
       </TouchableOpacity>
