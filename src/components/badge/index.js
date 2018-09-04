@@ -6,6 +6,16 @@ import Colors from '../../style/colors';
 import {BaseComponent} from '../../commons';
 import {Typography, ThemeManager, BorderRadiuses} from '../../style';
 
+
+const SIZE_DEFAULT = 20;
+const WIDTH_DOUBLE = 28;
+const WIDTH_TRIPLE = 35;
+
+const SIZE_SMALL = 18;
+const WIDTH_DOUBLE_SMALL = 25;
+const WIDTH_TRIPLE_SMALL = 28;
+
+
 /**
  * @description: Round colored badge, typically used to show a number
  * @extends: Animatable.View
@@ -61,9 +71,25 @@ export default class Badge extends BaseComponent {
 
   getBadgeSizeStyle() {
     const {label, borderWidth} = this.props;
-    const isOneLetter = label.length < 2;
-    let width = this.isSmallBadge() ? (isOneLetter ? 18 : 25) : isOneLetter ? 21 : 30;
-    let height = this.isSmallBadge() ? 18 : 20;
+    const numberOfCharacters = label.length;
+    let height = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
+    let width = 0;
+    
+    switch (numberOfCharacters) {
+      case 0:
+        width = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
+        break;
+      case 1:
+        width = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
+        break;
+      case 2:
+        width = this.isSmallBadge() ? WIDTH_DOUBLE_SMALL : WIDTH_DOUBLE;
+        break;
+      default:
+        width = this.isSmallBadge() ? WIDTH_TRIPLE_SMALL : WIDTH_TRIPLE;
+        break;
+    }
+
     if (borderWidth) {
       width += borderWidth * 2;
       height += borderWidth * 2;
@@ -120,11 +146,10 @@ function createStyles() {
       alignItems: 'center',
       justifyContent: 'center',
     },
-    badgeSmall: {
-      height: 18,
-    },
     label: {
       ...Typography.text90,
+      fontSize: 12,
+      fontWeight: 'bold',
       color: Colors.white,
       backgroundColor: 'transparent',
     },
