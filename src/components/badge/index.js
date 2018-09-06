@@ -148,8 +148,6 @@ function createStyles() {
     },
     label: {
       ...Typography.text90,
-      fontSize: 12,
-      fontWeight: 'bold',
       color: Colors.white,
       backgroundColor: 'transparent',
     },
