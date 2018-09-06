@@ -54,8 +54,8 @@ export default class Carousel extends BaseComponent {
     this.state = {
       currentPage: props.initialPage,
       currentStandingPage: props.initialPage,
+      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage})}
     };
-
     this.onScroll = this.onScroll.bind(this);
     this.updateOffset = this.updateOffset.bind(this);
   }
@@ -69,6 +69,11 @@ export default class Carousel extends BaseComponent {
   }
 
   onScroll(event) {
+    if (!this.skippedInitialScroll) {
+      this.skippedInitialScroll = true;
+      return;
+    }
+
     const {loop} = this.props;
     const offsetX = event.nativeEvent.contentOffset.x;
     if (offsetX >= 0) {
@@ -98,12 +103,6 @@ export default class Carousel extends BaseComponent {
     if (this.carousel) {
       this.carousel.scrollTo({x, animated});
     }
-  }
-
-  componentDidMount() {
-    setTimeout(() => {
-      this.updateOffset();
-    }, 0);
   }
 
   cloneChild(child) {
@@ -142,6 +141,7 @@ export default class Carousel extends BaseComponent {
           pagingEnabled
           onScroll={this.onScroll}
           scrollEventThrottle={200}
+          contentOffset={this.state.initialOffset}
         >
           {this.renderChildren()}
         </ScrollView>
