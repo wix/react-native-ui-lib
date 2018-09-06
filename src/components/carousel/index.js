@@ -54,7 +54,7 @@ export default class Carousel extends BaseComponent {
     this.state = {
       currentPage: props.initialPage,
       currentStandingPage: props.initialPage,
-      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage})}
+      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage})},
     };
     this.onScroll = this.onScroll.bind(this);
     this.updateOffset = this.updateOffset.bind(this);
