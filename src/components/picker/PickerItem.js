@@ -145,6 +145,7 @@ function createStyles() {
       ...Typography.text70,
       color: Colors.dark10,
       flex: 1,
+      textAlign: 'left',
     },
     labelTextDisabled: {
       color: Colors.dark60,
