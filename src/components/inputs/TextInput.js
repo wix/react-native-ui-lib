@@ -256,7 +256,7 @@ export default class TextInput extends BaseInput {
     return !_.isEmpty(value || this.state.value);
   }
 
-  shouldShowHelperText() {    
+  shouldShowHelperText() {
     const {focused} = this.state;
     const {helperText} = this.props;
     return focused && helperText;
@@ -300,8 +300,8 @@ export default class TextInput extends BaseInput {
     } = this.props;
     const typography = this.getTypography();
     const placeholderColor = this.getStateColor(placeholderTextColor);
-  
-    
+
+
     if (this.shouldFakePlaceholder()) {
       return (
         <Animated.Text
@@ -328,6 +328,7 @@ export default class TextInput extends BaseInput {
                 : typography.lineHeight,
             },
           ]}
+          numberOfLines={1}
           onPress={() => expandable && this.toggleExpandableModal(true)}
           suppressHighlighting
         >
@@ -340,7 +341,7 @@ export default class TextInput extends BaseInput {
   renderTitle() {
     const {floatingPlaceholder, title, titleColor, titleStyle} = this.props;
     const color = this.getStateColor(titleColor);
-    
+
     if (!floatingPlaceholder && title) {
       return (
         <Text
@@ -355,7 +356,7 @@ export default class TextInput extends BaseInput {
   renderCharCounter() {
     const {focused} = this.state;
     const {maxLength, showCharacterCounter, disabledColor} = this.props;
-    
+
     if (maxLength && showCharacterCounter) {
       const counter = this.getCharCount();
       const textColor = this.isCounterLimit() && focused ? DEFAULT_COLOR_BY_STATE.error : DEFAULT_COLOR_BY_STATE.default;
@@ -374,7 +375,7 @@ export default class TextInput extends BaseInput {
   renderError(visible) {
     const {enableErrors, error, useTopErrors} = this.props;
     const positionStyle = useTopErrors ? this.styles.topLabel : this.styles.bottomLabel;
-    
+
     if (visible && enableErrors) {
       return (
         <Text style={[this.styles.errorMessage, this.styles.label, positionStyle]}>
@@ -435,7 +436,7 @@ export default class TextInput extends BaseInput {
     }
 
     return (
-      <TouchableOpacity 
+      <TouchableOpacity
         style={this.styles.expandableInput}
         activeOpacity={1}
         onPress={() => !this.isDisabled() && this.toggleExpandableModal(true)}
@@ -455,7 +456,7 @@ export default class TextInput extends BaseInput {
     );
   }
 
-  renderTextInput() {    
+  renderTextInput() {
     const {value} = this.state; // value set on state for floatingPlaceholder functionality
     const color = this.getStateColor(this.props.color || this.extractColorValue());
     const typography = this.getTypography();
@@ -561,7 +562,7 @@ export default class TextInput extends BaseInput {
     if (text === '' && this.lastKey && this.lastKey !== 'Backspace') {
       return;
     }
-    
+
     const {transformer} = this.props;
     let transformedText = text;
     if (_.isFunction(transformer)) {
@@ -617,6 +618,7 @@ function createStyles({
     },
     floatingPlaceholder: {
       position: 'absolute',
+      width: '100%',
     },
     placeholder: {
       color: placeholderTextColor,
