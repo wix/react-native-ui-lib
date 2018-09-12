@@ -3,23 +3,24 @@
 // correct label to render (similar to what we do in NativePicker)
 // TODO: simplify this component, stop inherit from TextInput
 
+import _ from 'lodash';
+import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import PropTypes from 'prop-types';
-import _ from 'lodash';
-import NativePicker from './NativePicker';
+import {Constants} from '../../helpers';
 import {Colors} from '../../style';
-import {TextInput} from '../inputs';
-import PickerModal from './PickerModal';
-import PickerItem from './PickerItem';
-import * as PickerPresenter from './PickerPresenter';
-import Button from '../../components/button';
-import Text from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
 import View from '../../components/view';
-import Image from '../../components/image';
 import Modal from '../../screensComponents/modal';
-import {Constants} from '../../helpers';
+import Image from '../../components/image';
+import Text from '../../components/text';
+import Button from '../../components/button';
+import {TextInput} from '../inputs';
+import * as PickerPresenter from './PickerPresenter';
+import NativePicker from './NativePicker';
+import PickerModal from './PickerModal';
+import PickerItem from './PickerItem';
+
 
 const PICKER_MODES = {
   SINGLE: 'SINGLE',
@@ -121,10 +122,8 @@ class Picker extends TextInput {
   static defaultProps = {
     ...TextInput.defaultProps,
     mode: PICKER_MODES.SINGLE,
-    // enableModalBlur: true,
     expandable: true,
     text70: true,
-    // floatingPlaceholder: true,
     enableErrors: false,
   };
 
@@ -291,7 +290,7 @@ class Picker extends TextInput {
   render() {
     const {useNativePicker, renderPicker, customPickerProps, testID} = this.props;
 
-    if (useNativePicker) return <NativePicker {...this.props} />;
+    if (useNativePicker) return <NativePicker {...this.props}/>;
 
     if (_.isFunction(renderPicker)) {
       const {value} = this.state;
