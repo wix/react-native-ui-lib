@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView, Image} from 'react-native';
-import _ from 'lodash';
 import {View, Colors, Text, Stepper, Typography, Picker, Avatar, Assets, TagsInput} from 'react-native-ui-lib'; //eslint-disable-line
 import tagIcon from '../../assets/icons/tags.png';
 import contacts from '../../data/conversations';
@@ -14,7 +14,12 @@ const options = [
   {label: 'Perl', value: 'perl'},
 ];
 
-const filters = [{label: 'All', value: 0}, {label: 'Draft', value: 1}, {label: 'Published', value: 2}, {label: 'Scheduled', value: 3}];
+const filters = [
+  {label: 'All', value: 0},
+  {label: 'Draft', value: 1},
+  {label: 'Published', value: 2},
+  {label: 'Scheduled', value: 3},
+];
 
 export default class FormScreen extends Component {
   constructor(props) {
