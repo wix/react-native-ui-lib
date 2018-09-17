@@ -156,7 +156,7 @@ export default class Avatar extends BaseComponent {
   }
 
   renderImage() {
-    const {imageSource, onImageLoadStart, onImageLoadEnd, onImageLoadError, testID} = this.props;
+    const {imageSource, onImageLoadStart, onImageLoadEnd, onImageLoadError, testID, size} = this.props;
     const hasImage = !_.isUndefined(imageSource);
     if (hasImage) {
       return (
@@ -167,6 +167,7 @@ export default class Avatar extends BaseComponent {
           onLoadEnd={onImageLoadEnd}
           onError={onImageLoadError}
           testID={`${testID}.image`}
+          size={size}
         />
       );
     }
