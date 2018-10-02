@@ -8,6 +8,7 @@
     "eslint-plugin"
   ],
   "author": "Tnbal Tish <inbalti@wix.com>",
+  "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha tests --recursive",
@@ -34,6 +35,5 @@
   },
   "engines": {
     "node": ">=0.10.0"
-  },
-  "license": "ISC"
+  }
 }
