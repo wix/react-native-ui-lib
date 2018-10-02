@@ -9,6 +9,13 @@
   ],
   "author": "Tnbal Tish <inbalti@wix.com>",
   "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wix/react-native-ui-lib"
+  },
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha tests --recursive",

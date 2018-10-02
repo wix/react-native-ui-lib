@@ -3,8 +3,13 @@
   "version": "1.1.14",
   "main": "src/index.js",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
+  "license": "MIT",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wix/react-native-ui-lib"
   },
   "scripts": {
     "release": "node ./scripts/release.js"
