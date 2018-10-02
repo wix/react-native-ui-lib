@@ -76,6 +76,20 @@ describe('services/AvatarService', () => {
     });
   });
 
+  describe('isBlankGravatarUrl', () => {
+    it('should return false if the url does not contain the blank param', () => {
+      expect(uut.isBlankGravatarUrl('https://www.gravatar.com/avatar/00000000000000000000000000000000')).toEqual(false);
+    });
+    
+    it('should return true if the url contains the blank param', () => {
+      expect(uut.isBlankGravatarUrl('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=blank')).toEqual(true);
+    });
+    
+    it('should return false if it is not a gravatar url', () => {
+      expect(uut.isBlankGravatarUrl('https://some/random/url/avatar/000000000?d=blank')).toEqual(false);
+    });
+  });
+
   describe('Patch-fix function', () => {
     const gravatarUrl = 'https://www.gravatar.com/avatar/00000000000000000000000000000000';
     const shortGravatarUrl = 'https://gravatar.com/avatar/00000000000000000000000000000000';
