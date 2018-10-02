@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {View, TextInput as RNTextInput, StyleSheet} from 'react-native';
 import BaseInput from './BaseInput';
 
@@ -16,10 +15,6 @@ export default class TextArea extends BaseInput {
   static propTypes = {
     ...RNTextInput.propTypes,
     ...BaseInput.propTypes,
-    /**
-     * Use to identify the component in tests
-     */
-    testId: PropTypes.string,
   };
 
   generateStyles() {

@@ -120,10 +120,6 @@ export default class TextInput extends BaseInput {
      * Icon asset source for showing on the right side, appropriate for dropdown icon and such
      */
     rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * Use to identify the component in tests
-     */
-    testId: PropTypes.string,
   };
 
   static defaultProps = {
