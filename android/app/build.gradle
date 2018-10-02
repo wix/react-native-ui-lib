@@ -61,7 +61,6 @@ dependencies {
     compile "com.facebook.react:react-native:+"
     compile 'com.facebook.fresco:animated-gif:0.14.1'
 
-    //compile project(':react-native-interactable')
     compile project(':react-native-blur')
     compile project(':react-native-navigation')
     compile project(':react-native-ui-lib')
