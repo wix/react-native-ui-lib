@@ -1,12 +1,12 @@
-import React from 'react';
-import {StyleSheet, ViewPropTypes, Keyboard} from 'react-native';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import TextInput from './TextInput';
+import React from 'react';
+import {StyleSheet, ViewPropTypes, Keyboard} from 'react-native';
 import BaseInput from './BaseInput';
+import TextInput from './TextInput';
 import View from '../view';
 import Text from '../text';
-import TouchableOpacity from '../touchableOpacity';
+
 
 /**
  * @description: Mask Input to create custom looking inputs with custom formats
@@ -48,20 +48,18 @@ export default class MaskedInput extends BaseInput {
     if (_.isFunction(renderMaskedText)) {
       return renderMaskedText(value);
     }
-
     return <Text>{value}</Text>;
   }
 
   render() {
     const {containerStyle} = this.props;
     const TextInputProps = TextInput.extractOwnProps(this.props, ['containerStyle']);
+    
     return (
-      <View style={[containerStyle]}>
+      <View style={containerStyle}>
         <TextInput
           {...this.props}
-          ref={(input) => {
-            this.input = input;
-          }}
+          ref={r => (this.input = r)}
           containerStyle={styles.hiddenInputContainer}
           style={styles.hiddenInput}
           enableErrors={false}
@@ -70,13 +68,12 @@ export default class MaskedInput extends BaseInput {
           {...TextInputProps}
           onChangeText={this.onChangeText}
         />
-        <TouchableOpacity
+        <View
           activeOpacity={1}
           style={styles.maskedInputWrapper}
-          onPress={this.focus}
         >
           {this.renderMaskedText()}
-        </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -92,6 +89,6 @@ const styles = StyleSheet.create({
     height: undefined,
   },
   maskedInputWrapper: {
-    zIndex: 1,
+    zIndex: 0,
   },
 });
