@@ -68,10 +68,7 @@ export default class MaskedInput extends BaseInput {
           {...TextInputProps}
           onChangeText={this.onChangeText}
         />
-        <View
-          activeOpacity={1}
-          style={styles.maskedInputWrapper}
-        >
+        <View style={styles.maskedInputWrapper}>
           {this.renderMaskedText()}
         </View>
       </View>
