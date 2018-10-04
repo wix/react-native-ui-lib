@@ -23,7 +23,7 @@ describe('Assets', () => {
       });
 
       it('should throw if assets are not a plain object', () => {
-        expect(() => assets.loadAssetsGroup('assets', new class {})).toThrowErrorMatchingSnapshot();
+        expect(() => assets.loadAssetsGroup('assets', new class {}())).toThrowErrorMatchingSnapshot();
       });
     });
 
@@ -98,7 +98,7 @@ describe('Assets', () => {
 
   describe('.merge(...assets)', () => {
     it('should merge plain assets objects with getters and values', () => {
-      const fns = [jest.fn(), jest.fn(), jest.fn()];
+      const fns = [jest.fn(() => '1'), jest.fn(() => '2'), jest.fn(() => '3')];
 
       const basic = {
         get back() { return fns[0](); },
@@ -113,10 +113,10 @@ describe('Assets', () => {
       const icons = Assets.merge({}, basic, advanced);
       expect(icons.discard).toBe('discard.png');
 
-      icons.back;
+      expect(icons.back).toBe('1');
       expect(fns[0]).toHaveBeenCalled();
 
-      icons.forward;
+      expect(icons.forward).toBe('3');
       expect(fns[1]).not.toHaveBeenCalled();
       expect(fns[2]).toHaveBeenCalled();
     });
