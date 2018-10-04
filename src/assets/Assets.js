@@ -37,8 +37,4 @@ export class Assets {
 
     return this;
   }
-
-  static merge(...assets) {
-    return assets.reduce(assignProperties);
-  }
 }

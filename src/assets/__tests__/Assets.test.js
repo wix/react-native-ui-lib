@@ -95,30 +95,4 @@ describe('Assets', () => {
       });
     });
   });
-
-  describe('.merge(...assets)', () => {
-    it('should merge plain assets objects with getters and values', () => {
-      const fns = [jest.fn(() => '1'), jest.fn(() => '2'), jest.fn(() => '3')];
-
-      const basic = {
-        get back() { return fns[0](); },
-        get forward() { return fns[1](); },
-      };
-
-      const advanced = {
-        get forward() { return fns[2](); },
-        discard: 'discard.png',
-      };
-
-      const icons = Assets.merge({}, basic, advanced);
-      expect(icons.discard).toBe('discard.png');
-
-      expect(icons.back).toBe('1');
-      expect(fns[0]).toHaveBeenCalled();
-
-      expect(icons.forward).toBe('3');
-      expect(fns[1]).not.toHaveBeenCalled();
-      expect(fns[2]).toHaveBeenCalled();
-    });
-  });
 });
