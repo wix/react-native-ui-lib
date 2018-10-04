@@ -37,9 +37,13 @@ export default class Avatar extends BaseComponent {
      */
     containerStyle: ViewPropTypes.style,
     /**
-     * The image source (external or assets)
+    * The image source (external or assets)
      */
     imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * Image props object
+     */
+    imageProps: PropTypes.object,
     /**
      * Listener-callback for when an image's (uri) loading
      * starts (equiv. to Image.onLoadStart()).
@@ -156,7 +160,7 @@ export default class Avatar extends BaseComponent {
   }
 
   renderImage() {
-    const {imageSource, onImageLoadStart, onImageLoadEnd, onImageLoadError, testID, size} = this.props;
+    const {imageSource, onImageLoadStart, onImageLoadEnd, onImageLoadError, testID, imageProps} = this.props;
     const hasImage = !_.isUndefined(imageSource);
     if (hasImage) {
       return (
@@ -167,7 +171,7 @@ export default class Avatar extends BaseComponent {
           onLoadEnd={onImageLoadEnd}
           onError={onImageLoadError}
           testID={`${testID}.image`}
-          size={size}
+          {...imageProps}
         />
       );
     }
