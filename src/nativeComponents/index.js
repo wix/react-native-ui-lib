@@ -1,11 +1,6 @@
-import HighlighterOverlayView from './HighlighterOverlayView';
-import SafeAreaSpacerView from './SafeArea/SafeAreaSpacerView';
-import WheelPicker from './WheelPicker';
-import SafeAreaInsetsManager from './SafeArea/SafeAreaInsetsManager';
-
-export {
-  HighlighterOverlayView,
-  SafeAreaSpacerView,
-  WheelPicker,
-  SafeAreaInsetsManager,
+module.exports = {
+  get HighlighterOverlayView() { return require('./HighlighterOverlayView').default; },
+  get SafeAreaSpacerView() { return require('./SafeArea/SafeAreaSpacerView').default; },
+  get WheelPicker() { return require('./WheelPicker').default; },
+  get SafeAreaInsetsManager() { return require('./SafeArea/SafeAreaInsetsManager').default; },
 };
