@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`nativeComponents/index should export the same structure 1`] = `
+Object {
+  "HighlighterOverlayView": [Function],
+  "SafeAreaInsetsManager": SafeAreaInsetsManager {
+    "_defaultInsets": Object {
+      "bottom": 0,
+      "left": 0,
+      "right": 0,
+      "top": 0,
+    },
+    "_safeAreaChangedDelegates": Array [],
+    "_safeAreaInsets": Object {
+      "bottom": 0,
+      "left": 0,
+      "right": 0,
+      "top": 0,
+    },
+  },
+  "SafeAreaSpacerView": [Function],
+  "WheelPicker": [Function],
+}
+`;
