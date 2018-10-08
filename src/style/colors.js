@@ -2,6 +2,8 @@ import _ from 'lodash';
 import {colorsPalette} from './colorsPalette';
 
 const Color = require('color');
+const one = require('onecolor');
+
 
 class Colors {
   /**
@@ -85,10 +87,13 @@ class Colors {
         return color;
       } else if (tintLevel <= BASE_COLOR_LEVEL) {
         const darkRatio = (3 - (tintLevel / 10)) * 0.09;
-        return baseColor.darken(darkRatio);
+        return baseColor.darken(darkRatio).hex();
       } else {
-        const lightRatio = ((tintLevel / 10) - 3) * 0.13;
-        return baseColor.lighten(lightRatio);
+        // const lightRatio = ((tintLevel / 10) - 3) * 0.13;
+        // return baseColor.lighten(lightRatio).hex();
+
+        const lightRatio = ((tintLevel / 10) - 3) * 0.16;
+        return one(color).mix('#ffffff', lightRatio).hex();
       }
       // console.warn('"Colors.getColorTint" could not find this color');
       // return color;
