@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`animations/index should export the same structure 1`] = `
+Object {
+  "AnimatedImage": [Function],
+  "AnimatedScanner": [Function],
+  "ProgressBar": [Function],
+}
+`;

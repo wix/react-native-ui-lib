@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commons/index should export the same structure 1`] = `
+Object {
+  "BaseComponent": [Function],
+  "PureBaseComponent": [Function],
+  "SelectableComponent": [Function],
+}
+`;

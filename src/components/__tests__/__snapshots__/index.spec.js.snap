@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/index should export the same structure 1`] = `
+Object {
+  "ActionBar": [Function],
+  "ActionSheet": [Function],
+  "Avatar": [Function],
+  "Badge": [Function],
+  "Button": [Function],
+  "Card": [Function],
+  "Carousel": [Function],
+  "Checkbox": [Function],
+  "ConnectionStatusBar": [Function],
+  "Dialog": [Function],
+  "FeatureHighlight": [Function],
+  "Image": [Function],
+  "ListItem": [Function],
+  "MaskedInput": [Function],
+  "Notification": [Function],
+  "PageControl": [Function],
+  "Picker": [Function],
+  "RadioButton": [Function],
+  "RadioGroup": [Function],
+  "Stepper": [Function],
+  "Switch": [Function],
+  "TabBar": [Function],
+  "TagsInput": [Function],
+  "Text": [Function],
+  "TextArea": [Function],
+  "TextField": [Function],
+  "TextInput": [Function],
+  "Toast": [Function],
+  "TouchableOpacity": [Function],
+  "Tour": [Function],
+  "View": [Function],
+  "WheelPickerDialog": [Function],
+}
+`;

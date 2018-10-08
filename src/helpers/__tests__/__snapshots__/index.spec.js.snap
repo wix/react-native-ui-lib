@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`helpers/index should export the same structure 1`] = `
+Object {
+  "AvatarHelper": Object {
+    "getAvatarColors": [Function],
+    "getColorById": [Function],
+    "getInitials": [Function],
+    "isBlankGravatarUrl": [Function],
+    "isGravatarUrl": [Function],
+    "patchGravatarUrl": [Function],
+  },
+  "Constants": Object {
+    "isAndroid": false,
+    "isIOS": true,
+    "isIphoneX": false,
+    "isShortScreen": false,
+    "isSmallScreen": false,
+    "screenHeight": 1334,
+    "screenWidth": 750,
+    "statusBarHeight": 20,
+  },
+  "DocsGenerator": Object {
+    "extractComponentInfo": [Function],
+    "generateSnippet": [Function],
+  },
+}
+`;
