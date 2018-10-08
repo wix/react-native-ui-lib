@@ -1,11 +1,16 @@
-import baseComponent from './baseComponent';
-import SelectableComponent from './SelectableComponent';
+const createBaseComponentClass = usePure => require('./baseComponent').default(usePure);
 
-const BaseComponent = baseComponent(false);
-const PureBaseComponent = baseComponent(true);
+let BaseComponentClass;
+let PureBaseComponentClass;
 
-export {
-  BaseComponent,
-  PureBaseComponent,
-  SelectableComponent,
+module.exports = {
+  get BaseComponent() {
+    return (BaseComponentClass = BaseComponentClass || createBaseComponentClass(false));
+  },
+  get PureBaseComponent() {
+    return (PureBaseComponentClass = PureBaseComponentClass || createBaseComponentClass(true));
+  },
+  get SelectableComponent() {
+    return require('./SelectableComponent').default;
+  },
 };
