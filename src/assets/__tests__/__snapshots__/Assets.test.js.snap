@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Assets .loadAssetsGroup(groupName, assets) edge cases should throw if assets are not a plain object 1`] = `"assets should be a hash map or a function (for lazy access)"`;
+
+exports[`Assets .loadAssetsGroup(groupName, assets) edge cases should throw if group name is not a string 1`] = `"group name should be a string"`;
