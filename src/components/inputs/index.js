@@ -1,11 +1,6 @@
-import TextArea from './TextArea';
-import TextField from './TextField';
-import TextInput from './TextInput';
-import MaskedInput from './MaskedInput';
-
-export {
-  TextArea,
-  TextField,
-  TextInput,
-  MaskedInput,
+module.exports = {
+  get TextArea() { return require('./TextArea').default; },
+  get TextField() { return require('./TextField').default; },
+  get TextInput() { return require('./TextInput').default; },
+  get MaskedInput() { return require('./MaskedInput').default; },
 };
