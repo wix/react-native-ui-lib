@@ -1,12 +1,10 @@
 import _ from 'lodash';
 
 function assignProperties(a, b) {
-  if (a && b) {
-    for (const key in b) {
-      if (b.hasOwnProperty(key)) {
-        Object.defineProperty(a, key, Object.getOwnPropertyDescriptor(b, key));
-      }
-    }
+  if (a) {
+    _(b).keys().forEach((key) => {
+      Object.defineProperty(a, key, Object.getOwnPropertyDescriptor(b, key));
+    });
   }
 
   return a;
