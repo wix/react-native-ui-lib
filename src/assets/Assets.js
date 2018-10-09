@@ -1,7 +1,15 @@
 import _ from 'lodash';
 
 function assignProperties(a, b) {
-  return Object.defineProperties(a, Object.getOwnPropertyDescriptors(b));
+  if (a && b) {
+    for (const key in b) {
+      if (b.hasOwnProperty(key)) {
+        Object.defineProperty(a, key, Object.getOwnPropertyDescriptor(b, key));
+      }
+    }
+  }
+
+  return a;
 }
 
 function ensurePath(obj, path) {
