@@ -170,7 +170,7 @@ export default class Avatar extends BaseComponent {
     if (hasImage) {
       return (
         <Image
-          style={[this.styles.image, {...imageStyle}]}
+          style={[this.styles.image, imageStyle]}
           source={imageSource}
           onLoadStart={onImageLoadStart}
           onLoadEnd={onImageLoadEnd}
