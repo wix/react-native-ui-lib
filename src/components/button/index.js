@@ -304,7 +304,7 @@ export default class Button extends BaseComponent {
 
   getShadowStyle() {
     const backgroundColor = this.getBackgroundColor();
-    const {enableShadow} = this.props;
+    const {enableShadow} = this.getThemeProps();
     if (enableShadow) {
       return [this.styles.shadowStyle, backgroundColor && {shadowColor: backgroundColor}];
     }
