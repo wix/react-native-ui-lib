@@ -1,4 +1,4 @@
-import RadioButton from './RadioButton';
-import RadioGroup from './RadioGroup';
-
-export {RadioGroup, RadioButton};
+module.exports = {
+  get RadioButton() { return require('./RadioButton').default; },
+  get RadioGroup() { return require('./RadioGroup').default; },
+};

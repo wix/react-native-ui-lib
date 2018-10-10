@@ -1,67 +1,38 @@
-import ActionBar from './actionBar';
-import ActionSheet from './actionSheet';
-import Avatar from './avatar';
-import Badge from './badge';
-import Button from './button';
-import Card from './card';
-// import Carousel from './carousel/Carousel';
-import Carousel from './carousel';
-import Checkbox from './checkbox';
-import ConnectionStatusBar from './connectionStatusBar';
-import Dialog from './dialog';
-import FeatureHighlight from './featureHighlight';
-import Image from './image';
-import {TextArea, TextField, TextInput, MaskedInput} from './inputs';
-import ListItem from './listItem';
-import Notification from './notification';
-import PageControl from './pageControl';
-import Picker from './picker';
-import {RadioButton, RadioGroup} from './radioButton';
-import Stepper from './stepper';
-import Switch from './switch';
-import TabBar from './tabBar';
-import TagsInput from './tagsInput';
-import Text from './text';
-import Toast from './toast';
-import TouchableOpacity from './touchableOpacity';
-import Tour from './tour';
-import View from './view';
-import WheelPickerDialog from './wheelPickerDialog';
+module.exports = {
+  get ActionBar() { return require('./actionBar').default; },
+  get ActionSheet() { return require('./actionSheet').default; },
+  get Avatar() { return require('./avatar').default; },
+  get Badge() { return require('./badge').default; },
+  get Button() { return require('./button').default; },
+  get Card() { return require('./card').default; },
+  get Carousel() { return require('./carousel').default; },
+  get Checkbox() { return require('./checkbox').default; },
+  get ConnectionStatusBar() { return require('./connectionStatusBar').default; },
+  get Dialog() { return require('./dialog').default; },
+  get FeatureHighlight() { return require('./featureHighlight').default; },
+  get Image() { return require('./image').default; },
 
-export {
-  ActionBar,
-  ActionSheet,
-  Avatar,
-  Badge,
-  Button,
-  Card,
-  Carousel,
-  Checkbox,
-  ConnectionStatusBar,
-  Dialog,
-  FeatureHighlight,
-  Image,
-  
-  // Inputs
-  TextArea,
-  TextField,
-  TextInput,
-  MaskedInput,
+  get TextArea() { return require('./inputs').TextArea; },
+  get TextField() { return require('./inputs').TextField; },
+  get TextInput() { return require('./inputs').TextInput; },
+  get MaskedInput() { return require('./inputs').MaskedInput; },
 
-  ListItem,
-  Notification,
-  PageControl,
-  Picker,
-  Stepper,
-  TabBar,
-  TagsInput,
-  RadioButton,
-  RadioGroup,
-  Switch,
-  Text,
-  Toast,
-  TouchableOpacity,
-  Tour,
-  View,
-  WheelPickerDialog,
+  get ListItem() { return require('./listItem').default; },
+  get Notification() { return require('./notification').default; },
+  get PageControl() { return require('./pageControl').default; },
+  get Picker() { return require('./picker').default; },
+  get Stepper() { return require('./stepper').default; },
+  get TabBar() { return require('./tabBar').default; },
+  get TagsInput() { return require('./tagsInput').default; },
+
+  get RadioButton() { return require('./radioButton').RadioButton; },
+  get RadioGroup() { return require('./radioButton').RadioGroup; },
+
+  get Switch() { return require('./switch').default; },
+  get Text() { return require('./text').default; },
+  get Toast() { return require('./toast').default; },
+  get TouchableOpacity() { return require('./touchableOpacity').default; },
+  get Tour() { return require('./tour').default; },
+  get View() { return require('./view').default; },
+  get WheelPickerDialog() { return require('./wheelPickerDialog').default; },
 };

@@ -53,7 +53,7 @@ export default class MaskedInput extends BaseInput {
 
   render() {
     const {containerStyle} = this.props;
-    const TextInputProps = TextInput.extractOwnProps(this.props, ['containerStyle']);
+    const TextInputProps = TextInput.extractOwnProps(this.props, ['containerStyle', 'style']);
     
     return (
       <View style={containerStyle}>
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
   },
   hiddenInput: {
     color: 'transparent',
+    backgroundColor: 'transparent',
     height: undefined,
   },
   maskedInputWrapper: {
