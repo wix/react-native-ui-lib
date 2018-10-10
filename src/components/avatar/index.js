@@ -48,7 +48,7 @@ export default class Avatar extends BaseComponent {
      * Image style object used to pass additional style props
      * by components which render image
      */
-    imageStyle: PropTypes.object,
+    imageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.number]),
     /**
      * Listener-callback for when an image's (uri) loading
      * starts (equiv. to Image.onLoadStart()).
