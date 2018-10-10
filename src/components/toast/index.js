@@ -237,7 +237,12 @@ export default class Toast extends BaseComponent {
     if (action) {
       return (
         <Animatable.View {...contentAnimation}>
-          <Button style={this.styles.oneActionStyle} size="medium" {...action} />
+          <Button
+            size="medium"
+            style={this.styles.oneActionStyle}
+            backgroundColor={Colors.rgba(ThemeManager.primaryColor, 0.7)}
+            {...action}
+          />
         </Animatable.View>
       );
     }
@@ -367,7 +372,6 @@ function createStyles() {
       borderRadius: BorderRadiuses.br0,
       minWidth: undefined,
       height: '100%',
-      backgroundColor: Colors.rgba(ThemeManager.primaryColor, 0.7),
     },
     dismissIconStyle: {
       width: 12,

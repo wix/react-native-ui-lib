@@ -20,7 +20,7 @@ export default class AvatarsScreen extends Component {
               onDismiss={() => this.setState({showToast: false})}
               autoDismiss={3000}
             />
-            <Button size="medium" label="Show Toast" onPress={() => this.setState({showToast: true})} />
+            <Button size="medium" label="Show Toast" onPress={() => this.setState({showToast: true})}/>
           </View>
 
           <View style={styles.page} bg-red50>
@@ -31,7 +31,7 @@ export default class AvatarsScreen extends Component {
             <Toast
               visible
               message="Discount was added to 3 products"
-              actions={[{label: 'Undo', onPress: () => alert('undo')}]}
+              actions={[{label: 'Undo', backgroundColor: Colors.red40, onPress: () => alert('undo')}]}
             />
           </View>
 
@@ -51,7 +51,7 @@ export default class AvatarsScreen extends Component {
               onDismiss={() => this.setState({showToast: false})}
               visible={this.state.showToast}
             />
-            <Button size="medium" label="Show Toast" onPress={() => this.setState({showToast: true})} />
+            <Button size="medium" label="Show Toast" onPress={() => this.setState({showToast: true})}/>
 
             <Toast
               message="Toast can appear from bottom"
