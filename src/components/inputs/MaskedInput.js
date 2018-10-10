@@ -66,6 +66,8 @@ export default class MaskedInput extends BaseInput {
           hideUnderline
           placeholder=""
           {...TextInputProps}
+          caretHidden
+          multiline={false}
           onChangeText={this.onChangeText}
         />
         <View style={styles.maskedInputWrapper}>

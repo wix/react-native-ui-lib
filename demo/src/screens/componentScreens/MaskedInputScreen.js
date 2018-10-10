@@ -78,20 +78,18 @@ export default class MaskedInputScreen extends Component {
           <MaskedInput
             ref={r => (this.minput = r)}
             renderMaskedText={this.renderTimeText}
-            caretHidden
             keyboardType={'numeric'}
             maxLength={4}
             value={'15'}
           />
+
           <Text text70 marginT-40>
             Price/Discount
           </Text>
           <MaskedInput
             renderMaskedText={this.renderPrice}
-            caretHidden
             keyboardType={'numeric'}
           />
-
         </ScrollView>
       </View>
     );
