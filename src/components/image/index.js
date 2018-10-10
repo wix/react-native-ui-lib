@@ -20,7 +20,7 @@ class Image extends BaseComponent {
      */
     sourceTransformer: PropTypes.func,
     /**
-     * if provided image source we be drriven from asset name
+     * if provided image source will be driven from asset name
      */
     assetName: PropTypes.string,
     /**
