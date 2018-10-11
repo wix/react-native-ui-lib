@@ -117,6 +117,10 @@ class Picker extends TextInput {
      * Icon asset source for showing on the right side, appropriate for dropdown icon and such
      */
     rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * Pass props to the list component that wraps the picker options (allows to control FlatList behavior)
+     */
+    listProps: PropTypes.object,
   };
 
   static defaultProps = {
@@ -265,7 +269,7 @@ class Picker extends TextInput {
   }
 
   renderExpandableModal() {
-    const {mode, enableModalBlur, topBarProps, showSearch, searchStyle, searchPlaceholder} = this.getThemeProps();
+    const {mode, enableModalBlur, topBarProps, showSearch, searchStyle, searchPlaceholder, listProps} = this.getThemeProps();
     const {showExpandableModal, selectedItemPosition} = this.state;
     return (
       <PickerModal
@@ -281,6 +285,7 @@ class Picker extends TextInput {
         searchStyle={searchStyle}
         searchPlaceholder={searchPlaceholder}
         onSearchChange={this.onSearchChange}
+        listProps={listProps}
       >
         {this.appendPropsToChildren(this.props.children)}
       </PickerModal>

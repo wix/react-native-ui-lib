@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, ScrollView, TextInput} from 'react-native';
+import {StyleSheet, FlatList, TextInput} from 'react-native';
 import _ from 'lodash';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
@@ -25,12 +25,13 @@ class PickerModal extends BaseComponent {
     }),
     searchPlaceholder: PropTypes.string,
     onSearchChange: PropTypes.func,
+    listProps: PropTypes.object,
   };
 
   static defaultProps = {
     searchPlaceholder: 'Search...',
     searchStyle: {},
-  }
+  };
 
   state = {
     scrollHeight: undefined,
@@ -41,51 +42,14 @@ class PickerModal extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.scrollToSelected(nextProps.scrollPosition);
-  }
-
-  onScrollViewLayout = ({
-    nativeEvent: {
-      layout: {height},
-    },
-  }) => {
-    this.setState({scrollHeight: height}, () => {
-      this.scrollToSelected();
-    });
-  };
-
-  onScrollViewContentSizeChange = (contentWidth, contentHeight) => {
-    this.setState({scrollContentHeight: contentHeight}, () => {
-      this.scrollToSelected();
-    });
-  };
-
-  scrollToSelected(scrollPosition = this.props.scrollPosition) {
-    const isSearchFocused = _.invoke(this.search, 'isFocused');
-    if (!scrollPosition || isSearchFocused) return;
-
-    const {scrollHeight, scrollContentHeight} = this.state;
-    if (this.scrollView && scrollHeight && scrollContentHeight) {
-      const pageNumber = Math.floor(scrollPosition / scrollHeight);
-      const numberOfPages = Math.ceil(scrollContentHeight / scrollHeight);
-
-      if (pageNumber === numberOfPages - 1) {
-        this.scrollView.scrollToEnd({animated: false});
-      } else {
-        this.scrollView.scrollTo({x: 0, y: pageNumber * scrollHeight, animated: false});
-      }
-    }
-  }
-
   renderSearchInput() {
     const {showSearch, searchStyle, searchPlaceholder, onSearchChange} = this.props;
     if (showSearch) {
       return (
         <View style={this.styles.searchInputContainer}>
-          <Image style={this.styles.searchIcon} source={Assets.icons.search}/>
+          <Image style={this.styles.searchIcon} source={Assets.icons.search} />
           <TextInput
-            ref={r => this.search = r}
+            ref={r => (this.search = r)}
             style={[this.styles.searchInput, {color: searchStyle.color}]}
             placeholderTextColor={searchStyle.placeholderTextColor}
             selectionColor={searchStyle.selectionColor}
@@ -100,7 +64,7 @@ class PickerModal extends BaseComponent {
   }
 
   render() {
-    const {visible, enableModalBlur, topBarProps, children} = this.props;
+    const {visible, enableModalBlur, topBarProps, listProps, children} = this.props;
     return (
       <Modal
         animationType={'slide'}
@@ -111,14 +75,15 @@ class PickerModal extends BaseComponent {
       >
         <Modal.TopBar {...topBarProps} />
         {this.renderSearchInput()}
-        <ScrollView
-          ref={r => (this.scrollView = r)}
-          onLayout={this.onScrollViewLayout}
-          onContentSizeChange={this.onScrollViewContentSizeChange}
-          keyboardShouldPersistTaps="always"
-        >
-          <View style={this.styles.modalBody}>{children}</View>
-        </ScrollView>
+
+        <FlatList
+          data={_.times(React.Children.count(children))}
+          renderItem={({index}) => {
+            return React.Children.toArray(children)[index];
+          }}
+          keyExtractor={(item, index) => index}
+          {...listProps}
+        />
       </Modal>
     );
   }
