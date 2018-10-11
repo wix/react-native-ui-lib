@@ -138,6 +138,7 @@ export default class Button extends BaseComponent {
     if (!_.isUndefined(props.containerStyle)) {
       console.error('Button "containerStyle" prop will be deprecated soon, please use "style" instead');
     }
+    this.getComponentDimensions = this.getComponentDimensions.bind(this);
   }
 
   // This method will be called more than once in case of layout change!
