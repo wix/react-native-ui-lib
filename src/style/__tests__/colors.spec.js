@@ -44,13 +44,27 @@ describe('services/AvatarService', () => {
       expect(uut.getColorTint(uut.blue20, '60')).toEqual(uut.blue60);
       expect(uut.getColorTint(uut.blue20, 60)).toEqual(uut.blue60);
     });
-
-    /* it('should throw error if the color could not be found', () => {
-      expect(() => uut.getColorTint('#ff115', '10')).toThrow(new Error('"Colors.getColorTint" could not find this color'));
+    
+    it('should handle color that does not exist in uilib', () => {
+      expect(uut.getColorTint('#F1BE0B', 10)).toEqual('#b28c08');
+      expect(uut.getColorTint('#F1BE0B', 20)).toEqual('#ca9f09');
+      expect(uut.getColorTint('#F1BE0B', 30)).toEqual('#F1BE0B');
+      expect(uut.getColorTint('#F1BE0B', 40)).toEqual('#f5d04d');
+      expect(uut.getColorTint('#F1BE0B', 50)).toEqual('#f9e291');
+      expect(uut.getColorTint('#F1BE0B', 60)).toEqual('#fbedbb');
+      expect(uut.getColorTint('#F1BE0B', 70)).toEqual('#fdf4d6');
+      expect(uut.getColorTint('#F1BE0B', 80)).toEqual('#fef9e7');
     });
     
-    it('should throw error if tint key was not provided', () => {
-      expect(() => uut.getColorTint('#ff115')).toThrow(new Error('"Colors.getColorTint" must accept a color and tintKey params'));
-    }); */
+    it('should round down tint level to the nearest one', () => {
+      expect(uut.getColorTint('#F1BE0B', 75)).toEqual('#fdf4d6');
+      expect(uut.getColorTint('#F1BE0B', 25)).toEqual('#ca9f09');
+      expect(uut.getColorTint('#F1BE0B', 35)).toEqual('#F1BE0B');
+    });
+    
+    it('should handle out of range tint levels and round them to the nearest one in range', () => {
+      expect(uut.getColorTint('#F1BE0B', 3)).toEqual('#b28c08');
+      expect(uut.getColorTint('#F1BE0B', 95)).toEqual('#fef9e7');
+    });
   });
 });
