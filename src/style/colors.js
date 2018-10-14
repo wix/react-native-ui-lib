@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import {colorsPalette} from './colorsPalette';
 
+const one = require('onecolor');
+
 class Colors {
   /**
    * Load custom set of colors
@@ -60,10 +62,15 @@ class Colors {
   }
 
   getColorTint(color, tintKey) {
+    const BASE_COLOR_LEVEL = 3;
+    const darkRatios = [0.13, 0.08];
+    const lightRatios = [0.27, 0.55, 0.72, 0.83, 0.9];
+
     const colorKey = _.findKey(this, (value, key) => this[key] === color);
 
-    if (_.isUndefined(tintKey)) {
-      throw new Error('"Colors.getColorTint" must accept a color and tintKey params');
+    if (_.isUndefined(tintKey) || isNaN(tintKey) || _.isUndefined(color)) {
+      console.error('"Colors.getColorTint" must accept a color and tintKey params');
+      return color;
     }
 
     if (colorKey) {
@@ -74,10 +81,20 @@ class Colors {
         return color;
       }
       return requiredColor;
+    // Handles dynamic colors (non uilib colors)
     } else {
-      // throw new Error('"Colors.getColorTint" could not find this color');
-      console.warn('"Colors.getColorTint" could not find this color');
-      return color;
+      let tintLevel = Math.floor(Number(tintKey) / 10);
+      tintLevel = Math.max(1, tintLevel);
+      tintLevel = Math.min(8, tintLevel);
+      if (tintLevel === BASE_COLOR_LEVEL) {
+        return color;
+      } else if (tintLevel <= BASE_COLOR_LEVEL) {
+        const darkRatio = darkRatios[tintLevel - 1];
+        return one(color).darken(darkRatio).hex();
+      } else {
+        const lightRatio = lightRatios[tintLevel - 4];
+        return one(color).mix('#ffffff', lightRatio).hex();
+      }
     }
   }
 }
