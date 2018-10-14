@@ -19,7 +19,7 @@ const contentViewPadding = 32;
 const contentViewRightMargin = Constants.isIOS ? 45 : 46;
 const titleBottomMargin = 12;
 const messageBottomMargin = 24;
-const messageLineHeight = 22;
+const messageLineHeight = 24;
 const defaultButtonLabel = 'Got it';
 const contentViewHeight = Constants.isAndroid ? 268 : 282;
 
@@ -296,8 +296,8 @@ const styles = StyleSheet.create({
   },
   message: {
     marginBottom: messageBottomMargin,
-    lineHeight: messageLineHeight,
     ...Typography.text70,
+    lineHeight: messageLineHeight,
   },
   touchableOverlay: {
     ...StyleSheet.absoluteFillObject,
