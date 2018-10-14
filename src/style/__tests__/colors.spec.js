@@ -44,6 +44,15 @@ describe('services/AvatarService', () => {
       expect(uut.getColorTint(uut.blue20, '60')).toEqual(uut.blue60);
       expect(uut.getColorTint(uut.blue20, 60)).toEqual(uut.blue60);
     });
+
+    it('should return same color if tintLevel param is undefined or NaN', () => {
+      expect(uut.getColorTint('#F1BE0B')).toEqual('#F1BE0B');
+      expect(uut.getColorTint('#F1BE0B', '2a4')).toEqual('#F1BE0B');
+    });
+    
+    it('should return undefined if color param is undefined', () => {
+      expect(uut.getColorTint(undefined, 10)).toEqual(undefined);
+    });
     
     it('should handle color that does not exist in uilib', () => {
       expect(uut.getColorTint('#F1BE0B', 10)).toEqual('#b28c08');

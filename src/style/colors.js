@@ -68,8 +68,9 @@ class Colors {
 
     const colorKey = _.findKey(this, (value, key) => this[key] === color);
 
-    if (_.isUndefined(tintKey)) {
+    if (_.isUndefined(tintKey) || isNaN(tintKey) || _.isUndefined(color)) {
       console.error('"Colors.getColorTint" must accept a color and tintKey params');
+      return color;
     }
 
     if (colorKey) {
