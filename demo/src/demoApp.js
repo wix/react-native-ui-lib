@@ -1,38 +1,9 @@
 import {Navigation} from 'react-native-navigation';
-import {Typography, Constants, Colors, Assets, Button, Badge, ThemeManager, Text} from 'react-native-ui-lib'; //eslint-disable-line
+import {Constants, Assets, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
 import * as Animatable from 'react-native-animatable';
-import './screens';
+// import './screens';
+import {registerScreens} from './screens';
 
-// Typography.loadTypographies({
-//   h1: {fontSize: 58, fontWeight: '300', lineHeight: 80},
-//   h2: {fontSize: 46, fontWeight: '300', lineHeight: 64},
-// });
-
-// Colors.loadColors({
-//   pink: '#FF69B4',
-//   gold: '#FFD700',
-// });
-
-// ThemeManager.setTheme({
-//   primaryColor: Colors.purple30,
-//   CTA: {
-//     backgroundColor: Colors.purple30,
-//     textColor: Colors.dark10,
-//   },
-//   titleColor: Colors.blue10,
-//   subtitleColor: Colors.blue40,
-// });
-
-// ThemeManager.setComponentTheme('Picker', (props) => {
-//   if (props.useNativePicker) {
-//     return {
-//       topBarProps: {
-//         doneLabel: Constants.isIOS ? 'Done2' : 'OK2',
-//         cancelLabel: Constants.isIOS ? 'Cancel2' : 'CANCEL2',
-//       },
-//     };
-//   }
-// });
 
 Assets.loadAssetsGroup('icons.general', {
   camera: require('./assets/icons/cameraSelected.png'),
@@ -52,13 +23,76 @@ Animatable.initializeRegistryWithDefinitions({
   },
 });
 
-export function startApp() {
-  Navigation.startSingleScreenApp({
-    appStyle: {autoAdjustScrollViewInsets: true},
-    screen: {
-      screen: 'unicorn.MainScreen',
-      title: 'Wix UI Lib',
-      navigatorButtons: {},
+function getDefaultNavigationStyle() {
+  return {
+    statusBar: {
+      visible: true,
+      style: 'light',
+      backgroundColor: Colors.violet30, // for Android
+    },
+    layout: {
+      backgroundColor: Colors.white,
+      orientation: ['portrait'],
+    },
+    topBar: {
+      visible: true,
+      noBorder: true, // for iOS
+      elevation: 0, // for Android
+      background: {
+        color: Colors.violet30,
+      },
+      title: {
+        color: Colors.white,
+        fontSize: Typography.text70.fontSize,
+        fontFamily: Constants.isAndroid ? Typography.text70.fontFamily : '.SFUIText-Heavy',
+      },
+      subtitle: {
+        color: Colors.white,
+        fontSize: Typography.text80.fontSize,
+        fontFamily: Constants.isAndroid ? Typography.text80.fontFamily : '.SFUIText-Medium',
+      },
+      backButton: {
+        visible: true,
+        color: Colors.white,
+        // icon: Constants.isIOS ? Assets.icons.navigation.back : undefined,
+        showTitle: Constants.isIOS ? false : undefined,
+        testID: 'pop',
+      },
+      leftButtonColor: Colors.white, 
+      leftButtonDisabledColor: Colors.rgba(Colors.white, 0.6),
+      rightButtonColor: Colors.white, 
+      rightButtonDisabledColor: Colors.rgba(Colors.white, 0.6),
+    },
+  };
+}
+
+function startApp() {
+  Navigation.setDefaultOptions(getDefaultNavigationStyle());
+
+  Navigation.setRoot({
+    root: {
+      stack: {
+        children: [
+          {
+            component: {
+              name: 'unicorn.MainScreen',
+              options: {
+                topBar: {
+                  title: {
+                    text: 'Wix UI Lib',
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
     },
   });
 }
+
+Navigation.events().registerAppLaunchedListener(() => {
+  registerScreens();
+  startApp();
+});
+

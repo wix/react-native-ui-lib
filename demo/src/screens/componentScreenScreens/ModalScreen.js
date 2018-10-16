@@ -1,12 +1,22 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
+import {Navigation} from 'react-native-navigation';
 import {Colors, Carousel, PageControl, Modal, View, Text, Constants} from 'react-native-ui-lib';//eslint-disable-line
 
 export default class ModalScreen extends Component {
 
-  static navigatorStyle = {
-    navBarHidden: true,
-  };
+  // static navigatorStyle = {
+  //   navBarHidden: true,
+  // };
+
+  static options(passProps) {
+    return {
+      topBar: {
+        drawBehind: true,
+        visible: false,
+      },
+    };
+  }
 
   constructor(props) {
     super(props);
@@ -17,10 +27,11 @@ export default class ModalScreen extends Component {
   }
 
   closeScreen() {
-    const {navigator} = this.props;
-    navigator.pop({
-      animated: true,
-    });
+    // const {navigator} = this.props;
+    // navigator.pop({
+    //   animated: true,
+    // });
+    Navigation.pop(this.props.componentId);
   }
 
   render() {

@@ -1,3 +1,1 @@
-import {startApp} from './demo/src/demoApp';
-
-startApp();
+require('./demo/src/index');
