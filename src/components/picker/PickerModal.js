@@ -25,6 +25,7 @@ class PickerModal extends BaseComponent {
     }),
     searchPlaceholder: PropTypes.string,
     onSearchChange: PropTypes.func,
+    renderCustomSearch: PropTypes.func,
     listProps: PropTypes.object,
   };
 
@@ -43,8 +44,13 @@ class PickerModal extends BaseComponent {
   }
 
   renderSearchInput() {
-    const {showSearch, searchStyle, searchPlaceholder, onSearchChange} = this.props;
+    const {showSearch, searchStyle, searchPlaceholder, onSearchChange, renderCustomSearch} = this.props;
+    
     if (showSearch) {
+      if (_.isFunction(renderCustomSearch)) {
+        return renderCustomSearch(this.props);
+      }
+
       return (
         <View style={this.styles.searchInputContainer}>
           <Image style={this.styles.searchIcon} source={Assets.icons.search} />

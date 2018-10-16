@@ -106,6 +106,10 @@ class Picker extends TextInput {
      */
     onSearchChange: PropTypes.func,
     /**
+     * Render custom search input
+     */
+    renderCustomSearch: PropTypes.func,
+    /**
      * Allow to use the native picker solution (different for iOS and Android)
      */
     useNativePicker: PropTypes.bool,
@@ -269,7 +273,15 @@ class Picker extends TextInput {
   }
 
   renderExpandableModal() {
-    const {mode, enableModalBlur, topBarProps, showSearch, searchStyle, searchPlaceholder, listProps} = this.getThemeProps();
+    const {
+      mode,
+      enableModalBlur,
+      topBarProps,
+      showSearch,
+      searchStyle,
+      searchPlaceholder,
+      renderCustomSearch,
+      listProps} = this.getThemeProps();
     const {showExpandableModal, selectedItemPosition} = this.state;
     return (
       <PickerModal
@@ -285,6 +297,7 @@ class Picker extends TextInput {
         searchStyle={searchStyle}
         searchPlaceholder={searchPlaceholder}
         onSearchChange={this.onSearchChange}
+        renderCustomSearch={renderCustomSearch}
         listProps={listProps}
       >
         {this.appendPropsToChildren(this.props.children)}
