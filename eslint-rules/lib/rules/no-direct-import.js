@@ -2,13 +2,13 @@ const MAP_SCHEMA = {
   type: 'object',
   properties: {
     origin: {
-      type: 'string'
+      type: 'string',
     },
     destination: {
-      type: 'string'
-    }
+      type: 'string',
+    },
   },
-  additionalProperties: false
+  additionalProperties: false,
 };
 
 module.exports = {
@@ -19,16 +19,15 @@ module.exports = {
       recommended: true,
     },
     messages: {
-      uiLib: "Do not import directly from this source. Please use another import source (autofix available).",
+      uiLib: 'Do not import directly from this source. Please use another import source (autofix available).',
     },
     fixable: 'code',
     schema: [
-      MAP_SCHEMA
+      MAP_SCHEMA,
     ],
   },
   create(context) {
-
-    function reportDirectImport(node, options) {
+    function reportDirectImport(node) {
       try {
         const origin = context.options[0].origin;
         const destination = context.options[0].destination;
@@ -56,7 +55,7 @@ module.exports = {
     }
 
     return {
-      ImportDeclaration: node => checkImportDeclaretion(node)
+      ImportDeclaration: node => checkImportDeclaretion(node),
     };
-  }
+  },
 };
