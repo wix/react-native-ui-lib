@@ -51,9 +51,7 @@ module.exports = {
         if (check && pathString !== '') {
           const deprecatedObject = getDeprecatedObject(pathString);
           if (deprecatedObject) {
-            const path = deprecatedObject.path;
-            const message = deprecatedObject.message;
-            const fix = deprecatedObject.fix;
+            const {path, message, fix} = deprecatedObject;
             reportDeprecatedAssets(node, {path, message, fix});
           }
         }
@@ -67,7 +65,7 @@ module.exports = {
             pathString = (pathString === '') ? `${node.property.name}` : `${node.property.name}.${pathString}`;
             return isAssetsObject(node.object);
           }
-        } else if (node.name && node.name === assetsName) {
+        } else if (node.name === assetsName) {
           pathString = `${node.name}.${pathString}`;
           return true;
         }
@@ -79,13 +77,7 @@ module.exports = {
     const {deprecations} = context.options[0];
 
     function getDeprecatedObject(path) {
-      let jsonElement;
-      deprecations.forEach((element) => {
-        if (element.path === path) {
-          jsonElement = element;
-        }
-      });
-      return jsonElement;
+      return _.find(deprecations, {path});
     }
 
     function checkSpreadAttribute(node) {
@@ -106,11 +98,7 @@ module.exports = {
       if (source === importSource) {
         const specifiers = node.specifiers;
         if (specifiers) {
-          specifiers.forEach((s) => {
-            if (s.local.name === assetsName) {
-              shouldCheckDeprecation = true;
-            }
-          });
+          shouldCheckDeprecation = _.find(specifiers, e => e.local.name === assetsName);
         }
       }
     }
