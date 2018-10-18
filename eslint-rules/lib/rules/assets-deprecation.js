@@ -30,10 +30,7 @@ module.exports = {
           message: `${msg}`,
           fix(fixer) {
             if (options.fix) {
-              // const fix = Object.values(options.fix);
-              // fixer.replaceText(node, `${fix}`);
-              // fixer.replaceTextRange(node.range, fix);
-              // fixer.remove(node.object);
+              return fixer.replaceText(node, options.fix);
             }
           },
         });
