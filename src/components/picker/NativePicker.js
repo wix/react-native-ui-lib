@@ -9,34 +9,35 @@ import PickerDialog from './PickerDialog';
 
 class Picker extends BaseComponent {
   state = {
-    selectedValue: this.props.value,
+    selectedItem: this.props.value,
     items: this.extractPickerItems(this.props),
   };
 
   extractPickerItems(props) {
     const {children, useNativePicker} = props;
     if (useNativePicker) {
-      const items = React.Children.map(children, child => ({value: child.props.value, label: child.props.label}));
+      const items = React.Children.map(children, child => ({value: child.props.value.value, label: child.props.value.label}));
       return items;
     }
   }
 
   onCancel = () => {
     this.setState({
-      selectedValue: this.props.value,
+      selectedItem: this.props.value,
     });
     this.input.toggleExpandableModal(false);
   };
 
   onDone = () => {
-    const {selectedValue} = this.state;
-    _.invoke(this.props, 'onChange', selectedValue);
+    const {selectedItem} = this.state;
+    _.invoke(this.props, 'onChange', selectedItem);
     this.input.toggleExpandableModal(false);
   };
 
-  onValueChange = (selectedValue) => {
+  onValueChange = (selectedItem) => {
+    const {items} = this.state;
     this.setState({
-      selectedValue,
+      selectedItem: _.find(items, {value: selectedItem}),
     });
   };
 
@@ -47,22 +48,30 @@ class Picker extends BaseComponent {
     }
 
     const {items} = this.state;
-    const selectedItem = _.find(items, {value});
+    const selectedItem = _.find(items, {value: _.get(value, 'value')});
     return _.get(selectedItem, 'label');
   }
 
+  appendPropsToChildren = children => React.Children.map(children, child => 
+    React.cloneElement(child, {
+      value: child.props.value.value,
+      label: child.props.value.label,
+    }));
+
   renderPickerDialog = () => {
-    const {selectedValue} = this.state;
-    
+    const {selectedItem} = this.state;
+
     return (
       <PickerDialog
         {...this.getThemeProps()}
         onDismiss={this.onCancel}
         onValueChange={this.onValueChange}
-        selectedValue={selectedValue}
+        selectedValue={_.get(selectedItem, 'value')}
         onDone={this.onDone}
         onCancel={this.onCancel}
-      />
+      >
+        {this.appendPropsToChildren(this.props.children)}
+      </PickerDialog>
     );
   };
 

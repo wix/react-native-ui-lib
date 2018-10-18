@@ -32,6 +32,7 @@ export default class FormScreen extends Component {
       // language: {value: 'java', label: 'Java'},
       language: undefined,
       languages: [],
+      nativePickerValue: undefined,
       filter: filters[0],
       contact: contacts[0],
       tags: [{label: 'Amit'}, {label: 'Ethan'}],
@@ -131,7 +132,7 @@ export default class FormScreen extends Component {
             // }}
             // topBarProps={{doneLabel: 'YES', cancelLabel: 'NO'}}
           >
-            {_.map(options, option => <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled} />)}
+            {_.map(options, option => <Picker.Item key={option.value} value={option} disabled={option.disabled} />)}
           </Picker>
 
           <Text marginT-20 marginB-10 text70 dark60>

@@ -157,10 +157,6 @@ class Picker extends TextInput {
     if (props.mode === Picker.modes.MULTI && !Array.isArray(props.value)) {
       console.warn('Picker in MULTI mode must accept an array for value');
     }
-
-    if (props.useNativePicker && _.isPlainObject(props.value)) {
-      console.warn('UILib Picker: dont use object as value for native picker, use either string or a number');
-    }
   }
 
   componentWillReceiveProps(nexProps) {
@@ -223,7 +219,7 @@ class Picker extends TextInput {
         });
       }
     });
-
+    
     return childrenWithProps;
   }
 
