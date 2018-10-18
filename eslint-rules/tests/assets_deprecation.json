@@ -1,0 +1,7 @@
+[
+  {
+    "path": "Assets.icons.deprecated",
+    "message": "Use 'Assets.icons.general.valid' instead.",
+    "fix": "Assets.icons.general.valid"
+  }
+]

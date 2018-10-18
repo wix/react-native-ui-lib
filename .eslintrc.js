@@ -1,6 +1,6 @@
 // const validColors = require("./src/style/colorsPalette").colorsPalette;
 // const extraFixColorsMap = require("./src/style/colorsPalette").extraFixColorsMap;
-
+// const assetsDepJson = require('./eslint-rules/tests/assets_deprecation.json');
 
 module.exports = {
   "parser": "babel-eslint",
@@ -30,6 +30,7 @@ module.exports = {
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": true}],
     // "uilib/no-hard-coded-color": ["error", validColors, extraFixColorsMap],
     // "uilib/no-hard-coded-font": "warn"
+    // 'uilib/assets-deprecation': ['error', {deprecations: assetsDepJson, source: '../../assets', dueDate: '2 November, Friday'}]
   },
   "env": {
     "browser": true,
