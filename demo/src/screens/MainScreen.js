@@ -217,7 +217,7 @@ export default class UiLibExplorerMenu extends Component {
 
   renderHeader() {    
     return (
-      <View row spread>
+      <View row spread style={{height: Constants.isIOS ? 60 : 56}}>
         <TextInput
           ref={r => (this.toggledSearch = r)}
           placeholder="Search your component.."
@@ -226,15 +226,15 @@ export default class UiLibExplorerMenu extends Component {
           onDismiss={this.onSearchBoxBlur}
           value={this.state.filterText}
           style={{
-            height: Constants.isIOS ? 60 : 56,
-            marginTop: Constants.isIOS ? Constants.statusBarHeight - 16 : 0,
+            marginTop: Constants.isIOS ? Constants.statusBarHeight : 14,
             marginLeft: 16,
             color: Colors.violet30,
+            width: Constants.screenWidth - 80,
           }}
           hideUnderline
         />
         <Button
-          style={{marginRight: 16}}
+          style={{marginRight: 16, marginTop: Constants.isIOS ? Constants.statusBarHeight : 0}}
           iconSource={Assets.icons.search}
           size={'small'}
           onPress={this.onSearchBoxBlur}
