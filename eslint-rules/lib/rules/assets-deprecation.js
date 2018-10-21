@@ -79,9 +79,11 @@ module.exports = {
 
     function checkSpreadAttribute(node) {
       const spreadSource = utils.findValueNodeOfIdentifier(node.argument.name, context.getScope());
-      _.forEach(spreadSource.properties, (property) => {
-        deprecationCheck(property);
-      });
+      if (spreadSource && spreadSource.properties) {
+        _.forEach(spreadSource.properties, (property) => {
+          deprecationCheck(property);
+        });
+      }
     }
 
     // Import    
