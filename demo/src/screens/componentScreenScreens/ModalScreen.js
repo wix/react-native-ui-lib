@@ -5,10 +5,6 @@ import {Colors, Carousel, PageControl, Modal, View, Text, Constants} from 'react
 
 export default class ModalScreen extends Component {
 
-  // static navigatorStyle = {
-  //   navBarHidden: true,
-  // };
-
   static options(passProps) {
     return {
       topBar: {
@@ -27,10 +23,6 @@ export default class ModalScreen extends Component {
   }
 
   closeScreen() {
-    // const {navigator} = this.props;
-    // navigator.pop({
-    //   animated: true,
-    // });
     Navigation.pop(this.props.componentId);
   }
 

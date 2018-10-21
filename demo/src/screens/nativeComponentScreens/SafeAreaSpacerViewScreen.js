@@ -4,10 +4,6 @@ import {Text, View, SafeAreaSpacerView} from 'react-native-ui-lib'; //eslint-dis
 
 export default class SafeAreaSpacerViewScreen extends PureComponent {
 
-  // static navigatorStyle = {
-  //   navBarHidden: true,
-  // };
-
   static options(passProps) {
     return {
       topBar: {
