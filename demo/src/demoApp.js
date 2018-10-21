@@ -43,7 +43,8 @@ function getDefaultNavigationStyle() {
       title: {
         color: Colors.white,
         fontSize: Typography.text70.fontSize,
-        fontFamily: Constants.isAndroid ? Typography.text70.fontFamily : '.SFUIText-Heavy',
+        fontFamily: Constants.isAndroid ? 'sans-serif-bold' : '.SFUIText-Heavy',
+        alignment: 'center',
       },
       subtitle: {
         color: Colors.white,
@@ -51,7 +52,7 @@ function getDefaultNavigationStyle() {
         fontFamily: Constants.isAndroid ? Typography.text80.fontFamily : '.SFUIText-Medium',
       },
       backButton: {
-        visible: true,
+        // visible: true,
         color: Colors.white,
         showTitle: Constants.isIOS ? false : undefined,
         testID: 'pop',
