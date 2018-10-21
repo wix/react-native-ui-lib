@@ -1,12 +1,17 @@
 import React, {PureComponent} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {Button, Text, View, Colors, SafeAreaSpacerView} from 'react-native-ui-lib'; //eslint-disable-line
+import {Text, View, SafeAreaSpacerView} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class SafeAreaSpacerViewScreen extends PureComponent {
 
-  static navigatorStyle = {
-    navBarHidden: true,
-  };
+  static options(passProps) {
+    return {
+      topBar: {
+        drawBehind: true,
+        visible: false,
+      },
+    };
+  }
 
   render() {
     return (

@@ -1,8 +1,9 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import autobind from 'react-autobind';
 import {TouchableOpacity, Text, ListView, StyleSheet} from 'react-native';
+import {Navigation} from 'react-native-navigation';
 import {Colors, Typography, View, TextInput} from 'react-native-ui-lib';//eslint-disable-line
 import {navigationData} from '../menuStructure';
 
@@ -15,15 +16,18 @@ const ds = new ListView.DataSource({
 export default class UiLibExplorerMenu extends Component {
 
   static propTypes = {
-    navigator: PropTypes.object,
+    // navigationData: PropTypes.object,
   };
 
   constructor(props) {
     super(props);
     autobind(this);
+    
     this.state = {
       dataSource: ds.cloneWithRowsAndSections(navigationData),
     };
+
+    Navigation.events().bindComponent(this);
   }
 
   componentDidMount() {
@@ -31,14 +35,21 @@ export default class UiLibExplorerMenu extends Component {
     // this.openScreen({screen: 'unicorn.components.CardsScreen', title: 'Testing'});
   }
 
-  openScreen(row) {
-    const {navigator} = this.props;
-    navigator.push({
-      screen: row.screen,
-      title: row.title,
-      // overrideBackPress: row.overrideBackPress,
-      backButtonTitle: '',
+  openScreen(options) {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: options.name || options.screen,
+        passProps: options.passProps,
+        options: {
+          topBar: {
+            title: {
+              text: options.title,
+            },
+          },
+        },
+      },
     });
+
     this.filterExplorerScreens('');
   }
 
