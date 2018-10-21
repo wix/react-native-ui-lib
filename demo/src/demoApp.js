@@ -1,8 +1,10 @@
 import {Navigation} from 'react-native-navigation';
-import {Typography, Constants, Colors, Assets, Button, Badge, ThemeManager, Text} from 'react-native-ui-lib'; //eslint-disable-line
 import * as Animatable from 'react-native-animatable';
-import './screens';
+import {ThemeManager, Constants, Assets, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
+import {registerScreens} from './screens';
 
+
+/** Examples - uncomment when needed */
 // Typography.loadTypographies({
 //   h1: {fontSize: 58, fontWeight: '300', lineHeight: 80},
 //   h2: {fontSize: 46, fontWeight: '300', lineHeight: 64},
@@ -52,13 +54,76 @@ Animatable.initializeRegistryWithDefinitions({
   },
 });
 
-export function startApp() {
-  Navigation.startSingleScreenApp({
-    appStyle: {autoAdjustScrollViewInsets: true},
-    screen: {
-      screen: 'unicorn.MainScreen',
-      title: 'Wix UI Lib',
-      navigatorButtons: {},
+function getDefaultNavigationStyle() {
+  return {
+    statusBar: {
+      visible: true,
+      style: 'light',
+      backgroundColor: Colors.violet30, // for Android
+    },
+    layout: {
+      backgroundColor: Colors.white,
+      orientation: ['portrait'],
+    },
+    topBar: {
+      visible: true,
+      noBorder: true, // for iOS
+      elevation: 0, // for Android
+      background: {
+        color: Colors.violet30,
+      },
+      title: {
+        color: Colors.white,
+        fontSize: Typography.text70.fontSize,
+        fontFamily: Constants.isAndroid ? 'sans-serif-bold' : '.SFUIText-Heavy',
+        alignment: 'center',
+      },
+      subtitle: {
+        color: Colors.white,
+        fontSize: Typography.text80.fontSize,
+        fontFamily: Constants.isAndroid ? Typography.text80.fontFamily : '.SFUIText-Medium',
+      },
+      backButton: {
+        // visible: true,
+        color: Colors.white,
+        showTitle: Constants.isIOS ? false : undefined,
+        testID: 'pop',
+      },
+      leftButtonColor: Colors.white, 
+      leftButtonDisabledColor: Colors.rgba(Colors.white, 0.6),
+      rightButtonColor: Colors.white, 
+      rightButtonDisabledColor: Colors.rgba(Colors.white, 0.6),
+    },
+  };
+}
+
+function startApp() {
+  Navigation.setDefaultOptions(getDefaultNavigationStyle());
+
+  Navigation.setRoot({
+    root: {
+      stack: {
+        children: [
+          {
+            component: {
+              name: 'unicorn.MainScreen',
+              options: {
+                topBar: {
+                  title: {
+                    text: 'Wix UI Lib',
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
     },
   });
 }
+
+Navigation.events().registerAppLaunchedListener(() => {
+  registerScreens();
+  startApp();
+});
+

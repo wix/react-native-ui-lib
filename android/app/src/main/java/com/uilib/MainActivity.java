@@ -1,6 +1,6 @@
 package com.uilib;
 
-import com.reactnativenavigation.controllers.SplashActivity;
+import com.reactnativenavigation.NavigationActivity;
 
-public class MainActivity extends SplashActivity {
+public class MainActivity extends NavigationActivity {
 }
