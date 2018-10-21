@@ -47,7 +47,7 @@ ruleTester.run('assets-deprecation', rule, {
       errors: [
         {
           message: "'Assets.icons.deprecated' is deprecated. Use 'Assets.icons.general.valid' instead. " + 
-          'Please fix this issue by 2 November, Friday!',
+            'Please fix this issue by 2 November, Friday!',
         },
       ],
     },
@@ -57,7 +57,7 @@ ruleTester.run('assets-deprecation', rule, {
       errors: [
         {
           message: "'Assets.icons.deprecated' is deprecated. Use 'Assets.icons.general.valid' instead. " + 
-          'Please fix this issue by 2 November, Friday!',
+            'Please fix this issue by 2 November, Friday!',
         },
       ],
     },
