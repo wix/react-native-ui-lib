@@ -1,6 +1,6 @@
 package com.uilib;
 
-import com.reactnativenavigation.controllers.NavigationActivity;
+import com.reactnativenavigation.NavigationActivity;
 
 public class MainActivity extends NavigationActivity {
 }

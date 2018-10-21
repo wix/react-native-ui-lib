@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.cmcewen.blurview.BlurViewPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -46,9 +47,9 @@ public class MainApplication extends NavigationApplication {
         return Arrays.<ReactPackage>asList(
             // eg. new VectorIconsPackage()
             new TextInputDelKeyHandlerPackage(),
-                new BlurViewPackage(),
-                new HighlighterViewPackage(),
-                new WheelPickerPackage()
+            new BlurViewPackage(),
+            new HighlighterViewPackage(),
+            new WheelPickerPackage()
         );
     }
 

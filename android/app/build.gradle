@@ -8,8 +8,8 @@ apply plugin: "com.android.application"
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "com.uilib"
@@ -62,11 +62,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.android.support:appcompat-v7:25.0.1"
-
+    implementation "com.android.support:appcompat-v7:26.1.0"
     implementation "com.facebook.react:react-native:+"
     implementation 'com.facebook.fresco:animated-gif:0.14.1'
-
     implementation project(':react-native-navigation')
     implementation project(':react-native-blur')
     implementation project(':react-native-ui-lib')
