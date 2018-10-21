@@ -1,7 +1,6 @@
 import {Navigation} from 'react-native-navigation';
-import {Constants, Assets, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
 import * as Animatable from 'react-native-animatable';
-// import './screens';
+import {Constants, Assets, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
 import {registerScreens} from './screens';
 
 
@@ -54,7 +53,6 @@ function getDefaultNavigationStyle() {
       backButton: {
         visible: true,
         color: Colors.white,
-        // icon: Constants.isIOS ? Assets.icons.navigation.back : undefined,
         showTitle: Constants.isIOS ? false : undefined,
         testID: 'pop',
       },
