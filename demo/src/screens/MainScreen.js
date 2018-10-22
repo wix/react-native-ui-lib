@@ -1,22 +1,20 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {ListView, StyleSheet, FlatList} from 'react-native';
 import autobind from 'react-autobind';
+import {ListView, StyleSheet, FlatList} from 'react-native';
 import {Navigation} from 'react-native-navigation';
-import {navigationData} from '../menuStructure';
 import {
   Constants,
   Assets,
   Colors,
-  Typography,
   View,
   Text,
   Button,
   Carousel,
-  ListMenu,
   TextInput,
   Image,
 } from 'react-native-ui-lib'; //eslint-disable-line
+import {navigationData} from './MenuStructure';
 
 
 const ds = new ListView.DataSource({
@@ -40,12 +38,12 @@ export default class UiLibExplorerMenu extends Component {
     Navigation.events().bindComponent(this);
 
     const navigationStyle = this.getSearchNavigationStyle();
-    // navigationStyle.topBar.rightButtons.push({
-    //   id: 'uilib.settingsButton',
-    //   enabled: true,
-    //   icon: Assets.icons.settings,
-    // });
-    Navigation.mergeOptions(this.props.componentId, navigationStyle);
+    navigationStyle.topBar.rightButtons.push({
+      id: 'uilib.settingsButton',
+      enabled: true,
+      icon: Assets.icons.settings,
+    });
+    Navigation.mergeOptions(props.componentId, navigationStyle);
   }
 
   componentDidMount() {
@@ -57,7 +55,7 @@ export default class UiLibExplorerMenu extends Component {
   getSearchNavigationStyle() {
     return {
       topBar: {
-        drawBehind: true, // will not work without passing 'translucent: true'
+        drawBehind: true,
         translucent: true,
         rightButtons: [
           {
@@ -74,11 +72,11 @@ export default class UiLibExplorerMenu extends Component {
     const {buttonId} = event;
 
     switch (buttonId) {
-      // case 'uilib.settingsButton':
-      //   this.pushScreen({
-      //     name: 'example.Settings',
-      //   });
-      //   break;
+      case 'uilib.settingsButton':
+        this.pushScreen({
+          name: 'example.Settings',
+        });
+        break;
       case 'uilib.searchButton':
         this.toggleTopBar(false);
         break;
@@ -86,19 +84,6 @@ export default class UiLibExplorerMenu extends Component {
         break;
     }
   };
-
-  toggleTopBar = (shouldShow) => {
-    Navigation.mergeOptions(this.props.componentId, {
-      topBar: {
-        visible: shouldShow,
-        animate: true,
-      },
-    });
-  }
-
-  closeSearchBox() {
-    this.toggleTopBar(true);
-  }
 
   pushScreen(options) {
     Navigation.push(this.props.componentId, {
@@ -147,18 +132,28 @@ export default class UiLibExplorerMenu extends Component {
 
   onSearchBoxBlur() {
     this.closeSearchBox();
-
     this.filterExplorerScreens('');
   }
 
   /** Actions */
+  toggleTopBar = (shouldShow) => {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        visible: shouldShow,
+        animate: true,
+      },
+    });
+  }
+
+  closeSearchBox() {
+    this.toggleTopBar(true);
+  }
+
   openScreen(row) {
     this.closeSearchBox();
-
     setImmediate(() => {
       this.filterExplorerScreens('');
     });
-
     this.pushScreen(row);
   }
 
@@ -170,7 +165,6 @@ export default class UiLibExplorerMenu extends Component {
       _.each(navigationData, (menuSection, menuSectionKey) => {
         const filteredMenuSection = _.filter(menuSection, (menuItem) => {
           const {title, description, tags} = menuItem;
-
           return (
             _.includes(_.lowerCase(title), _.toLower(filterText)) ||
             _.includes(_.toLower(description), _.toLower(filterText)) ||
@@ -183,7 +177,6 @@ export default class UiLibExplorerMenu extends Component {
         }
       });
     }
-
     this.setState({
       filterText,
       filteredNavigationData,
@@ -192,29 +185,6 @@ export default class UiLibExplorerMenu extends Component {
   }
 
   /** Renders */
-  renderRow(row) {
-    return (
-      <ListMenu.Item
-        title={row.title}
-        onPress={() => this.openScreen(row)}
-        description={row.description}
-        showAccessoryIndicator
-      />
-    );
-  }
-
-  renderSeparator(sId, id) {
-    return <View style={styles.separator} key={'s' + sId + '_' + id}/>;
-  }
-
-  renderSectionHeader(sectionData, sectionID) {
-    return (
-      <View style={styles.sectionContainer}>
-        <Text style={styles.sectionText}>{sectionID}</Text>
-      </View>
-    );
-  }
-
   renderHeader() {    
     return (
       <View row spread style={{height: Constants.isIOS ? (Constants.isIphoneX ? 80 : 60) : 56}}>
@@ -303,12 +273,11 @@ export default class UiLibExplorerMenu extends Component {
                 style={[
                   styles.pageTitleExtraDivider,
                   {width: dividerWidths[_.indexOf(keys, key) % dividerWidths.length]},
-                  {transform: [{translateX: dividerTransforms[_.indexOf(keys, key) % dividerTransforms.length]}]}
+                  {transform: [{translateX: dividerTransforms[_.indexOf(keys, key) % dividerTransforms.length]}]},
                 ]}
               />
-
               <View flex>
-                <FlatList data={group} keyExtractor={(item, index) => item.title} renderItem={this.renderItem}/>
+                <FlatList data={group} keyExtractor={item => item.title} renderItem={this.renderItem}/>
               </View>
             </View>
           );
@@ -376,35 +345,10 @@ const styles = StyleSheet.create({
     borderColor: Colors.dark60,
   },
   pageTitleExtraDivider: {
-    borderTopWidth: 1,
-    borderColor: Colors.blue70,
-    width: '70%',
     marginTop: 5,
     marginBottom: 22,
   },
-  text: {
-    textAlign: 'left',
-    fontSize: 22,
-    padding: 20,
-  },
-  row: {
-    height: 56,
-    justifyContent: 'center',
-  },
   entryTextDeprecated: {
     textDecorationLine: 'line-through',
-  },
-  separator: {
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.dark70,
-  },
-  sectionContainer: {
-    backgroundColor: Colors.dark20,
-    paddingVertical: 4,
-    paddingLeft: 12,
-  },
-  sectionText: {
-    ...Typography.text60,
-    color: Colors.white,
   },
 });
