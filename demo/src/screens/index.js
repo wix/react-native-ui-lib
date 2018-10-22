@@ -8,10 +8,13 @@ import './animationScreens';
 import './realExamples';
 import './wrapperScreens';
 
-import Playground from './PlaygroundScreen';
 import MainScreen from './MainScreen';
+import Playground from './PlaygroundScreen';
+import SettingsScreen from './SettingsScreen';
+
 
 export function registerScreens() {
   Navigation.registerComponent('unicorn.MainScreen', () => MainScreen);
   Navigation.registerComponent('unicorn.PlaygroundScreen', () => Playground);
+  Navigation.registerComponent('example.Settings', () => SettingsScreen);
 }

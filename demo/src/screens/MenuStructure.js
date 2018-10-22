@@ -1,4 +1,3 @@
-// import {Constants} from '../../src';
 export const navigationData = {
   Presets: [
     {title: 'Border Radius', tags: 'corener border radius circle', screen: 'unicorn.style.BorderRadiusesScreen'},
@@ -32,7 +31,7 @@ export const navigationData = {
     {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'},
     {title: 'Wheel Picker Dialog', tags: 'wheel picker dialog', screen: 'unicorn.components.WheelPickerDialogScreen'},
   ],
-  NativeComponents: [
+  Native: [
     {title: 'Highlight Overlay', tags: 'native overlay', screen: 'unicorn.nativeComponents.HighlightOverlayViewScreen'},
     {title: 'Wheel Picker', tags: 'wheel picker', screen: 'unicorn.nativeComponents.WheelPickerViewScreen'},
     {title: 'SafeArea Sapcer', tags: 'native safe area', screen: 'unicorn.nativeComponents.SafeAreaSpacerViewScreen'},
