@@ -18,6 +18,12 @@ import View from '../view';
  * @gif: https://media.giphy.com/media/9S58XdLCoUiLzAc1b1/giphy.gif
  */
 /*eslint-enable*/
+
+const SWIPE_DIRECTIONS = {
+  UP: 'up',
+  DOWN: 'down',
+};
+
 class Dialog extends BaseComponent {
   static displayName = 'Dialog'
   static propTypes = {
@@ -29,6 +35,10 @@ class Dialog extends BaseComponent {
      * dismiss callback for when clicking on the background
      */
     onDismiss: PropTypes.func,
+    /**
+     * the direction of the swipe to dismiss the dialog (default is 'down')
+     */
+    dismissSwipeDirection: PropTypes.oneOfType(SWIPE_DIRECTIONS),
     /**
      * The color of the overlay background
      */
@@ -56,7 +66,10 @@ class Dialog extends BaseComponent {
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
     width: '90%',
     height: '70%',
+    dismissSwipeDirection: SWIPE_DIRECTIONS.DOWN,
   };
+
+  static swipeDirections = SWIPE_DIRECTIONS;
 
   generateStyles() {
     this.styles = createStyles(this.props);
@@ -74,14 +87,16 @@ class Dialog extends BaseComponent {
 
   onSwipe(gestureName) {
     const {SWIPE_UP, SWIPE_DOWN} = swipeDirections;
+    const {dismissSwipeDirection} = this.props;
+
     switch (gestureName) {
       case SWIPE_UP:
-        if (this.props.top) {
+        if (dismissSwipeDirection === SWIPE_DIRECTIONS.UP) {
           _.invoke(this.props, 'onDismiss');
         }
         break;
       case SWIPE_DOWN:
-        if (!this.props.top) {
+        if (dismissSwipeDirection === SWIPE_DIRECTIONS.DOWN) {
           _.invoke(this.props, 'onDismiss');
         }
         break;
