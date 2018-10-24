@@ -32,10 +32,10 @@ function isColorException(colorString) {
   return colorExceptions.indexOf(lowerCaseColorString) !== -1;
 }
 
-//no-hard-coded-font-styles
+// no-hard-coded-font-styles
 const fontProps = ['fontSize', 'fontWeight', 'lineHeight', 'fontFamily'];
 
-function isPropFont (propName) {
+function isPropFont(propName) {
   return (fontProps.indexOf(propName) !== -1);
 }
 

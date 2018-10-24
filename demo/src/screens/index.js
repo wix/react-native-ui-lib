@@ -16,5 +16,5 @@ import SettingsScreen from './SettingsScreen';
 export function registerScreens() {
   Navigation.registerComponent('unicorn.MainScreen', () => MainScreen);
   Navigation.registerComponent('unicorn.PlaygroundScreen', () => Playground);
-  Navigation.registerComponent('example.Settings', () => SettingsScreen);
+  Navigation.registerComponent('unicorn.Settings', () => SettingsScreen);
 }

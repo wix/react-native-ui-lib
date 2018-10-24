@@ -74,7 +74,7 @@ export default class UiLibExplorerMenu extends Component {
     switch (buttonId) {
       case 'uilib.settingsButton':
         this.pushScreen({
-          name: 'example.Settings',
+          name: 'unicorn.Settings',
         });
         break;
       case 'uilib.searchButton':
