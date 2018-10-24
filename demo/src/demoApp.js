@@ -1,3 +1,4 @@
+import {AsyncStorage} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import * as Animatable from 'react-native-animatable';
 import {ThemeManager, Constants, Assets, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
@@ -97,10 +98,10 @@ function getDefaultNavigationStyle() {
   };
 }
 
-function startApp() {
+function startApp(defaultScreen) {
   Navigation.setDefaultOptions(getDefaultNavigationStyle());
 
-  Navigation.setRoot({
+  const rootObject = {
     root: {
       stack: {
         children: [
@@ -119,11 +120,30 @@ function startApp() {
         ],
       },
     },
-  });
+  };
+
+  if (defaultScreen) {
+    rootObject.root.stack.children.push({
+      component: {
+        name: defaultScreen,
+      },
+    });
+  }
+
+  Navigation.setRoot(rootObject);
+}
+
+async function getDefaultScreenAndStartApp() {
+  try {
+    const defaultScreen = await AsyncStorage.getItem('uilib.defaultScreen');
+    startApp(defaultScreen);
+  } catch (error) {
+    console.warn(error);
+    startApp();
+  }
 }
 
 Navigation.events().registerAppLaunchedListener(() => {
   registerScreens();
-  startApp();
+  getDefaultScreenAndStartApp();
 });
-
