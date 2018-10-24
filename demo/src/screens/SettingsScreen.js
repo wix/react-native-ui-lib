@@ -13,12 +13,13 @@ class SettingsScreen extends Component {
     super(props);
 
     const data = props.navigationData || navigationData;
+    const playground = props.playground || playgroundScreen;
     
     this.state = {
       showRefreshMessage: false,
       screens: [
         none,
-        playgroundScreen,
+        playground,
         ..._.chain(data)
           .values()
           .flatten()

@@ -54,6 +54,10 @@ export default class UiLibExplorerMenu extends Component {
   }
 
   /** Navigation */
+  getMenuData() {
+    return this.props.navigationData || navigationData;
+  }
+
   getSearchNavigationStyle() {
     return {
       topBar: {
@@ -72,13 +76,13 @@ export default class UiLibExplorerMenu extends Component {
 
   navigationButtonPressed = (event) => {
     const {buttonId} = event;
-    const data = this.props.navigationData || navigationData;
+    const data = this.getMenuData();
 
     switch (buttonId) {
       case 'uilib.settingsButton':
         this.pushScreen({
           name: 'unicorn.Settings',
-          passProps: {navigationData: data},
+          passProps: {navigationData: data, playground: this.props.playground},
         });
         break;
       case 'uilib.searchButton':
@@ -163,7 +167,7 @@ export default class UiLibExplorerMenu extends Component {
 
   filterExplorerScreens(filterText) {
     let filteredNavigationData = {};
-    const data = this.props.navigationData || navigationData;
+    const data = this.getMenuData();
     
     if (!filterText) {
       filteredNavigationData = data;
@@ -240,7 +244,7 @@ export default class UiLibExplorerMenu extends Component {
 
   renderBreadcrumbs() {
     const {currentPage} = this.state;
-    const data = this.props.navigationData || navigationData;
+    const data = this.getMenuData();
     const pages = Object.keys(data);
     
     return (
@@ -316,7 +320,7 @@ export default class UiLibExplorerMenu extends Component {
     const showNoResults = _.isEmpty(filteredNavigationData) && !!filterText;
     const showResults = !_.isEmpty(filteredNavigationData) && !!filterText;
     const showCarousel = !filterText;
-    const data = this.props.navigationData || navigationData;
+    const data = this.getMenuData();
 
     return (
       <View flex bg-dark80>
