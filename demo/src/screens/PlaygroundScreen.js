@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import {Colors, Constants, View, Text, Button, Modal} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class PlaygroundScreen extends Component {
-  static id = 'example.Playground';
+  static id = 'unicorn.Playground';
 
   constructor(props) {
     super(props);
@@ -15,7 +15,7 @@ export default class PlaygroundScreen extends Component {
   render() {
     return (
       <View flex center style={styles.container}>
-        <Text>Playground Screen</Text>
+        <Text>Unicorn Playground Screen</Text>
       </View>
     );
   }
