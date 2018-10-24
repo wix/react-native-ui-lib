@@ -1,8 +1,9 @@
-import React from 'react';
-import {StyleSheet} from 'react-native';
-import * as Animatable from 'react-native-animatable';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import {BaseComponent} from '../../commons';
 import {Colors} from '../../style';
 import Modal from '../../screensComponents/modal';
@@ -71,10 +72,32 @@ class Dialog extends BaseComponent {
     };
   }
 
+  onSwipe(gestureName) {
+    const {SWIPE_UP, SWIPE_DOWN} = swipeDirections;
+    switch (gestureName) {
+      case SWIPE_UP:
+        if (this.props.top) {
+          _.invoke(this.props, 'onDismiss');
+        }
+        break;
+      case SWIPE_DOWN:
+        if (!this.props.top) {
+          _.invoke(this.props, 'onDismiss');
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
   render() {
     const {visible, overlayBackgroundColor, style, onDismiss} = this.getThemeProps();
     const {alignments} = this.state;
     const centerByDefault = _.isEmpty(alignments);
+    const config = {
+      velocityThreshold: 0.3,
+      directionalOffsetThreshold: 80,
+    };
 
     return (
       <Modal
@@ -87,7 +110,15 @@ class Dialog extends BaseComponent {
       >
         <View center={centerByDefault} style={[this.styles.overlay, alignments]} pointerEvents="box-none">
           <Animatable.View style={[this.styles.dialogContainer, style]} {...this.getAnimationConfig()}>
-            {this.props.children}
+            <GestureRecognizer
+              onSwipe={(direction, state) => this.onSwipe(direction, state)}
+              config={config}
+              style={{flex: 1}}
+            >
+              <TouchableWithoutFeedback>
+                {this.props.children}
+              </TouchableWithoutFeedback>
+            </GestureRecognizer>
           </Animatable.View>
         </View>
       </Modal>
