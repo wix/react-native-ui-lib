@@ -4,22 +4,29 @@ import {AsyncStorage} from 'react-native';
 import {View, Text, Picker, Toast} from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 
+
 const none = {label: '[None]', value: ''};
 const playgroundScreen = {label: 'Playground', value: 'unicorn.PlaygroundScreen'};
 
 class SettingsScreen extends Component {
-  state = {
-    showRefreshMessage: false,
-    screens: [
-      none,
-      playgroundScreen,
-      ..._.chain(navigationData)
-        .values()
-        .flatten()
-        .map(screen => ({label: screen.title, value: screen.screen}))
-        .value(),
-    ],
-  };
+  constructor(props) {
+    super(props);
+
+    const data = props.navigationData || navigationData;
+    
+    this.state = {
+      showRefreshMessage: false,
+      screens: [
+        none,
+        playgroundScreen,
+        ..._.chain(data)
+          .values()
+          .flatten()
+          .map(screen => ({label: screen.title, value: screen.screen}))
+          .value(),
+      ],
+    };
+  }
 
   async componentWillMount() {
     const {screens} = this.state;
@@ -34,7 +41,6 @@ class SettingsScreen extends Component {
   setDefaultScreen = (screen) => {
     this.setState({defaultScreen: screen});
     AsyncStorage.setItem('uilib.defaultScreen', screen.value);
-
     setTimeout(() => {
       this.setState({showRefreshMessage: true});
     }, 1000);

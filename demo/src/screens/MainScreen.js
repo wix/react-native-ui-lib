@@ -27,10 +27,12 @@ export default class UiLibExplorerMenu extends Component {
     super(props);
     autobind(this);
 
+    const data = props.navigationData || navigationData;
+    
     this.state = {
       currentPage: 0,
-      filteredNavigationData: navigationData,
-      dataSource: ds.cloneWithRowsAndSections(navigationData),
+      filteredNavigationData: data,
+      dataSource: ds.cloneWithRowsAndSections(data),
     };
 
     this.filterExplorerScreens = _.throttle(this.filterExplorerScreens, 300);
@@ -70,11 +72,13 @@ export default class UiLibExplorerMenu extends Component {
 
   navigationButtonPressed = (event) => {
     const {buttonId} = event;
+    const data = this.props.navigationData || navigationData;
 
     switch (buttonId) {
       case 'uilib.settingsButton':
         this.pushScreen({
           name: 'unicorn.Settings',
+          passProps: {navigationData: data},
         });
         break;
       case 'uilib.searchButton':
@@ -159,10 +163,12 @@ export default class UiLibExplorerMenu extends Component {
 
   filterExplorerScreens(filterText) {
     let filteredNavigationData = {};
+    const data = this.props.navigationData || navigationData;
+    
     if (!filterText) {
-      filteredNavigationData = navigationData;
+      filteredNavigationData = data;
     } else {
-      _.each(navigationData, (menuSection, menuSectionKey) => {
+      _.each(data, (menuSection, menuSectionKey) => {
         const filteredMenuSection = _.filter(menuSection, (menuItem) => {
           const {title, description, tags} = menuItem;
           return (
@@ -177,6 +183,7 @@ export default class UiLibExplorerMenu extends Component {
         }
       });
     }
+    
     this.setState({
       filterText,
       filteredNavigationData,
@@ -233,7 +240,9 @@ export default class UiLibExplorerMenu extends Component {
 
   renderBreadcrumbs() {
     const {currentPage} = this.state;
-    const pages = Object.keys(navigationData);
+    const data = this.props.navigationData || navigationData;
+    const pages = Object.keys(data);
+    
     return (
       <View style={styles.breadcrumbs} row>
         {_.map(pages, (key, index) => {
@@ -261,6 +270,7 @@ export default class UiLibExplorerMenu extends Component {
     const dividerTransforms = [-10, -55, -20];
     const dividerWidths = ['60%', '75%', '90%'];
     const keys = _.keys(data);
+    
     return (
       <Carousel onChangePage={this.onChangePage} ref={carousel => (this.carousel = carousel)}>
         {_.map(data, (group, key) => {
@@ -288,6 +298,7 @@ export default class UiLibExplorerMenu extends Component {
 
   renderSearchResults(data) {
     const flatData = _.flatMap(data);
+    
     return (
       <View paddingH-24>
         <FlatList
@@ -305,6 +316,7 @@ export default class UiLibExplorerMenu extends Component {
     const showNoResults = _.isEmpty(filteredNavigationData) && !!filterText;
     const showResults = !_.isEmpty(filteredNavigationData) && !!filterText;
     const showCarousel = !filterText;
+    const data = this.props.navigationData || navigationData;
 
     return (
       <View flex bg-dark80>
@@ -319,7 +331,7 @@ export default class UiLibExplorerMenu extends Component {
         {showCarousel && (
           <View flex useSafeArea>
             {this.renderBreadcrumbs()}
-            {this.renderCarousel(navigationData)}
+            {this.renderCarousel(data)}
           </View>
         )}
         {showResults && this.renderSearchResults(filteredNavigationData)}
