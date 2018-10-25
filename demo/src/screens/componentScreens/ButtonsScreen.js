@@ -1,11 +1,13 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Alert, Image} from 'react-native';
+import {ScrollView, StyleSheet, LayoutAnimation, Alert, Image} from 'react-native';
 import {Text, View, Assets, Constants, Button, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
 import DemoScreen from '../DemoScreen';
 
+const ButtonSpace = 20;
 const plusIcon = require('../../assets/icons/plus.png');
 
-const ButtonSpace = 20;
+const labelButton = {label: 'Animated', iconSource: Assets.icons.settings};
+const iconButton = {round: true, iconSource: Assets.icons.settings, iconStyle: {tintColor: Colors.white}};
 
 export default class ButtonsScreen extends DemoScreen {
   constructor(props) {
@@ -29,7 +31,18 @@ export default class ButtonsScreen extends DemoScreen {
       backgroundColor: Colors.yellow30,
       label: 'Button',
       // outline: true,
+      buttonProps: labelButton,
     };
+  }
+
+  changeProps = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    if (this.state.buttonProps === labelButton) {
+      this.setState({buttonProps: iconButton});
+    }
+    if (this.state.buttonProps === iconButton) {
+      this.setState({buttonProps: labelButton});
+    }
   }
 
   showSnippet(element) {
@@ -48,14 +61,15 @@ export default class ButtonsScreen extends DemoScreen {
   }
 
   render() {
-    const {snippet} = this.state;
+    const {snippet, buttonProps} = this.state;
 
     return (
       <View useSafeArea>
-        {!!snippet && <SnippetBlock snippet={snippet} onClose={() => this.hideSnippet()} />}
+        {!!snippet && <SnippetBlock snippet={snippet} onClose={() => this.hideSnippet()}/>}
         <ScrollView>
           <View centerH>
             <Text style={styles.title}>Buttons</Text>
+
             <Button
               backgroundColor="#30B650"
               label="SHUFFLE PLAY"
@@ -246,6 +260,75 @@ export default class ButtonsScreen extends DemoScreen {
               style={{marginBottom: ButtonSpace}}
               ref={element => (this.button_16 = element)}
               onPress={() => this.showSnippet(this.button_16)}
+            />
+
+            <Text style={styles.header}>Round</Text>
+            <Button
+              round
+              backgroundColor="#FF69B4"
+              style={{marginBottom: ButtonSpace}}
+              iconSource={Assets.icons.settings}
+              iconStyle={{tintColor: Colors.white}}
+              ref={element => (this.button_0 = element)}
+              onPress={() => this.showSnippet(this.button_0)}
+              size={'xSmall'}
+            />
+            <Button
+              round
+              backgroundColor="#ff4fa7"
+              style={{marginBottom: ButtonSpace}}
+              iconSource={Assets.icons.settings}
+              iconStyle={{tintColor: Colors.white}}
+              ref={element => (this.button_0 = element)}
+              onPress={() => this.showSnippet(this.button_0)}
+              size={'small'}
+            />
+            <Button
+              round
+              backgroundColor="#ff369b"
+              style={{marginBottom: ButtonSpace}}
+              iconSource={Assets.icons.settings}
+              iconStyle={{tintColor: Colors.white}}
+              ref={element => (this.button_0 = element)}
+              onPress={() => this.showSnippet(this.button_0)}
+              size={'medium'}
+            />
+            <Button
+              round
+              backgroundColor="#ff1d8e"
+              style={{marginBottom: ButtonSpace}}
+              iconSource={Assets.icons.settings}
+              iconStyle={{tintColor: Colors.white}}
+              ref={element => (this.button_0 = element)}
+              onPress={() => this.showSnippet(this.button_0)}
+            />
+            
+            <Text style={styles.header}>Animated</Text>
+            <Button
+              size={'small'}
+              style={{marginBottom: ButtonSpace / 4, marginLeft: ButtonSpace}}
+              backgroundColor={Colors.green20}
+              {...buttonProps}
+              onPress={this.changeProps}
+              animateLayout
+              animateTo={'left'}
+            />
+            <Button
+              size={'small'}
+              style={{marginBottom: ButtonSpace / 4}}
+              backgroundColor={Colors.green20}
+              {...buttonProps}
+              onPress={this.changeProps}
+              animateLayout
+            />
+            <Button
+              size={'small'}
+              style={{marginBottom: ButtonSpace / 4, marginRight: ButtonSpace}}
+              backgroundColor={Colors.green20}
+              {...buttonProps}
+              onPress={this.changeProps}
+              animateLayout
+              animateTo={'right'}
             />
 
             <Text style={styles.header}>Let your curves show</Text>
