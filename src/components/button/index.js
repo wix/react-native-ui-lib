@@ -90,6 +90,10 @@ export default class Button extends BaseComponent {
      */
     fullWidth: PropTypes.bool,
     /**
+     * should the button be a round button
+     */
+    round: PropTypes.bool,
+    /**
      * Control shadow visibility
      */
     enableShadow: PropTypes.bool, // iOS-only
@@ -224,28 +228,28 @@ export default class Button extends BaseComponent {
   }
 
   getContainerSizeStyle() {
-    const {size, outline, link, avoidMinWidth, avoidInnerPadding} = this.props;
+    const {size, outline, link, avoidMinWidth, avoidInnerPadding, round} = this.props;
     const outlineWidth = this.getThemeProps().outlineWidth || 1;
 
     const CONTAINER_STYLE_BY_SIZE = {};
     CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = {
       paddingVertical: 3,
-      paddingHorizontal: 11,
+      paddingHorizontal: round ? 3 : 11,
       minWidth: 66,
     };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = {
       paddingVertical: 4.5,
-      paddingHorizontal: 14,
+      paddingHorizontal: round ? 4.5 : 14,
       minWidth: 70,
     };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = {
       paddingVertical: 6.5,
-      paddingHorizontal: 16,
+      paddingHorizontal: round ? 6.5 : 16,
       minWidth: 77,
     };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = {
       paddingVertical: 9.5,
-      paddingHorizontal: 20,
+      paddingHorizontal: round ? 9.5 : 20,
       minWidth: 90,
     };
 
@@ -258,13 +262,13 @@ export default class Button extends BaseComponent {
 
     const containerSizeStyle = CONTAINER_STYLE_BY_SIZE[size];
 
-    if (link || this.isIconButton) {
+    if (link || (this.isIconButton && !round)) {
       containerSizeStyle.paddingVertical = undefined;
       containerSizeStyle.paddingHorizontal = undefined;
       containerSizeStyle.minWidth = undefined;
     }
 
-    if (avoidMinWidth) {
+    if (avoidMinWidth || round) {
       containerSizeStyle.minWidth = undefined;
     }
 
