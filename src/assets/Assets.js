@@ -18,7 +18,15 @@ function ensurePath(obj, path) {
 
   for (let i = 0; i < n; i++) {
     const segment = pathArray[i];
-    pointer[segment] = pointer[segment] || {};
+    
+    if (pointer[segment]) {
+      const descriptor = Object.getOwnPropertyDescriptor(pointer, segment);
+      if (descriptor.get) {
+        Object.defineProperty(pointer, segment, descriptor);
+      }
+    } else {
+      pointer[segment] = pointer[segment] || {};
+    }
     pointer = pointer[segment];
   }
 
