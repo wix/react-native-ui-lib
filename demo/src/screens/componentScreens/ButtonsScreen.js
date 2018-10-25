@@ -6,8 +6,8 @@ import DemoScreen from '../DemoScreen';
 const ButtonSpace = 20;
 const plusIcon = require('../../assets/icons/plus.png');
 
-const labelButton = {label: 'Animated', iconSource: Assets.icons.settings};
-const iconButton = {round: true, iconSource: Assets.icons.settings, iconStyle: {tintColor: Colors.white}};
+const labelButton = {label: 'Animated'};
+const iconButton = {round: true, iconStyle: {tintColor: Colors.white}};
 
 export default class ButtonsScreen extends DemoScreen {
   constructor(props) {
@@ -263,68 +263,73 @@ export default class ButtonsScreen extends DemoScreen {
             />
 
             <Text style={styles.header}>Round</Text>
-            <Button
-              round
-              backgroundColor="#FF69B4"
-              style={{marginBottom: ButtonSpace}}
-              iconSource={Assets.icons.settings}
-              iconStyle={{tintColor: Colors.white}}
-              ref={element => (this.button_0 = element)}
-              onPress={() => this.showSnippet(this.button_0)}
-              size={'xSmall'}
-            />
-            <Button
-              round
-              backgroundColor="#ff4fa7"
-              style={{marginBottom: ButtonSpace}}
-              iconSource={Assets.icons.settings}
-              iconStyle={{tintColor: Colors.white}}
-              ref={element => (this.button_0 = element)}
-              onPress={() => this.showSnippet(this.button_0)}
-              size={'small'}
-            />
-            <Button
-              round
-              backgroundColor="#ff369b"
-              style={{marginBottom: ButtonSpace}}
-              iconSource={Assets.icons.settings}
-              iconStyle={{tintColor: Colors.white}}
-              ref={element => (this.button_0 = element)}
-              onPress={() => this.showSnippet(this.button_0)}
-              size={'medium'}
-            />
-            <Button
-              round
-              backgroundColor="#ff1d8e"
-              style={{marginBottom: ButtonSpace}}
-              iconSource={Assets.icons.settings}
-              iconStyle={{tintColor: Colors.white}}
-              ref={element => (this.button_0 = element)}
-              onPress={() => this.showSnippet(this.button_0)}
-            />
+            <View row width={'100%'} centerV>
+              <Button
+                round
+                backgroundColor="#FF69B4"
+                style={{margin: ButtonSpace}}
+                iconSource={Assets.icons.settings}
+                iconStyle={{tintColor: Colors.white}}
+                ref={element => (this.button_0 = element)}
+                onPress={() => this.showSnippet(this.button_0)}
+                size={'xSmall'}
+              />
+              <Button
+                round
+                backgroundColor="#ff4fa7"
+                style={{margin: ButtonSpace}}
+                iconSource={Assets.icons.settings}
+                iconStyle={{tintColor: Colors.white}}
+                ref={element => (this.button_0 = element)}
+                onPress={() => this.showSnippet(this.button_0)}
+                size={'small'}
+              />
+              <Button
+                round
+                backgroundColor="#ff369b"
+                style={{margin: ButtonSpace}}
+                iconSource={Assets.icons.settings}
+                iconStyle={{tintColor: Colors.white}}
+                ref={element => (this.button_0 = element)}
+                onPress={() => this.showSnippet(this.button_0)}
+                size={'medium'}
+              />
+              <Button
+                round
+                backgroundColor="#ff1d8e"
+                style={{margin: ButtonSpace}}
+                iconSource={Assets.icons.settings}
+                iconStyle={{tintColor: Colors.white}}
+                ref={element => (this.button_0 = element)}
+                onPress={() => this.showSnippet(this.button_0)}
+              />
+            </View>
             
             <Text style={styles.header}>Animated</Text>
             <Button
               size={'small'}
               style={{marginBottom: ButtonSpace / 4, marginLeft: ButtonSpace}}
               backgroundColor={Colors.green20}
+              iconSource={Assets.icons.settings}
               {...buttonProps}
               onPress={this.changeProps}
+              iconOnRight
               animateLayout
               animateTo={'left'}
             />
             <Button
-              size={'small'}
+              size={'medium'}
               style={{marginBottom: ButtonSpace / 4}}
               backgroundColor={Colors.green20}
+              iconSource={Assets.icons.settings}
               {...buttonProps}
               onPress={this.changeProps}
               animateLayout
             />
             <Button
-              size={'small'}
               style={{marginBottom: ButtonSpace / 4, marginRight: ButtonSpace}}
               backgroundColor={Colors.green20}
+              iconSource={Assets.icons.settings}
               {...buttonProps}
               onPress={this.changeProps}
               animateLayout
