@@ -38,7 +38,7 @@ class Dialog extends BaseComponent {
     /**
      * the direction of the swipe to dismiss the dialog (default is 'down')
      */
-    dismissSwipeDirection: PropTypes.oneOfType(SWIPE_DIRECTIONS),
+    dismissSwipeDirection: PropTypes.oneOf(Object.values(SWIPE_DIRECTIONS)),
     /**
      * The color of the overlay background
      */
