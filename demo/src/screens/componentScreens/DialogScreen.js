@@ -74,6 +74,7 @@ class DialogScreen extends Component {
           centerH
           onDismiss={() => this.setState({showDialog4: false})}
           animationConfig={{animation: 'slideInDown', duration: 250}}
+          dismissSwipeDirection={Dialog.swipeDirections.UP}
         >
           {this.renderDialogContent(4, {br0: true})}
         </Dialog>
