@@ -3,8 +3,6 @@ import {TouchableOpacity} from 'react-native';
 import {Assets, RadioButton, Colors, RadioGroup, View, Text, Image} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class RadioButtonScreen extends Component {
-  static id = 'example.Playground';
-
   constructor(props) {
     super(props);
     this.state = {
