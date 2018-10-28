@@ -321,7 +321,7 @@ export default class Button extends BaseComponent {
       containerSizeStyle.minWidth = undefined;
     }
 
-    if (avoidMinWidth || round) {
+    if (avoidMinWidth) {
       containerSizeStyle.minWidth = undefined;
     }
 

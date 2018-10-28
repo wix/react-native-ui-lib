@@ -280,6 +280,29 @@ describe('Button', () => {
       const uut = new Button({size: 'medium', avoidInnerPadding: true});
       expect(uut.getContainerSizeStyle()).toEqual({minWidth: 77});
     });
+
+    it('should return style for round button', () => {
+      const uut = new Button({size: 'xSmall', round: true});
+      const uut1 = new Button({size: 'small', round: true});
+      const uut2 = new Button({size: 'medium', round: true});
+      const uut3 = new Button({size: 'large', round: true});
+      uut.state = {
+        size: 30,
+      };
+      uut1.state = {
+        size: 40,
+      };
+      uut2.state = {
+        size: 50,
+      };
+      uut3.state = {
+        size: 60,
+      };
+      expect(uut.getContainerSizeStyle()).toEqual({height: 30, width: 30, padding: 3});
+      expect(uut1.getContainerSizeStyle()).toEqual({height: 40, width: 40, padding: 4.5});
+      expect(uut2.getContainerSizeStyle()).toEqual({height: 50, width: 50, padding: 6.5});
+      expect(uut3.getContainerSizeStyle()).toEqual({height: 60, width: 60, padding: 9.5});
+    });
   });
 
   describe('getIconStyle', () => {
