@@ -10,6 +10,27 @@ import View from '../view';
 import Text from '../text';
 
 
+const PADDINGS = {
+  XSMALL: 3,
+  SMALL: 4.5,
+  MEDIUM: 6.5,
+  LARGE: 9.5,
+};
+
+const HORIZONTAL_PADDINGS = {
+  XSMALL: 11,
+  SMALL: 14,
+  MEDIUM: 16,
+  LARGE: 20,
+};
+
+const MIN_WIDTH = {
+  XSMALL: 66,
+  SMALL: 70,
+  MEDIUM: 77,
+  LARGE: 90,
+};
+
 /**
  * @description: Basic button component
  * @extends: TouchableOpacity
@@ -155,7 +176,6 @@ export default class Button extends BaseComponent {
     if (!_.isUndefined(props.containerStyle)) {
       console.error('Button "containerStyle" prop will be deprecated soon, please use "style" instead');
     }
-    this.getComponentDimensions = this.getComponentDimensions.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -165,9 +185,15 @@ export default class Button extends BaseComponent {
   }
 
   // This method will be called more than once in case of layout change!
-  getComponentDimensions(event) {
+  onLayout = (event) => {
+    const height = event.nativeEvent.layout.height;
+    if (this.props.round) {
+      const width = event.nativeEvent.layout.width;
+      const size = height >= width ? height : width;
+      this.setState({size});
+    }
+    
     if (Constants.isAndroid && Platform.Version <= 17) {
-      const height = event.nativeEvent.layout.height;
       this.setState({borderRadius: height / 2});
     }
   }
@@ -251,25 +277,33 @@ export default class Button extends BaseComponent {
     const outlineWidth = this.getThemeProps().outlineWidth || 1;
 
     const CONTAINER_STYLE_BY_SIZE = {};
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = {
-      paddingVertical: 3,
-      paddingHorizontal: round ? 3 : 11,
-      minWidth: 66,
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round ? 
+    {height: this.state.size, width: this.state.size, padding: PADDINGS.XSMALL} : 
+    {
+      paddingVertical: PADDINGS.XSMALL,
+      paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
+      minWidth: MIN_WIDTH.XSMALL,
     };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = {
-      paddingVertical: 4.5,
-      paddingHorizontal: round ? 4.5 : 14,
-      minWidth: 70,
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = round ?
+    {height: this.state.size, width: this.state.size, padding: PADDINGS.SMALL} : 
+    {
+      paddingVertical: PADDINGS.SMALL,
+      paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
+      minWidth: MIN_WIDTH.SMALL,
     };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = {
-      paddingVertical: 6.5,
-      paddingHorizontal: round ? 6.5 : 16,
-      minWidth: 77,
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = round ? 
+    {height: this.state.size, width: this.state.size, padding: PADDINGS.MEDIUM} : 
+    {
+      paddingVertical: PADDINGS.MEDIUM,
+      paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
+      minWidth: MIN_WIDTH.MEDIUM,
     };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = {
-      paddingVertical: 9.5,
-      paddingHorizontal: round ? 9.5 : 20,
-      minWidth: 90,
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = round ? 
+    {height: this.state.size, width: this.state.size, padding: PADDINGS.LARGE} : 
+    {
+      paddingVertical: PADDINGS.LARGE,
+      paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
+      minWidth: MIN_WIDTH.LARGE,
     };
 
     if (outline) {
@@ -428,7 +462,7 @@ export default class Button extends BaseComponent {
         ]}
         activeOpacity={0.6}
         activeBackgroundColor={this.getActiveBackgroundColor()}
-        onLayout={this.getComponentDimensions}
+        onLayout={this.onLayout}
         onPress={onPress}
         disabled={disabled}
         testID={testID}

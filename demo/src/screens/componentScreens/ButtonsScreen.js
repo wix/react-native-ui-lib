@@ -263,7 +263,7 @@ export default class ButtonsScreen extends DemoScreen {
             />
 
             <Text style={styles.header}>Round</Text>
-            <View row width={'100%'} centerV>
+            <View row width={'100%'} center>
               <Button
                 round
                 backgroundColor="#FF69B4"
