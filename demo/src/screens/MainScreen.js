@@ -4,6 +4,7 @@ import autobind from 'react-autobind';
 import {ListView, StyleSheet, FlatList} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {
+  ThemeManager,
   Constants,
   Assets,
   Colors,
@@ -209,7 +210,7 @@ export default class UiLibExplorerMenu extends Component {
           style={{
             marginTop: Constants.isIOS ? Constants.statusBarHeight + 10 : 14,
             marginLeft: 16,
-            color: Colors.violet30,
+            color: ThemeManager.primaryColor,
             width: Constants.screenWidth - 80,
           }}
           hideUnderline
