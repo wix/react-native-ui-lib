@@ -36,7 +36,6 @@ export default class ButtonsScreen extends DemoScreen {
   }
 
   changeProps = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     if (this.state.buttonProps === labelButton) {
       this.setState({buttonProps: iconButton});
     }
