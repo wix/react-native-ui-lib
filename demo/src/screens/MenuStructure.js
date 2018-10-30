@@ -49,7 +49,6 @@ export const navigationData = {
     {title: 'Basic List', tags: 'basic list', screen: 'unicorn.lists.BasicListScreen'},
     {title: 'Contacts List', tags: 'list contacts', screen: 'unicorn.lists.ContactsListScreen'},
     {title: 'Conversation List', tags: 'list conversation', screen: 'unicorn.lists.ConversationListScreen'},
-    {title: 'Grid List', tags: 'list grid', screen: 'unicorn.lists.GridListScreen'},
   ],
   Animations: [
     {title: 'Animated Image', tags: 'animated image', screen: 'unicorn.components.AnimatedImageScreen'},

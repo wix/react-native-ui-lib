@@ -1,5 +1,3 @@
-// import GridList from './lists/gridList';
-
 module.exports = {
   // Animations
   get AnimatedImage() { return require('./animations').AnimatedImage; },
@@ -47,8 +45,6 @@ module.exports = {
   get BaseComponent() { return require('./commons').BaseComponent; },
   get PureBaseComponent() { return require('./commons').PureBaseComponent; },
   get SelectableComponent() { return require('./commons').SelectableComponent; },
-
-  // GridList,
 
   // Helpers
   get AvatarHelper() { return require('./helpers').AvatarHelper; },

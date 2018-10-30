@@ -1,26 +1,21 @@
 import React, {Component} from 'react';
-import {StyleSheet, ListView, Alert} from 'react-native';
-import {Avatar, AvatarHelper, Badge, Colors, ListItem, Text, ConversationList, ThemeManager} from 'react-native-ui-lib';//eslint-disable-line
+import {StyleSheet, Alert, FlatList} from 'react-native';
+import {ThemeManager, Colors, ListItem, Text, Badge, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
+
 
 export default class ConversationListScreen extends Component {
 
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2,
-      sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-    });
+    
     this.state = {
-      dataSource: ds.cloneWithRows(conversations),
       onEdit: false,
       updating: false,
     };
   }
 
-  onItemPressed(id) {
-    alert(`item pressed: ${id}`); // eslint-disable-line
-  }
+  keyExtractor = (item, index) => item.name;
 
   renderRow(row, id) {
     const initials = AvatarHelper.getInitials(row.name);
@@ -33,8 +28,9 @@ export default class ConversationListScreen extends Component {
 
     return (
       <ListItem
+        key={id}
         height={75.8}
-        onPress={() => Alert.alert(`pressed on contact # ${id}`)}
+        onPress={() => Alert.alert(`pressed on contact #${id + 1}`)}
         {...animationProps}
       >
         <ListItem.Part left>
@@ -62,9 +58,10 @@ export default class ConversationListScreen extends Component {
 
   render() {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={(row, sectionId, rowId) => this.renderRow(row, rowId)}
+      <FlatList
+        data={conversations}
+        renderItem={({item, index}) => this.renderRow(item, index)}
+        keyExtractor={this.keyExtractor}
       />
     );
   }

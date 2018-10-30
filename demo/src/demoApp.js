@@ -42,13 +42,6 @@ Assets.loadAssetsGroup('icons.general', {
 });
 
 Animatable.initializeRegistryWithDefinitions({
-  gridListEntrance: {
-    from: {opacity: 0, translateY: 15},
-    to: {opacity: 1, translateY: 0},
-  },
-});
-
-Animatable.initializeRegistryWithDefinitions({
   basicListEntrance: {
     from: {opacity: 0, translateY: 20},
     to: {opacity: 1, translateY: 0},
