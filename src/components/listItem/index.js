@@ -9,7 +9,7 @@ import View from '../view';
 import ListItemPart from './ListItemPart';
 
 /**
- * @description: List item component to render inside a ListView component
+ * @description: List item component to render inside a List component
  * @extends: TouchableOpacity
  * @extendslink: docs/TouchableOpacity
  * @gif: https://media.giphy.com/media/l1IBjHowyPcOTWAY8/giphy.gif

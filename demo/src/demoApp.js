@@ -60,7 +60,7 @@ function getDefaultNavigationStyle() {
     statusBar: {
       visible: true,
       style: 'light',
-      backgroundColor: Colors.violet30, // for Android
+      backgroundColor: ThemeManager.primaryColor, // for Android
     },
     layout: {
       backgroundColor: Colors.white,
@@ -71,7 +71,7 @@ function getDefaultNavigationStyle() {
       noBorder: true, // for iOS
       elevation: 0, // for Android
       background: {
-        color: Colors.violet30,
+        color: ThemeManager.primaryColor,
       },
       title: {
         color: Colors.white,

@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import autobind from 'react-autobind';
-import {ListView, StyleSheet, FlatList} from 'react-native';
+import {StyleSheet, FlatList} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {
+  ThemeManager,
   Constants,
   Assets,
   Colors,
@@ -17,11 +18,6 @@ import {
 import {navigationData} from './MenuStructure';
 
 
-const ds = new ListView.DataSource({
-  rowHasChanged: (r1, r2) => r1 !== r2,
-  sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-});
-
 export default class UiLibExplorerMenu extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +28,6 @@ export default class UiLibExplorerMenu extends Component {
     this.state = {
       currentPage: 0,
       filteredNavigationData: data,
-      dataSource: ds.cloneWithRowsAndSections(data),
     };
 
     this.filterExplorerScreens = _.throttle(this.filterExplorerScreens, 300);
@@ -191,7 +186,6 @@ export default class UiLibExplorerMenu extends Component {
     this.setState({
       filterText,
       filteredNavigationData,
-      dataSource: ds.cloneWithRowsAndSections(filteredNavigationData),
     });
   }
 
@@ -209,7 +203,7 @@ export default class UiLibExplorerMenu extends Component {
           style={{
             marginTop: Constants.isIOS ? Constants.statusBarHeight + 10 : 14,
             marginLeft: 16,
-            color: Colors.violet30,
+            color: ThemeManager.primaryColor,
             width: Constants.screenWidth - 80,
           }}
           hideUnderline
