@@ -6,7 +6,7 @@ import Text from '../text';
 import Colors from '../../style/colors';
 import Typography from '../../style/typography';
 
-import WheelPicker from '../../nativeComponents/WheelPicker';
+import {WheelPicker} from '../../nativeComponents';
 
 
 export default class WheelPickerDialog extends Component {
