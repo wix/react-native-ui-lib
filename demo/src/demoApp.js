@@ -37,9 +37,9 @@ import {registerScreens} from './screens';
 //   }
 // });
 
-Assets.loadAssetsGroup('icons.general', {
-  camera: require('./assets/icons/cameraSelected.png'),
-});
+// Assets.loadAssetsGroup('icons.general', {
+//   camera: require('./assets/icons/cameraSelected.png'),
+// });
 
 Animatable.initializeRegistryWithDefinitions({
   basicListEntrance: {
