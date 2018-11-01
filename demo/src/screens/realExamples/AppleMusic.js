@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import {ScrollView, TouchableOpacity, StyleSheet, FlatList, Image} from 'react-native';
-import {View, Text, Colors, Constants} from 'react-native-ui-lib';
+import React, {Component} from 'react';
+import {StyleSheet, ScrollView, TouchableOpacity, FlatList, Image} from 'react-native';
+import {Constants, Colors, View, Text} from 'react-native-ui-lib'; //eslint-disable-line
 import songs from '../../data/songs';
+
 
 const GUTTER_SIZE = 24;
 const NUMBER_OF_COLUMNS = 2;
@@ -21,7 +22,7 @@ class AppleMusic extends Component {
               </Text>
             </View>
           </View>
-          {/*Menu List*/}
+          {/* Menu List */}
           <View paddingL-24>
             <FlatList
               data={['Playlist', 'Artists', 'Albums', 'Songs', 'Downloaded Music']}
@@ -29,7 +30,7 @@ class AppleMusic extends Component {
               renderItem={({item}) => <ListItem item={item}/>}
             />
           </View>
-          {/*Grid List of Recently Added*/}
+          {/* Grid List of Recently Added */}
           <View paddingH-24 marginT-30>
             <Text text40>
               Recently Added
@@ -50,7 +51,6 @@ class AppleMusic extends Component {
   }
 }
 
-
 const styles = StyleSheet.create({
   separator: {
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
 });
 
 export default AppleMusic;
+
 
 const ListItem = ({item}) => {
   return (
