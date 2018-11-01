@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "watchman watch-del-all && export DEV_MODE=true && react-native start",
-    "ios": "react-native run-ios --simulator='iPhone 8'",
+    "ios": "react-native run-ios --simulator='iPhone X'",
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
     "pretest": "npm run lint",
     "test": "jest",
@@ -51,12 +51,11 @@
     "@types/prop-types": "^15.5.3",
     "@types/react-native": "^0.55.21",
     "babel-cli": "^6.23.0",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^7.0.0",
-    "babel-jest": "^20.0.3",
+    "babel-jest": "^23.6.0",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.22.0",
-    "babel-preset-react-native": "1.9.1",
-    "enzyme": "^2.7.1",
     "eslint": "^3.0.0",
     "eslint-config-airbnb": "^14.0.0",
     "eslint-plugin-import": "^2.2.0",
@@ -66,17 +65,17 @@
     "eslint-plugin-uilib": "file:./eslint-rules",
     "gatsby": "^1.9.128",
     "gh-pages": "^1.1.0",
-    "jest": "^20.0.4",
+    "jest": "^23.6.0",
+    "metro-react-native-babel-preset": "^0.48.1",
     "mocha": "^5.0.0",
-    "react": "16.0.0",
-    "react-addons-test-utils": "^15.4.2",
+    "react": "16.6.0-alpha.8af6728",
     "react-autobind": "^1.0.6",
     "react-dom": "^15.4.2",
     "react-js-to-ts": "^1.4.0",
-    "react-native": "0.51.0",
+    "react-native": "0.57.3",
     "react-native-keyboard-aware-scrollview": "^2.0.0",
     "react-native-keyboard-tracking-view": "^5.3.2",
-    "react-native-navigation": "2.0.2565",
+    "react-native-navigation": "^2.0.2587",
     "typescript": "^2.9.2"
   },
   "peerDependencies": {
@@ -92,9 +91,12 @@
     ],
     "setupFiles": [
       "./jest-setup.js"
-    ]
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    }
   },
-  "babel": {
+  "babel_IGNORE": {
     "env": {
       "test": {
         "presets": [
