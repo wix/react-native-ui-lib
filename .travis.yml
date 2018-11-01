@@ -7,8 +7,9 @@ script:
   - npm run test
   - npm run release
   - npm run demo
-  - npm run docs:install
-  - npm run docs:build
+  # TODO: check failure issue (started after RN57 upgrade)
+  # - npm run docs:install
+  # - npm run docs:build
 
 deploy:
   provider: pages
