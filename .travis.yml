@@ -16,7 +16,8 @@ deploy:
   skip-cleanup: true
   github-token: $GIT_TOKEN
   keep-history: true
-  local-dir: uilib-docs/public
+  # disable docs build till issue resolved (started after RN57 upgrade)
+  # local-dir: uilib-docs/public
   on:
     branch: master
 
