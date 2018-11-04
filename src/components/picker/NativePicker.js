@@ -3,7 +3,7 @@ import React from 'react';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import TextInput from '../inputs/TextInput';
-import WheelPicker from '../../nativeComponents/WheelPicker';
+import {WheelPicker} from '../../nativeComponents';
 import PickerDialog from './PickerDialog';
 
 

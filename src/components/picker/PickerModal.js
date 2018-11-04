@@ -87,7 +87,7 @@ class PickerModal extends BaseComponent {
           renderItem={({index}) => {
             return React.Children.toArray(children)[index];
           }}
-          keyExtractor={(item, index) => index}
+          keyExtractor={(item, index) => index.toString()}
           {...listProps}
         />
       </Modal>

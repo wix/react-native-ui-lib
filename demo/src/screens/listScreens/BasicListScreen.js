@@ -1,28 +1,23 @@
-import React, {Component} from 'react';
-import {ListView, StyleSheet, Alert} from 'react-native';
-import {ListItem, Avatar, Text, BasicList, BorderRadiuses, Badge, AvatarHelper, Colors, ThemeManager} from 'react-native-ui-lib';//eslint-disable-line
 import _ from 'lodash';
+import React, {Component} from 'react';
+import {StyleSheet, Alert, FlatList} from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import {ThemeManager, Colors, BorderRadiuses, ListItem, Text} from 'react-native-ui-lib'; //eslint-disable-line
 import orders from '../../data/orders';
+
 
 export default class BasicListScreen extends Component {
 
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2,
-      sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-    });
+    
     this.state = {
-      dataSource: ds.cloneWithRows(orders),
       onEdit: false,
       updating: false,
     };
   }
 
-  onItemPressed(id) {
-    alert(`item pressed: ${id}`); // eslint-disable-line
-  }
+  keyExtractor = (item, index) => item.name;
 
   renderRow(row, id) {
     const statusColor = row.inventory.status === 'Paid' ? Colors.green30 : Colors.red30;
@@ -31,7 +26,7 @@ export default class BasicListScreen extends Component {
         activeBackgroundColor={Colors.dark60}
         activeOpacity={0.3}
         height={77.5}
-        onPress={() => Alert.alert(`pressed on contact # ${id}`)}
+        onPress={() => Alert.alert(`pressed on order #${id + 1}`)}
         animation="fadeIn"
         easing="ease-out-expo"
         duration={1000}
@@ -64,9 +59,10 @@ export default class BasicListScreen extends Component {
 
   render() {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={(row, sectionId, rowId) => this.renderRow(row, rowId)}
+      <FlatList
+        data={orders}
+        renderItem={({item, index}) => this.renderRow(item, index)}
+        keyExtractor={this.keyExtractor}
       />
     );
   }

@@ -37,16 +37,9 @@ import {registerScreens} from './screens';
 //   }
 // });
 
-Assets.loadAssetsGroup('icons.general', {
-  camera: require('./assets/icons/cameraSelected.png'),
-});
-
-Animatable.initializeRegistryWithDefinitions({
-  gridListEntrance: {
-    from: {opacity: 0, translateY: 15},
-    to: {opacity: 1, translateY: 0},
-  },
-});
+// Assets.loadAssetsGroup('icons.general', {
+//   camera: require('./assets/icons/cameraSelected.png'),
+// });
 
 Animatable.initializeRegistryWithDefinitions({
   basicListEntrance: {
@@ -111,7 +104,7 @@ function startApp(defaultScreen) {
               options: {
                 topBar: {
                   title: {
-                    text: 'Wix UI Lib',
+                    text: 'UILIB',
                   },
                 },
               },
