@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 project.ext {
     buildToolsVersion = rootProject.ext.has("buildToolsVersion") ? rootProject.ext.buildToolsVersion : '27.0.3'
     minSdkVersion = rootProject.ext.has("minSdkVersion") ? rootProject.ext.minSdkVersion : 19
-    compileSdkVersion = rootProject.ext.has("compileSdkVersion") ? rootProject.ext.compileSdkVersion : 100
+    compileSdkVersion = rootProject.ext.has("compileSdkVersion") ? rootProject.ext.compileSdkVersion : 26
     targetSdkVersion = rootProject.ext.has("targetSdkVersion") ? rootProject.ext.targetSdkVersion : 26
     supportLibVersion = rootProject.ext.has("supportLibVersion") ? rootProject.ext.supportLibVersion  : '26.1.0'
 }
