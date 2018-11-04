@@ -104,7 +104,7 @@ function startApp(defaultScreen) {
               options: {
                 topBar: {
                   title: {
-                    text: 'Wix UI Lib',
+                    text: 'UILIB',
                   },
                 },
               },

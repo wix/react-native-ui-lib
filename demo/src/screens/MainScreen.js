@@ -222,7 +222,7 @@ export default class UiLibExplorerMenu extends Component {
   renderItem({item}) {
     return (
       <View centerV row paddingL-20 marginB-10>
-        <Image source={Assets.icons.general.chevronRight} style={{tintColor: Colors.dark10}}/>
+        <Image source={Assets.icons.chevronRight} style={{tintColor: Colors.dark10}}/>
         <Text
           style={[item.deprecate && styles.entryTextDeprecated]}
           dark10
