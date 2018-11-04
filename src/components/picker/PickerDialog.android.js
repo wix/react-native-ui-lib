@@ -8,7 +8,7 @@ import Dialog from '../dialog';
 import View from '../view';
 import Text from '../text';
 import {Colors, BorderRadiuses} from '../../style';
-import WheelPicker from '../../nativeComponents/WheelPicker';
+import {WheelPicker} from '../../nativeComponents';
 
 class PickerDialog extends BaseComponent {
   static propTypes = {

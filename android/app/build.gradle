@@ -1,10 +1,13 @@
 apply plugin: "com.android.application"
 
-//import com.android.build.OutputFile
+project.ext.react = [
+    entryFile: "index.js"
+]
+
+//apply from: "../../node_modules/react-native/react.gradle"
 
 
-//def enableSeparateBuildPerCPUArchitecture = false
-
+def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
@@ -15,37 +18,33 @@ android {
         applicationId "com.uilib"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative51"
+        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative57"
         versionCode 1
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
-        renderscriptTargetApi 21
-        renderscriptSupportModeEnabled true
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+    splits {
+        abi {
+            reset()
+            enable enableSeparateBuildPerCPUArchitecture
+            universalApk false  // If true, also generate a universal APK
+            include "armeabi-v7a", "x86"
+        }
     }
-//    splits {
-//        abi {
-//            reset()
-//            enable enableSeparateBuildPerCPUArchitecture
-//            universalApk false  // If true, also generate a universal APK
-//            include "armeabi-v7a", "x86"
-//        }
-//    }
     buildTypes {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
-//        debug {
-//            debuggable true
-//        }
     }
-//    // applicationVariants are e.g. debug, release
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // applicationVariants are e.g. debug, release
 //    applicationVariants.all { variant ->
 //        variant.outputs.each { output ->
 //            // For each separate APK per architecture, set a unique version code as described here:
@@ -60,10 +59,19 @@ android {
 //    }
 }
 
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support' && requested.name != 'multidex') {
+            details.useVersion "${rootProject.ext.supportLibVersion}"
+        }
+    }
+}
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.android.support:appcompat-v7:26.1.0"
-    implementation "com.facebook.react:react-native:+"
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation 'com.facebook.fresco:animated-gif:0.14.1'
     implementation project(':react-native-navigation')
     implementation project(':react-native-blur')

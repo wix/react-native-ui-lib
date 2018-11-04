@@ -47,6 +47,7 @@ export default class CardScannerScreen extends Component {
       started: false,
       progress: 0,
       reset: true,
+      isDone: false,
     });
   }
 

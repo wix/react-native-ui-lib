@@ -231,6 +231,7 @@ ios/
 android/
 demo/
 uilib-docs/
+.babelrc
 # eslint-rules/
 scripts/
 demo-app.component.js

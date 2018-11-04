@@ -15,6 +15,11 @@ static id (*_swz_safeAreaInsetsDidChange_orig)(id self, SEL _cmd);
 
 RCT_EXPORT_MODULE()
 
++ (BOOL)requiresMainQueueSetup
+{
+    return NO;
+}
+
 - (dispatch_queue_t)methodQueue {
     return dispatch_get_main_queue();
 }
