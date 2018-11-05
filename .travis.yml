@@ -4,8 +4,8 @@ node_js:
 install:
   - npm install
 script:
-  - npm run test
-  - npm run release
+  # - npm run test
+  # - npm run release
   - npm run demo
   # disable docs build till issue resolved (started after RN57 upgrade)
   # - npm run docs:install
