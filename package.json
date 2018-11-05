@@ -32,6 +32,7 @@
     "bump:patch": "npm version patch",
     "demo": "./scripts/demo.sh",
     "release": "node ./scripts/release.js",
+    "jenkinsRelease": "node ./scripts/jenkinsRelease.js",
     "build:ts": "rm -rf dist-ts && ./scripts/build-ts.sh",
     "build:typings": "rm -rf ./typings && ./scripts/build-typings.sh && tsc"
   },
