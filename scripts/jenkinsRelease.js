@@ -4,7 +4,7 @@ const _ = require('lodash');
 const p = require('path');
 
 // Workaround JS
-const release = !process.env.RELEASE_BUILD;
+const release = !!!process.env.RELEASE_BUILD; // eslint-disable-line
 
 const ONLY_ON_BRANCH = 'origin/master';
 const VERSION_TAG = release ? 'latest' : 'snapshot';
