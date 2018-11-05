@@ -12,7 +12,8 @@
     "url": "https://github.com/wix/react-native-ui-lib"
   },
   "scripts": {
-    "release": "node ./scripts/release.js"
+    "release": "node ./scripts/release.js",
+    "jenkinsRelease": "node ./scripts/jenkinsRelease.js"
   },
   "devDependencies": {
     "react-native-ui-lib": "*"
