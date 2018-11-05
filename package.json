@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "watchman watch-del-all && export DEV_MODE=true && react-native start",
-    "ios": "react-native run-ios --simulator='iPhone X'",
+    "ios": "react-native run-ios",
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
     "pretest": "npm run lint",
     "test": "jest",
@@ -76,6 +76,7 @@
     "react-native-keyboard-aware-scrollview": "^2.0.0",
     "react-native-keyboard-tracking-view": "^5.3.2",
     "react-native-navigation": "^2.0.2587",
+    "shell-utils": "^1.0.10",
     "typescript": "^2.9.2"
   },
   "peerDependencies": {
