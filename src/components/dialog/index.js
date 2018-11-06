@@ -128,7 +128,7 @@ class Dialog extends BaseComponent {
             <GestureRecognizer
               onSwipe={(direction, state) => this.onSwipe(direction, state)}
               config={config}
-              style={{flex: 1}}
+              style={this.styles.gestureContainer}
             >
               <TouchableWithoutFeedback>
                 {this.props.children}
@@ -149,6 +149,9 @@ function createStyles({width, height}) {
     dialogContainer: {
       width,
       height,
+    },
+    gestureContainer: {
+      flexGrow: 1,
     },
   });
 }

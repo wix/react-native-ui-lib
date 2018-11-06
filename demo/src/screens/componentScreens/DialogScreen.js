@@ -6,12 +6,15 @@ class DialogScreen extends Component {
     showDialog2: false,
     showDialog3: false,
     showDialog4: false,
+    showDialog5: false,
   };
 
   renderDialogContent(dialogIndex, extraProps) {
     return (
       <View bg-white flex br20 padding-18 spread {...extraProps}>
-        <Text text50>This is Dialog</Text>
+        <View height={100}>
+          <Text text50>This is Dialog</Text>
+        </View>
         <View right>
           <Button text60 label="Done" link onPress={() => this.setState({[`showDialog${dialogIndex}`]: false})} />
         </View>
@@ -20,16 +23,11 @@ class DialogScreen extends Component {
   }
 
   render() {
-    const {showDialog1, showDialog2, showDialog3, showDialog4} = this.state;
+    const {showDialog1, showDialog2, showDialog3, showDialog4, showDialog5} = this.state;
     return (
       <View flex bg-dark80 padding-12 center>
         <Button size={'small'} label="show default dialog in center" onPress={() => this.setState({showDialog1: true})} />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show bottom dialog"
-          onPress={() => this.setState({showDialog2: true})}
-        />
+        <Button marginT-20 size={'small'} label="show bottom dialog" onPress={() => this.setState({showDialog2: true})} />
         <Button
           marginT-20
           size={'small'}
@@ -41,6 +39,12 @@ class DialogScreen extends Component {
           size={'small'}
           label="show top dialog different animation"
           onPress={() => this.setState({showDialog4: true})}
+        />
+        <Button
+          marginT-20
+          size={'small'}
+          label="show dialog with height based on content "
+          onPress={() => this.setState({showDialog5: true})}
         />
         <Dialog visible={showDialog1} width="90%" height="60%" onDismiss={() => this.setState({showDialog1: false})}>
           {this.renderDialogContent(1)}
@@ -77,6 +81,18 @@ class DialogScreen extends Component {
           dismissSwipeDirection={Dialog.swipeDirections.UP}
         >
           {this.renderDialogContent(4, {br0: true})}
+        </Dialog>
+
+        <Dialog
+          visible={showDialog5}
+          width="100%"
+          height={null}
+          bottom
+          centerH
+          onDismiss={() => this.setState({showDialog5: false})}
+          animationConfig={{duration: 250}}
+        >
+          {this.renderDialogContent(5, {flex: false})}
         </Dialog>
       </View>
     );
