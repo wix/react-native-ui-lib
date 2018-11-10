@@ -113,15 +113,16 @@ export default class Toast extends BaseComponent {
   constructor(props) {
     super(props);
 
+    const {animated} = this.props;
+
     this.state = {
       isVisible: false,
-      animationConfig: this.getAnimation(true),
-      contentAnimation: this.getContentAnimation(true),
+      animationConfig: animated ? this.getAnimation(true) : {},
+      contentAnimation: animated ? this.getContentAnimation(true) : {},
       duration: DURATION,
       delay: DELAY,
     };
 
-    const {animated} = this.props;
     if (animated) {
       setupRelativeAnimation(getHeight(this.props));
     }
@@ -160,17 +161,11 @@ export default class Toast extends BaseComponent {
   }
 
   getAnimation(shouldShow) {
-    const {position, useNativeDriver, animated} = this.props;
+    const {position, useNativeDriver} = this.props;
     const animationDescriptor = getAnimationDescriptor(position, this.state);
     const {animation, duration, delay} = shouldShow ? animationDescriptor.enter : animationDescriptor.exit;
 
-    return {
-      animation: animated ? animation : null, 
-      duration, 
-      delay, 
-      useNativeDriver, 
-      onAnimationEnd: () => this.onAnimationEnd(),
-    };
+    return {animation, duration, delay, useNativeDriver, onAnimationEnd: () => this.onAnimationEnd()};
   }
 
   getContentAnimation(shouldShow) {
@@ -278,7 +273,7 @@ export default class Toast extends BaseComponent {
     }
   }
 
-  // This weird layout should support iphoneX safe are
+  // This weird layout should support iphoneX safe area
   render() {
     const {backgroundColor, actions, enableBlur, testID, zIndex, renderContent} = this.getThemeProps();
     const {animationConfig} = this.state;
