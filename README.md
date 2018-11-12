@@ -5,4 +5,4 @@
 
 UI Toolset & Components Library for React Native
 
-Read more in our [Wiki](https://github.com/wix/react-native-ui-lib/wiki).
+Read more in our [Wiki](https://z448401921.github.io/react-native-ui-lib/uilib-docs/public/).
