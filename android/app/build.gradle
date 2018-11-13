@@ -74,6 +74,7 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation 'com.facebook.fresco:animated-gif:0.14.1'
     implementation project(':react-native-navigation')
+    implementation project(':react-native-interactable')
     implementation project(':react-native-blur')
     implementation project(':react-native-ui-lib')
 }
