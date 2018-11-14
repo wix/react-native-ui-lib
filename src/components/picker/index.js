@@ -163,7 +163,7 @@ class Picker extends TextInput {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nexProps) { //eslint-disable-line
+  componentWillReceiveProps(nexProps) {
     this.setState({
       value: nexProps.value,
     });

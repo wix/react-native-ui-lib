@@ -142,7 +142,7 @@ export default class TextInput extends BaseInput {
     this.generatePropsWarnings(props);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) { //eslint-disable-line
+  componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
       this.setState({value: nextProps.value}, this.updateFloatingPlaceholderState);
     }

@@ -122,7 +122,7 @@ export default class TagsInput extends BaseComponent {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) { //eslint-disable-line
+  componentWillReceiveProps(nextProps) {
     if (nextProps.tags !== this.state.tags) {
       this.setState({
         tags: nextProps.tags,
