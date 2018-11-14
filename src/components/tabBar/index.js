@@ -124,7 +124,7 @@ export default class TabBar extends BaseComponent {
     this.labels = this.getLabels(this.props.children);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) { //eslint-disable-line
     if (React.Children.count(nextProps.children) !== this.childrenCount) {
       /** dynamic children count */
       this.initializeValues(nextProps);

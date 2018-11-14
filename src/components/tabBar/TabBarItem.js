@@ -81,7 +81,7 @@ export default class TabBarItem extends BaseComponent {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) { //eslint-disable-line
     if (!_.isEqual(nextProps.label, this.props.label) && !_.isEqual(nextProps.width, this.props.width)) {
       /** dynamic item's label */
       this.setState({fontStyle: this.getFontStyle(this.getThemeProps())});

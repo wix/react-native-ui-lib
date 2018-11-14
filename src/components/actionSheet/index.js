@@ -134,7 +134,7 @@ export default class ActionSheet extends BaseComponent {
     );
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) { //eslint-disable-line
     const {useNativeIOS} = this.getThemeProps();
     const wasVisible = this.props.visible;
     const willBeVisible = nextProps.visible;
