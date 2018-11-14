@@ -62,6 +62,9 @@ module.exports = {
   get WheelPicker() { return require('./nativeComponents').WheelPicker; },
   get SafeAreaInsetsManager() { return require('./nativeComponents').SafeAreaInsetsManager; },
 
+  // InteractableComponents
+  get Drawer() { return require('./interactableComponents').Drawer; },
+
   // Style
   get Colors() { return require('./style').Colors; },
   get BorderRadiuses() { return require('./style').BorderRadiuses; },

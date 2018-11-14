@@ -15,7 +15,7 @@
   "scripts": {
     "start": "watchman watch-del-all && export DEV_MODE=true && react-native start",
     "ios": "react-native run-ios",
-    "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
+    "android": "react-native run-android",
     "pretest": "npm run lint",
     "test": "jest",
     "test:watch": "jest --watch",

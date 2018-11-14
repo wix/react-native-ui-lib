@@ -36,6 +36,9 @@ export const navigationData = {
     {title: 'Wheel Picker', tags: 'wheel picker', screen: 'unicorn.nativeComponents.WheelPickerViewScreen'},
     {title: 'SafeArea Sapcer', tags: 'native safe area', screen: 'unicorn.nativeComponents.SafeAreaSpacerViewScreen'},
   ],
+  Interactable: [
+    {title: 'Drawer', tags: 'interactable drawer', screen: 'unicorn.interactableComponents.DrawerScreen'},
+  ],
   Inputs: [
     {title: 'Text Inputs', tags: 'text input form', screen: 'unicorn.components.InputsScreen'},
     {title: 'Masked Inputs', tags: 'text input form mask', screen: 'unicorn.components.MaskedInputScreen'},
