@@ -12,9 +12,9 @@ export default class DrawerScreen extends Component {
 
   constructor(props) {
     super(props);
+    
     this.state = {
-      damping: 1 - 0.6,
-      tension: 300,
+      
     };
   }
 
@@ -27,19 +27,17 @@ export default class DrawerScreen extends Component {
   }
 
   render() {
-    const leftItem = {id: 'left1', icon: collectionsIcon, text: 'Add', style: {backgroundColor: Colors.red30}};
+    const leftItem = {id: 'left', icon: collectionsIcon, text: 'Save', style: {backgroundColor: Colors.red30}};
     const rightItems = [
-      {id: 'right1', icon: starIcon, text: 'Star', style: {backgroundColor: Colors.green40}},
-      {id: 'right2', icon: sharIcon, text: 'Share', style: {backgroundColor: Colors.violet40}},
-      {id: 'right3', icon: videoIcon, text: 'Video', style: {backgroundColor: Colors.violet50}},
+      {id: 'right-1', icon: starIcon, text: 'Star', style: {backgroundColor: Colors.green40}},
+      {id: 'right-2', icon: sharIcon, text: 'Share', style: {backgroundColor: Colors.violet40}},
+      {id: 'right-3', icon: videoIcon, text: 'Video', style: {backgroundColor: Colors.violet50}},
     ];
     
     return (
       <View style={styles.container}>
         <Drawer
-          height={75}
-          damping={this.state.damping}
-          tension={this.state.tension}
+          height={96}
           leftItem={leftItem}
           rightItems={rightItems}
           style={{marginTop: 20}}
@@ -51,6 +49,39 @@ export default class DrawerScreen extends Component {
             <View>
               <Text style={styles.rowTitle}>Row Title</Text>
               <Text style={styles.rowSubtitle}>Drag the row left and right</Text>
+            </View>
+          </View>
+        </Drawer>
+        
+        <Drawer
+          leftItem={leftItem}
+          rightItems={rightItems}
+          style={{marginTop: 20}}
+          onPress={this.onPress}
+          onItemPress={this.onItemPress}
+        >
+          <View style={styles.rowContent}>
+            <View style={styles.rowIcon} />
+            <View>
+              <Text style={styles.rowTitle}>Row Title</Text>
+              <Text style={styles.rowSubtitle}>Drag the row left and right</Text>
+            </View>
+          </View>
+        </Drawer>
+        
+        <Drawer
+          height={56}
+          leftItem={leftItem}
+          rightItems={rightItems}
+          style={{marginTop: 20}}
+          onPress={this.onPress}
+          onItemPress={this.onItemPress}
+        >
+          <View style={styles.rowContent}>
+            <View style={[styles.rowIcon, {width: 38, height: 38, borderRadius: 19}]}/>
+            <View>
+              <Text style={[styles.rowTitle, {...Typography.text70, fontWeight: 'bold'}]}>Row Title</Text>
+              <Text style={[styles.rowSubtitle, {...Typography.text80}]}>Drag the row left and right</Text>
             </View>
           </View>
         </Drawer>

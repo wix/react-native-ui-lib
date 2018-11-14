@@ -139,13 +139,13 @@ export default class Drawer extends BaseComponent {
     const {rightItems, height} = this.props;
     const size = rightItems.length;
 
-    const start = 50;
+    const end = height - 25;
     const interval = 65;
 
     // const opacityInputRanges = [[-225, -180], [-150, -115], [-75, -50]];
-    const first = [-(height), -(start)];
-    const second = [-(height * 2), -(start + interval)];
-    const third = [-(height * 3), -(start + (interval * 2))];
+    const first = [-(height), -(end)];
+    const second = [-(height * 2), -(end + interval)];
+    const third = [-(height * 3), -(end + (interval * 2))];
 
     switch (size) {
       case 1:
@@ -170,14 +170,14 @@ export default class Drawer extends BaseComponent {
             style={
             [this.styles.buttonImage, {
               opacity: this.deltaX.interpolate({
-                inputRange: [50, 75],
+                inputRange: [height - 25, height],
                 outputRange: [0, 1],
                 extrapolateLeft: 'clamp',
                 extrapolateRight: 'clamp',
               }),
               transform: [{
                 scale: this.deltaX.interpolate({
-                  inputRange: [50, 75],
+                  inputRange: [height - 25, height],
                   outputRange: [0.7, 1],
                   extrapolateLeft: 'clamp',
                   extrapolateRight: 'clamp',
@@ -192,14 +192,14 @@ export default class Drawer extends BaseComponent {
             style={
             [this.styles.buttonText, {
               opacity: this.deltaX.interpolate({
-                inputRange: [50, 75],
+                inputRange: [height - 25, height],
                 outputRange: [0, 1],
                 extrapolateLeft: 'clamp',
                 extrapolateRight: 'clamp',
               }),
               transform: [{
                 scale: this.deltaX.interpolate({
-                  inputRange: [50, 75],
+                  inputRange: [height - 25, height],
                   outputRange: [0.7, 1],
                   extrapolateLeft: 'clamp',
                   extrapolateRight: 'clamp',
@@ -377,8 +377,8 @@ export default class Drawer extends BaseComponent {
 
     return (
       <View style={[{backgroundColor: Colors.white}, style]}>
-        {this.renderRightItems()}
         {leftItem && this.renderleftItem()}
+        {rightItems && this.renderRightItems()}
         <Interactable.View
           ref={el => this.interactableElem = el}
           horizontalOnly
@@ -403,6 +403,8 @@ export default class Drawer extends BaseComponent {
 
 function createStyles(props) {
   const {height} = props;
+  const typography = height >= 72 ? Typography.text70 : Typography.text80;
+  const gap = height > 72 ? 8 : 0;
 
   return StyleSheet.create({
     container: {},
@@ -418,9 +420,9 @@ function createStyles(props) {
       tintColor: Colors.white,
     },
     buttonText: {
-      ...Typography.text70,
+      ...typography,
       color: Colors.white,
-      marginTop: 2,
+      marginTop: gap,
     },
   });
 }
