@@ -136,7 +136,7 @@ class FeatureHighlight extends BaseComponent {
     this.setTargetPosition();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) { //eslint-disable-line
     this.setTargetPosition(nextProps);
   }
 

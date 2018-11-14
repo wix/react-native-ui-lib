@@ -127,7 +127,7 @@ export default class Toast extends BaseComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) { //eslint-disable-line
     const {visible, animated} = nextProps;
     const {isVisible} = this.state;
     if (visible !== isVisible) {

@@ -76,7 +76,7 @@ export default class AnimatedScanner extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) { //eslint-disable-line
     const {progress} = this.props;
     if (nextProps.progress !== progress) {
       this.animate(nextProps.progress, nextProps.duration);
