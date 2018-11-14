@@ -178,7 +178,7 @@ export default class Button extends BaseComponent {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) { //eslint-disable-line
+  componentWillReceiveProps(nextProps) {
     if (nextProps.animateLayout) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }

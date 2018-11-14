@@ -35,7 +35,7 @@ class RadioGroup extends BaseComponent {
     };
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) { //eslint-disable-line
+  componentWillReceiveProps(nextProps) {
     if (this.props.value !== nextProps.value) {
       this.setState({value: nextProps.value});
     }

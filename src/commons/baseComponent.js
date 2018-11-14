@@ -44,7 +44,7 @@ export default function baseComponent(usePure) {
       };
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) { //eslint-disable-line
+    componentWillReceiveProps(nextProps) {
       this.updateModifiers(this.props, nextProps);
     }
 

@@ -65,7 +65,7 @@ class Switch extends BaseComponent {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) { //eslint-disable-line
+  componentWillReceiveProps(nextProps) {
     if (this.props.value !== nextProps.value) {
       this.toggle(nextProps.value);
     }
