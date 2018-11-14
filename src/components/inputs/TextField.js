@@ -128,7 +128,7 @@ export default class TextField extends BaseInput {
     this.generatePropsWarnings(props);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) { //eslint-disable-line
     if (nextProps.value !== this.props.value) {
       this.setState(
         {
