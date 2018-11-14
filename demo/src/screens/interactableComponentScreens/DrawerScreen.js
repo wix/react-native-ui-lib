@@ -1,10 +1,12 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
 import {Colors, Typography, View, Drawer, Text} from 'react-native-ui-lib'; //eslint-disable-line
 
 
+const collectionsIcon = require('../../assets/icons/collections.png');
 const starIcon = require('../../assets/icons/star.png');
+const sharIcon = require('../../assets/icons/share.png');
+const videoIcon = require('../../assets/icons/video.png');
 
 export default class DrawerScreen extends Component {
 
@@ -20,13 +22,17 @@ export default class DrawerScreen extends Component {
     alert('Drawer pressed');
   }
 
-  onButtonPress = (id) => {
-    alert(`Button ${id} pressed`);
+  onItemPress = (id) => {
+    alert(`Item ${id} pressed`);
   }
 
   render() {
-    const leftItem = {id: 'left1', icon: starIcon, style: {backgroundColor: Colors.green30}};
-    const rightItems = [{id: 'right1', icon: starIcon}, {id: 'right2', icon: starIcon}, {id: 'right3', icon: starIcon}];
+    const leftItem = {id: 'left1', icon: collectionsIcon, text: 'Add', style: {backgroundColor: Colors.red30}};
+    const rightItems = [
+      {id: 'right1', icon: starIcon, text: 'Star', style: {backgroundColor: Colors.green40}},
+      {id: 'right2', icon: sharIcon, text: 'Share', style: {backgroundColor: Colors.violet40}},
+      {id: 'right3', icon: videoIcon, text: 'Video', style: {backgroundColor: Colors.violet50}},
+    ];
     
     return (
       <View style={styles.container}>
@@ -36,9 +42,9 @@ export default class DrawerScreen extends Component {
           tension={this.state.tension}
           leftItem={leftItem}
           rightItems={rightItems}
-          style={{marginTop: 20, backgroundColor: Colors.yellow30}}
+          style={{marginTop: 20}}
           onPress={this.onPress}
-          onButtonPress={this.onButtonPress}
+          onItemPress={this.onItemPress}
         >
           <View style={styles.rowContent}>
             <View style={styles.rowIcon} />
