@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, View, TouchableOpacity, TouchableHighlight} from 'react-native';
 import Interactable from 'react-native-interactable';
-import {BaseComponent, Colors, Typography} from '../../../src';
+import {BaseComponent, Constants, Colors, Typography} from '../../../src';
 
 
 /**
@@ -113,6 +113,14 @@ export default class Drawer extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
+  getMaxTextWidth() {
+    const {leftItem, rightItems} = this.props;
+    const itemCount = _.isEmpty(leftItem) ? rightItems.length : rightItems.length + 1;
+    const minLeftMargin = 28;
+    const innnerPadding = 12 * 2;
+    return ((Constants.screenWidth - minLeftMargin) / itemCount) - innnerPadding;
+  }
+
   getSnapPoints() {
     const {leftItem, rightItems, damping, tension, height} = this.props;
     const size = rightItems.length;
@@ -159,12 +167,25 @@ export default class Drawer extends BaseComponent {
     }
   }
 
-  renderleftItem() {
+  renderLeftItem() {
     const {height, leftItem} = this.props;
 
     return (
       <View style={{position: 'absolute', left: 0, height, flexDirection: 'row', alignItems: 'center'}}>
-        <TouchableOpacity style={[leftItem.style, this.styles.button]} onPress={() => this.onItemPress(leftItem.id)}>
+        <TouchableOpacity
+          onPress={() => this.onItemPress(leftItem.id)}
+          style={
+          [leftItem.style, {
+            height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: 12,
+            width: this.deltaX.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0, 1],
+            }),
+          }]}
+        >
           <Animated.Image
             source={leftItem.icon}
             style={
@@ -188,7 +209,6 @@ export default class Drawer extends BaseComponent {
           />
           {leftItem.text && 
           <Animated.Text
-            source={leftItem.icon}
             style={
             [this.styles.buttonText, {
               opacity: this.deltaX.interpolate({
@@ -246,7 +266,6 @@ export default class Drawer extends BaseComponent {
           />
           {rightItems[0].text && 
           <Animated.Text
-            source={rightItems[0].icon}
             style={
             [this.styles.buttonText, {
               opacity: this.deltaX.interpolate({
@@ -294,7 +313,6 @@ export default class Drawer extends BaseComponent {
           />
           {rightItems[1].text && 
           <Animated.Text
-            source={rightItems[1].icon}
             style={
             [this.styles.buttonText, {
               opacity: this.deltaX.interpolate({
@@ -342,7 +360,6 @@ export default class Drawer extends BaseComponent {
           />
           {rightItems[2].text && 
           <Animated.Text
-            source={rightItems[2].icon}
             style={
             [this.styles.buttonText, {
               opacity: this.deltaX.interpolate({
@@ -377,8 +394,8 @@ export default class Drawer extends BaseComponent {
 
     return (
       <View style={[{backgroundColor: Colors.white}, style]}>
-        {leftItem && this.renderleftItem()}
         {rightItems && this.renderRightItems()}
+        {leftItem && this.renderLeftItem()}
         <Interactable.View
           ref={el => this.interactableElem = el}
           horizontalOnly
@@ -391,7 +408,7 @@ export default class Drawer extends BaseComponent {
           animatedValueX={this.deltaX}
         >
           <Container onPress={this.onPress} activeOpacity={0.7} underlayColor={Colors.white}>
-            <View style={{left: 0, right: 0, height}}>
+            <View style={{left: 0, right: 0, height, backgroundColor: Colors.white}}>
               {this.props.children}
             </View>
           </Container>
