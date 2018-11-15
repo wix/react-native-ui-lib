@@ -13,17 +13,15 @@ export default class DrawerScreen extends Component {
   constructor(props) {
     super(props);
     
-    this.state = {
-      
-    };
+    this.state = {};
   }
 
   onPress = () => {
-    alert('Drawer pressed');
+    console.log('Drawer pressed');
   }
 
   onItemPress = (id) => {
-    alert(`Item ${id} pressed`);
+    console.log(`Item ${id} pressed`);
   }
 
   render() {
@@ -99,9 +97,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderTopWidth: 1,
-    borderColor: Colors.dark70,
     backgroundColor: Colors.dark80,
   },
   rowIcon: {

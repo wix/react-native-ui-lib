@@ -247,7 +247,10 @@ export default class Drawer extends BaseComponent {
       <View style={{position: 'absolute', right: 0, height, flexDirection: 'row', alignItems: 'center'}}>
         
         {rightItems[0] && 
-        <TouchableOpacity style={[rightItems[0].style, this.styles.button, {width: this.itemWidth}]} onPress={() => this.onItemPress(rightItems[0].id)}>
+        <TouchableOpacity
+          style={[rightItems[0].style, this.styles.button, {width: this.itemWidth}]}
+          onPress={() => this.onItemPress(rightItems[0].id)}
+        >
           <Animated.Image
             source={rightItems[0].icon}
             style={
@@ -296,7 +299,10 @@ export default class Drawer extends BaseComponent {
         </TouchableOpacity>}
         
         {rightItems[1] && 
-        <TouchableOpacity style={[rightItems[1].style, this.styles.button, {width: this.itemWidth}]} onPress={() => this.onItemPress(rightItems[1].id)}>
+        <TouchableOpacity
+          style={[rightItems[1].style, this.styles.button, {width: this.itemWidth}]}
+          onPress={() => this.onItemPress(rightItems[1].id)}
+        >
           <Animated.Image
             source={rightItems[1].icon}
             style={
@@ -345,7 +351,10 @@ export default class Drawer extends BaseComponent {
         </TouchableOpacity>}
         
         {rightItems[2] && 
-        <TouchableOpacity style={[rightItems[2].style, this.styles.button, {width: this.itemWidth}]} onPress={() => this.onItemPress(rightItems[2].id)}>
+        <TouchableOpacity
+          style={[rightItems[2].style, this.styles.button, {width: this.itemWidth}]}
+          onPress={() => this.onItemPress(rightItems[2].id)}
+        >
           <Animated.Image
             source={rightItems[2].icon}
             style={
