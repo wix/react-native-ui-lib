@@ -178,58 +178,60 @@ export default class Drawer extends BaseComponent {
           [leftItem.style, {
             height: '100%',
             justifyContent: 'center',
-            alignItems: 'center',
-            padding: 12,
+            alignItems: 'flex-start',
             width: this.deltaX.interpolate({
               inputRange: [0, 1],
-              outputRange: [0, 1],
+              outputRange: [0, 1.75],
+              extrapolateLeft: 'clamp',
             }),
           }]}
         >
-          <Animated.Image
-            source={leftItem.icon}
-            style={
-            [this.styles.buttonImage, {
-              opacity: this.deltaX.interpolate({
-                inputRange: [height - 25, height],
-                outputRange: [0, 1],
-                extrapolateLeft: 'clamp',
-                extrapolateRight: 'clamp',
-              }),
-              transform: [{
-                scale: this.deltaX.interpolate({
+          <View style={{width: height, justifyContent: 'center', alignItems: 'center'}}>
+            <Animated.Image
+              source={leftItem.icon}
+              style={
+              [this.styles.buttonImage, {
+                opacity: this.deltaX.interpolate({
                   inputRange: [height - 25, height],
-                  outputRange: [0.7, 1],
+                  outputRange: [0, 1],
                   extrapolateLeft: 'clamp',
                   extrapolateRight: 'clamp',
                 }),
-              }],
-            },
-            ]}
-          />
-          {leftItem.text && 
-          <Animated.Text
-            style={
-            [this.styles.buttonText, {
-              opacity: this.deltaX.interpolate({
-                inputRange: [height - 25, height],
-                outputRange: [0, 1],
-                extrapolateLeft: 'clamp',
-                extrapolateRight: 'clamp',
-              }),
-              transform: [{
-                scale: this.deltaX.interpolate({
+                transform: [{
+                  scale: this.deltaX.interpolate({
+                    inputRange: [height - 25, height],
+                    outputRange: [0.7, 1],
+                    extrapolateLeft: 'clamp',
+                    extrapolateRight: 'clamp',
+                  }),
+                }],
+              },
+              ]}
+            />
+            {leftItem.text && 
+            <Animated.Text
+              style={
+              [this.styles.buttonText, {
+                opacity: this.deltaX.interpolate({
                   inputRange: [height - 25, height],
-                  outputRange: [0.7, 1],
+                  outputRange: [0, 1],
                   extrapolateLeft: 'clamp',
                   extrapolateRight: 'clamp',
                 }),
-              }],
-            },
-            ]}
-          >
-            {leftItem.text}
-          </Animated.Text>}
+                transform: [{
+                  scale: this.deltaX.interpolate({
+                    inputRange: [height - 25, height],
+                    outputRange: [0.7, 1],
+                    extrapolateLeft: 'clamp',
+                    extrapolateRight: 'clamp',
+                  }),
+                }],
+              },
+              ]}
+            >
+              {leftItem.text}
+            </Animated.Text>}
+          </View>
         </TouchableOpacity>
       </View>
     );
@@ -388,7 +390,7 @@ export default class Drawer extends BaseComponent {
 
   render() {
     const {style, height, boundaries, leftItem, rightItems, onPress} = this.props;
-    const dragBounds = boundaries || {right: height, left: -(height * rightItems.length)};
+    const dragBounds = boundaries || {right: height, left: -(height * rightItems.length), bounce: 0.3};
     const snapPoints = this.getSnapPoints();
     const Container = onPress ? TouchableHighlight : View;
 
@@ -422,6 +424,7 @@ function createStyles(props) {
   const {height} = props;
   const typography = height >= 72 ? Typography.text70 : Typography.text80;
   const gap = height > 72 ? 8 : 0;
+  const buttonPadding = height >= 72 ? 12 : 8;
 
   return StyleSheet.create({
     container: {},
@@ -430,6 +433,7 @@ function createStyles(props) {
       height: '100%',
       justifyContent: 'center',
       alignItems: 'center',
+      padding: buttonPadding,
     },
     buttonImage: {
       width: 24,
