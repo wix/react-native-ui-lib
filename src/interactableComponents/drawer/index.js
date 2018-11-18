@@ -6,6 +6,7 @@ import Interactable from 'react-native-interactable';
 import {BaseComponent, Constants, Colors, Typography} from '../../../src';
 
 
+const ITEM_BG = Colors.violet30;
 /**
  * @description: Interactable Drawer component
  * @extendslink: 
@@ -176,7 +177,7 @@ export default class Drawer extends BaseComponent {
       <View style={{position: 'absolute', left: 0, right: 0, height, flexDirection: 'row'}}>
         <Animated.View
           style={{
-            backgroundColor: leftItem.background,
+            backgroundColor: leftItem.background || ITEM_BG,
             position: 'absolute',
             left: 0,
             right: 0,
@@ -254,7 +255,7 @@ export default class Drawer extends BaseComponent {
         {rightItems[0] && 
           <TouchableOpacity
             style={
-            [this.styles.button, {width: this.itemWidth, backgroundColor: rightItems[0].background}]}
+            [this.styles.button, {width: this.itemWidth, backgroundColor: rightItems[0].background || ITEM_BG}]}
             onPress={() => this.onItemPress(rightItems[0].id)}
           >
             <Animated.Image
@@ -306,7 +307,7 @@ export default class Drawer extends BaseComponent {
         
         {rightItems[1] && 
         <TouchableOpacity
-          style={[this.styles.button, {width: this.itemWidth, backgroundColor: rightItems[1].background}]}
+          style={[this.styles.button, {width: this.itemWidth, backgroundColor: rightItems[1].background || ITEM_BG}]}
           onPress={() => this.onItemPress(rightItems[1].id)}
         >
           <Animated.Image
@@ -358,7 +359,7 @@ export default class Drawer extends BaseComponent {
         
         {rightItems[2] && 
         <TouchableOpacity
-          style={[this.styles.button, {width: this.itemWidth, backgroundColor: rightItems[2].background}]}
+          style={[this.styles.button, {width: this.itemWidth, backgroundColor: rightItems[2].background || ITEM_BG}]}
           onPress={() => this.onItemPress(rightItems[2].id)}
         >
           <Animated.Image
