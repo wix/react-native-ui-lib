@@ -7,6 +7,9 @@ import {BaseComponent, Constants, Colors, Typography} from '../../../src';
 
 
 const ITEM_BG = Colors.violet30;
+const MIN_LEFT_MARGIN = 28;
+const ITEM_PADDING = 12;
+
 /**
  * @description: Interactable Drawer component
  * @extendslink: 
@@ -81,6 +84,8 @@ export default class Drawer extends BaseComponent {
 
     this.deltaX = new Animated.Value(0);
     this.itemWidth = props.height;
+    this.minItemWidth = props.height;
+    this.maxItemWidth = (Constants.screenWidth - MIN_LEFT_MARGIN) / props.rightItems.length;
     
     this.state = {
       inMotion: false,
@@ -114,14 +119,6 @@ export default class Drawer extends BaseComponent {
 
   generateStyles() {
     this.styles = createStyles(this.props);
-  }
-
-  getMaxTextWidth() {
-    const {leftItem, rightItems} = this.props;
-    const itemCount = _.isEmpty(leftItem) ? rightItems.length : rightItems.length + 1;
-    const minLeftMargin = 28;
-    const innnerPadding = 12 * 2;
-    return ((Constants.screenWidth - minLeftMargin) / itemCount) - innnerPadding;
   }
 
   getSnapPoints() {
@@ -185,60 +182,61 @@ export default class Drawer extends BaseComponent {
               translateX: this.deltaX.interpolate({
                 inputRange: [0, this.itemWidth],
                 outputRange: [-this.itemWidth, 0],
+                extrapolateRight: 'clamp',
               }),
             }],
           }}
         >
           <TouchableOpacity
+            style={{width: this.itemWidth, height, padding: ITEM_PADDING, justifyContent: 'center', alignItems: 'center'}} 
             onPress={() => this.onItemPress(leftItem.id)}
+            activeOpacity={0.7}
           >
-            <View style={{width: this.itemWidth, height, padding: 12, justifyContent: 'center', alignItems: 'center'}}>
-              <Animated.Image
-                source={leftItem.icon}
-                style={
-                [this.styles.buttonImage, {
-                  opacity: this.deltaX.interpolate({
+            <Animated.Image
+              source={leftItem.icon}
+              style={
+              [this.styles.buttonImage, {
+                opacity: this.deltaX.interpolate({
+                  inputRange: [this.itemWidth - 25, this.itemWidth],
+                  outputRange: [0, 1],
+                  extrapolateLeft: 'clamp',
+                  extrapolateRight: 'clamp',
+                }),
+                transform: [{
+                  scale: this.deltaX.interpolate({
                     inputRange: [this.itemWidth - 25, this.itemWidth],
-                    outputRange: [0, 1],
+                    outputRange: [0.7, 1],
                     extrapolateLeft: 'clamp',
                     extrapolateRight: 'clamp',
                   }),
-                  transform: [{
-                    scale: this.deltaX.interpolate({
-                      inputRange: [this.itemWidth - 25, this.itemWidth],
-                      outputRange: [0.7, 1],
-                      extrapolateLeft: 'clamp',
-                      extrapolateRight: 'clamp',
-                    }),
-                  }],
-                },
-                ]}
-              />
-              {leftItem.text && 
-              <Animated.Text
-                numberOfLines={1}
-                style={
-                [this.styles.buttonText, {
-                  opacity: this.deltaX.interpolate({
+                }],
+              },
+              ]}
+            />
+            {leftItem.text && 
+            <Animated.Text
+              numberOfLines={1}
+              style={
+              [this.styles.buttonText, {
+                opacity: this.deltaX.interpolate({
+                  inputRange: [this.itemWidth - 25, this.itemWidth],
+                  outputRange: [0, 1],
+                  extrapolateLeft: 'clamp',
+                  extrapolateRight: 'clamp',
+                }),
+                transform: [{
+                  scale: this.deltaX.interpolate({
                     inputRange: [this.itemWidth - 25, this.itemWidth],
-                    outputRange: [0, 1],
+                    outputRange: [0.7, 1],
                     extrapolateLeft: 'clamp',
                     extrapolateRight: 'clamp',
                   }),
-                  transform: [{
-                    scale: this.deltaX.interpolate({
-                      inputRange: [this.itemWidth - 25, this.itemWidth],
-                      outputRange: [0.7, 1],
-                      extrapolateLeft: 'clamp',
-                      extrapolateRight: 'clamp',
-                    }),
-                  }],
-                },
-                ]}
-              >
-                {leftItem.text}
-              </Animated.Text>}
-            </View>
+                }],
+              },
+              ]}
+            >
+              {leftItem.text}
+            </Animated.Text>}
           </TouchableOpacity>
         </Animated.View>
       </View>
@@ -254,9 +252,9 @@ export default class Drawer extends BaseComponent {
         
         {rightItems[0] && 
           <TouchableOpacity
-            style={
-            [this.styles.button, {width: this.itemWidth, backgroundColor: rightItems[0].background || ITEM_BG}]}
+            style={[this.styles.button, {width: this.itemWidth, backgroundColor: rightItems[0].background || ITEM_BG}]}
             onPress={() => this.onItemPress(rightItems[0].id)}
+            activeOpacity={0.7}
           >
             <Animated.Image
               source={rightItems[0].icon}
@@ -309,6 +307,7 @@ export default class Drawer extends BaseComponent {
         <TouchableOpacity
           style={[this.styles.button, {width: this.itemWidth, backgroundColor: rightItems[1].background || ITEM_BG}]}
           onPress={() => this.onItemPress(rightItems[1].id)}
+          activeOpacity={0.7}
         >
           <Animated.Image
             source={rightItems[1].icon}
@@ -361,6 +360,7 @@ export default class Drawer extends BaseComponent {
         <TouchableOpacity
           style={[this.styles.button, {width: this.itemWidth, backgroundColor: rightItems[2].background || ITEM_BG}]}
           onPress={() => this.onItemPress(rightItems[2].id)}
+          activeOpacity={0.7}
         >
           <Animated.Image
             source={rightItems[2].icon}
@@ -416,9 +416,8 @@ export default class Drawer extends BaseComponent {
     const {style, height, boundaries, leftItem, rightItems, onPress} = this.props;
     const Container = onPress ? TouchableHighlight : View;
     const snapPoints = this.getSnapPoints();
-    const leftBound = -(this.itemWidth * rightItems.length);
     const dragBounds = boundaries || 
-      {right: _.isEmpty(leftItem) ? 0 : this.itemWidth, left: _.isEmpty(rightItems) ? 0 : leftBound};
+      {right: _.isEmpty(leftItem) ? 0 : this.itemWidth, left: _.isEmpty(rightItems) ? 0 : -(this.itemWidth * rightItems.length)};
 
     return (
       <View style={style}>
@@ -450,7 +449,7 @@ function createStyles(props) {
   const {height} = props;
   const typography = height >= 72 ? Typography.text70 : Typography.text80;
   const gap = height > 72 ? 8 : 0;
-  const buttonPadding = height >= 72 ? 12 : 8;
+  const buttonPadding = height >= 72 ? ITEM_PADDING : 8;
 
   return StyleSheet.create({
     container: {},
