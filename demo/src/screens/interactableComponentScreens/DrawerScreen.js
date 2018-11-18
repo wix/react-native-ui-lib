@@ -25,11 +25,11 @@ export default class DrawerScreen extends Component {
   }
 
   render() {
-    const leftItem = {id: 'left', icon: collectionsIcon, text: 'Save', style: {backgroundColor: Colors.red30}};
+    const leftItem = {id: 'left', icon: collectionsIcon, text: 'Save', background: Colors.red30};
     const rightItems = [
-      {id: 'right-1', icon: starIcon, text: 'Star', style: {backgroundColor: Colors.green40}},
-      {id: 'right-2', icon: sharIcon, text: 'Share', style: {backgroundColor: Colors.violet40}},
-      {id: 'right-3', icon: videoIcon, text: 'Video', style: {backgroundColor: Colors.violet50}},
+      {id: 'right-1', icon: starIcon, text: 'Star', background: Colors.green40},
+      {id: 'right-2', icon: sharIcon, text: 'Share', background: Colors.violet40},
+      {id: 'right-3', icon: videoIcon, text: 'Video', background: Colors.violet50},
     ];
     
     return (

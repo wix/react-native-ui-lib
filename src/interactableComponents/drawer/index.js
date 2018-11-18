@@ -57,7 +57,7 @@ export default class Drawer extends BaseComponent {
       id: PropTypes.string,
       icon: PropTypes.number,
       text: PropTypes.string,
-      style: PropTypes.object,
+      background: PropTypes.object,
     }),
     /**
      * Press handler
@@ -175,7 +175,8 @@ export default class Drawer extends BaseComponent {
     return (
       <View style={{position: 'absolute', left: 0, right: 0, height, flexDirection: 'row'}}>
         <Animated.View
-          style={[leftItem.style, {
+          style={{
+            backgroundColor: leftItem.background,
             position: 'absolute',
             left: 0,
             right: 0,
@@ -185,8 +186,7 @@ export default class Drawer extends BaseComponent {
                 outputRange: [-this.itemWidth, 0],
               }),
             }],
-          },
-          ]}
+          }}
         >
           <TouchableOpacity
             onPress={() => this.onItemPress(leftItem.id)}
@@ -254,7 +254,7 @@ export default class Drawer extends BaseComponent {
         {rightItems[0] && 
           <TouchableOpacity
             style={
-            [rightItems[0].style, this.styles.button, {width: this.itemWidth}]}
+            [this.styles.button, {width: this.itemWidth, backgroundColor: rightItems[0].background}]}
             onPress={() => this.onItemPress(rightItems[0].id)}
           >
             <Animated.Image
@@ -306,7 +306,7 @@ export default class Drawer extends BaseComponent {
         
         {rightItems[1] && 
         <TouchableOpacity
-          style={[rightItems[1].style, this.styles.button, {width: this.itemWidth}]}
+          style={[this.styles.button, {width: this.itemWidth, backgroundColor: rightItems[1].background}]}
           onPress={() => this.onItemPress(rightItems[1].id)}
         >
           <Animated.Image
@@ -358,7 +358,7 @@ export default class Drawer extends BaseComponent {
         
         {rightItems[2] && 
         <TouchableOpacity
-          style={[rightItems[2].style, this.styles.button, {width: this.itemWidth}]}
+          style={[this.styles.button, {width: this.itemWidth, backgroundColor: rightItems[2].background}]}
           onPress={() => this.onItemPress(rightItems[2].id)}
         >
           <Animated.Image
@@ -417,7 +417,7 @@ export default class Drawer extends BaseComponent {
     const snapPoints = this.getSnapPoints();
     const leftBound = -(this.itemWidth * rightItems.length);
     const dragBounds = boundaries || 
-      {right: _.isEmpty(leftItem) ? 0 : this.itemWidth, left: _.isEmpty(rightItems) ? 0 : leftBound, bounce: 0.5};
+      {right: _.isEmpty(leftItem) ? 0 : this.itemWidth, left: _.isEmpty(rightItems) ? 0 : leftBound};
 
     return (
       <View style={style}>
