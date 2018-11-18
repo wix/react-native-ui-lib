@@ -6,6 +6,7 @@ import Interactable from 'react-native-interactable';
 import {BaseComponent, Constants, Colors, Typography} from '../../../src';
 
 
+const BACKGROUND = Colors.white;
 /**
  * @description: Interactable Drawer component
  * @extendslink: 
@@ -80,6 +81,7 @@ export default class Drawer extends BaseComponent {
 
     this.deltaX = new Animated.Value(0);
     this.itemWidth = props.height;
+    
     this.state = {
       inMotion: false,
       position: 1,
@@ -127,7 +129,7 @@ export default class Drawer extends BaseComponent {
     const size = rightItems.length;
     
     const left = !_.isEmpty(leftItem) ? {x: this.itemWidth, damping: 1 - damping, tension} : {};
-    const zero = !_.isEmpty(rightItems[0]) ? {x: 0, damping: 1 - damping, tension} : {};
+    const zero = {x: 0, damping: 1 - damping, tension};
     const first = !_.isEmpty(rightItems[0]) ? {x: -(this.itemWidth), damping: 1 - damping, tension} : {};
     const second = !_.isEmpty(rightItems[1]) ? {x: -(this.itemWidth * 2), damping: 1 - damping, tension} : {};
     const third = !_.isEmpty(rightItems[2]) ? {x: -(this.itemWidth * 3), damping: 1 - damping, tension} : {};
@@ -140,7 +142,7 @@ export default class Drawer extends BaseComponent {
       case 3:
         return [left, zero, first, second, third];
       default:
-        return [left];
+        return [left, zero];
     }
   }
 
@@ -247,56 +249,68 @@ export default class Drawer extends BaseComponent {
       <View style={{position: 'absolute', right: 0, height, flexDirection: 'row', alignItems: 'center'}}>
         
         {rightItems[0] && 
-        <TouchableOpacity
-          style={[rightItems[0].style, this.styles.button, {width: this.itemWidth}]}
-          onPress={() => this.onItemPress(rightItems[0].id)}
-        >
-          <Animated.Image
-            source={rightItems[0].icon}
+          <TouchableOpacity
             style={
-            [this.styles.buttonImage, {
-              opacity: this.deltaX.interpolate({
-                inputRange: inputRanges[0],
-                outputRange: [1, 0],
-                extrapolateLeft: 'clamp',
+            [rightItems[0].style, {
+              height: '100%',
+              justifyContent: 'center',
+              alignItems: 'flex-end',
+              width: this.deltaX.interpolate({
+                inputRange: [0, 1],
+                outputRange: [1.75, 0],
                 extrapolateRight: 'clamp',
               }),
-              transform: [{
-                scale: this.deltaX.interpolate({
-                  inputRange: inputRanges[0],
-                  outputRange: [1, 0.7],
-                  extrapolateLeft: 'clamp',
-                  extrapolateRight: 'clamp',
-                }),
-              }],
-            },
-            ]}
-          />
-          {rightItems[0].text && 
-          <Animated.Text
-            numberOfLines={1}
-            style={
-            [this.styles.buttonText, {
-              opacity: this.deltaX.interpolate({
-                inputRange: inputRanges[0],
-                outputRange: [1, 0],
-                extrapolateLeft: 'clamp',
-                extrapolateRight: 'clamp',
-              }),
-              transform: [{
-                scale: this.deltaX.interpolate({
-                  inputRange: inputRanges[0],
-                  outputRange: [1, 0.7],
-                  extrapolateLeft: 'clamp',
-                  extrapolateRight: 'clamp',
-                }),
-              }],
-            },
-            ]}
+            }]}
+            onPress={() => this.onItemPress(rightItems[0].id)}
           >
-            {rightItems[0].text}
-          </Animated.Text>}
-        </TouchableOpacity>}
+            <View style={{width: this.itemWidth, justifyContent: 'center', alignItems: 'center', padding: 12}}>
+              <Animated.Image
+                source={rightItems[0].icon}
+                style={
+                [this.styles.buttonImage, {
+                  opacity: this.deltaX.interpolate({
+                    inputRange: inputRanges[0],
+                    outputRange: [1, 0],
+                    extrapolateLeft: 'clamp',
+                    extrapolateRight: 'clamp',
+                  }),
+                  transform: [{
+                    scale: this.deltaX.interpolate({
+                      inputRange: inputRanges[0],
+                      outputRange: [1, 0.7],
+                      extrapolateLeft: 'clamp',
+                      extrapolateRight: 'clamp',
+                    }),
+                  }],
+                },
+                ]}
+              />
+              {rightItems[0].text && 
+              <Animated.Text
+                numberOfLines={1}
+                style={
+                [this.styles.buttonText, {
+                  opacity: this.deltaX.interpolate({
+                    inputRange: inputRanges[0],
+                    outputRange: [1, 0],
+                    extrapolateLeft: 'clamp',
+                    extrapolateRight: 'clamp',
+                  }),
+                  transform: [{
+                    scale: this.deltaX.interpolate({
+                      inputRange: inputRanges[0],
+                      outputRange: [1, 0.7],
+                      extrapolateLeft: 'clamp',
+                      extrapolateRight: 'clamp',
+                    }),
+                  }],
+                },
+                ]}
+              >
+                {rightItems[0].text}
+              </Animated.Text>}
+            </View>
+          </TouchableOpacity>}
         
         {rightItems[1] && 
         <TouchableOpacity
@@ -407,14 +421,14 @@ export default class Drawer extends BaseComponent {
 
   render() {
     const {style, height, boundaries, leftItem, rightItems, onPress} = this.props;
-    const dragBounds = boundaries || {right: this.itemWidth, left: -(this.itemWidth * rightItems.length), bounce: 0.3};
+    const dragBounds = boundaries || {right: _.isEmpty(leftItem) ? 0 : undefined, left: _.isEmpty(rightItems) ? 0 : undefined, bounce: 0.5};
     const snapPoints = this.getSnapPoints();
     const Container = onPress ? TouchableHighlight : View;
 
     return (
-      <View style={[{backgroundColor: Colors.white}, style]}>
-        {rightItems && this.renderRightItems()}
-        {leftItem && this.renderLeftItem()}
+      <View style={[{backgroundColor: BACKGROUND}, style]}>
+        {this.renderRightItems()}
+        {this.renderLeftItem()}
         <Interactable.View
           ref={el => this.interactableElem = el}
           horizontalOnly
@@ -427,7 +441,7 @@ export default class Drawer extends BaseComponent {
           animatedValueX={this.deltaX}
         >
           <Container onPress={this.onPress} activeOpacity={0.7} underlayColor={Colors.white}>
-            <View style={{left: 0, right: 0, height, backgroundColor: Colors.white}}>
+            <View style={{left: 0, right: 0, height, backgroundColor: BACKGROUND}}>
               {this.props.children}
             </View>
           </Container>
