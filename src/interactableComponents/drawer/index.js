@@ -49,7 +49,7 @@ export default class Drawer extends BaseComponent {
       id: PropTypes.string,
       icon: PropTypes.number,
       text: PropTypes.string,
-      style: PropTypes.object,
+      style: PropTypes.string,
     })),
     /**
      * The bottom layer's item to appear when opened from the left (a single item)
@@ -58,7 +58,7 @@ export default class Drawer extends BaseComponent {
       id: PropTypes.string,
       icon: PropTypes.number,
       text: PropTypes.string,
-      background: PropTypes.object,
+      background: PropTypes.string,
     }),
     /**
      * Press handler
