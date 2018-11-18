@@ -416,10 +416,12 @@ export default class Drawer extends BaseComponent {
 
   render() {
     const {style, height, boundaries, leftItem, rightItems, onPress} = this.props;
-    const dragBounds = boundaries || {right: _.isEmpty(leftItem) ? 0 : undefined, left: _.isEmpty(rightItems) ? 0 : undefined, bounce: 0.5};
-    const snapPoints = this.getSnapPoints();
     const Container = onPress ? TouchableHighlight : View;
-    const backgroundColor = (rightItems[0] && rightItems[0].style && rightItems[0].style.backgroundColor) ? rightItems[0].style.backgroundColor : BACKGROUND;
+    const snapPoints = this.getSnapPoints();
+    const dragBounds = boundaries || 
+      {right: _.isEmpty(leftItem) ? 0 : undefined, left: _.isEmpty(rightItems) ? 0 : undefined, bounce: 0.5};
+    const backgroundColor = (rightItems[0] && rightItems[0].style && rightItems[0].style.backgroundColor) ? 
+      rightItems[0].style.backgroundColor : BACKGROUND;
 
     return (
       <View style={[{backgroundColor}, style]}>
