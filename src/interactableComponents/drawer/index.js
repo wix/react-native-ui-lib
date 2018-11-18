@@ -255,11 +255,6 @@ export default class Drawer extends BaseComponent {
               height: '100%',
               justifyContent: 'center',
               alignItems: 'flex-end',
-              width: this.deltaX.interpolate({
-                inputRange: [0, 1],
-                outputRange: [1.75, 0],
-                extrapolateRight: 'clamp',
-              }),
             }]}
             onPress={() => this.onItemPress(rightItems[0].id)}
           >
@@ -424,9 +419,10 @@ export default class Drawer extends BaseComponent {
     const dragBounds = boundaries || {right: _.isEmpty(leftItem) ? 0 : undefined, left: _.isEmpty(rightItems) ? 0 : undefined, bounce: 0.5};
     const snapPoints = this.getSnapPoints();
     const Container = onPress ? TouchableHighlight : View;
+    const backgroundColor = (rightItems[0] && rightItems[0].style && rightItems[0].style.backgroundColor) ? rightItems[0].style.backgroundColor : BACKGROUND;
 
     return (
-      <View style={[{backgroundColor: BACKGROUND}, style]}>
+      <View style={[{backgroundColor}, style]}>
         {this.renderRightItems()}
         {this.renderLeftItem()}
         <Interactable.View
