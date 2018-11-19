@@ -164,9 +164,9 @@ export default class Drawer extends BaseComponent {
       case 1:
         return [left, zero, first];
       case 2:
-        return [left, zero, first, second];
+        return [left, zero, second];
       case 3:
-        return [left, zero, first, second, third];
+        return [left, zero, third];
       default:
         return [left, zero];
     }

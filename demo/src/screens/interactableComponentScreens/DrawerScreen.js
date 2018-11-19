@@ -22,6 +22,9 @@ export default class DrawerScreen extends Component {
 
   onItemPress = (id) => {
     console.log(`Item ${id} pressed`);
+    if (id === 'right-1') {
+      this.firstDrawer.closeDrawer();
+    }
   }
 
   renderContent() {
@@ -53,6 +56,7 @@ export default class DrawerScreen extends Component {
           style={{marginTop: 20}}
           onPress={this.onPress}
           onItemPress={this.onItemPress}
+          ref={r => this.firstDrawer = r}
         >
           {this.renderContent()}
         </Drawer>
