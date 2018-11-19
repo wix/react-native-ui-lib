@@ -81,8 +81,8 @@ export default class BadgesScreen extends Component {
 
         <Text text50 row center marginT-50 marginB-15> Pimple Badges </Text>
         <View row center>
-          <Badge containerStyle={{marginRight: BadgesSpace}} pimple backgroundColor={Colors.red30}/>
-          <Badge containerStyle={{marginLeft: BadgesSpace}} pimple backgroundColor={Colors.blue30}/>
+          <Badge pimple containerStyle={{marginRight: BadgesSpace}} backgroundColor={Colors.red30}/>
+          <Badge pimple containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.blue30}/>
         </View>
       </ScrollView>
     );
