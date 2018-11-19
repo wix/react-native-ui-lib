@@ -30,7 +30,7 @@ public class MainApplication extends NavigationApplication {
         ReactNativeHost host = new NavigationReactNativeHost(this, isDebug(), createAdditionalReactPackages()) {
             @Override
             protected String getJSMainModuleName() {
-                return "index.android";
+                return "demo";
             }
         };
         return new ReactGateway(this, isDebug(), host);
