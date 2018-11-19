@@ -29,7 +29,7 @@ export default class DrawerScreen extends Component {
     const rightItems = [
       {id: 'right-1', icon: starIcon, text: 'Accessories', width: 110},
       {id: 'right-2', icon: sharIcon, text: 'Share', background: Colors.violet40},
-      {id: 'right-3', icon: videoIcon, text: 'Video', background: Colors.violet50},
+      {id: 'right-3', icon: videoIcon, text: 'Video', background: Colors.violet50, closeDrawer: true},
     ];
     
     return (

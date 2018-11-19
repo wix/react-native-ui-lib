@@ -39,12 +39,14 @@ export default class Drawer extends BaseComponent {
      */
     rightItems: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
+      closeDrawer: PropTypes.bool,
     })),
     /**
      * The bottom layer's item to appear when opened from the left (a single item)
      */
     leftItem: PropTypes.shape({
       id: PropTypes.string.isRequired,
+      closeDrawer: PropTypes.bool,
     }),
     /**
      * Press handler
@@ -95,20 +97,30 @@ export default class Drawer extends BaseComponent {
     this.setState({inMotion: false});
   }
   onPress = () => {
-    const {inMotion, position} = this.state;
-    if (!inMotion && position !== 1) {
-      this.interactableElem.snapTo({index: 1});
-    }
+    this.closeDrawer();
     _.invoke(this.props, 'onPress');
   }
   onItemPress(id) {
     _.invoke(this.props, 'onItemPress', id);
+    const item = this.getItemById(id);
+    if (item.closeDrawer) this.closeDrawer();
+  }
+
+  closeDrawer() {
+    const {inMotion, position} = this.state;
+    if (!inMotion && position !== 1) {
+      this.interactableElem.snapTo({index: 1});
+    }
   }
 
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
+  getItemById(id) {
+    const {leftItem, rightItems} = this.props;
+    return (id === leftItem.id) ? leftItem : _.find(rightItems, item => item.id === id);
+  }
   getItemsTotalWidth(numberOfItems) {
     const items = this.props.rightItems;
     let total = 0;
