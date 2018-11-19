@@ -24,6 +24,18 @@ export default class DrawerScreen extends Component {
     console.log(`Item ${id} pressed`);
   }
 
+  renderContent() {
+    return (
+      <View style={styles.rowContent}>
+        <View style={styles.rowIcon}/>
+        <View>
+          <Text style={styles.rowTitle}>Row Title</Text>
+          <Text style={styles.rowSubtitle}>Drag the row left and right</Text>
+        </View>
+      </View>
+    );
+  }
+
   render() {
     const leftItem = {id: 'left', icon: collectionsIcon, text: 'Save', background: Colors.red30};
     const rightItems = [
@@ -42,13 +54,7 @@ export default class DrawerScreen extends Component {
           onPress={this.onPress}
           onItemPress={this.onItemPress}
         >
-          <View style={styles.rowContent}>
-            <View style={styles.rowIcon} />
-            <View>
-              <Text style={styles.rowTitle}>Row Title</Text>
-              <Text style={styles.rowSubtitle}>Drag the row left and right</Text>
-            </View>
-          </View>
+          {this.renderContent()}
         </Drawer>
         
         <Drawer
@@ -58,13 +64,7 @@ export default class DrawerScreen extends Component {
           onPress={this.onPress}
           onItemPress={this.onItemPress}
         >
-          <View style={styles.rowContent}>
-            <View style={styles.rowIcon} />
-            <View>
-              <Text style={styles.rowTitle}>Row Title</Text>
-              <Text style={styles.rowSubtitle}>Drag the row left and right</Text>
-            </View>
-          </View>
+          {this.renderContent()}
         </Drawer>
         
         <Drawer
@@ -74,6 +74,7 @@ export default class DrawerScreen extends Component {
           style={{marginTop: 20}}
           onPress={this.onPress}
           onItemPress={this.onItemPress}
+          itemsTintColor={Colors.black}
         >
           <View style={styles.rowContent}>
             <View style={[styles.rowIcon, {width: 38, height: 38, borderRadius: 19}]}/>
@@ -90,7 +91,6 @@ export default class DrawerScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: Colors.white,
   },
   rowContent: {

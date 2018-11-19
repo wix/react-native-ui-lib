@@ -9,6 +9,15 @@ import {BaseComponent, Constants, Colors, Typography} from '../../../src';
 const ITEM_BG = Colors.violet30;
 const MIN_LEFT_MARGIN = 28;
 const ITEM_PADDING = 12;
+const BLEED = 25;
+const ITEM = {
+  id: PropTypes.string.isRequired,
+  text: PropTypes.string,
+  icon: PropTypes.number,
+  beckground: PropTypes.string,
+  width: PropTypes.number,
+  closeDrawer: PropTypes.bool,
+};
 
 /**
  * @description: Interactable Drawer component
@@ -37,25 +46,15 @@ export default class Drawer extends BaseComponent {
     /**
      * The bottom layer's items to appear when opened from the right (max. 3 items)
      */
-    rightItems: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      text: PropTypes.string,
-      icon: PropTypes.number,
-      beckground: PropTypes.string,
-      width: PropTypes.number,
-      closeDrawer: PropTypes.bool,
-    })),
+    rightItems: PropTypes.arrayOf(PropTypes.shape(ITEM)),
     /**
      * The bottom layer's item to appear when opened from the left (a single item)
      */
-    leftItem: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      text: PropTypes.string,
-      icon: PropTypes.number,
-      beckground: PropTypes.string,
-      width: PropTypes.number,
-      closeDrawer: PropTypes.bool,
-    }),
+    leftItem: PropTypes.shape(ITEM),
+    /**
+     * The color for the text and icon tint of the items
+     */
+    itemsTintColor: PropTypes.string,
     /**
      * Press handler
      */
@@ -70,6 +69,7 @@ export default class Drawer extends BaseComponent {
     height: 72,
     damping: 1 - 0.6,
     tension: 300,
+    itemsTintColor: Colors.white,
   }
 
   constructor(props) {
@@ -174,8 +174,7 @@ export default class Drawer extends BaseComponent {
   getInputRanges() {
     const {rightItems} = this.props;
     const size = rightItems.length;
-
-    const end = this.minItemWidth - 25;
+    const end = this.minItemWidth - BLEED;
     const interval = 65;
 
     // const opacityInputRanges = [[-225, -180], [-150, -115], [-75, -50]];
@@ -201,7 +200,10 @@ export default class Drawer extends BaseComponent {
     const background = leftItem.background || ITEM_BG;
 
     return (
-      <View style={{position: 'absolute', left: 0, right: 0, height, flexDirection: 'row'}} pointerEvents={'box-none'}>
+      <View
+        style={{position: 'absolute', left: 0, right: leftItemWidth, height, flexDirection: 'row'}}
+        pointerEvents={'box-none'}
+      >
         <Animated.View
           style={{
             backgroundColor: background,
@@ -237,14 +239,14 @@ export default class Drawer extends BaseComponent {
                 style={
                 [this.styles.buttonImage, {
                   opacity: this.deltaX.interpolate({
-                    inputRange: [this.minItemWidth - 25, this.minItemWidth],
+                    inputRange: [this.minItemWidth - BLEED, this.minItemWidth],
                     outputRange: [0, 1],
                     extrapolateLeft: 'clamp',
                     extrapolateRight: 'clamp',
                   }),
                   transform: [{
                     scale: this.deltaX.interpolate({
-                      inputRange: [this.minItemWidth - 25, this.minItemWidth],
+                      inputRange: [this.minItemWidth - BLEED, this.minItemWidth],
                       outputRange: [0.7, 1],
                       extrapolateLeft: 'clamp',
                       extrapolateRight: 'clamp',
@@ -259,14 +261,14 @@ export default class Drawer extends BaseComponent {
                 style={
                 [this.styles.buttonText, {
                   opacity: this.deltaX.interpolate({
-                    inputRange: [this.minItemWidth - 25, this.minItemWidth],
+                    inputRange: [this.minItemWidth - BLEED, this.minItemWidth],
                     outputRange: [0, 1],
                     extrapolateLeft: 'clamp',
                     extrapolateRight: 'clamp',
                   }),
                   transform: [{
                     scale: this.deltaX.interpolate({
-                      inputRange: [this.minItemWidth - 25, this.minItemWidth],
+                      inputRange: [this.minItemWidth - BLEED, this.minItemWidth],
                       outputRange: [0.7, 1],
                       extrapolateLeft: 'clamp',
                       extrapolateRight: 'clamp',
@@ -475,8 +477,6 @@ export default class Drawer extends BaseComponent {
   render() {
     const {style, height, onPress} = this.props;
     const Container = onPress ? TouchableHighlight : View;
-    const snapPoints = this.getSnapPoints();
-    const dragBounds = this.getBoundaries();
 
     return (
       <View style={[style, this.styles.container]}>
@@ -485,8 +485,8 @@ export default class Drawer extends BaseComponent {
         <Interactable.View
           ref={el => this.interactableElem = el}
           horizontalOnly
-          boundaries={dragBounds}
-          snapPoints={snapPoints}
+          boundaries={this.getBoundaries()}
+          snapPoints={this.getSnapPoints()}
           onSnap={this.onSnap}
           onDrag={this.onDrag}
           onStop={this.onStop}
@@ -505,9 +505,9 @@ export default class Drawer extends BaseComponent {
 }
 
 function createStyles(props) {
-  const {height} = props;
+  const {height, itemsTintColor} = props;
   const typography = height >= 72 ? Typography.text70 : Typography.text80;
-  const gap = height > 72 ? 8 : 0;
+  const textTopMargin = height > 72 ? 8 : 0;
   const buttonPadding = height >= 72 ? ITEM_PADDING : 8;
 
   return StyleSheet.create({
@@ -523,12 +523,12 @@ function createStyles(props) {
     buttonImage: {
       width: 24,
       height: 24,
-      tintColor: Colors.white,
+      tintColor: itemsTintColor,
     },
     buttonText: {
       ...typography,
-      color: Colors.white,
-      marginTop: gap,
+      color: itemsTintColor,
+      marginTop: textTopMargin,
     },
   });
 }
