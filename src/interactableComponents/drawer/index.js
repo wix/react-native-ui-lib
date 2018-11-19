@@ -66,13 +66,19 @@ export default class Drawer extends BaseComponent {
     super(props);
 
     this.deltaX = new Animated.Value(0);
-    this.minItemWidth = props.height;
+    this.minItemWidth = this.getMinWidth();
     this.maxItemWidth = (Constants.screenWidth - MIN_LEFT_MARGIN) / props.rightItems.length;
     
     this.state = {
       inMotion: false,
       position: 1,
     };
+  }
+
+  getMinWidth() {
+    const {height} = this.props;
+    const maxWidth = (Constants.screenWidth - MIN_LEFT_MARGIN);
+    return (height > maxWidth) ? maxWidth : height;
   }
 
   onSnap = ({nativeEvent}) => {
@@ -173,12 +179,13 @@ export default class Drawer extends BaseComponent {
   renderLeftItem() {
     const {height, leftItem} = this.props;
     const leftItemWidth = this.getLeftItemWidth();
+    const background = leftItem.background || ITEM_BG;
 
     return (
-      <View style={{position: 'absolute', left: 0, right: 0, height, flexDirection: 'row'}}>
+      <View style={{position: 'absolute', left: 0, right: 0, height, flexDirection: 'row'}} pointerEvents={'box-none'}>
         <Animated.View
           style={{
-            backgroundColor: leftItem.background || ITEM_BG,
+            backgroundColor: background,
             position: 'absolute',
             left: 0,
             right: 0,
@@ -191,66 +198,68 @@ export default class Drawer extends BaseComponent {
             }],
           }}
         >
-          <TouchableOpacity
-            style={{
-              width: leftItemWidth,
-              minWidth: this.minItemWidth,
-              maxWidth: this.maxItemWidth,
-              height,
-              padding: ITEM_PADDING,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'blue',
-            }} 
+          <TouchableHighlight
             onPress={() => this.onItemPress(leftItem.id)}
-            activeOpacity={0.7}
+            underlayColor={Colors.getColorTint(background, 50)}
           >
-            <Animated.Image
-              source={leftItem.icon}
-              style={
-              [this.styles.buttonImage, {
-                opacity: this.deltaX.interpolate({
-                  inputRange: [this.minItemWidth - 25, this.minItemWidth],
-                  outputRange: [0, 1],
-                  extrapolateLeft: 'clamp',
-                  extrapolateRight: 'clamp',
-                }),
-                transform: [{
-                  scale: this.deltaX.interpolate({
-                    inputRange: [this.minItemWidth - 25, this.minItemWidth],
-                    outputRange: [0.7, 1],
-                    extrapolateLeft: 'clamp',
-                    extrapolateRight: 'clamp',
-                  }),
-                }],
-              },
-              ]}
-            />
-            {leftItem.text && 
-            <Animated.Text
-              numberOfLines={1}
-              style={
-              [this.styles.buttonText, {
-                opacity: this.deltaX.interpolate({
-                  inputRange: [this.minItemWidth - 25, this.minItemWidth],
-                  outputRange: [0, 1],
-                  extrapolateLeft: 'clamp',
-                  extrapolateRight: 'clamp',
-                }),
-                transform: [{
-                  scale: this.deltaX.interpolate({
-                    inputRange: [this.minItemWidth - 25, this.minItemWidth],
-                    outputRange: [0.7, 1],
-                    extrapolateLeft: 'clamp',
-                    extrapolateRight: 'clamp',
-                  }),
-                }],
-              },
-              ]}
+            <View
+              style={{
+                width: leftItemWidth,
+                minWidth: this.minItemWidth,
+                maxWidth: this.maxItemWidth,
+                height,
+                padding: ITEM_PADDING,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }} 
             >
-              {leftItem.text}
-            </Animated.Text>}
-          </TouchableOpacity>
+              <Animated.Image
+                source={leftItem.icon}
+                style={
+                [this.styles.buttonImage, {
+                  opacity: this.deltaX.interpolate({
+                    inputRange: [this.minItemWidth - 25, this.minItemWidth],
+                    outputRange: [0, 1],
+                    extrapolateLeft: 'clamp',
+                    extrapolateRight: 'clamp',
+                  }),
+                  transform: [{
+                    scale: this.deltaX.interpolate({
+                      inputRange: [this.minItemWidth - 25, this.minItemWidth],
+                      outputRange: [0.7, 1],
+                      extrapolateLeft: 'clamp',
+                      extrapolateRight: 'clamp',
+                    }),
+                  }],
+                },
+                ]}
+              />
+              {leftItem.text && 
+              <Animated.Text
+                numberOfLines={1}
+                style={
+                [this.styles.buttonText, {
+                  opacity: this.deltaX.interpolate({
+                    inputRange: [this.minItemWidth - 25, this.minItemWidth],
+                    outputRange: [0, 1],
+                    extrapolateLeft: 'clamp',
+                    extrapolateRight: 'clamp',
+                  }),
+                  transform: [{
+                    scale: this.deltaX.interpolate({
+                      inputRange: [this.minItemWidth - 25, this.minItemWidth],
+                      outputRange: [0.7, 1],
+                      extrapolateLeft: 'clamp',
+                      extrapolateRight: 'clamp',
+                    }),
+                  }],
+                },
+                ]}
+              >
+                {leftItem.text}
+              </Animated.Text>}
+            </View>
+          </TouchableHighlight>
         </Animated.View>
       </View>
     );
@@ -453,7 +462,7 @@ export default class Drawer extends BaseComponent {
     const dragBounds = this.getBoundaries();
 
     return (
-      <View style={style}>
+      <View style={[style, this.styles.container]}>
         {this.renderRightItems()}
         {this.renderLeftItem()}
         <Interactable.View
@@ -485,7 +494,9 @@ function createStyles(props) {
   const buttonPadding = height >= 72 ? ITEM_PADDING : 8;
 
   return StyleSheet.create({
-    container: {},
+    container: {
+      overflow: 'hidden',
+    },
     button: {
       height: '100%',
       justifyContent: 'center',
