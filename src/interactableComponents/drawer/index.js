@@ -39,6 +39,10 @@ export default class Drawer extends BaseComponent {
      */
     rightItems: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
+      text: PropTypes.string,
+      icon: PropTypes.number,
+      beckground: PropTypes.string,
+      width: PropTypes.number,
       closeDrawer: PropTypes.bool,
     })),
     /**
@@ -46,6 +50,10 @@ export default class Drawer extends BaseComponent {
      */
     leftItem: PropTypes.shape({
       id: PropTypes.string.isRequired,
+      text: PropTypes.string,
+      icon: PropTypes.number,
+      beckground: PropTypes.string,
+      width: PropTypes.number,
       closeDrawer: PropTypes.bool,
     }),
     /**
@@ -75,12 +83,6 @@ export default class Drawer extends BaseComponent {
       inMotion: false,
       position: 1,
     };
-  }
-
-  getMinWidth() {
-    const {height} = this.props;
-    const maxWidth = (Constants.screenWidth - MIN_LEFT_MARGIN);
-    return (height > maxWidth) ? maxWidth : height;
   }
 
   onSnap = ({nativeEvent}) => {
@@ -117,6 +119,11 @@ export default class Drawer extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
+  getMinWidth() {
+    const {height} = this.props;
+    const maxWidth = (Constants.screenWidth - MIN_LEFT_MARGIN);
+    return (height > maxWidth) ? maxWidth : height;
+  }
   getItemById(id) {
     const {leftItem, rightItems} = this.props;
     return (id === leftItem.id) ? leftItem : _.find(rightItems, item => item.id === id);
@@ -276,7 +283,6 @@ export default class Drawer extends BaseComponent {
       </View>
     );
   }
-
   renderRightItems() {
     const {height, rightItems} = this.props;
     const inputRanges = this.getInputRanges();
@@ -466,7 +472,6 @@ export default class Drawer extends BaseComponent {
       </View>
     );
   }
-
   render() {
     const {style, height, onPress} = this.props;
     const Container = onPress ? TouchableHighlight : View;
