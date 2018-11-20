@@ -52,10 +52,6 @@ export default class Badge extends BaseComponent {
      */
     containerStyle: PropTypes.object,
     /**
-     * Shows pimple badge
-     */
-    pimple: PropTypes.bool,
-    /**
      * Use to identify the badge in tests
      */
     testId: PropTypes.string,
@@ -75,18 +71,16 @@ export default class Badge extends BaseComponent {
   }
 
   getBadgeSizeStyle() {
-    const {label, borderWidth, pimple} = this.props;
+    const {label, borderWidth} = this.props;
     let height = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
     let width = 0;
-    if (pimple || label === undefined) {
+    if (label === undefined) {
       width = SIZE_PIMPLE;
       height = SIZE_PIMPLE;
     } else {
       const numberOfCharacters = label.length;
       switch (numberOfCharacters) {
         case 0:
-          width = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
-          break;
         case 1:
           width = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
           break;
