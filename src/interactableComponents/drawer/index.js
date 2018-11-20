@@ -128,12 +128,11 @@ export default class Drawer extends BaseComponent {
     const {leftItem, rightItems} = this.props;
     return (id === leftItem.id) ? leftItem : _.find(rightItems, item => item.id === id);
   }
-  getItemsTotalWidth(numberOfItems) {
+  getRightItemsTotalWidth() {
     const items = this.props.rightItems;
     let total = 0;
     if (items.length > 0) {
-      const index = items.length - numberOfItems || 0;
-      for (let i = items.length - 1; i >= index; i--) {
+      for (let i = 0; i < items.length; i++) {
         total += (items[i].width || this.minItemWidth);
       }
     }
@@ -145,7 +144,7 @@ export default class Drawer extends BaseComponent {
   }
   getBoundaries() {
     const {leftItem, rightItems} = this.props;
-    const rightWidth = this.getItemsTotalWidth();
+    const rightWidth = this.getRightItemsTotalWidth();
     const rightBound = rightWidth > 0 ? -rightWidth : -(this.minItemWidth * rightItems.length);
     const dragBounds = {right: _.isEmpty(leftItem) ? 0 : this.getLeftItemWidth(), left: _.isEmpty(rightItems) ? 0 : rightBound};
     return dragBounds;
@@ -156,17 +155,15 @@ export default class Drawer extends BaseComponent {
     
     const left = !_.isEmpty(leftItem) ? {x: this.getLeftItemWidth(), damping: 1 - damping, tension} : {};
     const zero = {x: 0, damping: 1 - damping, tension};
-    const first = !_.isEmpty(rightItems[0]) ? {x: -(this.getItemsTotalWidth(1)), damping: 1 - damping, tension} : {};
-    const second = !_.isEmpty(rightItems[1]) ? {x: -(this.getItemsTotalWidth(2)), damping: 1 - damping, tension} : {};
-    const third = !_.isEmpty(rightItems[2]) ? {x: -(this.getItemsTotalWidth(3)), damping: 1 - damping, tension} : {};
+    const last = !_.isEmpty(rightItems[0]) ? {x: -(this.getRightItemsTotalWidth()), damping: 1 - damping, tension} : {};
 
     switch (size) {
       case 1:
-        return [left, zero, first];
+        return [left, zero, last];
       case 2:
-        return [left, zero, second];
+        return [left, zero, last];
       case 3:
-        return [left, zero, third];
+        return [left, zero, last];
       default:
         return [left, zero];
     }
