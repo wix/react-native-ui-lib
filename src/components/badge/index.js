@@ -63,7 +63,6 @@ export default class Badge extends BaseComponent {
 
   static defaultProps = {
     size: 'default',
-    label: '',
   };
 
   isSmallBadge() {
@@ -77,13 +76,13 @@ export default class Badge extends BaseComponent {
 
   getBadgeSizeStyle() {
     const {label, borderWidth, pimple} = this.props;
-    const numberOfCharacters = label.length;
     let height = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
     let width = 0;
-    if (pimple) {
+    if (pimple || label === undefined) {
       width = SIZE_PIMPLE;
       height = SIZE_PIMPLE;
     } else {
+      const numberOfCharacters = label.length;
       switch (numberOfCharacters) {
         case 0:
           width = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
