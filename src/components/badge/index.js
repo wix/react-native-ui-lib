@@ -52,10 +52,6 @@ export default class Badge extends BaseComponent {
      */
     containerStyle: PropTypes.object,
     /**
-     * Shows pimple badge
-     */
-    pimple: PropTypes.bool,
-    /**
      * Use to identify the badge in tests
      */
     testId: PropTypes.string,
@@ -63,7 +59,6 @@ export default class Badge extends BaseComponent {
 
   static defaultProps = {
     size: 'default',
-    label: '',
   };
 
   isSmallBadge() {
@@ -121,7 +116,7 @@ export default class Badge extends BaseComponent {
   }
 
   render() {
-    const {borderWidth, borderColor, pimple} = this.props;
+    const {borderWidth, borderColor} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
     const animationProps = this.extractAnimationProps();
@@ -140,7 +135,7 @@ export default class Badge extends BaseComponent {
         ]}
         {...animationProps}
       >
-        {!pimple && this.renderLabel()}
+        {this.renderLabel()}
       </Animatable.View>
     );
   }
