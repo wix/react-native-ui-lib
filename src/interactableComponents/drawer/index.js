@@ -87,7 +87,11 @@ export default class Drawer extends BaseComponent {
 
   onSnap = ({nativeEvent}) => {
     const { index } = nativeEvent;
-    this.setState({position: index});
+    if (index === 2) {
+      this.interactableElem.snapTo({index: 3});
+    } else {
+      this.setState({position: index});
+    }
   }
   onDrag = ({nativeEvent}) => {
     const { state } = nativeEvent;
@@ -155,6 +159,7 @@ export default class Drawer extends BaseComponent {
     
     const left = !_.isEmpty(leftItem) ? {x: this.getLeftItemWidth(), damping: 1 - damping, tension} : {};
     const zero = {x: 0, damping: 1 - damping, tension};
+    const first = {x: -((rightItems[0].width || this.minItemWidth) * 1.5), damping: 1 - damping, tension};
     const last = !_.isEmpty(rightItems[0]) ? {x: -(this.getRightItemsTotalWidth()), damping: 1 - damping, tension} : {};
 
     switch (size) {
@@ -163,7 +168,7 @@ export default class Drawer extends BaseComponent {
       case 2:
         return [left, zero, last];
       case 3:
-        return [left, zero, last];
+        return [left, zero, first, last];
       default:
         return [left, zero];
     }
