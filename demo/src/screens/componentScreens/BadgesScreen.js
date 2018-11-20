@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {Colors, View, Badge, Button, Text} from 'react-native-ui-lib';//eslint-disable-line
-
 const BadgesSpace = 30;
 const plusIcon = require('../../assets/icons/chevronUp.png');
 const minusIcon = require('../../assets/icons/chevronDown.png');
@@ -81,8 +80,8 @@ export default class BadgesScreen extends Component {
 
         <Text text50 row center marginT-50 marginB-15> Pimple Badges </Text>
         <View row center>
-          <Badge pimple containerStyle={{marginRight: BadgesSpace}} backgroundColor={Colors.red30}/>
-          <Badge pimple containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.blue30}/>
+          <Badge containerStyle={{marginRight: BadgesSpace}} backgroundColor={Colors.red30}/>
+          <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.blue30}/>
         </View>
       </ScrollView>
     );
