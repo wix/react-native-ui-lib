@@ -27,17 +27,17 @@ export default class BadgesScreen extends Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
+        <Text text50 row center marginB-15> Badges </Text>
         <View row center>
-          <View center marginR-20>
-            <Badge label={'1'} containerStyle={{marginTop: BadgesSpace}} backgroundColor={Colors.blue30}/>
+          <View center marginR-10 marginL-10>
+            <Badge label={'1'} backgroundColor={Colors.blue30}/>
             <Badge label={'1'} containerStyle={{marginTop: BadgesSpace}} backgroundColor={Colors.blue30} borderWidth={3} borderColor={Colors.blue50}/>
             <Badge size="small" label={'1'} containerStyle={{marginTop: BadgesSpace}} backgroundColor={Colors.blue30}/>
           </View>
 
-          <View center marginR-20>
+          <View center marginR-10 marginL-10>
             <Badge
               label={this.state.value.toString()}
-              containerStyle={{marginTop: BadgesSpace}}
               backgroundColor={Colors.red30}
             />
             <Badge
@@ -54,14 +54,14 @@ export default class BadgesScreen extends Component {
             />
           </View>
 
-          <View center marginR-20>
-            <Badge label={'99+'} containerStyle={{marginTop: BadgesSpace}}/>
+          <View center marginR-10 marginL-10>
+            <Badge label={'99+'}/>
             <Badge label={'99+'} containerStyle={{marginTop: BadgesSpace}} borderWidth={2} borderColor={Colors.white}/>
             <Badge size="small" label={'99+'} containerStyle={{marginTop: BadgesSpace}}/>
           </View>
         </View>
 
-        <View row marginT-50 marginB-15>
+        <View row marginT-20 marginB-15>
           <Button
             bg-dark60 style={{width: 40, height: 40, borderWidth: 1, marginRight: 15}}
             iconSource={minusIcon}
@@ -78,6 +78,12 @@ export default class BadgesScreen extends Component {
           />
         </View>
         <Text center>Press buttons to change red badge value by 1. Long press to change it by 10.</Text>
+
+        <Text text50 row center marginT-50 marginB-15> Pimple Badges </Text>
+        <View row center>
+          <Badge pimple containerStyle={{marginRight: BadgesSpace}} backgroundColor={Colors.red30}/>
+          <Badge pimple containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.blue30}/>
+        </View>
       </ScrollView>
     );
   }

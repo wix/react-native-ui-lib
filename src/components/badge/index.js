@@ -7,6 +7,7 @@ import {BaseComponent} from '../../commons';
 import {Typography, ThemeManager, BorderRadiuses} from '../../style';
 
 
+const SIZE_PIMPLE = 4.5;
 const SIZE_DEFAULT = 20;
 const WIDTH_DOUBLE = 28;
 const WIDTH_TRIPLE = 35;
@@ -51,6 +52,10 @@ export default class Badge extends BaseComponent {
      */
     containerStyle: PropTypes.object,
     /**
+     * Shows pimple badge
+     */
+    pimple: PropTypes.bool,
+    /**
      * Use to identify the badge in tests
      */
     testId: PropTypes.string,
@@ -58,6 +63,7 @@ export default class Badge extends BaseComponent {
 
   static defaultProps = {
     size: 'default',
+    label: '',
   };
 
   isSmallBadge() {
@@ -70,24 +76,28 @@ export default class Badge extends BaseComponent {
   }
 
   getBadgeSizeStyle() {
-    const {label, borderWidth} = this.props;
+    const {label, borderWidth, pimple} = this.props;
     const numberOfCharacters = label.length;
     let height = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
     let width = 0;
-    
-    switch (numberOfCharacters) {
-      case 0:
-        width = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
-        break;
-      case 1:
-        width = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
-        break;
-      case 2:
-        width = this.isSmallBadge() ? WIDTH_DOUBLE_SMALL : WIDTH_DOUBLE;
-        break;
-      default:
-        width = this.isSmallBadge() ? WIDTH_TRIPLE_SMALL : WIDTH_TRIPLE;
-        break;
+    if (pimple) {
+      width = SIZE_PIMPLE;
+      height = SIZE_PIMPLE;
+    } else {
+      switch (numberOfCharacters) {
+        case 0:
+          width = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
+          break;
+        case 1:
+          width = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
+          break;
+        case 2:
+          width = this.isSmallBadge() ? WIDTH_DOUBLE_SMALL : WIDTH_DOUBLE;
+          break;
+        default:
+          width = this.isSmallBadge() ? WIDTH_TRIPLE_SMALL : WIDTH_TRIPLE;
+          break;
+      }
     }
 
     if (borderWidth) {
@@ -113,7 +123,7 @@ export default class Badge extends BaseComponent {
   }
 
   render() {
-    const {borderWidth, borderColor} = this.props;
+    const {borderWidth, borderColor, pimple} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
     const animationProps = this.extractAnimationProps();
@@ -132,7 +142,7 @@ export default class Badge extends BaseComponent {
         ]}
         {...animationProps}
       >
-        {this.renderLabel()}
+        {!pimple && this.renderLabel()}
       </Animatable.View>
     );
   }
