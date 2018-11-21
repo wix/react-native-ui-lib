@@ -77,7 +77,7 @@ export default class Drawer extends BaseComponent {
 
     this.deltaX = new Animated.Value(0);
     this.minItemWidth = this.getMinWidth();
-    this.maxItemWidth = (Constants.screenWidth - MIN_LEFT_MARGIN) / props.rightItems.length;
+    this.maxItemWidth = this.getMaxWidth();
     
     this.state = {
       inMotion: false,
@@ -86,7 +86,7 @@ export default class Drawer extends BaseComponent {
   }
 
   onSnap = ({nativeEvent}) => {
-    const { index } = nativeEvent;
+    const {index} = nativeEvent;
     if (index === 2) {
       this.interactableElem.snapTo({index: 3});
     } else {
@@ -94,7 +94,7 @@ export default class Drawer extends BaseComponent {
     }
   }
   onDrag = ({nativeEvent}) => {
-    const { state } = nativeEvent;
+    const {state} = nativeEvent;
     if (state === 'start') {
       this.setState({inMotion: true});
     }
@@ -131,8 +131,12 @@ export default class Drawer extends BaseComponent {
 
   getMinWidth() {
     const {height} = this.props;
-    const maxWidth = (Constants.screenWidth - MIN_LEFT_MARGIN);
+    const maxWidth = this.getMaxWidth();
     return (height > maxWidth) ? maxWidth : height;
+  }
+  getMaxWidth() {
+    const {rightItems} = this.props;
+    return (Constants.screenWidth - MIN_LEFT_MARGIN) / rightItems.length;
   }
   getItemById(id) {
     const {leftItem, rightItems} = this.props;
