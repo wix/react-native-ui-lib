@@ -104,12 +104,18 @@ export default class Drawer extends BaseComponent {
   }
   onPress = () => {
     this.closeDrawer();
-    _.invoke(this.props, 'onPress');
+    
+    setTimeout(() => {
+      _.invoke(this.props, 'onPress');
+    }, 0);
   }
   onItemPress(id) {
-    _.invoke(this.props, 'onItemPress', id);
     const item = this.getItemById(id);
     if (item.closeDrawer) this.closeDrawer();
+    
+    setTimeout(() => {
+      _.invoke(this.props, 'onItemPress', id);
+    }, 0);
   }
 
   closeDrawer() {
