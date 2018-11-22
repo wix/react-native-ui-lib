@@ -53,11 +53,11 @@ export default class DrawerScreen extends Component {
   }
 
   render() {
-    const leftItem = {id: 'left', icon: collectionsIcon, text: 'Save', background: Colors.red30};
+    const leftItem = {id: 'left', icon: collectionsIcon, text: 'Archive'};
     const rightItems = [
       {id: 'right-1', icon: starIcon, text: 'Accessories', width: 110},
-      {id: 'right-2', icon: sharIcon, text: 'Share', background: Colors.violet40},
-      {id: 'right-3', icon: videoIcon, text: 'Video', background: Colors.violet50, closeDrawer: true},
+      {id: 'right-2', icon: sharIcon, text: 'Share'},
+      {id: 'right-3', icon: videoIcon, text: 'Video', closeDrawer: true},
     ];
     
     return (
@@ -72,6 +72,17 @@ export default class DrawerScreen extends Component {
           ref={r => this.firstDrawer = r}
         >
           {this.renderContent('0', conversations[0])}
+        </Drawer>
+        <Drawer
+          height={96}
+          leftItem={leftItem}
+          rightItems={[rightItems[0], rightItems[1]]}
+          style={{marginTop: 20}}
+          onPress={this.onPress}
+          onItemPress={this.onItemPress}
+          ref={r => this.firstDrawer = r}
+        >
+          {this.renderContent('2', conversations[2])}
         </Drawer>
         
         <Drawer

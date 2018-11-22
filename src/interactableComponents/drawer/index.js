@@ -6,7 +6,12 @@ import Interactable from 'react-native-interactable';
 import {BaseComponent, Constants, Colors, Typography} from '../../../src';
 
 
-const ITEM_BG = Colors.violet30;
+const ITEM_BG = {
+  left: Colors.blue30,
+  first: Colors.violet10,
+  second: Colors.violet30,
+  third: Colors.violet40,
+}
 const MIN_LEFT_MARGIN = 28;
 const ITEM_PADDING = 12;
 const BLEED = 25;
@@ -202,7 +207,7 @@ export default class Drawer extends BaseComponent {
   renderLeftItem() {
     const {height, leftItem} = this.props;
     const leftItemWidth = this.getLeftItemWidth();
-    const background = leftItem.background || ITEM_BG;
+    const background = leftItem.background || ITEM_BG.left;
 
     return (
       <View
@@ -304,7 +309,7 @@ export default class Drawer extends BaseComponent {
                 width: rightItems[0].width,
                 minWidth: this.minItemWidth,
                 maxWidth: this.maxItemWidth,
-                backgroundColor: rightItems[0].background || ITEM_BG,
+                backgroundColor: rightItems[0].background || ITEM_BG.first,
               },
             ]}
             onPress={() => this.onItemPress(rightItems[0].id)}
@@ -364,7 +369,7 @@ export default class Drawer extends BaseComponent {
               width: rightItems[1].width,
               minWidth: this.minItemWidth,
               maxWidth: this.maxItemWidth,
-              backgroundColor: rightItems[1].background || ITEM_BG,
+              backgroundColor: rightItems[1].background || ITEM_BG.second,
             },
           ]}
           onPress={() => this.onItemPress(rightItems[1].id)}
@@ -424,7 +429,7 @@ export default class Drawer extends BaseComponent {
               width: rightItems[2].width,
               minWidth: this.minItemWidth,
               maxWidth: this.maxItemWidth,
-              backgroundColor: rightItems[2].background || ITEM_BG,
+              backgroundColor: rightItems[2].background || ITEM_BG.third,
             },
           ]}
           onPress={() => this.onItemPress(rightItems[2].id)}
