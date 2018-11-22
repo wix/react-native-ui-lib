@@ -193,10 +193,12 @@ export default class Drawer extends BaseComponent {
   }
   getAlertAreas() {
     const {rightItems} = this.props;
+    const size = rightItems.length;
+    
     const first = {id: 'first', influenceArea: {left: -(rightItems[0].width || this.minItemWidth)}};
     const second = {id: 'second', influenceArea: {left: -(this.getRightItemsTotalWidth(2))}};
     
-    switch (rightItems.length) {
+    switch (size) {
       case 2:
         return [first];
       case 3:
