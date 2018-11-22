@@ -87,18 +87,6 @@ export default class Drawer extends BaseComponent {
 
   onSnap = ({nativeEvent}) => {
     const {index} = nativeEvent;
-    // console.warn(`index: ${index}, position: ${position}`);
-    // 1: closed, 4: open
-    // const {position} = this.state;
-    // if (index === 2) {
-    //   this.interactableElem.snapTo({index: (position === 1) ? 4 : 1});
-    // }
-    // if (index === 3) {
-    //   this.interactableElem.snapTo({index: (position === 4) ? 1 : 4});
-    // }
-    // if (index < 2 || index > 3) {
-    //   this.setState({position: index});
-    // }
     this.setState({position: index});
   }
   onDrag = ({nativeEvent}) => {
@@ -150,16 +138,6 @@ export default class Drawer extends BaseComponent {
     const {leftItem, rightItems} = this.props;
     return (id === leftItem.id) ? leftItem : _.find(rightItems, item => item.id === id);
   }
-  // getRightItemsTotalWidth() {
-  //   const items = this.props.rightItems;
-  //   let total = 0;
-  //   if (items.length > 0) {
-  //     for (let i = 0; i < items.length; i++) {
-  //       total += (items[i].width || this.minItemWidth);
-  //     }
-  //   }
-  //   return total;
-  // }
   getRightItemsTotalWidth(numberOfItems) {
     const items = this.props.rightItems;
     let total = 0;
@@ -186,17 +164,13 @@ export default class Drawer extends BaseComponent {
     const {leftItem, rightItems, damping, tension} = this.props;
     const size = rightItems.length;
     
-    const left = !_.isEmpty(leftItem) ? {if: 'open_left', x: this.getLeftItemWidth(), damping: 1 - damping, tension} : {};
-    const zero = {id: 'closed', x: 0, damping: 1 - damping, tension};
-    // const first = !_.isEmpty(rightItems[0]) ? {x: -(this.getRightItemsTotalWidth(1)), damping: 1 - damping, tension} : {};
-    // const second = !_.isEmpty(rightItems[1]) ? {x: -(this.getRightItemsTotalWidth(2)), damping: 1 - damping, tension} : {};
-    const last = !_.isEmpty(rightItems[0]) ? {id: 'open', x: -(this.getRightItemsTotalWidth()), damping: 1 - damping, tension} : {};
+    const left = !_.isEmpty(leftItem) ? {x: this.getLeftItemWidth(), damping: 1 - damping, tension} : {};
+    const zero = {x: 0, damping: 1 - damping, tension};
+    const last = !_.isEmpty(rightItems[0]) ? {x: -(this.getRightItemsTotalWidth()), damping: 1 - damping, tension} : {};
 
     switch (size) {
       case 1:
-        return [left, zero, last];
       case 2:
-        return [left, zero, last];
       case 3:
         return [left, zero, last];
       default:
@@ -209,7 +183,6 @@ export default class Drawer extends BaseComponent {
     const end = this.minItemWidth - BLEED;
     const interval = 65;
 
-    // const opacityInputRanges = [[-225, -180], [-150, -115], [-75, -50]];
     const first = [-(this.minItemWidth), -(end)];
     const second = [-(this.minItemWidth * 2), -(end + interval)];
     const third = [-(this.minItemWidth * 3), -(end + (interval * 2))];
