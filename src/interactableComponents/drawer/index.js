@@ -6,6 +6,7 @@ import Interactable from 'react-native-interactable';
 import {BaseComponent, Constants, Colors, Typography} from '../../../src';
 
 
+const DEFAULT_HEIGHT = 72;
 const ITEM_BG = {
   left: Colors.blue30,
   first: Colors.violet10,
@@ -41,6 +42,10 @@ export default class Drawer extends BaseComponent {
      */
     height: PropTypes.number,
     /**
+     * The drawer's width
+     */
+    width: PropTypes.number,
+    /**
      * The drawer top layer's damping
      */
     damping: PropTypes.number,
@@ -61,7 +66,7 @@ export default class Drawer extends BaseComponent {
      */
     itemsTintColor: PropTypes.string,
     /**
-     * Press handler
+     * Press handler (will also close the drawer)
      */
     onPress: PropTypes.func,
     /**
@@ -71,7 +76,8 @@ export default class Drawer extends BaseComponent {
   };
 
   static defaultProps = {
-    height: 72,
+    height: DEFAULT_HEIGHT,
+    width: Constants.screenWidth,
     damping: 1 - 0.6,
     tension: 300,
     itemsTintColor: Colors.white,
@@ -81,13 +87,20 @@ export default class Drawer extends BaseComponent {
     super(props);
 
     this.deltaX = new Animated.Value(0);
-    this.minItemWidth = this.getMinWidth();
-    this.maxItemWidth = this.getMaxWidth();
+    this.minItemWidth = this.getMinItemWidth();
+    this.maxItemWidth = this.getMaxItemWidth();
     
     this.state = {
       inMotion: false,
       position: 1,
     };
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) { //eslint-disable-line
+    this.deltaX = new Animated.Value(0);
+    this.minItemWidth = this.getMinItemWidth();
+    this.maxItemWidth = this.getMaxItemWidth();
+    this.setState({inMotion: false, position: 1});
   }
 
   onAlert = ({nativeEvent}) => {
@@ -114,7 +127,6 @@ export default class Drawer extends BaseComponent {
   }
   onPress = () => {
     this.closeDrawer();
-    
     setTimeout(() => {
       _.invoke(this.props, 'onPress');
     }, 0);
@@ -122,7 +134,6 @@ export default class Drawer extends BaseComponent {
   onItemPress(id) {
     const item = this.getItemById(id);
     if (item.closeDrawer) this.closeDrawer();
-    
     setTimeout(() => {
       _.invoke(this.props, 'onItemPress', id);
     }, 0);
@@ -139,14 +150,14 @@ export default class Drawer extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
-  getMinWidth() {
+  getMinItemWidth() {
     const {height} = this.props;
-    const maxWidth = this.getMaxWidth();
+    const maxWidth = this.getMaxItemWidth();
     return (height > maxWidth) ? maxWidth : height;
   }
-  getMaxWidth() {
-    const {rightItems} = this.props;
-    return (Constants.screenWidth - MIN_LEFT_MARGIN) / rightItems.length;
+  getMaxItemWidth() {
+    const {rightItems, width} = this.props;
+    return (width - MIN_LEFT_MARGIN) / rightItems.length;
   }
   getItemById(id) {
     const {leftItem, rightItems} = this.props;
@@ -158,7 +169,7 @@ export default class Drawer extends BaseComponent {
     if (items.length > 0) {
       const index = items.length - numberOfItems || 0;
       for (let i = items.length - 1; i >= index; i--) {
-        total += (items[i].width || this.minItemWidth);
+        total += this.getItemWidth(items[i]);
       }
     }
     return total;
@@ -166,6 +177,12 @@ export default class Drawer extends BaseComponent {
   getLeftItemWidth() {
     const {leftItem} = this.props;
     return leftItem.width || this.minItemWidth;
+  }
+  getItemWidth(item) {
+    if (item && item.width && item.width <= this.maxItemWidth) {
+      return item.width;
+    }
+    return this.minItemWidth;
   }
   getBoundaries() {
     const {leftItem, rightItems} = this.props;
@@ -195,7 +212,7 @@ export default class Drawer extends BaseComponent {
     const {rightItems} = this.props;
     const size = rightItems.length;
     
-    const first = {id: 'first', influenceArea: {left: -(rightItems[0].width || this.minItemWidth)}};
+    const first = {id: 'first', influenceArea: {left: -(this.getItemWidth(rightItems[0]) || this.minItemWidth)}};
     const second = {id: 'second', influenceArea: {left: -(this.getRightItemsTotalWidth(2))}};
     
     switch (size) {
@@ -230,13 +247,13 @@ export default class Drawer extends BaseComponent {
   }
 
   renderLeftItem() {
-    const {height, leftItem} = this.props;
+    const {height, width, leftItem} = this.props;
     const leftItemWidth = this.getLeftItemWidth();
     const background = leftItem.background || ITEM_BG.left;
 
     return (
       <View
-        style={{position: 'absolute', left: 0, right: Constants.screenWidth / 2, height, flexDirection: 'row'}}
+        style={{position: 'absolute', left: 0, right: width / 2, flexDirection: 'row'}}
         pointerEvents={'box-none'}
       >
         <Animated.View
@@ -510,11 +527,11 @@ export default class Drawer extends BaseComponent {
     );
   }
   render() {
-    const {style, height, onPress} = this.props;
-    const Container = onPress ? TouchableHighlight : View;
+    const {style, height, width, onPress} = this.props;
+    const Container = onPress ? TouchableOpacity : View;
 
     return (
-      <View style={[style, this.styles.container]}>
+      <View style={[style, this.styles.container, {width}]}>
         {this.renderRightItems()}
         {this.renderLeftItem()}
         <Interactable.View
@@ -529,9 +546,10 @@ export default class Drawer extends BaseComponent {
           onStop={this.onStop}
           dragToss={0.01}
           animatedValueX={this.deltaX}
+          style={{backgroundColor: Colors.white}}
         >
-          <Container onPress={this.onPress} underlayColor={'transparent'}>
-            <View style={{left: 0, right: 0, height, backgroundColor: Colors.white}}>
+          <Container onPress={this.onPress} activeOpacity={0.7}>
+            <View style={{left: 0, right: 0, height}}>
               {this.props.children}
             </View>
           </Container>
@@ -543,9 +561,9 @@ export default class Drawer extends BaseComponent {
 
 function createStyles(props) {
   const {height, itemsTintColor} = props;
-  const typography = height >= 72 ? Typography.text70 : Typography.text80;
-  const textTopMargin = height > 72 ? 8 : 0;
-  const buttonPadding = height >= 72 ? ITEM_PADDING : 8;
+  const typography = height >= DEFAULT_HEIGHT ? Typography.text70 : Typography.text80;
+  const textTopMargin = height > DEFAULT_HEIGHT ? 8 : 0;
+  const buttonPadding = height >= DEFAULT_HEIGHT ? ITEM_PADDING : 8;
 
   return StyleSheet.create({
     container: {

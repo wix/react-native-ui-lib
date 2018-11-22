@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Alert} from 'react-native';
-import {Colors, Typography, View, Drawer, Text, ListItem, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, Typography, View, Drawer, Text, Button, ListItem, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
 
 
@@ -18,14 +18,21 @@ export default class DrawerScreen extends Component {
   }
 
   onPress = () => {
-    console.log('Drawer pressed');
+    Alert.alert('Drawer pressed');
   }
-
   onItemPress = (id) => {
-    console.log(`Item ${id} pressed`);
+    Alert.alert(`Item ${id} pressed`);
     if (id === 'right-1') {
       this.firstDrawer.closeDrawer();
     }
+  }
+
+  onButtonPress(id) {
+    Alert.alert(`'${id}' button pressed`);
+  }
+  onContentPress(id) {
+    Alert.alert(`List item #${id + 1} pressed`);
+    this.firstDrawer.closeDrawer();
   }
 
   renderContent(id, row) {
@@ -33,7 +40,7 @@ export default class DrawerScreen extends Component {
     return (
       <ListItem
         key={id}
-        onPress={() => Alert.alert(`list item #${id + 1} pressed`)}
+        onPress={() => this.onContentPress(id)}
         style={{height: '100%', backgroundColor: Colors.dark80}}
       >
         <ListItem.Part left>
@@ -67,7 +74,6 @@ export default class DrawerScreen extends Component {
           leftItem={leftItem}
           rightItems={rightItems}
           style={{marginTop: 20}}
-          onPress={this.onPress}
           onItemPress={this.onItemPress}
           ref={r => this.firstDrawer = r}
         >
@@ -75,12 +81,12 @@ export default class DrawerScreen extends Component {
         </Drawer>
         <Drawer
           height={96}
+          width={250}
           leftItem={leftItem}
-          rightItems={[rightItems[0], rightItems[1]]}
-          style={{marginTop: 20}}
+          rightItems={[rightItems[1], rightItems[2]]}
+          style={{marginTop: 20, marginLeft: 50}}
           onPress={this.onPress}
           onItemPress={this.onItemPress}
-          ref={r => this.firstDrawer = r}
         >
           {this.renderContent('2', conversations[2])}
         </Drawer>
@@ -109,6 +115,16 @@ export default class DrawerScreen extends Component {
             <View>
               <Text style={[styles.rowTitle, {...Typography.text70, fontWeight: 'bold'}]}>Row Title</Text>
               <Text style={[styles.rowSubtitle, {...Typography.text80}]}>Drag the row left and right</Text>
+            </View>
+            <View style={styles.rowButtonContainer}>
+              <Button
+                round
+                size={'small'}
+                backgroundColor={Colors.yellow30}
+                dark20
+                iconSource={starIcon}
+                onPress={() => this.onButtonPress('star')}
+              />
             </View>
           </View>
         </Drawer>
@@ -142,5 +158,10 @@ const styles = StyleSheet.create({
   rowSubtitle: {
     ...Typography.text70,
     color: Colors.dark30,
+  },
+  rowButtonContainer: {
+    flex: 1,
+    alignItems: 'flex-end',
+    padding: 20,
   },
 });
