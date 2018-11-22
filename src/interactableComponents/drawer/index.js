@@ -90,6 +90,15 @@ export default class Drawer extends BaseComponent {
     };
   }
 
+  onAlert = ({nativeEvent}) => {
+    const event = JSON.stringify(nativeEvent);
+    if (event.includes('"first":"leave"')) {
+      this.interactableElem.snapTo({index: 2});
+    }
+    if (event.includes('"second":"enter"')) {
+      this.interactableElem.snapTo({index: 1});
+    }
+  }
   onSnap = ({nativeEvent}) => {
     const {index} = nativeEvent;
     this.setState({position: index});
@@ -180,6 +189,20 @@ export default class Drawer extends BaseComponent {
         return [left, zero, last];
       default:
         return [left, zero];
+    }
+  }
+  getAlertAreas() {
+    const {rightItems} = this.props;
+    const first = {id: 'first', influenceArea: {left: -(rightItems[0].width || this.minItemWidth)}};
+    const second = {id: 'second', influenceArea: {left: -(this.getRightItemsTotalWidth(2))}};
+    
+    switch (rightItems.length) {
+      case 2:
+        return [first];
+      case 3:
+        return [first, second];
+      default:
+        return [];
     }
   }
   getInputRanges() {
@@ -497,6 +520,8 @@ export default class Drawer extends BaseComponent {
           horizontalOnly
           boundaries={this.getBoundaries()}
           snapPoints={this.getSnapPoints()}
+          alertAreas={this.getAlertAreas()}
+          onAlert={this.onAlert}
           onSnap={this.onSnap}
           onDrag={this.onDrag}
           onStop={this.onStop}
@@ -504,7 +529,7 @@ export default class Drawer extends BaseComponent {
           animatedValueX={this.deltaX}
         >
           <Container onPress={this.onPress} underlayColor={'transparent'}>
-            <View style={{left: 0, right: 0, height}}>
+            <View style={{left: 0, right: 0, height, backgroundColor: Colors.white}}>
               {this.props.children}
             </View>
           </Container>
