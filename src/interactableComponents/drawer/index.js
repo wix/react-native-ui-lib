@@ -11,7 +11,7 @@ const ITEM_BG = {
   first: Colors.violet10,
   second: Colors.violet30,
   third: Colors.violet40,
-}
+};
 const MIN_LEFT_MARGIN = 28;
 const ITEM_PADDING = 12;
 const BLEED = 25;
