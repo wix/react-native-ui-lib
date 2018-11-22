@@ -87,11 +87,19 @@ export default class Drawer extends BaseComponent {
 
   onSnap = ({nativeEvent}) => {
     const {index} = nativeEvent;
-    if (index === 2) {
-      this.interactableElem.snapTo({index: 3});
-    } else {
-      this.setState({position: index});
-    }
+    // console.warn(`index: ${index}, position: ${position}`);
+    // 1: closed, 4: open
+    // const {position} = this.state;
+    // if (index === 2) {
+    //   this.interactableElem.snapTo({index: (position === 1) ? 4 : 1});
+    // }
+    // if (index === 3) {
+    //   this.interactableElem.snapTo({index: (position === 4) ? 1 : 4});
+    // }
+    // if (index < 2 || index > 3) {
+    //   this.setState({position: index});
+    // }
+    this.setState({position: index});
   }
   onDrag = ({nativeEvent}) => {
     const {state} = nativeEvent;
@@ -142,11 +150,22 @@ export default class Drawer extends BaseComponent {
     const {leftItem, rightItems} = this.props;
     return (id === leftItem.id) ? leftItem : _.find(rightItems, item => item.id === id);
   }
-  getRightItemsTotalWidth() {
+  // getRightItemsTotalWidth() {
+  //   const items = this.props.rightItems;
+  //   let total = 0;
+  //   if (items.length > 0) {
+  //     for (let i = 0; i < items.length; i++) {
+  //       total += (items[i].width || this.minItemWidth);
+  //     }
+  //   }
+  //   return total;
+  // }
+  getRightItemsTotalWidth(numberOfItems) {
     const items = this.props.rightItems;
     let total = 0;
     if (items.length > 0) {
-      for (let i = 0; i < items.length; i++) {
+      const index = items.length - numberOfItems || 0;
+      for (let i = items.length - 1; i >= index; i--) {
         total += (items[i].width || this.minItemWidth);
       }
     }
@@ -167,10 +186,11 @@ export default class Drawer extends BaseComponent {
     const {leftItem, rightItems, damping, tension} = this.props;
     const size = rightItems.length;
     
-    const left = !_.isEmpty(leftItem) ? {x: this.getLeftItemWidth(), damping: 1 - damping, tension} : {};
-    const zero = {x: 0, damping: 1 - damping, tension};
-    const first = {x: -((rightItems[0].width || this.minItemWidth) * 1.5), damping: 1 - damping, tension};
-    const last = !_.isEmpty(rightItems[0]) ? {x: -(this.getRightItemsTotalWidth()), damping: 1 - damping, tension} : {};
+    const left = !_.isEmpty(leftItem) ? {if: 'open_left', x: this.getLeftItemWidth(), damping: 1 - damping, tension} : {};
+    const zero = {id: 'closed', x: 0, damping: 1 - damping, tension};
+    // const first = !_.isEmpty(rightItems[0]) ? {x: -(this.getRightItemsTotalWidth(1)), damping: 1 - damping, tension} : {};
+    // const second = !_.isEmpty(rightItems[1]) ? {x: -(this.getRightItemsTotalWidth(2)), damping: 1 - damping, tension} : {};
+    const last = !_.isEmpty(rightItems[0]) ? {id: 'open', x: -(this.getRightItemsTotalWidth()), damping: 1 - damping, tension} : {};
 
     switch (size) {
       case 1:
@@ -178,7 +198,7 @@ export default class Drawer extends BaseComponent {
       case 2:
         return [left, zero, last];
       case 3:
-        return [left, zero, first, last];
+        return [left, zero, last];
       default:
         return [left, zero];
     }
@@ -213,7 +233,7 @@ export default class Drawer extends BaseComponent {
 
     return (
       <View
-        style={{position: 'absolute', left: 0, right: leftItemWidth, height, flexDirection: 'row'}}
+        style={{position: 'absolute', left: 0, right: Constants.screenWidth / 2, height, flexDirection: 'row'}}
         pointerEvents={'box-none'}
       >
         <Animated.View
@@ -505,7 +525,7 @@ export default class Drawer extends BaseComponent {
           dragToss={0.01}
           animatedValueX={this.deltaX}
         >
-          <Container onPress={this.onPress} activeOpacity={0.3} underlayColor={Colors.white}>
+          <Container onPress={this.onPress} underlayColor={'transparent'}>
             <View style={{left: 0, right: 0, height}}>
               {this.props.children}
             </View>

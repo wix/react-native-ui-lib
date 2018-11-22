@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
-import {Colors, Typography, View, Drawer, Text} from 'react-native-ui-lib'; //eslint-disable-line
+import {StyleSheet, Alert} from 'react-native';
+import {Colors, Typography, View, Drawer, Text, ListItem, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
+import conversations from '../../data/conversations';
 
 
 const collectionsIcon = require('../../assets/icons/collections.png');
@@ -27,15 +28,27 @@ export default class DrawerScreen extends Component {
     }
   }
 
-  renderContent() {
+  renderContent(id, row) {
+    const initials = AvatarHelper.getInitials(row.name);
     return (
-      <View style={styles.rowContent}>
-        <View style={styles.rowIcon}/>
-        <View>
-          <Text style={styles.rowTitle}>Row Title</Text>
-          <Text style={styles.rowSubtitle}>Drag the row left and right</Text>
-        </View>
-      </View>
+      <ListItem
+        key={id}
+        onPress={() => Alert.alert(`list item #${id + 1} pressed`)}
+        style={{height: '100%', backgroundColor: Colors.dark80}}
+      >
+        <ListItem.Part left>
+          <Avatar
+            imageSource={row.thumbnail ? {uri: row.thumbnail} : null}
+            label={initials}
+            isOnline={Number(id) % 3 === 0}
+            containerStyle={{marginHorizontal: 18}}
+            backgroundColor={Colors.white}
+          />
+        </ListItem.Part>
+        <ListItem.Part middle containerStyle={styles.border}>
+          <Text text70>{row.name}</Text>
+        </ListItem.Part>
+      </ListItem>
     );
   }
 
@@ -58,7 +71,7 @@ export default class DrawerScreen extends Component {
           onItemPress={this.onItemPress}
           ref={r => this.firstDrawer = r}
         >
-          {this.renderContent()}
+          {this.renderContent('0', conversations[0])}
         </Drawer>
         
         <Drawer
@@ -68,7 +81,7 @@ export default class DrawerScreen extends Component {
           onPress={this.onPress}
           onItemPress={this.onItemPress}
         >
-          {this.renderContent()}
+          {this.renderContent('1', conversations[1])}
         </Drawer>
         
         <Drawer
