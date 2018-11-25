@@ -292,7 +292,7 @@ export default class Drawer extends BaseComponent {
                 alignItems: 'center',
               }} 
             >
-              <Animated.Image
+              {leftItem.icon && <Animated.Image
                 source={leftItem.icon}
                 style={
                 [this.styles.buttonImage, {
@@ -312,7 +312,7 @@ export default class Drawer extends BaseComponent {
                   }],
                 },
                 ]}
-              />
+              />}
               {leftItem.text && 
               <Animated.Text
                 numberOfLines={1}
@@ -363,7 +363,7 @@ export default class Drawer extends BaseComponent {
             onPress={() => this.onItemPress(rightItems[0].id)}
             activeOpacity={0.7}
           >
-            <Animated.Image
+            {rightItems[0].icon && <Animated.Image
               source={rightItems[0].icon}
               style={
               [this.styles.buttonImage, {
@@ -383,7 +383,7 @@ export default class Drawer extends BaseComponent {
                 }],
               },
               ]}
-            />
+            />}
             {rightItems[0].text && 
             <Animated.Text
               numberOfLines={1}
@@ -423,7 +423,7 @@ export default class Drawer extends BaseComponent {
           onPress={() => this.onItemPress(rightItems[1].id)}
           activeOpacity={0.7}
         >
-          <Animated.Image
+          {rightItems[1].icon && <Animated.Image
             source={rightItems[1].icon}
             style={
             [this.styles.buttonImage, {
@@ -443,7 +443,7 @@ export default class Drawer extends BaseComponent {
               }],
             },
             ]}
-          />
+          />}
           {rightItems[1].text && 
           <Animated.Text
             numberOfLines={1}
@@ -483,7 +483,7 @@ export default class Drawer extends BaseComponent {
           onPress={() => this.onItemPress(rightItems[2].id)}
           activeOpacity={0.7}
         >
-          <Animated.Image
+          {rightItems[2].icon && <Animated.Image
             source={rightItems[2].icon}
             style={
             [this.styles.buttonImage, {
@@ -503,7 +503,7 @@ export default class Drawer extends BaseComponent {
               }],
             },
             ]}
-          />
+          />}
           {rightItems[2].text && 
           <Animated.Text
             numberOfLines={1}
