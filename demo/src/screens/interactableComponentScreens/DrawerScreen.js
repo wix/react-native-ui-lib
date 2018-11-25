@@ -92,7 +92,7 @@ export default class DrawerScreen extends Component {
         </Drawer>
         
         <Drawer
-          leftItem={leftItem}
+          // leftItem={leftItem}
           rightItems={rightItems}
           style={{marginTop: 20}}
           onPress={this.onPress}

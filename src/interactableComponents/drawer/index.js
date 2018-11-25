@@ -25,6 +25,7 @@ const ITEM = {
   width: PropTypes.number,
   closeDrawer: PropTypes.bool,
 };
+const LEFT_ITEM_ID = 'left';
 
 /**
  * @description: Interactable Drawer component
@@ -163,26 +164,27 @@ export default class Drawer extends BaseComponent {
   }
   getMaxItemWidth() {
     const {rightItems, width} = this.props;
-    return (width - MIN_LEFT_MARGIN) / rightItems.length;
+    return rightItems ? (width - MIN_LEFT_MARGIN) / rightItems.length : (width - MIN_LEFT_MARGIN);
   }
   getItemById(id) {
     const {leftItem, rightItems} = this.props;
     return (id === leftItem.id) ? leftItem : _.find(rightItems, item => item.id === id);
   }
   getRightItemsTotalWidth(numberOfItems) {
-    const items = this.props.rightItems;
+    const {rightItems} = this.props;
     let total = 0;
-    if (items.length > 0) {
-      const index = items.length - numberOfItems || 0;
-      for (let i = items.length - 1; i >= index; i--) {
-        total += this.getItemWidth(items[i]);
+    if (rightItems && rightItems.length > 0) {
+      const index = rightItems.length - numberOfItems || 0;
+      for (let i = rightItems.length - 1; i >= index; i--) {
+        total += this.getItemWidth(rightItems[i]);
       }
     }
     return total;
   }
   getLeftItemWidth() {
     const {leftItem} = this.props;
-    return leftItem.width || this.minItemWidth;
+    const width = leftItem ? leftItem.width : undefined;
+    return width || this.minItemWidth;
   }
   getItemWidth(item) {
     if (item && item.width && item.width <= this.maxItemWidth) {
@@ -193,17 +195,20 @@ export default class Drawer extends BaseComponent {
   getBoundaries() {
     const {leftItem, rightItems} = this.props;
     const rightWidth = this.getRightItemsTotalWidth();
-    const rightBound = rightWidth > 0 ? -rightWidth : -(this.minItemWidth * rightItems.length);
+    const size = rightItems ? rightItems.length : 0;
+    
+    const rightBound = rightWidth > 0 ? -rightWidth : -(this.minItemWidth * size);
     const dragBounds = {right: _.isEmpty(leftItem) ? 0 : this.getLeftItemWidth(), left: _.isEmpty(rightItems) ? 0 : rightBound};
     return dragBounds;
   }
   getSnapPoints() {
     const {leftItem, rightItems, damping, tension} = this.props;
-    const size = rightItems.length;
+    const size = rightItems ? rightItems.length : 0;
     
     const left = !_.isEmpty(leftItem) ? {x: this.getLeftItemWidth(), damping: 1 - damping, tension} : {};
     const zero = {x: 0, damping: 1 - damping, tension};
-    const last = !_.isEmpty(rightItems[0]) ? {x: -(this.getRightItemsTotalWidth()), damping: 1 - damping, tension} : {};
+    const last = rightItems && !_.isEmpty(rightItems[0]) ?
+      {x: -(this.getRightItemsTotalWidth()), damping: 1 - damping, tension} : {};
 
     switch (size) {
       case 1:
@@ -216,9 +221,10 @@ export default class Drawer extends BaseComponent {
   }
   getAlertAreas() {
     const {rightItems} = this.props;
-    const size = rightItems.length;
+    const size = rightItems ? rightItems.length : 0;
+    const firstItem = rightItems ? rightItems[0] : undefined;
     
-    const first = {id: 'first', influenceArea: {left: -(this.getItemWidth(rightItems[0]) || this.minItemWidth)}};
+    const first = {id: 'first', influenceArea: {left: -(this.getItemWidth(firstItem) || this.minItemWidth)}};
     const second = {id: 'second', influenceArea: {left: -(this.getRightItemsTotalWidth(2))}};
     
     switch (size) {
@@ -232,7 +238,7 @@ export default class Drawer extends BaseComponent {
   }
   getInputRanges() {
     const {rightItems} = this.props;
-    const size = rightItems.length;
+    const size = rightItems ? rightItems.length : 0;
     const end = this.minItemWidth - BLEED;
     const interval = 65;
 
@@ -255,7 +261,8 @@ export default class Drawer extends BaseComponent {
   renderLeftItem() {
     const {height, width, leftItem} = this.props;
     const leftItemWidth = this.getLeftItemWidth();
-    const background = leftItem.background || ITEM_BG.left;
+    const background = (leftItem ? leftItem.background : undefined) || ITEM_BG.left;
+    const id = (leftItem ? leftItem.id : undefined) || LEFT_ITEM_ID;
 
     return (
       <View
@@ -278,7 +285,7 @@ export default class Drawer extends BaseComponent {
           }}
         >
           <TouchableHighlight
-            onPress={() => this.onItemPress(leftItem.id)}
+            onPress={() => this.onItemPress(id)}
             underlayColor={Colors.getColorTint(background, 50)}
           >
             <View
@@ -292,7 +299,8 @@ export default class Drawer extends BaseComponent {
                 alignItems: 'center',
               }} 
             >
-              {leftItem.icon && <Animated.Image
+              {leftItem && leftItem.icon &&
+              <Animated.Image
                 source={leftItem.icon}
                 style={
                 [this.styles.buttonImage, {
@@ -313,7 +321,7 @@ export default class Drawer extends BaseComponent {
                 },
                 ]}
               />}
-              {leftItem.text && 
+              {leftItem && leftItem.text && 
               <Animated.Text
                 numberOfLines={1}
                 style={
@@ -533,12 +541,12 @@ export default class Drawer extends BaseComponent {
     );
   }
   render() {
-    const {style, height, width, onPress} = this.props;
+    const {style, height, width, onPress, rightItems} = this.props;
     const Container = onPress ? TouchableOpacity : View;
 
     return (
       <View style={[style, this.styles.container, {width}]}>
-        {this.renderRightItems()}
+        {rightItems && this.renderRightItems()}
         {this.renderLeftItem()}
         <Interactable.View
           ref={el => this.interactableElem = el}
