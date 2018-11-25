@@ -13,6 +13,7 @@ const ITEM_BG = {
   second: Colors.violet30,
   third: Colors.violet40,
 };
+const DEFAULT_ICON_SIZE = 24;
 const MIN_LEFT_MARGIN = 28;
 const ITEM_PADDING = 12;
 const BLEED = 25;
@@ -66,6 +67,10 @@ export default class Drawer extends BaseComponent {
      */
     itemsTintColor: PropTypes.string,
     /**
+     * The items' icon size
+     */
+    itemsIconSize: PropTypes.number,
+    /**
      * Press handler (will also close the drawer)
      */
     onPress: PropTypes.func,
@@ -81,6 +86,7 @@ export default class Drawer extends BaseComponent {
     damping: 1 - 0.6,
     tension: 300,
     itemsTintColor: Colors.white,
+    itemsIconSize: DEFAULT_ICON_SIZE,
   }
 
   constructor(props) {
@@ -560,7 +566,7 @@ export default class Drawer extends BaseComponent {
 }
 
 function createStyles(props) {
-  const {height, itemsTintColor} = props;
+  const {height, itemsTintColor, itemsIconSize} = props;
   const typography = height >= DEFAULT_HEIGHT ? Typography.text70 : Typography.text80;
   const textTopMargin = height > DEFAULT_HEIGHT ? 8 : 0;
   const buttonPadding = height >= DEFAULT_HEIGHT ? ITEM_PADDING : 8;
@@ -576,8 +582,8 @@ function createStyles(props) {
       padding: buttonPadding,
     },
     buttonImage: {
-      width: 24,
-      height: 24,
+      width: itemsIconSize,
+      height: itemsIconSize,
       tintColor: itemsTintColor,
     },
     buttonText: {

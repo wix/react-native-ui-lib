@@ -28,7 +28,7 @@ export default class DrawerScreen extends Component {
   }
 
   onButtonPress(id) {
-    Alert.alert(`'${id}' button pressed`);
+    Alert.alert(`Button '${id}' pressed`);
   }
   onContentPress(id) {
     Alert.alert(`List item #${id + 1} pressed`);
@@ -100,6 +100,21 @@ export default class DrawerScreen extends Component {
         >
           {this.renderContent('1', conversations[1])}
         </Drawer>
+
+        <Drawer
+          leftItem={{id: 'left', icon: collectionsIcon}}
+          rightItems={[
+            {id: 'right-1', icon: starIcon},
+            {id: 'right-2', icon: sharIcon},
+            {id: 'right-3', icon: videoIcon, closeDrawer: true},
+          ]}
+          style={{marginTop: 20}}
+          onPress={this.onPress}
+          onItemPress={this.onItemPress}
+          itemsIconSize={36}
+        >
+          {this.renderContent('3', conversations[3])}
+        </Drawer>
         
         <Drawer
           height={56}
@@ -118,12 +133,11 @@ export default class DrawerScreen extends Component {
             </View>
             <View style={styles.rowButtonContainer}>
               <Button
-                round
+                label={'Button'}
                 size={'small'}
-                backgroundColor={Colors.yellow30}
-                dark20
-                iconSource={starIcon}
-                onPress={() => this.onButtonPress('star')}
+                backgroundColor={Colors.blue30}
+                white
+                onPress={() => this.onButtonPress('1')}
               />
             </View>
           </View>
@@ -162,6 +176,6 @@ const styles = StyleSheet.create({
   rowButtonContainer: {
     flex: 1,
     alignItems: 'flex-end',
-    padding: 20,
+    padding: 10,
   },
 });
