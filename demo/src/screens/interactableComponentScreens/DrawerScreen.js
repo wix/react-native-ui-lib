@@ -102,7 +102,7 @@ export default class DrawerScreen extends Component {
         </Drawer>
 
         <Drawer
-          leftItem={{id: 'left', icon: collectionsIcon}}
+          leftItem={{id: 'left', icon: collectionsIcon, width: 120}}
           rightItems={[
             {id: 'right-1', icon: starIcon},
             {id: 'right-2', icon: sharIcon},

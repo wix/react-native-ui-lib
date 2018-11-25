@@ -297,14 +297,14 @@ export default class Drawer extends BaseComponent {
                 style={
                 [this.styles.buttonImage, {
                   opacity: this.deltaX.interpolate({
-                    inputRange: [this.minItemWidth - BLEED, this.minItemWidth],
+                    inputRange: [leftItemWidth - BLEED, leftItemWidth],
                     outputRange: [0, 1],
                     extrapolateLeft: 'clamp',
                     extrapolateRight: 'clamp',
                   }),
                   transform: [{
                     scale: this.deltaX.interpolate({
-                      inputRange: [this.minItemWidth - BLEED, this.minItemWidth],
+                      inputRange: [leftItemWidth - BLEED, leftItemWidth],
                       outputRange: [0.7, 1],
                       extrapolateLeft: 'clamp',
                       extrapolateRight: 'clamp',
@@ -319,14 +319,14 @@ export default class Drawer extends BaseComponent {
                 style={
                 [this.styles.buttonText, {
                   opacity: this.deltaX.interpolate({
-                    inputRange: [this.minItemWidth - BLEED, this.minItemWidth],
+                    inputRange: [leftItemWidth - BLEED, leftItemWidth],
                     outputRange: [0, 1],
                     extrapolateLeft: 'clamp',
                     extrapolateRight: 'clamp',
                   }),
                   transform: [{
                     scale: this.deltaX.interpolate({
-                      inputRange: [this.minItemWidth - BLEED, this.minItemWidth],
+                      inputRange: [leftItemWidth - BLEED, leftItemWidth],
                       outputRange: [0.7, 1],
                       extrapolateLeft: 'clamp',
                       extrapolateRight: 'clamp',
