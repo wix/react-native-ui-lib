@@ -7,12 +7,8 @@ import {BaseComponent, Constants, Colors, Typography} from '../../../src';
 
 
 const DEFAULT_HEIGHT = 72;
-const ITEM_BG = {
-  left: Colors.blue30,
-  first: Colors.violet10,
-  second: Colors.violet30,
-  third: Colors.violet40,
-};
+const ITEM_BG = [Colors.violet10, Colors.violet30, Colors.violet40];
+const LEFT_ITEM_BG = Colors.blue30;
 const DEFAULT_ICON_SIZE = 24;
 const MIN_LEFT_MARGIN = 28;
 const ITEM_PADDING = 12;
@@ -245,7 +241,7 @@ export default class Drawer extends BaseComponent {
   renderLeftItem() {
     const {height, width, leftItem} = this.props;
     const leftItemWidth = this.getLeftItemWidth();
-    const background = (leftItem ? leftItem.background : undefined) || ITEM_BG.left;
+    const background = (leftItem ? leftItem.background : undefined) || LEFT_ITEM_BG;
     const onLeftPress = leftItem ? leftItem.onPress : undefined;
 
     return (
@@ -335,193 +331,78 @@ export default class Drawer extends BaseComponent {
       </View>
     );
   }
-  renderRightItems() {
-    const {height, rightItems} = this.props;
+  renderRightItem(item, index) {
     const inputRanges = this.getInputRanges();
 
     return (
+      <TouchableOpacity
+        key={index}
+        style={[
+          this.styles.button, {
+            width: item.width,
+            minWidth: this.minItemWidth,
+            maxWidth: this.maxItemWidth,
+            backgroundColor: item.background || ITEM_BG[index],
+          },
+        ]}
+        onPress={item.onPress}
+        activeOpacity={item.onPress ? 0.7 : 1}
+      >
+        {item.icon &&
+        <Animated.Image
+          source={item.icon}
+          style={
+          [this.styles.buttonImage, {
+            opacity: this.deltaX.interpolate({
+              inputRange: inputRanges[index],
+              outputRange: [1, 0],
+              extrapolateLeft: 'clamp',
+              extrapolateRight: 'clamp',
+            }),
+            transform: [{
+              scale: this.deltaX.interpolate({
+                inputRange: inputRanges[index],
+                outputRange: [1, 0.7],
+                extrapolateLeft: 'clamp',
+                extrapolateRight: 'clamp',
+              }),
+            }],
+          },
+          ]}
+        />}
+        {item.text && 
+        <Animated.Text
+          numberOfLines={1}
+          style={
+          [this.styles.buttonText, {
+            opacity: this.deltaX.interpolate({
+              inputRange: inputRanges[index],
+              outputRange: [1, 0],
+              extrapolateLeft: 'clamp',
+              extrapolateRight: 'clamp',
+            }),
+            transform: [{
+              scale: this.deltaX.interpolate({
+                inputRange: inputRanges[index],
+                outputRange: [1, 0.7],
+                extrapolateLeft: 'clamp',
+                extrapolateRight: 'clamp',
+              }),
+            }],
+          },
+          ]}
+        >
+          {item.text}
+        </Animated.Text>}
+      </TouchableOpacity>
+    );
+  }
+  renderRightItems() {
+    const {height, rightItems} = this.props;
+
+    return (
       <View style={{position: 'absolute', right: 0, height, flexDirection: 'row', alignItems: 'center'}}>
-        
-        {rightItems[0] && 
-          <TouchableOpacity
-            style={[
-              this.styles.button, {
-                width: rightItems[0].width,
-                minWidth: this.minItemWidth,
-                maxWidth: this.maxItemWidth,
-                backgroundColor: rightItems[0].background || ITEM_BG.first,
-              },
-            ]}
-            onPress={rightItems[0].onPress}
-            activeOpacity={rightItems[0].onPress ? 0.7 : 1}
-          >
-            {rightItems[0].icon &&
-            <Animated.Image
-              source={rightItems[0].icon}
-              style={
-              [this.styles.buttonImage, {
-                opacity: this.deltaX.interpolate({
-                  inputRange: inputRanges[0],
-                  outputRange: [1, 0],
-                  extrapolateLeft: 'clamp',
-                  extrapolateRight: 'clamp',
-                }),
-                transform: [{
-                  scale: this.deltaX.interpolate({
-                    inputRange: inputRanges[0],
-                    outputRange: [1, 0.7],
-                    extrapolateLeft: 'clamp',
-                    extrapolateRight: 'clamp',
-                  }),
-                }],
-              },
-              ]}
-            />}
-            {rightItems[0].text && 
-            <Animated.Text
-              numberOfLines={1}
-              style={
-              [this.styles.buttonText, {
-                opacity: this.deltaX.interpolate({
-                  inputRange: inputRanges[0],
-                  outputRange: [1, 0],
-                  extrapolateLeft: 'clamp',
-                  extrapolateRight: 'clamp',
-                }),
-                transform: [{
-                  scale: this.deltaX.interpolate({
-                    inputRange: inputRanges[0],
-                    outputRange: [1, 0.7],
-                    extrapolateLeft: 'clamp',
-                    extrapolateRight: 'clamp',
-                  }),
-                }],
-              },
-              ]}
-            >
-              {rightItems[0].text}
-            </Animated.Text>}
-          </TouchableOpacity>}
-        
-        {rightItems[1] && 
-        <TouchableOpacity
-          style={[
-            this.styles.button, {
-              width: rightItems[1].width,
-              minWidth: this.minItemWidth,
-              maxWidth: this.maxItemWidth,
-              backgroundColor: rightItems[1].background || ITEM_BG.second,
-            },
-          ]}
-          onPress={rightItems[1].onPress}
-          activeOpacity={rightItems[1].onPress ? 0.7 : 1}
-        >
-          {rightItems[1].icon && <Animated.Image
-            source={rightItems[1].icon}
-            style={
-            [this.styles.buttonImage, {
-              opacity: this.deltaX.interpolate({
-                inputRange: inputRanges[1],
-                outputRange: [1, 0],
-                extrapolateLeft: 'clamp',
-                extrapolateRight: 'clamp',
-              }),
-              transform: [{
-                scale: this.deltaX.interpolate({
-                  inputRange: inputRanges[1],
-                  outputRange: [1, 0.7],
-                  extrapolateLeft: 'clamp',
-                  extrapolateRight: 'clamp',
-                }),
-              }],
-            },
-            ]}
-          />}
-          {rightItems[1].text && 
-          <Animated.Text
-            numberOfLines={1}
-            style={
-            [this.styles.buttonText, {
-              opacity: this.deltaX.interpolate({
-                inputRange: inputRanges[1],
-                outputRange: [1, 0],
-                extrapolateLeft: 'clamp',
-                extrapolateRight: 'clamp',
-              }),
-              transform: [{
-                scale: this.deltaX.interpolate({
-                  inputRange: inputRanges[1],
-                  outputRange: [1, 0.7],
-                  extrapolateLeft: 'clamp',
-                  extrapolateRight: 'clamp',
-                }),
-              }],
-            },
-            ]}
-          >
-            {rightItems[1].text}
-          </Animated.Text>}
-        </TouchableOpacity>}
-        
-        {rightItems[2] && 
-        <TouchableOpacity
-          style={[
-            this.styles.button, {
-              width: rightItems[2].width,
-              minWidth: this.minItemWidth,
-              maxWidth: this.maxItemWidth,
-              backgroundColor: rightItems[2].background || ITEM_BG.third,
-            },
-          ]}
-          onPress={rightItems[2].onPress}
-          activeOpacity={rightItems[2].onPress ? 0.7 : 1}
-        >
-          {rightItems[2].icon && <Animated.Image
-            source={rightItems[2].icon}
-            style={
-            [this.styles.buttonImage, {
-              opacity: this.deltaX.interpolate({
-                inputRange: inputRanges[2],
-                outputRange: [1, 0],
-                extrapolateLeft: 'clamp',
-                extrapolateRight: 'clamp',
-              }),
-              transform: [{
-                scale: this.deltaX.interpolate({
-                  inputRange: inputRanges[2],
-                  outputRange: [1, 0.7],
-                  extrapolateLeft: 'clamp',
-                  extrapolateRight: 'clamp',
-                }),
-              }],
-            },
-            ]}
-          />}
-          {rightItems[2].text && 
-          <Animated.Text
-            numberOfLines={1}
-            style={
-            [this.styles.buttonText, {
-              opacity: this.deltaX.interpolate({
-                inputRange: inputRanges[2],
-                outputRange: [1, 0],
-                extrapolateLeft: 'clamp',
-                extrapolateRight: 'clamp',
-              }),
-              transform: [{
-                scale: this.deltaX.interpolate({
-                  inputRange: inputRanges[2],
-                  outputRange: [1, 0.7],
-                  extrapolateLeft: 'clamp',
-                  extrapolateRight: 'clamp',
-                }),
-              }],
-            },
-            ]}
-          >
-            {rightItems[2].text}
-          </Animated.Text>}
-        </TouchableOpacity>}
+        {_.map(rightItems, (item, index) => { return this.renderRightItem(item, index); })}
       </View>
     );
   }
