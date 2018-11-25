@@ -17,15 +17,13 @@ const DEFAULT_ICON_SIZE = 24;
 const MIN_LEFT_MARGIN = 28;
 const ITEM_PADDING = 12;
 const BLEED = 25;
-const ITEM = {
-  id: PropTypes.string.isRequired,
+const ITEM_PROP_TYPES = {
+  width: PropTypes.number,
+  background: PropTypes.string,
   text: PropTypes.string,
   icon: PropTypes.number,
-  beckground: PropTypes.string,
-  width: PropTypes.number,
-  closeDrawer: PropTypes.bool,
+  onPress: PropTypes.func,
 };
-const LEFT_ITEM_ID = 'left';
 
 /**
  * @description: Interactable Drawer component
@@ -36,13 +34,9 @@ export default class Drawer extends BaseComponent {
 
   static propTypes = {
     /**
-     * The content for the drawer's top layer (a single child)
-     */
-    children: PropTypes.element.isRequired,
-    /**
      * The drawer's height
      */
-    height: PropTypes.number,
+    height: PropTypes.number.isRequired,
     /**
      * The drawer's width
      */
@@ -58,11 +52,11 @@ export default class Drawer extends BaseComponent {
     /**
      * The bottom layer's items to appear when opened from the right (max. 3 items)
      */
-    rightItems: PropTypes.arrayOf(PropTypes.shape(ITEM)),
+    rightItems: PropTypes.arrayOf(PropTypes.shape(ITEM_PROP_TYPES)),
     /**
      * The bottom layer's item to appear when opened from the left (a single item)
      */
-    leftItem: PropTypes.shape(ITEM),
+    leftItem: PropTypes.shape(ITEM_PROP_TYPES),
     /**
      * The color for the text and icon tint of the items
      */
@@ -72,13 +66,13 @@ export default class Drawer extends BaseComponent {
      */
     itemsIconSize: PropTypes.number,
     /**
+     * The items' text style
+     */
+    itemsTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
      * Press handler (will also close the drawer)
      */
     onPress: PropTypes.func,
-    /**
-     * Press handler for items
-     */
-    onItemPress: PropTypes.func,
   };
 
   static defaultProps = {
@@ -103,7 +97,7 @@ export default class Drawer extends BaseComponent {
     };
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) { //eslint-disable-line
+  componentWillReceiveProps(nextProps) { //eslint-disable-line
     this.deltaX = new Animated.Value(0);
     this.minItemWidth = this.getMinItemWidth();
     this.maxItemWidth = this.getMaxItemWidth();
@@ -138,13 +132,6 @@ export default class Drawer extends BaseComponent {
       _.invoke(this.props, 'onPress');
     }, 0);
   }
-  onItemPress(id) {
-    const item = this.getItemById(id);
-    if (item.closeDrawer) this.closeDrawer();
-    setTimeout(() => {
-      _.invoke(this.props, 'onItemPress', id);
-    }, 0);
-  }
 
   closeDrawer() {
     const {inMotion, position} = this.state;
@@ -165,10 +152,6 @@ export default class Drawer extends BaseComponent {
   getMaxItemWidth() {
     const {rightItems, width} = this.props;
     return rightItems ? (width - MIN_LEFT_MARGIN) / rightItems.length : (width - MIN_LEFT_MARGIN);
-  }
-  getItemById(id) {
-    const {leftItem, rightItems} = this.props;
-    return (id === leftItem.id) ? leftItem : _.find(rightItems, item => item.id === id);
   }
   getRightItemsTotalWidth(numberOfItems) {
     const {rightItems} = this.props;
@@ -192,6 +175,7 @@ export default class Drawer extends BaseComponent {
     }
     return this.minItemWidth;
   }
+
   getBoundaries() {
     const {leftItem, rightItems} = this.props;
     const rightWidth = this.getRightItemsTotalWidth();
@@ -206,7 +190,7 @@ export default class Drawer extends BaseComponent {
     const size = rightItems ? rightItems.length : 0;
     
     const left = !_.isEmpty(leftItem) ? {x: this.getLeftItemWidth(), damping: 1 - damping, tension} : {};
-    const zero = {x: 0, damping: 1 - damping, tension};
+    const initial = {x: 0, damping: 1 - damping, tension};
     const last = rightItems && !_.isEmpty(rightItems[0]) ?
       {x: -(this.getRightItemsTotalWidth()), damping: 1 - damping, tension} : {};
 
@@ -214,9 +198,9 @@ export default class Drawer extends BaseComponent {
       case 1:
       case 2:
       case 3:
-        return [left, zero, last];
+        return [left, initial, last];
       default:
-        return [left, zero];
+        return [left, initial];
     }
   }
   getAlertAreas() {
@@ -262,7 +246,7 @@ export default class Drawer extends BaseComponent {
     const {height, width, leftItem} = this.props;
     const leftItemWidth = this.getLeftItemWidth();
     const background = (leftItem ? leftItem.background : undefined) || ITEM_BG.left;
-    const id = (leftItem ? leftItem.id : undefined) || LEFT_ITEM_ID;
+    const onLeftPress = leftItem ? leftItem.onPress : undefined;
 
     return (
       <View
@@ -285,7 +269,7 @@ export default class Drawer extends BaseComponent {
           }}
         >
           <TouchableHighlight
-            onPress={() => this.onItemPress(id)}
+            onPress={onLeftPress}
             underlayColor={Colors.getColorTint(background, 50)}
           >
             <View
@@ -368,10 +352,11 @@ export default class Drawer extends BaseComponent {
                 backgroundColor: rightItems[0].background || ITEM_BG.first,
               },
             ]}
-            onPress={() => this.onItemPress(rightItems[0].id)}
-            activeOpacity={0.7}
+            onPress={rightItems[0].onPress}
+            activeOpacity={rightItems[0].onPress ? 0.7 : 1}
           >
-            {rightItems[0].icon && <Animated.Image
+            {rightItems[0].icon &&
+            <Animated.Image
               source={rightItems[0].icon}
               style={
               [this.styles.buttonImage, {
@@ -428,8 +413,8 @@ export default class Drawer extends BaseComponent {
               backgroundColor: rightItems[1].background || ITEM_BG.second,
             },
           ]}
-          onPress={() => this.onItemPress(rightItems[1].id)}
-          activeOpacity={0.7}
+          onPress={rightItems[1].onPress}
+          activeOpacity={rightItems[1].onPress ? 0.7 : 1}
         >
           {rightItems[1].icon && <Animated.Image
             source={rightItems[1].icon}
@@ -488,8 +473,8 @@ export default class Drawer extends BaseComponent {
               backgroundColor: rightItems[2].background || ITEM_BG.third,
             },
           ]}
-          onPress={() => this.onItemPress(rightItems[2].id)}
-          activeOpacity={0.7}
+          onPress={rightItems[2].onPress}
+          activeOpacity={rightItems[2].onPress ? 0.7 : 1}
         >
           {rightItems[2].icon && <Animated.Image
             source={rightItems[2].icon}
@@ -574,7 +559,7 @@ export default class Drawer extends BaseComponent {
 }
 
 function createStyles(props) {
-  const {height, itemsTintColor, itemsIconSize} = props;
+  const {height, itemsTintColor, itemsIconSize, itemsTextStyle} = props;
   const typography = height >= DEFAULT_HEIGHT ? Typography.text70 : Typography.text80;
   const textTopMargin = height > DEFAULT_HEIGHT ? 8 : 0;
   const buttonPadding = height >= DEFAULT_HEIGHT ? ITEM_PADDING : 8;
@@ -598,6 +583,7 @@ function createStyles(props) {
       ...typography,
       color: itemsTintColor,
       marginTop: textTopMargin,
+      ...itemsTextStyle,
     },
   });
 }

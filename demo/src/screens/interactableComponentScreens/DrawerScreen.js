@@ -20,11 +20,12 @@ export default class DrawerScreen extends Component {
   onPress = () => {
     Alert.alert('Drawer pressed');
   }
-  onItemPress = (id) => {
-    Alert.alert(`Item ${id} pressed`);
-    if (id === 'right-1') {
-      this.firstDrawer.closeDrawer();
-    }
+  onItemPress = () => {
+    Alert.alert('Item pressed');
+    this.firstDrawer.closeDrawer();
+  }
+  onLeftItemPressed = () => {
+    Alert.alert('Left item pressed');
   }
 
   onButtonPress(id) {
@@ -32,7 +33,13 @@ export default class DrawerScreen extends Component {
   }
   onContentPress(id) {
     Alert.alert(`List item #${id + 1} pressed`);
-    this.firstDrawer.closeDrawer();
+
+    if (id === '0') {
+      this.firstDrawer.closeDrawer();
+    }
+    if (id === '1') {
+      this.secondDrawer.closeDrawer();
+    }
   }
 
   renderContent(id, row) {
@@ -60,11 +67,11 @@ export default class DrawerScreen extends Component {
   }
 
   render() {
-    const leftItem = {id: 'left', icon: collectionsIcon, text: 'Archive'};
+    const leftItem = {icon: collectionsIcon, text: 'Archive', onPress: this.onLeftItemPressed};
     const rightItems = [
-      {id: 'right-1', icon: starIcon, text: 'Accessories', width: 110},
-      {id: 'right-2', icon: sharIcon, text: 'Share'},
-      {id: 'right-3', icon: videoIcon, text: 'Video', closeDrawer: true},
+      {icon: starIcon, text: 'Accessories', width: 110, onPress: this.onItemPress},
+      {icon: sharIcon, text: 'Share', onPress: this.onItemPress},
+      {icon: videoIcon, text: 'Video', onPress: this.onItemPress},
     ];
     
     return (
@@ -74,7 +81,6 @@ export default class DrawerScreen extends Component {
           leftItem={leftItem}
           rightItems={rightItems}
           style={{marginTop: 20}}
-          onItemPress={this.onItemPress}
           ref={r => this.firstDrawer = r}
         >
           {this.renderContent('0', conversations[0])}
@@ -86,7 +92,6 @@ export default class DrawerScreen extends Component {
           rightItems={[rightItems[1], rightItems[2]]}
           style={{marginTop: 20, marginLeft: 50}}
           onPress={this.onPress}
-          onItemPress={this.onItemPress}
         >
           {this.renderContent('2', conversations[2])}
         </Drawer>
@@ -96,7 +101,7 @@ export default class DrawerScreen extends Component {
           rightItems={rightItems}
           style={{marginTop: 20}}
           onPress={this.onPress}
-          onItemPress={this.onItemPress}
+          ref={r => this.secondDrawer = r}
         >
           {this.renderContent('1', conversations[1])}
         </Drawer>
@@ -110,7 +115,6 @@ export default class DrawerScreen extends Component {
           ]}
           style={{marginTop: 20}}
           onPress={this.onPress}
-          onItemPress={this.onItemPress}
           itemsIconSize={36}
         >
           {this.renderContent('3', conversations[3])}
@@ -122,8 +126,8 @@ export default class DrawerScreen extends Component {
           rightItems={rightItems}
           style={{marginTop: 20}}
           onPress={this.onPress}
-          onItemPress={this.onItemPress}
-          itemsTintColor={Colors.black}
+          itemsTintColor={Colors.dark70}
+          itemsTextStyle={{fontSize: 12}}
         >
           <View style={styles.rowContent}>
             <View style={[styles.rowIcon, {width: 38, height: 38, borderRadius: 19}]}/>
