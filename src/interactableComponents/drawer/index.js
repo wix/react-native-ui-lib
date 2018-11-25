@@ -7,12 +7,11 @@ import {BaseComponent, Constants, Colors, Typography} from '../../../src';
 
 
 const DEFAULT_HEIGHT = 72;
-const ITEM_BG = [Colors.violet10, Colors.violet30, Colors.violet40];
-const LEFT_ITEM_BG = Colors.blue30;
-const DEFAULT_ICON_SIZE = 24;
 const MIN_LEFT_MARGIN = 28;
+const DEFAULT_ICON_SIZE = 24;
+const ITEM_BG = Colors.blue30;
 const ITEM_PADDING = 12;
-const BLEED = 25;
+const BLEED = 15;
 const ITEM_PROP_TYPES = {
   width: PropTypes.number,
   background: PropTypes.string,
@@ -46,7 +45,7 @@ export default class Drawer extends BaseComponent {
      */
     tension: PropTypes.number,
     /**
-     * The bottom layer's items to appear when opened from the right (max. 3 items)
+     * The bottom layer's items to appear when opened from the right
      */
     rightItems: PropTypes.arrayOf(PropTypes.shape(ITEM_PROP_TYPES)),
     /**
@@ -86,6 +85,7 @@ export default class Drawer extends BaseComponent {
     this.deltaX = new Animated.Value(0);
     this.minItemWidth = this.getMinItemWidth();
     this.maxItemWidth = this.getMaxItemWidth();
+    this.inputRanges = this.getInputRanges();
     
     this.state = {
       inMotion: false,
@@ -94,14 +94,19 @@ export default class Drawer extends BaseComponent {
   }
 
   componentWillReceiveProps(nextProps) { //eslint-disable-line
-    this.deltaX = new Animated.Value(0);
-    this.minItemWidth = this.getMinItemWidth();
-    this.maxItemWidth = this.getMaxItemWidth();
-    this.setState({inMotion: false, position: 1});
+    if (nextProps !== this.props) {
+      this.deltaX = new Animated.Value(0);
+      this.minItemWidth = this.getMinItemWidth();
+      this.maxItemWidth = this.getMaxItemWidth();
+      this.inputRanges = this.getInputRanges();
+
+      this.setState({inMotion: false, position: 1});
+    }
   }
 
   onAlert = ({nativeEvent}) => {
     const event = JSON.stringify(nativeEvent);
+
     if (event.includes('"first":"leave"')) {
       this.interactableElem.snapTo({index: 2});
     }
@@ -152,21 +157,25 @@ export default class Drawer extends BaseComponent {
   getRightItemsTotalWidth(numberOfItems) {
     const {rightItems} = this.props;
     let total = 0;
+
     if (rightItems && rightItems.length > 0) {
-      const index = rightItems.length - numberOfItems || 0;
-      for (let i = rightItems.length - 1; i >= index; i--) {
-        total += this.getItemWidth(rightItems[i]);
+      const items = rightItems.reverse();
+      const size = numberOfItems && numberOfItems >= 0 ? numberOfItems : items.length;
+      
+      for (let i = 0; i < size; i++) {
+        total += this.getItemWidth(items[i]);
       }
     }
     return total;
   }
-  getLeftItemWidth() {
-    const {leftItem} = this.props;
-    const width = leftItem ? leftItem.width : undefined;
-    return width || this.minItemWidth;
-  }
   getItemWidth(item) {
-    if (item && item.width && item.width <= this.maxItemWidth) {
+    if (item && item.width) {
+      if (item.width <= this.minItemWidth) {
+        return this.minItemWidth;
+      }
+      if (item.width >= this.maxItemWidth) {
+        return this.maxItemWidth;
+      }
       return item.width;
     }
     return this.minItemWidth;
@@ -178,70 +187,62 @@ export default class Drawer extends BaseComponent {
     const size = rightItems ? rightItems.length : 0;
     
     const rightBound = rightWidth > 0 ? -rightWidth : -(this.minItemWidth * size);
-    const dragBounds = {right: _.isEmpty(leftItem) ? 0 : this.getLeftItemWidth(), left: _.isEmpty(rightItems) ? 0 : rightBound};
-    return dragBounds;
+    return {right: _.isEmpty(leftItem) ? 0 : this.getItemWidth(leftItem), left: _.isEmpty(rightItems) ? 0 : rightBound};
   }
   getSnapPoints() {
     const {leftItem, rightItems, damping, tension} = this.props;
     const size = rightItems ? rightItems.length : 0;
     
-    const left = !_.isEmpty(leftItem) ? {x: this.getLeftItemWidth(), damping: 1 - damping, tension} : {};
+    const left = !_.isEmpty(leftItem) ? {x: this.getItemWidth(leftItem), damping: 1 - damping, tension} : {};
     const initial = {x: 0, damping: 1 - damping, tension};
     const last = rightItems && !_.isEmpty(rightItems[0]) ?
       {x: -(this.getRightItemsTotalWidth()), damping: 1 - damping, tension} : {};
 
     switch (size) {
-      case 1:
-      case 2:
-      case 3:
-        return [left, initial, last];
-      default:
+      case 0: 
         return [left, initial];
+      default:
+        return [left, initial, last];
     }
   }
   getAlertAreas() {
     const {rightItems} = this.props;
     const size = rightItems ? rightItems.length : 0;
-    const firstItem = rightItems ? rightItems[0] : undefined;
-    
-    const first = {id: 'first', influenceArea: {left: -(this.getItemWidth(firstItem) || this.minItemWidth)}};
-    const second = {id: 'second', influenceArea: {left: -(this.getRightItemsTotalWidth(2))}};
+
+    const first = {id: 'first', influenceArea: {left: -(this.getRightItemsTotalWidth(1))}};
+    const second = {id: 'second', influenceArea: {left: -(this.getRightItemsTotalWidth(size - 1))}};
     
     switch (size) {
+      case 0: 
+      case 1:
+        return [];
       case 2:
         return [first];
-      case 3:
-        return [first, second];
       default:
-        return [];
+        return [first, second];
     }
   }
   getInputRanges() {
     const {rightItems} = this.props;
     const size = rightItems ? rightItems.length : 0;
-    const end = this.minItemWidth - BLEED;
     const interval = 65;
-
-    const first = [-(this.minItemWidth), -(end)];
-    const second = [-(this.minItemWidth * 2), -(end + interval)];
-    const third = [-(this.minItemWidth * 3), -(end + (interval * 2))];
-
-    switch (size) {
-      case 1:
-        return [first];
-      case 2:
-        return [second, first];
-      case 3:
-        return [third, second, first];
-      default:
-        return [];
+    const inputRanges = [];
+    
+    for (let i = 0; i < size; i++) {
+      const itemWidth = this.getItemWidth(rightItems[i]);
+      const end = itemWidth - (size * BLEED);
+      const min = -(itemWidth * (i + 1));
+      const max = -(end + (interval * i));
+      // const range = [-(this.minItemWidth * (i + 1)), -(end + (interval * i))];
+      inputRanges.push([min, max]);
     }
+    return inputRanges.reverse();
   }
 
   renderLeftItem() {
     const {height, width, leftItem} = this.props;
-    const leftItemWidth = this.getLeftItemWidth();
-    const background = (leftItem ? leftItem.background : undefined) || LEFT_ITEM_BG;
+    const leftItemWidth = this.getItemWidth(leftItem);
+    const background = (leftItem ? leftItem.background : undefined) || ITEM_BG;
     const onLeftPress = leftItem ? leftItem.onPress : undefined;
 
     return (
@@ -332,17 +333,15 @@ export default class Drawer extends BaseComponent {
     );
   }
   renderRightItem(item, index) {
-    const inputRanges = this.getInputRanges();
-
     return (
       <TouchableOpacity
         key={index}
         style={[
           this.styles.button, {
-            width: item.width,
+            width: this.getItemWidth(item),
             minWidth: this.minItemWidth,
             maxWidth: this.maxItemWidth,
-            backgroundColor: item.background || ITEM_BG[index],
+            backgroundColor: item.background || ITEM_BG,
           },
         ]}
         onPress={item.onPress}
@@ -354,14 +353,14 @@ export default class Drawer extends BaseComponent {
           style={
           [this.styles.buttonImage, {
             opacity: this.deltaX.interpolate({
-              inputRange: inputRanges[index],
+              inputRange: this.inputRanges[index],
               outputRange: [1, 0],
               extrapolateLeft: 'clamp',
               extrapolateRight: 'clamp',
             }),
             transform: [{
               scale: this.deltaX.interpolate({
-                inputRange: inputRanges[index],
+                inputRange: this.inputRanges[index],
                 outputRange: [1, 0.7],
                 extrapolateLeft: 'clamp',
                 extrapolateRight: 'clamp',
@@ -376,14 +375,14 @@ export default class Drawer extends BaseComponent {
           style={
           [this.styles.buttonText, {
             opacity: this.deltaX.interpolate({
-              inputRange: inputRanges[index],
+              inputRange: this.inputRanges[index],
               outputRange: [1, 0],
               extrapolateLeft: 'clamp',
               extrapolateRight: 'clamp',
             }),
             transform: [{
               scale: this.deltaX.interpolate({
-                inputRange: inputRanges[index],
+                inputRange: this.inputRanges[index],
                 outputRange: [1, 0.7],
                 extrapolateLeft: 'clamp',
                 extrapolateRight: 'clamp',
@@ -401,7 +400,7 @@ export default class Drawer extends BaseComponent {
     const {height, rightItems} = this.props;
 
     return (
-      <View style={{position: 'absolute', right: 0, height, flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{position: 'absolute', right: 0, height, flexDirection: 'row'}}>
         {_.map(rightItems, (item, index) => { return this.renderRightItem(item, index); })}
       </View>
     );

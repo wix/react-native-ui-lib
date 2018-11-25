@@ -69,9 +69,11 @@ export default class DrawerScreen extends Component {
   render() {
     const leftItem = {icon: collectionsIcon, text: 'Archive', onPress: this.onLeftItemPressed};
     const rightItems = [
-      {icon: starIcon, text: 'Accessories', width: 110, onPress: this.onItemPress},
-      {icon: sharIcon, text: 'Share', onPress: this.onItemPress},
-      {icon: videoIcon, text: 'Video', onPress: this.onItemPress},
+      {icon: starIcon, text: 'Accessories', onPress: this.onItemPress, background: Colors.violet10, width: 200},
+      {icon: sharIcon, text: 'Share', onPress: this.onItemPress, background: Colors.violet30, width: 20},
+      {icon: videoIcon, text: 'Video', onPress: this.onItemPress, background: Colors.violet40},
+      // {icon: videoIcon, text: 'Video', background: Colors.green30},
+      // {icon: videoIcon, text: 'Video', background: Colors.red30},
     ];
     
     return (
@@ -107,11 +109,22 @@ export default class DrawerScreen extends Component {
         </Drawer>
 
         <Drawer
-          leftItem={{id: 'left', icon: collectionsIcon, width: 120}}
+          leftItem={leftItem}
+          // rightItems={rightItems}
+          style={{marginTop: 20}}
+          onPress={this.onPress}
+          ref={r => this.secondDrawer = r}
+        >
+          {this.renderContent('1', conversations[1])}
+        </Drawer>
+
+        <Drawer
+          leftItem={{icon: collectionsIcon, background: Colors.blue10, width: 100}}
           rightItems={[
-            {id: 'right-1', icon: starIcon},
-            {id: 'right-2', icon: sharIcon},
-            {id: 'right-3', icon: videoIcon, closeDrawer: true},
+            {icon: starIcon, background: Colors.dark60},
+            {icon: sharIcon, background: Colors.yellow20},
+            {icon: videoIcon, background: Colors.red30},
+            // {icon: videoIcon, background: Colors.green30},
           ]}
           style={{marginTop: 20}}
           onPress={this.onPress}
