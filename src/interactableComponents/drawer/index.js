@@ -82,11 +82,7 @@ export default class Drawer extends BaseComponent {
   constructor(props) {
     super(props);
 
-    this.deltaX = new Animated.Value(0);
-    this.minItemWidth = this.getMinItemWidth();
-    this.maxItemWidth = this.getMaxItemWidth();
-    this.inputRanges = this.getInputRanges();
-    
+    this.setProps();
     this.state = {
       inMotion: false,
       position: 1,
@@ -95,13 +91,16 @@ export default class Drawer extends BaseComponent {
 
   componentWillReceiveProps(nextProps) { //eslint-disable-line
     if (nextProps !== this.props) {
-      this.deltaX = new Animated.Value(0);
-      this.minItemWidth = this.getMinItemWidth();
-      this.maxItemWidth = this.getMaxItemWidth();
-      this.inputRanges = this.getInputRanges();
-
+      this.setProps();
       this.setState({inMotion: false, position: 1});
     }
+  }
+
+  setProps() {
+    this.deltaX = new Animated.Value(0);
+    this.minItemWidth = this.getMinItemWidth();
+    this.maxItemWidth = this.getMaxItemWidth();
+    this.inputRanges = this.getInputRanges();
   }
 
   onAlert = ({nativeEvent}) => {
@@ -158,7 +157,7 @@ export default class Drawer extends BaseComponent {
     const {rightItems} = this.props;
     let total = 0;
 
-    if (rightItems && rightItems.length > 0) {
+    if (_.size(rightItems) > 0) {
       const items = rightItems.reverse();
       const size = numberOfItems && numberOfItems >= 0 ? numberOfItems : items.length;
       
@@ -240,14 +239,14 @@ export default class Drawer extends BaseComponent {
   }
 
   renderLeftItem() {
-    const {height, width, leftItem} = this.props;
+    const {height, leftItem} = this.props;
     const leftItemWidth = this.getItemWidth(leftItem);
     const background = (leftItem ? leftItem.background : undefined) || ITEM_BG;
     const onLeftPress = leftItem ? leftItem.onPress : undefined;
 
     return (
       <View
-        style={{position: 'absolute', left: 0, right: width / 2, flexDirection: 'row'}}
+        style={this.styles.leftItemContainer}
         pointerEvents={'box-none'}
       >
         <Animated.View
@@ -284,7 +283,7 @@ export default class Drawer extends BaseComponent {
               <Animated.Image
                 source={leftItem.icon}
                 style={
-                [this.styles.buttonImage, {
+                [this.styles.itemImage, {
                   opacity: this.deltaX.interpolate({
                     inputRange: [leftItemWidth - BLEED, leftItemWidth],
                     outputRange: [0, 1],
@@ -306,7 +305,7 @@ export default class Drawer extends BaseComponent {
               <Animated.Text
                 numberOfLines={1}
                 style={
-                [this.styles.buttonText, {
+                [this.styles.itemText, {
                   opacity: this.deltaX.interpolate({
                     inputRange: [leftItemWidth - BLEED, leftItemWidth],
                     outputRange: [0, 1],
@@ -337,7 +336,7 @@ export default class Drawer extends BaseComponent {
       <TouchableOpacity
         key={index}
         style={[
-          this.styles.button, {
+          this.styles.item, {
             width: this.getItemWidth(item),
             minWidth: this.minItemWidth,
             maxWidth: this.maxItemWidth,
@@ -351,7 +350,7 @@ export default class Drawer extends BaseComponent {
         <Animated.Image
           source={item.icon}
           style={
-          [this.styles.buttonImage, {
+          [this.styles.itemImage, {
             opacity: this.deltaX.interpolate({
               inputRange: this.inputRanges[index],
               outputRange: [1, 0],
@@ -373,7 +372,7 @@ export default class Drawer extends BaseComponent {
         <Animated.Text
           numberOfLines={1}
           style={
-          [this.styles.buttonText, {
+          [this.styles.itemText, {
             opacity: this.deltaX.interpolate({
               inputRange: this.inputRanges[index],
               outputRange: [1, 0],
@@ -397,20 +396,20 @@ export default class Drawer extends BaseComponent {
     );
   }
   renderRightItems() {
-    const {height, rightItems} = this.props;
+    const {rightItems} = this.props;
 
     return (
-      <View style={{position: 'absolute', right: 0, height, flexDirection: 'row'}}>
+      <View style={this.styles.rightItemsContainer}>
         {_.map(rightItems, (item, index) => { return this.renderRightItem(item, index); })}
       </View>
     );
   }
   render() {
-    const {style, height, width, onPress, rightItems} = this.props;
+    const {style, onPress, rightItems} = this.props;
     const Container = onPress ? TouchableOpacity : View;
 
     return (
-      <View style={[style, this.styles.container, {width}]}>
+      <View style={[style, this.styles.container]}>
         {rightItems && this.renderRightItems()}
         {this.renderLeftItem()}
         <Interactable.View
@@ -428,7 +427,7 @@ export default class Drawer extends BaseComponent {
           style={{backgroundColor: Colors.white}}
         >
           <Container onPress={this.onPress} activeOpacity={0.7}>
-            <View style={{left: 0, right: 0, height}}>
+            <View style={this.styles.childrenContainer}>
               {this.props.children}
             </View>
           </Container>
@@ -439,27 +438,45 @@ export default class Drawer extends BaseComponent {
 }
 
 function createStyles(props) {
-  const {height, itemsTintColor, itemsIconSize, itemsTextStyle} = props;
+  const {height, width, itemsTintColor, itemsIconSize, itemsTextStyle} = props;
   const typography = height >= DEFAULT_HEIGHT ? Typography.text70 : Typography.text80;
   const textTopMargin = height > DEFAULT_HEIGHT ? 8 : 0;
-  const buttonPadding = height >= DEFAULT_HEIGHT ? ITEM_PADDING : 8;
+  const itemPadding = height >= DEFAULT_HEIGHT ? ITEM_PADDING : 8;
 
   return StyleSheet.create({
     container: {
       overflow: 'hidden',
+      width,
     },
-    button: {
+    childrenContainer: {
+      left: 0,
+      right: 0,
+      height,
+    },
+    rightItemsContainer: {
+      position: 'absolute',
+      right: 0,
+      height,
+      flexDirection: 'row',
+    },
+    leftItemContainer: {
+      position: 'absolute',
+      left: 0,
+      right: width / 2,
+      flexDirection: 'row',
+    },
+    item: {
       height: '100%',
       justifyContent: 'center',
       alignItems: 'center',
-      padding: buttonPadding,
+      padding: itemPadding,
     },
-    buttonImage: {
+    itemImage: {
       width: itemsIconSize,
       height: itemsIconSize,
       tintColor: itemsTintColor,
     },
-    buttonText: {
+    itemText: {
       ...typography,
       color: itemsTintColor,
       marginTop: textTopMargin,
