@@ -28,11 +28,18 @@ export default class ConnectionStatusBar extends BaseComponent {
      * Text to show as the status
      */
     allowDismiss: PropTypes.bool,
+
+    /**
+     * Use absolute position for the component
+     */
+    useAbsolutePosition: PropTypes.bool,
+
   };
 
   static defaultProps = {
     label: 'No internet. Check your connection.',
     allowDismiss: false,
+    useAbsolutePosition: true,
   };
 
   static onConnectionLost;
@@ -111,9 +118,9 @@ export default class ConnectionStatusBar extends BaseComponent {
     if (this.state.isConnected || this.state.isCancelled) {
       return false;
     }
-
+    const containerStyle = [this.styles.topContainer, this.props.useAbsolutePosition ? this.styles.absolutePosition : null];
     return (
-      <View useSafeArea style={this.styles.absoluteContainer}>
+      <View useSafeArea style={containerStyle}>
         <View style={this.styles.container}>
           <View style={{flex: 1, flexDirection: 'row'}}>
             <Text style={this.styles.text}>{this.props.label}</Text>
@@ -132,8 +139,10 @@ export default class ConnectionStatusBar extends BaseComponent {
 function createStyles() {
   const typography = Constants.isSmallScreen ? Typography.text90 : Typography.text80;
   return StyleSheet.create({
-    absoluteContainer: {
+    topContainer: {
       backgroundColor: Colors.dark30,
+    },
+    absolutePosition: {
       ...StyleSheet.absoluteFillObject,
       bottom: undefined,
     },
