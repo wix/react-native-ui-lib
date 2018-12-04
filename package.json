@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "watchman watch-del-all && export DEV_MODE=true && react-native start",
-    "ios": "react-native run-ios",
+    "ios": "react-native run-ios --simulator='iPhone 7'",
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
     "pretest": "npm run lint",
     "test": "jest",
