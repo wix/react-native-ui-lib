@@ -168,16 +168,12 @@ export default class Drawer extends BaseComponent {
     return total;
   }
   getItemWidth(item) {
+    let width = this.minItemWidth;
     if (item && item.width) {
-      if (item.width <= this.minItemWidth) {
-        return this.minItemWidth;
-      }
-      if (item.width >= this.maxItemWidth) {
-        return this.maxItemWidth;
-      }
-      return item.width;
+      width = Math.max(item.width, this.minItemWidth);
+      width = Math.min(width, this.maxItemWidth);
     }
-    return this.minItemWidth;
+    return width;
   }
 
   getBoundaries() {
