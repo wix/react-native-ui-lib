@@ -6,7 +6,7 @@ import Interactable from 'react-native-interactable';
 import {BaseComponent, Constants, Colors, Typography} from '../../../src';
 
 
-const DEFAULT_HEIGHT = 72;
+const SCALE_POINT = 72; // scaling content style by height
 const MIN_LEFT_MARGIN = 28;
 const DEFAULT_ICON_SIZE = 24;
 const MIN_ITEM_WIDTH = 43; // NOTE: this is the min for the input ranges calc!
@@ -29,10 +29,6 @@ export default class Drawer extends BaseComponent {
   static displayName = 'Drawer';
 
   static propTypes = {
-    /**
-     * The drawer's height
-     */
-    height: PropTypes.number.isRequired,
     /**
      * The drawer's width (defaults to screen width)
      */
@@ -76,7 +72,6 @@ export default class Drawer extends BaseComponent {
   };
 
   static defaultProps = {
-    height: DEFAULT_HEIGHT,
     width: Constants.screenWidth,
     damping: 1 - 0.6,
     tension: 300,
@@ -88,8 +83,6 @@ export default class Drawer extends BaseComponent {
     super(props);
 
     this.deltaX = new Animated.Value(0);
-    this.minItemWidth = this.getMinItemWidth();
-    this.maxItemWidth = this.getMaxItemWidth();
     this.inputRanges = this.getInputRanges();
     this.leftItemJSON = JSON.stringify(this.props.leftItem);
     this.rightItemsJSON = JSON.stringify(this.props.rightItems);
@@ -147,15 +140,15 @@ export default class Drawer extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
+  getMaxItemWidth() {
+    const {rightItems, width} = this.props;
+    return rightItems ? (width - MIN_LEFT_MARGIN) / rightItems.length : (width - MIN_LEFT_MARGIN);
+  }
   getMinItemWidth() {
     const {equalWidths} = this.props;
     const maxWidth = this.getMaxItemWidth();
     const minWidth = equalWidths ? maxWidth : MIN_ITEM_WIDTH;
     return (minWidth > maxWidth) ? maxWidth : minWidth;
-  }
-  getMaxItemWidth() {
-    const {rightItems, width} = this.props;
-    return rightItems ? (width - MIN_LEFT_MARGIN) / rightItems.length : (width - MIN_LEFT_MARGIN);
   }
   getRightItemsTotalWidth(numberOfItems) {
     const {rightItems} = this.props;
@@ -172,10 +165,10 @@ export default class Drawer extends BaseComponent {
     return total;
   }
   getItemWidth(item) {
-    let width = this.minItemWidth;
+    let width = this.getMinItemWidth();
     if (item && item.width) {
-      width = Math.max(item.width, this.minItemWidth);
-      width = Math.min(width, this.maxItemWidth);
+      width = Math.max(item.width, width);
+      width = Math.min(width, this.getMaxItemWidth());
     }
     return width;
   }
@@ -183,9 +176,7 @@ export default class Drawer extends BaseComponent {
   getBoundaries() {
     const {leftItem, rightItems} = this.props;
     const rightWidth = this.getRightItemsTotalWidth();
-    const size = rightItems ? rightItems.length : 0;
-    
-    const rightBound = rightWidth > 0 ? -rightWidth : -(this.minItemWidth * size);
+    const rightBound = rightWidth > 0 ? -rightWidth : 0;
     return {right: _.isEmpty(leftItem) ? 0 : this.getItemWidth(leftItem), left: _.isEmpty(rightItems) ? 0 : rightBound};
   }
   getSnapPoints() {
@@ -232,7 +223,6 @@ export default class Drawer extends BaseComponent {
       const end = itemWidth - (size * BLEED);
       const min = -(itemWidth * (i + 1));
       const max = -(end + (interval * i));
-      // const range = [-(this.minItemWidth * (i + 1)), -(end + (interval * i))];
       inputRanges.push([min, max]);
     }
     return inputRanges.reverse();
@@ -240,7 +230,12 @@ export default class Drawer extends BaseComponent {
 
   onLayout = (event) => {
     const {width, height} = event.nativeEvent.layout;
-    this.setState({width, height});
+    
+    const typography = height >= SCALE_POINT ? Typography.text70 : Typography.text80;
+    const textTopMargin = height > SCALE_POINT ? 8 : 0;
+    const itemPadding = height >= SCALE_POINT ? ITEM_PADDING : 8;
+    
+    this.setState({width, height, typography, textTopMargin, itemPadding});
   }; 
 
   renderLeftItem() {
@@ -277,8 +272,6 @@ export default class Drawer extends BaseComponent {
               style={{
                 height: this.state.height,
                 width: leftItemWidth,
-                minWidth: this.minItemWidth,
-                maxWidth: this.maxItemWidth,
                 padding: ITEM_PADDING,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -313,7 +306,11 @@ export default class Drawer extends BaseComponent {
               <Animated.Text
                 numberOfLines={1}
                 style={
-                [this.styles.itemText, {color: this.props.itemsTintColor, ...this.props.itemsTextStyle}, {
+                [{
+                  color: this.props.itemsTintColor,
+                  ...this.props.itemsTextStyle,
+                  ...this.state.typography,
+                  marginTop: this.state.textTopMargin,
                   opacity: this.deltaX.interpolate({
                     inputRange: [leftItemWidth - BLEED, leftItemWidth],
                     outputRange: [0, 1],
@@ -346,9 +343,8 @@ export default class Drawer extends BaseComponent {
         style={[
           this.styles.item, {
             width: this.getItemWidth(item),
-            minWidth: this.minItemWidth,
-            maxWidth: this.maxItemWidth,
             backgroundColor: item.background || ITEM_BG,
+            padding: this.state.itemPadding,
           },
         ]}
         onPress={item.onPress}
@@ -383,7 +379,11 @@ export default class Drawer extends BaseComponent {
         <Animated.Text
           numberOfLines={1}
           style={
-          [this.styles.itemText, {color: this.props.itemsTintColor, ...this.props.itemsTextStyle}, {
+          [{
+            color: this.props.itemsTintColor,
+            ...this.props.itemsTextStyle,
+            ...this.state.typography,
+            marginTop: this.state.textTopMargin,
             opacity: this.deltaX.interpolate({
               inputRange: this.inputRanges[index],
               outputRange: [1, 0],
@@ -449,16 +449,12 @@ export default class Drawer extends BaseComponent {
 }
 
 function createStyles(props) {
-  const {height, width} = props;
-  const typography = height >= DEFAULT_HEIGHT ? Typography.text70 : Typography.text80;
-  const textTopMargin = height > DEFAULT_HEIGHT ? 8 : 0;
-  const itemPadding = height >= DEFAULT_HEIGHT ? ITEM_PADDING : 8;
+  const {width} = props;
 
   return StyleSheet.create({
     container: {
       overflow: 'hidden',
       width,
-      height,
     },
     childrenContainer: {
       left: 0,
@@ -479,11 +475,6 @@ function createStyles(props) {
     item: {
       justifyContent: 'center',
       alignItems: 'center',
-      padding: itemPadding,
-    },
-    itemText: {
-      ...typography,
-      marginTop: textTopMargin,
     },
   });
 }

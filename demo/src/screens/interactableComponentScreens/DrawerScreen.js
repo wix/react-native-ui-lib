@@ -99,7 +99,6 @@ export default class DrawerScreen extends Component {
     return (
       <ScrollView style={styles.container}>
         <Drawer
-          height={96}
           leftItem={leftItem}
           rightItems={rightItems}
           style={{marginTop: 20}}
@@ -108,7 +107,6 @@ export default class DrawerScreen extends Component {
           {this.renderContent('0', conversations[0])}
         </Drawer>
         <Drawer
-          height={96}
           width={250}
           leftItem={leftItem}
           rightItems={[rightItems[1], rightItems[2]]}
@@ -156,7 +154,6 @@ export default class DrawerScreen extends Component {
         </Drawer>
         
         <Drawer
-          height={56}
           leftItem={leftItem}
           rightItems={rightItems}
           style={{marginTop: 20}}
@@ -192,13 +189,11 @@ const styles = StyleSheet.create({
   },
   listContent: {
     backgroundColor: Colors.dark80,
-    height: '100%',
   },
   rowContent: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.dark80,
-    height: '100%',
   },
   rowIcon: {
     width: 50,
