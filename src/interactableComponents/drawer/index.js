@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, View, TouchableOpacity, TouchableHighlight} from 'react-native';
 import Interactable from 'react-native-interactable';
-import {BaseComponent, Constants, Colors, Typography} from '../../../src';
+import {BaseComponent} from '../../commons';
+import {screenWidth} from '../../helpers/Constants';
+import {Colors, Typography} from '../../style';
 
 
 const SCALE_POINT = 72; // scaling content style by height
@@ -38,6 +40,10 @@ export default class Drawer extends BaseComponent {
      */
     tension: PropTypes.number,
     /**
+     * Press handler (will also close the drawer)
+     */
+    onPress: PropTypes.func,
+    /**
      * The bottom layer's items to appear when opened from the right
      */
     rightItems: PropTypes.arrayOf(PropTypes.shape(ITEM_PROP_TYPES)),
@@ -61,10 +67,6 @@ export default class Drawer extends BaseComponent {
      * The items' text style
      */
     itemsTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * Press handler (will also close the drawer)
-     */
-    onPress: PropTypes.func,
   };
 
   static defaultProps = {
@@ -78,19 +80,17 @@ export default class Drawer extends BaseComponent {
     super(props);
 
     this.deltaX = new Animated.Value(0);
-    this.leftItemJSON = JSON.stringify(this.props.leftItem);
-    this.rightItemsJSON = JSON.stringify(this.props.rightItems);
 
     this.state = {
       inMotion: false,
       position: 1,
-      width: Constants.screenWidth,
+      width: screenWidth,
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.leftItemJSON !== JSON.stringify(nextProps.leftItem) || 
-      this.rightItemsJSON !== JSON.stringify(nextProps.rightItems)) {
+    if (JSON.stringify(this.props.leftItem) !== JSON.stringify(nextProps.leftItem) || 
+    JSON.stringify(this.props.rightItems) !== JSON.stringify(nextProps.rightItems)) {
       this.closeDrawer();
     }
   }
@@ -235,7 +235,8 @@ export default class Drawer extends BaseComponent {
   }; 
 
   renderLeftItem() {
-    const {leftItem} = this.props;
+    const {leftItem, itemsTintColor, itemsIconSize, itemsTextStyle} = this.props;
+    const {height, typography, textTopMargin} = this.state;
     const leftItemWidth = this.getItemWidth(leftItem);
     const background = (leftItem ? leftItem.background : undefined) || ITEM_BG;
     const onLeftPress = leftItem ? leftItem.onPress : undefined;
@@ -266,7 +267,7 @@ export default class Drawer extends BaseComponent {
           >
             <View
               style={{
-                height: this.state.height,
+                height,
                 width: leftItemWidth,
                 padding: ITEM_PADDING,
                 justifyContent: 'center',
@@ -278,9 +279,9 @@ export default class Drawer extends BaseComponent {
                 source={leftItem.icon}
                 style={
                 [{
-                  tintColor: this.props.itemsTintColor,
-                  width: this.props.itemsIconSize,
-                  height: this.props.itemsIconSize,
+                  tintColor: itemsTintColor,
+                  width: itemsIconSize,
+                  height: itemsIconSize,
                   opacity: this.deltaX.interpolate({
                     inputRange: [leftItemWidth - BLEED, leftItemWidth],
                     outputRange: [0, 1],
@@ -303,10 +304,10 @@ export default class Drawer extends BaseComponent {
                 numberOfLines={1}
                 style={
                 [{
-                  color: this.props.itemsTintColor,
-                  ...this.state.typography,
-                  ...this.props.itemsTextStyle,
-                  marginTop: this.state.textTopMargin,
+                  color: itemsTintColor,
+                  ...typography,
+                  ...itemsTextStyle,
+                  marginTop: textTopMargin,
                   opacity: this.deltaX.interpolate({
                     inputRange: [leftItemWidth - BLEED, leftItemWidth],
                     outputRange: [0, 1],
@@ -333,6 +334,8 @@ export default class Drawer extends BaseComponent {
     );
   }
   renderRightItem(item, index) {
+    const {itemsTintColor, itemsIconSize, itemsTextStyle} = this.props;
+    const {itemPadding, typography, textTopMargin} = this.state;
     const inputRanges = this.getInputRanges();
 
     return (
@@ -342,7 +345,7 @@ export default class Drawer extends BaseComponent {
           this.styles.item, {
             width: this.getItemWidth(item),
             backgroundColor: item.background || ITEM_BG,
-            padding: this.state.itemPadding,
+            padding: itemPadding,
           },
         ]}
         onPress={item.onPress}
@@ -353,9 +356,9 @@ export default class Drawer extends BaseComponent {
           source={item.icon}
           style={
           [{
-            tintColor: this.props.itemsTintColor,
-            width: this.props.itemsIconSize,
-            height: this.props.itemsIconSize,
+            tintColor: itemsTintColor,
+            width: itemsIconSize,
+            height: itemsIconSize,
             opacity: this.deltaX.interpolate({
               inputRange: inputRanges[index],
               outputRange: [1, 0],
@@ -378,10 +381,10 @@ export default class Drawer extends BaseComponent {
           numberOfLines={1}
           style={
           [{
-            color: this.props.itemsTintColor,
-            ...this.state.typography,
-            ...this.props.itemsTextStyle,
-            marginTop: this.state.textTopMargin,
+            color: itemsTintColor,
+            ...typography,
+            ...itemsTextStyle,
+            marginTop: textTopMargin,
             opacity: this.deltaX.interpolate({
               inputRange: inputRanges[index],
               outputRange: [1, 0],
