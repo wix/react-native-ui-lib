@@ -82,25 +82,24 @@ export default class Drawer extends BaseComponent {
   constructor(props) {
     super(props);
 
-    this.setProps();
+    this.deltaX = new Animated.Value(0);
+    this.minItemWidth = this.getMinItemWidth();
+    this.maxItemWidth = this.getMaxItemWidth();
+    this.inputRanges = this.getInputRanges();
+    this.leftItemJSON = JSON.stringify(this.props.leftItem);
+    this.rightItemsJSON = JSON.stringify(this.props.rightItems);
+
     this.state = {
       inMotion: false,
       position: 1,
     };
   }
 
-  componentWillReceiveProps(nextProps) { //eslint-disable-line
-    if (nextProps !== this.props) {
-      this.setProps();
-      this.setState({inMotion: false, position: 1});
+  componentWillReceiveProps(nextProps) {
+    if (this.leftItemJSON !== JSON.stringify(nextProps.leftItem) || 
+      this.rightItemsJSON !== JSON.stringify(nextProps.rightItems)) {
+      this.closeDrawer();
     }
-  }
-
-  setProps() {
-    this.deltaX = new Animated.Value(0);
-    this.minItemWidth = this.getMinItemWidth();
-    this.maxItemWidth = this.getMaxItemWidth();
-    this.inputRanges = this.getInputRanges();
   }
 
   onAlert = ({nativeEvent}) => {
@@ -266,10 +265,10 @@ export default class Drawer extends BaseComponent {
           >
             <View
               style={{
+                height,
                 width: leftItemWidth,
                 minWidth: this.minItemWidth,
                 maxWidth: this.maxItemWidth,
-                height,
                 padding: ITEM_PADDING,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -279,7 +278,10 @@ export default class Drawer extends BaseComponent {
               <Animated.Image
                 source={leftItem.icon}
                 style={
-                [this.styles.itemImage, {
+                [{
+                  tintColor: this.props.itemsTintColor,
+                  width: this.props.itemsIconSize,
+                  height: this.props.itemsIconSize,
                   opacity: this.deltaX.interpolate({
                     inputRange: [leftItemWidth - BLEED, leftItemWidth],
                     outputRange: [0, 1],
@@ -301,7 +303,7 @@ export default class Drawer extends BaseComponent {
               <Animated.Text
                 numberOfLines={1}
                 style={
-                [this.styles.itemText, {
+                [this.styles.itemText, {color: this.props.itemsTintColor, ...this.props.itemsTextStyle}, {
                   opacity: this.deltaX.interpolate({
                     inputRange: [leftItemWidth - BLEED, leftItemWidth],
                     outputRange: [0, 1],
@@ -346,7 +348,10 @@ export default class Drawer extends BaseComponent {
         <Animated.Image
           source={item.icon}
           style={
-          [this.styles.itemImage, {
+          [{
+            tintColor: this.props.itemsTintColor,
+            width: this.props.itemsIconSize,
+            height: this.props.itemsIconSize,
             opacity: this.deltaX.interpolate({
               inputRange: this.inputRanges[index],
               outputRange: [1, 0],
@@ -368,7 +373,7 @@ export default class Drawer extends BaseComponent {
         <Animated.Text
           numberOfLines={1}
           style={
-          [this.styles.itemText, {
+          [this.styles.itemText, {color: this.props.itemsTintColor, ...this.props.itemsTextStyle}, {
             opacity: this.deltaX.interpolate({
               inputRange: this.inputRanges[index],
               outputRange: [1, 0],
@@ -434,7 +439,7 @@ export default class Drawer extends BaseComponent {
 }
 
 function createStyles(props) {
-  const {height, width, itemsTintColor, itemsIconSize, itemsTextStyle} = props;
+  const {height, width} = props;
   const typography = height >= DEFAULT_HEIGHT ? Typography.text70 : Typography.text80;
   const textTopMargin = height > DEFAULT_HEIGHT ? 8 : 0;
   const itemPadding = height >= DEFAULT_HEIGHT ? ITEM_PADDING : 8;
@@ -443,16 +448,16 @@ function createStyles(props) {
     container: {
       overflow: 'hidden',
       width,
+      height,
     },
     childrenContainer: {
       left: 0,
       right: 0,
-      height,
     },
     rightItemsContainer: {
       position: 'absolute',
       right: 0,
-      height,
+      height: '100%',
       flexDirection: 'row',
     },
     leftItemContainer: {
@@ -462,21 +467,13 @@ function createStyles(props) {
       flexDirection: 'row',
     },
     item: {
-      height: '100%',
       justifyContent: 'center',
       alignItems: 'center',
       padding: itemPadding,
     },
-    itemImage: {
-      width: itemsIconSize,
-      height: itemsIconSize,
-      tintColor: itemsTintColor,
-    },
     itemText: {
       ...typography,
-      color: itemsTintColor,
       marginTop: textTopMargin,
-      ...itemsTextStyle,
     },
   });
 }
