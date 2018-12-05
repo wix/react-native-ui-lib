@@ -30,10 +30,6 @@ export default class Drawer extends BaseComponent {
 
   static propTypes = {
     /**
-     * The drawer's width (defaults to screen width)
-     */
-    width: PropTypes.number,
-    /**
      * The drawer top layer's damping
      */
     damping: PropTypes.number,
@@ -72,7 +68,6 @@ export default class Drawer extends BaseComponent {
   };
 
   static defaultProps = {
-    width: Constants.screenWidth,
     damping: 1 - 0.6,
     tension: 300,
     itemsTintColor: Colors.white,
@@ -83,13 +78,13 @@ export default class Drawer extends BaseComponent {
     super(props);
 
     this.deltaX = new Animated.Value(0);
-    this.inputRanges = this.getInputRanges();
     this.leftItemJSON = JSON.stringify(this.props.leftItem);
     this.rightItemsJSON = JSON.stringify(this.props.rightItems);
 
     this.state = {
       inMotion: false,
       position: 1,
+      width: Constants.screenWidth,
     };
   }
 
@@ -141,7 +136,8 @@ export default class Drawer extends BaseComponent {
   }
 
   getMaxItemWidth() {
-    const {rightItems, width} = this.props;
+    const {rightItems} = this.props;
+    const {width} = this.state;
     return rightItems ? (width - MIN_LEFT_MARGIN) / rightItems.length : (width - MIN_LEFT_MARGIN);
   }
   getMinItemWidth() {
@@ -337,6 +333,8 @@ export default class Drawer extends BaseComponent {
     );
   }
   renderRightItem(item, index) {
+    const inputRanges = this.getInputRanges();
+
     return (
       <TouchableOpacity
         key={index}
@@ -359,14 +357,14 @@ export default class Drawer extends BaseComponent {
             width: this.props.itemsIconSize,
             height: this.props.itemsIconSize,
             opacity: this.deltaX.interpolate({
-              inputRange: this.inputRanges[index],
+              inputRange: inputRanges[index],
               outputRange: [1, 0],
               extrapolateLeft: 'clamp',
               extrapolateRight: 'clamp',
             }),
             transform: [{
               scale: this.deltaX.interpolate({
-                inputRange: this.inputRanges[index],
+                inputRange: inputRanges[index],
                 outputRange: [1, 0.7],
                 extrapolateLeft: 'clamp',
                 extrapolateRight: 'clamp',
@@ -385,14 +383,14 @@ export default class Drawer extends BaseComponent {
             ...this.state.typography,
             marginTop: this.state.textTopMargin,
             opacity: this.deltaX.interpolate({
-              inputRange: this.inputRanges[index],
+              inputRange: inputRanges[index],
               outputRange: [1, 0],
               extrapolateLeft: 'clamp',
               extrapolateRight: 'clamp',
             }),
             transform: [{
               scale: this.deltaX.interpolate({
-                inputRange: this.inputRanges[index],
+                inputRange: inputRanges[index],
                 outputRange: [1, 0.7],
                 extrapolateLeft: 'clamp',
                 extrapolateRight: 'clamp',
@@ -420,7 +418,7 @@ export default class Drawer extends BaseComponent {
     const Container = onPress ? TouchableOpacity : View;
 
     return (
-      <View style={[style, this.styles.container]}>
+      <View style={[style, this.styles.container]} onLayout={this.onLayout}>
         {rightItems && this.renderRightItems()}
         {this.renderLeftItem()}
         <Interactable.View
@@ -438,7 +436,7 @@ export default class Drawer extends BaseComponent {
           style={{backgroundColor: Colors.white}}
         >
           <Container onPress={this.onPress} activeOpacity={0.7}>
-            <View style={this.styles.childrenContainer} onLayout={this.onLayout}>
+            <View style={this.styles.childrenContainer}>
               {this.props.children}
             </View>
           </Container>
@@ -448,13 +446,10 @@ export default class Drawer extends BaseComponent {
   }
 }
 
-function createStyles(props) {
-  const {width} = props;
-
+function createStyles() {
   return StyleSheet.create({
     container: {
       overflow: 'hidden',
-      width,
     },
     childrenContainer: {
       left: 0,
@@ -469,7 +464,7 @@ function createStyles(props) {
     leftItemContainer: {
       position: 'absolute',
       left: 0,
-      right: width / 2,
+      right: 0,
       flexDirection: 'row',
     },
     item: {

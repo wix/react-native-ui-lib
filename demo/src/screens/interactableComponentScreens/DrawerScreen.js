@@ -87,7 +87,7 @@ export default class DrawerScreen extends Component {
   }
 
   render() {
-    const leftItem = {icon: collectionsIcon, text: 'Archive', onPress: this.onLeftItemPressed, width: 100};
+    const leftItem = {icon: collectionsIcon, text: 'Archive', onPress: this.onLeftItemPressed};
     const rightItems = [
       this.state.dynamicItem,
       {icon: sharIcon, text: 'Share', onPress: this.onItemPress, background: Colors.violet30, width: 20},
@@ -103,18 +103,29 @@ export default class DrawerScreen extends Component {
           rightItems={rightItems}
           style={{marginTop: 20}}
           ref={r => this.firstDrawer = r}
+          equalWidths
         >
           {this.renderContent('0', conversations[0])}
         </Drawer>
         <Drawer
-          width={250}
           leftItem={leftItem}
           rightItems={[rightItems[1], rightItems[2]]}
-          style={{marginTop: 20, marginLeft: 50}}
+          style={{marginTop: 20, marginLeft: 50, marginRight: 50}}
           onPress={this.onPress}
         >
           {this.renderContent('2', conversations[2])}
         </Drawer>
+        
+        <View style={{width: 250}}>
+          <Drawer
+            leftItem={leftItem}
+            rightItems={[rightItems[1], rightItems[2]]}
+            style={{marginTop: 20, marginLeft: 50}}
+            onPress={this.onPress}
+          >
+            {this.renderContent('2', conversations[2])}
+          </Drawer>
+        </View>
         
         <Drawer
           // leftItem={leftItem}
@@ -122,7 +133,6 @@ export default class DrawerScreen extends Component {
           style={{marginTop: 20}}
           onPress={this.onPress}
           ref={r => this.secondDrawer = r}
-          equalWidths
         >
           {this.renderContent('1', conversations[1])}
         </Drawer>
@@ -158,7 +168,6 @@ export default class DrawerScreen extends Component {
           rightItems={rightItems}
           style={{marginTop: 20}}
           onPress={this.onPress}
-          itemsTintColor={Colors.dark70}
           itemsTextStyle={{fontSize: 12}}
         >
           <View style={styles.rowContent}>
