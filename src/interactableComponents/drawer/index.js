@@ -304,8 +304,8 @@ export default class Drawer extends BaseComponent {
                 style={
                 [{
                   color: this.props.itemsTintColor,
-                  ...this.props.itemsTextStyle,
                   ...this.state.typography,
+                  ...this.props.itemsTextStyle,
                   marginTop: this.state.textTopMargin,
                   opacity: this.deltaX.interpolate({
                     inputRange: [leftItemWidth - BLEED, leftItemWidth],
@@ -379,8 +379,8 @@ export default class Drawer extends BaseComponent {
           style={
           [{
             color: this.props.itemsTintColor,
-            ...this.props.itemsTextStyle,
             ...this.state.typography,
+            ...this.props.itemsTextStyle,
             marginTop: this.state.textTopMargin,
             opacity: this.deltaX.interpolate({
               inputRange: inputRanges[index],
