@@ -79,13 +79,13 @@ export default class BadgesScreen extends Component {
         <Text center>Press buttons to change red badge value by 1. Long press to change it by 10.</Text>
 
         <Text text50 row center marginT-50 marginB-15> Pimple Badges</Text>
-        <Text text80 row center marginB-15> Pimple Badges - size: `pimpleSmall`</Text>
+        <Text text80 row center marginB-15>size={'{\'pimpleSmall\'}'}</Text>
         <View row center>
           <Badge containerStyle={{marginRight: BadgesSpace}} backgroundColor={Colors.red30}/>
           <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.blue30}/>
         </View>
 
-        <Text text80 row center marginT-20 marginB-15> Pimple Badges - size: `pimpleBig`</Text>
+        <Text text80 row center marginT-20 marginB-15>size={'{\'pimpleBig\'}'}</Text>
         <View row center>
           <Badge containerStyle={{marginRight: BadgesSpace}} backgroundColor={Colors.red30} size={'pimpleBig'}/>
           <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.blue30} size={'pimpleBig'}/>
