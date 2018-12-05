@@ -116,7 +116,7 @@ export default class ConnectionStatusBar extends BaseComponent {
 
   render() {
     if (this.state.isConnected || this.state.isCancelled) {
-      return false;
+      return null;
     }
     const containerStyle = [this.styles.topContainer, this.props.useAbsolutePosition ? this.styles.absolutePosition : null];
     return (
