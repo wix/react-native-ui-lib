@@ -29,7 +29,8 @@ export default class Badge extends BaseComponent {
   static displayName = 'Badge';
   static propTypes = {
     /**
-     * Text to show inside the badge
+     * Text to show inside the badge.
+     * Not passing a label (undefined) will present a pimple badge.
      */
     label: PropTypes.string,
     /**
