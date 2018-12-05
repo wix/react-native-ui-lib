@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Alert} from 'react-native';
+import {StyleSheet, Alert, ScrollView} from 'react-native';
 import {Colors, Typography, View, Drawer, Text, Button, ListItem, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
 
@@ -14,15 +14,24 @@ export default class DrawerScreen extends Component {
   constructor(props) {
     super(props);
     
-    this.state = {};
+    this.state = {
+      dynamicItem: {icon: starIcon, text: 'Accessories', onPress: this.onItemPress, background: Colors.violet10, width: 200},
+      itemsTintColor: undefined,
+    };
   }
 
   onPress = () => {
-    Alert.alert('Drawer pressed');
+    // Alert.alert('Drawer pressed');
   }
   onItemPress = () => {
-    Alert.alert('Item pressed');
+    // Alert.alert('Item pressed');
+    this.toggleDynamicItem();
     this.firstDrawer.closeDrawer();
+  }
+  onItemPress2 = () => {
+    const {itemsTintColor} = this.state;
+    const color = itemsTintColor === undefined ? Colors.blue30 : undefined;
+    this.setState({itemsTintColor: color});
   }
   onLeftItemPressed = () => {
     Alert.alert('Left item pressed');
@@ -42,13 +51,24 @@ export default class DrawerScreen extends Component {
     }
   }
 
+  toggleDynamicItem() {
+    const {dynamicItem} = this.state;
+    let newItem;
+    if (dynamicItem.text === 'Accessories') {
+      newItem = {icon: starIcon, text: 'More', onPress: this.onItemPress, background: Colors.violet10, width: 90};
+    } else {
+      newItem = {icon: starIcon, text: 'Accessories', onPress: this.onItemPress, background: Colors.violet10, width: 200};
+    }
+    this.setState({dynamicItem: newItem});
+  }
+
   renderContent(id, row) {
     const initials = AvatarHelper.getInitials(row.name);
     return (
       <ListItem
         key={id}
         onPress={() => this.onContentPress(id)}
-        style={{height: '100%', backgroundColor: Colors.dark80}}
+        style={styles.listContent}
       >
         <ListItem.Part left>
           <Avatar
@@ -67,9 +87,9 @@ export default class DrawerScreen extends Component {
   }
 
   render() {
-    const leftItem = {icon: collectionsIcon, text: 'Archive', onPress: this.onLeftItemPressed};
+    const leftItem = {icon: collectionsIcon, text: 'Archive', onPress: this.onLeftItemPressed, width: 100};
     const rightItems = [
-      {icon: starIcon, text: 'Accessories', onPress: this.onItemPress, background: Colors.violet10, width: 200},
+      this.state.dynamicItem,
       {icon: sharIcon, text: 'Share', onPress: this.onItemPress, background: Colors.violet30, width: 20},
       {icon: videoIcon, text: 'Video', onPress: this.onItemPress, background: Colors.violet40},
       // {icon: videoIcon, text: 'Video', background: Colors.green30},
@@ -77,7 +97,7 @@ export default class DrawerScreen extends Component {
     ];
     
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Drawer
           height={96}
           leftItem={leftItem}
@@ -104,6 +124,7 @@ export default class DrawerScreen extends Component {
           style={{marginTop: 20}}
           onPress={this.onPress}
           ref={r => this.secondDrawer = r}
+          equalWidths
         >
           {this.renderContent('1', conversations[1])}
         </Drawer>
@@ -123,12 +144,13 @@ export default class DrawerScreen extends Component {
           rightItems={[
             {icon: starIcon, background: Colors.dark60},
             {icon: sharIcon, background: Colors.yellow20},
-            {icon: videoIcon, background: Colors.red30},
+            {icon: videoIcon, background: Colors.red30, onPress: this.onItemPress2},
             // {icon: videoIcon, background: Colors.green30},
           ]}
           style={{marginTop: 20}}
           onPress={this.onPress}
           itemsIconSize={36}
+          itemsTintColor={this.state.itemsTintColor}
         >
           {this.renderContent('3', conversations[3])}
         </Drawer>
@@ -159,7 +181,7 @@ export default class DrawerScreen extends Component {
             </View>
           </View>
         </Drawer>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -168,11 +190,15 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.white,
   },
+  listContent: {
+    backgroundColor: Colors.dark80,
+    height: '100%',
+  },
   rowContent: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.dark80,
+    height: '100%',
   },
   rowIcon: {
     width: 50,
