@@ -7,12 +7,13 @@ import {BaseComponent} from '../../commons';
 import {Typography, ThemeManager, BorderRadiuses} from '../../style';
 
 
-const SIZE_PIMPLE = 4.5;
+const SIZE_PIMPLE_SMALL = 6;
+const SIZE_PIMPLE_BIG = 10;
 const SIZE_DEFAULT = 20;
 const WIDTH_DOUBLE = 28;
 const WIDTH_TRIPLE = 35;
 
-const SIZE_SMALL = 18;
+const SIZE_SMALL = 16;
 const WIDTH_DOUBLE_SMALL = 25;
 const WIDTH_TRIPLE_SMALL = 28;
 
@@ -28,7 +29,8 @@ export default class Badge extends BaseComponent {
   static displayName = 'Badge';
   static propTypes = {
     /**
-     * Text to show inside the badge
+     * Text to show inside the badge.
+     * Not passing a label (undefined) will present a pimple badge.
      */
     label: PropTypes.string,
     /**
@@ -38,7 +40,7 @@ export default class Badge extends BaseComponent {
     /**
      * the badge size (default, small)
      */
-    size: PropTypes.oneOf(['default', 'small']),
+    size: PropTypes.oneOf(['default', 'small', 'pimpleBig', 'pimpleSmall']),
     /**
      * width of border around the badge
      */
@@ -71,12 +73,20 @@ export default class Badge extends BaseComponent {
   }
 
   getBadgeSizeStyle() {
-    const {label, borderWidth} = this.props;
+    const {label, borderWidth, size} = this.props;
     let height = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
     let width = 0;
     if (label === undefined) {
-      width = SIZE_PIMPLE;
-      height = SIZE_PIMPLE;
+      switch (size) {
+        default:
+        case 'pimpleSmall':
+          width = SIZE_PIMPLE_SMALL;
+          height = SIZE_PIMPLE_SMALL;
+          break;
+        case 'pimpleBig':
+          width = SIZE_PIMPLE_BIG;
+          height = SIZE_PIMPLE_BIG;
+      }
     } else {
       const numberOfCharacters = label.length;
       switch (numberOfCharacters) {
