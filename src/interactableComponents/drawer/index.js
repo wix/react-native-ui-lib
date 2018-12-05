@@ -9,6 +9,7 @@ import {BaseComponent, Constants, Colors, Typography} from '../../../src';
 const DEFAULT_HEIGHT = 72;
 const MIN_LEFT_MARGIN = 28;
 const DEFAULT_ICON_SIZE = 24;
+const MIN_ITEM_WIDTH = 43; // NOTE: this is the min for the input ranges calc!
 const ITEM_BG = Colors.blue30;
 const ITEM_PADDING = 12;
 const BLEED = 15;
@@ -33,7 +34,7 @@ export default class Drawer extends BaseComponent {
      */
     height: PropTypes.number.isRequired,
     /**
-     * The drawer's width
+     * The drawer's width (defaults to screen width)
      */
     width: PropTypes.number,
     /**
@@ -52,6 +53,10 @@ export default class Drawer extends BaseComponent {
      * The bottom layer's item to appear when opened from the left (a single item)
      */
     leftItem: PropTypes.shape(ITEM_PROP_TYPES),
+    /**
+     * Whether to give the items equal width (the max width)
+     */
+    equalWidths: PropTypes.bool,
     /**
      * The color for the text and icon tint of the items
      */
@@ -138,15 +143,15 @@ export default class Drawer extends BaseComponent {
       this.interactableElem.snapTo({index: 1});
     }
   }
-
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
   getMinItemWidth() {
-    const {height} = this.props;
+    const {equalWidths} = this.props;
     const maxWidth = this.getMaxItemWidth();
-    return (height > maxWidth) ? maxWidth : height;
+    const minWidth = equalWidths ? maxWidth : MIN_ITEM_WIDTH;
+    return (minWidth > maxWidth) ? maxWidth : minWidth;
   }
   getMaxItemWidth() {
     const {rightItems, width} = this.props;
@@ -233,8 +238,13 @@ export default class Drawer extends BaseComponent {
     return inputRanges.reverse();
   }
 
+  onLayout = (event) => {
+    const {width, height} = event.nativeEvent.layout;
+    this.setState({width, height});
+  }; 
+
   renderLeftItem() {
-    const {height, leftItem} = this.props;
+    const {leftItem} = this.props;
     const leftItemWidth = this.getItemWidth(leftItem);
     const background = (leftItem ? leftItem.background : undefined) || ITEM_BG;
     const onLeftPress = leftItem ? leftItem.onPress : undefined;
@@ -265,7 +275,7 @@ export default class Drawer extends BaseComponent {
           >
             <View
               style={{
-                height,
+                height: this.state.height,
                 width: leftItemWidth,
                 minWidth: this.minItemWidth,
                 maxWidth: this.maxItemWidth,
@@ -428,7 +438,7 @@ export default class Drawer extends BaseComponent {
           style={{backgroundColor: Colors.white}}
         >
           <Container onPress={this.onPress} activeOpacity={0.7}>
-            <View style={this.styles.childrenContainer}>
+            <View style={this.styles.childrenContainer} onLayout={this.onLayout}>
               {this.props.children}
             </View>
           </Container>
