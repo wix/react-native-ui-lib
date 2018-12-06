@@ -1,6 +1,7 @@
 import {Navigation} from 'react-native-navigation';
 import './componentScreens';
 import './nativeComponentScreens';
+import './interactableComponentScreens';
 import './componentScreenScreens';
 import './listScreens';
 import './styleScreens';
