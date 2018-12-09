@@ -13,6 +13,13 @@ export const isShortScreen = screenHeight <= 600;
 export let statusBarHeight = isIOS ? 20 : StatusBarManager.HEIGHT; // eslint-disable-line
 export const isIphoneX = isIOS && !Platform.isPad && !Platform.isTVOS && (screenHeight === 812 || screenWidth === 812);
 
+export function getAndroidVersion() {
+  if (isAndroid) {
+    return parseInt(Platform.Version, 10);
+  }
+  return undefined;
+}
+
 // override guesstimate height with the actual height from StatusBarManager
 if (isIOS) {
   StatusBarManager.getHeight(data => (statusBarHeight = data.height));
