@@ -14,10 +14,7 @@ export let statusBarHeight = isIOS ? 20 : StatusBarManager.HEIGHT; // eslint-dis
 export const isIphoneX = isIOS && !Platform.isPad && !Platform.isTVOS && (screenHeight === 812 || screenWidth === 812);
 
 export function getAndroidVersion() {
-  if (isAndroid) {
-    return parseInt(Platform.Version, 10);
-  }
-  return undefined;
+  return isAndroid ? parseInt(Platform.Version, 10) : undefined;
 }
 
 // override guesstimate height with the actual height from StatusBarManager
