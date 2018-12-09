@@ -221,7 +221,7 @@ export default class Button extends BaseComponent {
 
   getBackgroundColor() {
     const {backgroundColor: themeBackgroundColor} = this.getThemeProps();
-    const {disabled, outline, link, backgroundColor: propsBackgroundColor} = this.getThemeProps();
+    const {disabled, outline, link, backgroundColor: propsBackgroundColor} = this.props;
     const {backgroundColor: stateBackgroundColor} = this.state;
 
     if (!outline && !link) {
