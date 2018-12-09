@@ -615,6 +615,7 @@ function createStyles({
     floatingPlaceholder: {
       position: 'absolute',
       width: '100%',
+      backgroundColor: 'transparent',
     },
     placeholder: {
       color: placeholderTextColor,
