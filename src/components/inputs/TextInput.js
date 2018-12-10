@@ -526,7 +526,7 @@ export default class TextInput extends BaseInput {
         >
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
-          {this.renderExpandableModal()}
+          {expandable && this.renderExpandableModal()}
         </View>
         <View row>
           <View flex>
@@ -615,6 +615,7 @@ function createStyles({
     floatingPlaceholder: {
       position: 'absolute',
       width: '100%',
+      backgroundColor: 'transparent',
     },
     placeholder: {
       color: placeholderTextColor,

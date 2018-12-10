@@ -31,6 +31,8 @@ const MIN_WIDTH = {
   LARGE: 90,
 };
 
+const DEFAULT_SIZE = 'large';
+
 /**
  * @description: Basic button component
  * @extends: TouchableOpacity
@@ -152,8 +154,8 @@ export default class Button extends BaseComponent {
   };
 
   static defaultProps = {
-    size: 'large',
-    outline: false,
+    // size: 'large',
+    // outline: false,
     iconOnRight: false,
   };
 
@@ -199,7 +201,7 @@ export default class Button extends BaseComponent {
   }
 
   generateStyles() {
-    this.styles = createStyles(this.props);
+    this.styles = createStyles(this.getThemeProps());
   }
 
   get isOutline() {
@@ -213,7 +215,7 @@ export default class Button extends BaseComponent {
   }
 
   get isIconButton() {
-    const {iconSource, label} = this.props;
+    const {iconSource, label} = this.getThemeProps();
     return iconSource && !label;
   }
 
@@ -260,7 +262,7 @@ export default class Button extends BaseComponent {
   }
 
   getLabelSizeStyle() {
-    const {size} = this.props;
+    const size = this.getThemeProps().size || DEFAULT_SIZE;
 
     const LABEL_STYLE_BY_SIZE = {};
     LABEL_STYLE_BY_SIZE[Button.sizes.xSmall] = {...Typography.text80};
@@ -273,7 +275,8 @@ export default class Button extends BaseComponent {
   }
 
   getContainerSizeStyle() {
-    const {size, outline, link, avoidMinWidth, avoidInnerPadding, round} = this.props;
+    const {outline, link, avoidMinWidth, avoidInnerPadding, round} = this.getThemeProps();
+    const size = this.getThemeProps().size || DEFAULT_SIZE;
     const outlineWidth = this.getThemeProps().outlineWidth || 1;
 
     const CONTAINER_STYLE_BY_SIZE = {};
@@ -350,7 +353,7 @@ export default class Button extends BaseComponent {
   }
 
   getBorderRadiusStyle() {
-    const {link, fullWidth, borderRadius: borderRadiusFromProps} = this.props;
+    const {link, fullWidth, borderRadius: borderRadiusFromProps} = this.getThemeProps();
     if (link || fullWidth || borderRadiusFromProps === 0) {
       return {borderRadius: 0};
     }
@@ -369,7 +372,8 @@ export default class Button extends BaseComponent {
   }
 
   getIconStyle() {
-    const {size, disabled, iconStyle: propsIconStyle, iconOnRight} = this.props;
+    const {disabled, iconStyle: propsIconStyle, iconOnRight} = this.getThemeProps();
+    const size = this.getThemeProps().size || DEFAULT_SIZE;
     const iconStyle = {
       tintColor: this.getLabelColor(),
     };
@@ -391,7 +395,7 @@ export default class Button extends BaseComponent {
   }
 
   getAnimationDirectionStyle() {
-    const {animateTo} = this.props;
+    const {animateTo} = this.getThemeProps();
 
     let style;
     switch (animateTo) {
