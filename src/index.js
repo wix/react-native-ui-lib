@@ -61,9 +61,7 @@ module.exports = {
   get SafeAreaSpacerView() { return require('./nativeComponents').SafeAreaSpacerView; },
   get WheelPicker() { return require('./nativeComponents').WheelPicker; },
   get SafeAreaInsetsManager() { return require('./nativeComponents').SafeAreaInsetsManager; },
-
-  // InteractableComponents
-  get Drawer() { return require('./interactableComponents').Drawer; },
+  get Drawer() { return require('./nativeComponents').Drawer; },
 
   // Style
   get Colors() { return require('./style').Colors; },
