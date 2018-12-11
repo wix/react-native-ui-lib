@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Dialog, Button, Text} from 'react-native-ui-lib'; // eslint-disable-line
+import {Colors, View, Dialog, Button, Text} from 'react-native-ui-lib'; // eslint-disable-line
 class DialogScreen extends Component {
   state = {
     showDialog1: false,
@@ -57,6 +57,7 @@ class DialogScreen extends Component {
           centerH
           onDismiss={() => this.setState({showDialog2: false})}
           animationConfig={{duration: 250}}
+          style={{backgroundColor: Colors.white}}
         >
           {this.renderDialogContent(2, {br0: true})}
         </Dialog>
@@ -79,6 +80,7 @@ class DialogScreen extends Component {
           onDismiss={() => this.setState({showDialog4: false})}
           animationConfig={{animation: 'slideInDown', duration: 250}}
           dismissSwipeDirection={Dialog.swipeDirections.UP}
+          style={{backgroundColor: Colors.white}}
         >
           {this.renderDialogContent(4, {br0: true})}
         </Dialog>

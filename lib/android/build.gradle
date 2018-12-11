@@ -4,7 +4,7 @@ project.ext {
     buildToolsVersion = rootProject.ext.has("buildToolsVersion") ? rootProject.ext.buildToolsVersion : '27.0.3'
     minSdkVersion = rootProject.ext.has("minSdkVersion") ? rootProject.ext.minSdkVersion : 19
     compileSdkVersion = rootProject.ext.has("compileSdkVersion") ? rootProject.ext.compileSdkVersion : 27
-    targetSdkVersion = rootProject.ext.has("targetSdkVersion") ? rootProject.ext.targetSdkVersion : 27
+    targetSdkVersion = rootProject.ext.has("targetSdkVersion") ? rootProject.ext.targetSdkVersion : 25
     supportLibVersion = rootProject.ext.has("supportLibVersion") ? rootProject.ext.supportLibVersion  : '27.1.1'
 }
 
@@ -27,5 +27,5 @@ android {
 }
 
 dependencies {
-    compile 'com.facebook.react:react-native:+'
+    implementation 'com.facebook.react:react-native:+'
 }

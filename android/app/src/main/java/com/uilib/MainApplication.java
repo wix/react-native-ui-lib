@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.cmcewen.blurview.BlurViewPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -43,6 +42,12 @@ public class MainApplication extends NavigationApplication {
         return BuildConfig.DEBUG;
     }
 
+    @Nullable
+    @Override
+    public List<ReactPackage> createAdditionalReactPackages() {
+        return getPackages();
+    }
+
     protected List<ReactPackage> getPackages() {
         // Add additional packages you require here
         // No need to add RnnPackage and MainReactPackage
@@ -54,11 +59,5 @@ public class MainApplication extends NavigationApplication {
             new WheelPickerPackage(),
             new Interactable()
         );
-    }
-
-    @Nullable
-    @Override
-    public List<ReactPackage> createAdditionalReactPackages() {
-        return getPackages();
     }
 }

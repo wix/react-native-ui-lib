@@ -22,6 +22,7 @@ class SettingsScreen extends Component {
         playground,
         ..._.chain(data)
           .values()
+          .map('screens')
           .flatten()
           .map(screen => ({label: screen.title, value: screen.screen}))
           .value(),

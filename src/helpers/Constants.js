@@ -17,6 +17,12 @@ export function getAndroidVersion() {
   return isAndroid ? parseInt(Platform.Version, 10) : undefined;
 }
 
+export function getSafeAreaInsets(mode) {
+  return (mode === 'landscape') ? 
+    {left: 44, right: 44, bottom: 24, top: 0} : 
+    {left: 0, right: 0, bottom: 34, top: 44};
+}
+
 // override guesstimate height with the actual height from StatusBarManager
 if (isIOS) {
   StatusBarManager.getHeight(data => (statusBarHeight = data.height));
