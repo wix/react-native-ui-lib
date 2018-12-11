@@ -239,24 +239,30 @@ export default class UiLibExplorerMenu extends Component {
   renderBreadcrumbs() {
     const {currentPage} = this.state;
     const data = this.getMenuData();
-    const pages = Object.keys(data);
+    const sections = Object.keys(data);
     
     return (
       <View style={styles.breadcrumbs} row>
-        {_.map(pages, (key, index) => {
-          const isLast = index === pages.length - 1;
+        {_.map(data, (section, key) => {
+          const index = sections.indexOf(key);
+          const isLast = index === sections.length - 1;
           return (
             <View key={key} row centerV>
               <Button
-                link
-                dark50={currentPage !== index}
-                dark10={currentPage === index}
-                text50
-                label={key}
+                // link
+                size={Button.sizes.xSmall}
+                marginB-5
+                marginR-5={!isLast}
+                text80
+                // dark50={currentPage !== index}
+                // dark10={currentPage === index}
+                // text50
+                outline={currentPage !== index}
+                label={section.title}
                 style={{height: 30}}
                 onPress={() => this.carousel.goToPage(index)}
               />
-              {!isLast && <Text marginH-5>&middot;</Text>}
+              {/* {!isLast && <Text marginH-5>&middot;</Text>} */}
             </View>
           );
         })}
@@ -271,11 +277,11 @@ export default class UiLibExplorerMenu extends Component {
     
     return (
       <Carousel onChangePage={this.onChangePage} ref={carousel => (this.carousel = carousel)}>
-        {_.map(data, (group, key) => {
+        {_.map(data, (section, key) => {
           return (
             <View key={key} style={styles.page}>
               <View style={styles.pageTitleContainer}>
-                <Text text20>{key}</Text>
+                <Text text40>{key}</Text>
               </View>
               <View
                 style={[
@@ -285,7 +291,7 @@ export default class UiLibExplorerMenu extends Component {
                 ]}
               />
               <View flex>
-                <FlatList data={group} keyExtractor={item => item.title} renderItem={this.renderItem}/>
+                <FlatList data={section.screens} keyExtractor={item => item.title} renderItem={this.renderItem}/>
               </View>
             </View>
           );
@@ -352,6 +358,7 @@ const styles = StyleSheet.create({
   },
   pageTitleContainer: {
     borderBottomWidth: 1,
+    paddingBottom: 4,
     borderColor: Colors.dark60,
   },
   pageTitleExtraDivider: {
