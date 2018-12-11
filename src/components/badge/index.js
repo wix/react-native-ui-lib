@@ -57,7 +57,7 @@ export default class Badge extends BaseComponent {
      * If set to null/undefined, no formating will occur.
      * Example: labelLengthFormater={2}, label={124}, label will present "99+".
      */
-    labelLengthFormater: PropTypes.number,
+    labelLengthFormatter: PropTypes.number,
     /**
      * Use to identify the badge in tests
      */
@@ -115,40 +115,47 @@ export default class Badge extends BaseComponent {
     return {width, height};
   }
 
-  renderLabel() {
+  formatLabel() {
     const {labelLengthFormater} = this.props;
     let {label} = this.props;
-
-    switch (labelLengthFormater) {
-      case null:
-      case undefined:
-        break;
-      case 1:
-        if (label > 9) {
-          label = '9+';
-        }
-        break;
-      case 2:
-        if (label > 99) {
-          label = '99+';
-        }
-        break;
-      case 3:
-        if (label > 999) {
-          label = '999+';
-        }
-        break;
-      case 4:
-        if (label > 9999) {
-          label = '9999+';
-        }
-        break;
-      default:
-        if (label > 99) {
-          label = '99+';
-        }
-        break;
+    if (isNaN(label)) {
+      return label;
+    } else {
+      switch (labelLengthFormater) {
+        case null:
+        case undefined:
+          break;
+        case 1:
+          if (label > 9) {
+            label = '9+';
+          }
+          break;
+        case 2:
+          if (label > 99) {
+            label = '99+';
+          }
+          break;
+        case 3:
+          if (label > 999) {
+            label = '999+';
+          }
+          break;
+        case 4:
+          if (label > 9999) {
+            label = '9999+';
+          }
+          break;
+        default:
+          if (label > 99) {
+            label = '99+';
+          }
+          break;
+      }
     }
+    return label;
+  }
+
+  renderLabel() {
     return (
       <Text
         style={[this.styles.label, this.isSmallBadge() && this.styles.labelSmall]}
@@ -156,7 +163,7 @@ export default class Badge extends BaseComponent {
         numberOfLines={1}
         testID="badge"
       >
-        {label}
+        {this.formatLabel()}
       </Text>
     );
   }
