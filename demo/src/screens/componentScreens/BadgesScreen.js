@@ -11,7 +11,7 @@ export default class BadgesScreen extends Component {
     super(props);
 
     this.state = {
-      value: 10,
+      value: 100,
     };
   }
 
@@ -29,9 +29,9 @@ export default class BadgesScreen extends Component {
         <Text text50 row center marginB-15> Badges </Text>
         <View row center>
           <View center marginR-10 marginL-10>
-            <Badge label={'1'} backgroundColor={Colors.blue30}/>
-            <Badge label={'1'} containerStyle={{marginTop: BadgesSpace}} backgroundColor={Colors.blue30} borderWidth={3} borderColor={Colors.blue50}/>
-            <Badge size="small" label={'1'} containerStyle={{marginTop: BadgesSpace}} backgroundColor={Colors.blue30}/>
+            <Badge label={'10'} backgroundColor={Colors.blue30}/>
+            <Badge label={'10'} containerStyle={{marginTop: BadgesSpace}} backgroundColor={Colors.blue30} borderWidth={3} borderColor={Colors.blue50}/>
+            <Badge size="small" label={'10'} containerStyle={{marginTop: BadgesSpace}} backgroundColor={Colors.blue30}/>
           </View>
 
           <View center marginR-10 marginL-10>
@@ -54,9 +54,9 @@ export default class BadgesScreen extends Component {
           </View>
 
           <View center marginR-10 marginL-10>
-            <Badge label={'99+'}/>
-            <Badge label={'99+'} containerStyle={{marginTop: BadgesSpace}} borderWidth={2} borderColor={Colors.white}/>
-            <Badge size="small" label={'99+'} containerStyle={{marginTop: BadgesSpace}}/>
+            <Badge label={'9999'} labelLengthFormater={3}/>
+            <Badge label={'999'} labelLengthFormater={2} containerStyle={{marginTop: BadgesSpace}} borderWidth={2} borderColor={Colors.white}/>
+            <Badge labelLengthFormater={1} size="small" label={'99999999'} containerStyle={{marginTop: BadgesSpace}}/>
           </View>
         </View>
 
