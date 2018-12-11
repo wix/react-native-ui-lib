@@ -19,7 +19,7 @@ export default class BadgesScreen extends Component {
     const currValue = this.state.value;
     const newValue = currValue + value;
     if (newValue >= 1) {
-      this.setState({ value: newValue});
+      this.setState({value: newValue});
     }
   }
 
