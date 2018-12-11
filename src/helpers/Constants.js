@@ -19,8 +19,8 @@ export function getAndroidVersion() {
 
 export function getSafeAreaInsets(mode) {
   return (mode === 'landscape') ? 
-    {paddingLeft: 44, paddingRight: 44, paddingBottom: 24, paddingTop: 0} : 
-    {paddingLeft: 0, paddingRight: 0, paddingBottom: 34, paddingTop: 44};
+    {left: 44, right: 44, bottom: 24, top: 0} : 
+    {left: 0, right: 0, bottom: 34, top: 44};
 }
 
 // override guesstimate height with the actual height from StatusBarManager
