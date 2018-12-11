@@ -1,13 +1,14 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import {StyleSheet, TouchableWithoutFeedback, SafeAreaView} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import {BaseComponent} from '../../commons';
 import {Colors} from '../../style';
 import Modal from '../../screensComponents/modal';
 import View from '../view';
+import {Constants} from '../../helpers';
 
 /*eslint-disable*/
 /**
@@ -106,13 +107,14 @@ class Dialog extends BaseComponent {
   }
 
   render() {
-    const {visible, overlayBackgroundColor, style, onDismiss} = this.getThemeProps();
+    const {visible, overlayBackgroundColor, style, onDismiss, bottom} = this.getThemeProps();
     const {alignments} = this.state;
     const centerByDefault = _.isEmpty(alignments);
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80,
     };
+    const bottomInsets = Constants.getSafeAreaInsets().paddingBottom;
 
     return (
       <Modal
@@ -131,7 +133,10 @@ class Dialog extends BaseComponent {
               style={this.styles.gestureContainer}
             >
               <TouchableWithoutFeedback>
-                {this.props.children}
+                <SafeAreaView style={{flex: 1}}>
+                  {this.props.children}
+                  {Constants.isIphoneX && bottom && <View style={{height: bottomInsets}}/>}
+                </SafeAreaView>
               </TouchableWithoutFeedback>
             </GestureRecognizer>
           </Animatable.View>
