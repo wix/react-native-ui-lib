@@ -10,11 +10,11 @@ const SIZE_PIMPLE_SMALL = 6;
 const SIZE_PIMPLE_BIG = 10;
 const SIZE_DEFAULT = 20;
 const WIDTH_DOUBLE = 28;
-const WIDTH_TRIPLE = 35;
+const WIDTH_TRIPLE = 36;
 
 const SIZE_SMALL = 16;
 const WIDTH_DOUBLE_SMALL = 25;
-const WIDTH_TRIPLE_SMALL = 28;
+const WIDTH_TRIPLE_SMALL = 30;
 
 /**
  * @description: Round colored badge, typically used to show a number
