@@ -116,7 +116,7 @@ export default class Badge extends BaseComponent {
   }
 
   getFormattedLabel() {
-    const {labelLengthFormater} = this.props;
+    const {labelLengthFormater} = this.getThemeProps();
     let {label} = this.props;
     if (isNaN(label)) {
       return label;
