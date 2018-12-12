@@ -198,10 +198,11 @@ export default class Toast extends BaseComponent {
     }
 
     const hasOneAction = _.size(actions) === 1;
+    const hasTwoActions = _.size(actions) === 2;
     const height = getHeight(this.props);
 
     return (
-      <View row height={height} centerV spread>
+      <View row={!hasTwoActions} height={height} centerV spread>
         {icon && (
           <View>
             <Image source={icon} resizeMode={'contain'} style={this.styles.icon} tintColor={color}/>
@@ -209,11 +210,12 @@ export default class Toast extends BaseComponent {
         )}
         {this.renderMessage()}
         {(hasOneAction || allowDismiss) && (
-          <View row height="100%">
+          <View row height="100%" marginL-8>
             {hasOneAction && this.renderOneAction()}
             {this.renderDismissButton()}
           </View>
         )}
+        {hasTwoActions && this.renderTwoActions()}
       </View>
     );
   }
@@ -222,7 +224,7 @@ export default class Toast extends BaseComponent {
     const {message, messageStyle, centerMessage, color} = this.props;
     const {contentAnimation} = this.state;
     return (
-      <View flex centerH={centerMessage}>
+      <View flex centerH={centerMessage} centerV>
         <Animatable.Text style={[this.styles.message, color && {color}, messageStyle]} {...contentAnimation}>
           {message}
         </Animatable.Text>
@@ -249,11 +251,11 @@ export default class Toast extends BaseComponent {
   }
 
   renderTwoActions() {
-    const {actions} = this.props;
+    const {actions, backgroundColor} = this.props;
     const {contentAnimation} = this.state;
 
     return (
-      <Animatable.View style={this.styles.containerWithTwoActions} {...contentAnimation}>
+      <Animatable.View style={[this.styles.containerWithTwoActions, {backgroundColor}]} {...contentAnimation}>
         <Button size="small" {...actions[0]} />
         <Button marginL-12 size="small" {...actions[1]} />
       </Animatable.View>
@@ -295,11 +297,10 @@ export default class Toast extends BaseComponent {
     return (
       <View style={[positionStyle]} useSafeArea testID={testID}>
         <View height={height}/>
-
         <Animatable.View
           style={[
             this.styles.container,
-            !renderContent && {paddingHorizontal: 20},
+            !renderContent && !hasTwoActions && {paddingHorizontal: 20},
             backgroundColor && {backgroundColor},
             hasOneAction && this.styles.containerWithOneAction,
             {zIndex},
@@ -307,10 +308,7 @@ export default class Toast extends BaseComponent {
           {...animationConfig}
         >
           {enableBlur && <BlurView style={this.styles.blurView} {...blurOptions} />}
-
           {this.renderContent()}
-
-          {hasTwoActions && <View>{this.renderTwoActions()}</View>}
         </Animatable.View>
       </View>
     );
