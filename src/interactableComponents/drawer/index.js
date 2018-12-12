@@ -479,7 +479,7 @@ function createStyles() {
     leftItemContainer: {
       position: 'absolute',
       left: 0,
-      right: 0,
+      right: 100,
       flexDirection: 'row',
     },
     item: {
