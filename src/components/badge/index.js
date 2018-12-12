@@ -115,7 +115,7 @@ export default class Badge extends BaseComponent {
     return {width, height};
   }
 
-  formatLabel() {
+  getFormattedLabel() {
     const {labelLengthFormater} = this.props;
     let {label} = this.props;
     if (isNaN(label)) {
@@ -163,7 +163,7 @@ export default class Badge extends BaseComponent {
         numberOfLines={1}
         testID="badge"
       >
-        {this.formatLabel()}
+        {this.getFormattedLabel()}
       </Text>
     );
   }
