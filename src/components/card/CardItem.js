@@ -8,7 +8,6 @@ import {BaseComponent} from '../../commons';
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
  */
 export default class CardItem extends BaseComponent {
-
   static displayName = 'Card.Item';
 
   static propTypes = {
@@ -19,11 +18,11 @@ export default class CardItem extends BaseComponent {
     /**
      * align flex as a column
      */
-    column: PropTypes.bool,
+    column: PropTypes.bool
   };
 
   static defaultProps = {
-    row: true,
+    row: true
   };
 
   generateStyles() {
@@ -32,18 +31,14 @@ export default class CardItem extends BaseComponent {
 
   render() {
     const {style} = this.props;
-    return (
-      <View style={[this.styles.container, style]}>
-        {this.props.children}
-      </View>
-    );
+    return <View style={[this.styles.container, style]}>{this.props.children}</View>;
   }
 }
 
 function createStyles({column}) {
   return StyleSheet.create({
     container: {
-      flexDirection: column ? 'column' : 'row',
-    },
+      flexDirection: column ? 'column' : 'row'
+    }
   });
 }

@@ -344,7 +344,6 @@ export default class Toast extends BaseComponent {
     }
     _.invoke(this.props, 'onDismiss');
   }
-
 }
 
 function createStyles() {

@@ -9,33 +9,28 @@ import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 import Text from '../text';
 
-
-
-
-
-
 const PADDINGS = {
   XSMALL: 3,
   SMALL: 4.5,
   MEDIUM: 6.5,
-  LARGE: 9.5,
+  LARGE: 9.5
 };
 
 const HORIZONTAL_PADDINGS = {
   XSMALL: 11,
   SMALL: 14,
   MEDIUM: 16,
-  LARGE: 20,
+  LARGE: 20
 };
 
 const MIN_WIDTH = {
   XSMALL: 66,
   SMALL: 70,
   MEDIUM: 77,
-  LARGE: 90,
+  LARGE: 90
 };
 
-const DEFAULT_SIZE =  'large';
+const DEFAULT_SIZE = 'large';
 
 /**
  * @description: Basic button component
@@ -46,7 +41,7 @@ const DEFAULT_SIZE =  'large';
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.js
  */
 export default class Button extends BaseComponent {
-    static displayName = 'Button';
+  static displayName = 'Button';
   static propTypes = {
     ...Text.propTypes,
     /**

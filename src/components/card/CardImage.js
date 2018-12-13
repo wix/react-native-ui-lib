@@ -11,7 +11,6 @@ import * as CardPresenter from './CardPresenter';
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
  */
 export default class CardImage extends BaseComponent {
-
   static displayName = 'Card.Image';
 
   static propTypes = {
@@ -37,11 +36,11 @@ export default class CardImage extends BaseComponent {
      * border radius, basically for Android since overflow doesn't work well
      */
     borderRadius: PropTypes.number,
-    testID: PropTypes.string,
+    testID: PropTypes.string
   };
 
   static defaultProps = {
-    borderRadius: BorderRadiuses.br40,
+    borderRadius: BorderRadiuses.br40
   };
 
   generateStyles() {
@@ -54,7 +53,7 @@ export default class CardImage extends BaseComponent {
     if (imageSource) {
       return (
         <View style={[this.styles.container, borderStyle, style]}>
-          <Image testID={testID} source={imageSource} style={[this.styles.image, borderStyle]}/>
+          <Image testID={testID} source={imageSource} style={[this.styles.image, borderStyle]} />
         </View>
       );
     }
@@ -67,14 +66,14 @@ function createStyles({width, height, position}) {
   const {top, left, right, bottom} = CardPresenter.extractPositionValues(position);
   return StyleSheet.create({
     container: {
-      height: (left || right) ? undefined : height,
-      width: (top || bottom) ? undefined : width,
+      height: left || right ? undefined : height,
+      width: top || bottom ? undefined : width
     },
     image: {
       width: null,
       height: null,
       flex: 1,
-      resizeMode: 'cover',
-    },
+      resizeMode: 'cover'
+    }
   });
 }

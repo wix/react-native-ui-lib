@@ -34,7 +34,7 @@ const contentViewHeight = Constants.isAndroid ? 268 : 282;
  * @gif: https://media.giphy.com/media/3ohs4D5irZm5GojsDS/giphy.gif, https://media.giphy.com/media/3oxQNaDQckPZI78rWo/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.js
  */
-/*eslint-enable*/
+/* eslint-enable */
 class FeatureHighlight extends BaseComponent {
   static displayName = 'FeatureHighlight';
   static propTypes = {
@@ -49,7 +49,7 @@ class FeatureHighlight extends BaseComponent {
       x: PropTypes.number,
       y: PropTypes.number,
       width: PropTypes.number,
-      height: PropTypes.number,
+      height: PropTypes.number
     }),
     /**
      * Callback that extract the ref of the element to be highlighted
@@ -100,7 +100,7 @@ class FeatureHighlight extends BaseComponent {
      */
     minimumRectSize: PropTypes.shape({
       width: PropTypes.number,
-      height: PropTypes.number,
+      height: PropTypes.number
     }),
     /**
      * The padding of the highlight frame around the highlighted element's frame (only when passing ref in 'getTarget')
@@ -109,7 +109,7 @@ class FeatureHighlight extends BaseComponent {
     /**
      * Use to identify the component in tests
      */
-    testID: PropTypes.string,
+    testID: PropTypes.string
   };
 
   constructor(props) {
@@ -119,8 +119,8 @@ class FeatureHighlight extends BaseComponent {
     this.setTargetPosition = this.setTargetPosition.bind(this);
 
     this.state = {
-      fadeAnim: new Animated.Value(0),  // Initial value for opacity: 0
-      contentTopPosition: undefined,
+      fadeAnim: new Animated.Value(0), // Initial value for opacity: 0
+      contentTopPosition: undefined
     };
 
     this.contentHeight = contentViewHeight;
@@ -129,7 +129,7 @@ class FeatureHighlight extends BaseComponent {
 
   static defaultProps = {
     minimumRectSize: {width: 56, height: 56},
-    innerPadding: 10,
+    innerPadding: 10
   };
 
   componentDidMount() {
@@ -145,13 +145,14 @@ class FeatureHighlight extends BaseComponent {
   }
 
   animate(toValue) {
-    Animated.timing(                  // Animate over time
-      this.state.fadeAnim,            // The animated value to drive
+    Animated.timing(
+      // Animate over time
+      this.state.fadeAnim, // The animated value to drive
       {
-        toValue,                      // Animate to value
-        duration: toValue ? 100 : 0,   // Make it take a while
-      },
-    ).start();                        // Starts the animation
+        toValue, // Animate to value
+        duration: toValue ? 100 : 0 // Make it take a while
+      }
+    ).start(); // Starts the animation
   }
 
   setTargetPosition(props = this.props) {
@@ -181,17 +182,16 @@ class FeatureHighlight extends BaseComponent {
     const {highlightFrame, minimumRectSize, innerPadding} = this.props;
     const {top, height} = this.targetPosition;
     const screenVerticalCenter = Constants.screenHeight / 2;
-    const targetCenter = top + (height / 2);
+    const targetCenter = top + height / 2;
     const isAlignedTop = targetCenter > screenVerticalCenter;
     let topPosition = isAlignedTop ? top - this.contentHeight : top + height;
     if (!highlightFrame && !isAlignedTop) {
       const minRectHeight = minimumRectSize.height;
       const isUnderMin = height >= minRectHeight;
-      topPosition = isUnderMin ? topPosition + innerPadding : targetCenter + (minRectHeight / 2) + (innerPadding / 2);
+      topPosition = isUnderMin ? topPosition + innerPadding : targetCenter + minRectHeight / 2 + innerPadding / 2;
     }
     if (topPosition < 0 || topPosition + this.contentHeight > Constants.screenHeight) {
-      console.warn('Content is too long and might appear off screen. ' +
-        'Please adjust the message length for better results.');
+      console.warn('Content is too long and might appear off screen. Please adjust the message length for better results.');
     }
     return topPosition;
   }
@@ -217,11 +217,10 @@ class FeatureHighlight extends BaseComponent {
     this.targetPosition = undefined;
     const {confirmButtonProps} = this.props;
     _.invoke(confirmButtonProps, 'onPress');
-  }
+  };
 
   renderHighlightMessage() {
-    const {title, message, confirmButtonProps, textColor, titleNumberOfLines, messageNumberOfLines}
-      = this.getThemeProps();
+    const {title, message, confirmButtonProps, textColor, titleNumberOfLines, messageNumberOfLines} = this.getThemeProps();
     const color = textColor || defaultTextColor;
 
     return (
@@ -258,8 +257,17 @@ class FeatureHighlight extends BaseComponent {
     const {node, contentTopPosition} = this.state;
     if (contentTopPosition === undefined) return null;
 
-    const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding,
-      onBackgroundPress} = this.getThemeProps();
+    const {
+      testID,
+      visible,
+      highlightFrame,
+      overlayColor,
+      borderColor,
+      borderWidth,
+      minimumRectSize,
+      innerPadding,
+      onBackgroundPress
+    } = this.getThemeProps();
 
     return (
       <HighlighterOverlayView
@@ -274,7 +282,7 @@ class FeatureHighlight extends BaseComponent {
         innerPadding={innerPadding}
       >
         <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onBackgroundPress}>
-          <View flex/>
+          <View flex />
         </TouchableWithoutFeedback>
         {this.renderHighlightMessage()}
       </HighlighterOverlayView>
@@ -287,21 +295,21 @@ const styles = StyleSheet.create({
     position: 'absolute',
     padding: contentViewPadding,
     marginRight: contentViewRightMargin,
-    alignItems: 'flex-start',
+    alignItems: 'flex-start'
   },
   title: {
     marginBottom: titleBottomMargin,
     lineHeight: Typography.text60.lineHeight,
-    fontWeight: '900',
+    fontWeight: '900'
   },
   message: {
     marginBottom: messageBottomMargin,
     ...Typography.text70,
-    lineHeight: messageLineHeight,
+    lineHeight: messageLineHeight
   },
   touchableOverlay: {
-    ...StyleSheet.absoluteFillObject,
-  },
+    ...StyleSheet.absoluteFillObject
+  }
 });
 
 export default FeatureHighlight;

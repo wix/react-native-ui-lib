@@ -2,13 +2,12 @@ import _ from 'lodash';
 import Colors from './colors';
 
 class ThemeManager {
-
   theme = {
     primaryColor: Colors.blue30,
     CTA: {
       textColor: Colors.white,
       disabledColor: Colors.dark60,
-      backgroundColor: Colors.blue30,
+      backgroundColor: Colors.blue30
     },
     titleColor: Colors.dark10,
     subtitleColor: Colors.dark40,
@@ -16,9 +15,9 @@ class ThemeManager {
     components: {
       TouchableOpacity: {
         throttleTime: 0,
-        throttleOptions: {leading: true, trailing: false},
-      },
-    },
+        throttleOptions: {leading: true, trailing: false}
+      }
+    }
   };
 
   setTheme(overrides) {
@@ -79,7 +78,6 @@ class ThemeManager {
   get dividerColor() {
     return this.theme.dividerColor;
   }
-
 }
 
 export default new ThemeManager();

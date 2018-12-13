@@ -18,15 +18,15 @@ import {Constants} from '../../helpers';
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DialogScreen.js
  * @gif: https://media.giphy.com/media/9S58XdLCoUiLzAc1b1/giphy.gif
  */
-/*eslint-enable*/
+/* eslint-enable */
 
 const SWIPE_DIRECTIONS = {
   UP: 'up',
-  DOWN: 'down',
+  DOWN: 'down'
 };
 
 class Dialog extends BaseComponent {
-  static displayName = 'Dialog'
+  static displayName = 'Dialog';
   static propTypes = {
     /**
      * Control visibility of the dialog
@@ -60,14 +60,14 @@ class Dialog extends BaseComponent {
     /**
      * The dialog container style
      */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
   };
 
   static defaultProps = {
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
     width: '90%',
     height: '70%',
-    dismissSwipeDirection: SWIPE_DIRECTIONS.DOWN,
+    dismissSwipeDirection: SWIPE_DIRECTIONS.DOWN
   };
 
   static swipeDirections = SWIPE_DIRECTIONS;
@@ -82,7 +82,7 @@ class Dialog extends BaseComponent {
       animation: 'slideInUp',
       duration: 400,
       useNativeDriver: true,
-      ...animationConfig,
+      ...animationConfig
     };
   }
 
@@ -112,7 +112,7 @@ class Dialog extends BaseComponent {
     const centerByDefault = _.isEmpty(alignments);
     const config = {
       velocityThreshold: 0.3,
-      directionalOffsetThreshold: 80,
+      directionalOffsetThreshold: 80
     };
     const bottomInsets = Constants.getSafeAreaInsets().paddingBottom;
 
@@ -135,7 +135,7 @@ class Dialog extends BaseComponent {
               <TouchableWithoutFeedback>
                 <SafeAreaView style={{flex: 1}}>
                   {this.props.children}
-                  {Constants.isIphoneX && bottom && <View style={{height: bottomInsets}}/>}
+                  {Constants.isIphoneX && bottom && <View style={{height: bottomInsets}} />}
                 </SafeAreaView>
               </TouchableWithoutFeedback>
             </GestureRecognizer>
@@ -149,15 +149,15 @@ class Dialog extends BaseComponent {
 function createStyles({width, height}) {
   return StyleSheet.create({
     overlay: {
-      flex: 1,
+      flex: 1
     },
     dialogContainer: {
       width,
-      height,
+      height
     },
     gestureContainer: {
-      flexGrow: 1,
-    },
+      flexGrow: 1
+    }
   });
 }
 

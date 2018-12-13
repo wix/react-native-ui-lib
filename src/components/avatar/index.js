@@ -13,7 +13,7 @@ export const STATUS_MODES = {
   ONLINE: 'ONLINE',
   OFFLINE: 'OFFLINE',
   AWAY: 'AWAY',
-  NONE: 'NONE',
+  NONE: 'NONE'
 };
 
 /**
@@ -37,14 +37,14 @@ export default class Avatar extends BaseComponent {
      */
     containerStyle: ViewPropTypes.style,
     /**
-    * The image source (external or assets)
+     * The image source (external or assets)
      */
     imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
      * Image props object
      */
     imageProps: PropTypes.object,
-     /**
+    /**
      * Image style object used to pass additional style props
      * by components which render image
      */
@@ -103,14 +103,14 @@ export default class Avatar extends BaseComponent {
     /**
      * Press handler
      */
-    onPress: PropTypes.func,
+    onPress: PropTypes.func
   };
 
   static defaultProps = {
     backgroundColor: Colors.dark80,
     size: 50,
     labelColor: Colors.dark10,
-    status: STATUS_MODES.NONE,
+    status: STATUS_MODES.NONE
   };
 
   generateStyles() {
@@ -133,7 +133,7 @@ export default class Avatar extends BaseComponent {
   }
 
   getBadgeColor(isOnline, status) {
-    const onlineOverride = (status === STATUS_MODES.NONE) ? isOnline : false;
+    const onlineOverride = status === STATUS_MODES.NONE ? isOnline : false;
     const badgeColor = onlineOverride ? Colors.green30 : this.getStatusBadgeColor(status);
     return badgeColor;
   }
@@ -190,9 +190,7 @@ export default class Avatar extends BaseComponent {
 
     return (
       <Container style={[this.styles.container, containerStyle]} testID={testID} onPress={onPress}>
-        <View
-          style={[this.styles.initialsContainer, {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
-        >
+        <View style={[this.styles.initialsContainer, {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}>
           <Text numberOfLines={1} style={[this.styles.initials, {color}]}>
             {label}
           </Text>
@@ -214,38 +212,38 @@ function createStyles({size, labelColor, imageSource}) {
       justifyContent: 'center',
       width: size,
       height: size,
-      borderRadius,
+      borderRadius
     },
     initialsContainer: {
       ...StyleSheet.absoluteFillObject,
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius,
+      borderRadius
     },
     initialsContainerWithInset: {
       top: 1,
       right: 1,
       bottom: 1,
-      left: 1,
+      left: 1
     },
-    /*eslint-disable*/
+    /* eslint-disable */
     initials: {
       fontSize: size * fontSizeToImageSizeRatio,
       color: labelColor,
-      backgroundColor: 'transparent',
+      backgroundColor: 'transparent'
     },
-    /*eslint-enable*/
+    /* eslint-enable */
     defaultImage: {
       width: size,
       height: size,
-      borderRadius,
+      borderRadius
     },
     image: {
       ...StyleSheet.absoluteFillObject,
       position: 'absolute',
       width: size,
       height: size,
-      borderRadius,
+      borderRadius
     },
     onlineBadge: {
       height: 13.5,
@@ -255,17 +253,17 @@ function createStyles({size, labelColor, imageSource}) {
       backgroundColor: Colors.white,
       position: 'absolute',
       right: imageSource ? -1.5 : 0,
-      top: 4.5,
+      top: 4.5
     },
     onlineBadgeInner: {
       flex: 1,
-      borderRadius: 999,
+      borderRadius: 999
       // backgroundColor: Colors.green30,
     },
     fixAbsolutePosition: {
       position: undefined,
       left: undefined,
-      bottom: undefined,
+      bottom: undefined
     },
     ribbon: {
       position: 'absolute',
@@ -274,8 +272,8 @@ function createStyles({size, labelColor, imageSource}) {
       backgroundColor: Colors.blue30,
       borderRadius: BorderRadiuses.br100,
       paddingHorizontal: 6,
-      paddingVertical: 3,
-    },
+      paddingVertical: 3
+    }
   });
 
   return styles;

@@ -16,7 +16,6 @@ import ListItemPart from './ListItemPart';
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/listScreens/BasicListScreen.js
  */
 class ListItem extends BaseComponent {
-
   static displayName = 'ListItem';
 
   static propTypes = {
@@ -43,19 +42,19 @@ class ListItem extends BaseComponent {
     /**
      * Use to identify the ListItem in tests
      */
-    testID: PropTypes.string,
+    testID: PropTypes.string
   };
 
   static defaultProps = {
     height: 63,
     containerElement: TouchableOpacity,
-    underlayColor: Colors.dark70,
+    underlayColor: Colors.dark70
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      pressed: false,
+      pressed: false
     };
   }
 
@@ -64,20 +63,11 @@ class ListItem extends BaseComponent {
   }
 
   render() {
-    const {
-      containerElement,
-      containerStyle,
-      style,
-      onPress,
-      onLongPress,
-      underlayColor,
-      testID,
-      ...others
-    } = this.props;
+    const {containerElement, containerStyle, style, onPress, onLongPress, underlayColor, testID, ...others} = this.props;
     const {pressed} = this.state;
     // const containerStyle = this.extractContainerStyle(this.props);
     const animationProps = this.extractAnimationProps();
-    const Container = (onPress || onLongPress) ? containerElement : View;
+    const Container = onPress || onLongPress ? containerElement : View;
 
     const pressedStyle = {backgroundColor: underlayColor};
 
@@ -92,10 +82,7 @@ class ListItem extends BaseComponent {
         testID={testID}
         {...others}
       >
-        <Animatable.View
-          {...animationProps}
-          style={[this.styles.innerContainer, style, pressed && pressedStyle]}
-        >
+        <Animatable.View {...animationProps} style={[this.styles.innerContainer, style, pressed && pressedStyle]}>
           {this.props.children}
         </Animatable.View>
       </Container>
@@ -106,12 +93,12 @@ class ListItem extends BaseComponent {
 function createStyles({height}) {
   return StyleSheet.create({
     container: {
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white
     },
     innerContainer: {
       flexDirection: 'row',
-      height,
-    },
+      height
+    }
   });
 }
 
