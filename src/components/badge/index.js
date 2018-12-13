@@ -5,7 +5,6 @@ import * as Animatable from 'react-native-animatable';
 import Colors from '../../style/colors';
 import {BaseComponent} from '../../commons';
 import {Typography, ThemeManager, BorderRadiuses} from '../../style';
-import _ from 'lodash';
 
 const SIZE_PIMPLE_SMALL = 6;
 const SIZE_PIMPLE_BIG = 10;
@@ -17,7 +16,7 @@ const SIZE_SMALL = 16;
 const WIDTH_DOUBLE_SMALL = 25;
 const WIDTH_TRIPLE_SMALL = 30;
 
-const LABEL_FORMATTER_RANGE = [1, 2, 3, 4];
+const LABEL_FORMATTER_VALUES = [1, 2, 3, 4];
 
 /**
  * @description: Round colored badge, typically used to show a number
@@ -57,10 +56,10 @@ export default class Badge extends BaseComponent {
     /**
      * Receives a number from 1 to 4, representing the label's max digit length.
      * Beyond the max number for that digit length, a "+" will show up at the end.
-     * If set to 0, null, undefined, no formating will occur.
+     * If set to a value not included in LABEL_FORMATTER_VALUES, no formating will occur.
      * Example: labelLengthFormater={2}, label={124}, label will present "99+".
      */
-    labelFormatterLimit: PropTypes.oneOf(LABEL_FORMATTER_RANGE),
+    labelFormatterLimit: PropTypes.oneOf(LABEL_FORMATTER_VALUES),
     /**
      * Use to identify the badge in tests
      */
@@ -123,9 +122,9 @@ export default class Badge extends BaseComponent {
     if (isNaN(label)) {
       return label;
     }
-    if (LABEL_FORMATTER_RANGE.includes(labelFormatterLimit)) {
+    if (LABEL_FORMATTER_VALUES.includes(labelFormatterLimit)) {
       const maxLabelNumber = (10 ** labelFormatterLimit) - 1;
-      let formattedLabel = _.parseInt(label);
+      let formattedLabel = label;
       if (formattedLabel > maxLabelNumber) {
         formattedLabel = `${maxLabelNumber}+`;
       }
