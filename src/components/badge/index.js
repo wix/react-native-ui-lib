@@ -55,7 +55,7 @@ export default class Badge extends BaseComponent {
     containerStyle: PropTypes.object,
     /**
      * Receives a number from 1 to 4, representing the label's max digit length.
-     * Beyond the max number for that digit length, a "+" will show up at the end.
+     * Beyond the max number for that digit length, a "+" will show at the end.
      * If set to a value not included in LABEL_FORMATTER_VALUES, no formating will occur.
      * Example: labelLengthFormater={2}, label={124}, label will present "99+".
      */
