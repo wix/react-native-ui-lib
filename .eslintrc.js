@@ -4,7 +4,7 @@
 
 module.exports = {
   "parser": "babel-eslint",
-  "plugins": ["react-native", "uilib"],
+  "plugins": ["react-native"/* , "uilib" */],
   "extends": ["airbnb"],
   "rules": {
     "no-unneeded-ternary": "off",
@@ -28,6 +28,10 @@ module.exports = {
     "no-else-return": "off",
     "no-trailing-spaces": "off",
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": true}],
+    "operator-linebreak": "off",
+    "arrow-parens": "off",
+    "comma-dangle": ["off", "always-multiline"],
+    "no-mixed-operators": ["off"],
     // "uilib/no-hard-coded-color": ["error", validColors, extraFixColorsMap],
     // "uilib/no-hard-coded-font": "warn"
     // 'uilib/assets-deprecation': ['error', {deprecations: assetsDepJson, source: '../../assets', dueDate: '2 November, Friday'}]

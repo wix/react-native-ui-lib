@@ -10,6 +10,10 @@ import View from '../view';
 import Text from '../text';
 
 
+
+
+
+
 const PADDINGS = {
   XSMALL: 3,
   SMALL: 4.5,
@@ -31,7 +35,7 @@ const MIN_WIDTH = {
   LARGE: 90,
 };
 
-const DEFAULT_SIZE = 'large';
+const DEFAULT_SIZE =  'large';
 
 /**
  * @description: Basic button component
@@ -42,7 +46,7 @@ const DEFAULT_SIZE = 'large';
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.js
  */
 export default class Button extends BaseComponent {
-  static displayName = 'Button';
+    static displayName = 'Button';
   static propTypes = {
     ...Text.propTypes,
     /**
@@ -150,26 +154,26 @@ export default class Button extends BaseComponent {
     /**
      * Use to identify the button in tests
      */
-    testID: PropTypes.string,
+    testID: PropTypes.string
   };
 
   static defaultProps = {
     // size: 'large',
     // outline: false,
-    iconOnRight: false,
+    iconOnRight: false
   };
 
   static sizes = {
     xSmall: 'xSmall',
     small: 'small',
     medium: 'medium',
-    large: 'large',
+    large: 'large'
   };
 
   static animationDirection = {
     center: 'center',
     left: 'left',
-    right: 'right',
+    right: 'right'
   };
 
   constructor(props) {
@@ -187,18 +191,18 @@ export default class Button extends BaseComponent {
   }
 
   // This method will be called more than once in case of layout change!
-  onLayout = (event) => {
+  onLayout = event => {
     const height = event.nativeEvent.layout.height;
     if (this.props.round) {
       const width = event.nativeEvent.layout.width;
       const size = height >= width ? height : width;
       this.setState({size});
     }
-    
+
     if (Constants.isAndroid && Platform.Version <= 17) {
       this.setState({borderRadius: height / 2});
     }
-  }
+  };
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
@@ -280,37 +284,37 @@ export default class Button extends BaseComponent {
     const outlineWidth = this.getThemeProps().outlineWidth || 1;
 
     const CONTAINER_STYLE_BY_SIZE = {};
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round ? 
-    {height: this.state.size, width: this.state.size, padding: PADDINGS.XSMALL} : 
-    {
-      paddingVertical: PADDINGS.XSMALL,
-      paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
-      minWidth: MIN_WIDTH.XSMALL,
-    };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = round ?
-    {height: this.state.size, width: this.state.size, padding: PADDINGS.SMALL} : 
-    {
-      paddingVertical: PADDINGS.SMALL,
-      paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
-      minWidth: MIN_WIDTH.SMALL,
-    };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = round ? 
-    {height: this.state.size, width: this.state.size, padding: PADDINGS.MEDIUM} : 
-    {
-      paddingVertical: PADDINGS.MEDIUM,
-      paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
-      minWidth: MIN_WIDTH.MEDIUM,
-    };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = round ? 
-    {height: this.state.size, width: this.state.size, padding: PADDINGS.LARGE} : 
-    {
-      paddingVertical: PADDINGS.LARGE,
-      paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
-      minWidth: MIN_WIDTH.LARGE,
-    };
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round
+      ? {height: this.state.size, width: this.state.size, padding: PADDINGS.XSMALL}
+      : {
+        paddingVertical: PADDINGS.XSMALL,
+        paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
+        minWidth: MIN_WIDTH.XSMALL
+      };
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = round
+      ? {height: this.state.size, width: this.state.size, padding: PADDINGS.SMALL}
+      : {
+        paddingVertical: PADDINGS.SMALL,
+        paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
+        minWidth: MIN_WIDTH.SMALL
+      };
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = round
+      ? {height: this.state.size, width: this.state.size, padding: PADDINGS.MEDIUM}
+      : {
+        paddingVertical: PADDINGS.MEDIUM,
+        paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
+        minWidth: MIN_WIDTH.MEDIUM
+      };
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = round
+      ? {height: this.state.size, width: this.state.size, padding: PADDINGS.LARGE}
+      : {
+        paddingVertical: PADDINGS.LARGE,
+        paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
+        minWidth: MIN_WIDTH.LARGE
+      };
 
     if (outline) {
-      _.forEach(CONTAINER_STYLE_BY_SIZE, (style) => {
+      _.forEach(CONTAINER_STYLE_BY_SIZE, style => {
         style.paddingVertical -= outlineWidth; // eslint-disable-line
         style.paddingHorizontal -= outlineWidth; // eslint-disable-line
       });
@@ -342,7 +346,7 @@ export default class Button extends BaseComponent {
     if ((outline || outlineColor) && !link) {
       outlineStyle = {
         borderWidth: outlineWidth || 1,
-        borderColor: outlineColor || Colors.blue30,
+        borderColor: outlineColor || Colors.blue30
       };
 
       if (disabled) {
@@ -375,7 +379,7 @@ export default class Button extends BaseComponent {
     const {disabled, iconStyle: propsIconStyle, iconOnRight} = this.getThemeProps();
     const size = this.getThemeProps().size || DEFAULT_SIZE;
     const iconStyle = {
-      tintColor: this.getLabelColor(),
+      tintColor: this.getLabelColor()
     };
 
     const marginSide = [Button.sizes.large, Button.sizes.medium].includes(size) ? 8 : 4;
@@ -455,14 +459,14 @@ export default class Button extends BaseComponent {
           this.styles.container,
           animateLayout && this.getAnimationDirectionStyle(),
           containerSizeStyle,
-          (link) && this.styles.innerContainerLink,
+          link && this.styles.innerContainerLink,
           shadowStyle,
           margins,
           containerStyle,
           backgroundColor && {backgroundColor},
           borderRadiusStyle,
           outlineStyle,
-          style,
+          style
         ]}
         activeOpacity={0.6}
         activeBackgroundColor={this.getActiveBackgroundColor()}
@@ -487,31 +491,31 @@ function createStyles() {
     container: {
       backgroundColor: 'transparent',
       justifyContent: 'center',
-      alignItems: 'center',
+      alignItems: 'center'
     },
     containerDisabled: {
-      backgroundColor: Colors.dark60,
+      backgroundColor: Colors.dark60
     },
     innerContainerLink: {
       minWidth: undefined,
       paddingHorizontal: undefined,
       paddingVertical: undefined,
       borderRadius: BorderRadiuses.br0,
-      backgroundColor: undefined,
+      backgroundColor: undefined
     },
     shadowStyle: {
       shadowColor: Colors.blue10,
       shadowOffset: {height: 5, width: 0},
       shadowOpacity: 0.35,
       shadowRadius: 9.5,
-      elevation: 2,
+      elevation: 2
     },
     text: {
       backgroundColor: 'transparent',
       flex: 0,
       flexDirection: 'row',
       ...Typography.text70,
-      fontWeight: '100',
-    },
+      fontWeight: '100'
+    }
   });
 }
