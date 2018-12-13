@@ -7,7 +7,6 @@ class DialogScreen extends Component {
     showDialog3: false,
     showDialog4: false,
     showDialog5: false,
-    showDialog6: false,
   };
 
   renderDialogContent(dialogIndex, extraProps) {
@@ -24,7 +23,7 @@ class DialogScreen extends Component {
   }
 
   render() {
-    const {showDialog1, showDialog2, showDialog3, showDialog4, showDialog5, showDialog6} = this.state;
+    const {showDialog1, showDialog2, showDialog3, showDialog4, showDialog5} = this.state;
     return (
       <View flex bg-dark80 padding-12 center>
         <Button size={'small'} label="show default dialog in center" onPress={() => this.setState({showDialog1: true})} />
@@ -46,12 +45,6 @@ class DialogScreen extends Component {
           size={'small'}
           label="show dialog with height based on content "
           onPress={() => this.setState({showDialog5: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show dialog with content height"
-          onPress={() => this.setState({showDialog6: true})}
         />
         <Dialog visible={showDialog1} width="90%" height="60%" onDismiss={() => this.setState({showDialog1: false})}>
           {this.renderDialogContent(1)}
@@ -102,10 +95,6 @@ class DialogScreen extends Component {
           animationConfig={{duration: 250}}
         >
           {this.renderDialogContent(5, {flex: false})}
-        </Dialog>
-
-        <Dialog visible={showDialog6} width={'100%'} height={null} bottom>
-          {this.renderDialogContent(6, {flex: false})}
         </Dialog>
       </View>
     );
