@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Alert, FlatList} from 'react-native';
-import {ThemeManager, Colors, ListItem, Text, Badge, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
+import {AnimatableManager, ThemeManager, Colors, ListItem, Text, Badge, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
 
 
@@ -19,12 +19,7 @@ export default class ConversationListScreen extends Component {
 
   renderRow(row, id) {
     const initials = AvatarHelper.getInitials(row.name);
-    const animationProps = {
-      animation: 'basicListEntrance',
-      duration: 400,
-      delay: 10 + ((Number(id) % 12) * 40),
-      easing: 'ease-out-quart',
-    };
+    const animationProps = AnimatableManager.getListEntranceAnimationProps(id);
 
     return (
       <ListItem

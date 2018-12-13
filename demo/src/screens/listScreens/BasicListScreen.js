@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Alert, FlatList} from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {ThemeManager, Colors, BorderRadiuses, ListItem, Text} from 'react-native-ui-lib'; //eslint-disable-line
+import {AnimatableManager, ThemeManager, Colors, BorderRadiuses, ListItem, Text} from 'react-native-ui-lib'; //eslint-disable-line
 import orders from '../../data/orders';
 
 
@@ -21,26 +21,22 @@ export default class BasicListScreen extends Component {
 
   renderRow(row, id) {
     const statusColor = row.inventory.status === 'Paid' ? Colors.green30 : Colors.red30;
+    const animationProps = AnimatableManager.getListFadeInAnimationProps();
+    const imageAnimationProps = AnimatableManager.getListLeftFadeInAnimationProps();
+
     return (
       <ListItem
         activeBackgroundColor={Colors.dark60}
         activeOpacity={0.3}
         height={77.5}
         onPress={() => Alert.alert(`pressed on order #${id + 1}`)}
-        animation="fadeIn"
-        easing="ease-out-expo"
-        duration={1000}
-        useNativeDriver
+        {...animationProps}
       >
         <ListItem.Part left>
           <Animatable.Image
             source={{uri: row.mediaUrl}}
             style={styles.image}
-            animation="fadeInLeft"
-            easing="ease-out-expo"
-            duration={600}
-            delay={_.sample([20, 120, 220])}
-            useNativeDriver
+            {...imageAnimationProps}
           />
         </ListItem.Part>
         <ListItem.Part middle column containerStyle={[styles.border, {paddingRight: 17}]}>

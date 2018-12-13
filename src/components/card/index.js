@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {BlurView} from 'react-native-blur';
+import * as Animatable from 'react-native-animatable';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -17,8 +18,8 @@ const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 
 /**
  * @description: Card component
- * @extends: TouchableOpacity
- * @extendsnotes: (when passing onPress)
+ * @extends: TouchableOpacity, Animatable
+ * @extendsnotes: (Touchable when passing onPress)
  * @extendslink: docs/TouchableOpacity
  * @modifiers: margin, padding
  * @gif: https://media.giphy.com/media/l0HU9SKWmv0VTOYMM/giphy.gif
@@ -77,15 +78,6 @@ class Card extends BaseComponent {
   static defaultProps = {
     enableShadow: true,
   };
-
-  // constructor(props) {
-  //   super(props);
-
-  //   // TODO: enable this warning 
-  //   // if (props.containerStyle !== undefined) {
-  //   //   console.warn('Card\'s "containerStyle" prop will be deprecated soon. Please use style prop instead');
-  //   // }
-  // }
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
@@ -149,7 +141,6 @@ class Card extends BaseComponent {
       }
       return child;
     });
-    
     return children;
   }
 
@@ -170,29 +161,32 @@ class Card extends BaseComponent {
     const blurOptions = this.getBlurOptions();
     const Container = onPress ? TouchableOpacity : View;
     const brRadius = borderRadius || DEFAULT_BORDER_RADIUS;
+    const animationProps = this.extractAnimationProps();
     
     return (
-      <Container
-        style={[
-          this.styles.container,
-          {borderRadius: brRadius},
-          this.elevationStyle,
-          this.shadowStyle,
-          this.blurBgStyle,
-          containerStyle,
-          style,
-        ]}
-        onPress={onPress}
-        delayPressIn={10}
-        activeOpacity={0.6}
-        testID={testID}
-        {...others}
-      >
-        {Constants.isIOS && enableBlur && <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions}/>}
-        <View width={width} height={height} row={row} style={[this.styles.innerContainer, {borderRadius: brRadius}]}>
-          {this.renderChildren()}
-        </View>
-      </Container>
+      <Animatable.View {...animationProps}>
+        <Container
+          style={[
+            this.styles.container,
+            {borderRadius: brRadius},
+            this.elevationStyle,
+            this.shadowStyle,
+            this.blurBgStyle,
+            containerStyle,
+            style,
+          ]}
+          onPress={onPress}
+          delayPressIn={10}
+          activeOpacity={0.6}
+          testID={testID}
+          {...others}
+        >
+          {Constants.isIOS && enableBlur && <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions}/>}
+          <View width={width} height={height} row={row} style={[this.styles.innerContainer, {borderRadius: brRadius}]}>
+            {this.renderChildren()}
+          </View>
+        </Container>
+      </Animatable.View>
     );
   }
 }

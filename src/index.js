@@ -74,4 +74,5 @@ module.exports = {
   get ComponentsColors() { return require('./style').ComponentsColors; },
   get ThemeManager() { return require('./style').ThemeManager; },
   get Typography() { return require('./style').Typography; },
+  get AnimatableManager() { return require('./style/animatableManager').default; },
 };

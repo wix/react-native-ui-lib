@@ -1,7 +1,7 @@
 import {AsyncStorage} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import * as Animatable from 'react-native-animatable';
-import {ThemeManager, Constants, Assets, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
+import {AnimatableManager, ThemeManager, Constants, Assets, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
 import {registerScreens} from './screens';
 
 
@@ -41,12 +41,26 @@ import {registerScreens} from './screens';
 //   camera: require('./assets/icons/cameraSelected.png'),
 // });
 
-Animatable.initializeRegistryWithDefinitions({
-  basicListEntrance: {
-    from: {opacity: 0, translateY: 20},
-    to: {opacity: 1, translateY: 0},
-  },
-});
+// Animatable.initializeRegistryWithDefinitions({
+//   basicListEntrance: {
+//     from: {opacity: 0, translateY: 20},
+//     to: {opacity: 1, translateY: 0},
+//   },
+// });
+
+// const costumDefinitions = {
+//   costumAnimation1: {
+//     from: {opacity: 0, translateY: 20},
+//     to: {opacity: 1, translateY: 0},
+//   }, 
+//   costumAnimation2: {
+//     from: {opacity: 0, translateY: 40},
+//     to: {opacity: 1, translateY: 0},
+//   },
+// };
+
+Animatable.initializeRegistryWithDefinitions(AnimatableManager.loadCustomDefinitions(/** costumDefinitions */));
+
 
 function getDefaultNavigationStyle() {
   return {

@@ -4,11 +4,11 @@ import React from 'react';
 import {StyleSheet, TouchableWithoutFeedback, SafeAreaView} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import {Constants} from '../../helpers';
+import {Colors, AnimatableManager} from '../../style';
 import {BaseComponent} from '../../commons';
-import {Colors} from '../../style';
 import Modal from '../../screensComponents/modal';
 import View from '../view';
-import {Constants} from '../../helpers';
 
 /*eslint-disable*/
 /**
@@ -78,12 +78,7 @@ class Dialog extends BaseComponent {
 
   getAnimationConfig() {
     const {animationConfig} = this.props;
-    return {
-      animation: 'slideInUp',
-      duration: 400,
-      useNativeDriver: true,
-      ...animationConfig,
-    };
+    return AnimatableManager.getDialogAnimationProps(animationConfig);
   }
 
   onSwipe(gestureName) {

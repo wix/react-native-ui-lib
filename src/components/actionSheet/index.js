@@ -1,11 +1,11 @@
-import React from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {StyleSheet, ActionSheetIOS, TouchableWithoutFeedback, Modal} from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import _ from 'lodash';
-import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
-import {Colors} from '../../style';
+import {AnimatableManager, Colors} from '../../style';
+import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
 import Button from '../button';
@@ -74,8 +74,10 @@ export default class ActionSheet extends BaseComponent {
   };
 
   renderSheet() {
+    const animationProps = AnimatableManager.getActionSheetAnimationProps();
+    
     return (
-      <Animatable.View animation="slideInUp" duration={600} easing="ease-out-quint">
+      <Animatable.View {...animationProps}>
         <View bg-white>
           {this.renderTitle()}
           {this.renderActions()}
@@ -169,8 +171,9 @@ export default class ActionSheet extends BaseComponent {
 
   render() {
     const {visible, useNativeIOS, onDismiss} = this.getThemeProps();
-
     if (Constants.isIOS && useNativeIOS) return null;
+    
+    const animationProps = AnimatableManager.getActionSheetContainerAnimationProps();
 
     return (
       <Modal visible={visible} transparent onRequestClose={onDismiss}>
@@ -178,10 +181,7 @@ export default class ActionSheet extends BaseComponent {
           <View style={styles.container}>
             <Animatable.View
               style={styles.overlay}
-              animation="fadeIn"
-              duration={300}
-              easing="ease-out-quint"
-              useNativeDriver
+              {...animationProps}
             >
               <View flex bottom>
                 {this.renderSheet()}
