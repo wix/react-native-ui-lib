@@ -57,13 +57,13 @@ export default class CardAnimationsScreen extends Component {
     let animationProps;
     switch (animation) {
       case animationType.FADE_IN:
-        animationProps = AnimatableManager.getCardFadeInAnimationProps();
+        animationProps = AnimatableManager.getFadeInPreset();
         break;
       case animationType.ENTRANCE:
-        animationProps = AnimatableManager.getCardEntranceAnimationProps(index);
+        animationProps = AnimatableManager.getCardEntrancePreset(index);
         break;
       case animationType.ADDING:
-        animationProps = AnimatableManager.getCardAddingAnimationProps(index, {onAnimationEnd: this.onAnimationEnd});
+        animationProps = AnimatableManager.getCardAddingPreset(index, {onAnimationEnd: this.onAnimationEnd});
         break;
       default:
         break;

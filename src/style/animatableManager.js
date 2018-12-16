@@ -1,9 +1,10 @@
 import _ from 'lodash';
+import * as Animatable from 'react-native-animatable';
 
 
-/** Definitions */
+/** Animations Definitions */
 const definitions = {
-  basicListEntrance: {
+  listEntrance: {
     from: {opacity: 0, translateY: 20},
     to: {opacity: 1, translateY: 0},
   }, 
@@ -14,35 +15,42 @@ const definitions = {
 };
 
 class AnimatableManager {
+  constructor() {
+    this.loadCustomDefinitions(definitions);
+  }
+
   loadCustomDefinitions(costumDefinitions) {
-    return {
-      ...definitions,
-      ...costumDefinitions,
-    };
+    if (costumDefinitions) {
+      Animatable.initializeRegistryWithDefinitions(costumDefinitions);
+    }
   }
 
   /** Presets */
   // Commons
-  getFadeIn() {
+  getFadeInPreset(options) {
     return {
       animation: 'fadeIn',
       duration: 300,
       easing: 'ease-out-quint',
       useNativeDriver: true,
+      ...options,
     };
   }
 
-  // Components
-  getDialogAnimationProps(options) {
+  getSlideInUpPreset(options) {
     return {
       animation: 'slideInUp',
-      duration: 400,
+      duration: 500,
+      easing: 'ease-out-quint',
       useNativeDriver: true,
       ...options,
     };
   }
 
-  getCardEntranceAnimationProps(index) {
+
+  // Components
+  // 1- Card
+  getCardEntrancePreset(index = 0) {
     return {
       animation: 'cardEntrance',
       duration: 600,
@@ -52,11 +60,7 @@ class AnimatableManager {
     };
   }
 
-  getCardFadeInAnimationProps() {
-    return this.getFadeIn();
-  }
-
-  getCardAddingAnimationProps(index, options) {
+  getCardAddingPreset(index = 0, options) {
     if (index === 0) {
       return {
         animation: 'zoomIn',
@@ -76,29 +80,18 @@ class AnimatableManager {
     };
   }
 
-  getActionSheetAnimationProps() {
+  // 2- List
+  getListEntrancePreset(index) {
     return {
-      animation: 'slideInUp',
-      duration: 600,
-      easing: 'ease-out-quint',
-    };
-  }
-
-  getActionSheetContainerAnimationProps() {
-    return this.getFadeIn();
-  }
-
-  // Lists (Screens)
-  getListEntranceAnimationProps(id) {
-    return {
-      animation: 'basicListEntrance',
+      animation: 'listEntrance',
       duration: 500,
-      delay: 10 + ((Number(id) % 12) * 40),
+      delay: 10 + ((Number(index) % 12) * 40),
       easing: 'ease-out-quint',
+      useNativeDriver: true,
     };
   }
 
-  getListFadeInAnimationProps() {
+  getListFadeInPreset() {
     return {
       animation: 'fadeIn',
       easing: 'ease-out-expo',
@@ -107,7 +100,7 @@ class AnimatableManager {
     };
   }
 
-  getListLeftFadeInAnimationProps() {
+  getListFadeInLeftPreset() {
     return {
       animation: 'fadeInLeft',
       easing: 'ease-out-expo',

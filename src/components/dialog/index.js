@@ -78,7 +78,7 @@ class Dialog extends BaseComponent {
 
   getAnimationConfig() {
     const {animationConfig} = this.props;
-    return AnimatableManager.getDialogAnimationProps(animationConfig);
+    return AnimatableManager.getSlideInUpPreset(animationConfig);
   }
 
   onSwipe(gestureName) {

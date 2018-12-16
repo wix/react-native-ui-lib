@@ -1,6 +1,5 @@
 import {AsyncStorage} from 'react-native';
 import {Navigation} from 'react-native-navigation';
-import * as Animatable from 'react-native-animatable';
 import {AnimatableManager, ThemeManager, Constants, Assets, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
 import {registerScreens} from './screens';
 
@@ -48,7 +47,7 @@ import {registerScreens} from './screens';
 //   },
 // });
 
-// const costumDefinitions = {
+// const costumAnimationsDefinitions = {
 //   costumAnimation1: {
 //     from: {opacity: 0, translateY: 20},
 //     to: {opacity: 1, translateY: 0},
@@ -59,8 +58,7 @@ import {registerScreens} from './screens';
 //   },
 // };
 
-Animatable.initializeRegistryWithDefinitions(AnimatableManager.loadCustomDefinitions(/** costumDefinitions */));
-
+AnimatableManager.loadCustomDefinitions(/** costumAnimationsDefinitions */);
 
 function getDefaultNavigationStyle() {
   return {
