@@ -5,6 +5,7 @@ import * as Animatable from 'react-native-animatable';
 import Colors from '../../style/colors';
 import {BaseComponent} from '../../commons';
 import {Typography, ThemeManager, BorderRadiuses} from '../../style';
+import _ from 'lodash';
 
 const SIZE_PIMPLE_SMALL = 6;
 const SIZE_PIMPLE_BIG = 10;
@@ -15,6 +16,8 @@ const WIDTH_TRIPLE = 36;
 const SIZE_SMALL = 16;
 const WIDTH_DOUBLE_SMALL = 25;
 const WIDTH_TRIPLE_SMALL = 30;
+
+const LABEL_FORMATTER_VALUES = [1, 2, 3, 4];
 
 /**
  * @description: Round colored badge, typically used to show a number
@@ -53,11 +56,11 @@ export default class Badge extends BaseComponent {
     containerStyle: PropTypes.object,
     /**
      * Receives a number from 1 to 4, representing the label's max digit length.
-     * Beyond the max number for that digit length, a "+" will show up at the end.
-     * If set to null/undefined, no formating will occur.
+     * Beyond the max number for that digit length, a "+" will show at the end.
+     * If set to a value not included in LABEL_FORMATTER_VALUES, no formating will occur.
      * Example: labelLengthFormater={2}, label={124}, label will present "99+".
      */
-    labelLengthFormatter: PropTypes.number,
+    labelFormatterLimit: PropTypes.oneOf(LABEL_FORMATTER_VALUES),
     /**
      * Use to identify the badge in tests
      */
@@ -116,43 +119,20 @@ export default class Badge extends BaseComponent {
   }
 
   getFormattedLabel() {
-    const {labelLengthFormatter} = this.getThemeProps();
-    let {label} = this.props;
+    const {labelFormatterLimit, label} = this.getThemeProps();
     if (isNaN(label)) {
       return label;
-    } else {
-      switch (labelLengthFormatter) {
-        case null:
-        case undefined:
-          break;
-        case 1:
-          if (label > 9) {
-            label = '9+';
-          }
-          break;
-        case 2:
-          if (label > 99) {
-            label = '99+';
-          }
-          break;
-        case 3:
-          if (label > 999) {
-            label = '999+';
-          }
-          break;
-        case 4:
-          if (label > 9999) {
-            label = '9999+';
-          }
-          break;
-        default:
-          if (label > 99) {
-            label = '99+';
-          }
-          break;
-      }
     }
-    return label;
+    if (LABEL_FORMATTER_VALUES.includes(labelFormatterLimit)) {
+      const maxLabelNumber = (10 ** labelFormatterLimit) - 1;
+      let formattedLabel = label;
+      if (formattedLabel > maxLabelNumber) {
+        formattedLabel = `${maxLabelNumber}+`;
+      }
+      return formattedLabel;
+    } else {
+      return label;
+    }
   }
 
   renderLabel() {
