@@ -54,9 +54,9 @@ export default class BadgesScreen extends Component {
           </View>
 
           <View center marginR-10 marginL-10>
-            <Badge label={'9999'} labelLengthFormater={3}/>
-            <Badge label={'999'} labelLengthFormater={2} containerStyle={{marginTop: BadgesSpace}} borderWidth={2} borderColor={Colors.white}/>
-            <Badge labelLengthFormater={1} size="small" label={'99999999'} containerStyle={{marginTop: BadgesSpace}}/>
+            <Badge label={'9999'} labelFormatterLimit={3}/>
+            <Badge label={'999'} labelFormatterLimit={2} containerStyle={{marginTop: BadgesSpace}} borderWidth={2} borderColor={Colors.white}/>
+            <Badge labelFormatterLimit={1} size="small" label={'99999999'} containerStyle={{marginTop: BadgesSpace}}/>
           </View>
         </View>
 
