@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Checkbox, Assets, Text, View, Colors} from 'react-native-ui-lib'; //eslint-disable-line
 
+
 class CheckboxScreen extends Component {
   state = {
     value1: false,

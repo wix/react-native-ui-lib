@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Text, View, Switch, Constants, Button, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
+import {Text, View, Switch, Colors} from 'react-native-ui-lib'; //eslint-disable-line
+
 
 class SwitchScreen extends Component {
   state = {
@@ -8,7 +9,7 @@ class SwitchScreen extends Component {
     value3: true,
     value4: false,
   };
-  
+
   render() {
     return (
       <View flex bottom padding-20>

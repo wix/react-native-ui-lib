@@ -1,16 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {StyleSheet, Animated} from 'react-native';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {StyleSheet, Animated} from 'react-native';
+import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
-import {Colors, BorderRadiuses} from '../../style';
+
 
 const INNER_PADDING = 2;
 const DEFAULT_WIDTH = 42;
 const DEFAULT_HEIGHT = 24;
 const DEFAULT_THUMB_SIZE = 20;
-
 
 /**
  * Switch component for toggling boolean value related to some context

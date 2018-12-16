@@ -1,11 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Image, StyleSheet} from 'react-native';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {Image, StyleSheet} from 'react-native';
+import {Colors} from '../../style';
+import Assets from '../../assets';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
-import Assets from '../../assets';
-import {Colors} from '../../style';
+
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
