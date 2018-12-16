@@ -12,16 +12,20 @@ class SwitchScreen extends Component {
     return (
       <View flex bottom padding-20>
         <View flex center>
-          <Switch value={this.state.value1} onValueChange={value1 => this.setState({value1})} style={{marginBottom: 20}} />
+          <Switch value={this.state.value1} onValueChange={value1 => this.setState({value1})} style={{marginBottom: 20}}/>
           <Switch
-
             onColor={Colors.purple30}
             offColor={Colors.purple60}
             value={this.state.value2}
             onValueChange={value2 => this.setState({value2})}
             style={{marginBottom: 20}}
           />
-
+          <Switch
+            disabled
+            value={this.state.value1}
+            onValueChange={value1 => this.setState({value1})}
+            style={{marginBottom: 20}}
+          />
           <Switch
             width={80}
             height={38}
@@ -30,7 +34,6 @@ class SwitchScreen extends Component {
             onValueChange={value3 => this.setState({value3})}
             style={{marginBottom: 20}}
           />
-
           <Switch
             width={30}
             height={4}
