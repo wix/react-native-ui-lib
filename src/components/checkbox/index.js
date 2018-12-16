@@ -27,6 +27,10 @@ class Checkbox extends BaseComponent {
      */
     onValueChange: PropTypes.func,
     /**
+     * Whether the checkbox should be disabled
+     */
+    disabled: PropTypes.bool,
+    /**
      * The Checkbox color
      */
     color: PropTypes.string,
@@ -57,22 +61,25 @@ class Checkbox extends BaseComponent {
   }
 
   onPress = () => {
-    _.invoke(this.props, 'onValueChange', !this.props.value);
+    const {disabled} = this.getThemeProps();
+    if (!disabled) {
+      _.invoke(this.props, 'onValueChange', !this.props.value);
+    }
   };
 
   getContainerStyle() {
-    const {value, color, style: propsStyle} = this.getThemeProps();
+    const {value, color, style: propsStyle, disabled} = this.getThemeProps();
     const style = [this.styles.container];
 
-    if (value) {
+    if (disabled) {
+      style.push({borderColor: Colors.dark70});
+    } else if (value) {
       if (color) {
         style.push({backgroundColor: color});
       } else {
         style.push(this.styles.containerSelected);
       }
-    }
-
-    if (color) {
+    } else if (color) {
       style.push({borderColor: color});
     }
 

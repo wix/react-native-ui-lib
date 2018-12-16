@@ -2,7 +2,13 @@ import React, {Component} from 'react';
 import {Checkbox, Assets, Text, View, Colors} from 'react-native-ui-lib'; //eslint-disable-line
 
 class CheckboxScreen extends Component {
-  state = {};
+  state = {
+    value1: false,
+    value2: false,
+    value3: true,
+    value4: true,
+  };
+  
   render() {
     return (
       <View useSafeArea flex>
@@ -31,6 +37,14 @@ class CheckboxScreen extends Component {
               size={18}
               color={Colors.dark10}
               iconColor={Colors.green10}
+              style={{marginRight: 10}}
+            />
+            
+            <Checkbox
+              disabled
+              value={this.state.value1}
+              onValueChange={value1 => this.setState({value1})}
+              style={{marginRight: 10}}
             />
           </View>
           <Text text40 dark10>

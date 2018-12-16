@@ -8,6 +8,7 @@ class SwitchScreen extends Component {
     value3: true,
     value4: false,
   };
+  
   render() {
     return (
       <View flex bottom padding-20>
