@@ -40,9 +40,13 @@ export default class Drawer extends BaseComponent {
      */
     tension: PropTypes.number,
     /**
-     * Press handler (will also close the drawer)
+     * Press handler
      */
     onPress: PropTypes.func,
+    /**
+     * OnDragStart handler
+     */
+    onDragStart: PropTypes.func,
     /**
      * The bottom layer's items to appear when opened from the right
      */
@@ -113,6 +117,7 @@ export default class Drawer extends BaseComponent {
     const {state} = nativeEvent;
     if (state === 'start') {
       this.setState({inMotion: true});
+      _.invoke(this.props, 'onDragStart');
     }
   }
   onStop = () => {
