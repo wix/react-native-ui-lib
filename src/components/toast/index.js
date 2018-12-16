@@ -5,7 +5,7 @@ import {StyleSheet} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {BlurView} from 'react-native-blur';
 import {BaseComponent} from '../../commons';
-import {ThemeManager, Colors, Typography, BorderRadiuses} from '../../style';
+import {AnimatableManager, ThemeManager, Colors, Typography, BorderRadiuses} from '../../style';
 import Assets from '../../assets';
 import View from '../view';
 import Button from '../button';
@@ -14,6 +14,7 @@ import Image from '../image';
 
 const DURATION = 300;
 const DELAY = 100;
+const ANIMATION_SUFIX = 'toast';
 
 /**
  * @description Toast component for showing a feedback about a user action.
@@ -123,7 +124,7 @@ export default class Toast extends BaseComponent {
 
     const {animated} = this.props;
     if (animated) {
-      setupRelativeAnimation(getHeight(this.props));
+      AnimatableManager.loadSlideByHeightDefinitions(getHeight(this.props), ANIMATION_SUFIX);
     }
   }
 
@@ -132,7 +133,7 @@ export default class Toast extends BaseComponent {
     const {isVisible} = this.state;
     if (visible !== isVisible) {
       if (animated) {
-        setupRelativeAnimation(getHeight(nextProps));
+        AnimatableManager.loadSlideByHeightDefinitions(getHeight(this.props), ANIMATION_SUFIX);
       }
 
       const newState = animated
@@ -144,7 +145,6 @@ export default class Toast extends BaseComponent {
           animationConfig: {},
           contentAnimation: {},
         };
-
       this.setState(newState);
     }
   }
@@ -183,6 +183,7 @@ export default class Toast extends BaseComponent {
 
   getBlurOptions() {
     const {blurOptions} = this.getThemeProps();
+    
     return {
       blurType: 'light',
       amount: 5,
@@ -344,7 +345,6 @@ export default class Toast extends BaseComponent {
     }
     _.invoke(this.props, 'onDismiss');
   }
-
 }
 
 function createStyles() {
@@ -392,19 +392,18 @@ function getAnimationDescriptor(name, {duration = DURATION, delay = DELAY}) {
   const defaultProps = {duration, delay: 0};
   const animationDescriptorMap = {
     top: {
-      enter: {...defaultProps, animation: 'slideInDown_toast'},
-      exit: {...defaultProps, animation: 'slideOutUp_toast'},
+      enter: {...defaultProps, animation: AnimatableManager.animations.slideInDown_toast},
+      exit: {...defaultProps, animation: AnimatableManager.animations.slideOutUp_toast},
     },
     bottom: {
-      enter: {...defaultProps, animation: 'slideInUp_toast'},
-      exit: {...defaultProps, animation: 'slideOutDown_toast'},
+      enter: {...defaultProps, animation: AnimatableManager.animations.slideInUp_toast},
+      exit: {...defaultProps, animation: AnimatableManager.animations.slideOutDown_toast},
     },
     relative: {
-      enter: {...defaultProps, animation: 'growUp_toast'},
-      exit: {...defaultProps, animation: 'growDown_toast', delay},
+      enter: {...defaultProps, animation: AnimatableManager.animations.growUp_toast},
+      exit: {...defaultProps, animation: AnimatableManager.animations.growDown_toast, delay},
     },
   };
-
   return animationDescriptorMap[name] || {};
 }
 
@@ -415,38 +414,6 @@ function getAbsolutePositionStyle(location) {
     right: 0,
     [location]: 0,
   };
-}
-
-function setupRelativeAnimation(height) {
-  Animatable.initializeRegistryWithDefinitions({
-    // bottom
-    slideInUp_toast: {
-      from: {translateY: height},
-      to: {translateY: 0},
-    },
-    slideOutDown_toast: {
-      from: {translateY: 0},
-      to: {translateY: height},
-    },
-    // top
-    slideInDown_toast: {
-      from: {translateY: -height},
-      to: {translateY: 0},
-    },
-    slideOutUp_toast: {
-      from: {translateY: 0},
-      to: {translateY: -height},
-    },
-    // relative
-    growUp_toast: {
-      from: {height: 0},
-      to: {height},
-    },
-    growDown_toast: {
-      from: {height},
-      to: {height: 0},
-    },
-  });
 }
 
 function getHeight({height, actions}) {

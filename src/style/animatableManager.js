@@ -17,12 +17,53 @@ const definitions = {
 class AnimatableManager {
   constructor() {
     this.loadCustomDefinitions(definitions);
+    this.animations = getAnimations();
   }
 
-  loadCustomDefinitions(costumDefinitions) {
-    if (costumDefinitions) {
-      Animatable.initializeRegistryWithDefinitions(costumDefinitions);
+  loadCustomDefinitions(customDefinitions) {
+    if (customDefinitions) {
+      Animatable.initializeRegistryWithDefinitions(customDefinitions);
+      this.updateDefinitions(customDefinitions);
     }
+  }
+
+  updateDefinitions(newDefinitions) {
+    Object.assign(definitions, newDefinitions);
+    this.animations = getAnimations();
+  }
+
+  loadSlideByHeightDefinitions(height, sufix) {
+    const definition = {};
+    // bottom
+    definition[`slideInUp_${sufix}`] = {
+      from: {translateY: height},
+      to: {translateY: 0},
+    };
+    definition[`slideOutDown_${sufix}`] = {
+      from: {translateY: 0},
+      to: {translateY: height},
+    };
+    // top
+    definition[`slideInDown_${sufix}`] = {
+      from: {translateY: -height},
+      to: {translateY: 0},
+    };
+    definition[`slideOutUp_${sufix}`] = {
+      from: {translateY: 0},
+      to: {translateY: -height},
+    };
+    // relative
+    definition[`growUp_${sufix}`] = {
+      from: {height: 0},
+      to: {height},
+    };
+    definition[`growDown_${sufix}`] = {
+      from: {height},
+      to: {height: 0},
+    };
+
+    Animatable.initializeRegistryWithDefinitions(definition);
+    this.updateDefinitions(definition);
   }
 
   /** Presets */
@@ -30,8 +71,29 @@ class AnimatableManager {
   getFadeInPreset(options) {
     return {
       animation: 'fadeIn',
-      duration: 300,
       easing: 'ease-out-quint',
+      duration: 300,
+      useNativeDriver: true,
+      ...options,
+    };
+  }
+
+  getFadeInRightPreset(options) {
+    return {
+      animation: 'fadeInRight',
+      easing: 'ease-out-expo',
+      duration: 500,
+      useNativeDriver: true,
+      ...options,
+    };
+  }
+
+  getFadeInLeftPreset(options) {
+    return {
+      animation: 'fadeInLeft',
+      easing: 'ease-out-expo',
+      duration: 600,
+      delay: _.sample([20, 120, 220]),
       useNativeDriver: true,
       ...options,
     };
@@ -40,76 +102,50 @@ class AnimatableManager {
   getSlideInUpPreset(options) {
     return {
       animation: 'slideInUp',
-      duration: 500,
       easing: 'ease-out-quint',
+      duration: 500,
       useNativeDriver: true,
       ...options,
     };
   }
 
-
-  // Components
-  // 1- Card
-  getCardEntrancePreset(index = 0) {
+  getEntranceByIndexPreset(animation, index = 0) {
     return {
-      animation: 'cardEntrance',
+      animation,
+      easing: 'ease-out-quint',
       duration: 600,
       delay: 10 + ((Number(index) % 12) * 100),
-      easing: 'ease-out-quint',
       useNativeDriver: true,
     };
   }
 
-  getCardAddingPreset(index = 0, options) {
+  getAddOnTopPreset(index = 0, options) {
     if (index === 0) {
       return {
         animation: 'zoomIn',
+        easing: 'linear',
         duration: 200,
         delay: 200,
-        easing: 'linear',
         useNativeDriver: true,
         ...options,
       };
     }
     return {
       animation: 'slideInDown',
-      duration: 600,
       easing: 'ease-out-quint',
+      duration: 600,
       useNativeDriver: true,
       ...options,
     };
   }
+}
 
-  // 2- List
-  getListEntrancePreset(index) {
-    return {
-      animation: 'listEntrance',
-      duration: 500,
-      delay: 10 + ((Number(index) % 12) * 40),
-      easing: 'ease-out-quint',
-      useNativeDriver: true,
-    };
-  }
-
-  getListFadeInPreset() {
-    return {
-      animation: 'fadeIn',
-      easing: 'ease-out-expo',
-      duration: 1000,
-      useNativeDriver: true,
-    };
-  }
-
-  getListFadeInLeftPreset() {
-    return {
-      animation: 'fadeInLeft',
-      easing: 'ease-out-expo',
-      duration: 600,
-      delay: _.sample([20, 120, 220]),
-      useNativeDriver: true,
-    };
-  }
-
+function getAnimations() {
+  const animations = {};
+  _.forEach(Object.keys(definitions), (key) => {
+    animations[key] = `${key}`;
+  });
+  return animations;
 }
 
 export default new AnimatableManager();

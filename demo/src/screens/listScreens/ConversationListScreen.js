@@ -19,7 +19,7 @@ export default class ConversationListScreen extends Component {
 
   renderRow(row, id) {
     const initials = AvatarHelper.getInitials(row.name);
-    const animationProps = AnimatableManager.getListEntrancePreset(id);
+    const animationProps = AnimatableManager.getEntranceByIndexPreset(AnimatableManager.animations.listEntrance, id);
 
     return (
       <ListItem

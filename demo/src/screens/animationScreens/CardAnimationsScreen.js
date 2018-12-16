@@ -60,10 +60,10 @@ export default class CardAnimationsScreen extends Component {
         animationProps = AnimatableManager.getFadeInPreset();
         break;
       case animationType.ENTRANCE:
-        animationProps = AnimatableManager.getCardEntrancePreset(index);
+        animationProps = AnimatableManager.getEntranceByIndexPreset(AnimatableManager.animations.cardEntrance, index);
         break;
       case animationType.ADDING:
-        animationProps = AnimatableManager.getCardAddingPreset(index, {onAnimationEnd: this.onAnimationEnd});
+        animationProps = AnimatableManager.getAddOnTopPreset(index, {onAnimationEnd: this.onAnimationEnd});
         break;
       default:
         break;

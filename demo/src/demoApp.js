@@ -47,7 +47,7 @@ import {registerScreens} from './screens';
 //   },
 // });
 
-// const costumAnimationsDefinitions = {
+// const customAnimationsDefinitions = {
 //   costumAnimation1: {
 //     from: {opacity: 0, translateY: 20},
 //     to: {opacity: 1, translateY: 0},
@@ -57,8 +57,8 @@ import {registerScreens} from './screens';
 //     to: {opacity: 1, translateY: 0},
 //   },
 // };
+// AnimatableManager.loadCustomDefinitions(customAnimationsDefinitions);
 
-AnimatableManager.loadCustomDefinitions(/** costumAnimationsDefinitions */);
 
 function getDefaultNavigationStyle() {
   return {
