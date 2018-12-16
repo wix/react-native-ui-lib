@@ -128,7 +128,7 @@ class Dialog extends BaseComponent {
               style={this.styles.gestureContainer}
             >
               <TouchableWithoutFeedback>
-                <SafeAreaView style={{flex: 1}}>
+                <SafeAreaView style={{flexGrow: 1}}>
                   {this.props.children}
                   {Constants.isIphoneX && bottom && <View style={{height: bottomInsets}}/>}
                 </SafeAreaView>
