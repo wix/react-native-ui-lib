@@ -8,6 +8,7 @@ class CheckboxScreen extends Component {
     value2: false,
     value3: true,
     value4: true,
+    value5: false,
   };
   
   render() {
@@ -20,7 +21,6 @@ class CheckboxScreen extends Component {
               onValueChange={value1 => this.setState({value1})}
               style={{marginRight: 10}}
             />
-
             <Checkbox
               value={this.state.value2}
               onValueChange={value2 => this.setState({value2})}
@@ -30,7 +30,6 @@ class CheckboxScreen extends Component {
               selectedIcon={Assets.icons.x}
               style={{marginRight: 10}}
             />
-
             <Checkbox
               value={this.state.value3}
               onValueChange={value3 => this.setState({value3})}
@@ -40,17 +39,17 @@ class CheckboxScreen extends Component {
               iconColor={Colors.green10}
               style={{marginRight: 10}}
             />
-            
+  
             <Checkbox
               disabled
-              value={this.state.value1}
-              onValueChange={value1 => this.setState({value1})}
+              value={this.state.value5}
+              onValueChange={value5 => this.setState({value5})}
               style={{marginRight: 10}}
             />
             <Checkbox
               disabled
-              value={this.state.value3}
-              onValueChange={value3 => this.setState({value3})}
+              value={!this.state.value5}
+              onValueChange={value5 => this.setState({value5})}
               iconColor={Colors.green10}
               style={{marginRight: 10}}
             />

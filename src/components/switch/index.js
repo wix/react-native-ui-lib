@@ -66,7 +66,7 @@ class Switch extends BaseComponent {
   };
 
   state = {
-    thumbPosition: new Animated.Value(this.props.value && !this.props.disabled ? 1 : 0),
+    thumbPosition: new Animated.Value(this.props.value ? 1 : 0),
   };
 
   generateStyles() {
@@ -81,15 +81,16 @@ class Switch extends BaseComponent {
 
   toggle(value) {
     const {thumbPosition} = this.state;
-    const {disabled} = this.getThemeProps();
+    
     Animated.timing(thumbPosition, {
-      toValue: value && !disabled ? 1 : 0,
+      toValue: value ? 1 : 0,
       duration: 100,
     }).start();
   }
 
   onPress = () => {
     const {disabled} = this.getThemeProps();
+    
     if (!disabled) {
       _.invoke(this.props, 'onValueChange', !this.props.value);
       this.toggle(!this.props.value);

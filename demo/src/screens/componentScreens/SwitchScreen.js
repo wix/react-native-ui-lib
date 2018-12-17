@@ -8,6 +8,7 @@ class SwitchScreen extends Component {
     value2: false,
     value3: true,
     value4: false,
+    value5: false,
   };
 
   render() {
@@ -22,12 +23,19 @@ class SwitchScreen extends Component {
             onValueChange={value2 => this.setState({value2})}
             style={{marginBottom: 20}}
           />
-          <Switch
-            disabled
-            value={this.state.value1}
-            onValueChange={value1 => this.setState({value1})}
-            style={{marginBottom: 20}}
-          />
+          <View row marginB-20>
+            <Switch
+              disabled
+              value={this.state.value5}
+              onValueChange={value5 => this.setState({value5})}
+              style={{marginRight: 10}}
+            />
+            <Switch
+              disabled
+              value={!this.state.value5}
+              onValueChange={value5 => this.setState({value5})}
+            />
+          </View>
           <Switch
             width={80}
             height={38}
