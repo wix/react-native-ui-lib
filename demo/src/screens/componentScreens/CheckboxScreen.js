@@ -47,6 +47,13 @@ class CheckboxScreen extends Component {
               onValueChange={value1 => this.setState({value1})}
               style={{marginRight: 10}}
             />
+            <Checkbox
+              disabled
+              value={this.state.value3}
+              onValueChange={value3 => this.setState({value3})}
+              iconColor={Colors.green10}
+              style={{marginRight: 10}}
+            />
           </View>
           <Text text40 dark10>
             Checkbox

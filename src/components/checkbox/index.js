@@ -72,16 +72,19 @@ class Checkbox extends BaseComponent {
     const {value, color, style: propsStyle, disabled} = this.getThemeProps();
     const style = [this.styles.container];
 
-    if (disabled) {
-      style.push({borderColor: Colors.dark70});
-    } else if (value) {
-      if (color) {
-        style.push({backgroundColor: color});
+    if (value) {
+      if (disabled) {
+        style.push({backgroundColor: Colors.dark70, borderColor: Colors.dark70});
       } else {
-        style.push(this.styles.containerSelected);
+        style.push(color ? {backgroundColor: color} : this.styles.containerSelected);
       }
-    } else if (color) {
-      style.push({borderColor: color});
+    } else {
+      if (disabled) {
+        style.push({borderColor: Colors.dark70});
+      }
+      if (color) {
+        style.push({borderColor: color});
+      }
     }
 
     style.push(propsStyle);
@@ -89,7 +92,7 @@ class Checkbox extends BaseComponent {
   }
 
   render() {
-    const {value, selectedIcon, style, color, iconColor, testID, ...others} = this.getThemeProps();
+    const {value, selectedIcon, style, color, iconColor, disabled, testID, ...others} = this.getThemeProps();
     return (
       <TouchableOpacity
         activeOpacity={1}
@@ -100,7 +103,7 @@ class Checkbox extends BaseComponent {
       >
         {value && (
           <Image
-            style={[this.styles.selectedIcon, color && {tintColor: iconColor}]}
+            style={[this.styles.selectedIcon, color && {tintColor: iconColor}, disabled && {tintColor: DEFAULT_ICON_COLOR}]}
             source={selectedIcon || Assets.icons.checkSmall}
             testID={`${testID}.selected`}
           />
