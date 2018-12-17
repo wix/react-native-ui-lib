@@ -27,11 +27,6 @@ class AnimatableManager {
     }
   }
 
-  updateDefinitions(newDefinitions) {
-    Object.assign(definitions, newDefinitions);
-    this.animations = getAnimations();
-  }
-
   loadSlideByHeightDefinitions(height, sufix) {
     const definition = {};
     // bottom
@@ -66,8 +61,12 @@ class AnimatableManager {
     this.updateDefinitions(definition);
   }
 
+  updateDefinitions(newDefinitions) {
+    Object.assign(definitions, newDefinitions);
+    this.animations = getAnimations();
+  }
+
   /** Presets */
-  // Commons
   getFadeIn(options) {
     return {
       animation: 'fadeIn',
