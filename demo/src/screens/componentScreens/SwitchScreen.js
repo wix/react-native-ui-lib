@@ -23,19 +23,6 @@ class SwitchScreen extends Component {
             onValueChange={value2 => this.setState({value2})}
             style={{marginBottom: 20}}
           />
-          <View row marginB-20>
-            <Switch
-              disabled
-              value={this.state.value5}
-              onValueChange={value5 => this.setState({value5})}
-              style={{marginRight: 10}}
-            />
-            <Switch
-              disabled
-              value={!this.state.value5}
-              onValueChange={value5 => this.setState({value5})}
-            />
-          </View>
           <Switch
             width={80}
             height={38}
@@ -55,6 +42,20 @@ class SwitchScreen extends Component {
             onValueChange={value4 => this.setState({value4})}
             style={{marginBottom: 20}}
           />
+          <View row marginB-20>
+            <Text text70 centerV>Disabled: </Text>
+            <Switch
+              disabled
+              value={this.state.value5}
+              onValueChange={value5 => this.setState({value5})}
+              style={{marginRight: 10}}
+            />
+            <Switch
+              disabled
+              value={!this.state.value5}
+              onValueChange={value5 => this.setState({value5})}
+            />
+          </View>
         </View>
         <Text text40 dark10>
           Switch
