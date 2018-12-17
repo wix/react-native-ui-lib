@@ -74,7 +74,7 @@ export default class ActionSheet extends BaseComponent {
   };
 
   renderSheet() {
-    const animationProps = AnimatableManager.getSlideInUpPreset();
+    const animationProps = AnimatableManager.getSlideInUp();
     
     return (
       <Animatable.View {...animationProps}>
@@ -173,7 +173,7 @@ export default class ActionSheet extends BaseComponent {
     const {visible, useNativeIOS, onDismiss} = this.getThemeProps();
     if (Constants.isIOS && useNativeIOS) return null;
     
-    const animationProps = AnimatableManager.getFadeInPreset();
+    const animationProps = AnimatableManager.getFadeIn();
 
     return (
       <Modal visible={visible} transparent onRequestClose={onDismiss}>

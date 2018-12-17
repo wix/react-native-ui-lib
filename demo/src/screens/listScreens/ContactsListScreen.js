@@ -19,7 +19,7 @@ export default class ContactsListScreen extends Component {
 
   renderRow(row, id) {
     const initials = AvatarHelper.getInitials(row.name);
-    const animationProps = AnimatableManager.getEntranceByIndexPreset(AnimatableManager.animations.listEntrance, id);
+    const animationProps = AnimatableManager.getEntranceByIndex(AnimatableManager.animations.listEntrance, id);
 
     return (
       <ListItem

@@ -68,7 +68,7 @@ class AnimatableManager {
 
   /** Presets */
   // Commons
-  getFadeInPreset(options) {
+  getFadeIn(options) {
     return {
       animation: 'fadeIn',
       easing: 'ease-out-quint',
@@ -78,7 +78,7 @@ class AnimatableManager {
     };
   }
 
-  getFadeInRightPreset(options) {
+  getFadeInRight(options) {
     return {
       animation: 'fadeInRight',
       easing: 'ease-out-expo',
@@ -88,7 +88,7 @@ class AnimatableManager {
     };
   }
 
-  getFadeInLeftPreset(options) {
+  getFadeInLeft(options) {
     return {
       animation: 'fadeInLeft',
       easing: 'ease-out-expo',
@@ -99,7 +99,7 @@ class AnimatableManager {
     };
   }
 
-  getSlideInUpPreset(options) {
+  getSlideInUp(options) {
     return {
       animation: 'slideInUp',
       easing: 'ease-out-quint',
@@ -109,7 +109,7 @@ class AnimatableManager {
     };
   }
 
-  getEntranceByIndexPreset(animation, index = 0) {
+  getEntranceByIndex(animation, index = 0) {
     return {
       animation,
       easing: 'ease-out-quint',
@@ -119,7 +119,7 @@ class AnimatableManager {
     };
   }
 
-  getAddOnTopPreset(index = 0, options) {
+  getZoomInSlideDown(index = 0, options) {
     if (index === 0) {
       return {
         animation: 'zoomIn',
