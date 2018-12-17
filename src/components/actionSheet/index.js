@@ -1,16 +1,17 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, ActionSheetIOS, TouchableWithoutFeedback, Modal} from 'react-native';
-import * as Animatable from 'react-native-animatable';
+import {ActionSheetIOS} from 'react-native';
 import {Constants} from '../../helpers';
-import {AnimatableManager, Colors} from '../../style';
+import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
+import Dialog from '../dialog';
 import View from '../view';
 import Text from '../text';
 import Button from '../button';
 import Image from '../image';
 import ListItem from '../listItem';
+
 
 /**
  * @description: Cross platform Action sheet, with a support for native iOS solution
@@ -73,21 +74,20 @@ export default class ActionSheet extends BaseComponent {
     showCancelButton: false,
   };
 
-  renderSheet() {
-    const animationProps = AnimatableManager.getSlideInUp();
-    
+  renderSheet() {    
     return (
-      <Animatable.View {...animationProps}>
+      <View>
         <View bg-white>
           {this.renderTitle()}
           {this.renderActions()}
         </View>
-      </Animatable.View>
+      </View>
     );
   }
 
   renderTitle() {
     const {title} = this.props;
+    
     if (!_.isEmpty(title)) {
       return (
         <View height={56} paddingL-16 centerV>
@@ -102,6 +102,7 @@ export default class ActionSheet extends BaseComponent {
   renderActions() {
     const {title, options, cancelButtonIndex} = this.props;
     const optionsToRender = _.filter(options, (option, index) => index !== cancelButtonIndex);
+    
     return (
       <View paddingB-8 paddingT-8={_.isEmpty(title)}>
         {_.map(optionsToRender, this.renderAction)}
@@ -171,35 +172,21 @@ export default class ActionSheet extends BaseComponent {
 
   render() {
     const {visible, useNativeIOS, onDismiss} = this.getThemeProps();
+    
     if (Constants.isIOS && useNativeIOS) return null;
     
-    const animationProps = AnimatableManager.getFadeIn();
-
     return (
-      <Modal visible={visible} transparent onRequestClose={onDismiss}>
-        <TouchableWithoutFeedback onPress={onDismiss}>
-          <View style={styles.container}>
-            <Animatable.View
-              style={styles.overlay}
-              {...animationProps}
-            >
-              <View flex bottom>
-                {this.renderSheet()}
-              </View>
-            </Animatable.View>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+      <Dialog
+        bottom
+        centerH
+        width="100%"
+        height={null}
+        visible={visible}
+        onDismiss={onDismiss}
+        style={{backgroundColor: Colors.white}}
+      >
+        {this.renderSheet()}
+      </Dialog>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  overlay: {
-    flex: 1,
-    backgroundColor: Colors.rgba(Colors.black, 0.4),
-  },
-});
