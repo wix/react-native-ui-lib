@@ -7,13 +7,14 @@ export default class RadioButtonScreen extends Component {
     super(props);
     this.state = {
       color: 'orange',
+      disabledSelectedValue: true,
     };
   }
 
   renderRadioButton(value, text) {
     return (
       <View row centerV marginB-5>
-        <RadioButton value={value} />
+        <RadioButton value={value}/>
         <Text marginL-10>{text}</Text>
       </View>
     );
@@ -22,8 +23,8 @@ export default class RadioButtonScreen extends Component {
   renderRadioButtonWithImage(value, icon) {
     return (
       <View row centerV marginR-15>
-        <RadioButton value={value} size={15} color={Colors.green30} borderRadius={0} />
-        <Image style={{marginLeft: 6}} source={icon} />
+        <RadioButton value={value} size={15} color={Colors.green30} borderRadius={0}/>
+        <Image style={{marginLeft: 6}} source={icon}/>
       </View>
     );
   }
@@ -64,6 +65,22 @@ export default class RadioButtonScreen extends Component {
                 <Text marginL-10>Individual Radio Button</Text>
               </View>
             </TouchableOpacity>
+            <View row centerV marginT-10>
+              <RadioButton
+                disabled
+                selected={this.state.disabledValue}
+                onPress={() => this.setState({disabledValue: !this.state.disabledValue})}
+              />
+              <Text marginL-10>Disabled Radio Button</Text>
+            </View>
+            <View row centerV marginT-10>
+              <RadioButton
+                disabled
+                selected={this.state.disabledSelectedValue}
+                onPress={() => this.setState({disabledSelectedValue: !this.state.disabledSelectedValue})}
+              />
+              <Text marginL-10>Disabled Selected Radio Button</Text>
+            </View>
           </View>
           <View>
             <Text text40 dark10>
