@@ -1,11 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
-import PropTypes from 'prop-types';
 import * as Animatable from 'react-native-animatable';
-import Colors from '../../style/colors';
+import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
-import {Typography, ThemeManager, BorderRadiuses} from '../../style';
-import _ from 'lodash';
+
 
 const SIZE_PIMPLE_SMALL = 6;
 const SIZE_PIMPLE_BIG = 10;
