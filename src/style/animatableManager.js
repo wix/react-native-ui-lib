@@ -4,11 +4,7 @@ import * as Animatable from 'react-native-animatable';
 
 /** Animations Definitions */
 const definitions = {
-  listEntrance: {
-    from: {opacity: 0, translateY: 20},
-    to: {opacity: 1, translateY: 0},
-  }, 
-  cardEntrance: {
+  indexEntrance: {
     from: {opacity: 0, translateY: 40},
     to: {opacity: 1, translateY: 0},
   },

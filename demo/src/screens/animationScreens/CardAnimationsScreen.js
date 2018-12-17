@@ -60,7 +60,7 @@ export default class CardAnimationsScreen extends Component {
         animationProps = AnimatableManager.getFadeIn();
         break;
       case animationType.ENTRANCE:
-        animationProps = AnimatableManager.getEntranceByIndex(AnimatableManager.animations.cardEntrance, index);
+        animationProps = AnimatableManager.getEntranceByIndex(AnimatableManager.animations.indexEntrance, index);
         break;
       case animationType.ADDING:
         animationProps = AnimatableManager.getZoomInSlideDown(index, {onAnimationEnd: this.onAnimationEnd});

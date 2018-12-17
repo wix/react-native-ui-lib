@@ -40,13 +40,6 @@ import {registerScreens} from './screens';
 //   camera: require('./assets/icons/cameraSelected.png'),
 // });
 
-// Animatable.initializeRegistryWithDefinitions({
-//   basicListEntrance: {
-//     from: {opacity: 0, translateY: 20},
-//     to: {opacity: 1, translateY: 0},
-//   },
-// });
-
 // const customAnimationsDefinitions = {
 //   costumAnimation1: {
 //     from: {opacity: 0, translateY: 20},
