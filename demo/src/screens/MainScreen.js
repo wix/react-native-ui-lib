@@ -3,20 +3,8 @@ import React, {Component} from 'react';
 import autobind from 'react-autobind';
 import {StyleSheet, FlatList} from 'react-native';
 import {Navigation} from 'react-native-navigation';
-import {
-  ThemeManager,
-  Constants,
-  Assets,
-  Colors,
-  View,
-  Text,
-  Button,
-  Carousel,
-  TextInput,
-  Image,
-} from 'react-native-ui-lib'; //eslint-disable-line
+import {ThemeManager, Constants, Assets, Colors, View, Text, Button, Carousel, TextInput, Image} from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
-
 
 export default class UiLibExplorerMenu extends Component {
   constructor(props) {
@@ -24,7 +12,7 @@ export default class UiLibExplorerMenu extends Component {
     autobind(this);
 
     const data = props.navigationData || navigationData;
-    
+
     this.state = {
       currentPage: 0,
       filteredNavigationData: data,
@@ -146,7 +134,7 @@ export default class UiLibExplorerMenu extends Component {
         animate: true,
       },
     });
-  }
+  };
 
   closeSearchBox() {
     this.toggleTopBar(true);
@@ -163,12 +151,12 @@ export default class UiLibExplorerMenu extends Component {
   filterExplorerScreens(filterText) {
     let filteredNavigationData = {};
     const data = this.getMenuData();
-    
+
     if (!filterText) {
       filteredNavigationData = data;
     } else {
       _.each(data, (menuSection, menuSectionKey) => {
-        const filteredMenuSection = _.filter(menuSection, (menuItem) => {
+        const filteredMenuSection = _.filter(menuSection.screens, (menuItem) => {
           const {title, description, tags} = menuItem;
           return (
             _.includes(_.lowerCase(title), _.toLower(filterText)) ||
@@ -182,7 +170,7 @@ export default class UiLibExplorerMenu extends Component {
         }
       });
     }
-    
+
     this.setState({
       filterText,
       filteredNavigationData,
@@ -190,7 +178,7 @@ export default class UiLibExplorerMenu extends Component {
   }
 
   /** Renders */
-  renderHeader() {    
+  renderHeader() {
     return (
       <View row spread style={{height: Constants.isIOS ? (Constants.isIphoneX ? 80 : 60) : 56}}>
         <TextInput
@@ -222,7 +210,7 @@ export default class UiLibExplorerMenu extends Component {
   renderItem({item}) {
     return (
       <View centerV row paddingL-20 marginB-10>
-        <Image source={Assets.icons.chevronRight} style={{tintColor: Colors.dark10}}/>
+        <Image source={Assets.icons.chevronRight} style={{tintColor: Colors.dark10}} />
         <Text
           style={[item.deprecate && styles.entryTextDeprecated]}
           dark10
@@ -240,7 +228,7 @@ export default class UiLibExplorerMenu extends Component {
     const {currentPage} = this.state;
     const data = this.getMenuData();
     const sections = Object.keys(data);
-    
+
     return (
       <View style={styles.breadcrumbs} row>
         {_.map(data, (section, key) => {
@@ -274,7 +262,7 @@ export default class UiLibExplorerMenu extends Component {
     const dividerTransforms = [-10, -55, -20];
     const dividerWidths = ['60%', '75%', '90%'];
     const keys = _.keys(data);
-    
+
     return (
       <Carousel onChangePage={this.onChangePage} ref={carousel => (this.carousel = carousel)}>
         {_.map(data, (section, key) => {
@@ -291,7 +279,7 @@ export default class UiLibExplorerMenu extends Component {
                 ]}
               />
               <View flex>
-                <FlatList data={section.screens} keyExtractor={item => item.title} renderItem={this.renderItem}/>
+                <FlatList data={section.screens} keyExtractor={item => item.title} renderItem={this.renderItem} />
               </View>
             </View>
           );
@@ -302,13 +290,13 @@ export default class UiLibExplorerMenu extends Component {
 
   renderSearchResults(data) {
     const flatData = _.flatMap(data);
-    
+
     return (
       <View paddingH-24>
         <FlatList
           keyboardShouldPersistTaps="always"
           data={flatData}
-          keyExtractor={(item, index) => index}
+          keyExtractor={(item, index) => index.toString()}
           renderItem={this.renderItem}
         />
       </View>
