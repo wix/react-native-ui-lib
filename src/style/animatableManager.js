@@ -44,11 +44,11 @@ class AnimatableManager {
       to: {translateY: -height},
     };
     // relative
-    definition[`slideUp_${suffix}`] = {
+    definition[`slideIn_${suffix}`] = {
       from: {height: 0},
       to: {height},
     };
-    definition[`slideDown_${suffix}`] = {
+    definition[`slideOut_${suffix}`] = {
       from: {height},
       to: {height: 0},
     };

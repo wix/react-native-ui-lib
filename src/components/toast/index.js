@@ -400,8 +400,8 @@ function getAnimationDescriptor(name, {duration = DURATION, delay = DELAY}) {
       exit: {...defaultProps, animation: AnimatableManager.animations.slideOutDown_toast},
     },
     relative: {
-      enter: {...defaultProps, animation: AnimatableManager.animations.slideUp_toast},
-      exit: {...defaultProps, animation: AnimatableManager.animations.slideDown_toast, delay},
+      enter: {...defaultProps, animation: AnimatableManager.animations.slideIn_toast},
+      exit: {...defaultProps, animation: AnimatableManager.animations.slideOut_toast, delay},
     },
   };
   return animationDescriptorMap[name] || {};
