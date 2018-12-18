@@ -23,32 +23,32 @@ class AnimatableManager {
     }
   }
 
-  loadSlideByHeightDefinitions(height, sufix) {
+  loadSlideByHeightDefinitions(height, suffix) {
     const definition = {};
     // bottom
-    definition[`slideInUp_${sufix}`] = {
+    definition[`slideInUp_${suffix}`] = {
       from: {translateY: height},
       to: {translateY: 0},
     };
-    definition[`slideOutDown_${sufix}`] = {
+    definition[`slideOutDown_${suffix}`] = {
       from: {translateY: 0},
       to: {translateY: height},
     };
     // top
-    definition[`slideInDown_${sufix}`] = {
+    definition[`slideInDown_${suffix}`] = {
       from: {translateY: -height},
       to: {translateY: 0},
     };
-    definition[`slideOutUp_${sufix}`] = {
+    definition[`slideOutUp_${suffix}`] = {
       from: {translateY: 0},
       to: {translateY: -height},
     };
     // relative
-    definition[`growUp_${sufix}`] = {
+    definition[`slideUp_${suffix}`] = {
       from: {height: 0},
       to: {height},
     };
-    definition[`growDown_${sufix}`] = {
+    definition[`slideDown_${suffix}`] = {
       from: {height},
       to: {height: 0},
     };
@@ -63,6 +63,16 @@ class AnimatableManager {
   }
 
   /** Presets */
+  getSlideInUp(options) {
+    return {
+      animation: 'slideInUp',
+      easing: 'ease-out-quint',
+      duration: 500,
+      useNativeDriver: true,
+      ...options,
+    };
+  }
+
   getFadeIn(options) {
     return {
       animation: 'fadeIn',
@@ -83,22 +93,12 @@ class AnimatableManager {
     };
   }
 
-  getFadeInLeft(options) {
+  getRandomDelayFadeInLeft(options, delays = [20, 120, 220]) {
     return {
       animation: 'fadeInLeft',
       easing: 'ease-out-expo',
       duration: 600,
-      delay: _.sample([20, 120, 220]),
-      useNativeDriver: true,
-      ...options,
-    };
-  }
-
-  getSlideInUp(options) {
-    return {
-      animation: 'slideInUp',
-      easing: 'ease-out-quint',
-      duration: 500,
+      delay: _.sample(delays),
       useNativeDriver: true,
       ...options,
     };
@@ -115,6 +115,7 @@ class AnimatableManager {
   }
 
   getZoomInSlideDown(index = 0, options) {
+    const {onAnimationEnd, ...others} = options;
     if (index === 0) {
       return {
         animation: 'zoomIn',
@@ -122,7 +123,7 @@ class AnimatableManager {
         duration: 200,
         delay: 200,
         useNativeDriver: true,
-        ...options,
+        onAnimationEnd,
       };
     }
     return {
@@ -130,7 +131,7 @@ class AnimatableManager {
       easing: 'ease-out-quint',
       duration: 600,
       useNativeDriver: true,
-      ...options,
+      ...others,
     };
   }
 }
