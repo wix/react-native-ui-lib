@@ -111,7 +111,10 @@ export default class Drawer extends BaseComponent {
   }
   onSnap = ({nativeEvent}) => {
     const {index} = nativeEvent;
-    this.setState({position: index});
+    const {position} = this.state;
+    if (index !== position) {
+      this.setState({position: index});
+    }
   }
   onDrag = ({nativeEvent}) => {
     const {state} = nativeEvent;
@@ -121,7 +124,10 @@ export default class Drawer extends BaseComponent {
     }
   }
   onStop = () => {
-    this.setState({inMotion: false});
+    const {inMotion} = this.state;
+    if (inMotion) {
+      this.setState({inMotion: false});
+    }
   }
   onPress = () => {
     this.closeDrawer();
