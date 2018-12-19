@@ -14,7 +14,7 @@ import Image from '../image';
 
 const DURATION = 300;
 const DELAY = 100;
-const ANIMATION_SUFIX = 'toast';
+const ANIMATION_SUFFIX = 'toast';
 
 /**
  * @description Toast component for showing a feedback about a user action.
@@ -124,7 +124,7 @@ export default class Toast extends BaseComponent {
 
     const {animated} = this.props;
     if (animated) {
-      AnimatableManager.loadSlideByHeightDefinitions(getHeight(this.props), ANIMATION_SUFIX);
+      AnimatableManager.loadSlideByHeightDefinitions(getHeight(this.props), ANIMATION_SUFFIX);
     }
   }
 
@@ -133,7 +133,7 @@ export default class Toast extends BaseComponent {
     const {isVisible} = this.state;
     if (visible !== isVisible) {
       if (animated) {
-        AnimatableManager.loadSlideByHeightDefinitions(getHeight(this.props), ANIMATION_SUFIX);
+        AnimatableManager.loadSlideByHeightDefinitions(getHeight(this.props), ANIMATION_SUFFIX);
       }
 
       const newState = animated
