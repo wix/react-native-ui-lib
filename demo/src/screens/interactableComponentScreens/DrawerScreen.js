@@ -138,9 +138,10 @@ export default class DrawerScreen extends Component {
         </Drawer>
 
         <Drawer
-          leftItem={leftItem}
+          leftItem={{text: 'Archive', background: Colors.blue10, width: 100, onPress: this.onLeftItemPressed}}
           // rightItems={rightItems}
           style={{marginTop: 20}}
+          itemsTextStyle={{fontSize: 18}}
           onPress={this.onPress}
           ref={r => this.secondDrawer = r}
         >
@@ -157,7 +158,7 @@ export default class DrawerScreen extends Component {
           ]}
           style={{marginTop: 20}}
           onPress={this.onPress}
-          itemsIconSize={36}
+          itemsIconSize={30}
           itemsTintColor={this.state.itemsTintColor}
         >
           {this.renderContent('3', conversations[3])}
