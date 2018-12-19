@@ -1,9 +1,10 @@
 // TODO: update usage of React Context API to latest (https://reactjs.org/docs/context.html)
-import React from 'react';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {BaseComponent} from '../../commons';
 import View from '../view';
+
 
 /**
  * Wrap a group of Radio Buttons to automatically control their selection
@@ -50,8 +51,6 @@ class RadioGroup extends BaseComponent {
     this.setState({value});
     _.invoke(this.props, 'onValueChange', value);
   };
-
-  state = {};
 
   render() {
     return <View {...this.props}>{this.props.children}</View>;
