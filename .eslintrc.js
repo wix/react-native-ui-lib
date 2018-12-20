@@ -7,17 +7,18 @@ module.exports = {
   "plugins": ["react-native", "uilib"],
   "extends": ["airbnb"],
   "rules": {
-    "no-unneeded-ternary": "off",
     "arrow-body-style": "off",
     "class-methods-use-this": "off",
     "consistent-return": "off",
     "global-require": "off",
-    "import/prefer-default-export": "off",
+    "max-len": [2, 130, 4, {"ignoreUrls": true}],
     "no-nested-ternary": "off",
+    "no-else-return": "off",
     "no-plusplus": "off",
     "no-return-assign": "off",
+    "no-trailing-spaces": "off",
     "no-use-before-define": "off",
-    "max-len": [2, 130, 4, {"ignoreUrls": true}],
+    "no-unneeded-ternary": "off",
     "object-curly-spacing": "off",
     "react/forbid-prop-types": "off",
     "react/jsx-filename-extension": "off",
@@ -25,12 +26,11 @@ module.exports = {
     "react/jsx-tag-spacing": "off",
     "react/prefer-stateless-function": "off",
     "react/require-default-props": "off",
-    "no-else-return": "off",
-    "no-trailing-spaces": "off",
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": true}],
+    "import/prefer-default-export": "off",
+    // 'uilib/assets-deprecation': ['error', {deprecations: assetsDepJson, source: '../../assets', dueDate: '2 November, Friday'}]
     // "uilib/no-hard-coded-color": ["error", validColors, extraFixColorsMap],
     // "uilib/no-hard-coded-font": "warn"
-    // 'uilib/assets-deprecation': ['error', {deprecations: assetsDepJson, source: '../../assets', dueDate: '2 November, Friday'}]
   },
   "env": {
     "browser": true,
