@@ -31,12 +31,12 @@ export default class ConversationListScreen extends Component {
 
   renderRow(row, id) {
     const initials = AvatarHelper.getInitials(row.name);
-    // const animationProps = {
-    //   animation: 'itemEntrance',
-    //   duration: 400,
-    //   delay: 10 + ((Number(id) % 12) * 40),
-    //   easing: 'ease-out-quart',
-    // };
+    const animationProps = {
+      animation: 'basicListEntrance',
+      duration: 400,
+      delay: 10 + ((Number(id) % 12) * 40),
+      easing: 'ease-out-quart',
+    };
     const rightButtons = [
       {
         text: 'More',
@@ -62,7 +62,7 @@ export default class ConversationListScreen extends Component {
     };
 
     return (
-      <Animatable.View key={id} /**{...animationProps}*/>
+      <Animatable.View key={id} {...animationProps}>
         <Drawer
           leftItem={leftButton}
           rightItems={rightButtons}
@@ -72,7 +72,6 @@ export default class ConversationListScreen extends Component {
           <ListItem
             height={75.8}
             onPress={() => Alert.alert(`pressed on contact #${id + 1}`)}
-            // {...animationProps}
           >
             <ListItem.Part left>
               <Avatar
