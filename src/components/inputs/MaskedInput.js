@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, ViewPropTypes, Keyboard} from 'react-native';
 import BaseInput from './BaseInput';
-import TextInput from './TextInput';
+import TextField from './TextField';
 import View from '../view';
 import Text from '../text';
 
@@ -18,7 +18,7 @@ import Text from '../text';
 export default class MaskedInput extends BaseInput {
   static displayName = 'MaskedInput';
   static propTypes = {
-    ...TextInput.propTypes,
+    ...TextField.propTypes,
     /**
      * callback for rendering the custom input out of the value returns from the actual input
      */
@@ -53,11 +53,11 @@ export default class MaskedInput extends BaseInput {
 
   render() {
     const {containerStyle} = this.props;
-    const TextInputProps = TextInput.extractOwnProps(this.props, ['containerStyle', 'style']);
+    const TextInputProps = TextField.extractOwnProps(this.props, ['containerStyle', 'style']);
     
     return (
       <View style={containerStyle}>
-        <TextInput
+        <TextField
           {...this.props}
           ref={r => (this.input = r)}
           containerStyle={styles.hiddenInputContainer}

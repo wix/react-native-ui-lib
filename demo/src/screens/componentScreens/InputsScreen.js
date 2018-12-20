@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {View, Colors, Text, TextInput, TextArea, Typography, Modal, Button} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Colors, Text, TextField, TextArea, Typography, Modal, Button} from 'react-native-ui-lib'; //eslint-disable-line
 import {KeyboardAwareInsetsView} from 'react-native-keyboard-tracking-view';
 
 const LONG_TEXT =
@@ -68,7 +68,7 @@ export default class InputsScreen extends Component {
             onPress={this.onButtonPressed}
           />
           
-          <TextInput
+          <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
@@ -79,7 +79,7 @@ export default class InputsScreen extends Component {
             floatOnFocus
           />
 
-          <TextInput
+          <TextField
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
             placeholder="placeholder"
@@ -92,7 +92,7 @@ export default class InputsScreen extends Component {
             disabledColor={Colors.dark70}
           />
 
-          <TextInput
+          <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
@@ -103,7 +103,7 @@ export default class InputsScreen extends Component {
             useTopErrors={this.state.topError}
           />
 
-          <TextInput
+          <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
@@ -112,7 +112,7 @@ export default class InputsScreen extends Component {
             helperText="this is an helper text"
           />
 
-          <TextInput
+          <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             title="title"
@@ -124,7 +124,7 @@ export default class InputsScreen extends Component {
             useTopErrors={this.state.topError}
           />
 
-          <TextInput
+          <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             title="Title"
@@ -139,7 +139,7 @@ export default class InputsScreen extends Component {
             autoCapitalize="words"
           />
 
-          <TextInput
+          <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
@@ -149,7 +149,7 @@ export default class InputsScreen extends Component {
             showCharacterCounter
           />
 
-          <TextInput
+          <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
@@ -162,7 +162,7 @@ export default class InputsScreen extends Component {
             underlineColor={{focus: Colors.purple50, error: Colors.yellow60}}
           />
 
-          <TextInput
+          <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
@@ -171,14 +171,14 @@ export default class InputsScreen extends Component {
             numberOfLines={3}
           />
 
-          <TextInput
+          <TextField
             text40
             containerStyle={{marginBottom: INPUT_SPACING}}
             placeholder="write something.."
             hideUnderline
           />
 
-          <TextInput
+          <TextField
             text30
             containerStyle={{marginBottom: INPUT_SPACING}}
             placeholder="write something.."
@@ -186,7 +186,7 @@ export default class InputsScreen extends Component {
             hideUnderline
           />
 
-          <TextInput
+          <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             placeholder="Share your story"
@@ -197,7 +197,7 @@ export default class InputsScreen extends Component {
             multiline
           />
 
-          <TextInput
+          <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
@@ -206,7 +206,7 @@ export default class InputsScreen extends Component {
             expandable
           />
 
-          <TextInput
+          <TextField
             containerStyle={{marginBottom: INPUT_SPACING}}
             ref={r => (this.input = r)}
             placeholder="placeholder"
@@ -233,7 +233,7 @@ export default class InputsScreen extends Component {
             }}
           />
 
-          <TextInput
+          <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
@@ -255,21 +255,21 @@ export default class InputsScreen extends Component {
             <TextArea placeholder="write something.."/>
           </View>
 
-          <TextInput
+          <TextField
             text50
             floatingPlaceholder
             placeholder="Big Title Text"
             containerStyle={{marginBottom: INPUT_SPACING}}
             helperText="this is an helper text"
           />
-          <TextInput
+          <TextField
             text20
             placeholder="Huge Text"
             containerStyle={{marginBottom: INPUT_SPACING}}
             ref={input => (this.hugeText = input)}
           />
 
-          <TextInput
+          <TextField
             text70
             placeholder="No Underline"
             containerStyle={{marginBottom: INPUT_SPACING}}
@@ -277,7 +277,7 @@ export default class InputsScreen extends Component {
             hideUnderline
           />
 
-          <TextInput
+          <TextField
             text10
             placeholder="Centered"
             centered
