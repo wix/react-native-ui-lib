@@ -59,4 +59,3 @@ buck-out/
 dist
 dist-ts
 yarn.lock
-package-lock.json
