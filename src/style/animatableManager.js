@@ -4,7 +4,7 @@ import * as Animatable from 'react-native-animatable';
 
 /** Animations Definitions */
 const definitions = {
-  indexEntrance: {
+  itemEntrance: {
     from: {opacity: 0, translateY: 40},
     to: {opacity: 1, translateY: 0},
   },
@@ -13,7 +13,6 @@ const definitions = {
 class AnimatableManager {
   constructor() {
     this.loadCustomDefinitions(definitions);
-    this.animations = getAnimations();
   }
 
   loadCustomDefinitions(customDefinitions) {
@@ -21,6 +20,11 @@ class AnimatableManager {
       Animatable.initializeRegistryWithDefinitions(customDefinitions);
       this.updateDefinitions(customDefinitions);
     }
+  }
+
+  updateDefinitions(newDefinitions) {
+    Object.assign(definitions, newDefinitions);
+    this.animations = getAnimations();
   }
 
   loadSlideByHeightDefinitions(height, suffix) {
@@ -53,13 +57,7 @@ class AnimatableManager {
       to: {height: 0},
     };
 
-    Animatable.initializeRegistryWithDefinitions(definition);
-    this.updateDefinitions(definition);
-  }
-
-  updateDefinitions(newDefinitions) {
-    Object.assign(definitions, newDefinitions);
-    this.animations = getAnimations();
+    this.loadCustomDefinitions(definition);
   }
 
   /** Presets */
@@ -93,7 +91,7 @@ class AnimatableManager {
     };
   }
 
-  getRandomDelayFadeInLeft(options, delays = [20, 120, 220]) {
+  getRandomDelay(delays = [20, 120, 220], options) {
     return {
       animation: 'fadeInLeft',
       easing: 'ease-out-expo',
@@ -104,13 +102,14 @@ class AnimatableManager {
     };
   }
 
-  getEntranceByIndex(animation, index = 0) {
+  getEntranceByIndex = (index = 0, options) => {
     return {
-      animation,
+      animation: 'itemEntrance',
       easing: 'ease-out-quint',
       duration: 600,
       delay: 10 + ((Number(index) % 12) * 100),
       useNativeDriver: true,
+      ...options,
     };
   }
 

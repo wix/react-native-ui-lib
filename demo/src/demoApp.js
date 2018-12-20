@@ -41,11 +41,11 @@ import {registerScreens} from './screens';
 // });
 
 // const customAnimationsDefinitions = {
-//   costumAnimation1: {
+//   customAnimation1: {
 //     from: {opacity: 0, translateY: 20},
 //     to: {opacity: 1, translateY: 0},
 //   }, 
-//   costumAnimation2: {
+//   customAnimation2: {
 //     from: {opacity: 0, translateY: 40},
 //     to: {opacity: 1, translateY: 0},
 //   },
