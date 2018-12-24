@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {BlurView} from 'react-native-blur';
-import * as Animatable from 'react-native-animatable';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -144,7 +143,7 @@ class Card extends BaseComponent {
     return children;
   }
 
-  renderContainer() {
+  render() {
     const {
       row,
       width,
@@ -184,21 +183,6 @@ class Card extends BaseComponent {
           {this.renderChildren()}
         </View>
       </Container>
-    );
-  }
-
-  render() {
-    const animationProps = this.extractAnimationProps();
-    if (!_.isEmpty(animationProps)) {
-      return (
-        <Animatable.View {...animationProps}>
-          {this.renderContainer()}
-        </Animatable.View>
-      );
-    }
-    
-    return (
-      this.renderContainer()
     );
   }
 }

@@ -43,6 +43,13 @@ class AnimatableManager {
     this.presets = presets;
   }
 
+  loadAnimationPresets(animationPresets) {
+    if (animationPresets) {
+      this.presets = Object.assign(presets, animationPresets);
+    }
+  }
+
+  // NOTE: Should be sent as a parameter to Animatable.initializeRegistryWithDefinitions() call
   loadAnimationDefinitions(animationDefinitions) {
     if (animationDefinitions) {
       Animatable.initializeRegistryWithDefinitions(animationDefinitions); // Make available globally in uilib
@@ -50,12 +57,6 @@ class AnimatableManager {
       this.animations = getObjectMap(allDefinitions);
     }
     return definitions;
-  }
-
-  loadAnimationPresets(animationPresets) {
-    if (animationPresets) {
-      this.presets = Object.assign(presets, animationPresets);
-    }
   }
 
   loadSlideByHeightDefinitions(height, suffix) {

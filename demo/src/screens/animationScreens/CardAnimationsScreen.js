@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import {AnimatableManager, Colors, View, Button, Card, Text} from 'react-native-ui-lib';//eslint-disable-line
 
 
@@ -70,11 +71,13 @@ export default class CardAnimationsScreen extends Component {
     }
 
     return (
-      <Card key={index} marginH-20 marginV-10 height={100} style={styles.card} {...animationProps}>
-        <View flex center>
-          <Text text50 white>{item.text} #{index}</Text>
-        </View>
-      </Card>
+      <Animatable.View key={index} {...animationProps}>
+        <Card marginH-20 marginV-10 height={100} style={styles.card}>
+          <View flex center>
+            <Text text50 white>{item.text} #{index}</Text>
+          </View>
+        </Card>
+      </Animatable.View>
     );
   }
 
