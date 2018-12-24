@@ -29,8 +29,8 @@ export default class ConversationListScreen extends Component {
 
   keyExtractor = (item, index) => item.name;
 
-  renderRow(row, id) {
-    const initials = AvatarHelper.getInitials(row.name);
+  renderItem(item, id) {
+    const initials = AvatarHelper.getInitials(item.name);
     const animationProps = {
       animation: 'basicListEntrance',
       duration: 400,
@@ -66,8 +66,8 @@ export default class ConversationListScreen extends Component {
         <Drawer
           leftItem={leftButton}
           rightItems={rightButtons}
-          ref={r => row.drawer = r}
-          onDragStart={() => this.closeLast(row)}
+          ref={ref => item.drawer = ref}
+          onDragStart={() => this.closeLast(item)}
         >
           <ListItem
             height={75.8}
@@ -76,7 +76,7 @@ export default class ConversationListScreen extends Component {
             <ListItem.Part left>
               <Avatar
                 size={54}
-                imageSource={row.thumbnail ? {uri: row.thumbnail} : null}
+                imageSource={item.thumbnail ? {uri: item.thumbnail} : null}
                 label={initials}
                 isOnline={Number(id) < 3}
                 containerStyle={{marginHorizontal: 18}}
@@ -84,12 +84,12 @@ export default class ConversationListScreen extends Component {
             </ListItem.Part>
             <ListItem.Part middle column containerStyle={[styles.border, {paddingRight: 17}]}>
               <ListItem.Part containerStyle={{marginBottom: 3}}>
-                <Text style={{flex: 1, marginRight: 10}} text70 color={Colors.dark10} numberOfLines={1}>{row.name}</Text>
-                <Text style={{marginTop: 2}} text90 color={Colors.dark50}>{row.timestamp}</Text>
+                <Text style={{flex: 1, marginRight: 10}} text70 color={Colors.dark10} numberOfLines={1}>{item.name}</Text>
+                <Text style={{marginTop: 2}} text90 color={Colors.dark50}>{item.timestamp}</Text>
               </ListItem.Part>
               <ListItem.Part>
-                <Text style={{flex: 1, marginRight: 10}} text80 color={Colors.dark40} numberOfLines={1}>{row.text}</Text>
-                {row.count > 0 && <Badge label={row.count} animation="fadeIn" duration={400}/>}
+                <Text style={{flex: 1, marginRight: 10}} text80 color={Colors.dark40} numberOfLines={1}>{item.text}</Text>
+                {item.count > 0 && <Badge label={item.count} animation="fadeIn" duration={400}/>}
               </ListItem.Part>
             </ListItem.Part>
           </ListItem>
@@ -102,7 +102,7 @@ export default class ConversationListScreen extends Component {
     return (
       <FlatList
         data={conversations}
-        renderItem={({item, index}) => this.renderRow(item, index)}
+        renderItem={({item, index}) => this.renderItem(item, index)}
         keyExtractor={this.keyExtractor}
       />
     );

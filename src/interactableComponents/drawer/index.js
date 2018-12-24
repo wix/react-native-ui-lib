@@ -137,10 +137,11 @@ export default class Drawer extends BaseComponent {
   }
 
   closeDrawer() {
-    const {inMotion, position} = this.state;
-    if (!inMotion && position !== 1) {
-      this.interactableElem.snapTo({index: 1});
-    }
+    // const {inMotion, position} = this.state;
+    // if (!inMotion && position !== 1) {
+    //   this.interactableElem.snapTo({index: 1});
+    // }
+    this.interactableElem.snapTo({index: 1});
   }
   generateStyles() {
     this.styles = createStyles(this.props);
