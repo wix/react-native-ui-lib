@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Alert, FlatList} from 'react-native';
-import {ThemeManager, ListItem, Text, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
+import {AnimatableManager, ThemeManager, ListItem, Text, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
 
 
@@ -19,12 +19,8 @@ export default class ContactsListScreen extends Component {
 
   renderRow(row, id) {
     const initials = AvatarHelper.getInitials(row.name);
-    const animationProps = {
-      animation: 'basicListEntrance',
-      duration: 600,
-      delay: 10 + ((Number(id) % 12) * 40),
-      easing: 'ease-out-quint',
-    };
+    const animationProps = AnimatableManager.getEntranceByIndex(id);
+
     return (
       <ListItem
         key={id}

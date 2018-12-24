@@ -56,7 +56,6 @@ class DialogScreen extends Component {
           bottom
           centerH
           onDismiss={() => this.setState({showDialog2: false})}
-          animationConfig={{duration: 250}}
           style={{backgroundColor: Colors.white}}
         >
           {this.renderDialogContent(2, {br0: true})}
@@ -78,7 +77,6 @@ class DialogScreen extends Component {
           top
           centerH
           onDismiss={() => this.setState({showDialog4: false})}
-          animationConfig={{animation: 'slideInDown', duration: 250}}
           dismissSwipeDirection={Dialog.swipeDirections.UP}
           style={{backgroundColor: Colors.white}}
         >
@@ -92,7 +90,7 @@ class DialogScreen extends Component {
           bottom
           centerH
           onDismiss={() => this.setState({showDialog5: false})}
-          animationConfig={{duration: 250}}
+          animationConfig={{duration: 1000}}
         >
           {this.renderDialogContent(5, {flex: false})}
         </Dialog>

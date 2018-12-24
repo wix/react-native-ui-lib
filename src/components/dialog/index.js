@@ -4,11 +4,11 @@ import React from 'react';
 import {StyleSheet, TouchableWithoutFeedback, SafeAreaView} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import {Constants} from '../../helpers';
+import {Colors, AnimatableManager} from '../../style';
 import {BaseComponent} from '../../commons';
-import {Colors} from '../../style';
 import Modal from '../../screensComponents/modal';
 import View from '../view';
-import {Constants} from '../../helpers';
 
 /*eslint-disable*/
 /**
@@ -76,16 +76,6 @@ class Dialog extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
-  getAnimationConfig() {
-    const {animationConfig} = this.props;
-    return {
-      animation: 'slideInUp',
-      duration: 400,
-      useNativeDriver: true,
-      ...animationConfig,
-    };
-  }
-
   onSwipe(gestureName) {
     const {SWIPE_UP, SWIPE_DOWN} = swipeDirections;
     const {dismissSwipeDirection} = this.props;
@@ -107,7 +97,7 @@ class Dialog extends BaseComponent {
   }
 
   render() {
-    const {visible, overlayBackgroundColor, style, onDismiss, bottom} = this.getThemeProps();
+    const {visible, overlayBackgroundColor, style, onDismiss, bottom, animationConfig, top} = this.getThemeProps();
     const {alignments} = this.state;
     const centerByDefault = _.isEmpty(alignments);
     const config = {
@@ -115,6 +105,7 @@ class Dialog extends BaseComponent {
       directionalOffsetThreshold: 80,
     };
     const bottomInsets = Constants.getSafeAreaInsets().paddingBottom;
+    const animation = top ? AnimatableManager.presets.slideInDown : AnimatableManager.presets.slideInUp;
 
     return (
       <Modal
@@ -126,7 +117,7 @@ class Dialog extends BaseComponent {
         overlayBackgroundColor={overlayBackgroundColor}
       >
         <View center={centerByDefault} style={[this.styles.overlay, alignments]} pointerEvents="box-none">
-          <Animatable.View style={[this.styles.dialogContainer, style]} {...this.getAnimationConfig()}>
+          <Animatable.View style={[this.styles.dialogContainer, style]} {...animation} {...animationConfig}>
             <GestureRecognizer
               onSwipe={(direction, state) => this.onSwipe(direction, state)}
               config={config}

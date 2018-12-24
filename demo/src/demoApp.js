@@ -1,7 +1,7 @@
 import {AsyncStorage} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import * as Animatable from 'react-native-animatable';
-import {ThemeManager, Constants, Assets, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
+import {AnimatableManager, ThemeManager, Constants, Assets, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
 import {registerScreens} from './screens';
 
 
@@ -41,12 +41,34 @@ import {registerScreens} from './screens';
 //   camera: require('./assets/icons/cameraSelected.png'),
 // });
 
-Animatable.initializeRegistryWithDefinitions({
-  basicListEntrance: {
-    from: {opacity: 0, translateY: 20},
-    to: {opacity: 1, translateY: 0},
-  },
-});
+// AnimatableManager.loadAnimationPresets({
+//   preset1: {
+//     animation: 'fadeIn',
+//     easing: 'ease-out-quint',
+//     duration: 1000,
+//     useNativeDriver: true,
+//   },
+//   preset2: {
+//     animation: 'fadeInLeft',
+//     easing: 'ease-out-expo',
+//     duration: 500,
+//     useNativeDriver: true,
+//   },
+// });
+
+// const customAnimationsDefinitions = {
+//   customAnimation1: {
+//     from: {opacity: 0, translateY: 20},
+//     to: {opacity: 1, translateY: 0},
+//   }, 
+//   customAnimation2: {
+//     from: {opacity: 0, translateY: 40},
+//     to: {opacity: 1, translateY: 0},
+//   },
+// };
+// IMPORTANT! Make uilib's animations available globally for the app's use (option to pass adittional animation definitions)
+Animatable.initializeRegistryWithDefinitions(AnimatableManager.loadAnimationDefinitions(/** customAnimationsDefinitions */)); 
+
 
 function getDefaultNavigationStyle() {
   return {

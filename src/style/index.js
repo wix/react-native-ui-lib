@@ -7,4 +7,5 @@ module.exports = {
   get ComponentsColors() { return require('./componentsColors').default; },
   get Components() { return require('./components').default; },
   get ThemeManager() { return require('./themeManager').default; },
+  get AnimatableManager() { return require('./animatableManager').default; },
 };
