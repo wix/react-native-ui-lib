@@ -1,9 +1,11 @@
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
+import View from '../view';
 
 
 const SIZE_PIMPLE_SMALL = 6;
@@ -151,11 +153,12 @@ export default class Badge extends BaseComponent {
     const {borderWidth, borderColor} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
-    const animationProps = this.extractAnimationProps();
     const sizeStyle = this.getBadgeSizeStyle();
-
+    const animationProps = this.extractAnimationProps();
+    const Container = !_.isEmpty(animationProps) ? Animatable.View : View;
+    console.warn(Container);
     return (
-      <Animatable.View
+      <Container
         testID={this.props.testId}
         style={[
           sizeStyle,
@@ -168,7 +171,7 @@ export default class Badge extends BaseComponent {
         {...animationProps}
       >
         {this.renderLabel()}
-      </Animatable.View>
+      </Container>
     );
   }
 }
