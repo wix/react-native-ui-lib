@@ -156,7 +156,7 @@ export default class Badge extends BaseComponent {
     const sizeStyle = this.getBadgeSizeStyle();
     const animationProps = this.extractAnimationProps();
     const Container = !_.isEmpty(animationProps) ? Animatable.View : View;
-    console.warn(Container);
+
     return (
       <Container
         testID={this.props.testId}
