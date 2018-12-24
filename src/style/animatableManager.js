@@ -10,21 +10,55 @@ const definitions = {
   },
 };
 
+const presets = {
+  slideInUp: {
+    animation: 'slideInUp',
+    easing: 'ease-out-quint',
+    duration: 500,
+    useNativeDriver: true,
+  },
+  slideInDown: {
+    animation: 'slideInDown',
+    easing: 'ease-out-quint',
+    duration: 500,
+    useNativeDriver: true,
+  },
+  fadeIn: {
+    animation: 'fadeIn',
+    easing: 'ease-out-quint',
+    duration: 300,
+    useNativeDriver: true,
+  },
+  fadeInRight: {
+    animation: 'fadeInRight',
+    easing: 'ease-out-expo',
+    duration: 500,
+    useNativeDriver: true,
+  },
+};
+
 class AnimatableManager {
   constructor() {
-    this.loadCustomDefinitions(definitions);
+    this.loadAnimationDefinitions(definitions);
+    this.presets = presets;
   }
 
-  loadCustomDefinitions(customDefinitions) {
-    if (customDefinitions) {
-      Animatable.initializeRegistryWithDefinitions(customDefinitions);
-      this.updateDefinitions(customDefinitions);
+  loadAnimationDefinitions(animationDefinitions) {
+    if (animationDefinitions) {
+      Animatable.initializeRegistryWithDefinitions(animationDefinitions);
+      this.updateDefinitions(animationDefinitions);
     }
   }
 
   updateDefinitions(newDefinitions) {
     Object.assign(definitions, newDefinitions);
-    this.animations = getAnimations();
+    this.animations = getObjectMap(definitions);
+  }
+
+  loadAnimationPresets(animationPresets) {
+    if (animationPresets) {
+      this.presets = Object.assign(presets, animationPresets);
+    }
   }
 
   loadSlideByHeightDefinitions(height, suffix) {
@@ -57,40 +91,10 @@ class AnimatableManager {
       to: {height: 0},
     };
 
-    this.loadCustomDefinitions(definition);
+    this.loadAnimationDefinitions(definition);
   }
 
-  /** Presets */
-  getSlideInUp(options) {
-    return {
-      animation: 'slideInUp',
-      easing: 'ease-out-quint',
-      duration: 500,
-      useNativeDriver: true,
-      ...options,
-    };
-  }
-
-  getFadeIn(options) {
-    return {
-      animation: 'fadeIn',
-      easing: 'ease-out-quint',
-      duration: 300,
-      useNativeDriver: true,
-      ...options,
-    };
-  }
-
-  getFadeInRight(options) {
-    return {
-      animation: 'fadeInRight',
-      easing: 'ease-out-expo',
-      duration: 500,
-      useNativeDriver: true,
-      ...options,
-    };
-  }
-
+  /** Tools */
   getRandomDelay(delays = [20, 120, 220], options) {
     return {
       animation: 'fadeInLeft',
@@ -135,12 +139,12 @@ class AnimatableManager {
   }
 }
 
-function getAnimations() {
-  const animations = {};
-  _.forEach(Object.keys(definitions), (key) => {
-    animations[key] = `${key}`;
+function getObjectMap(object) {
+  const map = {};
+  _.forEach(Object.keys(object), (key) => {
+    map[key] = `${key}`;
   });
-  return animations;
+  return map;
 }
 
 export default new AnimatableManager();

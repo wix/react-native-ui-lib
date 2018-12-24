@@ -21,7 +21,7 @@ export default class BasicListScreen extends Component {
 
   renderRow(row, id) {
     const statusColor = row.inventory.status === 'Paid' ? Colors.green30 : Colors.red30;
-    const animationProps = AnimatableManager.getFadeInRight();
+    const animationProps = AnimatableManager.presets.fadeInRight;
     const imageAnimationProps = AnimatableManager.getRandomDelay();
 
     return (

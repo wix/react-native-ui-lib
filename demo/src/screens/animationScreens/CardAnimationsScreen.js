@@ -57,7 +57,7 @@ export default class CardAnimationsScreen extends Component {
     let animationProps;
     switch (animation) {
       case animationType.FADE_IN:
-        animationProps = AnimatableManager.getFadeIn();
+        animationProps = AnimatableManager.presets.fadeIn;
         break;
       case animationType.ENTRANCE:
         animationProps = AnimatableManager.getEntranceByIndex(index);

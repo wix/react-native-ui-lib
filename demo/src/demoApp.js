@@ -50,7 +50,23 @@ import {registerScreens} from './screens';
 //     to: {opacity: 1, translateY: 0},
 //   },
 // };
-// AnimatableManager.loadCustomDefinitions(customAnimationsDefinitions);
+// AnimatableManager.loadAnimationDefinitions(customAnimationsDefinitions);
+
+// const customPresets = {
+//   customPreset1: {
+//     animation: 'fadeIn',
+//     easing: 'ease-out-quint',
+//     duration: 1000,
+//     useNativeDriver: true,
+//   },
+//   customPreset2: {
+//     animation: 'fadeInLeft',
+//     easing: 'ease-out-expo',
+//     duration: 500,
+//     useNativeDriver: true,
+//   },
+// };
+// AnimatableManager.loadAnimationPresets(customPresets);
 
 
 function getDefaultNavigationStyle() {
