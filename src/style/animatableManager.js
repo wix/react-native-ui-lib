@@ -37,6 +37,12 @@ const presets = {
   },
 };
 
+/**
+ * @description: Animatable animations and presets
+ * @extendsnotes: To have access to uilib's animations, and load your custom animations (optional), call:
+ * 'Animatable.initializeRegistryWithDefinitions(AnimatableManager.loadAnimationDefinitions(<OPTIONAL_CUSTOM_ANIMATION>));' 
+ * in your app entry point
+ */
 class AnimatableManager {
   constructor() {
     this.loadAnimationDefinitions(definitions);
@@ -49,7 +55,7 @@ class AnimatableManager {
     }
   }
 
-  // NOTE: Should be sent as a parameter to Animatable.initializeRegistryWithDefinitions() call
+  // NOTE: to load globally send as a parameter to Animatable.initializeRegistryWithDefinitions() call
   loadAnimationDefinitions(animationDefinitions) {
     if (animationDefinitions) {
       Animatable.initializeRegistryWithDefinitions(animationDefinitions); // Make available globally in uilib
@@ -59,6 +65,7 @@ class AnimatableManager {
     return definitions;
   }
 
+  // NOTE: to load globally send as a parameter to Animatable.initializeRegistryWithDefinitions() call
   loadSlideByHeightDefinitions(height, suffix) {
     const definition = {};
     // bottom
