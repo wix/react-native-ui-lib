@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import autobind from 'react-autobind';
 import {StyleSheet, FlatList} from 'react-native';
 import {Navigation} from 'react-native-navigation';
-import {ThemeManager, Constants, Assets, Colors, View, Text, Button, Carousel, TextInput, Image} from 'react-native-ui-lib'; //eslint-disable-line
+import {ThemeManager, Constants, Assets, Colors, View, Text, Button, Carousel, TextField, Image} from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 
 export default class UiLibExplorerMenu extends Component {
@@ -181,7 +181,7 @@ export default class UiLibExplorerMenu extends Component {
   renderHeader() {
     return (
       <View row spread style={{height: Constants.isIOS ? (Constants.isIphoneX ? 80 : 60) : 56}}>
-        <TextInput
+        <TextField
           ref={r => (this.toggledSearch = r)}
           placeholder="Search your component.."
           onChangeText={this.filterExplorerScreens}

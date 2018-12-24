@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {ScrollView, StyleSheet, Switch} from 'react-native';
-import {View, TextInput, Text, Badge, Colors} from 'react-native-ui-lib';//eslint-disable-line
+import {View, TextField, Text, Badge, Colors} from 'react-native-ui-lib';//eslint-disable-line
 
 export default class DemoScreen extends Component {
 
@@ -68,7 +68,7 @@ export default class DemoScreen extends Component {
     // if (_.includes([PropTypes.string, PropTypes.number], prop)) {
     return (
       <View key={propId}>
-        <TextInput
+        <TextField
           placeholder={propId}
           floatingPlaceholder
           enableError={false}
