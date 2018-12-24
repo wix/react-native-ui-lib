@@ -59,8 +59,8 @@ class AnimatableManager {
   loadAnimationDefinitions(animationDefinitions) {
     if (animationDefinitions) {
       Animatable.initializeRegistryWithDefinitions(animationDefinitions); // Make available globally in uilib
-      const allDefinitions = Object.assign(definitions, animationDefinitions);
-      this.animations = getObjectMap(allDefinitions);
+      Object.assign(definitions, animationDefinitions);
+      this.animations = getObjectMap(definitions);
     }
     return definitions;
   }
@@ -96,7 +96,7 @@ class AnimatableManager {
       to: {height: 0},
     };
 
-    this.loadAnimationDefinitions(definition);
+    return this.loadAnimationDefinitions(definition);
   }
 
   /** Tools */
