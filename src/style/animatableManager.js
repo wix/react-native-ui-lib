@@ -45,14 +45,11 @@ class AnimatableManager {
 
   loadAnimationDefinitions(animationDefinitions) {
     if (animationDefinitions) {
-      Animatable.initializeRegistryWithDefinitions(animationDefinitions);
-      this.updateDefinitions(animationDefinitions);
+      Animatable.initializeRegistryWithDefinitions(animationDefinitions); // Make available globally in uilib
+      const allDefinitions = Object.assign(definitions, animationDefinitions);
+      this.animations = getObjectMap(allDefinitions);
     }
-  }
-
-  updateDefinitions(newDefinitions) {
-    Object.assign(definitions, newDefinitions);
-    this.animations = getObjectMap(definitions);
+    return definitions;
   }
 
   loadAnimationPresets(animationPresets) {
