@@ -518,7 +518,7 @@ export default class TextInput extends BaseInput {
 
     return (
       <View style={[this.styles.container, containerStyle]} collapsable={false}>
-        <View>
+        <View row>
           {this.shouldShowTopError() ? this.renderError(useTopErrors) : this.renderTitle()}
         </View>
         <View
@@ -532,7 +532,7 @@ export default class TextInput extends BaseInput {
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
           {this.renderExpandableModal()}
         </View>
-        <View row>
+        <View row left>
           <View flex>
             {this.renderError(!useTopErrors)}
           </View>
