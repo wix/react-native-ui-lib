@@ -1,17 +1,17 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, ScrollView} from 'react-native';
+import {Alert, StyleSheet, ScrollView, FlatList} from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {AnimatableManager, Colors, View, Button, Card, Text} from 'react-native-ui-lib';//eslint-disable-line
+import {AnimatableManager, ThemeManager, Colors, View, Button, ListItem, Text} from 'react-native-ui-lib';//eslint-disable-line
 
 
-const cards = [
-  {text: 'Card'},
-  {text: 'Card'},
-  {text: 'Card'},
-  // {text: 'Card'},
-  // {text: 'Card'},
-  // {text: 'Card'},
+const listItems = [
+  {id: '0', text: 'Item'},
+  {id: '1', text: 'Item'},
+  {id: '2', text: 'Item'},
+  // {id: '3', text: 'Item'},
+  // {id: '4', text: 'Item'},
+  // {id: '5', text: 'Item'},
 ];
 
 const animationType = {
@@ -20,26 +20,28 @@ const animationType = {
   ADDING: 'adding',
 };
 
-export default class CardAnimationsScreen extends Component {
+export default class ListAnimationsScreen extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      items: cards,
+      items: listItems,
       visible: true,
       fadeInAnimation: true,
       entranceAnimation: true,
       addingAnimation: false,
       animation: animationType.ENTRANCE,
-      counter: 2,
+      counter: 0,
     };
   }
 
   onAnimationEnd = () => {
-    // NOTE: must reset animation to invoke items' re-render
+    // NOTE: must reset animation to invoke list' re-render
     this.setState({animation: undefined});
   }
+
+  keyExtractor = (item, index) => item.id;
 
   reload(animation) {
     this.setState({visible: false, animation});
@@ -50,9 +52,10 @@ export default class CardAnimationsScreen extends Component {
   }
 
   addItem() {
-    const {counter} = this.state;
-    cards.splice(counter, 0, {text: 'Card'});
-    this.setState({items: cards, animation: animationType.ADDING});
+    const {items, counter} = this.state;
+    const itemsCopy = [...items];
+    itemsCopy.splice(counter, 0, {id: `${itemsCopy.length}-new`, text: 'Item'});
+    this.setState({items: itemsCopy, animation: animationType.ADDING});
   }
 
   renderItem(item, index) {
@@ -66,7 +69,7 @@ export default class CardAnimationsScreen extends Component {
         animationProps = AnimatableManager.getEntranceByIndex(index);
         break;
       case animationType.ADDING:
-        animationProps = AnimatableManager.getZoomInSlideDown(index, {onAnimationEnd: this.onAnimationEnd}, counter);
+        animationProps = AnimatableManager.getSlideInSlideDown(index, {onAnimationEnd: this.onAnimationEnd}, counter);
         break;
       default:
         break;
@@ -74,17 +77,20 @@ export default class CardAnimationsScreen extends Component {
 
     return (
       <Animatable.View key={index} {...animationProps}>
-        <Card marginH-20 marginV-10 height={100} style={styles.item}>
-          <View flex center>
-            <Text text50 white>{item.text} #{index}</Text>
-          </View>
-        </Card>
+        <ListItem
+          onPress={() => Alert.alert(`pressed on contact #${index + 1}`)}
+        >
+          <ListItem.Part middle containerStyle={styles.item}>
+            <Text text50 white>{item.text} #{item.id}</Text>
+          </ListItem.Part>
+        </ListItem>
       </Animatable.View>
     );
   }
 
   render() {
     const {visible, items, counter} = this.state;
+
     return (
       <View flex>
         <View row center>
@@ -103,7 +109,12 @@ export default class CardAnimationsScreen extends Component {
           />
         </View>
         <ScrollView style={{flex: 1}}>
-          {visible && _.map(items, (item, index) => this.renderItem(item, index))}
+          {visible && 
+          <FlatList
+            data={items}
+            renderItem={({item, index}) => this.renderItem(item, index)}
+            keyExtractor={this.keyExtractor}
+          />}
         </ScrollView>
       </View>
     );
@@ -112,6 +123,9 @@ export default class CardAnimationsScreen extends Component {
 
 const styles = StyleSheet.create({
   item: {
+    paddingHorizontal: 20,
     backgroundColor: Colors.dark60,
+    borderBottomWidth: 2,
+    borderColor: ThemeManager.dividerColor,
   },
 });
