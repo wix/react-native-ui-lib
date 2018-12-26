@@ -144,10 +144,10 @@ export default class Drawer extends BaseComponent {
     this.interactableElem.snapTo({index: 1});
   }
   generateStyles() {
-    this.styles = createStyles(this.props);
+    this.styles = createStyles(this.getThemeProps());
   }
   getAnimationConfig() {
-    const {animationConfig} = this.props;
+    const {animationConfig} = this.getThemeProps();
     return {
       useNativeDriver: true,
       ...animationConfig,
@@ -160,13 +160,13 @@ export default class Drawer extends BaseComponent {
     return rightItems ? (width - MIN_LEFT_MARGIN) / rightItems.length : (width - MIN_LEFT_MARGIN);
   }
   getMinItemWidth() {
-    const {equalWidths} = this.props;
+    const {equalWidths} = this.getThemeProps();
     const maxWidth = this.getMaxItemWidth();
     const minWidth = equalWidths ? maxWidth : MIN_ITEM_WIDTH;
     return (minWidth > maxWidth) ? maxWidth : minWidth;
   }
   getRightItemsTotalWidth(numberOfItems) {
-    const {rightItems} = this.props;
+    const {rightItems} = this.getThemeProps();
     let total = 0;
 
     if (_.size(rightItems) > 0) {
@@ -189,13 +189,13 @@ export default class Drawer extends BaseComponent {
   }
 
   getBoundaries() {
-    const {leftItem, rightItems} = this.props;
+    const {leftItem, rightItems} = this.getThemeProps();
     const rightWidth = this.getRightItemsTotalWidth();
     const rightBound = rightWidth > 0 ? -rightWidth : 0;
     return {right: _.isEmpty(leftItem) ? 0 : this.getItemWidth(leftItem), left: _.isEmpty(rightItems) ? 0 : rightBound};
   }
   getSnapPoints() {
-    const {leftItem, rightItems, damping, tension} = this.props;
+    const {leftItem, rightItems, damping, tension} = this.getThemeProps();
     const size = rightItems ? rightItems.length : 0;
     
     const left = !_.isEmpty(leftItem) ? {x: this.getItemWidth(leftItem), damping: 1 - damping, tension} : {};
@@ -228,7 +228,7 @@ export default class Drawer extends BaseComponent {
     }
   }
   getInputRanges() {
-    const {rightItems} = this.props;
+    const {rightItems} = this.getThemeProps();
     const size = rightItems ? rightItems.length : 0;
     const interval = 65;
     const inputRanges = [];
@@ -254,7 +254,7 @@ export default class Drawer extends BaseComponent {
   }; 
 
   renderLeftItem() {
-    const {leftItem, itemsTintColor, itemsIconSize, itemsTextStyle} = this.props;
+    const {leftItem, itemsTintColor, itemsIconSize, itemsTextStyle} = this.getThemeProps();
     const {height, typography, textTopMargin} = this.state;
     const leftItemWidth = this.getItemWidth(leftItem);
     const background = (leftItem ? leftItem.background : undefined) || ITEM_BG;
@@ -356,7 +356,7 @@ export default class Drawer extends BaseComponent {
     );
   }
   renderRightItem(item, index) {
-    const {itemsTintColor, itemsIconSize, itemsTextStyle} = this.props;
+    const {itemsTintColor, itemsIconSize, itemsTextStyle} = this.getThemeProps();
     const {itemPadding, typography, textTopMargin} = this.state;
     const inputRanges = this.getInputRanges();
 
@@ -432,7 +432,7 @@ export default class Drawer extends BaseComponent {
     );
   }
   renderRightItems() {
-    const {rightItems} = this.props;
+    const {rightItems} = this.getThemeProps();
 
     return (
       <View style={this.styles.rightItemsContainer}>
