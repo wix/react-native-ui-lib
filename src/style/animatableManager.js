@@ -8,6 +8,14 @@ const definitions = {
     from: {opacity: 0, translateY: 40},
     to: {opacity: 1, translateY: 0},
   },
+  itemAddition: {
+    from: {opacity: 0, scale: 0.6, translateY: -60},
+    to: {opacity: 1, scale: 1, translateY: 0},
+  },
+  listItemAddition: {
+    from: {scaleY: 0.8, translateY: -40},
+    to: {scaleY: 1, translateY: 0},
+  },
 };
 
 const presets = {
@@ -25,7 +33,11 @@ const presets = {
   },
   fadeIn: {
     animation: 'fadeIn',
-    easing: 'ease-out-quint',
+    duration: 300,
+    useNativeDriver: true,
+  },
+  fadeOut: {
+    animation: 'fadeOut',
     duration: 300,
     useNativeDriver: true,
   },
@@ -122,25 +134,48 @@ class AnimatableManager {
     };
   }
 
-  getZoomInSlideDown(index = 0, options) {
+  getZoomInSlideDown(index = 0, options, zoomIndex = 0) {
     const {onAnimationEnd, ...others} = options;
-    if (index === 0) {
+    if (index === zoomIndex) {
       return {
-        animation: 'zoomIn',
-        easing: 'linear',
-        duration: 200,
-        delay: 200,
+        animation: 'itemAddition',
+        easing: 'ease-out-quart',
+        duration: 600,
         useNativeDriver: true,
         onAnimationEnd,
       };
     }
-    return {
-      animation: 'slideInDown',
-      easing: 'ease-out-quint',
-      duration: 600,
-      useNativeDriver: true,
-      ...others,
-    };
+    if (index > zoomIndex) {
+      return {
+        animation: 'slideInDown',
+        easing: 'ease-out-quart',
+        duration: 600,
+        useNativeDriver: true,
+        ...others,
+      };
+    }
+  }
+
+  getSlideInSlideDown(index = 0, options, zoomIndex = 0) {
+    const {onAnimationEnd, ...others} = options;
+    if (index === zoomIndex) {
+      return {
+        animation: 'listItemAddition',
+        easing: 'ease-out-quart',
+        duration: 600,
+        useNativeDriver: true,
+        onAnimationEnd,
+      };
+    }
+    if (index > zoomIndex) {
+      return {
+        animation: 'slideInDown',
+        easing: 'ease-out-quart',
+        duration: 600,
+        useNativeDriver: true,
+        ...others,
+      };
+    }
   }
 }
 
