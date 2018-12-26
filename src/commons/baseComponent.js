@@ -126,13 +126,14 @@ export default function baseComponent(usePure) {
     }
 
     extractTypographyValue() {
-      const typographyPropsKeys = _.chain(this.props)
-        .keys(this.props)
+      const props = this.getThemeProps();
+      const typographyPropsKeys = _.chain(props)
+        .keys(/* this.props */)
         .filter(key => Typography.getKeysPattern().test(key))
         .value();
       let typography;
       _.forEach(typographyPropsKeys, (key) => {
-        if (this.props[key] === true) {
+        if (props[key] === true) {
           typography = Typography[key];
         }
       });

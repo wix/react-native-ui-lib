@@ -5,7 +5,7 @@
 module.exports = {
   "parser": "babel-eslint",
   "plugins": ["react-native", "uilib"],
-  "extends": ["airbnb"],
+  // "extends": ["airbnb"],
   "rules": {
     "arrow-body-style": "off",
     "class-methods-use-this": "off",
@@ -30,7 +30,8 @@ module.exports = {
     "import/prefer-default-export": "off",
     // 'uilib/assets-deprecation': ['error', {deprecations: assetsDepJson, source: '../../assets', dueDate: '2 November, Friday'}]
     // "uilib/no-hard-coded-color": ["error", validColors, extraFixColorsMap],
-    // "uilib/no-hard-coded-font": "warn"
+    // "uilib/no-hard-coded-font": "warn",
+    "react/jsx-no-bind": "error"
   },
   "env": {
     "browser": true,

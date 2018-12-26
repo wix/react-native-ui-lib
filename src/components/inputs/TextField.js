@@ -335,7 +335,8 @@ export default class TextField extends BaseInput {
   }
 
   renderTitle() {
-    const {floatingPlaceholder, title, titleColor, titleStyle} = this.props;
+    const {floatingPlaceholder, title, titleColor, titleStyle} = this.getThemeProps();
+    console.log('ethan - title is', title);
     const color = this.getStateColor(titleColor);
 
     if (!floatingPlaceholder && title) {
@@ -416,7 +417,7 @@ export default class TextField extends BaseInput {
     const {style, floatingPlaceholder, placeholder, hideUnderline, renderExpandableInput, rightIconSource} = this.props;
     const {value} = this.state;
     const typography = this.getTypography();
-    const color = this.getStateColor(this.props.color || this.extractColorValue());
+    const color = this.getStateColor(this.getThemeProps().color || this.extractColorValue());
     const minHeight = typography.lineHeight;
     const shouldShowPlaceholder = _.isEmpty(value) && !floatingPlaceholder;
     const inputStyle = [
@@ -454,7 +455,7 @@ export default class TextField extends BaseInput {
 
   renderTextInput() {
     const {value} = this.state; // value set on state for floatingPlaceholder functionality
-    const color = this.getStateColor(this.props.color || this.extractColorValue());
+    const color = this.getStateColor(this.getThemeProps().color || this.extractColorValue());
     const typography = this.getTypography();
     const {
       style,
@@ -467,7 +468,7 @@ export default class TextField extends BaseInput {
       numberOfLines,
       helperText,
       ...others
-    } = this.props;
+    } = this.getThemeProps();
     const inputStyle = [
       this.styles.input,
       hideUnderline && this.styles.inputWithoutUnderline,
@@ -509,7 +510,7 @@ export default class TextField extends BaseInput {
   }
 
   render() {
-    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.props;
+    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
     const underlineStateColor = this.getStateColor(underlineColor, true);
 
     return (

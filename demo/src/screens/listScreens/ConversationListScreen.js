@@ -37,14 +37,14 @@ export default class ConversationListScreen extends Component {
         text: 'More',
         icon: sharIcon,
         background: Colors.dark60,
-        onPress: () => Alert.alert(`More press for item #${id}`),
+        onPress: () => console.log(`More press for item #${id}`),
         width: 80,
       },
       {
         text: 'Archive',
         icon: collectionsIcon,
         background: Colors.blue30,
-        onPress: () => Alert.alert(`Archive press for item #${id}`),
+        onPress: () => console.log(`Archive press for item #${id}`),
         width: 80,
       },
     ];
@@ -52,7 +52,7 @@ export default class ConversationListScreen extends Component {
       text: 'Read',
       icon: starIcon,
       background: Colors.green30,
-      onPress: () => Alert.alert(`Read press for item #${id}`),
+      onPress: () => console.log(`Read press for item #${id}`),
       width: 80,
     };
 

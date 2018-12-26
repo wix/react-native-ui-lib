@@ -19,7 +19,7 @@
     "pretest": "npm run lint",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "eslint src -c .eslintrc.js",
+    "lint": "eslint __src demo/src/screens/listScreens/ConversationListScreen.js -c .eslintrc.js",
     "lint:fix": "eslint src -c .eslintrc.js --fix",
     "lint:test": "mocha --compilers js:babel-core/register eslint-rules/tests/lib/rules",
     "xcode": "open ./ios/uilib.xcodeproj",
