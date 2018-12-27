@@ -80,6 +80,10 @@ export default class TextField extends BaseInput {
      */
     renderExpandable: PropTypes.func,
     /**
+     * The picker modal top bar props
+     */
+    topBarProps: PropTypes.shape(Modal.TopBar.propTypes),
+    /**
      * transform function executed on value and return transformed value
      */
     transformer: PropTypes.func,
@@ -319,7 +323,7 @@ export default class TextField extends BaseInput {
   }
 
   renderExpandableModal() {
-    const {renderExpandable} = this.props;
+    const {renderExpandable, topBarProps} = this.props;
     const {showExpandableModal} = this.state;
 
     if (_.isFunction(renderExpandable) && showExpandableModal) {
@@ -333,6 +337,7 @@ export default class TextField extends BaseInput {
         onRequestClose={() => this.toggleExpandableModal(false)}
       >
         <Modal.TopBar
+          {...topBarProps}
           onCancel={() => this.toggleExpandableModal(false)}
           onDone={this.onDoneEditingExpandableInput}
         />
