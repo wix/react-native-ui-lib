@@ -63,6 +63,16 @@ class ListItem extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
+  onHideUnderlay() {
+    this.setPressed(false);
+  }
+  onShowUnderlay() {
+    this.setPressed(true);
+  }
+  setPressed(isPressed) {
+    this.setState({pressed: isPressed});
+  }
+
   render() {
     const {
       containerElement,
@@ -87,8 +97,8 @@ class ListItem extends BaseComponent {
         style={[this.styles.container, containerStyle]}
         onPress={onPress}
         onLongPress={onLongPress}
-        onHideUnderlay={() => this.setState({pressed: false})}
-        onShowUnderlay={() => this.setState({pressed: true})}
+        onHideUnderlay={this.onHideUnderlay}
+        onShowUnderlay={this.onShowUnderlay}
         testID={testID}
         {...others}
       >

@@ -39,6 +39,8 @@ class PickerModal extends BaseComponent {
     scrollContentHeight: undefined,
   };
 
+  keyExtractor = (item, index) => index.toString();
+
   generateStyles() {
     this.styles = createStyles(this.props);
   }
@@ -87,7 +89,7 @@ class PickerModal extends BaseComponent {
           renderItem={({index}) => {
             return React.Children.toArray(children)[index];
           }}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={this.keyExtractor}
           {...listProps}
         />
       </Modal>
