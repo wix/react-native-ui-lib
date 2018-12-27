@@ -154,8 +154,13 @@ export default class Badge extends BaseComponent {
     const containerStyle = this.extractContainerStyle(this.props);
     const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
     const sizeStyle = this.getBadgeSizeStyle();
+
     const animationProps = this.extractAnimationProps();
     const Container = !_.isEmpty(animationProps) ? Animatable.View : View;
+    if (animationProps) {
+      console.warn('Badge component will soon stop supporting animationProps.' +
+        'Please wrap your Badge component with your own animation component, such as Animatable.View');
+    }
 
     return (
       <Container

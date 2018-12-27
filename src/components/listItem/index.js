@@ -1,5 +1,6 @@
-import React from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Colors} from '../../style';
@@ -7,6 +8,7 @@ import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../../components/touchableOpacity';
 import View from '../view';
 import ListItemPart from './ListItemPart';
+
 
 /**
  * @description: List item component to render inside a List component
@@ -86,10 +88,15 @@ class ListItem extends BaseComponent {
     } = this.props;
     const {pressed} = this.state;
     // const containerStyle = this.extractContainerStyle(this.props);
-    const animationProps = this.extractAnimationProps();
+    const pressedStyle = {backgroundColor: underlayColor};
     const Container = (onPress || onLongPress) ? containerElement : View;
 
-    const pressedStyle = {backgroundColor: underlayColor};
+    const animationProps = this.extractAnimationProps();
+    const InnerContainer = !_.isEmpty(animationProps) ? Animatable.View : View;
+    if (animationProps) {
+      console.warn('ListItem component will soon stop supporting animationProps.' +
+        'Please wrap your ListItem component with your own animation component, such as Animatable.View');
+    }
 
     return (
       <Container
@@ -102,12 +109,12 @@ class ListItem extends BaseComponent {
         testID={testID}
         {...others}
       >
-        <Animatable.View
+        <InnerContainer
           {...animationProps}
           style={[this.styles.innerContainer, style, pressed && pressedStyle]}
         >
           {this.props.children}
-        </Animatable.View>
+        </InnerContainer>
       </Container>
     );
   }
