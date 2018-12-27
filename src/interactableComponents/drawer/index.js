@@ -75,7 +75,7 @@ export default class Drawer extends BaseComponent {
 
   static defaultProps = {
     damping: 0.7,
-    tension: 400,
+    tension: 300,
     itemsTintColor: Colors.white,
     itemsIconSize: DEFAULT_ICON_SIZE,
   }
@@ -190,8 +190,8 @@ export default class Drawer extends BaseComponent {
 
   getBoundaries() {
     const {leftItem, rightItems, equalWidths} = this.getThemeProps();
-    const leftSpring = 60;
-    const rightSpring = equalWidths ? 0 : 60;
+    const leftSpring = 30;
+    const rightSpring = equalWidths ? 0 : 30;
     const rightWidth = this.getRightItemsTotalWidth();
     const rightBound = rightWidth > 0 ? -rightWidth - rightSpring : 0;
     
@@ -449,7 +449,7 @@ export default class Drawer extends BaseComponent {
   render() {
     const {style, onPress, rightItems} = this.getThemeProps();
     const Container = onPress ? TouchableOpacity : View;
-    const backgroundColor = rightItems ? rightItems[0].background || ITEM_BG : ITEM_BG;
+    const backgroundColor = _.get(rightItems, '[0].background', ITEM_BG);
 
     return (
       <View style={[style, this.styles.container, {backgroundColor}]} onLayout={this.onLayout}>
