@@ -26,6 +26,11 @@ module.exports = {
     "react/jsx-tag-spacing": "off",
     "react/prefer-stateless-function": "off",
     "react/require-default-props": "off",
+    'react/jsx-no-bind': ['warn', {
+      ignoreRefs: true,
+      allowArrowFunctions: false,
+      allowBind: false,
+    }],
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": true}],
     "import/prefer-default-export": "off",
     // 'uilib/assets-deprecation': ['error', {deprecations: assetsDepJson, source: '../../assets', dueDate: '2 November, Friday'}]
