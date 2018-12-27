@@ -1,14 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {StyleSheet, FlatList, TextInput} from 'react-native';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {StyleSheet, FlatList, TextInput} from 'react-native';
 import {Constants} from '../../helpers';
+import {Typography, Colors} from '../../style';
+import Assets from '../../assets';
 import {BaseComponent} from '../../commons';
 import {Modal} from '../../screensComponents';
 import View from '../view';
 import Image from '../image';
-import {Typography, Colors} from '../../style';
-import Assets from '../../assets';
+
 
 class PickerModal extends BaseComponent {
   static displayName = 'IGNORE';
