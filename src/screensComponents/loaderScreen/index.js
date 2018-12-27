@@ -38,15 +38,18 @@ export default class LoaderScreen extends BaseComponent {
     * Show the screen as an absolute overlay
     */
     overlay: PropTypes.bool,
+    /**
+     * Custom container style 
+     */
   };
 
   render() {
-    const {message, messageStyle, loaderColor, overlay, backgroundColor, ...others} = this.props;
+    const {message, messageStyle, loaderColor, overlay, backgroundColor, containerStyle, ...others} = this.props;
     const animationProps = this.extractAnimationProps();
     
     return (
       <Animatable.View
-        style={[overlay ? [styles.overlayContainer, {backgroundColor}] : styles.container]}
+        style={[overlay ? [styles.overlayContainer, {backgroundColor}] : styles.container, containerStyle]}
         {...animationProps}
       >
         <View flex center>

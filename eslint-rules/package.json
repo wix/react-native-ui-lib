@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-uilib",
-  "version": "1.0.12",
+  "version": "1.0.14",
   "description": "uilib set of eslint rules",
   "keywords": [
     "eslint",
@@ -8,6 +8,14 @@
     "eslint-plugin"
   ],
   "author": "Tnbal Tish <inbalti@wix.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wix/react-native-ui-lib"
+  },
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha tests --recursive",
@@ -34,6 +42,5 @@
   },
   "engines": {
     "node": ">=0.10.0"
-  },
-  "license": "ISC"
+  }
 }

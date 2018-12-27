@@ -1,20 +1,24 @@
+import _ from 'lodash';
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
-import PropTypes from 'prop-types';
 import * as Animatable from 'react-native-animatable';
-import Colors from '../../style/colors';
+import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
-import {Typography, ThemeManager, BorderRadiuses} from '../../style';
+import View from '../view';
 
 
+const SIZE_PIMPLE_SMALL = 6;
+const SIZE_PIMPLE_BIG = 10;
 const SIZE_DEFAULT = 20;
 const WIDTH_DOUBLE = 28;
-const WIDTH_TRIPLE = 35;
+const WIDTH_TRIPLE = 36;
 
-const SIZE_SMALL = 18;
+const SIZE_SMALL = 16;
 const WIDTH_DOUBLE_SMALL = 25;
-const WIDTH_TRIPLE_SMALL = 28;
+const WIDTH_TRIPLE_SMALL = 30;
 
+const LABEL_FORMATTER_VALUES = [1, 2, 3, 4];
 
 /**
  * @description: Round colored badge, typically used to show a number
@@ -27,7 +31,8 @@ export default class Badge extends BaseComponent {
   static displayName = 'Badge';
   static propTypes = {
     /**
-     * Text to show inside the badge
+     * Text to show inside the badge.
+     * Not passing a label (undefined) will present a pimple badge.
      */
     label: PropTypes.string,
     /**
@@ -37,7 +42,7 @@ export default class Badge extends BaseComponent {
     /**
      * the badge size (default, small)
      */
-    size: PropTypes.oneOf(['default', 'small']),
+    size: PropTypes.oneOf(['default', 'small', 'pimpleBig', 'pimpleSmall']),
     /**
      * width of border around the badge
      */
@@ -50,6 +55,13 @@ export default class Badge extends BaseComponent {
      * Additional styles for the top container
      */
     containerStyle: PropTypes.object,
+    /**
+     * Receives a number from 1 to 4, representing the label's max digit length.
+     * Beyond the max number for that digit length, a "+" will show at the end.
+     * If set to a value not included in LABEL_FORMATTER_VALUES, no formating will occur.
+     * Example: labelLengthFormater={2}, label={124}, label will present "99+".
+     */
+    labelFormatterLimit: PropTypes.oneOf(LABEL_FORMATTER_VALUES),
     /**
      * Use to identify the badge in tests
      */
@@ -70,36 +82,61 @@ export default class Badge extends BaseComponent {
   }
 
   getBadgeSizeStyle() {
-    const {label, borderWidth} = this.props;
-    const numberOfCharacters = label.length;
+    const {label, borderWidth, size} = this.props;
     let height = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
     let width = 0;
-    
-    switch (numberOfCharacters) {
-      case 0:
-        width = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
-        break;
-      case 1:
-        width = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
-        break;
-      case 2:
-        width = this.isSmallBadge() ? WIDTH_DOUBLE_SMALL : WIDTH_DOUBLE;
-        break;
-      default:
-        width = this.isSmallBadge() ? WIDTH_TRIPLE_SMALL : WIDTH_TRIPLE;
-        break;
+    if (label === undefined) {
+      switch (size) {
+        default:
+        case 'pimpleSmall':
+          width = SIZE_PIMPLE_SMALL;
+          height = SIZE_PIMPLE_SMALL;
+          break;
+        case 'pimpleBig':
+          width = SIZE_PIMPLE_BIG;
+          height = SIZE_PIMPLE_BIG;
+      }
+    } else {
+      const numberOfCharacters = label.length;
+      switch (numberOfCharacters) {
+        case 0:
+        case 1:
+          width = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
+          break;
+        case 2:
+          width = this.isSmallBadge() ? WIDTH_DOUBLE_SMALL : WIDTH_DOUBLE;
+          break;
+        default:
+          width = this.isSmallBadge() ? WIDTH_TRIPLE_SMALL : WIDTH_TRIPLE;
+          break;
+      }
     }
 
     if (borderWidth) {
       width += borderWidth * 2;
       height += borderWidth * 2;
     }
-
     return {width, height};
   }
 
+  getFormattedLabel() {
+    const {labelFormatterLimit, label} = this.getThemeProps();
+    if (isNaN(label)) {
+      return label;
+    }
+    if (LABEL_FORMATTER_VALUES.includes(labelFormatterLimit)) {
+      const maxLabelNumber = (10 ** labelFormatterLimit) - 1;
+      let formattedLabel = label;
+      if (formattedLabel > maxLabelNumber) {
+        formattedLabel = `${maxLabelNumber}+`;
+      }
+      return formattedLabel;
+    } else {
+      return label;
+    }
+  }
+
   renderLabel() {
-    const {label} = this.props;
     return (
       <Text
         style={[this.styles.label, this.isSmallBadge() && this.styles.labelSmall]}
@@ -107,7 +144,7 @@ export default class Badge extends BaseComponent {
         numberOfLines={1}
         testID="badge"
       >
-        {label}
+        {this.getFormattedLabel()}
       </Text>
     );
   }
@@ -116,11 +153,12 @@ export default class Badge extends BaseComponent {
     const {borderWidth, borderColor} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
-    const animationProps = this.extractAnimationProps();
     const sizeStyle = this.getBadgeSizeStyle();
+    const animationProps = this.extractAnimationProps();
+    const Container = !_.isEmpty(animationProps) ? Animatable.View : View;
 
     return (
-      <Animatable.View
+      <Container
         testID={this.props.testId}
         style={[
           sizeStyle,
@@ -133,7 +171,7 @@ export default class Badge extends BaseComponent {
         {...animationProps}
       >
         {this.renderLabel()}
-      </Animatable.View>
+      </Container>
     );
   }
 }

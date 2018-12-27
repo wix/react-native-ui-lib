@@ -1,19 +1,11 @@
-import Typography from './typography';
-import BorderRadiuses from './borderRadiuses';
-import Colors from './colors';
-import Shadows from './shadows';
-import Spacings from './spacings';
-import ComponentsColors from './componentsColors';
-import Components from './components';
-import ThemeManager from './themeManager';
-
-export {
-  Colors,
-  BorderRadiuses,
-  Shadows,
-  Spacings,
-  Components,
-  ComponentsColors,
-  ThemeManager,
-  Typography,
+module.exports = {
+  get Typography() { return require('./typography').default; },
+  get BorderRadiuses() { return require('./borderRadiuses').default; },
+  get Colors() { return require('./colors').default; },
+  get Shadows() { return require('./shadows').default; },
+  get Spacings() { return require('./spacings').default; },
+  get ComponentsColors() { return require('./componentsColors').default; },
+  get Components() { return require('./components').default; },
+  get ThemeManager() { return require('./themeManager').default; },
+  get AnimatableManager() { return require('./animatableManager').default; },
 };

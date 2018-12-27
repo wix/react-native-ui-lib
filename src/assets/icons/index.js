@@ -1,6 +1,8 @@
 export const icons = {
-  check: require('./check.png'),
-  checkSmall: require('./check-small.png'),
-  x: require('./x.png'),
-  search: require('./search.png'),
+  get check() { return require('./check.png'); },
+  get checkSmall() { return require('./check-small.png'); },
+  get chevronRight() { return require('./chevronRight.png'); },
+  get x() { return require('./x.png'); },
+  get search() { return require('./search.png'); },
+  get settings() { return require('./settings.png'); },
 };

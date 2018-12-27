@@ -1,51 +1,42 @@
-import React, {Component} from 'react';
-import {ListView, StyleSheet, Alert} from 'react-native';
-import {ListItem, Avatar, Text, BasicList, BorderRadiuses, Badge, AvatarHelper, Colors, ThemeManager} from 'react-native-ui-lib';//eslint-disable-line
 import _ from 'lodash';
+import React, {Component} from 'react';
+import {StyleSheet, Alert, FlatList} from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import {AnimatableManager, ThemeManager, Colors, BorderRadiuses, ListItem, Text} from 'react-native-ui-lib'; //eslint-disable-line
 import orders from '../../data/orders';
+
 
 export default class BasicListScreen extends Component {
 
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2,
-      sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-    });
+    
     this.state = {
-      dataSource: ds.cloneWithRows(orders),
       onEdit: false,
       updating: false,
     };
   }
 
-  onItemPressed(id) {
-    alert(`item pressed: ${id}`); // eslint-disable-line
-  }
+  keyExtractor = (item, index) => item.name;
 
   renderRow(row, id) {
     const statusColor = row.inventory.status === 'Paid' ? Colors.green30 : Colors.red30;
+    const animationProps = AnimatableManager.presets.fadeInRight;
+    const imageAnimationProps = AnimatableManager.getRandomDelay();
+
     return (
       <ListItem
         activeBackgroundColor={Colors.dark60}
         activeOpacity={0.3}
         height={77.5}
-        onPress={() => Alert.alert(`pressed on contact # ${id}`)}
-        animation="fadeIn"
-        easing="ease-out-expo"
-        duration={1000}
-        useNativeDriver
+        onPress={() => Alert.alert(`pressed on order #${id + 1}`)}
+        {...animationProps}
       >
         <ListItem.Part left>
           <Animatable.Image
             source={{uri: row.mediaUrl}}
             style={styles.image}
-            animation="fadeInLeft"
-            easing="ease-out-expo"
-            duration={600}
-            delay={_.sample([20, 120, 220])}
-            useNativeDriver
+            {...imageAnimationProps}
           />
         </ListItem.Part>
         <ListItem.Part middle column containerStyle={[styles.border, {paddingRight: 17}]}>
@@ -64,9 +55,10 @@ export default class BasicListScreen extends Component {
 
   render() {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={(row, sectionId, rowId) => this.renderRow(row, rowId)}
+      <FlatList
+        data={orders}
+        renderItem={({item, index}) => this.renderRow(item, index)}
+        keyExtractor={this.keyExtractor}
       />
     );
   }

@@ -2,5 +2,5 @@
 
 pushd demo
 npm install
-npm run release
+npm run jenkinsRelease
 popd

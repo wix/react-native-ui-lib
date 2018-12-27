@@ -35,7 +35,6 @@ export default class ListItemPart extends BaseComponent {
      * container style
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    testId: PropTypes.string,
   };
 
   generateStyles() {

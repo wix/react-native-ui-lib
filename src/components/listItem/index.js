@@ -9,7 +9,7 @@ import View from '../view';
 import ListItemPart from './ListItemPart';
 
 /**
- * @description: List item component to render inside a ListView component
+ * @description: List item component to render inside a List component
  * @extends: TouchableOpacity
  * @extendslink: docs/TouchableOpacity
  * @gif: https://media.giphy.com/media/l1IBjHowyPcOTWAY8/giphy.gif
@@ -63,6 +63,16 @@ class ListItem extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
+  onHideUnderlay() {
+    this.setPressed(false);
+  }
+  onShowUnderlay() {
+    this.setPressed(true);
+  }
+  setPressed(isPressed) {
+    this.setState({pressed: isPressed});
+  }
+
   render() {
     const {
       containerElement,
@@ -87,8 +97,8 @@ class ListItem extends BaseComponent {
         style={[this.styles.container, containerStyle]}
         onPress={onPress}
         onLongPress={onLongPress}
-        onHideUnderlay={() => this.setState({pressed: false})}
-        onShowUnderlay={() => this.setState({pressed: true})}
+        onHideUnderlay={this.onHideUnderlay}
+        onShowUnderlay={this.onShowUnderlay}
         testID={testID}
         {...others}
       >

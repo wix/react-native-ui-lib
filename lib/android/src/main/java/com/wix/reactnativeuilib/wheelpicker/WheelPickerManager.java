@@ -34,11 +34,14 @@ public class WheelPickerManager extends SimpleViewManager<WheelPicker> {
 
     @ReactProp(name = "data")
     public void setData(WheelPicker wheelPicker, @Nullable ReadableArray data) {
-        NumberPicker numberPicker = (NumberPicker) wheelPicker;
         ArrayList dataList = data.toArrayList();
         final String[] arrayString= (String[]) dataList.toArray(new String[0]);
+
+        NumberPicker numberPicker = wheelPicker;
+        numberPicker.setDisplayedValues(null);
+        numberPicker.setWrapSelectorWheel(false);
         numberPicker.setMinValue(0);
-        numberPicker.setMaxValue(arrayString.length-1);
+        numberPicker.setMaxValue(arrayString.length -1);
         numberPicker.setDisplayedValues( arrayString );
     }
 

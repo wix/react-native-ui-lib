@@ -1,13 +1,37 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Platform, Image, StyleSheet} from 'react-native';
 import _ from 'lodash';
-import {BaseComponent} from '../../commons';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {Platform, StyleSheet, LayoutAnimation, Image} from 'react-native';
 import {Constants} from '../../helpers';
-import Text from '../text';
-import TouchableOpacity from '../touchableOpacity';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
+import {BaseComponent} from '../../commons';
+import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
+import Text from '../text';
+
+
+const PADDINGS = {
+  XSMALL: 3,
+  SMALL: 4.5,
+  MEDIUM: 6.5,
+  LARGE: 9.5,
+};
+
+const HORIZONTAL_PADDINGS = {
+  XSMALL: 11,
+  SMALL: 14,
+  MEDIUM: 16,
+  LARGE: 20,
+};
+
+const MIN_WIDTH = {
+  XSMALL: 66,
+  SMALL: 70,
+  MEDIUM: 77,
+  LARGE: 90,
+};
+
+const DEFAULT_SIZE = 'large';
 
 /**
  * @description: Basic button component
@@ -86,17 +110,21 @@ export default class Button extends BaseComponent {
      */
     labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
+     * Props that will be passed to the button's Text label.
+     */
+    labelProps: PropTypes.object,
+    /**
      * should the button act as a coast to coast button (no border radius)
      */
     fullWidth: PropTypes.bool,
     /**
+     * should the button be a round button
+     */
+    round: PropTypes.bool,
+    /**
      * Control shadow visibility
      */
     enableShadow: PropTypes.bool, // iOS-only
-    /**
-     * Props that will be passed to the button's Text label.
-     */
-    labelProps: PropTypes.object,
     /**
      * avoid inner button padding
      */
@@ -111,18 +139,24 @@ export default class Button extends BaseComponent {
      */
     getActiveBackgroundColor: PropTypes.func,
     /**
+     * should animate layout change
+     * Note: For Android you must set 'setLayoutAnimationEnabledExperimental(true)' via RN's 'UIManager'
+     */
+    animateLayout: PropTypes.bool,
+    /**
+     * the direction of the animation ('left' and 'right' will effect the button's own alignment)
+     */
+    animateTo: PropTypes.oneOf(['center', 'left', 'right']),
+    /**
      * Use to identify the button in tests
      */
     testID: PropTypes.string,
   };
 
   static defaultProps = {
-    // labelStyle: {},
-    size: 'large',
-    outline: false,
+    // size: 'large',
+    // outline: false,
     iconOnRight: false,
-    // borderRadius: BorderRadiuses.br100,
-    // backgroundColor: ThemeManager.CTABackgroundColor,
   };
 
   static sizes = {
@@ -130,6 +164,12 @@ export default class Button extends BaseComponent {
     small: 'small',
     medium: 'medium',
     large: 'large',
+  };
+
+  static animationDirection = {
+    center: 'center',
+    left: 'left',
+    right: 'right',
   };
 
   constructor(props) {
@@ -140,16 +180,28 @@ export default class Button extends BaseComponent {
     }
   }
 
+  componentDidUpdate() {
+    if (this.props.animateLayout) {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    }
+  }
+
   // This method will be called more than once in case of layout change!
-  getComponentDimensions(event) {
+  onLayout = (event) => {
+    const height = event.nativeEvent.layout.height;
+    if (this.props.round) {
+      const width = event.nativeEvent.layout.width;
+      const size = height >= width ? height : width;
+      this.setState({size});
+    }
+    
     if (Constants.isAndroid && Platform.Version <= 17) {
-      const height = event.nativeEvent.layout.height;
       this.setState({borderRadius: height / 2});
     }
   }
 
   generateStyles() {
-    this.styles = createStyles(this.props);
+    this.styles = createStyles(this.getThemeProps());
   }
 
   get isOutline() {
@@ -163,7 +215,7 @@ export default class Button extends BaseComponent {
   }
 
   get isIconButton() {
-    const {iconSource, label} = this.props;
+    const {iconSource, label} = this.getThemeProps();
     return iconSource && !label;
   }
 
@@ -210,7 +262,7 @@ export default class Button extends BaseComponent {
   }
 
   getLabelSizeStyle() {
-    const {size} = this.props;
+    const size = this.getThemeProps().size || DEFAULT_SIZE;
 
     const LABEL_STYLE_BY_SIZE = {};
     LABEL_STYLE_BY_SIZE[Button.sizes.xSmall] = {...Typography.text80};
@@ -223,29 +275,38 @@ export default class Button extends BaseComponent {
   }
 
   getContainerSizeStyle() {
-    const {size, outline, link, avoidMinWidth, avoidInnerPadding} = this.props;
+    const {outline, link, avoidMinWidth, avoidInnerPadding, round} = this.getThemeProps();
+    const size = this.getThemeProps().size || DEFAULT_SIZE;
     const outlineWidth = this.getThemeProps().outlineWidth || 1;
 
     const CONTAINER_STYLE_BY_SIZE = {};
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = {
-      paddingVertical: 3,
-      paddingHorizontal: 11,
-      minWidth: 66,
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round ? 
+    {height: this.state.size, width: this.state.size, padding: PADDINGS.XSMALL} : 
+    {
+      paddingVertical: PADDINGS.XSMALL,
+      paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
+      minWidth: MIN_WIDTH.XSMALL,
     };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = {
-      paddingVertical: 4.5,
-      paddingHorizontal: 14,
-      minWidth: 70,
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = round ?
+    {height: this.state.size, width: this.state.size, padding: PADDINGS.SMALL} : 
+    {
+      paddingVertical: PADDINGS.SMALL,
+      paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
+      minWidth: MIN_WIDTH.SMALL,
     };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = {
-      paddingVertical: 6.5,
-      paddingHorizontal: 16,
-      minWidth: 77,
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = round ? 
+    {height: this.state.size, width: this.state.size, padding: PADDINGS.MEDIUM} : 
+    {
+      paddingVertical: PADDINGS.MEDIUM,
+      paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
+      minWidth: MIN_WIDTH.MEDIUM,
     };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = {
-      paddingVertical: 9.5,
-      paddingHorizontal: 20,
-      minWidth: 90,
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = round ? 
+    {height: this.state.size, width: this.state.size, padding: PADDINGS.LARGE} : 
+    {
+      paddingVertical: PADDINGS.LARGE,
+      paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
+      minWidth: MIN_WIDTH.LARGE,
     };
 
     if (outline) {
@@ -257,7 +318,7 @@ export default class Button extends BaseComponent {
 
     const containerSizeStyle = CONTAINER_STYLE_BY_SIZE[size];
 
-    if (link || this.isIconButton) {
+    if (link || (this.isIconButton && !round)) {
       containerSizeStyle.paddingVertical = undefined;
       containerSizeStyle.paddingHorizontal = undefined;
       containerSizeStyle.minWidth = undefined;
@@ -292,7 +353,7 @@ export default class Button extends BaseComponent {
   }
 
   getBorderRadiusStyle() {
-    const {link, fullWidth, borderRadius: borderRadiusFromProps} = this.props;
+    const {link, fullWidth, borderRadius: borderRadiusFromProps} = this.getThemeProps();
     if (link || fullWidth || borderRadiusFromProps === 0) {
       return {borderRadius: 0};
     }
@@ -304,14 +365,15 @@ export default class Button extends BaseComponent {
 
   getShadowStyle() {
     const backgroundColor = this.getBackgroundColor();
-    const {enableShadow} = this.props;
+    const {enableShadow} = this.getThemeProps();
     if (enableShadow) {
       return [this.styles.shadowStyle, backgroundColor && {shadowColor: backgroundColor}];
     }
   }
 
   getIconStyle() {
-    const {size, disabled, iconStyle: propsIconStyle, iconOnRight} = this.props;
+    const {disabled, iconStyle: propsIconStyle, iconOnRight} = this.getThemeProps();
+    const size = this.getThemeProps().size || DEFAULT_SIZE;
     const iconStyle = {
       tintColor: this.getLabelColor(),
     };
@@ -330,6 +392,24 @@ export default class Button extends BaseComponent {
     }
 
     return [iconStyle, propsIconStyle];
+  }
+
+  getAnimationDirectionStyle() {
+    const {animateTo} = this.getThemeProps();
+
+    let style;
+    switch (animateTo) {
+      case 'left':
+        style = {alignSelf: 'flex-start'};
+        break;
+      case 'right':
+        style = {alignSelf: 'flex-end'};
+        break;
+      default:
+        // 'center' is the default
+        break;
+    }
+    return style;
   }
 
   renderIcon() {
@@ -361,7 +441,7 @@ export default class Button extends BaseComponent {
   }
 
   render() {
-    const {onPress, disabled, link, style, containerStyle, testID, ...others} = this.getThemeProps();
+    const {onPress, disabled, link, style, containerStyle, testID, animateLayout, ...others} = this.getThemeProps();
     const shadowStyle = this.getShadowStyle();
     const {margins} = this.state;
     const backgroundColor = this.getBackgroundColor();
@@ -373,6 +453,7 @@ export default class Button extends BaseComponent {
       <TouchableOpacity
         style={[
           this.styles.container,
+          animateLayout && this.getAnimationDirectionStyle(),
           containerSizeStyle,
           (link) && this.styles.innerContainerLink,
           shadowStyle,
@@ -385,7 +466,7 @@ export default class Button extends BaseComponent {
         ]}
         activeOpacity={0.6}
         activeBackgroundColor={this.getActiveBackgroundColor()}
-        onLayout={this.getComponentDimensions}
+        onLayout={this.onLayout}
         onPress={onPress}
         disabled={disabled}
         testID={testID}

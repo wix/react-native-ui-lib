@@ -18,10 +18,6 @@ export default class BaseInput extends BaseComponent {
      * text input container style
      */
     containerStyle: ViewPropTypes.style,
-    /**
-     * Use to identify the component in tests
-     */
-    testId: PropTypes.string,
   };
 
   static defaultProps = {

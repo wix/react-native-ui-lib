@@ -120,10 +120,6 @@ export default class TextInput extends BaseInput {
      * Icon asset source for showing on the right side, appropriate for dropdown icon and such
      */
     rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * Use to identify the component in tests
-     */
-    testId: PropTypes.string,
   };
 
   static defaultProps = {
@@ -133,6 +129,8 @@ export default class TextInput extends BaseInput {
 
   constructor(props) {
     super(props);
+    
+    console.warn('uilib TextInput component will be deprecated soon, please use TextField instead');
 
     this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(this);
     this.toggleExpandableModal = this.toggleExpandableModal.bind(this);
@@ -533,7 +531,7 @@ export default class TextInput extends BaseInput {
         >
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
-          {this.renderExpandableModal()}
+          {expandable && this.renderExpandableModal()}
         </View>
         <View row>
           <View flex left={centered !== true}>
@@ -630,6 +628,7 @@ function createStyles({
     floatingPlaceholder: {
       position: 'absolute',
       width: '100%',
+      backgroundColor: 'transparent',
     },
     placeholder: {
       color: placeholderTextColor,

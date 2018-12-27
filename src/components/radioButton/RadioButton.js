@@ -1,12 +1,13 @@
 // TODO: update usage of React Context API to latest (https://reactjs.org/docs/context.html)
-import React from 'react';
-import PropTypes from 'prop-types';
-import {StyleSheet} from 'react-native';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {StyleSheet} from 'react-native';
+import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
-import {Colors} from '../../style';
 import View from '../view';
+
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
@@ -31,6 +32,10 @@ class RadioButton extends BaseComponent {
      */
     onPress: PropTypes.func,
     /**
+     * Whether the radio button should be disabled
+     */
+    disabled: PropTypes.bool,
+    /**
      * The color of the radio button
      */
     color: PropTypes.string,
@@ -51,15 +56,16 @@ class RadioButton extends BaseComponent {
 
   state = {};
 
-
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
   }
 
   onPress = () => {
-    const {value} = this.props;
-    _.invoke(this.context, 'onValueChange', value);
-    _.invoke(this.props, 'onPress', this.isSelected());
+    const {value, disabled} = this.props;
+    if (!disabled) {
+      _.invoke(this.context, 'onValueChange', value);
+      _.invoke(this.props, 'onPress', this.isSelected());
+    }
   };
 
   isSelected(props = this.props, context = this.context) {
@@ -74,18 +80,17 @@ class RadioButton extends BaseComponent {
   }
 
   getContainerStyle() {
-    const {color, size, borderRadius, style: propsStyle} = this.getThemeProps();
+    const {color, size, borderRadius, style: propsStyle, disabled} = this.getThemeProps();
     const style = [this.styles.container];
+    
     if (size) {
       style.push({width: size, height: size});
     }
-
     if (borderRadius) {
       style.push({borderRadius});
     }
-
     if (color) {
-      style.push({borderColor: color});
+      style.push({borderColor: disabled ? Colors.dark70 : color});
     }
 
     style.push(propsStyle);
@@ -93,15 +98,14 @@ class RadioButton extends BaseComponent {
   }
 
   getSelectedStyle() {
-    const {color, borderRadius} = this.getThemeProps();
+    const {color, borderRadius, disabled} = this.getThemeProps();
     const style = [this.styles.selectedIndicator];
 
     if (borderRadius) {
       style.push({borderRadius});
     }
-
     if (color) {
-      style.push({backgroundColor: color});
+      style.push({backgroundColor: disabled ? Colors.dark70 : color});
     }
 
     return style;
@@ -118,18 +122,18 @@ class RadioButton extends BaseComponent {
   }
 }
 
-function createStyles({size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, color = DEFAULT_COLOR}) {
+function createStyles({size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, color = DEFAULT_COLOR, disabled}) {
   return StyleSheet.create({
     container: {
       borderWidth: 2,
-      borderColor: color,
+      borderColor: disabled ? Colors.dark70 : color,
       width: size,
       height: size,
       borderRadius,
       padding: 3,
     },
     selectedIndicator: {
-      backgroundColor: color,
+      backgroundColor: disabled ? Colors.dark70 : color,
       flex: 1,
       borderRadius,
     },
