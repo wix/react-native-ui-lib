@@ -544,7 +544,7 @@ function createStyles({
     },
     errorMessage: {
       color: Colors.red30,
-      textAlign: centered ? 'center' : undefined,
+      textAlign: centered ? 'center' : 'left',
       ...Typography.text90,
       // height: Typography.text90.lineHeight,
       marginTop: 1,
@@ -559,6 +559,7 @@ function createStyles({
       ...Typography.text90,
       height: Typography.text90.lineHeight,
       marginBottom: Constants.isIOS ? 5 : 4,
+      textAlign: 'left',
     },
     charCounter: {
       ...Typography.text90,
