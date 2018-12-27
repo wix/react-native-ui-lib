@@ -74,7 +74,7 @@ export default class Drawer extends BaseComponent {
   };
 
   static defaultProps = {
-    damping: 1 - 0.6,
+    damping: 0.7,
     tension: 300,
     itemsTintColor: Colors.white,
     itemsIconSize: DEFAULT_ICON_SIZE,
@@ -189,19 +189,25 @@ export default class Drawer extends BaseComponent {
   }
 
   getBoundaries() {
-    const {leftItem, rightItems} = this.getThemeProps();
+    const {leftItem, rightItems, equalWidths} = this.getThemeProps();
+    const leftSpring = 30;
+    const rightSpring = equalWidths ? 0 : 30;
     const rightWidth = this.getRightItemsTotalWidth();
-    const rightBound = rightWidth > 0 ? -rightWidth : 0;
-    return {right: _.isEmpty(leftItem) ? 0 : this.getItemWidth(leftItem), left: _.isEmpty(rightItems) ? 0 : rightBound};
+    const rightBound = rightWidth > 0 ? -rightWidth - rightSpring : 0;
+    
+    return {
+      right: _.isEmpty(leftItem) ? 0 : this.getItemWidth(leftItem) + leftSpring, 
+      left: _.isEmpty(rightItems) ? 0 : rightBound,
+    };
   }
   getSnapPoints() {
     const {leftItem, rightItems, damping, tension} = this.getThemeProps();
     const size = rightItems ? rightItems.length : 0;
     
-    const left = !_.isEmpty(leftItem) ? {x: this.getItemWidth(leftItem), damping: 1 - damping, tension} : {};
-    const initial = {x: 0, damping: 1 - damping, tension};
+    const left = !_.isEmpty(leftItem) ? {x: this.getItemWidth(leftItem), damping, tension} : {};
+    const initial = {x: 0, damping, tension};
     const last = rightItems && !_.isEmpty(rightItems[0]) ?
-      {x: -(this.getRightItemsTotalWidth()), damping: 1 - damping, tension} : {};
+      {x: -(this.getRightItemsTotalWidth()), damping, tension} : {};
 
     switch (size) {
       case 0: 
@@ -441,11 +447,12 @@ export default class Drawer extends BaseComponent {
     );
   }
   render() {
-    const {style, onPress, rightItems} = this.props;
+    const {style, onPress, rightItems} = this.getThemeProps();
     const Container = onPress ? TouchableOpacity : View;
+    const backgroundColor = _.get(rightItems, '[0].background', ITEM_BG);
 
     return (
-      <View style={[style, this.styles.container]} onLayout={this.onLayout}>
+      <View style={[style, this.styles.container, {backgroundColor}]} onLayout={this.onLayout}>
         {rightItems && this.renderRightItems()}
         {this.renderLeftItem()}
         <Interactable.View

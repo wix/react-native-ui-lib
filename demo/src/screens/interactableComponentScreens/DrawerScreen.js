@@ -41,8 +41,7 @@ export default class DrawerScreen extends Component {
     Alert.alert(`Button '${id}' pressed`);
   }
   onContentPress(id) {
-    Alert.alert(`List item #${id + 1} pressed`);
-
+    // Alert.alert(`List item #${id + 1} pressed`);
     if (id === '0') {
       this.firstDrawer.closeDrawer();
     }
@@ -104,6 +103,17 @@ export default class DrawerScreen extends Component {
           style={{marginTop: 20}}
           ref={r => this.firstDrawer = r}
           equalWidths
+        >
+          {this.renderContent('0', conversations[0])}
+        </Drawer>
+        <Drawer
+          leftItem={leftItem}
+          rightItems={[
+            {icon: sharIcon, text: 'Share', onPress: this.onItemPress, width: 20},
+            {icon: videoIcon, text: 'Video', onPress: this.onItemPress, background: Colors.violet40},
+          ]}
+          style={{marginTop: 20}}
+          ref={r => this.firstDrawer = r}
         >
           {this.renderContent('0', conversations[0])}
         </Drawer>
