@@ -35,7 +35,7 @@ import {registerScreens} from './screens';
 
 
 ////// BLOGPOST
-/* Typography.loadTypographies({
+Typography.loadTypographies({
   header: {fontSize: 30, fontWeight: '400', lineHeight: 45},
   title: {fontSize: 18, fontWeight: '500', lineHeight: 36},
   buttonText: {fontSize: 16, fontWeight: '500'},
@@ -61,7 +61,6 @@ ThemeManager.setComponentTheme('TextField', (props) => {
     hideUnderline: true,
     titleColor: {focus: Colors.primary},
     color: {focus: Colors.dark10, default: Colors.dark30},
-    title: _.toLower(props.title),
   };
 });
 
@@ -94,7 +93,7 @@ ThemeManager.setComponentTheme('Card', {
   // enableShadow: false,
   containerStyle: {borderWidth: 2, borderColor: Colors.primary},
   borderRadius: BorderRadiuses.br20,
-}); */
+});
 
 Animatable.initializeRegistryWithDefinitions({
   basicListEntrance: {

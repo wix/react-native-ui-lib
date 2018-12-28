@@ -15,14 +15,14 @@ import {
 } from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class PlaygroundScreen extends Component {
-  // static options(passProps) {
-  //   return {
-  //     topBar: {
-  //       // drawBehind: true,
-  //       visible: false,
-  //     },
-  //   };
-  // }
+  static options(passProps) {
+    return {
+      topBar: {
+        // drawBehind: true,
+        visible: false,
+      },
+    };
+  }
 
   constructor(props) {
     super(props);
