@@ -129,7 +129,7 @@ export default class TextInput extends BaseInput {
 
   constructor(props) {
     super(props);
-    
+
     console.warn('uilib TextInput component will be deprecated soon, please use TextField instead');
 
     this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(this);
@@ -463,7 +463,6 @@ export default class TextInput extends BaseInput {
       placeholder,
       placeholderTextColor,
       floatingPlaceholder,
-      rtl,
       centered,
       multiline,
       hideUnderline,
@@ -476,8 +475,6 @@ export default class TextInput extends BaseInput {
       hideUnderline && this.styles.inputWithoutUnderline,
       typography,
       color && {color},
-      rtl && this.styles.inputRTL,
-      centered && this.styles.inputCentered,
       // with the right flex on the tree hierarchy we might not need this
       // {height: this.getHeight()},
       style,
@@ -514,7 +511,7 @@ export default class TextInput extends BaseInput {
   }
 
   render() {
-    const {centered, expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.props;
+    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.props;
     const underlineStateColor = this.getStateColor(underlineColor, true);
 
     return (
@@ -534,7 +531,7 @@ export default class TextInput extends BaseInput {
           {expandable && this.renderExpandableModal()}
         </View>
         <View row>
-          <View flex left={centered !== true}>
+          <View flex>
             {this.renderError(!useTopErrors)}
           </View>
           {this.renderCharCounter()}
@@ -606,16 +603,8 @@ function createStyles({
       flexGrow: 1,
       marginBottom: Constants.isIOS ? 10 : 5,
       padding: 0,
-      // textAlign: centered ? 'center' : undefined,
+      textAlign: centered ? 'center' : undefined,
       backgroundColor: 'transparent',
-    },
-    inputRTL: {
-      textAlign: 'right',
-      writingDirection: 'rtl',
-    },
-    inputCentered: {
-      textAlign: 'center',
-      writingDirection: undefined,
     },
     expandableInput: {
       flexDirection: 'row',
@@ -632,7 +621,6 @@ function createStyles({
     },
     placeholder: {
       color: placeholderTextColor,
-      textAlign: 'left',
     },
     placeholderCentered: {
       left: 0,
