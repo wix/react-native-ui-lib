@@ -129,7 +129,7 @@ export default class TextInput extends BaseInput {
 
   constructor(props) {
     super(props);
-
+    
     console.warn('uilib TextInput component will be deprecated soon, please use TextField instead');
 
     this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(this);
