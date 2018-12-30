@@ -190,7 +190,7 @@ export default class Drawer extends BaseComponent {
 
   getBoundaries() {
     const {leftItem, rightItems, equalWidths} = this.getThemeProps();
-    const leftSpring = 30;
+    const leftSpring = 80;
     const rightSpring = equalWidths ? 0 : 30;
     const rightWidth = this.getRightItemsTotalWidth();
     const rightBound = rightWidth > 0 ? -rightWidth - rightSpring : 0;
