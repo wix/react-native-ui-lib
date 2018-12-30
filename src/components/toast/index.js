@@ -114,15 +114,16 @@ export default class Toast extends BaseComponent {
   constructor(props) {
     super(props);
 
+    const {animated} = this.props;
+
     this.state = {
       isVisible: false,
-      animationConfig: this.getAnimation(true),
-      contentAnimation: this.getContentAnimation(true),
+      animationConfig: animated ? this.getAnimation(true) : {},
+      contentAnimation: animated ? this.getContentAnimation(true) : {},
       duration: DURATION,
       delay: DELAY,
     };
 
-    const {animated} = this.props;
     if (animated) {
       AnimatableManager.loadSlideByHeightDefinitions(getHeight(this.props), ANIMATION_SUFFIX);
     }
@@ -280,7 +281,7 @@ export default class Toast extends BaseComponent {
     }
   }
 
-  // This weird layout should support iphoneX safe are
+  // This weird layout should support iphoneX safe area
   render() {
     const {backgroundColor, actions, enableBlur, testID, zIndex, renderContent} = this.getThemeProps();
     const {animationConfig} = this.state;
