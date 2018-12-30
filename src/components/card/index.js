@@ -17,7 +17,7 @@ const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 
 /**
  * @description: Card component
- * @extends: TouchableOpacity, Animatable
+ * @extends: TouchableOpacity
  * @extendsnotes: (Touchable when passing onPress)
  * @extendslink: docs/TouchableOpacity
  * @modifiers: margin, padding
