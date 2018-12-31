@@ -75,4 +75,5 @@ module.exports = {
   get ThemeManager() { return require('./style').ThemeManager; },
   get Typography() { return require('./style').Typography; },
   get AnimatableManager() { return require('./style').AnimatableManager; },
+  get MeasureText() { return require('./style').MeasureText; },
 };

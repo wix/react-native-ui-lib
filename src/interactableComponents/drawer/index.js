@@ -191,14 +191,13 @@ export default class Drawer extends BaseComponent {
   getBoundaries() {
     const {leftItem, rightItems, equalWidths} = this.getThemeProps();
     const leftSpring = 80;
+    const leftBound = this.getItemWidth(leftItem) + leftSpring;
     const rightSpring = equalWidths ? 0 : 30;
     const rightWidth = this.getRightItemsTotalWidth();
     const rightBound = rightWidth > 0 ? -rightWidth - rightSpring : 0;
     
     return {
-      right: _.isEmpty(leftItem) ? 0 : this.getItemWidth(leftItem) + leftSpring, 
-      left: _.isEmpty(rightItems) ? 0 : rightBound,
-    };
+      right: _.isEmpty(leftItem) ? 0 : leftBound, left: _.isEmpty(rightItems) ? 0 : rightBound};
   }
   getSnapPoints() {
     const {leftItem, rightItems, damping, tension} = this.getThemeProps();
@@ -242,8 +241,8 @@ export default class Drawer extends BaseComponent {
     for (let i = 0; i < size; i++) {
       const itemWidth = this.getItemWidth(rightItems[i]);
       const end = itemWidth - (size * BLEED);
-      const min = -(itemWidth * (i + 1));
       const max = -(end + (interval * i));
+      const min = -(itemWidth * (i + 1));
       inputRanges.push([min, max]);
     }
     return inputRanges.reverse();
@@ -362,6 +361,7 @@ export default class Drawer extends BaseComponent {
     );
   }
   renderRightItem(item, index) {
+    if (!item) return;
     const {itemsTintColor, itemsIconSize, itemsTextStyle} = this.getThemeProps();
     const {itemPadding, typography, textTopMargin} = this.state;
     const inputRanges = this.getInputRanges();

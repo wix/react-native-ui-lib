@@ -1,6 +1,7 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Alert, ScrollView} from 'react-native';
-import {Colors, Typography, View, Drawer, Text, Button, ListItem, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
+import {MeasureText, Colors, Typography, View, Drawer, Text, Button, ListItem, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
 
 
@@ -15,9 +16,19 @@ export default class DrawerScreen extends Component {
     super(props);
     
     this.state = {
-      dynamicItem: {icon: starIcon, text: 'Accessories', onPress: this.onItemPress, background: Colors.violet10, width: 200},
       itemsTintColor: undefined,
+      leftItem: {icon: collectionsIcon, text: 'Archive', onPress: this.onLeftItemPressed},
+      rightItems: [
+        {icon: starIcon, text: 'Accessories', onPress: this.onItemPress, background: Colors.violet10},
+        {icon: sharIcon, text: 'Share', onPress: this.onItemPress, background: Colors.violet30},
+        {icon: videoIcon, text: 'Video', onPress: this.onItemPress, background: Colors.violet40},
+        // {icon: videoIcon, text: 'Video', background: Colors.green30},
+        // {icon: videoIcon, text: 'Video', background: Colors.red30},
+      ],
     };
+
+    this.setLeftItemWidth();
+    this.setRightItemsWidths();
   }
 
   onPress = () => {
@@ -50,15 +61,45 @@ export default class DrawerScreen extends Component {
     }
   }
 
+  // Measure item text to calculate items' widths
+  async setRightItemsWidths() {
+    const {rightItems} = this.state;
+    if (rightItems) {
+      const promises = rightItems.map((item) => {
+        return this.setItemWidth(item);
+      });
+      const data = await Promise.all(promises);
+      this.setState({rightItems: data});
+    }
+  }
+  async setLeftItemWidth() {
+    const {leftItem} = this.state;
+    if (leftItem) {
+      const item = await this.setItemWidth(leftItem);
+      this.setState({leftItem: item});
+    }
+  }
+  async setItemWidth(item) {
+    if (item && !item.width && !_.isEmpty(item.text)) {
+      const horizontalPadding = 12;
+      const typography = Typography.text70;
+      const width = await MeasureText.measureWidth(item.text, typography);
+      const itemCopy = item;
+      itemCopy.width = width + (horizontalPadding * 2);
+      return itemCopy;
+    }
+  }
+
   toggleDynamicItem() {
-    const {dynamicItem} = this.state;
+    const {rightItems} = this.state;
     let newItem;
-    if (dynamicItem.text === 'Accessories') {
+    if (rightItems[0].text === 'Accessories') {
       newItem = {icon: starIcon, text: 'More', onPress: this.onItemPress, background: Colors.violet10, width: 90};
     } else {
       newItem = {icon: starIcon, text: 'Accessories', onPress: this.onItemPress, background: Colors.violet10, width: 200};
     }
-    this.setState({dynamicItem: newItem});
+    rightItems[0] = newItem;
+    this.setState({rightItems});
   }
 
   renderContent(id, row) {
@@ -86,63 +127,35 @@ export default class DrawerScreen extends Component {
   }
 
   render() {
-    const leftItem = {icon: collectionsIcon, text: 'Archive', onPress: this.onLeftItemPressed};
-    const rightItems = [
-      this.state.dynamicItem,
-      {icon: sharIcon, text: 'Share', onPress: this.onItemPress, background: Colors.violet30, width: 20},
-      {icon: videoIcon, text: 'Video', onPress: this.onItemPress, background: Colors.violet40},
-      // {icon: videoIcon, text: 'Video', background: Colors.green30},
-      // {icon: videoIcon, text: 'Video', background: Colors.red30},
-    ];
-    
+    const {leftItem, rightItems} = this.state;
+
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={{paddingBottom: 50}}>
         <Drawer
           leftItem={leftItem}
           rightItems={rightItems}
           style={{marginTop: 20}}
           ref={r => this.firstDrawer = r}
-          equalWidths
         >
           {this.renderContent('0', conversations[0])}
         </Drawer>
         <Drawer
           leftItem={leftItem}
           rightItems={[
-            {icon: sharIcon, text: 'Share', onPress: this.onItemPress, width: 20},
+            {icon: sharIcon, text: 'Share', onPress: this.onItemPress},
             {icon: videoIcon, text: 'Video', onPress: this.onItemPress, background: Colors.violet40},
           ]}
           style={{marginTop: 20}}
-          ref={r => this.firstDrawer = r}
         >
           {this.renderContent('0', conversations[0])}
         </Drawer>
-        <Drawer
-          leftItem={leftItem}
-          rightItems={[rightItems[1], rightItems[2]]}
-          style={{marginTop: 20, marginLeft: 50, marginRight: 50}}
-          onPress={this.onPress}
-        >
-          {this.renderContent('2', conversations[2])}
-        </Drawer>
-        
-        <View style={{width: 250}}>
-          <Drawer
-            leftItem={leftItem}
-            rightItems={[rightItems[1], rightItems[2]]}
-            style={{marginTop: 20, marginLeft: 50}}
-            onPress={this.onPress}
-          >
-            {this.renderContent('2', conversations[2])}
-          </Drawer>
-        </View>
         
         <Drawer
           // leftItem={leftItem}
           rightItems={rightItems}
           style={{marginTop: 20}}
           onPress={this.onPress}
-          ref={r => this.secondDrawer = r}
+          equalWidths
         >
           {this.renderContent('1', conversations[1])}
         </Drawer>
@@ -157,6 +170,26 @@ export default class DrawerScreen extends Component {
         >
           {this.renderContent('1', conversations[1])}
         </Drawer>
+
+        <Drawer
+          leftItem={leftItem}
+          rightItems={[rightItems[1], rightItems[2]]}
+          style={{marginTop: 20, marginLeft: 50, marginRight: 50}}
+          onPress={this.onPress}
+        >
+          {this.renderContent('2', conversations[2])}
+        </Drawer>
+        
+        {/* <View style={{width: 250}}>
+          <Drawer
+            leftItem={leftItem}
+            rightItems={[rightItems[1], rightItems[2]]}
+            style={{marginTop: 20, marginLeft: 50}}
+            onPress={this.onPress}
+          >
+            {this.renderContent('2', conversations[2])}
+          </Drawer>
+        </View> */}
 
         <Drawer
           leftItem={{icon: collectionsIcon, background: Colors.blue10, width: 100}}
