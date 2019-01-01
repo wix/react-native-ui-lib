@@ -137,7 +137,6 @@ module.exports = {
     }
 
     function isComponentDeprecated(component) {
-      // console.log(`UILIB isComponentDeprecated  ${component.name}`);
       const values = _.chain(deprecationSources)
         .values()
         .flatten()
@@ -145,16 +144,7 @@ module.exports = {
       return _.includes(values, component);
     }
 
-    function isComponentImported(component) {
-      // console.log(`UILIB isComponentImported ${component.name}`);
-      if (component.source in importSpecifiers) {
-        return _.includes(importSpecifiers[component.source], component.name);
-      }
-      return false;
-    }
-
     function isComponentImportMatch(component) {
-      // console.log(`UILIB isComponentImportMatch ${component.name}`);
       // in case it's a sub component like List.Item
       const componentName = _.split(component.component, '.')[0];
       if (component.source in importSpecifiers) {
