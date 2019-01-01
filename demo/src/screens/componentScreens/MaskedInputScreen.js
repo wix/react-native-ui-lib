@@ -55,7 +55,7 @@ export default class MaskedInputScreen extends Component {
       <View flex>
         <ScrollView
           contentContainerStyle={styles.container}
-          keyboardShouldPersistTaps="always"
+          keyboardShouldPersistTaps='always'
         >
           <Text text40 marginB-20>
             Masked Inputs

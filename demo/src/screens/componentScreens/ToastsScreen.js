@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {Alert, StyleSheet} from 'react-native';
 import {Constants, Assets, Colors, View, Button, Text, Image, TouchableOpacity, Toast} from 'react-native-ui-lib'; //eslint-disable-line
 
 
@@ -42,7 +42,7 @@ export default class ToastsScreen extends Component {
   render() {
     const {showTopToast, showRelativeToast, showToast, selectedColor, showLoader, showDismiss} = this.state;
     const backgroundColor = selectedColor === 'none' ? undefined : selectedColor;
-    const action = showLoader ? [{label: 'Undo', backgroundColor: Colors.red40, onPress: () => alert('undo')}] : [];
+    const action = showLoader ? [{label: 'Undo', backgroundColor: Colors.red40, onPress: () => Alert.alert('undo')}] : [];
     
     return (
       <View flex center bg-dark80 style={styles.container}>
@@ -50,7 +50,7 @@ export default class ToastsScreen extends Component {
           visible={this.state.showTopToast}
           position={'top'}
           backgroundColor={backgroundColor}
-          message="Toast with two lines of text. Toast with two lines of text"
+          message='Toast with two lines of text. Toast with two lines of text'
           onDismiss={() => this.setState({showTopToast: false})}
           allowDismiss={showDismiss}
           actions={action}
@@ -59,8 +59,8 @@ export default class ToastsScreen extends Component {
         <View style={{position: 'absolute', bottom: 100, width: Constants.screenWidth}}>
           <Toast
             visible={this.state.showRelativeToast}
-            message="Toast can move content relative to it to the top"
-            position="relative"
+            message='Toast can move content relative to it to the top'
+            position='relative'
             centerMessage
             backgroundColor={Colors.red60}
             color={Colors.blue30}
@@ -81,7 +81,7 @@ export default class ToastsScreen extends Component {
           visible={this.state.showToast}
           position={'bottom'}
           backgroundColor={backgroundColor}
-          message="Toast with one line of text"
+          message='Toast with one line of text'
           icon={Assets.icons.check}
           onDismiss={() => this.setState({showToast: false})}
           allowDismiss={showDismiss}
@@ -91,22 +91,22 @@ export default class ToastsScreen extends Component {
         <View center>
           <Text marginV-10 text60>Toggle Toast</Text>
           <View center row marginB-10>
-            <Button outline size="medium" label="TOP" onPress={() => this.setState({showTopToast: !showTopToast})}/>
+            <Button outline size='medium' label='TOP' onPress={() => this.setState({showTopToast: !showTopToast})}/>
             <Button 
-              outline size="medium" label="RELATIVE" 
+              outline size='medium' label='RELATIVE' 
               onPress={() => this.setState({showRelativeToast: !showRelativeToast})} marginH-10
             />
-            <Button outline size="medium" label="BOTTOM" onPress={() => this.setState({showToast: !showToast})}/>
+            <Button outline size='medium' label='BOTTOM' onPress={() => this.setState({showToast: !showToast})}/>
           </View>
           <Text marginV-10 text60>Toast Background Color</Text>
           {this.renderColors()}
           <View center row marginV-20>
             <Button 
-              outline size="medium" label="Show Action" 
+              outline size='medium' label='Show Action' 
               onPress={() => this.setState({showLoader: !showLoader, showDismiss: false})} marginR-10
             />
             <Button 
-              outline size="medium" label="Show Dismiss" 
+              outline size='medium' label='Show Dismiss' 
               onPress={() => this.setState({showLoader: false, showDismiss: !showDismiss})}
             />
           </View>

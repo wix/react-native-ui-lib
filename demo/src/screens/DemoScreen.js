@@ -74,7 +74,7 @@ export default class DemoScreen extends Component {
           enableError={false}
           value={this.state[propId]}
           onChangeText={text => this.updatePropValue(text, propId, prop)}
-          autoCapitalize="none"
+          autoCapitalize='none'
         />
       </View>
     );

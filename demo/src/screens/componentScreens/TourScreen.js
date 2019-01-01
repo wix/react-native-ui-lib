@@ -23,11 +23,11 @@ export default class TourScreen extends Component {
         <Tour
           visible={this.state.showButtonTour}
           overlayColor={Colors.dark10}
-          message="Check out this nice button and how nice it is"
+          message='Check out this nice button and how nice it is'
           onClose={() => this.setState({showButtonTour: false})}
         >
           <View centerH ref2={r => (this.target = r)} onLayout2={() => this.saveLayout()}>
-            <Button label="Show Tour" onPress={() => this.setState({showButtonTour: true})} />
+            <Button label='Show Tour' onPress={() => this.setState({showButtonTour: true})} />
           </View>
         </Tour>
         <Text text70>

@@ -70,8 +70,8 @@ export default class ButtonsScreen extends DemoScreen {
             <Text style={styles.title}>Buttons</Text>
 
             <Button
-              backgroundColor="#30B650"
-              label="SHUFFLE PLAY"
+              backgroundColor='#30B650'
+              label='SHUFFLE PLAY'
               labelStyle={{fontWeight: '600'}}
               style={{marginBottom: ButtonSpace}}
               enableShadow
@@ -80,8 +80,8 @@ export default class ButtonsScreen extends DemoScreen {
             />
 
             <Button
-              backgroundColor="#FB3C62"
-              label="Get 3 Months Free"
+              backgroundColor='#FB3C62'
+              label='Get 3 Months Free'
               borderRadius={7}
               style={{height: 45, marginBottom: ButtonSpace}}
               ref={element => (this.button_2 = element)}
@@ -91,9 +91,9 @@ export default class ButtonsScreen extends DemoScreen {
             <Button
               outline
               outlineColor={Colors.black}
-              label="SHOP HOLIDAY"
+              label='SHOP HOLIDAY'
               borderRadius={0}
-              size="medium"
+              size='medium'
               text60
               labelStyle={{fontWeight: '700', letterSpacing: 4}}
               style={{borderWidth: 3, marginBottom: ButtonSpace}}
@@ -102,9 +102,9 @@ export default class ButtonsScreen extends DemoScreen {
             />
 
             <Button
-              backgroundColor="#439F4F"
-              label="MOVE TO BAG"
-              size="small"
+              backgroundColor='#439F4F'
+              label='MOVE TO BAG'
+              size='small'
               borderRadius={0}
               text90
               labelStyle={{fontWeight: '500', letterSpacing: -0.5}}
@@ -113,9 +113,9 @@ export default class ButtonsScreen extends DemoScreen {
               onPress={() => this.showSnippet(this.button_4)}
             />
             <Button
-              backgroundColor="#3C9BF0"
-              label="Follow"
-              size="small"
+              backgroundColor='#3C9BF0'
+              label='Follow'
+              size='small'
               borderRadius={3}
               text90
               labelStyle={{fontWeight: '500'}}
@@ -200,14 +200,14 @@ export default class ButtonsScreen extends DemoScreen {
 
             <Text style={styles.header}>Inside Out</Text>
             <Button
-              label="Outline"
+              label='Outline'
               outline
               style={{marginBottom: ButtonSpace}}
               ref={element => (this.button_15 = element)}
               onPress={() => this.showSnippet(this.button_15)}
             />
             <Button
-              label="Outline M"
+              label='Outline M'
               size={Button.sizes.medium}
               outline
               style={{marginBottom: ButtonSpace}}
@@ -216,7 +216,7 @@ export default class ButtonsScreen extends DemoScreen {
             />
 
             <Button
-              label="Outline S"
+              label='Outline S'
               size={Button.sizes.small}
               outline
               style={{marginBottom: ButtonSpace}}
@@ -224,7 +224,7 @@ export default class ButtonsScreen extends DemoScreen {
               onPress={() => this.showSnippet(this.button_16a)}
             />
             <Button
-              label="Red Outline"
+              label='Red Outline'
               outline
               outlineWidth={3}
               outlineColor={Colors.red10}
@@ -234,7 +234,7 @@ export default class ButtonsScreen extends DemoScreen {
             />
 
             <Button
-              label="Outline with background"
+              label='Outline with background'
               outlineColor={Colors.dark10}
               backgroundColor={Colors.dark40}
               style={{marginBottom: ButtonSpace}}
@@ -243,7 +243,7 @@ export default class ButtonsScreen extends DemoScreen {
             />
 
             <Button
-              label="Disabled Outline"
+              label='Disabled Outline'
               outline
               disabled
               style={{marginBottom: ButtonSpace}}
@@ -252,7 +252,7 @@ export default class ButtonsScreen extends DemoScreen {
             />
 
             <Button
-              label="disabled outline + icon"
+              label='disabled outline + icon'
               outline
               disabled
               iconSource={plusIcon}
@@ -265,7 +265,7 @@ export default class ButtonsScreen extends DemoScreen {
             <View row width={'100%'} center>
               <Button
                 round
-                backgroundColor="#FF69B4"
+                backgroundColor='#FF69B4'
                 style={{margin: ButtonSpace}}
                 iconSource={Assets.icons.settings}
                 iconStyle={{tintColor: Colors.white}}
@@ -275,7 +275,7 @@ export default class ButtonsScreen extends DemoScreen {
               />
               <Button
                 round
-                backgroundColor="#ff4fa7"
+                backgroundColor='#ff4fa7'
                 style={{margin: ButtonSpace}}
                 iconSource={Assets.icons.settings}
                 iconStyle={{tintColor: Colors.white}}
@@ -285,7 +285,7 @@ export default class ButtonsScreen extends DemoScreen {
               />
               <Button
                 round
-                backgroundColor="#ff369b"
+                backgroundColor='#ff369b'
                 style={{margin: ButtonSpace}}
                 iconSource={Assets.icons.settings}
                 iconStyle={{tintColor: Colors.white}}
@@ -295,7 +295,7 @@ export default class ButtonsScreen extends DemoScreen {
               />
               <Button
                 round
-                backgroundColor="#ff1d8e"
+                backgroundColor='#ff1d8e'
                 style={{margin: ButtonSpace}}
                 iconSource={Assets.icons.settings}
                 iconStyle={{tintColor: Colors.white}}
@@ -395,13 +395,13 @@ export default class ButtonsScreen extends DemoScreen {
 
             <Button
               style={{marginBottom: ButtonSpace}}
-              size="small"
+              size='small'
               iconSource={plusIcon}
               iconStyle={{tintColor: 'white'}}
-              label="Icon"
+              label='Icon'
             />
 
-            <Button style={{marginBottom: ButtonSpace}} blue30 outline iconSource={plusIcon} label="Icon" />
+            <Button style={{marginBottom: ButtonSpace}} blue30 outline iconSource={plusIcon} label='Icon' />
 
             <Button onPress={() => Alert.alert('Button #3')} style={{marginBottom: ButtonSpace}}>
               <Text>
@@ -413,13 +413,13 @@ export default class ButtonsScreen extends DemoScreen {
               <Text style={{marginLeft: 10, color: Colors.blue30}}>Custom Icon</Text>
             </Button>
 
-            <Button text90 link style={{marginBottom: ButtonSpace}} iconSource={plusIcon} label="link icon" />
+            <Button text90 link style={{marginBottom: ButtonSpace}} iconSource={plusIcon} label='link icon' />
 
-            <Button text90 link disabled style={{marginBottom: ButtonSpace}} iconSource={plusIcon} label="disabled link" />
+            <Button text90 link disabled style={{marginBottom: ButtonSpace}} iconSource={plusIcon} label='disabled link' />
 
-            <Button label="link button" link style={{marginBottom: ButtonSpace}} />
+            <Button label='link button' link style={{marginBottom: ButtonSpace}} />
 
-            <Button label="Icon on right" iconSource={plusIcon} iconOnRight />
+            <Button label='Icon on right' iconSource={plusIcon} iconOnRight />
           </View>
 
           <View marginT-20>
@@ -430,7 +430,7 @@ export default class ButtonsScreen extends DemoScreen {
             </View>
             <Button
               fullWidth
-              label="Full Width"
+              label='Full Width'
               marginB-10
               ref={element => (this.button_20 = element)}
               onPress={() => this.showSnippet(this.button_20)}
@@ -438,20 +438,20 @@ export default class ButtonsScreen extends DemoScreen {
 
             <Button
               fullWidth
-              size="medium"
+              size='medium'
               bg-red70
               dark10
-              label="Medium Size Full Width"
+              label='Medium Size Full Width'
               marginB-10
               ref={element => (this.button_21 = element)}
               onPress={() => this.showSnippet(this.button_21)}
             />
             <Button
               fullWidth
-              size="small"
+              size='small'
               bg-green70
               green10
-              label="Small Size Full Width"
+              label='Small Size Full Width'
               ref={element => (this.button_22 = element)}
               onPress={() => this.showSnippet(this.button_22)}
             />
@@ -474,8 +474,8 @@ const SnippetBlock = ({snippet, onClose}) => {
         </Text>
       </View>
       <View row centerH>
-        {/* <Button marginR-10 white outline outlineColor={Colors.white} size="small" label="copy"/> */}
-        <Button white outline outlineColor={Colors.white} size="small" label="close" onPress={onClose} />
+        {/* <Button marginR-10 white outline outlineColor={Colors.white} size='small' label='copy'/> */}
+        <Button white outline outlineColor={Colors.white} size='small' label='close' onPress={onClose} />
       </View>
     </View>
   );

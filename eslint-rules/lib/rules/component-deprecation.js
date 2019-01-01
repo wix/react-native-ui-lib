@@ -70,29 +70,34 @@ module.exports = {
         component = node.name.name;
       }
 
-      if (component && isComponentDeprecated(component)) {
-        const deprecatedComponent = getDeprecatedObject(component);
-        if (isComponentImportMatch(deprecatedComponent)) {
-          const name = deprecatedComponent.component;
-          const message = deprecatedComponent.message;
-          const fix = deprecatedComponent.fix;
-          const props = deprecatedComponent.props;
-
-          if (!props) {
-            reportDeprecatedComponentOrProps(node, {name, message, fix});
-          } else {
-            const nodeAttributes = node.attributes;
-            nodeAttributes.forEach((att) => {
-              if (att.type === 'JSXAttribute') {
-                checkPropDeprecation(att, att.name.name, props, name);
-              } else if (att.type === 'JSXSpreadAttribute') {
-                const spreadSource = utils.findValueNodeOfIdentifier(att.argument.name, context.getScope());
-                _.forEach(spreadSource.properties, (property) => {
-                  checkPropDeprecation(property.key, property.key.name, props, name);
-                });
-              }
-            });
+      if (component) {
+        if (isComponentDeprecated(component)) {
+          const deprecatedComponent = getDeprecatedObject(component);
+          if (isComponentImportMatch(deprecatedComponent)) {
+            const name = deprecatedComponent.component;
+            const message = deprecatedComponent.message;
+            const fix = deprecatedComponent.fix;
+            const props = deprecatedComponent.props;
+  
+            if (!props) {
+              reportDeprecatedComponentOrProps(node, {name, message, fix});
+            } else {
+              const nodeAttributes = node.attributes;
+              nodeAttributes.forEach((att) => {
+                if (att.type === 'JSXAttribute') {
+                  checkPropDeprecation(att, att.name.name, props, name);
+                } else if (att.type === 'JSXSpreadAttribute') {
+                  const spreadSource = utils.findValueNodeOfIdentifier(att.argument.name, context.getScope());
+                  _.forEach(spreadSource.properties, (property) => {
+                    checkPropDeprecation(property.key, property.key.name, props, name);
+                  });
+                }
+              });
+            }
           }
+        } else if (!isComponentImported(component)) {
+          // console.log(`UILIB Linter 2 ${component.name}`);
+          // look for VariableDeclarator.id.name === component.name
         }
       }
     }
@@ -133,6 +138,7 @@ module.exports = {
     }
 
     function isComponentDeprecated(component) {
+      // console.log(`UILIB isComponentDeprecated  ${component.name}`);
       const values = _.chain(deprecationSources)
         .values()
         .flatten()
@@ -140,7 +146,16 @@ module.exports = {
       return _.includes(values, component);
     }
 
+    function isComponentImported(component) {
+      // console.log(`UILIB isComponentImported ${component.name}`);
+      if (component.source in importSpecifiers) {
+        return _.includes(importSpecifiers[component.source], component.name);
+      }
+      return false;
+    }
+
     function isComponentImportMatch(component) {
+      // console.log(`UILIB isComponentImportMatch ${component.name}`);
       // in case it's a sub component like List.Item
       const componentName = _.split(component.component, '.')[0];
       if (component.source in importSpecifiers) {

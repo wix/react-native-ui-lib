@@ -84,7 +84,7 @@ export default class ConversationListScreen extends Component {
             </ListItem.Part>
             <ListItem.Part>
               <Text style={{flex: 1, marginRight: 10}} text80 color={Colors.dark40} numberOfLines={1}>{item.text}</Text>
-              {item.count > 0 && <Badge label={item.count} animation="fadeIn" duration={400}/>}
+              {item.count > 0 && <Badge label={item.count} animation='fadeIn' duration={400}/>}
             </ListItem.Part>
           </ListItem.Part>
         </ListItem>

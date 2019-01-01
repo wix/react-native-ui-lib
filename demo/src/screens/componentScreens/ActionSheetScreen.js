@@ -36,7 +36,7 @@ export default class ActionSheetScreen extends Component {
               <Button
                 key={index}
                 link
-                size="small"
+                size='small'
                 text50
                 marginB-10
                 dark10
@@ -58,8 +58,8 @@ export default class ActionSheetScreen extends Component {
         )}
 
         <ActionSheet
-          title="Title"
-          message="Message of action sheet"
+          title='Title'
+          message='Message of action sheet'
           cancelButtonIndex={3}
           destructiveButtonIndex={0}
           options={[
@@ -73,8 +73,8 @@ export default class ActionSheetScreen extends Component {
         />
 
         <ActionSheet
-          title="Title"
-          message="Message of action sheet"
+          title='Title'
+          message='Message of action sheet'
           cancelButtonIndex={3}
           destructiveButtonIndex={0}
           options={[
@@ -88,8 +88,8 @@ export default class ActionSheetScreen extends Component {
         />
 
         <ActionSheet
-          title="Title"
-          message="Message of action sheet"
+          title='Title'
+          message='Message of action sheet'
           cancelButtonIndex={3}
           destructiveButtonIndex={0}
           options={[

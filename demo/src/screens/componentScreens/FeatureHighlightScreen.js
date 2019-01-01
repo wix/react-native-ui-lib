@@ -132,7 +132,7 @@ class FeatureHighlightScreen extends Component {
             </Text>
           </View>
           <View marginT-20 testID={'5'} ref={r => (this.addTarget(r))}>
-            <Button label="Show Overlay" onPress={this.showHighlight}/>
+            <Button label='Show Overlay' onPress={this.showHighlight}/>
           </View>
         </View>
         {this.renderHighlighterOverlay()}

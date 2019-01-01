@@ -81,8 +81,8 @@ export default class CardScannerScreen extends Component {
               <Card.Section footer>
                 <Text text90 color={Colors.dark50}>{post.likes} Likes</Text>
                 <Card.Item>
-                  <Button style={{marginRight: 10}} text90 link iconSource={featureIcon} label="Feature"/>
-                  <Button text90 link iconSource={shareIcon} label="Share"/>
+                  <Button style={{marginRight: 10}} text90 link iconSource={featureIcon} label='Feature'/>
+                  <Button text90 link iconSource={shareIcon} label='Share'/>
                 </Card.Item>
               </Card.Section>
             </Card.Section>
@@ -106,8 +106,8 @@ export default class CardScannerScreen extends Component {
         </View>
 
         <View row center>
-          <Button size="medium" label="Reset" onPress={this.reset} disabled={!this.state.isDone}/>
-          <Button marginL-10 size="medium" label="Publish" onPress={this.start} disabled={this.state.started}/>
+          <Button size='medium' label='Reset' onPress={this.reset} disabled={!this.state.isDone}/>
+          <Button marginL-10 size='medium' label='Publish' onPress={this.start} disabled={this.state.started}/>
         </View>
 
       </View>
