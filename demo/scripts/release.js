@@ -16,7 +16,7 @@ function execSyncSilently(cmd) {
 
 function validateEnv() {
   if (!process.env.CI || !process.env.TRAVIS) {
-    throw new Error(`releasing is only available from Travis CI`);
+    throw new Error('releasing is only available from Travis CI');
   }
 
   if (process.env.TRAVIS_BRANCH !== 'master') {
@@ -44,7 +44,7 @@ function calcNewVersion() {
 }
 
 function copyNpmRc() {
-  execSync(`rm -f package-lock.json`);
+  execSync('rm -f package-lock.json');
   const npmrcPath = p.resolve(`${__dirname}/.npmrc`);
   execSync(`cp -rf ${npmrcPath} .`);
 }
@@ -52,8 +52,8 @@ function copyNpmRc() {
 function tagAndPublish(newVersion) {
   console.log(`new version is: ${newVersion}`);
   execSync(`npm version ${newVersion} -m "v${newVersion} [ci skip]"`);
-  execSync(`npm publish --tag latest`);
-  execSyncSilently(`git push deploy --tags`);
+  execSync('npm publish --tag latest');
+  execSyncSilently('git push deploy --tags');
 }
 
 function run() {
