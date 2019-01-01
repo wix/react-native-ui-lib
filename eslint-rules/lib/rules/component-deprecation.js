@@ -88,16 +88,15 @@ module.exports = {
                   checkPropDeprecation(att, att.name.name, props, name);
                 } else if (att.type === 'JSXSpreadAttribute') {
                   const spreadSource = utils.findValueNodeOfIdentifier(att.argument.name, context.getScope());
-                  _.forEach(spreadSource.properties, (property) => {
-                    checkPropDeprecation(property.key, property.key.name, props, name);
-                  });
+                  if (spreadSource) {
+                    _.forEach(spreadSource.properties, (property) => {
+                      checkPropDeprecation(property.key, property.key.name, props, name);
+                    });
+                  }
                 }
               });
             }
           }
-        } else if (!isComponentImported(component)) {
-          // console.log(`UILIB Linter 2 ${component.name}`);
-          // look for VariableDeclarator.id.name === component.name
         }
       }
     }
