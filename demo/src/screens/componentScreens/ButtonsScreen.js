@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, LayoutAnimation, Alert, Image} from 'react-native';
+import {ScrollView, StyleSheet, Alert, Image} from 'react-native';
 import {Text, View, Assets, Constants, Button, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
 import DemoScreen from '../DemoScreen';
 

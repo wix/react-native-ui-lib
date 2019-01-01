@@ -2,8 +2,14 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {Constants, View, Text, Button, Image, FeatureHighlight} from 'react-native-ui-lib'; // eslint-disable-line
 
-const titles = ['Get Notified', 'Title two is a long title that will not get cut by default, but can be limited', 'Title number three',
-  'Title number four', 'Title number five', 'Title number six'];
+const titles = [
+  'Get Notified', 
+  'Title two is a long title that will not get cut by default, but can be limited',
+  'Title number three',
+  'Title number four', 
+  'Title number five', 
+  'Title number six',
+];
 const messages = [
   'Important notifications appear right on your clubs and groups. Tap them to get more information about the most' +
   'important things that you should pay attention to.',
@@ -120,7 +126,7 @@ class FeatureHighlightScreen extends Component {
           <View>
             <Text marginT-20>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-              industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+              industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
               scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
               into electronic typesetting, <Text>remaining</Text> essentially unchanged.
             </Text>

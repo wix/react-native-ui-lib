@@ -40,7 +40,7 @@ export default class InputsScreen extends Component {
       message = 'This field is mandatory';
     }
     if (text === 'Zzz') {
-      message = 'Please enter a valid text'
+      message = 'Please enter a valid text';
     }
     this.setState({error: message});
   }
@@ -48,7 +48,7 @@ export default class InputsScreen extends Component {
   render() {
     const {topError} = this.state;
     const state = topError ? 'On' : 'Off';
-    const btnLabel = `Top Errors: ${state}`
+    const btnLabel = `Top Errors: ${state}`;
     
     return (
       <View flex>

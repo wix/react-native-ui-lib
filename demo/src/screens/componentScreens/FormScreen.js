@@ -131,7 +131,8 @@ export default class FormScreen extends Component {
             // }}
             // topBarProps={{doneLabel: 'YES', cancelLabel: 'NO'}}
           >
-            {_.map(options, option => <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled} />)}
+            {_.map(options, option => 
+              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>)}
           </Picker>
 
           <Text marginT-20 marginB-10 text70 dark60>

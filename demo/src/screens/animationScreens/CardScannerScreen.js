@@ -23,7 +23,7 @@ export default class CardScannerScreen extends Component {
     };
   }
 
-  onBreak({isDone, progress}) {
+  onBreak({isDone}) {
     if (!isDone) {
       this.start();
     } else {

@@ -30,7 +30,10 @@ export default class BadgesScreen extends Component {
         <View row center>
           <View center marginR-10 marginL-10>
             <Badge label={'10'} backgroundColor={Colors.blue30}/>
-            <Badge label={'10'} containerStyle={{marginTop: BadgesSpace}} backgroundColor={Colors.blue30} borderWidth={3} borderColor={Colors.blue50}/>
+            <Badge 
+              label={'10'} containerStyle={{marginTop: BadgesSpace}} 
+              backgroundColor={Colors.blue30} borderWidth={3} borderColor={Colors.blue50}
+            />
             <Badge size="small" label={'10'} containerStyle={{marginTop: BadgesSpace}} backgroundColor={Colors.blue30}/>
           </View>
 
@@ -55,7 +58,10 @@ export default class BadgesScreen extends Component {
 
           <View center marginR-10 marginL-10>
             <Badge label={'9999'} labelFormatterLimit={3}/>
-            <Badge label={'999'} labelFormatterLimit={2} containerStyle={{marginTop: BadgesSpace}} borderWidth={2} borderColor={Colors.white}/>
+            <Badge 
+              label={'999'} labelFormatterLimit={2} containerStyle={{marginTop: BadgesSpace}} 
+              borderWidth={2} borderColor={Colors.white}
+            />
             <Badge labelFormatterLimit={1} size="small" label={'99999999'} containerStyle={{marginTop: BadgesSpace}}/>
           </View>
         </View>

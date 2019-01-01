@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
 import {Colors, View, Text, Button, Assets, Tour} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class TourScreen extends Component {
@@ -32,7 +31,7 @@ export default class TourScreen extends Component {
           </View>
         </Tour>
         <Text text70>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s
           standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
           make a type specimen book.
         </Text>
@@ -50,5 +49,3 @@ export default class TourScreen extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({});

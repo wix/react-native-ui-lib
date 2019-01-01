@@ -24,7 +24,7 @@ export default class ToastsScreen extends Component {
   renderColors() {
     return (
       <View row>
-        {_.map(['none', ...colors], (color, index) => {
+        {_.map(['none', ...colors], (color) => {
           const isSelected = color === this.state.selectedColor;
           const backgroundColor = color === 'none' ? undefined : color;
           return (
@@ -92,14 +92,23 @@ export default class ToastsScreen extends Component {
           <Text marginV-10 text60>Toggle Toast</Text>
           <View center row marginB-10>
             <Button outline size="medium" label="TOP" onPress={() => this.setState({showTopToast: !showTopToast})}/>
-            <Button outline size="medium" label="RELATIVE" onPress={() => this.setState({showRelativeToast: !showRelativeToast})} marginH-10/>
+            <Button 
+              outline size="medium" label="RELATIVE" 
+              onPress={() => this.setState({showRelativeToast: !showRelativeToast})} marginH-10
+            />
             <Button outline size="medium" label="BOTTOM" onPress={() => this.setState({showToast: !showToast})}/>
           </View>
           <Text marginV-10 text60>Toast Background Color</Text>
           {this.renderColors()}
           <View center row marginV-20>
-            <Button outline size="medium" label="Show Action" onPress={() => this.setState({showLoader: !showLoader, showDismiss: false})} marginR-10/>
-            <Button outline size="medium" label="Show Dismiss" onPress={() => this.setState({showLoader: false, showDismiss: !showDismiss})}/>
+            <Button 
+              outline size="medium" label="Show Action" 
+              onPress={() => this.setState({showLoader: !showLoader, showDismiss: false})} marginR-10
+            />
+            <Button 
+              outline size="medium" label="Show Dismiss" 
+              onPress={() => this.setState({showLoader: false, showDismiss: !showDismiss})}
+            />
           </View>
         </View>
       </View>

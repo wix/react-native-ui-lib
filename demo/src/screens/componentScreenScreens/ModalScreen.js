@@ -5,7 +5,7 @@ import {Colors, Carousel, PageControl, Modal, View, Text, Constants} from 'react
 
 export default class ModalScreen extends Component {
 
-  static options(passProps) {
+  static options() {
     return {
       topBar: {
         drawBehind: true,
@@ -51,7 +51,7 @@ export default class ModalScreen extends Component {
                 This is an example of a custom modal top bar.
               </Text>
               <Text text70>
-                By default you get the 'x' cancel icon and 'save' as done label
+                By default you get the &apos;x&apos; cancel icon and &apos;save&apos; as done label
               </Text>
             </View>
           </View>

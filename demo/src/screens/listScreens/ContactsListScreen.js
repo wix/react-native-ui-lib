@@ -15,7 +15,7 @@ export default class ContactsListScreen extends Component {
     };
   }
 
-  keyExtractor = (item, index) => item.name;
+  keyExtractor = item => item.name;
 
   renderRow(row, id) {
     const initials = AvatarHelper.getInitials(row.name);

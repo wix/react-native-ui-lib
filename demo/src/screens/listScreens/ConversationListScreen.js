@@ -26,7 +26,7 @@ export default class ConversationListScreen extends Component {
     this.last = item;
   }
 
-  keyExtractor = (item, index) => item.name;
+  keyExtractor = item => item.name;
 
   renderItem(item, id) {
     const initials = AvatarHelper.getInitials(item.name);

@@ -12,7 +12,7 @@ export default class TypographyScreen extends Component {
           return (
             <View key={key} style={styles.typographyEntry}>
               <Text dark10 style={value}>
-              {key}
+                {key}
               </Text>
               <Text dark10 style={[{fontSize: 12, color: Colors.dark50, marginTop: -1}]}>
                 font size of {value.fontSize}

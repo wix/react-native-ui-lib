@@ -5,7 +5,7 @@ import _ from 'lodash';
 const useCases = [
   {label: 'Default (Android/iOS)', useNativeIOS: false, icons: false},
   {label: 'Default with icons', useNativeIOS: false, icons: true},
-  {label: 'Native IOS', useNativeIOS: true}
+  {label: 'Native IOS', useNativeIOS: true},
 ];
 const collectionsIcon = require('../../assets/icons/collections.png');
 const starIcon = require('../../assets/icons/star.png');
@@ -45,7 +45,7 @@ export default class ActionSheetScreen extends Component {
                   this.setState({
                     showNative: useCase.useNativeIOS,
                     showCustom: !useCase.useNativeIOS && !useCase.icons,
-                    showCustomIcons: !useCase.useNativeIOS && useCase.icons
+                    showCustomIcons: !useCase.useNativeIOS && useCase.icons,
                   })}
               />
             );

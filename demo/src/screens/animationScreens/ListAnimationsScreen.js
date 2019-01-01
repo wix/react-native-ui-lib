@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
 import {Alert, StyleSheet, ScrollView, FlatList} from 'react-native';
 import * as Animatable from 'react-native-animatable';
@@ -41,7 +40,7 @@ export default class ListAnimationsScreen extends Component {
     this.setState({animation: undefined});
   }
 
-  keyExtractor = (item, index) => item.id;
+  keyExtractor = item => item.id;
 
   reload(animation) {
     this.setState({visible: false, animation});

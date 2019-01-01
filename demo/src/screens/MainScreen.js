@@ -36,6 +36,18 @@ export default class UiLibExplorerMenu extends Component {
     // this.openScreen({name: 'unicorn.components.ToastsScreen', title: 'Testing'});
   }
 
+  /** Events */
+  onChangePage(newPage) {
+    this.setState({
+      currentPage: newPage,
+    });
+  }
+
+  onSearchBoxBlur() {
+    this.closeSearchBox();
+    this.filterExplorerScreens('');
+  }
+
   /** Navigation */
   getMenuData() {
     return this.props.navigationData || navigationData;
@@ -112,18 +124,6 @@ export default class UiLibExplorerMenu extends Component {
         ],
       },
     });
-  }
-
-  /** Events */
-  onChangePage(newPage) {
-    this.setState({
-      currentPage: newPage,
-    });
-  }
-
-  onSearchBoxBlur() {
-    this.closeSearchBox();
-    this.filterExplorerScreens('');
   }
 
   /** Actions */
