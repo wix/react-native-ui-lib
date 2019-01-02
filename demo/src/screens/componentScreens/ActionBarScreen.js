@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {Alert, StyleSheet} from 'react-native';
 import {Constants, Colors, Typography, View, ActionBar, PageControl, Carousel} from 'react-native-ui-lib'; //eslint-disable-line
 import cameraSelected from '../../assets/icons/cameraSelected.png';
 import video from '../../assets/icons/video.png';
@@ -33,9 +33,9 @@ export default class ActionBarScreen extends Component {
           <View style={styles.page}>
             <ActionBar
               actions={[
-                {label: 'Delete', onPress: () => alert('delete'), red30: true},
-                {label: 'Replace Photo', onPress: () => alert('replace photo')},
-                {label: 'Edit', onPress: () => alert('edit')},
+                {label: 'Delete', onPress: () => Alert.alert('delete'), red30: true},
+                {label: 'Replace Photo', onPress: () => Alert.alert('replace photo')},
+                {label: 'Edit', onPress: () => Alert.alert('edit')},
               ]}
             />
           </View>
@@ -44,9 +44,9 @@ export default class ActionBarScreen extends Component {
             <ActionBar
               backgroundColor={Colors.blue30}
               actions={[
-                {label: 'Hide', onPress: () => alert('hide'), white: true},
-                {label: 'Add Discount', onPress: () => alert('add discount'), white: true},
-                {label: 'Duplicate', onPress: () => alert('duplicate'), white: true},
+                {label: 'Hide', onPress: () => Alert.alert('hide'), white: true},
+                {label: 'Add Discount', onPress: () => Alert.alert('add discount'), white: true},
+                {label: 'Duplicate', onPress: () => Alert.alert('duplicate'), white: true},
               ]}
             />
           </View>

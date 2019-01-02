@@ -28,7 +28,7 @@ export default class LoadingScreen extends Component {
         {loading &&
         <LoaderScreen
           color={Colors.blue60}
-          message="Loading..."
+          message='Loading...'
           overlay
           // backgroundColor={Colors.rgba(Colors.dark80, 0.85)}
           {...animationConfig}

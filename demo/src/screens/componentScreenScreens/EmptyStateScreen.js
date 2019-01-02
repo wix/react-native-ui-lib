@@ -33,17 +33,17 @@ export default class EmptyStateScreen extends Component {
         >
           <View style={styles.pageView}>
             <StateScreen
-              title="Oppsie (with local image)"
-              subtitle="Nothing to see here.."
-              ctaLabel="OK"
+              title='Oppsie (with local image)'
+              subtitle='Nothing to see here..'
+              ctaLabel='OK'
               imageSource={localImageSource}
             />
           </View>
           <View style={styles.pageView}>
             <StateScreen
-              title="Oppsie (with remote image)"
-              subtitle="Nothing to see here.."
-              ctaLabel="OK"
+              title='Oppsie (with remote image)'
+              subtitle='Nothing to see here..'
+              ctaLabel='OK'
               imageSource={remoteImageSource}
             />
           </View>

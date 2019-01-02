@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Alert, FlatList} from 'react-native';
 import * as Animatable from 'react-native-animatable';
@@ -17,7 +16,7 @@ export default class BasicListScreen extends Component {
     };
   }
 
-  keyExtractor = (item, index) => item.name;
+  keyExtractor = item => item.name;
 
   renderRow(row, id) {
     const statusColor = row.inventory.status === 'Paid' ? Colors.green30 : Colors.red30;

@@ -7,6 +7,7 @@ import {BaseComponent} from '../../commons';
 /**
  * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
  * @extends: TouchableOpacity
+ * @modifiers: margins, paddings, alignments, background, borderRadius
  * @extendslink: https://facebook.github.io/react-native/docs/touchableopacity.html
  * @gif: https://media.giphy.com/media/xULW8AMIgw7l31zjm8/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.js
@@ -40,6 +41,7 @@ export default class TouchableOpacity extends BaseComponent {
   }
 
   state = {
+    ...this.state,
     active: false,
   };
 
@@ -57,7 +59,7 @@ export default class TouchableOpacity extends BaseComponent {
     _.invoke(this.props, 'onPressOut', ...args);
   }
 
-  get backgroundStyle() {
+  get activeBackgroundStyle() {
     const {active} = this.state;
     const {activeBackgroundColor} = this.props;
 
@@ -67,7 +69,8 @@ export default class TouchableOpacity extends BaseComponent {
   }
 
   render() {
-    const {throttle, ...others} = this.getThemeProps();
+    const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle} = this.state;
+    const {throttle, style, ...others} = this.getThemeProps();
 
     return (
       <RNTouchableOpacity
@@ -75,7 +78,16 @@ export default class TouchableOpacity extends BaseComponent {
         onPress={this.onPress}
         onPressIn={this.onPressIn}
         onPressOut={this.onPressOut}
-        style={[this.props.style, this.backgroundStyle]}
+        style={[
+          backgroundColor && {backgroundColor},
+          borderRadius && {borderRadius},
+          flexStyle,
+          paddings,
+          margins,
+          alignments,
+          style,
+          this.activeBackgroundStyle,
+        ]}
       />
     );
   }

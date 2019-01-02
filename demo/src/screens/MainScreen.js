@@ -36,6 +36,18 @@ export default class UiLibExplorerMenu extends Component {
     // this.openScreen({name: 'unicorn.components.ToastsScreen', title: 'Testing'});
   }
 
+  /** Events */
+  onChangePage(newPage) {
+    this.setState({
+      currentPage: newPage,
+    });
+  }
+
+  onSearchBoxBlur() {
+    this.closeSearchBox();
+    this.filterExplorerScreens('');
+  }
+
   /** Navigation */
   getMenuData() {
     return this.props.navigationData || navigationData;
@@ -114,18 +126,6 @@ export default class UiLibExplorerMenu extends Component {
     });
   }
 
-  /** Events */
-  onChangePage(newPage) {
-    this.setState({
-      currentPage: newPage,
-    });
-  }
-
-  onSearchBoxBlur() {
-    this.closeSearchBox();
-    this.filterExplorerScreens('');
-  }
-
   /** Actions */
   toggleTopBar = (shouldShow) => {
     Navigation.mergeOptions(this.props.componentId, {
@@ -183,7 +183,7 @@ export default class UiLibExplorerMenu extends Component {
       <View row spread style={{height: Constants.isIOS ? (Constants.isIphoneX ? 80 : 60) : 56}}>
         <TextField
           ref={r => (this.toggledSearch = r)}
-          placeholder="Search your component.."
+          placeholder='Search your component..'
           onChangeText={this.filterExplorerScreens}
           onBlur={this.onSearchBoxBlur}
           onDismiss={this.onSearchBoxBlur}
@@ -294,7 +294,7 @@ export default class UiLibExplorerMenu extends Component {
     return (
       <View paddingH-24>
         <FlatList
-          keyboardShouldPersistTaps="always"
+          keyboardShouldPersistTaps='always'
           data={flatData}
           keyExtractor={(item, index) => index.toString()}
           renderItem={this.renderItem}

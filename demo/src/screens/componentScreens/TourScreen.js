@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
 import {Colors, View, Text, Button, Assets, Tour} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class TourScreen extends Component {
@@ -24,15 +23,15 @@ export default class TourScreen extends Component {
         <Tour
           visible={this.state.showButtonTour}
           overlayColor={Colors.dark10}
-          message="Check out this nice button and how nice it is"
+          message='Check out this nice button and how nice it is'
           onClose={() => this.setState({showButtonTour: false})}
         >
           <View centerH ref2={r => (this.target = r)} onLayout2={() => this.saveLayout()}>
-            <Button label="Show Tour" onPress={() => this.setState({showButtonTour: true})} />
+            <Button label='Show Tour' onPress={() => this.setState({showButtonTour: true})} />
           </View>
         </Tour>
         <Text text70>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s
           standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
           make a type specimen book.
         </Text>
@@ -50,5 +49,3 @@ export default class TourScreen extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({});
