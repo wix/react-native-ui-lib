@@ -34,7 +34,7 @@ class CarouselScreen extends Component {
             <Text>PAGE 6</Text>
           </Page>
         </Carousel>
-        <View center style={{...StyleSheet.absoluteFillObject}} pointerEvents="none">
+        <View center style={{...StyleSheet.absoluteFillObject}} pointerEvents='none'>
           <Text text10>{this.state.currentPage}</Text>
         </View>
       </View>

@@ -54,13 +54,13 @@ export default class FormScreen extends Component {
 
   render() {
     return (
-      <ScrollView keyboardShouldPersistTaps="always">
+      <ScrollView keyboardShouldPersistTaps='always'>
         <View style={styles.container}>
-          <TagsInput containerStyle={{marginBottom: 20}} placeholder="Enter Tags" tags={this.state.tags2} />
+          <TagsInput containerStyle={{marginBottom: 20}} placeholder='Enter Tags' tags={this.state.tags2} />
 
           <TagsInput
             containerStyle={{marginBottom: 20}}
-            placeholder="with disableTagAdding disableTagRemoval"
+            placeholder='with disableTagAdding disableTagRemoval'
             tags={this.state.tags3}
             disableTagRemoval
             disableTagAdding
@@ -69,7 +69,7 @@ export default class FormScreen extends Component {
           <TagsInput
             ref={r => (this.customTagsInput = r)}
             containerStyle={{marginBottom: 20}}
-            placeholder="With custom tags"
+            placeholder='With custom tags'
             tags={this.state.tags}
             renderTag={this.renderCustomTag}
             onCreateTag={value => ({label: value})}
@@ -87,7 +87,7 @@ export default class FormScreen extends Component {
           />
 
           <Picker
-            placeholder="Pick a single language"
+            placeholder='Pick a single language'
             value={this.state.language}
             enableModalBlur={false}
             onChange={item => this.setState({language: item})}
@@ -104,7 +104,7 @@ export default class FormScreen extends Component {
 
           <View marginT-20>
             <Picker
-              placeholder="Pick multiple Languages"
+              placeholder='Pick multiple Languages'
               value={this.state.languages}
               onChange={items => this.setState({languages: items})}
               mode={Picker.modes.MULTI}
@@ -115,8 +115,8 @@ export default class FormScreen extends Component {
           </View>
 
           <Picker
-            title="Native Picker"
-            placeholder="Pick a Language"
+            title='Native Picker'
+            placeholder='Pick a Language'
             useNativePicker
             value={this.state.nativePickerValue}
             onChange={nativePickerValue => this.setState({nativePickerValue})}
@@ -131,7 +131,8 @@ export default class FormScreen extends Component {
             // }}
             // topBarProps={{doneLabel: 'YES', cancelLabel: 'NO'}}
           >
-            {_.map(options, option => <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled} />)}
+            {_.map(options, option => 
+              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>)}
           </Picker>
 
           <Text marginT-20 marginB-10 text70 dark60>

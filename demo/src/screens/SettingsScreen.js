@@ -59,7 +59,7 @@ class SettingsScreen extends Component {
             Set default screen to open on app startup
           </Text>
           <Picker
-            placeholder="Pick default screen..."
+            placeholder='Pick default screen...'
             showSearch
             value={defaultScreen}
             onChange={this.setDefaultScreen}
@@ -70,7 +70,7 @@ class SettingsScreen extends Component {
           </Picker>
         </View>
         <Text titleHuge>Settings</Text>
-        <Toast visible={showRefreshMessage} position="bottom" message="Refresh the app!"/>
+        <Toast visible={showRefreshMessage} position='bottom' message='Refresh the app!'/>
       </View>
     );
   }
