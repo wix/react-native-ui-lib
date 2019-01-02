@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Alert, ScrollView} from 'react-native';
-import {MeasureText, Colors, Typography, View, Drawer, Text, Button, ListItem, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, Typography, View, Drawer, Text, Button, ListItem, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
 
 
@@ -81,7 +81,7 @@ export default class DrawerScreen extends Component {
     if (item && !item.width && !_.isEmpty(item.text)) {
       const horizontalPadding = 12;
       const typography = Typography.text70;
-      const width = await MeasureText.measureWidth(item.text, typography);
+      const width = await Typography.measureWidth(item.text, typography);
       const itemCopy = item;
       itemCopy.width = width + (horizontalPadding * 2);
       return itemCopy;
