@@ -8,5 +8,4 @@ module.exports = {
   get Components() { return require('./components').default; },
   get ThemeManager() { return require('./themeManager').default; },
   get AnimatableManager() { return require('./animatableManager').default; },
-  get MeasureText() { return require('./measureText').default; },
 };
