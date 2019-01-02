@@ -27,8 +27,7 @@ export default class DrawerScreen extends Component {
       ],
     };
 
-    this.setLeftItemWidth();
-    this.setRightItemsWidths();
+    this.setItemsWidths();
   }
 
   onPress = () => {
@@ -62,8 +61,9 @@ export default class DrawerScreen extends Component {
   }
 
   // Measure item text to calculate items' widths
-  async setRightItemsWidths() {
-    const {rightItems} = this.state;
+  async setItemsWidths() {
+    const {rightItems, leftItem} = this.state;
+    
     if (rightItems) {
       const promises = rightItems.map((item) => {
         return this.setItemWidth(item);
@@ -71,9 +71,7 @@ export default class DrawerScreen extends Component {
       const data = await Promise.all(promises);
       this.setState({rightItems: data});
     }
-  }
-  async setLeftItemWidth() {
-    const {leftItem} = this.state;
+
     if (leftItem) {
       const item = await this.setItemWidth(leftItem);
       this.setState({leftItem: item});
