@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import {ScrollView, StyleSheet, Switch} from 'react-native';
+import {ScrollView, Switch} from 'react-native';
 import {View, TextField, Text, Badge, Colors} from 'react-native-ui-lib';//eslint-disable-line
 
 export default class DemoScreen extends Component {
@@ -74,7 +74,7 @@ export default class DemoScreen extends Component {
           enableError={false}
           value={this.state[propId]}
           onChangeText={text => this.updatePropValue(text, propId, prop)}
-          autoCapitalize="none"
+          autoCapitalize='none'
         />
       </View>
     );

@@ -7,7 +7,14 @@ const examples = [
   {title: 'Empty Avatar', ribbonLabel: 'New'},
   {title: 'Custom Background', backgroundColor: Colors.violet60},
   {title: 'Initials (online)', label: 'ES', isOnline: true, status: Avatar.modes.NONE},
-  {title: 'Initials with Color', label: 'AD', backgroundColor: Colors.yellow60, labelColor: Colors.orange20, ribbonLabel: 'New', ribbonStyle: {backgroundColor: Colors.purple30}},
+  {
+    title: 'Initials with Color', 
+    label: 'AD', 
+    backgroundColor: Colors.yellow60, 
+    labelColor: Colors.orange20, 
+    ribbonLabel: 'New', 
+    ribbonStyle: {backgroundColor: Colors.purple30},
+  },
   {title: 'Image (online)', imageSource: {uri: 'https://lh3.googleusercontent.com/-cw77lUnOvmI/AAAAAAAAAAI/AAAAAAAAAAA/WMNck32dKbc/s181-c/104220521160525129167.jpg'}, isOnline: true},
   {
     title: 'Monitored Avatar (see logs)',
@@ -46,7 +53,10 @@ export default class AvatarsScreen extends Component {
     const uri = _.get(imageSource, 'uri');
     const isGravatar = !!uri && AvatarHelper.isGravatarUrl(uri);
     const patchedGravatar = isGravatar ? AvatarHelper.patchGravatarUrl(uri) : undefined;
-    const message = `Label: ${label}\n\nImage-source: ${uri}\n\nIs Gravatar: ${isGravatar}\n\n${patchedGravatar ? `Patched-uri: ${patchedGravatar}` : ''}`;
+    const message = 
+      `Label: ${label}\n\nImage-source: ${uri}\n\nIs Gravatar: ${isGravatar}\n\n${patchedGravatar ? 
+        `Patched-uri: ${patchedGravatar}` : ''
+      }`;
     Alert.alert(title, message);
   }
 

@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
 import {Alert, StyleSheet, ScrollView, FlatList} from 'react-native';
 import * as Animatable from 'react-native-animatable';
@@ -41,7 +40,7 @@ export default class ListAnimationsScreen extends Component {
     this.setState({animation: undefined});
   }
 
-  keyExtractor = (item, index) => item.id;
+  keyExtractor = item => item.id;
 
   reload(animation) {
     this.setState({visible: false, animation});
@@ -94,17 +93,17 @@ export default class ListAnimationsScreen extends Component {
     return (
       <View flex>
         <View row center>
-          <Button outline size="medium" margin-10 label="Entrance" onPress={() => this.reload(animationType.ENTRANCE)}/>
-          <Button outline size="medium" margin-10 label="Fade In" onPress={() => this.reload(animationType.FADE_IN)}/>
+          <Button outline size='medium' margin-10 label='Entrance' onPress={() => this.reload(animationType.ENTRANCE)}/>
+          <Button outline size='medium' margin-10 label='Fade In' onPress={() => this.reload(animationType.FADE_IN)}/>
         </View>
         <View row center>
-          <Button outline size="medium" margin-10 label={`Add at index: ${counter}`} onPress={() => this.addItem()}/>
+          <Button outline size='medium' margin-10 label={`Add at index: ${counter}`} onPress={() => this.addItem()}/>
           <Button 
-            round outline size="large" label="+" 
+            round outline size='large' label='+' 
             onPress={() => this.setState({counter: counter < items.length ? counter + 1 : counter})}
           />
           <Button 
-            round outline size="large" margin-10 label="-" 
+            round outline size='large' margin-10 label='-' 
             onPress={() => this.setState({counter: counter !== 0 ? counter - 1 : 0})}
           />
         </View>

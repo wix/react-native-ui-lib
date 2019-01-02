@@ -73,28 +73,32 @@ module.exports = {
         }
       }
 
-      if (component && isComponentDeprecated(component)) {
-        const deprecatedComponent = getDeprecatedObject(component);
-        if (isComponentImportMatch(deprecatedComponent)) {
-          const name = deprecatedComponent.component;
-          const message = deprecatedComponent.message;
-          const fix = deprecatedComponent.fix;
-          const props = deprecatedComponent.props;
-
-          if (!props) {
-            reportDeprecatedComponentOrProps(node, {name, message, fix});
-          } else {
-            const nodeAttributes = node.attributes;
-            nodeAttributes.forEach((att) => {
-              if (att.type === 'JSXAttribute') {
-                checkPropDeprecation(att, att.name.name, props, name);
-              } else if (att.type === 'JSXSpreadAttribute') {
-                const spreadSource = utils.findValueNodeOfIdentifier(att.argument.name, context.getScope());
-                _.forEach(spreadSource.properties, (property) => {
-                  checkPropDeprecation(property.key, property.key.name, props, name);
-                });
-              }
-            });
+      if (component) {
+        if (isComponentDeprecated(component)) {
+          const deprecatedComponent = getDeprecatedObject(component);
+          if (isComponentImportMatch(deprecatedComponent)) {
+            const name = deprecatedComponent.component;
+            const message = deprecatedComponent.message;
+            const fix = deprecatedComponent.fix;
+            const props = deprecatedComponent.props;
+  
+            if (!props) {
+              reportDeprecatedComponentOrProps(node, {name, message, fix});
+            } else {
+              const nodeAttributes = node.attributes;
+              nodeAttributes.forEach((att) => {
+                if (att.type === 'JSXAttribute') {
+                  checkPropDeprecation(att, att.name.name, props, name);
+                } else if (att.type === 'JSXSpreadAttribute') {
+                  const spreadSource = utils.findValueNodeOfIdentifier(att.argument.name, context.getScope());
+                  if (spreadSource) {
+                    _.forEach(spreadSource.properties, (property) => {
+                      checkPropDeprecation(property.key, property.key.name, props, name);
+                    });
+                  }
+                }
+              });
+            }
           }
         }
       }

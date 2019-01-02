@@ -1,5 +1,5 @@
-// const validColors = require("./src/style/colorsPalette").colorsPalette;
-// const extraFixColorsMap = require("./src/style/colorsPalette").extraFixColorsMap;
+// const validColors = require('./src/style/colorsPalette').colorsPalette;
+// const extraFixColorsMap = require('./src/style/colorsPalette').extraFixColorsMap;
 // const assetsDepJson = require('./eslint-rules/tests/assets_deprecation.json');
 // const deprecationsJson = require('./eslint-rules/tests/component_deprecation.json');
 

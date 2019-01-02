@@ -36,7 +36,7 @@ export default class HighlightOverlayViewScreen extends PureComponent {
       >
         <View marginT-125 paddingH-14 right>
           <Text text50 black style={{textAlign: 'right'}}>{'Check out this new amazing feature, just tap here!'}</Text>
-          <Button marginT-15 link blue30 text50M label="Got it" onPress={() => this.setState({showFTE: false})}/>
+          <Button marginT-15 link blue30 text50M label='Got it' onPress={() => this.setState({showFTE: false})}/>
         </View>
       </HighlighterOverlayView>
     );
