@@ -12,7 +12,6 @@ import CardSection from './CardSection';
 import CardItem from './CardItem';
 import CardImage from './CardImage';
 
-
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 
 /**
@@ -67,15 +66,11 @@ class Card extends BaseComponent {
     /**
      * Additional styles for the top container
      */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * Use to identify the component in tests
-     */
-    testID: PropTypes.string,
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
   };
 
   static defaultProps = {
-    enableShadow: true,
+    enableShadow: true
   };
 
   generateStyles() {
@@ -87,7 +82,7 @@ class Card extends BaseComponent {
     return {
       blurType: 'light',
       blurAmount: 5,
-      ...blurOptions,
+      ...blurOptions
     };
   }
 
@@ -125,9 +120,9 @@ class Card extends BaseComponent {
   get blurBgStyle() {
     const {enableBlur} = this.getThemeProps();
     if (Constants.isIOS && enableBlur) {
-      return {backgroundColor: Colors.rgba(Colors.white, 0.85)}; 
+      return {backgroundColor: Colors.rgba(Colors.white, 0.85)};
     } else {
-      return {backgroundColor: Colors.white}; 
+      return {backgroundColor: Colors.white};
     }
   }
 
@@ -136,7 +131,7 @@ class Card extends BaseComponent {
     const children = React.Children.map(this.props.children, (child, index) => {
       if (_.get(child, 'type') === CardImage) {
         const position = this.calcImagePosition(index);
-        return React.cloneElement(child, {key: index, position, borderRadius});
+        return React.cloneElement(child, {/* key: index, */ position, borderRadius});
       }
       return child;
     });
@@ -144,23 +139,11 @@ class Card extends BaseComponent {
   }
 
   render() {
-    const {
-      row,
-      width,
-      height,
-      onPress,
-      style,
-      containerStyle,
-      enableShadow,
-      borderRadius,
-      enableBlur,
-      testID,
-      ...others
-    } = this.getThemeProps();
+    const {onPress, style, containerStyle, enableShadow, borderRadius, enableBlur, ...others} = this.getThemeProps();
     const blurOptions = this.getBlurOptions();
     const Container = onPress ? TouchableOpacity : View;
     const brRadius = borderRadius || DEFAULT_BORDER_RADIUS;
-    
+
     return (
       <Container
         style={[
@@ -170,18 +153,16 @@ class Card extends BaseComponent {
           this.shadowStyle,
           this.blurBgStyle,
           containerStyle,
-          style,
+          style
         ]}
         onPress={onPress}
         delayPressIn={10}
         activeOpacity={0.6}
-        testID={testID}
         {...others}
       >
-        {Constants.isIOS && enableBlur && <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions}/>}
-        <View width={width} height={height} row={row} style={[this.styles.innerContainer, {borderRadius: brRadius}]}>
-          {this.renderChildren()}
-        </View>
+        {Constants.isIOS && enableBlur && <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions} />}
+
+        {this.renderChildren()}
       </Container>
     );
   }
@@ -193,23 +174,19 @@ function createStyles({width, height, borderRadius = DEFAULT_BORDER_RADIUS}) {
       width,
       height,
       overflow: 'visible',
-      borderRadius,
+      borderRadius
     },
-    containerShadow: { // sh30 bottom
+    containerShadow: {
+      // sh30 bottom
       shadowColor: Colors.dark40,
       shadowOpacity: 0.25,
       shadowRadius: 12,
-      shadowOffset: {height: 5, width: 0},
-    },
-    innerContainer: {
-      borderRadius,
-      overflow: 'hidden',
-      flexGrow: 1,
+      shadowOffset: {height: 5, width: 0}
     },
     blurView: {
       ...StyleSheet.absoluteFillObject,
-      borderRadius,
-    },
+      borderRadius
+    }
   });
 }
 
