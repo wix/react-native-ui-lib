@@ -56,7 +56,7 @@ export default class Button extends BaseComponent {
     /**
      * Icon image source
      */
-    iconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    iconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.func]),
     /**
      * Icon image style
      */
@@ -416,7 +416,11 @@ export default class Button extends BaseComponent {
     const {iconSource} = this.props;
     if (iconSource) {
       const iconStyle = this.getIconStyle();
-      return <Image source={iconSource} style={iconStyle} />;
+      if (typeof iconSource === 'function') {
+        return iconSource(iconStyle);
+      } else {
+        return <Image source={iconSource} style={iconStyle} />;
+      }
     }
     return null;
   }
