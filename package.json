@@ -77,7 +77,7 @@
     "react-native": "0.57.3",
     "react-native-keyboard-aware-scrollview": "^2.0.0",
     "react-native-keyboard-tracking-view": "^5.3.2",
-    "react-native-navigation": "^2.0.2587",
+    "react-native-navigation": "^2.3.0",
     "shell-utils": "^1.0.10",
     "typescript": "^2.9.2"
   },
