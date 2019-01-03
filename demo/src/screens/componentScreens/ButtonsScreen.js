@@ -412,7 +412,21 @@ export default class ButtonsScreen extends DemoScreen {
               <Image source={plusIcon} />
               <Text style={{marginLeft: 10, color: Colors.blue30}}>Custom Icon</Text>
             </Button>
-
+            <Button
+              label={'Custom Icon Renderer'}
+              outline
+              onPress={() => Alert.alert('Custom icon renderer')}
+              style={{marginBottom: ButtonSpace}}
+              iconSource={iconStyle => <View
+                style={{
+                  width: 20,
+                  height: 20,
+                  backgroundColor: iconStyle[0].tintColor,
+                  borderRadius: 10,
+                  marginRight: iconStyle[0].marginRight,
+                }}
+              />}
+            />
             <Button text90 link style={{marginBottom: ButtonSpace}} iconSource={plusIcon} label='link icon' />
 
             <Button text90 link disabled style={{marginBottom: ButtonSpace}} iconSource={plusIcon} label='disabled link' />
