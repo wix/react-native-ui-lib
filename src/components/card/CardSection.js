@@ -15,6 +15,12 @@ import View from '../view';
  */
 export default class CardSection extends BaseComponent {
 
+  constructor(props) {
+    super(props);
+
+    console.warn('uilib will depreciate "Card.Section" soon, please use "View" component with modifiers instead');
+  }
+
   static displayName = 'Card.Section';
 
   static propTypes = {
