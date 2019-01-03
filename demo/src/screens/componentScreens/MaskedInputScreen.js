@@ -1,18 +1,7 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import _ from 'lodash';
-import {
-  View,
-  Assets,
-  Constants,
-  Button,
-  Colors,
-  Text,
-  TextInput,
-  TextArea,
-  Typography,
-  MaskedInput,
-} from 'react-native-ui-lib'; //eslint-disable-line
+import {Typography, View, Text, MaskedInput} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class MaskedInputScreen extends Component {
   constructor(props) {
@@ -66,7 +55,7 @@ export default class MaskedInputScreen extends Component {
       <View flex>
         <ScrollView
           contentContainerStyle={styles.container}
-          keyboardShouldPersistTaps="always"
+          keyboardShouldPersistTaps='always'
         >
           <Text text40 marginB-20>
             Masked Inputs
@@ -78,20 +67,18 @@ export default class MaskedInputScreen extends Component {
           <MaskedInput
             ref={r => (this.minput = r)}
             renderMaskedText={this.renderTimeText}
-            caretHidden
             keyboardType={'numeric'}
             maxLength={4}
             value={'15'}
           />
+
           <Text text70 marginT-40>
             Price/Discount
           </Text>
           <MaskedInput
             renderMaskedText={this.renderPrice}
-            caretHidden
             keyboardType={'numeric'}
           />
-
         </ScrollView>
       </View>
     );

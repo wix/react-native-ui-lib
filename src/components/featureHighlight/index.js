@@ -9,17 +9,17 @@ import Button from '../button';
 import {Colors} from '../../style';
 import {Constants} from '../../helpers';
 import {HighlighterOverlayView} from '../../nativeComponents';
+import Typography from '../../style/typography';
 
 const defaultOverlayColor = Colors.rgba(Colors.black, 0.82);
 const defaultTextColor = Colors.white;
 const defaultStrokeColor = Colors.rgba(Colors.white, 0.12);
 const defaultStrokeWidth = 12;
-const contentViewPadding = Constants.isIOS ? 35 : 32;
+const contentViewPadding = 32;
 const contentViewRightMargin = Constants.isIOS ? 45 : 46;
-const titleBottomMargin = Constants.isIOS ? 15 : 12;
-const messageBottomMargin = Constants.isIOS ? 30 : 24;
-const titleLineHeight = Constants.isAndroid ? 26 : 24;
-const messageLineHeight = 22;
+const titleBottomMargin = 12;
+const messageBottomMargin = 24;
+const messageLineHeight = 24;
 const defaultButtonLabel = 'Got it';
 const contentViewHeight = Constants.isAndroid ? 268 : 282;
 
@@ -242,7 +242,8 @@ class FeatureHighlight extends BaseComponent {
         )}
         <Button
           label={defaultButtonLabel}
-          size="small"
+          size="medium"
+          labelStyle={{...Typography.text80, fontWeight: '700'}}
           outline
           outlineColor={color}
           activeBackgroundColor={Colors.rgba(color, 0.3)}
@@ -289,12 +290,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   title: {
-    fontWeight: '500',
     marginBottom: titleBottomMargin,
-    lineHeight: titleLineHeight,
+    lineHeight: Typography.text60.lineHeight,
+    fontWeight: '900',
   },
   message: {
     marginBottom: messageBottomMargin,
+    ...Typography.text70,
     lineHeight: messageLineHeight,
   },
   touchableOverlay: {

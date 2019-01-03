@@ -32,6 +32,7 @@ module.exports = {
           options.prop === undefined
             ? `The '${options.name}' component is deprecated. ${options.message}${dueDateNotice}`
             : `The '${options.name}' component's prop '${options.prop}' is deprecated. ${options.message}${dueDateNotice}`;
+        
         context.report({
           node,
           message: `${msg}`,
@@ -62,36 +63,42 @@ module.exports = {
       }
     }
 
-    function deprecationCheck(node) {
-      let component;
-      if (node.name.object) {
-        component = `${node.name.object.name}.${node.name.property.name}`;
-      } else {
-        component = node.name.name;
+    function deprecationCheck(node, componentName) {
+      let component = componentName;
+      if (!componentName && node.name) {
+        if (node.name.object) {
+          component = `${node.name.object.name}.${node.name.property.name}`;
+        } else {
+          component = node.name.name;
+        }
       }
 
-      if (component && isComponentDeprecated(component)) {
-        const deprecatedComponent = getDeprecatedObject(component);
-        if (isComponentImportMatch(deprecatedComponent)) {
-          const name = deprecatedComponent.component;
-          const message = deprecatedComponent.message;
-          const fix = deprecatedComponent.fix;
-          const props = deprecatedComponent.props;
-
-          if (!props) {
-            reportDeprecatedComponentOrProps(node, {name, message, fix});
-          } else {
-            const nodeAttributes = node.attributes;
-            nodeAttributes.forEach((att) => {
-              if (att.type === 'JSXAttribute') {
-                checkPropDeprecation(att, att.name.name, props, name);
-              } else if (att.type === 'JSXSpreadAttribute') {
-                const spreadSource = utils.findValueNodeOfIdentifier(att.argument.name, context.getScope());
-                _.forEach(spreadSource.properties, (property) => {
-                  checkPropDeprecation(property.key, property.key.name, props, name);
-                });
-              }
-            });
+      if (component) {
+        if (isComponentDeprecated(component)) {
+          const deprecatedComponent = getDeprecatedObject(component);
+          if (isComponentImportMatch(deprecatedComponent)) {
+            const name = deprecatedComponent.component;
+            const message = deprecatedComponent.message;
+            const fix = deprecatedComponent.fix;
+            const props = deprecatedComponent.props;
+  
+            if (!props) {
+              reportDeprecatedComponentOrProps(node, {name, message, fix});
+            } else {
+              const nodeAttributes = node.attributes;
+              nodeAttributes.forEach((att) => {
+                if (att.type === 'JSXAttribute') {
+                  checkPropDeprecation(att, att.name.name, props, name);
+                } else if (att.type === 'JSXSpreadAttribute') {
+                  const spreadSource = utils.findValueNodeOfIdentifier(att.argument.name, context.getScope());
+                  if (spreadSource) {
+                    _.forEach(spreadSource.properties, (property) => {
+                      checkPropDeprecation(property.key, property.key.name, props, name);
+                    });
+                  }
+                }
+              });
+            }
           }
         }
       }
@@ -109,8 +116,16 @@ module.exports = {
         if (specifiers) {
           specifiers.forEach((s) => {
             importSpecifiers[source].push(s.local.name);
+            checkSpecifier(s.local.name, node);
           });
         }
+      }
+    }
+
+    function checkSpecifier(name, node) {
+      const deprecatedComponent = getDeprecatedObject(name);
+      if (deprecatedComponent && !deprecatedComponent.props) {
+        deprecationCheck(node, name);
       }
     }
 
@@ -160,8 +175,8 @@ module.exports = {
     }
 
     return {
-      JSXOpeningElement: node => deprecationCheck(node),
       ImportDeclaration: node => createImportsObject(node),
+      JSXOpeningElement: node => deprecationCheck(node),
     };
   },
 };

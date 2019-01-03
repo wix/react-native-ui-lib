@@ -1,9 +1,5 @@
-import StateScreen from './stateScreen';
-import Modal from './modal';
-import LoaderScreen from './loaderScreen';
-
-export {
-  LoaderScreen,
-  Modal,
-  StateScreen,
+module.exports = {
+  get StateScreen() { return require('./stateScreen').default; },
+  get Modal() { return require('./modal').default; },
+  get LoaderScreen() { return require('./loaderScreen').default; },
 };

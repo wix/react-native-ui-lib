@@ -18,7 +18,7 @@ const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 /**
  * @description: Card component
  * @extends: TouchableOpacity
- * @extendsnotes: (when passing onPress)
+ * @extendsnotes: (Touchable when passing onPress)
  * @extendslink: docs/TouchableOpacity
  * @modifiers: margin, padding
  * @gif: https://media.giphy.com/media/l0HU9SKWmv0VTOYMM/giphy.gif
@@ -77,15 +77,6 @@ class Card extends BaseComponent {
   static defaultProps = {
     enableShadow: true,
   };
-
-  // constructor(props) {
-  //   super(props);
-
-  //   // TODO: enable this warning 
-  //   // if (props.containerStyle !== undefined) {
-  //   //   console.warn('Card\'s "containerStyle" prop will be deprecated soon. Please use style prop instead');
-  //   // }
-  // }
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
@@ -149,7 +140,6 @@ class Card extends BaseComponent {
       }
       return child;
     });
-    
     return children;
   }
 

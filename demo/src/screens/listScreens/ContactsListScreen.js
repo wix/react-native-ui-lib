@@ -1,38 +1,30 @@
 import React, {Component} from 'react';
-import {ListView, Alert, StyleSheet} from 'react-native';
-import {ListItem, Text, Avatar, Badge, ThemeManager, AvatarHelper} from 'react-native-ui-lib';//eslint-disable-line
+import {StyleSheet, Alert, FlatList} from 'react-native';
+import {AnimatableManager, ThemeManager, ListItem, Text, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
+
 
 export default class ContactsListScreen extends Component {
 
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2,
-      sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-    });
+    
     this.state = {
-      dataSource: ds.cloneWithRows(conversations),
       onEdit: false,
       updating: false,
     };
   }
 
-  onItemPressed(id) {
-    alert(`item pressed: ${id}`); // eslint-disable-line
-  }
+  keyExtractor = item => item.name;
 
   renderRow(row, id) {
     const initials = AvatarHelper.getInitials(row.name);
-    const animationProps = {
-      animation: 'basicListEntrance',
-      duration: 600,
-      delay: 10 + ((Number(id) % 12) * 40),
-      easing: 'ease-out-quint',
-    };
+    const animationProps = AnimatableManager.getEntranceByIndex(id);
+
     return (
       <ListItem
-        onPress={() => Alert.alert(`pressed on contact # ${id}`)}
+        key={id}
+        onPress={() => Alert.alert(`pressed on contact #${id + 1}`)}
         {...animationProps}
       >
         <ListItem.Part left>
@@ -52,9 +44,10 @@ export default class ContactsListScreen extends Component {
 
   render() {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={(row, sectionId, rowId) => this.renderRow(row, rowId)}
+      <FlatList
+        data={conversations}
+        renderItem={({item, index}) => this.renderRow(item, index)}
+        keyExtractor={this.keyExtractor}
       />
     );
   }

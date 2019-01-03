@@ -22,7 +22,7 @@ export default class ColorsScreen extends Component {
                     ({value})
                   </Text>
                 </View>
-                <View style={{borderRadius: value}} bg-yellow30 width="40%" height="40%" />
+                <View style={{borderRadius: value}} bg-yellow30 width='40%' height='40%' />
               </View>
             );
           })}

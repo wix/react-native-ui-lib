@@ -12,7 +12,6 @@ import View from '../../components/view';
 /**
  * @description: Scanner component for progress indication
  * @extends: Animated.View
- * @extendslink: https://github.com/oblador/react-native-animatable
  * @gif: https://media.giphy.com/media/l49JVcxoclUXbryiA/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/animationScreens/CardScannerScreen.js
  */

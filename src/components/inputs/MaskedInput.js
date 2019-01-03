@@ -1,12 +1,12 @@
-import React from 'react';
-import {StyleSheet, ViewPropTypes, Keyboard} from 'react-native';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import TextInput from './TextInput';
+import React from 'react';
+import {StyleSheet, ViewPropTypes, Keyboard} from 'react-native';
 import BaseInput from './BaseInput';
+import TextField from './TextField';
 import View from '../view';
 import Text from '../text';
-import TouchableOpacity from '../touchableOpacity';
+
 
 /**
  * @description: Mask Input to create custom looking inputs with custom formats
@@ -18,7 +18,7 @@ import TouchableOpacity from '../touchableOpacity';
 export default class MaskedInput extends BaseInput {
   static displayName = 'MaskedInput';
   static propTypes = {
-    ...TextInput.propTypes,
+    ...TextField.propTypes,
     /**
      * callback for rendering the custom input out of the value returns from the actual input
      */
@@ -48,35 +48,31 @@ export default class MaskedInput extends BaseInput {
     if (_.isFunction(renderMaskedText)) {
       return renderMaskedText(value);
     }
-
     return <Text>{value}</Text>;
   }
 
   render() {
     const {containerStyle} = this.props;
-    const TextInputProps = TextInput.extractOwnProps(this.props, ['containerStyle']);
+    const TextInputProps = TextField.extractOwnProps(this.props, ['containerStyle', 'style']);
+    
     return (
-      <View style={[containerStyle]}>
-        <TextInput
+      <View style={containerStyle}>
+        <TextField
           {...this.props}
-          ref={(input) => {
-            this.input = input;
-          }}
+          ref={r => (this.input = r)}
           containerStyle={styles.hiddenInputContainer}
           style={styles.hiddenInput}
           enableErrors={false}
           hideUnderline
           placeholder=""
           {...TextInputProps}
+          caretHidden
+          multiline={false}
           onChangeText={this.onChangeText}
         />
-        <TouchableOpacity
-          activeOpacity={1}
-          style={styles.maskedInputWrapper}
-          onPress={this.focus}
-        >
+        <View style={styles.maskedInputWrapper}>
           {this.renderMaskedText()}
-        </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -89,9 +85,10 @@ const styles = StyleSheet.create({
   },
   hiddenInput: {
     color: 'transparent',
+    backgroundColor: 'transparent',
     height: undefined,
   },
   maskedInputWrapper: {
-    zIndex: 1,
+    zIndex: 0,
   },
 });

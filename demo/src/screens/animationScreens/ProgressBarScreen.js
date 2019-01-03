@@ -9,14 +9,14 @@ export default class ProgressBarScreen extends Component {
     progresses: [0, 0, 0, 0],
   };
 
-  elements = new Array(4);
-
   componentDidMount() {
     this.startProgress(0, 45);
     this.startProgress(1, 25);
     this.startProgress(2, 70);
     this.startProgress(3, 15);
   }
+
+  elements = new Array(4);
 
   startProgress(index, stepSize) {
     const {progresses} = this.state;

@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
-import {TextInput} from '../inputs';
+import {TextField} from '../inputs';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
@@ -76,7 +76,7 @@ export default class TagsInput extends BaseComponent {
     /**
      * custom styling for the text input
      */
-    inputStyle: TextInput.propTypes.style,
+    inputStyle: TextField.propTypes.style,
     /**
      * should hide input underline
      */
@@ -278,7 +278,7 @@ export default class TagsInput extends BaseComponent {
     const isLastTagMarked = this.isLastTagMarked();
     return (
       <View style={styles.inputWrapper}>
-        <TextInput
+        <TextField
           ref={r => this.input = r}
           text80
           blurOnSubmit={false}

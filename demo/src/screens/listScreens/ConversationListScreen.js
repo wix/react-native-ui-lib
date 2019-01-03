@@ -1,70 +1,103 @@
 import React, {Component} from 'react';
-import {StyleSheet, ListView, Alert} from 'react-native';
-import {Avatar, AvatarHelper, Badge, Colors, ListItem, Text, ConversationList, ThemeManager} from 'react-native-ui-lib';//eslint-disable-line
+import {StyleSheet, Alert, FlatList} from 'react-native';
+import {AnimatableManager, ThemeManager, Colors, ListItem, Text, Badge, Avatar, AvatarHelper, Drawer} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
+
+
+const collectionsIcon = require('../../assets/icons/collections.png');
+const starIcon = require('../../assets/icons/star.png');
+const sharIcon = require('../../assets/icons/share.png');
 
 export default class ConversationListScreen extends Component {
 
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2,
-      sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-    });
+    
     this.state = {
-      dataSource: ds.cloneWithRows(conversations),
       onEdit: false,
       updating: false,
     };
   }
 
-  onItemPressed(id) {
-    alert(`item pressed: ${id}`); // eslint-disable-line
+  closeLast(item) {
+    if (this.last && this.last !== item) {
+      this.last.drawer.closeDrawer();
+    }
+    this.last = item;
   }
 
-  renderRow(row, id) {
-    const initials = AvatarHelper.getInitials(row.name);
-    const animationProps = {
-      animation: 'basicListEntrance',
-      duration: 400,
-      delay: 10 + ((Number(id) % 12) * 40),
-      easing: 'ease-out-quart',
+  keyExtractor = item => item.name;
+
+  renderItem(item, id) {
+    const initials = AvatarHelper.getInitials(item.name);
+    const animationProps = AnimatableManager.getEntranceByIndex(id);
+
+    const rightButtons = [
+      {
+        text: 'More',
+        icon: sharIcon,
+        background: Colors.dark60,
+        onPress: () => Alert.alert(`More press for item #${id}`),
+        width: 80,
+      },
+      {
+        text: 'Archive',
+        icon: collectionsIcon,
+        background: Colors.blue30,
+        onPress: () => Alert.alert(`Archive press for item #${id}`),
+        width: 80,
+      },
+    ];
+    const leftButton = {
+      text: 'Read',
+      icon: starIcon,
+      background: Colors.green30,
+      onPress: () => Alert.alert(`Read press for item #${id}`),
+      width: 80,
     };
 
     return (
-      <ListItem
-        height={75.8}
-        onPress={() => Alert.alert(`pressed on contact # ${id}`)}
-        {...animationProps}
+      <Drawer
+        leftItem={leftButton}
+        rightItems={rightButtons}
+        ref={r => item.drawer = r}
+        onDragStart={() => this.closeLast(item)}
       >
-        <ListItem.Part left>
-          <Avatar
-            size={54}
-            imageSource={row.thumbnail ? {uri: row.thumbnail} : null}
-            label={initials}
-            isOnline={Number(id) < 3}
-            containerStyle={{marginHorizontal: 18}}
-          />
-        </ListItem.Part>
-        <ListItem.Part middle column containerStyle={[styles.border, {paddingRight: 17}]}>
-          <ListItem.Part containerStyle={{marginBottom: 3}}>
-            <Text style={{flex: 1, marginRight: 10}} text70 color={Colors.dark10} numberOfLines={1}>{row.name}</Text>
-            <Text style={{marginTop: 2}} text90 color={Colors.dark50}>{row.timestamp}</Text>
+        <ListItem
+          height={75.8}
+          onPress={() => Alert.alert(`pressed on contact #${id + 1}`)}
+          {...animationProps}
+        >
+          <ListItem.Part left>
+            <Avatar
+              size={54}
+              imageSource={item.thumbnail ? {uri: item.thumbnail} : null}
+              label={initials}
+              isOnline={Number(id) < 3}
+              containerStyle={{marginHorizontal: 18}}
+            />
           </ListItem.Part>
-          <ListItem.Part>
-            <Text style={{flex: 1, marginRight: 10}} text80 color={Colors.dark40} numberOfLines={1}>{row.text}</Text>
-            {row.count > 0 && <Badge label={row.count} animation="fadeIn" duration={400}/>}
+          <ListItem.Part middle column containerStyle={[styles.border, {paddingRight: 17}]}>
+            <ListItem.Part containerStyle={{marginBottom: 3}}>
+              <Text style={{flex: 1, marginRight: 10}} text70 color={Colors.dark10} numberOfLines={1}>{item.name}</Text>
+              <Text style={{marginTop: 2}} text90 color={Colors.dark50}>{item.timestamp}</Text>
+            </ListItem.Part>
+            <ListItem.Part>
+              <Text style={{flex: 1, marginRight: 10}} text80 color={Colors.dark40} numberOfLines={1}>{item.text}</Text>
+              {item.count > 0 && <Badge label={item.count} animation='fadeIn' duration={400}/>}
+            </ListItem.Part>
           </ListItem.Part>
-        </ListItem.Part>
-      </ListItem>
+        </ListItem>
+      </Drawer>
     );
   }
 
   render() {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={(row, sectionId, rowId) => this.renderRow(row, rowId)}
+      <FlatList
+        data={conversations}
+        renderItem={({item, index}) => this.renderItem(item, index)}
+        keyExtractor={this.keyExtractor}
       />
     );
   }

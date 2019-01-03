@@ -1,5 +1,6 @@
-import React from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Colors} from '../../style';
@@ -8,8 +9,9 @@ import TouchableOpacity from '../../components/touchableOpacity';
 import View from '../view';
 import ListItemPart from './ListItemPart';
 
+
 /**
- * @description: List item component to render inside a ListView component
+ * @description: List item component to render inside a List component
  * @extends: TouchableOpacity
  * @extendslink: docs/TouchableOpacity
  * @gif: https://media.giphy.com/media/l1IBjHowyPcOTWAY8/giphy.gif
@@ -63,6 +65,16 @@ class ListItem extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
+  onHideUnderlay() {
+    this.setPressed(false);
+  }
+  onShowUnderlay() {
+    this.setPressed(true);
+  }
+  setPressed(isPressed) {
+    this.setState({pressed: isPressed});
+  }
+
   render() {
     const {
       containerElement,
@@ -76,10 +88,15 @@ class ListItem extends BaseComponent {
     } = this.props;
     const {pressed} = this.state;
     // const containerStyle = this.extractContainerStyle(this.props);
-    const animationProps = this.extractAnimationProps();
+    const pressedStyle = {backgroundColor: underlayColor};
     const Container = (onPress || onLongPress) ? containerElement : View;
 
-    const pressedStyle = {backgroundColor: underlayColor};
+    const animationProps = this.extractAnimationProps();
+    const InnerContainer = !_.isEmpty(animationProps) ? Animatable.View : View;
+    if (animationProps) {
+      console.warn('ListItem component will soon stop supporting animationProps.' +
+        'Please wrap your ListItem component with your own animation component, such as Animatable.View');
+    }
 
     return (
       <Container
@@ -87,17 +104,17 @@ class ListItem extends BaseComponent {
         style={[this.styles.container, containerStyle]}
         onPress={onPress}
         onLongPress={onLongPress}
-        onHideUnderlay={() => this.setState({pressed: false})}
-        onShowUnderlay={() => this.setState({pressed: true})}
+        onHideUnderlay={this.onHideUnderlay}
+        onShowUnderlay={this.onShowUnderlay}
         testID={testID}
         {...others}
       >
-        <Animatable.View
+        <InnerContainer
           {...animationProps}
           style={[this.styles.innerContainer, style, pressed && pressedStyle]}
         >
           {this.props.children}
-        </Animatable.View>
+        </InnerContainer>
       </Container>
     );
   }

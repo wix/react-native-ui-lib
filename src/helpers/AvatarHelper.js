@@ -47,6 +47,10 @@ export function isGravatarUrl(url) {
   return _.split(hostname, '.').includes('gravatar') && pathname.startsWith('/avatar/');
 }
 
+export function isBlankGravatarUrl(url) {
+  return isGravatarUrl(url) && _.endsWith(url, '?d=blank');
+}
+
 export function patchGravatarUrl(gravatarUrl) {
   const url = new URL(gravatarUrl, true);
   const {query} = url;

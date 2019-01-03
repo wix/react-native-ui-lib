@@ -151,8 +151,8 @@ export default class CardsScreen extends Component {
                       {post.likes} Likes
                     </Text>
                     <Card.Item>
-                      <Button style={{marginRight: 10}} text90 link iconSource={featureIcon} label="Feature" />
-                      <Button text90 link iconSource={shareIcon} label="Share" />
+                      <Button style={{marginRight: 10}} text90 link iconSource={featureIcon} label='Feature' />
+                      <Button text90 link iconSource={shareIcon} label='Share' />
                     </Card.Item>
                   </Card.Section>
                 </Card.Section>

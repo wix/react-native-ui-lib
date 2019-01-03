@@ -1,7 +1,7 @@
 // TODO: depreacte value allowing passing an object, allow only string or number
 // TODO: extract picker labels from children in order to obtain the
 // correct label to render (similar to what we do in NativePicker)
-// TODO: simplify this component, stop inherit from TextInput
+// TODO: simplify this component, stop inherit from TextField
 
 import _ from 'lodash';
 import PropTypes from 'prop-types';
@@ -15,7 +15,7 @@ import Modal from '../../screensComponents/modal';
 import Image from '../../components/image';
 import Text from '../../components/text';
 import Button from '../../components/button';
-import {TextInput} from '../inputs';
+import {TextField} from '../inputs';
 import * as PickerPresenter from './PickerPresenter';
 import NativePicker from './NativePicker';
 import PickerModal from './PickerModal';
@@ -31,16 +31,16 @@ const ItemType = PropTypes.shape({value: PropTypes.any, label: PropTypes.string}
 
 /**
  * @description: Picker Component, support single or multiple selection, blurModel and floatingPlaceholder
- * @extends: TextInput
- * @extendslink: docs/TextInput
+ * @extends: TextField
+ * @extendslink: docs/TextField
  * @gif: https://media.giphy.com/media/3o751SiuZZiByET2lq/giphy.gif, https://media.giphy.com/media/TgMQnyw5grJIDohzvx/giphy.gif, https://media.giphy.com/media/5hsdmVptBRskZKn787/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FormScreen.js
  */
-class Picker extends TextInput {
+class Picker extends TextField {
   static displayName = 'Picker';
   static modes = PICKER_MODES;
   static propTypes = {
-    ...TextInput.propTypes,
+    ...TextField.propTypes,
     /**
      * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
      */
@@ -106,6 +106,10 @@ class Picker extends TextInput {
      */
     onSearchChange: PropTypes.func,
     /**
+     * Render custom search input
+     */
+    renderCustomSearch: PropTypes.func,
+    /**
      * Allow to use the native picker solution (different for iOS and Android)
      */
     useNativePicker: PropTypes.bool,
@@ -117,10 +121,14 @@ class Picker extends TextInput {
      * Icon asset source for showing on the right side, appropriate for dropdown icon and such
      */
     rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * Pass props to the list component that wraps the picker options (allows to control FlatList behavior)
+     */
+    listProps: PropTypes.object,
   };
 
   static defaultProps = {
-    ...TextInput.defaultProps,
+    ...TextField.defaultProps,
     mode: PICKER_MODES.SINGLE,
     expandable: true,
     text70: true,
@@ -265,7 +273,15 @@ class Picker extends TextInput {
   }
 
   renderExpandableModal() {
-    const {mode, enableModalBlur, topBarProps, showSearch, searchStyle, searchPlaceholder} = this.getThemeProps();
+    const {
+      mode,
+      enableModalBlur,
+      topBarProps,
+      showSearch,
+      searchStyle,
+      searchPlaceholder,
+      renderCustomSearch,
+      listProps} = this.getThemeProps();
     const {showExpandableModal, selectedItemPosition} = this.state;
     return (
       <PickerModal
@@ -281,6 +297,8 @@ class Picker extends TextInput {
         searchStyle={searchStyle}
         searchPlaceholder={searchPlaceholder}
         onSearchChange={this.onSearchChange}
+        renderCustomSearch={renderCustomSearch}
+        listProps={listProps}
       >
         {this.appendPropsToChildren(this.props.children)}
       </PickerModal>

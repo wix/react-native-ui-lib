@@ -2,8 +2,8 @@ import _ from 'lodash';
 import React from 'react';
 import {BaseComponent} from '../../commons';
 import View from '../view';
-import TextInput from '../inputs/TextInput';
-import WheelPicker from '../../nativeComponents/WheelPicker';
+import TextField from '../inputs/TextField';
+import {WheelPicker} from '../../nativeComponents';
 import PickerDialog from './PickerDialog';
 
 
@@ -67,12 +67,12 @@ class Picker extends BaseComponent {
   };
 
   render() {
-    const textInputProps = TextInput.extractOwnProps(this.props);
+    const textInputProps = TextField.extractOwnProps(this.props);
     const label = this.getLabel();
     
     return (
       <View>
-        <TextInput
+        <TextField
           ref={r => (this.input = r)}
           floatingPlaceholder={false}
           enableErrors={false}
