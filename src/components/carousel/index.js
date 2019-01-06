@@ -1,10 +1,9 @@
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ScrollView, StyleSheet} from 'react-native';
-import _ from 'lodash';
-import {BaseComponent} from '../../commons';
-import View from '../view';
 import {Constants} from '../../helpers';
+import {BaseComponent} from '../../commons';
 import * as presenter from './CarouselPresenter';
 
 
@@ -129,40 +128,32 @@ export default class Carousel extends BaseComponent {
 
   render() {
     const {containerStyle, ...others} = this.props;
+    
     return (
-      <View flex style={containerStyle}>
-        <ScrollView
-          {...others}
-          ref={(scrollView) => {
-            this.carousel = scrollView;
-          }}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled
-          onScroll={this.onScroll}
-          scrollEventThrottle={200}
-          contentOffset={this.state.initialOffset}
-        >
-          {this.renderChildren()}
-        </ScrollView>
-      </View>
+      <ScrollView
+        {...others}
+        ref={(r) => { this.carousel = r; }}
+        flex 
+        style={containerStyle}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        pagingEnabled
+        onScroll={this.onScroll}
+        scrollEventThrottle={200}
+        contentOffset={this.state.initialOffset}
+      >
+        {this.renderChildren()}
+      </ScrollView>
     );
   }
 
   goToPage(pageIndex, animated = true) {
-    this.setState(
-      {
-        currentPage: pageIndex,
-      },
-      () => this.updateOffset(animated),
-    );
+    this.setState({currentPage: pageIndex}, () => this.updateOffset(animated));
   }
 }
 
 function createStyles() {
   return StyleSheet.create({
-    // container: {
-    //   flex: 1,
-    // },
+    
   });
 }
