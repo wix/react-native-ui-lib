@@ -19,10 +19,6 @@ export default function baseComponent(usePure) {
       useNativeDriver: PropTypes.bool,
     };
 
-    static defaultProps = {
-      useNativeDriver: true,
-    };
-
     static extractOwnProps(props, ignoreProps) {
       const ownPropTypes = this.propTypes;
       const ownProps = _.chain(props)
