@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import {StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
-import View from '../view';
-import Text from '../text';
+import React, { Component} from 'react';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import Colors from '../../style/colors';
 import Typography from '../../style/typography';
-
+import View from '../view';
+import Text from '../text';
 import {WheelPicker} from '../../nativeComponents';
 
 
@@ -40,11 +39,9 @@ export default class WheelPickerDialog extends Component {
   render() {
     return (
       <View style={styles.container} bg-white center>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title} >
-            {this.props.title}
-          </Text>
-        </View>
+        <Text style={styles.title} >
+          {this.props.title}
+        </Text>
 
         <WheelPicker
           onValueChange={this.onValueChange}
@@ -93,16 +90,14 @@ const styles = StyleSheet.create({
     height: 295,
     width: 280,
     flex: 0,
-    justifyContent: 'center',
-  },
-  titleContainer: {
-    alignSelf: 'flex-start',
+    justifyContent: 'center'
   },
   title: {
     marginTop: 21,
     marginLeft: 24,
     ...Typography.text60,
     color: Colors.black,
+    alignSelf: 'flex-start'
   },
   picker: {
     marginTop: 24,
@@ -110,19 +105,19 @@ const styles = StyleSheet.create({
     height: 148,
   },
   bottomButtonsContainer: {
+    flexDirection: 'row',
+    flex: 0,
     alignItems: 'center',
     marginTop: 32,
-    flex: 0,
     marginBottom: 8,
-    flexDirection: 'row',
-    marginLeft: 142,
+    marginLeft: 142
   },
   cancelButton: {
     color: Colors.blue30,
     width: 75,
     height: 36,
     textAlign: 'center',
-    textAlignVertical: 'center',
+    textAlignVertical: 'center'
   },
   okButton: {
     color: Colors.blue30,
@@ -130,7 +125,7 @@ const styles = StyleSheet.create({
     height: 36,
     textAlign: 'center',
     textAlignVertical: 'center',
-    marginHorizontal: 8,
+    marginHorizontal: 8
   },
 
 });
