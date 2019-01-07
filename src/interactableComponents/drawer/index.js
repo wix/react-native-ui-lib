@@ -9,7 +9,7 @@ import {Colors, Typography} from '../../style';
 
 
 const SCALE_POINT = 72; // scaling content style by height
-const MIN_LEFT_MARGIN = 28;
+const MIN_LEFT_MARGIN = 56;
 const DEFAULT_ICON_SIZE = 24;
 const MIN_ITEM_WIDTH = 43; // NOTE: this is the min for the input ranges calc!
 const ITEM_BG = Colors.blue30;
