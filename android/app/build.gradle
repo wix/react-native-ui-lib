@@ -77,4 +77,5 @@ dependencies {
     implementation project(':react-native-interactable')
     implementation project(':react-native-blur')
     implementation project(':react-native-ui-lib')
+    implementation project(':react-native-text-size')
 }

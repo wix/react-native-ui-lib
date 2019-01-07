@@ -22,6 +22,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		3933FFD42174BC5200CDD0F2 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3933FFD12174BC4900CDD0F2 /* libReactNativeNavigation.a */; };
 		39AF297F204DA0D200910FE4 /* libKeyboardTrackingView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39AF2958204DA0C000910FE4 /* libKeyboardTrackingView.a */; };
+		39C8E10D21D9130000BF8EA8 /* libRNTextSize.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39C8E10C21D90B1800BF8EA8 /* libRNTextSize.a */; };
 		39DA1A1221A54A060098FE14 /* libInteractable.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39DA1A1121A5497D0098FE14 /* libInteractable.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8E9D25791E67250A001EB48C /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EEDAA4C1E6723E8007266C9 /* libRNBlur.a */; };
@@ -163,6 +164,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = D834CED81CC64F2400FA5668;
 			remoteInfo = KeyboardTrackingView;
+		};
+		39C8E10B21D90B1800BF8EA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B3263B7B7C134C8495EA5E05 /* RNTextSize.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNTextSize;
 		};
 		39DA1A1021A5497D0098FE14 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -364,11 +372,13 @@
 		3933FFCB2174BC4900CDD0F2 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/lib/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		39AF2952204DA0BF00910FE4 /* KeyboardTrackingView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KeyboardTrackingView.xcodeproj; path = "../node_modules/react-native-keyboard-tracking-view/lib/KeyboardTrackingView.xcodeproj"; sourceTree = "<group>"; };
 		58CA453CF9884711B2FC29AF /* RNBlur.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
+		7228DF2448B54B64A808CE55 /* libRNTextSize.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNTextSize.a; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8E78A6F4217F48A600F3213A /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		8EB68A931E4B57C200F5CA08 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		ABA466B7BFE84EBD893EB923 /* Interactable.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = Interactable.xcodeproj; path = "../node_modules/react-native-interactable/lib/ios/Interactable.xcodeproj"; sourceTree = "<group>"; };
+		B3263B7B7C134C8495EA5E05 /* RNTextSize.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTextSize.xcodeproj; path = "../node_modules/react-native-text-size/ios/RNTextSize.xcodeproj"; sourceTree = "<group>"; };
 		D8D93E8620161B4600A39331 /* reactnativeuilib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = reactnativeuilib.xcodeproj; path = ../lib/ios/reactnativeuilib.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -377,6 +387,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39C8E10D21D9130000BF8EA8 /* libRNTextSize.a in Frameworks */,
 				39DA1A1221A54A060098FE14 /* libInteractable.a in Frameworks */,
 				8EBCD1D1217F48DC0036D32F /* libRCTBlob.a in Frameworks */,
 				3933FFD42174BC5200CDD0F2 /* libReactNativeNavigation.a in Frameworks */,
@@ -533,10 +544,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		39C8E10821D90B1800BF8EA8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				39C8E10C21D90B1800BF8EA8 /* libRNTextSize.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		39DA19E121A5497C0098FE14 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
 				1308230C8E2D429BABFA5632 /* libInteractable.a */,
+				7228DF2448B54B64A808CE55 /* libRNTextSize.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -578,6 +598,7 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				58CA453CF9884711B2FC29AF /* RNBlur.xcodeproj */,
 				ABA466B7BFE84EBD893EB923 /* Interactable.xcodeproj */,
+				B3263B7B7C134C8495EA5E05 /* RNTextSize.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -770,6 +791,10 @@
 					ProductGroup = 8EEDAA331E6723E7007266C9 /* Products */;
 					ProjectRef = 58CA453CF9884711B2FC29AF /* RNBlur.xcodeproj */;
 				},
+				{
+					ProductGroup = 39C8E10821D90B1800BF8EA8 /* Products */;
+					ProjectRef = B3263B7B7C134C8495EA5E05 /* RNTextSize.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -910,6 +935,13 @@
 			fileType = archive.ar;
 			path = libKeyboardTrackingView.a;
 			remoteRef = 39AF2957204DA0C000910FE4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		39C8E10C21D90B1800BF8EA8 /* libRNTextSize.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNTextSize.a;
+			remoteRef = 39C8E10B21D90B1800BF8EA8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		39DA1A1121A5497D0098FE14 /* libInteractable.a */ = {
@@ -1157,10 +1189,15 @@
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 					"$(SRCROOT)/../node_modules/react-native-interactable/lib/ios/Interactable",
+					"$(SRCROOT)/../node_modules/react-native-text-size/ios",
 				);
 				INFOPLIST_FILE = uilib/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/uilib\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1184,10 +1221,15 @@
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 					"$(SRCROOT)/../node_modules/react-native-interactable/lib/ios/Interactable",
+					"$(SRCROOT)/../node_modules/react-native-text-size/ios",
 				);
 				INFOPLIST_FILE = uilib/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/uilib\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

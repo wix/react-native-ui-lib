@@ -94,6 +94,18 @@ class Typography {
         .join('|')
         .value());
   }
+
+  async measureWidth(text, typography = Typography.text70, containerWidth = Constants.screenWidth) {
+    const rnTextSize = require('react-native-text-size').default;
+    if (text) {
+      const size = await rnTextSize.measure({
+        text, // text to measure, can include symbols
+        width: containerWidth, // max-width of the "virtual" container
+        ...typography, // RN font specification
+      });
+      return size.width;
+    }
+  }
 }
 
 export default new Typography();
