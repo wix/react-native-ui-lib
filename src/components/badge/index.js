@@ -157,7 +157,7 @@ export default class Badge extends BaseComponent {
 
     const animationProps = this.extractAnimationProps();
     const Container = !_.isEmpty(animationProps) ? Animatable.View : View;
-    if (animationProps) {
+    if (!_.isEmpty(animationProps)) {
       console.warn('Badge component will soon stop supporting animationProps.' +
         'Please wrap your Badge component with your own animation component, such as Animatable.View');
     }
