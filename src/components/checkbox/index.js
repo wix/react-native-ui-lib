@@ -76,7 +76,7 @@ class Checkbox extends BaseComponent {
       if (disabled) {
         style.push({backgroundColor: Colors.dark70, borderColor: Colors.dark70});
       } else {
-        style.push(color ? {backgroundColor: color} : this.styles.containerSelected);
+        style.push(color ? {backgroundColor: color, borderColor: color} : this.styles.containerSelected);
       }
     } else if (disabled) {
       style.push({borderColor: Colors.dark70});
