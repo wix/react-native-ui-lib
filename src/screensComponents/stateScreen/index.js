@@ -58,11 +58,6 @@ export default class StateScreen extends BaseComponent {
         <Image style={this.styles.image} resizeMode={'contain'} source={imageSource} />
         <Text style={[this.styles.title]}>{title}</Text>
         <Text style={[this.styles.subtitle]}>{subtitle}</Text>
-        {/* <TouchableOpacity onPress={onCtaPress} style={this.styles.cta}>
-          <Text style={this.styles.ctaLabel}>
-            {Constants.isAndroid ? _.toUpper(ctaLabel) : ctaLabel}
-          </Text>
-        </TouchableOpacity> */}
         <Button 
           link 
           marginT-30
@@ -101,6 +96,6 @@ function createStyles(isRemoteImage) {
     ctaLabel: {
       color: ThemeManager.primaryColor,
       ...Typography.text70
-    },
+    }
   });
 }
