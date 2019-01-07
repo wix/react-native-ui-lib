@@ -1,12 +1,13 @@
-import React from 'react';
-import {Modal as RNModal, TouchableWithoutFeedback, StyleSheet} from 'react-native';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {StyleSheet, Modal as RNModal, TouchableWithoutFeedback} from 'react-native';
 import {BlurView} from 'react-native-blur';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import TopBar from './TopBar';
 import View from '../../components/view';
+
 
 /**
  * @description: Component that present content on top of the invoking screen
@@ -33,7 +34,7 @@ export default class Modal extends BaseComponent {
     /**
      * the background color of the overlay
      */
-    overlayBackgroundColor: PropTypes.string,
+    overlayBackgroundColor: PropTypes.string
   };
 
   renderTouchableOverlay() {
@@ -42,7 +43,7 @@ export default class Modal extends BaseComponent {
       return (
         <View style={[styles.touchableOverlay, {backgroundColor: overlayBackgroundColor}]}>
           <TouchableWithoutFeedback onPress={onBackgroundPress}>
-            <View flex />
+            <View flex/>
           </TouchableWithoutFeedback>
         </View>
       );
@@ -56,7 +57,7 @@ export default class Modal extends BaseComponent {
 
     return (
       <RNModal visible={Boolean(visible)} {...others}>
-        <Container style={{flex: 1}} blurType="light">
+        <Container style={{flex: 1}} blurType='light'>
           {this.renderTouchableOverlay()}
           {this.props.children}
         </Container>
@@ -67,7 +68,7 @@ export default class Modal extends BaseComponent {
 
 const styles = StyleSheet.create({
   touchableOverlay: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFillObject
   },
 });
 
