@@ -15,8 +15,8 @@ export default class AnimatedImageScreen extends Component {
         {_.map(SampleImages, (image, index) =>
           <AnimatedImage
             containerStyle={{backgroundColor: Colors.blue50, marginBottom: 10}}
-            imageStyle={{resizeMode: 'cover', height: 250}}
-            imageSource={{uri: image}}
+            style={{resizeMode: 'cover', height: 250}}
+            source={{uri: image}}
             loader={<ActivityIndicator/>}
             key={index}
             animationDuration={index === 0 ? 300 : 800}
