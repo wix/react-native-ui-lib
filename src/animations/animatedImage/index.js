@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Animated, View} from 'react-native';
+import {Image} from '../../../src';
 import {BaseComponent} from '../../commons';
+
+const deprecatedProps = [{old: 'imageSource', new: 'source'}, {old: 'imageStyle', new: 'style'}, {old: 'testId', new: 'testID'}];
 
 /**
  * @description: Image component that fades-in the image with animation once it's loaded
@@ -13,9 +16,13 @@ export default class AnimatedImage extends BaseComponent {
   static displayName = 'AnimatedImage';
   static propTypes = {
     /**
+     * Image prop Types
+     */
+    ...Image.propTypes,
+    /**
      * Additional spacing styles for the container
      */
-    containerStyle: PropTypes.object,
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
      * Style for the image component
      */
@@ -35,16 +42,40 @@ export default class AnimatedImage extends BaseComponent {
     /**
      * A component to render while the image is loading
      */
-    loader: PropTypes.element,
+    loader: PropTypes.element
   };
 
   static defaultProps = {
-    animationDuration: 300,
+    animationDuration: 300
   };
 
   constructor(props) {
     super(props);
     this.state = {opacity: new Animated.Value(0), isLoading: true};
+    this.checkForDeprecatedProps(props);
+  }
+
+  checkForDeprecatedProps(props) {
+    deprecatedProps.forEach((prop) => {
+      if (props[prop.old]) {
+        console.warn(`'${prop.old}' property is deprecated, use '${prop.new}' instead`);
+      }
+    });
+  }
+
+  get source() {
+    const {imageSource, source} = this.props;
+    return source || imageSource;
+  }
+
+  get style() {
+    const {imageStyle, style} = this.props;
+    return style || imageStyle;
+  }
+
+  get testID() {
+    const {testId, testID} = this.props;
+    return testID || testId;
   }
 
   onLoad() {
@@ -55,22 +86,15 @@ export default class AnimatedImage extends BaseComponent {
   }
 
   render() {
-    const {testId, containerStyle, imageStyle, imageSource, loader} = this.props;
+    const {containerStyle, loader} = this.props;
     return (
-      <View testID={testId} style={containerStyle}>
-        <Animated.Image
-          style={[{opacity: this.state.opacity}, imageStyle]}
-          source={imageSource}
-          onLoad={() => this.onLoad()}
-        />
-        {
-          (this.state.isLoading && loader) &&
-            <View style={{position: 'absolute', top: 0, left: 0, bottom: 0, right: 0, alignItems: 'center'}}>
-              <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-                {loader}
-              </View>
-            </View>
-        }
+      <View testID={this.testID} style={containerStyle}>
+        <Animated.Image style={[{opacity: this.state.opacity}, this.style]} source={this.source} onLoad={() => this.onLoad()} />
+        {this.state.isLoading && loader && (
+          <View style={{position: 'absolute', top: 0, left: 0, bottom: 0, right: 0, alignItems: 'center'}}>
+            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>{loader}</View>
+          </View>
+        )}
       </View>
     );
   }

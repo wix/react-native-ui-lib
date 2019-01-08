@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, ActivityIndicator} from 'react-native';
-import {AnimatedImage, Constants, Colors} from 'react-native-ui-lib';//eslint-disable-line
+import {AnimatedImage, Colors} from 'react-native-ui-lib';//eslint-disable-line
 import _ from 'lodash';
 
 const SampleImages = [
