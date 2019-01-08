@@ -17,7 +17,7 @@ const examples = [
   },
   {title: 'Image (online)', imageSource: {uri: 'https://lh3.googleusercontent.com/-cw77lUnOvmI/AAAAAAAAAAI/AAAAAAAAAAA/WMNck32dKbc/s181-c/104220521160525129167.jpg'}, isOnline: true},
   {title: 'Smaller', size: 40, imageSource: {uri: 'https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg'}},
-  {title: 'Image with fade in animation', size: 60, animate: true, animationDuration: 1000, imageSource: {uri: 'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg'}},
+  {title: 'Image with fade in animation', size: 60, animate: true, animationDuration: 400, imageSource: {uri: 'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg'}},
   {title: 'Bigger', size: 60, backgroundColor: 'red', imageSource: {uri: 'https://lh3.googleusercontent.com/-NQvYunR8V0U/AAAAAAAAAAI/AAAAAAAAAAA/lGLfZ92rPeE/s181-c/108911355181327993622.jpg'}},
   {
     title: 'Monitored Avatar (see logs)',
