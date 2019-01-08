@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {Colors, Constants, View, Text, Button, Modal, Badge} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, View, Text} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class PlaygroundScreen extends Component {
   
@@ -12,11 +12,9 @@ export default class PlaygroundScreen extends Component {
   componentDidMount() {}
 
   render() {
-    const Container = Badge;
-
     return (
       <View flex center style={styles.container}>
-        <Badge>Unicorn Playground Screen</Badge>
+        <Text>Unicorn Playground Screen</Text>
       </View>
     );
   }
