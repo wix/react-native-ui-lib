@@ -133,7 +133,7 @@ export default class Carousel extends BaseComponent {
       <ScrollView
         {...others}
         ref={(r) => { this.carousel = r; }} 
-        style={[containerStyle, {flex: 1}]}
+        style={[containerStyle, {flexGrow: 1}]}
         horizontal
         showsHorizontalScrollIndicator={false}
         pagingEnabled
