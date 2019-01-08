@@ -4,10 +4,7 @@ import {Animated, View} from 'react-native';
 import {Image} from '../../../src';
 import {BaseComponent} from '../../commons';
 
-<<<<<<< HEAD
 const deprecatedProps = [{old: 'imageSource', new: 'source'}, {old: 'imageStyle', new: 'style'}, {old: 'testId', new: 'testID'}];
-=======
->>>>>>> master
 
 /**
  * @description: Image component that fades-in the image with animation once it's loaded
