@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.github.amarcruz.rntextsize.RNTextSizePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -57,7 +58,8 @@ public class MainApplication extends NavigationApplication {
             new BlurViewPackage(),
             new HighlighterViewPackage(),
             new WheelPickerPackage(),
-            new Interactable()
+            new Interactable(),
+            new RNTextSizePackage()
         );
     }
 }

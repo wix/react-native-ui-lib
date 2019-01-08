@@ -62,6 +62,7 @@ export default class ActionSheetScreen extends Component {
           message='Message of action sheet'
           cancelButtonIndex={3}
           destructiveButtonIndex={0}
+          useNativeIOS={false}
           options={[
             {label: 'option 1', onPress: () => this.pickOption('option 1')},
             {label: 'option 2', onPress: () => this.pickOption('option 2')},

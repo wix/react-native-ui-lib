@@ -109,9 +109,7 @@ export default class ActionSheet extends BaseComponent {
   
   renderIcon(icon) {
     return (
-      <View>
-        <Image source={icon} resizeMode={'contain'} style={{flex: 1, width: 20, height: 20, marginRight: 16}}/>
-      </View>
+      <Image source={icon} resizeMode={'contain'} style={{width: 20, height: 20, marginRight: 16}}/>
     );
   }
 
@@ -161,11 +159,9 @@ export default class ActionSheet extends BaseComponent {
 
   renderSheet() {    
     return (
-      <View>
-        <View bg-white>
-          {this.renderTitle()}
-          {this.renderActions()}
-        </View>
+      <View bg-white>
+        {this.renderTitle()}
+        {this.renderActions()}
       </View>
     );
   }

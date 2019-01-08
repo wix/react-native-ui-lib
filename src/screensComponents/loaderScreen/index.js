@@ -50,7 +50,7 @@ export default class LoaderScreen extends BaseComponent {
     
     const animationProps = this.extractAnimationProps();
     const Container = !_.isEmpty(animationProps) ? Animatable.View : View;
-    if (animationProps) {
+    if (!_.isEmpty(animationProps)) {
       console.warn('LoaderScreen component will soon stop supporting animationProps.' +
         'Please wrap your LoaderScreen component with your own animation component, such as Animatable.View');
     }

@@ -14,23 +14,20 @@ const PADDINGS = {
   XSMALL: 3,
   SMALL: 4.5,
   MEDIUM: 6.5,
-  LARGE: 9.5,
+  LARGE: 9.5
 };
-
 const HORIZONTAL_PADDINGS = {
   XSMALL: 11,
   SMALL: 14,
   MEDIUM: 16,
-  LARGE: 20,
+  LARGE: 20
 };
-
 const MIN_WIDTH = {
   XSMALL: 66,
   SMALL: 70,
   MEDIUM: 77,
-  LARGE: 90,
+  LARGE: 90
 };
-
 const DEFAULT_SIZE = 'large';
 
 /**
@@ -56,7 +53,7 @@ export default class Button extends BaseComponent {
     /**
      * Icon image source
      */
-    iconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    iconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.func]),
     /**
      * Icon image style
      */
@@ -154,22 +151,20 @@ export default class Button extends BaseComponent {
   };
 
   static defaultProps = {
-    // size: 'large',
-    // outline: false,
-    iconOnRight: false,
+    iconOnRight: false
   };
 
   static sizes = {
     xSmall: 'xSmall',
     small: 'small',
     medium: 'medium',
-    large: 'large',
+    large: 'large'
   };
 
   static animationDirection = {
     center: 'center',
     left: 'left',
-    right: 'right',
+    right: 'right'
   };
 
   constructor(props) {
@@ -338,6 +333,7 @@ export default class Button extends BaseComponent {
 
   getOutlineStyle() {
     const {outline, outlineColor, outlineWidth, link, disabled} = this.getThemeProps();
+    
     let outlineStyle;
     if ((outline || outlineColor) && !link) {
       outlineStyle = {
@@ -414,9 +410,14 @@ export default class Button extends BaseComponent {
 
   renderIcon() {
     const {iconSource} = this.props;
+    
     if (iconSource) {
       const iconStyle = this.getIconStyle();
-      return <Image source={iconSource} style={iconStyle} />;
+      if (typeof iconSource === 'function') {
+        return iconSource(iconStyle);
+      } else {
+        return <Image source={iconSource} style={iconStyle}/>;
+      }
     }
     return null;
   }
@@ -426,6 +427,7 @@ export default class Button extends BaseComponent {
     const typography = this.extractTypographyValue();
     const color = this.getLabelColor();
     const labelSizeStyle = this.getLabelSizeStyle();
+    
     if (label) {
       return (
         <Text

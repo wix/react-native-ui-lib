@@ -1,11 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {StyleSheet} from 'react-native';
 import * as Constants from '../../helpers/Constants';
 import {Typography, ThemeManager} from '../../style';
 import {BaseComponent} from '../../commons';
-import TouchableOpacity from '../../components/touchableOpacity';
+import View from '../../components/view';
+import Image from '../../components/image';
+import Button from '../../components/button';
+import Text from '../../components/text';
+
 
 /**
  * @description: Component that shows a full screen for a certain state, like an empty state
@@ -38,7 +42,7 @@ export default class StateScreen extends BaseComponent {
     /**
      * Use to identify the container in tests
      */
-    testId: PropTypes.string,
+    testId: PropTypes.string
   };
 
   generateStyles() {
@@ -51,20 +55,16 @@ export default class StateScreen extends BaseComponent {
     const {title, subtitle, imageSource, ctaLabel, onCtaPress, testId} = this.props;
     return (
       <View style={this.styles.container} testID={testId}>
-        <View>
-          <Image style={this.styles.image} resizeMode={'contain'} source={imageSource} />
-        </View>
-        <View>
-          <Text style={[this.styles.title]}>{title}</Text>
-          <Text style={[this.styles.subtitle]}>{subtitle}</Text>
-        </View>
-        <View style={this.styles.cta}>
-          <TouchableOpacity onPress={onCtaPress}>
-            <Text style={this.styles.ctaLabel}>
-              {Constants.isAndroid ? _.toUpper(ctaLabel) : ctaLabel}
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <Image style={this.styles.image} resizeMode={'contain'} source={imageSource} />
+        <Text style={[this.styles.title]}>{title}</Text>
+        <Text style={[this.styles.subtitle]}>{subtitle}</Text>
+        <Button 
+          link 
+          marginT-30
+          onPress={onCtaPress} 
+          labelStyle={this.styles.ctaLabel}
+          label={Constants.isAndroid ? _.toUpper(ctaLabel) : ctaLabel}
+        />
       </View>
     );
   }
@@ -77,28 +77,25 @@ function createStyles(isRemoteImage) {
       flex: 1,
       paddingTop: 80,
       justifyContent: 'flex-start',
-      alignItems: 'center',
+      alignItems: 'center'
     },
     image: imageStyle,
     title: {
       textAlign: 'center',
       ...Typography.text50,
       color: ThemeManager.titleColor,
-      fontWeight: '300',
+      fontWeight: '300'
     },
     subtitle: {
       textAlign: 'center',
       ...Typography.text70,
       color: ThemeManager.subtitleColor,
       fontWeight: '300',
-      marginTop: 12,
-    },
-    cta: {
-      marginTop: 30,
+      marginTop: 12
     },
     ctaLabel: {
       color: ThemeManager.primaryColor,
-      ...Typography.text70,
-    },
+      ...Typography.text70
+    }
   });
 }

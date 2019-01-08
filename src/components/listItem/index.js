@@ -93,7 +93,7 @@ class ListItem extends BaseComponent {
 
     const animationProps = this.extractAnimationProps();
     const InnerContainer = !_.isEmpty(animationProps) ? Animatable.View : View;
-    if (animationProps) {
+    if (!_.isEmpty(animationProps)) {
       console.warn('ListItem component will soon stop supporting animationProps.' +
         'Please wrap your ListItem component with your own animation component, such as Animatable.View');
     }

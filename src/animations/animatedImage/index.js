@@ -1,10 +1,13 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {Animated, View} from 'react-native';
 import {Image} from '../../../src';
 import {BaseComponent} from '../../commons';
 
+<<<<<<< HEAD
 const deprecatedProps = [{old: 'imageSource', new: 'source'}, {old: 'imageStyle', new: 'style'}, {old: 'testId', new: 'testID'}];
+=======
+>>>>>>> master
 
 /**
  * @description: Image component that fades-in the image with animation once it's loaded
@@ -36,13 +39,13 @@ export default class AnimatedImage extends BaseComponent {
      */
     animationDuration: PropTypes.number,
     /**
+     * A component to render while the image is loading
+     */
+    loader: PropTypes.element,
+    /**
      * Use to identify the avatar in tests
      */
     testId: PropTypes.string,
-    /**
-     * A component to render while the image is loading
-     */
-    loader: PropTypes.element
   };
 
   static defaultProps = {
@@ -78,7 +81,7 @@ export default class AnimatedImage extends BaseComponent {
     return testID || testId;
   }
 
-  onLoad() {
+  onLoad = () => {
     this.setState({isLoading: false}, () => {
       const animationParams = {toValue: 1, duration: this.props.animationDuration, useNativeDriver: false};
       Animated.timing(this.state.opacity, animationParams).start();
