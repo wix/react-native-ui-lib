@@ -17,6 +17,10 @@ export default class TouchableOpacity extends BaseComponent {
 
   static propTypes = {
     /**
+     * background color for TouchableOpacity 
+     */
+    backgroundColor: PropTypes.string,
+    /**
      * throttle time in MS for onPress callback
      */
     throttleTime: PropTypes.number,
@@ -59,6 +63,17 @@ export default class TouchableOpacity extends BaseComponent {
     _.invoke(this.props, 'onPressOut', ...args);
   }
 
+  get backgroundColorStyle() {
+    const {backgroundColor: modifiersBackgroundColor} = this.state;
+    const {backgroundColor: propsBackgroundColor} = this.getThemeProps();
+
+    const backgroundColor = propsBackgroundColor || modifiersBackgroundColor;
+
+    if (backgroundColor) {
+      return {backgroundColor};
+    }
+  }
+
   get activeBackgroundStyle() {
     const {active} = this.state;
     const {activeBackgroundColor} = this.props;
@@ -69,7 +84,7 @@ export default class TouchableOpacity extends BaseComponent {
   }
 
   render() {
-    const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle} = this.state;
+    const {borderRadius, paddings, margins, alignments, flexStyle} = this.state;
     const {throttle, style, ...others} = this.getThemeProps();
 
     return (
@@ -79,7 +94,7 @@ export default class TouchableOpacity extends BaseComponent {
         onPressIn={this.onPressIn}
         onPressOut={this.onPressOut}
         style={[
-          backgroundColor && {backgroundColor},
+          this.backgroundColorStyle,
           borderRadius && {borderRadius},
           flexStyle,
           paddings,
