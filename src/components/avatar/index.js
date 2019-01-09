@@ -34,10 +34,6 @@ export default class Avatar extends BaseComponent {
      */
     animate: PropTypes.bool,
     /**
-     * Duration of the fade in animation when the Avatar image loads
-     */
-    animationDuration: PropTypes.number,
-    /**
      * Background color for Avatar
      */
     backgroundColor: PropTypes.string,
@@ -177,7 +173,6 @@ export default class Avatar extends BaseComponent {
   renderImage() {
     const {
       animate,
-      animationDuration,
       imageSource,
       onImageLoadStart,
       onImageLoadEnd,
@@ -199,7 +194,7 @@ export default class Avatar extends BaseComponent {
           onError={onImageLoadError}
           testID={`${testID}.image`}
           containerStyle={this.styles.container}
-          imageProps={{animationDuration}}
+          imageProps={imageProps}
           {...imageProps}
         />
       );
