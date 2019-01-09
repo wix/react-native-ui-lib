@@ -116,6 +116,7 @@ export default class Avatar extends BaseComponent {
   };
 
   static defaultProps = {
+    animate: false,
     backgroundColor: Colors.dark80,
     size: 50,
     labelColor: Colors.dark10,
@@ -191,7 +192,6 @@ export default class Avatar extends BaseComponent {
       return (
         <ImageContainer
           animate={animate}
-          animationDuration={animationDuration}
           style={[this.styles.image, imageStyle]}
           source={imageSource}
           onLoadStart={onImageLoadStart}
@@ -199,6 +199,7 @@ export default class Avatar extends BaseComponent {
           onError={onImageLoadError}
           testID={`${testID}.image`}
           containerStyle={this.styles.container}
+          imageProps={{animationDuration}}
           {...imageProps}
         />
       );

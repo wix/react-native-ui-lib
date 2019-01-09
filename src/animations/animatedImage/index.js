@@ -4,6 +4,8 @@ import {Animated, View} from 'react-native';
 import {Image} from '../../../src';
 import {BaseComponent} from '../../commons';
 
+const UIAnimatedImage = Animated.createAnimatedComponent(Image);
+
 const deprecatedProps = [{old: 'imageSource', new: 'source'}, {old: 'imageStyle', new: 'style'}, {old: 'testId', new: 'testID'}];
 
 /**
@@ -12,7 +14,7 @@ const deprecatedProps = [{old: 'imageSource', new: 'source'}, {old: 'imageStyle'
  * @gif: https://media.giphy.com/media/l0HU7jj0ivEFyZIA0/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AnimatedImageScreen.js
  */
-export default class AnimatedImage extends BaseComponent {
+class AnimatedImage extends BaseComponent {
   static displayName = 'AnimatedImage';
   static propTypes = {
     /**
@@ -42,7 +44,7 @@ export default class AnimatedImage extends BaseComponent {
     /**
      * Use to identify the avatar in tests
      */
-    testId: PropTypes.string,
+    testId: PropTypes.string
   };
 
   static defaultProps = {
@@ -83,19 +85,26 @@ export default class AnimatedImage extends BaseComponent {
       const animationParams = {toValue: 1, duration: this.props.animationDuration, useNativeDriver: false};
       Animated.timing(this.state.opacity, animationParams).start();
     });
-  }
+  };
 
   render() {
-    const {containerStyle, loader} = this.props;
+    const {containerStyle, loader, ...others} = this.props;
     return (
       <View testID={this.testID} style={containerStyle}>
-        <Animated.Image style={[{opacity: this.state.opacity}, this.style]} source={this.source} onLoad={() => this.onLoad()} />
+        <UIAnimatedImage
+          {...others}
+          style={[{opacity: this.state.opacity}, this.style]}
+          source={this.source}
+          onLoad={() => this.onLoad()}
+        />
         {this.state.isLoading && loader && (
-          <View style={{position: 'absolute', top: 0, left: 0, bottom: 0, right: 0, alignItems: 'center'}}>
-            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>{loader}</View>
+          <View style={{position: 'absolute', top: 0, left: 0, bottom: 0, right: 0, justifyContent: 'center'}}>
+            {loader}
           </View>
         )}
       </View>
     );
   }
 }
+
+export default AnimatedImage;
