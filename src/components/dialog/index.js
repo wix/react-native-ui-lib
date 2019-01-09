@@ -112,8 +112,8 @@ class Dialog extends BaseComponent {
     const {top} = this.props;
     const {deltaY} = this.state;
     let newValue = 0;
-
-    if (Math.abs(gestureState.vy) >= 3) {
+    
+    if (Math.abs(gestureState.vy) >= 1.8) {
       if ((top && gestureState.vy < 0) || (!top && gestureState.vy > 0)) {
         // Swipe
         this.swipe = true;
@@ -153,11 +153,11 @@ class Dialog extends BaseComponent {
   animateDismiss() {
     const {top} = this.props;
     const {deltaY} = this.state;
-    const newValue = top ? deltaY._value - this.layout.height : deltaY._value + Constants.screenHeight; // eslint-disable-line
+    const newValue = top ? -this.layout.height -this.layout.y - 1 : deltaY._value + (Constants.screenHeight - this.layout.y); // eslint-disable-line
     
-    Animated.spring(deltaY, {
+    Animated.timing(deltaY, {
       toValue: Math.round(newValue),
-      speed: 40
+      speed: 50
     }).start(this.onAnimatedFinished);
   }
 
