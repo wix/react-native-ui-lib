@@ -9,6 +9,7 @@ import {BaseComponent} from '../../commons';
 import Modal from '../../screensComponents/modal';
 import View from '../view';
 
+
 /*eslint-disable*/
 /**
  * @description: Dialog component for displaying custom content inside a popup dialog
@@ -22,7 +23,7 @@ import View from '../view';
 const SWIPE_DIRECTIONS = {
   UP: 'up',
   DOWN: 'down',
-};
+}; // DEFRECATED
 
 class Dialog extends BaseComponent {
   static displayName = 'Dialog'
@@ -38,7 +39,7 @@ class Dialog extends BaseComponent {
     /**
      * the direction of the swipe to dismiss the dialog (default is 'down')
      */
-    dismissSwipeDirection: PropTypes.oneOf(Object.values(SWIPE_DIRECTIONS)),
+    dismissSwipeDirection: PropTypes.oneOf(Object.values(SWIPE_DIRECTIONS)), // DEFRECATED
     /**
      * The color of the overlay background
      */
@@ -65,8 +66,7 @@ class Dialog extends BaseComponent {
   static defaultProps = {
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
     width: '90%',
-    height: '70%',
-    // dismissSwipeDirection: SWIPE_DIRECTIONS.DOWN,
+    height: '70%'
   };
 
   constructor(props) {
@@ -82,7 +82,7 @@ class Dialog extends BaseComponent {
     }
   }
 
-  static swipeDirections = SWIPE_DIRECTIONS;
+  static swipeDirections = SWIPE_DIRECTIONS; // DEFRECATED
 
   componentWillMount() {
     this.panResponder = PanResponder.create({
