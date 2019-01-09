@@ -77,7 +77,7 @@ class DialogScreen extends Component {
           top
           centerH
           onDismiss={() => this.setState({showDialog4: false})}
-          dismissSwipeDirection={Dialog.swipeDirections.UP}
+          // dismissSwipeDirection={Dialog.swipeDirections.UP}
           style={{backgroundColor: Colors.white}}
         >
           {this.renderDialogContent(4, {br0: true})}

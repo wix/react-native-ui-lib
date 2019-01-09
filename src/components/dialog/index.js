@@ -1,9 +1,8 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, TouchableWithoutFeedback, SafeAreaView} from 'react-native';
+import {StyleSheet, TouchableWithoutFeedback, SafeAreaView, PanResponder, Animated, Easing} from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import {Constants} from '../../helpers';
 import {Colors, AnimatableManager} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -67,43 +66,116 @@ class Dialog extends BaseComponent {
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
     width: '90%',
     height: '70%',
-    dismissSwipeDirection: SWIPE_DIRECTIONS.DOWN,
+    // dismissSwipeDirection: SWIPE_DIRECTIONS.DOWN,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      alignments: this.state.alignments,
+      deltaY: new Animated.Value(0)
+    };
+
+    if (props.dismissSwipeDirection) {
+      console.warn('Dialog component\'s prop \'dismissSwipeDirection\' is deprecated, please remove it');
+    }
+  }
+
   static swipeDirections = SWIPE_DIRECTIONS;
+
+  componentWillMount() {
+    this.panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: this.handleStartShouldSetPanResponder,
+      onMoveShouldSetPanResponder: this.handleMoveShouldSetPanResponder,
+      onPanResponderGrant: this.handlePanResponderGrant,
+      onPanResponderMove: this.handlePanResponderMove,
+      onPanResponderRelease: this.handlePanResponderEnd,
+      onPanResponderTerminate: this.handlePanResponderEnd,
+    });
+  }
 
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
-  onSwipe(gestureName) {
-    const {SWIPE_UP, SWIPE_DOWN} = swipeDirections;
-    const {dismissSwipeDirection} = this.props;
+  handleStartShouldSetPanResponder = (e, gestureState) => {
+    return true;
+  };
+  handleMoveShouldSetPanResponder = (e, gestureState) => {
+    return true;
+  };
+  handlePanResponderGrant = (e, gestureState) => {
+    this.swipe = false;
+  };
+  handlePanResponderMove = (e, gestureState) => {
+    const {top} = this.props;
+    const {deltaY} = this.state;
+    let newValue = 0;
 
-    switch (gestureName) {
-      case SWIPE_UP:
-        if (dismissSwipeDirection === SWIPE_DIRECTIONS.UP) {
-          _.invoke(this.props, 'onDismiss');
-        }
-        break;
-      case SWIPE_DOWN:
-        if (dismissSwipeDirection === SWIPE_DIRECTIONS.DOWN) {
-          _.invoke(this.props, 'onDismiss');
-        }
-        break;
-      default:
-        break;
+    if (Math.abs(gestureState.vy) >= 3) {
+      if ((top && gestureState.vy < 0) || (!top && gestureState.vy > 0)) {
+        // Swipe
+        this.swipe = true;
+      }
+    } else if ((top && gestureState.dy < 0) || (!top && gestureState.dy > 0)) {
+      // Drag
+      newValue = gestureState.dy;
+      Animated.spring(deltaY, {
+        toValue: Math.round(newValue),
+        speed: 20
+      }).start();
     }
+  };
+  handlePanResponderEnd = (e, gestureState) => {
+    if (!this.swipe) {
+      const {top} = this.props;
+      const {deltaY} = this.state;
+      const threshold = this.layout.height / 2;
+      const endValue = Math.round(deltaY._value);
+      
+      if ((top && endValue <= -threshold) || (!top && endValue >= threshold)) {
+        // close
+        this.animateDismiss();
+      } else {
+        // back to initial position
+        Animated.spring(deltaY, {
+          toValue: 0,
+          speed: 20,
+        }).start();
+      }
+    } else {
+      // close
+      this.animateDismiss();
+    }
+  };
+
+  animateDismiss() {
+    const {top} = this.props;
+    const {deltaY} = this.state;
+    const newValue = top ? deltaY._value - this.layout.height : deltaY._value + Constants.screenHeight;
+    
+    Animated.spring(deltaY, {
+      toValue: Math.round(newValue),
+      speed: 40,
+    }).start(this.onAnimatedFinished);
+  }
+
+  onAnimatedFinished = ({finished}) => {
+    if (finished) {
+      _.invoke(this.props, 'onDismiss');
+      this.setState({deltaY: new Animated.Value(0)});
+    }
+  }
+
+  onLayout = (event) => {
+    this.layout = event.nativeEvent.layout;
   }
 
   render() {
     const {visible, overlayBackgroundColor, style, onDismiss, bottom, animationConfig, top} = this.getThemeProps();
-    const {alignments} = this.state;
+    const {alignments, deltaY} = this.state;
     const centerByDefault = _.isEmpty(alignments);
-    const config = {
-      velocityThreshold: 0.3,
-      directionalOffsetThreshold: 80,
-    };
     const bottomInsets = Constants.getSafeAreaInsets().paddingBottom;
     const animation = top ? AnimatableManager.presets.slideInDown : AnimatableManager.presets.slideInUp;
 
@@ -117,11 +189,19 @@ class Dialog extends BaseComponent {
         overlayBackgroundColor={overlayBackgroundColor}
       >
         <View center={centerByDefault} style={[this.styles.overlay, alignments]} pointerEvents="box-none">
-          <Animatable.View style={[this.styles.dialogContainer, style]} {...animation} {...animationConfig}>
-            <GestureRecognizer
-              onSwipe={(direction, state) => this.onSwipe(direction, state)}
-              config={config}
-              style={this.styles.gestureContainer}
+          <Animatable.View style={[this.styles.dialogContainer]} {...animation} {...animationConfig} pointerEvents="box-none">
+            <Animated.View
+              style={[
+                this.styles.gestureContainer,
+                style,
+                deltaY && {
+                  transform: [{
+                    translateY: deltaY
+                  }]
+                }
+              ]} 
+              {...this.panResponder.panHandlers}
+              onLayout={this.onLayout}
             >
               <TouchableWithoutFeedback>
                 <SafeAreaView style={{flexGrow: 1}}>
@@ -129,7 +209,7 @@ class Dialog extends BaseComponent {
                   {Constants.isIphoneX && bottom && <View style={{height: bottomInsets}}/>}
                 </SafeAreaView>
               </TouchableWithoutFeedback>
-            </GestureRecognizer>
+            </Animated.View>
           </Animatable.View>
         </View>
       </Modal>
@@ -140,15 +220,15 @@ class Dialog extends BaseComponent {
 function createStyles({width, height}) {
   return StyleSheet.create({
     overlay: {
-      flex: 1,
+      flex: 1
     },
     dialogContainer: {
       width,
-      height,
+      height
     },
     gestureContainer: {
-      flexGrow: 1,
-    },
+      flexGrow: 1
+    }
   });
 }
 
