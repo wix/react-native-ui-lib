@@ -11,7 +11,7 @@ class DialogScreen extends Component {
 
   renderDialogContent(dialogIndex, extraProps) {
     return (
-      <View bg-white flex br20 padding-18 spread {...extraProps}>
+      <View flex br20 padding-18 spread {...extraProps}>
         <View height={100}>
           <Text text50>This is Dialog</Text>
         </View>
@@ -46,7 +46,13 @@ class DialogScreen extends Component {
           label='show dialog with height based on content '
           onPress={() => this.setState({showDialog5: true})}
         />
-        <Dialog visible={showDialog1} width='90%' height='60%' onDismiss={() => this.setState({showDialog1: false})}>
+        <Dialog 
+          visible={showDialog1}
+          width='90%'
+          height='60%'
+          onDismiss={() => this.setState({showDialog1: false})}
+          style={{backgroundColor: Colors.white}}
+        >
           {this.renderDialogContent(1)}
         </Dialog>
         <Dialog
@@ -68,7 +74,7 @@ class DialogScreen extends Component {
           centerH
           onDismiss={() => this.setState({showDialog3: false})}
         >
-          {this.renderDialogContent(3, {'marginV-20': true})}
+          {this.renderDialogContent(3, {'marginV-20': true, backgroundColor: Colors.white})}
         </Dialog>
         <Dialog
           visible={showDialog4}
@@ -90,7 +96,8 @@ class DialogScreen extends Component {
           bottom
           centerH
           onDismiss={() => this.setState({showDialog5: false})}
-          animationConfig={{duration: 1000}}
+          // animationConfig={{duration: 1000}}
+          style={{backgroundColor: Colors.white}}
         >
           {this.renderDialogContent(5, {flex: false})}
         </Dialog>
