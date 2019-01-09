@@ -32,11 +32,11 @@ class Dialog extends BaseComponent {
      */
     visible: PropTypes.bool,
     /**
-     * dismiss callback for when clicking on the background
+     * Dismiss callback for when clicking on the background
      */
     onDismiss: PropTypes.func,
     /**
-     * the direction of the swipe to dismiss the dialog (default is 'down')
+     * The direction of the swipe to dismiss the dialog (default is 'down')
      */
     dismissSwipeDirection: PropTypes.oneOf(Object.values(SWIPE_DIRECTIONS)), // DEFRECATED
     /**
@@ -52,10 +52,9 @@ class Dialog extends BaseComponent {
      */
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
-     * the animation configuration to pass to the dialog (based on react-native-animatable,
-     * ex. {animation, duration, easing,..})
+     * The animation configuration to pass to the dialog (ex. {delay, duration, easing, useNativeDriver})
      */
-    animationConfig: PropTypes.object, // DEFRECATED
+    animationConfig: PropTypes.object,
     /**
      * The dialog container style
      */
@@ -82,8 +81,8 @@ class Dialog extends BaseComponent {
     if (props.dismissSwipeDirection) {
       console.warn('Dialog component\'s prop \'dismissSwipeDirection\' is deprecated, please remove it');
     }
-    if (props.animationConfig) {
-      console.warn('Dialog component\'s prop \'animationConfig\' is deprecated, please remove it');
+    if (props.animationConfig && props.animationConfig.animation) {
+      console.warn('Dialog component no longer support custom animation. Animation is \'slideInUp\'');
     }
   }
 
@@ -187,15 +186,16 @@ class Dialog extends BaseComponent {
     this.layout = event.nativeEvent.layout;
   }
 
-  onModalShow = () => {   
+  onModalShow = () => {
+    const {animationConfig} = this.getThemeProps();
     const {mainDeltaY} = this.state;
  
     Animated.timing(mainDeltaY, {
       toValue: 0,
-      duration: 280,
-      delay: 200,
-      easing: Easing.bezier(0.165, 0.84, 0.44, 1),
-      useNativeDriver: true
+      duration: _.get(animationConfig, 'duration', 280),
+      delay: _.get(animationConfig, 'delay', 200),
+      easing: _.get(animationConfig, 'easing', Easing.bezier(0.165, 0.84, 0.44, 1)),
+      useNativeDriver: _.get(animationConfig, 'useNativeDriver', true)
     }).start();
   }
 
@@ -220,7 +220,7 @@ class Dialog extends BaseComponent {
             this.styles.overlay,
             {...alignments},
             centerByDefault && this.styles.centerContent,
-            mainDeltaY && {
+            {
               transform: [{
                 translateY: mainDeltaY
               }]
@@ -232,7 +232,7 @@ class Dialog extends BaseComponent {
             style={[
               this.styles.dialogContainer,
               style,
-              deltaY && {
+              {
                 transform: [{
                   translateY: deltaY
                 }]

@@ -96,7 +96,7 @@ class DialogScreen extends Component {
           bottom
           centerH
           onDismiss={() => this.setState({showDialog5: false})}
-          // animationConfig={{duration: 1000}}
+          animationConfig={{duration: 1000}}
           style={{backgroundColor: Colors.white}}
         >
           {this.renderDialogContent(5, {flex: false})}
