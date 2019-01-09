@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, TouchableWithoutFeedback, SafeAreaView, PanResponder, Animated, Easing} from 'react-native';
+import {StyleSheet, TouchableWithoutFeedback, SafeAreaView, PanResponder, Animated} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Constants} from '../../helpers';
 import {Colors, AnimatableManager} from '../../style';
@@ -99,13 +99,13 @@ class Dialog extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
-  handleStartShouldSetPanResponder = (e, gestureState) => {
+  handleStartShouldSetPanResponder = () => {
     return true;
   };
-  handleMoveShouldSetPanResponder = (e, gestureState) => {
+  handleMoveShouldSetPanResponder = () => {
     return true;
   };
-  handlePanResponderGrant = (e, gestureState) => {
+  handlePanResponderGrant = () => {
     this.swipe = false;
   };
   handlePanResponderMove = (e, gestureState) => {
@@ -127,12 +127,12 @@ class Dialog extends BaseComponent {
       }).start();
     }
   };
-  handlePanResponderEnd = (e, gestureState) => {
+  handlePanResponderEnd = () => {
     if (!this.swipe) {
       const {top} = this.props;
       const {deltaY} = this.state;
       const threshold = this.layout.height / 2;
-      const endValue = Math.round(deltaY._value);
+      const endValue = Math.round(deltaY._value); // eslint-disable-line
       
       if ((top && endValue <= -threshold) || (!top && endValue >= threshold)) {
         // close
@@ -153,7 +153,7 @@ class Dialog extends BaseComponent {
   animateDismiss() {
     const {top} = this.props;
     const {deltaY} = this.state;
-    const newValue = top ? deltaY._value - this.layout.height : deltaY._value + Constants.screenHeight;
+    const newValue = top ? deltaY._value - this.layout.height : deltaY._value + Constants.screenHeight; // eslint-disable-line
     
     Animated.spring(deltaY, {
       toValue: Math.round(newValue),
