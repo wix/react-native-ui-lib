@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, TouchableWithoutFeedback, SafeAreaView, PanResponder, Animated} from 'react-native';
+import {StyleSheet, TouchableWithoutFeedback, SafeAreaView, PanResponder, Animated, Easing} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -156,13 +156,12 @@ class Dialog extends BaseComponent {
   };
 
   animateDismiss() {
-    const {top} = this.props;
-    const {deltaY} = this.state;
-    const newValue = top ? -this.layout.height -this.layout.y - 1 : deltaY._value + (Constants.screenHeight - this.layout.y); // eslint-disable-line
+    const {mainDeltaY} = this.state;
     
-    Animated.timing(deltaY, {
-      toValue: Math.round(newValue),
-      duration: 250
+    Animated.timing(mainDeltaY, {
+      toValue: this.initialPosition,
+      duration: 280,
+      useNativeDriver: true
     }).start(this.onAnimatedFinished);
   }
 
@@ -193,7 +192,10 @@ class Dialog extends BaseComponent {
  
     Animated.timing(mainDeltaY, {
       toValue: 0,
-      duration: 250
+      duration: 280,
+      delay: 200,
+      easing: Easing.bezier(0.165, 0.84, 0.44, 1),
+      useNativeDriver: true
     }).start();
   }
 
