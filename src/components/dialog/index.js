@@ -22,7 +22,7 @@ import View from '../view';
 
 const SWIPE_DIRECTIONS = {
   UP: 'up',
-  DOWN: 'down',
+  DOWN: 'down'
 }; // DEFRECATED
 
 class Dialog extends BaseComponent {
@@ -60,7 +60,7 @@ class Dialog extends BaseComponent {
     /**
      * The dialog container style
      */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
   };
 
   static defaultProps = {
@@ -91,7 +91,7 @@ class Dialog extends BaseComponent {
       onPanResponderGrant: this.handlePanResponderGrant,
       onPanResponderMove: this.handlePanResponderMove,
       onPanResponderRelease: this.handlePanResponderEnd,
-      onPanResponderTerminate: this.handlePanResponderEnd,
+      onPanResponderTerminate: this.handlePanResponderEnd
     });
   }
 
@@ -141,7 +141,7 @@ class Dialog extends BaseComponent {
         // back to initial position
         Animated.spring(deltaY, {
           toValue: 0,
-          speed: 20,
+          speed: 20
         }).start();
       }
     } else {
@@ -157,7 +157,7 @@ class Dialog extends BaseComponent {
     
     Animated.spring(deltaY, {
       toValue: Math.round(newValue),
-      speed: 40,
+      speed: 40
     }).start(this.onAnimatedFinished);
   }
 
@@ -188,8 +188,8 @@ class Dialog extends BaseComponent {
         onRequestClose={onDismiss}
         overlayBackgroundColor={overlayBackgroundColor}
       >
-        <View center={centerByDefault} style={[this.styles.overlay, alignments]} pointerEvents="box-none">
-          <Animatable.View style={[this.styles.dialogContainer]} {...animation} {...animationConfig} pointerEvents="box-none">
+        <View center={centerByDefault} style={[this.styles.overlay, alignments]} pointerEvents='box-none'>
+          <Animatable.View style={[this.styles.dialogContainer]} {...animation} {...animationConfig} pointerEvents='box-none'>
             <Animated.View
               style={[
                 this.styles.gestureContainer,
