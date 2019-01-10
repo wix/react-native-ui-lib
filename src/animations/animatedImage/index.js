@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Animated, View} from 'react-native';
+import {Animated, View, StyleSheet} from 'react-native';
 import {Image} from '../../../src';
 import {BaseComponent} from '../../commons';
 
@@ -98,7 +98,7 @@ class AnimatedImage extends BaseComponent {
           onLoad={() => this.onLoad()}
         />
         {this.state.isLoading && loader && (
-          <View style={{position: 'absolute', top: 0, left: 0, bottom: 0, right: 0, justifyContent: 'center'}}>
+          <View style={{...StyleSheet.absoluteFillObject, justifyContent: 'center'}}>
             {loader}
           </View>
         )}

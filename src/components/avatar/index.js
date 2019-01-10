@@ -194,7 +194,6 @@ export default class Avatar extends BaseComponent {
           onError={onImageLoadError}
           testID={`${testID}.image`}
           containerStyle={this.styles.container}
-          imageProps={imageProps}
           {...imageProps}
         />
       );
