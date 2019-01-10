@@ -54,7 +54,7 @@ class Dialog extends BaseComponent {
      */
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
-     * The animation configuration to pass to the dialog (ex. {delay, duration, easing, useNativeDriver})
+     * The animation configuration to pass to the dialog (ex. {animation, delay, duration, easing})
      */
     animationConfig: PropTypes.object,
     /**
