@@ -134,7 +134,7 @@ class Dialog extends BaseComponent {
     return (
       <PanGestureView
         style={[this.styles.dialogContainer, style]}
-        direction={top && PanGestureView.directions.TOP}
+        direction={top && PanGestureView.directions.UP}
         onDismiss={this.onDismiss}
       >
         {this.renderContent()}

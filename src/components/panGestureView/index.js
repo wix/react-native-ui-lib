@@ -8,12 +8,12 @@ import {BaseComponent} from '../../commons';
 
 const DIRECTIONS = {
   // VERTICAL
-  TOP: 'top',
-  BOTTOM: 'bottom'
+  UP: 'up',
+  DOWN: 'down'
 };
 
 /**
- * @description: PanGestureView component for drag and swipe gestures (supports only vertival gestures at the moment)
+ * @description: PanGestureView component for drag and swipe gestures (supports only vertical gestures at the moment)
  */
 export default class PanGestureView extends BaseComponent {
   static displayName = 'PanGestureView'
@@ -23,13 +23,13 @@ export default class PanGestureView extends BaseComponent {
      */
     onDismiss: PropTypes.func,
     /**
-     * The direction of the allowed pan (default is bottom)
+     * The direction of the allowed pan (default is down)
      */
     direction: PropTypes.oneOf(Object.values(DIRECTIONS))
   };
 
   static defaultProps = {
-    direction: DIRECTIONS.BOTTOM
+    direction: DIRECTIONS.DOWN
   };
   
   static directions = DIRECTIONS;
@@ -65,15 +65,15 @@ export default class PanGestureView extends BaseComponent {
     let newValue = 0;
     
     // VERTICAL
-    const top = (direction === DIRECTIONS.TOP);
+    const up = (direction === DIRECTIONS.UP);
     const {deltaY} = this.state;
 
     if (Math.abs(gestureState.vy) >= 1.8) {
-      if ((top && gestureState.vy < 0) || (!top && gestureState.vy > 0)) {
+      if ((up && gestureState.vy < 0) || (!up && gestureState.vy > 0)) {
         // Swipe
         this.swipe = true;
       }
-    } else if ((top && gestureState.dy < 0) || (!top && gestureState.dy > 0)) {
+    } else if ((up && gestureState.dy < 0) || (!up && gestureState.dy > 0)) {
       // Drag
       newValue = gestureState.dy;
       Animated.spring(deltaY, {
@@ -87,12 +87,12 @@ export default class PanGestureView extends BaseComponent {
       const {direction} = this.getThemeProps();
 
       // VERTICAL
-      const top = (direction === DIRECTIONS.TOP);
+      const up = (direction === DIRECTIONS.UP);
       const {deltaY} = this.state;
       const threshold = this.layout.height / 2;
       const endValue = Math.round(deltaY._value); // eslint-disable-line
       
-      if ((top && endValue <= -threshold) || (!top && endValue >= threshold)) {
+      if ((up && endValue <= -threshold) || (!up && endValue >= threshold)) {
         // close
         this.animateDismiss();
       } else {
@@ -112,9 +112,9 @@ export default class PanGestureView extends BaseComponent {
     const {direction} = this.getThemeProps();
 
     // VERTICAL
-    const top = (direction === DIRECTIONS.TOP);
+    const up = (direction === DIRECTIONS.UP);
     const {deltaY} = this.state;
-    const newValue = top ? -this.layout.height -this.layout.y - 1 : deltaY._value + (Constants.screenHeight - this.layout.y); // eslint-disable-line
+    const newValue = up ? -this.layout.height -this.layout.y - 1 : deltaY._value + (Constants.screenHeight - this.layout.y); // eslint-disable-line
 
     Animated.timing(deltaY, {
       toValue: Math.round(newValue),
