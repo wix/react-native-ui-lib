@@ -91,8 +91,8 @@ class Dialog extends BaseComponent {
   }
 
   onDismiss = () => {
-    _.invoke(this.props, 'onDismiss');
     this.initPositions();
+    _.invoke(this.props, 'onDismiss');
   }
 
   initPositions() {
