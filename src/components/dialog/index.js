@@ -159,8 +159,7 @@ class Dialog extends BaseComponent {
     
     Animated.timing(deltaY, {
       toValue: Math.round(newValue),
-      duration: 280,
-      useNativeDriver: true
+      duration: 280
     }).start(this.onAnimatedFinished);
   }
 
