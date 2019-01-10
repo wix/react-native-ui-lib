@@ -68,6 +68,8 @@ class Dialog extends BaseComponent {
     height: '70%'
   };
 
+  static swipeDirections = SWIPE_DIRECTIONS; // DEFRECATED
+
   constructor(props) {
     super(props);
 
@@ -82,11 +84,7 @@ class Dialog extends BaseComponent {
     if (props.dismissSwipeDirection) {
       console.warn('Dialog component\'s prop \'dismissSwipeDirection\' is deprecated, please remove it');
     }
-  }
 
-  static swipeDirections = SWIPE_DIRECTIONS; // DEFRECATED
-
-  componentWillMount() {
     this.panResponder = PanResponder.create({
       onStartShouldSetPanResponder: this.handleStartShouldSetPanResponder,
       onMoveShouldSetPanResponder: this.handleMoveShouldSetPanResponder,
