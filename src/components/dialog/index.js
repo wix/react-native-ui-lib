@@ -1,14 +1,15 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, TouchableWithoutFeedback, SafeAreaView} from 'react-native';
+import {StyleSheet, TouchableWithoutFeedback, SafeAreaView, Animated, Easing} from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import {Constants} from '../../helpers';
-import {Colors, AnimatableManager} from '../../style';
+import {AnimatableManager, Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import Modal from '../../screensComponents/modal';
 import View from '../view';
+import PanGestureView from '../panGestureView';
+
 
 /*eslint-disable*/
 /**
@@ -22,8 +23,8 @@ import View from '../view';
 
 const SWIPE_DIRECTIONS = {
   UP: 'up',
-  DOWN: 'down',
-};
+  DOWN: 'down'
+}; // DEFRECATED
 
 class Dialog extends BaseComponent {
   static displayName = 'Dialog'
@@ -33,13 +34,13 @@ class Dialog extends BaseComponent {
      */
     visible: PropTypes.bool,
     /**
-     * dismiss callback for when clicking on the background
+     * Dismiss callback for when clicking on the background
      */
     onDismiss: PropTypes.func,
     /**
-     * the direction of the swipe to dismiss the dialog (default is 'down')
+     * The direction of the swipe to dismiss the dialog (default is 'down')
      */
-    dismissSwipeDirection: PropTypes.oneOf(Object.values(SWIPE_DIRECTIONS)),
+    dismissSwipeDirection: PropTypes.oneOf(Object.values(SWIPE_DIRECTIONS)), // DEFRECATED
     /**
      * The color of the overlay background
      */
@@ -53,85 +54,137 @@ class Dialog extends BaseComponent {
      */
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
-     * the animation configuration to pass to the dialog (based on react-native-animatable,
-     * ex. {animation, duration, easing,..})
+     * The animation configuration to pass to the dialog (ex. {animation, delay, duration, easing})
      */
     animationConfig: PropTypes.object,
     /**
      * The dialog container style
      */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
   };
 
   static defaultProps = {
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
     width: '90%',
-    height: '70%',
-    dismissSwipeDirection: SWIPE_DIRECTIONS.DOWN,
+    height: '70%'
   };
 
-  static swipeDirections = SWIPE_DIRECTIONS;
+  static swipeDirections = SWIPE_DIRECTIONS; // DEFRECATED
+
+  constructor(props) {
+    super(props);
+
+    this.initialPosition = props.top ? -Constants.screenHeight : Constants.screenHeight;
+
+    this.state = {
+      alignments: this.state.alignments,
+      deltaY: new Animated.Value(this.initialPosition)
+    };
+
+    if (props.dismissSwipeDirection) {
+      console.warn('Dialog component\'s prop \'dismissSwipeDirection\' is deprecated, please remove it');
+    }
+  }
 
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
-  onSwipe(gestureName) {
-    const {SWIPE_UP, SWIPE_DOWN} = swipeDirections;
-    const {dismissSwipeDirection} = this.props;
+  onDismiss = () => {
+    this.initPositions();
+    _.invoke(this.props, 'onDismiss');
+  }
 
-    switch (gestureName) {
-      case SWIPE_UP:
-        if (dismissSwipeDirection === SWIPE_DIRECTIONS.UP) {
-          _.invoke(this.props, 'onDismiss');
-        }
-        break;
-      case SWIPE_DOWN:
-        if (dismissSwipeDirection === SWIPE_DIRECTIONS.DOWN) {
-          _.invoke(this.props, 'onDismiss');
-        }
-        break;
-      default:
-        break;
-    }
+  initPositions() {
+    this.setState({
+      deltaY: new Animated.Value(this.initialPosition)
+    });
+  }
+
+  onModalShow = () => {
+    const {animationConfig} = this.getThemeProps();
+    const {deltaY} = this.state;
+ 
+    Animated.timing(deltaY, {
+      toValue: 0,
+      duration: _.get(animationConfig, 'duration', 280),
+      delay: _.get(animationConfig, 'delay', 200),
+      easing: _.get(animationConfig, 'easing', Easing.bezier(0.165, 0.84, 0.44, 1)),
+      useNativeDriver: _.get(animationConfig, 'useNativeDriver', true)
+    }).start();
+  }
+
+  renderContent() {
+    const {bottom} = this.getThemeProps();
+    const bottomInsets = Constants.getSafeAreaInsets().paddingBottom;
+
+    return (
+      <TouchableWithoutFeedback>
+        <SafeAreaView style={{flexGrow: 1}}>
+          {this.props.children}
+          {Constants.isIphoneX && bottom && <View style={{height: bottomInsets}}/>}
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+    );
+  }
+
+  renderDraggableContainer() {
+    const {style, top} = this.getThemeProps();
+
+    return (
+      <PanGestureView
+        style={[this.styles.dialogContainer, style]}
+        direction={top && PanGestureView.directions.UP}
+        onDismiss={this.onDismiss}
+      >
+        {this.renderContent()}
+      </PanGestureView>
+    );
+  }
+
+  renderAnimationContainer() {
+    const {animationConfig, top} = this.getThemeProps();
+    const {alignments, deltaY} = this.state;
+    const centerByDefault = _.isEmpty(alignments);
+    const hasCustomAnimation = (animationConfig && animationConfig.animation);
+    const Container = hasCustomAnimation ? Animatable.View : Animated.View;
+    const defaultAnimation = top ? AnimatableManager.presets.slideInDown : AnimatableManager.presets.slideInUp;
+    const animation = hasCustomAnimation ? Object.assign(defaultAnimation, animationConfig) : {};
+
+    return (
+      <Container 
+        style={[
+          this.styles.overlay,
+          {...alignments},
+          centerByDefault && this.styles.centerContent,
+          !hasCustomAnimation && {
+            transform: [{
+              translateY: deltaY
+            }]
+          }
+        ]}
+        pointerEvents='box-none'
+        {...animation}
+      >
+        {this.renderDraggableContainer()}
+      </Container>
+    );
   }
 
   render() {
-    const {visible, overlayBackgroundColor, style, onDismiss, bottom, animationConfig, top} = this.getThemeProps();
-    const {alignments} = this.state;
-    const centerByDefault = _.isEmpty(alignments);
-    const config = {
-      velocityThreshold: 0.3,
-      directionalOffsetThreshold: 80,
-    };
-    const bottomInsets = Constants.getSafeAreaInsets().paddingBottom;
-    const animation = top ? AnimatableManager.presets.slideInDown : AnimatableManager.presets.slideInUp;
+    const {visible, overlayBackgroundColor} = this.getThemeProps();
 
     return (
       <Modal
         transparent
         visible={visible}
         animationType={'fade'}
-        onBackgroundPress={onDismiss}
-        onRequestClose={onDismiss}
+        onBackgroundPress={this.onDismiss}
+        onRequestClose={this.onDismiss}
         overlayBackgroundColor={overlayBackgroundColor}
+        onShow={this.onModalShow}
       >
-        <View center={centerByDefault} style={[this.styles.overlay, alignments]} pointerEvents="box-none">
-          <Animatable.View style={[this.styles.dialogContainer, style]} {...animation} {...animationConfig}>
-            <GestureRecognizer
-              onSwipe={(direction, state) => this.onSwipe(direction, state)}
-              config={config}
-              style={this.styles.gestureContainer}
-            >
-              <TouchableWithoutFeedback>
-                <SafeAreaView style={{flexGrow: 1}}>
-                  {this.props.children}
-                  {Constants.isIphoneX && bottom && <View style={{height: bottomInsets}}/>}
-                </SafeAreaView>
-              </TouchableWithoutFeedback>
-            </GestureRecognizer>
-          </Animatable.View>
-        </View>
+        {this.renderAnimationContainer()}
       </Modal>
     );
   }
@@ -140,15 +193,16 @@ class Dialog extends BaseComponent {
 function createStyles({width, height}) {
   return StyleSheet.create({
     overlay: {
-      flex: 1,
+      flex: 1
     },
     dialogContainer: {
       width,
-      height,
+      height
     },
-    gestureContainer: {
-      flexGrow: 1,
-    },
+    centerContent: {
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
   });
 }
 

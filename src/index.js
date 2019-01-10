@@ -24,6 +24,7 @@ module.exports = {
   get ListItem() { return require('./components').ListItem; },
   get Notification() { return require('./components').Notification; },
   get PageControl() { return require('./components').PageControl; },
+  get PanGestureView() { return require('./components').PanGestureView; },
   get Picker() { return require('./components').Picker; },
   get Stepper() { return require('./components').Stepper; },
   get TabBar() { return require('./components').TabBar; },
