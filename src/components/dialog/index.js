@@ -2,8 +2,9 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, TouchableWithoutFeedback, SafeAreaView, PanResponder, Animated, Easing} from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import {Constants} from '../../helpers';
-import {Colors} from '../../style';
+import {AnimatableManager, Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import Modal from '../../screensComponents/modal';
 import View from '../view';
@@ -81,9 +82,6 @@ class Dialog extends BaseComponent {
     if (props.dismissSwipeDirection) {
       console.warn('Dialog component\'s prop \'dismissSwipeDirection\' is deprecated, please remove it');
     }
-    if (props.animationConfig && props.animationConfig.animation) {
-      console.warn('Dialog component no longer support custom animation. Animation is \'slideInUp\'');
-    }
   }
 
   static swipeDirections = SWIPE_DIRECTIONS; // DEFRECATED
@@ -155,10 +153,12 @@ class Dialog extends BaseComponent {
   };
 
   animateDismiss() {
-    const {mainDeltaY} = this.state;
+    const {top} = this.props;
+    const {deltaY} = this.state;
+    const newValue = top ? -this.layout.height -this.layout.y - 1 : deltaY._value + (Constants.screenHeight - this.layout.y); // eslint-disable-line
     
-    Animated.timing(mainDeltaY, {
-      toValue: this.initialPosition,
+    Animated.timing(deltaY, {
+      toValue: Math.round(newValue),
       duration: 280,
       useNativeDriver: true
     }).start(this.onAnimatedFinished);
@@ -199,11 +199,82 @@ class Dialog extends BaseComponent {
     }).start();
   }
 
-  render() {
-    const {visible, overlayBackgroundColor, style, bottom} = this.getThemeProps();
-    const {alignments, deltaY, mainDeltaY} = this.state;
-    const centerByDefault = _.isEmpty(alignments);
+  renderContent() {
+    const {bottom} = this.getThemeProps();
     const bottomInsets = Constants.getSafeAreaInsets().paddingBottom;
+
+    return (
+      <TouchableWithoutFeedback>
+        <SafeAreaView style={{flexGrow: 1}}>
+          {this.props.children}
+          {Constants.isIphoneX && bottom && <View style={{height: bottomInsets}}/>}
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+    );
+  }
+
+  renderDraggableContainer() {
+    const {style} = this.getThemeProps();
+    const {deltaY} = this.state;
+
+    return (
+      <Animated.View
+        style={[
+          this.styles.dialogContainer,
+          style,
+          {
+            transform: [{
+              translateY: deltaY
+            }]
+          }
+        ]} 
+        {...this.panResponder.panHandlers}
+        onLayout={this.onLayout}
+      >
+        {this.renderContent()}
+      </Animated.View>
+    );
+  }
+
+  renderAnimationContainer() {
+    const {animationConfig, top} = this.getThemeProps();
+    const {alignments, mainDeltaY} = this.state;
+    const centerByDefault = _.isEmpty(alignments);
+    const animation = top ? AnimatableManager.presets.slideInDown : AnimatableManager.presets.slideInUp;
+
+    if (animationConfig && animationConfig.animation) {
+      return (
+        <Animatable.View 
+          style={[this.styles.overlay, {...alignments}, centerByDefault && this.styles.centerContent]} 
+          {...animation} 
+          {...animationConfig} 
+          pointerEvents='box-none'
+        >
+          {this.renderDraggableContainer()}
+        </Animatable.View>
+      );
+    }
+    return (
+      <Animated.View 
+        style={[
+          this.styles.overlay,
+          {...alignments},
+          centerByDefault && this.styles.centerContent,
+          {
+            transform: [{
+              translateY: mainDeltaY
+            }]
+          }
+        ]}
+        pointerEvents='box-none'
+      >
+        {this.renderDraggableContainer()}
+      </Animated.View>
+    );
+  }
+
+  render() {
+    const {visible, overlayBackgroundColor} = this.getThemeProps();
 
     return (
       <Modal
@@ -215,40 +286,7 @@ class Dialog extends BaseComponent {
         overlayBackgroundColor={overlayBackgroundColor}
         onShow={this.onModalShow}
       >
-        <Animated.View 
-          style={[
-            this.styles.overlay,
-            {...alignments},
-            centerByDefault && this.styles.centerContent,
-            {
-              transform: [{
-                translateY: mainDeltaY
-              }]
-            }
-          ]}
-          pointerEvents='box-none'
-        >
-          <Animated.View
-            style={[
-              this.styles.dialogContainer,
-              style,
-              {
-                transform: [{
-                  translateY: deltaY
-                }]
-              }
-            ]} 
-            {...this.panResponder.panHandlers}
-            onLayout={this.onLayout}
-          >
-            <TouchableWithoutFeedback>
-              <SafeAreaView style={{flexGrow: 1}}>
-                {this.props.children}
-                {Constants.isIphoneX && bottom && <View style={{height: bottomInsets}}/>}
-              </SafeAreaView>
-            </TouchableWithoutFeedback>
-          </Animated.View>
-        </Animated.View>
+        {this.renderAnimationContainer()}
       </Modal>
     );
   }
