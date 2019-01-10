@@ -61,18 +61,19 @@ export default class PanGestureView extends BaseComponent {
     this.swipe = false;
   };
   handlePanResponderMove = (e, gestureState) => {
-    const {direction} = this.props;
+    const {direction} = this.getThemeProps();
     let newValue = 0;
     
     // VERTICAL
+    const top = (direction === DIRECTIONS.TOP);
     const {deltaY} = this.state;
 
     if (Math.abs(gestureState.vy) >= 1.8) {
-      if ((direction.TOP && gestureState.vy < 0) || (!direction.TOP && gestureState.vy > 0)) {
+      if ((top && gestureState.vy < 0) || (!top && gestureState.vy > 0)) {
         // Swipe
         this.swipe = true;
       }
-    } else if ((direction.TOP && gestureState.dy < 0) || (!direction.TOP && gestureState.dy > 0)) {
+    } else if ((top && gestureState.dy < 0) || (!top && gestureState.dy > 0)) {
       // Drag
       newValue = gestureState.dy;
       Animated.spring(deltaY, {
@@ -83,14 +84,15 @@ export default class PanGestureView extends BaseComponent {
   };
   handlePanResponderEnd = () => {
     if (!this.swipe) {
-      const {direction} = this.props;
+      const {direction} = this.getThemeProps();
 
       // VERTICAL
+      const top = (direction === DIRECTIONS.TOP);
       const {deltaY} = this.state;
       const threshold = this.layout.height / 2;
       const endValue = Math.round(deltaY._value); // eslint-disable-line
       
-      if ((direction.TOP && endValue <= -threshold) || (!direction.TOP && endValue >= threshold)) {
+      if ((top && endValue <= -threshold) || (!top && endValue >= threshold)) {
         // close
         this.animateDismiss();
       } else {
@@ -107,11 +109,12 @@ export default class PanGestureView extends BaseComponent {
   };
 
   animateDismiss() {
-    const {direction} = this.props;
+    const {direction} = this.getThemeProps();
 
     // VERTICAL
+    const top = (direction === DIRECTIONS.TOP);
     const {deltaY} = this.state;
-    const newValue = direction.TOP ? -this.layout.height -this.layout.y - 1 : deltaY._value + (Constants.screenHeight - this.layout.y); // eslint-disable-line
+    const newValue = top ? -this.layout.height -this.layout.y - 1 : deltaY._value + (Constants.screenHeight - this.layout.y); // eslint-disable-line
 
     Animated.timing(deltaY, {
       toValue: Math.round(newValue),
