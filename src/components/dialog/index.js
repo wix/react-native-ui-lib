@@ -163,7 +163,7 @@ class Dialog extends BaseComponent {
             }]
           }
         ]}
-        pointerEvents='box-none'
+        pointerEvents="box-none"
         {...animation}
       >
         {this.renderDraggableContainer()}
