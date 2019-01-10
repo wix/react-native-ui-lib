@@ -1,8 +1,11 @@
 // TODO: need to figure how to allow any type of component to be wrapped with Hint and not just View
+// TODO: Add icon support
+// TODO: Add support to custom hint rendering
+// TODO: Add animation
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import {StyleSheet, findNodeHandle, TouchableWithoutFeedback, Animated} from 'react-native';
+import {StyleSheet, findNodeHandle} from 'react-native';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
@@ -13,7 +16,9 @@ import {Constants} from '../../helpers';
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
 
+const DEFAULT_COLOR = Colors.blue30;
 const DEFAULT_HINT_DISTANCE = Spacings.s4;
+const DEFAULT_EDGE_SPACE = Spacings.s5;
 const HINT_POSITIONS = {
   TOP: 'top',
   BOTTOM: 'bottom'
@@ -24,9 +29,17 @@ class Hint extends BaseComponent {
 
   static propTypes = {
     /**
+     * The hint background color
+     */
+    color: PropTypes.string,
+    /**
      * The hint message
      */
     message: PropTypes.string,
+    /**
+     * The hint message custom style
+     */
+    messageStyle: PropTypes.string,
     /**
      * The hint's position
      */
@@ -51,11 +64,9 @@ class Hint extends BaseComponent {
 
   static defaultProps = {
     position: HINT_POSITIONS.BOTTOM
-    // tipPosition: TIP_POSITIONS.MIDDLE
   };
 
   static positions = HINT_POSITIONS;
-  // static tipPositions = TIP_POSITIONS;
 
   state = {};
 
@@ -65,9 +76,9 @@ class Hint extends BaseComponent {
 
       setTimeout(() => {
         node.measureInWindow((x, y, width, height) => {
-          const targetPosition = {x, y, width, height};
+          const targetLayout = {x, y, width, height};
           this.setState({
-            targetPosition
+            targetLayout
           });
         });
       });
@@ -83,18 +94,22 @@ class Hint extends BaseComponent {
   };
 
   get showHint() {
-    const {targetPosition, containerLayout} = this.state;
-    return !!targetPosition && !!containerLayout;
+    const {targetLayout, containerLayout} = this.state;
+    return !!targetLayout && !!containerLayout;
   }
 
   get tipSize() {
-    const {useSideTip} = this.props;
-    return useSideTip ? {width: 14, height: 7} : {width: 20, height: 7};
+    return this.useSideTip ? {width: 14, height: 7} : {width: 20, height: 7};
   }
 
   get hintDistance() {
     const {distance} = this.getThemeProps();
-    return distance || Spacings.s4;
+    return distance || DEFAULT_HINT_DISTANCE;
+  }
+
+  get edgeSpace() {
+    const {edgeSpace} = this.getThemeProps();
+    return edgeSpace || DEFAULT_EDGE_SPACE;
   }
 
   get useSideTip() {
@@ -106,10 +121,10 @@ class Hint extends BaseComponent {
   }
 
   getTargetPositionOnScreen() {
-    const {targetPosition} = this.state;
-    if (targetPosition.x > Constants.screenWidth * (2 / 3)) {
+    const {targetLayout} = this.state;
+    if (targetLayout.x > Constants.screenWidth * (2 / 3)) {
       return 'right';
-    } else if (targetPosition.x < Constants.screenWidth * (1 / 3)) {
+    } else if (targetLayout.x < Constants.screenWidth * (1 / 3)) {
       return 'left';
     } else {
       return 'center';
@@ -117,14 +132,14 @@ class Hint extends BaseComponent {
   }
 
   getHintContainerPosition() {
-    const {targetPosition, containerLayout} = this.state;
+    const {targetLayout, containerLayout} = this.state;
     const {position} = this.props;
     const hintPositionStyle = {left: -containerLayout.x, alignItems: 'center'};
 
     if (position === HINT_POSITIONS.TOP) {
-      hintPositionStyle.bottom = targetPosition.height;
+      hintPositionStyle.bottom = targetLayout.height;
     } else {
-      hintPositionStyle.top = targetPosition.height;
+      hintPositionStyle.top = targetLayout.height;
     }
 
     const targetPositionOnScreen = this.getTargetPositionOnScreen();
@@ -138,8 +153,8 @@ class Hint extends BaseComponent {
   }
 
   getTipPosition() {
-    const {targetPosition} = this.state;
-    const {position} = this.props;
+    const {targetLayout} = this.state;
+    const {position} = this.getThemeProps();
     const tipPositionStyle = {};
 
     if (position === HINT_POSITIONS.TOP) {
@@ -148,20 +163,21 @@ class Hint extends BaseComponent {
       tipPositionStyle.top = this.hintDistance - this.tipSize.height;
     }
 
+    const targetMidWidth = targetLayout.width / 2;
+    const tipMidWidth = this.tipSize.width / 2;
+
     switch (this.getTargetPositionOnScreen()) {
       case 'left':
-        tipPositionStyle.left = this.useSideTip
-          ? 0 + this.hintDistance
-          : targetPosition.x + targetPosition.width / 2 - this.tipSize.width / 2;
+        tipPositionStyle.left = this.useSideTip ? this.edgeSpace : targetLayout.x + targetMidWidth - tipMidWidth;
         break;
       case 'right':
         tipPositionStyle.right = this.useSideTip
-          ? 0 + this.hintDistance
-          : Constants.screenWidth - targetPosition.x - targetPosition.width / 2 - this.tipSize.width / 2;
+          ? this.edgeSpace
+          : Constants.screenWidth - targetLayout.x - targetMidWidth - tipMidWidth;
         break;
       case 'center':
       default: {
-        tipPositionStyle.left = targetPosition.x + targetPosition.width / 2 - this.tipSize.width / 2;
+        tipPositionStyle.left = targetLayout.x + targetMidWidth - tipMidWidth;
         break;
       }
     }
@@ -177,7 +193,7 @@ class Hint extends BaseComponent {
   }
 
   renderHintTip() {
-    const {position} = this.props;
+    const {position, color} = this.getThemeProps();
     const source = this.useSideTip ? sideTip : middleTip;
     const flipVertically = position === HINT_POSITIONS.TOP;
     const flipHorizontally = this.getTargetPositionOnScreen() === 'right';
@@ -185,11 +201,13 @@ class Hint extends BaseComponent {
       transform: [{scaleY: flipVertically ? -1 : 1}, {scaleX: flipHorizontally ? -1 : 1}]
     };
 
-    return <Image tintColor={Colors.blue30} source={source} style={[styles.hintTip, this.getTipPosition(), flipStyle]} />;
+    return (
+      <Image tintColor={color || DEFAULT_COLOR} source={source} style={[styles.hintTip, this.getTipPosition(), flipStyle]} />
+    );
   }
 
   renderHint() {
-    const {message, borderRadius, edgeSpace} = this.getThemeProps();
+    const {message, borderRadius, edgeSpace, color} = this.getThemeProps();
     if (this.showHint) {
       return (
         <View
@@ -202,7 +220,7 @@ class Hint extends BaseComponent {
           pointerEvents="box-none"
         >
           {this.renderHintTip()}
-          <View style={[styles.hint, !_.isUndefined(borderRadius) && {borderRadius}]}>
+          <View style={[styles.hint, color && {backgroundColor: color}, !_.isUndefined(borderRadius) && {borderRadius}]}>
             <Text style={styles.hintMessage}>{message}</Text>
           </View>
         </View>
@@ -224,21 +242,6 @@ class Hint extends BaseComponent {
         {this.renderOverlay()}
         {this.renderChildren()}
         {this.renderHint()}
-        {/* {this.showHint && (
-          <HighlighterOverlayView
-            // testID={testID}
-            highlightViewTag={this.hintTarget}
-            // highlightFrame={highlightFrame}
-            visible={this.showHint}
-            overlayColor={Colors.rgba(Colors.dark10, 0.2)}
-            // strokeColor={borderColor || defaultStrokeColor}
-            // strokeWidth={borderWidth || defaultStrokeWidth}
-            // minimumRectSize={minimumRectSize}
-            // innerPadding={innerPadding}
-          >
-            {this.renderHint()}
-          </HighlighterOverlayView>
-        )} */}
       </View>
     );
   }
@@ -258,13 +261,13 @@ const styles = StyleSheet.create({
     width: Constants.screenWidth,
     zIndex: 100,
     paddingVertical: DEFAULT_HINT_DISTANCE,
-    paddingHorizontal: Spacings.s5
+    paddingHorizontal: DEFAULT_EDGE_SPACE
   },
   hintTip: {
     position: 'absolute'
   },
   hint: {
-    backgroundColor: Colors.blue30,
+    backgroundColor: DEFAULT_COLOR,
     padding: Spacings.s5,
     borderRadius: BorderRadiuses.br60
   },

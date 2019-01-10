@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {Constants, Colors, View, Avatar, Text, Hint, Button, RadioGroup, RadioButton, Switch} from 'react-native-ui-lib'; //eslint-disable-line
+import {Constants, BorderRadiuses, Spacings, Colors, View, Avatar, Text, Hint, Button, RadioGroup, RadioButton, Switch} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class HintsScreen extends Component {
   constructor(props) {
@@ -40,14 +40,15 @@ export default class HintsScreen extends Component {
       <View flex>
         <View flex centerV padding-20>
           <Hint
+            // color={Colors.orange30}
             message={message}
             position={showBottomHint ? Hint.positions.BOTTOM : Hint.positions.TOP}
             useSideTip={useSideTip}
             key={targetPosition}
-            borderRadius={0}
+            borderRadius={BorderRadiuses.br40}
           >
             <View style={{alignSelf: targetPosition}}>
-              <Button label="Press Me" />
+              <Button label="Button" />
             </View>
           </Hint>
         </View>
@@ -68,7 +69,7 @@ export default class HintsScreen extends Component {
 
           <RadioGroup row centerV marginB-20 value={useSideTip} onValueChange={value => this.setState({useSideTip: value})}>
             <Text marginR-10>Tip:</Text>
-            {this.renderRadioButton(null, 'Default')}
+            {this.renderRadioButton(undefined, 'Default')}
             {this.renderRadioButton(true, 'Side Tip')}
             {this.renderRadioButton(false, 'Middle Tip')}
           </RadioGroup>

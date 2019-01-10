@@ -23,6 +23,7 @@ module.exports = {
     'no-trailing-spaces': 'off',
     'no-use-before-define': 'off',
     'no-unneeded-ternary': 'off',
+    'no-mixed-operators': 'off',
     'object-curly-spacing': 'off',
     'react/forbid-prop-types': 'off',
     'react/jsx-filename-extension': 'off',
