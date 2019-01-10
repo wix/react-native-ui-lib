@@ -29,6 +29,10 @@ class Hint extends BaseComponent {
 
   static propTypes = {
     /**
+     * Control the visibility of the hint
+     */
+    visible: PropTypes.bool,
+    /**
      * The hint background color
      */
     color: PropTypes.string,
@@ -236,7 +240,9 @@ class Hint extends BaseComponent {
   }
 
   render() {
-    const {style, position, ...others} = this.props;
+    const {visible, style, position, ...others} = this.props;
+    if (!visible) return this.props.children;
+
     return (
       <View {...others} style={[styles.container, style]} collapsable={false} onLayout={this.onContainerLayout}>
         {this.renderOverlay()}

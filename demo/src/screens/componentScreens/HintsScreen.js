@@ -1,11 +1,25 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {Constants, BorderRadiuses, Spacings, Colors, View, Avatar, Text, Hint, Button, RadioGroup, RadioButton, Switch} from 'react-native-ui-lib'; //eslint-disable-line
+import {
+  Constants,
+  BorderRadiuses,
+  Spacings,
+  Colors,
+  View,
+  Avatar,
+  Text,
+  Hint,
+  Button,
+  RadioGroup,
+  RadioButton,
+  Switch
+} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class HintsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      showHint: false,
       useShortMessage: false,
       showBottomHint: false,
       targetPosition: 'flex-start'
@@ -31,7 +45,7 @@ export default class HintsScreen extends Component {
   }
 
   render() {
-    const {showBottomHint, targetPosition, useShortMessage, useSideTip} = this.state;
+    const {showHint, showBottomHint, targetPosition, useShortMessage, useSideTip} = this.state;
     const message = useShortMessage
       ? 'Add other cool and useful stuff'
       : 'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
@@ -40,6 +54,7 @@ export default class HintsScreen extends Component {
       <View flex>
         <View flex centerV padding-20>
           <Hint
+            visible={showHint}
             // color={Colors.orange30}
             message={message}
             // messageStyle={{color: 'red'}}
@@ -49,7 +64,7 @@ export default class HintsScreen extends Component {
             borderRadius={BorderRadiuses.br40}
           >
             <View style={{alignSelf: targetPosition}}>
-              <Button label="Button" />
+              <Button label="Button" onPress={() => this.setState({showHint: !showHint})} />
             </View>
           </Hint>
         </View>
