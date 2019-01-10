@@ -42,6 +42,7 @@ export default class HintsScreen extends Component {
           <Hint
             // color={Colors.orange30}
             message={message}
+            // messageStyle={{color: 'red'}}
             position={showBottomHint ? Hint.positions.BOTTOM : Hint.positions.TOP}
             useSideTip={useSideTip}
             key={targetPosition}

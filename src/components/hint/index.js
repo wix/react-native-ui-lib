@@ -207,7 +207,7 @@ class Hint extends BaseComponent {
   }
 
   renderHint() {
-    const {message, borderRadius, edgeSpace, color} = this.getThemeProps();
+    const {message, messageStyle, borderRadius, edgeSpace, color} = this.getThemeProps();
     if (this.showHint) {
       return (
         <View
@@ -221,7 +221,7 @@ class Hint extends BaseComponent {
         >
           {this.renderHintTip()}
           <View style={[styles.hint, color && {backgroundColor: color}, !_.isUndefined(borderRadius) && {borderRadius}]}>
-            <Text style={styles.hintMessage}>{message}</Text>
+            <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>
           </View>
         </View>
       );
