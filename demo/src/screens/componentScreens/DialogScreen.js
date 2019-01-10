@@ -50,7 +50,7 @@ class DialogScreen extends Component {
         <Button 
           marginT-20 
           size={'small'} 
-          label='show dialog with custom entrance animation' 
+          label='show dialog with animation configuration' 
           onPress={() => this.setState({showDialog6: true})} 
         />
 
@@ -103,7 +103,6 @@ class DialogScreen extends Component {
           bottom
           centerH
           onDismiss={() => this.setState({showDialog5: false})}
-          animationConfig={{duration: 1000}}
           style={{backgroundColor: Colors.white}}
         >
           {this.renderDialogContent(5, {flex: false})}
@@ -115,7 +114,7 @@ class DialogScreen extends Component {
           bottom
           centerH
           onDismiss={() => this.setState({showDialog6: false})}
-          animationConfig={{animation: 'slideInLeft'}}
+          animationConfig={{animation: 'slideInLeft', duration: 1000}}
         >
           {this.renderDialogContent(6, {'marginV-20': true, 'bg-yellow60': true})}
         </Dialog>

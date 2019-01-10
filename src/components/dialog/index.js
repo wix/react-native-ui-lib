@@ -146,36 +146,28 @@ class Dialog extends BaseComponent {
     const {animationConfig, top} = this.getThemeProps();
     const {alignments, deltaY} = this.state;
     const centerByDefault = _.isEmpty(alignments);
-    const animation = top ? AnimatableManager.presets.slideInDown : AnimatableManager.presets.slideInUp;
+    const hasCustomAnimation = (animationConfig && animationConfig.animation);
+    const Container = hasCustomAnimation ? Animatable.View : Animated.View;
+    const defaultAnimation = top ? AnimatableManager.presets.slideInDown : AnimatableManager.presets.slideInUp;
+    const animation = hasCustomAnimation ? Object.assign(defaultAnimation, animationConfig) : {};
 
-    if (animationConfig && animationConfig.animation) {
-      return (
-        <Animatable.View 
-          style={[this.styles.overlay, {...alignments}, centerByDefault && this.styles.centerContent]} 
-          {...animation} 
-          {...animationConfig} 
-          pointerEvents='box-none'
-        >
-          {this.renderDraggableContainer()}
-        </Animatable.View>
-      );
-    }
     return (
-      <Animated.View 
+      <Container 
         style={[
           this.styles.overlay,
           {...alignments},
           centerByDefault && this.styles.centerContent,
-          {
+          !hasCustomAnimation && {
             transform: [{
               translateY: deltaY
             }]
           }
         ]}
         pointerEvents='box-none'
+        {...animation}
       >
         {this.renderDraggableContainer()}
-      </Animated.View>
+      </Container>
     );
   }
 
