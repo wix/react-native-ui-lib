@@ -78,7 +78,7 @@ class Dialog extends BaseComponent {
 
     this.state = {
       alignments: this.state.alignments,
-      mainDeltaY: new Animated.Value(this.initialPosition)
+      deltaY: new Animated.Value(this.initialPosition)
     };
 
     if (props.dismissSwipeDirection) {
@@ -97,15 +97,15 @@ class Dialog extends BaseComponent {
 
   initPositions() {
     this.setState({
-      mainDeltaY: new Animated.Value(this.initialPosition)
+      deltaY: new Animated.Value(this.initialPosition)
     });
   }
 
   onModalShow = () => {
     const {animationConfig} = this.getThemeProps();
-    const {mainDeltaY} = this.state;
+    const {deltaY} = this.state;
  
-    Animated.timing(mainDeltaY, {
+    Animated.timing(deltaY, {
       toValue: 0,
       duration: _.get(animationConfig, 'duration', 280),
       delay: _.get(animationConfig, 'delay', 200),
@@ -144,7 +144,7 @@ class Dialog extends BaseComponent {
 
   renderAnimationContainer() {
     const {animationConfig, top} = this.getThemeProps();
-    const {alignments, mainDeltaY} = this.state;
+    const {alignments, deltaY} = this.state;
     const centerByDefault = _.isEmpty(alignments);
     const animation = top ? AnimatableManager.presets.slideInDown : AnimatableManager.presets.slideInUp;
 
@@ -168,7 +168,7 @@ class Dialog extends BaseComponent {
           centerByDefault && this.styles.centerContent,
           {
             transform: [{
-              translateY: mainDeltaY
+              translateY: deltaY
             }]
           }
         ]}
