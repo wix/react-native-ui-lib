@@ -20,6 +20,7 @@ module.exports = {
   get ListItem() { return require('./listItem').default; },
   get Notification() { return require('./notification').default; },
   get PageControl() { return require('./pageControl').default; },
+  get PanGestureView() { return require('./panGestureView').default; },
   get Picker() { return require('./picker').default; },
   get Stepper() { return require('./stepper').default; },
   get TabBar() { return require('./tabBar').default; },

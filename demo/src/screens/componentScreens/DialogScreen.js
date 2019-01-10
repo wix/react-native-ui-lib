@@ -7,11 +7,12 @@ class DialogScreen extends Component {
     showDialog3: false,
     showDialog4: false,
     showDialog5: false,
+    showDialog6: false
   };
 
   renderDialogContent(dialogIndex, extraProps) {
     return (
-      <View bg-white flex br20 padding-18 spread {...extraProps}>
+      <View flex br20 padding-18 spread {...extraProps}>
         <View height={100}>
           <Text text50>This is Dialog</Text>
         </View>
@@ -23,11 +24,11 @@ class DialogScreen extends Component {
   }
 
   render() {
-    const {showDialog1, showDialog2, showDialog3, showDialog4, showDialog5} = this.state;
+    const {showDialog1, showDialog2, showDialog3, showDialog4, showDialog5, showDialog6} = this.state;
     return (
       <View flex bg-dark80 padding-12 center>
-        <Button size={'small'} label='show default dialog in center' onPress={() => this.setState({showDialog1: true})} />
-        <Button marginT-20 size={'small'} label='show bottom dialog' onPress={() => this.setState({showDialog2: true})} />
+        <Button size={'small'} label='show default dialog in center' onPress={() => this.setState({showDialog1: true})}/>
+        <Button marginT-20 size={'small'} label='show bottom dialog' onPress={() => this.setState({showDialog2: true})}/>
         <Button
           marginT-20
           size={'small'}
@@ -46,7 +47,20 @@ class DialogScreen extends Component {
           label='show dialog with height based on content '
           onPress={() => this.setState({showDialog5: true})}
         />
-        <Dialog visible={showDialog1} width='90%' height='60%' onDismiss={() => this.setState({showDialog1: false})}>
+        <Button 
+          marginT-20 
+          size={'small'} 
+          label='show dialog with animation configuration' 
+          onPress={() => this.setState({showDialog6: true})} 
+        />
+
+        <Dialog 
+          visible={showDialog1}
+          width='90%'
+          height='60%'
+          onDismiss={() => this.setState({showDialog1: false})}
+          style={{backgroundColor: Colors.white}}
+        >
           {this.renderDialogContent(1)}
         </Dialog>
         <Dialog
@@ -68,7 +82,7 @@ class DialogScreen extends Component {
           centerH
           onDismiss={() => this.setState({showDialog3: false})}
         >
-          {this.renderDialogContent(3, {'marginV-20': true})}
+          {this.renderDialogContent(3, {'marginV-20': true, 'bg-white': true})}
         </Dialog>
         <Dialog
           visible={showDialog4}
@@ -77,12 +91,11 @@ class DialogScreen extends Component {
           top
           centerH
           onDismiss={() => this.setState({showDialog4: false})}
-          dismissSwipeDirection={Dialog.swipeDirections.UP}
+          // dismissSwipeDirection={Dialog.swipeDirections.UP}
           style={{backgroundColor: Colors.white}}
         >
           {this.renderDialogContent(4, {br0: true})}
         </Dialog>
-
         <Dialog
           visible={showDialog5}
           width='100%'
@@ -90,9 +103,20 @@ class DialogScreen extends Component {
           bottom
           centerH
           onDismiss={() => this.setState({showDialog5: false})}
-          animationConfig={{duration: 1000}}
+          style={{backgroundColor: Colors.white}}
         >
           {this.renderDialogContent(5, {flex: false})}
+        </Dialog>
+        <Dialog
+          visible={showDialog6}
+          width='80%'
+          height='40%'
+          bottom
+          centerH
+          onDismiss={() => this.setState({showDialog6: false})}
+          animationConfig={{animation: 'slideInLeft', duration: 1000}}
+        >
+          {this.renderDialogContent(6, {'marginV-20': true, 'bg-yellow60': true})}
         </Dialog>
       </View>
     );
