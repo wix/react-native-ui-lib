@@ -11,6 +11,7 @@ import CheckboxScreen from './CheckboxScreen';
 import ConnectionStatusBarScreen from './ConnectionStatusBarScreen';
 import DialogScreen from './DialogScreen';
 import FormScreen from './FormScreen';
+import HintsScreen from './HintsScreen';
 import InputsScreen from './InputsScreen';
 import MaskedInputScreen from './MaskedInputScreen';
 import PageControlScreen from './PageControlScreen';
@@ -35,6 +36,7 @@ Navigation.registerComponent('unicorn.components.CheckboxScreen', () => Checkbox
 Navigation.registerComponent('unicorn.components.ConnectionStatusBar', () => ConnectionStatusBarScreen);
 Navigation.registerComponent('unicorn.components.DialogScreen', () => DialogScreen);
 Navigation.registerComponent('unicorn.components.FormScreen', () => FormScreen);
+Navigation.registerComponent('unicorn.components.HintsScreen', () => HintsScreen);
 Navigation.registerComponent('unicorn.components.InputsScreen', () => InputsScreen);
 Navigation.registerComponent('unicorn.components.MaskedInputScreen', () => MaskedInputScreen);
 Navigation.registerComponent('unicorn.components.PageControlScreen', () => PageControlScreen);

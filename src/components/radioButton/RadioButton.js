@@ -22,7 +22,7 @@ class RadioButton extends BaseComponent {
     /**
      * The identifier value of the radio button. must be different than other RadioButtons in the same group
      */
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     /**
      * When using RadioButton without a RadioGroup, use this prop to toggle selection
      */
@@ -50,7 +50,7 @@ class RadioButton extends BaseComponent {
   };
 
   static contextTypes = {
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     onValueChange: PropTypes.func,
   };
 

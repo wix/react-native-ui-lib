@@ -16,7 +16,7 @@ class RadioGroup extends BaseComponent {
     /**
      * The value of the selected radio button
      */
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     /**
      * Invoked once when value changes, by selecting one of the radio buttons in the group
      */
@@ -24,7 +24,7 @@ class RadioGroup extends BaseComponent {
   };
 
   static childContextTypes = {
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     onValueChange: PropTypes.func,
   };
 
