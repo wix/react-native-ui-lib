@@ -103,6 +103,7 @@ export default class TouchableOpacity extends BaseComponent {
           style,
           this.activeBackgroundStyle,
         ]}
+        ref={this.setRef}
       />
     );
   }
