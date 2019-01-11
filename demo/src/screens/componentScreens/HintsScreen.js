@@ -1,19 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
-import {
-  Constants,
-  BorderRadiuses,
-  Spacings,
-  Colors,
-  View,
-  Avatar,
-  Text,
-  Hint,
-  Button,
-  RadioGroup,
-  RadioButton,
-  Switch
-} from 'react-native-ui-lib'; //eslint-disable-line
+import {Constants, BorderRadiuses, Colors, View, Text, Hint, Button, RadioGroup, RadioButton, Switch} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class HintsScreen extends Component {
   constructor(props) {
@@ -63,9 +49,7 @@ export default class HintsScreen extends Component {
             key={targetPosition}
             borderRadius={BorderRadiuses.br40}
           >
-            <View style={{alignSelf: targetPosition}}>
-              <Button label="Button" onPress={() => this.setState({showHint: !showHint})} />
-            </View>
+            <Button label="Button" onPress={() => this.setState({showHint: !showHint})} style={{alignSelf: targetPosition}} />
           </Hint>
         </View>
 
@@ -104,15 +88,3 @@ export default class HintsScreen extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.dark80
-  },
-  page: {
-    width: Constants.screenWidth,
-    flex: 1,
-    padding: 20
-  }
-});

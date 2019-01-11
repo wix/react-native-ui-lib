@@ -1,4 +1,3 @@
-// TODO: need to figure how to allow any type of component to be wrapped with Hint and not just View
 // TODO: Add icon support
 // TODO: Add support to custom hint rendering
 // TODO: Add animation
