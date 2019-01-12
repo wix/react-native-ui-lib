@@ -52,7 +52,11 @@ export default class HintsScreen extends Component {
             key={targetPosition}
             borderRadius={BorderRadiuses.br40}
           >
-            <Button label="Button" onPress={() => this.setState({showHint: !showHint})} style={{alignSelf: targetPosition}} />
+            <Button
+              label={showHint ? 'Hide' : 'Show'}
+              onPress={() => this.setState({showHint: !showHint})}
+              style={{alignSelf: targetPosition}}
+            />
           </Hint>
         </View>
 

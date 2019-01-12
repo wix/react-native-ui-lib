@@ -3,12 +3,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import * as Animatable from 'react-native-animatable';
 import {StyleSheet, findNodeHandle} from 'react-native';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
 import Image from '../image';
-import {Typography, Spacings, Colors, BorderRadiuses} from '../../style';
+import {Typography, Spacings, Colors, BorderRadiuses, AnimatableManager} from '../../style';
 import {Constants} from '../../helpers';
 
 const sideTip = require('./assets/hintTipSide.png');
@@ -21,6 +22,17 @@ const HINT_POSITIONS = {
   TOP: 'top',
   BOTTOM: 'bottom'
 };
+
+AnimatableManager.loadAnimationDefinitions({
+  hintAppearDown: {
+    from: {opacity: 0, translateY: 20},
+    to: {opacity: 1, translateY: 0}
+  },
+  hintAppearUp: {
+    from: {opacity: 0, translateY: -20},
+    to: {opacity: 1, translateY: 0}
+  }
+});
 
 class Hint extends BaseComponent {
   static displayName = 'Hint';
@@ -217,10 +229,13 @@ class Hint extends BaseComponent {
   }
 
   renderHint() {
-    const {message, messageStyle, icon, iconStyle, borderRadius, edgeSpace, color} = this.getThemeProps();
+    const {position, message, messageStyle, icon, iconStyle, borderRadius, edgeSpace, color} = this.getThemeProps();
+    const shownUp = position === HINT_POSITIONS.TOP;
     if (this.showHint) {
       return (
-        <View
+        <Animatable.View
+          animation={shownUp ? AnimatableManager.animations.hintAppearUp : AnimatableManager.animations.hintAppearDown}
+          duration={200}
           style={[
             styles.hintContainer,
             this.getHintContainerPosition(),
@@ -238,7 +253,7 @@ class Hint extends BaseComponent {
             {icon && <Image source={icon} style={[styles.icon, iconStyle]} />}
             <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>
           </View>
-        </View>
+        </Animatable.View>
       );
     }
   }
@@ -295,7 +310,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: Spacings.s4,
-    tintColor: Colors.white,
+    tintColor: Colors.white
   }
 });
 
