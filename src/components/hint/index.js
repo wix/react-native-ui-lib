@@ -1,4 +1,3 @@
-// TODO: Add icon support
 // TODO: Add support to custom hint rendering
 // TODO: Add animation
 import React from 'react';
@@ -42,7 +41,15 @@ class Hint extends BaseComponent {
     /**
      * The hint message custom style
      */
-    messageStyle: PropTypes.string,
+    messageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * Icon to show next to the hint's message
+     */
+    icon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * The icon's style
+     */
+    iconStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * The hint's position
      */
@@ -210,7 +217,7 @@ class Hint extends BaseComponent {
   }
 
   renderHint() {
-    const {message, messageStyle, borderRadius, edgeSpace, color} = this.getThemeProps();
+    const {message, messageStyle, icon, iconStyle, borderRadius, edgeSpace, color} = this.getThemeProps();
     if (this.showHint) {
       return (
         <View
@@ -223,7 +230,12 @@ class Hint extends BaseComponent {
           pointerEvents="box-none"
         >
           {this.renderHintTip()}
-          <View style={[styles.hint, color && {backgroundColor: color}, !_.isUndefined(borderRadius) && {borderRadius}]}>
+          <View
+            row
+            centerV
+            style={[styles.hint, color && {backgroundColor: color}, !_.isUndefined(borderRadius) && {borderRadius}]}
+          >
+            {icon && <Image source={icon} style={[styles.icon, iconStyle]} />}
             <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>
           </View>
         </View>
@@ -278,7 +290,12 @@ const styles = StyleSheet.create({
   },
   hintMessage: {
     ...Typography.text70,
-    color: Colors.white
+    color: Colors.white,
+    flexShrink: 1
+  },
+  icon: {
+    marginRight: Spacings.s4,
+    tintColor: Colors.white,
   }
 });
 

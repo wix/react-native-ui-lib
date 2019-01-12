@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import {Constants, BorderRadiuses, Colors, View, Text, Hint, Button, RadioGroup, RadioButton, Switch} from 'react-native-ui-lib'; //eslint-disable-line
+import {BorderRadiuses, View, Text, Hint, Button, RadioGroup, RadioButton, Switch, Assets} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class HintsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showHint: false,
+      showHint: true,
       useShortMessage: false,
       showBottomHint: false,
+      showIcon: false,
       targetPosition: 'flex-start'
       // useSideTip: undefined
     };
@@ -31,7 +32,7 @@ export default class HintsScreen extends Component {
   }
 
   render() {
-    const {showHint, showBottomHint, targetPosition, useShortMessage, useSideTip} = this.state;
+    const {showHint, showBottomHint, showIcon, targetPosition, useShortMessage, useSideTip} = this.state;
     const message = useShortMessage
       ? 'Add other cool and useful stuff'
       : 'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
@@ -44,6 +45,8 @@ export default class HintsScreen extends Component {
             // color={Colors.orange30}
             message={message}
             // messageStyle={{color: 'red'}}
+            icon={showIcon ? Assets.icons.settings : undefined}
+            // iconStyle={{tintColor: 'red'}}
             position={showBottomHint ? Hint.positions.BOTTOM : Hint.positions.TOP}
             useSideTip={useSideTip}
             key={targetPosition}
@@ -82,6 +85,11 @@ export default class HintsScreen extends Component {
           <View row centerV marginV-10>
             <Switch value={useShortMessage} onValueChange={() => this.setState({useShortMessage: !useShortMessage})} />
             <Text marginL-10>Toggle Message</Text>
+          </View>
+
+          <View row centerV marginV-10>
+            <Switch value={showIcon} onValueChange={showIcon => this.setState({showIcon})} />
+            <Text marginL-10>Toggle Icon</Text>
           </View>
         </View>
       </View>
