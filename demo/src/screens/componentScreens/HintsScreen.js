@@ -39,7 +39,7 @@ export default class HintsScreen extends Component {
 
     return (
       <View flex>
-        <View flex centerV padding-20>
+        <View flex padding-20 paddingT-110 bg-dark80>
           <Hint
             visible={showHint}
             // color={Colors.orange30}
@@ -47,6 +47,7 @@ export default class HintsScreen extends Component {
             // messageStyle={{color: 'red'}}
             icon={showIcon ? Assets.icons.settings : undefined}
             // iconStyle={{tintColor: 'red'}}
+            // distance={15}
             position={showBottomHint ? Hint.positions.BOTTOM : Hint.positions.TOP}
             useSideTip={useSideTip}
             key={targetPosition}
@@ -56,6 +57,8 @@ export default class HintsScreen extends Component {
               label={showHint ? 'Hide' : 'Show'}
               onPress={() => this.setState({showHint: !showHint})}
               style={{alignSelf: targetPosition}}
+              // style={{alignSelf: targetPosition, marginLeft: 30}}
+              // style={{alignSelf: targetPosition, position: 'absolute', top: 160, left: 100}}
             />
           </Hint>
         </View>

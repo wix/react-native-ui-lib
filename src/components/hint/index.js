@@ -3,8 +3,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import * as Animatable from 'react-native-animatable';
-import {StyleSheet, findNodeHandle} from 'react-native';
+import {View as AnimatableView} from 'react-native-animatable';
+import {StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
@@ -75,7 +75,7 @@ class Hint extends BaseComponent {
      */
     borderRadius: PropTypes.number,
     /**
-     * Space from screen edges
+     * Hint space from screen edges
      */
     edgeSpace: PropTypes.number,
     /**
@@ -92,32 +92,30 @@ class Hint extends BaseComponent {
 
   state = {};
 
-  setTarget = (node) => {
-    if (!this.hintTarget) {
-      this.hintTarget = findNodeHandle(node);
-
+  setTargetPosition = (node) => {
+    if (!this.state.targetLayoutInWindow) {
       setTimeout(() => {
         node.measureInWindow((x, y, width, height) => {
-          const targetLayout = {x, y, width, height};
+          const targetLayoutInWindow = {x, y, width, height};
           this.setState({
-            targetLayout
+            targetLayoutInWindow
           });
         });
       });
     }
   };
 
-  onContainerLayout = ({nativeEvent: {layout}}) => {
-    if (!this.state.containerLayout) {
+  onTargetLayout = ({nativeEvent: {layout}}) => {
+    if (!this.state.targetLayout) {
       this.setState({
-        containerLayout: layout
+        targetLayout: layout
       });
     }
   };
 
   get showHint() {
-    const {targetLayout, containerLayout} = this.state;
-    return !!targetLayout && !!containerLayout;
+    const {targetLayout} = this.state;
+    return !!targetLayout;
   }
 
   get tipSize() {
@@ -144,22 +142,30 @@ class Hint extends BaseComponent {
 
   getTargetPositionOnScreen() {
     const {targetLayout} = this.state;
-    if (targetLayout.x > Constants.screenWidth * (2 / 3)) {
+    const targetMidPosition = targetLayout.x + targetLayout.width / 2;
+    if (targetMidPosition > Constants.screenWidth * (2 / 3)) {
       return 'right';
-    } else if (targetLayout.x < Constants.screenWidth * (1 / 3)) {
+    } else if (targetMidPosition < Constants.screenWidth * (1 / 3)) {
       return 'left';
     } else {
       return 'center';
     }
   }
 
-  getHintContainerPosition() {
-    const {targetLayout, containerLayout} = this.state;
+  getContainerPosition() {
+    const {targetLayout} = this.state;
+    if (targetLayout) {
+      return {top: targetLayout.y, left: targetLayout.x};
+    }
+  }
+
+  getHintPosition() {
+    const {targetLayout} = this.state;
     const {position} = this.props;
-    const hintPositionStyle = {left: -containerLayout.x, alignItems: 'center'};
+    const hintPositionStyle = {left: -targetLayout.x, alignItems: 'center'};
 
     if (position === HINT_POSITIONS.TOP) {
-      hintPositionStyle.bottom = targetLayout.height;
+      hintPositionStyle.bottom = 0;
     } else {
       hintPositionStyle.top = targetLayout.height;
     }
@@ -172,6 +178,21 @@ class Hint extends BaseComponent {
     }
 
     return hintPositionStyle;
+  }
+
+  getHintPadding() {
+    const {targetLayout} = this.state;
+    const paddings = {paddingVertical: this.hintDistance, paddingHorizontal: this.edgeSpace};
+    if (this.useSideTip) {
+      const targetPositionOnScreen = this.getTargetPositionOnScreen();
+      if (targetPositionOnScreen === 'left') {
+        paddings.paddingLeft = targetLayout.x;
+      } else if (targetPositionOnScreen === 'right') {
+        paddings.paddingRight = Constants.screenWidth - targetLayout.x - targetLayout.width;
+      }
+    }
+
+    return paddings;
   }
 
   getTipPosition() {
@@ -190,11 +211,11 @@ class Hint extends BaseComponent {
 
     switch (this.getTargetPositionOnScreen()) {
       case 'left':
-        tipPositionStyle.left = this.useSideTip ? this.edgeSpace : targetLayout.x + targetMidWidth - tipMidWidth;
+        tipPositionStyle.left = this.useSideTip ? targetLayout.x : targetLayout.x + targetMidWidth - tipMidWidth;
         break;
       case 'right':
         tipPositionStyle.right = this.useSideTip
-          ? this.edgeSpace
+          ? Constants.screenWidth - targetLayout.x - targetLayout.width
           : Constants.screenWidth - targetLayout.x - targetMidWidth - tipMidWidth;
         break;
       case 'center':
@@ -208,9 +229,9 @@ class Hint extends BaseComponent {
   }
 
   renderOverlay() {
-    if (this.showHint) {
-      const {containerLayout} = this.state;
-      return <View style={[styles.overlay, {top: -containerLayout.y, left: -containerLayout.x}]} />;
+    const {targetLayoutInWindow} = this.state;
+    if (targetLayoutInWindow) {
+      return <View style={[styles.overlay, {top: -targetLayoutInWindow.y, left: -targetLayoutInWindow.x}]} />;
     }
   }
 
@@ -229,19 +250,14 @@ class Hint extends BaseComponent {
   }
 
   renderHint() {
-    const {position, message, messageStyle, icon, iconStyle, borderRadius, edgeSpace, color} = this.getThemeProps();
+    const {position, message, messageStyle, icon, iconStyle, borderRadius, color} = this.getThemeProps();
     const shownUp = position === HINT_POSITIONS.TOP;
     if (this.showHint) {
       return (
-        <Animatable.View
+        <AnimatableView
           animation={shownUp ? AnimatableManager.animations.hintAppearUp : AnimatableManager.animations.hintAppearDown}
           duration={200}
-          style={[
-            styles.hintContainer,
-            this.getHintContainerPosition(),
-            {paddingVertical: this.hintDistance},
-            edgeSpace && {paddingHorizontal: edgeSpace}
-          ]}
+          style={[styles.hintContainer, this.getHintPosition(), this.getHintPadding()]}
           pointerEvents="box-none"
         >
           {this.renderHintTip()}
@@ -253,7 +269,7 @@ class Hint extends BaseComponent {
             {icon && <Image source={icon} style={[styles.icon, iconStyle]} />}
             <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>
           </View>
-        </Animatable.View>
+        </AnimatableView>
       );
     }
   }
@@ -261,27 +277,31 @@ class Hint extends BaseComponent {
   renderChildren() {
     return React.cloneElement(this.props.children, {
       collapsable: false,
-      ref: this.setTarget
+      onLayout: this.onTargetLayout,
+      ref: this.setTargetPosition
     });
   }
 
   render() {
     const {visible, style, position, ...others} = this.props;
+
     if (!visible) return this.props.children;
 
     return (
-      <View {...others} style={[styles.container, style]} collapsable={false} onLayout={this.onContainerLayout}>
-        {this.renderOverlay()}
+      <React.Fragment>
+        <View {...others} style={[styles.container, style, this.getContainerPosition()]} collapsable={false}>
+          {this.renderOverlay()}
+          {this.renderHint()}
+        </View>
         {this.renderChildren()}
-        {this.renderHint()}
-      </View>
+      </React.Fragment>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    zIndex: 100
+    position: 'absolute'
   },
   overlay: {
     position: 'absolute',
@@ -291,9 +311,7 @@ const styles = StyleSheet.create({
   hintContainer: {
     position: 'absolute',
     width: Constants.screenWidth,
-    zIndex: 100,
-    paddingVertical: DEFAULT_HINT_DISTANCE,
-    paddingHorizontal: DEFAULT_EDGE_SPACE
+    zIndex: 100
   },
   hintTip: {
     position: 'absolute'
