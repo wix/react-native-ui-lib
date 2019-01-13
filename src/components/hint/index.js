@@ -16,8 +16,8 @@ const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
 
 const DEFAULT_COLOR = Colors.blue30;
-const DEFAULT_HINT_DISTANCE = Spacings.s4;
-const DEFAULT_EDGE_SPACE = Spacings.s5;
+const DEFAULT_HINT_OFFSET = Spacings.s4;
+const DEFAULT_EDGE_MARGINS = Spacings.s5;
 const HINT_POSITIONS = {
   TOP: 'top',
   BOTTOM: 'bottom'
@@ -75,13 +75,13 @@ class Hint extends BaseComponent {
      */
     borderRadius: PropTypes.number,
     /**
-     * Hint space from screen edges
+     * Hint margins from screen edges
      */
-    edgeSpace: PropTypes.number,
+    edgeMargins: PropTypes.number,
     /**
-     * Hint distance from target
+     * Hint offset from target
      */
-    distance: PropTypes.number
+    offset: PropTypes.number
   };
 
   static defaultProps = {
@@ -122,14 +122,14 @@ class Hint extends BaseComponent {
     return this.useSideTip ? {width: 14, height: 7} : {width: 20, height: 7};
   }
 
-  get hintDistance() {
-    const {distance} = this.getThemeProps();
-    return distance || DEFAULT_HINT_DISTANCE;
+  get hintOffset() {
+    const {offset} = this.getThemeProps();
+    return offset || DEFAULT_HINT_OFFSET;
   }
 
-  get edgeSpace() {
-    const {edgeSpace} = this.getThemeProps();
-    return edgeSpace || DEFAULT_EDGE_SPACE;
+  get edgeMargins() {
+    const {edgeMargins} = this.getThemeProps();
+    return edgeMargins || DEFAULT_EDGE_MARGINS;
   }
 
   get useSideTip() {
@@ -182,7 +182,7 @@ class Hint extends BaseComponent {
 
   getHintPadding() {
     const {targetLayout} = this.state;
-    const paddings = {paddingVertical: this.hintDistance, paddingHorizontal: this.edgeSpace};
+    const paddings = {paddingVertical: this.hintOffset, paddingHorizontal: this.edgeMargins};
     if (this.useSideTip) {
       const targetPositionOnScreen = this.getTargetPositionOnScreen();
       if (targetPositionOnScreen === 'left') {
@@ -201,9 +201,9 @@ class Hint extends BaseComponent {
     const tipPositionStyle = {};
 
     if (position === HINT_POSITIONS.TOP) {
-      tipPositionStyle.bottom = this.hintDistance - this.tipSize.height;
+      tipPositionStyle.bottom = this.hintOffset - this.tipSize.height;
     } else {
-      tipPositionStyle.top = this.hintDistance - this.tipSize.height;
+      tipPositionStyle.top = this.hintOffset - this.tipSize.height;
     }
 
     const targetMidWidth = targetLayout.width / 2;

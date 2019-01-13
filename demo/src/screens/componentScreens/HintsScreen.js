@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BorderRadiuses, View, Text, Hint, Button, RadioGroup, RadioButton, Switch, Assets} from 'react-native-ui-lib'; //eslint-disable-line
+import {BorderRadiuses,  Spacings, View, Text, Hint, Button, RadioGroup, RadioButton, Switch, Assets} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class HintsScreen extends Component {
   constructor(props) {
@@ -47,11 +47,12 @@ export default class HintsScreen extends Component {
             // messageStyle={{color: 'red'}}
             icon={showIcon ? Assets.icons.settings : undefined}
             // iconStyle={{tintColor: 'red'}}
-            // distance={15}
+            // offset={35}
             position={showBottomHint ? Hint.positions.BOTTOM : Hint.positions.TOP}
             useSideTip={useSideTip}
             key={targetPosition}
             borderRadius={BorderRadiuses.br40}
+            // edgeMargins={30}
           >
             <Button
               label={showHint ? 'Hide' : 'Show'}
