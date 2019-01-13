@@ -473,6 +473,7 @@ export default class Button extends BaseComponent {
         disabled={disabled}
         testID={testID}
         {...others}
+        ref={this.setRef}
       >
         <View row centerV>
           {this.props.children}

@@ -32,6 +32,7 @@ export const navigationData = {
       {title: 'Dialog', tags: 'dialog modal popup alert', screen: 'unicorn.components.DialogScreen'},
       {title: 'Feature Highlight', tags: 'feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
       {title: 'Form Controls', tags: 'form stepper', screen: 'unicorn.components.FormScreen'},
+      {title: 'Hint', tags: 'hints tooltip', screen: 'unicorn.components.HintsScreen'},
       {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
       {title: 'Radio Button', tags: 'radio button group controls', screen: 'unicorn.components.RadioButtonScreen'},
       {title: 'Switch', tags: 'switch toggle', screen: 'unicorn.components.SwitchScreen'},

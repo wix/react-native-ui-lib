@@ -24,6 +24,7 @@ module.exports = {
     'no-trailing-spaces': 'off',
     'no-use-before-define': 'off',
     'no-unneeded-ternary': 'off',
+    'no-mixed-operators': 'off',
     'object-curly-spacing': 'off',
     'operator-linebreak': 'off',
     'react/forbid-prop-types': 'off',

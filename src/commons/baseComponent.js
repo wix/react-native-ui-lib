@@ -348,6 +348,11 @@ export default function baseComponent(usePure) {
 
       return modifierProps;
     }
+
+    setRef = r => this.view = r;
+    getRef = () => this.view;
+    measureInWindow = (...args) => this.getRef().measureInWindow(...args);
+    measure = (...args) => this.getRef().measure(...args); // TODO: do we need this
   }
 
   return BaseComponent;

@@ -26,6 +26,7 @@ export default class View extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
+  // TODO: do we need this?
   setNativeProps(nativeProps) {
     this._root.setNativeProps(nativeProps); // eslint-disable-line
   }
@@ -48,7 +49,7 @@ export default class View extends BaseComponent {
           alignments,
           style,
         ]}
-        ref={r => (this.view = r)}
+        ref={this.setRef}
       >
         {this.props.children}
       </Element>
@@ -57,14 +58,6 @@ export default class View extends BaseComponent {
 
   render() {
     return this.renderView();
-  }
-
-  measure(...args) {
-    this.view.measure(...args);
-  }
-
-  measureInWindow(...args) {
-    this.view.measureInWindow(...args);
   }
 }
 

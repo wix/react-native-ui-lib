@@ -16,6 +16,7 @@ module.exports = {
   get ConnectionStatusBar() { return require('./components').ConnectionStatusBar; },
   get Dialog() { return require('./components').Dialog; },
   get FeatureHighlight() { return require('./components').FeatureHighlight; },
+  get Hint() { return require('./components').Hint; },
   get Image() { return require('./components').Image; },
   get TextArea() { return require('./components').TextArea; },
   get TextField() { return require('./components').TextField; },
