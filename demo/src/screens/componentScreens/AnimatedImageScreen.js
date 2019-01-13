@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
-import { AnimatedImage, Colors } from 'react-native-ui-lib'; //eslint-disable-line
 import _ from 'lodash';
+import { AnimatedImage, Colors } from 'react-native-ui-lib'; //eslint-disable-line
 
 const SampleImages = [
   'https://static.pexels.com/photos/50721/pencils-crayons-colourful-rainbow-50721.jpeg',
