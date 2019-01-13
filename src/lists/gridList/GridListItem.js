@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {View, Text, Image} from 'react-native';
-import * as Animatable from 'react-native-animatable';
+import {View as AnimatableView} from 'react-native-animatable';
 import {BaseComponent} from '../../commons';
 import createStyles from './style';
 import TouchableOpacity from '../../components/touchableOpacity';
@@ -15,7 +15,6 @@ export default class GridListItem extends BaseComponent {
   static displayName = 'IGNORE';
   static propTypes = {
     ...BaseComponent.propTypes,
-    // ...Animatable.propTypes,
     index: PropTypes.number.isRequired,
     title: PropTypes.string,
     titleStyle: PropTypes.object,
@@ -101,7 +100,7 @@ export default class GridListItem extends BaseComponent {
     const Container = (onPress && !disabled) ? TouchableOpacity : View;
     return (
       <Container style={[this.styles.container, disabled && this.containerDisabled]} onPress={onPress}>
-        <Animatable.View
+        <AnimatableView
           {...animationProps}
           style={[
             this.styles.innerContainer,
@@ -110,7 +109,7 @@ export default class GridListItem extends BaseComponent {
         >
           {this.renderTop()}
           {this.renderBottom()}
-        </Animatable.View>
+        </AnimatableView>
 
       </Container>
     );

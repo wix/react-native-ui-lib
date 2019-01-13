@@ -2,7 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import * as Animatable from 'react-native-animatable';
+import {View as AnimatableView, Text as AnimatableText} from 'react-native-animatable';
 import {BlurView} from 'react-native-blur';
 import {BaseComponent} from '../../commons';
 import {AnimatableManager, ThemeManager, Colors, Typography, BorderRadiuses} from '../../style';
@@ -227,9 +227,9 @@ export default class Toast extends BaseComponent {
     const {contentAnimation} = this.state;
     return (
       <View flex centerH={centerMessage} centerV>
-        <Animatable.Text style={[this.styles.message, color && {color}, messageStyle]} {...contentAnimation}>
+        <AnimatableText style={[this.styles.message, color && {color}, messageStyle]} {...contentAnimation}>
           {message}
-        </Animatable.Text>
+        </AnimatableText>
       </View>
     );
   }
@@ -240,14 +240,14 @@ export default class Toast extends BaseComponent {
 
     if (action) {
       return (
-        <Animatable.View {...contentAnimation}>
+        <AnimatableView {...contentAnimation}>
           <Button
             size="medium"
             style={this.styles.oneActionStyle}
             backgroundColor={Colors.rgba(ThemeManager.primaryColor, 0.7)}
             {...action}
           />
-        </Animatable.View>
+        </AnimatableView>
       );
     }
   }
@@ -257,10 +257,10 @@ export default class Toast extends BaseComponent {
     const {contentAnimation} = this.state;
 
     return (
-      <Animatable.View style={[this.styles.containerWithTwoActions, {backgroundColor}]} {...contentAnimation}>
+      <AnimatableView style={[this.styles.containerWithTwoActions, {backgroundColor}]} {...contentAnimation}>
         <Button size="small" {...actions[0]} />
         <Button marginL-12 size="small" {...actions[1]} />
-      </Animatable.View>
+      </AnimatableView>
     );
   }
 
@@ -269,14 +269,14 @@ export default class Toast extends BaseComponent {
     const {contentAnimation} = this.state;
     if (allowDismiss) {
       return (
-        <Animatable.View style={{justifyContent: 'center'}} {...contentAnimation}>
+        <AnimatableView style={{justifyContent: 'center'}} {...contentAnimation}>
           <Button
             link
             iconStyle={[this.styles.dismissIconStyle, color && {tintColor: color}]}
             iconSource={Assets.icons.x}
             onPress={this.onDismiss}
           />
-        </Animatable.View>
+        </AnimatableView>
       );
     }
   }
@@ -299,7 +299,7 @@ export default class Toast extends BaseComponent {
     return (
       <View style={[positionStyle]} useSafeArea testID={testID}>
         <View height={height}/>
-        <Animatable.View
+        <AnimatableView
           style={[
             this.styles.container,
             !renderContent && !hasTwoActions && {paddingHorizontal: 20},
@@ -311,7 +311,7 @@ export default class Toast extends BaseComponent {
         >
           {enableBlur && <BlurView style={this.styles.blurView} {...blurOptions} />}
           {this.renderContent()}
-        </Animatable.View>
+        </AnimatableView>
       </View>
     );
   }

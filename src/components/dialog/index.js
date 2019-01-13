@@ -2,7 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, TouchableWithoutFeedback, SafeAreaView, Animated, Easing} from 'react-native';
-import * as Animatable from 'react-native-animatable';
+import {View as AnimatableView} from 'react-native-animatable';
 import {Constants} from '../../helpers';
 import {AnimatableManager, Colors} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -147,7 +147,7 @@ class Dialog extends BaseComponent {
     const {alignments, deltaY} = this.state;
     const centerByDefault = _.isEmpty(alignments);
     const hasCustomAnimation = (animationConfig && animationConfig.animation);
-    const Container = hasCustomAnimation ? Animatable.View : Animated.View;
+    const Container = hasCustomAnimation ? AnimatableView : Animated.View;
     const defaultAnimation = top ? AnimatableManager.presets.slideInDown : AnimatableManager.presets.slideInUp;
     const animation = hasCustomAnimation ? Object.assign(defaultAnimation, animationConfig) : {};
 

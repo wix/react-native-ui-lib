@@ -2,7 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import * as Animatable from 'react-native-animatable';
+import {View as AnimatableView} from 'react-native-animatable';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../../components/touchableOpacity';
@@ -92,7 +92,7 @@ class ListItem extends BaseComponent {
     const Container = (onPress || onLongPress) ? containerElement : View;
 
     const animationProps = this.extractAnimationProps();
-    const InnerContainer = !_.isEmpty(animationProps) ? Animatable.View : View;
+    const InnerContainer = !_.isEmpty(animationProps) ? AnimatableView : View;
     if (!_.isEmpty(animationProps)) {
       console.warn('ListItem component will soon stop supporting animationProps.' +
         'Please wrap your ListItem component with your own animation component, such as Animatable.View');

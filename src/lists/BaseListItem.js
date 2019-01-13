@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet} from 'react-native';
-import * as Animatable from 'react-native-animatable';
+import {View as AnimatableView} from 'react-native-animatable';
 import _ from 'lodash';
 import {BaseComponent} from '../commons';
 import {ThemeManager} from '../style';
@@ -54,7 +54,7 @@ export default class BaseListItem extends BaseComponent {
 
     return (
       <Container style={this.styles.container} onPress={onPress}>
-        <Animatable.View style={this.styles.innerContainer} {...animationProps}>
+        <AnimatableView style={this.styles.innerContainer} {...animationProps}>
           <View style={this.styles.leftContainer}>
             {this.renderLeft()}
           </View>
@@ -64,7 +64,7 @@ export default class BaseListItem extends BaseComponent {
           <View style={this.styles.rightContainer}>
             {this.renderRight()}
           </View>
-        </Animatable.View>
+        </AnimatableView>
       </Container>
     );
   }

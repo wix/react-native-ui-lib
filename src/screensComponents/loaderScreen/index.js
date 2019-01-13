@@ -2,7 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, ActivityIndicator} from 'react-native';
-import * as Animatable from 'react-native-animatable';
+import {View as AnimatableView} from 'react-native-animatable';
 import {Colors, Typography, ThemeManager} from '../../style';
 import * as Constants from '../../helpers/Constants';
 import {BaseComponent} from '../../commons';
@@ -49,7 +49,7 @@ export default class LoaderScreen extends BaseComponent {
     const {message, messageStyle, loaderColor, overlay, backgroundColor, containerStyle, ...others} = this.props;
     
     const animationProps = this.extractAnimationProps();
-    const Container = !_.isEmpty(animationProps) ? Animatable.View : View;
+    const Container = !_.isEmpty(animationProps) ? AnimatableView : View;
     if (!_.isEmpty(animationProps)) {
       console.warn('LoaderScreen component will soon stop supporting animationProps.' +
         'Please wrap your LoaderScreen component with your own animation component, such as Animatable.View');

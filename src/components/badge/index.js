@@ -2,7 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
-import * as Animatable from 'react-native-animatable';
+import {View as AnimatableView} from 'react-native-animatable';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../view';
@@ -156,7 +156,7 @@ export default class Badge extends BaseComponent {
     const sizeStyle = this.getBadgeSizeStyle();
 
     const animationProps = this.extractAnimationProps();
-    const Container = !_.isEmpty(animationProps) ? Animatable.View : View;
+    const Container = !_.isEmpty(animationProps) ? AnimatableView : View;
     if (!_.isEmpty(animationProps)) {
       console.warn('Badge component will soon stop supporting animationProps.' +
         'Please wrap your Badge component with your own animation component, such as Animatable.View');
