@@ -40,6 +40,7 @@ export default class HintsScreen extends Component {
     return (
       <View flex>
         <View flex padding-20 paddingT-110 bg-dark80 style={{zIndex: 10}}>
+          {/* <Button bg-purple30 label="Background" style={{position: 'absolute', right: 50, bottom: 100}} /> */}
           <Hint
             visible={showHint}
             // color={Colors.orange30}

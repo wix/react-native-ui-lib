@@ -235,7 +235,10 @@ class Hint extends BaseComponent {
     const {onBackgroundPress} = this.props;
     if (targetLayoutInWindow) {
       return (
-        <View style={[styles.overlay, {top: -targetLayoutInWindow.y, left: -targetLayoutInWindow.x}]}>
+        <View
+          style={[styles.overlay, {top: -targetLayoutInWindow.y, left: -targetLayoutInWindow.x}]}
+          pointerEvents="box-none"
+        >
           {onBackgroundPress && (
             <TouchableWithoutFeedback style={[StyleSheet.absoluteFillObject]} onPress={onBackgroundPress}>
               <View flex />
