@@ -147,9 +147,9 @@ class Hint extends BaseComponent {
       return 'right';
     } else if (targetMidPosition < Constants.screenWidth * (1 / 3)) {
       return 'left';
-    } else {
-      return 'center';
     }
+
+    return 'center';
   }
 
   getContainerPosition() {
