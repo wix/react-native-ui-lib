@@ -45,7 +45,6 @@ export default class PanGestureView extends BaseComponent {
     };
 
     this.panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: this.handleStartShouldSetPanResponder,
       onMoveShouldSetPanResponder: this.handleMoveShouldSetPanResponder,
       onPanResponderGrant: this.handlePanResponderGrant,
       onPanResponderMove: this.handlePanResponderMove,
@@ -54,11 +53,10 @@ export default class PanGestureView extends BaseComponent {
     });
   }
 
-  handleStartShouldSetPanResponder = () => {
-    return true;
-  };
-  handleMoveShouldSetPanResponder = () => {
-    return true;
+  handleMoveShouldSetPanResponder = (e, gestureState) => {
+    // return true if user is swiping, return false if it's a single click
+    const {dx, dy} = gestureState;
+    return dx > 2 || dx < -2 || dy > 2 || dy < -2;
   };
   handlePanResponderGrant = () => {
     this.swipe = false;

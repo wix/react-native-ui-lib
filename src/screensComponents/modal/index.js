@@ -57,7 +57,7 @@ export default class Modal extends BaseComponent {
 
     return (
       <RNModal visible={Boolean(visible)} {...others}>
-        <Container style={{flex: 1}} blurType='light'>
+        <Container style={{flex: 1}} blurType="light">
           {this.renderTouchableOverlay()}
           {this.props.children}
         </Container>
