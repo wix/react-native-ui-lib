@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Animated, View, StyleSheet} from 'react-native';
-import {Image} from '../../../src';
+import Image from '../../components/image';
 import {BaseComponent} from '../../commons';
 
 const UIAnimatedImage = Animated.createAnimatedComponent(Image);
