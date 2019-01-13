@@ -58,7 +58,7 @@ class AnimatedImage extends BaseComponent {
   }
 
   checkForDeprecatedProps(props) {
-    deprecatedProps.forEach((prop) => {
+    deprecatedProps.forEach(prop => {
       if (props[prop.old]) {
         console.warn(`'${prop.old}' property is deprecated, use '${prop.new}' instead`);
       }
