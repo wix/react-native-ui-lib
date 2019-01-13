@@ -57,8 +57,9 @@ export default class PanGestureView extends BaseComponent {
   handleStartShouldSetPanResponder = () => {
     return true;
   };
-  handleMoveShouldSetPanResponder = () => {
-    return true;
+  handleMoveShouldSetPanResponder = (e, gestureState) => {
+    // return true if user is swiping, return false if it's a single click
+    return !(gestureState.dx === 0 && gestureState.dy === 0);
   };
   handlePanResponderGrant = () => {
     this.swipe = false;
