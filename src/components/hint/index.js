@@ -1,10 +1,9 @@
 // TODO: Add support to custom hint rendering
-// TODO: Add animation
 import React from 'react';
+import {StyleSheet, TouchableWithoutFeedback} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {View as AnimatableView} from 'react-native-animatable';
-import {StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
@@ -20,18 +19,18 @@ const DEFAULT_HINT_OFFSET = Spacings.s4;
 const DEFAULT_EDGE_MARGINS = Spacings.s5;
 const HINT_POSITIONS = {
   TOP: 'top',
-  BOTTOM: 'bottom'
+  BOTTOM: 'bottom',
 };
 
 AnimatableManager.loadAnimationDefinitions({
   hintAppearDown: {
     from: {opacity: 0, translateY: 20},
-    to: {opacity: 1, translateY: 0}
+    to: {opacity: 1, translateY: 0},
   },
   hintAppearUp: {
     from: {opacity: 0, translateY: -20},
-    to: {opacity: 1, translateY: 0}
-  }
+    to: {opacity: 1, translateY: 0},
+  },
 });
 
 class Hint extends BaseComponent {
@@ -81,24 +80,28 @@ class Hint extends BaseComponent {
     /**
      * Hint offset from target
      */
-    offset: PropTypes.number
+    offset: PropTypes.number,
+    /**
+     * Callback for the background press
+     */
+    onBackgroundPress: PropTypes.func,
   };
 
   static defaultProps = {
-    position: HINT_POSITIONS.BOTTOM
+    position: HINT_POSITIONS.BOTTOM,
   };
 
   static positions = HINT_POSITIONS;
 
   state = {};
 
-  setTargetPosition = (node) => {
+  setTargetPosition = node => {
     if (!this.state.targetLayoutInWindow) {
       setTimeout(() => {
         node.measureInWindow((x, y, width, height) => {
           const targetLayoutInWindow = {x, y, width, height};
           this.setState({
-            targetLayoutInWindow
+            targetLayoutInWindow,
           });
         });
       });
@@ -108,7 +111,7 @@ class Hint extends BaseComponent {
   onTargetLayout = ({nativeEvent: {layout}}) => {
     if (!this.state.targetLayout) {
       this.setState({
-        targetLayout: layout
+        targetLayout: layout,
       });
     }
   };
@@ -229,8 +232,17 @@ class Hint extends BaseComponent {
 
   renderOverlay() {
     const {targetLayoutInWindow} = this.state;
+    const {onBackgroundPress} = this.props;
     if (targetLayoutInWindow) {
-      return <View style={[styles.overlay, {top: -targetLayoutInWindow.y, left: -targetLayoutInWindow.x}]} />;
+      return (
+        <View style={[styles.overlay, {top: -targetLayoutInWindow.y, left: -targetLayoutInWindow.x}]}>
+          {onBackgroundPress && (
+            <TouchableWithoutFeedback style={[StyleSheet.absoluteFillObject]} onPress={onBackgroundPress}>
+              <View flex />
+            </TouchableWithoutFeedback>
+          )}
+        </View>
+      );
     }
   }
 
@@ -240,11 +252,15 @@ class Hint extends BaseComponent {
     const flipVertically = position === HINT_POSITIONS.TOP;
     const flipHorizontally = this.getTargetPositionOnScreen() === 'right';
     const flipStyle = {
-      transform: [{scaleY: flipVertically ? -1 : 1}, {scaleX: flipHorizontally ? -1 : 1}]
+      transform: [{scaleY: flipVertically ? -1 : 1}, {scaleX: flipHorizontally ? -1 : 1}],
     };
 
     return (
-      <Image tintColor={color || DEFAULT_COLOR} source={source} style={[styles.hintTip, this.getTipPosition(), flipStyle]} />
+      <Image
+        tintColor={color || DEFAULT_COLOR}
+        source={source}
+        style={[styles.hintTip, this.getTipPosition(), flipStyle]}
+      />
     );
   }
 
@@ -277,7 +293,7 @@ class Hint extends BaseComponent {
     return React.cloneElement(this.props.children, {
       collapsable: false,
       onLayout: this.onTargetLayout,
-      ref: this.setTargetPosition
+      ref: this.setTargetPosition,
     });
   }
 
@@ -300,35 +316,35 @@ class Hint extends BaseComponent {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute'
+    position: 'absolute',
+    zIndex: 100,
   },
   overlay: {
     position: 'absolute',
     width: Constants.screenWidth,
-    height: Constants.screenHeight
+    height: Constants.screenHeight,
   },
   hintContainer: {
     position: 'absolute',
     width: Constants.screenWidth,
-    zIndex: 100
   },
   hintTip: {
-    position: 'absolute'
+    position: 'absolute',
   },
   hint: {
     backgroundColor: DEFAULT_COLOR,
     padding: Spacings.s5,
-    borderRadius: BorderRadiuses.br60
+    borderRadius: BorderRadiuses.br60,
   },
   hintMessage: {
     ...Typography.text70,
     color: Colors.white,
-    flexShrink: 1
+    flexShrink: 1,
   },
   icon: {
     marginRight: Spacings.s4,
-    tintColor: Colors.white
-  }
+    tintColor: Colors.white,
+  },
 });
 
 export default Hint;

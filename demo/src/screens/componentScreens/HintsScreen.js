@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BorderRadiuses,  Spacings, View, Text, Hint, Button, RadioGroup, RadioButton, Switch, Assets} from 'react-native-ui-lib'; //eslint-disable-line
+import {BorderRadiuses, View, Text, Hint, Button, RadioGroup, RadioButton, Switch, Assets} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class HintsScreen extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ export default class HintsScreen extends Component {
       useShortMessage: false,
       showBottomHint: false,
       showIcon: false,
-      targetPosition: 'flex-start'
+      targetPosition: 'flex-start',
       // useSideTip: undefined
     };
   }
@@ -18,7 +18,7 @@ export default class HintsScreen extends Component {
 
   toggleHintPosition = () => {
     this.setState({
-      showBottomHint: !this.state.showBottomHint
+      showBottomHint: !this.state.showBottomHint,
     });
   };
 
@@ -39,7 +39,7 @@ export default class HintsScreen extends Component {
 
     return (
       <View flex>
-        <View flex padding-20 paddingT-110 bg-dark80>
+        <View flex padding-20 paddingT-110 bg-dark80 style={{zIndex: 10}}>
           <Hint
             visible={showHint}
             // color={Colors.orange30}
@@ -53,6 +53,7 @@ export default class HintsScreen extends Component {
             key={targetPosition}
             borderRadius={BorderRadiuses.br40}
             // edgeMargins={30}
+            // onBackgroundPress={() => this.setState({showHint: !showHint})}
           >
             <Button
               label={showHint ? 'Hide' : 'Show'}
@@ -78,7 +79,13 @@ export default class HintsScreen extends Component {
             {this.renderRadioButton('flex-end', 'Right')}
           </RadioGroup>
 
-          <RadioGroup row centerV marginB-20 value={useSideTip} onValueChange={value => this.setState({useSideTip: value})}>
+          <RadioGroup
+            row
+            centerV
+            marginB-20
+            value={useSideTip}
+            onValueChange={value => this.setState({useSideTip: value})}
+          >
             <Text marginR-10>Tip:</Text>
             {this.renderRadioButton(undefined, 'Default')}
             {this.renderRadioButton(true, 'Side Tip')}
