@@ -30,11 +30,11 @@ class Image extends BaseComponent {
     /**
      * the asset tint
      */
-    tintColor: PropTypes.string,
+    tintColor: PropTypes.string
   };
 
   static defaultProps = {
-    assetGroup: 'icons',
+    assetGroup: 'icons'
   };
 
   constructor(props) {
@@ -64,8 +64,8 @@ class Image extends BaseComponent {
   render() {
     const source = this.getImageSource();
     const {tintColor, style, ...others} = this.getThemeProps();
-    
-    return <RNImage style={[{tintColor}, style]} {...others} source={source}/>;
+
+    return <RNImage style={[{tintColor}, style]} {...others} source={source} />;
   }
 }
 
