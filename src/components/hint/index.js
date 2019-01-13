@@ -219,10 +219,9 @@ class Hint extends BaseComponent {
           : Constants.screenWidth - targetLayout.x - targetMidWidth - tipMidWidth;
         break;
       case 'center':
-      default: {
+      default:
         tipPositionStyle.left = targetLayout.x + targetMidWidth - tipMidWidth;
         break;
-      }
     }
 
     return tipPositionStyle;
