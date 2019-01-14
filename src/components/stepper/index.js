@@ -45,6 +45,7 @@ export default class Stepper extends BaseComponent {
 
   constructor(props) {
     super(props);
+    
     this.state = {
       value: props.initialValue,
     };
@@ -79,16 +80,16 @@ export default class Stepper extends BaseComponent {
   }
 
   render() {
-    const {minusDisabled, plusDisabled} = this.getDisabledState();
+    const {minusDisabled, plusDisabled, testID} = this.getDisabledState();
     return (
       <View style={[this.styles.container, this.props.containerStyle]}>
         <View style={this.styles.title}>
-          <Text testID={'label'} style={this.styles.titleText}>{this.getLabel()}</Text>
+          <Text testID={`${testID}.label`} style={this.styles.titleText}>{this.getLabel()}</Text>
         </View>
         <View style={this.styles.buttons}>
           <StepperButton
             label="-"
-            testId={'decrease'}
+            testID={`${testID}.decrease`}
             styles={this.styles}
             disabled={minusDisabled}
             onPress={() => this.updateValue(this.state.value - 1)}
@@ -96,7 +97,7 @@ export default class Stepper extends BaseComponent {
           <View style={this.styles.separator}/>
           <StepperButton
             label="+"
-            testId={'increase'}
+            testID={`${testID}.increase`}
             styles={this.styles}
             disabled={plusDisabled}
             onPress={() => this.updateValue(this.state.value + 1)}

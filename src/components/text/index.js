@@ -3,6 +3,7 @@ import React from 'react';
 import {Text as RNText, StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
 
+
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
  * @extends: Text
@@ -25,8 +26,7 @@ export default class Text extends BaseComponent {
     /**
      * whether to change the text to uppercase
      */
-    uppercase: PropTypes.bool,
-    testID: PropTypes.string,
+    uppercase: PropTypes.bool
   };
 
   // static defaultProps = {
@@ -82,7 +82,7 @@ export default class Text extends BaseComponent {
 function createStyles() {
   return StyleSheet.create({
     container: {
-      backgroundColor: 'transparent',
-    },
+      backgroundColor: 'transparent'
+    }
   });
 }

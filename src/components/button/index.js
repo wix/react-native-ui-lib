@@ -143,11 +143,7 @@ export default class Button extends BaseComponent {
     /**
      * the direction of the animation ('left' and 'right' will effect the button's own alignment)
      */
-    animateTo: PropTypes.oneOf(['center', 'left', 'right']),
-    /**
-     * Use to identify the button in tests
-     */
-    testID: PropTypes.string,
+    animateTo: PropTypes.oneOf(['center', 'left', 'right'])
   };
 
   static defaultProps = {
@@ -490,7 +486,7 @@ function createStyles() {
     container: {
       backgroundColor: 'transparent',
       justifyContent: 'center',
-      alignItems: 'center',
+      alignItems: 'center'
     },
     containerDisabled: {
       backgroundColor: Colors.dark60,
@@ -500,21 +496,21 @@ function createStyles() {
       paddingHorizontal: undefined,
       paddingVertical: undefined,
       borderRadius: BorderRadiuses.br0,
-      backgroundColor: undefined,
+      backgroundColor: undefined
     },
     shadowStyle: {
       shadowColor: Colors.blue10,
       shadowOffset: {height: 5, width: 0},
       shadowOpacity: 0.35,
       shadowRadius: 9.5,
-      elevation: 2,
+      elevation: 2
     },
     text: {
       backgroundColor: 'transparent',
       flex: 0,
       flexDirection: 'row',
       ...Typography.text70,
-      fontWeight: '100',
-    },
+      fontWeight: '100'
+    }
   });
 }

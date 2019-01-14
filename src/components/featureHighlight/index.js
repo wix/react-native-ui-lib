@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {StyleSheet, findNodeHandle, TouchableWithoutFeedback, Animated} from 'react-native';
+import {Colors, Typography} from '../../style';
+import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
 import Button from '../button';
-import {Colors} from '../../style';
-import {Constants} from '../../helpers';
 import {HighlighterOverlayView} from '../../nativeComponents';
-import Typography from '../../style/typography';
+
 
 const defaultOverlayColor = Colors.rgba(Colors.black, 0.82);
 const defaultTextColor = Colors.white;
@@ -105,11 +105,7 @@ class FeatureHighlight extends BaseComponent {
     /**
      * The padding of the highlight frame around the highlighted element's frame (only when passing ref in 'getTarget')
      */
-    innerPadding: PropTypes.number,
-    /**
-     * Use to identify the component in tests
-     */
-    testID: PropTypes.string,
+    innerPadding: PropTypes.number
   };
 
   constructor(props) {
@@ -129,7 +125,7 @@ class FeatureHighlight extends BaseComponent {
 
   static defaultProps = {
     minimumRectSize: {width: 56, height: 56},
-    innerPadding: 10,
+    innerPadding: 10
   };
 
   componentDidMount() {
@@ -287,21 +283,21 @@ const styles = StyleSheet.create({
     position: 'absolute',
     padding: contentViewPadding,
     marginRight: contentViewRightMargin,
-    alignItems: 'flex-start',
+    alignItems: 'flex-start'
   },
   title: {
     marginBottom: titleBottomMargin,
     lineHeight: Typography.text60.lineHeight,
-    fontWeight: '900',
+    fontWeight: '900'
   },
   message: {
     marginBottom: messageBottomMargin,
     ...Typography.text70,
-    lineHeight: messageLineHeight,
+    lineHeight: messageLineHeight
   },
   touchableOverlay: {
-    ...StyleSheet.absoluteFillObject,
-  },
+    ...StyleSheet.absoluteFillObject
+  }
 });
 
 export default FeatureHighlight;

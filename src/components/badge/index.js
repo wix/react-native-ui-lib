@@ -72,6 +72,14 @@ export default class Badge extends BaseComponent {
     size: 'default',
   };
 
+  constructor(props) {
+    super(props);
+
+    if (props.testId) {
+      console.warn('Badge prop \'testId\' is deprecated. Please use RN \'testID\' prop instead.');
+    }
+  }
+
   isSmallBadge() {
     const {size} = this.props;
     return size === 'small';
@@ -150,7 +158,8 @@ export default class Badge extends BaseComponent {
   }
 
   render() {
-    const {borderWidth, borderColor} = this.props;
+    // TODO: remove testId after deprecation
+    const {borderWidth, borderColor, testId, testID} = this.props;
     const containerStyle = this.extractContainerStyle(this.props);
     const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
     const sizeStyle = this.getBadgeSizeStyle();
@@ -164,7 +173,7 @@ export default class Badge extends BaseComponent {
 
     return (
       <Container
-        testID={this.props.testId}
+        testID={testID || testId}
         style={[
           sizeStyle,
           this.styles.badge,

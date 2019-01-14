@@ -1,11 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {StyleSheet, Animated} from 'react-native';
 import _ from 'lodash';
-import {BaseComponent} from '../../commons';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {StyleSheet, Animated} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
+import {BaseComponent} from '../../commons';
 import View from '../../components/view';
+
 
 // TODO: add finisher animation (check icon animation or something)
 // TODO: remove deprecated functionality
@@ -42,13 +43,12 @@ export default class AnimatedScanner extends BaseComponent {
     /**
      * should hide the scanner line
      */
-    hideScannerLine: PropTypes.bool,
-    testID: PropTypes.string,
+    hideScannerLine: PropTypes.bool
   };
 
   static defaultProps = {
     progress: 0,
-    duration: 1000,
+    duration: 1000
   };
 
   constructor(props) {
@@ -56,7 +56,7 @@ export default class AnimatedScanner extends BaseComponent {
 
     this.state = {
       animatedProgress: new Animated.Value(0),
-      isDone: false,
+      isDone: false
     };
 
     if (!_.isNumber(props.progress)) {
@@ -115,8 +115,8 @@ export default class AnimatedScanner extends BaseComponent {
               left: animatedProgress.interpolate({
                 inputRange: [0, 100],
                 outputRange: ['0%', '100%'],
-              }),
-            },
+              })
+            }
           ]}
         >
           {isDone && !hideScannerLine && <View style={this.styles.scanner}/>}
@@ -129,11 +129,11 @@ export default class AnimatedScanner extends BaseComponent {
     if (_.isNumber(this.props.progress)) {
       return this.renderNew();
     }
-    // todo: deprecate
+    // TODO: deprecate
     return this.renderOld();
   }
 
-  // todo: deprecate
+  // TODO: deprecate
   renderOld() {
     const {progress, opacity, backgroundColor} = this.props;
     return (
@@ -164,7 +164,7 @@ function createStyles() {
       left: 0,
       right: 0,
       backgroundColor: Colors.white,
-      opacity: 0.9,
+      opacity: 0.9
     },
     scanner: {
       position: 'absolute',
@@ -173,7 +173,7 @@ function createStyles() {
       bottom: 0,
       right: 0,
       borderWidth: StyleSheet.hairlineWidth,
-      borderColor: Colors.dark50,
-    },
+      borderColor: Colors.dark50
+    }
   });
 }

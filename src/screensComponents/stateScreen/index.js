@@ -45,6 +45,14 @@ export default class StateScreen extends BaseComponent {
     testId: PropTypes.string
   };
 
+  constructor(props) {
+    super(props);
+
+    if (props.testId) {
+      console.warn('StateScreen prop \'testId\' is deprecated. Please use RN \'testID\' prop instead.');
+    }
+  }
+
   generateStyles() {
     const {imageSource} = this.props;
     const isRemoteImage = _.isObject(imageSource) && Boolean(imageSource.uri);
@@ -52,9 +60,11 @@ export default class StateScreen extends BaseComponent {
   }
 
   render() {
-    const {title, subtitle, imageSource, ctaLabel, onCtaPress, testId} = this.props;
+    // TODO: remove testId after deprecation
+    const {title, subtitle, imageSource, ctaLabel, onCtaPress, testId, testID} = this.props;
+    
     return (
-      <View style={this.styles.container} testID={testId}>
+      <View style={this.styles.container} testID={testID || testId}>
         <Image style={this.styles.image} resizeMode={'contain'} source={imageSource} />
         <Text style={[this.styles.title]}>{title}</Text>
         <Text style={[this.styles.subtitle]}>{subtitle}</Text>
