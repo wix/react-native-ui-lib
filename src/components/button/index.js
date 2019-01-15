@@ -176,7 +176,7 @@ export default class Button extends BaseComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (!_.isEqual(prevProps, this.props) && this.props.animateLayout) {
+    if (this.props.animateLayout && !_.isEqual(prevProps, this.props)) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
   }
