@@ -167,7 +167,7 @@ export default class TextField extends BaseInput {
   }
 
   generateStyles() {
-    this.styles = createStyles(this.props);
+    this.styles = createStyles(this.getThemeProps());
   }
 
   toggleExpandableModal(value) {
@@ -211,7 +211,7 @@ export default class TextField extends BaseInput {
 
   getStateColor(colorProp, isUnderline) {
     const {focused} = this.state;
-    const {error, disabledColor} = this.props;
+    const {error, disabledColor} = this.getThemeProps();
     const colorByState = _.cloneDeep(isUnderline ? DEFAULT_UNDERLINE_COLOR_BY_STATE : DEFAULT_COLOR_BY_STATE);
 
     if (this.isDisabled() && disabledColor) {
@@ -247,7 +247,7 @@ export default class TextField extends BaseInput {
   }
 
   isCounterLimit() {
-    const {maxLength} = this.props;
+    const {maxLength} = this.getThemeProps();
     const counter = this.getCharCount();
     return counter === 0 ? false : maxLength <= counter;
   }
@@ -264,7 +264,7 @@ export default class TextField extends BaseInput {
 
   shouldFloatOnFocus() {
     const {focused} = this.state;
-    const {floatOnFocus} = this.props;
+    const {floatOnFocus} = this.getThemeProps();
     return focused && floatOnFocus;
   }
 
@@ -273,17 +273,17 @@ export default class TextField extends BaseInput {
   }
 
   shouldFakePlaceholder() {
-    const {floatingPlaceholder, centered} = this.props;
+    const {floatingPlaceholder, centered} = this.getThemeProps();
     return Boolean(floatingPlaceholder && !centered && !this.shouldShowTopError());
   }
 
   shouldShowError() {
-    const {enableErrors, error} = this.props;
+    const {enableErrors, error} = this.getThemeProps();
     return enableErrors && error;
   }
 
   shouldShowTopError() {
-    const {useTopErrors} = this.props;
+    const {useTopErrors} = this.getThemeProps();
     return this.shouldShowError() && useTopErrors;
   }
 
@@ -297,7 +297,7 @@ export default class TextField extends BaseInput {
       placeholderTextColor,
       floatingPlaceholderColor,
       multiline,
-    } = this.props;
+    } = this.getThemeProps();
     const typography = this.getTypography();
     const placeholderColor = this.getStateColor(placeholderTextColor);
 
@@ -339,7 +339,7 @@ export default class TextField extends BaseInput {
   }
 
   renderTitle() {
-    const {floatingPlaceholder, title, titleColor, titleStyle} = this.props;
+    const {floatingPlaceholder, title, titleColor, titleStyle} = this.getThemeProps();
     const color = this.getStateColor(titleColor);
 
     if (!floatingPlaceholder && title) {
@@ -355,7 +355,7 @@ export default class TextField extends BaseInput {
 
   renderCharCounter() {
     const {focused} = this.state;
-    const {maxLength, showCharacterCounter, disabledColor} = this.props;
+    const {maxLength, showCharacterCounter, disabledColor} = this.getThemeProps();
 
     if (maxLength && showCharacterCounter) {
       const counter = this.getCharCount();
@@ -373,7 +373,7 @@ export default class TextField extends BaseInput {
   }
 
   renderError(visible) {
-    const {enableErrors, error, useTopErrors} = this.props;
+    const {enableErrors, error, useTopErrors} = this.getThemeProps();
     const positionStyle = useTopErrors ? this.styles.topLabel : this.styles.bottomLabel;
 
     if (visible && enableErrors) {
@@ -386,11 +386,11 @@ export default class TextField extends BaseInput {
   }
 
   renderExpandableModal() {
-    const {renderExpandable, topBarProps} = this.props;
+    const {renderExpandable, topBarProps} = this.getThemeProps();
     const {showExpandableModal} = this.state;
 
     if (_.isFunction(renderExpandable) && showExpandableModal) {
-      return renderExpandable(this.props, this.state);
+      return renderExpandable(this.getThemeProps(), this.state);
     }
 
     return (
@@ -418,7 +418,7 @@ export default class TextField extends BaseInput {
   }
 
   renderExpandableInput() {
-    const {style, floatingPlaceholder, placeholder, hideUnderline, renderExpandableInput, rightIconSource} = this.props;
+    const {style, floatingPlaceholder, placeholder, hideUnderline, renderExpandableInput, rightIconSource} = this.getThemeProps();
     const {value} = this.state;
     const typography = this.getTypography();
     const color = this.getStateColor(this.props.color || this.extractColorValue());
@@ -514,7 +514,7 @@ export default class TextField extends BaseInput {
   }
 
   render() {
-    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.props;
+    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
     const underlineStateColor = this.getStateColor(underlineColor, true);
 
     return (
