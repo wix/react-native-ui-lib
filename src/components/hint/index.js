@@ -34,7 +34,7 @@ AnimatableManager.loadAnimationDefinitions({
 });
 
 /**
- * @description: Hint component to wrap a component.
+ * @description: Hint component.
  */
 class Hint extends BaseComponent {
   static displayName = 'Hint';
