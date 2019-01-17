@@ -33,6 +33,9 @@ AnimatableManager.loadAnimationDefinitions({
   },
 });
 
+/**
+ * @description: Hint component
+ */
 class Hint extends BaseComponent {
   static displayName = 'Hint';
 
