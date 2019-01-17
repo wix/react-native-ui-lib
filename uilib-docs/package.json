@@ -25,6 +25,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-loader": "^8.0.5",
+    "metro-react-native-babel-preset": "^0.51.1",
     "prettier": "^1.8.2"
   }
 }
