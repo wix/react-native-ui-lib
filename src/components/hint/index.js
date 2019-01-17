@@ -1,15 +1,16 @@
 // TODO: Add support to custom hint rendering
+import _ from 'lodash';
+import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, TouchableWithoutFeedback} from 'react-native';
-import PropTypes from 'prop-types';
-import _ from 'lodash';
 import {View as AnimatableView} from 'react-native-animatable';
+import {Typography, Spacings, Colors, BorderRadiuses, AnimatableManager} from '../../style';
+import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
 import Image from '../image';
-import {Typography, Spacings, Colors, BorderRadiuses, AnimatableManager} from '../../style';
-import {Constants} from '../../helpers';
+
 
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
