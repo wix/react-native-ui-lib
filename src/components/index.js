@@ -30,6 +30,8 @@ module.exports = {
   get RadioButton() { return require('./radioButton').RadioButton; },
   get RadioGroup() { return require('./radioButton').RadioGroup; },
 
+  get SharedElement() { return require('./sharedElement').default; },
+
   get Switch() { return require('./switch').default; },
   get Text() { return require('./text').default; },
   get Toast() { return require('./toast').default; },
