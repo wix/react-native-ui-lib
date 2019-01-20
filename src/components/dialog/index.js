@@ -86,6 +86,12 @@ class Dialog extends BaseComponent {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (!prevProps.visible && this.props.visible) {
+      this.animateContent();
+    }
+  }
+
   generateStyles() {
     this.styles = createStyles(this.props);
   }
@@ -101,14 +107,14 @@ class Dialog extends BaseComponent {
     });
   }
 
-  onModalShow = () => {
+  animateContent() {
     const {animationConfig} = this.getThemeProps();
     const {deltaY} = this.state;
  
     Animated.timing(deltaY, {
       toValue: 0,
-      duration: _.get(animationConfig, 'duration', 280),
-      delay: _.get(animationConfig, 'delay', 200),
+      duration: _.get(animationConfig, 'duration', 400),
+      delay: _.get(animationConfig, 'delay', 250),
       easing: _.get(animationConfig, 'easing', Easing.bezier(0.165, 0.84, 0.44, 1)),
       useNativeDriver: _.get(animationConfig, 'useNativeDriver', true)
     }).start();
@@ -182,7 +188,6 @@ class Dialog extends BaseComponent {
         onBackgroundPress={this.onDismiss}
         onRequestClose={this.onDismiss}
         overlayBackgroundColor={overlayBackgroundColor}
-        onShow={this.onModalShow}
       >
         {this.renderAnimationContainer()}
       </Modal>
