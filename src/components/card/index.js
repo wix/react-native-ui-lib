@@ -159,6 +159,7 @@ class Card extends BaseComponent {
         delayPressIn={10}
         activeOpacity={0.6}
         {...others}
+        ref={this.setRef}
       >
         {Constants.isIOS && enableBlur && <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions} />}
 
