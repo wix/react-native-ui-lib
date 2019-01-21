@@ -360,7 +360,7 @@ export default class Drawer extends BaseComponent {
       </View>
     );
   }
-  renderGhostButton(item, index) {
+  renderGhostButton = (item, index) => {
     return (
       <TouchableHighlight
         key={index}
@@ -497,7 +497,7 @@ export default class Drawer extends BaseComponent {
           </View>
           {rightItems && 
             <View style={{width: containerWidth, flexDirection: 'row'}}>
-              {_.map(rightItems, (item, index) => { return this.renderGhostButton(item, index); })}
+              {_.map(rightItems, this.renderGhostButton)}
             </View>
           }
         </Interactable.View>
