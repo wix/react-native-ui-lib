@@ -84,6 +84,10 @@ class Dialog extends BaseComponent {
     if (props.dismissSwipeDirection) {
       console.warn('Dialog component\'s prop \'dismissSwipeDirection\' is deprecated, please remove it');
     }
+
+    if (props.visible) {
+      this.animateContent();
+    }
   }
 
   componentDidUpdate(prevProps) {
