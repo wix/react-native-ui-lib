@@ -91,12 +91,13 @@ class AnimatedImage extends BaseComponent {
   render() {
     const {containerStyle, loader, ...others} = this.props;
     return (
-      <View testID={this.testID} style={containerStyle}>
+      <View style={containerStyle}>
         <UIAnimatedImage
           {...others}
           style={[{opacity: this.state.opacity}, this.style]}
           source={this.source}
           onLoad={() => this.onLoad()}
+          testID={this.testID}
         />
         {this.state.isLoading && loader && (
           <View style={{...StyleSheet.absoluteFillObject, justifyContent: 'center'}}>

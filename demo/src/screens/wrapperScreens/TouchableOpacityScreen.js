@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Text, TouchableOpacity} from 'react-native-ui-lib';
+import {View, Text, TouchableOpacity} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class TouchableOpacityScreen extends Component {
 

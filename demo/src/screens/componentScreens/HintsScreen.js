@@ -104,7 +104,7 @@ export default class HintsScreen extends Component {
           </View>
 
           <View row centerV marginV-10>
-            <Switch value={showIcon} onValueChange={showIcon => this.setState({showIcon})} />
+            <Switch value={showIcon} onValueChange={value => this.setState({showIcon: value})} />
             <Text marginL-10>Toggle Icon</Text>
           </View>
         </View>

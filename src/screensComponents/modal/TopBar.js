@@ -1,14 +1,14 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import {StyleSheet} from 'react-native';
+import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 import Assets from '../../assets';
 import {Colors, Typography} from '../../style';
-import {BaseComponent} from '../../commons';
 import View from '../../components/view';
+
 import Button from '../../components/button';
 import Text from '../../components/text';
-
 
 const DEFAULT_BUTTON_PROPS = {
   color: Colors.blue30,
@@ -64,7 +64,7 @@ export default class TopBar extends BaseComponent {
     /**
      * whether to include status bar or not (height claculations)
      */
-    includeStatusBar: PropTypes.bool
+    includeStatusBar: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -72,7 +72,7 @@ export default class TopBar extends BaseComponent {
     cancelIcon: Assets.icons.x,
     doneButtonProps: {},
     cancelButtonProps: {},
-    includeStatusBar: Constants.isIOS
+    includeStatusBar: Constants.isIOS,
   };
 
   generateStyles() {
@@ -102,14 +102,14 @@ export default class TopBar extends BaseComponent {
   renderDone() {
     const {doneButtonProps, doneLabel, doneIcon, onDone} = this.props;
     return this.renderTopBarButton({
-      onPress: onDone, label: doneLabel, icon: doneIcon, buttonProps: {style: {paddingRight: 16}, ...doneButtonProps},
+      onPress: onDone, label: doneLabel, icon: doneIcon, buttonProps: doneButtonProps,
     });
   }
 
   renderCancel() {
     const {cancelButtonProps, cancelLabel, cancelIcon, onCancel} = this.props;
     return this.renderTopBarButton({
-      onPress: onCancel, label: cancelLabel, icon: cancelIcon, buttonProps: {style: {paddingLeft: 16}, ...cancelButtonProps},
+      onPress: onCancel, label: cancelLabel, icon: cancelIcon, buttonProps: cancelButtonProps,
     });
   }
 
@@ -117,10 +117,19 @@ export default class TopBar extends BaseComponent {
     const {title, titleStyle, includeStatusBar} = this.props;
 
     return (
-      <View row spread centerV style={[this.styles.container, includeStatusBar && {marginTop: Constants.statusBarHeight}]}>
-        {this.renderCancel()}
-        <Text numberOfLines={1} text70 style={[this.styles.title, titleStyle]}>{title}</Text>
-        {this.renderDone()}
+      <View>
+        {includeStatusBar && <View style={this.styles.statusBar}/>}
+        <View style={this.styles.container}>
+          <View row flex bottom paddingL-15 centerV>
+            {this.renderCancel()}
+          </View>
+          <View row flex-3 bottom centerH centerV>
+            <Text numberOfLines={1} text70 style={[this.styles.title, titleStyle]}>{title}</Text>
+          </View>
+          <View row flex bottom right paddingR-15 centerV>
+            {this.renderDone()}
+          </View>
+        </View>
       </View>
     );
   }
@@ -130,17 +139,22 @@ function createStyles() {
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
-      height: 32 + Constants.statusBarHeight
+      height: 32 + Constants.statusBarHeight,
+    },
+    statusBar: {
+      height: Constants.statusBarHeight,
     },
     title: {
-      fontWeight: '500'
+      fontWeight: '500',
     },
     actionLabel: {
-      ...Typography.text70
+      ...Typography.text70,
     },
     icon: {
+      // width: 16,
+      // height: 16,
       tintColor: Colors.dark10,
-      marginBottom: 2
+      marginBottom: 2,
     },
   });
 }

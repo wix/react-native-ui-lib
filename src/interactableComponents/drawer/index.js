@@ -288,7 +288,7 @@ export default class Drawer extends BaseComponent {
         >
           <TouchableHighlight
             onPress={onLeftPress}
-            underlayColor={Colors.getColorTint(background, 50)}
+            underlayColor={Colors.rgba(Colors.white, 0.3)}
           >
             <View
               style={{
@@ -297,7 +297,7 @@ export default class Drawer extends BaseComponent {
                 padding: ITEM_PADDING,
                 justifyContent: 'center',
                 alignItems: 'center',
-              }} 
+              }}
             >
               {leftItem && leftItem.icon &&
               <Animated.Image
@@ -360,6 +360,23 @@ export default class Drawer extends BaseComponent {
       </View>
     );
   }
+  renderGhostButton = (item, index) => {
+    return (
+      <TouchableHighlight
+        key={index}
+        style={[
+          this.styles.item, {
+            width: this.getItemWidth(item),
+            backgroundColor: Colors.rgba(Colors.white, 0)
+          },
+        ]}
+        onPress={item.onPress}
+        underlayColor={Colors.rgba(Colors.white, 0.3)}
+      >
+        <View/>
+      </TouchableHighlight>
+    );
+  }
   renderRightItem(item, index) {
     if (!item) return;
     const {itemsTintColor, itemsIconSize, itemsTextStyle} = this.getThemeProps();
@@ -367,7 +384,7 @@ export default class Drawer extends BaseComponent {
     const inputRanges = this.getInputRanges();
 
     return (
-      <TouchableOpacity
+      <View
         key={index}
         style={[
           this.styles.item, {
@@ -376,8 +393,6 @@ export default class Drawer extends BaseComponent {
             padding: itemPadding,
           },
         ]}
-        onPress={item.onPress}
-        activeOpacity={item.onPress ? 0.7 : 1}
       >
         {item.icon &&
         <Animated.Image
@@ -434,7 +449,7 @@ export default class Drawer extends BaseComponent {
         >
           {item.text}
         </Animated.Text>}
-      </TouchableOpacity>
+      </View>
     );
   }
   renderRightItems() {
@@ -450,11 +465,13 @@ export default class Drawer extends BaseComponent {
     const {style, onPress, rightItems} = this.getThemeProps();
     const Container = onPress ? TouchableOpacity : View;
     const backgroundColor = _.get(rightItems, '[0].background', ITEM_BG);
+    const containerWidth = this.state.width || screenWidth;
 
     return (
       <View style={[style, this.styles.container, {backgroundColor}]} onLayout={this.onLayout}>
         {rightItems && this.renderRightItems()}
         {this.renderLeftItem()}
+        
         <Interactable.View
           ref={el => this.interactableElem = el}
           horizontalOnly
@@ -467,13 +484,22 @@ export default class Drawer extends BaseComponent {
           onStop={this.onStop}
           dragToss={0.01}
           animatedValueX={this.deltaX}
-          style={{backgroundColor: Colors.white}}
+          style={[this.styles.interactable, {width: containerWidth * 2}]}
         >
-          <Container onPress={this.onPress} activeOpacity={0.7}>
-            <View style={this.styles.childrenContainer}>
+          <View style={{backgroundColor: Colors.white}}>
+            <Container 
+              style={[this.styles.childrenContainer, {width: containerWidth}]}
+              activeOpacity={0.7}
+              onPress={this.onPress} 
+            >
               {this.props.children}
+            </Container>
+          </View>
+          {rightItems && 
+            <View style={{width: containerWidth, flexDirection: 'row'}}>
+              {_.map(rightItems, this.renderGhostButton)}
             </View>
-          </Container>
+          }
         </Interactable.View>
       </View>
     );
@@ -483,27 +509,31 @@ export default class Drawer extends BaseComponent {
 function createStyles() {
   return StyleSheet.create({
     container: {
-      overflow: 'hidden',
+      overflow: 'hidden'
+    },
+    interactable: {
+      flexDirection: 'row',
+      backgroundColor: 'transparent'
     },
     childrenContainer: {
       left: 0,
-      right: 0,
+      right: 0
     },
     rightItemsContainer: {
       position: 'absolute',
       right: 0,
       height: '100%',
-      flexDirection: 'row',
+      flexDirection: 'row'
     },
     leftItemContainer: {
       position: 'absolute',
       left: 0,
       right: 100,
-      flexDirection: 'row',
+      flexDirection: 'row'
     },
     item: {
       justifyContent: 'center',
-      alignItems: 'center',
+      alignItems: 'center'
     },
   });
 }
