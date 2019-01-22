@@ -4,13 +4,12 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^1.9.119",
-    "gatsby-link": "^1.6.28",
-    "gatsby-plugin-react-helmet": "^1.0.8",
-    "gatsby-plugin-sass": "^1.0.14",
-    "gatsby-source-filesystem": "^1.5.9",
-    "gatsby-transformer-react-docgen": "^1.0.9",
-    "metro-react-native-babel-preset": "^0.48.1",
+    "gatsby": "^2.0.91",
+    "gatsby-link": "^2.0.8",
+    "gatsby-plugin-react-helmet": "^3.0.5",
+    "gatsby-plugin-sass": "^2.0.7",
+    "gatsby-source-filesystem": "^2.0.16",
+    "gatsby-transformer-react-docgen": "^3.0.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0"
   },
@@ -26,6 +25,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "prettier": "^1.8.2"
+    "prettier": "^1.8.2",
+    "metro-react-native-babel-preset": "^0.48.1"
   }
 }
