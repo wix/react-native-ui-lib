@@ -29,8 +29,7 @@ StepperButton.propTypes = {
   /**
    * Handler function to receive updates when the value changes
    */
-  onPress: PropTypes.func,
-  testID: PropTypes.string
+  onPress: PropTypes.func
 };
 
 StepperButton.displayName = 'IGNORE';
