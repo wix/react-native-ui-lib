@@ -41,11 +41,7 @@ class ListItem extends BaseComponent {
     /**
      * The container element to wrap the ListItem
      */
-    containerElement: PropTypes.func,
-    /**
-     * Use to identify the ListItem in tests
-     */
-    testID: PropTypes.string,
+    containerElement: PropTypes.func
   };
 
   static defaultProps = {
@@ -127,8 +123,8 @@ function createStyles({height}) {
     },
     innerContainer: {
       flexDirection: 'row',
-      height,
-    },
+      height
+    }
   });
 }
 

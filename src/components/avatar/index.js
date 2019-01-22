@@ -1,14 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {StyleSheet, ViewPropTypes, TouchableOpacity} from 'react-native';
 import _ from 'lodash';
-import AnimatedImage from '../../animations/animatedImage';
-import {BaseComponent} from '../../commons';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {StyleSheet, ViewPropTypes, TouchableOpacity} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
+import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
 import Image from '../image';
+import AnimatedImage from '../../animations/animatedImage';
+
 
 export const STATUS_MODES = {
   ONLINE: 'ONLINE',
@@ -101,10 +102,6 @@ export default class Avatar extends BaseComponent {
      * Custom size for the Avatar
      */
     size: PropTypes.number,
-    /**
-     * Use to identify the avatar in tests
-     */
-    testID: PropTypes.string,
     /**
      * Press handler
      */

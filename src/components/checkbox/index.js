@@ -50,11 +50,7 @@ class Checkbox extends BaseComponent {
     /**
      * The selected icon color
      */
-    iconColor: PropTypes.string,
-    /**
-     * Use to identify the checkbox in tests
-     */
-    testID: PropTypes.string,
+    iconColor: PropTypes.string
   };
 
   generateStyles() {
@@ -119,14 +115,14 @@ function createStyles({color = DEFAULT_COLOR, iconColor = DEFAULT_ICON_COLOR, si
       borderWidth: 2,
       borderColor: color,
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
     containerSelected: {
-      backgroundColor: color,
+      backgroundColor: color
     },
     selectedIcon: {
-      tintColor: iconColor,
-    },
+      tintColor: iconColor
+    }
   });
 }
 
