@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet} from 'react-native';
 import _ from 'lodash';
-import {Typography, Colors, ThemeManager} from '../style';
+import {Typography, Colors} from '../style';
 import {DocsGenerator} from '../helpers';
 import * as Modifiers from './modifiers';
 
@@ -15,15 +15,7 @@ export default function baseComponent(usePure) {
       useNativeDriver: PropTypes.bool,
     };
 
-    static extractOwnProps(props, ignoreProps) {
-      const ownPropTypes = this.propTypes;
-      const ownProps = _.chain(props)
-        .pickBy((value, key) => _.includes(Object.keys(ownPropTypes), key))
-        .omit(ignoreProps)
-        .value();
-
-      return ownProps;
-    }
+    static extractOwnProps = Modifiers.extractOwnProps;
 
     constructor(props) {
       super(props);
@@ -40,19 +32,52 @@ export default function baseComponent(usePure) {
       this.updateModifiers(this.props, nextProps);
     }
 
-    getThemeProps() {
-      const componentName = this.constructor.displayName || this.constructor.name;
-      let themeProps;
-      if (_.isFunction(ThemeManager.components[componentName])) {
-        themeProps = ThemeManager.components[componentName](this.props, this.context);
-      } else {
-        themeProps = ThemeManager.components[componentName];
-      }
-      return {...themeProps, ...this.props};
-    }
-
+    // TODO: stop using this and remove it
     getSnippet() {
       return DocsGenerator.generateSnippet(DocsGenerator.extractComponentInfo(this));
+    }
+
+    generateStyles() {
+      this.styles = StyleSheet.create({});
+    }
+
+    getThemeProps = Modifiers.getThemeProps;
+
+    extractTypographyValue() {
+      return Modifiers.extractTypographyValue(this.props);
+    }
+
+    extractColorValue = () => Modifiers.extractColorValue(this.getThemeProps())
+
+    extractAnimationProps() {
+      return _.pick(this.props, [
+        'animation',
+        'duration',
+        'delay',
+        'direction',
+        'easing',
+        'iterationCount',
+        'transition',
+        'onAnimationBegin',
+        'onAnimationEnd',
+        'useNativeDriver',
+      ]);
+    }
+
+    extractModifierProps() {
+      return Modifiers.extractModifierProps(this.props);
+    }
+
+    // TODO: stop using this and remove it
+    extractContainerStyle(props) {
+      let containerStyle = {};
+      if (props.containerStyle) {
+        containerStyle = _.pickBy(props.containerStyle, (value, key) => {
+          return key.includes('margin') || _.includes(['alignSelf', 'transform'], key);
+        });
+      }
+
+      return containerStyle;
     }
 
     updateModifiers(currentProps, nextProps) {
@@ -85,52 +110,6 @@ export default function baseComponent(usePure) {
           ...this.buildStyleOutOfModifiers(options, nextProps),
         });
       }
-    }
-
-    generateStyles() {
-      this.styles = StyleSheet.create({});
-    }
-
-    extractAnimationProps() {
-      return _.pick(this.props, [
-        'animation',
-        'duration',
-        'delay',
-        'direction',
-        'easing',
-        'iterationCount',
-        'transition',
-        'onAnimationBegin',
-        'onAnimationEnd',
-        'useNativeDriver',
-      ]);
-    }
-
-    extractContainerStyle(props) {
-      let containerStyle = {};
-      if (props.containerStyle) {
-        containerStyle = _.pickBy(props.containerStyle, (value, key) => {
-          return key.includes('margin') || _.includes(['alignSelf', 'transform'], key);
-        });
-      }
-
-      return containerStyle;
-    }
-
-    extractTypographyValue() {
-      return Modifiers.extractTypographyValue(this.props);
-    }
-
-    extractColorValue() {
-      const props = this.getThemeProps();
-      const allColorsKeys = _.keys(Colors);
-      const colorPropsKeys = _.chain(props)
-        .keys()
-        .filter(key => _.includes(allColorsKeys, key))
-        .value();
-
-      const color = _.findLast(colorPropsKeys, colorKey => props[colorKey] === true);
-      return Colors[color];
     }
 
     buildStyleOutOfModifiers(
@@ -168,14 +147,12 @@ export default function baseComponent(usePure) {
       return style;
     }
 
-    extractTextProps(props) {
-      return _.pick(props, [..._.keys(Typography), ..._.keys(Colors), 'color']);
-    }
+    // TODO: stop using this and remove it
+    // extractTextProps(props) {
+    //   return _.pick(props, [..._.keys(Typography), ..._.keys(Colors), 'color']);
+    // }
 
-    extractModifierProps() {
-      return Modifiers.extractModifierProps(this.props);
-    }
-
+    // React Native Methods
     setRef = r => (this.view = r);
     getRef = () => this.view;
     measureInWindow = (...args) => this.getRef().measureInWindow(...args);
