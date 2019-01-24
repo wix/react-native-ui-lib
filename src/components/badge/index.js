@@ -148,8 +148,7 @@ export default class Badge extends BaseComponent {
 
   render() {
     // TODO: remove testId after deprecation
-    const {borderWidth, borderColor, testId, testID} = this.props;
-    const containerStyle = this.extractContainerStyle(this.props);
+    const {borderWidth, borderColor, containerStyle, testId, testID} = this.props;
     const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
     const sizeStyle = this.getBadgeSizeStyle();
 
@@ -184,6 +183,7 @@ export default class Badge extends BaseComponent {
 function createStyles() {
   return StyleSheet.create({
     badge: {
+      alignSelf: 'flex-start',
       borderRadius: BorderRadiuses.br100,
       backgroundColor: ThemeManager.primaryColor,
       alignItems: 'center',
