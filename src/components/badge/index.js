@@ -69,7 +69,7 @@ export default class Badge extends BaseComponent {
     super(props);
 
     if (props.testId) {
-      console.warn("Badge prop 'testId' is deprecated. Please use RN 'testID' prop instead.");
+      console.warn('Badge prop \'testId\' is deprecated. Please use RN \'testID\' prop instead.');
     }
   }
 
@@ -122,7 +122,7 @@ export default class Badge extends BaseComponent {
       return label;
     }
     if (LABEL_FORMATTER_VALUES.includes(labelFormatterLimit)) {
-      const maxLabelNumber = 10 ** labelFormatterLimit - 1;
+      const maxLabelNumber = (10 ** labelFormatterLimit) - 1;
       let formattedLabel = label;
       if (formattedLabel > maxLabelNumber) {
         formattedLabel = `${maxLabelNumber}+`;
