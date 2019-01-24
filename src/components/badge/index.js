@@ -148,7 +148,7 @@ export default class Badge extends BaseComponent {
 
   render() {
     // TODO: remove testId after deprecation
-    const {borderWidth, borderColor, containerStyle, testId, testID} = this.props;
+    const {borderWidth, borderColor, containerStyle, testId, testID, ...others} = this.props;
     const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
     const sizeStyle = this.getBadgeSizeStyle();
 
@@ -164,6 +164,7 @@ export default class Badge extends BaseComponent {
     return (
       <Container
         testID={testID || testId}
+        {...others}
         style={[
           sizeStyle,
           this.styles.badge,
