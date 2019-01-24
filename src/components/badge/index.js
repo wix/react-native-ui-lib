@@ -7,17 +7,10 @@ import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 
-
 const SIZE_PIMPLE_SMALL = 6;
 const SIZE_PIMPLE_BIG = 10;
-const SIZE_DEFAULT = 20;
-const WIDTH_DOUBLE = 28;
-const WIDTH_TRIPLE = 36;
-
-const SIZE_SMALL = 16;
-const WIDTH_DOUBLE_SMALL = 25;
-const WIDTH_TRIPLE_SMALL = 30;
-
+const DEFAULT_HEIGHT_SMALL = 16;
+const DEFAULT_HEIGHT = 20;
 const LABEL_FORMATTER_VALUES = [1, 2, 3, 4];
 
 /**
@@ -90,41 +83,37 @@ export default class Badge extends BaseComponent {
   }
 
   getBadgeSizeStyle() {
-    const {label, borderWidth, size} = this.props;
-    let height = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
-    let width = 0;
+    const {borderWidth, size} = this.props;
+    const label = this.getFormattedLabel();
+    const badgeHeight = this.isSmallBadge() ? DEFAULT_HEIGHT_SMALL : DEFAULT_HEIGHT;
+
+    const style = {
+      paddingHorizontal: this.isSmallBadge() ? 4 : 6,
+      height: badgeHeight,
+      minWidth: badgeHeight,
+    };
+
     if (label === undefined) {
       switch (size) {
-        default:
-        case 'pimpleSmall':
-          width = SIZE_PIMPLE_SMALL;
-          height = SIZE_PIMPLE_SMALL;
-          break;
         case 'pimpleBig':
-          width = SIZE_PIMPLE_BIG;
-          height = SIZE_PIMPLE_BIG;
-      }
-    } else {
-      const numberOfCharacters = label.length;
-      switch (numberOfCharacters) {
-        case 0:
-        case 1:
-          width = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
+          style.minWidth = SIZE_PIMPLE_BIG;
+          style.height = SIZE_PIMPLE_BIG;
+          style.paddingHorizontal = 0;
           break;
-        case 2:
-          width = this.isSmallBadge() ? WIDTH_DOUBLE_SMALL : WIDTH_DOUBLE;
-          break;
+        case 'pimpleSmall':
         default:
-          width = this.isSmallBadge() ? WIDTH_TRIPLE_SMALL : WIDTH_TRIPLE;
+          style.minWidth = SIZE_PIMPLE_SMALL;
+          style.height = SIZE_PIMPLE_SMALL;
+          style.paddingHorizontal = 0;
           break;
       }
     }
 
     if (borderWidth) {
-      width += borderWidth * 2;
-      height += borderWidth * 2;
+      style.minWidth += borderWidth * 2;
+      style.height += borderWidth * 2;
     }
-    return {width, height};
+    return style;
   }
 
   getFormattedLabel() {
@@ -167,8 +156,10 @@ export default class Badge extends BaseComponent {
     const animationProps = this.extractAnimationProps();
     const Container = !_.isEmpty(animationProps) ? AnimatableView : View;
     if (!_.isEmpty(animationProps)) {
-      console.warn('Badge component will soon stop supporting animationProps.' +
-        'Please wrap your Badge component with your own animation component, such as Animatable.View');
+      console.warn(
+        'Badge component will soon stop supporting animationProps.' +
+          'Please wrap your Badge component with your own animation component, such as Animatable.View',
+      );
     }
 
     return (
