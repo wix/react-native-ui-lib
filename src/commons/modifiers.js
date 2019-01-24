@@ -217,3 +217,67 @@ export function getThemeProps(props = this.props, context = this.context) {
   }
   return {...themeProps, ...props};
 }
+
+export function generateModifiersStyle(
+  options = {
+    backgroundColor: true,
+    borderRadius: true,
+    paddings: true,
+    margins: true,
+    alignments: true,
+    flex: true,
+  },
+  props = this.props,
+) {
+  const style = {};
+
+  if (options.backgroundColor) {
+    style.backgroundColor = this.extractBackgroundColorValue(props);
+  }
+  if (options.borderRadius) {
+    style.borderRadius = this.extractBorderRadiusValue(props);
+  }
+  if (options.paddings) {
+    style.paddings = this.extractPaddingValues(props);
+  }
+  if (options.margins) {
+    style.margins = this.extractMarginValues(props);
+  }
+  if (options.alignments) {
+    style.alignments = this.extractAlignmentsValues(props);
+  }
+  if (options.flex) {
+    style.flexStyle = this.extractFlexStyle(props);
+  }
+
+  return style;
+}
+
+
+export function getAlteredModifiersOptions(currentProps, nextProps) {
+  const allKeys = _.union([..._.keys(currentProps), ..._.keys(nextProps)]);
+  const changedKeys = _.filter(allKeys, key => !_.isEqual(currentProps[key], nextProps[key]));
+
+  const options = {};
+  if (_.find(changedKeys, key => FLEX_KEY_PATTERN.test(key))) {
+    options.flex = true;
+  }
+
+  if (_.find(changedKeys, key => PADDING_KEY_PATTERN.test(key))) {
+    options.paddings = true;
+  }
+
+  if (_.find(changedKeys, key => MARGIN_KEY_PATTERN.test(key))) {
+    options.margins = true;
+  }
+
+  if (_.find(changedKeys, key => ALIGNMENT_KEY_PATTERN.test(key))) {
+    options.alignments = true;
+  }
+
+  if (_.find(changedKeys, key => Colors.getBackgroundKeysPattern().test(key))) {
+    options.backgroundColor = true;
+  }
+
+  return options;
+}
