@@ -7,7 +7,7 @@ class DialogScreen extends Component {
     showDialog3: false,
     showDialog4: false,
     showDialog5: false,
-    showDialog6: false
+    showDialog6: false,
   };
 
   renderDialogContent(dialogIndex, extraProps) {
@@ -17,7 +17,7 @@ class DialogScreen extends Component {
           <Text text50>This is Dialog</Text>
         </View>
         <View right>
-          <Button text60 label='Done' link onPress={() => this.setState({[`showDialog${dialogIndex}`]: false})} />
+          <Button text60 label="Done" link onPress={() => this.setState({[`showDialog${dialogIndex}`]: false})} />
         </View>
       </View>
     );
@@ -27,37 +27,46 @@ class DialogScreen extends Component {
     const {showDialog1, showDialog2, showDialog3, showDialog4, showDialog5, showDialog6} = this.state;
     return (
       <View flex bg-dark80 padding-12 center>
-        <Button size={'small'} label='show default dialog in center' onPress={() => this.setState({showDialog1: true})}/>
-        <Button marginT-20 size={'small'} label='show bottom dialog' onPress={() => this.setState({showDialog2: true})}/>
+        <Button
+          size={'small'}
+          label="show default dialog in center"
+          onPress={() => this.setState({showDialog1: true})}
+        />
         <Button
           marginT-20
           size={'small'}
-          label='show bottom dialog with padding'
+          label="show bottom dialog"
+          onPress={() => this.setState({showDialog2: true})}
+        />
+        <Button
+          marginT-20
+          size={'small'}
+          label="show bottom dialog with padding"
           onPress={() => this.setState({showDialog3: true})}
         />
         <Button
           marginT-20
           size={'small'}
-          label='show top dialog different animation'
+          label="show top dialog different animation"
           onPress={() => this.setState({showDialog4: true})}
         />
         <Button
           marginT-20
           size={'small'}
-          label='show dialog with height based on content '
+          label="show dialog with height based on content "
           onPress={() => this.setState({showDialog5: true})}
         />
-        <Button 
-          marginT-20 
-          size={'small'} 
-          label='show dialog with animation configuration' 
-          onPress={() => this.setState({showDialog6: true})} 
+        <Button
+          marginT-20
+          size={'small'}
+          label="show dialog with animation configuration"
+          onPress={() => this.setState({showDialog6: true})}
         />
 
-        <Dialog 
+        <Dialog
           visible={showDialog1}
-          width='90%'
-          height='60%'
+          width="90%"
+          height="60%"
           onDismiss={() => this.setState({showDialog1: false})}
           style={{backgroundColor: Colors.white}}
         >
@@ -65,8 +74,8 @@ class DialogScreen extends Component {
         </Dialog>
         <Dialog
           visible={showDialog2}
-          width='100%'
-          height='35%'
+          width="100%"
+          height="35%"
           bottom
           centerH
           onDismiss={() => this.setState({showDialog2: false})}
@@ -76,8 +85,8 @@ class DialogScreen extends Component {
         </Dialog>
         <Dialog
           visible={showDialog3}
-          width='90%'
-          height='60%'
+          width="90%"
+          height="60%"
           bottom
           centerH
           onDismiss={() => this.setState({showDialog3: false})}
@@ -86,8 +95,8 @@ class DialogScreen extends Component {
         </Dialog>
         <Dialog
           visible={showDialog4}
-          height='40%'
-          width='100%'
+          height="40%"
+          width="100%"
           top
           centerH
           onDismiss={() => this.setState({showDialog4: false})}
@@ -98,7 +107,7 @@ class DialogScreen extends Component {
         </Dialog>
         <Dialog
           visible={showDialog5}
-          width='100%'
+          width="100%"
           height={null}
           bottom
           centerH
@@ -109,8 +118,8 @@ class DialogScreen extends Component {
         </Dialog>
         <Dialog
           visible={showDialog6}
-          width='80%'
-          height='40%'
+          width="80%"
+          height="40%"
           bottom
           centerH
           onDismiss={() => this.setState({showDialog6: false})}
