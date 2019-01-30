@@ -56,7 +56,7 @@ export default class RadioButtonScreen extends Component {
             </RadioGroup>
 
             <Text marginV-20 text60 dark10>
-              Use it without RaduiGroup
+              Use it without RadioGroup
             </Text>
 
             <TouchableOpacity activeOpacity={1} onPress={() => this.setState({individualValue: !this.state.individualValue})}>

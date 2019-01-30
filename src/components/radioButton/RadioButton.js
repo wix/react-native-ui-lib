@@ -1,4 +1,3 @@
-// TODO: update usage of React Context API to latest (https://reactjs.org/docs/context.html)
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -7,7 +6,7 @@ import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
-
+import {RadioGroupContext} from './RadioGroup';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
@@ -49,26 +48,21 @@ class RadioButton extends BaseComponent {
     borderRadius: PropTypes.number,
   };
 
-  static contextTypes = {
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    onValueChange: PropTypes.func,
-  };
-
   state = {};
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  onPress = () => {
+  onPress = context => {
     const {value, disabled} = this.props;
     if (!disabled) {
-      _.invoke(this.context, 'onValueChange', value);
-      _.invoke(this.props, 'onPress', this.isSelected());
+      _.invoke(context, 'onValueChange', value);
+      _.invoke(this.props, 'onPress', this.isSelected(this.props, context));
     }
   };
 
-  isSelected(props = this.props, context = this.context) {
+  isSelected(props = this.props, context) {
     const {value, selected} = props;
     // Individual Radio Button
     if (_.isUndefined(value)) {
@@ -82,7 +76,7 @@ class RadioButton extends BaseComponent {
   getContainerStyle() {
     const {color, size, borderRadius, style: propsStyle, disabled} = this.getThemeProps();
     const style = [this.styles.container];
-    
+
     if (size) {
       style.push({width: size, height: size});
     }
@@ -111,14 +105,18 @@ class RadioButton extends BaseComponent {
     return style;
   }
 
-  render() {
+  renderRadioButton = context => {
     const {style, onPress, ...others} = this.getThemeProps();
-    const Container = (onPress || this.context.onValueChange) ? TouchableOpacity : View;
+    const Container = onPress || context.onValueChange ? TouchableOpacity : View;
     return (
-      <Container activeOpacity={1} {...others} style={this.getContainerStyle()} onPress={this.onPress}>
-        {this.isSelected() && <View style={this.getSelectedStyle()} />}
+      <Container activeOpacity={1} {...others} style={this.getContainerStyle()} onPress={() => this.onPress(context)}>
+        {this.isSelected(this.props, context) && <View style={this.getSelectedStyle()} />}
       </Container>
     );
+  };
+
+  render() {
+    return <RadioGroupContext.Consumer>{this.renderRadioButton}</RadioGroupContext.Consumer>;
   }
 }
 
