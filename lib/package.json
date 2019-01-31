@@ -1,6 +1,6 @@
 {
   "name": "react-native-uilib-core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Our uilib native components (separated from js components)",
   "main": "components/index.js",
   "scripts": {},
