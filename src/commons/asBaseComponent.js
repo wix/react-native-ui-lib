@@ -1,6 +1,8 @@
 import React, {PureComponent} from 'react';
 import _ from 'lodash';
+import hoistStatics from 'hoist-non-react-statics';
 import * as Modifiers from './modifiers';
+import forwardRef from './forwardRef';
 
 function asBaseComponent(WrappedComponent) {
   class BaseComponent extends PureComponent {
@@ -15,11 +17,18 @@ function asBaseComponent(WrappedComponent) {
 
     render() {
       const themeProps = Modifiers.getThemeProps.call(WrappedComponent, this.props, this.context);
-      return <WrappedComponent /* {...this.props} */ {...themeProps} modifiers={this.state} />;
+      const {forwardedRef, ...others} = themeProps;
+      return <WrappedComponent /* {...this.props} */ {...others} modifiers={this.state} ref={forwardedRef} />;
     }
   }
 
-  return BaseComponent;
+  // Statics
+  hoistStatics(BaseComponent, WrappedComponent);
+  BaseComponent.displayName = WrappedComponent.displayName;
+  BaseComponent.propTypes = WrappedComponent.propTypes;
+  BaseComponent.defaultProps = WrappedComponent.defaultProps;
+
+  return forwardRef(BaseComponent);
 }
 
 export default asBaseComponent;

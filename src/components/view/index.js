@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 import {View as RNView, ViewPropTypes, SafeAreaView} from 'react-native';
-import {BaseComponent, asBaseComponent} from '../../commons';
+import {BaseComponent, asBaseComponent, forwardRef} from '../../commons';
 import * as Constants from '../../helpers/Constants';
 
 /**
@@ -28,7 +28,18 @@ class View extends PureComponent {
   }
 
   render() {
-    const {modifiers, useSafeArea, style, left, top, right, bottom, flex: propsFlex, ...others} = this.props;
+    const {
+      modifiers,
+      useSafeArea,
+      style,
+      left,
+      top,
+      right,
+      bottom,
+      flex: propsFlex,
+      forwardedRef,
+      ...others
+    } = this.props;
     const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
     const Element = useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
 
@@ -44,7 +55,7 @@ class View extends PureComponent {
           alignments,
           style,
         ]}
-        ref={this.setRef}
+        ref={forwardedRef}
       >
         {this.props.children}
       </Element>
@@ -52,4 +63,4 @@ class View extends PureComponent {
   }
 }
 
-export default asBaseComponent(View);
+export default asBaseComponent(forwardRef(View));
