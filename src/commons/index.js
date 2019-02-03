@@ -13,6 +13,9 @@ module.exports = {
   get SelectableComponent() {
     return require('./SelectableComponent').default;
   },
+  get UIComponent() {
+    return require('./UIComponent').default;
+  },
   get asBaseComponent() {
     return require('./asBaseComponent').default;
   },

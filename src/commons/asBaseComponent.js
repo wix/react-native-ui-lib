@@ -1,11 +1,12 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import _ from 'lodash';
 import hoistStatics from 'hoist-non-react-statics';
 import * as Modifiers from './modifiers';
 import forwardRef from './forwardRef';
+import UIComponent from './UIComponent';
 
 function asBaseComponent(WrappedComponent) {
-  class BaseComponent extends PureComponent {
+  class BaseComponent extends UIComponent {
     state = Modifiers.generateModifiersStyle(undefined, this.props);
 
     componentWillReceiveProps(nextProps) {
