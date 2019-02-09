@@ -3,11 +3,11 @@ import React, {Component} from 'react';
 import {Constants, View, Text, Button, Image, FeatureHighlight} from 'react-native-ui-lib'; // eslint-disable-line
 
 const titles = [
-  'Get Notified', 
+  'Get Notified',
   'Title two is a long title that will not get cut by default, but can be limited',
   'Title number three',
-  'Title number four', 
-  'Title number five', 
+  'Title number four',
+  'Title number five',
   'Title number six',
 ];
 const messages = [
@@ -33,7 +33,7 @@ class FeatureHighlightScreen extends Component {
       currentTargetIndex: 0,
     };
 
-    this.targets = [];
+    this.targets = {};
 
     this.closeHighlight = this.closeHighlight.bind(this);
     this.showHighlight = this.showHighlight.bind(this);
@@ -55,11 +55,9 @@ class FeatureHighlightScreen extends Component {
     this.setState({showFTE: true});
   }
 
-  addTarget(ref) {
-    if (ref != null) {
-      if (!_.find(this.targets, {props: {testID: ref.props.testID}})) {
-        this.targets.push(ref);
-      }
+  addTarget(ref, id) {
+    if (ref && !this.targets[id]) {
+      this.targets[id] = ref;
     }
   }
 
@@ -67,7 +65,7 @@ class FeatureHighlightScreen extends Component {
     const {currentTargetIndex} = this.state;
     const newTargetIndex = currentTargetIndex + 1;
 
-    if (newTargetIndex < this.targets.length) {
+    if (newTargetIndex < _.size(this.targets)) {
       this.setState({currentTargetIndex: newTargetIndex});
     } else {
       this.closeHighlight();
@@ -99,9 +97,9 @@ class FeatureHighlightScreen extends Component {
               marginT-40 br100 bg-yellow10
               style={{width: 32, height: 32}}
               testID={'0'}
-              ref={r => (this.addTarget(r))}
+              ref={r => (this.addTarget(r, '0'))}
             />
-            <View marginT-40 bg-red10 style={{width: 12, height: 12}} testID={'1'} ref={r => (this.addTarget(r))}/>
+            <View marginT-40 bg-red10 style={{width: 12, height: 12}} testID={'1'} ref={r => (this.addTarget(r, '1'))}/>
           </View>
           <View right flex>
             <View row flex>
@@ -109,16 +107,16 @@ class FeatureHighlightScreen extends Component {
                 marginT-40 marginR-60 bg-cyan30
                 style={{width: 50, height: 70}}
                 testID={'2'}
-                ref={r => (this.addTarget(r))}
+                ref={r => (this.addTarget(r, '2'))}
               />
-              <View marginT-40 bg-violet30 style={{width: 70, height: 50}} testID={'3'} ref={r => (this.addTarget(r))}/>
+              <View marginT-40 bg-violet30 style={{width: 70, height: 50}} testID={'3'} ref={r => (this.addTarget(r, '3'))}/>
             </View>
             <View
               marginT-40 marginR-50
               bg-purple40
               style={{width: 150, height: 56}}
               testID={'4'}
-              ref={r => (this.addTarget(r))}
+              ref={r => (this.addTarget(r, '4'))}
             />
           </View>
         </View>
