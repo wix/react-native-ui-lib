@@ -477,6 +477,7 @@ export default class TextField extends BaseInput {
       this.styles.input,
       hideUnderline && this.styles.inputWithoutUnderline,
       typography,
+      {height: typography.lineHeight},
       color && {color},
       // with the right flex on the tree hierarchy we might not need this
       // {height: this.getHeight()},
@@ -527,7 +528,8 @@ export default class TextField extends BaseInput {
             this.styles.innerContainer,
             hideUnderline && this.styles.innerContainerWithoutUnderline,
             {borderColor: underlineStateColor},
-            {paddingTop: this.getTopPaddings()}]}
+            {paddingTop: this.getTopPaddings()}
+          ]}
         >
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
