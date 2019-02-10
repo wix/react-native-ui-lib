@@ -8,6 +8,7 @@ class DialogScreen extends Component {
     showDialog4: false,
     showDialog5: false,
     showDialog6: false,
+    showDialog7: false
   };
 
   renderDialogContent(dialogIndex, extraProps) {
@@ -24,7 +25,7 @@ class DialogScreen extends Component {
   }
 
   render() {
-    const {showDialog1, showDialog2, showDialog3, showDialog4, showDialog5, showDialog6} = this.state;
+    const {showDialog1, showDialog2, showDialog3, showDialog4, showDialog5, showDialog6, showDialog7} = this.state;
     return (
       <View flex bg-dark80 padding-12 center>
         <Button
@@ -61,6 +62,12 @@ class DialogScreen extends Component {
           size={'small'}
           label="show dialog with animation configuration"
           onPress={() => this.setState({showDialog6: true})}
+        />
+        <Button
+          marginT-20
+          size={'small'}
+          label="show dialog with disabled pan gesture"
+          onPress={() => this.setState({showDialog7: true})}
         />
 
         <Dialog
@@ -126,6 +133,16 @@ class DialogScreen extends Component {
           animationConfig={{animation: 'slideInLeft', duration: 1000}}
         >
           {this.renderDialogContent(6, {'marginV-20': true, 'bg-yellow60': true})}
+        </Dialog>
+        <Dialog
+          visible={showDialog7}
+          width="80%"
+          height="40%"
+          onDismiss={() => this.setState({showDialog7: false})}
+          style={{backgroundColor: Colors.white}}
+          disablePan
+        >
+          {this.renderDialogContent(7)}
         </Dialog>
       </View>
     );

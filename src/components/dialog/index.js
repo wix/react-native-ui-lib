@@ -60,7 +60,11 @@ class Dialog extends BaseComponent {
     /**
      * The dialog container style
      */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * Disable the pan gesture recognizer
+     */
+    disablePan: PropTypes.bool
   };
 
   static defaultProps = {
@@ -139,16 +143,17 @@ class Dialog extends BaseComponent {
   }
 
   renderDraggableContainer() {
-    const {style, top} = this.getThemeProps();
+    const {style, top, disablePan} = this.getThemeProps();
+    const Container = disablePan ? View : PanGestureView;
 
     return (
-      <PanGestureView
+      <Container
         style={[this.styles.dialogContainer, style]}
         direction={top && PanGestureView.directions.UP}
         onDismiss={this.onDismiss}
       >
         {this.renderContent()}
-      </PanGestureView>
+      </Container>
     );
   }
 
