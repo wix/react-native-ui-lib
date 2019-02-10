@@ -1,11 +1,9 @@
 package com.uilib;
 
 import android.support.annotation.Nullable;
-
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.github.amarcruz.rntextsize.RNTextSizePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -17,6 +15,7 @@ import com.reactnativenavigation.react.ReactGateway;
 
 import com.cmcewen.blurview.BlurViewPackage;
 import com.wix.interactable.Interactable;
+import com.github.amarcruz.rntextsize.RNTextSizePackage;
 
 import com.wix.reactnativeuilib.highlighterview.HighlighterViewPackage;
 import com.wix.reactnativeuilib.textinput.TextInputDelKeyHandlerPackage;
@@ -55,9 +54,9 @@ public class MainApplication extends NavigationApplication {
         return Arrays.<ReactPackage>asList(
             // eg. new VectorIconsPackage()
             new TextInputDelKeyHandlerPackage(),
-            new BlurViewPackage(),
             new HighlighterViewPackage(),
             new WheelPickerPackage(),
+            new BlurViewPackage(),
             new Interactable(),
             new RNTextSizePackage()
         );
