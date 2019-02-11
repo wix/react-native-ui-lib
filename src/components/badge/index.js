@@ -163,7 +163,7 @@ export default class Badge extends BaseComponent {
 
     return (
       // The extra View wrapper is to break badge's flex-ness
-      <View>
+      <View style={containerStyle}>
         <Container
           testID={testID || testId}
           {...others}
@@ -172,7 +172,6 @@ export default class Badge extends BaseComponent {
             this.styles.badge,
             borderWidth && {borderWidth},
             borderColor && {borderColor},
-            containerStyle,
             backgroundStyle,
           ]}
           {...animationProps}
