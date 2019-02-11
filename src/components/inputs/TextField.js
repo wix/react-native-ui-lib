@@ -477,7 +477,7 @@ export default class TextField extends BaseInput {
       this.styles.input,
       hideUnderline && this.styles.inputWithoutUnderline,
       typography,
-      {minHeight: typography.lineHeight},
+      {minHeight: typography.lineHeight + 3}, // HACK: adding 3 to avoid cutting low letters at the bottom
       color && {color},
       // with the right flex on the tree hierarchy we might not need this
       // {height: this.getHeight()},
