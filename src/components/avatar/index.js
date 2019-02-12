@@ -10,6 +10,8 @@ import Text from '../text';
 import Image from '../image';
 import AnimatedImage from '../../animations/animatedImage';
 
+const BADGE_SIZE = 13.5;
+
 export const STATUS_MODES = {
   ONLINE: 'ONLINE',
   OFFLINE: 'OFFLINE',
@@ -142,11 +144,10 @@ export default class Avatar extends BaseComponent {
 
   getBadgePosition() {
     const {size} = this.props;
-    const badgeSize = 13.5;
     const radius = size / 2;
     const x = Math.sqrt(radius ** 2 * 2);
     const y = x - radius;
-    const shift = Math.sqrt(y ** 2 / 2) - badgeSize / 2;
+    const shift = Math.sqrt(y ** 2 / 2) - BADGE_SIZE / 2;
     return {top: shift, right: shift};
   }
 
@@ -272,8 +273,8 @@ function createStyles({size, labelColor}) {
       borderRadius,
     },
     onlineBadge: {
-      height: 13.5,
-      width: 13.5,
+      height: BADGE_SIZE,
+      width: BADGE_SIZE,
       padding: 1.5,
       borderRadius: 999,
       backgroundColor: Colors.white,
