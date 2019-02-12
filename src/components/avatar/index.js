@@ -142,10 +142,11 @@ export default class Avatar extends BaseComponent {
 
   getBadgePosition() {
     const {size} = this.props;
+    const badgeSize = 13.5;
     const radius = size / 2;
     const x = Math.sqrt(radius ** 2 * 2);
     const y = x - radius;
-    const shift = Math.sqrt(y ** 2 / 2) - 13.5 / 2; // 13.5 = hard coded badge size
+    const shift = Math.sqrt(y ** 2 / 2) - badgeSize / 2;
     return {top: shift, right: shift};
   }
 
