@@ -10,12 +10,11 @@ import Text from '../text';
 import Image from '../image';
 import AnimatedImage from '../../animations/animatedImage';
 
-
 export const STATUS_MODES = {
   ONLINE: 'ONLINE',
   OFFLINE: 'OFFLINE',
   AWAY: 'AWAY',
-  NONE: 'NONE'
+  NONE: 'NONE',
 };
 
 /**
@@ -105,7 +104,7 @@ export default class Avatar extends BaseComponent {
     /**
      * Press handler
      */
-    onPress: PropTypes.func
+    onPress: PropTypes.func,
   };
 
   static defaultProps = {
@@ -113,7 +112,7 @@ export default class Avatar extends BaseComponent {
     backgroundColor: Colors.dark80,
     size: 50,
     labelColor: Colors.dark10,
-    status: STATUS_MODES.NONE
+    status: STATUS_MODES.NONE,
   };
 
   generateStyles() {
@@ -141,6 +140,16 @@ export default class Avatar extends BaseComponent {
     return badgeColor;
   }
 
+  getBadgePosition() {
+    const {size} = this.props;
+    const badgeSize = 13.5;
+    const radius = size / 2;
+    const x = Math.sqrt(radius ** 2 * 2);
+    const y = x - radius;
+    const shift = Math.sqrt(y ** 2 / 2) - badgeSize / 2;
+    return {top: shift, right: shift};
+  }
+
   renderBadge() {
     const {testID, isOnline, status} = this.props;
     const badgeColor = this.getBadgeColor(isOnline, status);
@@ -148,7 +157,7 @@ export default class Avatar extends BaseComponent {
       return false;
     }
     return (
-      <View style={this.styles.onlineBadge} testID={`${testID}.onlineBadge`}>
+      <View style={[this.styles.onlineBadge, this.getBadgePosition()]} testID={`${testID}.onlineBadge`}>
         <View style={[this.styles.onlineBadgeInner, {backgroundColor: badgeColor}]} />
       </View>
     );
@@ -176,7 +185,7 @@ export default class Avatar extends BaseComponent {
       onImageLoadError,
       testID,
       imageProps,
-      imageStyle
+      imageStyle,
     } = this.props;
     const hasImage = !_.isUndefined(imageSource);
     const ImageContainer = animate ? AnimatedImage : Image;
@@ -205,7 +214,9 @@ export default class Avatar extends BaseComponent {
 
     return (
       <Container style={[this.styles.container, containerStyle]} testID={testID} onPress={onPress}>
-        <View style={[this.styles.initialsContainer, {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}>
+        <View
+          style={[this.styles.initialsContainer, {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
+        >
           <Text numberOfLines={1} style={[this.styles.initials, {color}]}>
             {label}
           </Text>
@@ -218,7 +229,7 @@ export default class Avatar extends BaseComponent {
   }
 }
 
-function createStyles({size, labelColor, imageSource}) {
+function createStyles({size, labelColor}) {
   const borderRadius = size / 2;
   const fontSizeToImageSizeRatio = 0.32;
   const styles = StyleSheet.create({
@@ -227,38 +238,38 @@ function createStyles({size, labelColor, imageSource}) {
       justifyContent: 'center',
       width: size,
       height: size,
-      borderRadius
+      borderRadius,
     },
     initialsContainer: {
       ...StyleSheet.absoluteFillObject,
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius
+      borderRadius,
     },
     initialsContainerWithInset: {
       top: 1,
       right: 1,
       bottom: 1,
-      left: 1
+      left: 1,
     },
     /*eslint-disable*/
     initials: {
       fontSize: size * fontSizeToImageSizeRatio,
       color: labelColor,
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
     },
     /*eslint-enable*/
     defaultImage: {
       width: size,
       height: size,
-      borderRadius
+      borderRadius,
     },
     image: {
       ...StyleSheet.absoluteFillObject,
       position: 'absolute',
       width: size,
       height: size,
-      borderRadius
+      borderRadius,
     },
     onlineBadge: {
       height: 13.5,
@@ -267,18 +278,16 @@ function createStyles({size, labelColor, imageSource}) {
       borderRadius: 999,
       backgroundColor: Colors.white,
       position: 'absolute',
-      right: imageSource ? -1.5 : 0,
-      top: 4.5
     },
     onlineBadgeInner: {
       flex: 1,
-      borderRadius: 999
+      borderRadius: 999,
       // backgroundColor: Colors.green30,
     },
     fixAbsolutePosition: {
       position: undefined,
       left: undefined,
-      bottom: undefined
+      bottom: undefined,
     },
     ribbon: {
       position: 'absolute',
@@ -287,8 +296,8 @@ function createStyles({size, labelColor, imageSource}) {
       backgroundColor: Colors.blue30,
       borderRadius: BorderRadiuses.br100,
       paddingHorizontal: 6,
-      paddingVertical: 3
-    }
+      paddingVertical: 3,
+    },
   });
 
   return styles;
