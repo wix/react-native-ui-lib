@@ -1,7 +1,7 @@
 import _ from 'lodash';
+import Color from 'color';
 import {colorsPalette} from './colorsPalette';
 
-const one = require('onecolor');
 
 class Colors {
   /**
@@ -46,7 +46,6 @@ class Colors {
     } else {
       throw new Error('rgba can work with either 2 or 4 arguments');
     }
-
     return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
   }
 
@@ -66,34 +65,35 @@ class Colors {
     const darkRatios = [0.13, 0.08];
     const lightRatios = [0.27, 0.55, 0.72, 0.83, 0.9];
 
-    const colorKey = _.findKey(this, (value, key) => this[key] === color);
-
     if (_.isUndefined(tintKey) || isNaN(tintKey) || _.isUndefined(color)) {
       console.error('"Colors.getColorTint" must accept a color and tintKey params');
       return color;
     }
 
+    const colorKey = _.findKey(this, (value, key) => this[key] === color);
+
     if (colorKey) {
       const requiredColorKey = `${colorKey.slice(0, -2)}${tintKey}`;
       const requiredColor = this[requiredColorKey];
+      
       if (_.isUndefined(requiredColor)) {
         console.warn('"Colors.getColorTint" could not find color with this tint');
         return color;
       }
       return requiredColor;
-    // Handles dynamic colors (non uilib colors)
-    } else {
+    } else { // Handles dynamic colors (non uilib colors)
       let tintLevel = Math.floor(Number(tintKey) / 10);
       tintLevel = Math.max(1, tintLevel);
       tintLevel = Math.min(8, tintLevel);
+      
       if (tintLevel === BASE_COLOR_LEVEL) {
         return color;
       } else if (tintLevel <= BASE_COLOR_LEVEL) {
         const darkRatio = darkRatios[tintLevel - 1];
-        return one(color).darken(darkRatio).hex();
+        return Color(color).darken(darkRatio).hex();
       } else {
         const lightRatio = lightRatios[tintLevel - 4];
-        return one(color).mix('#ffffff', lightRatio).hex();
+        return Color(color).mix(Color('#ffffff'), lightRatio).hex();
       }
     }
   }
@@ -103,7 +103,6 @@ function validateRGB(value) {
   if (isNaN(value) || value > 255 || value < 0) {
     throw new Error(`${value} is invalid rgb code, please use number between 0-255`);
   }
-
   return value;
 }
 
