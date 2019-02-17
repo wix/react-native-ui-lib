@@ -91,23 +91,17 @@ class Colors {
     const lightness = Math.round(hsl.color[2]);
     
     const ls = [lightness];
-    let l = lightness;
-    do {
+    let l = lightness - 10;
+    while (l > 20) {
+      ls.unshift(l);
       l -= 10;
-      if (l > 20) {
-        ls.push(l);
-      }
-    } while (l > 20);
+    }
 
-    l = lightness;
-    do {
+    l = lightness + 10;
+    while (l < 100) {
+      ls.push(l);
       l += 10;
-      if (l < 100) {
-        ls.push(l);
-      }
-    } while (l < 100);
-
-    ls.sort((a, b) => a - b);
+    }
     
     const tints = [];
     _.forEach(ls, e => {
