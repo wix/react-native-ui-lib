@@ -79,38 +79,50 @@ class Colors {
       return requiredColor;
     } else { 
       // Handles dynamic colors (non uilib colors)
-      let tintLevel = Math.floor(Number(tintKey) / 10);
-      tintLevel = Math.max(1, tintLevel);
-      tintLevel = Math.min(8, tintLevel);
-
-      return generateColorTint(color, tintLevel);
+      let tintLevel = Math.floor((Number(tintKey) / 10) + 1);
+      tintLevel = Math.max(2, tintLevel);
+      tintLevel = Math.min(9, tintLevel);
+      return generateColorTint(color, tintLevel * 10);
     }
   }
 
   generateColorPalette(color) {
+    const hsl = Color(color).hsl();
+    const lightness = Math.round(hsl.color[2]);
+    
+    const ls = [lightness];
+    let l = lightness;
+    do {
+      l -= 10;
+      if (l > 20) {
+        ls.push(l);
+      }
+    } while (l > 20);
+
+    l = lightness;
+    do {
+      l += 10;
+      if (l < 100) {
+        ls.push(l);
+      }
+    } while (l < 100);
+
+    ls.sort((a, b) => a - b);
+    
     const tints = [];
-    for (let i = 1; i <= 8; i++) {
-      tints.push(generateColorTint(color, i));
-    }
+    _.forEach(ls, e => {
+      const tint = generateColorTint(color, e);
+      tints.push(tint);
+    });
+
     return tints;
   }
 }
 
 function generateColorTint(color, tintLevel) {
-  if (color && tintLevel) {
-    const BASE_COLOR_LEVEL = 3;
-    
-    if (tintLevel < BASE_COLOR_LEVEL) {
-      const darkRatios = [0.13, 0.08];
-      const darkRatio = darkRatios[tintLevel - 1];
-      return Color(color).darken(darkRatio).hex();
-    } else if (tintLevel > BASE_COLOR_LEVEL) {
-      const lightRatios = [0.27, 0.55, 0.72, 0.83, 0.9];
-      const lightRatio = lightRatios[tintLevel - 4];
-      return Color(color).mix(Color('#ffffff'), lightRatio).hex();
-    }
-  }
-  return color;
+  const hsl = Color(color).hsl();
+  hsl.color[2] = tintLevel;
+  return hsl.hex();
 }
 
 function validateRGB(value) {
