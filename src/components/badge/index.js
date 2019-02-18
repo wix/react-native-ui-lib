@@ -9,9 +9,18 @@ import View from '../view';
 
 const SIZE_PIMPLE_SMALL = 6;
 const SIZE_PIMPLE_BIG = 10;
+const SIZE_PIMPLE_HUGE = 14;
 const DEFAULT_HEIGHT_SMALL = 16;
 const DEFAULT_HEIGHT = 20;
 const LABEL_FORMATTER_VALUES = [1, 2, 3, 4];
+
+export const BADGE_SIZES = {
+  default: DEFAULT_HEIGHT,
+  small: DEFAULT_HEIGHT_SMALL,
+  pimpleSmall: SIZE_PIMPLE_SMALL,
+  pimpleBig: SIZE_PIMPLE_BIG,
+  pimpleHuge: SIZE_PIMPLE_HUGE,
+};
 
 /**
  * @description: Round colored badge, typically used to show a number
@@ -22,6 +31,7 @@ const LABEL_FORMATTER_VALUES = [1, 2, 3, 4];
  */
 export default class Badge extends BaseComponent {
   static displayName = 'Badge';
+  static badgeSizes = BADGE_SIZES;
   static propTypes = {
     /**
      * Text to show inside the badge.
@@ -35,7 +45,7 @@ export default class Badge extends BaseComponent {
     /**
      * the badge size (default, small)
      */
-    size: PropTypes.oneOf(['default', 'small', 'pimpleBig', 'pimpleSmall']),
+    size: PropTypes.oneOf(['default', 'small', 'pimpleSmall', 'pimpleBig', 'pimpleHuge']),
     /**
      * width of border around the badge
      */
@@ -95,6 +105,11 @@ export default class Badge extends BaseComponent {
 
     if (label === undefined) {
       switch (size) {
+        case 'pimpleHuge':
+          style.minWidth = SIZE_PIMPLE_HUGE;
+          style.height = SIZE_PIMPLE_HUGE;
+          style.paddingHorizontal = 0;
+          break;
         case 'pimpleBig':
           style.minWidth = SIZE_PIMPLE_BIG;
           style.height = SIZE_PIMPLE_BIG;
