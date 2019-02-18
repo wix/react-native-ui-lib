@@ -55,25 +55,25 @@ describe('services/AvatarService', () => {
     });
     
     it('should handle color that does not exist in uilib', () => {
-      expect(uut.getColorTint('#F1BE0B', 10).toLowerCase()).toEqual('#d2a50a');
-      expect(uut.getColorTint('#F1BE0B', 20).toLowerCase()).toEqual('#deaf0a');
-      expect(uut.getColorTint('#F1BE0B', 30).toLowerCase()).toEqual('#f1be0b');
-      expect(uut.getColorTint('#F1BE0B', 40).toLowerCase()).toEqual('#f5d04d');
-      expect(uut.getColorTint('#F1BE0B', 50).toLowerCase()).toEqual('#f9e291');
-      expect(uut.getColorTint('#F1BE0B', 60).toLowerCase()).toEqual('#fbedbb');
-      expect(uut.getColorTint('#F1BE0B', 70).toLowerCase()).toEqual('#fdf4d6');
-      expect(uut.getColorTint('#F1BE0B', 80).toLowerCase()).toEqual('#fef9e7');
+      expect(uut.getColorTint('#F1BE0B', 10)).toEqual('#624D04');
+      expect(uut.getColorTint('#F1BE0B', 20)).toEqual('#927307');
+      expect(uut.getColorTint('#F1BE0B', 30)).toEqual('#C39A09');
+      expect(uut.getColorTint('#F1BE0B', 40)).toEqual('#F4C00B');
+      expect(uut.getColorTint('#F1BE0B', 50)).toEqual('#F6CD3C');
+      expect(uut.getColorTint('#F1BE0B', 60)).toEqual('#F8D96D');
+      expect(uut.getColorTint('#F1BE0B', 70)).toEqual('#FBE69D');
+      expect(uut.getColorTint('#F1BE0B', 80)).toEqual('#FDF2CE');
     });
     
     it('should round down tint level to the nearest one', () => {
-      expect(uut.getColorTint('#F1BE0B', 75).toLowerCase()).toEqual('#fdf4d6');
-      expect(uut.getColorTint('#F1BE0B', 25).toLowerCase()).toEqual('#deaf0a');
-      expect(uut.getColorTint('#F1BE0B', 35).toLowerCase()).toEqual('#f1be0b');
+      expect(uut.getColorTint('#F1BE0B', 75)).toEqual('#FBE69D');
+      expect(uut.getColorTint('#F1BE0B', 25)).toEqual('#927307');
+      expect(uut.getColorTint('#F1BE0B', 35)).toEqual('#C39A09');
     });
     
     it('should handle out of range tint levels and round them to the nearest one in range', () => {
-      expect(uut.getColorTint('#F1BE0B', 3).toLowerCase()).toEqual('#d2a50a');
-      expect(uut.getColorTint('#F1BE0B', 95).toLowerCase()).toEqual('#fef9e7');
+      expect(uut.getColorTint('#F1BE0B', 3)).toEqual('#624D04');
+      expect(uut.getColorTint('#F1BE0B', 95)).toEqual('#FDF2CE');
     });
   });
 });
