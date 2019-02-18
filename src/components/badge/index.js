@@ -7,11 +7,6 @@ import {BaseComponent} from '../../commons';
 import {BorderRadiuses, Colors, ThemeManager, Typography} from '../../style';
 import View from '../view';
 
-// const SIZE_PIMPLE_SMALL = 6;
-// const SIZE_PIMPLE_BIG = 10;
-// const SIZE_PIMPLE_HUGE = 14;
-// const DEFAULT_HEIGHT_SMALL = 16;
-// const DEFAULT_HEIGHT = 20;
 const LABEL_FORMATTER_VALUES = [1, 2, 3, 4];
 
 export const BADGE_SIZES = {
