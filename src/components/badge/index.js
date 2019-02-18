@@ -1,25 +1,25 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Text, StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
-import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
+import {BorderRadiuses, Colors, ThemeManager, Typography} from '../../style';
 import View from '../view';
 
-const SIZE_PIMPLE_SMALL = 6;
-const SIZE_PIMPLE_BIG = 10;
-const SIZE_PIMPLE_HUGE = 14;
-const DEFAULT_HEIGHT_SMALL = 16;
-const DEFAULT_HEIGHT = 20;
+// const SIZE_PIMPLE_SMALL = 6;
+// const SIZE_PIMPLE_BIG = 10;
+// const SIZE_PIMPLE_HUGE = 14;
+// const DEFAULT_HEIGHT_SMALL = 16;
+// const DEFAULT_HEIGHT = 20;
 const LABEL_FORMATTER_VALUES = [1, 2, 3, 4];
 
 export const BADGE_SIZES = {
-  default: DEFAULT_HEIGHT,
-  small: DEFAULT_HEIGHT_SMALL,
-  pimpleSmall: SIZE_PIMPLE_SMALL,
-  pimpleBig: SIZE_PIMPLE_BIG,
-  pimpleHuge: SIZE_PIMPLE_HUGE,
+  pimpleSmall: 6,
+  pimpleBig: 10,
+  pimpleHuge: 14,
+  small: 16,
+  default: 20,
 };
 
 /**
@@ -31,7 +31,6 @@ export const BADGE_SIZES = {
  */
 export default class Badge extends BaseComponent {
   static displayName = 'Badge';
-  static badgeSizes = BADGE_SIZES;
   static propTypes = {
     /**
      * Text to show inside the badge.
@@ -45,7 +44,7 @@ export default class Badge extends BaseComponent {
     /**
      * the badge size (default, small)
      */
-    size: PropTypes.oneOf(['default', 'small', 'pimpleSmall', 'pimpleBig', 'pimpleHuge']),
+    size: PropTypes.oneOf(Object.keys(BADGE_SIZES)),
     /**
      * width of border around the badge
      */
@@ -95,7 +94,7 @@ export default class Badge extends BaseComponent {
   getBadgeSizeStyle() {
     const {borderWidth, size} = this.props;
     const label = this.getFormattedLabel();
-    const badgeHeight = this.isSmallBadge() ? DEFAULT_HEIGHT_SMALL : DEFAULT_HEIGHT;
+    const badgeHeight = this.isSmallBadge() ? BADGE_SIZES.small : BADGE_SIZES.default;
 
     const style = {
       paddingHorizontal: this.isSmallBadge() ? 4 : 6,
@@ -104,26 +103,17 @@ export default class Badge extends BaseComponent {
     };
 
     if (label === undefined) {
-      switch (size) {
-        case 'pimpleHuge':
-          style.minWidth = SIZE_PIMPLE_HUGE;
-          style.height = SIZE_PIMPLE_HUGE;
-          style.paddingHorizontal = 0;
-          break;
-        case 'pimpleBig':
-          style.minWidth = SIZE_PIMPLE_BIG;
-          style.height = SIZE_PIMPLE_BIG;
-          style.paddingHorizontal = 0;
-          break;
-        case 'pimpleSmall':
-        default:
-          style.minWidth = SIZE_PIMPLE_SMALL;
-          style.height = SIZE_PIMPLE_SMALL;
-          style.paddingHorizontal = 0;
-          break;
+      const pimpleSizes = ['pimpleSmall', 'pimpleBig', 'pimpleHuge'];
+      if (pimpleSizes.includes(size)) {
+        style.minWidth = BADGE_SIZES[size];
+        style.height = BADGE_SIZES[size];
+        style.paddingHorizontal = 0;
+      } else {
+        style.minWidth = BADGE_SIZES.pimpleSmall;
+        style.height = BADGE_SIZES.pimpleSmall;
+        style.paddingHorizontal = 0;
       }
     }
-
     if (borderWidth) {
       style.minWidth += borderWidth * 2;
       style.height += borderWidth * 2;

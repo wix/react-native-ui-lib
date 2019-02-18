@@ -5,7 +5,7 @@ import {StyleSheet, ViewPropTypes, TouchableOpacity} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
-import Badge from '../badge';
+import Badge, {BADGE_SIZES} from '../badge';
 import View from '../view';
 import Text from '../text';
 import Image from '../image';
@@ -53,7 +53,7 @@ export default class Avatar extends BaseComponent {
     /**
      * Badge location on Avatar
      */
-    badgePosition: PropTypes.oneOf(Object.keys(BADGE_POSITIONS)),
+    badgePosition: PropTypes.oneOf(Object.values(BADGE_POSITIONS)),
     /**
      * Badge props passed down to Badge component
      */
@@ -168,14 +168,10 @@ export default class Avatar extends BaseComponent {
 
   getBadgePosition() {
     const {size, badgePosition} = this.props;
-
-    const badgeSize = this.getBadgeSize();
-    const badgeSizeNum = Badge.badgeSizes[badgeSize];
-    const badgeBorderWidth = this.getBadgeBorderWidth();
     const radius = size / 2;
     const x = Math.sqrt(radius ** 2 * 2);
     const y = x - radius;
-    const shift = Math.sqrt(y ** 2 / 2) - (badgeSizeNum + badgeBorderWidth * 2) / 2;
+    const shift = Math.sqrt(y ** 2 / 2) - (BADGE_SIZES[this.getBadgeSize()] + this.getBadgeBorderWidth() * 2) / 2;
 
     let badgeAlignment = {};
     switch (badgePosition) {
