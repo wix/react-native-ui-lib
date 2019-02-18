@@ -23,7 +23,7 @@ export const BADGE_POSITIONS = {
   BOTTOM_RIGHT: 'BOTTOM_RIGHT',
 };
 
-const DEFAULT_BADGE_SIZE = Badge.badgeSizes.pimpleBig;
+const DEFAULT_BADGE_SIZE = 'pimpleBig';
 const DEFAULT_BADGE_POSITION = BADGE_POSITIONS.TOP_RIGHT;
 const DEFAULT_BADGE_BORDER_WIDTH = 1.5;
 const DEFAULT_BADGE_BORDER_COLOR = Colors.white;
@@ -164,14 +164,18 @@ export default class Avatar extends BaseComponent {
 
   getBadgeBorderWidth = () => _.get(this.props, 'badgeProps.borderWidth', DEFAULT_BADGE_BORDER_WIDTH);
 
+  getBadgeSize = () => _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
+
   getBadgePosition() {
-    const {size, badgeProps, badgePosition} = this.props;
-    const badgeSize = Badge.badgeSizes[badgeProps.size];
+    const {size, badgePosition} = this.props;
+
+    const badgeSize = this.getBadgeSize();
+    const badgeSizeNum = Badge.badgeSizes[badgeSize];
     const badgeBorderWidth = this.getBadgeBorderWidth();
     const radius = size / 2;
     const x = Math.sqrt(radius ** 2 * 2);
     const y = x - radius;
-    const shift = Math.sqrt(y ** 2 / 2) - (badgeSize + badgeBorderWidth * 2) / 2;
+    const shift = Math.sqrt(y ** 2 / 2) - (badgeSizeNum + badgeBorderWidth * 2) / 2;
 
     let badgeAlignment = {};
     switch (badgePosition) {
@@ -198,7 +202,7 @@ export default class Avatar extends BaseComponent {
         borderWidth={DEFAULT_BADGE_BORDER_WIDTH}
         borderColor={DEFAULT_BADGE_BORDER_COLOR}
         containerStyle={this.getBadgePosition()}
-        size={DEFAULT_BADGE_SIZE}
+        size={this.getBadgeSize()}
         {...badgeProps}
         label={undefined}
         testID={`${testID}.onlineBadge`}
