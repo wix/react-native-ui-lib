@@ -6,6 +6,7 @@ import tagIcon from '../../assets/icons/tags.png';
 import contacts from '../../data/conversations';
 import dropdown from '../../assets/icons/chevronDown.png';
 
+
 const options = [
   {label: 'JavaScript', value: 'js'},
   {label: 'Java', value: 'java'},
@@ -54,13 +55,13 @@ export default class FormScreen extends Component {
 
   render() {
     return (
-      <ScrollView keyboardShouldPersistTaps='always'>
+      <ScrollView keyboardShouldPersistTaps="always">
         <View style={styles.container}>
-          <TagsInput containerStyle={{marginBottom: 20}} placeholder='Enter Tags' tags={this.state.tags2} />
+          <TagsInput containerStyle={{marginBottom: 20}} placeholder="Enter Tags" tags={this.state.tags2}/>
 
           <TagsInput
             containerStyle={{marginBottom: 20}}
-            placeholder='with disableTagAdding disableTagRemoval'
+            placeholder="with disableTagAdding disableTagRemoval"
             tags={this.state.tags3}
             disableTagRemoval
             disableTagAdding
@@ -69,7 +70,7 @@ export default class FormScreen extends Component {
           <TagsInput
             ref={r => (this.customTagsInput = r)}
             containerStyle={{marginBottom: 20}}
-            placeholder='With custom tags'
+            placeholder="With custom tags"
             tags={this.state.tags}
             renderTag={this.renderCustomTag}
             onCreateTag={value => ({label: value})}
@@ -87,7 +88,7 @@ export default class FormScreen extends Component {
           />
 
           <Picker
-            placeholder='Pick a single language'
+            placeholder="Pick a single language"
             value={this.state.language}
             enableModalBlur={false}
             onChange={item => this.setState({language: item})}
@@ -99,24 +100,24 @@ export default class FormScreen extends Component {
             searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.dark50}}
             // onSearchChange={value => console.warn('value', value)}
           >
-            {_.map(options, option => <Picker.Item key={option.value} value={option} disabled={option.disabled} />)}
+            {_.map(options, option => <Picker.Item key={option.value} value={option} disabled={option.disabled}/>)}
           </Picker>
 
           <View marginT-20>
             <Picker
-              placeholder='Pick multiple Languages'
+              placeholder="Pick multiple Languages"
               value={this.state.languages}
               onChange={items => this.setState({languages: items})}
               mode={Picker.modes.MULTI}
               rightIconSource={dropdown}
             >
-              {_.map(options, option => <Picker.Item key={option.value} value={option} disabled={option.disabled} />)}
+              {_.map(options, option => <Picker.Item key={option.value} value={option} disabled={option.disabled}/>)}
             </Picker>
           </View>
 
           <Picker
-            title='Native Picker'
-            placeholder='Pick a Language'
+            title="Native Picker"
+            placeholder="Pick a Language"
             useNativePicker
             value={this.state.nativePickerValue}
             onChange={nativePickerValue => this.setState({nativePickerValue})}
@@ -144,7 +145,7 @@ export default class FormScreen extends Component {
             renderPicker={({label}) => {
               return (
                 <View row center>
-                  <Image style={{marginRight: 1, height: 16, resizeMode: 'contain'}} source={tagIcon} />
+                  <Image style={{marginRight: 1, height: 16, resizeMode: 'contain'}} source={tagIcon}/>
                   <Text dark10 text80>
                     {label} Posts
                   </Text>
@@ -152,7 +153,7 @@ export default class FormScreen extends Component {
               );
             }}
           >
-            {_.map(filters, filter => <Picker.Item key={filter.value} value={filter} />)}
+            {_.map(filters, filter => <Picker.Item key={filter.value} value={filter}/>)}
           </Picker>
 
           <Text marginT-20 marginB-10 text70 dark60>
@@ -165,7 +166,7 @@ export default class FormScreen extends Component {
             renderPicker={(contact) => {
               return (
                 <View row center>
-                  <Avatar size={30} imageSource={{uri: contact.thumbnail}} />
+                  <Avatar size={30} imageSource={{uri: contact.thumbnail}}/>
                   <Text text70 marginL-10>
                     {contact.name}
                   </Text>
@@ -190,12 +191,12 @@ export default class FormScreen extends Component {
                     spread
                   >
                     <View row centerV>
-                      <Avatar size={45} imageSource={{uri: item.thumbnail}} />
+                      <Avatar size={45} imageSource={{uri: item.thumbnail}}/>
                       <Text marginL-10 text70 dark10>
                         {item.name}
                       </Text>
                     </View>
-                    {props.isSelected && <Image source={Assets.icons.check} />}
+                    {props.isSelected && <Image source={Assets.icons.check}/>}
                   </View>
                 )}
                 getItemLabel={item => item.name}
