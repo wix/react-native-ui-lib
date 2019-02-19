@@ -5,12 +5,11 @@ import {StyleSheet, ViewPropTypes, TouchableOpacity} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
+import Badge, {BADGE_SIZES} from '../badge';
 import View from '../view';
 import Text from '../text';
 import Image from '../image';
 import AnimatedImage from '../../animations/animatedImage';
-
-const BADGE_SIZE = 13.5;
 
 export const STATUS_MODES = {
   ONLINE: 'ONLINE',
@@ -18,6 +17,16 @@ export const STATUS_MODES = {
   AWAY: 'AWAY',
   NONE: 'NONE',
 };
+
+export const BADGE_POSITIONS = {
+  TOP_RIGHT: 'TOP_RIGHT',
+  BOTTOM_RIGHT: 'BOTTOM_RIGHT',
+};
+
+const DEFAULT_BADGE_SIZE = 'pimpleBig';
+const DEFAULT_BADGE_POSITION = BADGE_POSITIONS.TOP_RIGHT;
+const DEFAULT_BADGE_BORDER_WIDTH = 1.5;
+const DEFAULT_BADGE_BORDER_COLOR = Colors.white;
 
 /**
  * @description: Avatar component for displaying user profile images
@@ -30,7 +39,9 @@ export const STATUS_MODES = {
 export default class Avatar extends BaseComponent {
   static displayName = 'Avatar';
   static modes = STATUS_MODES;
+  static badgePosition = BADGE_POSITIONS;
   static propTypes = {
+
     /**
      * Adds fade in animation when Avatar image loads
      */
@@ -39,6 +50,14 @@ export default class Avatar extends BaseComponent {
      * Background color for Avatar
      */
     backgroundColor: PropTypes.string,
+    /**
+     * Badge location on Avatar
+     */
+    badgePosition: PropTypes.oneOf(Object.values(BADGE_POSITIONS)),
+    /**
+     * Badge props passed down to Badge component
+     */
+    badgeProps: PropTypes.object,
     /**
      * Additional spacing styles for the container
      */
@@ -115,6 +134,7 @@ export default class Avatar extends BaseComponent {
     size: 50,
     labelColor: Colors.dark10,
     status: STATUS_MODES.NONE,
+    badgePosition: DEFAULT_BADGE_POSITION,
   };
 
   generateStyles() {
@@ -142,25 +162,47 @@ export default class Avatar extends BaseComponent {
     return badgeColor;
   }
 
+  getBadgeBorderWidth = () => _.get(this.props, 'badgeProps.borderWidth', DEFAULT_BADGE_BORDER_WIDTH);
+
+  getBadgeSize = () => _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
+
   getBadgePosition() {
-    const {size} = this.props;
+    const {size, badgePosition} = this.props;
     const radius = size / 2;
     const x = Math.sqrt(radius ** 2 * 2);
     const y = x - radius;
-    const shift = Math.sqrt(y ** 2 / 2) - BADGE_SIZE / 2;
-    return {top: shift, right: shift};
+    const shift = Math.sqrt(y ** 2 / 2) - (BADGE_SIZES[this.getBadgeSize()] + this.getBadgeBorderWidth() * 2) / 2;
+
+    let badgeAlignment = {};
+    switch (badgePosition) {
+      case BADGE_POSITIONS.BOTTOM_RIGHT:
+        badgeAlignment = {bottom: shift, right: shift};
+        break;
+      case BADGE_POSITIONS.TOP_RIGHT:
+      default:
+        badgeAlignment = {top: shift, right: shift};
+        break;
+    }
+    return {position: 'absolute', ...badgeAlignment};
   }
 
   renderBadge() {
-    const {testID, isOnline, status} = this.props;
+    const {testID, isOnline, status, badgeProps} = this.props;
     const badgeColor = this.getBadgeColor(isOnline, status);
     if (badgeColor === null) {
       return false;
     }
     return (
-      <View style={[this.styles.onlineBadge, this.getBadgePosition()]} testID={`${testID}.onlineBadge`}>
-        <View style={[this.styles.onlineBadgeInner, {backgroundColor: badgeColor}]} />
-      </View>
+      <Badge
+        backgroundColor={badgeColor}
+        borderWidth={DEFAULT_BADGE_BORDER_WIDTH}
+        borderColor={DEFAULT_BADGE_BORDER_COLOR}
+        containerStyle={this.getBadgePosition()}
+        size={this.getBadgeSize()}
+        {...badgeProps}
+        label={undefined}
+        testID={`${testID}.onlineBadge`}
+      />
     );
   }
 
@@ -271,19 +313,6 @@ function createStyles({size, labelColor}) {
       width: size,
       height: size,
       borderRadius,
-    },
-    onlineBadge: {
-      height: BADGE_SIZE,
-      width: BADGE_SIZE,
-      padding: 1.5,
-      borderRadius: 999,
-      backgroundColor: Colors.white,
-      position: 'absolute',
-    },
-    onlineBadgeInner: {
-      flex: 1,
-      borderRadius: 999,
-      // backgroundColor: Colors.green30,
     },
     fixAbsolutePosition: {
       position: undefined,
