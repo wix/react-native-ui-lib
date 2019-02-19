@@ -90,9 +90,9 @@ class Colors {
     const hsl = Color(color).hsl();
     const lightness = Math.round(hsl.color[2]);
     
-    const ls = [lightness];
+    const ls = [hsl.color[2]];
     let l = lightness - 10;
-    while (l > 20) {
+    while (l >= 20) {
       ls.unshift(l);
       l -= 10;
     }
