@@ -109,7 +109,8 @@ class Colors {
       tints.push(tint);
     });
 
-    return tints;
+    const sliced = tints.slice(0, 8);
+    return sliced;
   }
 }
 
