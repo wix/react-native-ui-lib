@@ -6,7 +6,7 @@ import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
-import {RadioGroupContext} from './RadioGroup';
+import asRadioGroupChild from './asRadioGroupChild';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
@@ -54,22 +54,21 @@ class RadioButton extends BaseComponent {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  onPress = context => {
+  onPress = () => {
     const {value, disabled} = this.props;
     if (!disabled) {
-      _.invoke(context, 'onValueChange', value);
-      _.invoke(this.props, 'onPress', this.isSelected(this.props, context));
+      _.invoke(this.props, 'onValueChange', value);
+      _.invoke(this.props, 'onPress', this.isSelected());
     }
   };
 
-  isSelected(props = this.props, context) {
-    const {value, selected} = props;
+  isSelected() {
+    const {value, selectedValue, selected} = this.props;
     // Individual Radio Button
     if (_.isUndefined(value)) {
       return Boolean(selected);
     }
     // Grouped Radio Button
-    const {value: selectedValue} = context;
     return value === selectedValue;
   }
 
@@ -105,18 +104,14 @@ class RadioButton extends BaseComponent {
     return style;
   }
 
-  renderRadioButton = context => {
-    const {style, onPress, ...others} = this.getThemeProps();
-    const Container = onPress || context.onValueChange ? TouchableOpacity : View;
+  render() {
+    const {style, onPress, onValueChange, ...others} = this.getThemeProps();
+    const Container = onPress || onValueChange ? TouchableOpacity : View;
     return (
-      <Container activeOpacity={1} {...others} style={this.getContainerStyle()} onPress={() => this.onPress(context)}>
-        {this.isSelected(this.props, context) && <View style={this.getSelectedStyle()} />}
+      <Container activeOpacity={1} {...others} style={this.getContainerStyle()} onPress={this.onPress}>
+        {this.isSelected() && <View style={this.getSelectedStyle()} />}
       </Container>
     );
-  };
-
-  render() {
-    return <RadioGroupContext.Consumer>{this.renderRadioButton}</RadioGroupContext.Consumer>;
   }
 }
 
@@ -138,4 +133,4 @@ function createStyles({size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, col
   });
 }
 
-export default RadioButton;
+export default asRadioGroupChild(RadioButton);
