@@ -134,7 +134,6 @@ export default class Avatar extends BaseComponent {
     labelColor: Colors.dark10,
     status: STATUS_MODES.NONE,
     badgePosition: DEFAULT_BADGE_POSITION,
-    badgeProps: {borderWidth: DEFAULT_BADGE_BORDER_WIDTH},
   };
 
   generateStyles() {
@@ -161,24 +160,17 @@ export default class Avatar extends BaseComponent {
     const badgeColor = onlineOverride ? Colors.green30 : this.getStatusBadgeColor(status);
     return badgeColor;
   }
-
-  getBorderWidthAddition() {
-    const {badgeProps} = this.props;
-    if (badgeProps.borderWidth === undefined) {
-      return 0;
-    } else {
-      return badgeProps.borderWidth;
-    }
-  }
-
+  
   getBadgeSize = () => _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
+  
+  getBadgeBorderWidth = () => _.get(this.props.badgeProps, 'borderWidth', DEFAULT_BADGE_BORDER_WIDTH);
 
   getBadgePosition() {
     const {size, badgePosition} = this.props;
     const radius = size / 2;
     const x = Math.sqrt(radius ** 2 * 2);
     const y = x - radius;
-    const shift = Math.sqrt(y ** 2 / 2) - (BADGE_SIZES[this.getBadgeSize()] + this.getBorderWidthAddition() * 2) / 2;
+    const shift = Math.sqrt(y ** 2 / 2) - (BADGE_SIZES[this.getBadgeSize()] + this.getBadgeBorderWidth() * 2) / 2;
 
     let badgeAlignment = {};
     switch (badgePosition) {
@@ -202,11 +194,11 @@ export default class Avatar extends BaseComponent {
     return (
       <Badge
         backgroundColor={badgeColor}
-        borderWidth={DEFAULT_BADGE_BORDER_WIDTH}
         borderColor={DEFAULT_BADGE_BORDER_COLOR}
         containerStyle={this.getBadgePosition()}
         size={this.getBadgeSize()}
         {...badgeProps}
+        borderWidth={this.getBadgeBorderWidth()}
         label={undefined}
         testID={`${testID}.onlineBadge`}
       />
