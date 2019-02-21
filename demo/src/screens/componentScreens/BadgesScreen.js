@@ -25,10 +25,7 @@ export default class BadgesScreen extends Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <Text text50 row center marginB-15>
-          {' '}
-          Badges{' '}
-        </Text>
+        <Text text50 row center marginB-15>Badges</Text>
         <View row center>
           <View center marginR-10 marginL-10>
             <Badge label={'10'} backgroundColor={Colors.blue30} />
@@ -96,9 +93,7 @@ export default class BadgesScreen extends Component {
         </View>
         <Text center>Press buttons to change red badge value by 1.{'\n'}Long press to change it by 10.</Text>
 
-        <Text text50 row center marginT-45 marginB-10>
-          Pimple Badges
-        </Text>
+        <Text text50 row center marginT-45>Pimple Badges</Text>
         <View row>
           <View
             center
