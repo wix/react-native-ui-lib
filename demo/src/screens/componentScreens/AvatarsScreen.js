@@ -46,7 +46,7 @@ const examples = [
       uri: 'https://randomuser.me/api/portraits/women/24.jpg',
     },
     isOnline: true,
-    badgeProps: {size: 'pimpleHuge'},
+    badgeProps: {size: 'pimpleHuge', borderColor: 'red'},
     badgePosition: 'BOTTOM_RIGHT',
   },
   {
