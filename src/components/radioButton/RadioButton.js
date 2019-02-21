@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Animated} from 'react-native';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
@@ -48,7 +48,61 @@ class RadioButton extends BaseComponent {
     borderRadius: PropTypes.number,
   };
 
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      opacityAnimationValue: new Animated.Value(0),
+      scaleAnimationValue: new Animated.Value(0.8)
+    };
+    
+    this.selected = undefined;
+    this.selectedPrevState = undefined;
+  }
+
+  componentDidMount() {
+    this.animate();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!this.props.selected) { // will always be radio group
+      if (this.selectedPrevState && !this.selected) { // unselect
+        this.animate();
+      }
+    } else if (prevProps.selected !== this.props.selected) { // will always be individual
+      this.selected = this.props.selected;
+      this.animate();
+    }
+  }
+
+  animate() {
+    const ANIMATION_TIME = 150;
+    const ANIMATION_DELAY = 60;
+    if (this.selected) {
+      Animated.parallel([
+        Animated.timing(this.state.opacityAnimationValue, {
+          toValue: 1,
+          duration: ANIMATION_TIME,
+        }),
+        Animated.timing(this.state.scaleAnimationValue, {
+          toValue: 1,
+          delay: ANIMATION_DELAY,
+          duration: ANIMATION_TIME,
+        }),
+      ]).start();
+    } else {
+      Animated.parallel([
+        Animated.timing(this.state.scaleAnimationValue, {
+          toValue: 0.8,
+          duration: ANIMATION_TIME,
+        }),
+        Animated.timing(this.state.opacityAnimationValue, {
+          toValue: 0,
+          delay: ANIMATION_DELAY,
+          duration: ANIMATION_TIME,
+        }),
+      ]).start();
+    }
+  }
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
@@ -58,7 +112,14 @@ class RadioButton extends BaseComponent {
     const {value, disabled} = this.props;
     if (!disabled) {
       _.invoke(context, 'onValueChange', value);
-      _.invoke(this.props, 'onPress', this.isSelected(this.props, context));
+      const selected = this.isSelected(this.props, context);
+      _.invoke(this.props, 'onPress', selected);
+      if (value) { // so individual is not called here as well
+        if (!selected) {
+          this.selected = !selected;
+          this.animate();
+        }
+      }
     }
   };
 
@@ -108,9 +169,18 @@ class RadioButton extends BaseComponent {
   renderRadioButton = context => {
     const {style, onPress, ...others} = this.getThemeProps();
     const Container = onPress || context.onValueChange ? TouchableOpacity : View;
+    this.selectedPrevState = this.selected;
+    this.selected = this.isSelected(this.props, context);
     return (
       <Container activeOpacity={1} {...others} style={this.getContainerStyle()} onPress={() => this.onPress(context)}>
-        {this.isSelected(this.props, context) && <View style={this.getSelectedStyle()} />}
+        {<Animated.View
+          style={[
+            this.getSelectedStyle(),
+            {opacity: this.state.opacityAnimationValue},
+            {scaleX: this.state.scaleAnimationValue},
+            {scaleY: this.state.scaleAnimationValue}
+          ]}
+        />}
       </Container>
     );
   };
