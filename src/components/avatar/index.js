@@ -41,7 +41,6 @@ export default class Avatar extends BaseComponent {
   static modes = STATUS_MODES;
   static badgePosition = BADGE_POSITIONS;
   static propTypes = {
-
     /**
      * Adds fade in animation when Avatar image loads
      */
@@ -161,10 +160,10 @@ export default class Avatar extends BaseComponent {
     const badgeColor = onlineOverride ? Colors.green30 : this.getStatusBadgeColor(status);
     return badgeColor;
   }
-
-  getBadgeBorderWidth = () => _.get(this.props, 'badgeProps.borderWidth', DEFAULT_BADGE_BORDER_WIDTH);
-
+  
   getBadgeSize = () => _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
+  
+  getBadgeBorderWidth = () => _.get(this.props, 'badgeProps.borderWidth', DEFAULT_BADGE_BORDER_WIDTH);
 
   getBadgePosition() {
     const {size, badgePosition} = this.props;
@@ -195,11 +194,11 @@ export default class Avatar extends BaseComponent {
     return (
       <Badge
         backgroundColor={badgeColor}
-        borderWidth={DEFAULT_BADGE_BORDER_WIDTH}
         borderColor={DEFAULT_BADGE_BORDER_COLOR}
-        containerStyle={this.getBadgePosition()}
         size={this.getBadgeSize()}
         {...badgeProps}
+        borderWidth={this.getBadgeBorderWidth()}
+        containerStyle={this.getBadgePosition()}
         label={undefined}
         testID={`${testID}.onlineBadge`}
       />

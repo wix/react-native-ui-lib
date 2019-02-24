@@ -39,14 +39,14 @@ const examples = [
     imageSource: {uri: 'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg'},
   },
   {
-    title: 'Big pimple (bottom right)',
+    title: 'Big pimple',
     size: 70,
     backgroundColor: 'red',
     imageSource: {
       uri: 'https://randomuser.me/api/portraits/women/24.jpg',
     },
     isOnline: true,
-    badgeProps: {size: 'pimpleHuge'},
+    badgeProps: {size: 'pimpleHuge', borderWidth: 0},
     badgePosition: 'BOTTOM_RIGHT',
   },
   {
@@ -98,7 +98,7 @@ export default class AvatarsScreen extends Component {
       <ScrollView contentContainerStyle={styles.container}>
         {_.map(examples, (example, i) => (
           <View key={i} style={styles.section}>
-            <Text style={{...Typography.text70}}>{example.title}</Text>
+            <Text style={{...Typography.text80}}>{example.title}</Text>
             <Avatar containerStyle={{marginVertical: 5}} {...example} onPress={() => this.onAvatarPress(example)} />
           </View>
         ))}
