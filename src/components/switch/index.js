@@ -84,7 +84,7 @@ class Switch extends BaseComponent {
     Animated.timing(thumbPosition, {
       toValue: value ? 1 : 0,
       duration: 200,
-      easing: Easing.bezier(0.77, 0, 0.175, 1),
+      easing: Easing.bezier(0.77, 0.0, 0.175, 1.0),
       useNativeDriver: true,
     }).start();
   }
