@@ -64,11 +64,19 @@ class RadioButton extends BaseComponent {
   }
 
   componentDidUpdate(prevProps) {
+    console.warn(`componentDidUpdate`);
+
     if (!this.props.selected) { // will always be radio group
+      // console.warn(`group: ${this.props.selected}`);
+
       if (this.selectedPrevState && !this.selected) { // unselect
+        // console.warn(`unselect: ${this.props.selected}`);
+
         this.animate();
       }
     } else if (prevProps.selected !== this.props.selected) { // will always be individual
+      // console.warn(`individual: ${this.props.selected}`);
+
       this.selected = this.props.selected;
       this.animate();
     }
@@ -113,6 +121,7 @@ class RadioButton extends BaseComponent {
     if (!disabled) {
       _.invoke(context, 'onValueChange', value);
       const selected = this.isSelected(this.props, context);
+      // console.warn(`this.selected: ${this.selected}, selected: ${selected}`);
       _.invoke(this.props, 'onPress', selected);
       if (value) { // so individual is not called here as well
         if (!selected) {
@@ -171,6 +180,7 @@ class RadioButton extends BaseComponent {
     const Container = onPress || context.onValueChange ? TouchableOpacity : View;
     this.selectedPrevState = this.selected;
     this.selected = this.isSelected(this.props, context);
+    // console.warn(`render this.selected: ${this.selected}`);
     return (
       <Container activeOpacity={1} {...others} style={this.getContainerStyle()} onPress={() => this.onPress(context)}>
         {<Animated.View
