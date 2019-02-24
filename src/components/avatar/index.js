@@ -195,9 +195,9 @@ export default class Avatar extends BaseComponent {
       <Badge
         backgroundColor={badgeColor}
         borderColor={DEFAULT_BADGE_BORDER_COLOR}
-        containerStyle={this.getBadgePosition()}
         size={this.getBadgeSize()}
         {...badgeProps}
+        containerStyle={this.getBadgePosition()}
         borderWidth={this.getBadgeBorderWidth()}
         label={undefined}
         testID={`${testID}.onlineBadge`}
