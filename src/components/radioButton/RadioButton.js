@@ -64,7 +64,7 @@ class RadioButton extends BaseComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (!this.props.selected) { // will always be radio group
+    if (this.props.selected === undefined) { // will always be radio group
       if (this.selectedPrevState && !this.selected) { // unselect
         this.animate();
       }
@@ -75,30 +75,30 @@ class RadioButton extends BaseComponent {
   }
 
   animate() {
-    const ANIMATION_TIME = 150;
-    const ANIMATION_DELAY = 60;
+    const animationTime = 150;
+    const animationDelay = 60;
     if (this.selected) {
       Animated.parallel([
         Animated.timing(this.state.opacityAnimationValue, {
           toValue: 1,
-          duration: ANIMATION_TIME,
+          duration: animationTime,
         }),
         Animated.timing(this.state.scaleAnimationValue, {
           toValue: 1,
-          delay: ANIMATION_DELAY,
-          duration: ANIMATION_TIME,
+          delay: animationDelay,
+          duration: animationTime,
         }),
       ]).start();
     } else {
       Animated.parallel([
         Animated.timing(this.state.scaleAnimationValue, {
           toValue: 0.8,
-          duration: ANIMATION_TIME,
+          duration: animationTime,
         }),
         Animated.timing(this.state.opacityAnimationValue, {
           toValue: 0,
-          delay: ANIMATION_DELAY,
-          duration: ANIMATION_TIME,
+          delay: animationDelay,
+          duration: animationTime,
         }),
       ]).start();
     }
@@ -112,11 +112,10 @@ class RadioButton extends BaseComponent {
     const {value, disabled} = this.props;
     if (!disabled) {
       _.invoke(context, 'onValueChange', value);
-      const selected = this.isSelected(this.props, context);
-      _.invoke(this.props, 'onPress', selected);
+      _.invoke(this.props, 'onPress', this.selected);
       if (value) { // so individual is not called here as well
-        if (!selected) {
-          this.selected = !selected;
+        if (!this.selected) {
+          this.selected = !this.selected;
           this.animate();
         }
       }
