@@ -59,7 +59,17 @@ export default class RadioButtonScreen extends Component {
               Use it without RadioGroup
             </Text>
 
-            <TouchableOpacity activeOpacity={1} onPress={() => this.setState({individualValue: !this.state.individualValue})}>
+            <View row centerV marginB-10>
+              <RadioButton
+                selected={this.state.individualValue2}
+                onPress={() => this.setState({individualValue2: !this.state.individualValue2})}
+              />
+              <Text marginL-10>The text is not clickable</Text>
+            </View>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => this.setState({individualValue: !this.state.individualValue})}
+            >
               <View row centerV>
                 <RadioButton selected={this.state.individualValue} />
                 <Text marginL-10>Individual Radio Button</Text>
