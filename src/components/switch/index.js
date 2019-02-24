@@ -1,11 +1,10 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Animated} from 'react-native';
+import {StyleSheet, Animated, Easing} from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
-
 
 const INNER_PADDING = 2;
 const DEFAULT_WIDTH = 42;
@@ -81,16 +80,18 @@ class Switch extends BaseComponent {
 
   toggle(value) {
     const {thumbPosition} = this.state;
-    
+
     Animated.timing(thumbPosition, {
       toValue: value ? 1 : 0,
-      duration: 100,
+      duration: 200,
+      easing: Easing.bezier(0.77, 0.0, 0.175, 1.0),
+      useNativeDriver: true,
     }).start();
   }
 
   onPress = () => {
     const {disabled} = this.getThemeProps();
-    
+
     if (!disabled) {
       _.invoke(this.props, 'onValueChange', !this.props.value);
       this.toggle(!this.props.value);
@@ -101,7 +102,7 @@ class Switch extends BaseComponent {
     const props = this.getThemeProps();
     const width = props.width || DEFAULT_WIDTH;
     const thumbSize = props.thumbSize || DEFAULT_THUMB_SIZE;
-    const position = width - ((2 * INNER_PADDING) + thumbSize);
+    const position = width - (2 * INNER_PADDING + thumbSize);
     return position;
   }
 
