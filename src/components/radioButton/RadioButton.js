@@ -133,9 +133,9 @@ class RadioButton extends BaseComponent {
     return value === selectedValue;
   }
 
-  getContainerStyle() {
+  getCircleStyle() {
     const {color, size, borderRadius, style: propsStyle, disabled} = this.getThemeProps();
-    const style = [this.styles.container];
+    const style = [this.styles.circle];
 
     if (size) {
       style.push({width: size, height: size});
@@ -151,9 +151,9 @@ class RadioButton extends BaseComponent {
     return style;
   }
 
-  getSelectedStyle() {
+  getInnerCircleStyle() {
     const {color, borderRadius, disabled} = this.getThemeProps();
-    const style = [this.styles.selectedIndicator];
+    const style = [this.styles.innerCircle];
 
     if (borderRadius) {
       style.push({borderRadius});
@@ -171,15 +171,15 @@ class RadioButton extends BaseComponent {
     this.selectedPrevState = this.selected;
     this.selected = this.isSelected(this.props, context);
     return (
-      <Container activeOpacity={1} {...others} style={this.getContainerStyle()} onPress={() => this.onPress(context)}>
-        {<Animated.View
+      <Container activeOpacity={1} {...others} style={this.getCircleStyle()} onPress={() => this.onPress(context)}>
+        <Animated.View
           style={[
-            this.getSelectedStyle(),
+            this.getInnerCircleStyle(),
             {opacity: this.state.opacityAnimationValue},
             {scaleX: this.state.scaleAnimationValue},
             {scaleY: this.state.scaleAnimationValue}
           ]}
-        />}
+        />
       </Container>
     );
   };
@@ -191,7 +191,7 @@ class RadioButton extends BaseComponent {
 
 function createStyles({size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, color = DEFAULT_COLOR, disabled}) {
   return StyleSheet.create({
-    container: {
+    circle: {
       borderWidth: 2,
       borderColor: disabled ? Colors.dark70 : color,
       width: size,
@@ -199,7 +199,7 @@ function createStyles({size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, col
       borderRadius,
       padding: 3,
     },
-    selectedIndicator: {
+    innerCircle: {
       backgroundColor: disabled ? Colors.dark70 : color,
       flex: 1,
       borderRadius,
