@@ -14,8 +14,7 @@ export default class RadioButtonScreen extends Component {
   renderRadioButton(value, text) {
     return (
       <View row centerV marginB-5>
-        <RadioButton value={value}/>
-        <Text marginL-10>{text}</Text>
+        <RadioButton value={value} label={text}/>
       </View>
     );
   }
@@ -63,16 +62,15 @@ export default class RadioButtonScreen extends Component {
               <RadioButton
                 selected={this.state.individualValue2}
                 onPress={() => this.setState({individualValue2: !this.state.individualValue2})}
+                label="Individual Radio Button"
               />
-              <Text marginL-10>The text is not clickable</Text>
             </View>
             <TouchableOpacity
               activeOpacity={1}
               onPress={() => this.setState({individualValue: !this.state.individualValue})}
             >
               <View row centerV>
-                <RadioButton selected={this.state.individualValue} />
-                <Text marginL-10>Individual Radio Button</Text>
+                <RadioButton selected={this.state.individualValue} label="Individual Radio Button (wrapped)" />
               </View>
             </TouchableOpacity>
             <View row centerV marginT-10>
@@ -80,16 +78,16 @@ export default class RadioButtonScreen extends Component {
                 disabled
                 selected={this.state.disabledValue}
                 onPress={() => this.setState({disabledValue: !this.state.disabledValue})}
+                label="Disabled Radio Button"
               />
-              <Text marginL-10>Disabled Radio Button</Text>
             </View>
             <View row centerV marginT-10>
               <RadioButton
                 disabled
                 selected={this.state.disabledSelectedValue}
                 onPress={() => this.setState({disabledSelectedValue: !this.state.disabledSelectedValue})}
+                label="Disabled Selected Radio Button"
               />
-              <Text marginL-10>Disabled Selected Radio Button</Text>
             </View>
           </View>
           <View>

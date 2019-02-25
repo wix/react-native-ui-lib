@@ -6,6 +6,7 @@ import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
+import Text from '../text';
 import {RadioGroupContext} from './RadioGroup';
 
 const DEFAULT_SIZE = 24;
@@ -46,6 +47,10 @@ class RadioButton extends BaseComponent {
      * The radio button border radius
      */
     borderRadius: PropTypes.number,
+    /**
+     * A label for the radio button description
+     */
+    label: PropTypes.string,
   };
 
   constructor(props) {
@@ -171,15 +176,18 @@ class RadioButton extends BaseComponent {
     this.selectedPrevState = this.selected;
     this.selected = this.isSelected(this.props, context);
     return (
-      <Container activeOpacity={1} {...others} style={this.getCircleStyle()} onPress={() => this.onPress(context)}>
-        <Animated.View
-          style={[
-            this.getInnerCircleStyle(),
-            {opacity: this.state.opacityAnimationValue},
-            {scaleX: this.state.scaleAnimationValue},
-            {scaleY: this.state.scaleAnimationValue}
-          ]}
-        />
+      <Container row centerV activeOpacity={1} {...others} onPress={() => this.onPress(context)}>
+        <View style={this.getCircleStyle()} >
+          <Animated.View
+            style={[
+              this.getInnerCircleStyle(),
+              {opacity: this.state.opacityAnimationValue},
+              {scaleX: this.state.scaleAnimationValue},
+              {scaleY: this.state.scaleAnimationValue}
+            ]}
+          />
+        </View>
+        {this.props.label && (<Text marginL-10 >{this.props.label}</Text>)}
       </Container>
     );
   };
