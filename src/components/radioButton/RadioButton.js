@@ -7,6 +7,7 @@ import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 import Text from '../text';
+import Image from '../image';
 import {RadioGroupContext} from './RadioGroup';
 
 const DEFAULT_SIZE = 24;
@@ -51,6 +52,26 @@ class RadioButton extends BaseComponent {
      * A label for the radio button description
      */
     label: PropTypes.string,
+    /**
+     * Label style
+     */
+    labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * Icon image source
+     */
+    iconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * Icon image style
+     */
+    iconStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * Should the icon be on the right side of the label
+     */
+    iconOnRight: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    iconOnRight: false
   };
 
   constructor(props) {
@@ -170,6 +191,25 @@ class RadioButton extends BaseComponent {
     return style;
   }
 
+  getIconStyle() {
+    const {iconStyle} = this.getThemeProps();
+    const style = [this.styles.image];
+
+    return [style, iconStyle];
+  }
+
+  renderLabel() {
+    return (
+      this.props.label && (<Text marginL-10 style={this.props.labelStyle} >{this.props.label}</Text>)
+    );
+  }
+
+  renderIcon() {
+    return (
+      this.props.iconSource && (<Image style={this.getIconStyle()} source={this.props.iconSource} />)
+    );
+  }
+
   renderRadioButton = context => {
     const {style, onPress, ...others} = this.getThemeProps();
     const Container = onPress || context.onValueChange ? TouchableOpacity : View;
@@ -187,7 +227,9 @@ class RadioButton extends BaseComponent {
             ]}
           />
         </View>
-        {this.props.label && (<Text marginL-10 >{this.props.label}</Text>)}
+        {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
+        {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
+        
       </Container>
     );
   };
@@ -212,6 +254,9 @@ function createStyles({size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, col
       flex: 1,
       borderRadius,
     },
+    image: {
+      marginLeft: 6,
+    }
   });
 }
 
