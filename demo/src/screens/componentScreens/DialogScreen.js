@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Colors, View, Dialog, Button, Text} from 'react-native-ui-lib'; // eslint-disable-line
+
+
 class DialogScreen extends Component {
   state = {
     showDialog1: false,
@@ -8,7 +10,8 @@ class DialogScreen extends Component {
     showDialog4: false,
     showDialog5: false,
     showDialog6: false,
-    showDialog7: false
+    showDialog7: false,
+    showDialog8: false
   };
 
   renderDialogContent(dialogIndex, extraProps) {
@@ -18,14 +21,15 @@ class DialogScreen extends Component {
           <Text text50>This is Dialog</Text>
         </View>
         <View right>
-          <Button text60 label="Done" link onPress={() => this.setState({[`showDialog${dialogIndex}`]: false})} />
+          <Button text60 label="Done" link onPress={() => this.setState({[`showDialog${dialogIndex}`]: false})}/>
         </View>
       </View>
     );
   }
 
   render() {
-    const {showDialog1, showDialog2, showDialog3, showDialog4, showDialog5, showDialog6, showDialog7} = this.state;
+    const {showDialog1, showDialog2, showDialog3, showDialog4, showDialog5, showDialog6, showDialog7, showDialog8} = this.state;
+    
     return (
       <View flex bg-dark80 padding-12 center>
         <Button
@@ -69,6 +73,12 @@ class DialogScreen extends Component {
           label="show dialog with disabled pan gesture"
           onPress={() => this.setState({showDialog7: true})}
         />
+        <Button
+          marginT-20
+          size={'small'}
+          label="show dialog without a modal"
+          onPress={() => this.setState({showDialog8: true})}
+        />
 
         <Dialog
           visible={showDialog1}
@@ -107,7 +117,6 @@ class DialogScreen extends Component {
           top
           centerH
           onDismiss={() => this.setState({showDialog4: false})}
-          // dismissSwipeDirection={Dialog.swipeDirections.UP}
           style={{backgroundColor: Colors.white}}
         >
           {this.renderDialogContent(4, {br0: true})}
@@ -144,6 +153,19 @@ class DialogScreen extends Component {
         >
           {this.renderDialogContent(7)}
         </Dialog>
+        {showDialog8 && 
+        <Dialog
+          visible={showDialog8}
+          height="40%"
+          width="100%"
+          top
+          centerH
+          onDismiss={() => this.setState({showDialog8: false})}
+          style={{backgroundColor: Colors.white}}
+          useModal={false}
+        >
+          {this.renderDialogContent(8)}
+        </Dialog>}
       </View>
     );
   }
