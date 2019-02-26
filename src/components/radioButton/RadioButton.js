@@ -191,13 +191,6 @@ class RadioButton extends BaseComponent {
     return style;
   }
 
-  getIconStyle() {
-    const {iconStyle} = this.getThemeProps();
-    const style = [this.styles.image];
-
-    return [style, iconStyle];
-  }
-
   renderLabel() {
     return (
       this.props.label && (<Text marginL-10 style={this.props.labelStyle} >{this.props.label}</Text>)
@@ -205,8 +198,10 @@ class RadioButton extends BaseComponent {
   }
 
   renderIcon() {
+    const {iconStyle} = this.getThemeProps();
+    const style = [this.styles.image, iconStyle];
     return (
-      this.props.iconSource && (<Image style={this.getIconStyle()} source={this.props.iconSource} />)
+      this.props.iconSource && (<Image style={style} source={this.props.iconSource} />)
     );
   }
 
