@@ -160,9 +160,9 @@ class RadioButton extends BaseComponent {
     return value === selectedValue;
   }
 
-  getCircleStyle() {
+  getRadioButtonOutlineStyle() {
     const {color, size, borderRadius, style: propsStyle, disabled} = this.getThemeProps();
-    const style = [this.styles.circle];
+    const style = [this.styles.radioButtonOutline];
 
     if (size) {
       style.push({width: size, height: size});
@@ -178,9 +178,9 @@ class RadioButton extends BaseComponent {
     return style;
   }
 
-  getInnerCircleStyle() {
+  getRadioButtonInnerStyle() {
     const {color, borderRadius, disabled} = this.getThemeProps();
-    const style = [this.styles.innerCircle];
+    const style = [this.styles.radioButtonInner];
 
     if (borderRadius) {
       style.push({borderRadius});
@@ -213,10 +213,10 @@ class RadioButton extends BaseComponent {
     this.selected = this.isSelected(this.props, context);
     return (
       <Container row centerV activeOpacity={1} {...others} onPress={() => this.onPress(context)}>
-        <View style={this.getCircleStyle()} >
+        <View style={this.getRadioButtonOutlineStyle()} >
           <Animated.View
             style={[
-              this.getInnerCircleStyle(),
+              this.getRadioButtonInnerStyle(),
               {opacity: this.state.opacityAnimationValue},
               {scaleX: this.state.scaleAnimationValue},
               {scaleY: this.state.scaleAnimationValue}
@@ -237,7 +237,7 @@ class RadioButton extends BaseComponent {
 
 function createStyles({size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, color = DEFAULT_COLOR, disabled}) {
   return StyleSheet.create({
-    circle: {
+    radioButtonOutline: {
       borderWidth: 2,
       borderColor: disabled ? Colors.dark70 : color,
       width: size,
@@ -245,7 +245,7 @@ function createStyles({size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, col
       borderRadius,
       padding: 3,
     },
-    innerCircle: {
+    radioButtonInner: {
       backgroundColor: disabled ? Colors.dark70 : color,
       flex: 1,
       borderRadius,
