@@ -2,6 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated} from 'react-native';
+import EASING_FUNCTIONS from 'react-native-animatable/easing';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
@@ -113,6 +114,7 @@ class RadioButton extends BaseComponent {
           toValue: 1,
           delay: animationDelay,
           duration: animationTime,
+          easing: EASING_FUNCTIONS['ease-out-quart'],
         }),
       ]).start();
     } else {
@@ -123,7 +125,6 @@ class RadioButton extends BaseComponent {
         }),
         Animated.timing(this.state.opacityAnimationValue, {
           toValue: 0,
-          delay: animationDelay,
           duration: animationTime,
         }),
       ]).start();
