@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Animated} from 'react-native';
-import EASING_FUNCTIONS from 'react-native-animatable/easing';
+import {StyleSheet, Animated, Easing} from 'react-native';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
@@ -114,7 +113,7 @@ class RadioButton extends BaseComponent {
           toValue: 1,
           delay: animationDelay,
           duration: animationTime,
-          easing: EASING_FUNCTIONS['ease-out-quart'],
+          easing: Easing.bezier(0.165, 0.84, 0.44, 1),
         }),
       ]).start();
     } else {
