@@ -74,10 +74,9 @@ class NativePicker extends BaseComponent {
     return (
       <View>
         <TextField
-          ref={r => (this.input = r)}
-          floatingPlaceholder={false}
-          enableErrors={false}
           {...textInputProps}
+          ref={r => (this.input = r)}
+          enableErrors={false}
           value={label}
           expandable
           renderExpandable={this.renderPickerDialog}
