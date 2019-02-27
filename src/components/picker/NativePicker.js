@@ -7,7 +7,7 @@ import {WheelPicker} from '../../nativeComponents';
 import PickerDialog from './PickerDialog';
 
 
-class Picker extends BaseComponent {
+class NativePicker extends BaseComponent {
   state = {
     selectedValue: this.props.value,
     items: this.extractPickerItems(this.props),
@@ -87,5 +87,5 @@ class Picker extends BaseComponent {
   }
 }
 
-Picker.Item = WheelPicker.Item;
-export default Picker;
+NativePicker.Item = WheelPicker.Item;
+export default NativePicker;
