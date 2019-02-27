@@ -137,14 +137,8 @@ class Picker extends BaseComponent {
   constructor(props) {
     super(props);
 
-    this.onDoneSelecting = this.onDoneSelecting.bind(this);
-    this.toggleItemSelection = this.toggleItemSelection.bind(this);
-    this.appendPropsToChildren = this.appendPropsToChildren.bind(this);
-    this.cancelSelect = this.cancelSelect.bind(this);
-    this.handlePickerOnPress = this.handlePickerOnPress.bind(this);
-
     this.state = {
-      ...this.state,
+      value: props.value,
       showModal: false,
       selectedItemPosition: 0,
     };
@@ -172,7 +166,6 @@ class Picker extends BaseComponent {
   }
 
   getLabel() {
-    const {getLabel} = this.props;
     const {value} = this.state;
     
     if (_.isArray(value)) {
@@ -181,6 +174,8 @@ class Picker extends BaseComponent {
         .join(', ')
         .value();
     }
+
+    const {getLabel} = this.props;
     return _.isFunction(getLabel) ? getLabel(value) : _.get(value, 'label');
   }
 
@@ -188,7 +183,7 @@ class Picker extends BaseComponent {
     return this.extractTypographyValue() || Typography.text70;
   }
 
-  handlePickerOnPress() {
+  handlePickerOnPress = () => {
     this.toggleExpandableModal(true);
     _.invoke(this.props, 'onPress');
   }
@@ -197,7 +192,7 @@ class Picker extends BaseComponent {
     this.setState({showExpandableModal: value});
   }
 
-  toggleItemSelection(item) {
+  toggleItemSelection = (item) => {
     const {value} = this.state;
     const newValue = _.xorBy(value, [item], 'value');
     this.setState({
@@ -205,14 +200,14 @@ class Picker extends BaseComponent {
     });
   }
 
-  cancelSelect() {
+  cancelSelect = () => {
     this.setState({
       value: this.props.value,
     });
     this.toggleExpandableModal(false);
   }
 
-  onDoneSelecting(item) {
+  onDoneSelecting = (item) => {
     this.setState({searchValue: '', value: item}); // clean search when done selecting
     // this.onChangeText(item);
     this.toggleExpandableModal(false);
@@ -234,7 +229,7 @@ class Picker extends BaseComponent {
     this.setState({selectedItemPosition: y});
   };
 
-  appendPropsToChildren() {
+  appendPropsToChildren = () => {
     const {children, mode, getItemValue, showSearch, renderItem} = this.props;
     const {value, searchValue} = this.state;
     const childrenWithProps = React.Children.map(children, (child) => {
