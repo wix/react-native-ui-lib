@@ -1,23 +1,36 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {Animated, Easing, Image, StyleSheet} from 'react-native';
 import {Colors} from '../../style';
 import Assets from '../../assets';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
 
-
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
-const DEFAULT_ICON_COLOR = Colors.white;
+const DEFAULT_ICON_COLOR = Colors.red;
 
 /**
  * Checkbox component for toggling boolean value related to some context
  */
 class Checkbox extends BaseComponent {
-  static displayName = 'Checkbox';
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      isChecked: new Animated.Value(props.value ? 1 : 0),
+    };
+
+    this.animationStyle = {
+      opacity: this.state.isChecked.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 1]
+      }),
+    };
+  }
+
+  static displayName = 'Checkbox';
   static propTypes = {
     /**
      * The value of the Checkbox. If true the switch will be turned on. Default value is false.
@@ -50,38 +63,63 @@ class Checkbox extends BaseComponent {
     /**
      * The selected icon color
      */
-    iconColor: PropTypes.string
+    iconColor: PropTypes.string,
   };
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.value !== nextProps.value) {
+      this.check(nextProps.value);
+    }
+  }
+
+  check(nextProps) {
+    const {isChecked} = this.state;
+
+    Animated.timing(isChecked, {
+      duration: 200,
+      easing: Easing.bezier(0.77, 0.0, 0.175, 1.0),
+      toValue: nextProps.value,
+      useNativeDriver: true,
+    }).start();
+  }
+
   onPress = () => {
     const {disabled} = this.getThemeProps();
     if (!disabled) {
       _.invoke(this.props, 'onValueChange', !this.props.value);
+      this.check(!this.props.value);
     }
   };
 
-  getContainerStyle() {
+  getBorderColor() {
     const {value, color, style: propsStyle, disabled} = this.getThemeProps();
-    const style = [this.styles.container];
-
+    const style = [this.styles.containerBorder];
     if (value) {
       if (disabled) {
-        style.push({backgroundColor: Colors.dark70, borderColor: Colors.dark70});
+        style.push({borderColor: Colors.dark70});
       } else {
-        style.push(color ? {backgroundColor: color, borderColor: color} : this.styles.containerSelected);
+        style.push({borderColor: color || DEFAULT_COLOR});
       }
-    } else if (disabled) {
-      style.push({borderColor: Colors.dark70});
-    } else if (color) {
-      style.push({borderColor: color});
     }
-
     style.push(propsStyle);
     return style;
+  }
+
+  getFillColor() {
+    const {value, color, disabled} = this.getThemeProps();
+    if (value) {
+      if (disabled) {
+        return {backgroundColor: Colors.dark70};
+      } else {
+        return {backgroundColor: color || DEFAULT_COLOR};
+      }
+    } else {
+      return {backgroundColor: 'transparent'};
+    }
   }
 
   render() {
@@ -91,15 +129,21 @@ class Checkbox extends BaseComponent {
         activeOpacity={1}
         testID={testID}
         {...others}
-        style={this.getContainerStyle()}
+        style={[this.getBorderColor()]}
         onPress={this.onPress}
       >
         {value && (
-          <Image
-            style={[this.styles.selectedIcon, color && {tintColor: iconColor}, disabled && {tintColor: DEFAULT_ICON_COLOR}]}
-            source={selectedIcon || Assets.icons.checkSmall}
-            testID={`${testID}.selected`}
-          />
+          <Animated.View style={[this.styles.container, this.getFillColor(), value && {opacity: this.animationStyle.opacity}]}>
+            <Image 
+              style={[
+                this.styles.selectedIcon,
+                color && {tintColor: iconColor},
+                disabled && {tintColor: DEFAULT_ICON_COLOR},
+              ]}
+              source={selectedIcon || Assets.icons.checkSmall}
+              testID={`${testID}.selected`}
+            />
+          </Animated.View>
         )}
       </TouchableOpacity>
     );
@@ -108,21 +152,27 @@ class Checkbox extends BaseComponent {
 
 function createStyles({color = DEFAULT_COLOR, iconColor = DEFAULT_ICON_COLOR, size = DEFAULT_SIZE, borderRadius}) {
   return StyleSheet.create({
-    container: {
+    containerBorder: {
       width: size,
       height: size,
       borderRadius: borderRadius || 8,
       borderWidth: 2,
       borderColor: color,
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
-    containerSelected: {
-      backgroundColor: color
+    container: {
+      width: size,
+      height: size,
+      borderRadius: borderRadius || 8,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     selectedIcon: {
-      tintColor: iconColor
-    }
+      tintColor: iconColor,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
   });
 }
 

@@ -19,41 +19,20 @@ class CheckboxScreen extends Component {
             <Checkbox
               value={this.state.value1}
               onValueChange={value1 => this.setState({value1})}
+              size={70}
               style={{marginBottom: 20}}
+              // disabled
+              // color={Colors.purple30}
             />
-            <Checkbox
+           {/*  <Checkbox
               value={this.state.value2}
               onValueChange={value2 => this.setState({value2})}
               borderRadius={2}
-              size={30}
+              size={70}
               color={Colors.purple30}
               selectedIcon={Assets.icons.x}
               style={{marginBottom: 20}}
-            />
-            <Checkbox
-              value={this.state.value3}
-              onValueChange={value3 => this.setState({value3})}
-              borderRadius={5}
-              size={18}
-              color={Colors.dark10}
-              iconColor={Colors.green10}
-              style={{marginBottom: 20}}
-            />
-            <View row marginB-20>
-              <Text text70 centerV>Disabled: </Text>
-              <Checkbox
-                disabled
-                value={this.state.value5}
-                onValueChange={value5 => this.setState({value5})}
-                style={{marginRight: 10}}
-              />
-              <Checkbox
-                disabled
-                value={!this.state.value5}
-                onValueChange={value5 => this.setState({value5})}
-                iconColor={Colors.green10}
-              />
-            </View>
+            /> */}
           </View>
           <Text text40 dark10>
             Checkbox
