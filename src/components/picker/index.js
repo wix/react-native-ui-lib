@@ -8,7 +8,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
-import {Colors} from '../../style';
+import {Colors, Typography} from '../../style';
+import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../../components/touchableOpacity';
 import View from '../../components/view';
 import Modal from '../../screensComponents/modal';
@@ -30,13 +31,11 @@ const PICKER_MODES = {
 const ItemType = PropTypes.shape({value: PropTypes.any, label: PropTypes.string});
 
 /**
- * @description: Picker Component, support single or multiple selection, blurModel and floatingPlaceholder
- * @extends: TextField
- * @extendslink: docs/TextField
+ * @description: Picker Component, support single or multiple selection, blurModel and nativePicker
  * @gif: https://media.giphy.com/media/3o751SiuZZiByET2lq/giphy.gif, https://media.giphy.com/media/TgMQnyw5grJIDohzvx/giphy.gif, https://media.giphy.com/media/5hsdmVptBRskZKn787/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FormScreen.js
  */
-class Picker extends TextField {
+class Picker extends BaseComponent {
   static displayName = 'Picker';
   static modes = PICKER_MODES;
   static propTypes = {
@@ -129,10 +128,10 @@ class Picker extends TextField {
 
   static defaultProps = {
     ...TextField.defaultProps,
-    mode: PICKER_MODES.SINGLE,
-    expandable: true,
-    text70: true,
-    enableErrors: false,
+    // expandable: true,
+    // text70: true,
+    // enableErrors: false,
+    mode: PICKER_MODES.SINGLE
   };
 
   constructor(props) {
@@ -153,7 +152,6 @@ class Picker extends TextField {
     if (props.mode === Picker.modes.SINGLE && Array.isArray(props.value)) {
       console.warn('Picker in SINGLE mode cannot accept an array for value');
     }
-
     if (props.mode === Picker.modes.MULTI && !Array.isArray(props.value)) {
       console.warn('Picker in MULTI mode must accept an array for value');
     }
@@ -169,6 +167,36 @@ class Picker extends TextField {
     });
   }
 
+  generateStyles() {
+    this.styles = createStyles(this.getThemeProps());
+  }
+
+  getLabel() {
+    const {getLabel} = this.props;
+    const {value} = this.state;
+    
+    if (_.isArray(value)) {
+      return _.chain(value)
+        .map('label')
+        .join(', ')
+        .value();
+    }
+    return _.isFunction(getLabel) ? getLabel(value) : _.get(value, 'label');
+  }
+
+  getTypography() {
+    return this.extractTypographyValue() || Typography.text70;
+  }
+
+  handlePickerOnPress() {
+    this.toggleExpandableModal(true);
+    _.invoke(this.props, 'onPress');
+  }
+
+  toggleExpandableModal(value) {
+    this.setState({showExpandableModal: value});
+  }
+
   toggleItemSelection(item) {
     const {value} = this.state;
     const newValue = _.xorBy(value, [item], 'value');
@@ -177,9 +205,16 @@ class Picker extends TextField {
     });
   }
 
+  cancelSelect() {
+    this.setState({
+      value: this.props.value,
+    });
+    this.toggleExpandableModal(false);
+  }
+
   onDoneSelecting(item) {
-    this.setState({searchValue: ''}); // clean search when done selecting
-    this.onChangeText(item);
+    this.setState({searchValue: '', value: item}); // clean search when done selecting
+    // this.onChangeText(item);
     this.toggleExpandableModal(false);
     _.invoke(this.props, 'onChange', item);
   }
@@ -190,13 +225,6 @@ class Picker extends TextField {
     });
     _.invoke(this.props, 'onSearchChange', searchValue);
   };
-
-  cancelSelect() {
-    this.setState({
-      value: this.props.value,
-    });
-    this.toggleExpandableModal(false);
-  }
 
   onSelectedItemLayout = ({
     nativeEvent: {
@@ -212,6 +240,7 @@ class Picker extends TextField {
     const childrenWithProps = React.Children.map(children, (child) => {
       const childValue = PickerPresenter.getItemValue({getItemValue, ...child.props});
       const childLabel = PickerPresenter.getItemLabel({...child.props, getLabel: child.props.getItemLabel});
+      
       if (!showSearch || _.isEmpty(searchValue) || _.includes(_.lowerCase(childLabel), _.lowerCase(searchValue))) {
         const selectedValue = PickerPresenter.getItemValue({value, getItemValue});
         return React.cloneElement(child, {
@@ -227,23 +256,6 @@ class Picker extends TextField {
     return childrenWithProps;
   }
 
-  getLabel() {
-    const {getLabel} = this.props;
-    const {value} = this.state;
-    if (_.isArray(value)) {
-      return _.chain(value)
-        .map('label')
-        .join(', ')
-        .value();
-    }
-    return _.isFunction(getLabel) ? getLabel(value) : _.get(value, 'label');
-  }
-
-  handlePickerOnPress() {
-    this.toggleExpandableModal(true);
-    _.invoke(this.props, 'onPress');
-  }
-
   renderExpandableInput() {
     const {value} = this.state;
     const {placeholder, rightIconSource, style} = this.props;
@@ -253,7 +265,7 @@ class Picker extends TextField {
     const shouldShowPlaceholder = _.isEmpty(value);
 
     return (
-      <TouchableOpacity style={styles.pickerInputWrapper} activeOpacity={1} onPress={this.handlePickerOnPress}>
+      <TouchableOpacity style={this.styles.pickerInputWrapper} activeOpacity={1} onPress={this.handlePickerOnPress}>
         <Text
           style={[
             this.styles.input,
@@ -267,7 +279,7 @@ class Picker extends TextField {
         >
           {shouldShowPlaceholder ? placeholder : label}
         </Text>
-        {rightIconSource && <Image source={rightIconSource} />}
+        {rightIconSource && <Image source={rightIconSource}/>}
       </TouchableOpacity>
     );
   }
@@ -283,6 +295,7 @@ class Picker extends TextField {
       renderCustomSearch,
       listProps} = this.getThemeProps();
     const {showExpandableModal, selectedItemPosition} = this.state;
+    
     return (
       <PickerModal
         visible={showExpandableModal}
@@ -310,29 +323,40 @@ class Picker extends TextField {
 
     if (useNativePicker) return <NativePicker {...this.props}/>;
 
-    if (_.isFunction(renderPicker)) {
-      const {value} = this.state;
-      return (
-        <View left>
-          <Button {...customPickerProps} link onPress={this.handlePickerOnPress} testID={testID}>
-            {renderPicker(value)}
-          </Button>
-          {this.renderExpandableModal()}
-        </View>
-      );
-    }
-
-    return super.render();
+    const {value} = this.state;
+    const customPicker = _.isFunction(renderPicker);
+    const customProps = customPicker ? customPickerProps : undefined;
+    
+    return (
+      <View left>
+        <Button link onPress={this.handlePickerOnPress} testID={testID} {...customProps}>
+          {customPicker ? renderPicker(value) : this.renderExpandableInput()}
+        </Button>
+        {this.renderExpandableModal()}
+      </View>
+    );
   }
 }
 
-const styles = StyleSheet.create({
-  pickerInputWrapper: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});
+function createStyles({placeholderTextColor, centered}) {
+  return StyleSheet.create({
+    pickerInputWrapper: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    input: {
+      flexGrow: 1,
+      marginBottom: Constants.isIOS ? 10 : 5,
+      padding: 0,
+      textAlign: centered ? 'center' : undefined,
+      backgroundColor: 'transparent',
+    },
+    placeholder: {
+      color: placeholderTextColor,
+    },
+  });
+}
 
 Picker.Item = PickerItem;
 export default Picker;
