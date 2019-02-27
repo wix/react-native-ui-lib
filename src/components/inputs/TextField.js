@@ -89,6 +89,10 @@ export default class TextField extends BaseInput {
      */
     renderExpandable: PropTypes.func,
     /**
+     * Callback for the modal toggle
+     */
+    onToggleExpandableModal: PropTypes.func,
+    /**
      * The picker modal top bar props
      */
     topBarProps: PropTypes.shape(Modal.TopBar.propTypes),
@@ -172,6 +176,7 @@ export default class TextField extends BaseInput {
 
   toggleExpandableModal(value) {
     this.setState({showExpandableModal: value});
+    _.invoke(this.props, 'onToggleExpandableModal', value);
   }
 
   updateFloatingPlaceholderState(withoutAnimation) {
@@ -587,10 +592,7 @@ export default class TextField extends BaseInput {
   }
 }
 
-function createStyles({
-  placeholderTextColor,
-  centered,
-}) {
+function createStyles({placeholderTextColor, centered}) {
   return StyleSheet.create({
     container: {
     },

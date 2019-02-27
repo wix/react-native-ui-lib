@@ -7,10 +7,8 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Colors, Typography} from '../../style';
 import {BaseComponent} from '../../commons';
-import TouchableOpacity from '../../components/touchableOpacity';
 import View from '../../components/view';
 import Modal from '../../screensComponents/modal';
-import Image from '../../components/image';
 import Button from '../../components/button';
 import {TextField} from '../inputs';
 import * as PickerPresenter from './PickerPresenter';
@@ -184,7 +182,7 @@ class Picker extends BaseComponent {
     _.invoke(this.props, 'onPress');
   }
 
-  toggleExpandableModal(value) {
+  toggleExpandableModal = (value) => {
     this.setState({showExpandableModal: value});
   }
 
@@ -246,28 +244,7 @@ class Picker extends BaseComponent {
     return childrenWithProps;
   }
 
-  renderExpandableInput() {
-    const {rightIconSource} = this.props;
-    const textInputProps = TextField.extractOwnProps(this.props, ['rightIconSource', 'hideUnderline', 'underlineColor']);
-    const label = this.getLabel();
-
-    return (
-      <TouchableOpacity style={this.styles.pickerInputWrapper} activeOpacity={1} onPress={this.handlePickerOnPress}>
-        <TextField
-          {...textInputProps}
-          hideUnderline
-          enableErrors={false}
-          expandable={false}
-          value={label}
-          editable={false}
-          pointerEvents={'none'}
-        />
-        {rightIconSource && <Image source={rightIconSource} style={{marginLeft: 16}}/>}
-      </TouchableOpacity>
-    );
-  }
-
-  renderExpandableModal() {
+  renderExpandableModal = () => {
     const {
       mode,
       enableModalBlur,
@@ -278,7 +255,7 @@ class Picker extends BaseComponent {
       renderCustomSearch,
       listProps} = this.getThemeProps();
     const {showExpandableModal, selectedItemPosition} = this.state;
-    
+
     return (
       <PickerModal
         visible={showExpandableModal}
@@ -306,17 +283,29 @@ class Picker extends BaseComponent {
 
     if (useNativePicker) return <NativePicker {...this.props}/>;
 
-    const {value} = this.state;
-    const customPicker = _.isFunction(renderPicker);
-    const customProps = customPicker ? customPickerProps : undefined;
-    
+    if (_.isFunction(renderPicker)) {
+      const {value} = this.state;
+      return (
+        <View left>
+          <Button {...customPickerProps} link onPress={this.handlePickerOnPress} testID={testID}>
+            {renderPicker(value)}
+          </Button>
+          {this.renderExpandableModal()}
+        </View>
+      );
+    }
+
+    const textInputProps = TextField.extractOwnProps(this.props);
+    const label = this.getLabel();
     return (
-      <View left>
-        <Button link onPress={this.handlePickerOnPress} testID={testID} {...customProps}>
-          {customPicker ? renderPicker(value) : this.renderExpandableInput()}
-        </Button>
-        {this.renderExpandableModal()}
-      </View>
+      <TextField
+        {...textInputProps}
+        enableErrors={false}
+        value={label}
+        expandable
+        renderExpandable={this.renderExpandableModal}
+        onToggleExpandableModal={this.toggleExpandableModal}
+      />
     );
   }
 }
