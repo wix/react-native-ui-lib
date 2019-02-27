@@ -2,8 +2,8 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView, Image} from 'react-native';
 import {View, Colors, Text, Stepper, Typography, Picker, Avatar, Assets, TagsInput} from 'react-native-ui-lib'; //eslint-disable-line
-import tagIcon from '../../assets/icons/tags.png';
 import contacts from '../../data/conversations';
+import tagIcon from '../../assets/icons/tags.png';
 import dropdown from '../../assets/icons/chevronDown.png';
 
 
@@ -14,7 +14,6 @@ const options = [
   {label: 'C++', value: 'c++', disabled: true},
   {label: 'Perl', value: 'perl'},
 ];
-
 const filters = [
   {label: 'All', value: 0},
   {label: 'Draft', value: 1},
@@ -25,8 +24,6 @@ const filters = [
 export default class FormScreen extends Component {
   constructor(props) {
     super(props);
-
-    this.onTagPress = this.onTagPress.bind(this);
 
     this.state = {
       itemsCount: 1,
@@ -41,7 +38,7 @@ export default class FormScreen extends Component {
     };
   }
 
-  onTagPress(tagIndex, markedTagIndex) {
+  onTagPress = (tagIndex, markedTagIndex) => {
     this.customTagsInput.markTagIndex(tagIndex === markedTagIndex ? undefined : tagIndex);
   }
 
@@ -57,6 +54,8 @@ export default class FormScreen extends Component {
     return (
       <ScrollView keyboardShouldPersistTaps="always">
         <View style={styles.container}>
+          <Text style={{...Typography.text60, marginBottom: 20}}>TagsInput</Text>
+
           <TagsInput containerStyle={{marginBottom: 20}} placeholder="Enter Tags" tags={this.state.tags2}/>
 
           <TagsInput
@@ -87,14 +86,15 @@ export default class FormScreen extends Component {
             initialValue={1}
           />
 
+          <Text style={{...Typography.text60, marginBottom: 20}}>Picker</Text>
           <Picker
             placeholder="Pick a single language"
+            floatingPlaceholder
             value={this.state.language}
             enableModalBlur={false}
             onChange={item => this.setState({language: item})}
             topBarProps={{title: 'Languages'}}
             style={{color: Colors.red20}}
-            hideUnderline
             showSearch
             searchPlaceholder={'Search a language'}
             searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.dark50}}
@@ -110,6 +110,7 @@ export default class FormScreen extends Component {
               onChange={items => this.setState({languages: items})}
               mode={Picker.modes.MULTI}
               rightIconSource={dropdown}
+              hideUnderline
             >
               {_.map(options, option => <Picker.Item key={option.value} value={option} disabled={option.disabled}/>)}
             </Picker>
@@ -136,9 +137,7 @@ export default class FormScreen extends Component {
               <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>)}
           </Picker>
 
-          <Text marginT-20 marginB-10 text70 dark60>
-            Custom Picker:
-          </Text>
+          <Text marginT-20 marginB-10 text70 dark60>Custom Picker:</Text>
           <Picker
             value={this.state.filter}
             onChange={filter => this.setState({filter})}
@@ -156,9 +155,7 @@ export default class FormScreen extends Component {
             {_.map(filters, filter => <Picker.Item key={filter.value} value={filter}/>)}
           </Picker>
 
-          <Text marginT-20 marginB-10 text70 dark60>
-            Custom Picker Items:
-          </Text>
+          <Text marginT-20 marginB-10 text70 dark60>Custom Picker Items:</Text>
           <Picker
             value={this.state.contact}
             onChange={contact => this.setState({contact})}
@@ -212,12 +209,7 @@ export default class FormScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
-  },
-  componentTitle: {
-    ...Typography.text80,
-    marginTop: 25,
-    marginBottom: 5,
+    padding: 15
   },
   customTag: {
     backgroundColor: Colors.purple30,
@@ -225,6 +217,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     borderRadius: 3,
     marginRight: 10,
-    marginBottom: 10,
+    marginBottom: 10
   },
 });
