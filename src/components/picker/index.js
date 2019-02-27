@@ -4,8 +4,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {Colors, Typography} from '../../style';
+import {Typography} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
 import Modal from '../../screensComponents/modal';
@@ -153,10 +152,6 @@ class Picker extends BaseComponent {
     this.setState({
       value: nexProps.value,
     });
-  }
-
-  generateStyles() {
-    this.styles = createStyles(this.getThemeProps());
   }
 
   getLabel() {
@@ -308,17 +303,6 @@ class Picker extends BaseComponent {
       />
     );
   }
-}
-
-function createStyles({hideUnderline, underlineColor}) {
-  return StyleSheet.create({
-    pickerInputWrapper: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      borderBottomWidth: hideUnderline ? 0 : 1,
-      borderBottomColor: underlineColor ? underlineColor.default : Colors.dark70
-    }
-  });
 }
 
 Picker.Item = PickerItem;

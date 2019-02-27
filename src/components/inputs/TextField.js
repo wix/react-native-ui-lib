@@ -89,7 +89,7 @@ export default class TextField extends BaseInput {
      */
     renderExpandable: PropTypes.func,
     /**
-     * Callback for the modal toggle
+     * Callback for the modal toggle. Pass with renderExpandable to control the modal toggle
      */
     onToggleExpandableModal: PropTypes.func,
     /**
