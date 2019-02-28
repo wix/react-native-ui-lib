@@ -32,7 +32,7 @@ module.exports = {
   get TagsInput() { return require('./components').TagsInput; },
   get RadioButton() { return require('./components').RadioButton; },
   get RadioGroup() { return require('./components').RadioGroup; },
-  get SharedElement() { return require('./components').SharedElement; },
+  get SharedTransition() { return require('./components').SharedTransition; },
   get Switch() { return require('./components').Switch; },
   get Text() { return require('./components').Text; },
   get Toast() { return require('./components').Toast; },

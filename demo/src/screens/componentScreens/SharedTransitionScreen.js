@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, LayoutAnimation, FlatList} from 'react-native';
+import {LayoutAnimation, FlatList} from 'react-native';
 import {Colors, View, Image, TouchableOpacity, SharedTransition, Card, Button, Text, Modal} from 'react-native-ui-lib'; //eslint-disable-line
 
 const DATA = [
@@ -176,10 +176,3 @@ export default class PlaygroundScreen extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.dark80,
-  },
-});
