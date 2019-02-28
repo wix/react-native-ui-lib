@@ -9,7 +9,7 @@ import TouchableOpacity from '../touchableOpacity';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
-const DEFAULT_ICON_COLOR = Colors.red;
+const DEFAULT_ICON_COLOR = Colors.white;
 const DEFAULT_DISABLED_COLOR = Colors.dark70;
 
 /**
@@ -119,7 +119,7 @@ class Checkbox extends BaseComponent {
         activeOpacity={1}
         testID={testID}
         {...others}
-        style={[this.getBorderColor()]}
+        style={this.getBorderColor()}
         onPress={this.onPress}
       >
         {
