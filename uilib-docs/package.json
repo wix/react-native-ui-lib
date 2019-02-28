@@ -10,6 +10,7 @@
     "gatsby-plugin-sass": "^1.0.14",
     "gatsby-source-filesystem": "^1.5.9",
     "gatsby-transformer-react-docgen": "^1.0.9",
+    "metro-react-native-babel-preset": "^0.48.1",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0"
   },

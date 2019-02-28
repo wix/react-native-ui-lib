@@ -1,10 +1,22 @@
 import _ from 'lodash';
-import {Typography, Colors, BorderRadiuses, Spacings} from '../style';
+import {Typography, Colors, BorderRadiuses, Spacings, ThemeManager} from '../style';
 
 export const FLEX_KEY_PATTERN = /^flex(G|S)?(-\d*)?$/;
 export const PADDING_KEY_PATTERN = new RegExp(`padding[LTRBHV]?-([0-9]*|${Spacings.getKeysPattern()})`);
 export const MARGIN_KEY_PATTERN = new RegExp(`margin[LTRBHV]?-([0-9]*|${Spacings.getKeysPattern()})`);
 export const ALIGNMENT_KEY_PATTERN = /(left|top|right|bottom|center|centerV|centerH|spread)/;
+
+export function extractColorValue(props) {
+  // const props = this.getThemeProps();
+  const allColorsKeys = _.keys(Colors);
+  const colorPropsKeys = _.chain(props)
+    .keys()
+    .filter(key => _.includes(allColorsKeys, key))
+    .value();
+
+  const color = _.findLast(colorPropsKeys, colorKey => props[colorKey] === true);
+  return Colors[color];
+}
 
 // todo: refactor this and use BACKGROUND_KEY_PATTERN
 export function extractBackgroundColorValue(props) {
@@ -183,4 +195,89 @@ export function extractModifierProps(props) {
   });
 
   return modifierProps;
+}
+
+export function extractOwnProps(props, ignoreProps) {
+  const ownPropTypes = this.propTypes;
+  const ownProps = _.chain(props)
+    .pickBy((value, key) => _.includes(Object.keys(ownPropTypes), key))
+    .omit(ignoreProps)
+    .value();
+
+  return ownProps;
+}
+
+export function getThemeProps(props = this.props, context = this.context) {
+  const componentName = this.displayName || this.constructor.displayName || this.constructor.name;
+  let themeProps;
+  if (_.isFunction(ThemeManager.components[componentName])) {
+    themeProps = ThemeManager.components[componentName](props, context);
+  } else {
+    themeProps = ThemeManager.components[componentName];
+  }
+  return {...themeProps, ...props};
+}
+
+export function generateModifiersStyle(
+  options = {
+    backgroundColor: true,
+    borderRadius: true,
+    paddings: true,
+    margins: true,
+    alignments: true,
+    flex: true,
+  },
+  props = this.props,
+) {
+  const style = {};
+
+  if (options.backgroundColor) {
+    style.backgroundColor = this.extractBackgroundColorValue(props);
+  }
+  if (options.borderRadius) {
+    style.borderRadius = this.extractBorderRadiusValue(props);
+  }
+  if (options.paddings) {
+    style.paddings = this.extractPaddingValues(props);
+  }
+  if (options.margins) {
+    style.margins = this.extractMarginValues(props);
+  }
+  if (options.alignments) {
+    style.alignments = this.extractAlignmentsValues(props);
+  }
+  if (options.flex) {
+    style.flexStyle = this.extractFlexStyle(props);
+  }
+
+  return style;
+}
+
+
+export function getAlteredModifiersOptions(currentProps, nextProps) {
+  const allKeys = _.union([..._.keys(currentProps), ..._.keys(nextProps)]);
+  const changedKeys = _.filter(allKeys, key => !_.isEqual(currentProps[key], nextProps[key]));
+
+  const options = {};
+  if (_.find(changedKeys, key => FLEX_KEY_PATTERN.test(key))) {
+    options.flex = true;
+  }
+
+  if (_.find(changedKeys, key => PADDING_KEY_PATTERN.test(key))) {
+    options.paddings = true;
+  }
+
+  if (_.find(changedKeys, key => MARGIN_KEY_PATTERN.test(key))) {
+    options.margins = true;
+  }
+
+  if (_.find(changedKeys, key => ALIGNMENT_KEY_PATTERN.test(key))) {
+    options.alignments = true;
+  }
+
+  if (_.find(changedKeys, key => Colors.getBackgroundKeysPattern().test(key))) {
+    options.backgroundColor = true;
+  }
+
+  return options;
 }

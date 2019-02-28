@@ -340,7 +340,9 @@ const styles = StyleSheet.create({
   },
   hint: {
     backgroundColor: DEFAULT_COLOR,
-    padding: Spacings.s5,
+    paddingHorizontal: Spacings.s5,
+    paddingTop: Spacings.s3,
+    paddingBottom: Spacings.s4,
     borderRadius: BorderRadiuses.br60,
   },
   hintMessage: {

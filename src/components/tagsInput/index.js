@@ -143,7 +143,7 @@ export default class TagsInput extends BaseComponent {
       tags: newTags,
     });
     _.invoke(this.props, 'onChangeTags', newTags, TagsInput.onChangeTagsActions.ADDED, newTag);
-    this.input.clear();
+    this.clear();
   }
 
   removeMarkedTag() {
@@ -312,6 +312,18 @@ export default class TagsInput extends BaseComponent {
         </View>
       </View>
     );
+  }
+
+  blur() {
+    this.input.blur();
+  }
+
+  focus() {
+    this.input.focus();
+  }
+
+  clear() {
+    this.input.clear();
   }
 }
 

@@ -1,13 +1,14 @@
-// TODO: update usage of React Context API to latest (https://reactjs.org/docs/context.html)
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Animated, Easing} from 'react-native';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
-
+import Text from '../text';
+import Image from '../image';
+import {RadioGroupContext} from './RadioGroup';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
@@ -47,28 +48,107 @@ class RadioButton extends BaseComponent {
      * The radio button border radius
      */
     borderRadius: PropTypes.number,
+    /**
+     * A label for the radio button description
+     */
+    label: PropTypes.string,
+    /**
+     * Label style
+     */
+    labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * Icon image source
+     */
+    iconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * Icon image style
+     */
+    iconStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * Should the icon be on the right side of the label
+     */
+    iconOnRight: PropTypes.bool,
   };
 
-  static contextTypes = {
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    onValueChange: PropTypes.func,
+  static defaultProps = {
+    iconOnRight: false
   };
 
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      opacityAnimationValue: new Animated.Value(0),
+      scaleAnimationValue: new Animated.Value(0.8)
+    };
+    
+    this.selected = undefined;
+    this.selectedPrevState = undefined;
+  }
+
+  componentDidMount() {
+    this.animate();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.selected === undefined) { // will always be radio group
+      if (this.selectedPrevState && !this.selected) { // unselect
+        this.animate();
+      }
+    } else if (prevProps.selected !== this.props.selected) { // will always be individual
+      this.selected = this.props.selected;
+      this.animate();
+    }
+  }
+
+  animate() {
+    const animationTime = 150;
+    const animationDelay = 60;
+    if (this.selected) {
+      Animated.parallel([
+        Animated.timing(this.state.opacityAnimationValue, {
+          toValue: 1,
+          duration: animationTime,
+        }),
+        Animated.timing(this.state.scaleAnimationValue, {
+          toValue: 1,
+          delay: animationDelay,
+          duration: animationTime,
+          easing: Easing.bezier(0.165, 0.84, 0.44, 1),
+        }),
+      ]).start();
+    } else {
+      Animated.parallel([
+        Animated.timing(this.state.scaleAnimationValue, {
+          toValue: 0.8,
+          duration: animationTime,
+        }),
+        Animated.timing(this.state.opacityAnimationValue, {
+          toValue: 0,
+          duration: animationTime,
+        }),
+      ]).start();
+    }
+  }
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  onPress = () => {
+  onPress = context => {
     const {value, disabled} = this.props;
     if (!disabled) {
-      _.invoke(this.context, 'onValueChange', value);
-      _.invoke(this.props, 'onPress', this.isSelected());
+      _.invoke(context, 'onValueChange', value);
+      _.invoke(this.props, 'onPress', this.selected);
+      if (value) { // so individual is not called here as well
+        if (!this.selected) {
+          this.selected = !this.selected;
+          this.animate();
+        }
+      }
     }
   };
 
-  isSelected(props = this.props, context = this.context) {
+  isSelected(props = this.props, context) {
     const {value, selected} = props;
     // Individual Radio Button
     if (_.isUndefined(value)) {
@@ -79,10 +159,10 @@ class RadioButton extends BaseComponent {
     return value === selectedValue;
   }
 
-  getContainerStyle() {
+  getRadioButtonOutlineStyle() {
     const {color, size, borderRadius, style: propsStyle, disabled} = this.getThemeProps();
-    const style = [this.styles.container];
-    
+    const style = [this.styles.radioButtonOutline];
+
     if (size) {
       style.push({width: size, height: size});
     }
@@ -97,9 +177,9 @@ class RadioButton extends BaseComponent {
     return style;
   }
 
-  getSelectedStyle() {
+  getRadioButtonInnerStyle() {
     const {color, borderRadius, disabled} = this.getThemeProps();
-    const style = [this.styles.selectedIndicator];
+    const style = [this.styles.radioButtonInner];
 
     if (borderRadius) {
       style.push({borderRadius});
@@ -111,20 +191,54 @@ class RadioButton extends BaseComponent {
     return style;
   }
 
-  render() {
-    const {style, onPress, ...others} = this.getThemeProps();
-    const Container = (onPress || this.context.onValueChange) ? TouchableOpacity : View;
+  renderLabel() {
+    const {label, labelStyle} = this.props;
     return (
-      <Container activeOpacity={1} {...others} style={this.getContainerStyle()} onPress={this.onPress}>
-        {this.isSelected() && <View style={this.getSelectedStyle()} />}
+      label && (<Text marginL-10 style={labelStyle} >{label}</Text>)
+    );
+  }
+
+  renderIcon() {
+    const {iconSource} = this.props;
+    const {iconStyle} = this.getThemeProps();
+    const style = [this.styles.image, iconStyle];
+    return (
+      iconSource && (<Image style={style} source={iconSource} />)
+    );
+  }
+
+  renderRadioButton = context => {
+    const {style, onPress, ...others} = this.getThemeProps();
+    const Container = onPress || context.onValueChange ? TouchableOpacity : View;
+    this.selectedPrevState = this.selected;
+    this.selected = this.isSelected(this.props, context);
+    return (
+      <Container row centerV activeOpacity={1} {...others} onPress={() => this.onPress(context)}>
+        <View style={this.getRadioButtonOutlineStyle()} >
+          <Animated.View
+            style={[
+              this.getRadioButtonInnerStyle(),
+              {opacity: this.state.opacityAnimationValue},
+              {scaleX: this.state.scaleAnimationValue},
+              {scaleY: this.state.scaleAnimationValue}
+            ]}
+          />
+        </View>
+        {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
+        {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
+        
       </Container>
     );
+  };
+
+  render() {
+    return <RadioGroupContext.Consumer>{this.renderRadioButton}</RadioGroupContext.Consumer>;
   }
 }
 
 function createStyles({size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, color = DEFAULT_COLOR, disabled}) {
   return StyleSheet.create({
-    container: {
+    radioButtonOutline: {
       borderWidth: 2,
       borderColor: disabled ? Colors.dark70 : color,
       width: size,
@@ -132,11 +246,14 @@ function createStyles({size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, col
       borderRadius,
       padding: 3,
     },
-    selectedIndicator: {
+    radioButtonInner: {
       backgroundColor: disabled ? Colors.dark70 : color,
       flex: 1,
       borderRadius,
     },
+    image: {
+      marginLeft: 6,
+    }
   });
 }
 

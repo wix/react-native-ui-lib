@@ -1,10 +1,11 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import Image from '../image';
 import {BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
+import Image from '../image';
 import * as CardPresenter from './CardPresenter';
+
 
 /**
  * @description: Card.Image, part of the Card component belongs inside a Card (better be a direct child)
@@ -36,12 +37,11 @@ export default class CardImage extends BaseComponent {
     /**
      * border radius, basically for Android since overflow doesn't work well
      */
-    borderRadius: PropTypes.number,
-    testID: PropTypes.string,
+    borderRadius: PropTypes.number
   };
 
   static defaultProps = {
-    borderRadius: BorderRadiuses.br40,
+    borderRadius: BorderRadiuses.br40
   };
 
   generateStyles() {
@@ -58,7 +58,6 @@ export default class CardImage extends BaseComponent {
         </View>
       );
     }
-
     return null;
   }
 }
@@ -74,7 +73,7 @@ function createStyles({width, height, position}) {
       width: null,
       height: null,
       flex: 1,
-      resizeMode: 'cover',
-    },
+      resizeMode: 'cover'
+    }
   });
 }

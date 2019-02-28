@@ -41,11 +41,7 @@ class ListItem extends BaseComponent {
     /**
      * The container element to wrap the ListItem
      */
-    containerElement: PropTypes.func,
-    /**
-     * Use to identify the ListItem in tests
-     */
-    testID: PropTypes.string,
+    containerElement: PropTypes.func
   };
 
   static defaultProps = {
@@ -87,7 +83,6 @@ class ListItem extends BaseComponent {
       ...others
     } = this.props;
     const {pressed} = this.state;
-    // const containerStyle = this.extractContainerStyle(this.props);
     const pressedStyle = {backgroundColor: underlayColor};
     const Container = (onPress || onLongPress) ? containerElement : View;
 
@@ -127,8 +122,8 @@ function createStyles({height}) {
     },
     innerContainer: {
       flexDirection: 'row',
-      height,
-    },
+      height
+    }
   });
 }
 

@@ -1,7 +1,25 @@
-import {Colors, Typography, BorderRadiuses} from '../../style';
+import PropTypes from 'prop-types';
+import {ThemeManager, Colors, Typography, BorderRadiuses} from '../../style';
 import * as uut from '../modifiers';
 
 describe('Modifiers', () => {
+  const SampleComponent = () => {};
+  SampleComponent.displayName = 'SampleComponent';
+  SampleComponent.propTypes = {
+    prop1: PropTypes.string,
+    prop2: PropTypes.number,
+  };
+
+  describe('extractColorValue', () => {
+    it('should return color value according to modifier', () => {
+      expect(uut.extractColorValue({red30: true})).toBe(Colors.red30);
+    });
+
+    it('should take last color passed as modifier', () => {
+      expect(uut.extractColorValue({red30: true, green10: false, purple50: true})).toBe(Colors.purple50);
+    });
+  });
+
   describe('background modifiers', () => {
     it('should return color value according to background-?? prop that was sent', () => {
       expect(uut.extractBackgroundColorValue({'background-red30': true})).toBe(Colors.red30);
@@ -258,11 +276,13 @@ describe('Modifiers', () => {
         'bg-red30': true,
       });
 
-      expect(uut.extractModifierProps({
-        'margin-50': true,
-        'background-blue20': true,
-        other: 'some-value',
-      })).toEqual({
+      expect(
+        uut.extractModifierProps({
+          'margin-50': true,
+          'background-blue20': true,
+          other: 'some-value',
+        }),
+      ).toEqual({
         'margin-50': true,
         'background-blue20': true,
       });
@@ -274,61 +294,44 @@ describe('Modifiers', () => {
     });
   });
 
-  // describe('getThemeProps', () => {
-  //   it('should return props values from the Theme Manager if were defined', () => {
-  //     ThemeManager.setComponentTheme('BaseComponent', {someProp: 'themeValue'});
-  //     const uut = new BaseComponent({});
-  //     expect(uut.getThemeProps()).toEqual({someProp: 'themeValue'});
-  //   });
+  describe('extractOwnProps', () => {
+    it('should extract the component props from a props object', () => {
+      const props = {color: 'red', prop1: 'text', prop2: 2};
+      expect(uut.extractOwnProps.bind(SampleComponent)(props)).toEqual({
+        prop1: 'text',
+        prop2: 2,
+      });
+    });
 
-  //   it('should return override theme values with passed props values', () => {
-  //     ThemeManager.setComponentTheme('BaseComponent', {someProp: 'themeValue'});
-  //     const uut = new BaseComponent({someProp: 'someValue'});
-  //     expect(uut.getThemeProps()).toEqual({someProp: 'someValue'});
-  //   });
+    it('should omit props that were required to ignore', () => {
+      const props = {color: 'red', prop1: 'text', prop2: 2};
+      expect(uut.extractOwnProps.bind(SampleComponent)(props, 'prop1')).toEqual({
+        prop2: 2,
+      });
+      expect(uut.extractOwnProps.bind(SampleComponent)(props, ['prop1', 'prop2'])).toEqual({});
+    });
+  });
 
-  //   it('should return props values from the Theme Manager merged with values from passed props', () => {
-  //     ThemeManager.setComponentTheme('BaseComponent', {someProp: 'themeValue'});
-  //     const uut = new BaseComponent({anotherProps: 'anotherValue'});
-  //     expect(uut.getThemeProps()).toEqual({someProp: 'themeValue', anotherProps: 'anotherValue'});
-  //   });
+  describe('getThemeProps', () => {
+    it('should return props values from the Theme Manager if were defined', () => {
+      ThemeManager.setComponentTheme('SampleComponent', {prop1: 'themeValue'});
+      expect(uut.getThemeProps.call(SampleComponent, {})).toEqual({prop1: 'themeValue'});
+    });
 
-  //   it('should support getThemeProps callback that accepts current props and can condition returned props', () => {
-  //     ThemeManager.setComponentTheme('BaseComponent', props => ({someProp: props.test ? 'yes' : 'no'}));
-  //     let uut = new BaseComponent({test: true});
-  //     expect(uut.getThemeProps()).toEqual({someProp: 'yes', test: true});
+    it('should return override theme values with passed props values', () => {
+      ThemeManager.setComponentTheme('SampleComponent', {prop1: 'themeValue'});
+      expect(uut.getThemeProps.call(SampleComponent, {prop1: 'someValue'})).toEqual({prop1: 'someValue'});
+    });
 
-  //     uut = new BaseComponent({test: false});
-  //     expect(uut.getThemeProps()).toEqual({someProp: 'no', test: false});
-  //   });
-  // });
+    it('should return props values from the Theme Manager merged with values from passed props', () => {
+      ThemeManager.setComponentTheme('SampleComponent', {prop1: 'themeValue'});
+      expect(uut.getThemeProps.call(SampleComponent, {prop2: 2})).toEqual({prop1: 'themeValue', prop2: 2});
+    });
 
-  // describe('updateModifiers', () => {
-  //   it('should update state with new modifiers values if modifiers props have changed', () => {
-  //     const uut = new BaseComponent({});
-  //     jest.spyOn(uut, 'setState');
-
-  //     uut.updateModifiers({someProp: true, 'bg-dark20': true}, {someProp: true, 'bg-dark30': true});
-  //     expect(uut.setState).toHaveBeenCalledWith({backgroundColor: Colors.dark30});
-
-  //     uut.updateModifiers({someProp: 'text'}, {'bg-red50': true, 'padding-20': true});
-  //     expect(uut.setState).toHaveBeenCalledWith({backgroundColor: Colors.red50, paddings: {padding: 20}});
-  //   });
-
-  //   it('should not update state if modifiers prop have not changed', () => {
-  //     const uut = new BaseComponent({});
-  //     jest.spyOn(uut, 'setState');
-
-  //     uut.updateModifiers({someProp: true, 'bg-dark20': true}, {someProp: false, 'bg-dark20': true});
-  //     expect(uut.setState).not.toHaveBeenCalled();
-  //   });
-
-  //   it('should not update state if any prop value has changed', () => {
-  //     const uut = new BaseComponent({});
-  //     jest.spyOn(uut, 'setState');
-
-  //     uut.updateModifiers({someProp: true, 'bg-dark20': true}, {someProp: true, 'bg-dark20': true});
-  //     expect(uut.setState).not.toHaveBeenCalled();
-  //   });
-  // });
+    it('should support getThemeProps callback that accepts current props and can condition returned props', () => {
+      ThemeManager.setComponentTheme('SampleComponent', props => ({prop1: props.test ? 'yes' : 'no'}));
+      expect(uut.getThemeProps.call(SampleComponent, {test: true})).toEqual({prop1: 'yes', test: true});
+      expect(uut.getThemeProps.call(SampleComponent, {test: false})).toEqual({prop1: 'no', test: false});
+    });
+  });
 });

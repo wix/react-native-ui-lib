@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BorderRadiuses, View, Text, Hint, Button, RadioGroup, RadioButton, Switch, Assets} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, Hint, Button, RadioGroup, RadioButton, Switch, Assets} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class HintsScreen extends Component {
   constructor(props) {
@@ -52,7 +52,7 @@ export default class HintsScreen extends Component {
             position={showBottomHint ? Hint.positions.BOTTOM : Hint.positions.TOP}
             useSideTip={useSideTip}
             key={targetPosition}
-            borderRadius={BorderRadiuses.br40}
+            // borderRadius={BorderRadiuses.br40}
             // edgeMargins={30}
             // onBackgroundPress={() => this.setState({showHint: !showHint})}
           >
@@ -104,7 +104,7 @@ export default class HintsScreen extends Component {
           </View>
 
           <View row centerV marginV-10>
-            <Switch value={showIcon} onValueChange={showIcon => this.setState({showIcon})} />
+            <Switch value={showIcon} onValueChange={value => this.setState({showIcon: value})} />
             <Text marginL-10>Toggle Icon</Text>
           </View>
         </View>

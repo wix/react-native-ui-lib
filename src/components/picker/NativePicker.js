@@ -57,6 +57,7 @@ class Picker extends BaseComponent {
     return (
       <PickerDialog
         {...this.getThemeProps()}
+        disablePan
         onDismiss={this.onCancel}
         onValueChange={this.onValueChange}
         selectedValue={selectedValue}

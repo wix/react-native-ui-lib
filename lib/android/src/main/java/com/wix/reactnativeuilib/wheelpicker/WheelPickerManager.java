@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 
 public class WheelPickerManager extends SimpleViewManager<WheelPicker> {
     public static final String REACT_CLASS = "WheelPicker";
+    private int initialIndex;
 
     @Override
     public String getName() {
@@ -30,6 +31,11 @@ public class WheelPickerManager extends SimpleViewManager<WheelPicker> {
     @Override
     public WheelPicker createViewInstance(ThemedReactContext context) {
         return new WheelPicker(context); //If your customview has more constructor parameters pass it from here.
+    }
+
+    @ReactProp(name = "initialIndex")
+    public void setInitialIndex(WheelPicker wheelPicker, @Nullable Integer initialIndex) {
+        this.initialIndex = (initialIndex == null) ? 0 : initialIndex;
     }
 
     @ReactProp(name = "data")
@@ -43,6 +49,7 @@ public class WheelPickerManager extends SimpleViewManager<WheelPicker> {
         numberPicker.setMinValue(0);
         numberPicker.setMaxValue(arrayString.length -1);
         numberPicker.setDisplayedValues( arrayString );
+        numberPicker.setValue(this.initialIndex);
     }
 
     public Map getExportedCustomBubblingEventTypeConstants() {

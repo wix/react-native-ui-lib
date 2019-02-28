@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, TouchableWithoutFeedback, SafeAreaView, Animated, Easing} from 'react-native';
+import {StyleSheet, TouchableWithoutFeedback, SafeAreaView, Animated, Easing, TouchableOpacity} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {Constants} from '../../helpers';
 import {AnimatableManager, Colors} from '../../style';
@@ -60,13 +60,22 @@ class Dialog extends BaseComponent {
     /**
      * The dialog container style
      */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * Disable the pan gesture recognizer
+     */
+    disablePan: PropTypes.bool,
+    /**
+     * Whether to display the dialog in a modal
+     */
+    useModal: PropTypes.bool
   };
 
   static defaultProps = {
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
     width: '90%',
-    height: '70%'
+    height: '70%',
+    useModal: true
   };
 
   static swipeDirections = SWIPE_DIRECTIONS; // DEFRECATED
@@ -83,6 +92,10 @@ class Dialog extends BaseComponent {
 
     if (props.dismissSwipeDirection) {
       console.warn('Dialog component\'s prop \'dismissSwipeDirection\' is deprecated, please remove it');
+    }
+
+    if (props.visible) {
+      this.animateContent();
     }
   }
 
@@ -135,16 +148,17 @@ class Dialog extends BaseComponent {
   }
 
   renderDraggableContainer() {
-    const {style, top} = this.getThemeProps();
+    const {style, top, disablePan} = this.getThemeProps();
+    const Container = disablePan ? View : PanGestureView;
 
     return (
-      <PanGestureView
+      <Container
         style={[this.styles.dialogContainer, style]}
         direction={top && PanGestureView.directions.UP}
         onDismiss={this.onDismiss}
       >
         {this.renderContent()}
-      </PanGestureView>
+      </Container>
     );
   }
 
@@ -178,20 +192,32 @@ class Dialog extends BaseComponent {
   }
 
   render() {
-    const {visible, overlayBackgroundColor} = this.getThemeProps();
-
-    return (
-      <Modal
-        transparent
-        visible={visible}
-        animationType={'fade'}
-        onBackgroundPress={this.onDismiss}
-        onRequestClose={this.onDismiss}
-        overlayBackgroundColor={overlayBackgroundColor}
-      >
-        {this.renderAnimationContainer()}
-      </Modal>
-    );
+    const {visible, overlayBackgroundColor, useModal} = this.getThemeProps();
+    
+    if (useModal) {
+      return (
+        <Modal
+          transparent
+          visible={visible}
+          animationType={'fade'}
+          onBackgroundPress={this.onDismiss}
+          onRequestClose={this.onDismiss}
+          overlayBackgroundColor={overlayBackgroundColor}
+        >
+          {this.renderAnimationContainer()}
+        </Modal>
+      );
+    } else {      
+      return (
+        <TouchableOpacity 
+          onPress={this.onDismiss}
+          activeOpacity={1}
+          style={{position: 'absolute', bottom: 0, top: 0, left: 0, right: 0, backgroundColor: overlayBackgroundColor}}
+        >
+          {this.renderAnimationContainer()}
+        </TouchableOpacity>
+      );
+    }
   }
 }
 

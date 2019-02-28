@@ -48,6 +48,8 @@ module.exports = {
   get BaseComponent() { return require('./commons').BaseComponent; },
   get PureBaseComponent() { return require('./commons').PureBaseComponent; },
   get SelectableComponent() { return require('./commons').SelectableComponent; },
+  get UIComponent() { return require('./commons').UIComponent; },
+  get forwardRef() { return require('./commons').forwardRef; },
 
   // Helpers
   get AvatarHelper() { return require('./helpers').AvatarHelper; },

@@ -167,7 +167,7 @@ export default class ActionSheet extends BaseComponent {
   }
 
   render() {
-    const {visible, useNativeIOS, onDismiss} = this.getThemeProps();
+    const {useNativeIOS, visible, onDismiss, useModal} = this.getThemeProps();
     
     if (Constants.isIOS && useNativeIOS) return null;
     
@@ -177,9 +177,10 @@ export default class ActionSheet extends BaseComponent {
         centerH
         width="100%"
         height={null}
+        style={{backgroundColor: Colors.white}}
         visible={visible}
         onDismiss={onDismiss}
-        style={{backgroundColor: Colors.white}}
+        useModal={useModal}
       >
         {this.renderSheet()}
       </Dialog>

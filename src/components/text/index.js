@@ -26,7 +26,6 @@ export default class Text extends BaseComponent {
      * whether to change the text to uppercase
      */
     uppercase: PropTypes.bool,
-    testID: PropTypes.string,
   };
 
   // static defaultProps = {
@@ -55,9 +54,9 @@ export default class Text extends BaseComponent {
       style,
     ];
     const children = uppercase ? this.transformToUppercase(this.props.children) : this.props.children;
-    
+
     return (
-      <RNText {...others} style={textStyle} ref={r => (this.text = r)}>
+      <RNText {...others} style={textStyle} ref={this.setRef}>
         {children}
       </RNText>
     );
@@ -68,14 +67,6 @@ export default class Text extends BaseComponent {
       return items.toUpperCase();
     }
     return items;
-  }
-
-  measure(...args) {
-    this.text.measure(...args);
-  }
-
-  measureInWindow(...args) {
-    this.text.measureInWindow(...args);
   }
 }
 

@@ -8,6 +8,7 @@ const MAP_SCHEMA = {
 
 const FIX_TYPES = {
   PROP_NAME: 'propName',
+  COMPONENT_NAME: 'componentName'
 };
 
 module.exports = {
@@ -40,9 +41,16 @@ module.exports = {
             if (options.fix) {
               const type = Object.keys(options.fix)[0];
               const fix = Object.values(options.fix)[0];
+
               switch (type) {
                 case FIX_TYPES.PROP_NAME:
                   // Fix for prop name change only (when prop's value and type does not change)
+                  return fixer.replaceText(node.name, fix);
+                case FIX_TYPES.COMPONENT_NAME:
+                  if (node.type === 'ImportDeclaration') {
+                    const index = getSpecifierIndex(node, options.name);
+                    return fixer.replaceText(node.specifiers[index], fix);
+                  }
                   return fixer.replaceText(node.name, fix);
                 default:
                   break;
@@ -53,6 +61,19 @@ module.exports = {
       } catch (err) {
         console.log('Found error in: ', context.getFilename());
       }
+    }
+
+    function getSpecifierIndex(node, name) {
+      let matchIndex;
+      if (node && node.specifiers) {
+        _.forEach(node.specifiers, (s, index) => {
+          const x = _.get(s, 'imported.name');
+          if (x === name) {
+            matchIndex = index;
+          }
+        });
+      }
+      return matchIndex;
     }
 
     function checkPropDeprecation(node, propName, deprecatedPropList, componentName) {
@@ -72,7 +93,6 @@ module.exports = {
           component = node.name.name;
         }
       }
-
       if (component) {
         if (isComponentDeprecated(component)) {
           const deprecatedComponent = getDeprecatedObject(component);

@@ -6,8 +6,8 @@ import {
 } from 'react-native';
 
 
-const StepperButton = ({label, testId, styles, disabled, onPress}) =>
-  <TouchableOpacity disabled={disabled} testID={testId} onPress={onPress} style={styles.button}>
+const StepperButton = ({label, testID, styles, disabled, onPress}) =>
+  <TouchableOpacity disabled={disabled} testID={testID} onPress={onPress} style={styles.button}>
     <Text style={[styles.buttonText, disabled && styles.disableText]} allowFontScaling={false}>
       {label}
     </Text>
@@ -18,10 +18,6 @@ StepperButton.propTypes = {
    * Text to show on the button
    */
   label: PropTypes.string,
-  /**
-   * Use to identify the button in tests
-   */
-  testId: PropTypes.string,
   /**
    * Style from the parent component with `button` style, `buttonText` style and `disableText` style
    */
@@ -34,6 +30,7 @@ StepperButton.propTypes = {
    * Handler function to receive updates when the value changes
    */
   onPress: PropTypes.func,
+  testID: PropTypes.string
 };
 
 StepperButton.displayName = 'IGNORE';

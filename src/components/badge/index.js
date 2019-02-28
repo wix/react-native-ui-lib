@@ -1,24 +1,21 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Text, StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
-import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
+import {BorderRadiuses, Colors, ThemeManager, Typography} from '../../style';
 import View from '../view';
 
-
-const SIZE_PIMPLE_SMALL = 6;
-const SIZE_PIMPLE_BIG = 10;
-const SIZE_DEFAULT = 20;
-const WIDTH_DOUBLE = 28;
-const WIDTH_TRIPLE = 36;
-
-const SIZE_SMALL = 16;
-const WIDTH_DOUBLE_SMALL = 25;
-const WIDTH_TRIPLE_SMALL = 30;
-
 const LABEL_FORMATTER_VALUES = [1, 2, 3, 4];
+
+export const BADGE_SIZES = {
+  pimpleSmall: 6,
+  pimpleBig: 10,
+  pimpleHuge: 14,
+  small: 16,
+  default: 20,
+};
 
 /**
  * @description: Round colored badge, typically used to show a number
@@ -42,7 +39,7 @@ export default class Badge extends BaseComponent {
     /**
      * the badge size (default, small)
      */
-    size: PropTypes.oneOf(['default', 'small', 'pimpleBig', 'pimpleSmall']),
+    size: PropTypes.oneOf(Object.keys(BADGE_SIZES)),
     /**
      * width of border around the badge
      */
@@ -72,6 +69,14 @@ export default class Badge extends BaseComponent {
     size: 'default',
   };
 
+  constructor(props) {
+    super(props);
+
+    if (props.testId) {
+      console.warn("Badge prop 'testId' is deprecated. Please use RN 'testID' prop instead.");
+    }
+  }
+
   isSmallBadge() {
     const {size} = this.props;
     return size === 'small';
@@ -82,41 +87,33 @@ export default class Badge extends BaseComponent {
   }
 
   getBadgeSizeStyle() {
-    const {label, borderWidth, size} = this.props;
-    let height = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
-    let width = 0;
-    if (label === undefined) {
-      switch (size) {
-        default:
-        case 'pimpleSmall':
-          width = SIZE_PIMPLE_SMALL;
-          height = SIZE_PIMPLE_SMALL;
-          break;
-        case 'pimpleBig':
-          width = SIZE_PIMPLE_BIG;
-          height = SIZE_PIMPLE_BIG;
-      }
-    } else {
-      const numberOfCharacters = label.length;
-      switch (numberOfCharacters) {
-        case 0:
-        case 1:
-          width = this.isSmallBadge() ? SIZE_SMALL : SIZE_DEFAULT;
-          break;
-        case 2:
-          width = this.isSmallBadge() ? WIDTH_DOUBLE_SMALL : WIDTH_DOUBLE;
-          break;
-        default:
-          width = this.isSmallBadge() ? WIDTH_TRIPLE_SMALL : WIDTH_TRIPLE;
-          break;
-      }
-    }
+    const {borderWidth, size} = this.props;
+    const label = this.getFormattedLabel();
+    const badgeHeight = this.isSmallBadge() ? BADGE_SIZES.small : BADGE_SIZES.default;
 
-    if (borderWidth) {
-      width += borderWidth * 2;
-      height += borderWidth * 2;
+    const style = {
+      paddingHorizontal: this.isSmallBadge() ? 4 : 6,
+      height: badgeHeight,
+      minWidth: badgeHeight,
+    };
+
+    if (label === undefined) {
+      const pimpleSizes = ['pimpleSmall', 'pimpleBig', 'pimpleHuge'];
+      if (pimpleSizes.includes(size)) {
+        style.minWidth = BADGE_SIZES[size];
+        style.height = BADGE_SIZES[size];
+        style.paddingHorizontal = 0;
+      } else {
+        style.minWidth = BADGE_SIZES.pimpleSmall;
+        style.height = BADGE_SIZES.pimpleSmall;
+        style.paddingHorizontal = 0;
+      }
     }
-    return {width, height};
+    if (borderWidth) {
+      style.minWidth += borderWidth * 2;
+      style.height += borderWidth * 2;
+    }
+    return style;
   }
 
   getFormattedLabel() {
@@ -125,7 +122,7 @@ export default class Badge extends BaseComponent {
       return label;
     }
     if (LABEL_FORMATTER_VALUES.includes(labelFormatterLimit)) {
-      const maxLabelNumber = (10 ** labelFormatterLimit) - 1;
+      const maxLabelNumber = 10 ** labelFormatterLimit - 1;
       let formattedLabel = label;
       if (formattedLabel > maxLabelNumber) {
         formattedLabel = `${maxLabelNumber}+`;
@@ -150,33 +147,37 @@ export default class Badge extends BaseComponent {
   }
 
   render() {
-    const {borderWidth, borderColor} = this.props;
-    const containerStyle = this.extractContainerStyle(this.props);
+    // TODO: remove testId after deprecation
+    const {borderWidth, borderColor, containerStyle, testId, testID, ...others} = this.props;
     const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
     const sizeStyle = this.getBadgeSizeStyle();
 
     const animationProps = this.extractAnimationProps();
     const Container = !_.isEmpty(animationProps) ? AnimatableView : View;
     if (!_.isEmpty(animationProps)) {
-      console.warn('Badge component will soon stop supporting animationProps.' +
-        'Please wrap your Badge component with your own animation component, such as Animatable.View');
+      console.warn(
+        'Badge component will soon stop supporting animationProps.' +
+          'Please wrap your Badge component with your own animation component, such as Animatable.View',
+      );
     }
 
     return (
-      <Container
-        testID={this.props.testId}
-        style={[
-          sizeStyle,
-          this.styles.badge,
-          borderWidth && {borderWidth},
-          borderColor && {borderColor},
-          containerStyle,
-          backgroundStyle,
-        ]}
-        {...animationProps}
-      >
-        {this.renderLabel()}
-      </Container>
+      // The extra View wrapper is to break badge's flex-ness
+      <View style={containerStyle} {...others} backgroundColor={undefined}>
+        <Container
+          testID={testID || testId}
+          style={[
+            sizeStyle,
+            this.styles.badge,
+            borderWidth && {borderWidth},
+            borderColor && {borderColor},
+            backgroundStyle,
+          ]}
+          {...animationProps}
+        >
+          {this.renderLabel()}
+        </Container>
+      </View>
     );
   }
 }
@@ -184,6 +185,7 @@ export default class Badge extends BaseComponent {
 function createStyles() {
   return StyleSheet.create({
     badge: {
+      alignSelf: 'flex-start',
       borderRadius: BorderRadiuses.br100,
       backgroundColor: ThemeManager.primaryColor,
       alignItems: 'center',

@@ -76,6 +76,7 @@ class AnimatedImage extends BaseComponent {
   }
 
   get testID() {
+    // TODO: remove testId after deprecation
     const {testId, testID} = this.props;
     return testID || testId;
   }
