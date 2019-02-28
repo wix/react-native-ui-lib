@@ -76,7 +76,7 @@ class Checkbox extends BaseComponent {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  check(value) {
+  animateCheckbox(value) {
     const {isChecked} = this.state;
 
     Animated.timing(isChecked, {
@@ -91,22 +91,18 @@ class Checkbox extends BaseComponent {
     const {disabled} = this.getThemeProps();
     if (!disabled) {
       _.invoke(this.props, 'onValueChange', !this.props.value);
-      this.check(!this.props.value);
+      this.animateCheckbox(!this.props.value);
     }
   };
 
-  getColors(element) {
+  getColor() {
     const {color, disabled} = this.getThemeProps();
-    if (disabled) {
-      return {[element]: DEFAULT_DISABLED_COLOR};
-    } else {
-      return {[element]: color || DEFAULT_COLOR};
-    }
+    return disabled ? DEFAULT_DISABLED_COLOR : color || DEFAULT_COLOR;
   }
 
-  getBorderColor() {
+  getBorderStyle() {
     const {style: propsStyle} = this.getThemeProps();
-    const borderColor = this.getColors('borderColor');
+    const borderColor = {borderColor: this.getColor()};
     const style = [this.styles.container, {borderWidth: 2}, borderColor, propsStyle];
 
     return style;
@@ -119,12 +115,12 @@ class Checkbox extends BaseComponent {
         activeOpacity={1}
         testID={testID}
         {...others}
-        style={this.getBorderColor()}
+        style={this.getBorderStyle()}
         onPress={this.onPress}
       >
         {
           <Animated.View
-            style={[this.styles.container, this.getColors('backgroundColor'), {opacity: this.animationStyle.opacity}]}
+            style={[this.styles.container, {backgroundColor: this.getColor()}, {opacity: this.animationStyle.opacity}]}
           >
             <Animated.Image
               style={[
