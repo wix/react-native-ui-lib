@@ -10,6 +10,7 @@ import TouchableOpacity from '../touchableOpacity';
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
 const DEFAULT_ICON_COLOR = Colors.red;
+const DEFAULT_DISABLED_COLOR = Colors.dark70;
 
 /**
  * Checkbox component for toggling boolean value related to some context
@@ -17,27 +18,19 @@ const DEFAULT_ICON_COLOR = Colors.red;
 class Checkbox extends BaseComponent {
   constructor(props) {
     super(props);
+
     this.state = {
-      isChecked: new Animated.Value(props.value ? 1 : 0),
+      isChecked: new Animated.Value(this.props.value ? 1 : 0),
     };
 
     this.animationStyle = {
-      opacity: this.state.isChecked.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 1],
-      }),
+      opacity: this.state.isChecked,
       transform: [
         {
-          scaleX: this.state.isChecked.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0, 1],
-          }),
+          scaleX: this.state.isChecked,
         },
         {
-          scaleY: this.state.isChecked.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0, 1],
-          }),
+          scaleY: this.state.isChecked,
         },
       ],
     };
@@ -83,19 +76,13 @@ class Checkbox extends BaseComponent {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.value !== nextProps.value) {
-      this.check(nextProps.value);
-    }
-  }
-
-  check(nextProps) {
+  check(value) {
     const {isChecked} = this.state;
 
     Animated.timing(isChecked, {
-      duration: 220,
+      duration: 170,
       easing: Easing.bezier(0.77, 0.0, 0.175, 1.0),
-      toValue: nextProps.value,
+      toValue: Number(value),
       useNativeDriver: true,
     }).start();
   }
@@ -108,31 +95,21 @@ class Checkbox extends BaseComponent {
     }
   };
 
-  getBorderColor() {
-    const {value, color, style: propsStyle, disabled} = this.getThemeProps();
-    const style = [this.styles.containerBorder];
-    if (value) {
-      if (disabled) {
-        style.push({borderColor: Colors.dark70});
-      } else {
-        style.push({borderColor: color || DEFAULT_COLOR});
-      }
+  getColors(element) {
+    const {color, disabled} = this.getThemeProps();
+    if (disabled) {
+      return {[element]: DEFAULT_DISABLED_COLOR};
+    } else {
+      return {[element]: color || DEFAULT_COLOR};
     }
-    style.push(propsStyle);
-    return style;
   }
 
-  getFillColor() {
-    const {value, color, disabled} = this.getThemeProps();
-    if (value) {
-      if (disabled) {
-        return {backgroundColor: Colors.dark70};
-      } else {
-        return {backgroundColor: color || DEFAULT_COLOR};
-      }
-    } else {
-      return {backgroundColor: 'transparent'};
-    }
+  getBorderColor() {
+    const {style: propsStyle} = this.getThemeProps();
+    const borderColor = this.getColors('borderColor');
+    const style = [this.styles.container, {borderWidth: 2}, borderColor, propsStyle];
+
+    return style;
   }
 
   render() {
@@ -145,9 +122,9 @@ class Checkbox extends BaseComponent {
         style={[this.getBorderColor()]}
         onPress={this.onPress}
       >
-        {value && (
+        {
           <Animated.View
-            style={[this.styles.container, this.getFillColor(), value && {opacity: this.animationStyle.opacity}]}
+            style={[this.styles.container, this.getColors('backgroundColor'), {opacity: this.animationStyle.opacity}]}
           >
             <Animated.Image
               style={[
@@ -160,7 +137,7 @@ class Checkbox extends BaseComponent {
               testID={`${testID}.selected`}
             />
           </Animated.View>
-        )}
+        }
       </TouchableOpacity>
     );
   }
@@ -168,25 +145,15 @@ class Checkbox extends BaseComponent {
 
 function createStyles({color = DEFAULT_COLOR, iconColor = DEFAULT_ICON_COLOR, size = DEFAULT_SIZE, borderRadius}) {
   return StyleSheet.create({
-    containerBorder: {
-      width: size,
-      height: size,
-      borderRadius: borderRadius || 8,
-      borderWidth: 2,
-      borderColor: color,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
     container: {
       width: size,
       height: size,
       borderRadius: borderRadius || 8,
       alignItems: 'center',
       justifyContent: 'center',
+      borderColor: color,
     },
     selectedIcon: {
-      height: size,
-      width: size,
       tintColor: iconColor,
       alignItems: 'center',
       justifyContent: 'center',
