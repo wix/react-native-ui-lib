@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Animated, Easing, Image, StyleSheet} from 'react-native';
+import {Animated, Easing, StyleSheet} from 'react-native';
 import {Colors} from '../../style';
 import Assets from '../../assets';
 import {BaseComponent} from '../../commons';
@@ -15,7 +15,6 @@ const DEFAULT_ICON_COLOR = Colors.red;
  * Checkbox component for toggling boolean value related to some context
  */
 class Checkbox extends BaseComponent {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -25,8 +24,22 @@ class Checkbox extends BaseComponent {
     this.animationStyle = {
       opacity: this.state.isChecked.interpolate({
         inputRange: [0, 1],
-        outputRange: [0, 1]
+        outputRange: [0, 1],
       }),
+      transform: [
+        {
+          scaleX: this.state.isChecked.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 1],
+          }),
+        },
+        {
+          scaleY: this.state.isChecked.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 1],
+          }),
+        },
+      ],
     };
   }
 
@@ -80,7 +93,7 @@ class Checkbox extends BaseComponent {
     const {isChecked} = this.state;
 
     Animated.timing(isChecked, {
-      duration: 200,
+      duration: 220,
       easing: Easing.bezier(0.77, 0.0, 0.175, 1.0),
       toValue: nextProps.value,
       useNativeDriver: true,
@@ -133,11 +146,14 @@ class Checkbox extends BaseComponent {
         onPress={this.onPress}
       >
         {value && (
-          <Animated.View style={[this.styles.container, this.getFillColor(), value && {opacity: this.animationStyle.opacity}]}>
-            <Image 
+          <Animated.View
+            style={[this.styles.container, this.getFillColor(), value && {opacity: this.animationStyle.opacity}]}
+          >
+            <Animated.Image
               style={[
                 this.styles.selectedIcon,
                 color && {tintColor: iconColor},
+                {transform: this.animationStyle.transform},
                 disabled && {tintColor: DEFAULT_ICON_COLOR},
               ]}
               source={selectedIcon || Assets.icons.checkSmall}
@@ -169,6 +185,8 @@ function createStyles({color = DEFAULT_COLOR, iconColor = DEFAULT_ICON_COLOR, si
       justifyContent: 'center',
     },
     selectedIcon: {
+      height: size,
+      width: size,
       tintColor: iconColor,
       alignItems: 'center',
       justifyContent: 'center',

@@ -21,7 +21,7 @@ class CheckboxScreen extends Component {
               onValueChange={value1 => this.setState({value1})}
               size={70}
               style={{marginBottom: 20}}
-              // disabled
+              disabled
               // color={Colors.purple30}
             />
            {/*  <Checkbox
