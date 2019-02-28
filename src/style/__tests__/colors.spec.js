@@ -1,6 +1,6 @@
 import uut from '../colors';
 
-describe('services/AvatarService', () => {
+describe('style/Colors', () => {
   it('should add alpha to hex color value', () => {
     expect(uut.rgba(uut.green30, 0.7)).toBe('rgba(101, 200, 136, 0.7)');
     expect(uut.rgba(uut.red10, 0.7)).toBe('rgba(207, 38, 47, 0.7)');
@@ -38,7 +38,27 @@ describe('services/AvatarService', () => {
     expect(() => uut.rgba('#ff244', 0.7)).toThrow(new Error('#ff244 is invalid hex color'));
   });
 
+  describe('isEmpty', () => {
+    it('should return true if color is undefined', () => {
+      expect(uut.isEmpty(undefined)).toBe(true);
+      expect(uut.isEmpty(null)).toBe(true);
+    });
+
+    it('should return true if color is transparent', () => {
+      expect(uut.isEmpty('transparent')).toBe(true);
+    });
+
+    it('should return false if color is valid', () => {
+      expect(uut.isEmpty('#fff')).toBe(false);
+      expect(uut.isEmpty(uut.green20)).toBe(false);
+    });
+  });
+
   describe('getColorTint', () => {
+    it('should return back transparent if transparent was passed', () => {
+      expect(uut.getColorTint('transparent', '40')).toEqual('transparent');
+    });
+
     it('should return color with a specific tint', () => {
       expect(uut.getColorTint(uut.green30, '40')).toEqual(uut.green40);
       expect(uut.getColorTint(uut.blue20, '60')).toEqual(uut.blue60);
@@ -49,11 +69,11 @@ describe('services/AvatarService', () => {
       expect(uut.getColorTint('#F1BE0B')).toEqual('#F1BE0B');
       expect(uut.getColorTint('#F1BE0B', '2a4')).toEqual('#F1BE0B');
     });
-    
+
     it('should return undefined if color param is undefined', () => {
       expect(uut.getColorTint(undefined, 10)).toEqual(undefined);
     });
-    
+
     it('should handle color that does not exist in uilib', () => {
       expect(uut.getColorTint('#F1BE0B', 10)).toEqual('#624D04');
       expect(uut.getColorTint('#F1BE0B', 20)).toEqual('#927307');
@@ -64,13 +84,13 @@ describe('services/AvatarService', () => {
       expect(uut.getColorTint('#F1BE0B', 70)).toEqual('#FBE69D');
       expect(uut.getColorTint('#F1BE0B', 80)).toEqual('#FDF2CE');
     });
-    
+
     it('should round down tint level to the nearest one', () => {
       expect(uut.getColorTint('#F1BE0B', 75)).toEqual('#FBE69D');
       expect(uut.getColorTint('#F1BE0B', 25)).toEqual('#927307');
       expect(uut.getColorTint('#F1BE0B', 35)).toEqual('#C39A09');
     });
-    
+
     it('should handle out of range tint levels and round them to the nearest one in range', () => {
       expect(uut.getColorTint('#F1BE0B', 3)).toEqual('#624D04');
       expect(uut.getColorTint('#F1BE0B', 95)).toEqual('#FDF2CE');

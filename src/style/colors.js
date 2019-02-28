@@ -2,7 +2,6 @@ import _ from 'lodash';
 import Color from 'color';
 import {colorsPalette} from './colorsPalette';
 
-
 class Colors {
   /**
    * Load custom set of colors
@@ -60,9 +59,27 @@ class Colors {
     );
   }
 
+  isEmpty(color) {
+    if (_.isNil(color) || color === 'transparent') {
+      return true;
+    }
+
+    try {
+      Color(color);
+      return false;
+    } catch (error) {
+      console.warn('Colors.isEmpty failed:', error);
+      return true;
+    }
+  }
+
   getColorTint(color, tintKey) {
     if (_.isUndefined(tintKey) || isNaN(tintKey) || _.isUndefined(color)) {
       console.error('"Colors.getColorTint" must accept a color and tintKey params');
+      return color;
+    }
+
+    if (color === 'transparent') {
       return color;
     }
 
@@ -71,15 +88,15 @@ class Colors {
     if (colorKey) {
       const requiredColorKey = `${colorKey.slice(0, -2)}${tintKey}`;
       const requiredColor = this[requiredColorKey];
-      
+
       if (_.isUndefined(requiredColor)) {
         console.warn('"Colors.getColorTint" could not find color with this tint');
         return color;
       }
       return requiredColor;
-    } else { 
+    } else {
       // Handles dynamic colors (non uilib colors)
-      let tintLevel = Math.floor((Number(tintKey) / 10) + 1);
+      let tintLevel = Math.floor(Number(tintKey) / 10 + 1);
       tintLevel = Math.max(2, tintLevel);
       tintLevel = Math.min(9, tintLevel);
       return generateColorTint(color, tintLevel * 10);
@@ -89,7 +106,7 @@ class Colors {
   generateColorPalette(color) {
     const hsl = Color(color).hsl();
     const lightness = Math.round(hsl.color[2]);
-    
+
     const ls = [hsl.color[2]];
     let l = lightness - 10;
     while (l >= 20) {
@@ -102,7 +119,7 @@ class Colors {
       ls.push(l);
       l += 10;
     }
-    
+
     const tints = [];
     _.forEach(ls, e => {
       const tint = generateColorTint(color, e);
