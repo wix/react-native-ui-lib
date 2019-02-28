@@ -33,7 +33,7 @@ module.exports = {
     'react/jsx-tag-spacing': 'off',
     // 'react/no-did-mount-set-state': 'warn',
     'react/prefer-stateless-function': 'off',
-    // 'react/prop-types': 'warn',
+    "react/prop-types": ['error', { ignore: ['children', 'style', 'testID'] }],
     'react/require-default-props': 'off',
     'react/jsx-no-bind': ['warn', {
       ignoreRefs: true,
