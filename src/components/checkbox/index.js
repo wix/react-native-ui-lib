@@ -1,23 +1,42 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {Animated, Easing, StyleSheet} from 'react-native';
 import {Colors} from '../../style';
 import Assets from '../../assets';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
 
-
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
 const DEFAULT_ICON_COLOR = Colors.white;
+const DEFAULT_DISABLED_COLOR = Colors.dark70;
 
 /**
  * Checkbox component for toggling boolean value related to some context
  */
 class Checkbox extends BaseComponent {
-  static displayName = 'Checkbox';
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      isChecked: new Animated.Value(this.props.value ? 1 : 0),
+    };
+
+    this.animationStyle = {
+      opacity: this.state.isChecked,
+      transform: [
+        {
+          scaleX: this.state.isChecked,
+        },
+        {
+          scaleY: this.state.isChecked,
+        },
+      ],
+    };
+  }
+
+  static displayName = 'Checkbox';
   static propTypes = {
     /**
      * The value of the Checkbox. If true the switch will be turned on. Default value is false.
@@ -50,37 +69,42 @@ class Checkbox extends BaseComponent {
     /**
      * The selected icon color
      */
-    iconColor: PropTypes.string
+    iconColor: PropTypes.string,
   };
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
   }
 
+  animateCheckbox(value) {
+    const {isChecked} = this.state;
+
+    Animated.timing(isChecked, {
+      duration: 170,
+      easing: Easing.bezier(0.77, 0.0, 0.175, 1.0),
+      toValue: Number(value),
+      useNativeDriver: true,
+    }).start();
+  }
+
   onPress = () => {
     const {disabled} = this.getThemeProps();
     if (!disabled) {
       _.invoke(this.props, 'onValueChange', !this.props.value);
+      this.animateCheckbox(!this.props.value);
     }
   };
 
-  getContainerStyle() {
-    const {value, color, style: propsStyle, disabled} = this.getThemeProps();
-    const style = [this.styles.container];
+  getColor() {
+    const {color, disabled} = this.getThemeProps();
+    return disabled ? DEFAULT_DISABLED_COLOR : color || DEFAULT_COLOR;
+  }
 
-    if (value) {
-      if (disabled) {
-        style.push({backgroundColor: Colors.dark70, borderColor: Colors.dark70});
-      } else {
-        style.push(color ? {backgroundColor: color, borderColor: color} : this.styles.containerSelected);
-      }
-    } else if (disabled) {
-      style.push({borderColor: Colors.dark70});
-    } else if (color) {
-      style.push({borderColor: color});
-    }
+  getBorderStyle() {
+    const {style: propsStyle} = this.getThemeProps();
+    const borderColor = {borderColor: this.getColor()};
+    const style = [this.styles.container, {borderWidth: 2}, borderColor, propsStyle];
 
-    style.push(propsStyle);
     return style;
   }
 
@@ -91,16 +115,25 @@ class Checkbox extends BaseComponent {
         activeOpacity={1}
         testID={testID}
         {...others}
-        style={this.getContainerStyle()}
+        style={this.getBorderStyle()}
         onPress={this.onPress}
       >
-        {value && (
-          <Image
-            style={[this.styles.selectedIcon, color && {tintColor: iconColor}, disabled && {tintColor: DEFAULT_ICON_COLOR}]}
-            source={selectedIcon || Assets.icons.checkSmall}
-            testID={`${testID}.selected`}
-          />
-        )}
+        {
+          <Animated.View
+            style={[this.styles.container, {backgroundColor: this.getColor()}, {opacity: this.animationStyle.opacity}]}
+          >
+            <Animated.Image
+              style={[
+                this.styles.selectedIcon,
+                color && {tintColor: iconColor},
+                {transform: this.animationStyle.transform},
+                disabled && {tintColor: DEFAULT_ICON_COLOR},
+              ]}
+              source={selectedIcon || Assets.icons.checkSmall}
+              testID={`${testID}.selected`}
+            />
+          </Animated.View>
+        }
       </TouchableOpacity>
     );
   }
@@ -112,17 +145,15 @@ function createStyles({color = DEFAULT_COLOR, iconColor = DEFAULT_ICON_COLOR, si
       width: size,
       height: size,
       borderRadius: borderRadius || 8,
-      borderWidth: 2,
-      borderColor: color,
       alignItems: 'center',
-      justifyContent: 'center'
-    },
-    containerSelected: {
-      backgroundColor: color
+      justifyContent: 'center',
+      borderColor: color,
     },
     selectedIcon: {
-      tintColor: iconColor
-    }
+      tintColor: iconColor,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
   });
 }
 
