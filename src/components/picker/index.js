@@ -168,10 +168,6 @@ class Picker extends BaseComponent {
     return _.isFunction(getLabel) ? getLabel(value) : _.get(value, 'label');
   }
 
-  getTypography() {
-    return this.extractTypographyValue() || Typography.text70;
-  }
-
   handlePickerOnPress = () => {
     this.toggleExpandableModal(true);
     _.invoke(this.props, 'onPress');
