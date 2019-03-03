@@ -45,9 +45,7 @@ const DATA = [
   },
 ];
 
-const ANIMATION_DURATION = 200;
-
-export default class PlaygroundScreen extends Component {
+export default class SharedTransitionScreen extends Component {
   constructor(props) {
     super(props);
 
@@ -56,38 +54,6 @@ export default class PlaygroundScreen extends Component {
 
   state = {
     showDetails: false,
-  };
-
-  componentDidUpdate() {
-    LayoutAnimation.configureNext({
-      ...LayoutAnimation.Presets.easeInEaseOut,
-      duration: ANIMATION_DURATION,
-    });
-  }
-
-  focusItem = id => {
-    const {itemId} = this.state;
-    if (itemId) {
-      this.backToList();
-    } else {
-      const card = this.cards[id];
-      card.measureInWindow((x, y, width, height) => {
-        const itemLayout = {x, y, width, height};
-        this.setState({itemId: id, itemLayout});
-
-        setTimeout(() => {
-          this.setState({showDetails: true});
-        }, ANIMATION_DURATION);
-      });
-    }
-  };
-
-  backToList = () => {
-    this.setState({showDetails: false});
-
-    setTimeout(() => {
-      this.setState({itemId: undefined, itemLayout: undefined});
-    }, ANIMATION_DURATION);
   };
 
   renderItem = ({item}) => {
