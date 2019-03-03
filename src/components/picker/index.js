@@ -4,7 +4,6 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Typography} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
 import Modal from '../../screensComponents/modal';
