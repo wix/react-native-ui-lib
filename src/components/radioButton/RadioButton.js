@@ -196,8 +196,7 @@ class RadioButton extends BaseComponent {
             style={[
               this.getRadioButtonInnerStyle(),
               {opacity: opacityAnimationValue},
-              {scaleX: scaleAnimationValue},
-              {scaleY: scaleAnimationValue}
+              {transform: [{ scale: scaleAnimationValue }]}
             ]}
           />
         </View>
