@@ -114,7 +114,7 @@ export default class PlaygroundScreen extends Component {
         <SharedTransition.Source
           id={item.id}
           data={item}
-          style={[{overflow: 'hidden', position: 'absolute', right: 20, top: 20, bottom: 20, width: 150, height: 200}]}
+          style={[{overflow: 'hidden', position: 'absolute', right: 20, top: 20, bottom: 20, width: '45%', height: 200}]}
         >
           {this.renderSharedElement(item)}
         </SharedTransition.Source>

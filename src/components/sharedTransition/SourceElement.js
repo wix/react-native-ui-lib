@@ -14,10 +14,6 @@ class SourceElement extends Component {
 
   state = {};
 
-  setRef = ref => {
-    this.element = ref;
-  };
-
   onPress = () => {
     const {data} = this.props;
     const {setSource} = this.context;
@@ -26,6 +22,10 @@ class SourceElement extends Component {
       const sourceLayout = {x, y, width, height};
       setSource(sourceLayout, data, this.props.children);
     });
+  };
+
+  setRef = ref => {
+    this.element = ref;
   };
 
   render() {
