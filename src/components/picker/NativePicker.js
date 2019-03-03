@@ -7,7 +7,7 @@ import {WheelPicker} from '../../nativeComponents';
 import PickerDialog from './PickerDialog';
 
 
-class Picker extends BaseComponent {
+class NativePicker extends BaseComponent {
   state = {
     selectedValue: this.props.value,
     items: this.extractPickerItems(this.props),
@@ -74,10 +74,9 @@ class Picker extends BaseComponent {
     return (
       <View>
         <TextField
-          ref={r => (this.input = r)}
-          floatingPlaceholder={false}
-          enableErrors={false}
           {...textInputProps}
+          ref={r => (this.input = r)}
+          enableErrors={false}
           value={label}
           expandable
           renderExpandable={this.renderPickerDialog}
@@ -87,5 +86,5 @@ class Picker extends BaseComponent {
   }
 }
 
-Picker.Item = WheelPicker.Item;
-export default Picker;
+NativePicker.Item = WheelPicker.Item;
+export default NativePicker;
