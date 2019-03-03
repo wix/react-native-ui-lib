@@ -88,6 +88,9 @@ export const navigationData = {
   },
   Examples: {
     title: 'Examples',
-    screens: [{title: 'Apple Music', tags: 'apple music demo screen', screen: 'unicorn.examples.AppleMusic'}],
+    screens: [
+      {title: 'Apple Music', tags: 'apple music demo screen', screen: 'unicorn.examples.AppleMusic'},
+      {title: 'List Actions', tags: 'list actions demo screen', screen: 'unicorn.examples.ListActionsScreen'}
+    ],
   },
 };
