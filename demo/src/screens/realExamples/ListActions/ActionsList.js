@@ -129,7 +129,7 @@ export default class ActionsList extends Component {
           position: 'absolute',
           alignSelf: 'flex-start',
           padding: 20,
-          // opacity: animationValue2,
+          opacity: animationValue2,
           transform: [
             {scale: animationValue2}
           ]
@@ -172,7 +172,7 @@ export default class ActionsList extends Component {
           position: 'absolute',
           alignSelf: 'flex-end',
           padding: 20,
-          // opacity: animationValue,
+          opacity: animationValue,
           transform: [
             {scale: animationValue}
           ]
