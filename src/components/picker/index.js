@@ -110,10 +110,6 @@ class Picker extends BaseComponent {
      */
     renderNativePicker: PropTypes.func,
     /**
-     * Icon asset source for showing on the right side, appropriate for drop-down icon and such
-     */
-    rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
      * Pass props to the list component that wraps the picker options (allows to control FlatList behavior)
      */
     listProps: PropTypes.object
