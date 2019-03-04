@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Text, View, WheelPicker ,Colors} from 'react-native-ui-lib'; //eslint-disable-line
+import {Text, View, WheelPicker ,Colors, Constants} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class WheelPickerViewScreen extends PureComponent {
   constructor(props) {
@@ -31,6 +31,7 @@ export default class WheelPickerViewScreen extends PureComponent {
         <WheelPicker
           selectedValue={selectedValue}
           onValueChange={this.onValueChange}
+          style={Constants.isIOS ? {width: 200} : {}}
           color={Colors.purple30}
           labelStyle={{fontSize: 40, fontFamily: 'sans-serif-condensed-light'}}
           itemHeight={55}
