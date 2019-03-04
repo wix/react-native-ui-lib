@@ -64,7 +64,7 @@ export default class RadioButtonScreen extends Component {
       <View flex useSafeArea bg-dark80>
         <View flex>
           <ScrollView style={{padding: 20}}>
-            <RadioGroup value={this.state.color} onValueChange={value => this.setState({color: value})}>
+            <RadioGroup initialValue={this.state.color} onValueChange={value => this.setState({color: value})}>
               <Text marginB-20 text60 dark10>
                 Select a color
               </Text>
@@ -74,7 +74,7 @@ export default class RadioButtonScreen extends Component {
               <Text marginT-10>You chose: {this.state.color}</Text>
             </RadioGroup>
 
-            <RadioGroup marginT-30 value={this.state.textSide} onValueChange={value => this.setState({textSide: value})}>
+            <RadioGroup marginT-30 initialValue={this.state.textSide} onValueChange={value => this.setState({textSide: value})}>
               <Text marginB-20 text60 dark10>
                 Select text side
               </Text>
@@ -84,7 +84,7 @@ export default class RadioButtonScreen extends Component {
             </RadioGroup>
 
             <RadioGroup
-              value={this.state.transportationType} onValueChange={value => this.setState({transportationType: value})}
+              initialValue={this.state.transportationType} onValueChange={value => this.setState({transportationType: value})}
             >
               <Text marginV-20 text60 dark10>
                 Select transportation type (enum)
@@ -96,7 +96,7 @@ export default class RadioButtonScreen extends Component {
             </RadioGroup>
 
             <RadioGroup
-              value={this.state.messageType || null} onValueChange={value => this.setState({messageType: value})}
+              initialValue={this.state.messageType || null} onValueChange={value => this.setState({messageType: value})}
             >
               <Text marginV-20 text60 dark10>
                 Select Message type{'\n'}
@@ -108,7 +108,7 @@ export default class RadioButtonScreen extends Component {
               <Text marginT-10>You chose: {this.state.messageType ? this.state.messageType : 'Default'}</Text>
             </RadioGroup>
 
-            <RadioGroup marginT-30 value={this.state.value} onValueChange={value => this.setState({value})}>
+            <RadioGroup marginT-30 initialValue={this.state.value} onValueChange={value => this.setState({value})}>
               <Text marginB-20 text60 dark10>
                 Yes or No?
               </Text>
