@@ -99,23 +99,25 @@ class Hint extends BaseComponent {
 
   state = {};
 
-  setTargetPosition = node => {
-    if (!this.state.targetLayoutInWindow) {
-      setTimeout(() => {
-        node.measureInWindow((x, y, width, height) => {
-          const targetLayoutInWindow = {x, y, width, height};
-          this.setState({
-            targetLayoutInWindow,
-          });
-        });
-      });
-    }
+  setTargetRef = ref => {
+    this.targetRef = ref;
   };
 
   onTargetLayout = ({nativeEvent: {layout}}) => {
     if (!this.state.targetLayout) {
       this.setState({
         targetLayout: layout,
+      });
+    }
+
+    if (!this.state.targetLayoutInWindow) {
+      setTimeout(() => {
+        this.targetRef.measureInWindow((x, y, width, height) => {
+          const targetLayoutInWindow = {x, y, width, height};
+          this.setState({
+            targetLayoutInWindow,
+          });
+        });
       });
     }
   };
@@ -238,9 +240,16 @@ class Hint extends BaseComponent {
     const {targetLayoutInWindow} = this.state;
     const {onBackgroundPress} = this.props;
     if (targetLayoutInWindow) {
+      const containerPosition = this.getContainerPosition();
       return (
         <View
-          style={[styles.overlay, {top: -targetLayoutInWindow.y, left: -targetLayoutInWindow.x}]}
+          style={[
+            styles.overlay,
+            {
+              top: containerPosition.top - targetLayoutInWindow.y,
+              left: containerPosition.left - targetLayoutInWindow.x,
+            },
+          ]}
           pointerEvents="box-none"
         >
           {onBackgroundPress && (
@@ -300,7 +309,7 @@ class Hint extends BaseComponent {
     return React.cloneElement(this.props.children, {
       collapsable: false,
       onLayout: this.onTargetLayout,
-      ref: this.setTargetPosition,
+      ref: this.setTargetRef,
     });
   }
 
@@ -311,8 +320,8 @@ class Hint extends BaseComponent {
 
     return (
       <React.Fragment>
+        {this.renderOverlay()}
         <View {...others} style={[styles.container, style, this.getContainerPosition()]} collapsable={false}>
-          {this.renderOverlay()}
           {this.renderHint()}
         </View>
         {this.renderChildren()}
@@ -325,6 +334,9 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     zIndex: 100,
+    // This is a hack to make hint render correctly on Android
+    borderWidth: 1,
+    borderColor: 'transparent',
   },
   overlay: {
     position: 'absolute',
