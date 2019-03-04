@@ -10,6 +10,7 @@ import View from '../view';
 import Text from '../text';
 import Image from '../image';
 import AnimatedImage from '../../animations/animatedImage';
+import Assets from '../../assets';
 
 export const STATUS_MODES = {
   ONLINE: 'ONLINE',
@@ -125,6 +126,10 @@ export default class Avatar extends BaseComponent {
      * Press handler
      */
     onPress: PropTypes.func,
+    /**
+     * selected
+     */
+    isSelected: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -134,6 +139,7 @@ export default class Avatar extends BaseComponent {
     labelColor: Colors.dark10,
     status: STATUS_MODES.NONE,
     badgePosition: DEFAULT_BADGE_POSITION,
+    isSelected: false,
   };
 
   generateStyles() {
@@ -160,9 +166,9 @@ export default class Avatar extends BaseComponent {
     const badgeColor = onlineOverride ? Colors.green30 : this.getStatusBadgeColor(status);
     return badgeColor;
   }
-  
+
   getBadgeSize = () => _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
-  
+
   getBadgeBorderWidth = () => _.get(this.props, 'badgeProps.borderWidth', DEFAULT_BADGE_BORDER_WIDTH);
 
   getBadgePosition() {
@@ -249,6 +255,17 @@ export default class Avatar extends BaseComponent {
     return undefined;
   }
 
+  renderSelectCheckmark() {
+    if (this.props.isSelected) {
+      return (
+        <View center style={this.styles.checkmark}>
+          <Image tintColor={Colors.white} source={Assets.icons.check}/>
+        </View>
+      );
+    }
+    return false;
+  }
+
   render() {
     const {label, labelColor: color, imageSource, backgroundColor, onPress, containerStyle, testID} = this.props;
     const Container = onPress ? TouchableOpacity : View;
@@ -266,6 +283,7 @@ export default class Avatar extends BaseComponent {
         {this.renderImage()}
         {this.renderBadge()}
         {this.renderRibbon()}
+        {this.renderSelectCheckmark()}
       </Container>
     );
   }
@@ -327,6 +345,11 @@ function createStyles({size, labelColor}) {
       paddingHorizontal: 6,
       paddingVertical: 3,
     },
+    checkmark: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: Colors.rgba(Colors.black, 0.5),
+      borderRadius,
+    }
   });
 
   return styles;

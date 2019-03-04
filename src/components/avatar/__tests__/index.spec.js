@@ -58,4 +58,15 @@ describe('Avatar Badge', () => {
       expect(uut.renderBadge()).toEqual(false);
     });
   });
+
+  describe('select checkmark', () => {
+    it('should not return checkmark when not selected', () => {
+      const uut = new Avatar({});
+      expect(uut.renderSelectCheckmark()).toEqual(false);
+    });
+    it('should return checkmark when selected', () => {
+      const uut = new Avatar({isSelected: true});
+      expect(uut.renderSelectCheckmark()).not.toEqual(false);
+    });
+  });
 });
