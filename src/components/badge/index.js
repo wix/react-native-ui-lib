@@ -6,6 +6,7 @@ import {View as AnimatableView} from 'react-native-animatable';
 import {BaseComponent} from '../../commons';
 import {BorderRadiuses, Colors, ThemeManager, Typography} from '../../style';
 import View from '../view';
+import Image from '../image';
 
 const LABEL_FORMATTER_VALUES = [1, 2, 3, 4];
 
@@ -39,7 +40,7 @@ export default class Badge extends BaseComponent {
     /**
      * the badge size (default, small)
      */
-    size: PropTypes.oneOf(Object.keys(BADGE_SIZES)),
+    size: PropTypes.oneOfType([PropTypes.oneOf(Object.keys(BADGE_SIZES)), PropTypes.number]),
     /**
      * width of border around the badge
      */
@@ -59,6 +60,14 @@ export default class Badge extends BaseComponent {
      * Example: labelLengthFormater={2}, label={124}, label will present "99+".
      */
     labelFormatterLimit: PropTypes.oneOf(LABEL_FORMATTER_VALUES),
+    /**
+     * Renders an icon badge
+     */
+    icon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * Additional styling to badge icon
+     */
+    iconStyle: PropTypes.object,
     /**
      * Use to identify the badge in tests
      */
@@ -87,7 +96,7 @@ export default class Badge extends BaseComponent {
   }
 
   getBadgeSizeStyle() {
-    const {borderWidth, size} = this.props;
+    const {borderWidth, size, icon} = this.props;
     const label = this.getFormattedLabel();
     const badgeHeight = this.isSmallBadge() ? BADGE_SIZES.small : BADGE_SIZES.default;
 
@@ -97,7 +106,7 @@ export default class Badge extends BaseComponent {
       minWidth: badgeHeight,
     };
 
-    if (label === undefined) {
+    if (label === undefined && !icon) {
       const pimpleSizes = ['pimpleSmall', 'pimpleBig', 'pimpleHuge'];
       if (pimpleSizes.includes(size)) {
         style.minWidth = BADGE_SIZES[size];
@@ -133,6 +142,16 @@ export default class Badge extends BaseComponent {
     }
   }
 
+  getBorderStyling() {
+    const {icon, borderWidth, borderColor} = this.props;
+    if (!icon) {
+      return {
+        borderWidth,
+        borderColor,
+      };
+    }
+  }
+
   renderLabel() {
     return (
       <Text
@@ -146,11 +165,32 @@ export default class Badge extends BaseComponent {
     );
   }
 
+  renderIcon() {
+    const {icon, iconStyle, size, borderWidth, borderColor} = this.props;
+    const iconSize = isNaN(size) ? 16 : size;
+    return (
+      <View>
+        <Image
+          source={icon}
+          style={{
+            height: iconSize,
+            width: iconSize,
+            borderRadius: iconSize / 2,
+            borderWidth,
+            borderColor,
+            ...iconStyle
+          }}
+        />
+      </View>
+    );
+  }
+
   render() {
     // TODO: remove testId after deprecation
-    const {borderWidth, borderColor, containerStyle, testId, testID, ...others} = this.props;
-    const backgroundStyle = this.props.backgroundColor && {backgroundColor: this.props.backgroundColor};
+    const {borderWidth, backgroundColor, borderColor, containerStyle, icon, testId, testID, ...others} = this.props;
+    const backgroundStyle = backgroundColor && {backgroundColor};
     const sizeStyle = this.getBadgeSizeStyle();
+    const borderStyle = borderWidth && !icon && this.getBorderStyling();
 
     const animationProps = this.extractAnimationProps();
     const Container = !_.isEmpty(animationProps) ? AnimatableView : View;
@@ -166,16 +206,11 @@ export default class Badge extends BaseComponent {
       <View style={containerStyle} {...others} backgroundColor={undefined}>
         <Container
           testID={testID || testId}
-          style={[
-            sizeStyle,
-            this.styles.badge,
-            borderWidth && {borderWidth},
-            borderColor && {borderColor},
-            backgroundStyle,
-          ]}
+          pointerEvents={'none'}
+          style={[sizeStyle, !icon && this.styles.badge, borderStyle, backgroundStyle]}
           {...animationProps}
         >
-          {this.renderLabel()}
+          {icon ? this.renderIcon() : this.renderLabel()}
         </Container>
       </View>
     );
