@@ -1,13 +1,28 @@
 import React, {Component} from 'react';
-import {TouchableOpacity} from 'react-native';
-import {Assets, RadioButton, Colors, RadioGroup, View, Text} from 'react-native-ui-lib'; //eslint-disable-line
+import {TouchableOpacity, ScrollView, Platform, StyleSheet} from 'react-native';
+import {Assets, RadioButton, Colors, Shadows, RadioGroup, View, Text} from 'react-native-ui-lib'; //eslint-disable-line
 const starIcon = require('../../assets/icons/star.png');
 
+const TRANSPORTATION_TYPES = {
+  CAR: 'Car',
+  WALK: 'Walk',
+  BUS: 'Bus',
+};
+
+const MESSAGE_TYPES = {
+  WARNING: 'Warning',
+  ERROR: 'Error',
+};
+
 export default class RadioButtonScreen extends Component {
+  static transportationTypes = TRANSPORTATION_TYPES;
+  static messageTypes = MESSAGE_TYPES;
   constructor(props) {
     super(props);
     this.state = {
       color: 'orange',
+      transportationType: undefined,
+      messageType: undefined,
       disabledSelectedValue: true,
     };
   }
@@ -16,6 +31,14 @@ export default class RadioButtonScreen extends Component {
     return (
       <View row centerV marginB-5>
         <RadioButton value={value} label={text}/>
+      </View>
+    );
+  }
+
+  renderRadioButtonForEnum(type) {
+    return (
+      <View row centerV marginB-5>
+        <RadioButton value={type} label={type}/>
       </View>
     );
   }
@@ -39,27 +62,51 @@ export default class RadioButtonScreen extends Component {
   render() {
     return (
       <View flex useSafeArea bg-dark80>
-        <View flex padding-20>
-          <View flex>
-            <View spread row>
-              <RadioGroup value={this.state.color} onValueChange={value => this.setState({color: value})}>
-                <Text marginB-20 text60 dark10>
-                  Select a color
-                </Text>
-                {this.renderRadioButton('orange', 'Orange')}
-                {this.renderRadioButton('purple', 'Purple')}
-                {this.renderRadioButton('green', 'Green')}
-                <Text marginT-10>You chose: {this.state.color}</Text>
-              </RadioGroup>
-              <RadioGroup value={this.state.textSide} onValueChange={value => this.setState({textSide: value})}>
-                <Text marginB-20 text60 dark10>
-                  Select text side
-                </Text>
-                {this.renderRadioButtonWithImageAndText('right', 'Text on right')}
-                {this.renderRadioButtonWithImageAndText('left', 'Text on left', true)}
-                <Text marginT-10>You chose: {this.state.textSide}</Text>
-              </RadioGroup>
-            </View>
+        <View flex>
+          <ScrollView style={{padding: 20}}>
+            <RadioGroup value={this.state.color} onValueChange={value => this.setState({color: value})}>
+              <Text marginB-20 text60 dark10>
+                Select a color
+              </Text>
+              {this.renderRadioButton('orange', 'Orange')}
+              {this.renderRadioButton('purple', 'Purple')}
+              {this.renderRadioButton('green', 'Green')}
+              <Text marginT-10>You chose: {this.state.color}</Text>
+            </RadioGroup>
+
+            <RadioGroup marginT-30 value={this.state.textSide} onValueChange={value => this.setState({textSide: value})}>
+              <Text marginB-20 text60 dark10>
+                Select text side
+              </Text>
+              {this.renderRadioButtonWithImageAndText('right', 'Text on right')}
+              {this.renderRadioButtonWithImageAndText('left', 'Text on left', true)}
+              <Text marginT-10>You chose: {this.state.textSide}</Text>
+            </RadioGroup>
+
+            <RadioGroup
+              value={this.state.transportationType} onValueChange={value => this.setState({transportationType: value})}
+            >
+              <Text marginV-20 text60 dark10>
+                Select transportation type (enum)
+              </Text>
+              {this.renderRadioButtonForEnum(RadioButtonScreen.transportationTypes.CAR)}
+              {this.renderRadioButtonForEnum(RadioButtonScreen.transportationTypes.WALK)}
+              {this.renderRadioButtonForEnum(RadioButtonScreen.transportationTypes.BUS)}
+              <Text marginT-10>You chose: {this.state.transportationType}</Text>
+            </RadioGroup>
+
+            <RadioGroup
+              value={this.state.messageType || null} onValueChange={value => this.setState({messageType: value})}
+            >
+              <Text marginV-20 text60 dark10>
+                Select Message type{'\n'}
+                (enum with default value)
+              </Text>
+              {this.renderRadioButton(null, 'Default')}
+              {this.renderRadioButtonForEnum(RadioButtonScreen.messageTypes.WARNING)}
+              {this.renderRadioButtonForEnum(RadioButtonScreen.messageTypes.ERROR)}
+              <Text marginT-10>You chose: {this.state.messageType ? this.state.messageType : 'Default'}</Text>
+            </RadioGroup>
 
             <RadioGroup marginT-30 value={this.state.value} onValueChange={value => this.setState({value})}>
               <Text marginB-20 text60 dark10>
@@ -75,7 +122,6 @@ export default class RadioButtonScreen extends Component {
             <Text marginV-20 text60 dark10>
               Use it without RadioGroup
             </Text>
-
             <View row centerV marginB-10>
               <RadioButton
                 selected={this.state.individualValue2}
@@ -108,8 +154,11 @@ export default class RadioButtonScreen extends Component {
                 label="Disabled Selected Radio Button"
               />
             </View>
-          </View>
-          <View>
+
+            <View style={{height: 30}}/>
+          </ScrollView>
+
+          <View paddingH-20 paddingV-10 style={[styles.shadow, {backgroundColor: Colors.dark80}]}>
             <Text text40 dark10>
               Radio Buttons
             </Text>
@@ -119,3 +168,16 @@ export default class RadioButtonScreen extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  shadow: {
+    ...Platform.select({
+      ios: {
+        ...Shadows.dark20.bottom
+      },
+      android: {
+        elevation: 3
+      },
+    }),
+  },
+});
