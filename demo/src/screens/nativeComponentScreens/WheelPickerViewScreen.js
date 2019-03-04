@@ -25,14 +25,15 @@ export default class WheelPickerViewScreen extends PureComponent {
     const {selectedValue, items} = this.state;
 
     return (
-      <View flex center>
-        <Text>{'Wheel Picker'}</Text>
-        <Text>{`Selected Value is: ${selectedValue}`}</Text>
+      <View flex centerH>
+        <Text margin-10 text40 dark10 style={{fontWeight: 'bold'}}>{'Wheel Picker'}</Text>
+        <Text marginB-30 text60 dark10>{`Current Value is: ${selectedValue}`}</Text>
         <WheelPicker
           selectedValue={selectedValue}
           onValueChange={this.onValueChange}
-          color={Colors.purple30}
-          labelStyle={{fontSize: 40, fontFamily: 'sans-serif-condensed-light'}}
+          style={{width: 200}}
+          color={Colors.violet30}
+          labelStyle={{fontSize: 32, fontFamily: 'sans-serif-condensed-light'}}
           itemHeight={55}
         >
           {items.map((item) => {
