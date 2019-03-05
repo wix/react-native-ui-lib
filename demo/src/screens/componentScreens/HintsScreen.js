@@ -32,14 +32,23 @@ export default class HintsScreen extends Component {
   }
 
   render() {
-    const {showHint, showBottomHint, showIcon, targetPosition, useShortMessage, useSideTip} = this.state;
+    const {
+      showHint,
+      showBottomHint,
+      showIcon,
+      targetPosition,
+      useShortMessage,
+      useSideTip,
+      useTargetFrame,
+    } = this.state;
+    const targetFrame = {x: 140, y: 100, width: 10, height: 10};
     const message = useShortMessage
       ? 'Add other cool and useful stuff'
       : 'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
 
     return (
       <View flex>
-        <View flex padding-20 paddingT-110 bg-dark80 style={{zIndex: 10}}>
+        <View flex padding-20 paddingT-110 bg-dark80 style={{zIndex: 10}} key={useTargetFrame ? 'withTargetFrame' : 'withElement'}>
           {/* <Button bg-purple30 label="Background" style={{position: 'absolute', right: 50, bottom: 100}} /> */}
           <Hint
             visible={showHint}
@@ -52,21 +61,37 @@ export default class HintsScreen extends Component {
             position={showBottomHint ? Hint.positions.BOTTOM : Hint.positions.TOP}
             useSideTip={useSideTip}
             key={targetPosition}
+            targetFrame={useTargetFrame ? targetFrame : undefined}
             // borderRadius={BorderRadiuses.br40}
             // edgeMargins={30}
             // onBackgroundPress={() => this.setState({showHint: !showHint})}
           >
-            <Button
-              label={showHint ? 'Hide' : 'Show'}
-              onPress={() => this.setState({showHint: !showHint})}
-              style={{alignSelf: targetPosition}}
-              // style={{alignSelf: targetPosition, marginLeft: 30}}
-              // style={{alignSelf: targetPosition, position: 'absolute', top: 160, left: 100}}
-            />
+            {!useTargetFrame && (
+              <Button
+                label={showHint ? 'Hide' : 'Show'}
+                onPress={() => this.setState({showHint: !showHint})}
+                style={{alignSelf: targetPosition}}
+                // style={{alignSelf: targetPosition, marginLeft: 30}}
+                // style={{alignSelf: targetPosition, position: 'absolute', top: 160, left: 100}}
+              />
+            )}
           </Hint>
+
+          {useTargetFrame && (
+            <View
+              bg-red50
+              style={{
+                position: 'absolute',
+                top: targetFrame.y,
+                left: targetFrame.x,
+                width: targetFrame.width,
+                height: targetFrame.height,
+              }}
+            />
+          )}
         </View>
 
-        <View padding-20>
+        <View padding-20 collapsabe={false}>
           <RadioGroup
             row
             centerV
@@ -106,6 +131,11 @@ export default class HintsScreen extends Component {
           <View row centerV marginV-10>
             <Switch value={showIcon} onValueChange={value => this.setState({showIcon: value})} />
             <Text marginL-10>Toggle Icon</Text>
+          </View>
+
+          <View row centerV marginV-10>
+            <Switch value={useTargetFrame} onValueChange={value => this.setState({useTargetFrame: value})} />
+            <Text marginL-10>Use random position</Text>
           </View>
         </View>
       </View>
