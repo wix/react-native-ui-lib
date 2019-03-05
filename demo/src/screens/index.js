@@ -12,10 +12,12 @@ import './wrapperScreens';
 import MainScreen from './MainScreen';
 import Playground from './PlaygroundScreen';
 import SettingsScreen from './SettingsScreen';
+import CustomScreen from './CustomScreen';
 
 
 export function registerScreens() {
   Navigation.registerComponent('unicorn.MainScreen', () => MainScreen);
   Navigation.registerComponent('unicorn.PlaygroundScreen', () => Playground);
   Navigation.registerComponent('unicorn.Settings', () => SettingsScreen);
+  Navigation.registerComponent('unicorn.CustomScreen', () => CustomScreen);
 }
