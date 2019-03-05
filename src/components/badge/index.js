@@ -40,7 +40,6 @@ export default class Badge extends BaseComponent {
      */
     backgroundColor: PropTypes.string,
     /**
-     * TODO: depreciate enum badge sizes, use only number for size
      * the badge size (default, small)
      */
     size: PropTypes.oneOf(Object.keys(BADGE_SIZES)),
@@ -106,10 +105,9 @@ export default class Badge extends BaseComponent {
     const {borderWidth, size, icon} = this.props;
     const label = this.getFormattedLabel();
     const badgeHeight = this.isSmallBadge() ? BADGE_SIZES.small : BADGE_SIZES.default;
-    const badgeLabelPadding = this.isSmallBadge() ? 4 : 6;
 
     const style = {
-      paddingHorizontal: badgeLabelPadding,
+      paddingHorizontal: this.isSmallBadge() ? 4 : 6,
       height: badgeHeight,
       minWidth: badgeHeight,
     };
@@ -132,6 +130,10 @@ export default class Badge extends BaseComponent {
       style.paddingHorizontal = 0;
       style.height = BADGE_SIZES[size];
       style.width = BADGE_SIZES[size];
+      if (borderWidth) {
+        style.height += borderWidth * 2;
+        style.width += borderWidth * 2;
+      }
       return style;
     }
 
