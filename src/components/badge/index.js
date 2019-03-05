@@ -10,12 +10,14 @@ import Image from '../image';
 
 const LABEL_FORMATTER_VALUES = [1, 2, 3, 4];
 
+// TODO: depreciate enum badge sizes, use only number for size
 export const BADGE_SIZES = {
   pimpleSmall: 6,
   pimpleBig: 10,
   pimpleHuge: 14,
   small: 16,
   default: 20,
+  large: 24,
 };
 
 /**
@@ -38,9 +40,10 @@ export default class Badge extends BaseComponent {
      */
     backgroundColor: PropTypes.string,
     /**
+     * TODO: depreciate enum badge sizes, use only number for size
      * the badge size (default, small)
      */
-    size: PropTypes.oneOfType([PropTypes.oneOf(Object.keys(BADGE_SIZES)), PropTypes.number]),
+    size: PropTypes.oneOf(Object.keys(BADGE_SIZES)),
     /**
      * width of border around the badge
      */
@@ -68,6 +71,10 @@ export default class Badge extends BaseComponent {
      * Additional styling to badge icon
      */
     iconStyle: PropTypes.object,
+    /**
+     * Additional props passed to icon
+     */
+    iconProps: PropTypes.object,
     /**
      * Use to identify the badge in tests
      */
@@ -99,28 +106,38 @@ export default class Badge extends BaseComponent {
     const {borderWidth, size, icon} = this.props;
     const label = this.getFormattedLabel();
     const badgeHeight = this.isSmallBadge() ? BADGE_SIZES.small : BADGE_SIZES.default;
+    const badgeLabelPadding = this.isSmallBadge() ? 4 : 6;
 
     const style = {
-      paddingHorizontal: this.isSmallBadge() ? 4 : 6,
+      paddingHorizontal: badgeLabelPadding,
       height: badgeHeight,
       minWidth: badgeHeight,
     };
 
-    if (label === undefined && !icon) {
+    const isPimple = label === undefined;
+    if (isPimple && !icon) {
       const pimpleSizes = ['pimpleSmall', 'pimpleBig', 'pimpleHuge'];
       if (pimpleSizes.includes(size)) {
+        style.paddingHorizontal = 0;
         style.minWidth = BADGE_SIZES[size];
         style.height = BADGE_SIZES[size];
-        style.paddingHorizontal = 0;
       } else {
+        style.paddingHorizontal = 0;
         style.minWidth = BADGE_SIZES.pimpleSmall;
         style.height = BADGE_SIZES.pimpleSmall;
-        style.paddingHorizontal = 0;
       }
     }
+
+    if (icon) {
+      style.paddingHorizontal = 0;
+      style.height = BADGE_SIZES[size];
+      style.width = BADGE_SIZES[size];
+      return style;
+    }
+
     if (borderWidth) {
-      style.minWidth += borderWidth * 2;
       style.height += borderWidth * 2;
+      style.minWidth += borderWidth * 2;
     }
     return style;
   }
@@ -143,13 +160,11 @@ export default class Badge extends BaseComponent {
   }
 
   getBorderStyling() {
-    const {icon, borderWidth, borderColor} = this.props;
-    if (!icon) {
-      return {
-        borderWidth,
-        borderColor,
-      };
-    }
+    const {borderWidth, borderColor} = this.props;
+    return {
+      borderWidth,
+      borderColor,
+    };
   }
 
   renderLabel() {
@@ -166,22 +181,17 @@ export default class Badge extends BaseComponent {
   }
 
   renderIcon() {
-    const {icon, iconStyle, size, borderWidth, borderColor} = this.props;
-    const iconSize = isNaN(size) ? 16 : size;
+    const {icon, iconStyle, iconProps} = this.props;
     return (
-      <View>
-        <Image
-          source={icon}
-          style={{
-            height: iconSize,
-            width: iconSize,
-            borderRadius: iconSize / 2,
-            borderWidth,
-            borderColor,
-            ...iconStyle
-          }}
-        />
-      </View>
+      <Image
+        source={icon}
+        resizeMode="contain"
+        {...iconProps}
+        style={{
+          flex: 1,
+          ...iconStyle,
+        }}
+      />
     );
   }
 
@@ -190,7 +200,7 @@ export default class Badge extends BaseComponent {
     const {borderWidth, backgroundColor, borderColor, containerStyle, icon, testId, testID, ...others} = this.props;
     const backgroundStyle = backgroundColor && {backgroundColor};
     const sizeStyle = this.getBadgeSizeStyle();
-    const borderStyle = borderWidth && !icon && this.getBorderStyling();
+    const borderStyle = borderWidth ? this.getBorderStyling() : undefined;
 
     const animationProps = this.extractAnimationProps();
     const Container = !_.isEmpty(animationProps) ? AnimatableView : View;
@@ -207,7 +217,7 @@ export default class Badge extends BaseComponent {
         <Container
           testID={testID || testId}
           pointerEvents={'none'}
-          style={[sizeStyle, !icon && this.styles.badge, borderStyle, backgroundStyle]}
+          style={[sizeStyle, this.styles.badge, borderStyle, backgroundStyle]}
           {...animationProps}
         >
           {icon ? this.renderIcon() : this.renderLabel()}
@@ -217,14 +227,15 @@ export default class Badge extends BaseComponent {
   }
 }
 
-function createStyles() {
+function createStyles(props) {
   return StyleSheet.create({
     badge: {
       alignSelf: 'flex-start',
       borderRadius: BorderRadiuses.br100,
-      backgroundColor: ThemeManager.primaryColor,
+      backgroundColor: !props.icon ? ThemeManager.primaryColor : undefined,
       alignItems: 'center',
       justifyContent: 'center',
+      overflow: 'hidden',
     },
     label: {
       ...Typography.text90,

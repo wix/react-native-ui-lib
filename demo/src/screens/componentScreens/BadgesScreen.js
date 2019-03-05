@@ -26,7 +26,7 @@ export default class BadgesScreen extends Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <Text text50 row center marginB-15>
+      <Text text50 row center marginB-15>
           Badges
         </Text>
         <View row center>
@@ -120,43 +120,41 @@ export default class BadgesScreen extends Component {
             <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.blue30} size={'pimpleHuge'} />
           </View>
         </View>
-
         <Text text50 marginB-15 row center marginT-25>
           Icon Badges
         </Text>
         <View center row style={{justifyContent: 'space-between'}}>
           <View flex center column>
             <Badge
-              size={16}
+              size={'small'}
               icon={checkMark}
               containerStyle={{marginBottom: 10}}
               borderWidth={1}
               borderColor={Colors.red30}
             />
             <Text style={{textAlign: 'center'}} text80 row>
-              Small (16)
+              small(16)
             </Text>
           </View>
 
           <View flex center column>
             <Badge
-              size={20}
               icon={checkMark}
               iconStyle={{tintColor: Colors.red30}}
               containerStyle={{marginBottom: 10}}
             />
-            <Text text80>Medium (20)</Text>
+            <Text text80>default(20)</Text>
           </View>
 
           <View flex center column>
             <Badge
-              size={24}
+              size={'large'}
               icon={checkMark}
               containerStyle={{marginBottom: 10}}
               iconStyle={{backgroundColor: Colors.red30}}
             />
             <Text text80 row>
-              Large(24)
+              large(24)
             </Text>
           </View>
         </View>
