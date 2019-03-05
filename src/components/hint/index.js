@@ -11,7 +11,6 @@ import View from '../view';
 import Text from '../text';
 import Image from '../image';
 
-
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
 
@@ -70,6 +69,15 @@ class Hint extends BaseComponent {
      */
     position: PropTypes.oneOf(_.values(HINT_POSITIONS)),
     /**
+     * Provide custom target position instead of wrapping a child
+     */
+    targetFrame: PropTypes.shape({
+      x: PropTypes.number,
+      y: PropTypes.number,
+      width: PropTypes.number,
+      height: PropTypes.number,
+    }),
+    /**
      * Show side tips instead of the middle tip
      */
     useSideTip: PropTypes.bool,
@@ -97,7 +105,9 @@ class Hint extends BaseComponent {
 
   static positions = HINT_POSITIONS;
 
-  state = {};
+  state = {
+    targetLayout: this.props.targetFrame,
+  };
 
   setTargetRef = ref => {
     this.targetRef = ref;
@@ -306,11 +316,14 @@ class Hint extends BaseComponent {
   }
 
   renderChildren() {
-    return React.cloneElement(this.props.children, {
-      collapsable: false,
-      onLayout: this.onTargetLayout,
-      ref: this.setTargetRef,
-    });
+    const {targetFrame} = this.props;
+    if (!targetFrame) {
+      return React.cloneElement(this.props.children, {
+        collapsable: false,
+        onLayout: this.onTargetLayout,
+        ref: this.setTargetRef,
+      });
+    }
   }
 
   render() {
