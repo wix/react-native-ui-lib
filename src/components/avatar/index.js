@@ -250,7 +250,7 @@ export default class Avatar extends BaseComponent {
   }
 
   render() {
-    const {label, labelColor: color, imageSource, backgroundColor, onPress, containerStyle, testID} = this.props;
+    const {label, labelColor: color, imageSource, backgroundColor, onPress, containerStyle, children, testID} = this.props;
     const Container = onPress ? TouchableOpacity : View;
     const hasImage = !_.isUndefined(imageSource);
 
@@ -266,6 +266,7 @@ export default class Avatar extends BaseComponent {
         {this.renderImage()}
         {this.renderBadge()}
         {this.renderRibbon()}
+        {children}
       </Container>
     );
   }
