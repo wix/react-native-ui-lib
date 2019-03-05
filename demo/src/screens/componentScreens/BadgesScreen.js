@@ -26,7 +26,7 @@ export default class BadgesScreen extends Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-      <Text text50 row center marginB-15>
+        <Text text50 row center marginB-15>
           Badges
         </Text>
         <View row center>
@@ -123,37 +123,24 @@ export default class BadgesScreen extends Component {
         <Text text50 marginB-15 row center marginT-25>
           Icon Badges
         </Text>
-        <View center row style={{justifyContent: 'space-between'}}>
-          <View flex center column>
-            <Badge
-              size={'small'}
-              icon={checkMark}
-              containerStyle={{marginBottom: 10}}
-              borderWidth={1}
-              borderColor={Colors.red30}
-            />
-            <Text style={{textAlign: 'center'}} text80 row>
+        <View row style={{justifyContent: 'space-around'}}>
+          <View style={styles.iconBadgeColumnContainer}>
+            <Badge size={'small'} icon={checkMark} borderWidth={1} borderColor={Colors.red30} />
+            <Text text80 style={{marginTop: 10}}>
               small(16)
             </Text>
           </View>
 
-          <View flex center column>
-            <Badge
-              icon={checkMark}
-              iconStyle={{tintColor: Colors.red30}}
-              containerStyle={{marginBottom: 10}}
-            />
-            <Text text80>default(20)</Text>
+          <View style={styles.iconBadgeColumnContainer}>
+            <Badge icon={checkMark} iconStyle={{tintColor: Colors.red30}} />
+            <Text text80 style={{marginTop: 10}}>
+              default(20)
+            </Text>
           </View>
 
-          <View flex center column>
-            <Badge
-              size={'large'}
-              icon={checkMark}
-              containerStyle={{marginBottom: 10}}
-              iconStyle={{backgroundColor: Colors.red30}}
-            />
-            <Text text80 row>
+          <View style={styles.iconBadgeColumnContainer}>
+            <Badge size={'large'} icon={checkMark} iconStyle={{backgroundColor: Colors.red30}} />
+            <Text text80 style={{marginTop: 10}}>
               large(24)
             </Text>
           </View>
@@ -168,7 +155,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 20,
-    paddingBottom: 30,
+    paddingBottom: 20,
     backgroundColor: Colors.dark70,
+  },
+  iconBadgeColumnContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flexDirection: 'column',
   },
 });
