@@ -8,7 +8,7 @@ import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 import Text from '../text';
 import Image from '../image';
-import {RadioGroupContext} from './RadioGroup';
+import asRadioGroupChild from './asRadioGroupChild';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
@@ -80,9 +80,6 @@ class RadioButton extends BaseComponent {
       opacityAnimationValue: new Animated.Value(0),
       scaleAnimationValue: new Animated.Value(0.8)
     };
-    
-    this.selected = undefined;
-    this.selectedPrevState = undefined;
   }
 
   componentDidMount() {
@@ -90,26 +87,23 @@ class RadioButton extends BaseComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.selected === undefined) { // will always be radio group
-      if (this.selectedPrevState && !this.selected) { // unselect
-        this.animate();
-      }
-    } else if (prevProps.selected !== this.props.selected) { // will always be individual
-      this.selected = this.props.selected;
+    if (prevProps.selected !== this.props.selected) {
       this.animate();
     }
   }
 
   animate() {
+    const {selected} = this.props;
+    const {opacityAnimationValue, scaleAnimationValue} = this.state;
     const animationTime = 150;
     const animationDelay = 60;
-    if (this.selected) {
+    if (selected) {
       Animated.parallel([
-        Animated.timing(this.state.opacityAnimationValue, {
+        Animated.timing(opacityAnimationValue, {
           toValue: 1,
           duration: animationTime,
         }),
-        Animated.timing(this.state.scaleAnimationValue, {
+        Animated.timing(scaleAnimationValue, {
           toValue: 1,
           delay: animationDelay,
           duration: animationTime,
@@ -118,11 +112,11 @@ class RadioButton extends BaseComponent {
       ]).start();
     } else {
       Animated.parallel([
-        Animated.timing(this.state.scaleAnimationValue, {
+        Animated.timing(scaleAnimationValue, {
           toValue: 0.8,
           duration: animationTime,
         }),
-        Animated.timing(this.state.opacityAnimationValue, {
+        Animated.timing(opacityAnimationValue, {
           toValue: 0,
           duration: animationTime,
         }),
@@ -134,30 +128,13 @@ class RadioButton extends BaseComponent {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  onPress = context => {
-    const {value, disabled} = this.props;
+  onPress = () => {
+    const {disabled, value, selected} = this.props;
     if (!disabled) {
-      _.invoke(context, 'onValueChange', value);
-      _.invoke(this.props, 'onPress', this.selected);
-      if (value) { // so individual is not called here as well
-        if (!this.selected) {
-          this.selected = !this.selected;
-          this.animate();
-        }
-      }
+      _.invoke(this.props, 'onValueChange', value);
+      _.invoke(this.props, 'onPress', selected);
     }
   };
-
-  isSelected(props = this.props, context) {
-    const {value, selected} = props;
-    // Individual Radio Button
-    if (_.isUndefined(value)) {
-      return Boolean(selected);
-    }
-    // Grouped Radio Button
-    const {value: selectedValue} = context;
-    return value === selectedValue;
-  }
 
   getRadioButtonOutlineStyle() {
     const {color, size, borderRadius, style: propsStyle, disabled} = this.getThemeProps();
@@ -207,20 +184,19 @@ class RadioButton extends BaseComponent {
     );
   }
 
-  renderRadioButton = context => {
-    const {style, onPress, ...others} = this.getThemeProps();
-    const Container = onPress || context.onValueChange ? TouchableOpacity : View;
-    this.selectedPrevState = this.selected;
-    this.selected = this.isSelected(this.props, context);
+  render() {
+    const {style, onPress, onValueChange, selected, ...others} = this.getThemeProps();
+    const {opacityAnimationValue, scaleAnimationValue} = this.state;
+    const Container = onPress || onValueChange ? TouchableOpacity : View;
+
     return (
-      <Container row centerV activeOpacity={1} {...others} onPress={() => this.onPress(context)}>
+      <Container row centerV activeOpacity={1} {...others} onPress={this.onPress}>
         <View style={this.getRadioButtonOutlineStyle()} >
           <Animated.View
             style={[
               this.getRadioButtonInnerStyle(),
-              {opacity: this.state.opacityAnimationValue},
-              {scaleX: this.state.scaleAnimationValue},
-              {scaleY: this.state.scaleAnimationValue}
+              {opacity: opacityAnimationValue},
+              {transform: [{ scale: scaleAnimationValue }]}
             ]}
           />
         </View>
@@ -229,10 +205,6 @@ class RadioButton extends BaseComponent {
         
       </Container>
     );
-  };
-
-  render() {
-    return <RadioGroupContext.Consumer>{this.renderRadioButton}</RadioGroupContext.Consumer>;
   }
 }
 
@@ -257,4 +229,4 @@ function createStyles({size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, col
   });
 }
 
-export default RadioButton;
+export default asRadioGroupChild(RadioButton);

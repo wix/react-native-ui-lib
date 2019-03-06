@@ -23,7 +23,7 @@ export default function asRadioGroupChild(WrappedComponent) {
             <WrappedComponent
               {...this.props}
               selectedValue={value}
-              selected={buttonValue ? value === buttonValue : selected}
+              selected={buttonValue !== undefined ? value === buttonValue : selected}
               onValueChange={onValueChange}
             />
           )}
