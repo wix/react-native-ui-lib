@@ -23,7 +23,6 @@ const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
   error: Colors.red30
 };
 const LABEL_TYPOGRAPHY = Typography.text80;
-const BOTTOM_MARGIN = Constants.isIOS ? 10 : 5;
 
 /**
  * @description: A wrapper for Text Input component with extra functionality like floating placeholder
@@ -438,6 +437,7 @@ export default class TextField extends BaseInput {
         style={this.styles.expandableInput}
         activeOpacity={1}
         onPress={() => !this.isDisabled() && this.toggleExpandableModal(true)}
+        centerV
       >
         <Text
           style={[
@@ -449,7 +449,7 @@ export default class TextField extends BaseInput {
           {shouldShowPlaceholder ? placeholder : value}
         </Text>
         {rightIconSource && 
-          <Image pointerEvents="none" source={rightIconSource} style={{marginBottom: BOTTOM_MARGIN}}/>}
+          <Image pointerEvents="none" source={rightIconSource}/>}
       </TouchableOpacity>
     );
   }
@@ -598,7 +598,7 @@ function createStyles({placeholderTextColor, centered, multiline}) {
     },
     input: {
       flexGrow: 1,
-      marginBottom: BOTTOM_MARGIN,
+      marginBottom: Constants.isIOS ? 10 : 5,
       padding: 0,
       textAlign: centered ? 'center' : undefined,
       backgroundColor: 'transparent'
