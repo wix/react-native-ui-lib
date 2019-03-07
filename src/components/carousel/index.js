@@ -57,6 +57,7 @@ export default class Carousel extends BaseComponent {
     };
     this.onScroll = this.onScroll.bind(this);
     this.updateOffset = this.updateOffset.bind(this);
+    this.handleOnLayout = this.handleOnLayout.bind(this);
   }
 
   generateStyles() {
@@ -104,6 +105,10 @@ export default class Carousel extends BaseComponent {
     }
   }
 
+  handleOnLayout() {
+    this.updateOffset(false);
+  }
+
   cloneChild(child) {
     if (!child.key) {
       return child;
@@ -140,6 +145,7 @@ export default class Carousel extends BaseComponent {
         onScroll={this.onScroll}
         scrollEventThrottle={200}
         contentOffset={this.state.initialOffset}
+        onLayout={this.handleOnLayout}
       >
         {this.renderChildren()}
       </ScrollView>
