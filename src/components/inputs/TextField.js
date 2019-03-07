@@ -187,15 +187,12 @@ export default class TextField extends BaseInput {
   }
 
   getPlaceholderText() {
+    // HACK: passing whitespace instead of undefined. Issue fixed in RN56
     const {placeholder, helperText} = this.props;
     const text = this.shouldFakePlaceholder() ?
       (this.shouldShowHelperText() ? helperText : ' ') :
       (this.shouldShowTopError() && this.shouldShowHelperText() ? helperText : placeholder);
     return text;
-  }
-
-  isDisabled() {
-    return this.props.editable === false;
   }
 
   getStateColor(colorProp, isUnderline) {
@@ -233,6 +230,15 @@ export default class TextField extends BaseInput {
       return value.length;
     }
     return 0;
+  }
+
+  getTopPaddings() {
+    const {floatingPlaceholder} = this.getThemeProps();
+    return floatingPlaceholder ? (this.shouldShowTopError() ? undefined : 25) : undefined;
+  }
+
+  isDisabled() {
+    return this.props.editable === false;
   }
 
   isCounterLimit() {
@@ -440,7 +446,6 @@ export default class TextField extends BaseInput {
         style={this.styles.expandableInput}
         activeOpacity={1}
         onPress={() => !this.isDisabled() && this.toggleExpandableModal(true)}
-        centerV
       >
         <Text
           style={[
@@ -478,11 +483,9 @@ export default class TextField extends BaseInput {
       this.styles.input,
       hideUnderline && this.styles.inputWithoutUnderline,
       {...typographyStyle},
-      // {minHeight: typography.lineHeight + 3},
       color && {color},
       style
     ];
-    // HACK: passing whitespace instead of undefined. Issue fixed in RN56
     const placeholderText = this.getPlaceholderText();
     const placeholderColor = this.getStateColor(placeholderTextColor);
 
@@ -506,11 +509,6 @@ export default class TextField extends BaseInput {
         }}
       />
     );
-  }
-
-  getTopPaddings() {
-    const {floatingPlaceholder} = this.getThemeProps();
-    return floatingPlaceholder ? (this.shouldShowTopError() ? undefined : 25) : undefined;
   }
 
   render() {
