@@ -452,7 +452,7 @@ export default class TextField extends BaseInput {
           {shouldShowPlaceholder ? placeholder : value}
         </Text>
         {rightIconSource && 
-          <Image pointerEvents="none" source={rightIconSource} style={{marginBottom: 5}}/>}
+          <Image pointerEvents="none" source={rightIconSource} style={{marginBottom: hideUnderline ? 0 : 7}}/>}
       </TouchableOpacity>
     );
   }
@@ -473,7 +473,6 @@ export default class TextField extends BaseInput {
     } = this.getThemeProps();
     const typography = this.getTypography();
     const {lineHeight, ...typographyStyle} = typography;
-    // delete typography.lineHeight;
     const color = this.getStateColor(this.props.color || this.extractColorValue());
     const inputStyle = [
       this.styles.input,
