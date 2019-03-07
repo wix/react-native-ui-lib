@@ -284,7 +284,8 @@ export default class TextField extends BaseInput {
       expandable,
       placeholder,
       placeholderTextColor,
-      floatingPlaceholderColor
+      floatingPlaceholderColor,
+      multiline
     } = this.getThemeProps();
     const typography = this.getTypography();
     const placeholderColor = this.getStateColor(placeholderTextColor);
@@ -301,7 +302,7 @@ export default class TextField extends BaseInput {
             !centered && {
               top: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [28, 0]
+                outputRange: [multiline ? 30 : 28, multiline ? (Constants.isAndroid ? 0 : 5) : 0]
               }),
               fontSize: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
@@ -416,12 +417,14 @@ export default class TextField extends BaseInput {
       rightIconSource
     } = this.getThemeProps();
     const typography = this.getTypography();
+    const {lineHeight, ...typographyStyle} = typography;
+
     const color = this.getStateColor(this.props.color || this.extractColorValue());
     const inputStyle = [
       this.styles.input,
       hideUnderline && this.styles.inputWithoutUnderline,
-      typography,
-      {minHeight: typography.lineHeight + (Constants.isAndroid ? 4 : 0)},
+      {...typographyStyle},
+      {minHeight: lineHeight + (Constants.isAndroid ? 6 : 0)},
       color && {color},
       style
     ];
@@ -469,12 +472,14 @@ export default class TextField extends BaseInput {
       ...others
     } = this.getThemeProps();
     const typography = this.getTypography();
+    const {lineHeight, ...typographyStyle} = typography;
+    // delete typography.lineHeight;
     const color = this.getStateColor(this.props.color || this.extractColorValue());
     const inputStyle = [
       this.styles.input,
       hideUnderline && this.styles.inputWithoutUnderline,
-      typography,
-      {minHeight: typography.lineHeight + 3},
+      {...typographyStyle},
+      // {minHeight: typography.lineHeight + 3},
       color && {color},
       style
     ];
@@ -634,7 +639,7 @@ function createStyles({placeholderTextColor, centered, multiline}) {
       paddingHorizontal: 20
     },
     topLabel: {
-      marginBottom: Constants.isIOS ? (multiline ? 3 : 6) : (multiline ? 8 : 7)
+      marginBottom: Constants.isIOS ? (multiline ? 1 : 6) : 7
     },
     bottomLabel: {
       marginTop: 1
