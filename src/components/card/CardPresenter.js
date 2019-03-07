@@ -11,15 +11,15 @@ export function extractPositionValues(position) {
 }
 
 export function generateBorderRadiusStyle({position, borderRadius}) {
-  const {top, left, right, bottom} = extractPositionValues(position);
+  if (Constants.isIOS) {
+    const borderRadiusStyle = {};
 
-  const borderRadiusStyle = {};
-  if (Constants.isAndroid) {
-    borderRadiusStyle.borderTopLeftRadius = (top || left) ? borderRadius : undefined;
-    borderRadiusStyle.borderTopRightRadius = (top || right) ? borderRadius : undefined;
-    borderRadiusStyle.borderBottomLeftRadius = (bottom || left) ? borderRadius : undefined;
-    borderRadiusStyle.borderBottomRightRadius = (bottom || right) ? borderRadius : undefined;
+    const {top, left, right, bottom} = extractPositionValues(position);
+
+    borderRadiusStyle.borderTopLeftRadius = top || left ? borderRadius : undefined;
+    borderRadiusStyle.borderTopRightRadius = top || right ? borderRadius : undefined;
+    borderRadiusStyle.borderBottomLeftRadius = bottom || left ? borderRadius : undefined;
+    borderRadiusStyle.borderBottomRightRadius = bottom || right ? borderRadius : undefined;
+    return borderRadiusStyle;
   }
-
-  return borderRadiusStyle;
 }

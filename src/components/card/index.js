@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ViewPropTypes} from 'react-native';
 import {BlurView} from 'react-native-blur';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
@@ -66,11 +66,11 @@ class Card extends BaseComponent {
     /**
      * Additional styles for the top container
      */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
+    containerStyle: ViewPropTypes.style,
   };
 
   static defaultProps = {
-    enableShadow: true
+    enableShadow: true,
   };
 
   generateStyles() {
@@ -82,7 +82,7 @@ class Card extends BaseComponent {
     return {
       blurType: 'light',
       blurAmount: 5,
-      ...blurOptions
+      ...blurOptions,
     };
   }
 
@@ -127,11 +127,18 @@ class Card extends BaseComponent {
   }
 
   renderChildren() {
+    if (Constants.isAndroid) {
+      return this.props.children;
+    }
+
     const {borderRadius} = this.getThemeProps();
     const children = React.Children.map(this.props.children, (child, index) => {
-      if (_.get(child, 'type') === CardImage) {
+      if (_.get(child, 'type.displayName') === CardImage.displayName) {
         const position = this.calcImagePosition(index);
-        return React.cloneElement(child, {/* key: index, */ position, borderRadius});
+        return React.cloneElement(child, {
+          /* key: index, */ position,
+          borderRadius: borderRadius || DEFAULT_BORDER_RADIUS,
+        });
       }
       return child;
     });
@@ -153,7 +160,7 @@ class Card extends BaseComponent {
           this.shadowStyle,
           this.blurBgStyle,
           containerStyle,
-          style
+          style,
         ]}
         onPress={onPress}
         delayPressIn={10}
@@ -161,7 +168,9 @@ class Card extends BaseComponent {
         {...others}
         ref={this.setRef}
       >
-        {Constants.isIOS && enableBlur && <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions} />}
+        {Constants.isIOS && enableBlur && (
+          <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions} />
+        )}
 
         {this.renderChildren()}
       </Container>
@@ -174,20 +183,21 @@ function createStyles({width, height, borderRadius = DEFAULT_BORDER_RADIUS}) {
     container: {
       width,
       height,
-      overflow: 'visible',
-      borderRadius
+      // must use visible for iOS for shadow
+      overflow: Constants.isIOS ? 'visible' : 'hidden',
+      borderRadius,
     },
     containerShadow: {
       // sh30 bottom
       shadowColor: Colors.dark40,
       shadowOpacity: 0.25,
       shadowRadius: 12,
-      shadowOffset: {height: 5, width: 0}
+      shadowOffset: {height: 5, width: 0},
     },
     blurView: {
       ...StyleSheet.absoluteFillObject,
-      borderRadius
-    }
+      borderRadius,
+    },
   });
 }
 
