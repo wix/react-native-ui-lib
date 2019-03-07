@@ -452,7 +452,7 @@ export default class TextField extends BaseInput {
           {shouldShowPlaceholder ? placeholder : value}
         </Text>
         {rightIconSource && 
-          <Image pointerEvents="none" source={rightIconSource}/>}
+          <Image pointerEvents="none" source={rightIconSource} style={{marginBottom: 5}}/>}
       </TouchableOpacity>
     );
   }
