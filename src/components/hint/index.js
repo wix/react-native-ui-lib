@@ -51,7 +51,7 @@ class Hint extends BaseComponent {
     /**
      * The hint message
      */
-    message: PropTypes.string,
+    message: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
     /**
      * The hint message custom style
      */
