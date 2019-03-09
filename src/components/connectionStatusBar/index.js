@@ -33,6 +33,21 @@ export default class ConnectionStatusBar extends BaseComponent {
      * Use absolute position for the component
      */
     useAbsolutePosition: PropTypes.bool,
+    
+    /**
+     * Custom style for container
+     */
+    style: PropTypes.object,
+    
+    /**
+     * Custom style for text
+     */
+    styleTitle: PropTypes.object,
+    
+    /**
+     * Custom style for dismiss
+     */
+    styleDismiss: PropTypes.object,
 
   };
 
@@ -40,6 +55,7 @@ export default class ConnectionStatusBar extends BaseComponent {
     label: 'No internet. Check your connection.',
     allowDismiss: false,
     useAbsolutePosition: true,
+    style: null,
   };
 
   static onConnectionLost;
@@ -118,15 +134,18 @@ export default class ConnectionStatusBar extends BaseComponent {
     if (this.state.isConnected || this.state.isCancelled) {
       return false;
     }
-    const containerStyle = [this.styles.topContainer, this.props.useAbsolutePosition ? this.styles.absolutePosition : null];
+    const containerStyle = [
+      this.styles.topContainer, this.props.useAbsolutePosition ? this.styles.absolutePosition : null,
+      this.props.style
+    ];
     return (
       <View useSafeArea style={containerStyle}>
         <View style={this.styles.container}>
           <View style={{flex: 1, flexDirection: 'row'}}>
-            <Text style={this.styles.text}>{this.props.label}</Text>
+            <Text style={[this.styles.text, this.props.styleTitle]}>{this.props.label}</Text>
             {this.props.allowDismiss && (
               <TouchableOpacity style={this.styles.xContainer} onPress={() => this.setState({isCancelled: true})}>
-                <Text style={this.styles.x}>✕</Text>
+                <Text style={[this.styles.x, this.props.styleDismiss]}>✕</Text>
               </TouchableOpacity>
             )}
           </View>
