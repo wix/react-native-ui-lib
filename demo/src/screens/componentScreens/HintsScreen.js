@@ -22,15 +22,6 @@ export default class HintsScreen extends Component {
     });
   };
 
-  renderRadioButton(value, label) {
-    return (
-      <View row centerV marginR-10>
-        <RadioButton value={value} />
-        <Text marginL-5>{label}</Text>
-      </View>
-    );
-  }
-
   render() {
     const {
       showHint,
@@ -43,17 +34,32 @@ export default class HintsScreen extends Component {
     } = this.state;
     const targetFrame = {x: 140, y: 100, width: 10, height: 10};
     const message = useShortMessage
-      ? 'Add other cool and useful stuff'
+      ? 'Add other cool and useful stuff.'
       : 'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
 
     return (
       <View flex>
-        <View flex padding-20 paddingT-110 bg-dark80 style={{zIndex: 10}} key={useTargetFrame ? 'withTargetFrame' : 'withElement'}>
+        <View
+          flex
+          padding-20
+          paddingT-110
+          bg-dark80
+          style={{zIndex: 10}}
+          key={useTargetFrame ? 'withTargetFrame' : 'withElement'}
+        >
           {/* <Button bg-purple30 label="Background" style={{position: 'absolute', right: 50, bottom: 100}} /> */}
           <Hint
             visible={showHint}
             // color={Colors.orange30}
-            message={message}
+            // message={message}
+            message={
+              <Text>
+                {message}{' '}
+                <Text style={{textDecorationLine: 'underline'}} onPress={() => {}}>
+                  click here
+                </Text>
+              </Text>
+            }
             // messageStyle={{color: 'red'}}
             icon={showIcon ? Assets.icons.settings : undefined}
             // iconStyle={{tintColor: 'red'}}
@@ -100,9 +106,9 @@ export default class HintsScreen extends Component {
             onValueChange={value => this.setState({targetPosition: value})}
           >
             <Text marginR-10>Button Position:</Text>
-            {this.renderRadioButton('flex-start', 'Left')}
-            {this.renderRadioButton('center', 'Center')}
-            {this.renderRadioButton('flex-end', 'Right')}
+            <RadioButton value={'flex-start'} label={'Left'} marginR-10 />
+            <RadioButton value={'center'} label={'Center'} marginR-10 />
+            <RadioButton value={'flex-end'} label={'Right'} marginR-10 />
           </RadioGroup>
 
           <RadioGroup
@@ -113,9 +119,9 @@ export default class HintsScreen extends Component {
             onValueChange={value => this.setState({useSideTip: value})}
           >
             <Text marginR-10>Tip:</Text>
-            {this.renderRadioButton(undefined, 'Default')}
-            {this.renderRadioButton(true, 'Side Tip')}
-            {this.renderRadioButton(false, 'Middle Tip')}
+            <RadioButton value={null} label={'Default'} marginR-10 />
+            <RadioButton value label={'Side Tip'} marginR-10 />
+            <RadioButton value={false} label={'Middle Tip'} marginR-10 />
           </RadioGroup>
 
           <View row centerV marginV-10>
