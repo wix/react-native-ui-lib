@@ -1,12 +1,9 @@
 module.exports = {
-  // Animations
-  get AnimatedImage() { return require('./animations').AnimatedImage; },
-  get AnimatedScanner() { return require('./animations').AnimatedScanner; },
-  get ProgressBar() { return require('./animations').ProgressBar; },
-
   // Components
   get ActionBar() { return require('./components').ActionBar; },
   get ActionSheet() { return require('./components').ActionSheet; },
+  get AnimatedImage() { return require('./components').AnimatedImage; },
+  get AnimatedScanner() { return require('./components').AnimatedScanner; },
   get Avatar() { return require('./components').Avatar; },
   get Badge() { return require('./components').Badge; },
   get Button() { return require('./components').Button; },
@@ -27,6 +24,7 @@ module.exports = {
   get PageControl() { return require('./components').PageControl; },
   get PanGestureView() { return require('./components').PanGestureView; },
   get Picker() { return require('./components').Picker; },
+  get ProgressBar() { return require('./components').ProgressBar; },
   get Stepper() { return require('./components').Stepper; },
   get TabBar() { return require('./components').TabBar; },
   get TagsInput() { return require('./components').TagsInput; },

@@ -1,3 +1,4 @@
+// TODO: consider unify this component functionality with our Image component
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Animated, View, StyleSheet} from 'react-native';
