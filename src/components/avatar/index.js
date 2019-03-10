@@ -221,9 +221,9 @@ export default class Avatar extends BaseComponent {
 
   renderBadge() {
     const {testID, badgeProps, status, isOnline} = this.props;
-    const oldBgPropsToBeDeprecated = status || isOnline;
+    const badgeBgPropsToBeDeprecated = status || isOnline;
 
-    if (badgeProps || oldBgPropsToBeDeprecated) {
+    if (badgeProps || badgeBgPropsToBeDeprecated) {
       return (
         <Badge
           backgroundColor={this.getBadgeColor()}
