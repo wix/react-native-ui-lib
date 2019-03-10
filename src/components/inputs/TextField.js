@@ -595,7 +595,7 @@ function createStyles({placeholderTextColor, centered, multiline}) {
       borderBottomWidth: 0
     },
     input: {
-      flexGrow: 1,
+      flex: 1,
       textAlign: centered ? 'center' : undefined,
       backgroundColor: 'transparent',
       marginBottom: Constants.isIOS ? 10 : 5,
