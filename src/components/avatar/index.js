@@ -165,7 +165,7 @@ export default class Avatar extends BaseComponent {
         return Colors.dark60;
       case Avatar.modes.NONE:
       default:
-        return undefined;
+        return null;
     }
   }
 
