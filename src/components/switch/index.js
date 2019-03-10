@@ -94,7 +94,6 @@ class Switch extends BaseComponent {
 
     if (!disabled) {
       _.invoke(this.props, 'onValueChange', !this.props.value);
-      this.toggle(!this.props.value);
     }
   };
 
