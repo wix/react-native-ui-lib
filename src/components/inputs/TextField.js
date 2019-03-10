@@ -308,7 +308,7 @@ export default class TextField extends BaseInput {
             !centered && {
               top: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [multiline ? 30 : 28, multiline ? (Constants.isAndroid ? 0 : 5) : 0]
+                outputRange: multiline ? [30, (Constants.isAndroid ? 0 : 5)] : [28, 0]
               }),
               fontSize: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
@@ -585,11 +585,11 @@ function createStyles({placeholderTextColor, centered, multiline}) {
     container: {
     },
     innerContainer: {
+      flexGrow: 1,
       flexDirection: 'row',
-      borderBottomWidth: 1,
-      borderColor: Colors.dark70,
       justifyContent: centered ? 'center' : undefined,
-      flexGrow: 1
+      borderBottomWidth: 1,
+      borderColor: Colors.dark70
     },
     innerContainerWithoutUnderline: {
       borderBottomWidth: 0
@@ -609,6 +609,11 @@ function createStyles({placeholderTextColor, centered, multiline}) {
     inputWithoutUnderline: {
       marginBottom: undefined
     },
+    expandableModalContent: {
+      flex: 1,
+      paddingTop: 15,
+      paddingHorizontal: 20
+    },
     floatingPlaceholder: {
       position: 'absolute',
       width: '100%',
@@ -626,11 +631,6 @@ function createStyles({placeholderTextColor, centered, multiline}) {
       flex: 1,
       color: Colors.red30,
       textAlign: centered ? 'center' : undefined
-    },
-    expandableModalContent: {
-      flex: 1,
-      paddingTop: 15,
-      paddingHorizontal: 20
     },
     topLabel: {
       marginBottom: Constants.isIOS ? (multiline ? 1 : 6) : 7
