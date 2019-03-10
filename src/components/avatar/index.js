@@ -156,25 +156,25 @@ export default class Avatar extends BaseComponent {
 
   getStatusBadgeColor(status) {
     switch (status) {
-      case Avatar.modes.NONE:
-        return null;
+
       case Avatar.modes.AWAY:
         return Colors.yellow30;
       case Avatar.modes.ONLINE:
         return Colors.green30;
       case Avatar.modes.OFFLINE:
         return Colors.dark60;
+      case Avatar.modes.NONE:
       default:
-        return null;
+        return undefined;
     }
   }
 
   getBadgeColor() {
     const {isOnline, status} = this.props;
-    const color = status ? this.getStatusBadgeColor(status) : null;
-    const onlineColor = isOnline ? Colors.green30 : null;
+    const statusColor = this.getStatusBadgeColor(status);
+    const onlineColor = isOnline ? Colors.green30 : undefined;
 
-    return color || onlineColor || _.get(this.props, 'badgeProps.backgroundColor');
+    return _.get(this.props, 'badgeProps.backgroundColor') || statusColor || onlineColor;
   }
 
   getBadgeSize = () => _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
@@ -220,10 +220,8 @@ export default class Avatar extends BaseComponent {
   }
 
   renderBadge() {
-    const {testID, badgeProps, status, isOnline} = this.props;
-    const badgeBgPropsToBeDeprecated = status || isOnline;
-
-    if (badgeProps || badgeBgPropsToBeDeprecated) {
+    const {testID, badgeProps} = this.props;
+    if (badgeProps || this.getBadgeColor()) {
       return (
         <Badge
           backgroundColor={this.getBadgeColor()}
