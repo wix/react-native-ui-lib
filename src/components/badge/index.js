@@ -183,11 +183,12 @@ export default class Badge extends BaseComponent {
   }
 
   renderIcon() {
-    const {icon, iconStyle, iconProps} = this.props;
+    const {icon, iconStyle, iconProps, borderColor} = this.props;
     return (
       <Image
         source={icon}
         resizeMode="contain"
+        borderColor={borderColor}
         {...iconProps}
         style={{
           flex: 1,
