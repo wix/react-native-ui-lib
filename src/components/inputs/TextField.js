@@ -420,7 +420,6 @@ export default class TextField extends BaseInput {
       placeholder, 
       hideUnderline, 
       renderExpandableInput, 
-      rightIconSource
     } = this.getThemeProps();
     const typography = this.getTypography();
     const {lineHeight, ...typographyStyle} = typography;
@@ -456,8 +455,6 @@ export default class TextField extends BaseInput {
         >
           {shouldShowPlaceholder ? placeholder : value}
         </Text>
-        {rightIconSource && 
-          <Image pointerEvents="none" source={rightIconSource} style={{marginBottom: hideUnderline ? 0 : 7}}/>}
       </TouchableOpacity>
     );
   }
@@ -511,13 +508,19 @@ export default class TextField extends BaseInput {
     );
   }
 
+  onLayout = (event) => {
+    const width = event.nativeEvent.layout.width;
+    this.setState({contentWidth: width});
+  }
+
   render() {
-    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
+    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline, rightIconSource} = this.getThemeProps();
     const underlineStateColor = this.getStateColor(underlineColor, true);
 
     return (
       <View style={[this.styles.container, containerStyle]} collapsable={false}>
         {this.shouldShowTopError() ? this.renderError(useTopErrors) : this.renderTitle()}
+        
         <View
           style={[
             this.styles.innerContainer,
@@ -525,15 +528,16 @@ export default class TextField extends BaseInput {
             {borderColor: underlineStateColor},
             {paddingTop: this.getTopPaddings()}
           ]}
+          onLayout={this.onLayout}
         >
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
+          {rightIconSource && <Image pointerEvents="none" source={rightIconSource} style={this.styles.rightIcon}/>}
           {expandable && this.renderExpandableModal()}
         </View>
+        
         <View row>
-          <View flex>
-            {this.renderError(!useTopErrors)}
-          </View>
+          {this.renderError(!useTopErrors)}
           {this.renderCharCounter()}
         </View>
       </View>
@@ -598,15 +602,15 @@ function createStyles({placeholderTextColor, centered, multiline}) {
     },
     input: {
       flexGrow: 1,
-      marginBottom: Constants.isIOS ? 10 : 5,
-      padding: 0,
       textAlign: centered ? 'center' : undefined,
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
+      marginBottom: Constants.isIOS ? 10 : 5,
+      padding: 0 // for Android
     },
     expandableInput: {
+      flexGrow: 1,
       flexDirection: 'row',
-      alignItems: 'center',
-      flexGrow: 1
+      alignItems: 'center'
     },
     inputWithoutUnderline: {
       marginBottom: undefined
@@ -625,6 +629,7 @@ function createStyles({placeholderTextColor, centered, multiline}) {
       textAlign: 'center'
     },
     errorMessage: {
+      flex: 1,
       color: Colors.red30,
       textAlign: centered ? 'center' : undefined
     },
@@ -642,6 +647,10 @@ function createStyles({placeholderTextColor, centered, multiline}) {
     label: {
       ...LABEL_TYPOGRAPHY,
       height: LABEL_TYPOGRAPHY.lineHeight
+    },
+    rightIcon: {
+      alignSelf: 'center', 
+      marginLeft: 8
     }
   });
 }
