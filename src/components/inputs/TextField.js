@@ -508,11 +508,6 @@ export default class TextField extends BaseInput {
     );
   }
 
-  onLayout = (event) => {
-    const width = event.nativeEvent.layout.width;
-    this.setState({contentWidth: width});
-  }
-
   render() {
     const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline, rightIconSource} = this.getThemeProps();
     const underlineStateColor = this.getStateColor(underlineColor, true);
@@ -528,7 +523,6 @@ export default class TextField extends BaseInput {
             {borderColor: underlineStateColor},
             {paddingTop: this.getTopPaddings()}
           ]}
-          onLayout={this.onLayout}
         >
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
