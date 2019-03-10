@@ -517,9 +517,7 @@ export default class TextField extends BaseInput {
 
     return (
       <View style={[this.styles.container, containerStyle]} collapsable={false}>
-        <View>
-          {this.shouldShowTopError() ? this.renderError(useTopErrors) : this.renderTitle()}
-        </View>
+        {this.shouldShowTopError() ? this.renderError(useTopErrors) : this.renderTitle()}
         <View
           style={[
             this.styles.innerContainer,
