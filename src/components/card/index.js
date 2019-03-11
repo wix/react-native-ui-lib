@@ -234,7 +234,8 @@ class Card extends BaseComponent {
   }
 }
 
-function createStyles({width, height, borderRadius = DEFAULT_BORDER_RADIUS, selectionOptions = DEFAULT_SELECTION_PROPS}) {
+function createStyles({width, height, borderRadius = DEFAULT_BORDER_RADIUS, selectionOptions}) {
+  const selectionOptionsWithDefaults = _.merge(DEFAULT_SELECTION_PROPS, selectionOptions);
   return StyleSheet.create({
     container: {
       width,
@@ -256,17 +257,17 @@ function createStyles({width, height, borderRadius = DEFAULT_BORDER_RADIUS, sele
     selectedBorder: {
       ...StyleSheet.absoluteFillObject,
       borderRadius: DEFAULT_BORDER_RADIUS,
-      borderWidth: selectionOptions.borderWidth,
-      borderColor: selectionOptions.color,
+      borderWidth: selectionOptionsWithDefaults.borderWidth,
+      borderColor: selectionOptionsWithDefaults.color,
     },
     selectedIndicator: {
       borderRadius: BorderRadiuses.br100,
       position: 'absolute',
-      top: -selectionOptions.indicatorSize / 2 + 2,
-      right: -selectionOptions.indicatorSize / 2 + 1,
-      width: selectionOptions.indicatorSize,
-      height: selectionOptions.indicatorSize,
-      backgroundColor: selectionOptions.color,
+      top: -selectionOptionsWithDefaults.indicatorSize / 2 + 2,
+      right: -selectionOptionsWithDefaults.indicatorSize / 2 + 1,
+      width: selectionOptionsWithDefaults.indicatorSize,
+      height: selectionOptionsWithDefaults.indicatorSize,
+      backgroundColor: selectionOptionsWithDefaults.color,
       alignItems: 'center',
       justifyContent: 'center',
     },

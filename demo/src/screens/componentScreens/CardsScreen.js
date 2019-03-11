@@ -11,15 +11,12 @@ const cardImage2 = require('../../assets/images/empty-state.jpg');
 
 export default class CardsScreen extends Component {
   state = {
-    selected: true,
-  };
-
-  selectCard = () => {
-    this.setState({selected: !this.state.selected});
+    selected1: true,
+    selected2: true,
   };
 
   render() {
-    const {selected} = this.state;
+    const {selected1, selected2} = this.state;
     return (
       <View>
         <Image
@@ -53,11 +50,30 @@ export default class CardsScreen extends Component {
             </ScrollView>
 
             <View row>
-              <Card height={120} flex marginV-20 marginR-20>
+              <Card
+                height={120}
+                flex
+                marginV-20
+                selected={selected1}
+                onPress={() => this.setState({selected1: !selected1})}
+                activeOpacity={1}
+                marginR-20
+              >
                 <Card.Image height={'100%'} imageSource={cardImage} />
               </Card>
-
-              <Card height={120} flex marginV-20 selected={selected} onPress={this.selectCard} activeOpacity={1}>
+              <Card
+                height={120}
+                flex
+                marginV-20
+                selected={selected2}
+                onPress={() => this.setState({selected2: !selected2})}
+                activeOpacity={1}
+                selectionOptions={{
+                  color: Colors.dark10,
+                  indicatorSize: 25,
+                  borderWidth: 3,
+                }}
+              >
                 <Card.Image height={'100%'} imageSource={cardImage} />
               </Card>
             </View>
