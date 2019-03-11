@@ -9,7 +9,7 @@ import Badge, {BADGE_SIZES} from '../badge';
 import View from '../view';
 import Text from '../text';
 import Image from '../image';
-import AnimatedImage from '../../animations/animatedImage';
+import AnimatedImage from '../animatedImage';
 
 export const STATUS_MODES = {
   ONLINE: 'ONLINE',

@@ -18,7 +18,7 @@ export default class CardScannerScreen extends Component {
       progress: 0,
       started: false,
       reset: false,
-      isDone: false
+      isDone: false,
     };
   }
 
@@ -27,7 +27,7 @@ export default class CardScannerScreen extends Component {
       this.start();
     } else {
       this.setState({
-        isDone
+        isDone,
       });
     }
   }
@@ -37,7 +37,7 @@ export default class CardScannerScreen extends Component {
     this.setState({
       started: true,
       reset: false,
-      progress: progress + 25
+      progress: progress + 25,
     });
   }
 
@@ -46,7 +46,7 @@ export default class CardScannerScreen extends Component {
       started: false,
       progress: 0,
       reset: true,
-      isDone: false
+      isDone: false,
     });
   }
 
@@ -55,8 +55,8 @@ export default class CardScannerScreen extends Component {
     const post = posts[0];
     const statusColor = post.status === 'Published' ? Colors.green30 : Colors.orange30;
     return (
-      <View style={styles.container} useSafeArea>
-        <View flex>
+      <View flex useSafeArea>
+        <View flex padding-20>
           <View paddingL-40 height={6} width={'100%'} bg-violet50 marginB-20>
             <AnimatedScanner backgroundColor={Colors.purple30} progress={98} duration={1600} />
           </View>
@@ -79,9 +79,10 @@ export default class CardScannerScreen extends Component {
               <Text text90 color={Colors.dark50}>
                 {post.likes} Likes
               </Text>
-
-              <Button style={{marginRight: 10}} text90 link iconSource={featureIcon} label="Feature" />
-              <Button text90 link iconSource={shareIcon} label="Share" />
+              <View row spread>
+                <Button style={{marginRight: 10}} text90 link iconSource={featureIcon} label="Feature" />
+                <Button text90 link iconSource={shareIcon} label="Share" />
+              </View>
             </View>
 
             <AnimatedScanner
@@ -105,7 +106,7 @@ export default class CardScannerScreen extends Component {
           )}
         </View>
 
-        <View row center>
+        <View row center padding-20>
           <Button size="medium" label="Reset" onPress={this.reset} disabled={!this.state.isDone} />
           <Button marginL-10 size="medium" label="Publish" onPress={this.start} disabled={this.state.started} />
         </View>
@@ -113,11 +114,3 @@ export default class CardScannerScreen extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 15,
-    backgroundColor: Colors.dark80,
-    flex: 1
-  }
-});
