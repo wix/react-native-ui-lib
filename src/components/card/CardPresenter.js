@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import {Constants} from '../../helpers';
 
 export function extractPositionValues(position) {
   const top = _.includes(position, 'top');
@@ -11,15 +10,13 @@ export function extractPositionValues(position) {
 }
 
 export function generateBorderRadiusStyle({position, borderRadius}) {
-  if (Constants.isIOS) {
-    const borderRadiusStyle = {};
+  const borderRadiusStyle = {};
 
-    const {top, left, right, bottom} = extractPositionValues(position);
+  const {top, left, right, bottom} = extractPositionValues(position);
 
-    borderRadiusStyle.borderTopLeftRadius = top || left ? borderRadius : undefined;
-    borderRadiusStyle.borderTopRightRadius = top || right ? borderRadius : undefined;
-    borderRadiusStyle.borderBottomLeftRadius = bottom || left ? borderRadius : undefined;
-    borderRadiusStyle.borderBottomRightRadius = bottom || right ? borderRadius : undefined;
-    return borderRadiusStyle;
-  }
+  borderRadiusStyle.borderTopLeftRadius = top || left ? borderRadius : undefined;
+  borderRadiusStyle.borderTopRightRadius = top || right ? borderRadius : undefined;
+  borderRadiusStyle.borderBottomLeftRadius = bottom || left ? borderRadius : undefined;
+  borderRadiusStyle.borderBottomRightRadius = bottom || right ? borderRadius : undefined;
+  return borderRadiusStyle;
 }
