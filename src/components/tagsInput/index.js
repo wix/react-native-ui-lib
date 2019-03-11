@@ -97,7 +97,7 @@ export default class TagsInput extends BaseComponent {
 
     this.state = {
       value: props.value,
-      tags: props.tags || [],
+      tags: _.cloneDeep(props.tags) || [],
       tagIndexToRemove: undefined
     };
   }
