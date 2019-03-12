@@ -131,7 +131,7 @@ export default class Avatar extends BaseComponent {
     /**
      * AWAY, ONLINE, OFFLINE or NONE mode (if set to a value other then 'NONE' will override isOnline prop)
      */
-    status: PropTypes.oneOf(Object.keys(STATUS_MODES)),
+    status: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf(Object.keys(STATUS_MODES))]),
     /**
      * Custom size for the Avatar
      */
@@ -221,6 +221,7 @@ export default class Avatar extends BaseComponent {
 
   renderBadge() {
     const {testID, badgeProps} = this.props;
+    
     if (badgeProps || this.getBadgeColor()) {
       return (
         <Badge

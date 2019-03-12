@@ -61,7 +61,7 @@ const examples = [
     },
     badgeProps: {
       icon: star,
-      size: 'small',
+      size: 'pimpleHuge',
       borderWidth: 1.5,
       borderColor: Colors.white,
       iconStyle: {backgroundColor: Colors.yellow20},

@@ -115,7 +115,7 @@ export default class BadgesScreen extends Component {
           </View>
 
           <View center column style={{justifyContent: 'space-around', width: 40, height: 140}}>
-            <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.green30} />
+            <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.green30} size={'pimpleSmall'}/>
             <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.red30} size={'pimpleBig'} />
             <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.blue30} size={'pimpleHuge'} />
           </View>
