@@ -16,26 +16,6 @@ const DEFAULT_DISABLED_COLOR = Colors.dark70;
  * Checkbox component for toggling boolean value related to some context
  */
 class Checkbox extends BaseComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isChecked: new Animated.Value(this.props.value ? 1 : 0),
-    };
-
-    this.animationStyle = {
-      opacity: this.state.isChecked,
-      transform: [
-        {
-          scaleX: this.state.isChecked,
-        },
-        {
-          scaleY: this.state.isChecked,
-        },
-      ],
-    };
-  }
-
   static displayName = 'Checkbox';
   static propTypes = {
     /**
@@ -72,6 +52,32 @@ class Checkbox extends BaseComponent {
     iconColor: PropTypes.string,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isChecked: new Animated.Value(this.props.value ? 1 : 0),
+    };
+
+    this.animationStyle = {
+      opacity: this.state.isChecked,
+      transform: [
+        {
+          scaleX: this.state.isChecked,
+        },
+        {
+          scaleY: this.state.isChecked,
+        },
+      ],
+    };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.value !== this.props.value) {
+      this.animateCheckbox(this.props.value);
+    }
+  }
+
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
   }
@@ -91,7 +97,6 @@ class Checkbox extends BaseComponent {
     const {disabled} = this.getThemeProps();
     if (!disabled) {
       _.invoke(this.props, 'onValueChange', !this.props.value);
-      this.animateCheckbox(!this.props.value);
     }
   };
 
