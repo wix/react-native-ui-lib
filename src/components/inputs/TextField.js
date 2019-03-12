@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Animated, TouchableOpacity, TextInput as RNTextInput} from 'react-native';
+import {StyleSheet, Animated, TextInput as RNTextInput} from 'react-native';
 import {Colors, Typography} from '../../style';
 import {Constants} from '../../helpers';
 import BaseInput from './BaseInput';
@@ -10,6 +10,7 @@ import TextArea from './TextArea';
 import View from '../view';
 import Image from '../image';
 import Text from '../text';
+import TouchableOpacity from '../touchableOpacity';
 
 
 const DEFAULT_COLOR_BY_STATE = {
@@ -127,7 +128,15 @@ export default class TextField extends BaseInput {
     /**
      * Icon asset source for showing on the right side, appropriate for dropdown icon and such
      */
-    rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
+    rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * Props for the right button {iconSource, onPress, style}
+     */
+    rightButtonProps: PropTypes.shape({
+      iconSource: PropTypes.number,
+      onPress: PropTypes.func,
+      style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
+    }),
   };
 
   static defaultProps = {
@@ -282,6 +291,15 @@ export default class TextField extends BaseInput {
     return this.shouldShowError() && useTopErrors;
   }
 
+  shouldDisplayRightButton() {
+    const {rightButtonProps, expandable} = this.getThemeProps();
+    return !expandable && rightButtonProps && rightButtonProps.iconSource;
+  }
+
+  onPressRightButton = () => {
+    _.invoke(this.props, 'rightButtonProps.onPress');
+  }
+
   /** Renders */
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
@@ -420,6 +438,7 @@ export default class TextField extends BaseInput {
       placeholder, 
       hideUnderline, 
       renderExpandableInput, 
+      rightIconSource
     } = this.getThemeProps();
     const typography = this.getTypography();
     const {lineHeight, ...typographyStyle} = typography;
@@ -455,6 +474,7 @@ export default class TextField extends BaseInput {
         >
           {shouldShowPlaceholder ? placeholder : value}
         </Text>
+        {rightIconSource && <Image pointerEvents="none" source={rightIconSource} style={this.styles.rightIcon}/>}
       </TouchableOpacity>
     );
   }
@@ -477,6 +497,7 @@ export default class TextField extends BaseInput {
     const {lineHeight, ...typographyStyle} = typography;
     const color = this.getStateColor(this.props.color || this.extractColorValue());
     const inputStyle = [
+      this.shouldDisplayRightButton() && {paddingRight: 33},
       this.styles.input,
       hideUnderline && this.styles.inputWithoutUnderline,
       {...typographyStyle},
@@ -508,8 +529,25 @@ export default class TextField extends BaseInput {
     );
   }
 
+  renderRightButton() {
+    const {rightButtonProps} = this.getThemeProps();
+    const tintColor = _.get(rightButtonProps, 'style.tintColor', Colors.blue30);
+
+    if (this.shouldDisplayRightButton()) {
+      return (
+        <TouchableOpacity style={[this.styles.rightButton, rightButtonProps.style]} onPress={this.onPressRightButton}>
+          <Image 
+            pointerEvents="none" 
+            source={rightButtonProps.iconSource} 
+            style={[this.styles.rightButtonImage, {tintColor}]}
+          />
+        </TouchableOpacity>
+      );
+    }
+  }
+
   render() {
-    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline, rightIconSource} = this.getThemeProps();
+    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
     const underlineStateColor = this.getStateColor(underlineColor, true);
 
     return (
@@ -526,7 +564,7 @@ export default class TextField extends BaseInput {
         >
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
-          {rightIconSource && <Image pointerEvents="none" source={rightIconSource} style={this.styles.rightIcon}/>}
+          {this.renderRightButton()}
           {expandable && this.renderExpandableModal()}
         </View>
         
@@ -645,6 +683,15 @@ function createStyles({placeholderTextColor, centered, multiline}) {
     rightIcon: {
       alignSelf: 'center', 
       marginLeft: 8
+    },
+    rightButton: {
+      position: 'absolute',
+      right: 3,
+      alignSelf: 'center'
+    },
+    rightButtonImage: {
+      width: 24,
+      height: 24
     }
   });
 }

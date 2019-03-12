@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {Colors, Typography, View, Text, TextField, TextArea, Modal, Button} from 'react-native-ui-lib'; //eslint-disable-line
 import {KeyboardAwareInsetsView} from 'react-native-keyboard-tracking-view';
-import dropdown from '../../assets/icons/chevronDown.png';
+import icon from '../../assets/icons/richText.png';
+import dropDown from '../../assets/icons/chevronDown.png';
 
 
 const LONG_TEXT =
@@ -33,6 +34,10 @@ export default class InputsScreen extends Component {
   onButtonPressed = () => {
     const {topError} = this.state;
     this.setState({topError: !topError});
+  }
+
+  onPressInfo = () => {
+    console.warn('onPressInfo');
   }
 
   onChangeText = (text) => {
@@ -238,17 +243,17 @@ export default class InputsScreen extends Component {
             text70
             containerStyle={{marginBottom: INPUT_SPACING, width: 160}}
             floatingPlaceholder
-            placeholder="RightIconSource"
-            rightIconSource={dropdown}
+            placeholder="Right button"
+            rightButtonProps={{iconSource: icon, onPress: this.onPressInfo, style: {tintColor: Colors.red30}}}
           />
 
           <TextField
             text70
-            containerStyle={{marginBottom: INPUT_SPACING}}
+            containerStyle={{marginBottom: INPUT_SPACING, width: 210}}
             floatingPlaceholder
-            placeholder="Multiline & RightIconSource"
+            placeholder="Multiline & Right button"
             multiline
-            rightIconSource={dropdown}
+            rightButtonProps={{iconSource: icon, onPress: this.onPressInfo}}
           />
           
           <TextField
@@ -257,7 +262,7 @@ export default class InputsScreen extends Component {
             floatingPlaceholder
             placeholder="Expandable & rightIconSource"
             expandable
-            rightIconSource={dropdown}
+            rightIconSource={dropDown}
           />
 
           <Text dark10 marginB-5>Text Area</Text>
