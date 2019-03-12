@@ -131,7 +131,7 @@ export default class Avatar extends BaseComponent {
     /**
      * AWAY, ONLINE, OFFLINE or NONE mode (if set to a value other then 'NONE' will override isOnline prop)
      */
-    status: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf(Object.keys(STATUS_MODES))]),
+    status: PropTypes.oneOf(Object.keys(STATUS_MODES)),
     /**
      * Custom size for the Avatar
      */
@@ -181,23 +181,15 @@ export default class Avatar extends BaseComponent {
 
   getBadgeBorderWidth() {
     const {badgeProps} = this.props;
-    const borderWidths = _.get(this.props, 'badgeProps.borderWidth', DEFAULT_BADGE_BORDER_WIDTH);
+    const borderWidth = _.get(this.props, 'badgeProps.borderWidth', DEFAULT_BADGE_BORDER_WIDTH);
 
     if (_.get(this.props, 'badgeProps.icon')) {
       return badgeProps.borderWidth || 0;
     }
-    return borderWidths;
+    return borderWidth;
   }
 
-  getBorderColor() {
-    const {badgeProps} = this.props;
-    const borderColors = _.get(this.props, 'badgeProps.borderColor', DEFAULT_BADGE_BORDER_COLOR);
-
-    if (_.get(this.props, 'badgeProps.icon')) {
-      return badgeProps.borderColor || undefined;
-    }
-    return borderColors;
-  }
+  getBorderColor = () => _.get(this.props, 'badgeProps.borderColor', DEFAULT_BADGE_BORDER_COLOR);
 
   getBadgePosition() {
     const {size, badgePosition} = this.props;

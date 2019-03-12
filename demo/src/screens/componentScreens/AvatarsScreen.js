@@ -63,7 +63,6 @@ const examples = [
       icon: star,
       size: 'pimpleHuge',
       borderWidth: 1.5,
-      borderColor: Colors.white,
       iconStyle: {backgroundColor: Colors.yellow20},
     },
   },
