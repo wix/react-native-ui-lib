@@ -71,8 +71,10 @@ export default class Carousel extends BaseComponent {
   }
 
   onContentSizeChange = () => {
+    const {currentPage} = this.state;
+
     if (Constants.isAndroid) {
-      this.goToPage(this.state.currentPage, false);
+      this.goToPage(currentPage, false);
     }
   }
 
@@ -140,6 +142,7 @@ export default class Carousel extends BaseComponent {
 
   render() {
     const {containerStyle, ...others} = this.props;
+    const {initialOffset} = this.state;
     
     return (
       <ScrollView
@@ -151,7 +154,7 @@ export default class Carousel extends BaseComponent {
         pagingEnabled
         onScroll={this.onScroll}
         scrollEventThrottle={200}
-        contentOffset={this.state.initialOffset}
+        contentOffset={initialOffset}
         onContentSizeChange={this.onContentSizeChange}
       >
         {this.renderChildren()}
