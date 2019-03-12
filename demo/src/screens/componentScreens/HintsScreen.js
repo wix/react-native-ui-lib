@@ -10,6 +10,7 @@ export default class HintsScreen extends Component {
       showBottomHint: false,
       showIcon: false,
       targetPosition: 'flex-start',
+      // useTargetFrame: true,
       // useSideTip: undefined
     };
   }
