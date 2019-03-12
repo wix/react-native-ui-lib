@@ -7,6 +7,14 @@
       {
         "prop": "url",
         "message": "Please use the 'imageSource' prop instead."
+      },
+      {
+        "prop": "isOnline",
+        "message": "Please use 'badgeProps.backgroundColor' prop instead."
+      },
+      {
+        "prop": "status",
+        "message": "Please use 'badgeProps.backgroundColor' prop instead."
       }
     ]
   },
