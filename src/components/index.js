@@ -1,6 +1,8 @@
 module.exports = {
   get ActionBar() { return require('./actionBar').default; },
   get ActionSheet() { return require('./actionSheet').default; },
+  get AnimatedImage() { return require('./animatedImage').default; },
+  get AnimatedScanner() { return require('./animatedScanner').default; },
   get Avatar() { return require('./avatar').default; },
   get Badge() { return require('./badge').default; },
   get Button() { return require('./button').default; },
@@ -23,6 +25,7 @@ module.exports = {
   get PageControl() { return require('./pageControl').default; },
   get PanGestureView() { return require('./panGestureView').default; },
   get Picker() { return require('./picker').default; },
+  get ProgressBar() { return require('./progressBar').default; },
   get Stepper() { return require('./stepper').default; },
   get TabBar() { return require('./tabBar').default; },
   get TagsInput() { return require('./tagsInput').default; },

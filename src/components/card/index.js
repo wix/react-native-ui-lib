@@ -1,18 +1,27 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, ViewPropTypes} from 'react-native';
+import {StyleSheet, ViewPropTypes, Animated} from 'react-native';
 import {BlurView} from 'react-native-blur';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
+import Image from '../image';
 import CardSection from './CardSection';
 import CardItem from './CardItem';
 import CardImage from './CardImage';
+import Assets from '../../assets';
 
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
+
+const DEFAULT_SELECTION_PROPS = {
+  borderWidth: 2,
+  color: Colors.blue30,
+  indicatorSize: 20,
+  icon: Assets.icons.checkSmall,
+};
 
 /**
  * @description: Card component
@@ -67,11 +76,45 @@ class Card extends BaseComponent {
      * Additional styles for the top container
      */
     containerStyle: ViewPropTypes.style,
+    /**
+     * Adds visual indication that the card is selected
+     */
+    selected: PropTypes.bool,
+    /**
+     * Custom options for styling the selection indication
+     */
+    selectionOptions: PropTypes.shape({
+      icon: PropTypes.number,
+      color: PropTypes.string,
+      borderWidth: PropTypes.number,
+      indicatorSize: PropTypes.number,
+    }),
   };
 
   static defaultProps = {
+    selected: false,
     enableShadow: true,
   };
+
+  state = {
+    animatedSelected: new Animated.Value(Number(this.props.selected)),
+  };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.selected !== this.props.selected) {
+      this.animateSelection();
+    }
+  }
+
+  animateSelection() {
+    const {animatedSelected} = this.state;
+    const {selected} = this.props;
+    Animated.timing(animatedSelected, {
+      toValue: Number(selected),
+      duration: 120,
+      useNativeDriver: true,
+    }).start();
+  }
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
@@ -126,17 +169,29 @@ class Card extends BaseComponent {
     }
   }
 
-  renderChildren() {
-    if (Constants.isAndroid) {
-      return this.props.children;
-    }
+  renderSelection() {
+    const {selectionOptions, borderRadius} = this.getThemeProps();
+    const {animatedSelected} = this.state;
 
+    return (
+      <Animated.View
+        style={[this.styles.selectedBorder, borderRadius && {borderRadius}, {opacity: animatedSelected}]}
+        pointerEvents="none"
+      >
+        <View style={this.styles.selectedIndicator}>
+          <Image source={_.get(selectionOptions, 'icon', DEFAULT_SELECTION_PROPS.icon)} />
+        </View>
+      </Animated.View>
+    );
+  }
+
+  renderChildren() {
     const {borderRadius} = this.getThemeProps();
     const children = React.Children.map(this.props.children, (child, index) => {
       if (_.get(child, 'type.displayName') === CardImage.displayName) {
         const position = this.calcImagePosition(index);
         return React.cloneElement(child, {
-          /* key: index, */ position,
+          position,
           borderRadius: borderRadius || DEFAULT_BORDER_RADIUS,
         });
       }
@@ -173,18 +228,19 @@ class Card extends BaseComponent {
         )}
 
         {this.renderChildren()}
+        {this.renderSelection()}
       </Container>
     );
   }
 }
 
-function createStyles({width, height, borderRadius = DEFAULT_BORDER_RADIUS}) {
+function createStyles({width, height, borderRadius = DEFAULT_BORDER_RADIUS, selectionOptions}) {
+  const selectionOptionsWithDefaults = _.merge(DEFAULT_SELECTION_PROPS, selectionOptions);
   return StyleSheet.create({
     container: {
       width,
       height,
-      // must use visible for iOS for shadow
-      overflow: Constants.isIOS ? 'visible' : 'hidden',
+      overflow: 'visible',
       borderRadius,
     },
     containerShadow: {
@@ -197,6 +253,23 @@ function createStyles({width, height, borderRadius = DEFAULT_BORDER_RADIUS}) {
     blurView: {
       ...StyleSheet.absoluteFillObject,
       borderRadius,
+    },
+    selectedBorder: {
+      ...StyleSheet.absoluteFillObject,
+      borderRadius: DEFAULT_BORDER_RADIUS,
+      borderWidth: selectionOptionsWithDefaults.borderWidth,
+      borderColor: selectionOptionsWithDefaults.color,
+    },
+    selectedIndicator: {
+      borderRadius: BorderRadiuses.br100,
+      position: 'absolute',
+      top: -selectionOptionsWithDefaults.indicatorSize / 2 + 2,
+      right: -selectionOptionsWithDefaults.indicatorSize / 2 + 1,
+      width: selectionOptionsWithDefaults.indicatorSize,
+      height: selectionOptionsWithDefaults.indicatorSize,
+      backgroundColor: selectionOptionsWithDefaults.color,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   });
 }

@@ -10,7 +10,13 @@ const cardImage = require('../../assets/images/card-example.jpg');
 const cardImage2 = require('../../assets/images/empty-state.jpg');
 
 export default class CardsScreen extends Component {
+  state = {
+    selected1: true,
+    selected2: true,
+  };
+
   render() {
+    const {selected1, selected2} = this.state;
     return (
       <View>
         <Image
@@ -43,43 +49,66 @@ export default class CardsScreen extends Component {
               })}
             </ScrollView>
 
-            <Card height={120} width={120} marginV-20>
-              <Card.Image height={'100%'} imageSource={cardImage} />
-            </Card>
+            <View row>
+              <Card
+                height={120}
+                flex
+                marginV-20
+                selected={selected1}
+                onPress={() => this.setState({selected1: !selected1})}
+                activeOpacity={1}
+                marginR-20
+              >
+                <Card.Image height={'100%'} imageSource={cardImage} />
+              </Card>
+              <Card
+                height={120}
+                flex
+                marginV-20
+                selected={selected2}
+                onPress={() => this.setState({selected2: !selected2})}
+                activeOpacity={1}
+                selectionOptions={{
+                  color: Colors.dark10,
+                  indicatorSize: 25,
+                  borderWidth: 3,
+                }}
+              >
+                <Card.Image height={'100%'} imageSource={cardImage} />
+              </Card>
+            </View>
 
-            <Card marginB-20 height={80} style={{backgroundColor: Colors.dark60}}>
-              <View flex padding-20>
-                <Text text50 white>
+            <View row>
+              <Card flex center marginB-20 height={80} style={{backgroundColor: Colors.dark60}} marginR-20>
+                <Text text80 center white>
                   With custom background color
                 </Text>
-              </View>
-            </Card>
-
-            <Card marginB-20 height={80} style={{backgroundColor: Colors.rgba(Colors.dark60, 0.75)}}>
-              <View flex padding-20>
-                <Text text50 white>
+              </Card>
+              <Card flex center marginB-20 height={80} style={{backgroundColor: Colors.rgba(Colors.dark60, 0.75)}}>
+                <Text text70 center white>
                   With opacity
                 </Text>
-              </View>
-            </Card>
+              </Card>
 
-            {Constants.isIOS && (
-              <Card
-                marginB-20
-                height={80}
-                enableBlur
-                // onPress={() => {}}
-              >
-                <View flex padding-20>
-                  <Text text50 dark20>
+              {Constants.isIOS && (
+                <Card
+                  flex
+                  center
+                  marginL-20
+                  marginB-20
+                  height={80}
+                  enableBlur
+                  // onPress={() => {}}
+                >
+                  <Text text70 dark20 center>
                     With Blur effect
                   </Text>
-                  <Text text80 dark20>
+                  <Text text80 dark20 center>
                     (iOS only)
                   </Text>
-                </View>
-              </Card>
-            )}
+                </Card>
+              )}
+            </View>
 
             <Card row height={160} style={{marginBottom: 15}} onPress={() => {}} enableBlur>
               <Card.Image width={115} imageSource={cardImage} />
