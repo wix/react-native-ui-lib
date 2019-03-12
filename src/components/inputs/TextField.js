@@ -388,6 +388,8 @@ export default class TextField extends BaseInput {
       return renderExpandable(this.getThemeProps(), this.state);
     }
 
+    const textInputProps = TextField.extractOwnProps(this.props, 'error');
+
     return (
       <Modal
         animationType={'slide'}
@@ -404,7 +406,7 @@ export default class TextField extends BaseInput {
             ref={(textarea) => {
               this.expandableInput = textarea;
             }}
-            {...this.props}
+            {...textInputProps}
             value={this.state.value}
           />
         </View>
