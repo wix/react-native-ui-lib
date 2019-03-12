@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
   },
   iconBadgeColumnContainer: {
     flex: 1,
+    justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'column',
   },
