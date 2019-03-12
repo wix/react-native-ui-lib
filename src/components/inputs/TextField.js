@@ -133,7 +133,7 @@ export default class TextField extends BaseInput {
      * Props for the right button {iconSource, onPress, style}
      */
     rightButtonProps: PropTypes.shape({
-      iconSource: PropTypes.number,
+      iconSource: PropTypes.number.isRequired,
       onPress: PropTypes.func,
       style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
     }),
@@ -633,7 +633,7 @@ function createStyles({placeholderTextColor, centered, multiline}) {
       borderBottomWidth: 0
     },
     input: {
-      flex: 1,
+      flexGrow: 1,
       textAlign: centered ? 'center' : undefined,
       backgroundColor: 'transparent',
       marginBottom: Constants.isIOS ? 10 : 5,
