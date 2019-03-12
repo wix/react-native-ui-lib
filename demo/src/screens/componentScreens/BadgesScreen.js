@@ -123,7 +123,7 @@ export default class BadgesScreen extends Component {
         <Text text50 marginB-10 row center marginT-25>
           Icon Badges
         </Text>
-        <View row>
+        <View row paddingH-15>
           <View style={styles.iconBadgeColumnContainer}>
             <Badge size={'small'} icon={star} borderWidth={1} borderColor={Colors.red30}/>
             <Text text80 style={{marginTop: 10}}>
@@ -153,8 +153,9 @@ export default class BadgesScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    paddingTop: 20,
-    paddingBottom: 20,
+    // paddingTop: 20,
+    // paddingBottom: 20,
+    padding: 20,
     backgroundColor: Colors.dark70,
   },
   iconBadgeColumnContainer: {
