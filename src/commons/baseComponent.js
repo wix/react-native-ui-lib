@@ -28,7 +28,7 @@ export default function baseComponent(usePure) {
       };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
       this.updateModifiers(this.props, nextProps);
     }
 
