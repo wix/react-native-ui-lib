@@ -92,7 +92,7 @@ export default class Drawer extends BaseComponent {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (JSON.stringify(this.props.leftItem) !== JSON.stringify(nextProps.leftItem) || 
     JSON.stringify(this.props.rightItems) !== JSON.stringify(nextProps.rightItems)) {
       this.closeDrawer();

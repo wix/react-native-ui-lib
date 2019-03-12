@@ -31,7 +31,7 @@ class RadioGroup extends BaseComponent {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.value !== nextProps.value) {
       this.setState({value: nextProps.value});
     }
