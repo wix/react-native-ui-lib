@@ -144,7 +144,7 @@ export default class TextInput extends BaseInput {
     this.generatePropsWarnings(props);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
       this.setState({value: nextProps.value}, this.updateFloatingPlaceholderState);
     }

@@ -56,7 +56,7 @@ export default class SelectableComponent extends BaseComponent {
     this.onSelect = this.onSelect.bind(this);
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (newProps.selected !== this.state.selected) {
       this.setState({
         selected: newProps.selected,

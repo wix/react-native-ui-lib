@@ -72,6 +72,11 @@ class PickerModal extends BaseComponent {
     }
   }
 
+  renderItem = ({index}) => {
+    const {children} = this.props;
+    return React.Children.toArray(children)[index];
+  }
+
   render() {
     const {visible, enableModalBlur, topBarProps, listProps, children} = this.props;
     return (
@@ -87,9 +92,7 @@ class PickerModal extends BaseComponent {
 
         <FlatList
           data={_.times(React.Children.count(children))}
-          renderItem={({index}) => {
-            return React.Children.toArray(children)[index];
-          }}
+          renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
           {...listProps}
         />
