@@ -153,8 +153,6 @@ export default class BadgesScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    // paddingTop: 20,
-    // paddingBottom: 20,
     padding: 20,
     backgroundColor: Colors.dark70,
   },
