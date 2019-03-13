@@ -2,39 +2,45 @@ import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
 import {Constants, View, Text, Carousel} from 'react-native-ui-lib'; // eslint-disable-line
 
+
+const INITIAL_PAGE = 0;
+
 class CarouselScreen extends Component {
   state = {
-    currentPage: 1,
+    currentPage: INITIAL_PAGE
   };
 
   onChangePage(index) {
-    this.setState({currentPage: index + 1});
+    this.setState({currentPage: index});
   }
 
   render() {
     return (
       <View flex>
-        <Carousel loop onChangePage={(index => this.onChangePage(index))}>
+        <Carousel loop onChangePage={(index => this.onChangePage(index))}/** initialPage={INITIAL_PAGE} */>
+          <Page bg-cyan50>
+            <Text margin-15>PAGE 0</Text>
+          </Page>
           <Page bg-red50>
-            <Text>PAGE 1</Text>
+            <Text margin-15>PAGE 1</Text>
           </Page>
           <Page bg-purple50>
-            <Text>PAGE 2</Text>
+            <Text margin-15>PAGE 2</Text>
           </Page>
           <Page bg-green50>
-            <Text>PAGE 3</Text>
+            <Text margin-15>PAGE 3</Text>
           </Page>
           <Page bg-yellow20>
-            <Text>PAGE 4</Text>
+            <Text margin-15>PAGE 4</Text>
           </Page>
           <Page bg-purple20>
-            <Text>PAGE 5</Text>
+            <Text margin-15>PAGE 5</Text>
           </Page>
-          <Page bg-blue10>
-            <Text>PAGE 6</Text>
+          <Page bg-blue70>
+            <Text margin-15>PAGE 6</Text>
           </Page>
         </Carousel>
-        <View center style={{...StyleSheet.absoluteFillObject}} pointerEvents='none'>
+        <View center style={{...StyleSheet.absoluteFillObject}} pointerEvents="none">
           <Text text10>{this.state.currentPage}</Text>
         </View>
       </View>
@@ -52,8 +58,8 @@ const Page = ({children, ...others}) => {
 
 const styles = StyleSheet.create({
   page: {
-    width: Constants.screenWidth,
-  },
+    width: Constants.screenWidth
+  }
 });
 
 export default CarouselScreen;
