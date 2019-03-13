@@ -1,26 +1,22 @@
-import React from 'react';
-import ReactNative, {
-  NativeModules,
-  StyleSheet,
-  ViewPropTypes,
-  Image,
-  DeviceEventEmitter,
-} from 'react-native';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
-import {BaseComponent} from '../../commons';
+import PropTypes from 'prop-types';
+import React from 'react';
+import ReactNative, {NativeModules, StyleSheet, ViewPropTypes, Image, DeviceEventEmitter} from 'react-native';
 import {Constants} from '../../helpers';
-import {TextField} from '../inputs';
-import View from '../view';
-import TouchableOpacity from '../touchableOpacity';
-import Text from '../text';
 import {Colors, BorderRadiuses, ThemeManager, Typography} from '../../style';
 import Assets from '../../assets';
+import {BaseComponent} from '../../commons';
+import View from '../view';
+import TouchableOpacity from '../touchableOpacity';
+import {TextField} from '../inputs';
+import Text from '../text';
 
-// todo: support backspace to remove tags
-// todo: support updating tags externally
-// todo: support char array as tag creators (like comma)
-// todo: add notes to Docs about the Android fix for onKeyPress
+
+// TODO: support updating tags externally
+// TODO: support char array as tag creators (like comma)
+// TODO: add notes to Docs about the Android fix for onKeyPress
+
+const GUTTER_SPACING = 8;
 
 /**
  * @description: Tags input component (chips)
@@ -80,12 +76,12 @@ export default class TagsInput extends BaseComponent {
     /**
      * should hide input underline
      */
-    hideUnderline: PropTypes.bool,
+    hideUnderline: PropTypes.bool
   };
 
   static onChangeTagsActions = {
     ADDED: 'added',
-    REMOVED: 'removed',
+    REMOVED: 'removed'
   };
 
   constructor(props) {
@@ -101,8 +97,8 @@ export default class TagsInput extends BaseComponent {
 
     this.state = {
       value: props.value,
-      tags: props.tags || [],
-      tagIndexToRemove: undefined,
+      tags: _.cloneDeep(props.tags) || [],
+      tagIndexToRemove: undefined
     };
   }
 
@@ -122,7 +118,7 @@ export default class TagsInput extends BaseComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.tags !== this.state.tags) {
       this.setState({
         tags: nextProps.tags,
@@ -131,13 +127,15 @@ export default class TagsInput extends BaseComponent {
   }
 
   addTag() {
-    const {onCreateTag, disableTagAdding} = this.props;
+    const {onCreateTag, disableTagAdding} = this.getThemeProps();
     const {value, tags} = this.state;
+    
     if (disableTagAdding) return;
     if (_.isEmpty(value.trim())) return;
 
     const newTag = _.isFunction(onCreateTag) ? onCreateTag(value) : value;
     const newTags = [...tags, newTag];
+    
     this.setState({
       value: '',
       tags: newTags,
@@ -148,8 +146,10 @@ export default class TagsInput extends BaseComponent {
 
   removeMarkedTag() {
     const {tags, tagIndexToRemove} = this.state;
+    
     if (!_.isUndefined(tagIndexToRemove)) {
       const removedTag = tags[tagIndexToRemove];
+      
       tags.splice(tagIndexToRemove, 1);
       this.setState({
         tags,
@@ -190,13 +190,15 @@ export default class TagsInput extends BaseComponent {
     const {tags, tagIndexToRemove} = this.state;
     const tagsCount = _.size(tags);
     const isLastTagMarked = tagIndexToRemove === tagsCount - 1;
+    
     return isLastTagMarked;
   }
 
   onKeyPress(event) {
     _.invoke(this.props, 'onKeyPress', event);
     
-    if (this.props.disableTagRemoval) {
+    const {disableTagRemoval} = this.getThemeProps();
+    if (disableTagRemoval) {
       return;
     }
 
@@ -220,10 +222,10 @@ export default class TagsInput extends BaseComponent {
 
   getLabel(item) {
     const {getLabel} = this.props;
+    
     if (getLabel) {
       return getLabel(item);
     }
-
     if (_.isString(item)) {
       return item;
     }
@@ -232,10 +234,11 @@ export default class TagsInput extends BaseComponent {
 
   renderLabel(tag, shouldMarkTag) {
     const typography = this.extractTypographyValue();
+    
     return (
       <View row centerV>
         {shouldMarkTag &&
-          <Image style={styles.removeIcon} source={Assets.icons.x} />}
+          <Image style={styles.removeIcon} source={Assets.icons.x}/>}
         <Text style={[styles.tagLabel, typography]}>
           {shouldMarkTag ? 'Remove' : this.getLabel(tag)}
         </Text>
@@ -244,12 +247,14 @@ export default class TagsInput extends BaseComponent {
   }
 
   renderTag(tag, index) {
-    const {tagStyle, renderTag} = this.props;
+    const {tagStyle, renderTag} = this.getThemeProps();
     const {tagIndexToRemove} = this.state;
     const shouldMarkTag = tagIndexToRemove === index;
+    
     if (_.isFunction(renderTag)) {
       return renderTag(tag, index, shouldMarkTag, this.getLabel(tag));
     }
+    
     return (
       <View
         key={index}
@@ -273,9 +278,10 @@ export default class TagsInput extends BaseComponent {
   }
 
   renderTextInput() {
-    const {containerStyle, inputStyle, selectionColor, ...others} = this.props;
+    const {containerStyle, inputStyle, selectionColor, ...others} = this.getThemeProps();
     const {value} = this.state;
     const isLastTagMarked = this.isLastTagMarked();
+    
     return (
       <View style={styles.inputWrapper}>
         <TextField
@@ -299,11 +305,10 @@ export default class TagsInput extends BaseComponent {
   }
 
   render() {
-    const {disableTagRemoval} = this.props;
+    const {disableTagRemoval, containerStyle, hideUnderline} = this.getThemeProps();
     const tagRenderFn = disableTagRemoval ? this.renderTag : this.renderTagWrapper;
-
-    const {containerStyle, hideUnderline} = this.props;
     const {tags} = this.state;
+    
     return (
       <View style={[!hideUnderline && styles.withUnderline, containerStyle]}>
         <View style={styles.tagsList}>
@@ -327,20 +332,19 @@ export default class TagsInput extends BaseComponent {
   }
 }
 
-const GUTTER_SPACING = 8;
 const styles = StyleSheet.create({
   withUnderline: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: ThemeManager.dividerColor,
+    borderColor: ThemeManager.dividerColor
   },
   tagsList: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap'
   },
   inputWrapper: {
     flexGrow: 1,
     minWidth: 120,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   tag: {
     backgroundColor: Colors.blue30,
@@ -348,19 +352,19 @@ const styles = StyleSheet.create({
     paddingVertical: 4.5,
     paddingHorizontal: 12,
     marginRight: GUTTER_SPACING,
-    marginVertical: GUTTER_SPACING / 2,
+    marginVertical: GUTTER_SPACING / 2
   },
   tagMarked: {
-    backgroundColor: Colors.dark10,
+    backgroundColor: Colors.dark10
   },
   removeIcon: {
     tintColor: Colors.white,
     width: 10,
     height: 10,
-    marginRight: 6,
+    marginRight: 6
   },
   tagLabel: {
     ...Typography.text80,
-    color: Colors.white,
-  },
+    color: Colors.white
+  }
 });

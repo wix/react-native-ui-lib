@@ -1,17 +1,47 @@
 import React, {Component} from 'react';
+import {Navigation} from 'react-native-navigation';
 import {Colors, View, Dialog, Button, Text} from 'react-native-ui-lib'; // eslint-disable-line
 
 
 class DialogScreen extends Component {
-  state = {
-    showDialog1: false,
-    showDialog2: false,
-    showDialog3: false,
-    showDialog4: false,
-    showDialog5: false,
-    showDialog6: false,
-    showDialog7: false,
-    showDialog8: false
+  constructor(props) {
+    super(props);
+
+    Navigation.events().bindComponent(this);
+
+    this.state = {
+      showDialog1: false,
+      showDialog2: false,
+      showDialog3: false,
+      showDialog4: false,
+      showDialog5: false,
+      showDialog6: false,
+      showDialog7: false,
+      showDialog8: false
+    };
+  }
+
+  showOverlay = async () => {
+    this.overlay = await Navigation.showOverlay({
+      component: {
+        name: 'unicorn.CustomScreen',
+        passProps: {
+          onDismiss: this.dismissOverlay
+        },
+        options: {
+          layout: {
+            backgroundColor: 'transparent'
+          },
+          overlay: {
+            interceptTouchOutside: false
+          }
+        }
+      }
+    });
+  }
+
+  dismissOverlay = () => {
+    Navigation.dismissOverlay(this.overlay);
   };
 
   renderDialogContent(dialogIndex, extraProps) {
@@ -78,6 +108,12 @@ class DialogScreen extends Component {
           size={'small'}
           label="show dialog without a modal"
           onPress={() => this.setState({showDialog8: true})}
+        />
+        <Button
+          marginT-20
+          size={'small'}
+          label="show dialog in RNN overlay"
+          onPress={(this.showOverlay)}
         />
 
         <Dialog

@@ -1,11 +1,11 @@
 import React, {PureComponent} from 'react';
-import {Text, View, WheelPicker } from 'react-native-ui-lib'; //eslint-disable-line
+import {Text, View, WheelPicker ,Colors} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class WheelPickerViewScreen extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'common lisp',
+      selectedValue: 'common lisp',
       items: [
         { value: 'python', label: 'python'},
         { value: 'javascript', label: 'javascript'},
@@ -17,20 +17,26 @@ export default class WheelPickerViewScreen extends PureComponent {
     this.onValueChange = this.onValueChange.bind(this);
   }
 
-
   onValueChange(itemValue) {
-    this.setState({ value: itemValue});
+    this.setState({ selectedValue: itemValue});
   }
+
   render() {
+    const {selectedValue, items} = this.state;
+
     return (
-      <View flex center>
-        <Text>{'Wheel Picker'}</Text>
-        <Text>{`Selected Value is: ${this.state.value}`}</Text>
+      <View flex centerH>
+        <Text margin-10 text40 dark10 style={{fontWeight: 'bold'}}>{'Wheel Picker'}</Text>
+        <Text marginB-30 text60 dark10>{`Current Value is: ${selectedValue}`}</Text>
         <WheelPicker
-          selectedValue={this.state.value}
-          onValueChange={this.onValueChange} style={{width: 200}}
+          selectedValue={selectedValue}
+          onValueChange={this.onValueChange}
+          style={{width: 200}}
+          color={Colors.violet30}
+          labelStyle={{fontSize: 32, fontFamily: 'sans-serif-condensed-light'}}
+          itemHeight={55}
         >
-          {this.state.items.map((item) => {
+          {items.map((item) => {
             return (
               <WheelPicker.Item key={item.value} value={item.value} label={item.label} />
             );

@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
 import {BaseComponent} from '../../commons';
-import View from '../view';
 import TextField from '../inputs/TextField';
 import {WheelPicker} from '../../nativeComponents';
 import PickerDialog from './PickerDialog';
@@ -72,16 +71,14 @@ class NativePicker extends BaseComponent {
     const label = this.getLabel();
     
     return (
-      <View>
-        <TextField
-          {...textInputProps}
-          ref={r => (this.input = r)}
-          enableErrors={false}
-          value={label}
-          expandable
-          renderExpandable={this.renderPickerDialog}
-        />
-      </View>
+      <TextField
+        {...textInputProps}
+        ref={r => (this.input = r)}
+        enableErrors={false}
+        value={label}
+        expandable
+        renderExpandable={this.renderPickerDialog}
+      />
     );
   }
 }

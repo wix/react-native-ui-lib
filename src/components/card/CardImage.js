@@ -54,7 +54,7 @@ export default class CardImage extends BaseComponent {
     if (imageSource) {
       return (
         <View style={[this.styles.container, borderStyle, style]}>
-          <Image testID={testID} source={imageSource} style={[this.styles.image, borderStyle]}/>
+          <Image testID={testID} source={imageSource} style={[this.styles.image/* , borderStyle */]}/>
         </View>
       );
     }
@@ -68,6 +68,7 @@ function createStyles({width, height, position}) {
     container: {
       height: (left || right) ? undefined : height,
       width: (top || bottom) ? undefined : width,
+      overflow: 'hidden'
     },
     image: {
       width: null,

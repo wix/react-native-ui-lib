@@ -74,7 +74,7 @@ export default class ActionSheet extends BaseComponent {
     showCancelButton: false,
   };
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const {useNativeIOS} = this.getThemeProps();
     const wasVisible = this.props.visible;
     const willBeVisible = nextProps.visible;

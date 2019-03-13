@@ -132,7 +132,7 @@ class FeatureHighlight extends BaseComponent {
     this.setTargetPosition();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setTargetPosition(nextProps);
   }
 

@@ -72,7 +72,7 @@ class Switch extends BaseComponent {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.value !== nextProps.value) {
       this.toggle(nextProps.value);
     }
@@ -94,7 +94,6 @@ class Switch extends BaseComponent {
 
     if (!disabled) {
       _.invoke(this.props, 'onValueChange', !this.props.value);
-      this.toggle(!this.props.value);
     }
   };
 

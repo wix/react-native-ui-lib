@@ -3,10 +3,13 @@ import {ScrollView, View, Text, StyleSheet, Alert} from 'react-native';
 import _ from 'lodash';
 import {Avatar, AvatarHelper, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line
 
+const star = require('../../assets/icons/star.png');
+
+const onlineColor = Colors.green30;
+
 const examples = [
-  {title: 'Empty Avatar', ribbonLabel: 'New'},
   {title: 'Custom Background', backgroundColor: Colors.violet60},
-  {title: 'Initials (online)', label: 'ES', isOnline: true, status: Avatar.modes.NONE},
+  {title: 'Empty Avatar with ribbon', ribbonLabel: 'New'},
   {
     title: 'Initials with Color',
     label: 'AD',
@@ -15,16 +18,18 @@ const examples = [
     ribbonLabel: 'New',
     ribbonStyle: {backgroundColor: Colors.purple30},
   },
+  {title: 'Initials, badge ("online")', label: 'ES', badgeProps: {backgroundColor: onlineColor}},
   {
-    title: 'Image (online)',
+    title: 'Image, badge ("away")',
     imageSource: {
       uri:
         'https://lh3.googleusercontent.com/-cw77lUnOvmI/AAAAAAAAAAI/AAAAAAAAAAA/WMNck32dKbc/s181-c/104220521160525129167.jpg',
     },
-    isOnline: true,
+    badgeProps: {size: 'pimpleBig', backgroundColor: Colors.yellow30},
   },
+
   {
-    title: 'Smaller',
+    title: 'Smaller size',
     size: 40,
     imageSource: {
       uri:
@@ -39,23 +44,28 @@ const examples = [
     imageSource: {uri: 'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg'},
   },
   {
-    title: 'Big pimple',
+    title: 'Big pimple, bottom right',
     size: 70,
     backgroundColor: 'red',
     imageSource: {
       uri: 'https://randomuser.me/api/portraits/women/24.jpg',
     },
-    isOnline: true,
-    badgeProps: {size: 'pimpleHuge', borderWidth: 0},
+    badgeProps: {size: 'pimpleHuge', borderWidth: 0, backgroundColor: onlineColor},
     badgePosition: 'BOTTOM_RIGHT',
   },
   {
-    title: 'Monitored Avatar (see logs)',
-    label: '?!',
-    backgroundColor: Colors.blue20,
-    imageSource: {uri: 'https://static.altomusic.com/media/catalog/product/M/A/MAJ100SBK_0.jpg'},
-    onImageLoadStart: () => console.log('AvatarScreen: Monitored avatar load STARTED...'), // eslint-disable-line
-    onImageLoadEnd: () => console.log('AvatarScreen: Monitored avatar load ENDED'), // eslint-disable-line
+    title: 'Icon badge',
+    size: 60,
+    imageSource: {
+      uri: 'https://randomuser.me/api/portraits/women/24.jpg',
+    },
+    badgeProps: {
+      icon: star,
+      size: 'pimpleHuge',
+      borderWidth: 1.5,
+      borderColor: Colors.white,
+      iconStyle: {backgroundColor: Colors.yellow20},
+    },
   },
   {
     title: 'Invalid Gravatar (see logs)',
@@ -67,12 +77,18 @@ const examples = [
     onImageLoadError: () => console.log('AvatarScreen: Invalid avatar load FAILED'), // eslint-disable-line
   },
   {
+    title: 'Monitored Avatar (see logs)',
+    label: '?!',
+    backgroundColor: Colors.blue20,
+    imageSource: {uri: 'https://static.altomusic.com/media/catalog/product/M/A/MAJ100SBK_0.jpg'},
+    onImageLoadStart: () => console.log('AvatarScreen: Monitored avatar load STARTED...'), // eslint-disable-line
+    onImageLoadEnd: () => console.log('AvatarScreen: Monitored avatar load ENDED'), // eslint-disable-line
+  },
+  {
     title: 'Empty Gravatar',
     backgroundColor: Colors.red60,
     imageSource: {uri: 'https://www.gravatar.com/avatar/2497473d558a37020c558bf26e380a7c?d=blank'},
   },
-  {title: 'Status (offline)', status: Avatar.modes.OFFLINE},
-  {title: 'Status (away) overrides isOnline', isOnline: true, status: Avatar.modes.AWAY},
 ];
 
 export default class AvatarsScreen extends Component {
