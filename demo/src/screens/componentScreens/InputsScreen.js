@@ -241,10 +241,10 @@ export default class InputsScreen extends Component {
 
           <TextField
             text70
-            containerStyle={{marginBottom: INPUT_SPACING, width: 160}}
+            containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
             placeholder="Right button"
-            rightButtonProps={{iconSource: icon, onPress: this.onPressInfo, style: {tintColor: Colors.red30}}}
+            rightButtonProps={{iconSource: icon, onPress: this.onPressInfo}}
           />
 
           <TextField
@@ -253,7 +253,7 @@ export default class InputsScreen extends Component {
             floatingPlaceholder
             placeholder="Multiline & Right button"
             multiline
-            rightButtonProps={{iconSource: icon, onPress: this.onPressInfo}}
+            rightButtonProps={{iconSource: icon, onPress: this.onPressInfo, style: {tintColor: Colors.red30}}}
           />
           
           <TextField

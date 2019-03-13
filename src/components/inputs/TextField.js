@@ -24,6 +24,9 @@ const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
   error: Colors.red30
 };
 const LABEL_TYPOGRAPHY = Typography.text80;
+const ICON_SIZE = 24;
+const ICON_RIGHT_PADDING = 3;
+const ICON_LEFT_PADDING = 6;
 
 /**
  * @description: A wrapper for Text Input component with extra functionality like floating placeholder
@@ -497,7 +500,7 @@ export default class TextField extends BaseInput {
     const {lineHeight, ...typographyStyle} = typography;
     const color = this.getStateColor(this.props.color || this.extractColorValue());
     const inputStyle = [
-      this.shouldDisplayRightButton() && {paddingRight: 33},
+      this.shouldDisplayRightButton() && {paddingRight: (ICON_SIZE + ICON_RIGHT_PADDING + ICON_LEFT_PADDING)},
       this.styles.input,
       hideUnderline && this.styles.inputWithoutUnderline,
       {...typographyStyle},
@@ -686,12 +689,12 @@ function createStyles({placeholderTextColor, centered, multiline}) {
     },
     rightButton: {
       position: 'absolute',
-      right: 3,
+      right: ICON_RIGHT_PADDING,
       alignSelf: 'center'
     },
     rightButtonImage: {
-      width: 24,
-      height: 24
+      width: ICON_SIZE,
+      height: ICON_SIZE
     }
   });
 }
