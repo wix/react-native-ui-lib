@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import {StyleSheet/* , TouchableWithoutFeedback */} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {Typography, Spacings, Colors, BorderRadiuses, AnimatableManager} from '../../style';
 import {Constants} from '../../helpers';
@@ -10,6 +10,7 @@ import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
 import Image from '../image';
+import Modal from '../../screensComponents/modal';
 
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
@@ -132,9 +133,19 @@ class Hint extends BaseComponent {
     }
   };
 
+  get targetLayout() {
+    const {onBackgroundPress, targetFrame} = this.props;
+    const {targetLayout, targetLayoutInWindow} = this.state;
+
+    if (targetFrame) {
+      return targetFrame;
+    }
+
+    return (onBackgroundPress) ? targetLayoutInWindow : targetLayout;
+  }
+
   get showHint() {
-    const {targetLayout} = this.state;
-    return !!targetLayout;
+    return !!this.targetLayout;
   }
 
   get tipSize() {
@@ -160,8 +171,7 @@ class Hint extends BaseComponent {
   }
 
   getTargetPositionOnScreen() {
-    const {targetLayout} = this.state;
-    const targetMidPosition = targetLayout.x + targetLayout.width / 2;
+    const targetMidPosition = this.targetLayout.x + this.targetLayout.width / 2;
     if (targetMidPosition > Constants.screenWidth * (2 / 3)) {
       return 'right';
     } else if (targetMidPosition < Constants.screenWidth * (1 / 3)) {
@@ -172,21 +182,19 @@ class Hint extends BaseComponent {
   }
 
   getContainerPosition() {
-    const {targetLayout} = this.state;
-    if (targetLayout) {
-      return {top: targetLayout.y, left: targetLayout.x};
+    if (this.targetLayout) {
+      return {top: this.targetLayout.y, left: this.targetLayout.x};
     }
   }
 
   getHintPosition() {
-    const {targetLayout} = this.state;
     const {position} = this.props;
-    const hintPositionStyle = {left: -targetLayout.x, alignItems: 'center'};
+    const hintPositionStyle = {left: -this.targetLayout.x, alignItems: 'center'};
 
     if (position === HINT_POSITIONS.TOP) {
       hintPositionStyle.bottom = 0;
     } else {
-      hintPositionStyle.top = targetLayout.height;
+      hintPositionStyle.top = this.targetLayout.height;
     }
 
     const targetPositionOnScreen = this.getTargetPositionOnScreen();
@@ -200,14 +208,13 @@ class Hint extends BaseComponent {
   }
 
   getHintPadding() {
-    const {targetLayout} = this.state;
     const paddings = {paddingVertical: this.hintOffset, paddingHorizontal: this.edgeMargins};
     if (this.useSideTip) {
       const targetPositionOnScreen = this.getTargetPositionOnScreen();
       if (targetPositionOnScreen === 'left') {
-        paddings.paddingLeft = targetLayout.x;
+        paddings.paddingLeft = this.targetLayout.x;
       } else if (targetPositionOnScreen === 'right') {
-        paddings.paddingRight = Constants.screenWidth - targetLayout.x - targetLayout.width;
+        paddings.paddingRight = Constants.screenWidth - this.targetLayout.x - this.targetLayout.width;
       }
     }
 
@@ -215,7 +222,6 @@ class Hint extends BaseComponent {
   }
 
   getTipPosition() {
-    const {targetLayout} = this.state;
     const {position} = this.getThemeProps();
     const tipPositionStyle = {};
 
@@ -225,52 +231,52 @@ class Hint extends BaseComponent {
       tipPositionStyle.top = this.hintOffset - this.tipSize.height;
     }
 
-    const targetMidWidth = targetLayout.width / 2;
+    const targetMidWidth = this.targetLayout.width / 2;
     const tipMidWidth = this.tipSize.width / 2;
 
     switch (this.getTargetPositionOnScreen()) {
       case 'left':
-        tipPositionStyle.left = this.useSideTip ? targetLayout.x : targetLayout.x + targetMidWidth - tipMidWidth;
+        tipPositionStyle.left = this.useSideTip ? this.targetLayout.x : this.targetLayout.x + targetMidWidth - tipMidWidth;
         break;
       case 'right':
         tipPositionStyle.right = this.useSideTip
-          ? Constants.screenWidth - targetLayout.x - targetLayout.width
-          : Constants.screenWidth - targetLayout.x - targetMidWidth - tipMidWidth;
+          ? Constants.screenWidth - this.targetLayout.x - this.targetLayout.width
+          : Constants.screenWidth - this.targetLayout.x - targetMidWidth - tipMidWidth;
         break;
       case 'center':
       default:
-        tipPositionStyle.left = targetLayout.x + targetMidWidth - tipMidWidth;
+        tipPositionStyle.left = this.targetLayout.x + targetMidWidth - tipMidWidth;
         break;
     }
 
     return tipPositionStyle;
   }
 
-  renderOverlay() {
-    const {targetLayoutInWindow} = this.state;
-    const {onBackgroundPress} = this.props;
-    if (targetLayoutInWindow) {
-      const containerPosition = this.getContainerPosition();
-      return (
-        <View
-          style={[
-            styles.overlay,
-            {
-              top: containerPosition.top - targetLayoutInWindow.y,
-              left: containerPosition.left - targetLayoutInWindow.x,
-            },
-          ]}
-          pointerEvents="box-none"
-        >
-          {onBackgroundPress && (
-            <TouchableWithoutFeedback style={[StyleSheet.absoluteFillObject]} onPress={onBackgroundPress}>
-              <View flex />
-            </TouchableWithoutFeedback>
-          )}
-        </View>
-      );
-    }
-  }
+  // renderOverlay() {
+  //   const {targetLayoutInWindow} = this.state;
+  //   const {onBackgroundPress} = this.props;
+  //   if (targetLayoutInWindow) {
+  //     const containerPosition = this.getContainerPosition();
+  //     return (
+  //       <View
+  //         style={[
+  //           styles.overlay,
+  //           {
+  //             top: containerPosition.top - targetLayoutInWindow.y,
+  //             left: containerPosition.left - targetLayoutInWindow.x,
+  //           },
+  //         ]}
+  //         pointerEvents="box-none"
+  //       >
+  //         {onBackgroundPress && (
+  //           <TouchableWithoutFeedback style={[StyleSheet.absoluteFillObject]} onPress={onBackgroundPress}>
+  //             <View flex />
+  //           </TouchableWithoutFeedback>
+  //         )}
+  //       </View>
+  //     );
+  //   }
+  // }
 
   renderHintTip() {
     const {position, color} = this.getThemeProps();
@@ -315,6 +321,15 @@ class Hint extends BaseComponent {
     }
   }
 
+  renderHintContainer() {
+    const {visible, style, position, onBackgroundPress, ...others} = this.props;
+    return (
+      <View {...others} style={[styles.container, style, this.getContainerPosition()]} collapsable={false}>
+        {this.renderHint()}
+      </View>
+    );
+  }
+
   renderChildren() {
     const {targetFrame} = this.props;
     if (!targetFrame) {
@@ -327,16 +342,27 @@ class Hint extends BaseComponent {
   }
 
   render() {
-    const {visible, style, position, ...others} = this.props;
+    const {visible, onBackgroundPress} = this.props;
 
     if (!visible) return this.props.children;
 
     return (
       <React.Fragment>
-        {this.renderOverlay()}
-        <View {...others} style={[styles.container, style, this.getContainerPosition()]} collapsable={false}>
-          {this.renderHint()}
-        </View>
+        {onBackgroundPress ? (
+          <Modal
+            pointerEvents="box-none"
+            visible={this.showHint}
+            animationType="none"
+            transparent
+            onBackgroundPress={onBackgroundPress}
+            onRequestClose={onBackgroundPress}
+          >
+            {this.renderHintContainer()}
+          </Modal>
+        ) : (
+          // this.renderOverlay(),
+          this.renderHintContainer()
+        )}
         {this.renderChildren()}
       </React.Fragment>
     );
@@ -351,11 +377,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'transparent',
   },
-  overlay: {
-    position: 'absolute',
-    width: Constants.screenWidth,
-    height: Constants.screenHeight,
-  },
+  // overlay: {
+  //   position: 'absolute',
+  //   width: Constants.screenWidth,
+  //   height: Constants.screenHeight,
+  // },
   hintContainer: {
     position: 'absolute',
     width: Constants.screenWidth,
