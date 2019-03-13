@@ -30,8 +30,6 @@ export const BADGE_POSITIONS = {
 
 const DEFAULT_BADGE_SIZE = 'pimpleBig';
 const DEFAULT_BADGE_POSITION = BADGE_POSITIONS.TOP_RIGHT;
-const DEFAULT_BADGE_BORDER_WIDTH = 1.5;
-const DEFAULT_BADGE_BORDER_COLOR = Colors.white;
 
 /**
  * @description: Avatar component for displaying user profile images
@@ -169,6 +167,8 @@ export default class Avatar extends BaseComponent {
     }
   }
 
+  getBadgeBorderWidth = () => _.get(this.props, 'badgeProps.borderWidth', 0);
+
   getBadgeColor() {
     const {isOnline, status} = this.props;
     const statusColor = this.getStatusBadgeColor(status);
@@ -178,18 +178,6 @@ export default class Avatar extends BaseComponent {
   }
 
   getBadgeSize = () => _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
-
-  getBadgeBorderWidth() {
-    const {badgeProps} = this.props;
-    const borderWidth = _.get(this.props, 'badgeProps.borderWidth', DEFAULT_BADGE_BORDER_WIDTH);
-
-    if (_.get(this.props, 'badgeProps.icon')) {
-      return badgeProps.borderWidth || 0;
-    }
-    return borderWidth;
-  }
-
-  getBorderColor = () => _.get(this.props, 'badgeProps.borderColor', DEFAULT_BADGE_BORDER_COLOR);
 
   getBadgePosition() {
     const {size, badgePosition} = this.props;
@@ -218,10 +206,8 @@ export default class Avatar extends BaseComponent {
       return (
         <Badge
           backgroundColor={this.getBadgeColor()}
-          borderColor={this.getBorderColor()}
           size={this.getBadgeSize()}
           {...badgeProps}
-          borderWidth={this.getBadgeBorderWidth()}
           containerStyle={this.getBadgePosition()}
           label={undefined}
           testID={`${testID}.onlineBadge`}
