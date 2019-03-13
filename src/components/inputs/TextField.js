@@ -542,6 +542,7 @@ export default class TextField extends BaseInput {
           <Image 
             pointerEvents="none" 
             source={rightButtonProps.iconSource} 
+            resizeMode={'contain'}
             style={[this.styles.rightButtonImage, {tintColor}]}
           />
         </TouchableOpacity>
