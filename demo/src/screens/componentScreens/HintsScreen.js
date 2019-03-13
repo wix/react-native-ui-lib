@@ -10,7 +10,7 @@ export default class HintsScreen extends Component {
       showBottomHint: false,
       showIcon: false,
       targetPosition: 'flex-start',
-      // useSideTip: undefined
+      useSideTip: null
     };
   }
 
@@ -102,7 +102,7 @@ export default class HintsScreen extends Component {
             row
             centerV
             marginB-20
-            value={targetPosition}
+            initialValue={targetPosition}
             onValueChange={value => this.setState({targetPosition: value})}
           >
             <Text marginR-10>Button Position:</Text>
@@ -115,7 +115,7 @@ export default class HintsScreen extends Component {
             row
             centerV
             marginB-20
-            value={useSideTip}
+            initialValue={useSideTip}
             onValueChange={value => this.setState({useSideTip: value})}
           >
             <Text marginR-10>Tip:</Text>
