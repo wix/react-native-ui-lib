@@ -113,21 +113,9 @@ export default class Badge extends BaseComponent {
     };
 
     const isPimple = label === undefined;
-    if (isPimple && !icon) {
-      const pimpleSizes = ['pimpleSmall', 'pimpleBig', 'pimpleHuge'];
-      if (pimpleSizes.includes(size)) {
-        style.paddingHorizontal = 0;
-        style.minWidth = BADGE_SIZES[size];
-        style.height = BADGE_SIZES[size];
-      } else {
-        style.paddingHorizontal = 0;
-        style.minWidth = BADGE_SIZES.pimpleSmall;
-        style.height = BADGE_SIZES.pimpleSmall;
-      }
-    }
-
-    if (icon) {
+    if (isPimple || icon) {
       style.paddingHorizontal = 0;
+      style.minWidth = undefined;
       style.height = BADGE_SIZES[size];
       style.width = BADGE_SIZES[size];
       if (borderWidth) {
@@ -183,11 +171,12 @@ export default class Badge extends BaseComponent {
   }
 
   renderIcon() {
-    const {icon, iconStyle, iconProps} = this.props;
+    const {icon, iconStyle, iconProps, borderColor} = this.props;
     return (
       <Image
         source={icon}
         resizeMode="contain"
+        borderColor={borderColor}
         {...iconProps}
         style={{
           flex: 1,

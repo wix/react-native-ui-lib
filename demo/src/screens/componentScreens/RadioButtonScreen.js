@@ -78,7 +78,7 @@ export default class RadioButtonScreen extends Component {
               <Text marginT-10>You chose: {this.state.textSide}</Text>
             </RadioGroup>
 
-            <RadioGroup marginT-30 value={this.state.value} onValueChange={value => this.setState({value})}>
+            <RadioGroup marginT-30 initialValue={this.state.value} onValueChange={value => this.setState({value})}>
               <Text marginB-20 text60 dark10>
                 Yes or No?
               </Text>

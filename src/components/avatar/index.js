@@ -11,6 +11,11 @@ import Text from '../text';
 import Image from '../image';
 import AnimatedImage from '../animatedImage';
 
+const deprecatedProps = [
+  {old: 'isOnline', new: 'badgeProps.backgroundColor'},
+  {old: 'status', new: 'badgeProps.backgroundColor'},
+];
+
 export const STATUS_MODES = {
   ONLINE: 'ONLINE',
   OFFLINE: 'OFFLINE',
@@ -25,8 +30,6 @@ export const BADGE_POSITIONS = {
 
 const DEFAULT_BADGE_SIZE = 'pimpleBig';
 const DEFAULT_BADGE_POSITION = BADGE_POSITIONS.TOP_RIGHT;
-const DEFAULT_BADGE_BORDER_WIDTH = 1.5;
-const DEFAULT_BADGE_BORDER_COLOR = Colors.white;
 
 /**
  * @description: Avatar component for displaying user profile images
@@ -37,6 +40,16 @@ const DEFAULT_BADGE_BORDER_COLOR = Colors.white;
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.js
  */
 export default class Avatar extends BaseComponent {
+  constructor(props) {
+    super(props);
+
+    deprecatedProps.forEach(prop => {
+      if (props[prop.old]) {
+        console.warn(`"${prop.old}" property is deprecated, please use "${prop.new}"`);
+      }
+    });
+  }
+
   static displayName = 'Avatar';
   static modes = STATUS_MODES;
   static badgePosition = BADGE_POSITIONS;
@@ -132,7 +145,6 @@ export default class Avatar extends BaseComponent {
     backgroundColor: Colors.dark80,
     size: 50,
     labelColor: Colors.dark10,
-    status: STATUS_MODES.NONE,
     badgePosition: DEFAULT_BADGE_POSITION,
   };
 
@@ -142,28 +154,30 @@ export default class Avatar extends BaseComponent {
 
   getStatusBadgeColor(status) {
     switch (status) {
-      case Avatar.modes.NONE:
-        return null;
+
       case Avatar.modes.AWAY:
         return Colors.yellow30;
       case Avatar.modes.ONLINE:
         return Colors.green30;
       case Avatar.modes.OFFLINE:
         return Colors.dark60;
+      case Avatar.modes.NONE:
       default:
         return null;
     }
   }
 
-  getBadgeColor(isOnline, status) {
-    const onlineOverride = status === STATUS_MODES.NONE ? isOnline : false;
-    const badgeColor = onlineOverride ? Colors.green30 : this.getStatusBadgeColor(status);
-    return badgeColor;
+  getBadgeBorderWidth = () => _.get(this.props, 'badgeProps.borderWidth', 0);
+
+  getBadgeColor() {
+    const {isOnline, status} = this.props;
+    const statusColor = this.getStatusBadgeColor(status);
+    const onlineColor = isOnline ? Colors.green30 : undefined;
+
+    return _.get(this.props, 'badgeProps.backgroundColor') || statusColor || onlineColor;
   }
-  
+
   getBadgeSize = () => _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
-  
-  getBadgeBorderWidth = () => _.get(this.props, 'badgeProps.borderWidth', DEFAULT_BADGE_BORDER_WIDTH);
 
   getBadgePosition() {
     const {size, badgePosition} = this.props;
@@ -186,23 +200,20 @@ export default class Avatar extends BaseComponent {
   }
 
   renderBadge() {
-    const {testID, isOnline, status, badgeProps} = this.props;
-    const badgeColor = this.getBadgeColor(isOnline, status);
-    if (badgeColor === null) {
-      return false;
+    const {testID, badgeProps} = this.props;
+    
+    if (badgeProps || this.getBadgeColor()) {
+      return (
+        <Badge
+          backgroundColor={this.getBadgeColor()}
+          size={this.getBadgeSize()}
+          {...badgeProps}
+          containerStyle={this.getBadgePosition()}
+          label={undefined}
+          testID={`${testID}.onlineBadge`}
+        />
+      );
     }
-    return (
-      <Badge
-        backgroundColor={badgeColor}
-        borderColor={DEFAULT_BADGE_BORDER_COLOR}
-        size={this.getBadgeSize()}
-        {...badgeProps}
-        borderWidth={this.getBadgeBorderWidth()}
-        containerStyle={this.getBadgePosition()}
-        label={undefined}
-        testID={`${testID}.onlineBadge`}
-      />
-    );
   }
 
   renderRibbon() {
@@ -250,10 +261,18 @@ export default class Avatar extends BaseComponent {
   }
 
   render() {
-    const {label, labelColor: color, imageSource, backgroundColor, onPress, containerStyle, children, testID} = this.props;
+    const {
+      label,
+      labelColor: color,
+      imageSource,
+      backgroundColor,
+      onPress,
+      containerStyle,
+      children,
+      testID,
+    } = this.props;
     const Container = onPress ? TouchableOpacity : View;
     const hasImage = !_.isUndefined(imageSource);
-
     return (
       <Container style={[this.styles.container, containerStyle]} testID={testID} onPress={onPress}>
         <View
