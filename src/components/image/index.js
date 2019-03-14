@@ -1,10 +1,16 @@
 import React from 'react';
-import {Image as RNImage} from 'react-native';
+import {Image as RNImage, I18nManager} from 'react-native';
 import PropTypes from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import _ from 'lodash';
 import {BaseComponent} from '../../commons';
 import Assets from '../../assets';
+
+
+const MODES = {
+  HORIZONTAL: 'horizontal',
+  VERTICAL: 'vertical'
+};
 
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
@@ -30,12 +36,18 @@ class Image extends BaseComponent {
     /**
      * the asset tint
      */
-    tintColor: PropTypes.string
+    tintColor: PropTypes.string,
+    /**
+     * whether the image should flip on RTL
+     */
+    supportRTL: PropTypes.oneOfType([PropTypes.oneOf(Object.values(MODES)), PropTypes.bool])
   };
 
   static defaultProps = {
     assetGroup: 'icons'
   };
+
+  static directionModes = MODES;
 
   constructor(props) {
     super(props);
@@ -61,11 +73,33 @@ class Image extends BaseComponent {
     return source;
   }
 
+  getRTLTransformStyle() {
+    const {supportRTL} = this.getThemeProps();
+    const shouldFlipRTL = supportRTL && I18nManager.isRTL;
+
+    if (shouldFlipRTL) {
+      switch (supportRTL) {
+        case MODES.HORIZONTAL:
+          return [{scaleX: -1}];
+        case MODES.VERTICAL: 
+          return [{scaleX: -1}, {scaleY: -1}];
+        default:
+          return [{scaleX: -1}];
+      }
+    }
+  }
+
   render() {
     const source = this.getImageSource();
     const {tintColor, style, ...others} = this.getThemeProps();
 
-    return <RNImage style={[{tintColor}, style]} {...others} source={source} />;
+    return (
+      <RNImage 
+        style={[{tintColor}, style, {transform: this.getRTLTransformStyle()}]} 
+        {...others} 
+        source={source}
+      />
+    );
   }
 }
 
