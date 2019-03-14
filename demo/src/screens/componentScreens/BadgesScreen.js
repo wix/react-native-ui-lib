@@ -4,7 +4,7 @@ import {Colors, View, Badge, Button, Text} from 'react-native-ui-lib'; //eslint-
 const BadgesSpace = 30;
 const plusIcon = require('../../assets/icons/chevronUp.png');
 const minusIcon = require('../../assets/icons/chevronDown.png');
-const checkMark = require('../../assets/icons/star.png');
+const star = require('../../assets/icons/star.png');
 
 export default class BadgesScreen extends Component {
   constructor(props) {
@@ -25,12 +25,12 @@ export default class BadgesScreen extends Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView style={{backgroundColor: Colors.dark70}} contentContainerStyle={styles.container}>
         <Text text50 row center marginB-15>
           Badges
         </Text>
         <View row center>
-          <View center marginR-10 marginL-10>
+          <View center marginH-10>
             <Badge label={'10'} backgroundColor={Colors.blue30} />
             <Badge
               label={'10'}
@@ -47,7 +47,7 @@ export default class BadgesScreen extends Component {
             />
           </View>
 
-          <View center marginR-10 marginL-10>
+          <View center marginH-10>
             <Badge label={this.state.value.toString()} backgroundColor={Colors.red30} />
             <Badge
               label={this.state.value.toString()}
@@ -63,7 +63,7 @@ export default class BadgesScreen extends Component {
             />
           </View>
 
-          <View center marginR-10 marginL-10>
+          <View center marginH-10>
             <Badge label={'9999'} labelFormatterLimit={3} />
             <Badge
               label={'999'}
@@ -76,7 +76,7 @@ export default class BadgesScreen extends Component {
           </View>
         </View>
 
-        <View row marginT-20 marginB-15>
+        <View row paddingT-20 marginB-15>
           <Button
             bg-dark60
             style={{width: 30, height: 30, borderWidth: 1, marginRight: 15}}
@@ -115,31 +115,31 @@ export default class BadgesScreen extends Component {
           </View>
 
           <View center column style={{justifyContent: 'space-around', width: 40, height: 140}}>
-            <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.green30} />
+            <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.green30} size={'pimpleSmall'}/>
             <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.red30} size={'pimpleBig'} />
             <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.blue30} size={'pimpleHuge'} />
           </View>
         </View>
-        <Text text50 marginB-15 row center marginT-25>
+        <Text text50 marginB-10 row center marginT-25>
           Icon Badges
         </Text>
-        <View row style={{justifyContent: 'space-around'}}>
+        <View row paddingH-15>
           <View style={styles.iconBadgeColumnContainer}>
-            <Badge size={'small'} icon={checkMark} borderWidth={1} borderColor={Colors.red30} />
+            <Badge size={'small'} icon={star} borderWidth={1} borderColor={Colors.red30}/>
             <Text text80 style={{marginTop: 10}}>
               small(16)
             </Text>
           </View>
 
           <View style={styles.iconBadgeColumnContainer}>
-            <Badge icon={checkMark} iconStyle={{tintColor: Colors.red30}} />
+            <Badge icon={star} iconStyle={{tintColor: Colors.red30}}/>
             <Text text80 style={{marginTop: 10}}>
               default(20)
             </Text>
           </View>
 
           <View style={styles.iconBadgeColumnContainer}>
-            <Badge size={'large'} icon={checkMark} iconStyle={{backgroundColor: Colors.red30}} />
+            <Badge size={'large'} icon={star} iconStyle={{backgroundColor: Colors.red30}}/>
             <Text text80 style={{marginTop: 10}}>
               large(24)
             </Text>
@@ -152,16 +152,14 @@ export default class BadgesScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 20,
-    paddingBottom: 20,
+    padding: 20,
     backgroundColor: Colors.dark70,
   },
   iconBadgeColumnContainer: {
     flex: 1,
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'flex-end',
     flexDirection: 'column',
   },
 });

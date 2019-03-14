@@ -72,7 +72,7 @@ class PickerDialog extends BaseComponent {
       <Dialog {...dialogProps} visible height="50%" width="77%">
         <View style={styles.dialog}>
           {this.renderHeader()}
-          <View flex centerV paddingH-24>
+          <View flex center paddingH-24>
             {this.renderPicker()}
           </View>
           {this.renderFooter()}
