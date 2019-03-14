@@ -7,11 +7,6 @@ import {BaseComponent} from '../../commons';
 import Assets from '../../assets';
 
 
-const MODES = {
-  HORIZONTAL: 'horizontal',
-  VERTICAL: 'vertical'
-};
-
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
  * @extends: Image
@@ -38,16 +33,14 @@ class Image extends BaseComponent {
      */
     tintColor: PropTypes.string,
     /**
-     * whether the image should flip on RTL
+     * whether the image should flip horizontally on RTL locals
      */
-    supportRTL: PropTypes.oneOfType([PropTypes.oneOf(Object.values(MODES)), PropTypes.bool])
+    supportRTL: PropTypes.bool
   };
 
   static defaultProps = {
     assetGroup: 'icons'
   };
-
-  static directionModes = MODES;
 
   constructor(props) {
     super(props);
@@ -73,19 +66,6 @@ class Image extends BaseComponent {
     return source;
   }
 
-  getRTLTransformStyle() {
-    const {supportRTL} = this.getThemeProps();
-
-    switch (supportRTL) {
-      case MODES.HORIZONTAL:
-        return [{scaleX: -1}];
-      case MODES.VERTICAL: 
-        return [{scaleX: -1}, {scaleY: -1}];
-      default:
-        return [{scaleX: -1}];
-    }
-  }
-
   render() {
     const source = this.getImageSource();
     const {tintColor, style, supportRTL, ...others} = this.getThemeProps();
@@ -93,7 +73,7 @@ class Image extends BaseComponent {
 
     return (
       <RNImage 
-        style={[{tintColor}, style, shouldFlipRTL && {transform: this.getRTLTransformStyle()}]} 
+        style={[{tintColor}, style, shouldFlipRTL && {transform: [{scaleX: -1}]}]} 
         {...others} 
         source={source}
       />
