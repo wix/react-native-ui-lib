@@ -353,7 +353,7 @@ export default class TabBar extends BaseComponent {
           left: this.containerWidth - gradientWidth,
           opacity: this.state.gradientValue}}
       >
-        <Image source={Assets.images.gradient} style={{width: gradientWidth, height: height - 3, tintColor}}/>
+        <Image source={Assets.images.gradient} style={{width: gradientWidth, height: height - 3, tintColor}} supportRTL/>
       </Animated.View>
     );
   }
