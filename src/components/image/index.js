@@ -75,27 +75,25 @@ class Image extends BaseComponent {
 
   getRTLTransformStyle() {
     const {supportRTL} = this.getThemeProps();
-    const shouldFlipRTL = supportRTL && I18nManager.isRTL;
 
-    if (shouldFlipRTL) {
-      switch (supportRTL) {
-        case MODES.HORIZONTAL:
-          return [{scaleX: -1}];
-        case MODES.VERTICAL: 
-          return [{scaleX: -1}, {scaleY: -1}];
-        default:
-          return [{scaleX: -1}];
-      }
+    switch (supportRTL) {
+      case MODES.HORIZONTAL:
+        return [{scaleX: -1}];
+      case MODES.VERTICAL: 
+        return [{scaleX: -1}, {scaleY: -1}];
+      default:
+        return [{scaleX: -1}];
     }
   }
 
   render() {
     const source = this.getImageSource();
-    const {tintColor, style, ...others} = this.getThemeProps();
+    const {tintColor, style, supportRTL, ...others} = this.getThemeProps();
+    const shouldFlipRTL = supportRTL && I18nManager.isRTL;
 
     return (
       <RNImage 
-        style={[{tintColor}, style, {transform: this.getRTLTransformStyle()}]} 
+        style={[{tintColor}, style, shouldFlipRTL && {transform: this.getRTLTransformStyle()}]} 
         {...others} 
         source={source}
       />
