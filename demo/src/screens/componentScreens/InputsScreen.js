@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {View, Colors, Text, TextField, TextArea, Typography, Modal, Button} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, Typography, View, Text, TextField, TextArea, Modal, Button} from 'react-native-ui-lib'; //eslint-disable-line
 import {KeyboardAwareInsetsView} from 'react-native-keyboard-tracking-view';
+import icon from '../../assets/icons/richText.png';
+import dropDown from '../../assets/icons/chevronDown.png';
+
 
 const LONG_TEXT =
   'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer' +
   'Martín Bollati. In this piece';
-const INPUT_SPACING = 10;
-
 const transformPrice = (value) => {
   let cleanValue;
   let priceText = '';
@@ -17,6 +18,7 @@ const transformPrice = (value) => {
   }
   return priceText;
 };
+const INPUT_SPACING = 10;
 
 export default class InputsScreen extends Component {
   constructor(props) {
@@ -32,6 +34,10 @@ export default class InputsScreen extends Component {
   onButtonPressed = () => {
     const {topError} = this.state;
     this.setState({topError: !topError});
+  }
+
+  onPressInfo = () => {
+    console.warn('onPressInfo');
   }
 
   onChangeText = (text) => {
@@ -67,7 +73,7 @@ export default class InputsScreen extends Component {
             label={btnLabel}
             onPress={this.onButtonPressed}
           />
-          
+
           <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
@@ -163,15 +169,6 @@ export default class InputsScreen extends Component {
           />
 
           <TextField
-            text70
-            containerStyle={{marginBottom: INPUT_SPACING}}
-            floatingPlaceholder
-            placeholder="multiline & numberOfLines = 3"
-            multiline
-            numberOfLines={3}
-          />
-
-          <TextField
             text40
             containerStyle={{marginBottom: INPUT_SPACING}}
             placeholder="write something.."
@@ -240,6 +237,32 @@ export default class InputsScreen extends Component {
             placeholder="with price transformer"
             value={this.state.value}
             transformer={transformPrice}
+          />
+
+          <TextField
+            text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            floatingPlaceholder
+            placeholder="Right button"
+            rightButtonProps={{iconSource: icon, onPress: this.onPressInfo}}
+          />
+
+          <TextField
+            text70
+            containerStyle={{marginBottom: INPUT_SPACING, width: 210}}
+            floatingPlaceholder
+            placeholder="Multiline & Right button"
+            multiline
+            rightButtonProps={{iconSource: icon, onPress: this.onPressInfo, style: {tintColor: Colors.red30}}}
+          />
+          
+          <TextField
+            text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            floatingPlaceholder
+            placeholder="Expandable & rightIconSource"
+            expandable
+            rightIconSource={dropDown}
           />
 
           <Text dark10 marginB-5>Text Area</Text>
