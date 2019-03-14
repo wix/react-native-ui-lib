@@ -149,7 +149,7 @@ export default class ActionSheet extends BaseComponent {
     if (!_.isEmpty(title)) {
       return (
         <View height={56} paddingL-16 centerV>
-          <Text dark40 text70>
+          <Text dark40 text70 style={{alignSelf: 'flex-start'}}>
             {title}
           </Text>
         </View>
