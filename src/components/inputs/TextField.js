@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Animated, TouchableOpacity, TextInput as RNTextInput} from 'react-native';
+import {StyleSheet, Animated, TextInput as RNTextInput} from 'react-native';
 import {Colors, Typography} from '../../style';
 import {Constants} from '../../helpers';
 import BaseInput from './BaseInput';
@@ -10,6 +10,7 @@ import TextArea from './TextArea';
 import View from '../view';
 import Image from '../image';
 import Text from '../text';
+import TouchableOpacity from '../touchableOpacity';
 
 
 const DEFAULT_COLOR_BY_STATE = {
@@ -23,6 +24,9 @@ const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
   error: Colors.red30
 };
 const LABEL_TYPOGRAPHY = Typography.text80;
+const ICON_SIZE = 24;
+const ICON_RIGHT_PADDING = 3;
+const ICON_LEFT_PADDING = 6;
 
 /**
  * @description: A wrapper for Text Input component with extra functionality like floating placeholder
@@ -127,7 +131,15 @@ export default class TextField extends BaseInput {
     /**
      * Icon asset source for showing on the right side, appropriate for dropdown icon and such
      */
-    rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
+    rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * Props for the right button {iconSource, onPress, style}
+     */
+    rightButtonProps: PropTypes.shape({
+      iconSource: PropTypes.number.isRequired,
+      onPress: PropTypes.func,
+      style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
+    }),
   };
 
   static defaultProps = {
@@ -282,6 +294,15 @@ export default class TextField extends BaseInput {
     return this.shouldShowError() && useTopErrors;
   }
 
+  shouldDisplayRightButton() {
+    const {rightButtonProps, expandable} = this.getThemeProps();
+    return !expandable && rightButtonProps && rightButtonProps.iconSource;
+  }
+
+  onPressRightButton = () => {
+    _.invoke(this.props, 'rightButtonProps.onPress');
+  }
+
   /** Renders */
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
@@ -308,7 +329,7 @@ export default class TextField extends BaseInput {
             !centered && {
               top: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [multiline ? 30 : 28, multiline ? (Constants.isAndroid ? 0 : 5) : 0]
+                outputRange: multiline ? [30, (Constants.isAndroid ? 0 : 5)] : [28, 0]
               }),
               fontSize: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
@@ -458,8 +479,7 @@ export default class TextField extends BaseInput {
         >
           {shouldShowPlaceholder ? placeholder : value}
         </Text>
-        {rightIconSource && 
-          <Image pointerEvents="none" source={rightIconSource} style={{marginBottom: hideUnderline ? 0 : 7}}/>}
+        {rightIconSource && <Image pointerEvents="none" source={rightIconSource} style={this.styles.rightIcon}/>}
       </TouchableOpacity>
     );
   }
@@ -482,6 +502,7 @@ export default class TextField extends BaseInput {
     const {lineHeight, ...typographyStyle} = typography;
     const color = this.getStateColor(this.props.color || this.extractColorValue());
     const inputStyle = [
+      this.shouldDisplayRightButton() && {paddingRight: (ICON_SIZE + ICON_RIGHT_PADDING + ICON_LEFT_PADDING)},
       this.styles.input,
       hideUnderline && this.styles.inputWithoutUnderline,
       {...typographyStyle},
@@ -513,6 +534,24 @@ export default class TextField extends BaseInput {
     );
   }
 
+  renderRightButton() {
+    const {rightButtonProps} = this.getThemeProps();
+    const tintColor = _.get(rightButtonProps, 'style.tintColor', Colors.blue30);
+
+    if (this.shouldDisplayRightButton()) {
+      return (
+        <TouchableOpacity style={[this.styles.rightButton, rightButtonProps.style]} onPress={this.onPressRightButton}>
+          <Image 
+            pointerEvents="none" 
+            source={rightButtonProps.iconSource} 
+            resizeMode={'contain'}
+            style={[this.styles.rightButtonImage, {tintColor}]}
+          />
+        </TouchableOpacity>
+      );
+    }
+  }
+
   render() {
     const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
     const underlineStateColor = this.getStateColor(underlineColor, true);
@@ -520,6 +559,7 @@ export default class TextField extends BaseInput {
     return (
       <View style={[this.styles.container, containerStyle]} collapsable={false}>
         {this.shouldShowTopError() ? this.renderError(useTopErrors) : this.renderTitle()}
+        
         <View
           style={[
             this.styles.innerContainer,
@@ -530,12 +570,12 @@ export default class TextField extends BaseInput {
         >
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
+          {this.renderRightButton()}
           {expandable && this.renderExpandableModal()}
         </View>
+        
         <View row>
-          <View flex>
-            {this.renderError(!useTopErrors)}
-          </View>
+          {this.renderError(!useTopErrors)}
           {this.renderCharCounter()}
         </View>
       </View>
@@ -589,29 +629,34 @@ function createStyles({placeholderTextColor, centered, multiline}) {
     container: {
     },
     innerContainer: {
+      flexGrow: 1,
       flexDirection: 'row',
-      borderBottomWidth: 1,
-      borderColor: Colors.dark70,
       justifyContent: centered ? 'center' : undefined,
-      flexGrow: 1
+      borderBottomWidth: 1,
+      borderColor: Colors.dark70
     },
     innerContainerWithoutUnderline: {
       borderBottomWidth: 0
     },
     input: {
       flexGrow: 1,
-      marginBottom: Constants.isIOS ? 10 : 5,
-      padding: 0,
       textAlign: centered ? 'center' : undefined,
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
+      marginBottom: Constants.isIOS ? 10 : 5,
+      padding: 0 // for Android
     },
     expandableInput: {
+      flexGrow: 1,
       flexDirection: 'row',
-      alignItems: 'center',
-      flexGrow: 1
+      alignItems: 'center'
     },
     inputWithoutUnderline: {
       marginBottom: undefined
+    },
+    expandableModalContent: {
+      flex: 1,
+      paddingTop: 15,
+      paddingHorizontal: 20
     },
     floatingPlaceholder: {
       position: 'absolute',
@@ -627,13 +672,9 @@ function createStyles({placeholderTextColor, centered, multiline}) {
       textAlign: 'center'
     },
     errorMessage: {
+      flex: 1,
       color: Colors.red30,
       textAlign: centered ? 'center' : undefined
-    },
-    expandableModalContent: {
-      flex: 1,
-      paddingTop: 15,
-      paddingHorizontal: 20
     },
     topLabel: {
       marginBottom: Constants.isIOS ? (multiline ? 1 : 6) : 7
@@ -644,6 +685,19 @@ function createStyles({placeholderTextColor, centered, multiline}) {
     label: {
       ...LABEL_TYPOGRAPHY,
       height: LABEL_TYPOGRAPHY.lineHeight
+    },
+    rightIcon: {
+      alignSelf: 'center', 
+      marginLeft: 8
+    },
+    rightButton: {
+      position: 'absolute',
+      right: ICON_RIGHT_PADDING,
+      alignSelf: 'center'
+    },
+    rightButtonImage: {
+      width: ICON_SIZE,
+      height: ICON_SIZE
     }
   });
 }
