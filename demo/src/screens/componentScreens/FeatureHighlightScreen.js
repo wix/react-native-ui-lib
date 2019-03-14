@@ -129,8 +129,8 @@ class FeatureHighlightScreen extends Component {
               into electronic typesetting, <Text>remaining</Text> essentially unchanged.
             </Text>
           </View>
-          <View marginT-20 testID={'5'} ref={r => (this.addTarget(r))}>
-            <Button label='Show Overlay' onPress={this.showHighlight}/>
+          <View marginT-20 testID={'5'} ref={r => (this.addTarget(r, '5'))}>
+            <Button label="Show Overlay" onPress={this.showHighlight}/>
           </View>
         </View>
         {this.renderHighlighterOverlay()}
