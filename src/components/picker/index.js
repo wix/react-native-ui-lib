@@ -143,7 +143,7 @@ class Picker extends BaseComponent {
     }
   }
 
-  componentWillReceiveProps(nexProps) {
+  UNSAFE_componentWillReceiveProps(nexProps) {
     this.setState({
       value: nexProps.value,
     });

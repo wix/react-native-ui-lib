@@ -18,11 +18,11 @@ export default class Carousel extends BaseComponent {
   static displayName = 'Carousel';
   static propTypes = {
     /**
-     * this first page to start with
+     * the first page to start with
      */
     initialPage: PropTypes.number,
     /**
-     * the page width (all pages should have the same page)
+     * the page width (all pages should have the same width)
      */
     pageWidth: PropTypes.number,
     /**
@@ -34,7 +34,7 @@ export default class Carousel extends BaseComponent {
      */
     onChangePage: PropTypes.func,
     /**
-     * callback for onScroll event of the internall ScrollView
+     * callback for onScroll event of the internal ScrollView
      */
     onScroll: PropTypes.func,
     /**
@@ -45,18 +45,17 @@ export default class Carousel extends BaseComponent {
 
   static defaultProps = {
     initialPage: 0,
-    pageWidth: Constants.screenWidth,
+    pageWidth: Constants.screenWidth
   };
 
   constructor(props) {
     super(props);
+    
     this.state = {
       currentPage: props.initialPage,
       currentStandingPage: props.initialPage,
-      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage})},
+      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage})}
     };
-    this.onScroll = this.onScroll.bind(this);
-    this.updateOffset = this.updateOffset.bind(this);
   }
 
   generateStyles() {
@@ -67,7 +66,19 @@ export default class Carousel extends BaseComponent {
     return Math.floor(this.props.pageWidth);
   }
 
-  onScroll(event) {
+  goToPage(pageIndex, animated = true) {
+    this.setState({currentPage: pageIndex}, () => this.updateOffset(animated));
+  }
+
+  onContentSizeChange = () => {
+    const {currentPage} = this.state;
+
+    if (Constants.isAndroid) {
+      this.goToPage(currentPage, false);
+    }
+  }
+
+  onScroll = (event) => {
     if (!this.skippedInitialScroll) {
       this.skippedInitialScroll = true;
       return;
@@ -75,6 +86,7 @@ export default class Carousel extends BaseComponent {
 
     const {loop} = this.props;
     const offsetX = event.nativeEvent.contentOffset.x;
+    
     if (offsetX >= 0) {
       const {currentStandingPage} = this.state;
       const newPage = presenter.calcPageIndex(offsetX, this.props);
@@ -84,6 +96,7 @@ export default class Carousel extends BaseComponent {
       // finished full page scroll
       if (offsetX % this.pageWidth <= OFFSET_PIXEL_CORRECTION) {
         this.setState({currentStandingPage: newPage});
+        
         if (currentStandingPage !== newPage) {
           _.invoke(this.props, 'onChangePage', newPage, currentStandingPage);
         }
@@ -93,12 +106,13 @@ export default class Carousel extends BaseComponent {
     if (loop && presenter.isOutOfBounds(offsetX, this.props)) {
       this.updateOffset();
     }
-
+    
     _.invoke(this.props, 'onScroll', event);
   }
 
-  updateOffset(animated = false) {
+  updateOffset = (animated = false) => {
     const x = presenter.calcOffset(this.props, this.state);
+    
     if (this.carousel) {
       this.carousel.scrollTo({x, animated});
     }
@@ -108,6 +122,7 @@ export default class Carousel extends BaseComponent {
     if (!child.key) {
       return child;
     }
+    
     return React.cloneElement(child, {
       key: `${child.key}-clone`,
     });
@@ -116,18 +131,18 @@ export default class Carousel extends BaseComponent {
   renderChildren() {
     const {children, loop} = this.props;
     const length = presenter.getChildrenLength(this.props);
-
     const childrenArray = React.Children.toArray(children);
+    
     if (loop) {
       childrenArray.unshift(this.cloneChild(children[length - 1]));
       childrenArray.push(this.cloneChild(children[0]));
     }
-
     return childrenArray;
   }
 
   render() {
     const {containerStyle, ...others} = this.props;
+    const {initialOffset} = this.state;
     
     return (
       <ScrollView
@@ -139,15 +154,12 @@ export default class Carousel extends BaseComponent {
         pagingEnabled
         onScroll={this.onScroll}
         scrollEventThrottle={200}
-        contentOffset={this.state.initialOffset}
+        contentOffset={initialOffset}
+        onContentSizeChange={this.onContentSizeChange}
       >
         {this.renderChildren()}
       </ScrollView>
     );
-  }
-
-  goToPage(pageIndex, animated = true) {
-    this.setState({currentPage: pageIndex}, () => this.updateOffset(animated));
   }
 }
 

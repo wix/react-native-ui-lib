@@ -88,10 +88,7 @@ class PickerItem extends BaseComponent {
     const {isSelected, disabled} = this.props;
     if (isSelected) {
       return (
-        <Image
-          style={[this.styles.checkIcon, disabled && this.styles.checkIconDisabled]}
-          source={Assets.icons.check}
-        />
+        <Image style={[this.styles.checkIcon, disabled && this.styles.checkIconDisabled]} source={Assets.icons.check} />
       );
     }
   }
@@ -100,10 +97,7 @@ class PickerItem extends BaseComponent {
     const {disabled} = this.props;
     return (
       <View style={this.styles.container} flex row spread centerV>
-        <Text
-          numberOfLines={1}
-          style={[this.styles.labelText, disabled && this.styles.labelTextDisabled]}
-        >
+        <Text numberOfLines={1} style={[this.styles.labelText, disabled && this.styles.labelTextDisabled]}>
           {this.getLabel()}
         </Text>
         {this.renderSelectedIndicator()}
@@ -113,16 +107,15 @@ class PickerItem extends BaseComponent {
 
   onSelectedLayout = (...args) => {
     _.invoke(this.props, 'onSelectedLayout', ...args);
-  }
+  };
 
   render() {
-    const {renderItem, label, value, disabled, onPress, isSelected, testID} = this.props;
+    const {renderItem, value, disabled, isSelected, testID} = this.props;
 
     return (
       <TouchableOpacity
         activeOpacity={0.5}
-        // todo: deprecate the check for object
-        onPress={() => onPress(_.isObject(value) ? value : {value, label})}
+        onPress={this.onPress}
         onLayout={isSelected ? this.onSelectedLayout : undefined}
         disabled={disabled}
         testID={testID}
@@ -131,6 +124,12 @@ class PickerItem extends BaseComponent {
       </TouchableOpacity>
     );
   }
+  
+  // TODO: deprecate the check for object
+  onPress = () => {
+    const {label, value, onPress} = this.props;
+    onPress(_.isObject(value) ? value : {value, label});
+  };
 }
 
 function createStyles() {

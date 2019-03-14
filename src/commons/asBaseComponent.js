@@ -9,7 +9,7 @@ function asBaseComponent(WrappedComponent) {
   class BaseComponent extends UIComponent {
     state = Modifiers.generateModifiersStyle(undefined, this.props);
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
       const options = Modifiers.getAlteredModifiersOptions(this.props, nextProps);
       if (!_.isEmpty(options)) {
         this.setState(Modifiers.generateModifiersStyle(undefined, nextProps));

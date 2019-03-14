@@ -18,44 +18,44 @@ describe('Avatar Badge', () => {
   });
 
   describe('getBadgeColor', () => {
-    it('should rerun transparent when either isOnline nor status is passed', () => {
+    it('should return undefined when either isOnline nor status is passed', () => {
       const uut = new Avatar({});
-      expect(uut.getBadgeColor(uut.props.isOnline, uut.props.status)).toEqual(null);
+      expect(uut.getBadgeColor(uut.props.isOnline, uut.props.status)).toEqual(undefined);
     });
-    it('should rerun transparent when isOnline is false and status not passed', () => {
+    it('should return undefined when isOnline is false and status not passed', () => {
       const uut = new Avatar({isOnline: false});
-      expect(uut.getBadgeColor(uut.props.isOnline, uut.props.status)).toEqual(null);
+      expect(uut.getBadgeColor(uut.props.isOnline, uut.props.status)).toEqual(undefined);
     });
-    it('should rerun transparent when isOnline not passed and status is NONE', () => {
+    it('should return undefined when isOnline not passed and status is NONE', () => {
       const uut = new Avatar({status: Avatar.modes.NONE});
-      expect(uut.getBadgeColor(uut.props.isOnline, uut.props.status)).toEqual(null);
+      expect(uut.getBadgeColor(uut.props.isOnline, uut.props.status)).toEqual(undefined);
     });
-    it('should rerun green when isOnline is true and status is NONE', () => {
+    it('should return green when isOnline is true and status is NONE', () => {
       const uut = new Avatar({isOnline: true, status: Avatar.modes.NONE});
       expect(uut.getBadgeColor(uut.props.isOnline, uut.props.status)).toEqual(Colors.green30);
     });
-    it('should rerun yellow when isOnline is true and status is AWAY (status to override isOnline)', () => {
+    it('should return yellow when isOnline is true and status is AWAY (status to override isOnline)', () => {
       const uut = new Avatar({isOnline: true, status: Avatar.modes.AWAY});
       expect(uut.getBadgeColor(uut.props.isOnline, uut.props.status)).toEqual(Colors.yellow30);
     });
   });
 
   describe('renderBadge', () => {
-    it('should rerun false when isOnline is false and status is NONE', () => {
+    it('should return undefined when isOnline is undefined and status is NONE', () => {
       const uut = new Avatar({isOnline: false, status: Avatar.modes.NONE});
-      expect(uut.renderBadge()).toEqual(false);
+      expect(uut.renderBadge()).toEqual(undefined);
     });
-    it('should rerun false when isOnline is false and status is not passed', () => {
+    it('should return undefined when isOnline is false and status is not passed', () => {
       const uut = new Avatar({isOnline: false});
-      expect(uut.renderBadge()).toEqual(false);
+      expect(uut.renderBadge()).toEqual(undefined);
     });
-    it('should rerun false when isOnline not passed and status is NONE', () => {
+    it('should return undefined when isOnline not passed and status is NONE', () => {
       const uut = new Avatar({status: Avatar.modes.NONE});
-      expect(uut.renderBadge()).toEqual(false);
+      expect(uut.renderBadge()).toEqual(undefined);
     });
-    it('should rerun false when either isOnline nor status is passed', () => {
+    it('should return undefined when either isOnline nor status is passed', () => {
       const uut = new Avatar({});
-      expect(uut.renderBadge()).toEqual(false);
+      expect(uut.renderBadge()).toEqual(undefined);
     });
   });
 });

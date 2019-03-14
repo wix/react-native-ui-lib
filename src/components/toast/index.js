@@ -129,7 +129,7 @@ export default class Toast extends BaseComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const {visible, animated} = nextProps;
     const {isVisible} = this.state;
     if (visible !== isVisible) {
