@@ -16,11 +16,12 @@ class SourceElement extends Component {
 
   onPress = () => {
     const {data} = this.props;
-    const {setSource} = this.context;
+    const {setSharedData, setSource} = this.context;
+    setSharedData(data);
 
-    this.element.measureInWindow((x, y, width, height) => {
-      const sourceLayout = {x, y, width, height};
-      setSource(sourceLayout, data, this.props.children);
+    this.element.measure((x, y, width, height, pageX, pageY) => {
+      const sourceLayout = {x: pageX, y: pageY, width, height};
+      setSource(sourceLayout, this.props.children);
     });
   };
 

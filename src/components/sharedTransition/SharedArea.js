@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
-import {LayoutAnimation, StyleSheet} from 'react-native';
+import {LayoutAnimation, StyleSheet, Animated} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import Modal from '../../screensComponents/modal';
-import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
-
+import {Colors} from '../../style';
+import {Constants} from '../../helpers';
 import ShareTransitionContext from './ShareTransitionContext';
+
+const DETAILS_TRANSITION_DURATION = 250;
+const ELEMENT_TRANSITION_BASE_DURATION = Constants.isIOS ? 600 : 400;
 
 class SharedArea extends Component {
   static propTypes = {
@@ -20,13 +22,24 @@ class SharedArea extends Component {
     renderDetails: _.noop,
   };
 
-  state = {};
+  state = {
+    detailsOverlayAnimation: new Animated.Value(0),
+    detailsAnimation: new Animated.Value(0),
+  };
 
   componentDidUpdate(prevProps, prevState) {
+    if (this.state.data !== prevState.data) {
+      this.animateDetailsOverlay();
+    }
+
+    if (this.state.showDetails !== prevState.showDetails) {
+      this.animateDetails();
+    }
+
     if (this.state.showDetails !== prevState.showDetails) {
       LayoutAnimation.configureNext({
         ...LayoutAnimation.Presets.easeInEaseOut,
-        duration: 200,
+        duration: this.getTransitionDuration(),
       });
     }
   }
@@ -34,17 +47,37 @@ class SharedArea extends Component {
   getProviderContextValue() {
     const {showDetails} = this.state;
     return {
+      setSharedData: this.setSharedData,
       setSource: this.setSource,
       setTarget: this.setTarget,
       showDetails,
     };
   }
 
-  setSource = (itemLayout, data, element) => {
+  getTransitionDuration() {
+    const {sourceLayout, targetLayout} = this.state;
+    if (sourceLayout && targetLayout) {
+      const transitionDistance = Math.sqrt(
+        (targetLayout.x - sourceLayout.x) ** 2 + (targetLayout.y - sourceLayout.y) ** 2,
+      );
+      const screenSize = Math.sqrt(Constants.screenHeight ** 2 + Constants.screenWidth ** 2);
+
+      return Math.round((transitionDistance / screenSize) * ELEMENT_TRANSITION_BASE_DURATION);
+    }
+
+    return ELEMENT_TRANSITION_BASE_DURATION;
+  }
+
+  setSharedData = data => {
+    this.setState({
+      data,
+    });
+  };
+
+  setSource = (sourceLayout, element) => {
     this.setState(
       {
-        itemLayout,
-        data,
+        sourceLayout,
         element,
       },
       () => {
@@ -52,18 +85,18 @@ class SharedArea extends Component {
           this.setState({
             showDetails: true,
           });
-        }, 200);
+        }, DETAILS_TRANSITION_DURATION);
       },
     );
   };
 
-  setTarget = itemLayout => {
+  setTarget = targetLayout => {
     this.setState({
-      placeholderLayout: itemLayout,
+      targetLayout,
     });
   };
 
-  clearFocusedItem = () => {
+  clearSource = () => {
     this.setState(
       {
         showDetails: false,
@@ -71,40 +104,78 @@ class SharedArea extends Component {
       () => {
         setTimeout(() => {
           this.setState({
-            itemLayout: undefined,
+            data: undefined,
+            sourceLayout: undefined,
+            element: undefined,
           });
-        }, 200);
+        }, DETAILS_TRANSITION_DURATION);
       },
     );
   };
 
-  renderFocusedItem() {
+  animateDetailsOverlay() {
+    const {detailsOverlayAnimation, data} = this.state;
+    Animated.timing(detailsOverlayAnimation, {
+      toValue: Number(!!data),
+      duration: DETAILS_TRANSITION_DURATION,
+      useNativeDriver: true,
+    }).start();
+  }
+
+  animateDetails = () => {
+    const {detailsAnimation, showDetails} = this.state;
+    Animated.timing(detailsAnimation, {
+      toValue: Number(!!showDetails),
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  renderDetailsOverlay() {
     const {renderDetails} = this.props;
-    const {itemLayout, placeholderLayout, data, element, showDetails} = this.state;
+    const {
+      sourceLayout,
+      targetLayout,
+      data,
+      element,
+      showDetails,
+      detailsOverlayAnimation,
+      detailsAnimation,
+    } = this.state;
 
     let style;
-    if (itemLayout) {
-      const detailsReady = showDetails && placeholderLayout;
+    if (sourceLayout) {
+      const detailsReady = showDetails && targetLayout;
+
       style = {
         position: 'absolute',
-        width: detailsReady ? placeholderLayout.width : itemLayout.width,
-        height: detailsReady ? placeholderLayout.height : itemLayout.height,
-        top: detailsReady ? placeholderLayout.y : itemLayout.y,
-        left: detailsReady ? placeholderLayout.x : itemLayout.x,
+        width: detailsReady ? targetLayout.width : sourceLayout.width,
+        height: detailsReady ? targetLayout.height : sourceLayout.height,
+        top: detailsReady ? targetLayout.y : sourceLayout.y,
+        left: detailsReady ? targetLayout.x : sourceLayout.x,
       };
     }
 
     return (
-      <Modal visible={!!itemLayout} animationType="fade" onBackgroundPress={this.clearFocusedItem}>
-        <View pointerEvents="box-none" style={[StyleSheet.absoluteFillObject, {opacity: showDetails ? 1 : 0}]}>
+      <Animated.View
+        pointerEvents={data ? 'auto' : 'none'}
+        style={[
+          StyleSheet.absoluteFillObject,
+
+          {
+            opacity: detailsOverlayAnimation,
+            backgroundColor: Colors.white,
+          },
+        ]}
+      >
+        <Animated.View pointerEvents="box-none" style={[StyleSheet.absoluteFillObject, {opacity: detailsAnimation}]}>
           {renderDetails(data)}
-        </View>
-        {
-          <TouchableOpacity activeOpacity={1} onPress={this.clearFocusedItem} style={[style]}>
-            {element}
-          </TouchableOpacity>
-        }
-      </Modal>
+        </Animated.View>
+
+        <TouchableOpacity activeOpacity={1} onPress={this.clearSource} style={[style]}>
+          {element}
+        </TouchableOpacity>
+      </Animated.View>
     );
   }
 
@@ -112,7 +183,7 @@ class SharedArea extends Component {
     return (
       <ShareTransitionContext.Provider value={this.getProviderContextValue()}>
         {this.props.children}
-        {this.renderFocusedItem()}
+        {this.renderDetailsOverlay()}
       </ShareTransitionContext.Provider>
     );
   }

@@ -6,13 +6,15 @@ import ShareTransitionContext from './ShareTransitionContext';
 class TargetElement extends Component {
   state = {};
 
-  componentDidUpdate() {
-    const {showDetails, setTarget} = this.context;
+  componentDidMount() {
+    const {setTarget} = this.context;
 
-    if (showDetails && !this.targetLayout) {
-      this.element.measureInWindow((x, y, width, height) => {
-        this.targetLayout = {x, y, width, height};
-        setTarget(this.targetLayout);
+    if (!this.targetLayout) {
+      setTimeout(() => {
+        this.element.measure((x, y, width, height, pageX, pageY) => {
+          this.targetLayout = {x: pageX, y: pageY, width, height};
+          setTarget(this.targetLayout);
+        });
       });
     }
   }
