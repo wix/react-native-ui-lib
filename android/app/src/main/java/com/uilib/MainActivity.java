@@ -1,5 +1,17 @@
 package com.uilib;
 
-import com.reactnativenavigation.NavigationActivity;
+import android.os.Bundle;
 
-public class MainActivity extends NavigationActivity {}
+import com.reactnativenavigation.NavigationActivity;
+import com.facebook.react.modules.i18nmanager.I18nUtil;
+
+
+public class MainActivity extends NavigationActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        I18nUtil sharedI18nUtilInstance = I18nUtil.getInstance();
+        sharedI18nUtilInstance.allowRTL(getApplicationContext(), true);
+    }
+}
