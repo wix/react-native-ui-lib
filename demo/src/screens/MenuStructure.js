@@ -27,19 +27,28 @@ export const navigationData = {
       {title: 'Buttons', tags: 'button cta', screen: 'unicorn.components.ButtonsScreen'},
       {title: 'Cards', tags: 'cards feed', screen: 'unicorn.components.CardsScreen'},
       {title: 'Carousel', tags: 'carousel', screen: 'unicorn.components.CarouselScreen'},
-      {title: 'Checkbox', tags: 'checkbox toggle controls', screen: 'unicorn.components.CheckboxScreen'},
       {title: 'Connection Status Bar', tags: 'connection status bar', screen: 'unicorn.components.ConnectionStatusBar'},
       {title: 'Dialog', tags: 'dialog modal popup alert', screen: 'unicorn.components.DialogScreen'},
       {title: 'Feature Highlight', tags: 'feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
-      {title: 'Form Controls', tags: 'form stepper', screen: 'unicorn.components.FormScreen'},
       {title: 'Hint', tags: 'hints tooltip', screen: 'unicorn.components.HintsScreen'},
       {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
-      {title: 'Radio Button', tags: 'radio button group controls', screen: 'unicorn.components.RadioButtonScreen'},
       {title: 'Shared Transition', tags: 'shared transition element', screen: 'unicorn.components.SharedTransitionScreen'},
-      {title: 'Switch', tags: 'switch toggle', screen: 'unicorn.components.SwitchScreen'},
       {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
       {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'},
       {title: 'Wheel Picker Dialog', tags: 'wheel picker dialog', screen: 'unicorn.components.WheelPickerDialogScreen'},
+    ],
+  },
+  Form: {
+    title: 'Form',
+    screens: [
+      {title: 'Checkbox', tags: 'checkbox toggle controls', screen: 'unicorn.components.CheckboxScreen'},
+      {title: 'TextField', tags: 'text input field form', screen: 'unicorn.components.InputsScreen'},
+      {title: 'Picker', tags: 'picker form', screen: 'unicorn.components.PickerScreen'},
+      {title: 'RadioButton', tags: 'radio button group controls', screen: 'unicorn.components.RadioButtonScreen'},
+      {title: 'Stepper', tags: 'stepper form', screen: 'unicorn.components.StepperScreen'},
+      {title: 'Switch', tags: 'switch toggle', screen: 'unicorn.components.SwitchScreen'},
+      {title: 'TagsInput', tags: 'tags input form', screen: 'unicorn.components.TagsInputScreen'},
+      {title: 'Masked Inputs', tags: 'text input form mask', screen: 'unicorn.components.MaskedInputScreen'},
     ],
   },
   Native: {
@@ -53,13 +62,6 @@ export const navigationData = {
   Interactable: {
     title: 'Interactable',
     screens: [{title: 'Drawer', tags: 'interactable drawer', screen: 'unicorn.interactableComponents.DrawerScreen'}],
-  },
-  Inputs: {
-    title: 'Inputs',
-    screens: [
-      {title: 'Text Inputs', tags: 'text input form', screen: 'unicorn.components.InputsScreen'},
-      {title: 'Masked Inputs', tags: 'text input form mask', screen: 'unicorn.components.MaskedInputScreen'},
-    ],
   },
   Screens: {
     title: 'Screens',
