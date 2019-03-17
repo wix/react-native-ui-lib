@@ -80,7 +80,9 @@ export default class SharedTransitionScreen extends Component {
         <SharedTransition.Source
           id={item.id}
           data={item}
-          style={[{overflow: 'hidden', position: 'absolute', right: 20, top: 20, bottom: 20, width: '45%', height: 200}]}
+          style={[
+            {overflow: 'hidden', position: 'absolute', right: 20, top: 20, bottom: 20, width: '45%', height: 200},
+          ]}
         >
           {this.renderSharedElement(item)}
         </SharedTransition.Source>
@@ -105,33 +107,30 @@ export default class SharedTransitionScreen extends Component {
     );
   }
 
-  renderDetails = data => {
-    if (data) {
-      return (
-        <View flex bg-blue70 pointerEvents="box-none" padding-20 paddingT-100>
-          <View row>
-            <SharedTransition.Target style={{width: 200, height: 250}}>
-              {this.renderSharedElement(data, true)}
-            </SharedTransition.Target>
-            <View flex paddingL-20>
-              <Text text50>{data.title}</Text>
-              <Text text90 purple30 marginT-10>
-                {data.views} Views
-              </Text>
-            </View>
-          </View>
-          <View left marginT-20>
-            <Text text60>{data.location}</Text>
-            <Text>
-              when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into electronic typesetting, remaining essentially
-              unchanged
+  renderDetails = (data = {}) => {
+    return (
+      <View flex pointerEvents="box-none" padding-20 paddingT-100>
+        <View row>
+          <SharedTransition.Target style={{width: 200, height: 250, borderWidth: 1}}>
+            {data && this.renderSharedElement(data, true)}
+          </SharedTransition.Target>
+          <View flex paddingL-20>
+            <Text text50>{data.title}</Text>
+            <Text text90 purple30 marginT-10>
+              {data.views} Views
             </Text>
-            <Button link marginT-20 dark10 label="Learn More" size="small" />
           </View>
         </View>
-      );
-    }
+        <View left marginT-20>
+          <Text text60>{data.location}</Text>
+          <Text>
+            when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived
+            not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged
+          </Text>
+          <Button link marginT-20 dark10 label="Learn More" size="small" />
+        </View>
+      </View>
+    );
   };
 
   render() {
