@@ -443,7 +443,8 @@ export default class TextField extends BaseInput {
       placeholder, 
       hideUnderline, 
       renderExpandableInput, 
-      rightIconSource
+      rightIconSource,
+      testID
     } = this.getThemeProps();
     const typography = this.getTypography();
     const {lineHeight, ...typographyStyle} = typography;
@@ -469,6 +470,7 @@ export default class TextField extends BaseInput {
         style={this.styles.expandableInput}
         activeOpacity={1}
         onPress={() => !this.isDisabled() && this.toggleExpandableModal(true)}
+        testID={testID}
       >
         <Text
           style={[
