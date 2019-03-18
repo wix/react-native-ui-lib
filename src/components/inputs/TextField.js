@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Animated, TextInput as RNTextInput} from 'react-native';
+import {StyleSheet, I18nManager, Animated, TextInput as RNTextInput} from 'react-native';
 import {Colors, Typography} from '../../style';
 import {Constants} from '../../helpers';
 import BaseInput from './BaseInput';
@@ -506,6 +506,7 @@ export default class TextField extends BaseInput {
       this.styles.input,
       hideUnderline && this.styles.inputWithoutUnderline,
       {...typographyStyle},
+      I18nManager.isRTL && {minHeight: lineHeight + 3},
       color && {color},
       style
     ];
