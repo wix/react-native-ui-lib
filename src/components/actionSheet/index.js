@@ -159,7 +159,7 @@ export default class ActionSheet extends BaseComponent {
 
   renderSheet() {    
     return (
-      <View bg-white>
+      <View testID={this.props.testID} bg-white>
         {this.renderTitle()}
         {this.renderActions()}
       </View>
