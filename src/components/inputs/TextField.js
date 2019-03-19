@@ -436,51 +436,19 @@ export default class TextField extends BaseInput {
   }
 
   renderExpandableInput() {
-    const {value} = this.state;
-    const {
-      style, 
-      floatingPlaceholder, 
-      placeholder, 
-      hideUnderline, 
-      renderExpandableInput, 
-      rightIconSource,
-      testID
-    } = this.getThemeProps();
-    const typography = this.getTypography();
-    const {lineHeight, ...typographyStyle} = typography;
-
-    const color = this.getStateColor(this.props.color || this.extractColorValue());
-    const inputStyle = [
-      this.styles.input,
-      hideUnderline && this.styles.inputWithoutUnderline,
-      {...typographyStyle},
-      {minHeight: lineHeight + (Constants.isAndroid ? 6 : 0)},
-      color && {color},
-      style
-    ];
+    const {renderExpandableInput, rightIconSource} = this.getThemeProps();
 
     if (_.isFunction(renderExpandableInput)) {
       return renderExpandableInput(this.getThemeProps());
     }
-
-    const shouldShowPlaceholder = _.isEmpty(value) && !floatingPlaceholder;
 
     return (
       <TouchableOpacity
         style={this.styles.expandableInput}
         activeOpacity={1}
         onPress={() => !this.isDisabled() && this.toggleExpandableModal(true)}
-        testID={testID}
       >
-        <Text
-          style={[
-            inputStyle,
-            shouldShowPlaceholder && this.styles.placeholder
-          ]}
-          numberOfLines={3}
-        >
-          {shouldShowPlaceholder ? placeholder : value}
-        </Text>
+        {this.renderTextInput()}
         {rightIconSource && <Image pointerEvents="none" source={rightIconSource} style={this.styles.rightIcon}/>}
       </TouchableOpacity>
     );
@@ -498,6 +466,7 @@ export default class TextField extends BaseInput {
       hideUnderline,
       numberOfLines,
       helperText,
+      expandable,
       ...others
     } = this.getThemeProps();
     const typography = this.getTypography();
@@ -508,11 +477,13 @@ export default class TextField extends BaseInput {
       this.styles.input,
       hideUnderline && this.styles.inputWithoutUnderline,
       {...typographyStyle},
+      expandable && {maxHeight: lineHeight * (Constants.isAndroid ? 2.5 : 4)},
       color && {color},
       style
     ];
     const placeholderText = this.getPlaceholderText();
     const placeholderColor = this.getStateColor(placeholderTextColor);
+    const shouldUseMultiline = multiline ? multiline : expandable;
 
     return (
       <RNTextInput
@@ -522,7 +493,7 @@ export default class TextField extends BaseInput {
         placeholderTextColor={placeholderColor}
         underlineColorAndroid="transparent"
         style={inputStyle}
-        multiline={multiline}
+        multiline={shouldUseMultiline}
         numberOfLines={numberOfLines}
         onKeyPress={this.onKeyPress}
         onChangeText={this.onChangeText}
@@ -532,6 +503,8 @@ export default class TextField extends BaseInput {
         ref={(input) => {
           this.input = input;
         }}
+        editable={!expandable}
+        pointerEvents={expandable ? 'none' : undefined}
       />
     );
   }
