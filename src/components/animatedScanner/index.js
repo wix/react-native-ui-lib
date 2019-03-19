@@ -103,7 +103,7 @@ export default class AnimatedScanner extends BaseComponent {
   }
 
   renderNew() {
-    const {opacity, backgroundColor, hideScannerLine} = this.props;
+    const {opacity, backgroundColor, borderRadius, hideScannerLine} = this.props;
     const {isDone, animatedProgress} = this.state;
     return (
       <View style={{...StyleSheet.absoluteFillObject}}>
@@ -111,6 +111,7 @@ export default class AnimatedScanner extends BaseComponent {
           style={[this.styles.container,
             opacity && {opacity},
             backgroundColor && {backgroundColor},
+            borderRadius && {borderRadius},
             {
               left: animatedProgress.interpolate({
                 inputRange: [0, 100],
@@ -135,12 +136,13 @@ export default class AnimatedScanner extends BaseComponent {
 
   // TODO: deprecate
   renderOld() {
-    const {progress, opacity, backgroundColor} = this.props;
+    const {progress, opacity, backgroundColor, borderRadius} = this.props;
     return (
       <Animated.View
         style={[this.styles.container,
           opacity && {opacity},
           backgroundColor && {backgroundColor},
+          borderRadius && {borderRadius},
           {
             right: progress.interpolate({
               inputRange: [0, 5, 55, 100],

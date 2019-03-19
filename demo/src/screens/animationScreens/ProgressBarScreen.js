@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import {ScrollView} from 'react-native';
-import {View, Text, ProgressBar, Colors} from 'react-native-ui-lib';//eslint-disable-line
+import {View, Text, ProgressBar, Colors, BorderRadiuses} from 'react-native-ui-lib';//eslint-disable-line
 
 export default class ProgressBarScreen extends Component {
 
@@ -50,8 +50,9 @@ export default class ProgressBarScreen extends Component {
                   ref={element => this.elements[index] = element}
                   progress={value}
                   height={[10, 15, 22, 30][index]}
-                  backgroundColor={[Colors.red70, Colors.purple70, Colors.blue70, Colors.green70][index]}
-                  progressBackgroundColor={[Colors.red40, Colors.purple40, Colors.blue30, Colors.green40][index]}
+                  backgroundColor={[Colors.red70, Colors.purple70, Colors.blue70, Colors.grey20][index]}
+                  progressBackgroundColor={[Colors.red40, Colors.purple40, Colors.blue30, Colors.grey20][index]}
+                  borderRadius={[undefined, undefined, undefined, BorderRadiuses.br60][index]}
                 />
 
                 <View bg-dark10 padding-12>

@@ -34,13 +34,18 @@ export default class ProgressBar extends BaseComponent {
   };
 
   render() {
-    const {height, backgroundColor, progressBackgroundColor} = this.props;
+    const {height, backgroundColor, progressBackgroundColor, borderRadius} = this.props;
     const animatedScannerProps = AnimatedScanner.extractOwnProps(this.props);
     const modifiers = this.extractModifierProps();
 
     return (
-      <View height={height} {...modifiers} style={{backgroundColor}}>
-        <AnimatedScanner {...animatedScannerProps} backgroundColor={progressBackgroundColor} hideScannerLine/>
+      <View height={height} {...modifiers} style={{backgroundColor, borderRadius}}>
+        <AnimatedScanner
+          {...animatedScannerProps}
+          borderRadius={borderRadius}
+          backgroundColor={progressBackgroundColor}
+          hideScannerLine
+        />
       </View>
     );
   }
