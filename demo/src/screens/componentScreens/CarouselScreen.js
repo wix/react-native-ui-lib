@@ -17,7 +17,7 @@ class CarouselScreen extends Component {
   render() {
     return (
       <View flex>
-        <Carousel loop onChangePage={(index => this.onChangePage(index))}/** initialPage={INITIAL_PAGE} */>
+        <Carousel loop onChangePage={(index => this.onChangePage(index))} /* initialPage={INITIAL_PAGE} */>
           <Page bg-cyan50>
             <Text margin-15>PAGE 0</Text>
           </Page>

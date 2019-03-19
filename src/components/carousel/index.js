@@ -91,7 +91,7 @@ export default class Carousel extends BaseComponent {
     }
 
     const {loop} = this.props;
-    const offsetX = event.nativeEvent.contentOffset.x;
+    const offsetX = presenter.getDirectionOffset(event.nativeEvent.contentOffset.x, this.props);
     
     if (offsetX >= 0) {
       const {currentStandingPage} = this.state;

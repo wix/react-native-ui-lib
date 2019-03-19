@@ -1,4 +1,18 @@
+import {I18nManager} from 'react-native';
 import _ from 'lodash';
+import {Constants} from '../../helpers';
+
+export function getDirectionOffset(offset, props) {
+  let fixedOffset = offset;
+
+  if (I18nManager.isRTL && Constants.isAndroid) {
+    const {loop, pageWidth} = props;
+    const totalWidth = ((getChildrenLength(props) - 1) + (loop ? 2 : 0)) * pageWidth;
+    fixedOffset = Math.abs(totalWidth - offset);
+  }
+
+  return fixedOffset;
+}
 
 export function getChildrenLength(props) {
   const length = _.get(props, 'children.length') || 0;
@@ -11,7 +25,10 @@ export function calcOffset(props, state) {
 
   const actualCurrentPage = loop ? currentPage + 1 : currentPage;
 
-  return pageWidth * actualCurrentPage;
+  let offset = pageWidth * actualCurrentPage;
+  offset = getDirectionOffset(offset, props);
+
+  return offset;
 }
 
 export function calcPageIndex(offset, props) {
