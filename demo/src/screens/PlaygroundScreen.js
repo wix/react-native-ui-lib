@@ -13,7 +13,7 @@ export default class PlaygroundScreen extends Component {
 
   render() {
     return (
-      <View flex center style={styles.container}>
+      <View flex bg-dark80 center style={styles.container}>
         <Text>Unicorn Playground Screen</Text>
       </View>
     );
@@ -22,7 +22,5 @@ export default class PlaygroundScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: Colors.dark80,
-  },
+  }
 });
