@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ScrollView, StyleSheet, I18nManager} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import * as presenter from './CarouselPresenter';
@@ -50,14 +50,11 @@ export default class Carousel extends BaseComponent {
 
   constructor(props) {
     super(props);
-
-    const rtlInitialPage = presenter.getChildrenLength(props) - 1 - props.initialPage;
-    const initialPage = I18nManager.isRTL ? rtlInitialPage : props.initialPage;
     
     this.state = {
-      currentPage: initialPage,
-      currentStandingPage: initialPage,
-      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage})} // for iOS
+      currentPage: props.initialPage,
+      currentStandingPage: props.initialPage,
+      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage})}
     };
   }
 
@@ -82,7 +79,6 @@ export default class Carousel extends BaseComponent {
   }
 
   onContentSizeChange = () => {
-    // Since scrollView's contentOffset is not supported in Android
     if (Constants.isAndroid) {
       this.updateOffset();
     }
@@ -100,6 +96,7 @@ export default class Carousel extends BaseComponent {
     if (offsetX >= 0) {
       const {currentStandingPage} = this.state;
       const newPage = presenter.calcPageIndex(offsetX, this.props);
+
       this.setState({currentPage: newPage});
 
       // finished full page scroll
@@ -138,7 +135,6 @@ export default class Carousel extends BaseComponent {
       childrenArray.unshift(this.cloneChild(children[length - 1]));
       childrenArray.push(this.cloneChild(children[0]));
     }
-
     return childrenArray;
   }
 
