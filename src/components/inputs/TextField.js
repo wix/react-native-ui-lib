@@ -139,7 +139,7 @@ export default class TextField extends BaseInput {
       iconSource: PropTypes.number,
       onPress: PropTypes.func,
       style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
-    }),
+    })
   };
 
   static defaultProps = {
@@ -155,7 +155,7 @@ export default class TextField extends BaseInput {
 
     this.state = {
       value: props.value,
-      floatingPlaceholderState: new Animated.Value(this.shouldFloatPlacholder(props.value) ? 1 : 0),
+      floatingPlaceholderState: new Animated.Value(this.shouldFloatPlaceholder(props.value) ? 1 : 0),
       showExpandableModal: false
     };
 
@@ -189,11 +189,11 @@ export default class TextField extends BaseInput {
 
   updateFloatingPlaceholderState(withoutAnimation) {
     if (withoutAnimation) {
-      this.state.floatingPlaceholderState.setValue(this.shouldFloatPlacholder() ? 1 : 0);
+      this.state.floatingPlaceholderState.setValue(this.shouldFloatPlaceholder() ? 1 : 0);
     } else {
       Animated.spring(this.state.floatingPlaceholderState, {
-        toValue: this.shouldFloatPlacholder() ? 1 : 0,
-        duration: 150,
+        toValue: this.shouldFloatPlaceholder() ? 1 : 0,
+        duration: 150
       }).start();
     }
   }
@@ -275,7 +275,7 @@ export default class TextField extends BaseInput {
     return focused && floatOnFocus;
   }
 
-  shouldFloatPlacholder(text) {
+  shouldFloatPlaceholder(text) {
     return this.hasText(text) || this.shouldShowHelperText() || this.shouldFloatOnFocus();
   }
 
@@ -339,10 +339,10 @@ export default class TextField extends BaseInput {
                 inputRange: [0, 1],
                 outputRange: [placeholderColor, this.getStateColor(floatingPlaceholderColor)]
               }),
-              lineHeight: this.shouldFloatPlacholder()
+              lineHeight: this.shouldFloatPlaceholder()
                 ? LABEL_TYPOGRAPHY.lineHeight
                 : typography.lineHeight
-            },
+            }
           ]}
           numberOfLines={1}
           onPress={() => expandable && this.toggleExpandableModal(true)}
@@ -500,9 +500,7 @@ export default class TextField extends BaseInput {
         onChange={this.onChange}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
-        ref={(input) => {
-          this.input = input;
-        }}
+        ref={(input) => { this.input = input; }}
         editable={!expandable}
         pointerEvents={expandable ? 'none' : undefined}
       />
