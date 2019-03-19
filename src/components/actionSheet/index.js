@@ -119,6 +119,7 @@ export default class ActionSheet extends BaseComponent {
         style={{backgroundColor: 'transparent'}}
         height={48}
         key={index}
+        testID={option.testID}
         onPress={() => this.onOptionPress(index)}
         activeBackgroundColor={Colors.dark80}
       >
@@ -159,7 +160,7 @@ export default class ActionSheet extends BaseComponent {
 
   renderSheet() {    
     return (
-      <View testID={this.props.testID} bg-white>
+      <View bg-white>
         {this.renderTitle()}
         {this.renderActions()}
       </View>
