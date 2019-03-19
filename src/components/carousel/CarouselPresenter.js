@@ -1,4 +1,7 @@
 import _ from 'lodash';
+import {I18nManager} from 'react-native';
+import {Constants} from '../../helpers';
+
 
 export function getChildrenLength(props) {
   const length = _.get(props, 'children.length') || 0;
@@ -8,7 +11,6 @@ export function getChildrenLength(props) {
 export function calcOffset(props, state) {
   const {currentPage} = state;
   const {pageWidth, loop} = props;
-
   const actualCurrentPage = loop ? currentPage + 1 : currentPage;
 
   return pageWidth * actualCurrentPage;
@@ -17,15 +19,20 @@ export function calcOffset(props, state) {
 export function calcPageIndex(offset, props) {
   const pagesCount = getChildrenLength(props);
   const {pageWidth, loop} = props;
-  const pageIndexIncludingClonedPages = Math.round(offset / pageWidth);
-
+  let pageIndexIncludingClonedPages = Math.round(offset / pageWidth);
+  
   let actualPageIndex;
   if (loop) {
     actualPageIndex = (pageIndexIncludingClonedPages + (pagesCount - 1)) % pagesCount;
+    if (Constants.isAndroid && I18nManager.isRTL && !isOutOfBounds(offset, props)) {
+      actualPageIndex = (pagesCount - 1) - actualPageIndex;
+    }
   } else {
+    if (Constants.isAndroid && I18nManager.isRTL) {
+      pageIndexIncludingClonedPages = (pagesCount - 1) - pageIndexIncludingClonedPages;
+    }
     actualPageIndex = Math.min(pagesCount - 1, pageIndexIncludingClonedPages);
   }
-
   return actualPageIndex;
 }
 
