@@ -317,7 +317,6 @@ export default class TextField extends BaseInput {
     const typography = this.getTypography();
     const placeholderColor = this.getStateColor(placeholderTextColor);
 
-
     if (this.shouldFakePlaceholder()) {
       return (
         <Animated.Text
@@ -329,7 +328,7 @@ export default class TextField extends BaseInput {
             !centered && {
               top: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: multiline && Constants.isIOS ? [30, 5] : [28, 0]
+                outputRange: multiline && Constants.isIOS ? [30, 5] : [25, 0]
               }),
               fontSize: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
