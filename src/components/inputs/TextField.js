@@ -307,7 +307,6 @@ export default class TextField extends BaseInput {
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
     const {
-      centered,
       expandable,
       placeholder,
       placeholderTextColor,
@@ -324,8 +323,7 @@ export default class TextField extends BaseInput {
             this.styles.floatingPlaceholder,
             this.styles.placeholder,
             typography,
-            centered && this.styles.placeholderCentered,
-            !centered && {
+            {
               top: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
                 outputRange: multiline && Constants.isIOS ? [30, 5] : [25, 0]
@@ -638,11 +636,6 @@ function createStyles({placeholderTextColor, centered, multiline}) {
     },
     placeholder: {
       color: placeholderTextColor
-    },
-    placeholderCentered: {
-      left: 0,
-      right: 0,
-      textAlign: 'center'
     },
     errorMessage: {
       flex: 1,
