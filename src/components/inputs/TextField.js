@@ -329,7 +329,7 @@ export default class TextField extends BaseInput {
             !centered && {
               top: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: multiline ? [30, (Constants.isAndroid ? 0 : 5)] : [28, 0]
+                outputRange: multiline && Constants.isIOS ? [30, 5] : [28, 0]
               }),
               fontSize: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
@@ -616,7 +616,8 @@ function createStyles({placeholderTextColor, centered, multiline}) {
       textAlign: centered ? 'center' : undefined,
       backgroundColor: 'transparent',
       marginBottom: Constants.isIOS ? 10 : 5,
-      padding: 0 // for Android
+      padding: 0, // for Android
+      textAlignVertical: 'top' // for Android (not working)
     },
     expandableInput: {
       flexGrow: 1,
