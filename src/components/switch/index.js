@@ -138,7 +138,7 @@ class Switch extends BaseComponent {
 
   render() {
     const {value, style, ...others} = this.getThemeProps();
-    const switchValueForDetox = value ? 'Switched On' : 'Switched Off';
+    const switchValueForDetox = value ? 'switchedOn' : 'switchedOff';
 
     return (
       <TouchableOpacity

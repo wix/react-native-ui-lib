@@ -115,7 +115,7 @@ class Checkbox extends BaseComponent {
 
   render() {
     const {value, selectedIcon, style, color, iconColor, disabled, testID, ...others} = this.getThemeProps();
-    const checkboxValueForDetox = value ? 'Checked' : 'Unchecked';
+    const checkboxValueForDetox = value ? 'checked' : 'unchecked';
 
     return (
       <TouchableOpacity
