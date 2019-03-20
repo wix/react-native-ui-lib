@@ -160,20 +160,12 @@ export default class AnimatedScanner extends BaseComponent {
 function createStyles() {
   return StyleSheet.create({
     container: {
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
+      ...StyleSheet.absoluteFill,
       backgroundColor: Colors.white,
       opacity: 0.9
     },
     scanner: {
-      position: 'absolute',
-      left: 0,
-      top: 0,
-      bottom: 0,
-      right: 0,
+      ...StyleSheet.absoluteFill,
       borderWidth: StyleSheet.hairlineWidth,
       borderColor: Colors.dark50
     }
