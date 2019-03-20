@@ -576,7 +576,7 @@ export default class TextField extends BaseInput {
           {expandable && this.renderExpandableModal()}
         </View>
         
-        <View row>
+        <View row right>
           {this.renderError(!useTopErrors)}
           {this.renderCharCounter()}
         </View>
