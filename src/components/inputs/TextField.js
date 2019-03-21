@@ -433,7 +433,7 @@ export default class TextField extends BaseInput {
   }
 
   renderExpandableInput() {
-    const {renderExpandableInput, rightIconSource} = this.getThemeProps();
+    const {renderExpandableInput, rightIconSource, testID} = this.getThemeProps();
 
     if (_.isFunction(renderExpandableInput)) {
       return renderExpandableInput(this.getThemeProps());
@@ -444,6 +444,7 @@ export default class TextField extends BaseInput {
         style={this.styles.expandableInput}
         activeOpacity={1}
         onPress={() => !this.isDisabled() && this.toggleExpandableModal(true)}
+        testID={`${testID}.expandable`}
       >
         {this.renderTextInput()}
         {rightIconSource && <Image pointerEvents="none" source={rightIconSource} style={this.styles.rightIcon}/>}
