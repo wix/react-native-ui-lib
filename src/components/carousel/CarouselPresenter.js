@@ -1,11 +1,10 @@
-import {I18nManager} from 'react-native';
 import _ from 'lodash';
 import {Constants} from '../../helpers';
 
 export function getDirectionOffset(offset, props) {
   let fixedOffset = offset;
 
-  if (I18nManager.isRTL && Constants.isAndroid) {
+  if (Constants.isRTL && Constants.isAndroid) {
     const {loop, pageWidth} = props;
     const totalWidth = ((getChildrenLength(props) - 1) + (loop ? 2 : 0)) * pageWidth;
     fixedOffset = Math.abs(totalWidth - offset);

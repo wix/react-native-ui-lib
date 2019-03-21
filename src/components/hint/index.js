@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {I18nManager, StyleSheet/* , TouchableWithoutFeedback */} from 'react-native';
+import {StyleSheet/* , TouchableWithoutFeedback */} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {Typography, Spacings, Colors, BorderRadiuses, AnimatableManager} from '../../style';
 import {Constants} from '../../helpers';
@@ -178,9 +178,9 @@ class Hint extends BaseComponent {
   getTargetPositionOnScreen() {
     const targetMidPosition = this.targetLayout.x + this.targetLayout.width / 2;
     if (targetMidPosition > Constants.screenWidth * (2 / 3)) {
-      return TARGET_POSITIONS.RIGHT; // I18nManager.isRTL ? TARGET_POSITIONS.LEFT : 
+      return TARGET_POSITIONS.RIGHT; 
     } else if (targetMidPosition < Constants.screenWidth * (1 / 3)) {
-      return TARGET_POSITIONS.LEFT; // I18nManager.isRTL ? TARGET_POSITIONS.RIGHT : 
+      return TARGET_POSITIONS.LEFT; 
     }
 
     return TARGET_POSITIONS.CENTER;
@@ -247,10 +247,10 @@ class Hint extends BaseComponent {
     const targetPositionOnScreen = this.getTargetPositionOnScreen();
     switch (targetPositionOnScreen) {
       case TARGET_POSITIONS.LEFT:
-        tipPositionStyle.left = I18nManager.isRTL ? rightPosition : leftPosition;
+        tipPositionStyle.left = Constants.isRTL ? rightPosition : leftPosition;
         break;
       case TARGET_POSITIONS.RIGHT:
-        tipPositionStyle.right = I18nManager.isRTL ? leftPosition : rightPosition;
+        tipPositionStyle.right = Constants.isRTL ? leftPosition : rightPosition;
         break;
       case TARGET_POSITIONS.CENTER:
       default:

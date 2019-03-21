@@ -1,8 +1,9 @@
-import React from 'react';
-import {Image as RNImage, I18nManager} from 'react-native';
-import PropTypes from 'prop-types';
-import hoistNonReactStatic from 'hoist-non-react-statics';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import hoistNonReactStatic from 'hoist-non-react-statics';
+import {Image as RNImage} from 'react-native';
+import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import Assets from '../../assets';
 
@@ -69,7 +70,7 @@ class Image extends BaseComponent {
   render() {
     const source = this.getImageSource();
     const {tintColor, style, supportRTL, ...others} = this.getThemeProps();
-    const shouldFlipRTL = supportRTL && I18nManager.isRTL;
+    const shouldFlipRTL = supportRTL && Constants.isRTL;
 
     return (
       <RNImage 

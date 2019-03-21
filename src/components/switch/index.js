@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Animated, Easing, I18nManager} from 'react-native';
+import {StyleSheet, Animated, Easing} from 'react-native';
+import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
@@ -125,7 +126,7 @@ class Switch extends BaseComponent {
   renderThumb() {
     const {thumbStyle} = this.getThemeProps();
     const {thumbPosition} = this.state;
-    const output = this.calcThumbOnPosition() * (I18nManager.isRTL ? -1 : 1);
+    const output = this.calcThumbOnPosition() * (Constants.isRTL ? -1 : 1);
     
     const interpolatedTranslateX = thumbPosition.interpolate({
       inputRange: [0, 1],

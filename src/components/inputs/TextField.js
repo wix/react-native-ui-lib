@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, I18nManager, Animated, TextInput as RNTextInput} from 'react-native';
-import {Colors, Typography} from '../../style';
+import {StyleSheet, Animated, TextInput as RNTextInput} from 'react-native';
 import {Constants} from '../../helpers';
+import {Colors, Typography} from '../../style';
 import BaseInput from './BaseInput';
 import {Modal} from '../../screensComponents';
 import TextArea from './TextArea';
@@ -508,7 +508,7 @@ export default class TextField extends BaseInput {
       this.styles.input,
       hideUnderline && this.styles.inputWithoutUnderline,
       {...typographyStyle},
-      I18nManager.isRTL && {minHeight: lineHeight + 3},
+      Constants.isRTL && {minHeight: lineHeight + 3},
       color && {color},
       style
     ];
