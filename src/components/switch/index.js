@@ -103,7 +103,8 @@ class Switch extends BaseComponent {
     const props = this.getThemeProps();
     const width = props.width || DEFAULT_WIDTH;
     const thumbSize = props.thumbSize || DEFAULT_THUMB_SIZE;
-    const position = width - (2 * INNER_PADDING + thumbSize);
+    let position = width - (2 * INNER_PADDING + thumbSize);
+    position *= (Constants.isRTL ? -1 : 1);
     return position;
   }
 
@@ -126,11 +127,10 @@ class Switch extends BaseComponent {
   renderThumb() {
     const {thumbStyle} = this.getThemeProps();
     const {thumbPosition} = this.state;
-    const output = this.calcThumbOnPosition() * (Constants.isRTL ? -1 : 1);
     
     const interpolatedTranslateX = thumbPosition.interpolate({
       inputRange: [0, 1],
-      outputRange: [0, output],
+      outputRange: [0, this.calcThumbOnPosition()],
     });
 
     const thumbPositionStyle = {

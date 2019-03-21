@@ -2,7 +2,6 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, TextInput as RNTextInput} from 'react-native';
-import {Colors, Typography} from '../../style';
 import {Constants} from '../../helpers';
 import {Colors, Typography} from '../../style';
 import BaseInput from './BaseInput';
