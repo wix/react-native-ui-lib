@@ -86,6 +86,7 @@ export default class InputsScreen extends Component {
           />
 
           <TextField
+            text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
             placeholder="placeholder"
