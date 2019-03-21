@@ -138,11 +138,11 @@ class Switch extends BaseComponent {
 
   render() {
     const {value, style, ...others} = this.getThemeProps();
-    const switchValueForDetox = value ? 'switchedOn' : 'switchedOff';
+    const accessibilityLabel = value ? 'switchOn' : 'switchOff';
 
     return (
       <TouchableOpacity
-        accessibilityLabel={switchValueForDetox}
+        accessibilityLabel={accessibilityLabel}
         activeOpacity={1}
         {...others}
         style={this.getSwitchStyle()}
