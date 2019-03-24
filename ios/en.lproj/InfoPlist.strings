@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  uilib
+
+  Created by Inbal Tish on 13/03/2019.
+  Copyright © 2019 Facebook. All rights reserved.
+*/
+"CFBundleDisplayName" = "uilib";

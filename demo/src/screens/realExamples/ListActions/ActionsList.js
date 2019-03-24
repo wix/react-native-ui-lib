@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {Animated, LayoutAnimation, PanResponder} from 'react-native';
+import {Animated, LayoutAnimation, PanResponder, I18nManager} from 'react-native';
 import {Constants, Assets, Colors, View, TouchableOpacity, Button, Text} from 'react-native-ui-lib'; //eslint-disable-line
 
 
@@ -10,6 +10,10 @@ const icon3 = require('../../../assets/icons/tags.png');
 const icon4 = require('../../../assets/icons/collections.png');
 
 const INITIAL_WIDTH = 40;
+const DIRECTIONS = {
+  LEFT: 'left',
+  RIGHT: 'right'
+};
 
 export default class ActionsList extends Component {
   static displayName = 'ActionsList';
@@ -50,10 +54,10 @@ export default class ActionsList extends Component {
   // handlePanResponderGrant = (e, gestureState) => {
   // };
   handlePanResponderMove = (e, gestureState) => {
-    if (gestureState.dx < 0 && this.direction !== 'left') {
-      this.direction = 'left';
-    } else if (gestureState.dx > 0 && this.direction !== 'right') {
-      this.direction = 'right';
+    if (gestureState.dx < 0 && this.direction !== DIRECTIONS.LEFT) {
+      this.direction = I18nManager.isRTL ? DIRECTIONS.RIGHT : DIRECTIONS.LEFT;
+    } else if (gestureState.dx > 0 && this.direction !== DIRECTIONS.RIGHT) {
+      this.direction = I18nManager.isRTL ? DIRECTIONS.LEFT : DIRECTIONS.RIGHT;
     }
   };
   handlePanResponderEnd = () => {
@@ -63,10 +67,10 @@ export default class ActionsList extends Component {
 
   closePanels = () => {
     if (this.rightPanel) {
-      this.animate('right');
+      this.animate(DIRECTIONS.RIGHT);
     } 
     if (this.leftPanel) {
-      this.animate('left');
+      this.animate(DIRECTIONS.LEFT);
     }
   }
 
@@ -77,7 +81,7 @@ export default class ActionsList extends Component {
     
     const {animationValue, animationValue2} = this.state;
     
-    if (this.direction === 'left' && !this.rightPanel && !this.leftPanel) { // open rightPanel
+    if (this.direction === DIRECTIONS.LEFT && !this.rightPanel && !this.leftPanel) { // open rightPanel
       Animated.spring(animationValue, {
         toValue: 1,
         speed: 2000,
@@ -87,7 +91,7 @@ export default class ActionsList extends Component {
         this.setState({rightPanelWidth: Constants.screenWidth - 40});
       }, 100);
       this.rightPanel = !this.rightPanel;
-    } else if (this.direction === 'right' && this.rightPanel) { // close rightPanel
+    } else if (this.direction === DIRECTIONS.RIGHT && this.rightPanel) { // close rightPanel
       this.setState({rightPanelWidth: INITIAL_WIDTH}, () => {
         Animated.spring(animationValue, {
           toValue: 0,
@@ -97,7 +101,7 @@ export default class ActionsList extends Component {
         }).start();
       });
       this.rightPanel = !this.rightPanel;
-    } else if (this.direction === 'right' && !this.leftPanel && !this.rightPanel) { // open leftPanel
+    } else if (this.direction === DIRECTIONS.RIGHT && !this.leftPanel && !this.rightPanel) { // open leftPanel
       Animated.spring(animationValue2, {
         toValue: 1,
         speed: 2000,
@@ -107,7 +111,7 @@ export default class ActionsList extends Component {
         this.setState({leftPanelWidth: 64});
       }, 100);
       this.leftPanel = !this.leftPanel;
-    } else if (this.direction === 'left' && this.leftPanel) { // close leftPanel
+    } else if (this.direction === DIRECTIONS.LEFT && this.leftPanel) { // close leftPanel
       this.setState({leftPanelWidth: INITIAL_WIDTH}, () => {
         Animated.spring(animationValue2, {
           toValue: 0,
@@ -154,7 +158,7 @@ export default class ActionsList extends Component {
               iconStyle={{tintColor: Colors.white}}
               onPress={() => {
                 // console.warn('left action press');
-                this.animate('left');
+                this.animate(DIRECTIONS.LEFT);
               }}
             />
           </View>}
@@ -197,7 +201,7 @@ export default class ActionsList extends Component {
               iconStyle={{tintColor: Colors.white}}
               onPress={() => {
                 // console.warn('dismiss press');
-                this.animate('right');
+                this.animate(DIRECTIONS.RIGHT);
               }}
             />
             <Button
@@ -208,7 +212,7 @@ export default class ActionsList extends Component {
               iconStyle={{tintColor: Colors.white}}
               onPress={() => {
                 // console.warn('action 1 press');
-                this.animate('right');
+                this.animate(DIRECTIONS.RIGHT);
               }}
             />
             <Button

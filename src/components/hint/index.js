@@ -22,6 +22,11 @@ const HINT_POSITIONS = {
   TOP: 'top',
   BOTTOM: 'bottom',
 };
+const TARGET_POSITIONS = {
+  LEFT: 'left',
+  RIGHT: 'right',
+  CENTER: 'center'
+};
 
 AnimatableManager.loadAnimationDefinitions({
   hintAppearDown: {
@@ -167,18 +172,18 @@ class Hint extends BaseComponent {
     if (!_.isUndefined(useSideTip)) {
       return useSideTip;
     }
-    return this.getTargetPositionOnScreen() !== 'center';
+    return this.getTargetPositionOnScreen() !== TARGET_POSITIONS.CENTER;
   }
 
   getTargetPositionOnScreen() {
     const targetMidPosition = this.targetLayout.x + this.targetLayout.width / 2;
     if (targetMidPosition > Constants.screenWidth * (2 / 3)) {
-      return 'right';
+      return TARGET_POSITIONS.RIGHT; 
     } else if (targetMidPosition < Constants.screenWidth * (1 / 3)) {
-      return 'left';
+      return TARGET_POSITIONS.LEFT; 
     }
 
-    return 'center';
+    return TARGET_POSITIONS.CENTER;
   }
 
   getContainerPosition() {
@@ -198,9 +203,9 @@ class Hint extends BaseComponent {
     }
 
     const targetPositionOnScreen = this.getTargetPositionOnScreen();
-    if (targetPositionOnScreen === 'right') {
+    if (targetPositionOnScreen === TARGET_POSITIONS.RIGHT) {
       hintPositionStyle.alignItems = 'flex-end';
-    } else if (targetPositionOnScreen === 'left') {
+    } else if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
       hintPositionStyle.alignItems = 'flex-start';
     }
 
@@ -211,9 +216,9 @@ class Hint extends BaseComponent {
     const paddings = {paddingVertical: this.hintOffset, paddingHorizontal: this.edgeMargins};
     if (this.useSideTip) {
       const targetPositionOnScreen = this.getTargetPositionOnScreen();
-      if (targetPositionOnScreen === 'left') {
+      if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
         paddings.paddingLeft = this.targetLayout.x;
-      } else if (targetPositionOnScreen === 'right') {
+      } else if (targetPositionOnScreen === TARGET_POSITIONS.RIGHT) {
         paddings.paddingRight = Constants.screenWidth - this.targetLayout.x - this.targetLayout.width;
       }
     }
@@ -234,16 +239,20 @@ class Hint extends BaseComponent {
     const targetMidWidth = this.targetLayout.width / 2;
     const tipMidWidth = this.tipSize.width / 2;
 
-    switch (this.getTargetPositionOnScreen()) {
-      case 'left':
-        tipPositionStyle.left = this.useSideTip ? this.targetLayout.x : this.targetLayout.x + targetMidWidth - tipMidWidth;
+    const leftPosition = this.useSideTip ? this.targetLayout.x : this.targetLayout.x + targetMidWidth - tipMidWidth;
+    const rightPosition = this.useSideTip
+      ? Constants.screenWidth - this.targetLayout.x - this.targetLayout.width
+      : Constants.screenWidth - this.targetLayout.x - targetMidWidth - tipMidWidth;
+
+    const targetPositionOnScreen = this.getTargetPositionOnScreen();
+    switch (targetPositionOnScreen) {
+      case TARGET_POSITIONS.LEFT:
+        tipPositionStyle.left = Constants.isRTL ? rightPosition : leftPosition;
         break;
-      case 'right':
-        tipPositionStyle.right = this.useSideTip
-          ? Constants.screenWidth - this.targetLayout.x - this.targetLayout.width
-          : Constants.screenWidth - this.targetLayout.x - targetMidWidth - tipMidWidth;
+      case TARGET_POSITIONS.RIGHT:
+        tipPositionStyle.right = Constants.isRTL ? leftPosition : rightPosition;
         break;
-      case 'center':
+      case TARGET_POSITIONS.CENTER:
       default:
         tipPositionStyle.left = this.targetLayout.x + targetMidWidth - tipMidWidth;
         break;
@@ -282,7 +291,7 @@ class Hint extends BaseComponent {
     const {position, color} = this.getThemeProps();
     const source = this.useSideTip ? sideTip : middleTip;
     const flipVertically = position === HINT_POSITIONS.TOP;
-    const flipHorizontally = this.getTargetPositionOnScreen() === 'right';
+    const flipHorizontally = this.getTargetPositionOnScreen() === TARGET_POSITIONS.RIGHT;
     const flipStyle = {
       transform: [{scaleY: flipVertically ? -1 : 1}, {scaleX: flipHorizontally ? -1 : 1}],
     };
