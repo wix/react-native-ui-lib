@@ -115,8 +115,11 @@ class Checkbox extends BaseComponent {
 
   render() {
     const {value, selectedIcon, style, color, iconColor, disabled, testID, ...others} = this.getThemeProps();
+    const accessibilityLabel = value ? 'checked' : 'unchecked';
+
     return (
       <TouchableOpacity
+        accessibilityLabel={accessibilityLabel}
         activeOpacity={1}
         testID={testID}
         {...others}

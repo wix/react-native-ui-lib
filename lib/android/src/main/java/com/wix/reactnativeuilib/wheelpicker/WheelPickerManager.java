@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -71,40 +72,13 @@ public class WheelPickerManager extends SimpleViewManager<WheelPicker> {
     @ReactProp(name = "color")
     public void setColor(WheelPicker wheelPicker, @Nullable String colorAsString) {
         if (colorAsString != null) {
-            if (colorAsString.length() == 4) { // #XXX
-                colorAsString = colorAsString.replaceAll("#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])", "#$1$1$2$2$3$3");
-            }
-
-            int color = Color.parseColor(colorAsString);
+            int color = getColorFromString(colorAsString);
             try {
-                setTextColor(wheelPicker, color);
                 setDividerColor(wheelPicker, color);
             } catch (Exception e) {
                 String message = "at least one component in the wheel picker did not receive the correct color";
                 Log.w(TAG, message, e);
                 logForwarder.w(TAG, message + e.getMessage());
-            }
-        }
-    }
-
-    private void setTextColor(WheelPicker wheelPicker, int color) throws NoSuchFieldException, IllegalAccessException, IllegalArgumentException {
-        setDrawableColor(wheelPicker, color);
-        setEditTextColor(wheelPicker, color);
-    }
-
-    private void setDrawableColor(WheelPicker wheelPicker, int color) throws NoSuchFieldException, IllegalAccessException, IllegalArgumentException {
-        //noinspection JavaReflectionMemberAccess
-        Field selectorWheelPaintField = NumberPicker.class.getDeclaredField("mSelectorWheelPaint");
-        selectorWheelPaintField.setAccessible(true);
-        ((Paint)selectorWheelPaintField.get(wheelPicker)).setColor(color);
-    }
-
-    private void setEditTextColor(WheelPicker wheelPicker, int color) {
-        final int count = wheelPicker.getChildCount();
-        for(int i = 0 ; i < count ; ++i){
-            View child = wheelPicker.getChildAt(i);
-            if(child instanceof EditText) {
-                ((EditText) child).setTextColor(color);
             }
         }
     }
@@ -188,6 +162,43 @@ public class WheelPickerManager extends SimpleViewManager<WheelPicker> {
     }
 
     @SuppressWarnings("unused")
+    @ReactProp(name = "labelColor")
+    public void setLabelColor(WheelPicker wheelPicker, @Nullable String colorAsString) {
+        if (colorAsString != null) {
+            int color = getColorFromString(colorAsString);
+            try {
+                setTextColor(wheelPicker, color);
+            } catch (Exception e) {
+                String message = "at least one component in the wheel picker did not receive the correct color";
+                Log.w(TAG, message, e);
+                logForwarder.w(TAG, message + e.getMessage());
+            }
+        }
+    }
+
+    private void setTextColor(WheelPicker wheelPicker, int color) throws NoSuchFieldException, IllegalAccessException, IllegalArgumentException {
+        setDrawableColor(wheelPicker, color);
+        setEditTextColor(wheelPicker, color);
+    }
+
+    private void setDrawableColor(WheelPicker wheelPicker, int color) throws NoSuchFieldException, IllegalAccessException, IllegalArgumentException {
+        //noinspection JavaReflectionMemberAccess
+        Field selectorWheelPaintField = NumberPicker.class.getDeclaredField("mSelectorWheelPaint");
+        selectorWheelPaintField.setAccessible(true);
+        ((Paint)selectorWheelPaintField.get(wheelPicker)).setColor(color);
+    }
+
+    private void setEditTextColor(WheelPicker wheelPicker, int color) {
+        final int count = wheelPicker.getChildCount();
+        for(int i = 0 ; i < count ; ++i){
+            View child = wheelPicker.getChildAt(i);
+            if(child instanceof EditText) {
+                ((EditText) child).setTextColor(color);
+            }
+        }
+    }
+
+    @SuppressWarnings("unused")
     @ReactProp(name = "itemHeight")
     public void setItemHeight(WheelPicker wheelPicker, @Nullable Integer itemHeight) {
         if (itemHeight != null) {
@@ -213,5 +224,13 @@ public class WheelPickerManager extends SimpleViewManager<WheelPicker> {
                                 "phasedRegistrationNames",
                                 MapBuilder.of("bubbled", "onChange")))
                 .build();
+    }
+
+    private int getColorFromString(@NonNull String colorAsString) {
+        if (colorAsString.length() == 4) { // #XXX
+            colorAsString = colorAsString.replaceAll("#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])", "#$1$1$2$2$3$3");
+        }
+
+        return Color.parseColor(colorAsString);
     }
 }
