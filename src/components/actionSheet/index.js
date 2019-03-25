@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ActionSheetIOS} from 'react-native';
+import {ActionSheetIOS, StyleSheet, ViewPropTypes} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -59,6 +59,14 @@ export default class ActionSheet extends BaseComponent {
      * When passed (only with useNativeIOS), will display a cancel button at the bottom (overrides cancelButtonIndex)
      */
     showCancelButton: PropTypes.bool,
+    /**
+     * Add or override style of the action sheet
+     */
+    sheetStyle: ViewPropTypes.style,
+    /**
+     * Add or override style of the dialog wrapping the action sheet
+     */
+    dialogStyle: ViewPropTypes.style,
   };
 
   constructor(props) {
@@ -159,8 +167,9 @@ export default class ActionSheet extends BaseComponent {
   }
 
   renderSheet() {    
+    const {sheetStyle} = this.getThemeProps();
     return (
-      <View bg-white>
+      <View style={[styles.sheetStyle, sheetStyle]} >
         {this.renderTitle()}
         {this.renderActions()}
       </View>
@@ -168,7 +177,7 @@ export default class ActionSheet extends BaseComponent {
   }
 
   render() {
-    const {useNativeIOS, visible, onDismiss, useModal} = this.getThemeProps();
+    const {useNativeIOS, visible, onDismiss, useModal, dialogStyle} = this.getThemeProps();
     
     if (Constants.isIOS && useNativeIOS) return null;
     
@@ -178,7 +187,7 @@ export default class ActionSheet extends BaseComponent {
         centerH
         width="100%"
         height={null}
-        style={{backgroundColor: Colors.white}}
+        style={[styles.dialogStyle, dialogStyle]}
         visible={visible}
         onDismiss={onDismiss}
         useModal={useModal}
@@ -188,3 +197,12 @@ export default class ActionSheet extends BaseComponent {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  sheetStyle: {
+    backgroundColor: Colors.white
+  },
+  dialogStyle: {
+    backgroundColor: Colors.white
+  },
+});
