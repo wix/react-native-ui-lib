@@ -174,7 +174,7 @@ export default class ActionSheet extends BaseComponent {
     const {renderTitle} = this.props;
     const {sheetStyle} = this.getThemeProps();
     return (
-      <View style={[styles.sheetStyle, sheetStyle]} >
+      <View style={[styles.sheet, sheetStyle]} >
         {renderTitle ? renderTitle() : this.renderTitle()}
         {this.renderActions()}
       </View>
@@ -192,7 +192,7 @@ export default class ActionSheet extends BaseComponent {
         centerH
         width="100%"
         height={null}
-        style={[styles.dialogStyle, dialogStyle]}
+        style={[styles.dialog, dialogStyle]}
         visible={visible}
         onDismiss={onDismiss}
         useModal={useModal}
@@ -204,10 +204,10 @@ export default class ActionSheet extends BaseComponent {
 }
 
 const styles = StyleSheet.create({
-  sheetStyle: {
+  sheet: {
     backgroundColor: Colors.white
   },
-  dialogStyle: {
+  dialog: {
     backgroundColor: Colors.white
   },
 });
