@@ -67,6 +67,10 @@ export default class ActionSheet extends BaseComponent {
      * Add or override style of the dialog wrapping the action sheet
      */
     dialogStyle: ViewPropTypes.style,
+    /**
+     * Render custom title
+     */
+    renderTitle: PropTypes.func,
   };
 
   constructor(props) {
@@ -166,11 +170,12 @@ export default class ActionSheet extends BaseComponent {
     }
   }
 
-  renderSheet() {    
+  renderSheet() {
+    const {renderTitle} = this.props;
     const {sheetStyle} = this.getThemeProps();
     return (
       <View style={[styles.sheetStyle, sheetStyle]} >
-        {this.renderTitle()}
+        {renderTitle ? renderTitle() : this.renderTitle()}
         {this.renderActions()}
       </View>
     );
