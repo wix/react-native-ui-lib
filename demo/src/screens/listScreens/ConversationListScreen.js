@@ -73,7 +73,7 @@ export default class ConversationListScreen extends Component {
               size={54}
               imageSource={item.thumbnail ? {uri: item.thumbnail} : null}
               label={initials}
-              isOnline={Number(id) < 3}
+              badgeProps={{backgroundColor: Number(id) < 3 ? Colors.green30 : undefined}}
               containerStyle={{marginHorizontal: 18}}
             />
           </ListItem.Part>

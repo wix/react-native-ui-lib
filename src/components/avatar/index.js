@@ -45,7 +45,7 @@ export default class Avatar extends BaseComponent {
 
     deprecatedProps.forEach(prop => {
       if (props[prop.old]) {
-        console.warn(`"${prop.old}" property is deprecated, please use "${prop.new}"`);
+        console.warn(`"Avatar's ${prop.old}" property is deprecated, please use "${prop.new}"`);
       }
     });
   }

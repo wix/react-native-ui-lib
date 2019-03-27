@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Alert, FlatList} from 'react-native';
-import {AnimatableManager, ThemeManager, ListItem, Text, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
+import {AnimatableManager, Colors, ThemeManager, ListItem, Text, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
 
 
@@ -31,7 +31,7 @@ export default class ContactsListScreen extends Component {
           <Avatar
             imageSource={row.thumbnail ? {uri: row.thumbnail} : null}
             label={initials}
-            isOnline={Number(id) % 3 === 0}
+            badgeProps={{backgroundColor: Number(id) % 3 === 0 ? Colors.green30 : undefined}}
             containerStyle={{marginHorizontal: 18}}
           />
         </ListItem.Part>
