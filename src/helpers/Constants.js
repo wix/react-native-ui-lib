@@ -1,4 +1,4 @@
-import {Platform, Dimensions, NativeModules} from 'react-native';
+import {Platform, Dimensions, NativeModules, I18nManager} from 'react-native';
 
 const {StatusBarManager} = NativeModules;
 const {height, width} = Dimensions.get('window');
@@ -12,6 +12,7 @@ export const isSmallScreen = screenWidth <= 340;
 export const isShortScreen = screenHeight <= 600;
 export let statusBarHeight = isIOS ? 20 : StatusBarManager.HEIGHT; // eslint-disable-line
 export const isIphoneX = isIOS && !Platform.isPad && !Platform.isTVOS && (screenHeight === 812 || screenWidth === 812);
+export const isRTL = I18nManager.isRTL;
 
 export function getAndroidVersion() {
   return isAndroid ? parseInt(Platform.Version, 10) : undefined;

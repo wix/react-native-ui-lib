@@ -2,9 +2,11 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, Easing} from 'react-native';
+import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
+
 
 const INNER_PADDING = 2;
 const DEFAULT_WIDTH = 42;
@@ -101,7 +103,8 @@ class Switch extends BaseComponent {
     const props = this.getThemeProps();
     const width = props.width || DEFAULT_WIDTH;
     const thumbSize = props.thumbSize || DEFAULT_THUMB_SIZE;
-    const position = width - (2 * INNER_PADDING + thumbSize);
+    let position = width - (2 * INNER_PADDING + thumbSize);
+    position *= (Constants.isRTL ? -1 : 1);
     return position;
   }
 
@@ -124,6 +127,7 @@ class Switch extends BaseComponent {
   renderThumb() {
     const {thumbStyle} = this.getThemeProps();
     const {thumbPosition} = this.state;
+    
     const interpolatedTranslateX = thumbPosition.interpolate({
       inputRange: [0, 1],
       outputRange: [0, this.calcThumbOnPosition()],
@@ -138,8 +142,11 @@ class Switch extends BaseComponent {
 
   render() {
     const {value, style, ...others} = this.getThemeProps();
+    const accessibilityLabel = value ? 'switchOn' : 'switchOff';
+
     return (
       <TouchableOpacity
+        accessibilityLabel={accessibilityLabel}
         activeOpacity={1}
         {...others}
         style={this.getSwitchStyle()}

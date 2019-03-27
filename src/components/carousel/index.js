@@ -66,15 +66,21 @@ export default class Carousel extends BaseComponent {
     return Math.floor(this.props.pageWidth);
   }
 
+  updateOffset = (animated = false) => {
+    const x = presenter.calcOffset(this.props, this.state);
+    
+    if (this.carousel) {
+      this.carousel.scrollTo({x, animated});
+    }
+  }
+
   goToPage(pageIndex, animated = true) {
     this.setState({currentPage: pageIndex}, () => this.updateOffset(animated));
   }
 
   onContentSizeChange = () => {
-    const {currentPage} = this.state;
-
     if (Constants.isAndroid) {
-      this.goToPage(currentPage, false);
+      this.updateOffset();
     }
   }
 
@@ -85,7 +91,7 @@ export default class Carousel extends BaseComponent {
     }
 
     const {loop} = this.props;
-    const offsetX = event.nativeEvent.contentOffset.x;
+    const offsetX = presenter.getDirectionOffset(event.nativeEvent.contentOffset.x, this.props);
     
     if (offsetX >= 0) {
       const {currentStandingPage} = this.state;
@@ -108,14 +114,6 @@ export default class Carousel extends BaseComponent {
     }
     
     _.invoke(this.props, 'onScroll', event);
-  }
-
-  updateOffset = (animated = false) => {
-    const x = presenter.calcOffset(this.props, this.state);
-    
-    if (this.carousel) {
-      this.carousel.scrollTo({x, animated});
-    }
   }
 
   cloneChild(child) {

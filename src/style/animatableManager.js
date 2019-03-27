@@ -163,6 +163,7 @@ class AnimatableManager {
         animation: 'listItemAddition',
         easing: 'ease-out-quart',
         duration: 600,
+        delay: 150,
         useNativeDriver: true,
         onAnimationEnd,
       };

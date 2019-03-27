@@ -11,6 +11,7 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import <React/RCTI18nUtil.h>
 #import <ReactNativeNavigation/ReactNativeNavigation.h>
 
 @implementation AppDelegate
@@ -19,7 +20,7 @@
 {
   NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"demo" fallbackResource:nil];
   [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
-  
+  [[RCTI18nUtil sharedInstance] allowRTL:YES];
   return YES;
 }
 
