@@ -68,6 +68,10 @@ export default class ActionSheet extends BaseComponent {
      */
     dialogStyle: ViewPropTypes.style,
     /**
+     * Add or override style of the options list
+     */
+    listStyle: ViewPropTypes.style,
+    /**
      * Render custom title
      */
     renderTitle: PropTypes.func,
@@ -151,11 +155,11 @@ export default class ActionSheet extends BaseComponent {
   }
 
   renderActions() {
-    const {title, options, cancelButtonIndex, renderAction} = this.props;
+    const {title, options, cancelButtonIndex, renderAction, listStyle} = this.props;
     const optionsToRender = _.filter(options, (option, index) => index !== cancelButtonIndex);
     
     return (
-      <View paddingB-8 paddingT-8={_.isEmpty(title)}>
+      <View style={[_.isEmpty(title) ? styles.listNoTitle : styles.listWithTitle, listStyle]}>
         {renderAction ?
           optionsToRender.map((option, index) => renderAction(option, index, this.onOptionPress)) :
           _.map(optionsToRender, this.renderAction)
@@ -217,5 +221,12 @@ const styles = StyleSheet.create({
   },
   dialog: {
     backgroundColor: Colors.white
+  },
+  listWithTitle: {
+    paddingBottom: 8
+  },
+  listNoTitle: {
+    paddingTop: 8,
+    paddingBottom: 8
   },
 });
