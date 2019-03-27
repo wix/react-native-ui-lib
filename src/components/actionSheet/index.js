@@ -71,6 +71,11 @@ export default class ActionSheet extends BaseComponent {
      * Render custom title
      */
     renderTitle: PropTypes.func,
+    /**
+     * Render custom action<br>
+     * Note: you will need to call onOptionPress so the option's onPress will be called
+     */
+    renderAction: PropTypes.func,
   };
 
   constructor(props) {
@@ -146,12 +151,15 @@ export default class ActionSheet extends BaseComponent {
   }
 
   renderActions() {
-    const {title, options, cancelButtonIndex} = this.props;
+    const {title, options, cancelButtonIndex, renderAction} = this.props;
     const optionsToRender = _.filter(options, (option, index) => index !== cancelButtonIndex);
     
     return (
       <View paddingB-8 paddingT-8={_.isEmpty(title)}>
-        {_.map(optionsToRender, this.renderAction)}
+        {renderAction ?
+          optionsToRender.map((option, index) => renderAction(option, index, this.onOptionPress)) :
+          _.map(optionsToRender, this.renderAction)
+        }
       </View>
     );
   }
