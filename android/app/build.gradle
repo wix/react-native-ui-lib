@@ -78,4 +78,7 @@ dependencies {
     implementation project(':react-native-blur')
     implementation project(':react-native-ui-lib')
     implementation project(':react-native-text-size')
+    implementation project(':react-native-reanimated')
+    implementation project(':react-native-gesture-handler')
+
 }

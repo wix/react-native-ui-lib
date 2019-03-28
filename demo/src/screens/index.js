@@ -1,4 +1,6 @@
 import {Navigation} from 'react-native-navigation';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler'
+
 import './componentScreens';
 import './nativeComponentScreens';
 import './interactableComponentScreens';
@@ -17,7 +19,7 @@ import CustomScreen from './CustomScreen';
 
 export function registerScreens() {
   Navigation.registerComponent('unicorn.MainScreen', () => MainScreen);
-  Navigation.registerComponent('unicorn.PlaygroundScreen', () => Playground);
+  Navigation.registerComponent('unicorn.PlaygroundScreen', () => gestureHandlerRootHOC(Playground));
   Navigation.registerComponent('unicorn.Settings', () => SettingsScreen);
   Navigation.registerComponent('unicorn.CustomScreen', () => CustomScreen);
 }
