@@ -483,6 +483,7 @@ export default class TextField extends BaseInput {
     const placeholderText = this.getPlaceholderText();
     const placeholderColor = this.getStateColor(placeholderTextColor);
     const shouldUseMultiline = multiline ? multiline : expandable;
+    const isEditable = !this.isDisabled() && !expandable;
 
     return (
       <RNTextInput
@@ -500,7 +501,7 @@ export default class TextField extends BaseInput {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         ref={(input) => { this.input = input; }}
-        editable={!expandable}
+        editable={isEditable}
         pointerEvents={expandable ? 'none' : undefined}
       />
     );
