@@ -94,7 +94,6 @@ export default class InputsScreen extends Component {
             value="disabled with value"
             maxLength={100}
             showCharacterCounter
-            expandable
             editable={false}
             disabledColor={Colors.dark70}
           />
