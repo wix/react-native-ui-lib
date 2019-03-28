@@ -547,8 +547,10 @@ export default class TextField extends BaseInput {
           {expandable && this.renderExpandableModal()}
         </View>
         
-        <View row right>
-          {this.renderError(!useTopErrors)}
+        <View row>
+          <View flex>
+            {this.renderError(!useTopErrors)}
+          </View>
           {this.renderCharCounter()}
         </View>
       </View>
@@ -641,7 +643,6 @@ function createStyles({placeholderTextColor, centered, multiline}) {
       color: placeholderTextColor
     },
     errorMessage: {
-      flex: 1,
       color: Colors.red30,
       textAlign: centered ? 'center' : undefined
     },
