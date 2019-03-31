@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {StyleSheet, YellowBox, processColor} from 'react-native';
+import {StyleSheet, YellowBox, processColor, Animated} from 'react-native';
 import {Colors, Button, View, Text, Constants, TouchableOpacity} from 'react-native-ui-lib'; //eslint-disable-line
-import Animated, {Easing} from 'react-native-reanimated';
+import Reanimated, {Easing} from 'react-native-reanimated';
 import {TapGestureHandler, State} from 'react-native-gesture-handler';
 import _ from 'lodash';
 
@@ -25,7 +25,7 @@ const {
   block,
   event,
   interpolate,
-} = Animated;
+} = Reanimated;
 
 export default class PlaygroundScreen extends Component {
   state = {
@@ -34,6 +34,11 @@ export default class PlaygroundScreen extends Component {
 
   componentDidMount() {
     // this.slow();
+
+    Animated.timing(this._width, {
+      toValue: Constants.screenWidth,
+      duration: 1500,
+    }).start();
   }
 
   slow() {
@@ -52,6 +57,7 @@ export default class PlaygroundScreen extends Component {
   transX = this.runTiming(this.clock, 10, 20);
 
   width = this.runTiming(this.clock, 0, Constants.screenWidth);
+  _width = new Animated.Value(0);
 
   runTiming(clock, value, dest) {
     const state = {
@@ -98,7 +104,9 @@ export default class PlaygroundScreen extends Component {
   render() {
     return (
       <View center style={styles.container}>
-        <Animated.View style={[styles.box, {width: this.width}]} />
+        <Reanimated.View style={[styles.box, {width: this.width}]} />
+        <Animated.View style={[styles.box, {backgroundColor: Colors.purple30}, {width: this._width}]} />
+
         <Button
           marginV-20
           label="JS BUTTON"
@@ -205,7 +213,7 @@ class SharedElement extends Component {
       // we run the step here that is going to update position
       timing(clock, state, config),
       // if the animation is over we stop the clock
-      cond(state.finished, [debug('stop clock', stopClock(clock)), Animated.call([], this.onAnimationEnd)]),
+      cond(state.finished, [debug('stop clock', stopClock(clock)), Reanimated.call([], this.onAnimationEnd)]),
       // we made the block return the updated position
       state.position,
     ]);
@@ -213,9 +221,9 @@ class SharedElement extends Component {
 
   render() {
     return (
-      <Animated.View style={[{backgroundColor: 'black', width: 100, height: 100}, this.getAnimatedStyle()]}>
+      <Reanimated.View style={[{backgroundColor: 'black', width: 100, height: 100}, this.getAnimatedStyle()]}>
         <Text white>{this.state.time}</Text>
-      </Animated.View>
+      </Reanimated.View>
     );
   }
 }
@@ -247,11 +255,11 @@ class NativeButton extends Component {
   render() {
     return (
       <TapGestureHandler onHandlerStateChange={this.onStateChange} onGestureEvent={this.onPress}>
-        <Animated.View style={[styles.button, {backgroundColor: this._color}]}>
+        <Reanimated.View style={[styles.button, {backgroundColor: this._color}]}>
           <Text white text70>
             NATIVE BUTTON
           </Text>
-        </Animated.View>
+        </Reanimated.View>
       </TapGestureHandler>
     );
   }
