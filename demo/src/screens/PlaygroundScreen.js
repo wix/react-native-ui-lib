@@ -73,6 +73,7 @@ export default class PlaygroundScreen extends Component {
         clockRunning(clock),
         [
           // if the clock is already running we update the toValue, in case a new dest has been passed in
+          debug('ethan - clock is running', clock),
           set(config.toValue, dest),
         ],
         [
@@ -98,16 +99,20 @@ export default class PlaygroundScreen extends Component {
     return (
       <View center style={styles.container}>
         <Animated.View style={[styles.box, {width: this.width}]} />
-        <Button marginV-20 label="JS BUTTON" activeBackgroundColor={'red'} />
+        <Button
+          marginV-20
+          label="JS BUTTON"
+          activeBackgroundColor={'red'}
+          onPress={() => this.setState({show: !this.state.show})}
+        />
 
         <NativeButton />
-        <TouchableOpacity onPress={() => this.setState({show: !this.state.show})}>
-          <SharedElement
-            show={this.state.show}
-            startLayout={{x: 100, y: 300, width: 50, height: 60}}
-            endLayout={{x: 120, y: 340, width: 250, height: 160}}
-          />
-        </TouchableOpacity>
+
+        <SharedElement
+          show={this.state.show}
+          startLayout={{x: 100, y: 300, width: 100, height: 100}}
+          endLayout={{x: 120, y: 340, width: 200, height: 160}}
+        />
       </View>
     );
   }
@@ -115,6 +120,12 @@ export default class PlaygroundScreen extends Component {
 
 class SharedElement extends Component {
   clock = new Clock();
+
+  _transition = new Value(0);
+
+  state = {
+    time: Date.now(),
+  };
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.show !== this.props.show) {
@@ -149,7 +160,15 @@ class SharedElement extends Component {
     };
   }
 
+  onAnimationEnd = () => {
+    console.warn('ethan - animation ended');
+    // this.setState({
+    //   time: Date.now()
+    // });
+  };
+
   runTiming(clock, value, dest) {
+    console.warn('ethan - runTiming');
     const state = {
       finished: new Value(0),
       position: new Value(0),
@@ -158,7 +177,7 @@ class SharedElement extends Component {
     };
 
     const config = {
-      duration: 300,
+      duration: 2000,
       toValue: new Value(0),
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
@@ -170,9 +189,11 @@ class SharedElement extends Component {
         [
           // if the clock is already running we update the toValue, in case a new dest has been passed in
           set(config.toValue, dest),
+          // debug('ethan - clock is running:', divide(state.time, 1000000)),
         ],
         [
           // if the clock isn't running we reset all the animation params and start the clock
+          // debug('ethan - clock NOT running:', divide(state.time, 1000000)),
           set(state.finished, 0),
           set(state.time, 0),
           set(state.position, value),
@@ -184,14 +205,18 @@ class SharedElement extends Component {
       // we run the step here that is going to update position
       timing(clock, state, config),
       // if the animation is over we stop the clock
-      cond(state.finished, debug('stop clock', stopClock(clock))),
+      cond(state.finished, [debug('stop clock', stopClock(clock)), Animated.call([], this.onAnimationEnd)]),
       // we made the block return the updated position
       state.position,
     ]);
   }
 
   render() {
-    return <Animated.View style={[{backgroundColor: 'black', width: 100, height: 100}, this.getAnimatedStyle()]} />;
+    return (
+      <Animated.View style={[{backgroundColor: 'black', width: 100, height: 100}, this.getAnimatedStyle()]}>
+        <Text white>{this.state.time}</Text>
+      </Animated.View>
+    );
   }
 }
 

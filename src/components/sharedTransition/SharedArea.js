@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
-import {LayoutAnimation, StyleSheet, Animated} from 'react-native';
+import {StyleSheet} from 'react-native';
+import Animated, {Easing} from 'react-native-reanimated';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import TouchableOpacity from '../touchableOpacity';
 import {Colors} from '../../style';
-import {Constants} from '../../helpers';
 import ShareTransitionContext from './ShareTransitionContext';
-
-const DETAILS_TRANSITION_DURATION = 250;
-const ELEMENT_TRANSITION_BASE_DURATION = Constants.isIOS ? 600 : 400;
 
 class SharedArea extends Component {
   static propTypes = {
@@ -22,27 +19,8 @@ class SharedArea extends Component {
     renderDetails: _.noop,
   };
 
-  state = {
-    detailsOverlayAnimation: new Animated.Value(0),
-    detailsAnimation: new Animated.Value(0),
-  };
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.data !== prevState.data) {
-      this.animateDetailsOverlay();
-    }
-
-    if (this.state.showDetails !== prevState.showDetails) {
-      this.animateDetails();
-    }
-
-    if (this.state.showDetails !== prevState.showDetails) {
-      LayoutAnimation.configureNext({
-        ...LayoutAnimation.Presets.easeInEaseOut,
-        duration: this.getTransitionDuration(),
-      });
-    }
-  }
+  state = {};
+  transition = new Animated.Value(0);
 
   getProviderContextValue() {
     const {showDetails} = this.state;
@@ -54,18 +32,44 @@ class SharedArea extends Component {
     };
   }
 
-  getTransitionDuration() {
+  getOverlayStyle() {
+    return {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: Colors.white,
+      opacity: Animated.interpolate(this.transition, {inputRange: [0, 1], outputRange: [0, 1]}),
+    };
+  }
+
+  getDetailsStyle() {
+    return {
+      ...StyleSheet.absoluteFillObject,
+      opacity: Animated.interpolate(this.transition, {inputRange: [90, 100], outputRange: [0, 1]}),
+    };
+  }
+
+  getElementStyle() {
     const {sourceLayout, targetLayout} = this.state;
-    if (sourceLayout && targetLayout) {
-      const transitionDistance = Math.sqrt(
-        (targetLayout.x - sourceLayout.x) ** 2 + (targetLayout.y - sourceLayout.y) ** 2,
-      );
-      const screenSize = Math.sqrt(Constants.screenHeight ** 2 + Constants.screenWidth ** 2);
-
-      return Math.round((transitionDistance / screenSize) * ELEMENT_TRANSITION_BASE_DURATION);
+    if (sourceLayout && this.transition) {
+      return {
+        position: 'absolute',
+        width: Animated.interpolate(this.transition, {
+          inputRange: [0, 100],
+          outputRange: [sourceLayout.width, targetLayout.width],
+        }),
+        height: Animated.interpolate(this.transition, {
+          inputRange: [0, 100],
+          outputRange: [sourceLayout.height, targetLayout.height],
+        }),
+        top: Animated.interpolate(this.transition, {
+          inputRange: [0, 100],
+          outputRange: [sourceLayout.y, targetLayout.y],
+        }),
+        left: Animated.interpolate(this.transition, {
+          inputRange: [0, 100],
+          outputRange: [sourceLayout.x, targetLayout.x],
+        }),
+      };
     }
-
-    return ELEMENT_TRANSITION_BASE_DURATION;
   }
 
   setSharedData = data => {
@@ -79,13 +83,10 @@ class SharedArea extends Component {
       {
         sourceLayout,
         element,
+        showDetails: true,
       },
       () => {
-        setTimeout(() => {
-          this.setState({
-            showDetails: true,
-          });
-        }, DETAILS_TRANSITION_DURATION);
+        this.startTransition(true);
       },
     );
   };
@@ -97,84 +98,40 @@ class SharedArea extends Component {
   };
 
   clearSource = () => {
-    this.setState(
-      {
+    this.startTransition(false, () => {
+      this.setState({
         showDetails: false,
-      },
-      () => {
-        setTimeout(() => {
-          this.setState({
-            data: undefined,
-            sourceLayout: undefined,
-            element: undefined,
-          });
-        }, DETAILS_TRANSITION_DURATION);
-      },
-    );
+        data: undefined,
+        sourceLayout: undefined,
+        element: undefined,
+      });
+    });
   };
 
-  animateDetailsOverlay() {
-    const {detailsOverlayAnimation, data} = this.state;
-    Animated.timing(detailsOverlayAnimation, {
-      toValue: Number(!!data),
-      duration: DETAILS_TRANSITION_DURATION,
-      useNativeDriver: true,
-    }).start();
+  startTransition(show, onAnimationEnd) {
+    Animated.timing(this.transition, {
+      toValue: show ? 100 : 0,
+      duration: 600,
+      easing: Easing.bezier(0.19, 1, 0.22, 1),
+      useNativeDriver: false,
+    }).start(onAnimationEnd);
   }
-
-  animateDetails = () => {
-    const {detailsAnimation, showDetails} = this.state;
-    Animated.timing(detailsAnimation, {
-      toValue: Number(!!showDetails),
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
-  };
 
   renderDetailsOverlay() {
     const {renderDetails} = this.props;
-    const {
-      sourceLayout,
-      targetLayout,
-      data,
-      element,
-      showDetails,
-      detailsOverlayAnimation,
-      detailsAnimation,
-    } = this.state;
-
-    let style;
-    if (sourceLayout) {
-      const detailsReady = showDetails && targetLayout;
-
-      style = {
-        position: 'absolute',
-        width: detailsReady ? targetLayout.width : sourceLayout.width,
-        height: detailsReady ? targetLayout.height : sourceLayout.height,
-        top: detailsReady ? targetLayout.y : sourceLayout.y,
-        left: detailsReady ? targetLayout.x : sourceLayout.x,
-      };
-    }
+    const {data, element} = this.state;
 
     return (
-      <Animated.View
-        pointerEvents={data ? 'auto' : 'none'}
-        style={[
-          StyleSheet.absoluteFillObject,
-
-          {
-            opacity: detailsOverlayAnimation,
-            backgroundColor: Colors.white,
-          },
-        ]}
-      >
-        <Animated.View pointerEvents="box-none" style={[StyleSheet.absoluteFillObject, {opacity: detailsAnimation}]}>
+      <Animated.View pointerEvents={data ? 'auto' : 'none'} style={this.getOverlayStyle()}>
+        <Animated.View pointerEvents="box-none" style={this.getDetailsStyle()}>
           {renderDetails(data)}
         </Animated.View>
 
-        <TouchableOpacity activeOpacity={1} onPress={this.clearSource} style={[style]}>
-          {element}
-        </TouchableOpacity>
+        <Animated.View style={this.getElementStyle()}>
+          <TouchableOpacity activeOpacity={1} onPress={this.clearSource} /* _style={[style]} */ style={{flex: 1}}>
+            {element}
+          </TouchableOpacity>
+        </Animated.View>
       </Animated.View>
     );
   }

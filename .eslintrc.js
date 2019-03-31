@@ -37,6 +37,7 @@ module.exports = {
     'react/prefer-stateless-function': 'off',
     'react/prop-types': ['error', {ignore: ['children', 'style', 'testID']}],
     'react/require-default-props': 'off',
+    "react/sort-comp": ['warn'],
     'react/jsx-no-bind': [
       'warn',
       {
