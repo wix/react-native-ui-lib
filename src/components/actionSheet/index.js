@@ -70,7 +70,7 @@ export default class ActionSheet extends BaseComponent {
     /**
      * Add or override style of the options list
      */
-    listStyle: ViewPropTypes.style,
+    optionsStyle: ViewPropTypes.style,
     /**
      * Render custom title
      */
@@ -155,11 +155,11 @@ export default class ActionSheet extends BaseComponent {
   }
 
   renderActions() {
-    const {title, options, cancelButtonIndex, renderAction, listStyle} = this.props;
+    const {title, options, cancelButtonIndex, renderAction, optionsStyle} = this.props;
     const optionsToRender = _.filter(options, (option, index) => index !== cancelButtonIndex);
     
     return (
-      <View style={[_.isEmpty(title) ? styles.listNoTitle : styles.listWithTitle, listStyle]}>
+      <View style={[_.isEmpty(title) ? styles.listNoTitle : styles.listWithTitle, optionsStyle]}>
         {renderAction && _.isFunction(renderAction) ?
           optionsToRender.map((option, index) => renderAction(option, index, this.onOptionPress)) :
           _.map(optionsToRender, this.renderAction)
