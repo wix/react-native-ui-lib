@@ -76,7 +76,7 @@ export default class ActionSheet extends BaseComponent {
      */
     renderTitle: PropTypes.func,
     /**
-     * Render custom action<br>
+     * Render custom action
      * Note: you will need to call onOptionPress so the option's onPress will be called
      */
     renderAction: PropTypes.func,
