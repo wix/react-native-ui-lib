@@ -215,6 +215,8 @@ export default class ActionSheet extends BaseComponent {
   }
 }
 
+const verticalPadding = 8;
+
 const styles = StyleSheet.create({
   sheet: {
     backgroundColor: Colors.white
@@ -223,10 +225,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white
   },
   listWithTitle: {
-    paddingBottom: 8
+    paddingBottom: verticalPadding
   },
   listNoTitle: {
-    paddingTop: 8,
-    paddingBottom: 8
+    paddingTop: verticalPadding,
+    paddingBottom: verticalPadding
   },
 });
