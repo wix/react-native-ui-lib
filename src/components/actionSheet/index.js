@@ -160,7 +160,7 @@ export default class ActionSheet extends BaseComponent {
     
     return (
       <View style={[_.isEmpty(title) ? styles.listNoTitle : styles.listWithTitle, listStyle]}>
-        {renderAction ?
+        {renderAction && _.isFunction(renderAction) ?
           optionsToRender.map((option, index) => renderAction(option, index, this.onOptionPress)) :
           _.map(optionsToRender, this.renderAction)
         }
@@ -187,7 +187,7 @@ export default class ActionSheet extends BaseComponent {
     const {sheetStyle} = this.getThemeProps();
     return (
       <View style={[styles.sheet, sheetStyle]} >
-        {renderTitle ? renderTitle() : this.renderTitle()}
+        {renderTitle && _.isFunction(renderTitle) ? renderTitle() : this.renderTitle()}
         {this.renderActions()}
       </View>
     );
