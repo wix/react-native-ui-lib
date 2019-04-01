@@ -60,9 +60,9 @@ export default class ActionSheet extends BaseComponent {
      */
     showCancelButton: PropTypes.bool,
     /**
-     * Add or override style of the action sheet
+     * Add or override style of the action sheet (wraps the title and actions)
      */
-    sheetStyle: ViewPropTypes.style,
+    containerStyle: ViewPropTypes.style,
     /**
      * Add or override style of the dialog wrapping the action sheet
      */
@@ -184,9 +184,9 @@ export default class ActionSheet extends BaseComponent {
 
   renderSheet() {
     const {renderTitle} = this.props;
-    const {sheetStyle} = this.getThemeProps();
+    const {containerStyle} = this.getThemeProps();
     return (
-      <View style={[styles.sheet, sheetStyle]} >
+      <View style={[styles.sheet, containerStyle]} >
         {renderTitle && _.isFunction(renderTitle) ? renderTitle() : this.renderTitle()}
         {this.renderActions()}
       </View>
