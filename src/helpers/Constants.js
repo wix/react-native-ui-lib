@@ -11,7 +11,7 @@ export const screenHeight = height;
 export const isSmallScreen = screenWidth <= 340;
 export const isShortScreen = screenHeight <= 600;
 export let statusBarHeight = isIOS ? 20 : StatusBarManager.HEIGHT; // eslint-disable-line
-export const isIphoneX = isIOS && !Platform.isPad && !Platform.isTVOS && (screenHeight === 812 || screenWidth === 812);
+export const isIphoneX = isIOS && !Platform.isPad && !Platform.isTVOS && (screenHeight >= 812 || screenWidth >= 812);
 export const isRTL = I18nManager.isRTL;
 
 export function getAndroidVersion() {
