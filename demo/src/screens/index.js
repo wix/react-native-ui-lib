@@ -10,6 +10,7 @@ import './styleScreens';
 import './animationScreens';
 import './realExamples';
 import './wrapperScreens';
+import './incubatorScreens';
 
 import MainScreen from './MainScreen';
 import Playground from './PlaygroundScreen';

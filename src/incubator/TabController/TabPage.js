@@ -5,34 +5,40 @@ import PropTypes from 'prop-types';
 import Reanimated from 'react-native-reanimated';
 import TabBarContext from './TabBarContext';
 
-const {cond, eq, Value, event} = Reanimated;
+const {cond, and, call, block, eq} = Reanimated;
 
 export default class TabPage extends Component {
   static contextType = TabBarContext;
   static propTypes = {
     index: PropTypes.number.isRequired,
-    // INTERNAL PROPS
-    state: PropTypes.object,
+    lazy: PropTypes.bool,
   };
 
   static defaultProps = {
     activeOpacity: 0.6,
   };
 
-  state = new Value(-1);
+  state = {
+    loaded: !this.props.lazy,
+  };
 
-  onStateChange = event([
-    {
-      nativeEvent: {state: this.props.state},
-    },
-  ]);
+  lazyLoad = () => {
+    console.warn('ethan - lazy load');
+    this.setState({
+      loaded: true,
+    });
+  };
 
   render() {
-    const {index} = this.props;
     const {currentPage} = this.context;
-    const opacity = cond(eq(currentPage, index), 1, 0);
+    const {index, lazy} = this.props;
+    const {loaded} = this.state;
+    const opacity = block([
+      cond(and(eq(currentPage, index), lazy, !loaded), call([], this.lazyLoad)),
+      cond(eq(currentPage, index), 1, 0),
+    ]);
 
-    return <Reanimated.View style={[styles.page, {opacity}]}>{this.props.children}</Reanimated.View>;
+    return <Reanimated.View style={[styles.page, {opacity}]}>{loaded && this.props.children}</Reanimated.View>;
   }
 }
 
