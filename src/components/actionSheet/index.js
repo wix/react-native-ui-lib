@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ActionSheetIOS} from 'react-native';
+import {ActionSheetIOS, StyleSheet, ViewPropTypes} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -12,6 +12,7 @@ import Button from '../button';
 import Image from '../image';
 import ListItem from '../listItem';
 
+const VERTICAL_PADDING = 8;
 
 /**
  * @description: Cross platform Action sheet, with a support for native iOS solution
@@ -59,6 +60,27 @@ export default class ActionSheet extends BaseComponent {
      * When passed (only with useNativeIOS), will display a cancel button at the bottom (overrides cancelButtonIndex)
      */
     showCancelButton: PropTypes.bool,
+    /**
+     * Add or override style of the action sheet (wraps the title and actions)
+     */
+    containerStyle: ViewPropTypes.style,
+    /**
+     * Add or override style of the dialog wrapping the action sheet
+     */
+    dialogStyle: ViewPropTypes.style,
+    /**
+     * Add or override style of the options list
+     */
+    optionsStyle: ViewPropTypes.style,
+    /**
+     * Render custom title
+     */
+    renderTitle: PropTypes.func,
+    /**
+     * Render custom action
+     * Note: you will need to call onOptionPress so the option's onPress will be called
+     */
+    renderAction: PropTypes.func,
   };
 
   constructor(props) {
@@ -134,12 +156,15 @@ export default class ActionSheet extends BaseComponent {
   }
 
   renderActions() {
-    const {title, options, cancelButtonIndex} = this.props;
+    const {title, options, cancelButtonIndex, renderAction, optionsStyle} = this.props;
     const optionsToRender = _.filter(options, (option, index) => index !== cancelButtonIndex);
     
     return (
-      <View paddingB-8 paddingT-8={_.isEmpty(title)}>
-        {_.map(optionsToRender, this.renderAction)}
+      <View style={[_.isEmpty(title) ? styles.listNoTitle : styles.listWithTitle, optionsStyle]}>
+        {_.isFunction(renderAction) ?
+          optionsToRender.map((option, index) => renderAction(option, index, this.onOptionPress)) :
+          _.map(optionsToRender, this.renderAction)
+        }
       </View>
     );
   }
@@ -158,17 +183,19 @@ export default class ActionSheet extends BaseComponent {
     }
   }
 
-  renderSheet() {    
+  renderSheet() {
+    const {renderTitle} = this.props;
+    const {containerStyle} = this.getThemeProps();
     return (
-      <View bg-white>
-        {this.renderTitle()}
+      <View style={[styles.sheet, containerStyle]} >
+        {_.isFunction(renderTitle) ? renderTitle() : this.renderTitle()}
         {this.renderActions()}
       </View>
     );
   }
 
   render() {
-    const {useNativeIOS, visible, onDismiss, useModal} = this.getThemeProps();
+    const {useNativeIOS, visible, onDismiss, useModal, dialogStyle} = this.getThemeProps();
     
     if (Constants.isIOS && useNativeIOS) return null;
     
@@ -178,7 +205,7 @@ export default class ActionSheet extends BaseComponent {
         centerH
         width="100%"
         height={null}
-        style={{backgroundColor: Colors.white}}
+        style={[styles.dialog, dialogStyle]}
         visible={visible}
         onDismiss={onDismiss}
         useModal={useModal}
@@ -188,3 +215,19 @@ export default class ActionSheet extends BaseComponent {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  sheet: {
+    backgroundColor: Colors.white
+  },
+  dialog: {
+    backgroundColor: Colors.white
+  },
+  listWithTitle: {
+    paddingBottom: VERTICAL_PADDING
+  },
+  listNoTitle: {
+    paddingTop: VERTICAL_PADDING,
+    paddingBottom: VERTICAL_PADDING
+  },
+});
