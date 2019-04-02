@@ -27,6 +27,7 @@ module.exports = {
     'no-use-before-define': 'off',
     'no-unneeded-ternary': 'off',
     'no-mixed-operators': 'off',
+    'no-underscore-dangle': ['error', {'allowAfterThis': true}],
     'object-curly-spacing': 'off',
     'operator-linebreak': 'off',
     'react/forbid-prop-types': 'off',

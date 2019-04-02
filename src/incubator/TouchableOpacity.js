@@ -18,6 +18,7 @@ export default class TouchableOpacity extends Component {
 
   static defaultProps = {
     activeOpacity: 0.2,
+    onPress: _.noop,
   };
 
   state = new Value(-1);
@@ -28,7 +29,7 @@ export default class TouchableOpacity extends Component {
   ]);
 
   _opacity = block([
-    cond(eq(this.state, State.END), call([], () => this.onPress())),
+    cond(eq(this.state, State.END), call([], () => this.props.onPress(this.props))),
     cond(eq(this.state, State.BEGAN), this.props.activeOpacity, 1),
   ]);
 
@@ -37,10 +38,6 @@ export default class TouchableOpacity extends Component {
     processColor(this.props.feedbackColor || this.props.backgroundColor),
     processColor(this.props.backgroundColor),
   );
-
-  onPress = () => {
-    _.invoke(this.props, 'onPress', this.props);
-  };
 
   render() {
     const {style} = this.props;
