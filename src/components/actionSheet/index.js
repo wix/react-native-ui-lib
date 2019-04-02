@@ -12,6 +12,7 @@ import Button from '../button';
 import Image from '../image';
 import ListItem from '../listItem';
 
+const VERTICAL_PADDING = 8;
 
 /**
  * @description: Cross platform Action sheet, with a support for native iOS solution
@@ -215,8 +216,6 @@ export default class ActionSheet extends BaseComponent {
   }
 }
 
-const verticalPadding = 8;
-
 const styles = StyleSheet.create({
   sheet: {
     backgroundColor: Colors.white
@@ -225,10 +224,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white
   },
   listWithTitle: {
-    paddingBottom: verticalPadding
+    paddingBottom: VERTICAL_PADDING
   },
   listNoTitle: {
-    paddingTop: verticalPadding,
-    paddingBottom: verticalPadding
+    paddingTop: VERTICAL_PADDING,
+    paddingBottom: VERTICAL_PADDING
   },
 });
