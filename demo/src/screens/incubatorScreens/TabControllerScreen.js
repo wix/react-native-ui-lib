@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Incubator, View, Text, Image} from 'react-native-ui-lib'; //eslint-disable-line
+import {Incubator, View, Text, Image, Assets} from 'react-native-ui-lib'; //eslint-disable-line
 import _ from 'lodash';
 
 class TabControllerScreen extends Component {
@@ -24,13 +24,22 @@ class TabControllerScreen extends Component {
       <View flex bg-dark80>
         <View flex>
           <Incubator.TabController selectedIndex={2} _onChangeIndex={index => console.warn('tab index is', index)}>
-            <Incubator.TabController.TabBar _indicatorStyle={{backgroundColor: 'green', height: 3}}>
-              <Incubator.TabController.TabBarItem label="ABOUT" />
-              <Incubator.TabController.TabBarItem label="EVENTS" />
-              <Incubator.TabController.TabBarItem label="SERVICES" />
-              <Incubator.TabController.TabBarItem label="ACCOUNT" />
-              <Incubator.TabController.TabBarItem label="GROUPS" />
-              <Incubator.TabController.TabBarItem label="BLOG" />
+            <Incubator.TabController.TabBar
+              uppercase
+              // indicatorStyle={{backgroundColor: 'green', height: 3}}
+              // labelColor={'green'}
+              // selectedLabelColor={'red'}
+              // labelStyle={{fontSize: 20}}
+              iconColor={'green'}
+              selectedIconColor={'blue'}
+            >
+              <Incubator.TabController.TabBarItem label="about" onPress={() => console.warn('ethan - press about')} />
+              <Incubator.TabController.TabBarItem label="events" />
+              <Incubator.TabController.TabBarItem label="services" />
+              <Incubator.TabController.TabBarItem label="account" />
+              <Incubator.TabController.TabBarItem label="groups" />
+              <Incubator.TabController.TabBarItem label="blog" />
+              <Incubator.TabController.TabBarItem icon={Assets.icons.settings} />
             </Incubator.TabController.TabBar>
             <View flex>
               <Incubator.TabController.TabPage index={0}>

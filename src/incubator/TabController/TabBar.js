@@ -5,16 +5,21 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import TabBarContext from './TabBarContext';
 import View from '../../components/view';
+import Text from '../../components/text';
 import {Colors, Spacings} from '../../style';
 import {Constants} from '../../helpers';
 
 const DEFAULT_HEIGHT = 48;
-const {Code, Clock, Value, debug, add, sub, cond, eq, stopClock, startClock, timing, block, set} = Reanimated;
+const {Code, Clock, Value, add, sub, cond, eq, stopClock, startClock, timing, block, set} = Reanimated;
 
 class TabBar extends Component {
   static contextType = TabBarContext;
 
   static propTypes = {
+    /**
+     * Tab Bar height
+     */
+    height: PropTypes.number,
     /**
      * Show Tab Bar bottom shadow
      */
@@ -28,9 +33,29 @@ class TabBar extends Component {
      */
     indicatorStyle: ViewPropTypes.style,
     /**
-     * Tab Bar height
+     * custom label style
      */
-    height: PropTypes.number,
+    labelStyle: Text.propTypes.style,
+    /**
+     * the default label color
+     */
+    labelColor: PropTypes.string,
+    /**
+     * the selected label color
+     */
+    selectedLabelColor: PropTypes.string,
+    /**
+     * whether to change the text to uppercase
+     */
+    uppercase: PropTypes.bool,
+    /**
+     * icon tint color
+     */
+    iconColor: PropTypes.string,
+    /**
+     * icon selected tint color
+     */
+    selectedIconColor: PropTypes.string,
     /**
      * The TabBar container width
      */
@@ -101,9 +126,17 @@ class TabBar extends Component {
 
   renderTabBarItems() {
     const {itemStates} = this.context;
+    const {labelColor, selectedLabelColor, labelStyle, uppercase, iconColor, selectedIconColor} = this.props;
     if (!_.isEmpty(itemStates)) {
       return React.Children.map(this.props.children, (child, index) => {
         return React.cloneElement(child, {
+          labelColor,
+          selectedLabelColor,
+          labelStyle,
+          uppercase,
+          iconColor,
+          selectedIconColor,
+          ...child.props,
           ...this.context,
           index,
           state: itemStates[index],
