@@ -23,7 +23,7 @@ class TabControllerScreen extends Component {
     return (
       <View flex bg-dark80>
         <View flex>
-          <Incubator.TabController selectedIndex={2} _onChangeIndex={index => console.warn('tab index is', index)}>
+          <Incubator.TabController selectedIndex={0} _onChangeIndex={index => console.warn('tab index is', index)}>
             <Incubator.TabController.TabBar
               uppercase
               // indicatorStyle={{backgroundColor: 'green', height: 3}}
@@ -33,10 +33,10 @@ class TabControllerScreen extends Component {
               // iconColor={'green'}
               // selectedIconColor={'blue'}
             >
-              <Incubator.TabController.TabBarItem label="about" onPress={() => console.warn('ethan - press about')} />
+              <Incubator.TabController.TabBarItem label="about" onPress={() => console.warn('press about')} />
               <Incubator.TabController.TabBarItem label="events" />
               <Incubator.TabController.TabBarItem label="services" />
-              <Incubator.TabController.TabBarItem label="account" />
+              <Incubator.TabController.TabBarItem label="account" badge={{label: '9'}} />
               <Incubator.TabController.TabBarItem label="groups" />
               <Incubator.TabController.TabBarItem label="blog" />
               <Incubator.TabController.TabBarItem icon={Assets.icons.settings} ignore />
@@ -65,7 +65,16 @@ class TabControllerScreen extends Component {
                 />
               </Incubator.TabController.TabPage>
               <Incubator.TabController.TabPage index={2}>
-                <Text text40>PAGE 2</Text>
+                <Text text40>SERVICES</Text>
+              </Incubator.TabController.TabPage>
+              <Incubator.TabController.TabPage index={3}>
+                <Text text40>ACCOUNT</Text>
+              </Incubator.TabController.TabPage>
+              <Incubator.TabController.TabPage index={4}>
+                <Text text40>GROUPS</Text>
+              </Incubator.TabController.TabPage>
+              <Incubator.TabController.TabPage index={5}>
+                <Text text40>BLOG</Text>
               </Incubator.TabController.TabPage>
             </View>
           </Incubator.TabController>

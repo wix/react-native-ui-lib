@@ -176,7 +176,7 @@ export default class TabBarItem extends Component {
   }
 
   render() {
-    const {label, icon, state, uppercase} = this.props;
+    const {label, icon, badge, state, uppercase} = this.props;
     const opacity = block([
       cond(eq(state, State.END), call([], () => this.onChangeIndex(this.props.index))),
       cond(eq(state, State.BEGAN), this.props.activeOpacity, 1),
@@ -186,11 +186,12 @@ export default class TabBarItem extends Component {
       <TapGestureHandler onHandlerStateChange={this.onStateChange} shouldCancelWhenOutside>
         <Reanimated.View style={[styles.tabItem, {opacity}, this.getItemStyle()]} onLayout={this.onLayout}>
           {icon && <Reanimated.Image source={icon} style={[this.getIconStyle()]} />}
-          {label && (
+          {!_.isEmpty(label) && (
             <Reanimated.Text style={[styles.tabItemLabel, this.getLabelStyle()]}>
               {uppercase ? _.toUpper(label) : label}
             </Reanimated.Text>
           )}
+          {badge && <Badge backgroundColor={Colors.red30} size={'default'} {...badge} containerStyle={styles.badge} />}
         </Reanimated.View>
       </TapGestureHandler>
     );
@@ -200,11 +201,15 @@ export default class TabBarItem extends Component {
 const styles = StyleSheet.create({
   tabItem: {
     flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: Spacings.s4,
   },
   tabItemLabel: {
     ...Typography.text80,
+  },
+  badge: {
+    marginLeft: Spacings.s1,
   },
 });
