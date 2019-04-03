@@ -23,7 +23,6 @@ export default class TabPage extends Component {
   };
 
   lazyLoad = () => {
-    console.warn('ethan - lazy load');
     this.setState({
       loaded: true,
     });

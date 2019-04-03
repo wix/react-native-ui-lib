@@ -12,7 +12,7 @@ class TabControllerScreen extends Component {
   slow() {
     setTimeout(() => {
       _.times(5000, () => {
-        console.log('ethan - slow logg');
+        console.log('slow log');
       });
 
       this.slow();
@@ -23,11 +23,14 @@ class TabControllerScreen extends Component {
     return (
       <View flex bg-dark80>
         <View flex>
-          <Incubator.TabController onChangeIndex={index => console.warn('ethan - index', index)}>
-            <Incubator.TabController.TabBar>
-              <Incubator.TabController.TabBarItem label="ABOUT" index={0} />
-              <Incubator.TabController.TabBarItem label="EVENTS" index={1} />
-              <Incubator.TabController.TabBarItem label="ACCOUNT" index={2} />
+          <Incubator.TabController selectedIndex={2} _onChangeIndex={index => console.warn('tab index is', index)}>
+            <Incubator.TabController.TabBar _indicatorStyle={{backgroundColor: 'green', height: 3}}>
+              <Incubator.TabController.TabBarItem label="ABOUT" />
+              <Incubator.TabController.TabBarItem label="EVENTS" />
+              <Incubator.TabController.TabBarItem label="SERVICES" />
+              <Incubator.TabController.TabBarItem label="ACCOUNT" />
+              <Incubator.TabController.TabBarItem label="GROUPS" />
+              <Incubator.TabController.TabBarItem label="BLOG" />
             </Incubator.TabController.TabBar>
             <View flex>
               <Incubator.TabController.TabPage index={0}>

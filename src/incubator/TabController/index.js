@@ -1,5 +1,6 @@
 // TODO: support carousel mode
 // TODO: support selected indicator
+// TODO: support scrollable tabbar
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -16,7 +17,19 @@ class TabController extends Component {
   static contextType = TabBarContext;
 
   static propTypes = {
+    /**
+     * TODO: change to initial index
+     * current selected tab index
+     */
+    selectedIndex: PropTypes.number,
+    /**
+     * callback for when index has change (will not be called on ignored items)
+     */
     onChangeIndex: PropTypes.func,
+    /**
+     * callback for when tab selected
+     */
+    onTabSelected: PropTypes.func,
   };
 
   static defaultProps = {
@@ -27,8 +40,8 @@ class TabController extends Component {
     itemStates: [],
   };
 
-  _targetPage = new Value(0);
-  _currentPage = new Value(0);
+  _targetPage = new Value(-1);
+  _currentPage = new Value(this.props.selectedIndex);
 
   getProviderContextValue = () => {
     const {itemStates} = this.state;
@@ -59,12 +72,12 @@ class TabController extends Component {
           <Code>
             {() =>
               block([
-                cond(eq(itemStates[0], State.BEGAN), set(this._targetPage, 0)),
-                cond(eq(itemStates[1], State.BEGAN), set(this._targetPage, 1)),
-                cond(eq(itemStates[2], State.BEGAN), set(this._targetPage, 2)),
-                cond(and(eq(this._targetPage, 0), eq(itemStates[0], State.END)), set(this._currentPage, 0)),
-                cond(and(eq(this._targetPage, 1), eq(itemStates[1], State.END)), set(this._currentPage, 1)),
-                cond(and(eq(this._targetPage, 2), eq(itemStates[2], State.END)), set(this._currentPage, 2)),
+                ..._.map(itemStates, (state, index) => {
+                  return [
+                    cond(eq(state, State.BEGAN), set(this._targetPage, index)),
+                    cond(and(eq(this._targetPage, index), eq(state, State.END)), set(this._currentPage, index)),
+                  ];
+                }),
               ])
             }
           </Code>
