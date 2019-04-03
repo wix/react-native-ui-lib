@@ -62,7 +62,7 @@ export default class TabBarItem extends Component {
     /**
      * ignore of the tab
      */
-    ignore: PropTypes.bool,
+    ignore: PropTypes.bool, // eslint-disable-line
     /**
      * callback for when pressing a tab
      */

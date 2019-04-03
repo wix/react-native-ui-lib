@@ -79,7 +79,13 @@ class TabBar extends Component {
     super(props, context);
     const {registerTabItems} = this.context;
     const itemsCount = React.Children.count(this.props.children);
-    registerTabItems(itemsCount);
+    const ignoredItems = [];
+    React.Children.toArray(this.props.children).forEach((child, index) => {
+      if (child.props.ignore) {
+        ignoredItems.push(index);
+      }
+    });
+    registerTabItems(itemsCount, ignoredItems);
   }
 
   onItemLayout = (itemWidth, itemIndex) => {

@@ -54,9 +54,9 @@ class TabController extends Component {
     };
   };
 
-  registerTabItems = tabItemsCount => {
+  registerTabItems = (tabItemsCount, ignoredItems) => {
     const itemStates = _.times(tabItemsCount, () => new Value(-1));
-    this.setState({itemStates});
+    this.setState({itemStates, ignoredItems});
   };
 
   onChangeIndex = () => {
@@ -64,7 +64,7 @@ class TabController extends Component {
   };
 
   render() {
-    const {itemStates} = this.state;
+    const {itemStates, ignoredItems} = this.state;
     return (
       <TabBarContext.Provider value={this.getProviderContextValue()}>
         {this.props.children}
@@ -74,8 +74,11 @@ class TabController extends Component {
               block([
                 ..._.map(itemStates, (state, index) => {
                   return [
-                    cond(eq(state, State.BEGAN), set(this._targetPage, index)),
-                    cond(and(eq(this._targetPage, index), eq(state, State.END)), set(this._currentPage, index)),
+                    cond(and(eq(state, State.BEGAN), !_.includes(ignoredItems, index)), set(this._targetPage, index)),
+                    cond(
+                      and(eq(this._targetPage, index), eq(state, State.END), !_.includes(ignoredItems, index)),
+                      set(this._currentPage, index),
+                    ),
                   ];
                 }),
               ])

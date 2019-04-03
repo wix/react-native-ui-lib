@@ -30,8 +30,8 @@ class TabControllerScreen extends Component {
               // labelColor={'green'}
               // selectedLabelColor={'red'}
               // labelStyle={{fontSize: 20}}
-              iconColor={'green'}
-              selectedIconColor={'blue'}
+              // iconColor={'green'}
+              // selectedIconColor={'blue'}
             >
               <Incubator.TabController.TabBarItem label="about" onPress={() => console.warn('ethan - press about')} />
               <Incubator.TabController.TabBarItem label="events" />
@@ -39,7 +39,7 @@ class TabControllerScreen extends Component {
               <Incubator.TabController.TabBarItem label="account" />
               <Incubator.TabController.TabBarItem label="groups" />
               <Incubator.TabController.TabBarItem label="blog" />
-              <Incubator.TabController.TabBarItem icon={Assets.icons.settings} />
+              <Incubator.TabController.TabBarItem icon={Assets.icons.settings} ignore />
             </Incubator.TabController.TabBar>
             <View flex>
               <Incubator.TabController.TabPage index={0}>

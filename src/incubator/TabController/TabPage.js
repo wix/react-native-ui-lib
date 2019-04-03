@@ -1,4 +1,3 @@
-// TODO: support hitSlow
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
