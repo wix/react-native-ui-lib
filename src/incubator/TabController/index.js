@@ -1,6 +1,7 @@
 // TODO: support carousel mode
 // TODO: support selected indicator
-// TODO: support scrollable tabbar
+// TODO: support auto scroll to selected index
+// TODO: add theme support
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -33,6 +34,7 @@ class TabController extends Component {
   };
 
   static defaultProps = {
+    selectedIndex: 0,
     activeOpacity: 0.2,
   };
 

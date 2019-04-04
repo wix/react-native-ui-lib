@@ -57,6 +57,11 @@ class TabBar extends Component {
      */
     selectedIconColor: PropTypes.string,
     /**
+     * TODO: rename to feedbackColor
+     * Apply background color on press for TouchableOpacity
+     */
+    activeBackgroundColor: PropTypes.string,
+    /**
      * The TabBar container width
      */
     containerWidth: PropTypes.number,
@@ -132,7 +137,15 @@ class TabBar extends Component {
 
   renderTabBarItems() {
     const {itemStates} = this.context;
-    const {labelColor, selectedLabelColor, labelStyle, uppercase, iconColor, selectedIconColor} = this.props;
+    const {
+      labelColor,
+      selectedLabelColor,
+      labelStyle,
+      uppercase,
+      iconColor,
+      selectedIconColor,
+      activeBackgroundColor,
+    } = this.props;
     if (!_.isEmpty(itemStates)) {
       return React.Children.map(this.props.children, (child, index) => {
         return React.cloneElement(child, {
@@ -142,6 +155,7 @@ class TabBar extends Component {
           uppercase,
           iconColor,
           selectedIconColor,
+          activeBackgroundColor,
           ...child.props,
           ...this.context,
           index,

@@ -3,10 +3,11 @@ import {StyleSheet, processColor} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Reanimated from 'react-native-reanimated';
-import {TapGestureHandler, State} from 'react-native-gesture-handler';
+import {State} from 'react-native-gesture-handler';
 import {Colors, Typography, Spacings} from '../../style';
 import Text from '../../components/text';
 import Badge from '../../components/badge';
+import TouchableOpacity from '../TouchableOpacity';
 
 const {cond, eq, call, block, event, and, defined} = Reanimated;
 
@@ -76,6 +77,7 @@ export default class TabBarItem extends Component {
      */
     activeOpacity: PropTypes.number,
     /**
+     * TODO: rename to feedbackColor
      * Apply background color on press for TouchableOpacity
      */
     activeBackgroundColor: PropTypes.string,
@@ -176,24 +178,24 @@ export default class TabBarItem extends Component {
   }
 
   render() {
-    const {label, icon, badge, state, uppercase} = this.props;
-    const opacity = block([
-      cond(eq(state, State.END), call([], () => this.onChangeIndex(this.props.index))),
-      cond(eq(state, State.BEGAN), this.props.activeOpacity, 1),
-    ]);
+    const {label, icon, badge, state, uppercase, activeOpacity, activeBackgroundColor} = this.props;
 
     return (
-      <TapGestureHandler onHandlerStateChange={this.onStateChange} shouldCancelWhenOutside>
-        <Reanimated.View style={[styles.tabItem, {opacity}, this.getItemStyle()]} onLayout={this.onLayout}>
-          {icon && <Reanimated.Image source={icon} style={[this.getIconStyle()]} />}
-          {!_.isEmpty(label) && (
-            <Reanimated.Text style={[styles.tabItemLabel, this.getLabelStyle()]}>
-              {uppercase ? _.toUpper(label) : label}
-            </Reanimated.Text>
-          )}
-          {badge && <Badge backgroundColor={Colors.red30} size={'default'} {...badge} containerStyle={styles.badge} />}
-        </Reanimated.View>
-      </TapGestureHandler>
+      <TouchableOpacity
+        state={state}
+        style={[styles.tabItem, this.getItemStyle()]}
+        onLayout={this.onLayout}
+        feedbackColor={activeBackgroundColor}
+        activeOpacity={activeOpacity}
+      >
+        {icon && <Reanimated.Image source={icon} style={[this.getIconStyle()]} />}
+        {!_.isEmpty(label) && (
+          <Reanimated.Text style={[styles.tabItemLabel, this.getLabelStyle()]}>
+            {uppercase ? _.toUpper(label) : label}
+          </Reanimated.Text>
+        )}
+        {badge && <Badge backgroundColor={Colors.red30} size={'default'} {...badge} containerStyle={styles.badge} />}
+      </TouchableOpacity>
     );
   }
 }
