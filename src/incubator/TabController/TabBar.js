@@ -1,3 +1,5 @@
+// TODO: add theme support
+// TODO: support commented props
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView, ViewPropTypes} from 'react-native';
 import Reanimated, {Easing} from 'react-native-reanimated';
@@ -20,14 +22,14 @@ class TabBar extends Component {
      * Tab Bar height
      */
     height: PropTypes.number,
-    /**
-     * Show Tab Bar bottom shadow
-     */
-    enableShadow: PropTypes.bool,
-    /**
-     * The minimum number of tabs to render in scroll mode
-     */
-    minTabsForScroll: PropTypes.number,
+    // /**
+    //  * Show Tab Bar bottom shadow
+    //  */
+    // enableShadow: PropTypes.bool,
+    // /**
+    //  * The minimum number of tabs to render in scroll mode
+    //  */
+    // minTabsForScroll: PropTypes.number,
     /**
      * custom style for the selected indicator
      */
@@ -74,6 +76,7 @@ class TabBar extends Component {
     itemsWidths: undefined,
   };
 
+  tabBar = React.createRef();
   _clock = new Clock();
   _itemsWidths = _.times(React.Children.count(this.props.children), () => null);
   _indicatorWidth = new Value(0);
@@ -96,11 +99,14 @@ class TabBar extends Component {
   onItemLayout = (itemWidth, itemIndex) => {
     this._itemsWidths[itemIndex] = itemWidth;
     if (!_.includes(this._itemsWidths, null)) {
-      this.setState({itemsWidths: this._itemsWidths});
+      const {selectedIndex} = this.context;
+      const itemsOffsets = _.map(this._itemsWidths, (w, index) => _.sum(_.take(this._itemsWidths, index)));
+      this.setState({itemsWidths: this._itemsWidths, itemsOffsets});
+      this.tabBar.current.scrollTo({x: itemsOffsets[selectedIndex], animated: false});
     }
   };
 
-  runTiming(targetValue) {
+  runTiming(targetValue, duration) {
     const clock = new Clock();
     const state = {
       finished: new Value(0),
@@ -110,7 +116,7 @@ class TabBar extends Component {
     };
 
     const config = {
-      duration: 300,
+      duration,
       toValue: targetValue,
       easing: Easing.bezier(0.23, 1, 0.32, 1),
     };
@@ -128,8 +134,8 @@ class TabBar extends Component {
     const {indicatorStyle} = this.props;
     if (itemsWidths) {
       const transitionStyle = {
-        width: this.runTiming(this._indicatorWidth),
-        left: this.runTiming(this._offset),
+        width: this.runTiming(this._indicatorWidth, 400),
+        left: this.runTiming(this._offset, 300),
       };
       return <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, transitionStyle]} />;
     }
@@ -169,10 +175,11 @@ class TabBar extends Component {
   render() {
     const {currentPage} = this.context;
     const {containerWidth, height} = this.props;
-    const {itemsWidths} = this.state;
+    const {itemsWidths, itemsOffsets} = this.state;
     return (
       <View>
         <ScrollView
+          ref={this.tabBar}
           horizontal
           showsHorizontalScrollIndicator={false}
           style={{backgroundColor: Colors.white}}
@@ -184,7 +191,6 @@ class TabBar extends Component {
         {!_.isUndefined(itemsWidths) && (
           <Code>
             {() => {
-              const itemsOffsets = _.map(itemsWidths, (itemWidth, index) => _.sum(_.take(itemsWidths, index)));
               const indicatorInset = Spacings.s4;
 
               return block([

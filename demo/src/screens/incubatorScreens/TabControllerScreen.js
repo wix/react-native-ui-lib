@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
-import {Incubator, View, Text, Image, Assets} from 'react-native-ui-lib'; //eslint-disable-line
+import {Incubator, Colors, View, Text, Image, Assets} from 'react-native-ui-lib'; //eslint-disable-line
 import _ from 'lodash';
 
 class TabControllerScreen extends Component {
-  state = {};
+  state = {
+    selectedIndex: 0,
+    tabsCount: 2,
+    key: Date.now(),
+  };
 
   componentDidMount() {
     // this.slow();
@@ -19,12 +23,43 @@ class TabControllerScreen extends Component {
     }, 10);
   }
 
+  addTab = () => {
+    const {tabsCount} = this.state;
+
+    if (tabsCount < 6) {
+      this.setState({tabsCount: tabsCount + 1, key: Date.now(), selectedIndex: tabsCount});
+    }
+  };
+
+  getTabs() {
+    const {tabsCount} = this.state;
+    const tabs = [
+      <Incubator.TabController.TabBarItem key="about" label="about" onPress={() => console.warn('press about')} />,
+      <Incubator.TabController.TabBarItem key="events" label="events" />,
+      <Incubator.TabController.TabBarItem key="services" label="services" />,
+      <Incubator.TabController.TabBarItem key="account" label="account" badge={{label: '9'}} />,
+      <Incubator.TabController.TabBarItem key="groups" label="groups" />,
+      <Incubator.TabController.TabBarItem key="blog" label="blog" />,
+    ];
+
+    return [
+      ..._.take(tabs, tabsCount),
+      <Incubator.TabController.TabBarItem key="addTabs" icon={Assets.icons.settings} ignore onPress={this.addTab} />,
+    ];
+  }
+
   render() {
+    const {key, selectedIndex} = this.state;
     return (
       <View flex bg-dark80>
         <View flex>
-          <Incubator.TabController selectedIndex={0} _onChangeIndex={index => console.warn('tab index is', index)}>
+          <Incubator.TabController
+            key={key}
+            selectedIndex={selectedIndex}
+            _onChangeIndex={index => console.warn('tab index is', index)}
+          >
             <Incubator.TabController.TabBar
+              // key={key}
               uppercase
               // indicatorStyle={{backgroundColor: 'green', height: 3}}
               // labelColor={'green'}
@@ -32,19 +67,14 @@ class TabControllerScreen extends Component {
               // labelStyle={{fontSize: 20}}
               // iconColor={'green'}
               // selectedIconColor={'blue'}
+              activeBackgroundColor={Colors.blue60}
             >
-              <Incubator.TabController.TabBarItem label="about" onPress={() => console.warn('press about')} />
-              <Incubator.TabController.TabBarItem label="events" />
-              <Incubator.TabController.TabBarItem label="services" />
-              <Incubator.TabController.TabBarItem label="account" badge={{label: '9'}} />
-              <Incubator.TabController.TabBarItem label="groups" />
-              <Incubator.TabController.TabBarItem label="blog" />
-              <Incubator.TabController.TabBarItem icon={Assets.icons.settings} ignore />
+              {this.getTabs()}
             </Incubator.TabController.TabBar>
             <View flex>
               <Incubator.TabController.TabPage index={0}>
                 <View flex>
-                  <Text text40>PAGE 0</Text>
+                  <Text text40>ABOUT</Text>
                   <Image
                     style={{flex: 1}}
                     source={{
@@ -55,7 +85,7 @@ class TabControllerScreen extends Component {
                 </View>
               </Incubator.TabController.TabPage>
               <Incubator.TabController.TabPage index={1} lazy>
-                <Text text40>PAGE 1</Text>
+                <Text text40>EVENTS</Text>
                 <Image
                   style={{flex: 1}}
                   source={{

@@ -1,3 +1,4 @@
+// TODO: support commented props
 import React, {Component} from 'react';
 import {StyleSheet, processColor} from 'react-native';
 import PropTypes from 'prop-types';
@@ -48,14 +49,14 @@ export default class TabBarItem extends Component {
      * Badge component props to display next the item label
      */
     badge: PropTypes.shape(Badge.propTypes),
-    /**
-     * maximun number of lines the label can break
-     */
-    maxLines: PropTypes.number,
-    /**
-     * whether the tab will have a divider on its right
-     */
-    showDivider: PropTypes.bool,
+    // /**
+    //  * maximun number of lines the label can break
+    //  */
+    // maxLines: PropTypes.number,
+    // /**
+    //  * whether the tab will have a divider on its right
+    //  */
+    // showDivider: PropTypes.bool,
     /**
      * A fixed width for the item
      */
@@ -187,6 +188,7 @@ export default class TabBarItem extends Component {
         onLayout={this.onLayout}
         feedbackColor={activeBackgroundColor}
         activeOpacity={activeOpacity}
+        onPress={this.onPress}
       >
         {icon && <Reanimated.Image source={icon} style={[this.getIconStyle()]} />}
         {!_.isEmpty(label) && (

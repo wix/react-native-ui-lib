@@ -1,7 +1,6 @@
 // TODO: support carousel mode
-// TODO: support selected indicator
 // TODO: support auto scroll to selected index
-// TODO: add theme support
+// TODO: support commented props
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -27,10 +26,10 @@ class TabController extends Component {
      * callback for when index has change (will not be called on ignored items)
      */
     onChangeIndex: PropTypes.func,
-    /**
-     * callback for when tab selected
-     */
-    onTabSelected: PropTypes.func,
+    // /**
+    //  * callback for when tab selected
+    //  */
+    // onTabSelected: PropTypes.func,
   };
 
   static defaultProps = {
@@ -47,8 +46,9 @@ class TabController extends Component {
 
   getProviderContextValue = () => {
     const {itemStates} = this.state;
-    const {onChangeIndex} = this.props;
+    const {onChangeIndex, selectedIndex} = this.props;
     return {
+      selectedIndex,
       currentPage: this._currentPage,
       itemStates,
       registerTabItems: this.registerTabItems,
