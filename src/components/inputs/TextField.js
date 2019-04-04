@@ -475,7 +475,8 @@ export default class TextField extends BaseInput {
       this.styles.input,
       hideUnderline && this.styles.inputWithoutUnderline,
       {...typographyStyle},
-      expandable && {maxHeight: lineHeight * (Constants.isAndroid ? 2.5 : 4)},
+      Constants.isAndroid && {lineHeight},
+      expandable && {maxHeight: lineHeight * (Constants.isAndroid ? 3 : 3.3)},
       Constants.isRTL && {minHeight: lineHeight + 3},
       color && {color},
       style
