@@ -109,9 +109,9 @@ export default class SharedTransitionScreen extends Component {
 
   renderDetails = (data = {}) => {
     return (
-      <View flex pointerEvents="box-none" padding-20 paddingT-100>
+      <View flex pointerEvents="box-none" padding-20 paddingT-50>
         <View row>
-          <SharedTransition.Target style={{width: 200, height: 250, borderWidth: 1}}>
+          <SharedTransition.Target style={{width: 200, height: 280, marginLeft: -30}}>
             {data && this.renderSharedElement(data, true)}
           </SharedTransition.Target>
           <View flex paddingL-20>
