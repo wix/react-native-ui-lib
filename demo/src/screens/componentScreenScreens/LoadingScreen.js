@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {View as AnimatableView} from 'react-native-animatable';
 import {View, Text, LoaderScreen, Colors} from 'react-native-ui-lib';//eslint-disable-line
 
 export default class LoadingScreen extends Component {
@@ -26,13 +27,14 @@ export default class LoadingScreen extends Component {
           Content Content Content
         </Text>
         {loading &&
-        <LoaderScreen
-          color={Colors.blue60}
-          message='Loading...'
-          overlay
-          // backgroundColor={Colors.rgba(Colors.dark80, 0.85)}
-          {...animationConfig}
-        />}
+        <AnimatableView {...animationConfig}>
+          <LoaderScreen
+            color={Colors.blue30}
+            message="Loading..."
+            overlay
+          />
+        </AnimatableView>
+        }
       </View>
     );
   }

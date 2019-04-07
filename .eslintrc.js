@@ -27,6 +27,7 @@ module.exports = {
     'no-use-before-define': 'off',
     'no-unneeded-ternary': 'off',
     'no-mixed-operators': 'off',
+    'no-underscore-dangle': ['error', {'allowAfterThis': true}],
     'object-curly-spacing': 'off',
     'operator-linebreak': 'off',
     'react/forbid-prop-types': 'off',
@@ -37,6 +38,7 @@ module.exports = {
     'react/prefer-stateless-function': 'off',
     'react/prop-types': ['error', {ignore: ['children', 'style', 'testID']}],
     'react/require-default-props': 'off',
+    "react/sort-comp": ['warn'],
     'react/jsx-no-bind': [
       'warn',
       {

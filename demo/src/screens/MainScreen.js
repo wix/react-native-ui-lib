@@ -6,6 +6,7 @@ import {Navigation} from 'react-native-navigation';
 import {ThemeManager, Constants, Assets, Colors, View, Text, Button, Carousel, TextField, Image} from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 
+
 export default class UiLibExplorerMenu extends Component {
   constructor(props) {
     super(props);
@@ -29,11 +30,6 @@ export default class UiLibExplorerMenu extends Component {
       icon: Assets.icons.settings,
     });
     Navigation.mergeOptions(props.componentId, navigationStyle);
-  }
-
-  componentDidMount() {
-    // this.showScreen({name: 'unicorn.PlaygroundScreen', title: 'Playground'});
-    // this.openScreen({name: 'unicorn.components.ToastsScreen', title: 'Testing'});
   }
 
   /** Events */
@@ -183,7 +179,7 @@ export default class UiLibExplorerMenu extends Component {
       <View row spread style={{height: Constants.isIOS ? (Constants.isIphoneX ? 80 : 60) : 56}}>
         <TextField
           ref={r => (this.toggledSearch = r)}
-          placeholder='Search your component..'
+          placeholder="Search your component.."
           onChangeText={this.filterExplorerScreens}
           onBlur={this.onSearchBoxBlur}
           onDismiss={this.onSearchBoxBlur}
@@ -210,7 +206,7 @@ export default class UiLibExplorerMenu extends Component {
   renderItem({item}) {
     return (
       <View centerV row paddingL-20 marginB-10>
-        <Image source={Assets.icons.chevronRight} style={{tintColor: Colors.dark10}} />
+        <Image source={Assets.icons.chevronRight} style={{tintColor: Colors.dark10}} supportRTL/>
         <Text
           style={[item.deprecate && styles.entryTextDeprecated]}
           dark10
@@ -269,7 +265,7 @@ export default class UiLibExplorerMenu extends Component {
           return (
             <View key={key} style={styles.page}>
               <View style={styles.pageTitleContainer}>
-                <Text text40>{key}</Text>
+                <Text text40 style={{alignSelf: 'flex-start'}}>{section.title}</Text>
               </View>
               <View
                 style={[

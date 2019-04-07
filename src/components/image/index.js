@@ -1,10 +1,12 @@
-import React from 'react';
-import {Image as RNImage} from 'react-native';
-import PropTypes from 'prop-types';
-import hoistNonReactStatic from 'hoist-non-react-statics';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import hoistNonReactStatic from 'hoist-non-react-statics';
+import {Image as RNImage} from 'react-native';
+import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import Assets from '../../assets';
+
 
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
@@ -30,7 +32,11 @@ class Image extends BaseComponent {
     /**
      * the asset tint
      */
-    tintColor: PropTypes.string
+    tintColor: PropTypes.string,
+    /**
+     * whether the image should flip horizontally on RTL locals
+     */
+    supportRTL: PropTypes.bool
   };
 
   static defaultProps = {
@@ -63,9 +69,16 @@ class Image extends BaseComponent {
 
   render() {
     const source = this.getImageSource();
-    const {tintColor, style, ...others} = this.getThemeProps();
+    const {tintColor, style, supportRTL, ...others} = this.getThemeProps();
+    const shouldFlipRTL = supportRTL && Constants.isRTL;
 
-    return <RNImage style={[{tintColor}, style]} {...others} source={source} />;
+    return (
+      <RNImage 
+        style={[{tintColor}, style, shouldFlipRTL && {transform: [{scaleX: -1}]}]} 
+        {...others} 
+        source={source}
+      />
+    );
   }
 }
 

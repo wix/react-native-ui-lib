@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {AsyncStorage} from 'react-native';
-import {View, Text, Picker, Toast} from 'react-native-ui-lib'; //eslint-disable-line
+import {StyleSheet, AsyncStorage, I18nManager} from 'react-native';
+import {Colors, View, Text, Picker, Toast, Switch} from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 
 
@@ -25,8 +25,8 @@ class SettingsScreen extends Component {
           .map('screens')
           .flatten()
           .map(screen => ({label: screen.title, value: screen.screen}))
-          .value(),
-      ],
+          .value()
+      ]
     };
   }
 
@@ -35,10 +35,21 @@ class SettingsScreen extends Component {
     const defaultScreenId = await AsyncStorage.getItem('uilib.defaultScreen');
     const defaultScreen = _.find(screens, {value: defaultScreenId});
     
-    this.setState({
-      defaultScreen,
-    });
+    const isRTLString = await AsyncStorage.getItem('uilib.isRTL');
+    const isRTL = isRTLString === 'true';
+    
+    this.setState({defaultScreen, isRTL});
   }
+
+  onDirectionChange = () => {
+    this.setState({isRTL: !this.state.isRTL}, () => {
+      I18nManager.forceRTL(this.state.isRTL);
+      AsyncStorage.setItem('uilib.isRTL', `${this.state.isRTL}`);
+      setTimeout(() => {
+        this.setState({showRefreshMessage: true});
+      }, 1000);
+    });
+  };
 
   setDefaultScreen = (screen) => {
     this.setState({defaultScreen: screen});
@@ -49,8 +60,8 @@ class SettingsScreen extends Component {
   };
 
   render() {
-    const {defaultScreen, showRefreshMessage} = this.state;
-    
+    const {defaultScreen, showRefreshMessage, isRTL} = this.state;
+
     return (
       <View flex padding-25 bg-grey80>
         <View flex>
@@ -59,7 +70,7 @@ class SettingsScreen extends Component {
             Set default screen to open on app startup
           </Text>
           <Picker
-            placeholder='Pick default screen...'
+            placeholder="Pick default screen..."
             showSearch
             value={defaultScreen}
             onChange={this.setDefaultScreen}
@@ -68,12 +79,37 @@ class SettingsScreen extends Component {
               <Picker.Item key={screen.value} value={screen}/>
             ))}
           </Picker>
+
+          <View style={{borderWidth: 1, borderColor: Colors.dark70, marginTop: 40}}>
+            <View style={[{padding: 5, borderBottomWidth: 1}, styles.block]}>
+              <Text text80 dark20>Current layout direction</Text>
+            </View>
+            <View center margin-5 padding-10>
+              <Text text70>{isRTL ? 'RIGHT to LEFT' : 'LEFT to RIGHT'}</Text>
+            </View>
+
+            <View row spread centerV style={[{padding: 12, borderTopWidth: 1}, styles.block]}>
+              <Switch
+                value={isRTL}
+                onValueChange={this.onDirectionChange}
+              />
+              <Text text80 dark20>Force RTL</Text>
+            </View>
+          </View>
         </View>
-        <Text titleHuge>Settings</Text>
-        <Toast visible={showRefreshMessage} position='bottom' message='Refresh the app!'/>
+
+        <Text text30 dark10>Settings</Text>
+        <Toast visible={showRefreshMessage} position="bottom" message="Refresh the app!"/>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  block: {
+    borderColor: Colors.dark70,
+    backgroundColor: Colors.dark80
+  }
+});
 
 export default SettingsScreen;

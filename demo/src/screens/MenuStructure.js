@@ -89,6 +89,12 @@ export const navigationData = {
       {title: 'ProgressBar', tags: 'progress bar animated', screen: 'unicorn.animations.ProgressBarScreen'},
     ],
   },
+  Incubator: {
+    title: 'Incubator',
+    screens: [
+      {title: 'TabBarController', tags: 'tabbar controller native', screen: 'unicorn.incubator.TabControllerScreen'},
+    ]
+  },
   Examples: {
     title: 'Examples',
     screens: [
