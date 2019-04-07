@@ -19,10 +19,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
-  [ReactNativeNavigation bootstrap:[self sourceURLForBridge: bridge] launchOptions:launchOptions];
-//  NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"demo" fallbackResource:nil];
-//  [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
+  NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"demo" fallbackResource:nil];
+  [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
   [[RCTI18nUtil sharedInstance] allowRTL:YES];
   return YES;
 }
