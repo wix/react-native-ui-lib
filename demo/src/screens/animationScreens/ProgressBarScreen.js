@@ -47,6 +47,7 @@ export default class ProgressBarScreen extends Component {
             return (
               <View key={index}>
                 <ProgressBar
+                  // style={{borderRadius: 10}}
                   ref={element => this.elements[index] = element}
                   progress={value}
                   height={[10, 15, 22, 30][index]}
