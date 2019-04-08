@@ -103,12 +103,13 @@ export default class AnimatedScanner extends BaseComponent {
   }
 
   renderNew() {
-    const {opacity, backgroundColor, hideScannerLine} = this.props;
+    const {opacity, backgroundColor, hideScannerLine, style} = this.props;
     const {isDone, animatedProgress} = this.state;
     return (
       <View style={{...StyleSheet.absoluteFillObject}}>
         <Animated.View
           style={[this.styles.container,
+            style,
             opacity && {opacity},
             backgroundColor && {backgroundColor},
             {

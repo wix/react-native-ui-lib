@@ -1,4 +1,5 @@
 import React from 'react';
+import {ViewPropTypes} from 'react-native';
 import PropTypes from 'prop-types';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
@@ -26,6 +27,10 @@ export default class ProgressBar extends BaseComponent {
      * the progress background color
      */
     progressBackgroundColor: PropTypes.string,
+    /**
+     * the progress bar container style
+     */
+    containerStyle: ViewPropTypes.style,
   };
 
   static defaultProps = {
@@ -34,13 +39,18 @@ export default class ProgressBar extends BaseComponent {
   };
 
   render() {
-    const {height, backgroundColor, progressBackgroundColor} = this.props;
+    const {height, backgroundColor, progressBackgroundColor, containerStyle, style} = this.props;
     const animatedScannerProps = AnimatedScanner.extractOwnProps(this.props);
     const modifiers = this.extractModifierProps();
 
     return (
-      <View height={height} {...modifiers} style={{backgroundColor}}>
-        <AnimatedScanner {...animatedScannerProps} backgroundColor={progressBackgroundColor} hideScannerLine/>
+      <View height={height} {...modifiers} style={[{backgroundColor}, containerStyle]}>
+        <AnimatedScanner
+          {...animatedScannerProps}
+          backgroundColor={progressBackgroundColor}
+          hideScannerLine
+          style={style}
+        />
       </View>
     );
   }

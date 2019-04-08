@@ -302,8 +302,12 @@ export default class Button extends BaseComponent {
 
     if (outline) {
       _.forEach(CONTAINER_STYLE_BY_SIZE, (style) => {
-        style.paddingVertical -= outlineWidth; // eslint-disable-line
-        style.paddingHorizontal -= outlineWidth; // eslint-disable-line
+        if (round) {
+          style.padding -= outlineWidth; // eslint-disable-line
+        } else {
+          style.paddingVertical -= outlineWidth; // eslint-disable-line
+          style.paddingHorizontal -= outlineWidth; // eslint-disable-line
+        }
       });
     }
 

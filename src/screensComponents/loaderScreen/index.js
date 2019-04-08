@@ -67,7 +67,7 @@ export default class LoaderScreen extends BaseComponent {
             color={loaderColor || (Constants.isIOS ? Colors.dark60 : ThemeManager.primaryColor)}
             {...others}
           />
-          {message && <Text style={[styles.message, messageStyle]}>{message}</Text>}
+          {!overlay && message && <Text style={[styles.message, messageStyle]}>{message}</Text>}
         </View>
       </Container>
     );
@@ -86,6 +86,6 @@ const styles = StyleSheet.create({
   message: {
     ...Typography.text70,
     marginTop: 18,
-    color: Colors.dark10,
+    color: Colors.dark10
   },
 });

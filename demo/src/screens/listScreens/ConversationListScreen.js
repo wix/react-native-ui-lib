@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Alert, FlatList} from 'react-native';
+import {View as AnimatableView} from 'react-native-animatable';
 import {AnimatableManager, ThemeManager, Colors, ListItem, Text, Badge, Avatar, AvatarHelper, Drawer} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
 
@@ -57,38 +58,39 @@ export default class ConversationListScreen extends Component {
     };
 
     return (
-      <Drawer
-        leftItem={leftButton}
-        rightItems={rightButtons}
-        ref={r => item.drawer = r}
-        onDragStart={() => this.closeLast(item)}
-      >
-        <ListItem
-          height={75.8}
-          onPress={() => Alert.alert(`pressed on contact #${id + 1}`)}
-          {...animationProps}
+      <AnimatableView {...animationProps}>
+        <Drawer
+          leftItem={leftButton}
+          rightItems={rightButtons}
+          ref={r => item.drawer = r}
+          onDragStart={() => this.closeLast(item)}
         >
-          <ListItem.Part left>
-            <Avatar
-              size={54}
-              imageSource={item.thumbnail ? {uri: item.thumbnail} : null}
-              label={initials}
-              isOnline={Number(id) < 3}
-              containerStyle={{marginHorizontal: 18}}
-            />
-          </ListItem.Part>
-          <ListItem.Part middle column containerStyle={[styles.border, {paddingRight: 17}]}>
-            <ListItem.Part containerStyle={{marginBottom: 3}}>
-              <Text style={{flex: 1, marginRight: 10}} text70 color={Colors.dark10} numberOfLines={1}>{item.name}</Text>
-              <Text style={{marginTop: 2}} text90 color={Colors.dark50}>{item.timestamp}</Text>
+          <ListItem
+            height={75.8}
+            onPress={() => Alert.alert(`pressed on contact #${id + 1}`)}
+          >
+            <ListItem.Part left>
+              <Avatar
+                size={54}
+                imageSource={item.thumbnail ? {uri: item.thumbnail} : null}
+                label={initials}
+                badgeProps={{backgroundColor: Number(id) < 3 ? Colors.green30 : undefined}}
+                containerStyle={{marginHorizontal: 18}}
+              />
             </ListItem.Part>
-            <ListItem.Part>
-              <Text style={{flex: 1, marginRight: 10}} text80 color={Colors.dark40} numberOfLines={1}>{item.text}</Text>
-              {item.count > 0 && <Badge label={item.count} animation='fadeIn' duration={400}/>}
+            <ListItem.Part middle column containerStyle={[styles.border, {paddingRight: 17}]}>
+              <ListItem.Part containerStyle={{marginBottom: 3}}>
+                <Text style={{flex: 1, marginRight: 10}} text70 color={Colors.dark10} numberOfLines={1}>{item.name}</Text>
+                <Text style={{marginTop: 2}} text90 color={Colors.dark50}>{item.timestamp}</Text>
+              </ListItem.Part>
+              <ListItem.Part>
+                <Text style={{flex: 1, marginRight: 10}} text80 color={Colors.dark40} numberOfLines={1}>{item.text}</Text>
+                {item.count > 0 && <Badge label={item.count} animation='fadeIn' duration={400}/>}
+              </ListItem.Part>
             </ListItem.Part>
-          </ListItem.Part>
-        </ListItem>
-      </Drawer>
+          </ListItem>
+        </Drawer>
+      </AnimatableView>
     );
   }
 

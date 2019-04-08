@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, ViewPropTypes} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {BaseComponent} from '../../commons';
 import {BorderRadiuses, Colors, ThemeManager, Typography} from '../../style';
@@ -42,7 +42,7 @@ export default class Badge extends BaseComponent {
     /**
      * the badge size (default, small)
      */
-    size: PropTypes.oneOf(Object.keys(BADGE_SIZES)),
+    size: PropTypes.oneOfType([PropTypes.oneOf(Object.keys(BADGE_SIZES)), PropTypes.number]),
     /**
      * width of border around the badge
      */
@@ -54,7 +54,7 @@ export default class Badge extends BaseComponent {
     /**
      * Additional styles for the top container
      */
-    containerStyle: PropTypes.object,
+    containerStyle: ViewPropTypes.style,
     /**
      * Receives a number from 1 to 4, representing the label's max digit length.
      * Beyond the max number for that digit length, a "+" will show at the end.
@@ -104,8 +104,8 @@ export default class Badge extends BaseComponent {
   getBadgeSizeStyle() {
     const {borderWidth, size, icon} = this.props;
     const label = this.getFormattedLabel();
-    const badgeHeight = this.isSmallBadge() ? BADGE_SIZES.small : BADGE_SIZES.default;
-
+    const badgeHeight = _.isNumber(size) ? size : BADGE_SIZES[size];
+    
     const style = {
       paddingHorizontal: this.isSmallBadge() ? 4 : 6,
       height: badgeHeight,
@@ -116,8 +116,7 @@ export default class Badge extends BaseComponent {
     if (isPimple || icon) {
       style.paddingHorizontal = 0;
       style.minWidth = undefined;
-      style.height = BADGE_SIZES[size];
-      style.width = BADGE_SIZES[size];
+      style.width = style.height;
       if (borderWidth) {
         style.height += borderWidth * 2;
         style.width += borderWidth * 2;

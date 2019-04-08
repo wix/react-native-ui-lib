@@ -112,7 +112,7 @@ export default class DrawerScreen extends Component {
           <Avatar
             imageSource={row.thumbnail ? {uri: row.thumbnail} : null}
             label={initials}
-            isOnline={Number(id) % 3 === 0}
+            badgeProps={{backgroundColor: Number(id) % 3 === 0 ? Colors.green30 : undefined}}
             containerStyle={{marginHorizontal: 18}}
             backgroundColor={Colors.white}
           />

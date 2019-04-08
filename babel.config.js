@@ -1,0 +1,5 @@
+module.exports = {
+  presets: ['module:metro-react-native-babel-preset'],
+  retainLines: true,
+  plugins: ['transform-inline-environment-variables'],
+};
