@@ -6,6 +6,7 @@ import Interactable from 'react-native-interactable';
 import {BaseComponent} from '../../commons';
 import {screenWidth} from '../../helpers/Constants';
 import {Colors, Typography} from '../../style';
+import NewDrawer from './newDrawer';
 
 
 const SCALE_POINT = 72; // scaling content style by height
@@ -462,6 +463,10 @@ export default class Drawer extends BaseComponent {
     );
   }
   render() {
+    return (
+      <NewDrawer {...this.props}/>
+    );
+    
     const {style, onPress, rightItems} = this.getThemeProps();
     const Container = onPress ? TouchableOpacity : View;
     const backgroundColor = _.get(rightItems, '[0].background', ITEM_BG);

@@ -36,7 +36,8 @@ export default class DrawerScreen extends Component {
   onItemPress = () => {
     // Alert.alert('Item pressed');
     this.toggleDynamicItem();
-    this.firstDrawer.closeDrawer();
+    
+    // this.firstDrawer.closeDrawer();
   }
   onItemPress2 = () => {
     const {itemsTintColor} = this.state;
@@ -51,13 +52,14 @@ export default class DrawerScreen extends Component {
     Alert.alert(`Button '${id}' pressed`);
   }
   onContentPress(id) {
-    // Alert.alert(`List item #${id + 1} pressed`);
-    if (id === '0') {
-      this.firstDrawer.closeDrawer();
-    }
-    if (id === '1') {
-      this.secondDrawer.closeDrawer();
-    }
+    Alert.alert(`List item #${id + 1} pressed`);
+    
+    // if (id === '0') {
+    //   this.firstDrawer.closeDrawer();
+    // }
+    // if (id === '1') {
+    //   this.secondDrawer.closeDrawer();
+    // }
   }
 
   // Measure item text to calculate items' widths
@@ -103,24 +105,25 @@ export default class DrawerScreen extends Component {
   renderContent(id, row) {
     const initials = AvatarHelper.getInitials(row.name);
     return (
-      <ListItem
-        key={id}
-        onPress={() => this.onContentPress(id)}
-        style={styles.listContent}
-      >
-        <ListItem.Part left>
-          <Avatar
-            imageSource={row.thumbnail ? {uri: row.thumbnail} : null}
-            label={initials}
-            badgeProps={{backgroundColor: Number(id) % 3 === 0 ? Colors.green30 : undefined}}
-            containerStyle={{marginHorizontal: 18}}
-            backgroundColor={Colors.white}
-          />
-        </ListItem.Part>
-        <ListItem.Part middle containerStyle={styles.border}>
-          <Text text70>{row.name}</Text>
-        </ListItem.Part>
-      </ListItem>
+      <View style={{height: 50, borderWidth: 1}}/>
+      // <ListItem
+      //   key={id}
+      //   onPress={() => this.onContentPress(id)}
+      //   style={styles.listContent}
+      // >
+      //   <ListItem.Part left>
+      //     <Avatar
+      //       imageSource={row.thumbnail ? {uri: row.thumbnail} : null}
+      //       label={initials}
+      //       badgeProps={{backgroundColor: Number(id) % 3 === 0 ? Colors.green30 : undefined}}
+      //       containerStyle={{marginHorizontal: 18}}
+      //       backgroundColor={Colors.white}
+      //     />
+      //   </ListItem.Part>
+      //   <ListItem.Part middle containerStyle={styles.border}>
+      //     <Text text70>{row.name}</Text>
+      //   </ListItem.Part>
+      // </ListItem>
     );
   }
 
