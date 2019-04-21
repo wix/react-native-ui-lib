@@ -122,7 +122,7 @@ export default class Avatar extends BaseComponent {
      */
     ribbonLabelStyle: Text.propTypes.style,
     /**
-     * custom ribbon
+     * Custom ribbon
      */
     customRibbon: PropTypes.element,
     /**
