@@ -124,7 +124,7 @@ export default class Avatar extends BaseComponent {
     /**
      * custom ribbon
      */
-    customRibbon: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.element]),
+    customRibbon: PropTypes.element,
     /**
      * Determine if to show online badge
      */
