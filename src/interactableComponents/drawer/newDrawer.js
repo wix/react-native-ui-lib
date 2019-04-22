@@ -1,5 +1,5 @@
 import React from 'react';
-import {Animated, StyleSheet} from 'react-native';
+import {Animated, StyleSheet, ViewPropTypes} from 'react-native';
 import PropTypes from 'prop-types';
 import {RectButton} from 'react-native-gesture-handler';
 import _ from 'lodash';
@@ -18,6 +18,8 @@ const ITEM_PROP_TYPES = {
   text: PropTypes.string,
   icon: PropTypes.number,
   onPress: PropTypes.func,
+  keepOpen: PropTypes.bool,
+  style: ViewPropTypes.style,
 };
 
 export default class NewDrawer extends BaseComponent {
@@ -64,12 +66,15 @@ export default class NewDrawer extends BaseComponent {
     itemsTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
   };
 
-  onPress = text => {
-    alert(text);
-    this.close();
+  onPress = item => {
+    if (!item.keepOpen) {
+      this.closeDrawer();
+    }
+
+    _.invoke(item, 'onPress');
   };
 
-  close = () => {
+  closeDrawer = () => {
     this._swipeableRow.close();
   };
 
@@ -80,17 +85,19 @@ export default class NewDrawer extends BaseComponent {
   renderLeftActions = (progress, dragX) => {
     const {leftItem} = this.getThemeProps();
 
-    return (
-      <View row>
-        {this.renderAction({
-          item: {background: DEFAULT_BG, ...leftItem},
-          progress,
-          dragX,
-          index: 0,
-          itemsCount: 1,
-        })}
-      </View>
-    );
+    if (leftItem) {
+      return (
+        <View row>
+          {this.renderAction({
+            item: leftItem,
+            progress,
+            dragX,
+            index: 0,
+            itemsCount: 1,
+          })}
+        </View>
+      );
+    }
   };
 
   renderRightActions = (progress, dragX) => {
@@ -98,7 +105,6 @@ export default class NewDrawer extends BaseComponent {
 
     return (
       <View row>
-        {/* <React.Fragment> */}
         {_.map(rightItems, (item, index) => {
           return this.renderAction({
             item,
@@ -108,7 +114,6 @@ export default class NewDrawer extends BaseComponent {
             itemsCount: rightItems.length,
           });
         })}
-        {/* </React.Fragment> */}
       </View>
     );
   };
@@ -134,37 +139,38 @@ export default class NewDrawer extends BaseComponent {
 
     return (
       <RectButton
-        key={item.text}
-        style={[styles.action, {backgroundColor: item.background}, !item.width ? {flex: 1} : {width: item.width}]}
-        onPress={() => this.onPress(item.text)}
+        key={index}
+        style={[styles.action, item.style, {backgroundColor: item.background || DEFAULT_BG}, {width: item.width}]}
+        onPress={() => this.onPress(item)}
       >
-        <Animated.Image
-          source={item.icon}
-          style={[
-            styles.actionIcon,
-            {tintColor: itemsTintColor, width: itemsIconSize, height: itemsIconSize, opacity, transform: [{scale}]},
-          ]}
-        />
-        <Animated.Text
-          style={[styles.actionText, {color: itemsTintColor, opacity, transform: [{scale}]}, itemsTextStyle]}
-        >
-          {item.text}
-        </Animated.Text>
+        {item.icon && (
+          <Animated.Image
+            source={item.icon}
+            style={[
+              styles.actionIcon,
+              {tintColor: itemsTintColor, width: itemsIconSize, height: itemsIconSize, opacity, transform: [{scale}]},
+            ]}
+          />
+        )}
+        {item.text && (
+          <Animated.Text
+            style={[styles.actionText, {color: itemsTintColor, opacity, transform: [{scale}]}, itemsTextStyle]}
+          >
+            {item.text}
+          </Animated.Text>
+        )}
       </RectButton>
     );
   };
 
-  positionWillChange = () => {
-    // use for onDragStart
-    console.warn('INBAL positionWillChange: ');
-  };
+  // positionWillChange = () => {};
 
   render() {
-    const {children, rightItems, leftItem} = this.props;
+    const {children, rightItems, leftItem, onDragStart, style} = this.props;
     const leftRender = Constants.isRTL ? this.renderRightActions : this.renderLeftActions;
     const rightRender = Constants.isRTL ? this.renderLeftActions : this.renderRightActions;
 
-    const rightActionsContainerStyle = {backgroundColor: _.get(_.first(rightItems), 'background')};
+    const rightActionsContainerStyle = {backgroundColor: _.get(_.first(rightItems), 'background', DEFAULT_BG)};
     const leftActionsContainerStyle = leftItem
       ? {backgroundColor: _.get(leftItem, 'background', DEFAULT_BG)}
       : undefined;
@@ -179,11 +185,13 @@ export default class NewDrawer extends BaseComponent {
         renderRightActions={rightRender}
         rightActionsContainerStyle={rightActionsContainerStyle}
         leftActionsContainerStyle={leftActionsContainerStyle}
-        onSwipeableLeftWillOpen={this.positionWillChange}
-        onSwipeableRightWillOpen={this.positionWillChange}
-        onSwipeableWillOpen={this.positionWillChange}
-        onSwipeableWillClose={this.positionWillChange}
+        // onSwipeableLeftWillOpen={this.positionWillChange}
+        // onSwipeableRightWillOpen={this.positionWillChange}
+        // onSwipeableWillOpen={this.positionWillChange}
+        // onSwipeableWillClose={this.positionWillChange}
+        onDragStart={onDragStart}
         animationOptions={{bounciness: 10}}
+        containerStyle={style}
       >
         {children}
       </Swipeable>
@@ -206,7 +214,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   action: {
-    // flex: 1, // apply for 'equalWidths'
+    paddingHorizontal: 12,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#dd2c00',

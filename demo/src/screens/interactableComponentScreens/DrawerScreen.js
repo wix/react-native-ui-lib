@@ -7,7 +7,7 @@ import conversations from '../../data/conversations';
 
 const collectionsIcon = require('../../assets/icons/collections.png');
 const starIcon = require('../../assets/icons/star.png');
-const sharIcon = require('../../assets/icons/share.png');
+const shareIcon = require('../../assets/icons/share.png');
 const videoIcon = require('../../assets/icons/video.png');
 
 class DrawerScreen extends Component {
@@ -19,14 +19,14 @@ class DrawerScreen extends Component {
       leftItem: {icon: collectionsIcon, text: 'Archive', onPress: this.onLeftItemPressed},
       rightItems: [
         {icon: starIcon, text: 'Accessories', onPress: this.onItemPress, background: Colors.violet10},
-        {icon: sharIcon, text: 'Share', onPress: this.onItemPress, background: Colors.violet30},
+        {icon: shareIcon, text: 'Share', onPress: this.onItemPress, background: Colors.violet30},
         {icon: videoIcon, text: 'Video', onPress: this.onItemPress, background: Colors.violet40},
         // {icon: videoIcon, text: 'Video', background: Colors.green30},
         // {icon: videoIcon, text: 'Video', background: Colors.red30},
       ],
     };
 
-    this.setItemsWidths();
+    // this.setItemsWidths();
   }
 
   onPress = () => {
@@ -36,7 +36,7 @@ class DrawerScreen extends Component {
     // Alert.alert('Item pressed');
     this.toggleDynamicItem();
 
-    // this.firstDrawer.closeDrawer();
+    this.firstDrawer.closeDrawer();
   };
   onItemPress2 = () => {
     const {itemsTintColor} = this.state;
@@ -78,6 +78,7 @@ class DrawerScreen extends Component {
       this.setState({leftItem: item});
     }
   }
+
   async setItemWidth(item) {
     if (item && !item.width && !_.isEmpty(item.text)) {
       const horizontalPadding = 12;
@@ -93,14 +94,14 @@ class DrawerScreen extends Component {
     const {rightItems} = this.state;
     let newItem;
     if (rightItems[0].text === 'Accessories') {
-      newItem = {icon: starIcon, text: 'More', onPress: this.onItemPress, background: Colors.violet10, width: 90};
+      newItem = {icon: starIcon, text: 'More', onPress: this.onItemPress, background: Colors.violet10, /* width: 90 */};
     } else {
       newItem = {
         icon: starIcon,
         text: 'Accessories',
         onPress: this.onItemPress,
         background: Colors.violet10,
-        width: 200,
+        // width: 200,
       };
     }
     rightItems[0] = newItem;
@@ -142,13 +143,11 @@ class DrawerScreen extends Component {
         >
           {this.renderContent('0', conversations[0])}
         </Drawer>
-        <Drawer leftItem={leftItem} rightItems={rightItems} style={{marginTop: 20}} ref={r => (this.firstDrawer = r)}>
-          {this.renderContent('0', conversations[0])}
-        </Drawer>
         <Drawer
+          migrate
           leftItem={leftItem}
           rightItems={[
-            {icon: sharIcon, text: 'Share', onPress: this.onItemPress},
+            {icon: shareIcon, text: 'Share', onPress: this.onItemPress},
             {icon: videoIcon, text: 'Video', onPress: this.onItemPress, background: Colors.violet40},
           ]}
           style={{marginTop: 20}}
@@ -156,18 +155,20 @@ class DrawerScreen extends Component {
           {this.renderContent('0', conversations[0])}
         </Drawer>
 
-        <Drawer
+        {/* <Drawer
           // leftItem={leftItem}
+          migrate
           rightItems={rightItems}
           style={{marginTop: 20}}
           onPress={this.onPress}
           equalWidths
         >
           {this.renderContent('1', conversations[1])}
-        </Drawer>
+        </Drawer> */}
 
         <Drawer
           leftItem={{text: 'Archive', background: Colors.blue10, width: 100, onPress: this.onLeftItemPressed}}
+          migrate
           // rightItems={rightItems}
           style={{marginTop: 20}}
           itemsTextStyle={{fontSize: 18}}
@@ -177,14 +178,15 @@ class DrawerScreen extends Component {
           {this.renderContent('1', conversations[1])}
         </Drawer>
 
-        <Drawer
+        {/* <Drawer
+          migrate
           leftItem={leftItem}
           rightItems={[rightItems[1], rightItems[2]]}
           style={{marginTop: 20, marginLeft: 50, marginRight: 50}}
           onPress={this.onPress}
         >
           {this.renderContent('2', conversations[2])}
-        </Drawer>
+        </Drawer> */}
 
         {/* <View style={{width: 250}}>
           <Drawer
@@ -198,10 +200,11 @@ class DrawerScreen extends Component {
         </View> */}
 
         <Drawer
+          migrate
           leftItem={{icon: collectionsIcon, background: Colors.blue10, width: 100}}
           rightItems={[
             {icon: starIcon, background: Colors.dark60},
-            {icon: sharIcon, background: Colors.yellow20},
+            {icon: shareIcon, background: Colors.yellow20},
             {icon: videoIcon, background: Colors.red30, onPress: this.onItemPress2},
             // {icon: videoIcon, background: Colors.green30},
           ]}
@@ -214,6 +217,7 @@ class DrawerScreen extends Component {
         </Drawer>
 
         <Drawer
+          migrate
           leftItem={leftItem}
           rightItems={rightItems}
           style={{marginTop: 20}}

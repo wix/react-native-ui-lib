@@ -8,7 +8,6 @@ import {screenWidth} from '../../helpers/Constants';
 import {Colors, Typography} from '../../style';
 import NewDrawer from './newDrawer';
 
-
 const SCALE_POINT = 72; // scaling content style by height
 const MIN_LEFT_MARGIN = 56;
 const DEFAULT_ICON_SIZE = 24;
@@ -79,12 +78,13 @@ export default class Drawer extends BaseComponent {
     tension: 300,
     itemsTintColor: Colors.white,
     itemsIconSize: DEFAULT_ICON_SIZE,
-  }
+  };
 
   constructor(props) {
     super(props);
 
     this.deltaX = new Animated.Value(0);
+    this.drawer = React.createRef();
 
     this.state = {
       inMotion: false,
@@ -142,7 +142,11 @@ export default class Drawer extends BaseComponent {
     // if (!inMotion && position !== 1) {
     //   this.interactableElem.snapTo({index: 1});
     // }
-    this.interactableElem.snapTo({index: 1});
+    if (this.props.migrate) {
+      this.drawer.current.closeDrawer();
+    } else {
+      this.interactableElem.snapTo({index: 1});
+    }
   }
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
@@ -466,7 +470,7 @@ export default class Drawer extends BaseComponent {
     const {migrate} = this.props;
 
     if (migrate) {
-      return (<NewDrawer {...this.props}/>);
+      return <NewDrawer ref={this.drawer} {...this.props} />;
     }
     
     const {style, onPress, rightItems} = this.getThemeProps();
@@ -480,7 +484,7 @@ export default class Drawer extends BaseComponent {
         {this.renderLeftItem()}
         
         <Interactable.View
-          ref={el => this.interactableElem = el}
+          ref={el => (this.interactableElem = el)}
           horizontalOnly
           boundaries={this.getBoundaries()}
           snapPoints={this.getSnapPoints()}
