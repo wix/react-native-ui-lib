@@ -463,9 +463,11 @@ export default class Drawer extends BaseComponent {
     );
   }
   render() {
-    return (
-      <NewDrawer {...this.props}/>
-    );
+    const {migrate} = this.props;
+
+    if (migrate) {
+      return (<NewDrawer {...this.props}/>);
+    }
     
     const {style, onPress, rightItems} = this.getThemeProps();
     const Container = onPress ? TouchableOpacity : View;
