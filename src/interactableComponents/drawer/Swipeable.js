@@ -37,6 +37,7 @@ export type PropType = {
   onSwipeableRightWillOpen?: Function,
   onSwipeableWillOpen?: Function,
   onSwipeableWillClose?: Function,
+  onDragStart?: Function,
   renderLeftActions?: (progressAnimatedValue: any, dragAnimatedValue: any) => any,
   renderRightActions?: (progressAnimatedValue: any, dragAnimatedValue: any) => any,
   leftActionsContainerStyle: any,
@@ -164,6 +165,10 @@ export default class Swipeable extends Component<PropType, StateType> {
   _onHandlerStateChange = ({nativeEvent}) => {
     if (nativeEvent.oldState === State.ACTIVE) {
       this._handleRelease(nativeEvent);
+    }
+
+    if (nativeEvent.state === State.ACTIVE) {
+      this.props.onDragStart && this.props.onDragStart();
     }
   };
 
