@@ -2,7 +2,6 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, ViewPropTypes, TouchableOpacity} from 'react-native';
-import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 import Badge, {BADGE_SIZES} from '../badge';
@@ -123,6 +122,10 @@ export default class Avatar extends BaseComponent {
      */
     ribbonLabelStyle: Text.propTypes.style,
     /**
+     * Custom ribbon
+     */
+    customRibbon: PropTypes.element,
+    /**
      * Determine if to show online badge
      */
     isOnline: PropTypes.bool,
@@ -154,7 +157,6 @@ export default class Avatar extends BaseComponent {
 
   getStatusBadgeColor(status) {
     switch (status) {
-
       case Avatar.modes.AWAY:
         return Colors.yellow30;
       case Avatar.modes.ONLINE:
@@ -201,7 +203,7 @@ export default class Avatar extends BaseComponent {
 
   renderBadge() {
     const {testID, badgeProps} = this.props;
-    
+
     if (badgeProps || this.getBadgeColor()) {
       return (
         <Badge
@@ -217,9 +219,11 @@ export default class Avatar extends BaseComponent {
   }
 
   renderRibbon() {
-    const {ribbonLabel, ribbonStyle, ribbonLabelStyle} = this.props;
+    const {ribbonLabel, ribbonStyle, ribbonLabelStyle, customRibbon} = this.props;
     if (ribbonLabel) {
-      return (
+      return customRibbon ? (
+        <View style={this.styles.customRibbon}>{customRibbon}</View>
+      ) : (
         <View style={[this.styles.ribbon, ribbonStyle]}>
           <Text numberOfLines={1} text100 white style={[ribbonLabelStyle]}>
             {ribbonLabel}
@@ -294,6 +298,11 @@ export default class Avatar extends BaseComponent {
 function createStyles({size, labelColor}) {
   const borderRadius = size / 2;
   const fontSizeToImageSizeRatio = 0.32;
+  const ribbonPosition = {
+    position: 'absolute',
+    top: '10%',
+    left: size / 1.7,
+  };
   const styles = StyleSheet.create({
     container: {
       alignItems: 'center',
@@ -339,13 +348,14 @@ function createStyles({size, labelColor}) {
       bottom: undefined,
     },
     ribbon: {
-      position: 'absolute',
-      right: Constants.isIOS ? '-15%' : 0,
-      top: Constants.isIOS ? '-10%' : 0,
+      ...ribbonPosition,
       backgroundColor: Colors.blue30,
       borderRadius: BorderRadiuses.br100,
       paddingHorizontal: 6,
       paddingVertical: 3,
+    },
+    customRibbon: {
+      ...ribbonPosition,
     },
   });
 
