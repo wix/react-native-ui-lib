@@ -74,6 +74,8 @@ class Colors {
   }
 
   getColorTint(color, tintKey) {
+    const dynamicHexColor = this.getTintedColorForDynamicHex(color, tintKey);
+
     if (_.isUndefined(tintKey) || isNaN(tintKey) || _.isUndefined(color)) {
       console.error('"Colors.getColorTint" must accept a color and tintKey params');
       return color;
@@ -90,17 +92,19 @@ class Colors {
       const requiredColor = this[requiredColorKey];
 
       if (_.isUndefined(requiredColor)) {
-        console.warn('"Colors.getColorTint" could not find color with this tint');
-        return color;
+        return dynamicHexColor;
       }
       return requiredColor;
-    } else {
-      // Handles dynamic colors (non uilib colors)
-      let tintLevel = Math.floor(Number(tintKey) / 10 + 1);
-      tintLevel = Math.max(2, tintLevel);
-      tintLevel = Math.min(9, tintLevel);
-      return generateColorTint(color, tintLevel * 10);
     }
+    return dynamicHexColor;
+  }
+
+  getTintedColorForDynamicHex(color, tintKey) {
+    // Handles dynamic colors (non uilib colors)
+    let tintLevel = Math.floor(Number(tintKey) / 10 + 1);
+    tintLevel = Math.max(2, tintLevel);
+    tintLevel = Math.min(9, tintLevel);
+    return generateColorTint(color, tintLevel * 10);
   }
 
   generateColorPalette(color) {
