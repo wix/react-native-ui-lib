@@ -82,41 +82,36 @@ export default class NewDrawer extends BaseComponent {
     this._swipeableRow = ref;
   };
 
+  getActionsContainerStyle(items) {
+    return {backgroundColor: _.get(_.first(items), 'background', DEFAULT_BG)};
+  }
+
+  // TODO: enable support for rendering more than one left item
   renderLeftActions = (progress, dragX) => {
     const {leftItem} = this.getThemeProps();
-
-    if (leftItem) {
-      return (
-        <View row>
-          {this.renderAction({
-            item: leftItem,
-            progress,
-            dragX,
-            index: 0,
-            itemsCount: 1,
-          })}
-        </View>
-      );
-    }
+    return this.renderActions([leftItem], progress, dragX);
   };
 
   renderRightActions = (progress, dragX) => {
     const {rightItems} = this.getThemeProps();
+    return this.renderActions(rightItems, progress, dragX);
+  };
 
+  renderActions(items, progress, dragX) {
     return (
       <View row>
-        {_.map(rightItems, (item, index) => {
+        {_.map(items, (item, index) => {
           return this.renderAction({
             item,
-            index: rightItems.length - index - 1,
+            index: items.length - index - 1,
             progress,
             dragX,
-            itemsCount: rightItems.length,
+            itemsCount: items.length,
           });
         })}
       </View>
     );
-  };
+  }
 
   // eslint-disable-next-line react/prop-types
   renderAction = ({item, index, progress, itemsCount}) => {
@@ -170,10 +165,8 @@ export default class NewDrawer extends BaseComponent {
     const leftRender = Constants.isRTL ? this.renderRightActions : this.renderLeftActions;
     const rightRender = Constants.isRTL ? this.renderLeftActions : this.renderRightActions;
 
-    const rightActionsContainerStyle = {backgroundColor: _.get(_.first(rightItems), 'background', DEFAULT_BG)};
-    const leftActionsContainerStyle = leftItem
-      ? {backgroundColor: _.get(leftItem, 'background', DEFAULT_BG)}
-      : undefined;
+    const rightActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? [leftItem] : rightItems);
+    const leftActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? rightItems : [leftItem]);
 
     return (
       <Swipeable
