@@ -74,8 +74,6 @@ class Colors {
   }
 
   getColorTint(color, tintKey) {
-    const dynamicHexColor = this.getTintedColorForDynamicHex(color, tintKey);
-
     if (_.isUndefined(tintKey) || isNaN(tintKey) || _.isUndefined(color)) {
       console.error('"Colors.getColorTint" must accept a color and tintKey params');
       return color;
@@ -92,11 +90,11 @@ class Colors {
       const requiredColor = this[requiredColorKey];
 
       if (_.isUndefined(requiredColor)) {
-        return dynamicHexColor;
+        return this.getTintedColorForDynamicHex(color, tintKey);
       }
       return requiredColor;
     }
-    return dynamicHexColor;
+    return this.getTintedColorForDynamicHex(color, tintKey);
   }
 
   getTintedColorForDynamicHex(color, tintKey) {
