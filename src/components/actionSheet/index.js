@@ -93,7 +93,6 @@ export default class ActionSheet extends BaseComponent {
   static defaultProps = {
     title: undefined,
     message: undefined,
-    showCancelButton: undefined,
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
