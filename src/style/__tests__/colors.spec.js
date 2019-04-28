@@ -74,6 +74,10 @@ describe('style/Colors', () => {
       expect(uut.getColorTint(undefined, 10)).toEqual(undefined);
     });
 
+    it('should handle a color which exists in uiLib but doesn\'t have predefined tints', () => {
+      expect(uut.getColorTint('#000000', 60)).toEqual('#B3B3B3');
+    });
+
     it('should handle color that does not exist in uilib', () => {
       expect(uut.getColorTint('#F1BE0B', 10)).toEqual('#624D04');
       expect(uut.getColorTint('#F1BE0B', 20)).toEqual('#927307');
