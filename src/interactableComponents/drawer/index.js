@@ -467,10 +467,10 @@ export default class Drawer extends BaseComponent {
     );
   }
   render() {
-    const {migrate} = this.props;
+    const {migrate} = this.getThemeProps();
 
     if (migrate) {
-      return <NewDrawer ref={this.drawer} {...this.props} />;
+      return <NewDrawer ref={this.drawer} {...this.getThemeProps()} />;
     }
     
     const {style, onPress, rightItems} = this.getThemeProps();
