@@ -90,17 +90,19 @@ class Colors {
       const requiredColor = this[requiredColorKey];
 
       if (_.isUndefined(requiredColor)) {
-        console.warn('"Colors.getColorTint" could not find color with this tint');
-        return color;
+        return this.getTintedColorForDynamicHex(color, tintKey);
       }
       return requiredColor;
-    } else {
-      // Handles dynamic colors (non uilib colors)
-      let tintLevel = Math.floor(Number(tintKey) / 10 + 1);
-      tintLevel = Math.max(2, tintLevel);
-      tintLevel = Math.min(9, tintLevel);
-      return generateColorTint(color, tintLevel * 10);
     }
+    return this.getTintedColorForDynamicHex(color, tintKey);
+  }
+
+  getTintedColorForDynamicHex(color, tintKey) {
+    // Handles dynamic colors (non uilib colors)
+    let tintLevel = Math.floor(Number(tintKey) / 10 + 1);
+    tintLevel = Math.max(2, tintLevel);
+    tintLevel = Math.min(9, tintLevel);
+    return generateColorTint(color, tintLevel * 10);
   }
 
   generateColorPalette(color) {
