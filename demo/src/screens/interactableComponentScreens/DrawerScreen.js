@@ -178,26 +178,17 @@ class DrawerScreen extends Component {
           {this.renderContent('1', conversations[1])}
         </Drawer>
 
-        {/* <Drawer
-          migrate
-          leftItem={leftItem}
-          rightItems={[rightItems[1], rightItems[2]]}
-          style={{marginTop: 20, marginLeft: 50, marginRight: 50}}
-          onPress={this.onPress}
-        >
-          {this.renderContent('2', conversations[2])}
-        </Drawer> */}
-
-        {/* <View style={{width: 250}}>
+        <View style={{paddingHorizontal: 50}}>
           <Drawer
+            migrate
             leftItem={leftItem}
             rightItems={[rightItems[1], rightItems[2]]}
-            style={{marginTop: 20, marginLeft: 50}}
+            style={{marginTop: 20}}
             onPress={this.onPress}
           >
             {this.renderContent('2', conversations[2])}
           </Drawer>
-        </View> */}
+        </View>
 
         <Drawer
           migrate
