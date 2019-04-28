@@ -2,70 +2,71 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Alert, ScrollView} from 'react-native';
 import {Colors, Typography, View, Drawer, Text, Button, ListItem, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
+import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import conversations from '../../data/conversations';
-
 
 const collectionsIcon = require('../../assets/icons/collections.png');
 const starIcon = require('../../assets/icons/star.png');
-const sharIcon = require('../../assets/icons/share.png');
+const shareIcon = require('../../assets/icons/share.png');
 const videoIcon = require('../../assets/icons/video.png');
 
-export default class DrawerScreen extends Component {
-
+class DrawerScreen extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       itemsTintColor: undefined,
       leftItem: {icon: collectionsIcon, text: 'Archive', onPress: this.onLeftItemPressed},
       rightItems: [
         {icon: starIcon, text: 'Accessories', onPress: this.onItemPress, background: Colors.violet10},
-        {icon: sharIcon, text: 'Share', onPress: this.onItemPress, background: Colors.violet30},
+        {icon: shareIcon, text: 'Share', onPress: this.onItemPress, background: Colors.violet30},
         {icon: videoIcon, text: 'Video', onPress: this.onItemPress, background: Colors.violet40},
         // {icon: videoIcon, text: 'Video', background: Colors.green30},
         // {icon: videoIcon, text: 'Video', background: Colors.red30},
       ],
     };
 
-    this.setItemsWidths();
+    // this.setItemsWidths();
   }
 
   onPress = () => {
     // Alert.alert('Drawer pressed');
-  }
+  };
   onItemPress = () => {
     // Alert.alert('Item pressed');
     this.toggleDynamicItem();
+
     this.firstDrawer.closeDrawer();
-  }
+  };
   onItemPress2 = () => {
     const {itemsTintColor} = this.state;
     const color = itemsTintColor === undefined ? Colors.blue30 : undefined;
     this.setState({itemsTintColor: color});
-  }
+  };
   onLeftItemPressed = () => {
     Alert.alert('Left item pressed');
-  }
+  };
 
   onButtonPress(id) {
     Alert.alert(`Button '${id}' pressed`);
   }
   onContentPress(id) {
-    // Alert.alert(`List item #${id + 1} pressed`);
-    if (id === '0') {
-      this.firstDrawer.closeDrawer();
-    }
-    if (id === '1') {
-      this.secondDrawer.closeDrawer();
-    }
+    Alert.alert(`List item #${id + 1} pressed`);
+
+    // if (id === '0') {
+    //   this.firstDrawer.closeDrawer();
+    // }
+    // if (id === '1') {
+    //   this.secondDrawer.closeDrawer();
+    // }
   }
 
   // Measure item text to calculate items' widths
   async setItemsWidths() {
     const {rightItems, leftItem} = this.state;
-    
+
     if (rightItems) {
-      const promises = rightItems.map((item) => {
+      const promises = rightItems.map(item => {
         return this.setItemWidth(item);
       });
       const data = await Promise.all(promises);
@@ -77,13 +78,14 @@ export default class DrawerScreen extends Component {
       this.setState({leftItem: item});
     }
   }
+
   async setItemWidth(item) {
     if (item && !item.width && !_.isEmpty(item.text)) {
       const horizontalPadding = 12;
       const typography = Typography.text70;
       const width = await Typography.measureWidth(item.text, typography);
       const itemCopy = item;
-      itemCopy.width = width + (horizontalPadding * 2);
+      itemCopy.width = width + horizontalPadding * 2;
       return itemCopy;
     }
   }
@@ -92,9 +94,15 @@ export default class DrawerScreen extends Component {
     const {rightItems} = this.state;
     let newItem;
     if (rightItems[0].text === 'Accessories') {
-      newItem = {icon: starIcon, text: 'More', onPress: this.onItemPress, background: Colors.violet10, width: 90};
+      newItem = {icon: starIcon, text: 'More', onPress: this.onItemPress, background: Colors.violet10, /* width: 90 */};
     } else {
-      newItem = {icon: starIcon, text: 'Accessories', onPress: this.onItemPress, background: Colors.violet10, width: 200};
+      newItem = {
+        icon: starIcon,
+        text: 'Accessories',
+        onPress: this.onItemPress,
+        background: Colors.violet10,
+        // width: 200,
+      };
     }
     rightItems[0] = newItem;
     this.setState({rightItems});
@@ -103,11 +111,8 @@ export default class DrawerScreen extends Component {
   renderContent(id, row) {
     const initials = AvatarHelper.getInitials(row.name);
     return (
-      <ListItem
-        key={id}
-        onPress={() => this.onContentPress(id)}
-        style={styles.listContent}
-      >
+      // <View style={{height: 50, borderWidth: 1}}/>
+      <ListItem key={id} onPress={() => this.onContentPress(id)} style={styles.listContent}>
         <ListItem.Part left>
           <Avatar
             imageSource={row.thumbnail ? {uri: row.thumbnail} : null}
@@ -130,70 +135,67 @@ export default class DrawerScreen extends Component {
     return (
       <ScrollView style={styles.container} contentContainerStyle={{paddingBottom: 50}}>
         <Drawer
+          migrate
           leftItem={leftItem}
           rightItems={rightItems}
           style={{marginTop: 20}}
-          ref={r => this.firstDrawer = r}
+          ref={r => (this.firstDrawer = r)}
         >
           {this.renderContent('0', conversations[0])}
         </Drawer>
         <Drawer
+          migrate
           leftItem={leftItem}
           rightItems={[
-            {icon: sharIcon, text: 'Share', onPress: this.onItemPress},
+            {icon: shareIcon, text: 'Share', onPress: this.onItemPress},
             {icon: videoIcon, text: 'Video', onPress: this.onItemPress, background: Colors.violet40},
           ]}
           style={{marginTop: 20}}
         >
           {this.renderContent('0', conversations[0])}
         </Drawer>
-        
-        <Drawer
+
+        {/* <Drawer
           // leftItem={leftItem}
+          migrate
           rightItems={rightItems}
           style={{marginTop: 20}}
           onPress={this.onPress}
           equalWidths
         >
           {this.renderContent('1', conversations[1])}
-        </Drawer>
+        </Drawer> */}
 
         <Drawer
           leftItem={{text: 'Archive', background: Colors.blue10, width: 100, onPress: this.onLeftItemPressed}}
+          migrate
           // rightItems={rightItems}
           style={{marginTop: 20}}
           itemsTextStyle={{fontSize: 18}}
           onPress={this.onPress}
-          ref={r => this.secondDrawer = r}
+          ref={r => (this.secondDrawer = r)}
         >
           {this.renderContent('1', conversations[1])}
         </Drawer>
 
-        <Drawer
-          leftItem={leftItem}
-          rightItems={[rightItems[1], rightItems[2]]}
-          style={{marginTop: 20, marginLeft: 50, marginRight: 50}}
-          onPress={this.onPress}
-        >
-          {this.renderContent('2', conversations[2])}
-        </Drawer>
-        
-        {/* <View style={{width: 250}}>
+        <View style={{paddingHorizontal: 50}}>
           <Drawer
+            migrate
             leftItem={leftItem}
             rightItems={[rightItems[1], rightItems[2]]}
-            style={{marginTop: 20, marginLeft: 50}}
+            style={{marginTop: 20}}
             onPress={this.onPress}
           >
             {this.renderContent('2', conversations[2])}
           </Drawer>
-        </View> */}
+        </View>
 
         <Drawer
+          migrate
           leftItem={{icon: collectionsIcon, background: Colors.blue10, width: 100}}
           rightItems={[
             {icon: starIcon, background: Colors.dark60},
-            {icon: sharIcon, background: Colors.yellow20},
+            {icon: shareIcon, background: Colors.yellow20},
             {icon: videoIcon, background: Colors.red30, onPress: this.onItemPress2},
             // {icon: videoIcon, background: Colors.green30},
           ]}
@@ -204,8 +206,9 @@ export default class DrawerScreen extends Component {
         >
           {this.renderContent('3', conversations[3])}
         </Drawer>
-        
+
         <Drawer
+          migrate
           leftItem={leftItem}
           rightItems={rightItems}
           style={{marginTop: 20}}
@@ -213,7 +216,7 @@ export default class DrawerScreen extends Component {
           itemsTextStyle={{fontSize: 12}}
         >
           <View style={styles.rowContent}>
-            <View style={[styles.rowIcon, {width: 38, height: 38, borderRadius: 19}]}/>
+            <View style={[styles.rowIcon, {width: 38, height: 38, borderRadius: 19}]} />
             <View>
               <Text style={[styles.rowTitle, {...Typography.text70, fontWeight: 'bold'}]}>Row Title</Text>
               <Text style={[styles.rowSubtitle, {...Typography.text80}]}>Drag the row left and right</Text>
@@ -268,3 +271,5 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
+
+export default gestureHandlerRootHOC(DrawerScreen);
