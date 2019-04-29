@@ -89,7 +89,9 @@ export default class NewDrawer extends BaseComponent {
   // TODO: enable support for rendering more than one left item
   renderLeftActions = (progress, dragX) => {
     const {leftItem} = this.getThemeProps();
-    return this.renderActions([leftItem], progress, dragX);
+    if (leftItem) {
+      return this.renderActions([leftItem], progress, dragX);
+    }
   };
 
   renderRightActions = (progress, dragX) => {
