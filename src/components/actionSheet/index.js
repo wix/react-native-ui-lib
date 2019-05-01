@@ -81,6 +81,10 @@ export default class ActionSheet extends BaseComponent {
      * Note: you will need to call onOptionPress so the option's onPress will be called
      */
     renderAction: PropTypes.func,
+    /**
+     * Called once the modal has been dissmissed (iOS only, modal only)
+     */
+    onModalDismissed: PropTypes.func
   };
 
   constructor(props) {
@@ -194,7 +198,7 @@ export default class ActionSheet extends BaseComponent {
   }
 
   render() {
-    const {useNativeIOS, visible, onDismiss, useModal, dialogStyle} = this.getThemeProps();
+    const {useNativeIOS, visible, onDismiss, useModal, dialogStyle, onModalDismissed} = this.getThemeProps();
     
     if (Constants.isIOS && useNativeIOS) return null;
     
@@ -208,6 +212,7 @@ export default class ActionSheet extends BaseComponent {
         visible={visible}
         onDismiss={onDismiss}
         useModal={useModal}
+        onModalDismissed={onModalDismissed}
       >
         {this.renderSheet()}
       </Dialog>

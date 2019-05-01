@@ -68,7 +68,11 @@ class Dialog extends BaseComponent {
     /**
      * Whether to display the dialog in a modal
      */
-    useModal: PropTypes.bool
+    useModal: PropTypes.bool,
+    /**
+     * Called once the modal has been dissmissed (iOS only, modal only)
+     */
+    onModalDismissed: PropTypes.func
   };
 
   static defaultProps = {
@@ -192,7 +196,7 @@ class Dialog extends BaseComponent {
   }
 
   render() {
-    const {visible, overlayBackgroundColor, useModal} = this.getThemeProps();
+    const {visible, overlayBackgroundColor, useModal, onModalDismissed} = this.getThemeProps();
     
     if (useModal) {
       return (
@@ -203,6 +207,7 @@ class Dialog extends BaseComponent {
           onBackgroundPress={this.onDismiss}
           onRequestClose={this.onDismiss}
           overlayBackgroundColor={overlayBackgroundColor}
+          onDismiss={onModalDismissed}
         >
           {this.renderAnimationContainer()}
         </Modal>
