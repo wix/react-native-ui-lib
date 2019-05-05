@@ -17,6 +17,48 @@ class PickerDialog extends BaseComponent {
     onDone: PropTypes.func,
     onCancel: PropTypes.func,
     children: PropTypes.array,
+    /**
+     * Pass props for the WheelPicker (Android only)
+     */
+    wheelPickerProps: PropTypes.shape({
+      /**
+       * the current selected value of the picker
+       */
+      selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), //eslint-disable-line
+      /**
+       * callback for when a value change
+       */
+      onValueChange: PropTypes.func,
+      /**
+       * pass custom style
+       */
+      style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+      /**
+       * pass custom label style: fontSize, fontFamily, color<br>
+       * Note: label's color will override the text color (hex only)
+       */
+      labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+      /**
+       * The height of the selected item
+       */
+      itemHeight: PropTypes.number,
+      /**
+       * The color of the wheel picker (hex only)
+       */
+      color: PropTypes.string,
+      /**
+       * padd custom style for the picker item
+       */
+      itemStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]), //eslint-disable-line
+    }),
+    /**
+     * select label style
+     */
+    selectLabelStyle: Text.propTypes.style,
+    /**
+     * cancel label style
+     */
+    cancelLabelStyle: Text.propTypes.style,
   };
 
   state = {};
@@ -38,16 +80,16 @@ class PickerDialog extends BaseComponent {
   }
 
   renderFooter() {
-    const {onDone, onCancel, topBarProps} = this.props;
+    const {onDone, onCancel, topBarProps, selectLabelStyle, cancelLabelStyle} = this.props;
     const doneLabel = _.get(topBarProps, 'doneLabel', 'OK');
     const cancelLabel = _.get(topBarProps, 'cancelLabel', 'CANCEL');
 
     return (
       <View style={styles.footer}>
-        <Text text80 blue30 onPress={onCancel}>
+        <Text text80 blue30 onPress={onCancel} style={cancelLabelStyle}>
           {cancelLabel}
         </Text>
-        <Text text80 blue30 marginL-15 onPress={onDone}>
+        <Text text80 blue30 marginL-15 onPress={onDone} style={selectLabelStyle}>
           {doneLabel}
         </Text>
       </View>
@@ -55,12 +97,12 @@ class PickerDialog extends BaseComponent {
   }
 
   renderPicker() {
-    const {children, onValueChange, selectedValue, renderNativePicker} = this.props;
+    const {children, onValueChange, selectedValue, renderNativePicker, wheelPickerProps} = this.props;
     if (_.isFunction(renderNativePicker)) {
       return renderNativePicker(this.props);
     }
     return (
-      <WheelPicker onValueChange={onValueChange} selectedValue={selectedValue}>
+      <WheelPicker onValueChange={onValueChange} selectedValue={selectedValue} {...wheelPickerProps}>
         {children}
       </WheelPicker>
     );

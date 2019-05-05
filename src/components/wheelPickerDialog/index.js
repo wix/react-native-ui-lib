@@ -7,7 +7,6 @@ import View from '../view';
 import Text from '../text';
 import {WheelPicker} from '../../nativeComponents';
 
-
 export default class WheelPickerDialog extends Component {
   static displayName = 'IGNORE';
 
@@ -37,18 +36,20 @@ export default class WheelPickerDialog extends Component {
   }
 
   render() {
+    const {title, items, onCancel, wheelPickerProps, selectLabelStyle, cancelLabelStyle} = this.props;
     return (
       <View style={styles.container} bg-white center>
         <Text style={styles.title} >
-          {this.props.title}
+          {title}
         </Text>
 
         <WheelPicker
           onValueChange={this.onValueChange}
           selectedValue={this.state.currentValue || this.state.initalSelectedValue}
           style={styles.picker}
+          {...wheelPickerProps}
         >
-          {this.props.items.map((item, idx) => {
+          {items.map((item, idx) => {
             return (
               <WheelPicker.Item key={String(idx) + String(item.value)} value={item.value} label={item.label} />
             );
@@ -56,13 +57,13 @@ export default class WheelPickerDialog extends Component {
         </WheelPicker>
         <View style={styles.bottomButtonsContainer}>
 
-          <TouchableOpacity onPress={this.props.onCancel} >
-            <Text style={styles.cancelButton} text80-medium>
+          <TouchableOpacity onPress={onCancel} >
+            <Text style={[styles.cancelButton, cancelLabelStyle]} text80-medium>
               {'CANCEL'}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={this.onSelect} >
-            <Text style={styles.okButton} text80-medium>
+            <Text style={[styles.okButton, selectLabelStyle]} text80-medium>
               {'OK'}
             </Text>
           </TouchableOpacity>
@@ -74,6 +75,48 @@ export default class WheelPickerDialog extends Component {
 }
 
 WheelPickerDialog.propTypes = {
+  /**
+   * Pass props for the WheelPicker (Android only)
+   */
+  wheelPickerProps: PropTypes.shape({
+    /**
+     * the current selected value of the picker
+     */
+    selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), //eslint-disable-line
+    /**
+     * callback for when a value change
+     */
+    onValueChange: PropTypes.func,
+    /**
+     * pass custom style
+     */
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * pass custom label style: fontSize, fontFamily, color<br>
+     * Note: label's color will override the text color (hex only)
+     */
+    labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * The height of the selected item
+     */
+    itemHeight: PropTypes.number,
+    /**
+     * The color of the wheel picker (hex only)
+     */
+    color: PropTypes.string,
+    /**
+     * padd custom style for the picker item
+     */
+    itemStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]), //eslint-disable-line
+  }),
+  /**
+   * select label style
+   */
+  selectLabelStyle: Text.propTypes.style,
+  /**
+   * cancel label style
+   */
+  cancelLabelStyle: Text.propTypes.style,
   items: PropTypes.array,
   selectedValue: PropTypes.oneOfType([
     PropTypes.string,
