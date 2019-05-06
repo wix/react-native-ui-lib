@@ -78,37 +78,7 @@ WheelPickerDialog.propTypes = {
   /**
    * Pass props for the WheelPicker (Android only)
    */
-  wheelPickerProps: PropTypes.shape({
-    /**
-     * the current selected value of the picker
-     */
-    selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), //eslint-disable-line
-    /**
-     * callback for when a value change
-     */
-    onValueChange: PropTypes.func,
-    /**
-     * pass custom style
-     */
-    style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * pass custom label style: fontSize, fontFamily, color<br>
-     * Note: label's color will override the text color (hex only)
-     */
-    labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * The height of the selected item
-     */
-    itemHeight: PropTypes.number,
-    /**
-     * The color of the wheel picker (hex only)
-     */
-    color: PropTypes.string,
-    /**
-     * padd custom style for the picker item
-     */
-    itemStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]), //eslint-disable-line
-  }),
+  wheelPickerProps: PropTypes.shape(WheelPicker.propTypes),
   /**
    * select label style
    */
