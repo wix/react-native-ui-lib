@@ -37,7 +37,7 @@ export default class WheelPickerDialogScreen extends Component {
           onSelect={this.onSelect}
           onCancel={this.onCancel}
           wheelPickerProps={{
-            style: {width: 200},
+            style: {width: 100},
             color: Colors.violet30,
             labelStyle: {fontSize: 32, fontFamily: 'sans-serif-condensed-light'},
             itemHeight: 55}}
