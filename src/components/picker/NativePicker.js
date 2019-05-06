@@ -5,7 +5,6 @@ import TextField from '../inputs/TextField';
 import {WheelPicker} from '../../nativeComponents';
 import PickerDialog from './PickerDialog';
 
-
 class NativePicker extends BaseComponent {
   state = {
     selectedValue: this.props.value,

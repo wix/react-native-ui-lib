@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, WheelPickerDialog} from 'react-native-ui-lib'; //eslint-disable-line
+import { View, Text, WheelPickerDialog, Colors} from 'react-native-ui-lib'; //eslint-disable-line
 
 
 export default class WheelPickerDialogScreen extends Component {
@@ -36,6 +36,13 @@ export default class WheelPickerDialogScreen extends Component {
           title={this.state.title}
           onSelect={this.onSelect}
           onCancel={this.onCancel}
+          wheelPickerProps={{
+            style: {width: 100},
+            color: Colors.violet30,
+            labelStyle: {fontSize: 32, fontFamily: 'sans-serif-condensed-light'},
+            itemHeight: 55}}
+          selectLabelStyle={{color: Colors.violet30}}
+          cancelLabelStyle={{color: Colors.violet30}}
         />
         <Text test60 style={{width: 280}}>
           {`The result value is ${this.state.selectedValue}. Roll the picker and press OK to change it`}
