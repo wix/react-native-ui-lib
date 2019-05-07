@@ -20,6 +20,7 @@ const ITEM_PROP_TYPES = {
   onPress: PropTypes.func,
   keepOpen: PropTypes.bool,
   style: ViewPropTypes.style,
+  testID: PropTypes.string,
 };
 
 export default class NewDrawer extends BaseComponent {
@@ -137,6 +138,7 @@ export default class NewDrawer extends BaseComponent {
     return (
       <RectButton
         key={index}
+        testID={item.testID}
         style={[styles.action, item.style, {backgroundColor: item.background || DEFAULT_BG}, {width: item.width}]}
         onPress={() => this.onPress(item)}
       >
