@@ -7,8 +7,6 @@ import {BaseComponent} from '../../commons';
 import * as presenter from './CarouselPresenter';
 
 
-const OFFSET_PIXEL_CORRECTION = 5;
-
 /**
  * @description: Carousel for scrolling pages horizontally
  * @gif: https://media.giphy.com/media/l0HU7f8gjpRlMRhKw/giphy.gif, https://media.giphy.com/media/3oFzmcjX9OhpyckhcQ/giphy.gif
@@ -84,6 +82,15 @@ export default class Carousel extends BaseComponent {
     }
   }
 
+  // finished full page scroll
+  onMomentumScrollEnd = () => {
+    const {currentStandingPage, currentPage} = this.state;
+    this.setState({currentStandingPage: currentPage});  
+    if (currentStandingPage !== currentPage) {
+      _.invoke(this.props, 'onChangePage', currentPage, currentStandingPage);
+    }
+  }
+
   onScroll = (event) => {
     if (!this.skippedInitialScroll) {
       this.skippedInitialScroll = true;
@@ -94,19 +101,9 @@ export default class Carousel extends BaseComponent {
     const offsetX = presenter.getDirectionOffset(event.nativeEvent.contentOffset.x, this.props);
     
     if (offsetX >= 0) {
-      const {currentStandingPage} = this.state;
       const newPage = presenter.calcPageIndex(offsetX, this.props);
 
       this.setState({currentPage: newPage});
-
-      // finished full page scroll
-      if (offsetX % this.pageWidth <= OFFSET_PIXEL_CORRECTION) {
-        this.setState({currentStandingPage: newPage});
-        
-        if (currentStandingPage !== newPage) {
-          _.invoke(this.props, 'onChangePage', newPage, currentStandingPage);
-        }
-      }
     }
 
     if (loop && presenter.isOutOfBounds(offsetX, this.props)) {
@@ -154,6 +151,7 @@ export default class Carousel extends BaseComponent {
         scrollEventThrottle={200}
         contentOffset={initialOffset}
         onContentSizeChange={this.onContentSizeChange}
+        onMomentumScrollEnd={this.onMomentumScrollEnd}
       >
         {this.renderChildren()}
       </ScrollView>

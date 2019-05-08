@@ -50,7 +50,9 @@ class Picker extends BaseComponent {
      */
     enableModalBlur: PropTypes.bool,
     /**
-     * Render custom picker
+     * Render custom picker - input will be value (see above)
+     * Example:
+     * renderPicker = (selectedItem) => {...}
      */
     renderPicker: PropTypes.func,
     /**
