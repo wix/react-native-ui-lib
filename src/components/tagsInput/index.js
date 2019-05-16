@@ -131,7 +131,7 @@ export default class TagsInput extends BaseComponent {
     const {value, tags} = this.state;
     
     if (disableTagAdding) return;
-    if (_.isEmpty(value.trim())) return;
+    if (_.isNil(value) || _.isEmpty(value.trim())) return;
 
     const newTag = _.isFunction(onCreateTag) ? onCreateTag(value) : value;
     const newTags = [...tags, newTag];
