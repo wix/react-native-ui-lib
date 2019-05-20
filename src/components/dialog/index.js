@@ -138,12 +138,12 @@ class Dialog extends BaseComponent {
   }
 
   renderContent() {
-    const {bottom} = this.getThemeProps();
+    const {bottom, testID} = this.getThemeProps();
     const bottomInsets = Constants.getSafeAreaInsets().paddingBottom;
 
     return (
       <TouchableWithoutFeedback>
-        <SafeAreaView style={{flexGrow: 1}}>
+        <SafeAreaView style={{flexGrow: 1}} testID={testID}>
           {this.props.children}
           {Constants.isIphoneX && bottom && <View style={{height: bottomInsets}}/>}
         </SafeAreaView>
