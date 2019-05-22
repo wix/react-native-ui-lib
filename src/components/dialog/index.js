@@ -167,7 +167,7 @@ class Dialog extends BaseComponent {
   }
 
   renderAnimationContainer() {
-    const {animationConfig, top} = this.getThemeProps();
+    const {animationConfig, top, testID} = this.getThemeProps();
     const {alignments, deltaY} = this.state;
     const centerByDefault = _.isEmpty(alignments);
     const hasCustomAnimation = (animationConfig && animationConfig.animation);
@@ -176,7 +176,8 @@ class Dialog extends BaseComponent {
     const animation = hasCustomAnimation ? Object.assign(defaultAnimation, animationConfig) : {};
 
     return (
-      <Container 
+      <Container
+        testID={testID}
         style={[
           this.styles.overlay,
           {...alignments},
