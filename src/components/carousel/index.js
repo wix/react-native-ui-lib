@@ -73,10 +73,7 @@ export default class Carousel extends BaseComponent {
         // this is done to handle onMomentumScrollEnd not being called in Android:
         // https://github.com/facebook/react-native/issues/11693
         // https://github.com/facebook/react-native/issues/19246
-        const {currentStandingPage, currentPage} = this.state;
-        if (currentStandingPage !== currentPage) {
-          _.invoke(this.props, 'onChangePage', currentPage, currentStandingPage);
-        }
+        this.onMomentumScrollEnd();
       }
     }
   }
