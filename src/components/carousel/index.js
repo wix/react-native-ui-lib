@@ -69,6 +69,12 @@ export default class Carousel extends BaseComponent {
     
     if (this.carousel) {
       this.carousel.scrollTo({x, animated});
+      if (Constants.isAndroid) {
+        // this is done to handle onMomentumScrollEnd not being called in Android:
+        // https://github.com/facebook/react-native/issues/11693
+        // https://github.com/facebook/react-native/issues/19246
+        this.onMomentumScrollEnd();
+      }
     }
   }
 
