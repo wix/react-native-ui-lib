@@ -198,12 +198,13 @@ export default class ActionSheet extends BaseComponent {
   }
 
   render() {
-    const {useNativeIOS, visible, onDismiss, useModal, dialogStyle, onModalDismissed} = this.getThemeProps();
+    const {useNativeIOS, visible, onDismiss, useModal, dialogStyle, onModalDismissed, testID} = this.getThemeProps();
     
     if (Constants.isIOS && useNativeIOS) return null;
     
     return (
       <Dialog
+        testID={testID}
         bottom
         centerH
         width="100%"

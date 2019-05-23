@@ -1,4 +1,4 @@
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import {Navigation} from 'react-native-navigation';
 import * as Animatable from 'react-native-animatable';
 import {AnimatableManager, ThemeManager, Constants, Assets, Colors, Typography} from 'react-native-ui-lib'; //eslint-disable-line

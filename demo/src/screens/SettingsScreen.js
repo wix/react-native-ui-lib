@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, AsyncStorage, I18nManager} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import {StyleSheet, I18nManager} from 'react-native';
 import {Colors, View, Text, Picker, Toast, Switch} from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 

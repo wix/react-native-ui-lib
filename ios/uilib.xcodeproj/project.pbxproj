@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -34,6 +33,7 @@
 		8EBCD1D1217F48DC0036D32F /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E78A6FA217F48A600F3213A /* libRCTBlob.a */; };
 		8EFF3266225A18E5008801BE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFF322D225A18E5008801BE /* JavaScriptCore.framework */; };
 		D8D93EAD20161B5000A39331 /* libreactnativeuilib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8D93EA720161B4600A39331 /* libreactnativeuilib.a */; };
+		DF6E5A49E7C04AB69D24CA62 /* libRNCAsyncStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93B1B48103514A85815B551B /* libRNCAsyncStorage.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -414,6 +414,8 @@
 		ABA466B7BFE84EBD893EB923 /* Interactable.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = Interactable.xcodeproj; path = "../node_modules/react-native-interactable/lib/ios/Interactable.xcodeproj"; sourceTree = "<group>"; };
 		B3263B7B7C134C8495EA5E05 /* RNTextSize.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTextSize.xcodeproj; path = "../node_modules/react-native-text-size/ios/RNTextSize.xcodeproj"; sourceTree = "<group>"; };
 		D8D93E8620161B4600A39331 /* reactnativeuilib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = reactnativeuilib.xcodeproj; path = ../lib/ios/reactnativeuilib.xcodeproj; sourceTree = "<group>"; };
+		E29F19B0766441A3A54F0079 /* RNCAsyncStorage.xcodeproj */ = {isa = PBXFileReference; name = "RNCAsyncStorage.xcodeproj"; path = "../node_modules/@react-native-community/async-storage/ios/RNCAsyncStorage.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		93B1B48103514A85815B551B /* libRNCAsyncStorage.a */ = {isa = PBXFileReference; name = "libRNCAsyncStorage.a"; path = "libRNCAsyncStorage.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -442,6 +444,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				DF6E5A49E7C04AB69D24CA62 /* libRNCAsyncStorage.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,6 +643,7 @@
 				58CA453CF9884711B2FC29AF /* RNBlur.xcodeproj */,
 				ABA466B7BFE84EBD893EB923 /* Interactable.xcodeproj */,
 				B3263B7B7C134C8495EA5E05 /* RNTextSize.xcodeproj */,
+				E29F19B0766441A3A54F0079 /* RNCAsyncStorage.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1300,12 +1304,14 @@
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 					"$(SRCROOT)/../node_modules/react-native-interactable/lib/ios/Interactable",
 					"$(SRCROOT)/../node_modules/react-native-text-size/ios",
+					"$(SRCROOT)/../node_modules/@react-native-community/async-storage/ios",
 				);
 				INFOPLIST_FILE = uilib/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/uilib\"",
 					"\"$(SRCROOT)/uilib\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1332,12 +1338,14 @@
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 					"$(SRCROOT)/../node_modules/react-native-interactable/lib/ios/Interactable",
 					"$(SRCROOT)/../node_modules/react-native-text-size/ios",
+					"$(SRCROOT)/../node_modules/@react-native-community/async-storage/ios",
 				);
 				INFOPLIST_FILE = uilib/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/uilib\"",
 					"\"$(SRCROOT)/uilib\"",
 				);
 				OTHER_LDFLAGS = (
