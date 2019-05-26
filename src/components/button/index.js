@@ -163,6 +163,12 @@ export default class Button extends BaseComponent {
     right: 'right'
   };
 
+  // This redundant constructor for some reason fix tests :/
+  // eslint-disable-next-line
+  constructor(props) {
+    super(props);
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.animateLayout && !_.isEqual(prevProps, this.props)) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
