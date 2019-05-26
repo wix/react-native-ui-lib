@@ -163,14 +163,6 @@ export default class Button extends BaseComponent {
     right: 'right'
   };
 
-  constructor(props) {
-    super(props);
-
-    if (!_.isUndefined(props.containerStyle)) {
-      console.error('Button "containerStyle" prop will be deprecated soon, please use "style" instead');
-    }
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.animateLayout && !_.isEqual(prevProps, this.props)) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -185,7 +177,7 @@ export default class Button extends BaseComponent {
       const size = height >= width ? height : width;
       this.setState({size});
     }
-    
+
     if (Constants.isAndroid && Platform.Version <= 17) {
       this.setState({borderRadius: height / 2});
     }
@@ -271,29 +263,29 @@ export default class Button extends BaseComponent {
     const outlineWidth = this.getThemeProps().outlineWidth || 1;
 
     const CONTAINER_STYLE_BY_SIZE = {};
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round ? 
-    {height: this.state.size, width: this.state.size, padding: PADDINGS.XSMALL} : 
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round ?
+    {height: this.state.size, width: this.state.size, padding: PADDINGS.XSMALL} :
     {
       paddingVertical: PADDINGS.XSMALL,
       paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
       minWidth: MIN_WIDTH.XSMALL,
     };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = round ?
-    {height: this.state.size, width: this.state.size, padding: PADDINGS.SMALL} : 
+    {height: this.state.size, width: this.state.size, padding: PADDINGS.SMALL} :
     {
       paddingVertical: PADDINGS.SMALL,
       paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
       minWidth: MIN_WIDTH.SMALL,
     };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = round ? 
-    {height: this.state.size, width: this.state.size, padding: PADDINGS.MEDIUM} : 
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = round ?
+    {height: this.state.size, width: this.state.size, padding: PADDINGS.MEDIUM} :
     {
       paddingVertical: PADDINGS.MEDIUM,
       paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
       minWidth: MIN_WIDTH.MEDIUM,
     };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = round ? 
-    {height: this.state.size, width: this.state.size, padding: PADDINGS.LARGE} : 
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = round ?
+    {height: this.state.size, width: this.state.size, padding: PADDINGS.LARGE} :
     {
       paddingVertical: PADDINGS.LARGE,
       paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
@@ -333,7 +325,7 @@ export default class Button extends BaseComponent {
 
   getOutlineStyle() {
     const {outline, outlineColor, outlineWidth, link, disabled} = this.getThemeProps();
-    
+
     let outlineStyle;
     if ((outline || outlineColor) && !link) {
       outlineStyle = {
@@ -410,7 +402,7 @@ export default class Button extends BaseComponent {
 
   renderIcon() {
     const {iconSource} = this.props;
-    
+
     if (iconSource) {
       const iconStyle = this.getIconStyle();
       if (typeof iconSource === 'function') {
@@ -427,7 +419,7 @@ export default class Button extends BaseComponent {
     const typography = this.extractTypographyValue();
     const color = this.getLabelColor();
     const labelSizeStyle = this.getLabelSizeStyle();
-    
+
     if (label) {
       return (
         <Text
@@ -443,7 +435,7 @@ export default class Button extends BaseComponent {
   }
 
   render() {
-    const {onPress, disabled, link, style, containerStyle, testID, animateLayout, ...others} = this.getThemeProps();
+    const {onPress, disabled, link, style, testID, animateLayout, ...others} = this.getThemeProps();
     const shadowStyle = this.getShadowStyle();
     const {margins} = this.state;
     const backgroundColor = this.getBackgroundColor();
@@ -460,7 +452,6 @@ export default class Button extends BaseComponent {
           (link) && this.styles.innerContainerLink,
           shadowStyle,
           margins,
-          containerStyle,
           backgroundColor && {backgroundColor},
           borderRadiusStyle,
           outlineStyle,
