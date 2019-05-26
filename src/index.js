@@ -17,7 +17,6 @@ module.exports = {
   get Image() { return require('./components').Image; },
   get TextArea() { return require('./components').TextArea; },
   get TextField() { return require('./components').TextField; },
-  get TextInput() { return require('./components').TextInput; },
   get MaskedInput() { return require('./components').MaskedInput; },
   get ListItem() { return require('./components').ListItem; },
   get Notification() { return require('./components').Notification; },
