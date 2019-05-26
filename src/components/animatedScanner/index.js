@@ -9,7 +9,6 @@ import View from '../../components/view';
 
 
 // TODO: add finisher animation (check icon animation or something)
-// TODO: remove deprecated functionality
 /**
  * @description: Scanner component for progress indication
  * @extends: Animated.View
@@ -58,10 +57,6 @@ export default class AnimatedScanner extends BaseComponent {
       animatedProgress: new Animated.Value(0),
       isDone: false
     };
-
-    if (!_.isNumber(props.progress)) {
-      console.warn('[react-native-ui-lib]! please check out the new api for AnimatedScanner. progress now accepts number instead of Animated Value'); // eslint-disable-line
-    }
   }
 
   componentDidMount() {
@@ -102,7 +97,7 @@ export default class AnimatedScanner extends BaseComponent {
     });
   }
 
-  renderNew() {
+  render() {
     const {opacity, backgroundColor, hideScannerLine, style} = this.props;
     const {isDone, animatedProgress} = this.state;
     return (
@@ -125,54 +120,17 @@ export default class AnimatedScanner extends BaseComponent {
       </View>
     );
   }
-
-  render() {
-    if (_.isNumber(this.props.progress)) {
-      return this.renderNew();
-    }
-    // TODO: deprecate
-    return this.renderOld();
-  }
-
-  // TODO: deprecate
-  renderOld() {
-    const {progress, opacity, backgroundColor} = this.props;
-    return (
-      <Animated.View
-        style={[this.styles.container,
-          opacity && {opacity},
-          backgroundColor && {backgroundColor},
-          {
-            right: progress.interpolate({
-              inputRange: [0, 5, 55, 100],
-              outputRange: [Constants.screenWidth, Constants.screenWidth / 2, Constants.screenWidth / 3, 0],
-            }),
-          },
-        ]}
-      >
-        {JSON.stringify(progress) !== '100' && <View style={this.styles.scanner}/>}
-      </Animated.View>
-    );
-  }
 }
 
 function createStyles() {
   return StyleSheet.create({
     container: {
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
+      ...StyleSheet.absoluteFillObject,
       backgroundColor: Colors.white,
       opacity: 0.9
     },
     scanner: {
-      position: 'absolute',
-      left: 0,
-      top: 0,
-      bottom: 0,
-      right: 0,
+      ...StyleSheet.absoluteFillObject,
       borderWidth: StyleSheet.hairlineWidth,
       borderColor: Colors.dark50
     }
