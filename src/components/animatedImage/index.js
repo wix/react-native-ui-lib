@@ -7,8 +7,6 @@ import {BaseComponent} from '../../commons';
 
 const UIAnimatedImage = Animated.createAnimatedComponent(Image);
 
-const deprecatedProps = [{old: 'imageSource', new: 'source'}, {old: 'imageStyle', new: 'style'}, {old: 'testId', new: 'testID'}];
-
 /**
  * @description: Image component that fades-in the image with animation once it's loaded
  * @extends: Animated.Image
@@ -27,25 +25,13 @@ class AnimatedImage extends BaseComponent {
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
-     * Style for the image component
-     */
-    imageStyle: PropTypes.object,
-    /**
-     * The image source (external or assets)
-     */
-    imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
      * Duration for the fade animation when the image is loaded
      */
     animationDuration: PropTypes.number,
     /**
      * A component to render while the image is loading
      */
-    loader: PropTypes.element,
-    /**
-     * Use to identify the avatar in tests
-     */
-    testId: PropTypes.string
+    loader: PropTypes.element
   };
 
   static defaultProps = {
@@ -55,31 +41,6 @@ class AnimatedImage extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {opacity: new Animated.Value(0), isLoading: true};
-    this.checkForDeprecatedProps(props);
-  }
-
-  checkForDeprecatedProps(props) {
-    deprecatedProps.forEach(prop => {
-      if (props[prop.old]) {
-        console.warn(`'${prop.old}' property is deprecated, use '${prop.new}' instead`);
-      }
-    });
-  }
-
-  get source() {
-    const {imageSource, source} = this.props;
-    return source || imageSource;
-  }
-
-  get style() {
-    const {imageStyle, style} = this.props;
-    return style || imageStyle;
-  }
-
-  get testID() {
-    // TODO: remove testId after deprecation
-    const {testId, testID} = this.props;
-    return testID || testId;
   }
 
   onLoad = () => {
@@ -90,15 +51,15 @@ class AnimatedImage extends BaseComponent {
   };
 
   render() {
-    const {containerStyle, loader, ...others} = this.props;
+    const {containerStyle, source, loader, style, testID, ...others} = this.props;
     return (
       <View style={containerStyle}>
         <UIAnimatedImage
           {...others}
-          style={[{opacity: this.state.opacity}, this.style]}
-          source={this.source}
+          style={[{opacity: this.state.opacity}, style]}
+          source={source}
           onLoad={() => this.onLoad()}
-          testID={this.testID}
+          testID={testID}
         />
         {this.state.isLoading && loader && (
           <View style={{...StyleSheet.absoluteFillObject, justifyContent: 'center'}}>
