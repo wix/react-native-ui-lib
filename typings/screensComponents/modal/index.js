@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal as RNModal, TouchableWithoutFeedback, StyleSheet } from "react-native";
 import _ from "lodash";
-import { BlurView } from "react-native-blur";
+import { BlurView } from "@react-native-community/blur";
 import { Constants } from "../../helpers";
 import { BaseComponent } from "../../commons";
 import TopBar from "./TopBar";

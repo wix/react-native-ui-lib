@@ -2,7 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Modal as RNModal, TouchableWithoutFeedback} from 'react-native';
-import {BlurView} from 'react-native-blur';
+import {BlurView} from '@react-native-community/blur';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import TopBar from './TopBar';
