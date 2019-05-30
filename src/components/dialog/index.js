@@ -139,7 +139,7 @@ class Dialog extends BaseComponent {
 
   renderContent() {
     const {bottom} = this.getThemeProps();
-    const bottomInsets = Constants.getSafeAreaInsets().paddingBottom;
+    const bottomInsets = Constants.getSafeAreaInsets().bottom;
 
     return (
       <TouchableWithoutFeedback>
