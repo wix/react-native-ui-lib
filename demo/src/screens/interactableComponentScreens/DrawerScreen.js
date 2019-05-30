@@ -135,16 +135,15 @@ class DrawerScreen extends Component {
     return (
       <ScrollView style={styles.container} contentContainerStyle={{paddingBottom: 50}}>
         <Drawer
-          migrate
           leftItem={leftItem}
           rightItems={rightItems}
           style={{marginTop: 20}}
+          itemsIconSize={20}
           ref={r => (this.firstDrawer = r)}
         >
           {this.renderContent('0', conversations[0])}
         </Drawer>
         <Drawer
-          migrate
           leftItem={leftItem}
           rightItems={[
             {icon: shareIcon, text: 'Share', onPress: this.onItemPress},
@@ -157,7 +156,6 @@ class DrawerScreen extends Component {
 
         {/* <Drawer
           // leftItem={leftItem}
-          migrate
           rightItems={rightItems}
           style={{marginTop: 20}}
           onPress={this.onPress}
@@ -168,7 +166,6 @@ class DrawerScreen extends Component {
 
         <Drawer
           leftItem={{text: 'Archive', background: Colors.blue10, width: 100, onPress: this.onLeftItemPressed}}
-          migrate
           // rightItems={rightItems}
           style={{marginTop: 20}}
           itemsTextStyle={{fontSize: 18}}
@@ -180,9 +177,9 @@ class DrawerScreen extends Component {
 
         <View style={{paddingHorizontal: 50}}>
           <Drawer
-            migrate
             leftItem={leftItem}
             rightItems={[rightItems[1], rightItems[2]]}
+            itemsIconSize={24}
             style={{marginTop: 20}}
             onPress={this.onPress}
           >
@@ -191,7 +188,6 @@ class DrawerScreen extends Component {
         </View>
 
         <Drawer
-          migrate
           leftItem={{icon: collectionsIcon, background: Colors.blue10, width: 100}}
           rightItems={[
             {icon: starIcon, background: Colors.dark60},
@@ -208,7 +204,6 @@ class DrawerScreen extends Component {
         </Drawer>
 
         <Drawer
-          migrate
           leftItem={leftItem}
           rightItems={rightItems}
           style={{marginTop: 20}}
