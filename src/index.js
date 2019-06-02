@@ -34,7 +34,6 @@ module.exports = {
   get Text() { return require('./components').Text; },
   get Toast() { return require('./components').Toast; },
   get TouchableOpacity() { return require('./components').TouchableOpacity; },
-  get Tour() { return require('./components').Tour; },
   get View() { return require('./components').View; },
   get WheelPickerDialog() { return require('./components').WheelPickerDialog; },
 

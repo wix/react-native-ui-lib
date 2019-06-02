@@ -39,7 +39,6 @@ module.exports = {
   get Text() { return require('./text').default; },
   get Toast() { return require('./toast').default; },
   get TouchableOpacity() { return require('./touchableOpacity').default; },
-  get Tour() { return require('./tour').default; },
   get View() { return require('./view').default; },
   get WheelPickerDialog() { return require('./wheelPickerDialog').default; },
 };
