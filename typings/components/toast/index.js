@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import _ from "lodash";
 import * as Animatable from "react-native-animatable";
-import { BlurView } from "react-native-blur";
+import { BlurView } from "@react-native-community/blur";
 import { BaseComponent } from "../../commons";
 import View from "../view";
 import Button from "../button";
