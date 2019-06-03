@@ -66,6 +66,10 @@ class Dialog extends BaseComponent {
      */
     disablePan: PropTypes.bool,
     /**
+     * Whether or not to handle SafeArea
+     */
+    useSafeArea: PropTypes.bool,
+    /**
      * Whether to display the dialog in a modal
      */
     useModal: PropTypes.bool,
@@ -138,14 +142,14 @@ class Dialog extends BaseComponent {
   }
 
   renderContent() {
-    const {bottom} = this.getThemeProps();
+    const {bottom, useSafeArea} = this.getThemeProps();
     const bottomInsets = Constants.getSafeAreaInsets().bottom;
 
     return (
       <TouchableWithoutFeedback>
         <SafeAreaView style={{flexGrow: 1}}>
           {this.props.children}
-          {Constants.isIphoneX && bottom && <View style={{height: bottomInsets}}/>}
+          {useSafeArea && Constants.isIphoneX && bottom && <View style={{height: bottomInsets}}/>}
         </SafeAreaView>
       </TouchableWithoutFeedback>
     );

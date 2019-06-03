@@ -130,6 +130,7 @@ class DialogScreen extends Component {
           width="100%"
           height="35%"
           bottom
+          useSafeArea
           centerH
           onDismiss={() => this.setState({showDialog2: false})}
           style={{backgroundColor: Colors.white}}
@@ -141,6 +142,7 @@ class DialogScreen extends Component {
           width="90%"
           height="60%"
           bottom
+          useSafeArea
           centerH
           onDismiss={() => this.setState({showDialog3: false})}
         >
@@ -162,6 +164,7 @@ class DialogScreen extends Component {
           width="100%"
           height={null}
           bottom
+          useSafeArea
           centerH
           onDismiss={() => this.setState({showDialog5: false})}
           style={{backgroundColor: Colors.white}}
@@ -173,6 +176,7 @@ class DialogScreen extends Component {
           width="80%"
           height="40%"
           bottom
+          useSafeArea
           centerH
           onDismiss={() => this.setState({showDialog6: false})}
           animationConfig={{animation: 'slideInLeft', duration: 1000}}
