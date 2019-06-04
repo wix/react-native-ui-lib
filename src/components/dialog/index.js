@@ -21,11 +21,6 @@ import PanGestureView from '../panGestureView';
  */
 /*eslint-enable*/
 
-const SWIPE_DIRECTIONS = {
-  UP: 'up',
-  DOWN: 'down'
-}; // DEFRECATED
-
 class Dialog extends BaseComponent {
   static displayName = 'Dialog'
   static propTypes = {
@@ -37,10 +32,6 @@ class Dialog extends BaseComponent {
      * Dismiss callback for when clicking on the background
      */
     onDismiss: PropTypes.func,
-    /**
-     * The direction of the swipe to dismiss the dialog (default is 'down')
-     */
-    dismissSwipeDirection: PropTypes.oneOf(Object.values(SWIPE_DIRECTIONS)), // DEFRECATED
     /**
      * The color of the overlay background
      */
@@ -82,8 +73,6 @@ class Dialog extends BaseComponent {
     useModal: true
   };
 
-  static swipeDirections = SWIPE_DIRECTIONS; // DEFRECATED
-
   constructor(props) {
     super(props);
 
@@ -93,10 +82,6 @@ class Dialog extends BaseComponent {
       alignments: this.state.alignments,
       deltaY: new Animated.Value(this.initialPosition)
     };
-
-    if (props.dismissSwipeDirection) {
-      console.warn('Dialog component\'s prop \'dismissSwipeDirection\' is deprecated, please remove it');
-    }
 
     if (props.visible) {
       this.animateContent();
