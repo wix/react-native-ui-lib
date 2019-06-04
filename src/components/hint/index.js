@@ -103,6 +103,10 @@ class Hint extends BaseComponent {
      * Callback for the background press
      */
     onBackgroundPress: PropTypes.func,
+    /**
+     * Hint testID
+     */
+    testID: PropTypes.string
   };
 
   static defaultProps = {
@@ -306,7 +310,7 @@ class Hint extends BaseComponent {
   }
 
   renderHint() {
-    const {position, message, messageStyle, icon, iconStyle, borderRadius, color} = this.getThemeProps();
+    const {position, message, messageStyle, icon, iconStyle, borderRadius, color, testID} = this.getThemeProps();
     const shownUp = position === HINT_POSITIONS.TOP;
     if (this.showHint) {
       return (
@@ -315,6 +319,7 @@ class Hint extends BaseComponent {
           duration={200}
           style={[styles.hintContainer, this.getHintPosition(), this.getHintPadding()]}
           pointerEvents="box-none"
+          testID={`${testID}`}
         >
           {this.renderHintTip()}
           <View
