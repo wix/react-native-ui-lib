@@ -103,10 +103,6 @@ class Hint extends BaseComponent {
      * Callback for the background press
      */
     onBackgroundPress: PropTypes.func,
-    /**
-     * Hint testID
-     */
-    testID: PropTypes.string
   };
 
   static defaultProps = {
@@ -319,7 +315,7 @@ class Hint extends BaseComponent {
           duration={200}
           style={[styles.hintContainer, this.getHintPosition(), this.getHintPadding()]}
           pointerEvents="box-none"
-          testID={`${testID}`}
+          testID={testID}
         >
           {this.renderHintTip()}
           <View
