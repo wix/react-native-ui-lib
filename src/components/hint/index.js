@@ -103,6 +103,10 @@ class Hint extends BaseComponent {
      * Callback for the background press
      */
     onBackgroundPress: PropTypes.func,
+    /**
+     * The hint's test identifier
+     */
+    testID: PropTypes.string,
   };
 
   static defaultProps = {
