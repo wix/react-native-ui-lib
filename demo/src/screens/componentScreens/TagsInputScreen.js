@@ -41,7 +41,7 @@ export default class TagsInputScreen extends Component {
 
   render() {
     return (
-      <ScrollView keyboardShouldPersistTaps="always">
+      <ScrollView keyboardShouldPersistTaps="never">
         <View style={styles.container}>
           <Text text40 marginB-20>
             TagsInput
