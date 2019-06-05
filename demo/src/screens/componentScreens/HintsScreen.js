@@ -72,6 +72,7 @@ export default class HintsScreen extends Component {
             // borderRadius={BorderRadiuses.br40}
             // edgeMargins={30}
             // onBackgroundPress={() => this.setState({showHint: !showHint})}
+            testID={'Hint'}
           >
             {!useTargetFrame && (
               <Button
