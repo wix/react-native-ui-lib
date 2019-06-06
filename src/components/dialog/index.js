@@ -122,6 +122,14 @@ class Dialog extends BaseComponent {
     _.invoke(this.props, 'onDismiss');
   }
 
+  animatedDismiss = () => {
+    if (this.panGestureViewRef) {
+      this.panGestureViewRef.animateDismiss();
+    } else {
+      this.onDismiss();
+    }
+  }
+
   initPositions() {
     this.setState({
       deltaY: new Animated.Value(this.initialPosition)
@@ -161,6 +169,7 @@ class Dialog extends BaseComponent {
 
     return (
       <Container
+        ref={!disablePan && (r => this.panGestureViewRef = r)}
         style={[this.styles.dialogContainer, style]}
         direction={top && PanGestureView.directions.UP}
         onDismiss={this.onDismiss}
@@ -201,7 +210,8 @@ class Dialog extends BaseComponent {
   }
 
   render() {
-    const {visible, overlayBackgroundColor, useModal, onModalDismissed} = this.getThemeProps();
+    const {visible, overlayBackgroundColor, useModal, onModalDismissed, disablePan} = this.getThemeProps();
+    const dismissFunction = disablePan ? this.onDismiss : this.animatedDismiss;
     
     if (useModal) {
       return (
@@ -209,8 +219,8 @@ class Dialog extends BaseComponent {
           transparent
           visible={visible}
           animationType={'fade'}
-          onBackgroundPress={this.onDismiss}
-          onRequestClose={this.onDismiss}
+          onBackgroundPress={dismissFunction}
+          onRequestClose={dismissFunction}
           overlayBackgroundColor={overlayBackgroundColor}
           onDismiss={onModalDismissed}
         >
