@@ -2,11 +2,10 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
-import {Image as RNImage} from 'react-native';
+import {Image as RNImage, StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import Assets from '../../assets';
-
 
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
@@ -36,11 +35,15 @@ class Image extends BaseComponent {
     /**
      * whether the image should flip horizontally on RTL locals
      */
-    supportRTL: PropTypes.bool
+    supportRTL: PropTypes.bool,
+    /**
+     * Show image as a cover, full width, image (according to aspect ratio, default: 16:8)
+     */
+    cover: PropTypes.bool
   };
 
   static defaultProps = {
-    assetGroup: 'icons'
+    assetGroup: 'icons',
   };
 
   constructor(props) {
@@ -69,18 +72,33 @@ class Image extends BaseComponent {
 
   render() {
     const source = this.getImageSource();
-    const {tintColor, style, supportRTL, ...others} = this.getThemeProps();
+    const {tintColor, style, supportRTL, cover, aspectRatio, ...others} = this.getThemeProps();
     const shouldFlipRTL = supportRTL && Constants.isRTL;
 
     return (
-      <RNImage 
-        style={[{tintColor}, style, shouldFlipRTL && {transform: [{scaleX: -1}]}]} 
-        {...others} 
+      <RNImage
+        style={[
+          {tintColor},
+          shouldFlipRTL && styles.rtlFlipped,
+          cover && styles.coverImage,
+          style
+        ]}
+        {...others}
         source={source}
       />
     );
   }
 }
+
+const styles = StyleSheet.create({
+  rtlFlipped: {
+    transform: [{scaleX: -1}],
+  },
+  coverImage: {
+    width: Constants.screenWidth,
+    aspectRatio: 16 / 8,
+  },
+});
 
 hoistNonReactStatic(Image, RNImage);
 export default Image;
