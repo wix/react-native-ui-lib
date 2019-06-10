@@ -36,12 +36,14 @@ export default class TabPage extends Component {
       cond(eq(currentPage, index), 1, 0),
     ]);
 
-    return <Reanimated.View style={[styles.page, {opacity}]}>{loaded && this.props.children}</Reanimated.View>;
+    const zIndex = cond(eq(currentPage, index), 1, 0);
+
+    return <Reanimated.View style={[styles.page, {opacity}, {zIndex}]}>{loaded && this.props.children}</Reanimated.View>;
   }
 }
 
 const styles = StyleSheet.create({
   page: {
     ...StyleSheet.absoluteFillObject,
-  },
+  }
 });

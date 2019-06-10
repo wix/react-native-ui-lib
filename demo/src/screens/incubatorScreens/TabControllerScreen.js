@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Incubator, Colors, View, Text, Image, Assets} from 'react-native-ui-lib'; //eslint-disable-line
+import {Incubator, Colors, View, Text, Image, Assets, Button} from 'react-native-ui-lib'; //eslint-disable-line
 import _ from 'lodash';
 
 class TabControllerScreen extends Component {
@@ -75,6 +75,7 @@ class TabControllerScreen extends Component {
               <Incubator.TabController.TabPage index={0}>
                 <View flex>
                   <Text text40>ABOUT</Text>
+                  <Button label="Button" />
                   <Image
                     style={{flex: 1}}
                     source={{
