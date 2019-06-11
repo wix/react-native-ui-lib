@@ -78,7 +78,7 @@ dependencies {
     implementation 'com.facebook.fresco:animated-gif:0.14.1'
     implementation project(':react-native-navigation')
     implementation project(':react-native-interactable')
-    implementation project(':react-native-blur')
+    implementation project(':@react-native-community_blur')
     implementation project(':react-native-ui-lib')
     implementation project(':react-native-text-size')
     implementation project(':react-native-reanimated')

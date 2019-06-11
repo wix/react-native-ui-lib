@@ -1,11 +1,12 @@
 rootProject.name = 'uilib'
-include ':@react-native-community_async-storage'
-project(':@react-native-community_async-storage').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/async-storage/android')
 
 include ':app'
 
-include ':react-native-blur'
-project(':react-native-blur').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-blur/android')
+include ':@react-native-community_async-storage'
+project(':@react-native-community_async-storage').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/async-storage/android')
+
+include ':@react-native-community_blur'
+project(':@react-native-community_blur').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/blur/android')
 
 include ':react-native-interactable'
 project(':react-native-interactable').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-interactable/lib/android')

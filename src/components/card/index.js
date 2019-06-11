@@ -2,7 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, ViewPropTypes, Animated} from 'react-native';
-import {BlurView} from 'react-native-blur';
+import {BlurView} from '@react-native-community/blur';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -69,7 +69,7 @@ class Card extends BaseComponent {
      */
     enableBlur: PropTypes.bool,
     /**
-     * blur option for blur effect according to react-native-blur lib (make sure enableBlur is on)
+     * blur option for blur effect according to @react-native-community/blur lib (make sure enableBlur is on)
      */
     blurOptions: PropTypes.object,
     /**
