@@ -142,7 +142,13 @@ export default class NewDrawer extends BaseComponent {
       <RectButton
         key={index}
         testID={item.testID}
-        style={[styles.action, item.style, {backgroundColor: item.background || DEFAULT_BG}, {width: item.width}, {minWidth: itemsMinWidth}]}
+        style={[
+          styles.action,
+          item.style,
+          {backgroundColor: item.background || DEFAULT_BG},
+          {width: item.width},
+          {minWidth: itemsMinWidth},
+        ]}
         onPress={() => this.onPress(item)}
       >
         {item.icon && (
