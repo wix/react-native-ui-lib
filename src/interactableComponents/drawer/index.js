@@ -11,7 +11,6 @@ import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 
 const DEFAULT_BG = Colors.blue30;
-// const DEFAULT_ICON_SIZE = 24;
 
 const ITEM_PROP_TYPES = {
   width: PropTypes.number,
@@ -55,6 +54,10 @@ export default class NewDrawer extends BaseComponent {
      */
     equalWidths: PropTypes.bool,
     /**
+     * Set a different minimum width
+     */
+    itemsMinWidth: PropTypes.number,
+    /**
      * The color for the text and icon tint of the items
      */
     itemsTintColor: PropTypes.string,
@@ -67,14 +70,14 @@ export default class NewDrawer extends BaseComponent {
      */
     itemsTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
   };
-
+  
   static defaultProps = {
     damping: 0.7,
     tension: 300,
     itemsTintColor: Colors.white,
     // itemsIconSize: DEFAULT_ICON_SIZE,
   };
-
+  
   onPress = item => {
     if (!item.keepOpen) {
       this.closeDrawer();
@@ -126,8 +129,7 @@ export default class NewDrawer extends BaseComponent {
 
   // eslint-disable-next-line react/prop-types
   renderAction = ({item, index, progress, itemsCount}) => {
-    const {itemsTintColor, itemsIconSize, itemsTextStyle} = this.getThemeProps();
-
+    const {itemsTintColor, itemsIconSize, itemsTextStyle, itemsMinWidth} = this.getThemeProps();
     const inputRange = [index / itemsCount, (index + 1) / itemsCount];
     const outputRange = [0.2, 1];
 
@@ -147,7 +149,13 @@ export default class NewDrawer extends BaseComponent {
       <RectButton
         key={index}
         testID={item.testID}
-        style={[styles.action, item.style, {backgroundColor: item.background || DEFAULT_BG}, {width: item.width}]}
+        style={[
+          styles.action,
+          item.style,
+          {backgroundColor: item.background || DEFAULT_BG},
+          {width: item.width},
+          {minWidth: itemsMinWidth},
+        ]}
         onPress={() => this.onPress(item)}
       >
         {item.icon && (
@@ -155,8 +163,7 @@ export default class NewDrawer extends BaseComponent {
             source={item.icon}
             style={[
               styles.actionIcon,
-              {tintColor: itemsTintColor, opacity, transform: [{scale}]},
-              itemsIconSize && {width: itemsIconSize, height: itemsIconSize}
+              {tintColor: itemsTintColor, width: itemsIconSize, height: itemsIconSize, opacity, transform: [{scale}]},
             ]}
           />
         )}
