@@ -47,10 +47,10 @@ export default class TagsInputScreen extends Component {
             TagsInput
           </Text>
 
-          <TagsInput containerStyle={{marginBottom: 20}} placeholder="Enter Tags" tags={this.state.tags2} />
+          <TagsInput containerStyle={{marginBottom: 25}} placeholder="Enter Tags" tags={this.state.tags2} />
 
           <TagsInput
-            containerStyle={{marginBottom: 20}}
+            containerStyle={{marginBottom: 25}}
             placeholder="with disableTagAdding disableTagRemoval"
             tags={this.state.tags3}
             disableTagRemoval
@@ -59,22 +59,13 @@ export default class TagsInputScreen extends Component {
 
           <TagsInput
             ref={r => (this.customTagsInput = r)}
-            containerStyle={{marginBottom: 20}}
+            containerStyle={{marginBottom: 25}}
             placeholder="With custom tags"
             tags={this.state.tags}
             renderTag={this.renderCustomTag}
             onCreateTag={value => ({label: value})}
             onTagPress={this.onTagPress}
             inputStyle={{...Typography.text60, color: Colors.blue30}}
-          />
-
-          <Text style={{...Typography.text60}}>Stepper</Text>
-          <Stepper
-            label={this.state.itemsCount === 1 ? 'Item' : 'Items'}
-            min={1}
-            max={5}
-            onValueChange={count => this.setState({itemsCount: count})}
-            initialValue={1}
           />
         </View>
       </ScrollView>
