@@ -79,7 +79,7 @@ function getDefaultNavigationStyle() {
     },
     layout: {
       backgroundColor: Colors.white,
-      orientation: ['portrait'],
+      orientation: ['portrait', 'landscape'],
     },
     topBar: {
       visible: true,
