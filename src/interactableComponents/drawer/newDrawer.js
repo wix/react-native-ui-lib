@@ -54,6 +54,10 @@ export default class NewDrawer extends BaseComponent {
      */
     equalWidths: PropTypes.bool,
     /**
+     * Set a different minimum width
+     */
+    itemsMinWidth: PropTypes.number,
+    /**
      * The color for the text and icon tint of the items
      */
     itemsTintColor: PropTypes.string,
@@ -118,8 +122,7 @@ export default class NewDrawer extends BaseComponent {
 
   // eslint-disable-next-line react/prop-types
   renderAction = ({item, index, progress, itemsCount}) => {
-    const {itemsTintColor, itemsIconSize, itemsTextStyle} = this.getThemeProps();
-
+    const {itemsTintColor, itemsIconSize, itemsTextStyle, itemsMinWidth} = this.getThemeProps();
     const inputRange = [index / itemsCount, (index + 1) / itemsCount];
     const outputRange = [0.2, 1];
 
@@ -139,7 +142,13 @@ export default class NewDrawer extends BaseComponent {
       <RectButton
         key={index}
         testID={item.testID}
-        style={[styles.action, item.style, {backgroundColor: item.background || DEFAULT_BG}, {width: item.width}]}
+        style={[
+          styles.action,
+          item.style,
+          {backgroundColor: item.background || DEFAULT_BG},
+          {width: item.width},
+          {minWidth: itemsMinWidth},
+        ]}
         onPress={() => this.onPress(item)}
       >
         {item.icon && (
