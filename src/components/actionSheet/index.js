@@ -84,7 +84,11 @@ export default class ActionSheet extends BaseComponent {
     /**
      * Called once the modal has been dissmissed (iOS only, modal only)
      */
-    onModalDismissed: PropTypes.func
+    onModalDismissed: PropTypes.func,
+    /**
+     * Whether or not to handle SafeArea
+     */
+    useSafeArea: PropTypes.bool
   };
 
   constructor(props) {
