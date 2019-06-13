@@ -42,6 +42,11 @@ class Dialog extends BaseComponent {
      */
     dismissSwipeDirection: PropTypes.oneOf(Object.values(SWIPE_DIRECTIONS)), // DEFRECATED
     /**
+     * Specify a layout reference, if specified only touches in this layout will trigger a swipe
+     * You must use React.createRef() and send it (not the current)
+     */
+    swipeLayoutRef: PropTypes.object,
+    /**
      * The color of the overlay background
      */
     overlayBackgroundColor: PropTypes.string,
@@ -164,7 +169,7 @@ class Dialog extends BaseComponent {
   }
 
   renderDraggableContainer() {
-    const {style, top, disablePan} = this.getThemeProps();
+    const {style, top, disablePan, swipeLayoutRef} = this.getThemeProps();
     const Container = disablePan ? View : PanGestureView;
 
     return (
@@ -173,6 +178,7 @@ class Dialog extends BaseComponent {
         style={[this.styles.dialogContainer, style]}
         direction={top && PanGestureView.directions.UP}
         onDismiss={this.onDismiss}
+        swipeLayoutRef={swipeLayoutRef}
       >
         {this.renderContent()}
       </Container>

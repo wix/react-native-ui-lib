@@ -28,7 +28,12 @@ export default class PanGestureView extends BaseComponent {
     /**
      * The direction of the allowed pan (default is down)
      */
-    direction: PropTypes.oneOf(Object.values(DIRECTIONS))
+    direction: PropTypes.oneOf(Object.values(DIRECTIONS)),
+    /**
+     * Specify a layout reference, if specified only touches in this layout will trigger a swipe (iOS only)
+     * You must use React.createRef() and send it (not the current)
+     */
+    swipeLayoutRef: PropTypes.object
   };
 
   static defaultProps = {
@@ -53,9 +58,37 @@ export default class PanGestureView extends BaseComponent {
     });
   }
 
+  componentDidMount = () => {
+    if (Constants.isIOS) {
+      const {swipeLayoutRef} = this.props;
+      if (swipeLayoutRef && swipeLayoutRef.current) {
+        setTimeout(
+          () =>
+            swipeLayoutRef.current.measure((fx, fy, width, height, px, py) => {
+              const left = px;
+              let top = py;
+              while (top > Constants.screenHeight) {
+                top -= Constants.screenHeight;
+              }
+
+              this.swipeBox = {top, left, right: left + width, bottom: top + height};
+            }),
+          0,
+        );
+      }
+    }
+  };
+
   handleMoveShouldSetPanResponder = (e, gestureState) => {
     // return true if user is swiping, return false if it's a single click
-    const {dy} = gestureState;
+    const {dy, moveX, moveY} = gestureState;
+    if (this.swipeBox) {
+      const swipeBox = this.swipeBox;
+      if (moveX < swipeBox.left || moveX > swipeBox.right || moveY < swipeBox.top || moveY > swipeBox.bottom) {
+        return false;
+      }
+    }
+
     return dy > 5 || dy < -5;
   };
   handlePanResponderGrant = () => {
