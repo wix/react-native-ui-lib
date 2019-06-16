@@ -11,23 +11,27 @@ const data = [
   },
   {
     title: 'Owl',
-    description: 'DescriptionOwls are birds from the order Strigiformes, which includes about 200 species of mostly solitary and nocturnal birds of prey typified by an upright stance, a large, broad head, binocular vision, binaural hearing, sharp talons, and feathers adapted for silent flight.',
+    description:
+      'DescriptionOwls are birds from the order Strigiformes, which includes about 200 species of mostly solitary and nocturnal birds of prey typified by an upright stance, a large, broad head, binocular vision, binaural hearing, sharp talons, and feathers adapted for silent flight.',
     image: 'https://i.pinimg.com/originals/e5/e3/92/e5e3927bdc7b3afae1e0503757dfee42.jpg',
   },
   {
     title: 'Penguin',
-    description: 'DescriptionPenguins are a group of aquatic flightless birds. They live almost exclusively in the Southern Hemisphere, with only one species, the Galapagos penguin, found north of the equator. Highly adapted for life in the water, penguins have countershaded dark and white plumage, and their wings have evolved into flippers.',
+    description:
+      'DescriptionPenguins are a group of aquatic flightless birds. They live almost exclusively in the Southern Hemisphere, with only one species, the Galapagos penguin, found north of the equator. Highly adapted for life in the water, penguins have countershaded dark and white plumage, and their wings have evolved into flippers.',
     image: 'https://sites.google.com/site/cabrillolab/_/rsrc/1359185743777/penguin-research-links/Gentoo.png',
   },
   {
     title: 'Stork',
-    description: 'DescriptionStorks are large, long-legged, long-necked wading birds with long, stout bills. They belong to the family called Ciconiidae, and make up the order Ciconiiformes. Ciconiiformes previously included a number of other families, such as herons and ibises, but those families have been moved to other orders. ',
-    image: 'https://cdn130.picsart.com/296060988068201.jpg?c256x256'    
+    description:
+      'DescriptionStorks are large, long-legged, long-necked wading birds with long, stout bills. They belong to the family called Ciconiidae, and make up the order Ciconiiformes. Ciconiiformes previously included a number of other families, such as herons and ibises, but those families have been moved to other orders. ',
+    image: 'https://cdn130.picsart.com/296060988068201.jpg?c256x256',
   },
   {
     title: 'Goose',
-    description: `DescriptionGeese are waterfowl of the family Anatidae. This group comprises the genera Anser and Branta. Chen, a genus comprising 'white geese', is sometimes used to refer to a group of species that are more commonly placed within Anser. Some other birds, mostly related to the shelducks, have "goose" as part of their names.`,
-    image: 'https://static-s.aa-cdn.net/img/ios/1216464827/8c6ebccbcff77b69747998fbd1456883?v=1'
+    description:
+      'DescriptionGeese are waterfowl of the family Anatidae. This group comprises the genera Anser and Branta. Chen, a genus comprising \'white geese\', is sometimes used to refer to a group of species that are more commonly placed within Anser. Some other birds, mostly related to the shelducks, have "goose" as part of their names.',
+    image: 'https://static-s.aa-cdn.net/img/ios/1216464827/8c6ebccbcff77b69747998fbd1456883?v=1',
   },
 ];
 
@@ -36,6 +40,12 @@ export default class PlaygroundScreen extends Component {
     super(props);
     this.state = {};
   }
+
+  static options = {
+    topBar: {
+      visible: false,
+    },
+  };
 
   componentDidMount() {}
 
