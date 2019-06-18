@@ -29,7 +29,7 @@ const ICON_RIGHT_PADDING = 3;
 const ICON_LEFT_PADDING = 6;
 
 /**
- * @description: A wrapper for Text Input component with extra functionality like floating placeholder
+ * @description: A wrapper for TextInput component with extra functionality like floating placeholder
  * @extends: TextInput
  * @extendslink: https://facebook.github.io/react-native/docs/textinput.html
  * @modifiers: Typography
@@ -121,7 +121,7 @@ export default class TextField extends BaseInput {
      */
     showCharacterCounter: PropTypes.bool,
     /**
-     * should float the placeholer when focused (instead of when typing)
+     * should float the placeholder when focused (instead of when typing)
      */
     floatOnFocus: PropTypes.bool,
     /**
