@@ -84,7 +84,11 @@ export default class ActionSheet extends BaseComponent {
     /**
      * Called once the modal has been dissmissed (iOS only, modal only)
      */
-    onModalDismissed: PropTypes.func
+    onModalDismissed: PropTypes.func,
+    /**
+     * Whether or not to handle SafeArea
+     */
+    useSafeArea: PropTypes.bool
   };
 
   constructor(props) {
@@ -198,12 +202,13 @@ export default class ActionSheet extends BaseComponent {
   }
 
   render() {
-    const {useNativeIOS, visible, onDismiss, useModal, dialogStyle, onModalDismissed, testID} = this.getThemeProps();
+    const {useNativeIOS, visible, onDismiss, useModal, dialogStyle, onModalDismissed, testID, useSafeArea} = this.getThemeProps();
     
     if (Constants.isIOS && useNativeIOS) return null;
     
     return (
       <Dialog
+        useSafeArea={useSafeArea}
         testID={testID}
         bottom
         centerH
