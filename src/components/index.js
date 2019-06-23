@@ -11,6 +11,7 @@ module.exports = {
   get Checkbox() { return require('./checkbox').default; },
   get ConnectionStatusBar() { return require('./connectionStatusBar').default; },
   get Dialog() { return require('./dialog').default; },
+  get DialogView() { return require('./dialogView').default; },
   get FeatureHighlight() { return require('./featureHighlight').default; },
   get Hint() { return require('./hint').default; },
   get Image() { return require('./image').default; },
