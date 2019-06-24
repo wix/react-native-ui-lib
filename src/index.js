@@ -23,6 +23,7 @@ module.exports = {
   get Notification() { return require('./components').Notification; },
   get PageControl() { return require('./components').PageControl; },
   get PanGestureView() { return require('./components').PanGestureView; },
+  get PanListenerView() { return require('./components').PanListenerView; },
   get Picker() { return require('./components').Picker; },
   get ProgressBar() { return require('./components').ProgressBar; },
   get Stepper() { return require('./components').Stepper; },

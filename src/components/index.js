@@ -24,6 +24,7 @@ module.exports = {
   get Notification() { return require('./notification').default; },
   get PageControl() { return require('./pageControl').default; },
   get PanGestureView() { return require('./panGestureView').default; },
+  get PanListenerView() { return require('./panListenerView').default; },
   get Picker() { return require('./picker').default; },
   get ProgressBar() { return require('./progressBar').default; },
   get Stepper() { return require('./stepper').default; },
