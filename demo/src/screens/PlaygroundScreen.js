@@ -42,8 +42,8 @@ export default class PlaygroundScreen extends Component {
     this.state = {};
 
     _.forEach(data, item => Image.prefetch(item.image));
-    // this.entranceAnim = new Animated.Value(0);
-    this.entranceAnim = _.times(4, () => new Animated.Value(0));
+    this.entranceAnim = new Animated.Value(0);
+    // this.entranceAnim = _.times(4, () => new Animated.Value(0));
   }
 
   static options = {
@@ -55,20 +55,20 @@ export default class PlaygroundScreen extends Component {
   componentDidMount() {
     /* Add performance hit */
     // this.slow(10);
-
-    /* Animate using stagger api */
+    
     setTimeout(() => {
-      Animated.stagger(
-        200,
-        this.entranceAnim.map(anim =>
-          Animated.timing(anim, {
-            toValue: 100,
-            duration: 600,
-            easing: Easing.bezier(0.23, 1, 0.32, 1),
-            useNativeDriver: true,
-          }),
-        ),
-      ).start();
+    /* Animate using stagger api */
+    //   Animated.stagger(
+    //     200,
+    //     this.entranceAnim.map(anim =>
+    //       Animated.timing(anim, {
+    //         toValue: 100,
+    //         duration: 600,
+    //         easing: Easing.bezier(0.23, 1, 0.32, 1),
+    //         useNativeDriver: true,
+    //       }),
+    //     ),
+    //   ).start();
 
       /* Loop with timeout delay */
       // _.forEach(this.entranceAnim, (anim, index) => {
@@ -83,12 +83,12 @@ export default class PlaygroundScreen extends Component {
       // });
 
       /* Use a single animated value */
-      // Animated.timing(this.entranceAnim, {
-      //   toValue: 100,
-      //   duration: 1300,
-      //   easing: Easing.bezier(0.23, 1, 0.32, 1),
-      //   useNativeDriver: true,
-      // }).start();
+      Animated.timing(this.entranceAnim, {
+        toValue: 100,
+        duration: 1300,
+        easing: Easing.bezier(0.23, 1, 0.32, 1),
+        useNativeDriver: true,
+      }).start();
     }, 1000);
   }
 
@@ -107,19 +107,19 @@ export default class PlaygroundScreen extends Component {
   renderCard(index) {
     const style = {};
     if (index < 4) {
-      const animValue = this.entranceAnim[index];
-      // const animValue = this.entranceAnim;
+      // const animValue = this.entranceAnim[index];
+      const animValue = this.entranceAnim;
       style.opacity = animValue.interpolate({
-        // inputRange: [index * 25, (index + 1) * 25],
-        inputRange: [0, 100],
+        inputRange: [index * 25, (index + 1) * 25],
+        // inputRange: [0, 100],
         outputRange: [0, 1],
       });
 
       style.transform = [
         {
           translateX: animValue.interpolate({
-            // inputRange: [index * 25, (100 - index * 25) / 2 + index * 25, 100],
-            inputRange: [0, 70, 100],
+            inputRange: [index * 25, (100 - index * 25) / 2 + index * 25, 100],
+            // inputRange: [0, 70, 100],
             outputRange: [-30, 10 - index * 10, 0],
             extrapolate: 'clamp',
           }),
