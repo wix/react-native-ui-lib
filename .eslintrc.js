@@ -5,8 +5,8 @@
 
 module.exports = {
   parser: 'babel-eslint',
-  plugins: ['react-native', 'uilib'],
-  extends: ['airbnb'],
+  plugins: ['react', 'react-native', 'uilib'],
+  // extends: ['airbnb'],
   rules: {
     'arrow-body-style': 'off',
     'arrow-parens': 'off',
@@ -47,10 +47,10 @@ module.exports = {
         allowBind: false,
       },
     ],
-    'import/no-extraneous-dependencies': [
-      'warn',
-      {devDependencies: true, optionalDependencies: false, peerDependencies: true},
-    ],
+    // 'import/no-extraneous-dependencies': [
+    //   'warn',
+    //   {devDependencies: true, optionalDependencies: false, peerDependencies: true},
+    // ],
     'import/prefer-default-export': 'off',
     // 'uilib/assets-deprecation': ['error', {deprecations: assetsDepJson, source: '../../assets', dueDate: '2 November, Friday'}],
     // 'uilib/component-deprecation': ['error', {deprecations: deprecationsJson, dueDate: 'Friday 21 December'}],
