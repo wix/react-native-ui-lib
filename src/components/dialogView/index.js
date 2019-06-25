@@ -24,7 +24,7 @@ import {Constants} from '../../helpers';
  *   <content/>
  * </View>
  *
- * Note: if the user provides none of [showKnob, title, message, renderHeader] a header will not be rendered
+ * Note: if the user provides none of [showKnob, title, message, renderTitle] a header will not be rendered
  */
 /*eslint-enable*/
 export default class DialogView extends BaseComponent {
@@ -47,10 +47,9 @@ export default class DialogView extends BaseComponent {
      */
     showDivider: PropTypes.bool,
     /**
-     * Renders the whole header
-     * If this is provided the knob, title, message and divider will not be rendered
+     * Replace the title & message
      */
-    renderHeader: PropTypes.func,
+    renderTitle: PropTypes.func,
     /**
      * An alternative knob style
      */
@@ -83,25 +82,38 @@ export default class DialogView extends BaseComponent {
   };
 
   hasTitle = () => {
-    const {title, message} = this.getThemeProps();
-    return !_.isUndefined(title) || !_.isUndefined(message);
+    const {title, message, renderTitle} = this.getThemeProps();
+    return !_.isUndefined(title) || !_.isUndefined(message) || !_.isUndefined(renderTitle);
   };
 
   renderTitle = () => {
-    const {testID, showKnob, title, message, titleStyle, messageStyle, titleContainerStyle} = this.getThemeProps();
+    const {
+      testID,
+      showKnob,
+      title,
+      message,
+      titleStyle,
+      messageStyle,
+      titleContainerStyle,
+      renderTitle,
+    } = this.getThemeProps();
 
-    return (
-      <View style={[showKnob ? styles.titleContainerWithKnob : styles.titleContainer, titleContainerStyle]}>
-        <Text testID={`${testID}.title`} style={[styles.title, titleStyle]}>
-          {title}
-        </Text>
-        {message && (
-          <Text testID={`${testID}.message`} style={[styles.message, messageStyle]}>
-            {message}
+    if (renderTitle) {
+      return renderTitle();
+    } else {
+      return (
+        <View style={[showKnob ? styles.titleContainerWithKnob : styles.titleContainer, titleContainerStyle]}>
+          <Text testID={`${testID}.title`} style={[styles.title, titleStyle]}>
+            {title}
           </Text>
-        )}
-      </View>
-    );
+          {message && (
+            <Text testID={`${testID}.message`} style={[styles.message, messageStyle]}>
+              {message}
+            </Text>
+          )}
+        </View>
+      );
+    }
   };
 
   renderDivider = () => {
@@ -123,13 +135,8 @@ export default class DialogView extends BaseComponent {
   };
 
   hasHeader = () => {
-    const {showKnob, title, message, renderHeader} = this.getThemeProps();
-    return (
-      showKnob ||
-      !_.isUndefined(title) ||
-      !_.isUndefined(message) ||
-      !_.isUndefined(renderHeader)
-    );
+    const {showKnob, title, message, renderTitle} = this.getThemeProps();
+    return showKnob || !_.isUndefined(title) || !_.isUndefined(message) || !_.isUndefined(renderTitle);
   };
 
   render() {
