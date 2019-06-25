@@ -1,10 +1,9 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {PanResponder, Animated} from 'react-native';
-import {Constants} from '../../helpers';
+import {PanResponder} from 'react-native';
 import {BaseComponent} from '../../commons';
-import {Colors, View, Text} from 'react-native-ui-lib'; //eslint-disable-line
+import {View} from 'react-native-ui-lib'; //eslint-disable-line
 
 const DIRECTIONS = {
   UP: 'up',
@@ -43,9 +42,21 @@ export default class PanListenerView extends BaseComponent {
      */
     onSwipeListener: PropTypes.func,
     /**
-     * This is were you will get notified when the pan ends
+     * This is were you will get notified when the pan starts
      */
-    onPanEndListener: PropTypes.func,
+    handlePanStart: PropTypes.func,
+    /**
+     * This is were you will get notified when the pan ends
+     * The user has released all touches while this view is the responder.
+     * This typically means a gesture has succeeded
+     */
+    onPanReleaseListener: PropTypes.func,
+    /**
+     * This is were you will get notified when the pan ends
+     * Another component has become the responder,
+     * so this gesture should be cancelled
+     */
+    onPanTerminatedListener: PropTypes.func,
     /**
      * The sensitivity beyond which a pan is no longer considered a single click (default is 5)
      */
@@ -68,8 +79,8 @@ export default class PanListenerView extends BaseComponent {
       onMoveShouldSetPanResponder: this.shouldPan,
       onPanResponderGrant: this.handlePanStart,
       onPanResponderMove: this.handlePanMove,
-      onPanResponderRelease: this.handlePanEnd,
-      onPanResponderTerminate: this.handlePanEnd,
+      onPanResponderRelease: this.handlePanRelease,
+      onPanResponderTerminate: this.handlePanTerminate,
     });
   }
 
@@ -94,7 +105,11 @@ export default class PanListenerView extends BaseComponent {
   };
 
   handlePanStart = () => {
-    this.swipe = false;
+    const {onPanStartListener} = this.props;
+
+    if (!_.isUndefined(onPanStartListener)) {
+      onPanStartListener();
+    }
   };
 
   getSwipeDirection = ({vx, vy}) => {
@@ -144,18 +159,26 @@ export default class PanListenerView extends BaseComponent {
     if (panResult && panResult.selectedDirections.length > 0) {
       onSwipeListener({swipeDirections: panResult.selectedDirections, deltas: panResult.selectedAmounts});
     } else if (!_.isUndefined(onDragListener)) {
-      const panResult = this.getDragDirection(gestureState);
+      panResult = this.getDragDirection(gestureState);
       if (panResult && panResult.selectedDirections.length > 0) {
         onDragListener({dragDirections: panResult.selectedDirections, velocities: panResult.selectedAmounts});
       }
     }
   };
 
-  handlePanEnd = () => {
-    const {onPanEndListener} = this.props;
+  handlePanRelease = () => {
+    const {onPanReleaseListener} = this.props;
 
-    if (!_.isUndefined(onPanEndListener)) {
-      onPanEndListener();
+    if (!_.isUndefined(onPanReleaseListener)) {
+      onPanReleaseListener();
+    }
+  };
+
+  handlePanTerminate = () => {
+    const {onPanTerminatedListener} = this.props;
+
+    if (!_.isUndefined(onPanTerminatedListener)) {
+      onPanTerminatedListener();
     }
   };
 
