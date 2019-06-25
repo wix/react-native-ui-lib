@@ -48,6 +48,7 @@ export default class DialogView extends BaseComponent {
     showDivider: PropTypes.bool,
     /**
      * Replace the title & message
+     * this.props will be sent to this function
      */
     renderTitle: PropTypes.func,
     /**
@@ -99,7 +100,7 @@ export default class DialogView extends BaseComponent {
     } = this.getThemeProps();
 
     if (renderTitle) {
-      return renderTitle();
+      return renderTitle(this.props);
     } else {
       return (
         <View style={[showKnob ? styles.titleContainerWithKnob : styles.titleContainer, titleContainerStyle]}>
