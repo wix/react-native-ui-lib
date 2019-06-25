@@ -16,14 +16,15 @@ import {Constants} from '../../helpers';
  * The default rendering is:
  * <View>
  *   <header>
- *     title                <renderRightOfTitle
- *     message                                 />
- *     <renderBelowTitle/>
+ *     knob
+ *     title
+ *     message
+ *     divider
  *   </header>
  *   <content/>
  * </View>
  *
- * Note: if the user provides none of [title, message, renderRightOfTitle, renderBelowTitle, renderHeader] a header will not be rendered
+ * Note: if the user provides none of [showKnob, title, message, renderHeader] a header will not be rendered
  */
 /*eslint-enable*/
 export default class DialogView extends BaseComponent {
@@ -46,16 +47,8 @@ export default class DialogView extends BaseComponent {
      */
     showDivider: PropTypes.bool,
     /**
-     * Renders to the right of the title
-     */
-    renderRightOfTitle: PropTypes.func,
-    /**
-     * Render below the title section
-     */
-    renderBelowTitle: PropTypes.func,
-    /**
      * Renders the whole header
-     * If this is provided the title, message, renderRightOfTitle, renderBelowTitle
+     * If this is provided the knob, title, message and divider will not be rendered
      */
     renderHeader: PropTypes.func,
     /**
@@ -67,17 +60,9 @@ export default class DialogView extends BaseComponent {
      */
     dividerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
-     * An alternative style surrounding the whole header
+     * An alternative style surrounding the whole title & message
      */
-    headerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * An alternative style surrounding the title, message and the renderRightOfTitle
-     */
-    titleOuterContainerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * An alternative style surrounding both title and message
-     */
-    titleInnerContainerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    titleContainerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * An alternative style for the title
      */
@@ -98,35 +83,23 @@ export default class DialogView extends BaseComponent {
   };
 
   hasTitle = () => {
-    const {title, message, renderRightOfTitle} = this.getThemeProps();
-    return !_.isUndefined(title) || !_.isUndefined(message) || !_.isUndefined(renderRightOfTitle);
+    const {title, message} = this.getThemeProps();
+    return !_.isUndefined(title) || !_.isUndefined(message);
   };
 
   renderTitle = () => {
-    const {
-      testID,
-      title,
-      message,
-      renderRightOfTitle,
-      titleOuterContainerStyle,
-      titleInnerContainerStyle,
-      titleStyle,
-      messageStyle,
-    } = this.getThemeProps();
+    const {testID, showKnob, title, message, titleStyle, messageStyle, titleContainerStyle} = this.getThemeProps();
 
     return (
-      <View style={[styles.titleOuterContainer, titleOuterContainerStyle]}>
-        <View style={[styles.titleInnerContainer, titleInnerContainerStyle]}>
-          <Text testID={`${testID}.title`} style={[styles.title, titleStyle]}>
-            {title}
+      <View style={[showKnob ? styles.titleContainerWithKnob : styles.titleContainer, titleContainerStyle]}>
+        <Text testID={`${testID}.title`} style={[styles.title, titleStyle]}>
+          {title}
+        </Text>
+        {message && (
+          <Text testID={`${testID}.message`} style={[styles.message, messageStyle]}>
+            {message}
           </Text>
-          {message && (
-            <Text testID={`${testID}.message`} style={[styles.message, messageStyle]}>
-              {message}
-            </Text>
-          )}
-        </View>
-        {renderRightOfTitle && renderRightOfTitle()}
+        )}
       </View>
     );
   };
@@ -137,27 +110,24 @@ export default class DialogView extends BaseComponent {
   };
 
   renderHeader = () => {
-    const {headerStyle, showKnob, renderBelowTitle, showDivider} = this.getThemeProps();
+    const {showKnob, showDivider} = this.getThemeProps();
     const hasTitle = this.hasTitle();
 
     return (
-      <View style={[styles.header, headerStyle]}>
+      <View>
         {showKnob && this.renderKnob()}
         {hasTitle && this.renderTitle()}
-        {renderBelowTitle && renderBelowTitle()}
         {showDivider && this.renderDivider()}
       </View>
     );
   };
 
   hasHeader = () => {
-    const {showKnob, title, message, renderRightOfTitle, renderBelowTitle, renderHeader} = this.getThemeProps();
+    const {showKnob, title, message, renderHeader} = this.getThemeProps();
     return (
       showKnob ||
       !_.isUndefined(title) ||
       !_.isUndefined(message) ||
-      !_.isUndefined(renderRightOfTitle) ||
-      !_.isUndefined(renderBelowTitle) ||
       !_.isUndefined(renderHeader)
     );
   };
@@ -184,7 +154,23 @@ const styles = StyleSheet.create({
     margin: Spacings.s3,
     marginBottom: Constants.isIphoneX ? -Spacings.s2 : Spacings.s3,
   },
-  header: {},
+  titleContainer: {
+    marginVertical: Spacings.s2
+  },
+  titleContainerWithKnob: {
+    marginBottom: Spacings.s2
+  },
+  title: {
+    color: Colors.dark30,
+    ...Typography.text60,
+    marginHorizontal: Spacings.s5,
+  },
+  message: {
+    color: Colors.dark30,
+    ...Typography.text70,
+    marginHorizontal: Spacings.s5,
+    marginTop: Spacings.s1
+  },
   knob: {
     alignSelf: 'center',
     width: 44,
@@ -193,26 +179,6 @@ const styles = StyleSheet.create({
     marginBottom: Spacings.s2,
     backgroundColor: Colors.dark70,
     borderRadius: BorderRadiuses.br10,
-  },
-  titleOuterContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  titleInnerContainer: {
-    flex: 1,
-  },
-  title: {
-    color: Colors.dark30,
-    ...Typography.text60,
-    marginHorizontal: Spacings.s5,
-    marginBottom: Spacings.s2,
-  },
-  message: {
-    color: Colors.dark30,
-    ...Typography.text70,
-    marginHorizontal: Spacings.s5,
-    marginTop: -Spacings.s1,
-    marginBottom: Spacings.s2,
   },
   divider: {
     borderBottomWidth: 1,

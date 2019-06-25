@@ -1,26 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, Alert, FlatList} from 'react-native';
-import * as Animatable from 'react-native-animatable';
-import {Navigation} from 'react-native-navigation';
-import {
-  DialogView,
-  Colors,
-  View,
-  Dialog,
-  Button,
-  Text,
-  ListItem,
-  AnimatableManager,
-  BorderRadiuses,
-  ThemeManager,
-  Image,
-  Spacings,
-  Assets,
-  ProgressBar,
-} from 'react-native-ui-lib'; // eslint-disable-line
-
-const startIcon = require('../../assets/icons/star.png');
+import {StyleSheet} from 'react-native';
+import {DialogView, View, Dialog, Button, Text, Spacings} from 'react-native-ui-lib'; // eslint-disable-line
 
 export default class DialogViewScreen extends Component {
   constructor(props) {
@@ -32,53 +13,17 @@ export default class DialogViewScreen extends Component {
 
     this.useCases = [
       {text: 'Title', title: 'Title'},
+      {text: 'Title, knob and divider', title: 'Title, knob and divider', showKnob: true, showDivider: true},
       {text: 'Title and message', title: 'Title and message', message: 'Some text'},
-      {text: 'Title and icon', title: 'Title and icon', renderRightOfTitle: this.renderIcon},
       {
-        text: 'Long text',
-        title:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        message:
-          'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        text: 'Title, message, knob and divider',
+        title: 'Title, message, knob and divider',
+        message: 'Some text',
+        showKnob: true,
+        showDivider: true,
       },
-      {
-        text: 'Long text and icon',
-        title:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        message:
-          'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        renderRightOfTitle: this.renderIcon,
-      },
-      {text: 'Custom title', title: 'Custom title', renderBelowTitle: this.renderBelowTitle},
     ];
   }
-
-  renderIcon = () => {
-    return (
-      <View center style={{marginRight: Spacings.s5}}>
-        <Image source={startIcon} />
-      </View>
-    );
-  };
-
-  renderBelowTitle = () => {
-    return (
-      <View bg-green80 br60 style={{marginHorizontal: Spacings.s5, marginBottom: Spacings.s2}}>
-        <Text marginH-15 marginV-16 text70 green30>
-          Render below title
-        </Text>
-        <ProgressBar
-          br60
-          marginH-15
-          marginB-16
-          progress={30}
-          height={10}
-          backgroundColor={Colors.green30}
-          progressBackgroundColor={Colors.green70}
-        />
-      </View>
-    );
-  };
 
   renderContent = () => {
     return (
@@ -119,10 +64,10 @@ export default class DialogViewScreen extends Component {
                 onDismiss={() => this.setState({showDialogIndex: undefined})}
               >
                 <DialogView
+                  showKnob={useCase.showKnob}
                   title={useCase.title}
                   message={useCase.message}
-                  renderRightOfTitle={useCase.renderRightOfTitle}
-                  renderBelowTitle={useCase.renderBelowTitle}
+                  showDivider={useCase.showDivider}
                 >
                   {this.renderContent()}
                 </DialogView>
