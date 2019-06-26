@@ -23,7 +23,7 @@ export default class PanListenerView extends BaseComponent {
   static displayName = 'PanListenerView';
   static propTypes = {
     /**
-     * The directions of the allowed pan (default is DOWN)
+     * The directions of the allowed pan (default allows all directions)
      * Types: UP, DOWN, LEFT and RIGHT (using PanListenerView.directions.###)
      */
     directions: PropTypes.arrayOf(PropTypes.oneOf(Object.values(DIRECTIONS))),
