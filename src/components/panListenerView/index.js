@@ -32,6 +32,7 @@ export default class PanListenerView extends BaseComponent {
      * onDragListener = (swipeDirections, velocities) => {...}
      * swipeDirections - array of directions
      * velocities - array of velocities (same length and order as swipeDirections)
+     * Both arrays will have [x, y] - if no x or y drag has occurred this value will be undefined
      */
     onDragListener: PropTypes.func,
     /**
@@ -39,6 +40,7 @@ export default class PanListenerView extends BaseComponent {
      * onSwipeListener = (dragDirections, deltas) => {...}
      * dragDirections - array of directions
      * deltas - array of deltas (same length and order as dragDirections)
+     * Both arrays will have [x, y] - if no x or y swipe has occurred this value will be undefined
      */
     onSwipeListener: PropTypes.func,
     /**
@@ -129,24 +131,30 @@ export default class PanListenerView extends BaseComponent {
     if (directions.includes(DIRECTIONS.LEFT) && x < -sensitivity) {
       selectedDirections.push(DIRECTIONS.LEFT);
       selectedAmounts.push(x);
-    }
-
-    if (directions.includes(DIRECTIONS.RIGHT) && x > sensitivity) {
+    } else if (directions.includes(DIRECTIONS.RIGHT) && x > sensitivity) {
       selectedDirections.push(DIRECTIONS.RIGHT);
       selectedAmounts.push(x);
+    } else {
+      selectedDirections.push(undefined);
+      selectedAmounts.push(undefined);
     }
 
     if (directions.includes(DIRECTIONS.UP) && y < -sensitivity) {
       selectedDirections.push(DIRECTIONS.UP);
       selectedAmounts.push(y);
-    }
-
-    if (directions.includes(DIRECTIONS.DOWN) && y > sensitivity) {
+    } else if (directions.includes(DIRECTIONS.DOWN) && y > sensitivity) {
       selectedDirections.push(DIRECTIONS.DOWN);
       selectedAmounts.push(y);
+    } else {
+      selectedDirections.push(undefined);
+      selectedAmounts.push(undefined);
     }
 
     return {selectedDirections, selectedAmounts};
+  };
+
+  panResultHasValue = panResult => {
+    return panResult && (panResult.selectedDirections[0] || panResult.selectedDirections[1]);
   };
 
   handlePanMove = (e, gestureState) => {
@@ -156,11 +164,11 @@ export default class PanListenerView extends BaseComponent {
       panResult = this.getSwipeDirection(gestureState);
     }
 
-    if (panResult && panResult.selectedDirections.length > 0) {
+    if (this.panResultHasValue(panResult)) {
       onSwipeListener({swipeDirections: panResult.selectedDirections, deltas: panResult.selectedAmounts});
     } else if (!_.isUndefined(onDragListener)) {
       panResult = this.getDragDirection(gestureState);
-      if (panResult && panResult.selectedDirections.length > 0) {
+      if (this.panResultHasValue(panResult)) {
         onDragListener({dragDirections: panResult.selectedDirections, velocities: panResult.selectedAmounts});
       }
     }
