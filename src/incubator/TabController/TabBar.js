@@ -6,6 +6,7 @@ import Reanimated, {Easing} from 'react-native-reanimated';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import TabBarContext from './TabBarContext';
+import {asBaseComponent, forwardRef} from '../../commons';
 import View from '../../components/view';
 import Text from '../../components/text';
 import {Colors, Spacings} from '../../style';
@@ -15,6 +16,7 @@ const DEFAULT_HEIGHT = 48;
 const {Code, Clock, Value, add, sub, cond, eq, stopClock, startClock, timing, block, set} = Reanimated;
 
 class TabBar extends Component {
+  static displayName = 'TabBar';
   static contextType = TabBarContext;
 
   static propTypes = {
@@ -211,7 +213,6 @@ class TabBar extends Component {
   }
 }
 
-export default TabBar;
 
 const styles = StyleSheet.create({
   tabBar: {
@@ -235,3 +236,5 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.blue30,
   },
 });
+
+export default asBaseComponent(forwardRef(TabBar));
