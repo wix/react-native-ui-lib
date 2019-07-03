@@ -23,6 +23,7 @@ const ITEM_PROP_TYPES = {
   testID: PropTypes.string
 };
 
+// TODO: change to pure component after deprecation of old drawer
 class NewDrawer extends BaseComponent {
   static propTypes = {
     ...Swipeable.PropTypes,

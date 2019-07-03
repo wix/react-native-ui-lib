@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, View, TouchableOpacity, TouchableHighlight} from 'react-native';
 import Interactable from 'react-native-interactable';
-import {BaseComponent} from '../../commons';
+// import {BaseComponent} from '../../commons';
+import baseComponent from './../../commons/baseComponent';
 import {screenWidth} from '../../helpers/Constants';
 import {Colors, Typography} from '../../style';
 import NewDrawer from './newDrawer';
+
+
+const BaseComponent = baseComponent(true);
 
 const SCALE_POINT = 72; // scaling content style by height
 const MIN_LEFT_MARGIN = 56;
