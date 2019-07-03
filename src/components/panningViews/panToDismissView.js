@@ -201,13 +201,11 @@ class PanToDismissView extends BaseComponent {
 
   getDismissAnimationDirection = () => {
     const {swipeDirections, dragDirections} = this.props.context;
-    let hasHorizontalSwipe;
-    let hasVerticalSwipe;
+    const hasHorizontalSwipe = !_.isUndefined(swipeDirections[0]);
+    const hasVerticalSwipe = !_.isUndefined(swipeDirections[1]);
     let isRight;
     let isDown;
-
-    hasHorizontalSwipe = !_.isUndefined(swipeDirections[0]);
-    hasVerticalSwipe = !_.isUndefined(swipeDirections[1]);
+    
     if (hasHorizontalSwipe || hasVerticalSwipe) {
       if (hasHorizontalSwipe) {
         isRight = swipeDirections[0] === PanningProvider.Directions.RIGHT;

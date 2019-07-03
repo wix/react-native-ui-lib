@@ -182,7 +182,10 @@ class PanListenerView extends BaseComponent {
 
     if (this.panResultHasValue(panResult)) {
       const data = {directions: panResult.selectedDirections, velocities: panResult.selectedAmounts};
-      hasSwipe && onSwipe(data);
+      if (hasSwipe) {
+        onSwipe(data);
+      }
+
       if (hasContext) {
         _.invoke(context, 'onSwipe', data);
       }
@@ -190,7 +193,10 @@ class PanListenerView extends BaseComponent {
       panResult = this.getDragDirection(gestureState);
       if (this.panResultHasValue(panResult)) {
         const data = {directions: panResult.selectedDirections, deltas: panResult.selectedAmounts};
-        hasDrag && onDrag(data);
+        if (hasDrag) {
+          onDrag(data);
+        }
+        
         if (hasContext) {
           _.invoke(context, 'onDrag', data);
         }
