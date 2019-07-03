@@ -1,18 +1,16 @@
 import _ from 'lodash';
-import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import React, {Component, PureComponent} from 'react';
 import {StyleSheet, Alert, FlatList} from 'react-native';
-import {View as AnimatableView} from 'react-native-animatable';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
-import {
-  AnimatableManager, ThemeManager, Colors, ListItem, Text, Avatar, AvatarHelper, Drawer, Button
-} from 'react-native-ui-lib'; //eslint-disable-line
+import {ThemeManager, Colors, ListItem, Text, Avatar, AvatarHelper, Drawer, Button} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
 
 
 const collectionsIcon = require('../../assets/icons/collections.png');
 const starIcon = require('../../assets/icons/star.png');
 const shareIcon = require('../../assets/icons/share.png');
-const batchSize = 15;
+const batchSize = 10;
 
 class ConversationListScreen extends Component {
 
@@ -33,7 +31,6 @@ class ConversationListScreen extends Component {
 
     const map = _.map(data, (item, index) => {
       const initials = AvatarHelper.getInitials(item.name);
-      const animationProps = AnimatableManager.getEntranceByIndex(index);
       const avatarBadgeProps = {backgroundColor: Number(index) < 3 ? Colors.green30 : undefined};
       const buttonPress = () => Alert.alert('Badge button press');
       const listOnPress = () => Alert.alert(`Pressed on contact #${index + 1}`);
@@ -62,7 +59,6 @@ class ConversationListScreen extends Component {
       return {
         ...item,
         initials,
-        animationProps,
         avatarBadgeProps,
         buttonPress,
         listOnPress,
@@ -109,45 +105,7 @@ class ConversationListScreen extends Component {
   }
 
   renderItem = ({item, index}) => {
-    return (
-      <AnimatableView {...item.animationProps}>
-        <Drawer
-          migrate
-          leftItem={item.leftButton}
-          rightItems={item.rightButtons}
-          // itemsMinWidth={80}
-          ref={r => this.addRef(r, index)}
-          onDragStart={this.onDragStart}
-          index={index} // sent for the 'closeLast' functionality
-          onSwipeableWillOpen={this.onSwipeableWillOpen} // sent for the 'closeLast' functionality
-        >
-          <ListItem
-            height={75.8}
-            onPress={item.listOnPress}
-          >
-            <ListItem.Part left>
-              <Avatar
-                size={54}
-                imageSource={item.imageSource}
-                label={item.initials}
-                badgeProps={item.avatarBadgeProps}
-                containerStyle={styles.avatar}
-              />
-            </ListItem.Part>
-            <ListItem.Part middle column containerStyle={styles.border}>
-              <ListItem.Part containerStyle={styles.middle}>
-                <Text style={styles.text} text70 color={Colors.dark10} numberOfLines={1}>{item.name}</Text>
-                <Text style={styles.subtitle} text90 color={Colors.dark50}>{item.timestamp}</Text>
-              </ListItem.Part>
-              <ListItem.Part>
-                <Text style={styles.text} text80 color={Colors.dark40} numberOfLines={1}>{item.text}</Text>
-                {item.count > 0 && <Button round size={'small'} label={item.count} onPress={item.buttonPress}/>}
-              </ListItem.Part>
-            </ListItem.Part>
-          </ListItem>
-        </Drawer>
-      </AnimatableView>
-    );
+    return <ContactItem item={item} index={index} addRef={this.addRef} onSwipeableWillOpen={this.onSwipeableWillOpen}/>
   }
 
   keyExtractor = (item, index) => `${item.name}-${index}`;
@@ -156,17 +114,66 @@ class ConversationListScreen extends Component {
     return (
       <FlatList
         data={this.state.items}
-        // extraData={this.state}
         renderItem={this.renderItem}
         keyExtractor={this.keyExtractor}
         onEndReached={this.onEndReached}
-        // onEndReachedThreshold={0.7}
       />
     );
   }
 }
 
 export default gestureHandlerRootHOC(ConversationListScreen);
+
+class ContactItem extends PureComponent {
+  static propTypes = {
+    item: PropTypes.object,
+    index: PropTypes.number,
+    addRef: PropTypes.func,
+    onSwipeableWillOpen: PropTypes.func
+  }
+
+  render() {
+    const {item, index, addRef, onSwipeableWillOpen} = this.props;
+
+    return (
+      <Drawer
+        migrate
+        leftItem={item.leftButton}
+        rightItems={item.rightButtons}
+        // itemsMinWidth={80}
+        ref={r => addRef(r, index)}
+        onDragStart={this.onDragStart}
+        index={index} // sent for the 'closeLast' functionality
+        onSwipeableWillOpen={onSwipeableWillOpen} // sent for the 'closeLast' functionality
+      >
+        <ListItem
+          height={75.8}
+          onPress={item.listOnPress}
+        >
+          <ListItem.Part left>
+            <Avatar
+              size={54}
+              imageSource={item.imageSource}
+              label={item.initials}
+              badgeProps={item.avatarBadgeProps}
+              containerStyle={styles.avatar}
+            />
+          </ListItem.Part>
+          <ListItem.Part middle column containerStyle={styles.border}>
+            <ListItem.Part containerStyle={styles.middle}>
+              <Text style={styles.text} text70 color={Colors.dark10} numberOfLines={1}>{item.name}</Text>
+              <Text style={styles.subtitle} text90 color={Colors.dark50}>{item.timestamp}</Text>
+            </ListItem.Part>
+            <ListItem.Part>
+              <Text style={styles.text} text80 color={Colors.dark40} numberOfLines={1}>{item.text}</Text>
+              {item.count > 0 && <Button size={'small'} label={item.count} onPress={item.buttonPress}/>}
+            </ListItem.Part>
+          </ListItem.Part>
+        </ListItem>
+      </Drawer>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   border: {
