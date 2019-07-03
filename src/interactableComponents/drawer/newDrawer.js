@@ -10,6 +10,7 @@ import View from '../../components/view';
 import Swipeable from './Swipeable';
 
 
+const deprecatedProps = ['damping', 'tension', 'onPress', 'equalWidths'];
 const DEFAULT_BG = Colors.blue30;
 const ITEM_PROP_TYPES = {
   width: PropTypes.number,
@@ -79,9 +80,9 @@ class NewDrawer extends BaseComponent {
     super(props);
 
     this._swipeableRow = React.createRef();
+    this.animationOptions = {bounciness: props.bounciness || 5};
     this.rightActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? [props.leftItem] : props.rightItems);
     this.leftActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? props.rightItems : [props.leftItem]);
-    this.animationOptions = {bounciness: props.bounciness || 5};
     this.leftRender = Constants.isRTL ? this.renderRightActions : this.renderLeftActions;
     this.rightRender = Constants.isRTL ? this.renderLeftActions : this.renderRightActions;
 
@@ -94,15 +95,12 @@ class NewDrawer extends BaseComponent {
       console.warn("Drawer's 'onPress' prop is deprecated. " +
         "For items, send 'onPress' handler in the item's object and for content use your own.");
     }
-    if (props.tension !== undefined) {
-      console.warn("Drawer's 'tension' prop is deprecated.");
-    }
-    if (props.damping !== undefined) {
-      console.warn("Drawer's 'damping' prop is deprecated.");
-    }
-    if (props.equalWidths !== undefined) {
-      console.warn("Drawer's 'equalWidths' prop is deprecated.");
-    }
+
+    deprecatedProps.forEach(prop => {
+      if (props[prop]) {
+        console.warn(`"Drawer's ${prop}" property is deprecated.`);
+      }
+    });
   }
 
   getActionsContainerStyle(items) {
@@ -248,7 +246,7 @@ const styles = StyleSheet.create({
   leftAction: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: /* Constants.isRTL ? 'flex-end' :  */ 'flex-start',
+    alignItems: /* Constants.isRTL ? 'flex-end' :  */'flex-start',
     backgroundColor: '#388e3c'
   },
   actionIcon: {
