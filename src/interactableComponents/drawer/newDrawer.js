@@ -24,6 +24,7 @@ const ITEM_PROP_TYPES = {
 
 class NewDrawer extends BaseComponent {
   static propTypes = {
+    ...Swipeable.PropTypes,
     /**
      * The drawer top layer's damping
      */
@@ -101,6 +102,13 @@ class NewDrawer extends BaseComponent {
     _.invoke(item, 'onPress');
   };
 
+  onSwipeableWillOpen = () => {
+    _.invoke(this.props, 'onSwipeableWillOpen', this.props);
+  };
+  onSwipeableWillClose = () => {
+    _.invoke(this.props, 'onSwipeableWillClose', this.props);
+  };
+
   // TODO: enable support for rendering more than one left item
   renderLeftActions = (progress, dragX) => {
     const {leftItem} = this.getThemeProps();
@@ -130,7 +138,6 @@ class NewDrawer extends BaseComponent {
     }
   }
 
-  // eslint-disable-next-line react/prop-types
   renderAction = ({item, index, progress, itemsCount}) => {
     const {itemsTintColor, itemsIconSize, itemsTextStyle, itemsMinWidth} = this.getThemeProps();
     const inputRange = [index / itemsCount, (index + 1) / itemsCount];
@@ -195,8 +202,6 @@ class NewDrawer extends BaseComponent {
     );
   };
 
-  // positionWillChange = () => {};
-
   render() {
     const {children, style, ...others} = this.props;
     return (
@@ -206,16 +211,12 @@ class NewDrawer extends BaseComponent {
         friction={1}
         containerStyle={style}
         animationOptions={this.animationOptions}
-        // leftThreshold={80}
-        // rightThreshold={40}
         renderLeftActions={this.leftRender}
         renderRightActions={this.rightRender}
         rightActionsContainerStyle={this.rightActionsContainerStyle}
         leftActionsContainerStyle={this.leftActionsContainerStyle}
-        // onSwipeableLeftWillOpen={this.positionWillChange}
-        // onSwipeableRightWillOpen={this.positionWillChange}
-        // onSwipeableWillOpen={this.positionWillChange}
-        // onSwipeableWillClose={this.positionWillChange}
+        onSwipeableWillOpen={this.onSwipeableWillOpen}
+        onSwipeableWillClose={this.onSwipeableWillClose}
       >
         {children}
       </Swipeable>

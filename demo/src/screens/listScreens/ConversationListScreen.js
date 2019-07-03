@@ -19,8 +19,8 @@ class ConversationListScreen extends Component {
   constructor(props) {
     super(props);
     
-    this.refArray = [];
     this.lastIndex = undefined;
+    this.refArray = [];
     this.batchCounter = 0;
 
     this.state = {
@@ -100,12 +100,12 @@ class ConversationListScreen extends Component {
     this.refArray[index] = ref;
   }
 
-  onDragStart = (props) => {
-    this.closeLast(props.index);
-  }
-
   onEndReached = () => {
     this.getNewItems();
+  }
+
+  onSwipeableWillOpen = (props) => {
+    this.closeLast(props.index);
   }
 
   renderItem = ({item, index}) => {
@@ -119,6 +119,7 @@ class ConversationListScreen extends Component {
           ref={r => this.addRef(r, index)}
           onDragStart={this.onDragStart}
           index={index} // sent for the 'closeLast' functionality
+          onSwipeableWillOpen={this.onSwipeableWillOpen} // sent for the 'closeLast' functionality
         >
           <ListItem
             height={75.8}
