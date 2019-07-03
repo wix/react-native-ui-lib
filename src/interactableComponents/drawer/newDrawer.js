@@ -26,17 +26,21 @@ class NewDrawer extends BaseComponent {
   static propTypes = {
     ...Swipeable.PropTypes,
     /**
-     * The drawer top layer's damping
+     * The drawer top layer's damping - DEPRECATED
      */
     damping: PropTypes.number,
     /**
-     * The drawer top layer's tension
+     * The drawer top layer's tension - DEPRECATED
      */
     tension: PropTypes.number,
     /**
      * Press handler - DEPRECATED
      */
     onPress: PropTypes.func,
+    /**
+     * The drawer animation bounciness
+     */
+    bounciness: PropTypes.number,
     /**
      * OnDragStart handler
      */
@@ -50,7 +54,7 @@ class NewDrawer extends BaseComponent {
      */
     leftItem: PropTypes.shape(ITEM_PROP_TYPES),
     /**
-     * Whether to give the items equal width (the max width)
+     * Whether to give the items equal width (the max width) - DEPRECATED
      */
     equalWidths: PropTypes.bool,
     /**
@@ -77,13 +81,27 @@ class NewDrawer extends BaseComponent {
     this._swipeableRow = React.createRef();
     this.rightActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? [props.leftItem] : props.rightItems);
     this.leftActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? props.rightItems : [props.leftItem]);
-    this.animationOptions = {bounciness: 5};
+    this.animationOptions = {bounciness: props.bounciness || 5};
     this.leftRender = Constants.isRTL ? this.renderRightActions : this.renderLeftActions;
     this.rightRender = Constants.isRTL ? this.renderLeftActions : this.renderRightActions;
 
+    // TODO: deprecate when removing old drawer version
+    // this.checkDeprecations(props);
+  }
+
+  checkDeprecations(props) {
     if (props.onPress !== undefined) {
       console.warn("Drawer's 'onPress' prop is deprecated. " +
         "For items, send 'onPress' handler in the item's object and for content use your own.");
+    }
+    if (props.tension !== undefined) {
+      console.warn("Drawer's 'tension' prop is deprecated.");
+    }
+    if (props.damping !== undefined) {
+      console.warn("Drawer's 'damping' prop is deprecated.");
+    }
+    if (props.equalWidths !== undefined) {
+      console.warn("Drawer's 'equalWidths' prop is deprecated.");
     }
   }
 
