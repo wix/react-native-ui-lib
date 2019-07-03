@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {View, Text, PanListenerView} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, PanListenerView, PanningProvider} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class PanListenerScreen extends Component {
   state = {
@@ -8,23 +8,23 @@ export default class PanListenerScreen extends Component {
     endType: ''
   };
 
-  onDragListener = ({dragDirections, velocities}) => {
-    this.setState({locationText: `Dragged: ${dragDirections}`});
+  onDrag = ({directions, velocities}) => {
+    this.setState({locationText: `Dragged: ${directions}`});
   };
 
-  onSwipeListener = ({swipeDirections, deltas}) => {
-    this.setState({locationText: `Swiped: ${swipeDirections}`});
+  onSwipe = ({directions, deltas}) => {
+    this.setState({locationText: `Swiped: ${directions}`});
   };
 
-  onPanStartListener = () => {
+  onPanStart = () => {
     this.setState({endType: 'Panning'});
   };
 
-  onPanReleaseListener = () => {
+  onPanRelease = () => {
     this.setState({endType: 'Released'});
   };
 
-  onPanTerminatedListener = () => {
+  onPanTerminated = () => {
     this.setState({endType: 'Terminated'});
   };
 
@@ -41,12 +41,12 @@ export default class PanListenerScreen extends Component {
           centerV
           height={300}
           width="100%"
-          // directions={[PanListenerView.directions.UP, PanListenerView.directions.DOWN]}
-          onDragListener={this.onDragListener}
-          onSwipeListener={this.onSwipeListener}
-          onPanStartListener={this.onPanStartListener}
-          onPanReleaseListener={this.onPanReleaseListener}
-          onPanTerminatedListener={this.onPanTerminatedListener}
+        //   directions={[PanningProvider.Directions.UP, PanningProvider.Directions.DOWN]}
+          onDrag={this.onDrag}
+          onSwipe={this.onSwipe}
+          onPanStart={this.onPanStart}
+          onPanRelease={this.onPanRelease}
+          onPanTerminated={this.onPanTerminated}
         >
           <Text text50 margin-40>Drag\swipe here</Text>
         </PanListenerView>
