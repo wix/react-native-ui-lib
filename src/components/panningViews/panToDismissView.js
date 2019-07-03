@@ -14,7 +14,6 @@ const DEFAULT_DISMISS_ANIMATION_DURATION = 280;
 /**
  * @description: PanToDismissView component created to making listening to swipe and drag events easier,
  * Has to be used as a child of a PanningProvider that also has a PanListenerView
- * TODO: @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PanListenerScreen.js
  */
 class PanToDismissView extends BaseComponent {
   static displayName = 'PanToDismissView';
@@ -268,14 +267,12 @@ class PanToDismissView extends BaseComponent {
   };
 
   onDismissAnimationFinished = ({finished}) => {
-    // TODO: this.setState({shouldAnimate: false});
     if (finished) {
       this.onDismiss();
     }
   };
 
   onDismiss = () => {
-    // TODO: this.initPositions();
     _.invoke(this.props, 'onDismiss');
   };
 
