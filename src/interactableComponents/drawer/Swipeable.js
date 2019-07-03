@@ -59,7 +59,7 @@ export default class Swipeable extends Component<PropType, StateType> {
   static defaultProps = {
     friction: 1,
     overshootFriction: 1,
-    useNativeAnimations: true
+    // useNativeAnimations: true // issue in iPhone 5
   };
   
   _onGestureEvent: ?Animated.Event;
@@ -105,7 +105,7 @@ export default class Swipeable extends Component<PropType, StateType> {
   }
 
   _updateAnimatedEvent = (props: PropType, state: StateType) => {
-    const {friction, overshootFriction, useNativeAnimations} = props;
+    const {friction, overshootFriction} = props;
     const {dragX, rowTranslation, leftWidth = 0, rowWidth = 0} = state;
     const {rightOffset = rowWidth} = state;
     const rightWidth = Math.max(0, rowWidth - rightOffset);
@@ -210,6 +210,18 @@ export default class Swipeable extends Component<PropType, StateType> {
 
   _animateRow = (fromValue, toValue, velocityX) => {
     const {dragX, rowTranslation} = this.state;
+    const {
+      useNativeAnimations, 
+      animationOptions, 
+      onSwipeableLeftOpen, 
+      onSwipeableRightOpen, 
+      onSwipeableClose, 
+      onSwipeableOpen,
+      onSwipeableLeftWillOpen,
+      onSwipeableRightWillOpen,
+      onSwipeableWillClose,
+      onSwipeableWillOpen
+    } = this.props;
     
     dragX.setValue(0);
     rowTranslation.setValue(fromValue);
@@ -221,34 +233,34 @@ export default class Swipeable extends Component<PropType, StateType> {
       velocity: velocityX,
       bounciness: 0,
       toValue,
-      useNativeDriver: this.props.useNativeAnimations,
-      ...this.props.animationOptions
+      useNativeDriver: useNativeAnimations,
+      ...animationOptions
     }).start(({finished}) => {
       if (finished) {
-        if (toValue > 0 && this.props.onSwipeableLeftOpen) {
-          this.props.onSwipeableLeftOpen();
-        } else if (toValue < 0 && this.props.onSwipeableRightOpen) {
-          this.props.onSwipeableRightOpen();
+        if (toValue > 0 && onSwipeableLeftOpen) {
+          onSwipeableLeftOpen();
+        } else if (toValue < 0 && onSwipeableRightOpen) {
+          onSwipeableRightOpen();
         }
 
         if (toValue === 0) {
-          this.props.onSwipeableClose && this.props.onSwipeableClose();
+          onSwipeableClose && onSwipeableClose();
         } else {
-          this.props.onSwipeableOpen && this.props.onSwipeableOpen();
+          onSwipeableOpen && onSwipeableOpen();
         }
       }
     });
 
-    if (toValue > 0 && this.props.onSwipeableLeftWillOpen) {
-      this.props.onSwipeableLeftWillOpen();
-    } else if (toValue < 0 && this.props.onSwipeableRightWillOpen) {
-      this.props.onSwipeableRightWillOpen();
+    if (toValue > 0 && onSwipeableLeftWillOpen) {
+      onSwipeableLeftWillOpen();
+    } else if (toValue < 0 && onSwipeableRightWillOpen) {
+      onSwipeableRightWillOpen();
     }
 
     if (toValue === 0) {
-      this.props.onSwipeableWillClose && this.props.onSwipeableWillClose();
+      onSwipeableWillClose && onSwipeableWillClose();
     } else {
-      this.props.onSwipeableWillOpen && this.props.onSwipeableWillOpen();
+      onSwipeableWillOpen && onSwipeableWillOpen();
     }
   };
 
@@ -291,7 +303,9 @@ export default class Swipeable extends Component<PropType, StateType> {
       renderLeftActions,
       renderRightActions,
       leftActionsContainerStyle,
-      rightActionsContainerStyle
+      rightActionsContainerStyle,
+      containerStyle,
+      childrenContainerStyle
     } = this.props;
 
     const left = renderLeftActions && (
@@ -327,14 +341,14 @@ export default class Swipeable extends Component<PropType, StateType> {
         onGestureEvent={this._onGestureEvent}
         onHandlerStateChange={this._onHandlerStateChange}
       >
-        <Animated.View onLayout={this._onRowLayout} style={[styles.container, this.props.containerStyle]}>
+        <Animated.View onLayout={this._onRowLayout} style={[styles.container, containerStyle]}>
           {left}
           {right}
           <TapGestureHandler onHandlerStateChange={this._onTapHandlerStateChange}>
             <Animated.View
               style={[
                 {transform: [{translateX: this._transX}]},
-                this.props.childrenContainerStyle
+                childrenContainerStyle
               ]}
             >
               {children}

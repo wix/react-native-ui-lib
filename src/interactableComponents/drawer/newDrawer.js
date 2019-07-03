@@ -29,11 +29,11 @@ class NewDrawer extends BaseComponent {
      */
     damping: PropTypes.number,
     /**
-     * The drawer top layer's tention
+     * The drawer top layer's tension
      */
     tension: PropTypes.number,
     /**
-     * Press handler
+     * Press handler - DEPRECATED
      */
     onPress: PropTypes.func,
     /**
@@ -79,6 +79,11 @@ class NewDrawer extends BaseComponent {
     this.animationOptions = {bounciness: 5};
     this.leftRender = Constants.isRTL ? this.renderRightActions : this.renderLeftActions;
     this.rightRender = Constants.isRTL ? this.renderLeftActions : this.renderRightActions;
+
+    if (props.onPress !== undefined) {
+      console.warn("Drawer's 'onPress' prop is deprecated. " +
+        "For items, send 'onPress' handler in the item's object and for content use your own.");
+    }
   }
 
   getActionsContainerStyle(items) {
