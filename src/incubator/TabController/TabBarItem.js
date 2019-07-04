@@ -1,5 +1,5 @@
 // TODO: support commented props
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {StyleSheet, processColor} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -15,7 +15,7 @@ const {cond, eq, call, block, event, and, defined} = Reanimated;
 const DEFAULT_LABEL_COLOR = Colors.black;
 const DEFAULT_SELECTED_LABEL_COLOR = Colors.blue30;
 
-export default class TabBarItem extends Component {
+export default class TabBarItem extends PureComponent {
   static propTypes = {
     /**
      * label of the tab
@@ -155,11 +155,11 @@ export default class TabBarItem extends Component {
     );
 
     return [
-      labelStyle,
       {
         fontWeight,
         color,
       },
+      labelStyle
     ];
   }
 
