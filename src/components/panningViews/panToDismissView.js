@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {Animated} from 'react-native';
-import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 import asPanViewConsumer from './asPanViewConsumer';
 import PanningProvider from './panningProvider';
@@ -15,7 +14,7 @@ const DEFAULT_DISMISS_ANIMATION_DURATION = 280;
  * @description: PanToDismissView component created to making listening to swipe and drag events easier,
  * Has to be used as a child of a PanningProvider that also has a PanListenerView
  */
-class PanToDismissView extends BaseComponent {
+class PanToDismissView extends PureComponent {
   static displayName = 'PanToDismissView';
   static propTypes = {
     /**
@@ -142,7 +141,7 @@ class PanToDismissView extends BaseComponent {
   };
 
   onPanEnd = () => {
-    const {directions} = this.getThemeProps();
+    const {directions} = this.props;
     if (this.swipe[0] || this.swipe[1]) {
       const {isRight, isDown} = this.getDismissAnimationDirection();
       this.animateDismiss(isRight, isDown);
@@ -277,7 +276,7 @@ class PanToDismissView extends BaseComponent {
   };
 
   render() {
-    const {style} = this.getThemeProps();
+    const {style} = this.props;
     const {shouldAnimate, deltaX, deltaY} = this.state;
     const transform = shouldAnimate ? [{translateX: deltaX}, {translateY: deltaY}] : [];
 
