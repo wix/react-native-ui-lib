@@ -82,7 +82,7 @@ class ConversationListScreen extends Component {
   }
 
   closeLast(index) {
-    if (this.lastIndex !== undefined) {
+    if (this.lastIndex !== undefined && this.lastIndex !== index) {
       this.closeDrawer(this.lastIndex);
     }
     this.lastIndex = index;
@@ -121,8 +121,6 @@ class ConversationListScreen extends Component {
     );
   }
 }
-
-export default gestureHandlerRootHOC(ConversationListScreen);
 
 class ContactItem extends PureComponent {
   static propTypes = {
@@ -195,3 +193,5 @@ const styles = StyleSheet.create({
     marginTop: 2
   }
 });
+
+export default gestureHandlerRootHOC(ConversationListScreen);

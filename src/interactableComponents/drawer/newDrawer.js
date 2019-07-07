@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {Animated, StyleSheet, ViewPropTypes} from 'react-native';
 import {RectButton} from 'react-native-gesture-handler';
-import {BaseComponent} from '../../commons';
+import {PureBaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import View from '../../components/view';
@@ -23,8 +23,7 @@ const ITEM_PROP_TYPES = {
   testID: PropTypes.string
 };
 
-// TODO: change to pure component after deprecation of old drawer
-class NewDrawer extends BaseComponent {
+class NewDrawer extends PureBaseComponent {
   static propTypes = {
     ...Swipeable.PropTypes,
     /**
