@@ -27,13 +27,14 @@ class PanDismissibleView extends PureComponent {
      */
     onDismiss: PropTypes.func,
     /**
-     * The animation speed (default is 20)
+     * Some animation options to choose from:
+     * animationSpeed - The animation speed (default is 20)
+     * animationBounciness - The dismiss animation duration (default is 280)
      */
-    animationSpeed: PropTypes.number,
-    /**
-     * The animation bounciness (default is 6)
-     */
-    animationBounciness: PropTypes.number,
+    animationOptions: PropTypes.shape({
+      animationSpeed: PropTypes.number,
+      animationBounciness: PropTypes.number,
+    }),
     /**
      * The dismiss animation duration (default is 280)
      */
@@ -47,8 +48,10 @@ class PanDismissibleView extends PureComponent {
       PanningProvider.Directions.LEFT,
       PanningProvider.Directions.RIGHT,
     ],
-    animationSpeed: DEFAULT_SPEED,
-    animationBounciness: DEFAULT_BOUNCINESS,
+    animationOptions: {
+      animationSpeed: DEFAULT_SPEED,
+      animationBounciness: DEFAULT_BOUNCINESS,
+    }
   };
 
   constructor(props) {
@@ -163,7 +166,7 @@ class PanDismissibleView extends PureComponent {
 
   animateToInitialPosition = () => {
     const {deltaX, deltaY} = this.state;
-    const {animationSpeed, animationBounciness} = this.props;
+    const {animationSpeed, animationBounciness} = this.props.animationOptions;
     const toX = -this.left;
     const toY = -this.top;
     const animations = [];
