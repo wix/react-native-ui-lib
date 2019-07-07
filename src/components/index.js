@@ -23,7 +23,6 @@ module.exports = {
   get ListItem() { return require('./listItem').default; },
   get Notification() { return require('./notification').default; },
   get PageControl() { return require('./pageControl').default; },
-  get asPanViewConsumer() { return require('./panningViews/asPanViewConsumer').default; },
   get PanningProvider() { return require('./panningViews/panningProvider').default; },
   get PanGestureView() { return require('./panningViews/panGestureView').default; },
   get PanListenerView() { return require('./panningViews/panListenerView').default; },
