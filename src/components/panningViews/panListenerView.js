@@ -116,10 +116,8 @@ class PanListenerView extends PureBaseComponent {
   };
 
   handlePanStart = () => {
-    const {context} = this.props;
-
     _.invoke(this.props, 'onPanStart');
-    _.invoke(context, 'onPanStart');
+    _.invoke(this.props.context, 'onPanStart');
   };
 
   getSwipeDirection = ({vx, vy}) => {
@@ -190,17 +188,13 @@ class PanListenerView extends PureBaseComponent {
   };
 
   handlePanRelease = () => {
-    const {context} = this.props;
-    
     _.invoke(this.props, 'onPanRelease');
-    _.invoke(context, 'onPanRelease');
+    _.invoke(this.props.context, 'onPanRelease');
   };
 
   handlePanTerminate = () => {
-    const {context} = this.props;
-    
     _.invoke(this.props, 'onPanTerminated');
-    _.invoke(context, 'onPanTerminated');
+    _.invoke(this.props.context, 'onPanTerminated');
   };
 
   onLayout = event => {
