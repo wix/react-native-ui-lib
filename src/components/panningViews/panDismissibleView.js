@@ -51,15 +51,15 @@ class PanDismissibleView extends PureComponent {
     animationOptions: {
       animationSpeed: DEFAULT_SPEED,
       animationBounciness: DEFAULT_BOUNCINESS,
-    }
+    },
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      deltaX: 0,
-      deltaY: 0,
+      animTranslateX: new Animated.Value(0),
+      animTranslateY: new Animated.Value(0),
       shouldAnimate: false,
     };
     this.ref = React.createRef();
@@ -116,8 +116,8 @@ class PanDismissibleView extends PureComponent {
   initPositions = () => {
     this.setNativeProps(this.originalLeft, this.originalTop);
     this.setState({
-      deltaX: new Animated.Value(this.originalLeft),
-      deltaY: new Animated.Value(this.originalTop),
+      animTranslateX: new Animated.Value(this.originalLeft),
+      animTranslateY: new Animated.Value(this.originalTop),
     });
   };
 
@@ -165,14 +165,14 @@ class PanDismissibleView extends PureComponent {
   };
 
   animateToInitialPosition = () => {
-    const {deltaX, deltaY} = this.state;
+    const {animTranslateX, animTranslateY} = this.state;
     const {animationSpeed, animationBounciness} = this.props.animationOptions;
     const toX = -this.left;
     const toY = -this.top;
     const animations = [];
     if (!_.isUndefined(toX)) {
       animations.push(
-        Animated.spring(deltaX, {
+        Animated.spring(animTranslateX, {
           toValue: Math.round(toX),
           speed: animationSpeed,
           bounciness: animationBounciness,
@@ -182,7 +182,7 @@ class PanDismissibleView extends PureComponent {
 
     if (!_.isUndefined(toY)) {
       animations.push(
-        Animated.spring(deltaY, {
+        Animated.spring(animTranslateY, {
           toValue: Math.round(toY),
           speed: animationSpeed,
           bounciness: animationBounciness,
@@ -206,7 +206,7 @@ class PanDismissibleView extends PureComponent {
     const hasVerticalSwipe = !_.isUndefined(swipeDirections[1]);
     let isRight;
     let isDown;
-    
+
     if (hasHorizontalSwipe || hasVerticalSwipe) {
       if (hasHorizontalSwipe) {
         isRight = swipeDirections[0] === PanningProvider.Directions.RIGHT;
@@ -227,27 +227,27 @@ class PanDismissibleView extends PureComponent {
     }
 
     return {isRight, isDown};
-  }
+  };
 
   animateDismiss = (isRight, isDown) => {
-    const {deltaX, deltaY} = this.state;
+    const {animTranslateX, animTranslateY} = this.state;
     const animations = [];
     let toX;
     let toY;
 
-    if (!_.isUndefined(isRight) && !_.isUndefined(deltaX)) {
+    if (!_.isUndefined(isRight) && !_.isUndefined(animTranslateX)) {
       const maxSize = Constants.screenWidth + this.width;
       toX = isRight ? maxSize : -maxSize;
     }
 
-    if (!_.isUndefined(isDown) && !_.isUndefined(deltaY)) {
+    if (!_.isUndefined(isDown) && !_.isUndefined(animTranslateY)) {
       const maxSize = Constants.screenHeight + this.height;
       toY = isDown ? maxSize : -maxSize;
     }
 
     if (!_.isUndefined(toX)) {
       animations.push(
-        Animated.timing(deltaX, {
+        Animated.timing(animTranslateX, {
           toValue: Math.round(toX),
           duration: DEFAULT_DISMISS_ANIMATION_DURATION,
         }),
@@ -256,7 +256,7 @@ class PanDismissibleView extends PureComponent {
 
     if (!_.isUndefined(toY)) {
       animations.push(
-        Animated.timing(deltaY, {
+        Animated.timing(animTranslateY, {
           toValue: Math.round(toY),
           duration: DEFAULT_DISMISS_ANIMATION_DURATION,
         }),
@@ -280,8 +280,8 @@ class PanDismissibleView extends PureComponent {
 
   render() {
     const {style} = this.props;
-    const {shouldAnimate, deltaX, deltaY} = this.state;
-    const transform = shouldAnimate ? [{translateX: deltaX}, {translateY: deltaY}] : [];
+    const {shouldAnimate, animTranslateX, animTranslateY} = this.state;
+    const transform = shouldAnimate ? [{translateX: animTranslateX}, {translateY: animTranslateY}] : [];
 
     return (
       <Animated.View
