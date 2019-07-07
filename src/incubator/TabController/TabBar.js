@@ -1,11 +1,12 @@
-// TODO: add theme support
 // TODO: support commented props
-import React, {Component} from 'react';
-import {StyleSheet, ScrollView, ViewPropTypes} from 'react-native';
+// TODO: disable scroll when content width is shorter than screen width
+import React, {PureComponent} from 'react';
+import {StyleSheet, ScrollView, ViewPropTypes, Platform} from 'react-native';
 import Reanimated, {Easing} from 'react-native-reanimated';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import TabBarContext from './TabBarContext';
+import {asBaseComponent, forwardRef} from '../../commons';
 import View from '../../components/view';
 import Text from '../../components/text';
 import {Colors, Spacings} from '../../style';
@@ -14,7 +15,8 @@ import {Constants} from '../../helpers';
 const DEFAULT_HEIGHT = 48;
 const {Code, Clock, Value, add, sub, cond, eq, stopClock, startClock, timing, block, set} = Reanimated;
 
-class TabBar extends Component {
+class TabBar extends PureComponent {
+  static displayName = 'TabBar';
   static contextType = TabBarContext;
 
   static propTypes = {
@@ -22,10 +24,10 @@ class TabBar extends Component {
      * Tab Bar height
      */
     height: PropTypes.number,
-    // /**
-    //  * Show Tab Bar bottom shadow
-    //  */
-    // enableShadow: PropTypes.bool,
+    /**
+     * Show Tab Bar bottom shadow
+     */
+    enableShadow: PropTypes.bool,
     // /**
     //  * The minimum number of tabs to render in scroll mode
     //  */
@@ -174,10 +176,10 @@ class TabBar extends Component {
 
   render() {
     const {currentPage} = this.context;
-    const {containerWidth, height} = this.props;
+    const {containerWidth, height, enableShadow} = this.props;
     const {itemsWidths, itemsOffsets} = this.state;
     return (
-      <View>
+      <View style={enableShadow && styles.containerShadow}>
         <ScrollView
           ref={this.tabBar}
           horizontal
@@ -211,7 +213,6 @@ class TabBar extends Component {
   }
 }
 
-export default TabBar;
 
 const styles = StyleSheet.create({
   tabBar: {
@@ -234,4 +235,20 @@ const styles = StyleSheet.create({
     height: 2,
     backgroundColor: Colors.blue30,
   },
+  containerShadow: {
+    ...Platform.select({
+      ios: {
+        shadowColor: Colors.dark10,
+        shadowOpacity: 0.05,
+        shadowRadius: 2,
+        shadowOffset: {height: 6, width: 0}
+      },
+      android: {
+        elevation: 5,
+        backgroundColor: Colors.white
+      }
+    })
+  },
 });
+
+export default asBaseComponent(forwardRef(TabBar));
