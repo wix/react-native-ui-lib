@@ -60,13 +60,13 @@ class PanDismissibleView extends PureComponent {
     this.state = {
       animTranslateX: new Animated.Value(0),
       animTranslateY: new Animated.Value(0),
-      shouldAnimate: false,
+      isAnimating: false,
     };
     this.ref = React.createRef();
   }
 
   componentDidUpdate(prevProps) {
-    const {shouldAnimate} = this.state;
+    const {isAnimating} = this.state;
     const {isPanning, dragDeltas, swipeDirections} = this.props.context;
     const {
       isPanning: prevIsPanning,
@@ -74,7 +74,7 @@ class PanDismissibleView extends PureComponent {
       swipeDirections: prevSwipeDirections,
     } = prevProps.context;
     if (isPanning !== prevIsPanning) {
-      if (isPanning && !shouldAnimate) {
+      if (isPanning && !isAnimating) {
         // do not start a new pan if we're still animating
         this.onPanStart();
       } else {
@@ -190,13 +190,13 @@ class PanDismissibleView extends PureComponent {
       );
     }
 
-    this.setState({shouldAnimate: true}, () => {
+    this.setState({isAnimating: true}, () => {
       Animated.parallel(animations).start(this.onInitAnimationFinished);
     });
   };
 
   onInitAnimationFinished = () => {
-    this.setState({shouldAnimate: false});
+    this.setState({isAnimating: false});
     this.initPositions();
   };
 
@@ -263,7 +263,7 @@ class PanDismissibleView extends PureComponent {
       );
     }
 
-    this.setState({shouldAnimate: true}, () => {
+    this.setState({isAnimating: true}, () => {
       Animated.parallel(animations).start(this.onDismissAnimationFinished);
     });
   };
@@ -280,8 +280,8 @@ class PanDismissibleView extends PureComponent {
 
   render() {
     const {style} = this.props;
-    const {shouldAnimate, animTranslateX, animTranslateY} = this.state;
-    const transform = shouldAnimate ? [{translateX: animTranslateX}, {translateY: animTranslateY}] : [];
+    const {isAnimating, animTranslateX, animTranslateY} = this.state;
+    const transform = isAnimating ? [{translateX: animTranslateX}, {translateY: animTranslateY}] : [];
 
     return (
       <Animated.View
