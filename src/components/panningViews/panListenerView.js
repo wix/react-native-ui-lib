@@ -2,7 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {PanResponder} from 'react-native';
-import {BaseComponent} from '../../commons';
+import {PureBaseComponent} from '../../commons';
 import {View} from 'react-native-ui-lib'; //eslint-disable-line
 import asPanViewConsumer from './asPanViewConsumer';
 import PanningProvider from './panningProvider';
@@ -14,7 +14,7 @@ const DEFAULT_SWIPE_VELOCITY = 1.8;
  * @description: PanListenerView component created to making listening to swipe and drag events easier
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PanListenerScreen.js
  */
-class PanListenerView extends BaseComponent {
+class PanListenerView extends PureBaseComponent {
   static displayName = 'PanListenerView';
   static propTypes = {
     /**
