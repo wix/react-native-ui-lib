@@ -116,15 +116,10 @@ class PanListenerView extends PureBaseComponent {
   };
 
   handlePanStart = () => {
-    const {onPanStart, context} = this.props;
+    const {context} = this.props;
 
-    if (!_.isUndefined(onPanStart)) {
-      onPanStart();
-    }
-
-    if (!_.isUndefined(context)) {
-      _.invoke(context, 'onPanStart');
-    }
+    _.invoke(this.props, 'onPanStart');
+    _.invoke(context, 'onPanStart');
   };
 
   getSwipeDirection = ({vx, vy}) => {
@@ -182,50 +177,30 @@ class PanListenerView extends PureBaseComponent {
 
     if (this.panResultHasValue(panResult)) {
       const data = {directions: panResult.selectedDirections, velocities: panResult.selectedAmounts};
-      if (hasSwipe) {
-        onSwipe(data);
-      }
-
-      if (hasContext) {
-        _.invoke(context, 'onSwipe', data);
-      }
+      _.invoke(this.props, 'onSwipe', data);
+      _.invoke(context, 'onSwipe', data);
     } else if (hasDrag || hasContext) {
       panResult = this.getDragDirection(gestureState);
       if (this.panResultHasValue(panResult)) {
         const data = {directions: panResult.selectedDirections, deltas: panResult.selectedAmounts};
-        if (hasDrag) {
-          onDrag(data);
-        }
-        
-        if (hasContext) {
-          _.invoke(context, 'onDrag', data);
-        }
+        _.invoke(this.props, 'onDrag', data);
+        _.invoke(context, 'onDrag', data);
       }
     }
   };
 
   handlePanRelease = () => {
-    const {onPanRelease, context} = this.props;
-
-    if (!_.isUndefined(onPanRelease)) {
-      onPanRelease();
-    }
-
-    if (!_.isUndefined(context)) {
-      _.invoke(context, 'onPanRelease');
-    }
+    const {context} = this.props;
+    
+    _.invoke(this.props, 'onPanRelease');
+    _.invoke(context, 'onPanRelease');
   };
 
   handlePanTerminate = () => {
-    const {onPanTerminated, context} = this.props;
-
-    if (!_.isUndefined(onPanTerminated)) {
-      onPanTerminated();
-    }
-
-    if (!_.isUndefined(context)) {
-      _.invoke(context, 'onPanTerminated');
-    }
+    const {context} = this.props;
+    
+    _.invoke(this.props, 'onPanTerminated');
+    _.invoke(context, 'onPanTerminated');
   };
 
   onLayout = event => {
