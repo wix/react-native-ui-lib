@@ -140,7 +140,6 @@ class ContactItem extends PureComponent {
         rightItems={item.rightButtons}
         // itemsMinWidth={80}
         ref={r => addRef(r, index)}
-        onDragStart={this.onDragStart}
         index={index} // sent for the 'closeLast' functionality
         onSwipeableWillOpen={onSwipeableWillOpen} // sent for the 'closeLast' functionality
       >
