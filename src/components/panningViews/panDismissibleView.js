@@ -11,11 +11,11 @@ const DEFAULT_BOUNCINESS = 6;
 const DEFAULT_DISMISS_ANIMATION_DURATION = 280;
 
 /**
- * @description: PanToDismissView component created to making listening to swipe and drag events easier,
+ * @description: PanDismissibleView component created to making listening to swipe and drag events easier,
  * Has to be used as a child of a PanningProvider that also has a PanListenerView
  */
-class PanToDismissView extends PureComponent {
-  static displayName = 'PanToDismissView';
+class PanDismissibleView extends PureComponent {
+  static displayName = 'PanDismissibleView';
   static propTypes = {
     /**
      * The directions of the allowed pan (default allows all directions)
@@ -297,4 +297,4 @@ class PanToDismissView extends PureComponent {
   }
 }
 
-export default asPanViewConsumer(PanToDismissView);
+export default asPanViewConsumer(PanDismissibleView);
