@@ -202,10 +202,10 @@ class PanListenerView extends PureBaseComponent {
   };
 
   render() {
-    const {style, children, ...others} = this.getThemeProps();
+    const {children, ...others} = this.getThemeProps();
 
     return (
-      <View style={style} {...this.panResponder.panHandlers} onLayout={this.onLayout} {...others}>
+      <View {...others} {...this.panResponder.panHandlers} onLayout={this.onLayout}>
         {children}
       </View>
     );
