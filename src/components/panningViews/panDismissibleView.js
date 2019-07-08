@@ -72,7 +72,7 @@ class PanDismissibleView extends PureComponent {
       isPanning: prevIsPanning,
       dragDeltas: prevDragDeltas,
       swipeDirections: prevSwipeDirections,
-    } = prevProps.context;
+    } = prevProps.context; // eslint-disable-line
     if (isPanning !== prevIsPanning) {
       if (isPanning && !isAnimating) {
         // do not start a new pan if we're still animating
