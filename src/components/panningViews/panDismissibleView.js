@@ -28,17 +28,15 @@ class PanDismissibleView extends PureComponent {
     onDismiss: PropTypes.func,
     /**
      * Some animation options to choose from:
-     * speed - The animation speed (default is 20)
-     * bounciness - The dismiss animation duration (default is 280)
+     * speed - the animation speed (default is 20)
+     * bounciness - the animation bounciness (default is 6)
+     * duration - the dismiss animation duration (default is 280)
      */
     animationOptions: PropTypes.shape({
       speed: PropTypes.number,
       bounciness: PropTypes.number,
+      duration: PropTypes.number,
     }),
-    /**
-     * The dismiss animation duration (default is 280)
-     */
-    dismissAnimationDuration: PropTypes.number,
   };
 
   static defaultProps = {
@@ -51,6 +49,7 @@ class PanDismissibleView extends PureComponent {
     animationOptions: {
       speed: DEFAULT_SPEED,
       bounciness: DEFAULT_BOUNCINESS,
+      duration: DEFAULT_DISMISS_ANIMATION_DURATION,
     },
   };
 
@@ -171,8 +170,8 @@ class PanDismissibleView extends PureComponent {
       animations.push(
         Animated.spring(animTranslateX, {
           toValue: Math.round(toX),
-          speed: speed,
-          bounciness: bounciness,
+          speed,
+          bounciness,
         }),
       );
     }
@@ -181,8 +180,8 @@ class PanDismissibleView extends PureComponent {
       animations.push(
         Animated.spring(animTranslateY, {
           toValue: Math.round(toY),
-          speed: speed,
-          bounciness: bounciness,
+          speed,
+          bounciness,
         }),
       );
     }
@@ -228,6 +227,7 @@ class PanDismissibleView extends PureComponent {
 
   animateDismiss = (isRight, isDown) => {
     const {animTranslateX, animTranslateY} = this.state;
+    const {duration} = this.props.animationOptions;
     const animations = [];
     let toX;
     let toY;
@@ -246,7 +246,7 @@ class PanDismissibleView extends PureComponent {
       animations.push(
         Animated.timing(animTranslateX, {
           toValue: Math.round(toX),
-          duration: DEFAULT_DISMISS_ANIMATION_DURATION,
+          duration,
         }),
       );
     }
@@ -255,7 +255,7 @@ class PanDismissibleView extends PureComponent {
       animations.push(
         Animated.timing(animTranslateY, {
           toValue: Math.round(toY),
-          duration: DEFAULT_DISMISS_ANIMATION_DURATION,
+          duration,
         }),
       );
     }
