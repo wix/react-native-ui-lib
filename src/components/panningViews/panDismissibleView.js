@@ -235,12 +235,12 @@ class PanDismissibleView extends PureComponent {
     let toX;
     let toY;
 
-    if (!_.isUndefined(isRight) && !_.isUndefined(animTranslateX)) {
+    if (!_.isUndefined(isRight)) {
       const maxSize = Constants.screenWidth + this.width;
       toX = isRight ? maxSize : -maxSize;
     }
 
-    if (!_.isUndefined(isDown) && !_.isUndefined(animTranslateY)) {
+    if (!_.isUndefined(isDown)) {
       const maxSize = Constants.screenHeight + this.height;
       toY = isDown ? maxSize : -maxSize;
     }
