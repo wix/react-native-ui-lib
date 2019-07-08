@@ -27,7 +27,7 @@ class PanListenerView extends PureBaseComponent {
      * onDrag = ({directions, velocities}) => {...}
      * directions - array of directions
      * velocities - array of velocities (same length and order as directions)
-     * Both arrays will have [x, y] - if no x or y drag has occurred this value will be undefined
+     * Both arrays will have {x, y} - if no x or y drag has occurred this value will be undefined
      */
     onDrag: PropTypes.func,
     /**
@@ -35,7 +35,7 @@ class PanListenerView extends PureBaseComponent {
      * onSwipe = ({directions, deltas}) => {...}
      * directions - array of directions
      * deltas - array of deltas (same length and order as directions)
-     * Both arrays will have [x, y] - if no x or y swipe has occurred this value will be undefined
+     * Both arrays will have {x, y} - if no x or y swipe has occurred this value will be undefined
      */
     onSwipe: PropTypes.func,
     /**
@@ -131,36 +131,30 @@ class PanListenerView extends PureBaseComponent {
 
   getDirectionsOverSensitivity = (x, y, sensitivity) => {
     const {directions} = this.props;
-    const selectedDirections = [];
-    const selectedAmounts = [];
+    const selectedDirections = {};
+    const selectedAmounts = {};
 
     if (directions.includes(PanningProvider.Directions.LEFT) && x < -sensitivity) {
-      selectedDirections.push(PanningProvider.Directions.LEFT);
-      selectedAmounts.push(x);
+      selectedDirections.x = PanningProvider.Directions.LEFT;
+      selectedAmounts.x = x;
     } else if (directions.includes(PanningProvider.Directions.RIGHT) && x > sensitivity) {
-      selectedDirections.push(PanningProvider.Directions.RIGHT);
-      selectedAmounts.push(x);
-    } else {
-      selectedDirections.push(undefined);
-      selectedAmounts.push(undefined);
+      selectedDirections.x = PanningProvider.Directions.RIGHT;
+      selectedAmounts.x = x;
     }
 
     if (directions.includes(PanningProvider.Directions.UP) && y < -sensitivity) {
-      selectedDirections.push(PanningProvider.Directions.UP);
-      selectedAmounts.push(y);
+      selectedDirections.y = PanningProvider.Directions.UP;
+      selectedAmounts.y = y;
     } else if (directions.includes(PanningProvider.Directions.DOWN) && y > sensitivity) {
-      selectedDirections.push(PanningProvider.Directions.DOWN);
-      selectedAmounts.push(y);
-    } else {
-      selectedDirections.push(undefined);
-      selectedAmounts.push(undefined);
+      selectedDirections.y = PanningProvider.Directions.DOWN;
+      selectedAmounts.y = y;
     }
-
+    
     return {selectedDirections, selectedAmounts};
   };
 
   panResultHasValue = panResult => {
-    return panResult && (panResult.selectedDirections[0] || panResult.selectedDirections[1]);
+    return panResult && (panResult.selectedDirections.x || panResult.selectedDirections.y);
   };
 
   handlePanMove = (e, gestureState) => {

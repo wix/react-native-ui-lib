@@ -84,16 +84,16 @@ class PanDismissibleView extends PureComponent {
 
     if (
       isPanning &&
-      (dragDeltas[0] || dragDeltas[1]) &&
-      (dragDeltas[0] !== prevDragDeltas[0] || dragDeltas[1] !== prevDragDeltas[1])
+      (dragDeltas.x || dragDeltas.y) &&
+      (dragDeltas.x !== prevDragDeltas.x || dragDeltas.y !== prevDragDeltas.y)
     ) {
       this.onDrag(dragDeltas);
     }
 
     if (
       isPanning &&
-      (swipeDirections[0] || swipeDirections[1]) &&
-      (swipeDirections[0] !== prevSwipeDirections[0] || swipeDirections[1] !== prevSwipeDirections[1])
+      (swipeDirections.x || swipeDirections.y) &&
+      (swipeDirections.x !== prevSwipeDirections.x || swipeDirections.y !== prevSwipeDirections.y)
     ) {
       this.onSwipe(swipeDirections);
     }
@@ -122,12 +122,12 @@ class PanDismissibleView extends PureComponent {
   };
 
   onPanStart = () => {
-    this.swipe = [undefined, undefined];
+    this.swipe = {};
   };
 
   onDrag = deltas => {
-    const left = deltas[0] ? Math.round(deltas[0]) : this.originalLeft;
-    const top = deltas[1] ? Math.round(deltas[1]) : this.originalTop;
+    const left = deltas.x ? Math.round(deltas.x) : this.originalLeft;
+    const top = deltas.y ? Math.round(deltas.y) : this.originalTop;
     this.setNativeProps(left, top);
   };
 
@@ -145,16 +145,16 @@ class PanDismissibleView extends PureComponent {
 
   onPanEnd = () => {
     const {directions} = this.props;
-    if (this.swipe[0] || this.swipe[1]) {
+    if (this.swipe.x || this.swipe.y) {
       const {isRight, isDown} = this.getDismissAnimationDirection();
       this.animateDismiss(isRight, isDown);
     } else {
-      const endValue = [Math.round(this.left), Math.round(this.top)];
+      const endValue = {x: Math.round(this.left), y: Math.round(this.top)};
       if (
-        (directions.includes(PanningProvider.Directions.LEFT) && endValue[0] <= -this.thresholdX) ||
-        (directions.includes(PanningProvider.Directions.RIGHT) && endValue[0] >= this.thresholdX) ||
-        (directions.includes(PanningProvider.Directions.UP) && endValue[1] <= -this.thresholdY) ||
-        (directions.includes(PanningProvider.Directions.DOWN) && endValue[1] >= this.thresholdY)
+        (directions.includes(PanningProvider.Directions.LEFT) && endValue.x <= -this.thresholdX) ||
+        (directions.includes(PanningProvider.Directions.RIGHT) && endValue.x >= this.thresholdX) ||
+        (directions.includes(PanningProvider.Directions.UP) && endValue.y <= -this.thresholdY) ||
+        (directions.includes(PanningProvider.Directions.DOWN) && endValue.y >= this.thresholdY)
       ) {
         const {isRight, isDown} = this.getDismissAnimationDirection();
         this.animateDismiss(isRight, isDown);
@@ -202,27 +202,27 @@ class PanDismissibleView extends PureComponent {
 
   getDismissAnimationDirection = () => {
     const {swipeDirections, dragDirections} = this.props.context;
-    const hasHorizontalSwipe = !_.isUndefined(swipeDirections[0]);
-    const hasVerticalSwipe = !_.isUndefined(swipeDirections[1]);
+    const hasHorizontalSwipe = !_.isUndefined(swipeDirections.x);
+    const hasVerticalSwipe = !_.isUndefined(swipeDirections.y);
     let isRight;
     let isDown;
 
     if (hasHorizontalSwipe || hasVerticalSwipe) {
       if (hasHorizontalSwipe) {
-        isRight = swipeDirections[0] === PanningProvider.Directions.RIGHT;
+        isRight = swipeDirections.x === PanningProvider.Directions.RIGHT;
       }
 
       if (hasVerticalSwipe) {
-        isDown = swipeDirections[1] === PanningProvider.Directions.DOWN;
+        isDown = swipeDirections.y === PanningProvider.Directions.DOWN;
       }
     } else {
       // got here from a drag beyond threshold
-      if (!_.isUndefined(dragDirections[0])) {
-        isRight = dragDirections[0] === PanningProvider.Directions.RIGHT;
+      if (!_.isUndefined(dragDirections.x)) {
+        isRight = dragDirections.x === PanningProvider.Directions.RIGHT;
       }
 
-      if (!_.isUndefined(dragDirections[1])) {
-        isDown = dragDirections[1] === PanningProvider.Directions.DOWN;
+      if (!_.isUndefined(dragDirections.y)) {
+        isDown = dragDirections.y === PanningProvider.Directions.DOWN;
       }
     }
 

@@ -8,12 +8,12 @@ export default class PanListenerScreen extends Component {
     endType: ''
   };
 
-  onDrag = ({directions, velocities}) => {
-    this.setState({locationText: `Dragged: ${directions}`});
+  onDrag = ({directions, deltas}) => {
+    this.setState({locationText: `Dragged: ${directions.x}, ${directions.y}`});
   };
 
-  onSwipe = ({directions, deltas}) => {
-    this.setState({locationText: `Swiped: ${directions}`});
+  onSwipe = ({directions, velocities}) => {
+    this.setState({locationText: `Swiped: ${directions.x}, ${directions.y}`});
   };
 
   onPanStart = () => {

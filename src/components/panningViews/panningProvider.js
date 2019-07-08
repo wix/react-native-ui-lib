@@ -17,14 +17,11 @@ export default class PanningProvider extends Component {
     this.state = {
       isPanning: false,
       wasTerminated: false,
-      dragDirections: [],
-      dragDeltas: [],
-      swipeDirections: [],
-      swipeVelocities: [],
+      dragDirections: {},
+      dragDeltas: {},
+      swipeDirections: {},
+      swipeVelocities: {},
     };
-
-    this.inputQueue = [];
-    this.stateIsBusy = false;
   }
 
   getProviderContextValue = () => {
