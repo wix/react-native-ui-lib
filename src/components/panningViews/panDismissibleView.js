@@ -51,6 +51,7 @@ class PanDismissibleView extends PureComponent {
       bounciness: DEFAULT_BOUNCINESS,
       duration: DEFAULT_DISMISS_ANIMATION_DURATION,
     },
+    onDismiss: _.noop,
   };
 
   constructor(props) {
@@ -66,7 +67,7 @@ class PanDismissibleView extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const {isAnimating} = this.state;
-    const {isPanning, dragDeltas, swipeDirections} = this.props.context;
+    const {isPanning, dragDeltas, swipeDirections} = this.props.context; // eslint-disable-line
     const {
       isPanning: prevIsPanning,
       dragDeltas: prevDragDeltas,
@@ -197,7 +198,7 @@ class PanDismissibleView extends PureComponent {
   };
 
   getDismissAnimationDirection = () => {
-    const {swipeDirections, dragDirections} = this.props.context;
+    const {swipeDirections, dragDirections} = this.props.context; // eslint-disable-line
     const hasHorizontalSwipe = !_.isUndefined(swipeDirections.x);
     const hasVerticalSwipe = !_.isUndefined(swipeDirections.y);
     let isRight;
@@ -267,12 +268,9 @@ class PanDismissibleView extends PureComponent {
 
   onDismissAnimationFinished = ({finished}) => {
     if (finished) {
-      this.onDismiss();
+      const {onDismiss} = this.props;
+      onDismiss();
     }
-  };
-
-  onDismiss = () => {
-    _.invoke(this.props, 'onDismiss');
   };
 
   render() {
