@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {Colors, Typography, View, Text, TextField, TextArea, Modal, Button} from 'react-native-ui-lib'; //eslint-disable-line
 import {KeyboardAwareInsetsView} from 'react-native-keyboard-tracking-view';
-import icon from '../../assets/icons/richText.png';
-import dropDown from '../../assets/icons/chevronDown.png';
 
+
+const richText = require('../../assets/icons/richText.png');
+const dropDown = require('../../assets/icons/chevronDown.png');
+const star = require('../../assets/icons/star.png');
 
 const LONG_TEXT =
   'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer' +
@@ -78,7 +80,7 @@ export default class InputsScreen extends Component {
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
-            placeholder="floatingPlaceholder & error"
+            placeholder="FloatingPlaceholder & error"
             onChangeText={this.onChangeText}
             error={this.state.error}
             useTopErrors={this.state.topError}
@@ -102,7 +104,7 @@ export default class InputsScreen extends Component {
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
-            placeholder="& helperText"
+            placeholder="With helperText"
             helperText="this is an helper text"
             onChangeText={this.onChangeText}
             error={this.state.error}
@@ -113,7 +115,7 @@ export default class InputsScreen extends Component {
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
-            placeholder="multiline & helperText"
+            placeholder="Multiline & helperText"
             multiline
             helperText="this is an helper text"
           />
@@ -122,7 +124,7 @@ export default class InputsScreen extends Component {
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             title="title"
-            placeholder="character counter & error"
+            placeholder="Character counter & error"
             maxLength={3}
             showCharacterCounter
             onChangeText={this.onChangeText}
@@ -135,7 +137,7 @@ export default class InputsScreen extends Component {
             containerStyle={{marginBottom: INPUT_SPACING}}
             title="Title"
             titleStyle={{fontSize: Typography.text70.fontSize}}
-            placeholder="multiline & titleStyle"
+            placeholder="Multiline & titleStyle"
             multiline
             maxLength={32}
             showCharacterCounter
@@ -149,7 +151,7 @@ export default class InputsScreen extends Component {
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
-            placeholder="character counter & expandable"
+            placeholder="Character counter & expandable"
             expandable
             maxLength={20}
             showCharacterCounter
@@ -161,7 +163,7 @@ export default class InputsScreen extends Component {
             floatingPlaceholder
             placeholderTextColor={Colors.cyan30}
             floatingPlaceholderColor={Colors.cyan30}
-            placeholder="underline colors & error"
+            placeholder="Underline colors & error"
             onChangeText={this.onChangeText}
             error={this.state.error}
             useTopErrors={this.state.topError}
@@ -171,14 +173,14 @@ export default class InputsScreen extends Component {
           <TextField
             text40
             containerStyle={{marginBottom: INPUT_SPACING}}
-            placeholder="write something.."
+            placeholder="Write something.."
             hideUnderline
           />
 
           <TextField
             text30
             containerStyle={{marginBottom: INPUT_SPACING}}
-            placeholder="write something.."
+            placeholder="Write something.."
             centered
             hideUnderline
           />
@@ -234,7 +236,7 @@ export default class InputsScreen extends Component {
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
-            placeholder="with price transformer"
+            placeholder="With price transformer"
             value={this.state.value}
             transformer={transformPrice}
           />
@@ -243,24 +245,32 @@ export default class InputsScreen extends Component {
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
-            placeholder="Right button"
-            rightButtonProps={{iconSource: icon, onPress: this.onPressInfo}}
+            placeholder="With right button"
+            rightButtonProps={{iconSource: richText, onPress: this.onPressInfo}}
           />
 
           <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING, width: 210}}
             floatingPlaceholder
-            placeholder="Multiline & Right button"
+            placeholder="Multiline & right button"
             multiline
-            rightButtonProps={{iconSource: icon, onPress: this.onPressInfo, style: {tintColor: Colors.red30}}}
+            rightButtonProps={{iconSource: richText, onPress: this.onPressInfo, style: {tintColor: Colors.red30}}}
           />
           
           <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
-            placeholder="Expandable & rightIconSource"
+            placeholder="With right icon"
+            rightIconSource={star}
+          />
+
+          <TextField
+            text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            floatingPlaceholder
+            placeholder="Expandable & right icon"
             expandable
             rightIconSource={dropDown}
           />
@@ -275,7 +285,7 @@ export default class InputsScreen extends Component {
               borderColor: Colors.dark60,
             }}
           >
-            <TextArea placeholder="write something.."/>
+            <TextArea placeholder="Write something.."/>
           </View>
 
           <TextField
