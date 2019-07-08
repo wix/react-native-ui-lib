@@ -28,12 +28,12 @@ class PanDismissibleView extends PureComponent {
     onDismiss: PropTypes.func,
     /**
      * Some animation options to choose from:
-     * animationSpeed - The animation speed (default is 20)
-     * animationBounciness - The dismiss animation duration (default is 280)
+     * speed - The animation speed (default is 20)
+     * bounciness - The dismiss animation duration (default is 280)
      */
     animationOptions: PropTypes.shape({
-      animationSpeed: PropTypes.number,
-      animationBounciness: PropTypes.number,
+      speed: PropTypes.number,
+      bounciness: PropTypes.number,
     }),
     /**
      * The dismiss animation duration (default is 280)
@@ -49,8 +49,8 @@ class PanDismissibleView extends PureComponent {
       PanningProvider.Directions.RIGHT,
     ],
     animationOptions: {
-      animationSpeed: DEFAULT_SPEED,
-      animationBounciness: DEFAULT_BOUNCINESS,
+      speed: DEFAULT_SPEED,
+      bounciness: DEFAULT_BOUNCINESS,
     },
   };
 
@@ -166,7 +166,7 @@ class PanDismissibleView extends PureComponent {
 
   animateToInitialPosition = () => {
     const {animTranslateX, animTranslateY} = this.state;
-    const {animationSpeed, animationBounciness} = this.props.animationOptions;
+    const {speed, bounciness} = this.props.animationOptions;
     const toX = -this.left;
     const toY = -this.top;
     const animations = [];
@@ -174,8 +174,8 @@ class PanDismissibleView extends PureComponent {
       animations.push(
         Animated.spring(animTranslateX, {
           toValue: Math.round(toX),
-          speed: animationSpeed,
-          bounciness: animationBounciness,
+          speed: speed,
+          bounciness: bounciness,
         }),
       );
     }
@@ -184,8 +184,8 @@ class PanDismissibleView extends PureComponent {
       animations.push(
         Animated.spring(animTranslateY, {
           toValue: Math.round(toY),
-          speed: animationSpeed,
-          bounciness: animationBounciness,
+          speed: speed,
+          bounciness: bounciness,
         }),
       );
     }
