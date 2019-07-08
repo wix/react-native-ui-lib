@@ -14,6 +14,7 @@ import HintsScreen from './HintsScreen';
 import InputsScreen from './InputsScreen';
 import MaskedInputScreen from './MaskedInputScreen';
 import PageControlScreen from './PageControlScreen';
+import PanListenerScreen from './PanListenerScreen';
 import PickerScreen from './PickerScreen';
 import RadioButtonScreen from './RadioButtonScreen';
 import SharedTransitionScreen from './SharedTransitionScreen';
@@ -43,6 +44,7 @@ Navigation.registerComponent('unicorn.components.HintsScreen', () => HintsScreen
 Navigation.registerComponent('unicorn.components.InputsScreen', () => InputsScreen);
 Navigation.registerComponent('unicorn.components.MaskedInputScreen', () => MaskedInputScreen);
 Navigation.registerComponent('unicorn.components.PageControlScreen', () => PageControlScreen);
+Navigation.registerComponent('unicorn.components.PanListenerScreen', () => PanListenerScreen);
 Navigation.registerComponent('unicorn.components.PickerScreen', () => PickerScreen);
 Navigation.registerComponent('unicorn.components.RadioButtonScreen', () => RadioButtonScreen);
 Navigation.registerComponent('unicorn.components.SharedTransitionScreen', () => SharedTransitionScreen);
