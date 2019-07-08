@@ -106,18 +106,15 @@ class PanDismissibleView extends PureComponent {
       this.thresholdY = layout.height / 2;
       this.width = layout.width;
       this.thresholdX = layout.width / 2;
-      const {style} = this.props;
-      this.originalLeft = _.get(style, 'left', 0);
-      this.originalTop = _.get(style, 'top', 0);
       this.initPositions();
     }
   };
 
   initPositions = () => {
-    this.setNativeProps(this.originalLeft, this.originalTop);
+    this.setNativeProps(0, 0);
     this.setState({
-      animTranslateX: new Animated.Value(this.originalLeft),
-      animTranslateY: new Animated.Value(this.originalTop),
+      animTranslateX: new Animated.Value(0),
+      animTranslateY: new Animated.Value(0),
     });
   };
 
@@ -126,8 +123,8 @@ class PanDismissibleView extends PureComponent {
   };
 
   onDrag = deltas => {
-    const left = deltas.x ? Math.round(deltas.x) : this.originalLeft;
-    const top = deltas.y ? Math.round(deltas.y) : this.originalTop;
+    const left = deltas.x ? Math.round(deltas.x) : 0;
+    const top = deltas.y ? Math.round(deltas.y) : 0;
     this.setNativeProps(left, top);
   };
 
