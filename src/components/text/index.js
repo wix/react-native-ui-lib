@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {Text as RNText, StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
-import {Constants} from '../../helpers';
 
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
@@ -75,7 +74,7 @@ function createStyles() {
   return StyleSheet.create({
     container: {
       backgroundColor: 'transparent',
-      writingDirection: Constants.isRTL ? 'rtl' : 'auto'
+      textAlign: 'left'
     },
   });
 }

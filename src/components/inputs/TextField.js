@@ -645,7 +645,7 @@ function createStyles({placeholderTextColor, centered, multiline}) {
     },
     placeholder: {
       color: placeholderTextColor,
-      writingDirection: Constants.isRTL ? 'rtl' : 'auto'
+      textAlign: 'left'
     },
     errorMessage: {
       color: Colors.red30,
