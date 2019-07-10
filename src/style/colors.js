@@ -75,7 +75,7 @@ class Colors {
 
   getColorTint(color, tintKey) {
     if (_.isUndefined(tintKey) || isNaN(tintKey) || _.isUndefined(color)) {
-      console.error('"Colors.getColorTint" must accept a color and tintKey params');
+      // console.error('"Colors.getColorTint" must accept a color and tintKey params');
       return color;
     }
 
