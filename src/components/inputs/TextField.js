@@ -137,6 +137,7 @@ export default class TextField extends BaseInput {
      */
     rightButtonProps: PropTypes.shape({
       iconSource: PropTypes.number,
+      iconColor: PropTypes.string,
       onPress: PropTypes.func,
       style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
     })
@@ -512,9 +513,7 @@ export default class TextField extends BaseInput {
   renderRightButton() {
     if (this.shouldDisplayRightButton()) {
       const {rightButtonProps} = this.getThemeProps();
-      const tintColor = _.get(rightButtonProps, 'style.tintColor', Colors.blue30);
-      const style = _.get(rightButtonProps, 'style');
-      const iconSource = _.get(rightButtonProps, 'iconSource');
+      const {style, iconSource, iconColor} = rightButtonProps;
 
       return (
         <TouchableOpacity style={[this.styles.rightButton, style]} onPress={this.onPressRightButton}>
@@ -522,7 +521,7 @@ export default class TextField extends BaseInput {
             pointerEvents="none" 
             source={iconSource} 
             resizeMode={'contain'}
-            style={[this.styles.rightButtonImage, {tintColor}]}
+            style={[this.styles.rightButtonImage, {tintColor: iconColor || Colors.blue30}]}
           />
         </TouchableOpacity>
       );
@@ -534,8 +533,8 @@ export default class TextField extends BaseInput {
     
     if (rightIconSource) {
       return (
-        <View style={this.styles.rightIcon}>
-          <Image pointerEvents="none" source={rightIconSource} resizeMode={'center'} style={this.styles.rightButtonImage}/>
+        <View style={this.styles.rightIcon} pointerEvents="none">
+          <Image source={rightIconSource} resizeMode={'center'} style={this.styles.rightButtonImage}/>
         </View>
       );
     }

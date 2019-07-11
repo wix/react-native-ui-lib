@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet, Alert} from 'react-native';
 import {Colors, Typography, View, Text, TextField, TextArea, Modal, Button} from 'react-native-ui-lib'; //eslint-disable-line
 import {KeyboardAwareInsetsView} from 'react-native-keyboard-tracking-view';
 
@@ -39,7 +39,7 @@ export default class InputsScreen extends Component {
   }
 
   onPressInfo = () => {
-    console.warn('onPressInfo');
+    Alert.alert('Info button press');
   }
 
   onChangeText = (text) => {
@@ -62,6 +62,7 @@ export default class InputsScreen extends Component {
       <View flex>
         <ScrollView
           contentContainerStyle={styles.container}
+          showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="always"
           getTextInputRefs={() => [this.noUnderline, this.hugeText]}
         >
@@ -255,7 +256,7 @@ export default class InputsScreen extends Component {
             floatingPlaceholder
             placeholder="Multiline & right button"
             multiline
-            rightButtonProps={{iconSource: richText, onPress: this.onPressInfo, style: {tintColor: Colors.red30}}}
+            rightButtonProps={{iconSource: richText, onPress: this.onPressInfo, iconColor: Colors.red30}}
           />
           
           <TextField
