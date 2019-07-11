@@ -132,7 +132,7 @@ class Colors {
 
     const sliced = tints.slice(0, 8);
     return sliced;
-  })
+  });
 }
 
 function generateColorTint(color, tintLevel) {
