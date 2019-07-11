@@ -56,9 +56,9 @@ export default class Badge extends BaseComponent {
      */
     containerStyle: ViewPropTypes.style,
     /**
-     * Additional styles for the label
+     * Additional styles for the badge label
      */
-    labelStyle: PropTypes.object,
+    labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * Receives a number from 1 to 4, representing the label's max digit length.
      * Beyond the max number for that digit length, a "+" will show at the end.
