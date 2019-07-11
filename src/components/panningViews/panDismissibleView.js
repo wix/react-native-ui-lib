@@ -226,6 +226,11 @@ class PanDismissibleView extends PureComponent {
     return {isRight, isDown};
   };
 
+  // Send undefined to not animate in the horizontal\vertical direction
+  // isRight === true --> animate to the right
+  // isRight === false --> animate to the left
+  // isDown === true --> animate to the bottom
+  // isDown === false --> animate to the top
   animateDismiss = (isRight, isDown) => {
     const {animTranslateX, animTranslateY} = this.state;
     const {duration} = this.props.animationOptions;
