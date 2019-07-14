@@ -144,7 +144,7 @@ class PanDismissibleView extends PureComponent {
     const {directions} = this.props;
     if (this.swipe.x || this.swipe.y) {
       const {isRight, isDown} = this.getDismissAnimationDirection();
-      this.animateDismiss(isRight, isDown);
+      this._animateDismiss(isRight, isDown);
     } else {
       const endValue = {x: Math.round(this.left), y: Math.round(this.top)};
       if (
@@ -154,7 +154,7 @@ class PanDismissibleView extends PureComponent {
         (directions.includes(PanningProvider.Directions.DOWN) && endValue.y >= this.thresholdY)
       ) {
         const {isRight, isDown} = this.getDismissAnimationDirection();
-        this.animateDismiss(isRight, isDown);
+        this._animateDismiss(isRight, isDown);
       } else {
         this.animateToInitialPosition();
       }
@@ -226,7 +226,23 @@ class PanDismissibleView extends PureComponent {
     return {isRight, isDown};
   };
 
-  animateDismiss = (isRight, isDown) => {
+  // Send undefined to not animate in the horizontal\vertical direction
+  // isRight === true --> animate to the right
+  // isRight === false --> animate to the left
+  // isDown === true --> animate to the bottom
+  // isDown === false --> animate to the top
+  animateDismiss = () => {
+    const {directions = []} = this.props;
+    const hasUp = directions.includes(PanningProvider.Directions.UP);
+    const hasRight = directions.includes(PanningProvider.Directions.RIGHT);
+    const hasLeft = directions.includes(PanningProvider.Directions.LEFT);
+    const hasDown = !hasUp && !hasLeft && !hasRight; // default
+    const verticalDismiss = hasDown ? true : hasUp ? false : undefined;
+    const horizontalDismiss = hasRight ? true : hasLeft ? false : undefined;
+    this._animateDismiss(horizontalDismiss, verticalDismiss);
+  };
+
+  _animateDismiss = (isRight, isDown) => {
     const {animTranslateX, animTranslateY} = this.state;
     const {duration} = this.props.animationOptions;
     const animations = [];
