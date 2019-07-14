@@ -75,29 +75,39 @@ describe('style/Colors', () => {
     });
 
     it('should handle a color which exists in uiLib but doesn\'t have predefined tints', () => {
-      expect(uut.getColorTint('#000000', 60)).toEqual('#B3B3B3');
+      expect(uut.getColorTint('#000000', 60)).toEqual('#808080');
     });
 
-    it('should handle color that does not exist in uilib', () => {
-      expect(uut.getColorTint('#F1BE0B', 10)).toEqual('#624D04');
-      expect(uut.getColorTint('#F1BE0B', 20)).toEqual('#927307');
-      expect(uut.getColorTint('#F1BE0B', 30)).toEqual('#C39A09');
-      expect(uut.getColorTint('#F1BE0B', 40)).toEqual('#F4C00B');
-      expect(uut.getColorTint('#F1BE0B', 50)).toEqual('#F6CD3C');
-      expect(uut.getColorTint('#F1BE0B', 60)).toEqual('#F8D96D');
-      expect(uut.getColorTint('#F1BE0B', 70)).toEqual('#FBE69D');
-      expect(uut.getColorTint('#F1BE0B', 80)).toEqual('#FDF2CE');
+    it('should handle color that does not exist in uilib', () => {                  
+      expect(uut.getColorTint('#F1BE0B', 10)).toEqual('#8D7006'); // 
+      expect(uut.getColorTint('#F1BE0B', 20)).toEqual('#BE9609'); // 
+      expect(uut.getColorTint('#F1BE0B', 30)).toEqual('#F1BE0B'); // 
+      expect(uut.getColorTint('#F1BE0B', 40)).toEqual('#F6CC37'); // 
+      expect(uut.getColorTint('#F1BE0B', 50)).toEqual('#F8D868'); // 
+      expect(uut.getColorTint('#F1BE0B', 60)).toEqual('#FAE599'); // 
+      expect(uut.getColorTint('#F1BE0B', 70)).toEqual('#FDF1C9'); // 
+      expect(uut.getColorTint('#F1BE0B', 80)).toEqual('#FFFEFA'); // 
     });
 
     it('should round down tint level to the nearest one', () => {
-      expect(uut.getColorTint('#F1BE0B', 75)).toEqual('#FBE69D');
-      expect(uut.getColorTint('#F1BE0B', 25)).toEqual('#927307');
-      expect(uut.getColorTint('#F1BE0B', 35)).toEqual('#C39A09');
+      expect(uut.getColorTint('#F1BE0B', 75)).toEqual('#FDF1C9'); 
+      expect(uut.getColorTint('#F1BE0B', 25)).toEqual('#BE9609'); 
+      expect(uut.getColorTint('#F1BE0B', 35)).toEqual('#F1BE0B');
     });
 
     it('should handle out of range tint levels and round them to the nearest one in range', () => {
-      expect(uut.getColorTint('#F1BE0B', 3)).toEqual('#624D04');
-      expect(uut.getColorTint('#F1BE0B', 95)).toEqual('#FDF2CE');
+      expect(uut.getColorTint('#F1BE0B', 3)).toEqual('#8D7006'); 
+      expect(uut.getColorTint('#F1BE0B', 95)).toEqual('#FFFEFA');
     });
+    
+    it('should memoize calls for generateColorPalette', () => {
+      uut.getColorTint('#3F88C5', 20)
+      uut.getColorTint('#3F88C5', 50)
+      uut.getColorTint('#3F88C5', 70)
+      const cachedPalette = uut.generateColorPalette.cache.get('#3F88C5');
+      expect(cachedPalette).toBeDefined();
+      expect(cachedPalette.length).toBe(8);
+      expect(cachedPalette.includes('#3F88C5')).toBe(true);
+    })
   });
 });
