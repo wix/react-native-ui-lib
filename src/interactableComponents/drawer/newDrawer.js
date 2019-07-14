@@ -128,7 +128,8 @@ class NewDrawer extends PureBaseComponent {
   // TODO: enable support for rendering more than one left item
   renderLeftActions = (progress, dragX) => {
     const {leftItem} = this.getThemeProps();
-    return this.renderActions([leftItem], progress, dragX);
+    const leftItems = leftItem ? [leftItem] : undefined;
+    return this.renderActions(leftItems, progress, dragX);
   };
 
   renderRightActions = (progress, dragX) => {
@@ -190,10 +191,10 @@ class NewDrawer extends PureBaseComponent {
             style={[
               styles.actionIcon,
               {
-                width: itemsIconSize, 
-                height: itemsIconSize, 
-                tintColor: itemsTintColor, 
-                opacity, 
+                width: itemsIconSize,
+                height: itemsIconSize,
+                tintColor: itemsTintColor,
+                opacity,
                 transform: [{scale}]
               }
             ]}
@@ -202,12 +203,12 @@ class NewDrawer extends PureBaseComponent {
         {item.text && (
           <Animated.Text
             style={[
-              styles.actionText, 
+              styles.actionText,
               {
-                color: itemsTintColor, 
-                opacity, 
+                color: itemsTintColor,
+                opacity,
                 transform: [{scale}]
-              }, 
+              },
               itemsTextStyle
             ]}
           >
