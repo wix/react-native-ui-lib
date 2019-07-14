@@ -153,13 +153,11 @@ export function extractFlexStyle(props) {
     flexG: 'flexGrow',
     flexS: 'flexShrink',
   };
-  const flexPropKey = _.chain(props)
-    .keys(props)
-    .filter(key => FLEX_KEY_PATTERN.test(key))
-    .last()
-    .value();
-  if (flexPropKey && props[flexPropKey] === true) {
-    let [flexKey, flexValue] = flexPropKey.split('-');
+
+  const keys = Object.keys(props);
+  const flexProp = keys.find((item) => FLEX_KEY_PATTERN.test(item));
+  if (flexProp && props[flexProp] === true) {
+    let [flexKey, flexValue] = flexProp.split('-');
     flexKey = STYLE_KEY_CONVERTERS[flexKey];
     flexValue = _.isEmpty(flexValue) ? 1 : Number(flexValue);
 
