@@ -631,7 +631,7 @@ function createStyles({placeholderTextColor, centered, multiline, expandable}) {
     },
     input: {
       flexGrow: 1,
-      textAlign: centered ? 'center' : undefined,
+      textAlign: centered ? 'center' : inputTextAlign,
       backgroundColor: 'transparent',
       marginBottom: Constants.isIOS ? 10 : 5,
       padding: 0, // for Android
@@ -658,7 +658,8 @@ function createStyles({placeholderTextColor, centered, multiline, expandable}) {
       backgroundColor: 'transparent'
     },
     placeholder: {
-      color: placeholderTextColor
+      color: placeholderTextColor,
+      textAlign: 'left'
     },
     errorMessage: {
       color: Colors.red30,
