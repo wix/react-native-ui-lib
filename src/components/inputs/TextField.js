@@ -601,6 +601,7 @@ export default class TextField extends BaseInput {
 }
 
 function createStyles({placeholderTextColor, centered, multiline}) {
+  const inputTextAlign = (Constants.isRTL ? 'right' : 'left');
   return StyleSheet.create({
     container: {
     },
@@ -616,7 +617,7 @@ function createStyles({placeholderTextColor, centered, multiline}) {
     },
     input: {
       flexGrow: 1,
-      textAlign: centered ? 'center' : undefined,
+      textAlign: centered ? 'center' : inputTextAlign,
       backgroundColor: 'transparent',
       marginBottom: Constants.isIOS ? 10 : 5,
       padding: 0, // for Android
@@ -643,7 +644,8 @@ function createStyles({placeholderTextColor, centered, multiline}) {
       backgroundColor: 'transparent'
     },
     placeholder: {
-      color: placeholderTextColor
+      color: placeholderTextColor,
+      textAlign: 'left'
     },
     errorMessage: {
       color: Colors.red30,

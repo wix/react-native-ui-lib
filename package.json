@@ -73,7 +73,7 @@
     "react-autobind": "^1.0.6",
     "react-dom": "^15.4.2",
     "react-js-to-ts": "^1.4.0",
-    "react-native": "0.59.3",
+    "react-native": "^0.59.3",
     "react-native-keyboard-aware-scrollview": "^2.0.0",
     "react-native-keyboard-tracking-view": "^5.3.2",
     "react-native-navigation": "2.13.1",

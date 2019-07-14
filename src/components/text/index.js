@@ -74,6 +74,7 @@ function createStyles() {
   return StyleSheet.create({
     container: {
       backgroundColor: 'transparent',
+      textAlign: 'left'
     },
   });
 }
