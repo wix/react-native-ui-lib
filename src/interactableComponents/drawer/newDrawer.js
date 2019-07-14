@@ -73,7 +73,11 @@ class NewDrawer extends PureBaseComponent {
     /**
      * The items' text style
      */
-    itemsTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
+    itemsTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * Perform the animation in natively
+     */
+    useNativeAnimations: PropTypes.bool,
   };
 
   constructor(props) {
@@ -220,7 +224,7 @@ class NewDrawer extends PureBaseComponent {
   };
 
   render() {
-    const {children, style, ...others} = this.props;
+    const {children, style, useNativeAnimations, ...others} = this.props;
     return (
       <Swipeable
         {...others}
@@ -234,6 +238,7 @@ class NewDrawer extends PureBaseComponent {
         leftActionsContainerStyle={this.leftActionsContainerStyle}
         onSwipeableWillOpen={this.onSwipeableWillOpen}
         onSwipeableWillClose={this.onSwipeableWillClose}
+        useNativeAnimations={useNativeAnimations}
       >
         {children}
       </Swipeable>
