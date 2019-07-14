@@ -18,7 +18,7 @@ class BorderRadiuses {
   }
 
   getKeysPattern() {
-    return /^(br)/;
+    return /^(br[0-9]+)/;
   }
 }
 
