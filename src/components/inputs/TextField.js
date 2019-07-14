@@ -616,6 +616,8 @@ export default class TextField extends BaseInput {
 }
 
 function createStyles({placeholderTextColor, centered, multiline, expandable}) {
+  const inputTextAlign = (Constants.isRTL ? 'right' : 'left');
+
   return StyleSheet.create({
     container: {
     },
