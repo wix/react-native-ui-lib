@@ -18,14 +18,15 @@ export function extractColorValue(props) {
   return Colors[color];
 }
 
-// todo: refactor this and use BACKGROUND_KEY_PATTERN
 export function extractBackgroundColorValue(props) {
   let backgroundColor;
-  _.forEach(Colors, (value, key) => {
-    if (props[`background-${key}`] === true || props[`bg-${key}`] === true) {
-      backgroundColor = value;
-    }
-  });
+
+  const keys = Object.keys(props);
+  const bgProp = keys.find((prop) => Colors.getBackgroundKeysPattern().test(prop));
+  if (bgProp) {
+    const key = bgProp.replace(Colors.getBackgroundKeysPattern(), '');
+    backgroundColor = Colors[key];
+  }
 
   return backgroundColor;
 }
@@ -167,16 +168,13 @@ export function extractFlexStyle(props) {
 }
 
 export function extractBorderRadiusValue(props) {
-  const borderRadiusPropsKeys = _.chain(props)
-    .keys()
-    .filter(key => BorderRadiuses.getKeysPattern().test(key))
-    .value();
   let borderRadius;
-  _.forEach(borderRadiusPropsKeys, key => {
-    if (props[key] === true) {
-      borderRadius = BorderRadiuses[key];
-    }
-  });
+
+  const keys = Object.keys(props);
+  const bgProp = keys.find((prop) => BorderRadiuses.getKeysPattern().test(prop));
+  if (bgProp) {
+    borderRadius = BorderRadiuses[bgProp];
+  }
 
   return borderRadius;
 }

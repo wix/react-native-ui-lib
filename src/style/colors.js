@@ -49,14 +49,7 @@ class Colors {
   }
 
   getBackgroundKeysPattern() {
-    return new RegExp(
-      _.chain(this)
-        .keys()
-        .map(key => [`bg-${key}`, `background-${key}`])
-        .flatten()
-        .join('|')
-        .value(),
-    );
+    return /^(bg-|background-)/;
   }
 
   isEmpty(color) {
