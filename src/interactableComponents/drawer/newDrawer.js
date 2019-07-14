@@ -128,7 +128,7 @@ class NewDrawer extends PureBaseComponent {
   // TODO: enable support for rendering more than one left item
   renderLeftActions = (progress, dragX) => {
     const {leftItem} = this.getThemeProps();
-    const leftItems = leftItem ? [leftItem] : [];
+    const leftItems = leftItem ? [leftItem] : undefined;
     return this.renderActions(leftItems, progress, dragX);
   };
 
