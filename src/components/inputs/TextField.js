@@ -137,6 +137,7 @@ export default class TextField extends BaseInput {
      */
     rightButtonProps: PropTypes.shape({
       iconSource: PropTypes.number,
+      iconColor: PropTypes.string,
       onPress: PropTypes.func,
       style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
     })
@@ -433,7 +434,7 @@ export default class TextField extends BaseInput {
   }
 
   renderExpandableInput() {
-    const {renderExpandableInput, rightIconSource, testID} = this.getThemeProps();
+    const {renderExpandableInput, testID} = this.getThemeProps();
 
     if (_.isFunction(renderExpandableInput)) {
       return renderExpandableInput(this.getThemeProps());
@@ -447,7 +448,6 @@ export default class TextField extends BaseInput {
         testID={`${testID}.expandable`}
       >
         {this.renderTextInput()}
-        {rightIconSource && <Image pointerEvents="none" source={rightIconSource} style={this.styles.rightIcon}/>}
       </TouchableOpacity>
     );
   }
@@ -465,13 +465,15 @@ export default class TextField extends BaseInput {
       numberOfLines,
       helperText,
       expandable,
+      rightIconSource,
       ...others
     } = this.getThemeProps();
     const typography = this.getTypography();
     const {lineHeight, ...typographyStyle} = typography;
     const color = this.getStateColor(this.props.color || this.extractColorValue());
+    const hasRightElement = this.shouldDisplayRightButton() || rightIconSource;
     const inputStyle = [
-      this.shouldDisplayRightButton() && {paddingRight: (ICON_SIZE + ICON_RIGHT_PADDING + ICON_LEFT_PADDING)},
+      hasRightElement && this.styles.rightElement,
       this.styles.input,
       hideUnderline && this.styles.inputWithoutUnderline,
       {...typographyStyle},
@@ -509,19 +511,31 @@ export default class TextField extends BaseInput {
   }
 
   renderRightButton() {
-    const {rightButtonProps} = this.getThemeProps();
-    const tintColor = _.get(rightButtonProps, 'style.tintColor', Colors.blue30);
-
     if (this.shouldDisplayRightButton()) {
+      const {rightButtonProps} = this.getThemeProps();
+      const {style, iconSource, iconColor} = rightButtonProps;
+
       return (
-        <TouchableOpacity style={[this.styles.rightButton, rightButtonProps.style]} onPress={this.onPressRightButton}>
+        <TouchableOpacity style={[this.styles.rightButton, style]} onPress={this.onPressRightButton}>
           <Image 
             pointerEvents="none" 
-            source={rightButtonProps.iconSource} 
+            source={iconSource} 
             resizeMode={'contain'}
-            style={[this.styles.rightButtonImage, {tintColor}]}
+            style={[this.styles.rightButtonImage, {tintColor: iconColor || Colors.blue30}]}
           />
         </TouchableOpacity>
+      );
+    }
+  }
+
+  renderRightIcon() {
+    const {rightIconSource} = this.getThemeProps();
+    
+    if (rightIconSource) {
+      return (
+        <View style={this.styles.rightIcon} pointerEvents="none">
+          <Image source={rightIconSource} resizeMode={'center'} style={this.styles.rightButtonImage}/>
+        </View>
       );
     }
   }
@@ -545,6 +559,7 @@ export default class TextField extends BaseInput {
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
           {this.renderRightButton()}
+          {this.renderRightIcon()}
           {expandable && this.renderExpandableModal()}
         </View>
         
@@ -600,8 +615,9 @@ export default class TextField extends BaseInput {
   }
 }
 
-function createStyles({placeholderTextColor, centered, multiline}) {
+function createStyles({placeholderTextColor, centered, multiline, expandable}) {
   const inputTextAlign = (Constants.isRTL ? 'right' : 'left');
+
   return StyleSheet.create({
     container: {
     },
@@ -661,9 +677,14 @@ function createStyles({placeholderTextColor, centered, multiline}) {
       ...LABEL_TYPOGRAPHY,
       height: LABEL_TYPOGRAPHY.lineHeight
     },
+    rightElement: {
+      paddingRight: ICON_SIZE + ICON_RIGHT_PADDING + ICON_LEFT_PADDING
+    },
     rightIcon: {
-      alignSelf: 'center', 
-      marginLeft: 8
+      position: 'absolute',
+      right: ICON_RIGHT_PADDING,
+      alignSelf: 'flex-end',
+      paddingBottom: expandable ? 14 : 8
     },
     rightButton: {
       position: 'absolute',
