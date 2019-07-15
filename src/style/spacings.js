@@ -20,12 +20,7 @@ class Spacings {
   }
 
   getKeysPattern() {
-    return new RegExp(
-      _.chain(this)
-        .keys()
-        .join('|')
-        .value(),
-    );
+    return /^(s[0-9]+)/;
   }
 }
 
