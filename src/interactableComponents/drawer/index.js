@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, View, TouchableOpacity, TouchableHighlight} from 'react-native';
 import Interactable from 'react-native-interactable';
-import {BaseComponent} from '../../commons';
+import {PureBaseComponent} from '../../commons';
 import {screenWidth} from '../../helpers/Constants';
 import {Colors, Typography} from '../../style';
 import NewDrawer from './newDrawer';
+
 
 const SCALE_POINT = 72; // scaling content style by height
 const MIN_LEFT_MARGIN = 56;
@@ -25,9 +26,9 @@ const ITEM_PROP_TYPES = {
 
 /**
  * @description: Interactable Drawer component
- * @extendslink: 
+ * @extendslink:
  */
-export default class Drawer extends BaseComponent {
+export default class Drawer extends PureBaseComponent {
   static displayName = 'Drawer';
 
   static propTypes = {
@@ -71,6 +72,10 @@ export default class Drawer extends BaseComponent {
      * The items' text style
      */
     itemsTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * Perform the animation in natively
+     */
+    useNativeAnimations: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -94,7 +99,7 @@ export default class Drawer extends BaseComponent {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (JSON.stringify(this.props.leftItem) !== JSON.stringify(nextProps.leftItem) || 
+    if (JSON.stringify(this.props.leftItem) !== JSON.stringify(nextProps.leftItem) ||
     JSON.stringify(this.props.rightItems) !== JSON.stringify(nextProps.rightItems)) {
       this.closeDrawer();
     }
@@ -177,7 +182,7 @@ export default class Drawer extends BaseComponent {
     if (_.size(rightItems) > 0) {
       const items = rightItems.reverse();
       const size = numberOfItems && numberOfItems >= 0 ? numberOfItems : items.length;
-      
+
       for (let i = 0; i < size; i++) {
         total += this.getItemWidth(items[i]);
       }
@@ -200,21 +205,21 @@ export default class Drawer extends BaseComponent {
     const rightSpring = equalWidths ? 0 : 30;
     const rightWidth = this.getRightItemsTotalWidth();
     const rightBound = rightWidth > 0 ? -rightWidth - rightSpring : 0;
-    
+
     return {
       right: _.isEmpty(leftItem) ? 0 : leftBound, left: _.isEmpty(rightItems) ? 0 : rightBound};
   }
   getSnapPoints() {
     const {leftItem, rightItems, damping, tension} = this.getThemeProps();
     const size = rightItems ? rightItems.length : 0;
-    
+
     const left = !_.isEmpty(leftItem) ? {x: this.getItemWidth(leftItem), damping, tension} : {};
     const initial = {x: 0, damping, tension};
     const last = rightItems && !_.isEmpty(rightItems[0]) ?
       {x: -(this.getRightItemsTotalWidth()), damping, tension} : {};
 
     switch (size) {
-      case 0: 
+      case 0:
         return [left, initial];
       default:
         return [left, initial, last];
@@ -226,9 +231,9 @@ export default class Drawer extends BaseComponent {
 
     const first = {id: 'first', influenceArea: {left: -(this.getRightItemsTotalWidth(1))}};
     const second = {id: 'second', influenceArea: {left: -(this.getRightItemsTotalWidth(size - 1))}};
-    
+
     switch (size) {
-      case 0: 
+      case 0:
       case 1:
         return [];
       case 2:
@@ -242,7 +247,7 @@ export default class Drawer extends BaseComponent {
     const size = rightItems ? rightItems.length : 0;
     const interval = 65;
     const inputRanges = [];
-    
+
     for (let i = 0; i < size; i++) {
       const itemWidth = this.getItemWidth(rightItems[i]);
       const end = itemWidth - (size * BLEED);
@@ -255,13 +260,13 @@ export default class Drawer extends BaseComponent {
 
   onLayout = (event) => {
     const {width, height} = event.nativeEvent.layout;
-    
+
     const typography = height >= SCALE_POINT ? Typography.text70 : Typography.text80;
     const textTopMargin = height > SCALE_POINT ? 8 : 0;
     const itemPadding = height >= SCALE_POINT ? ITEM_PADDING : 8;
-    
+
     this.setState({width, height, typography, textTopMargin, itemPadding});
-  }; 
+  };
 
   renderLeftItem() {
     const {leftItem, itemsTintColor, itemsIconSize, itemsTextStyle} = this.getThemeProps();
@@ -330,7 +335,7 @@ export default class Drawer extends BaseComponent {
                 ]}
                 {...this.getAnimationConfig()}
               />}
-              {leftItem && leftItem.text && 
+              {leftItem && leftItem.text &&
               <Animated.Text
                 numberOfLines={1}
                 style={
@@ -425,7 +430,7 @@ export default class Drawer extends BaseComponent {
           ]}
           {...this.getAnimationConfig()}
         />}
-        {item.text && 
+        {item.text &&
         <Animated.Text
           numberOfLines={1}
           style={
@@ -472,7 +477,7 @@ export default class Drawer extends BaseComponent {
     if (migrate) {
       return <NewDrawer ref={this.drawer} {...this.getThemeProps()} />;
     }
-    
+
     const {style, onPress, rightItems} = this.getThemeProps();
     const Container = onPress ? TouchableOpacity : View;
     const backgroundColor = _.get(rightItems, '[0].background', ITEM_BG);
@@ -482,7 +487,7 @@ export default class Drawer extends BaseComponent {
       <View style={[style, this.styles.container, {backgroundColor}]} onLayout={this.onLayout}>
         {rightItems && this.renderRightItems()}
         {this.renderLeftItem()}
-        
+
         <Interactable.View
           ref={el => (this.interactableElem = el)}
           horizontalOnly
@@ -498,15 +503,15 @@ export default class Drawer extends BaseComponent {
           style={[this.styles.interactable, {width: containerWidth * 2}]}
         >
           <View style={{backgroundColor: Colors.white}}>
-            <Container 
+            <Container
               style={[this.styles.childrenContainer, {width: containerWidth}]}
               activeOpacity={0.7}
-              onPress={this.onPress} 
+              onPress={this.onPress}
             >
               {this.props.children}
             </Container>
           </View>
-          {rightItems && 
+          {rightItems &&
             <View style={{width: containerWidth, flexDirection: 'row'}}>
               {_.map(rightItems, this.renderGhostButton)}
             </View>

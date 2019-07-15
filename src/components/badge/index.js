@@ -56,6 +56,10 @@ export default class Badge extends BaseComponent {
      */
     containerStyle: ViewPropTypes.style,
     /**
+     * Additional styles for the badge label
+     */
+    labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
      * Receives a number from 1 to 4, representing the label's max digit length.
      * Beyond the max number for that digit length, a "+" will show at the end.
      * If set to a value not included in LABEL_FORMATTER_VALUES, no formating will occur.
@@ -157,9 +161,10 @@ export default class Badge extends BaseComponent {
   }
 
   renderLabel() {
+    const {labelStyle} = this.props;
     return (
       <Text
-        style={[this.styles.label, this.isSmallBadge() && this.styles.labelSmall]}
+        style={[this.styles.label, this.isSmallBadge() && this.styles.labelSmall, labelStyle]}
         allowFontScaling={false}
         numberOfLines={1}
         testID="badge"

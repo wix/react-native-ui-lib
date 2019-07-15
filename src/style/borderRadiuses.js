@@ -18,14 +18,7 @@ class BorderRadiuses {
   }
 
   getKeysPattern() {
-    return new RegExp(
-      _.chain(this)
-        .keys()
-        .map(key => [`${key}`])
-        .flatten()
-        .join('|')
-        .value(),
-    );
+    return /^(br[0-9]+)/;
   }
 }
 

@@ -1,17 +1,17 @@
+import _ from 'lodash';
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Animated, StyleSheet, ViewPropTypes} from 'react-native';
-import PropTypes from 'prop-types';
 import {RectButton} from 'react-native-gesture-handler';
-import _ from 'lodash';
-
-import Swipeable from './Swipeable';
-import View from '../../components/view';
-import {BaseComponent} from '../../commons';
+import {PureBaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
+import View from '../../components/view';
+import Swipeable from './Swipeable';
 
+
+const deprecatedProps = ['damping', 'tension', 'onPress', 'equalWidths'];
 const DEFAULT_BG = Colors.blue30;
-
 const ITEM_PROP_TYPES = {
   width: PropTypes.number,
   background: PropTypes.string,
@@ -20,23 +20,28 @@ const ITEM_PROP_TYPES = {
   onPress: PropTypes.func,
   keepOpen: PropTypes.bool,
   style: ViewPropTypes.style,
-  testID: PropTypes.string,
+  testID: PropTypes.string
 };
 
-export default class NewDrawer extends BaseComponent {
+class NewDrawer extends PureBaseComponent {
   static propTypes = {
+    ...Swipeable.PropTypes,
     /**
-     * The drawer top layer's damping
+     * The drawer top layer's damping - DEPRECATED
      */
     damping: PropTypes.number,
     /**
-     * The drawer top layer's tention
+     * The drawer top layer's tension - DEPRECATED
      */
     tension: PropTypes.number,
     /**
-     * Press handler
+     * Press handler - DEPRECATED
      */
     onPress: PropTypes.func,
+    /**
+     * The drawer animation bounciness
+     */
+    bounciness: PropTypes.number,
     /**
      * OnDragStart handler
      */
@@ -50,7 +55,7 @@ export default class NewDrawer extends BaseComponent {
      */
     leftItem: PropTypes.shape(ITEM_PROP_TYPES),
     /**
-     * Whether to give the items equal width (the max width)
+     * Whether to give the items equal width (the max width) - DEPRECATED
      */
     equalWidths: PropTypes.bool,
     /**
@@ -69,34 +74,66 @@ export default class NewDrawer extends BaseComponent {
      * The items' text style
      */
     itemsTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * Perform the animation in natively
+     */
+    useNativeAnimations: PropTypes.bool,
   };
 
-  onPress = item => {
-    if (!item.keepOpen) {
-      this.closeDrawer();
+  constructor(props) {
+    super(props);
+
+    this._swipeableRow = React.createRef();
+    this.animationOptions = {bounciness: props.bounciness || 5};
+    this.rightActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? [props.leftItem] : props.rightItems);
+    this.leftActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? props.rightItems : [props.leftItem]);
+    this.leftRender = Constants.isRTL ? this.renderRightActions : this.renderLeftActions;
+    this.rightRender = Constants.isRTL ? this.renderLeftActions : this.renderRightActions;
+
+    // TODO: deprecate when removing old drawer version
+    // this.checkDeprecations(props);
+  }
+
+  checkDeprecations(props) {
+    if (props.onPress !== undefined) {
+      console.warn("Drawer's 'onPress' prop is deprecated. " +
+        "For items, send 'onPress' handler in the item's object and for content use your own.");
     }
 
-    _.invoke(item, 'onPress');
-  };
-
-  closeDrawer = () => {
-    this._swipeableRow.close();
-  };
-
-  updateRef = ref => {
-    this._swipeableRow = ref;
-  };
+    deprecatedProps.forEach(prop => {
+      if (props[prop]) {
+        console.warn(`"Drawer's ${prop}" property is deprecated.`);
+      }
+    });
+  }
 
   getActionsContainerStyle(items) {
     return {backgroundColor: _.get(_.first(items), 'background', DEFAULT_BG)};
   }
 
+  closeDrawer = () => {
+    this._swipeableRow.current.close();
+  };
+
+  onActionPress(item) {
+    if (!item.keepOpen) {
+      this.closeDrawer();
+    }
+    _.invoke(item, 'onPress');
+  };
+
+  onSwipeableWillOpen = () => {
+    _.invoke(this.props, 'onSwipeableWillOpen', this.props);
+  };
+  onSwipeableWillClose = () => {
+    _.invoke(this.props, 'onSwipeableWillClose', this.props);
+  };
+
   // TODO: enable support for rendering more than one left item
   renderLeftActions = (progress, dragX) => {
     const {leftItem} = this.getThemeProps();
-    if (leftItem) {
-      return this.renderActions([leftItem], progress, dragX);
-    }
+    const leftItems = leftItem ? [leftItem] : undefined;
+    return this.renderActions(leftItems, progress, dragX);
   };
 
   renderRightActions = (progress, dragX) => {
@@ -105,22 +142,23 @@ export default class NewDrawer extends BaseComponent {
   };
 
   renderActions(items, progress, dragX) {
-    return (
-      <View row>
-        {_.map(items, (item, index) => {
-          return this.renderAction({
-            item,
-            index: items.length - index - 1,
-            progress,
-            dragX,
-            itemsCount: items.length,
-          });
-        })}
-      </View>
-    );
+    if (items) {
+      return (
+        <View row>
+          {_.map(items, (item, index) => {
+            return this.renderAction({
+              item,
+              index: items.length - index - 1,
+              progress,
+              dragX,
+              itemsCount: items.length
+            });
+          })}
+        </View>
+      );
+    }
   }
 
-  // eslint-disable-next-line react/prop-types
   renderAction = ({item, index, progress, itemsCount}) => {
     const {itemsTintColor, itemsIconSize, itemsTextStyle, itemsMinWidth} = this.getThemeProps();
     const inputRange = [index / itemsCount, (index + 1) / itemsCount];
@@ -129,13 +167,13 @@ export default class NewDrawer extends BaseComponent {
     const scale = progress.interpolate({
       inputRange,
       outputRange,
-      extrapolate: 'clamp',
+      extrapolate: 'clamp'
     });
 
     const opacity = progress.interpolate({
       inputRange,
       outputRange,
-      extrapolate: 'clamp',
+      extrapolate: 'clamp'
     });
 
     return (
@@ -147,22 +185,36 @@ export default class NewDrawer extends BaseComponent {
           item.style,
           {backgroundColor: item.background || DEFAULT_BG},
           {width: item.width},
-          {minWidth: itemsMinWidth},
+          {minWidth: itemsMinWidth}
         ]}
-        onPress={() => this.onPress(item)}
+        onPress={() => this.onActionPress(item)}
       >
         {item.icon && (
           <Animated.Image
             source={item.icon}
             style={[
               styles.actionIcon,
-              {tintColor: itemsTintColor, width: itemsIconSize, height: itemsIconSize, opacity, transform: [{scale}]},
+              {
+                width: itemsIconSize,
+                height: itemsIconSize,
+                tintColor: itemsTintColor,
+                opacity,
+                transform: [{scale}]
+              }
             ]}
           />
         )}
         {item.text && (
           <Animated.Text
-            style={[styles.actionText, {color: itemsTintColor, opacity, transform: [{scale}]}, itemsTextStyle]}
+            style={[
+              styles.actionText,
+              {
+                color: itemsTintColor,
+                opacity,
+                transform: [{scale}]
+              },
+              itemsTextStyle
+            ]}
           >
             {item.text}
           </Animated.Text>
@@ -171,33 +223,21 @@ export default class NewDrawer extends BaseComponent {
     );
   };
 
-  // positionWillChange = () => {};
-
   render() {
-    const {children, rightItems, leftItem, onDragStart, style} = this.props;
-    const leftRender = Constants.isRTL ? this.renderRightActions : this.renderLeftActions;
-    const rightRender = Constants.isRTL ? this.renderLeftActions : this.renderRightActions;
-
-    const rightActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? [leftItem] : rightItems);
-    const leftActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? rightItems : [leftItem]);
-
+    const {children, style, ...others} = this.props;
     return (
       <Swipeable
-        ref={this.updateRef}
+        {...others}
+        ref={this._swipeableRow}
         friction={1}
-        // leftThreshold={80}
-        // rightThreshold={40}
-        renderLeftActions={leftRender}
-        renderRightActions={rightRender}
-        rightActionsContainerStyle={rightActionsContainerStyle}
-        leftActionsContainerStyle={leftActionsContainerStyle}
-        // onSwipeableLeftWillOpen={this.positionWillChange}
-        // onSwipeableRightWillOpen={this.positionWillChange}
-        // onSwipeableWillOpen={this.positionWillChange}
-        // onSwipeableWillClose={this.positionWillChange}
-        onDragStart={onDragStart}
-        animationOptions={{bounciness: 10}}
         containerStyle={style}
+        animationOptions={this.animationOptions}
+        renderLeftActions={this.leftRender}
+        renderRightActions={this.rightRender}
+        rightActionsContainerStyle={this.rightActionsContainerStyle}
+        leftActionsContainerStyle={this.leftActionsContainerStyle}
+        onSwipeableWillOpen={this.onSwipeableWillOpen}
+        onSwipeableWillClose={this.onSwipeableWillClose}
       >
         {children}
       </Swipeable>
@@ -205,24 +245,26 @@ export default class NewDrawer extends BaseComponent {
   }
 }
 
+export default NewDrawer;
+
 const styles = StyleSheet.create({
   leftAction: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: /* Constants.isRTL ? 'flex-end' :  */ 'flex-start',
-    backgroundColor: '#388e3c',
+    alignItems: /* Constants.isRTL ? 'flex-end' :  */'flex-start',
+    backgroundColor: '#388e3c'
   },
   actionIcon: {
     width: 30,
-    marginHorizontal: 10,
+    marginHorizontal: 10
   },
   actionText: {
-    color: '#ffffff',
+    color: '#ffffff'
   },
   action: {
     paddingHorizontal: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#dd2c00',
-  },
+    backgroundColor: '#dd2c00'
+  }
 });
