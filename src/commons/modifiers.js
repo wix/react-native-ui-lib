@@ -18,14 +18,15 @@ export function extractColorValue(props) {
   return Colors[color];
 }
 
-// todo: refactor this and use BACKGROUND_KEY_PATTERN
 export function extractBackgroundColorValue(props) {
   let backgroundColor;
-  _.forEach(Colors, (value, key) => {
-    if (props[`background-${key}`] === true || props[`bg-${key}`] === true) {
-      backgroundColor = value;
-    }
-  });
+
+  const keys = Object.keys(props);
+  const bgProp = _.findLast(keys, (prop) => Colors.getBackgroundKeysPattern().test(prop));
+  if (bgProp) {
+    const key = bgProp.replace(Colors.getBackgroundKeysPattern(), '');
+    backgroundColor = Colors[key];
+  }
 
   return backgroundColor;
 }
@@ -152,13 +153,11 @@ export function extractFlexStyle(props) {
     flexG: 'flexGrow',
     flexS: 'flexShrink',
   };
-  const flexPropKey = _.chain(props)
-    .keys(props)
-    .filter(key => FLEX_KEY_PATTERN.test(key))
-    .last()
-    .value();
-  if (flexPropKey && props[flexPropKey] === true) {
-    let [flexKey, flexValue] = flexPropKey.split('-');
+
+  const keys = Object.keys(props);
+  const flexProp = keys.find((item) => FLEX_KEY_PATTERN.test(item));
+  if (flexProp && props[flexProp] === true) {
+    let [flexKey, flexValue] = flexProp.split('-');
     flexKey = STYLE_KEY_CONVERTERS[flexKey];
     flexValue = _.isEmpty(flexValue) ? 1 : Number(flexValue);
 
@@ -167,16 +166,13 @@ export function extractFlexStyle(props) {
 }
 
 export function extractBorderRadiusValue(props) {
-  const borderRadiusPropsKeys = _.chain(props)
-    .keys()
-    .filter(key => BorderRadiuses.getKeysPattern().test(key))
-    .value();
   let borderRadius;
-  _.forEach(borderRadiusPropsKeys, key => {
-    if (props[key] === true) {
-      borderRadius = BorderRadiuses[key];
-    }
-  });
+
+  const keys = Object.keys(props);
+  const radiusProp = keys.find((prop) => BorderRadiuses.getKeysPattern().test(prop));
+  if (radiusProp) {
+    borderRadius = BorderRadiuses[radiusProp];
+  }
 
   return borderRadius;
 }
