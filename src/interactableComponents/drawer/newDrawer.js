@@ -224,7 +224,7 @@ class NewDrawer extends PureBaseComponent {
   };
 
   render() {
-    const {children, style, useNativeAnimations, ...others} = this.props;
+    const {children, style, ...others} = this.props;
     return (
       <Swipeable
         {...others}
@@ -238,7 +238,6 @@ class NewDrawer extends PureBaseComponent {
         leftActionsContainerStyle={this.leftActionsContainerStyle}
         onSwipeableWillOpen={this.onSwipeableWillOpen}
         onSwipeableWillClose={this.onSwipeableWillClose}
-        useNativeAnimations={useNativeAnimations}
       >
         {children}
       </Swipeable>
