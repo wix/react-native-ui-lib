@@ -59,9 +59,9 @@ export default class Swipeable extends Component<PropType, StateType> {
   static defaultProps = {
     friction: 1,
     overshootFriction: 1,
-    // useNativeAnimations: true // issue in iPhone 5
+    useNativeAnimations: false // issue in iPhone5
   };
-  
+
   _onGestureEvent: ?Animated.Event;
   _transX: ?Animated.Interpolation;
   _showLeftAction: ?Animated.Interpolation | ?Animated.Value;
@@ -71,7 +71,7 @@ export default class Swipeable extends Component<PropType, StateType> {
 
   constructor(props: PropType) {
     super(props);
-    
+
     const dragX = new Animated.Value(0);
     this.rowState = 0;
 
@@ -82,7 +82,7 @@ export default class Swipeable extends Component<PropType, StateType> {
       rightOffset: undefined,
       rowWidth: Constants.screenWidth
     };
-    
+
     this._updateAnimatedEvent(props, this.state);
 
     this._onGestureEvent = Animated.event([{nativeEvent: {translationX: dragX}}], {
@@ -211,18 +211,18 @@ export default class Swipeable extends Component<PropType, StateType> {
   _animateRow = (fromValue, toValue, velocityX) => {
     const {dragX, rowTranslation} = this.state;
     const {
-      useNativeAnimations, 
-      animationOptions, 
-      onSwipeableLeftOpen, 
-      onSwipeableRightOpen, 
-      onSwipeableClose, 
+      useNativeAnimations,
+      animationOptions,
+      onSwipeableLeftOpen,
+      onSwipeableRightOpen,
+      onSwipeableClose,
       onSwipeableOpen,
       onSwipeableLeftWillOpen,
       onSwipeableRightWillOpen,
       onSwipeableWillClose,
       onSwipeableWillOpen
     } = this.props;
-    
+
     dragX.setValue(0);
     rowTranslation.setValue(fromValue);
     this.rowState = Math.sign(toValue);
@@ -268,7 +268,7 @@ export default class Swipeable extends Component<PropType, StateType> {
     const {leftWidth = 0, rowWidth = 0} = this.state;
     const {rightOffset = rowWidth} = this.state;
     const rightWidth = rowWidth - rightOffset;
-    
+
     if (this.rowState === 1) {
       return leftWidth;
     } else if (this.rowState === -1) {
@@ -311,8 +311,8 @@ export default class Swipeable extends Component<PropType, StateType> {
     const left = renderLeftActions && (
       <Animated.View
         style={[
-          styles.leftActions, 
-          leftActionsContainerStyle, 
+          styles.leftActions,
+          leftActionsContainerStyle,
           {transform: [{translateX: this._leftActionTranslate}]}
         ]}
       >
