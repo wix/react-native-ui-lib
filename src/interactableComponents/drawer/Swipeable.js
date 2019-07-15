@@ -59,7 +59,7 @@ export default class Swipeable extends Component<PropType, StateType> {
   static defaultProps = {
     friction: 1,
     overshootFriction: 1,
-    useNativeAnimations: true
+    useNativeAnimations: false // issue in iPhone5
   };
 
   _onGestureEvent: ?Animated.Event;
