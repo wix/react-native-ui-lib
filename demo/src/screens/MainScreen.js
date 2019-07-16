@@ -307,7 +307,7 @@ export default class UiLibExplorerMenu extends Component {
     const data = this.getMenuData();
 
     return (
-      <View flex bg-dark80>
+      <View testID="demo_main_screen" flex bg-dark80>
         {this.renderHeader()}
         {showNoResults && (
           <View paddingH-24>
