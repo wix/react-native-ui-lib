@@ -13,6 +13,8 @@ class Spacings {
   s9 = Constants.isIOS ? 27 : 36;
   s10 = Constants.isIOS ? 30 : 40;
 
+  keysPattern = this.generateKeysPattern();
+
   loadSpacings(spacings) {
     _.forEach(spacings, (value, key) => {
       this[key] = value;
@@ -20,6 +22,10 @@ class Spacings {
   }
 
   getKeysPattern() {
+    return this.keysPattern;
+  }
+
+  generateKeysPattern() {
     return new RegExp(
       _.chain(this)
         .keys()

@@ -75,6 +75,8 @@ class Typography {
     fontFamily: Constants.isAndroid ? 'sans-serif-light' : undefined,
   };
 
+  keysPattern = this.generateKeysPattern();
+
   /**
    * Load custom set of typographies
    * arguments:
@@ -85,9 +87,14 @@ class Typography {
     _.forEach(typographies, (value, key) => {
       this[key] = value;
     });
+    this.keysPattern = this.generateKeysPattern();
   }
 
   getKeysPattern() {
+    return this.keysPattern;
+  }
+
+  generateKeysPattern() {
     return new RegExp(_.chain(this)
         .keys()
         .map(key => [`${key}`])
