@@ -1,9 +1,10 @@
 import _ from 'lodash';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
+import View from '../view';
 import * as presenter from './CarouselPresenter';
 
 
@@ -42,26 +43,41 @@ export default class Carousel extends BaseComponent {
   };
 
   static defaultProps = {
-    initialPage: 0,
-    pageWidth: Constants.screenWidth
+    initialPage: 0
   };
 
   constructor(props) {
     super(props);
     
+    const defaultPageWidth = props.pageWidth || Constants.screenWidth;
+    
     this.state = {
       currentPage: props.initialPage,
       currentStandingPage: props.initialPage,
-      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage})}
+      pageWidth: defaultPageWidth,
+      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage, pageWidth: defaultPageWidth})}
     };
+  }
+
+  componentDidMount() {
+    Constants.addDimensionsEventListener(this.onOrientationChanged);
+  }
+
+  componentWillUnmount() {
+    Constants.removeDimensionsEventListener(this.onOrientationChanged);
+  }
+
+  onOrientationChanged = () => {
+    if (!this.props.pageWidth) {
+      this.setState({
+        pageWidth: Constants.screenWidth, 
+        initialOffset: {x: presenter.calcOffset(this.props, {currentPage: this.state.currentPage, pageWidth: Constants.screenWidth})}
+      });
+    }
   }
 
   generateStyles() {
     this.styles = createStyles(this.props);
-  }
-
-  get pageWidth() {
-    return Math.floor(this.props.pageWidth);
   }
 
   updateOffset = (animated = false) => {
@@ -104,40 +120,42 @@ export default class Carousel extends BaseComponent {
     }
 
     const {loop} = this.props;
-    const offsetX = presenter.getDirectionOffset(event.nativeEvent.contentOffset.x, this.props);
+    const {pageWidth} = this.state;
+    const offsetX = presenter.getDirectionOffset(event.nativeEvent.contentOffset.x, this.props, pageWidth);
     
     if (offsetX >= 0) {
-      const newPage = presenter.calcPageIndex(offsetX, this.props);
-
+      const newPage = presenter.calcPageIndex(offsetX, this.props, pageWidth);
       this.setState({currentPage: newPage});
     }
 
-    if (loop && presenter.isOutOfBounds(offsetX, this.props)) {
+    if (loop && presenter.isOutOfBounds(offsetX, this.props, pageWidth)) {
       this.updateOffset();
     }
     
     _.invoke(this.props, 'onScroll', event);
   }
 
-  cloneChild(child) {
-    if (!child.key) {
-      return child;
-    }
-    
-    return React.cloneElement(child, {
-      key: `${child.key}-clone`,
-    });
+  renderChild = (child, key) => {
+    return (
+      <View style={{width: this.state.pageWidth}} key={key}>
+        {child}
+      </View>
+    );
   }
 
   renderChildren() {
     const {children, loop} = this.props;
     const length = presenter.getChildrenLength(this.props);
-    const childrenArray = React.Children.toArray(children);
+    
+    const childrenArray = React.Children.map(children, (child, index) => {
+      return this.renderChild(child, `${index}`);
+    });
     
     if (loop) {
-      childrenArray.unshift(this.cloneChild(children[length - 1]));
-      childrenArray.push(this.cloneChild(children[0]));
+      childrenArray.unshift(this.renderChild(children[length - 1], `${length - 1}-clone`));
+      childrenArray.push(this.renderChild(children[0], `${0}-clone`));
     }
+    
     return childrenArray;
   }
 
