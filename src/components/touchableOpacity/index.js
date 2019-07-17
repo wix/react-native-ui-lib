@@ -2,7 +2,7 @@ import React from 'react';
 import {TouchableOpacity as RNTouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import {BaseComponent} from '../../commons';
+import {PureBaseComponent} from '../../commons';
 
 /**
  * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
@@ -12,12 +12,12 @@ import {BaseComponent} from '../../commons';
  * @gif: https://media.giphy.com/media/xULW8AMIgw7l31zjm8/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.js
  */
-export default class TouchableOpacity extends BaseComponent {
+export default class TouchableOpacity extends PureBaseComponent {
   static displayName = 'TouchableOpacity';
 
   static propTypes = {
     /**
-     * background color for TouchableOpacity 
+     * background color for TouchableOpacity
      */
     backgroundColor: PropTypes.string,
     /**

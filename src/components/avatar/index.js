@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, ViewPropTypes, TouchableOpacity} from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
-import {BaseComponent} from '../../commons';
+import {PureBaseComponent} from '../../commons';
 import Badge, {BADGE_SIZES} from '../badge';
 import View from '../view';
 import Text from '../text';
@@ -38,7 +38,7 @@ const DEFAULT_BADGE_POSITION = BADGE_POSITIONS.TOP_RIGHT;
  * @image: https://user-images.githubusercontent.com/33805983/34480603-197d7f64-efb6-11e7-9feb-db8ba756f055.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.js
  */
-export default class Avatar extends BaseComponent {
+export default class Avatar extends PureBaseComponent {
   constructor(props) {
     super(props);
 

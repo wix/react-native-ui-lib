@@ -2,14 +2,14 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import 'react';
 import {TextInput as RNTextInput, Animated, ViewPropTypes} from 'react-native';
-import {BaseComponent} from '../../commons';
+import {PureBaseComponent} from '../../commons';
 import {Colors, Typography} from '../../style';
 
-export default class BaseInput extends BaseComponent {
+export default class BaseInput extends PureBaseComponent {
   static displayName = 'BaseInput';
   static propTypes = {
     ...RNTextInput.propTypes,
-    ...BaseComponent.propTypes,
+    ...PureBaseComponent.propTypes,
     /**
      * text color
      */
