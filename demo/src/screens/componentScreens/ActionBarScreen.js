@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {Alert, StyleSheet} from 'react-native';
-import {Colors, Typography, View, ActionBar, PageControl, Carousel} from 'react-native-ui-lib'; //eslint-disable-line
+import {Constants, Colors, Typography, View, ActionBar, PageControl, Carousel} from 'react-native-ui-lib'; //eslint-disable-line
 import cameraSelected from '../../assets/icons/cameraSelected.png';
 import video from '../../assets/icons/video.png';
 import tags from '../../assets/icons/tags.png';
@@ -90,10 +90,12 @@ export default class ActionBarScreen extends Component {
 
 const styles = StyleSheet.create({
   page: {
-    flex: 1
+    width: Constants.screenWidth,
+    flex: 1,
   },
   pageControl: {
-    zIndex: 1
+    zIndex: 1,
+    width: Constants.screenWidth,
   },
   absoluteContainer: {
     position: 'absolute',

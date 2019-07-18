@@ -336,6 +336,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   page: {
+    width: Constants.screenWidth,
     flex: 1,
     paddingLeft: 24,
   },
