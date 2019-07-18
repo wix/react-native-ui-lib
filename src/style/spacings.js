@@ -19,6 +19,7 @@ class Spacings {
     _.forEach(spacings, (value, key) => {
       this[key] = value;
     });
+    this.keysPattern = this.generateKeysPattern();
   }
 
   getKeysPattern() {
