@@ -86,7 +86,7 @@ class Dialog extends BaseComponent {
     useModal: true
   };
 
-  static swipeDirections = SWIPE_DIRECTIONS; // DEFRECATED
+  static swipeDirections = SWIPE_DIRECTIONS; // DEPRECATED
 
   constructor(props) {
     super(props);

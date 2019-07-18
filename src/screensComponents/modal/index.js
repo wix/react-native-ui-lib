@@ -34,7 +34,13 @@ export default class Modal extends BaseComponent {
     /**
      * the background color of the overlay
      */
-    overlayBackgroundColor: PropTypes.string
+    overlayBackgroundColor: PropTypes.string,
+    /**
+     * The types of orientation you would like to support (iOS only)
+     */
+    supportedOrientations: PropTypes.arrayOf(
+      PropTypes.oneOf(['portrait', 'portrait-upside-down', 'landscape', 'landscape-left', 'landscape-right'])
+    )
   };
 
   renderTouchableOverlay() {
@@ -51,12 +57,16 @@ export default class Modal extends BaseComponent {
   }
 
   render() {
-    const {blurView, enableModalBlur, visible, ...others} = this.props;
+    const {blurView, enableModalBlur, visible, supportedOrientations, ...others} = this.getThemeProps();
     const defaultContainer = enableModalBlur && Constants.isIOS ? BlurView : View;
     const Container = blurView ? blurView : defaultContainer;
 
     return (
-      <RNModal visible={Boolean(visible)} {...others}>
+      <RNModal
+        visible={Boolean(visible)}
+        supportedOrientations={supportedOrientations}
+        {...others}
+      >
         <Container style={{flex: 1}} blurType="light">
           {this.renderTouchableOverlay()}
           {this.props.children}
