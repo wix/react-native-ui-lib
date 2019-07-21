@@ -37,38 +37,36 @@ function setStatusBarHeight() {
 /* Layout */
 export const isRTL = I18nManager.isRTL;
 
-export function getSafeAreaInsets() {
-  const orientation = getOrientation();
-  return (orientation === orientation.LANDSCAPE) ? 
-    {left: 44, right: 44, bottom: 24, top: 0} : 
-    {left: 0, right: 0, bottom: 34, top: 44};
-}
-
-/* Dimensions */
 const {height, width} = Dimensions.get(dimensionsScope.WINDOW);
+export let orientation = getOrientation(height, width);
 export let screenWidth = width;
 export let screenHeight = height;
 export let isSmallScreen = screenWidth <= 340;
 export let isShortScreen = screenHeight <= 600;
 
+export function getSafeAreaInsets() {
+  return (orientation === orientation.LANDSCAPE) ? 
+    {left: 44, right: 44, bottom: 24, top: 0} : 
+    {left: 0, right: 0, bottom: 34, top: 44};
+}
+
+/* Orientation */
+function getOrientation(height, width) {
+  return width < height ? orientations.PORTRAIT : orientations.LANDSCAPE;
+}
+
 function updateConstants() {
   const {height, width} = Dimensions.get(dimensionsScope.WINDOW);
+  orientation = getOrientation(height, width);
   screenWidth = width;
   screenHeight = height;
   isSmallScreen = screenWidth <= 340;
   isShortScreen = screenHeight <= 600;
+
   setStatusBarHeight();
 }
 
-/* Orientation */
-Dimensions.addEventListener('change', () => {
-  updateConstants();
-});
-
-export function getOrientation() {
-  const {height, width} = Dimensions.get(dimensionsScope.WINDOW);
-  return width < height ? orientations.PORTRAIT : orientations.LANDSCAPE;
-}
+Dimensions.addEventListener('change', updateConstants);
 
 export function addDimensionsEventListener(callback) {
   Dimensions.addEventListener('change', callback);
