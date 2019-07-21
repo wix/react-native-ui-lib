@@ -8,7 +8,7 @@ import {AnimatableManager, Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import Modal from '../../screensComponents/modal';
 import View from '../view';
-import PanGestureView from '../panGestureView';
+import PanGestureView from '../panningViews/panGestureView';
 
 
 /*eslint-disable*/
@@ -142,7 +142,7 @@ class Dialog extends BaseComponent {
       <TouchableWithoutFeedback>
         <SafeAreaView style={{flexGrow: 1}}>
           {this.props.children}
-          {useSafeArea && Constants.isIphoneX && bottom && <View style={{height: bottomInsets}}/>}
+          {useSafeArea && Constants.isIphoneX && bottom && <View style={{marginTop: bottomInsets}}/>}
         </SafeAreaView>
       </TouchableWithoutFeedback>
     );
@@ -156,7 +156,7 @@ class Dialog extends BaseComponent {
       <Container
         ref={!disablePan && (r => this.panGestureViewRef = r)}
         style={[this.styles.dialogContainer, style]}
-        direction={top && PanGestureView.directions.UP}
+        direction={!disablePan && top && PanGestureView.directions.UP}
         onDismiss={this.onDismiss}
       >
         {this.renderContent()}

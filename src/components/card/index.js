@@ -90,7 +90,6 @@ class Card extends BaseComponent {
   };
 
   static defaultProps = {
-    selected: false,
     enableShadow: true,
   };
 
@@ -168,8 +167,12 @@ class Card extends BaseComponent {
   }
 
   renderSelection() {
-    const {selectionOptions, borderRadius} = this.getThemeProps();
+    const {selectionOptions, borderRadius, selected} = this.getThemeProps();
     const {animatedSelected} = this.state;
+
+    if (_.isUndefined(selected)) {
+      return null;
+    }
 
     return (
       <Animated.View

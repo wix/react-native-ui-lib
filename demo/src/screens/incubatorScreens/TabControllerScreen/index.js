@@ -2,10 +2,14 @@ import React, {Component} from 'react';
 import {Incubator, Colors, View, Text, Image, Assets, Button} from 'react-native-ui-lib'; //eslint-disable-line
 import _ from 'lodash';
 
+import Tab1 from './tab1';
+import Tab2 from './tab2';
+import Tab3 from './tab3';
+
 class TabControllerScreen extends Component {
   state = {
     selectedIndex: 0,
-    tabsCount: 2,
+    tabsCount: 3,
     key: Date.now(),
   };
 
@@ -34,9 +38,9 @@ class TabControllerScreen extends Component {
   getTabs() {
     const {tabsCount} = this.state;
     const tabs = [
-      <Incubator.TabController.TabBarItem key="about" label="about" onPress={() => console.warn('press about')} />,
-      <Incubator.TabController.TabBarItem key="events" label="events" />,
-      <Incubator.TabController.TabBarItem key="services" label="services" />,
+      <Incubator.TabController.TabBarItem key="tab1" label="tab1" onPress={() => console.warn('press tab1')} />,
+      <Incubator.TabController.TabBarItem key="tab2" label="tab2" />,
+      <Incubator.TabController.TabBarItem key="tab3" label="tab3" />,
       <Incubator.TabController.TabBarItem key="account" label="account" badge={{label: '9'}} />,
       <Incubator.TabController.TabBarItem key="groups" label="groups" />,
       <Incubator.TabController.TabBarItem key="blog" label="blog" />,
@@ -73,30 +77,13 @@ class TabControllerScreen extends Component {
             </Incubator.TabController.TabBar>
             <View flex>
               <Incubator.TabController.TabPage index={0}>
-                <View flex>
-                  <Text text40>ABOUT</Text>
-                  <Button label="Button" />
-                  <Image
-                    style={{flex: 1}}
-                    source={{
-                      uri:
-                        'https://images.unsplash.com/photo-1553969923-bbf0cac2666b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
-                    }}
-                  />
-                </View>
+                <Tab1 />
               </Incubator.TabController.TabPage>
               <Incubator.TabController.TabPage index={1} lazy>
-                <Text text40>EVENTS</Text>
-                <Image
-                  style={{flex: 1}}
-                  source={{
-                    uri:
-                      'https://images.unsplash.com/photo-1551376347-075b0121a65b?ixlib=rb-1.2.1&auto=format&fit=crop&w=2468&q=80',
-                  }}
-                />
+                <Tab2 />
               </Incubator.TabController.TabPage>
               <Incubator.TabController.TabPage index={2}>
-                <Text text40>SERVICES</Text>
+                <Tab3 />
               </Incubator.TabController.TabPage>
               <Incubator.TabController.TabPage index={3}>
                 <Text text40>ACCOUNT</Text>

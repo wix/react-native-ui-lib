@@ -5,10 +5,12 @@ import {Colors, Typography, View, Drawer, Text, Button, ListItem, Avatar, Avatar
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import conversations from '../../data/conversations';
 
+
 const collectionsIcon = require('../../assets/icons/collections.png');
 const starIcon = require('../../assets/icons/star.png');
 const shareIcon = require('../../assets/icons/share.png');
 const videoIcon = require('../../assets/icons/video.png');
+const tagsIcon = require('../../assets/icons/tags.png');
 
 class DrawerScreen extends Component {
   constructor(props) {
@@ -21,62 +23,31 @@ class DrawerScreen extends Component {
         {icon: starIcon, text: 'Accessories', onPress: this.onItemPress, background: Colors.violet10},
         {icon: shareIcon, text: 'Share', onPress: this.onItemPress, background: Colors.violet30},
         {icon: videoIcon, text: 'Video', onPress: this.onItemPress, background: Colors.violet40},
-        // {icon: videoIcon, text: 'Video', background: Colors.green30},
-        // {icon: videoIcon, text: 'Video', background: Colors.red30},
+        // {icon: tagsIcon, text: 'Video', background: Colors.red30},
       ],
     };
-
-    // this.setItemsWidths();
   }
 
-  onPress = () => {
-    // Alert.alert('Drawer pressed');
-  };
   onItemPress = () => {
-    // Alert.alert('Item pressed');
+    Alert.alert('Right drawer item pressed');
+    
     this.toggleDynamicItem();
-
     this.firstDrawer.closeDrawer();
   };
   onItemPress2 = () => {
     const {itemsTintColor} = this.state;
     const color = itemsTintColor === undefined ? Colors.blue30 : undefined;
+    
     this.setState({itemsTintColor: color});
   };
   onLeftItemPressed = () => {
-    Alert.alert('Left item pressed');
+    Alert.alert('Left drawer item pressed');
   };
-
-  onButtonPress(id) {
-    Alert.alert(`Button '${id}' pressed`);
-  }
   onContentPress(id) {
     Alert.alert(`List item #${id + 1} pressed`);
-
-    // if (id === '0') {
-    //   this.firstDrawer.closeDrawer();
-    // }
-    // if (id === '1') {
-    //   this.secondDrawer.closeDrawer();
-    // }
   }
-
-  // Measure item text to calculate items' widths
-  async setItemsWidths() {
-    const {rightItems, leftItem} = this.state;
-
-    if (rightItems) {
-      const promises = rightItems.map(item => {
-        return this.setItemWidth(item);
-      });
-      const data = await Promise.all(promises);
-      this.setState({rightItems: data});
-    }
-
-    if (leftItem) {
-      const item = await this.setItemWidth(leftItem);
-      this.setState({leftItem: item});
-    }
+  onButtonPress(id) {
+    Alert.alert(`Button '${id}' pressed`);
   }
 
   async setItemWidth(item) {
@@ -94,14 +65,13 @@ class DrawerScreen extends Component {
     const {rightItems} = this.state;
     let newItem;
     if (rightItems[0].text === 'Accessories') {
-      newItem = {icon: starIcon, text: 'More', onPress: this.onItemPress, background: Colors.violet10, /* width: 90 */};
+      newItem = {icon: starIcon, text: 'More', onPress: this.onItemPress, background: Colors.violet10};
     } else {
       newItem = {
         icon: starIcon,
         text: 'Accessories',
         onPress: this.onItemPress,
-        background: Colors.violet10,
-        // width: 200,
+        background: Colors.violet10
       };
     }
     rightItems[0] = newItem;
@@ -111,7 +81,6 @@ class DrawerScreen extends Component {
   renderContent(id, row) {
     const initials = AvatarHelper.getInitials(row.name);
     return (
-      // <View style={{height: 50, borderWidth: 1}}/>
       <ListItem key={id} onPress={() => this.onContentPress(id)} style={styles.listContent}>
         <ListItem.Part left>
           <Avatar
@@ -133,32 +102,32 @@ class DrawerScreen extends Component {
     const {leftItem, rightItems} = this.state;
 
     return (
-      <ScrollView style={styles.container} contentContainerStyle={{paddingBottom: 50}}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <Drawer
           leftItem={leftItem}
           rightItems={rightItems}
-          style={{marginTop: 20}}
+          style={styles.drawer}
           itemsIconSize={20}
-          ref={r => (this.firstDrawer = r)}
+          ref={r => this.firstDrawer = r}
         >
           {this.renderContent('0', conversations[0])}
         </Drawer>
+
         <Drawer
           leftItem={leftItem}
           rightItems={[
             {icon: shareIcon, text: 'Share', onPress: this.onItemPress},
-            {icon: videoIcon, text: 'Video', onPress: this.onItemPress, background: Colors.violet40},
+            {icon: videoIcon, text: 'Video', onPress: this.onItemPress, background: Colors.blue10},
           ]}
-          style={{marginTop: 20}}
+          style={styles.drawer}
         >
-          {this.renderContent('0', conversations[0])}
+          {this.renderContent('1', conversations[1])}
         </Drawer>
 
         {/* <Drawer
           // leftItem={leftItem}
           rightItems={rightItems}
-          style={{marginTop: 20}}
-          onPress={this.onPress}
+          style={styles.drawer}
           equalWidths
         >
           {this.renderContent('1', conversations[1])}
@@ -167,12 +136,10 @@ class DrawerScreen extends Component {
         <Drawer
           leftItem={{text: 'Archive', background: Colors.blue10, width: 100, onPress: this.onLeftItemPressed}}
           // rightItems={rightItems}
-          style={{marginTop: 20}}
-          itemsTextStyle={{fontSize: 18}}
-          onPress={this.onPress}
-          ref={r => (this.secondDrawer = r)}
+          style={styles.drawer}
+          itemsTextStyle={{fontSize: 18, fontWeight: 'bold'}}
         >
-          {this.renderContent('1', conversations[1])}
+          {this.renderContent('2', conversations[2])}
         </Drawer>
 
         <View style={{paddingHorizontal: 50}}>
@@ -193,34 +160,33 @@ class DrawerScreen extends Component {
             {icon: starIcon, background: Colors.dark60},
             {icon: shareIcon, background: Colors.yellow20},
             {icon: videoIcon, background: Colors.red30, onPress: this.onItemPress2},
-            // {icon: videoIcon, background: Colors.green30},
+            {icon: tagsIcon, background: Colors.green30},
           ]}
-          style={{marginTop: 20}}
-          onPress={this.onPress}
+          style={styles.drawer}
           itemsIconSize={30}
           itemsTintColor={this.state.itemsTintColor}
         >
-          {this.renderContent('3', conversations[3])}
+          {this.renderContent('4', conversations[4])}
         </Drawer>
 
         <Drawer
           leftItem={leftItem}
           rightItems={rightItems}
-          style={{marginTop: 20}}
-          onPress={this.onPress}
+          style={styles.drawer}
           itemsTextStyle={{fontSize: 12}}
         >
           <View style={styles.rowContent}>
-            <View style={[styles.rowIcon, {width: 38, height: 38, borderRadius: 19}]} />
+            <View style={styles.rowIcon}/>
             <View>
-              <Text style={[styles.rowTitle, {...Typography.text70, fontWeight: 'bold'}]}>Row Title</Text>
-              <Text style={[styles.rowSubtitle, {...Typography.text80}]}>Drag the row left and right</Text>
+              <Text style={styles.rowTitle}>Row Title</Text>
+              <Text style={styles.rowSubtitle}>Drag the row left and right</Text>
             </View>
             <View style={styles.rowButtonContainer}>
               <Button
-                label={'Button'}
+                label={'1'}
                 size={'small'}
-                backgroundColor={Colors.blue30}
+                round
+                backgroundColor={Colors.yellow30}
                 white
                 onPress={() => this.onButtonPress('1')}
               />
@@ -234,37 +200,43 @@ class DrawerScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.white
+  },
+  contentContainer: {
+    paddingBottom: 50
+  },
+  drawer: {
+    marginTop: 20
   },
   listContent: {
-    backgroundColor: Colors.dark80,
+    backgroundColor: Colors.dark80
   },
   rowContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.dark80,
+    backgroundColor: Colors.dark80
   },
   rowIcon: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 38,
+    height: 38,
+    borderRadius: 19,
     backgroundColor: Colors.violet40,
-    margin: 20,
+    margin: 20
   },
   rowTitle: {
-    ...Typography.text60,
+    ...Typography.text70,
     fontWeight: 'bold',
-    color: Colors.dark20,
+    color: Colors.dark20
   },
   rowSubtitle: {
-    ...Typography.text70,
-    color: Colors.dark30,
+    ...Typography.text80,
+    color: Colors.dark30
   },
   rowButtonContainer: {
     flex: 1,
     alignItems: 'flex-end',
-    padding: 10,
-  },
+    padding: 10
+  }
 });
 
 export default gestureHandlerRootHOC(DrawerScreen);

@@ -19,6 +19,7 @@ export default class TouchableOpacity extends Component {
 
   static defaultProps = {
     activeOpacity: 0.2,
+    feedbackColor: 'transparent',
     onPress: _.noop,
     state: new Value(-1),
   };
