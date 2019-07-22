@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-uilib",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "uilib set of eslint rules",
   "keywords": [
     "eslint",
@@ -16,7 +16,7 @@
     "type": "git",
     "url": "https://github.com/wix/react-native-ui-lib"
   },
-  "main": "lib/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "mocha tests --recursive",
     "test:watch": "mocha tests --recursive --watch"
