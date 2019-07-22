@@ -19,9 +19,6 @@ export function getAndroidVersion() {
   return isAndroid ? parseInt(Platform.Version, 10) : undefined;
 }
 
-/* Devices */
-export const isIphoneX = isIOS && !Platform.isPad && !Platform.isTVOS && (screenHeight >= 812 || screenWidth >= 812);
-
 /* Navigation */
 const {StatusBarManager} = NativeModules;
 export let statusBarHeight = setStatusBarHeight();
@@ -49,6 +46,9 @@ export function getSafeAreaInsets() {
     {left: 44, right: 44, bottom: 24, top: 0} : 
     {left: 0, right: 0, bottom: 34, top: 44};
 }
+
+/* Devices */
+export const isIphoneX = isIOS && !Platform.isPad && !Platform.isTVOS && (screenHeight >= 812 || screenWidth >= 812);
 
 /* Orientation */
 function getOrientation(height, width) {
