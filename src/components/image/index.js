@@ -4,7 +4,7 @@ import React from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {Image as RNImage, StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
-import {BaseComponent} from '../../commons';
+import {PureBaseComponent} from '../../commons';
 import Assets from '../../assets';
 
 /**
@@ -12,7 +12,7 @@ import Assets from '../../assets';
  * @extends: Image
  * @extendslink: https://facebook.github.io/react-native/docs/image.html
  */
-class Image extends BaseComponent {
+class Image extends PureBaseComponent {
   static displayName = 'Image';
 
   static propTypes = {

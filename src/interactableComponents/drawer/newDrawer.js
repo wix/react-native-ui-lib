@@ -11,7 +11,9 @@ import Swipeable from './Swipeable';
 
 
 const deprecatedProps = ['damping', 'tension', 'onPress', 'equalWidths'];
+
 const DEFAULT_BG = Colors.blue30;
+
 const ITEM_PROP_TYPES = {
   width: PropTypes.number,
   background: PropTypes.string,
@@ -78,6 +80,10 @@ class NewDrawer extends PureBaseComponent {
      * Perform the animation in natively
      */
     useNativeAnimations: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    itemsTintColor: Colors.white
   };
 
   constructor(props) {

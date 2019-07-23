@@ -124,7 +124,7 @@ class Hint extends BaseComponent {
   };
 
   onTargetLayout = ({nativeEvent: {layout}}) => {
-    if (!this.state.targetLayout) {
+    if (!_.isEqual(this.state.targetLayout, layout)) {
       this.setState({
         targetLayout: layout,
       });

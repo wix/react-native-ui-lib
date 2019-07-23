@@ -78,9 +78,10 @@ export default class Swipeable extends Component<PropType, StateType> {
     this.state = {
       dragX,
       rowTranslation: new Animated.Value(0),
+      rowWidth: Constants.screenWidth,
       leftWidth: undefined,
       rightOffset: undefined,
-      rowWidth: Constants.screenWidth
+      measureCompleted: false
     };
 
     this._updateAnimatedEvent(props, this.state);
@@ -293,9 +294,36 @@ export default class Swipeable extends Component<PropType, StateType> {
     this._animateRow(this._currentOffset(), -rightWidth);
   };
 
-  _onRowLayout = ({nativeEvent}) => this.setState({rowWidth: nativeEvent.layout.width});
-  _onLeftLayout = ({nativeEvent}) => this.setState({leftWidth: nativeEvent.layout.x});
-  _onRightLayout = ({nativeEvent}) => this.setState({rightOffset: nativeEvent.layout.x});
+  _onRowLayout = ({nativeEvent}) => this.handleMeasure('rowWidth', nativeEvent);
+  _onLeftLayout = ({nativeEvent}) => this.handleMeasure('leftWidth', nativeEvent);
+  _onRightLayout = ({nativeEvent}) => this.handleMeasure('rightOffset', nativeEvent);
+
+  handleMeasure = (name, nativeEvent) => {
+    const {width, x} = nativeEvent.layout;
+
+    switch (name) {
+      case 'rowWidth':
+        this.rowWidth = width;
+        break;
+      case 'leftWidth':
+        this.leftWidth = x;
+        break;
+      case 'rightOffset':
+        this.rightOffset = x;
+        break;
+      default:
+        break;
+    }
+
+    if (this.rowWidth && this.leftWidth && this.rightOffset) {
+      this.setState({
+        rowWidth: this.rowWidth,
+        leftWidth: this.leftWidth,
+        rightOffset: this.rightOffset,
+        measureCompleted: true
+      });
+    }
+  };
 
   render() {
     const {
