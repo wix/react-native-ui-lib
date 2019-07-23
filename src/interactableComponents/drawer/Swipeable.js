@@ -365,7 +365,8 @@ export default class Swipeable extends Component<PropType, StateType> {
     return (
       <PanGestureHandler
         {...this.props}
-        minDeltaX={10}
+        // minDeltaX={10}
+        activeOffsetX={[-10, Constants.isIOS ? 44 : 10]}
         onGestureEvent={this._onGestureEvent}
         onHandlerStateChange={this._onHandlerStateChange}
       >
