@@ -67,6 +67,7 @@ class PanDismissibleView extends PureComponent {
       animTranslateX: new Animated.Value(0),
       animTranslateY: new Animated.Value(0),
       isAnimating: false,
+      forceDismissIsPending: false
     };
     this.ref = React.createRef();
   }
@@ -116,12 +117,13 @@ class PanDismissibleView extends PureComponent {
     }
   };
 
-  initPositions = () => {
+  initPositions = (extraDataForSetState, runAfterSetState) => {
     this.setNativeProps(0, 0);
     this.setState({
       animTranslateX: new Animated.Value(0),
       animTranslateY: new Animated.Value(0),
-    });
+      ...extraDataForSetState
+    }, runAfterSetState);
   };
 
   onPanStart = () => {
@@ -208,8 +210,9 @@ class PanDismissibleView extends PureComponent {
   };
 
   onInitAnimationFinished = () => {
-    this.setState({isAnimating: false});
-    this.initPositions();
+    const {forceDismissIsPending} = this.state;
+    const runAfterSetState = forceDismissIsPending ? this.animateDismiss : undefined;
+    this.initPositions({isAnimating: false, forceDismissIsPending: false}, runAfterSetState);
   };
 
   getDismissAnimationDirection = () => {
@@ -247,14 +250,19 @@ class PanDismissibleView extends PureComponent {
   // isDown === true --> animate to the bottom
   // isDown === false --> animate to the top
   animateDismiss = () => {
-    const {directions = []} = this.props;
-    const hasUp = directions.includes(PanningProvider.Directions.UP);
-    const hasRight = directions.includes(PanningProvider.Directions.RIGHT);
-    const hasLeft = directions.includes(PanningProvider.Directions.LEFT);
-    const hasDown = !hasUp && !hasLeft && !hasRight; // default
-    const verticalDismiss = hasDown ? true : hasUp ? false : undefined;
-    const horizontalDismiss = hasRight ? true : hasLeft ? false : undefined;
-    this._animateDismiss(horizontalDismiss, verticalDismiss);
+    const {isAnimating} = this.state;
+    if (isAnimating) {
+      this.setState({forceDismissIsPending: true});
+    } else {
+      const {directions = []} = this.props;
+      const hasUp = directions.includes(PanningProvider.Directions.UP);
+      const hasRight = directions.includes(PanningProvider.Directions.RIGHT);
+      const hasLeft = directions.includes(PanningProvider.Directions.LEFT);
+      const hasDown = !hasUp && !hasLeft && !hasRight; // default
+      const verticalDismiss = hasDown ? true : hasUp ? false : undefined;
+      const horizontalDismiss = hasRight ? true : hasLeft ? false : undefined;
+      this._animateDismiss(horizontalDismiss, verticalDismiss);
+    }
   };
 
   _animateDismiss = (isRight, isDown) => {
