@@ -55,11 +55,11 @@ export default class PanningProvider extends Component {
   };
 
   onDrag = ({directions, deltas}) => {
-    this.setState({dragDirections: directions, dragDeltas: deltas});
+    this.setState({dragDirections: directions, dragDeltas: deltas, swipeDirections: {}, swipeVelocities: {}});
   };
 
   onSwipe = ({directions, velocities}) => {
-    this.setState({swipeDirections: directions, swipeVelocities: velocities});
+    this.setState({swipeDirections: directions, swipeVelocities: velocities, dragDirections: {}, dragDeltas: {}});
   };
 
   render() {

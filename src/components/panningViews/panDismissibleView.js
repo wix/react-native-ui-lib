@@ -9,6 +9,7 @@ import PanningProvider from './panningProvider';
 const DEFAULT_SPEED = 20;
 const DEFAULT_BOUNCINESS = 6;
 const DEFAULT_DISMISS_ANIMATION_DURATION = 280;
+const DEFAULT_MAXIMUM_DRAGS_AFTER_SWIPE = 1;
 
 /**
  * @description: PanDismissibleView component created to making listening to swipe and drag events easier,
@@ -37,6 +38,10 @@ class PanDismissibleView extends PureComponent {
       bounciness: PropTypes.number,
       duration: PropTypes.number,
     }),
+    /**
+     * The maximum number of swipes that can occur after a swipe before resetting the swipe (default is 1)
+     */
+    maximumDragsAfterSwipe: PropTypes.number,
   };
 
   static defaultProps = {
@@ -51,6 +56,7 @@ class PanDismissibleView extends PureComponent {
       bounciness: DEFAULT_BOUNCINESS,
       duration: DEFAULT_DISMISS_ANIMATION_DURATION,
     },
+    maximumDragsAfterSwipe: DEFAULT_MAXIMUM_DRAGS_AFTER_SWIPE,
     onDismiss: _.noop,
   };
 
@@ -120,12 +126,21 @@ class PanDismissibleView extends PureComponent {
 
   onPanStart = () => {
     this.swipe = {};
+    this.counter = 0;
   };
 
   onDrag = deltas => {
+    const {maximumDragsAfterSwipe} = this.props;
     const left = deltas.x ? Math.round(deltas.x) : 0;
     const top = deltas.y ? Math.round(deltas.y) : 0;
     this.setNativeProps(left, top);
+    if (this.swipe.x || this.swipe.y) {
+      if (this.counter < maximumDragsAfterSwipe) {
+        this.counter += 1;
+      } else {
+        this.swipe = {};
+      }
+    }
   };
 
   setNativeProps = (left, top) => {
