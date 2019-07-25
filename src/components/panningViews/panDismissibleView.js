@@ -61,9 +61,9 @@ class PanDismissibleView extends PureComponent {
     this.state = {
       animTranslateX: new Animated.Value(0),
       animTranslateY: new Animated.Value(0),
-      isAnimating: false,
-      shouldDismissAfterReset: false
+      isAnimating: false
     };
+    shouldDismissAfterReset = false;
     this.ref = React.createRef();
   }
 
@@ -204,9 +204,9 @@ class PanDismissibleView extends PureComponent {
   };
 
   onResetPositionFinished = () => {
-    const {shouldDismissAfterReset} = this.state;
-    const runAfterSetState = shouldDismissAfterReset ? this.animateDismiss : undefined;
-    this.initPositions({isAnimating: false, shouldDismissAfterReset: false}, runAfterSetState);
+    const runAfterSetState = this.shouldDismissAfterReset ? this.animateDismiss : undefined;
+    this.shouldDismissAfterReset = false;
+    this.initPositions({isAnimating: false}, runAfterSetState);
   };
 
   getDismissAnimationDirection = () => {
@@ -246,7 +246,7 @@ class PanDismissibleView extends PureComponent {
   animateDismiss = () => {
     const {isAnimating} = this.state;
     if (isAnimating) {
-      this.setState({shouldDismissAfterReset: true});
+      this.shouldDismissAfterReset = true;
     } else {
       const {directions = []} = this.props;
       const hasUp = directions.includes(PanningProvider.Directions.UP);
