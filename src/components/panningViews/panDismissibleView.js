@@ -62,7 +62,7 @@ class PanDismissibleView extends PureComponent {
       animTranslateX: new Animated.Value(0),
       animTranslateY: new Animated.Value(0),
       isAnimating: false,
-      forceDismissIsPending: false
+      shouldDismissAfterReset: false
     };
     this.ref = React.createRef();
   }
@@ -167,12 +167,12 @@ class PanDismissibleView extends PureComponent {
         const {isRight, isDown} = this.getDismissAnimationDirection();
         this._animateDismiss(isRight, isDown);
       } else {
-        this.animateToInitialPosition();
+        this.resetPosition();
       }
     }
   };
 
-  animateToInitialPosition = () => {
+  resetPosition = () => {
     const {animTranslateX, animTranslateY} = this.state;
     const {speed, bounciness} = this.props.animationOptions;
     const toX = -this.left;
@@ -199,14 +199,14 @@ class PanDismissibleView extends PureComponent {
     }
 
     this.setState({isAnimating: true}, () => {
-      Animated.parallel(animations).start(this.onInitAnimationFinished);
+      Animated.parallel(animations).start(this.onResetPositionFinished);
     });
   };
 
-  onInitAnimationFinished = () => {
-    const {forceDismissIsPending} = this.state;
-    const runAfterSetState = forceDismissIsPending ? this.animateDismiss : undefined;
-    this.initPositions({isAnimating: false, forceDismissIsPending: false}, runAfterSetState);
+  onResetPositionFinished = () => {
+    const {shouldDismissAfterReset} = this.state;
+    const runAfterSetState = shouldDismissAfterReset ? this.animateDismiss : undefined;
+    this.initPositions({isAnimating: false, shouldDismissAfterReset: false}, runAfterSetState);
   };
 
   getDismissAnimationDirection = () => {
@@ -246,7 +246,7 @@ class PanDismissibleView extends PureComponent {
   animateDismiss = () => {
     const {isAnimating} = this.state;
     if (isAnimating) {
-      this.setState({forceDismissIsPending: true});
+      this.setState({shouldDismissAfterReset: true});
     } else {
       const {directions = []} = this.props;
       const hasUp = directions.includes(PanningProvider.Directions.UP);
