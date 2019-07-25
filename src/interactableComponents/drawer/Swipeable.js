@@ -315,7 +315,10 @@ export default class Swipeable extends Component<PropType, StateType> {
         break;
     }
 
-    if (this.rowWidth && this.leftWidth && this.rightOffset) {
+    const leftRender = this.props.renderLeftActions ? this.leftWidth : true;
+    const rightRender = this.props.renderRightActions ? this.rightOffset : true;
+
+    if (this.rowWidth && leftRender && rightRender) {
       this.setState({
         rowWidth: this.rowWidth,
         leftWidth: this.leftWidth,

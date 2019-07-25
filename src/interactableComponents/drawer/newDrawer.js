@@ -93,8 +93,8 @@ class NewDrawer extends PureBaseComponent {
     this.animationOptions = {bounciness: props.bounciness || 5};
     this.rightActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? [props.leftItem] : props.rightItems);
     this.leftActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? props.rightItems : [props.leftItem]);
-    this.leftRender = Constants.isRTL ? this.renderRightActions : this.renderLeftActions;
-    this.rightRender = Constants.isRTL ? this.renderLeftActions : this.renderRightActions;
+    this.leftRender = props.leftItem ? (Constants.isRTL ? this.renderRightActions : this.renderLeftActions) : undefined;
+    this.rightRender = props.rightItems ? (Constants.isRTL ? this.renderLeftActions : this.renderRightActions) : undefined;
 
     // TODO: deprecate when removing old drawer version
     // this.checkDeprecations(props);
