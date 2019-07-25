@@ -13,7 +13,8 @@ const MAXIMUM_DRAGS_AFTER_SWIPE = 2;
 
 /**
  * @description: PanDismissibleView component created to making listening to swipe and drag events easier,
- * Has to be used as a child of a PanningProvider that also has a PanListenerView
+ * @notes: Has to be used as a child of a PanningProvider that also has a PanListenerView.
+ *         The PanListenerView is the one that sends the drag\swipe events.
  */
 class PanDismissibleView extends PureComponent {
   static displayName = 'PanDismissibleView';

@@ -8,7 +8,11 @@ const DIRECTIONS = {
   RIGHT: 'right',
 };
 
+/**
+ * @description: Wraps the panDismissibleView and panListenerView to provide a shared context
+ */
 export default class PanningProvider extends Component {
+  static displayName = 'PanningProvider'
   static Directions = DIRECTIONS;
 
   constructor(props) {
