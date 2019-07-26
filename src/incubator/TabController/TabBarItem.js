@@ -179,7 +179,7 @@ export default class TabBarItem extends PureComponent {
   }
 
   render() {
-    const {label, icon, badge, state, uppercase, activeOpacity, activeBackgroundColor} = this.props;
+    const {label, icon, badge, state, uppercase, activeOpacity, activeBackgroundColor, testID} = this.props;
 
     return (
       <TouchableOpacity
@@ -189,6 +189,7 @@ export default class TabBarItem extends PureComponent {
         feedbackColor={activeBackgroundColor}
         activeOpacity={activeOpacity}
         onPress={this.onPress}
+        testID={testID}
       >
         {icon && <Reanimated.Image source={icon} style={[this.getIconStyle()]} />}
         {!_.isEmpty(label) && (
