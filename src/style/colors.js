@@ -49,14 +49,7 @@ class Colors {
   }
 
   getBackgroundKeysPattern() {
-    return new RegExp(
-      _.chain(this)
-        .keys()
-        .map(key => [`bg-${key}`, `background-${key}`])
-        .flatten()
-        .join('|')
-        .value(),
-    );
+    return /^(bg-|background-)/;
   }
 
   isEmpty(color) {
@@ -75,7 +68,7 @@ class Colors {
 
   getColorTint(color, tintKey) {
     if (_.isUndefined(tintKey) || isNaN(tintKey) || _.isUndefined(color)) {
-      console.error('"Colors.getColorTint" must accept a color and tintKey params');
+      // console.error('"Colors.getColorTint" must accept a color and tintKey params');
       return color;
     }
 
@@ -99,13 +92,15 @@ class Colors {
 
   getTintedColorForDynamicHex(color, tintKey) {
     // Handles dynamic colors (non uilib colors)
-    let tintLevel = Math.floor(Number(tintKey) / 10 + 1);
-    tintLevel = Math.max(2, tintLevel);
-    tintLevel = Math.min(9, tintLevel);
-    return generateColorTint(color, tintLevel * 10);
+    let tintLevel = Math.floor(Number(tintKey) / 10);
+    tintLevel = Math.max(1, tintLevel);
+    tintLevel = Math.min(8, tintLevel);
+
+    const colorsPalette = this.generateColorPalette(color);
+    return colorsPalette[tintLevel - 1];
   }
 
-  generateColorPalette(color) {
+  generateColorPalette = _.memoize((color) => {
     const hsl = Color(color).hsl();
     const lightness = Math.round(hsl.color[2]);
 
@@ -130,7 +125,7 @@ class Colors {
 
     const sliced = tints.slice(0, 8);
     return sliced;
-  }
+  });
 }
 
 function generateColorTint(color, tintLevel) {

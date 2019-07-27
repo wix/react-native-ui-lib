@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Text, ViewPropTypes} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
-import {BaseComponent} from '../../commons';
+import {PureBaseComponent} from '../../commons';
 import {BorderRadiuses, Colors, ThemeManager, Typography} from '../../style';
 import View from '../view';
 import Image from '../image';
@@ -27,7 +27,7 @@ export const BADGE_SIZES = {
  * @image: https://user-images.githubusercontent.com/33805983/34480753-df7a868a-efb6-11e7-9072-80f5c110a4f3.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.js
  */
-export default class Badge extends BaseComponent {
+export default class Badge extends PureBaseComponent {
   static displayName = 'Badge';
   static propTypes = {
     /**
@@ -55,6 +55,10 @@ export default class Badge extends BaseComponent {
      * Additional styles for the top container
      */
     containerStyle: ViewPropTypes.style,
+    /**
+     * Additional styles for the badge label
+     */
+    labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * Receives a number from 1 to 4, representing the label's max digit length.
      * Beyond the max number for that digit length, a "+" will show at the end.
@@ -105,7 +109,7 @@ export default class Badge extends BaseComponent {
     const {borderWidth, size, icon} = this.props;
     const label = this.getFormattedLabel();
     const badgeHeight = _.isNumber(size) ? size : BADGE_SIZES[size];
-    
+
     const style = {
       paddingHorizontal: this.isSmallBadge() ? 4 : 6,
       height: badgeHeight,
@@ -157,9 +161,10 @@ export default class Badge extends BaseComponent {
   }
 
   renderLabel() {
+    const {labelStyle} = this.props;
     return (
       <Text
-        style={[this.styles.label, this.isSmallBadge() && this.styles.labelSmall]}
+        style={[this.styles.label, this.isSmallBadge() && this.styles.labelSmall, labelStyle]}
         allowFontScaling={false}
         numberOfLines={1}
         testID="badge"

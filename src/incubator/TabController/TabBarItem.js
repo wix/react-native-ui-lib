@@ -1,5 +1,5 @@
 // TODO: support commented props
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {StyleSheet, processColor} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -15,7 +15,7 @@ const {cond, eq, call, block, event, and, defined} = Reanimated;
 const DEFAULT_LABEL_COLOR = Colors.black;
 const DEFAULT_SELECTED_LABEL_COLOR = Colors.blue30;
 
-export default class TabBarItem extends Component {
+export default class TabBarItem extends PureComponent {
   static propTypes = {
     /**
      * label of the tab
@@ -155,11 +155,11 @@ export default class TabBarItem extends Component {
     );
 
     return [
-      labelStyle,
       {
         fontWeight,
         color,
       },
+      labelStyle
     ];
   }
 
@@ -179,7 +179,7 @@ export default class TabBarItem extends Component {
   }
 
   render() {
-    const {label, icon, badge, state, uppercase, activeOpacity, activeBackgroundColor} = this.props;
+    const {label, icon, badge, state, uppercase, activeOpacity, activeBackgroundColor, testID} = this.props;
 
     return (
       <TouchableOpacity
@@ -189,6 +189,7 @@ export default class TabBarItem extends Component {
         feedbackColor={activeBackgroundColor}
         activeOpacity={activeOpacity}
         onPress={this.onPress}
+        testID={testID}
       >
         {icon && <Reanimated.Image source={icon} style={[this.getIconStyle()]} />}
         {!_.isEmpty(label) && (

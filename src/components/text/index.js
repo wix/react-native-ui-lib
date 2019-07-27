@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Text as RNText, StyleSheet} from 'react-native';
-import {BaseComponent} from '../../commons';
+import {PureBaseComponent} from '../../commons';
 
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
@@ -9,11 +9,11 @@ import {BaseComponent} from '../../commons';
  * @extendslink: https://facebook.github.io/react-native/docs/text.html
  * @modifiers: margins, color, typography
  */
-export default class Text extends BaseComponent {
+export default class Text extends PureBaseComponent {
   static displayName = 'Text';
   static propTypes = {
     ...RNText.propTypes,
-    ...BaseComponent.propTypes,
+    ...PureBaseComponent.propTypes,
     /**
      * color of the text
      */
@@ -74,6 +74,7 @@ function createStyles() {
   return StyleSheet.create({
     container: {
       backgroundColor: 'transparent',
+      textAlign: 'left'
     },
   });
 }

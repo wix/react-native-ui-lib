@@ -124,7 +124,7 @@ class Hint extends BaseComponent {
   };
 
   onTargetLayout = ({nativeEvent: {layout}}) => {
-    if (!this.state.targetLayout) {
+    if (!_.isEqual(this.state.targetLayout, layout)) {
       this.setState({
         targetLayout: layout,
       });
@@ -208,9 +208,9 @@ class Hint extends BaseComponent {
 
     const targetPositionOnScreen = this.getTargetPositionOnScreen();
     if (targetPositionOnScreen === TARGET_POSITIONS.RIGHT) {
-      hintPositionStyle.alignItems = 'flex-end';
+      hintPositionStyle.alignItems = Constants.isRTL ? 'flex-start' : 'flex-end';
     } else if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
-      hintPositionStyle.alignItems = 'flex-start';
+      hintPositionStyle.alignItems = Constants.isRTL ? 'flex-end' : 'flex-start';
     }
 
     return hintPositionStyle;

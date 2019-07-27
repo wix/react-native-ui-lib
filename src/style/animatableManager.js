@@ -12,6 +12,10 @@ const definitions = {
     from: {opacity: 0, scale: 0.6, translateY: -60},
     to: {opacity: 1, scale: 1, translateY: 0},
   },
+  itemRemoval: {
+    from: {opacity: 1, scale: 1, translateY: 0},
+    to: {opacity: 0, scale: 0.6, translateY: -60},
+  },
   listItemAddition: {
     from: {scaleY: 0.8, translateY: -40},
     to: {scaleY: 1, translateY: 0},

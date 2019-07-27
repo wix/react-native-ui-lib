@@ -7,7 +7,7 @@ import {ThemeManager, Constants, Assets, Colors, View, Text, Button, Carousel, T
 import {navigationData} from './MenuStructure';
 
 
-export default class UiLibExplorerMenu extends Component {
+export default class MainScreen extends Component {
   constructor(props) {
     super(props);
     autobind(this);
@@ -16,7 +16,7 @@ export default class UiLibExplorerMenu extends Component {
 
     this.state = {
       currentPage: 0,
-      filteredNavigationData: data,
+      filteredNavigationData: data
     };
 
     this.filterExplorerScreens = _.throttle(this.filterExplorerScreens, 300);
@@ -27,16 +27,14 @@ export default class UiLibExplorerMenu extends Component {
     navigationStyle.topBar.rightButtons.push({
       id: 'uilib.settingsButton',
       enabled: true,
-      icon: Assets.icons.settings,
+      icon: Assets.icons.settings
     });
     Navigation.mergeOptions(props.componentId, navigationStyle);
   }
 
   /** Events */
   onChangePage(newPage) {
-    this.setState({
-      currentPage: newPage,
-    });
+    this.setState({currentPage: newPage});
   }
 
   onSearchBoxBlur() {
@@ -58,10 +56,10 @@ export default class UiLibExplorerMenu extends Component {
           {
             id: 'uilib.searchButton',
             enabled: true,
-            icon: Assets.icons.search,
-          },
-        ],
-      },
+            icon: Assets.icons.search
+          }
+        ]
+      }
     };
   }
 
@@ -73,10 +71,11 @@ export default class UiLibExplorerMenu extends Component {
       case 'uilib.settingsButton':
         this.pushScreen({
           name: 'unicorn.Settings',
-          passProps: {navigationData: data, playground: this.props.playground},
+          passProps: {navigationData: data, playground: this.props.playground}
         });
         break;
       case 'uilib.searchButton':
+        this.input.focus();
         this.toggleTopBar(false);
         break;
       default:
@@ -92,11 +91,11 @@ export default class UiLibExplorerMenu extends Component {
         options: {
           topBar: {
             title: {
-              text: options.title,
-            },
-          },
-        },
-      },
+              text: options.title
+            }
+          }
+        }
+      }
     });
   }
 
@@ -111,14 +110,14 @@ export default class UiLibExplorerMenu extends Component {
               options: {
                 topBar: {
                   title: {
-                    text: options.title,
-                  },
-                },
-              },
-            },
-          },
-        ],
-      },
+                    text: options.title
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
     });
   }
 
@@ -127,21 +126,23 @@ export default class UiLibExplorerMenu extends Component {
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         visible: shouldShow,
-        animate: true,
-      },
+        animate: true
+      }
     });
   };
 
   closeSearchBox() {
     this.toggleTopBar(true);
+    this.input.blur();
   }
 
   openScreen(row) {
     this.closeSearchBox();
-    setImmediate(() => {
+
+    setTimeout(() => {
       this.filterExplorerScreens('');
-    });
-    this.pushScreen(row);
+      this.pushScreen(row);
+    }, 0);
   }
 
   filterExplorerScreens(filterText) {
@@ -169,7 +170,7 @@ export default class UiLibExplorerMenu extends Component {
 
     this.setState({
       filterText,
-      filteredNavigationData,
+      filteredNavigationData
     });
   }
 
@@ -178,17 +179,16 @@ export default class UiLibExplorerMenu extends Component {
     return (
       <View row spread style={{height: Constants.isIOS ? (Constants.isIphoneX ? 80 : 60) : 56}}>
         <TextField
-          ref={r => (this.toggledSearch = r)}
+          ref={r => this.input = r}
+          value={this.state.filterText}
           placeholder="Search your component.."
           onChangeText={this.filterExplorerScreens}
           onBlur={this.onSearchBoxBlur}
-          onDismiss={this.onSearchBoxBlur}
-          value={this.state.filterText}
           style={{
             marginTop: Constants.isIOS ? Constants.statusBarHeight + 10 : 14,
             marginLeft: 16,
             color: ThemeManager.primaryColor,
-            width: Constants.screenWidth - 80,
+            width: Constants.screenWidth - 80
           }}
           hideUnderline
         />
@@ -196,8 +196,8 @@ export default class UiLibExplorerMenu extends Component {
           style={{marginRight: 16, marginTop: Constants.isIOS ? Constants.statusBarHeight : 0}}
           iconSource={Assets.icons.search}
           size={'small'}
-          onPress={this.onSearchBoxBlur}
           backgroundColor={'transparent'}
+          onPress={this.onSearchBoxBlur}
         />
       </View>
     );
@@ -275,7 +275,7 @@ export default class UiLibExplorerMenu extends Component {
                 ]}
               />
               <View flex>
-                <FlatList data={section.screens} keyExtractor={item => item.title} renderItem={this.renderItem} />
+                <FlatList data={section.screens} keyExtractor={item => item.title} renderItem={this.renderItem}/>
               </View>
             </View>
           );
@@ -307,7 +307,7 @@ export default class UiLibExplorerMenu extends Component {
     const data = this.getMenuData();
 
     return (
-      <View flex bg-dark80>
+      <View testID="demo_main_screen" flex bg-dark80>
         {this.renderHeader()}
         {showNoResults && (
           <View paddingH-24>
@@ -333,23 +333,23 @@ const styles = StyleSheet.create({
     padding: 12,
     flexWrap: 'wrap',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   page: {
     width: Constants.screenWidth,
     flex: 1,
-    paddingLeft: 24,
+    paddingLeft: 24
   },
   pageTitleContainer: {
     borderBottomWidth: 1,
     paddingBottom: 4,
-    borderColor: Colors.dark60,
+    borderColor: Colors.dark60
   },
   pageTitleExtraDivider: {
     marginTop: 5,
-    marginBottom: 22,
+    marginBottom: 22
   },
   entryTextDeprecated: {
-    textDecorationLine: 'line-through',
-  },
+    textDecorationLine: 'line-through'
+  }
 });
