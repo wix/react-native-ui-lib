@@ -6,10 +6,23 @@ import TabBarContext from './TabBarContext';
 
 const {cond, and, call, block, eq} = Reanimated;
 
+/**
+* @description: TabController's TabPage
+* @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TabControllerScreen/index.js
+*/
 export default class TabPage extends Component {
+  static displayName = 'TabController.TabPage';
+
   static contextType = TabBarContext;
+
   static propTypes = {
+    /**
+     * The index of the the TabPage
+     */
     index: PropTypes.number.isRequired,
+    /**
+     * Whether this page should be loaded lazily
+     */
     lazy: PropTypes.bool,
   };
 

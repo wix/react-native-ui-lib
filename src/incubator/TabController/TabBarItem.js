@@ -15,7 +15,14 @@ const {cond, eq, call, block, event, and, defined} = Reanimated;
 const DEFAULT_LABEL_COLOR = Colors.black;
 const DEFAULT_SELECTED_LABEL_COLOR = Colors.blue30;
 
+/**
+* @description: TabController's TabBarItem
+* @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TabControllerScreen/index.js
+* @notes: Must be rendered as a direct child of TabController.TabBar.
+*/
 export default class TabBarItem extends PureComponent {
+  static displayName = 'TabController.TabBarItem';
+
   static propTypes = {
     /**
      * label of the tab
