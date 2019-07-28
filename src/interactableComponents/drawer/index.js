@@ -29,7 +29,7 @@ const ITEM_PROP_TYPES = {
  * @extendslink:
  */
 export default class Drawer extends PureBaseComponent {
-  static displayName = 'Drawer';
+  static displayName = 'IGNORE';
 
   static propTypes = {
     /**
