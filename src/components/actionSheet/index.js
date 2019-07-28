@@ -15,7 +15,7 @@ import ListItem from '../listItem';
 const VERTICAL_PADDING = 8;
 
 /**
- * @description: Cross platform Action sheet, with a support for native iOS solution
+ * @description: Cross platform Action Sheet, with a support for native iOS solution
  * @gif: https://media.giphy.com/media/l0HUpXOR6RqB2ct5S/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionSheetScreen.js
  */
