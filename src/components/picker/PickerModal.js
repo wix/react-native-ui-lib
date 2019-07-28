@@ -38,6 +38,26 @@ class PickerModal extends BaseComponent {
   state = {
     scrollHeight: undefined,
     scrollContentHeight: undefined,
+    contentOffset: {}
+  };
+
+  componentDidMount() {
+    if (Constants.isIOS && !Constants.isIphoneX) {
+      Constants.addDimensionsEventListener(this.onOrientationChanged);
+    }
+  }
+
+  componentWillUnmount() {
+    if (Constants.isIOS && !Constants.isIphoneX) {
+      Constants.removeDimensionsEventListener(this.onOrientationChanged);
+    }
+  }
+
+  onOrientationChanged = () => {
+    const isLandscape = Constants.orientation === Constants.orientations.LANDSCAPE;
+    const y = isLandscape ? 0.1 : 0;
+    this.flatListKey = isLandscape ? 'landscape' : 'portrait';
+    this.setState({contentOffset: {y}});
   };
 
   keyExtractor = (item, index) => index.toString();
@@ -78,6 +98,7 @@ class PickerModal extends BaseComponent {
   }
 
   render() {
+    const {contentOffset} = this.state;
     const {visible, enableModalBlur, topBarProps, listProps, children} = this.props;
     return (
       <Modal
@@ -91,9 +112,11 @@ class PickerModal extends BaseComponent {
         {this.renderSearchInput()}
 
         <FlatList
+          key={this.flatListKey}
           data={_.times(React.Children.count(children))}
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
+          contentOffset={contentOffset}
           {...listProps}
         />
       </Modal>
