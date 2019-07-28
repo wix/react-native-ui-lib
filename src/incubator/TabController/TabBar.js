@@ -15,8 +15,12 @@ import {Constants} from '../../helpers';
 const DEFAULT_HEIGHT = 48;
 const {Code, Clock, Value, add, sub, cond, eq, stopClock, startClock, timing, block, set} = Reanimated;
 
+/**
+* @description: TabController's TabBar component
+* @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TabControllerScreen/index.js
+*/
 class TabBar extends PureComponent {
-  static displayName = 'TabBar';
+  static displayName = 'TabController.TabBar';
   static contextType = TabBarContext;
 
   static propTypes = {
@@ -70,6 +74,7 @@ class TabBar extends PureComponent {
      */
     containerWidth: PropTypes.number,
   };
+
   static defaultProps = {
     containerWidth: Constants.screenWidth,
   };

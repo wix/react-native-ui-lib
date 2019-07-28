@@ -40,8 +40,10 @@ AnimatableManager.loadAnimationDefinitions({
 });
 
 /**
- * @description: Hint component.
- */
+* @description: Hint component for displaying a tooltip over wrapped component
+* @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.js
+* @notes: You can either wrap a component or pass a specific targetFrame
+*/
 class Hint extends BaseComponent {
   static displayName = 'Hint';
 
@@ -208,9 +210,9 @@ class Hint extends BaseComponent {
 
     const targetPositionOnScreen = this.getTargetPositionOnScreen();
     if (targetPositionOnScreen === TARGET_POSITIONS.RIGHT) {
-      hintPositionStyle.alignItems = 'flex-end';
+      hintPositionStyle.alignItems = Constants.isRTL ? 'flex-start' : 'flex-end';
     } else if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
-      hintPositionStyle.alignItems = 'flex-start';
+      hintPositionStyle.alignItems = Constants.isRTL ? 'flex-end' : 'flex-start';
     }
 
     return hintPositionStyle;

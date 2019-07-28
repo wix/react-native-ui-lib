@@ -315,7 +315,10 @@ export default class Swipeable extends Component<PropType, StateType> {
         break;
     }
 
-    if (this.rowWidth && this.leftWidth && this.rightOffset) {
+    const leftRender = this.props.renderLeftActions ? this.leftWidth : true;
+    const rightRender = this.props.renderRightActions ? this.rightOffset : true;
+
+    if (this.rowWidth && leftRender && rightRender) {
       this.setState({
         rowWidth: this.rowWidth,
         leftWidth: this.leftWidth,
@@ -365,7 +368,8 @@ export default class Swipeable extends Component<PropType, StateType> {
     return (
       <PanGestureHandler
         {...this.props}
-        minDeltaX={10}
+        // minDeltaX={10}
+        activeOffsetX={[-10, Constants.isIOS ? 44 : 10]}
         onGestureEvent={this._onGestureEvent}
         onHandlerStateChange={this._onHandlerStateChange}
       >
