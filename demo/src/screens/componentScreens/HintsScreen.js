@@ -41,6 +41,7 @@ export default class HintsScreen extends Component {
     return (
       <View>
         <View
+          flex
           padding-20
           paddingT-120
           bg-dark80
