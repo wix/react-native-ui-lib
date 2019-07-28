@@ -13,7 +13,8 @@ import PanGestureView from '../panningViews/panGestureView';
 
 /**
  * @description: Dialog component for displaying custom content inside a popup dialog
- * @notes: Use alignment modifiers to control the dialog position (top, bottom, centerV, centerH, etc... by default the dialog is aligned to center)
+ * @notes: Use alignment modifiers to control the dialog position
+ * (top, bottom, centerV, centerH, etc... by default the dialog is aligned to center)
  * @modifiers: alignment
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DialogScreen.js
  * @gif: https://media.giphy.com/media/9S58XdLCoUiLzAc1b1/giphy.gif
