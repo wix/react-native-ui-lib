@@ -4,7 +4,18 @@ import PropTypes from 'prop-types';
 import autobind from 'react-autobind';
 import {StyleSheet, FlatList, ViewPropTypes} from 'react-native';
 import {Navigation} from 'react-native-navigation';
-import {ThemeManager, Constants, Assets, Colors, View, Text, Button, Carousel, TextField} from 'react-native-ui-lib'; //eslint-disable-line
+import {
+  ThemeManager,
+  Constants,
+  Assets,
+  Colors,
+  View,
+  Text,
+  Button,
+  Carousel,
+  TextField,
+  Image,
+} from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 
 export default class MainScreen extends Component {
