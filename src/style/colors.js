@@ -123,9 +123,41 @@ class Colors {
       tints.push(tint);
     });
 
-    const sliced = tints.slice(0, 8);
-    return sliced;
+    let sliced = tints.slice(0, 8);
+    const adjusted = adjustSaturation(sliced, color);
+    return adjusted || sliced;
   });
+}
+
+function adjustSaturation(colors, color) {
+  let array;
+  const lightnessLevel = 80;
+  const saturationLevel = 60;
+  const hsl = Color(color).hsl();
+  const lightness = Math.round(hsl.color[2]);
+
+  if (lightness > lightnessLevel) {
+    const saturation = Math.round(hsl.color[1]);
+    if (saturation > saturationLevel) {
+      array = [];
+      _.forEach(colors, e => {
+        if (e !== color) {
+          const s = addSaturation(e, saturationLevel);
+          array.push(s);
+        } else {
+          array.push(e);
+        }
+      });
+    }
+  }
+
+  return array;
+}
+
+function addSaturation(color, saturation) {
+  const hsl = Color(color).hsl();
+  hsl.color[1] = saturation;
+  return hsl.hex();
 }
 
 function generateColorTint(color, tintLevel) {
