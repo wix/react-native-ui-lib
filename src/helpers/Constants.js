@@ -6,7 +6,7 @@ const dimensionsScope = {
   WINDOW: 'window',
   SCREEN: 'screen'
 }
-const orientations = {
+export const orientations = {
   PORTRAIT: 'portrait',
   LANDSCAPE: 'landscape'
 }
