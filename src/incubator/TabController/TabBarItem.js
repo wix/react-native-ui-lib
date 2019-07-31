@@ -144,6 +144,7 @@ export default class TabBarItem extends PureComponent {
     };
 
     if (width || itemWidth) {
+      style.flex = undefined;
       style.width = width || itemWidth;
       style.paddingHorizontal = undefined;
     }

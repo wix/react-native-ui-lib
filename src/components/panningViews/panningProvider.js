@@ -8,7 +8,11 @@ const DIRECTIONS = {
   RIGHT: 'right',
 };
 
+/**
+ * @description: Wraps the panDismissibleView and panListenerView to provide a shared context
+ */
 export default class PanningProvider extends Component {
+  static displayName = 'PanningProvider'
   static Directions = DIRECTIONS;
 
   constructor(props) {
@@ -55,11 +59,11 @@ export default class PanningProvider extends Component {
   };
 
   onDrag = ({directions, deltas}) => {
-    this.setState({dragDirections: directions, dragDeltas: deltas});
+    this.setState({dragDirections: directions, dragDeltas: deltas, swipeDirections: {}, swipeVelocities: {}});
   };
 
   onSwipe = ({directions, velocities}) => {
-    this.setState({swipeDirections: directions, swipeVelocities: velocities});
+    this.setState({swipeDirections: directions, swipeVelocities: velocities, dragDirections: {}, dragDeltas: {}});
   };
 
   render() {
