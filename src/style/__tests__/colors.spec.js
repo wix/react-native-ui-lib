@@ -108,6 +108,16 @@ describe('style/Colors', () => {
       expect(cachedPalette).toBeDefined();
       expect(cachedPalette.length).toBe(8);
       expect(cachedPalette.includes('#3F88C5')).toBe(true);
-    })
+    });
+
+    it('should generateColorPalette', () => {
+      const palette = uut.generateColorPalette('#3F88C5');
+      expect(palette).toEqual(['#193852', '#255379', '#316EA1', '#3F88C5', '#66A0D1', '#8DB9DD', '#B5D1E9', '#DCE9F4']);
+    });
+
+    it('should generateColorPalette with adjusted saturation', () => {
+      const palette = uut.generateColorPalette('#FFE5FF');
+      expect(palette).toEqual(['#661A66', '#8F248F', '#B82EB7', '#D148D1', '#DB71DB', '#E699E6', '#F0C2F0', '#FFE5FF']);
+    });
   });
 });
