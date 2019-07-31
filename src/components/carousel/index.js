@@ -71,7 +71,9 @@ export default class Carousel extends BaseComponent {
     if (!this.props.pageWidth) {
       this.setState({
         pageWidth: Constants.screenWidth, 
-        initialOffset: {x: presenter.calcOffset(this.props, {currentPage: this.state.currentPage, pageWidth: Constants.screenWidth})}
+        initialOffset: {
+          x: presenter.calcOffset(this.props, {currentPage: this.state.currentPage, pageWidth: Constants.screenWidth})
+        }
       });
     }
   }
