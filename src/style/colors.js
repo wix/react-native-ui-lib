@@ -139,18 +139,9 @@ function adjustSaturation(colors, color) {
   if (lightness > lightnessLevel) {
     const saturation = Math.round(hsl.color[1]);
     if (saturation > saturationLevel) {
-      array = [];
-      _.forEach(colors, e => {
-        if (e !== color) {
-          const s = addSaturation(e, saturationLevel);
-          array.push(s);
-        } else {
-          array.push(e);
-        }
-      });
+      array = _.map(colors, e => e !== color ? addSaturation(e, saturationLevel) : e)
     }
   }
-
   return array;
 }
 
