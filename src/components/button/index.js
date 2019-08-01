@@ -4,7 +4,7 @@ import React from 'react';
 import {Platform, StyleSheet, LayoutAnimation, Image} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
-import {BaseComponent} from '../../commons';
+import {PureBaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 import Text from '../text';
@@ -38,7 +38,7 @@ const DEFAULT_SIZE = 'large';
  * @gif: https://media.giphy.com/media/xULW8j5WzsuPytqklq/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.js
  */
-export default class Button extends BaseComponent {
+export default class Button extends PureBaseComponent {
   static displayName = 'Button';
   static propTypes = {
     ...Text.propTypes,

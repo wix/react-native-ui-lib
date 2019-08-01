@@ -1,13 +1,31 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import autobind from 'react-autobind';
-import {StyleSheet, FlatList} from 'react-native';
+import {StyleSheet, FlatList, ViewPropTypes} from 'react-native';
 import {Navigation} from 'react-native-navigation';
-import {ThemeManager, Constants, Assets, Colors, View, Text, Button, Carousel, TextField, Image} from 'react-native-ui-lib'; //eslint-disable-line
+import {
+  ThemeManager,
+  Constants,
+  Assets,
+  Colors,
+  View,
+  Text,
+  Button,
+  Carousel,
+  TextField,
+  Image,
+} from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 
+export default class MainScreen extends Component {
+  static propTypes = {
+    containerStyle: ViewPropTypes.style,
+    renderItem: PropTypes.func,
+    renderSectionTitle: PropTypes.func,
+    pageStyle: ViewPropTypes.style,
+  };
 
-export default class UiLibExplorerMenu extends Component {
   constructor(props) {
     super(props);
     autobind(this);
@@ -34,9 +52,7 @@ export default class UiLibExplorerMenu extends Component {
 
   /** Events */
   onChangePage(newPage) {
-    this.setState({
-      currentPage: newPage,
-    });
+    this.setState({currentPage: newPage});
   }
 
   onSearchBoxBlur() {
@@ -65,7 +81,7 @@ export default class UiLibExplorerMenu extends Component {
     };
   }
 
-  navigationButtonPressed = (event) => {
+  navigationButtonPressed = event => {
     const {buttonId} = event;
     const data = this.getMenuData();
 
@@ -77,6 +93,7 @@ export default class UiLibExplorerMenu extends Component {
         });
         break;
       case 'uilib.searchButton':
+        this.input.focus();
         this.toggleTopBar(false);
         break;
       default:
@@ -123,7 +140,7 @@ export default class UiLibExplorerMenu extends Component {
   }
 
   /** Actions */
-  toggleTopBar = (shouldShow) => {
+  toggleTopBar = shouldShow => {
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         visible: shouldShow,
@@ -134,14 +151,16 @@ export default class UiLibExplorerMenu extends Component {
 
   closeSearchBox() {
     this.toggleTopBar(true);
+    this.input.blur();
   }
 
   openScreen(row) {
     this.closeSearchBox();
-    setImmediate(() => {
+
+    setTimeout(() => {
       this.filterExplorerScreens('');
-    });
-    this.pushScreen(row);
+      this.pushScreen(row);
+    }, 0);
   }
 
   filterExplorerScreens(filterText) {
@@ -152,7 +171,7 @@ export default class UiLibExplorerMenu extends Component {
       filteredNavigationData = data;
     } else {
       _.each(data, (menuSection, menuSectionKey) => {
-        const filteredMenuSection = _.filter(menuSection.screens, (menuItem) => {
+        const filteredMenuSection = _.filter(menuSection.screens, menuItem => {
           const {title, description, tags} = menuItem;
           return (
             _.includes(_.lowerCase(title), _.toLower(filterText)) ||
@@ -178,12 +197,11 @@ export default class UiLibExplorerMenu extends Component {
     return (
       <View row spread style={{height: Constants.isIOS ? (Constants.isIphoneX ? 80 : 60) : 56}}>
         <TextField
-          ref={r => (this.toggledSearch = r)}
+          ref={r => (this.input = r)}
+          value={this.state.filterText}
           placeholder="Search your component.."
           onChangeText={this.filterExplorerScreens}
           onBlur={this.onSearchBoxBlur}
-          onDismiss={this.onSearchBoxBlur}
-          value={this.state.filterText}
           style={{
             marginTop: Constants.isIOS ? Constants.statusBarHeight + 10 : 14,
             marginLeft: 16,
@@ -196,17 +214,23 @@ export default class UiLibExplorerMenu extends Component {
           style={{marginRight: 16, marginTop: Constants.isIOS ? Constants.statusBarHeight : 0}}
           iconSource={Assets.icons.search}
           size={'small'}
-          onPress={this.onSearchBoxBlur}
           backgroundColor={'transparent'}
+          onPress={this.onSearchBoxBlur}
         />
       </View>
     );
   }
 
   renderItem({item}) {
+    const {renderItem} = this.props;
+
+    if (renderItem) {
+      return renderItem({item}, this.openScreen);
+    }
+
     return (
       <View centerV row paddingL-20 marginB-10>
-        <Image source={Assets.icons.chevronRight} style={{tintColor: Colors.dark10}} supportRTL/>
+        <Image source={Assets.icons.chevronRight} style={{tintColor: Colors.dark10}} supportRTL />
         <Text
           style={[item.deprecate && styles.entryTextDeprecated]}
           dark10
@@ -254,7 +278,24 @@ export default class UiLibExplorerMenu extends Component {
     );
   }
 
+  renderSectionTitle(title) {
+    const {renderSectionTitle} = this.props;
+
+    if (renderSectionTitle) {
+      return renderSectionTitle(title);
+    }
+
+    return (
+      <View style={styles.pageTitleContainer}>
+        <Text text40 style={{alignSelf: 'flex-start'}}>
+          {title}
+        </Text>
+      </View>
+    );
+  }
+
   renderCarousel(data) {
+    const {renderItem, pageStyle} = this.props;
     const dividerTransforms = [-10, -55, -20];
     const dividerWidths = ['60%', '75%', '90%'];
     const keys = _.keys(data);
@@ -263,10 +304,8 @@ export default class UiLibExplorerMenu extends Component {
       <Carousel onChangePage={this.onChangePage} ref={carousel => (this.carousel = carousel)}>
         {_.map(data, (section, key) => {
           return (
-            <View key={key} style={styles.page}>
-              <View style={styles.pageTitleContainer}>
-                <Text text40 style={{alignSelf: 'flex-start'}}>{section.title}</Text>
-              </View>
+            <View key={key} style={[styles.page, pageStyle]}>
+              {this.renderSectionTitle(section.title)}
               <View
                 style={[
                   styles.pageTitleExtraDivider,
@@ -275,7 +314,12 @@ export default class UiLibExplorerMenu extends Component {
                 ]}
               />
               <View flex>
-                <FlatList data={section.screens} keyExtractor={item => item.title} renderItem={this.renderItem} />
+                <FlatList
+                  showsVerticalScrollIndicator={false}
+                  data={section.screens}
+                  keyExtractor={item => item.title}
+                  renderItem={this.renderItem}
+                />
               </View>
             </View>
           );
@@ -285,21 +329,21 @@ export default class UiLibExplorerMenu extends Component {
   }
 
   renderSearchResults(data) {
+    const {renderItem} = this.props;
     const flatData = _.flatMap(data);
 
     return (
-      <View paddingH-24>
-        <FlatList
-          keyboardShouldPersistTaps='always'
-          data={flatData}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={this.renderItem}
-        />
-      </View>
+      <FlatList
+        keyboardShouldPersistTaps="always"
+        data={flatData}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={renderItem || this.renderItem}
+      />
     );
   }
 
   render() {
+    const {containerStyle} = this.props;
     const {filteredNavigationData, filterText} = this.state;
     const showNoResults = _.isEmpty(filteredNavigationData) && !!filterText;
     const showResults = !_.isEmpty(filteredNavigationData) && !!filterText;
@@ -307,7 +351,7 @@ export default class UiLibExplorerMenu extends Component {
     const data = this.getMenuData();
 
     return (
-      <View testID="demo_main_screen" flex bg-dark80>
+      <View testID="demo_main_screen" flex bg-dark80 style={containerStyle}>
         {this.renderHeader()}
         {showNoResults && (
           <View paddingH-24>
@@ -347,7 +391,7 @@ const styles = StyleSheet.create({
   },
   pageTitleExtraDivider: {
     marginTop: 5,
-    marginBottom: 22,
+    // marginBottom: 22,
   },
   entryTextDeprecated: {
     textDecorationLine: 'line-through',

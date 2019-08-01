@@ -5,7 +5,7 @@ import {StyleSheet, ViewPropTypes, Animated} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
-import {BaseComponent} from '../../commons';
+import {PureBaseComponent} from '../../commons';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
@@ -30,7 +30,7 @@ const DEFAULT_SELECTION_PROPS = {
  * @gif: https://media.giphy.com/media/l0HU9SKWmv0VTOYMM/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
  */
-class Card extends BaseComponent {
+class Card extends PureBaseComponent {
   static displayName = 'Card';
 
   static propTypes = {
