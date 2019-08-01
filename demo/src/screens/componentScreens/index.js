@@ -10,6 +10,7 @@ import CarouselScreen from './CarouselScreen';
 import CheckboxScreen from './CheckboxScreen';
 import ConnectionStatusBarScreen from './ConnectionStatusBarScreen';
 import DialogScreen from './DialogScreen';
+import DrawerScreen from './DrawerScreen';
 import HintsScreen from './HintsScreen';
 import InputsScreen from './InputsScreen';
 import MaskedInputScreen from './MaskedInputScreen';
@@ -39,6 +40,7 @@ Navigation.registerComponent('unicorn.components.CarouselScreen', () => Carousel
 Navigation.registerComponent('unicorn.components.CheckboxScreen', () => CheckboxScreen);
 Navigation.registerComponent('unicorn.components.ConnectionStatusBar', () => ConnectionStatusBarScreen);
 Navigation.registerComponent('unicorn.components.DialogScreen', () => DialogScreen);
+Navigation.registerComponent('unicorn.components.DrawerScreen', () => DrawerScreen);
 Navigation.registerComponent('unicorn.components.TagsInputScreen', () => TagsInputScreen);
 Navigation.registerComponent('unicorn.components.HintsScreen', () => HintsScreen);
 Navigation.registerComponent('unicorn.components.InputsScreen', () => InputsScreen);

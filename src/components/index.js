@@ -11,6 +11,7 @@ module.exports = {
   get Checkbox() { return require('./checkbox').default; },
   get ConnectionStatusBar() { return require('./connectionStatusBar').default; },
   get Dialog() { return require('./dialog').default; },
+  get Drawer() { return require('./drawer').default; },
   get FeatureHighlight() { return require('./featureHighlight').default; },
   get Hint() { return require('./hint').default; },
   get Image() { return require('./image').default; },
@@ -21,7 +22,6 @@ module.exports = {
   get MaskedInput() { return require('./inputs').MaskedInput; },
 
   get ListItem() { return require('./listItem').default; },
-  get Notification() { return require('./notification').default; },
   get PageControl() { return require('./pageControl').default; },
   get PanningProvider() { return require('./panningViews/panningProvider').default; },
   get PanGestureView() { return require('./panningViews/panGestureView').default; },

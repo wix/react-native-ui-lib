@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import {View, Text, Hint, Button, RadioGroup, RadioButton, Switch, Assets} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, Hint, Button, RadioGroup, RadioButton, Switch} from 'react-native-ui-lib'; //eslint-disable-line
+
+
+const settingsIcon = require('../../assets/icons/settings.png');
 
 export default class HintsScreen extends Component {
   constructor(props) {
@@ -62,7 +65,7 @@ export default class HintsScreen extends Component {
               </Text>
             }
             // messageStyle={{color: 'red'}}
-            icon={showIcon ? Assets.icons.settings : undefined}
+            icon={showIcon ? settingsIcon : undefined}
             // iconStyle={{tintColor: 'red'}}
             // offset={35}
             position={showBottomHint ? Hint.positions.BOTTOM : Hint.positions.TOP}

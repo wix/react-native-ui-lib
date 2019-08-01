@@ -5,7 +5,7 @@ import DemoScreen from '../DemoScreen';
 
 const ButtonSpace = 20;
 const plusIcon = require('../../assets/icons/plus.png');
-
+const settingsIcon = require('../../assets/icons/settings.png');
 const labelButton = {label: 'Animated'};
 const iconButton = {round: true, iconStyle: {tintColor: Colors.white}};
 
@@ -267,7 +267,7 @@ export default class ButtonsScreen extends DemoScreen {
                 round
                 backgroundColor='#FF69B4'
                 style={{margin: ButtonSpace}}
-                iconSource={Assets.icons.settings}
+                iconSource={settingsIcon}
                 iconStyle={{tintColor: Colors.white}}
                 ref={element => (this.button_0 = element)}
                 onPress={() => this.showSnippet(this.button_0)}
@@ -277,7 +277,7 @@ export default class ButtonsScreen extends DemoScreen {
                 round
                 backgroundColor='#ff4fa7'
                 style={{margin: ButtonSpace}}
-                iconSource={Assets.icons.settings}
+                iconSource={settingsIcon}
                 iconStyle={{tintColor: Colors.white}}
                 ref={element => (this.button_0 = element)}
                 onPress={() => this.showSnippet(this.button_0)}
@@ -287,7 +287,7 @@ export default class ButtonsScreen extends DemoScreen {
                 round
                 backgroundColor='#ff369b'
                 style={{margin: ButtonSpace}}
-                iconSource={Assets.icons.settings}
+                iconSource={settingsIcon}
                 iconStyle={{tintColor: Colors.white}}
                 ref={element => (this.button_0 = element)}
                 onPress={() => this.showSnippet(this.button_0)}
@@ -297,7 +297,7 @@ export default class ButtonsScreen extends DemoScreen {
                 round
                 backgroundColor='#ff1d8e'
                 style={{margin: ButtonSpace}}
-                iconSource={Assets.icons.settings}
+                iconSource={settingsIcon}
                 iconStyle={{tintColor: Colors.white}}
                 ref={element => (this.button_0 = element)}
                 onPress={() => this.showSnippet(this.button_0)}
@@ -309,7 +309,7 @@ export default class ButtonsScreen extends DemoScreen {
               size={'small'}
               style={{marginBottom: ButtonSpace / 4, marginLeft: ButtonSpace}}
               backgroundColor={Colors.green20}
-              iconSource={Assets.icons.settings}
+              iconSource={settingsIcon}
               {...buttonProps}
               onPress={this.changeProps}
               iconOnRight
@@ -320,7 +320,7 @@ export default class ButtonsScreen extends DemoScreen {
               size={'medium'}
               style={{marginBottom: ButtonSpace / 4}}
               backgroundColor={Colors.green20}
-              iconSource={Assets.icons.settings}
+              iconSource={settingsIcon}
               {...buttonProps}
               onPress={this.changeProps}
               animateLayout
@@ -328,7 +328,7 @@ export default class ButtonsScreen extends DemoScreen {
             <Button
               style={{marginBottom: ButtonSpace / 4, marginRight: ButtonSpace}}
               backgroundColor={Colors.green20}
-              iconSource={Assets.icons.settings}
+              iconSource={settingsIcon}
               {...buttonProps}
               onPress={this.changeProps}
               animateLayout

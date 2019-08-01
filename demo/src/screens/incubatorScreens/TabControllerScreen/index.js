@@ -1,10 +1,13 @@
-import React, {Component} from 'react';
-import {Incubator, Colors, View, Text, Image, Assets, Button} from 'react-native-ui-lib'; //eslint-disable-line
 import _ from 'lodash';
+import React, {Component} from 'react';
+import {Incubator, Colors, View, Text} from 'react-native-ui-lib'; //eslint-disable-line
 
 import Tab1 from './tab1';
 import Tab2 from './tab2';
 import Tab3 from './tab3';
+
+
+const settingsIcon = require('../../../assets/icons/settings.png');
 
 class TabControllerScreen extends Component {
   state = {
@@ -48,7 +51,7 @@ class TabControllerScreen extends Component {
 
     return [
       ..._.take(tabs, tabsCount),
-      <Incubator.TabController.TabBarItem key="addTabs" icon={Assets.icons.settings} ignore onPress={this.addTab} />,
+      <Incubator.TabController.TabBarItem key="addTabs" icon={settingsIcon} ignore onPress={this.addTab} />,
     ];
   }
 

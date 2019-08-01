@@ -12,6 +12,7 @@ module.exports = {
   get Checkbox() { return require('./components').Checkbox; },
   get ConnectionStatusBar() { return require('./components').ConnectionStatusBar; },
   get Dialog() { return require('./components').Dialog; },
+  get Drawer() { return require('./components').Drawer; },
   get FeatureHighlight() { return require('./components').FeatureHighlight; },
   get Hint() { return require('./components').Hint; },
   get Image() { return require('./components').Image; },
@@ -19,7 +20,6 @@ module.exports = {
   get TextField() { return require('./components').TextField; },
   get MaskedInput() { return require('./components').MaskedInput; },
   get ListItem() { return require('./components').ListItem; },
-  get Notification() { return require('./components').Notification; },
   get PageControl() { return require('./components').PageControl; },
   get PanningProvider() { return require('./components').PanningProvider; },
   get PanGestureView() { return require('./components').PanGestureView; },
@@ -64,10 +64,7 @@ module.exports = {
   get HighlighterOverlayView() { return require('./nativeComponents').HighlighterOverlayView; },
   get SafeAreaSpacerView() { return require('./nativeComponents').SafeAreaSpacerView; },
   get WheelPicker() { return require('./nativeComponents').WheelPicker; },
-  get SafeAreaInsetsManager() { return require('./nativeComponents').SafeAreaInsetsManager; },
-
-  // InteractableComponents
-  get Drawer() { return require('./interactableComponents').Drawer; },
+  get SafeAreaInsetsManager() { return require('./nativeComponents').SafeAreaInsetsManager; },  
 
   // Style
   get Colors() { return require('./style').Colors; },
