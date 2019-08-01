@@ -10,8 +10,8 @@ import View from '../../components/view';
 import Swipeable from './Swipeable';
 
 
-const deprecatedProps = ['damping', 'tension', 'onPress', 'equalWidths'];
 const DEFAULT_BG = Colors.blue30;
+const DEFAULT_ICON_SIZE = 24;
 const ITEM_PROP_TYPES = {
   width: PropTypes.number,
   background: PropTypes.string,
@@ -35,18 +35,6 @@ class Drawer extends PureBaseComponent {
   static propTypes = {
     ...Swipeable.PropTypes,
     /**
-     * The drawer top layer's damping - DEPRECATED
-     */
-    damping: PropTypes.number,
-    /**
-     * The drawer top layer's tension - DEPRECATED
-     */
-    tension: PropTypes.number,
-    /**
-     * Press handler - DEPRECATED
-     */
-    onPress: PropTypes.func,
-    /**
      * The drawer animation bounciness
      */
     bounciness: PropTypes.number,
@@ -62,10 +50,6 @@ class Drawer extends PureBaseComponent {
      * The bottom layer's item to appear when opened from the left (a single item)
      */
     leftItem: PropTypes.shape(ITEM_PROP_TYPES),
-    /**
-     * Whether to give the items equal width (the max width) - DEPRECATED
-     */
-    equalWidths: PropTypes.bool,
     /**
      * Set a different minimum width
      */
@@ -89,7 +73,8 @@ class Drawer extends PureBaseComponent {
   };
 
   static defaultProps = {
-    itemsTintColor: Colors.white
+    itemsTintColor: Colors.white,
+    itemsIconSize: DEFAULT_ICON_SIZE
   };
 
   constructor(props) {
@@ -101,22 +86,6 @@ class Drawer extends PureBaseComponent {
     this.leftActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? props.rightItems : [props.leftItem]);
     this.leftRender = props.leftItem ? (Constants.isRTL ? this.renderRightActions : this.renderLeftActions) : undefined;
     this.rightRender = props.rightItems ? (Constants.isRTL ? this.renderLeftActions : this.renderRightActions) : undefined;
-
-    // TODO: deprecate when removing old drawer version
-    // this.checkDeprecations(props);
-  }
-
-  checkDeprecations(props) {
-    if (props.onPress !== undefined) {
-      console.warn("Drawer's 'onPress' prop is deprecated. " +
-        "For items, send 'onPress' handler in the item's object and for content use your own.");
-    }
-
-    deprecatedProps.forEach(prop => {
-      if (props[prop]) {
-        console.warn(`Drawer's ${prop} property is deprecated.`);
-      }
-    });
   }
 
   getActionsContainerStyle(items) {
@@ -137,6 +106,7 @@ class Drawer extends PureBaseComponent {
   onSwipeableWillOpen = () => {
     _.invoke(this.props, 'onSwipeableWillOpen', this.props);
   };
+  
   onSwipeableWillClose = () => {
     _.invoke(this.props, 'onSwipeableWillClose', this.props);
   };
