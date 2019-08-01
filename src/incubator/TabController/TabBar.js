@@ -13,7 +13,21 @@ import {Colors, Spacings} from '../../style';
 import {Constants} from '../../helpers';
 
 const DEFAULT_HEIGHT = 48;
-const {Code, Clock, Value, add, sub, cond, eq, stopClock, startClock, timing, block, set} = Reanimated;
+const {
+  Code,
+  Clock,
+  Value,
+  add,
+  sub,
+  cond,
+  eq,
+  stopClock,
+  startClock,
+  clockRunning,
+  timing,
+  block,
+  set,
+} = Reanimated;
 
 /**
 * @description: TabController's TabBar component
@@ -87,6 +101,7 @@ class TabBar extends PureComponent {
   _clock = new Clock();
   _itemsWidths = _.times(React.Children.count(this.props.children), () => null);
   _indicatorWidth = new Value(0);
+  _prevIndicatorWidth = new Value(0);
   _prevOffset = new Value(0);
   _offset = new Value(0);
 
@@ -113,11 +128,11 @@ class TabBar extends PureComponent {
     }
   };
 
-  runTiming(targetValue, duration) {
+  runTiming(targetValue, prevValue, duration) {
     const clock = new Clock();
     const state = {
       finished: new Value(0),
-      position: new Value(0),
+      position: prevValue,
       time: new Value(0),
       frameTime: new Value(0),
     };
@@ -129,9 +144,15 @@ class TabBar extends PureComponent {
     };
 
     return block([
-      startClock(clock),
+      cond(clockRunning(clock), [], [startClock(clock)]),
       timing(clock, state, config),
-      cond(state.finished, [stopClock(clock), set(state.finished, 0), set(state.time, 0), set(state.frameTime, 0)]),
+      cond(state.finished, [
+        stopClock(clock),
+        set(state.finished, 0),
+        set(state.time, 0),
+        set(state.frameTime, 0),
+        set(prevValue, state.position),
+      ]),
       state.position,
     ]);
   }
@@ -141,8 +162,8 @@ class TabBar extends PureComponent {
     const {indicatorStyle} = this.props;
     if (itemsWidths) {
       const transitionStyle = {
-        width: this.runTiming(this._indicatorWidth, 400),
-        left: this.runTiming(this._offset, 300),
+        width: this.runTiming(this._indicatorWidth, this._prevIndicatorWidth, 300),
+        left: this.runTiming(this._offset, this._prevOffset, 400),
       };
       return <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, transitionStyle]} />;
     }
@@ -217,7 +238,6 @@ class TabBar extends PureComponent {
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   tabBar: {
