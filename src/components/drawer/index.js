@@ -11,7 +11,6 @@ import Swipeable from './Swipeable';
 
 
 const DEFAULT_BG = Colors.blue30;
-const DEFAULT_ICON_SIZE = 24;
 const ITEM_PROP_TYPES = {
   width: PropTypes.number,
   background: PropTypes.string,
@@ -74,7 +73,7 @@ class Drawer extends PureBaseComponent {
 
   static defaultProps = {
     itemsTintColor: Colors.white,
-    itemsIconSize: DEFAULT_ICON_SIZE
+    itemsIconSize: 24
   };
 
   constructor(props) {
