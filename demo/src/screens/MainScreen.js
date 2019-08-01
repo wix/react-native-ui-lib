@@ -329,7 +329,6 @@ export default class MainScreen extends Component {
   }
 
   renderSearchResults(data) {
-    const {renderItem} = this.props;
     const flatData = _.flatMap(data);
 
     return (
@@ -337,7 +336,7 @@ export default class MainScreen extends Component {
         keyboardShouldPersistTaps="always"
         data={flatData}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={renderItem || this.renderItem}
+        renderItem={this.renderItem}
       />
     );
   }
