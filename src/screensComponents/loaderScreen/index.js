@@ -2,12 +2,11 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, ActivityIndicator} from 'react-native';
-import {View as AnimatableView} from 'react-native-animatable';
 import {Colors, Typography, ThemeManager} from '../../style';
 import * as Constants from '../../helpers/Constants';
 import {BaseComponent} from '../../commons';
-import Text from '../../components/text';
 import View from '../../components/view';
+import Text from '../../components/text';
 
 
 /**
@@ -18,6 +17,7 @@ import View from '../../components/view';
  */
 export default class LoaderScreen extends BaseComponent {
   static displayName = 'LoaderScreen';
+  
   static propTypes = {
     ...ActivityIndicator.propTypes,
     /**
@@ -48,17 +48,9 @@ export default class LoaderScreen extends BaseComponent {
   render() {
     const {message, messageStyle, loaderColor, overlay, backgroundColor, containerStyle, ...others} = this.props;
     
-    const animationProps = this.extractAnimationProps();
-    const Container = !_.isEmpty(animationProps) ? AnimatableView : View;
-    if (!_.isEmpty(animationProps)) {
-      console.warn('LoaderScreen component will soon stop supporting animationProps.' +
-        'Please wrap your LoaderScreen component with your own animation component, such as Animatable.View');
-    }
-    
     return (
-      <Container
+      <View
         style={[overlay ? [styles.overlayContainer, {backgroundColor}] : styles.container, containerStyle]}
-        {...animationProps}
       >
         <View flex center>
           <ActivityIndicator
@@ -69,23 +61,23 @@ export default class LoaderScreen extends BaseComponent {
           />
           {!overlay && message && <Text style={[styles.message, messageStyle]}>{message}</Text>}
         </View>
-      </Container>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   overlayContainer: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: Colors.rgba(Colors.white, 0.85),
-    zIndex: 100,
+    zIndex: 100
   },
   message: {
     ...Typography.text70,
     marginTop: 18,
     color: Colors.dark10
-  },
+  }
 });
