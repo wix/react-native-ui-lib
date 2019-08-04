@@ -11,9 +11,7 @@ import Swipeable from './Swipeable';
 
 
 const deprecatedProps = ['damping', 'tension', 'onPress', 'equalWidths'];
-
 const DEFAULT_BG = Colors.blue30;
-
 const ITEM_PROP_TYPES = {
   width: PropTypes.number,
   background: PropTypes.string,
@@ -25,7 +23,15 @@ const ITEM_PROP_TYPES = {
   testID: PropTypes.string
 };
 
+/**
+ * @description: Drawer Component
+ * @important: If your app works with RNN, your screen must be wrapped
+ * with gestureHandlerRootHOC from 'react-native-gesture-handler'. see  
+ * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
+ */
 class NewDrawer extends PureBaseComponent {
+  static displayName = 'Drawer';
+
   static propTypes = {
     ...Swipeable.PropTypes,
     /**

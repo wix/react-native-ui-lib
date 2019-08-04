@@ -17,7 +17,7 @@ class View extends PureComponent {
     ...ViewPropTypes,
     ...BaseComponent.propTypes,
     /**
-     * if true, will render as SafeAreaView
+     * If true, will render as SafeAreaView
      */
     useSafeArea: PropTypes.bool,
   };

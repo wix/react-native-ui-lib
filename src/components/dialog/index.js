@@ -11,15 +11,14 @@ import View from '../view';
 import PanGestureView from '../panningViews/panGestureView';
 
 
-/*eslint-disable*/
 /**
  * @description: Dialog component for displaying custom content inside a popup dialog
- * @notes: Use alignment modifiers to control the dialog positon (top, bottom, centerV, centerH, etc... by default the dialog is align to center)
+ * @notes: Use alignment modifiers to control the dialog position
+ * (top, bottom, centerV, centerH, etc... by default the dialog is aligned to center)
  * @modifiers: alignment
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DialogScreen.js
  * @gif: https://media.giphy.com/media/9S58XdLCoUiLzAc1b1/giphy.gif
  */
-/*eslint-enable*/
 
 const SWIPE_DIRECTIONS = {
   UP: 'up',
@@ -143,7 +142,6 @@ class Dialog extends BaseComponent {
     Animated.timing(deltaY, {
       toValue: 0,
       duration: _.get(animationConfig, 'duration', 400),
-      delay: _.get(animationConfig, 'delay', 250),
       easing: _.get(animationConfig, 'easing', Easing.bezier(0.165, 0.84, 0.44, 1)),
       useNativeDriver: _.get(animationConfig, 'useNativeDriver', true)
     }).start();
