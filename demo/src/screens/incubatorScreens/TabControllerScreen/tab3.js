@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
 import _ from 'lodash';
-import {Card, Incubator, Colors, View, Text, Image, Assets, Button} from 'react-native-ui-lib'; //eslint-disable-line
+import {Card, Avatar, View, Text, Image, Assets, Button} from 'react-native-ui-lib'; //eslint-disable-line
 
 class Tab2 extends Component {
   state = {
@@ -12,6 +12,22 @@ class Tab2 extends Component {
     setTimeout(() => {
       this.setState({loading: false});
     }, 1200);
+
+    // this.slow();
+  }
+
+  slow(iterations = 10) {
+    if (iterations === 0) {
+      return;
+    }
+
+    setTimeout(() => {
+      _.times(5000, () => {
+        console.log('slow log');
+      });
+
+      this.slow(iterations - 1);
+    }, 10);
   }
 
   render() {
@@ -29,10 +45,16 @@ class Tab2 extends Component {
           )}
 
           {!loading &&
-            _.times(20, index => {
+            _.times(100, index => {
               return (
-                <Card margin-20 padding-20 key={index} onPress={_.noop}>
-                  <Text text40>{index}</Text>
+                <Card row centerV margin-20 padding-20 key={index} onPress={_.noop}>
+                  <Avatar
+                    size={50}
+                    imageSource={{
+                      uri: 'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg',
+                    }}
+                  />
+                  <Text text40 marginL-20>{index}</Text>
                 </Card>
               );
             })}
