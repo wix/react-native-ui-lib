@@ -284,7 +284,7 @@ export default class Avatar extends PureBaseComponent {
       return (
         <ImageContainer
           animate={animate}
-          style={[this.getContainerStyle(), {...StyleSheet.absoluteFillObject}, imageStyle]}
+          style={[this.getContainerStyle(), StyleSheet.absoluteFillObject, imageStyle]}
           source={imageSource}
           onLoadStart={onImageLoadStart}
           onLoadEnd={onImageLoadEnd}
