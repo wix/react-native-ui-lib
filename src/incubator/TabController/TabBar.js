@@ -5,7 +5,9 @@ import {StyleSheet, ScrollView, ViewPropTypes, Platform} from 'react-native';
 import Reanimated, {Easing} from 'react-native-reanimated';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+
 import TabBarContext from './TabBarContext';
+import ReanimatedObject from './ReanimatedObject';
 import {asBaseComponent, forwardRef} from '../../commons';
 import View from '../../components/view';
 import Text from '../../components/text';
@@ -79,47 +81,26 @@ class TabBar extends PureComponent {
     containerWidth: Constants.screenWidth,
   };
 
-  state = {
-    itemsWidths: undefined,
-  };
-
-  tabBar = React.createRef();
-  _indicatorOffset = createReanimatedObject({duration: 300, easing: Easing.bezier(0.23, 1, 0.32, 1)});
-  _indicatorWidth = createReanimatedObject({duration: 300, easing: Easing.bezier(0.23, 1, 0.32, 1)}); 
-
-  // _clock = new Clock();
-  // _state = {
-  //   finished: new Value(0),
-  //   position: new Value(0),
-  //   time: new Value(0),
-  //   frameTime: new Value(0),
-  // };
-  // _config = {
-  //   duration: 300,
-  //   toValue: new Value(0),
-  //   easing: Easing.bezier(0.23, 1, 0.32, 1),
-  // };
-  _itemsWidths = _.times(React.Children.count(this.props.children), () => null);
-  
-  // INDICATOR WIDTH
-  // _prevIndicatorWidth = new Value(0);
-  // _indicatorWidth = new Value(70);
-  // _nextIndicatorWidth = new Value(0);
-  // INDICATOR OFFSET
-  // _prevOffset = new Value(0);
-  // _offset = new Value(0);
-  // _nextOffset = new Value(0);
-
-  _indicatorTransitionStyle = {
-    width: this._indicatorWidth.value,
-    left: this._indicatorOffset.value,
-  };
-
   constructor(props, context) {
     super(props, context);
     const {registerTabItems} = this.context;
     const itemsCount = React.Children.count(this.props.children);
     const ignoredItems = [];
+
+    this.tabBar = React.createRef();
+
+    this._itemsWidths = _.times(React.Children.count(this.props.children), () => null);
+    this._indicatorOffset = new ReanimatedObject({duration: 300, easing: Easing.bezier(0.23, 1, 0.32, 1)});
+    this._indicatorWidth = new ReanimatedObject({duration: 300, easing: Easing.bezier(0.23, 1, 0.32, 1)});
+    this._indicatorTransitionStyle = {
+      width: this._indicatorWidth.value,
+      left: this._indicatorOffset.value,
+    };
+
+    this.state = {
+      itemsWidths: undefined,
+    };
+
     React.Children.toArray(this.props.children).forEach((child, index) => {
       if (child.props.ignore) {
         ignoredItems.push(index);
@@ -196,7 +177,12 @@ class TabBar extends PureComponent {
       activeBackgroundColor,
     } = this.props;
     if (!_.isEmpty(itemStates)) {
-      return React.Children.map(this.props.children, (child, index) => {
+
+      if (this.tabBarItems) {
+        return this.tabBarItems;
+      }
+
+      this.tabBarItems = React.Children.map(this.props.children, (child, index) => {
         return React.cloneElement(child, {
           labelColor,
           selectedLabelColor,
@@ -212,6 +198,7 @@ class TabBar extends PureComponent {
           onLayout: this.onItemLayout,
         });
       });
+      return this.tabBarItems;
     }
   }
 
@@ -225,8 +212,8 @@ class TabBar extends PureComponent {
           ref={this.tabBar}
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={{backgroundColor: Colors.white}}
-          contentContainerStyle={{minWidth: containerWidth}}
+          style={styles.tabBarScroll}
+          contentContainerStyle={styles.tabBarScrollContent}
         >
           <View style={[styles.tabBar, height && {height}]}>{this.renderTabBarItems()}</View>
           {this.renderSelectedIndicator()}
@@ -240,60 +227,20 @@ class TabBar extends PureComponent {
                 // calc indicator current width
                 ..._.map(itemsWidths, (width, index) => {
                   return cond(eq(currentPage, index), [
-                    // set(this._indicatorWidth, sub(itemsWidths[index], indicatorInset * 2)),
                     set(this._indicatorWidth.nextValue, sub(itemsWidths[index], indicatorInset * 2)),
                   ]);
                 }),
                 // calc indicator current position
                 ..._.map(itemsOffsets, (offset, index) => {
-                  // return cond(eq(currentPage, index), [set(this._offset, add(itemsOffsets[index], indicatorInset))]);
                   return cond(eq(currentPage, index), [
                     set(this._indicatorOffset.nextValue, add(itemsOffsets[index], indicatorInset)),
                   ]);
                 }),
 
-                // offset transition
-                cond(
-                  clockRunning(this._indicatorOffset.clock),
-                  [
-                    set(this._indicatorOffset.config.toValue, this._indicatorOffset.nextValue),
-                    set(this._indicatorOffset.value, this._indicatorOffset.state.position),
-                  ],
-                  [
-                    set(this._indicatorOffset.state.finished, 0),
-                    set(this._indicatorOffset.state.time, 0),
-                    set(this._indicatorOffset.state.frameTime, 0),
-                    set(this._indicatorOffset.state.position, this._prevOffset),
-                    set(this._indicatorOffset.config.toValue, this._indicatorOffset.nextValue),
-                    startClock(this._indicatorOffset.clock),
-                  ],
-                ),
-                timing(this._indicatorOffset.clock, this._indicatorOffset.state, this._indicatorOffset.config),
-                cond(this._indicatorOffset.state.finished, [
-                  stopClock(this._indicatorOffset.clock),
-                  set(this._indicatorOffset.prevValue, this._indicatorOffset.state.position),
-                ]),
-                // width transition
-                cond(
-                  clockRunning(this._indicatorWidth.clock),
-                  [
-                    set(this._indicatorWidth.config.toValue, this._indicatorWidth.nextValue),
-                    set(this._indicatorWidth.value, this._indicatorWidth.state.position),
-                  ],
-                  [
-                    set(this._indicatorWidth.state.position, this._prevOffset),
-                    set(this._indicatorWidth.config.toValue, this._indicatorWidth.nextValue),
-                    startClock(this._indicatorWidth.clock),
-                  ],
-                ),
-                timing(this._indicatorWidth.clock, this._indicatorWidth.state, this._indicatorWidth.config),
-                cond(this._indicatorWidth.state.finished, [
-                  stopClock(this._indicatorWidth.clock),
-                  set(this._indicatorWidth.state.finished, 0),
-                  set(this._indicatorWidth.state.time, 0),
-                  set(this._indicatorWidth.state.frameTime, 0),
-                  set(this._indicatorWidth.prevValue, this._indicatorWidth.state.position),
-                ]),
+                // Offset transition
+                this._indicatorOffset.getTransitionBlock(),
+                // Width transition
+                this._indicatorWidth.getTransitionBlock(),
               ]);
             }}
           </Code>
@@ -310,6 +257,12 @@ const styles = StyleSheet.create({
     height: DEFAULT_HEIGHT,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  tabBarScroll: {
+    backgroundColor: Colors.white,
+  },
+  tabBarScrollContent: {
+    minWidth: Constants.screenWidth,
   },
   tab: {
     flex: 1,
@@ -339,26 +292,5 @@ const styles = StyleSheet.create({
     }),
   },
 });
-
-function createReanimatedObject(config) {
-  return {
-    clock: new Clock(),
-    state: {
-      finished: new Value(0),
-      position: new Value(0),
-      time: new Value(0),
-      frameTime: new Value(0),
-    },
-    config: {
-      duration: 300,
-      toValue: new Value(0),
-      easing: Easing.bezier(0.23, 1, 0.32, 1),
-      ...config,
-    },
-    prevValue: new Value(0),
-    value: new Value(0),
-    nextValue: new Value(0),
-  };
-}
 
 export default asBaseComponent(forwardRef(TabBar));

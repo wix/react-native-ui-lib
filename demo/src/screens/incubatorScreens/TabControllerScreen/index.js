@@ -35,7 +35,7 @@ class TabControllerScreen extends Component {
     }
   };
 
-  getTabs() {
+  renderTabItems() {
     const {tabsCount} = this.state;
     const tabs = [
       <Incubator.TabController.TabBarItem key="tab1" label="tab1" onPress={() => console.warn('press tab1')} />,
@@ -50,6 +50,31 @@ class TabControllerScreen extends Component {
       ..._.take(tabs, tabsCount),
       <Incubator.TabController.TabBarItem key="addTabs" icon={Assets.icons.settings} ignore onPress={this.addTab} />,
     ];
+  }
+
+  renderTabPages() {
+    return (
+      <View flex>
+        <Incubator.TabController.TabPage index={0}>
+          <Tab1 />
+        </Incubator.TabController.TabPage>
+        <Incubator.TabController.TabPage index={1} lazy>
+          <Tab2 />
+        </Incubator.TabController.TabPage>
+        <Incubator.TabController.TabPage index={2}>
+          <Tab3 />
+        </Incubator.TabController.TabPage>
+        <Incubator.TabController.TabPage index={3}>
+          <Text text40>ACCOUNT</Text>
+        </Incubator.TabController.TabPage>
+        <Incubator.TabController.TabPage index={4}>
+          <Text text40>GROUPS</Text>
+        </Incubator.TabController.TabPage>
+        <Incubator.TabController.TabPage index={5}>
+          <Text text40>BLOG</Text>
+        </Incubator.TabController.TabPage>
+      </View>
+    );
   }
 
   render() {
@@ -73,28 +98,9 @@ class TabControllerScreen extends Component {
               // selectedIconColor={'blue'}
               activeBackgroundColor={Colors.blue60}
             >
-              {this.getTabs()}
+              {this.renderTabItems()}
             </Incubator.TabController.TabBar>
-            <View flex>
-              <Incubator.TabController.TabPage index={0}>
-                <Tab1 />
-              </Incubator.TabController.TabPage>
-              <Incubator.TabController.TabPage index={1} lazy>
-                <Tab2 />
-              </Incubator.TabController.TabPage>
-              <Incubator.TabController.TabPage index={2}>
-                <Tab3 />
-              </Incubator.TabController.TabPage>
-              <Incubator.TabController.TabPage index={3}>
-                <Text text40>ACCOUNT</Text>
-              </Incubator.TabController.TabPage>
-              <Incubator.TabController.TabPage index={4}>
-                <Text text40>GROUPS</Text>
-              </Incubator.TabController.TabPage>
-              <Incubator.TabController.TabPage index={5}>
-                <Text text40>BLOG</Text>
-              </Incubator.TabController.TabPage>
-            </View>
+            {this.renderTabPages()}
           </Incubator.TabController>
         </View>
       </View>
