@@ -19,7 +19,7 @@ export default class HintsScreen extends Component {
 
   toggleHintPosition = () => {
     this.setState({
-      showBottomHint: !this.state.showBottomHint,
+      showBottomHint: !this.state.showBottomHint
     });
   };
 
@@ -31,7 +31,7 @@ export default class HintsScreen extends Component {
       targetPosition,
       useShortMessage,
       useSideTip,
-      useTargetFrame,
+      useTargetFrame
     } = this.state;
     const targetFrame = {x: 140, y: 100, width: 10, height: 10};
     const message = useShortMessage
@@ -39,16 +39,16 @@ export default class HintsScreen extends Component {
       : 'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
 
     return (
-      <View flex>
+      <View>
         <View
           flex
           padding-20
-          paddingT-110
+          paddingT-120
           bg-dark80
           style={{zIndex: 10}}
           key={useTargetFrame ? 'withTargetFrame' : 'withElement'}
         >
-          {/* <Button bg-purple30 label="Background" style={{position: 'absolute', right: 50, bottom: 100}} /> */}
+          {/* <Button bg-purple30 label="Background" style={{position: 'absolute', right: 50, bottom: 100}}/> */}
           <Hint
             visible={showHint}
             // color={Colors.orange30}
@@ -93,7 +93,7 @@ export default class HintsScreen extends Component {
                 top: targetFrame.y,
                 left: targetFrame.x,
                 width: targetFrame.width,
-                height: targetFrame.height,
+                height: targetFrame.height
               }}
             />
           )}
@@ -108,9 +108,9 @@ export default class HintsScreen extends Component {
             onValueChange={value => this.setState({targetPosition: value})}
           >
             <Text marginR-10>Button Position:</Text>
-            <RadioButton value={'flex-start'} label={'Left'} marginR-10 />
-            <RadioButton value={'center'} label={'Center'} marginR-10 />
-            <RadioButton value={'flex-end'} label={'Right'} marginR-10 />
+            <RadioButton value={'flex-start'} label={'Left'} marginR-10/>
+            <RadioButton value={'center'} label={'Center'} marginR-10/>
+            <RadioButton value={'flex-end'} label={'Right'} marginR-10/>
           </RadioGroup>
 
           <RadioGroup
@@ -121,28 +121,28 @@ export default class HintsScreen extends Component {
             onValueChange={value => this.setState({useSideTip: value})}
           >
             <Text marginR-10>Tip:</Text>
-            <RadioButton value={null} label={'Default'} marginR-10 />
-            <RadioButton value label={'Side Tip'} marginR-10 />
-            <RadioButton value={false} label={'Middle Tip'} marginR-10 />
+            <RadioButton value={null} label={'Default'} marginR-10/>
+            <RadioButton value label={'Side Tip'} marginR-10/>
+            <RadioButton value={false} label={'Middle Tip'} marginR-10/>
           </RadioGroup>
 
           <View row centerV marginV-10>
-            <Switch value={showBottomHint} onValueChange={this.toggleHintPosition} />
+            <Switch value={showBottomHint} onValueChange={this.toggleHintPosition}/>
             <Text marginL-10>Toggle Hint Position</Text>
           </View>
 
           <View row centerV marginV-10>
-            <Switch value={useShortMessage} onValueChange={() => this.setState({useShortMessage: !useShortMessage})} />
+            <Switch value={useShortMessage} onValueChange={() => this.setState({useShortMessage: !useShortMessage})}/>
             <Text marginL-10>Toggle Message</Text>
           </View>
 
           <View row centerV marginV-10>
-            <Switch value={showIcon} onValueChange={value => this.setState({showIcon: value})} />
+            <Switch value={showIcon} onValueChange={value => this.setState({showIcon: value})}/>
             <Text marginL-10>Toggle Icon</Text>
           </View>
 
           <View row centerV marginV-10>
-            <Switch value={useTargetFrame} onValueChange={value => this.setState({useTargetFrame: value})} />
+            <Switch value={useTargetFrame} onValueChange={value => this.setState({useTargetFrame: value})}/>
             <Text marginL-10>Use random position</Text>
           </View>
         </View>

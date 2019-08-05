@@ -1,10 +1,11 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import _ from 'lodash';
-import {View, Text, Colors, Spacings} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, Spacings} from 'react-native-ui-lib'; //eslint-disable-line
 
-class SpacingsScreen extends Component {
-  state = {};
+
+export default class SpacingsScreen extends Component {
+  
   render() {
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -12,15 +13,17 @@ class SpacingsScreen extends Component {
           <Text text30 dark10 marginB-20>Spacings</Text>
           <View>
             {_.map(Spacings, (value, key) => {
+              if (!_.isNumber(value)) {
+                return;
+              }
+              
               return (
                 <View key={key} marginB-12>
                   <View row spread bottom>
-                    <Text text60 dark10>
-                      {key}
-                    </Text>
+                    <Text text60 dark10>{key}</Text>
                     <Text dark30 text90>{value}</Text>
                   </View>
-                  <View height={value} bg-red80 right />
+                  <View height={value} bg-red80 right/>
                 </View>
               );
             })}
@@ -30,5 +33,3 @@ class SpacingsScreen extends Component {
     );
   }
 }
-
-export default SpacingsScreen;

@@ -12,9 +12,13 @@ import * as presenter from './CarouselPresenter';
  * @description: Carousel for scrolling pages horizontally
  * @gif: https://media.giphy.com/media/l0HU7f8gjpRlMRhKw/giphy.gif, https://media.giphy.com/media/3oFzmcjX9OhpyckhcQ/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CarouselScreen.js
+ * @extends: ScrollView
+ * @extendsLink: https://facebook.github.io/react-native/docs/scrollview 
+ * @notes: This is screed width Component
  */
 export default class Carousel extends BaseComponent {
   static displayName = 'Carousel';
+  
   static propTypes = {
     /**
      * the first page to start with
