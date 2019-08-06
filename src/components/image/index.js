@@ -6,6 +6,8 @@ import {Image as RNImage, StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
 import {PureBaseComponent} from '../../commons';
 import Assets from '../../assets';
+import Overlay from '../overlay';
+import View from '../view';
 
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
@@ -39,7 +41,11 @@ class Image extends PureBaseComponent {
     /**
      * Show image as a cover, full width, image (according to aspect ratio, default: 16:8)
      */
-    cover: PropTypes.bool
+    cover: PropTypes.bool,
+    /**
+     * the type of overly to place on top of the image
+     */
+    overlayType: PropTypes.oneOfType([PropTypes.oneOf(Object.keys(Overlay.overlayTypes)), PropTypes.string])
   };
 
   static defaultProps = {
@@ -70,7 +76,7 @@ class Image extends PureBaseComponent {
     return source;
   }
 
-  render() {
+  renderImage() {
     const source = this.getImageSource();
     const {tintColor, style, supportRTL, cover, aspectRatio, ...others} = this.getThemeProps();
     const shouldFlipRTL = supportRTL && Constants.isRTL;
@@ -87,6 +93,20 @@ class Image extends PureBaseComponent {
         source={source}
       />
     );
+  }
+
+  render() {
+    const {style, overlayType} = this.getThemeProps();
+
+    if (overlayType) {
+      return (
+        <View>
+          {this.renderImage()}
+          <Overlay style={style} type={overlayType}/>
+        </View>
+      );
+    }
+    return this.renderImage();
   }
 }
 
