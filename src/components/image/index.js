@@ -52,6 +52,8 @@ class Image extends PureBaseComponent {
     assetGroup: 'icons',
   };
 
+  static overlayTypes = Overlay.overlayTypes;
+
   constructor(props) {
     super(props);
 
