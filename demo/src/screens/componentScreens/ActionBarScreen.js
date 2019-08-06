@@ -27,6 +27,7 @@ export default class ActionBarScreen extends Component {
           size={15}
         />
         <Carousel
+          migrate
           onChangePage={currentPage => this.setState({currentPage})}
           initialPage={this.state.currentPage}
         >

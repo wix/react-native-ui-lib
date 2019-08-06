@@ -301,7 +301,7 @@ export default class MainScreen extends Component {
     const keys = _.keys(data);
 
     return (
-      <Carousel onChangePage={this.onChangePage} ref={carousel => (this.carousel = carousel)}>
+      <Carousel migrate onChangePage={this.onChangePage} ref={carousel => (this.carousel = carousel)}>
         {_.map(data, (section, key) => {
           return (
             <View key={key} style={[styles.page, pageStyle]}>
