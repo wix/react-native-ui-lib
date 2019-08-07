@@ -60,6 +60,10 @@ class Picker extends BaseComponent {
      */
     renderItem: PropTypes.func,
     /**
+     * Render custom picker modal
+     */
+    renderExpandableModal: PropTypes.func,
+    /**
      * Custom picker props (when using renderPicker, will apply on the button wrapper)
      */
     customPickerProps: PropTypes.object,
@@ -241,8 +245,15 @@ class Picker extends BaseComponent {
       searchStyle,
       searchPlaceholder,
       renderCustomSearch,
+      renderExpandableModal,
       listProps} = this.getThemeProps();
     const {showExpandableModal, selectedItemPosition} = this.state;
+
+    if (renderExpandableModal) {
+      const children = this.appendPropsToChildren(this.props.children)
+
+      return renderExpandableModal(showExpandableModal, children)
+    }
 
     return (
       <PickerModal
