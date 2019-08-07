@@ -2,8 +2,8 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Image} from 'react-native';
-import {PureBaseComponent} from '../../commons';
 import {Colors} from '../../style';
+import {PureBaseComponent} from '../../commons';
 import View from '../view';
 
 
@@ -15,12 +15,17 @@ const OVERLY_TYPES = {
   SOLID: 'solid'
 }
 /**
- * @description: Overlay view with types
+ * @description: Overlay view with types (default, top, bottom, solid)
+ * @extends: Image
+ * @extendsLink: https://facebook.github.io/react-native/docs/image
  */
 export default class Overlay extends PureBaseComponent {
   static displayName = 'Overlay';
 
   static propTypes = {
+    /** 
+    * The type of overlay to set on top of the image 
+    */
     type: PropTypes.oneOfType([PropTypes.oneOf(Object.keys(OVERLY_TYPES)), PropTypes.string])
   };
 
@@ -63,7 +68,6 @@ export default class Overlay extends PureBaseComponent {
         </View>
       );
     }
-
     return this.renderImage(this.getStyleByType());
   }
 }

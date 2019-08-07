@@ -97,14 +97,19 @@ class Image extends PureBaseComponent {
     );
   }
 
+  onLayout = (event) => {
+    const width = event.nativeEvent.layout.width;
+    this.setState({width});
+  }
+
   render() {
-    const {style, overlayType} = this.getThemeProps();
+    const {overlayType} = this.getThemeProps();
 
     if (overlayType) {
       return (
-        <View>
+        <View onLayout={this.onLayout}>
           {this.renderImage()}
-          <Overlay style={style} type={overlayType}/>
+          <Overlay style={{width: this.state.width}} type={overlayType}/>
         </View>
       );
     }
