@@ -103,13 +103,13 @@ class Image extends PureBaseComponent {
   }
 
   render() {
-    const {overlayType} = this.getThemeProps();
-
+    const {style, overlayType} = this.getThemeProps();
+  
     if (overlayType) {
       return (
         <View onLayout={this.onLayout}>
           {this.renderImage()}
-          <Overlay style={{width: this.state.width}} type={overlayType}/>
+          <Overlay style={[style, {width: this.state.width}]} type={overlayType}/>
         </View>
       );
     }

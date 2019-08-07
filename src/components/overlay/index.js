@@ -50,7 +50,7 @@ export default class Overlay extends PureBaseComponent {
 
     return (
       <Image
-        style={[style, styles.image, typeStyle]}
+        style={[style, styles.container, typeStyle, {width: undefined}]}
         resizeMode={'stretch'}
         source={image}
       />
@@ -59,10 +59,11 @@ export default class Overlay extends PureBaseComponent {
 
   render() {
     const {style, type} = this.props;
+    const width = _.get(style, 'width');
     
     if (type === OVERLY_TYPES.DEFAULT) {
       return (
-        <View style={[style, styles.container]}>
+        <View style={[{width}, styles.container]}>
           {this.renderImage(styles.top)}
           {this.renderImage(styles.bottom)}
         </View>
@@ -76,21 +77,18 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject
   },
-  image: {
-    ...StyleSheet.absoluteFillObject, 
-    height: '50%'
-  },
   top: {
     bottom: undefined,
-    top: 0
+    top: 0,
+    height: '50%'
   },
   bottom: {
-    transform: [{scaleY: -1}],
     bottom: 0,
-    top: undefined
+    top: undefined,
+    height: '50%',
+    transform: [{scaleY: -1}]
   },
   solid: {
-    backgroundColor: Colors.rgba(Colors.dark10, 0.4), 
-    height: '100%'
+    backgroundColor: Colors.rgba(Colors.dark10, 0.4)
   }
 });
