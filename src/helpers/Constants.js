@@ -6,7 +6,7 @@ const dimensionsScope = {
   WINDOW: 'window',
   SCREEN: 'screen'
 }
-const orientations = {
+export const orientations = {
   PORTRAIT: 'portrait',
   LANDSCAPE: 'landscape'
 }
@@ -40,6 +40,8 @@ export let screenWidth = width;
 export let screenHeight = height;
 export let isSmallScreen = screenWidth <= 340;
 export let isShortScreen = screenHeight <= 600;
+export const ratio = screenWidth < screenHeight ? screenHeight / screenWidth : screenWidth / screenHeight;
+export const isTablet = Platform.isPad || (ratio < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
 
 export function getSafeAreaInsets() {
   return (orientation === orientation.LANDSCAPE) ? 
