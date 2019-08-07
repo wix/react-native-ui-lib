@@ -98,6 +98,7 @@ class TabBar extends PureComponent {
     };
 
     this.state = {
+      scrollEnabled: false,
       itemsWidths: undefined,
     };
 
@@ -116,6 +117,12 @@ class TabBar extends PureComponent {
       const itemsOffsets = _.map(this._itemsWidths, (w, index) => _.sum(_.take(this._itemsWidths, index)));
       this.setState({itemsWidths: this._itemsWidths, itemsOffsets});
       this.tabBar.current.scrollTo({x: itemsOffsets[selectedIndex], animated: false});
+    }
+  };
+
+  onContentSizeChange = width => {
+    if (width > Constants.screenWidth) {
+      this.setState({scrollEnabled: true});
     }
   };
 
@@ -149,19 +156,10 @@ class TabBar extends PureComponent {
   }
 
   renderSelectedIndicator() {
-    // return null;
     const {itemsWidths} = this.state;
     const {indicatorStyle} = this.props;
     if (itemsWidths) {
-      // const transitionStyle = {
-      //   width: this.runTiming(this._indicatorWidth, this._prevIndicatorWidth, 300),
-      //   left: this.runTiming(this._offset, this._prevOffset, 400),
-      // };
-      return (
-        <Reanimated.View
-          style={[styles.selectedIndicator, indicatorStyle /* , transitionStyle */, this._indicatorTransitionStyle]}
-        />
-      );
+      return <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, this._indicatorTransitionStyle]} />;
     }
   }
 
@@ -177,7 +175,6 @@ class TabBar extends PureComponent {
       activeBackgroundColor,
     } = this.props;
     if (!_.isEmpty(itemStates)) {
-
       if (this.tabBarItems) {
         return this.tabBarItems;
       }
@@ -205,7 +202,7 @@ class TabBar extends PureComponent {
   render() {
     const {currentPage} = this.context;
     const {containerWidth, height, enableShadow} = this.props;
-    const {itemsWidths, itemsOffsets} = this.state;
+    const {itemsWidths, itemsOffsets, scrollEnabled} = this.state;
     return (
       <View style={enableShadow && styles.containerShadow}>
         <ScrollView
@@ -214,6 +211,8 @@ class TabBar extends PureComponent {
           showsHorizontalScrollIndicator={false}
           style={styles.tabBarScroll}
           contentContainerStyle={styles.tabBarScrollContent}
+          scrollEnabled={scrollEnabled}
+          onContentSizeChange={this.onContentSizeChange}
         >
           <View style={[styles.tabBar, height && {height}]}>{this.renderTabBarItems()}</View>
           {this.renderSelectedIndicator()}
