@@ -16,7 +16,7 @@ import NewCarousel from './index';
  * @extendsLink: https://facebook.github.io/react-native/docs/scrollview 
  * @notes: This is screed width Component
  */
-export default class Carousel extends BaseComponent {
+export default class CarouselDeprecated extends BaseComponent {
   static displayName = 'IGNORE';
   
   static propTypes = {
