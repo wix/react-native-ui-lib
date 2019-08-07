@@ -5,7 +5,9 @@ import {StyleSheet, ScrollView, ViewPropTypes, Platform} from 'react-native';
 import Reanimated, {Easing} from 'react-native-reanimated';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+
 import TabBarContext from './TabBarContext';
+import ReanimatedObject from './ReanimatedObject';
 import {asBaseComponent, forwardRef} from '../../commons';
 import View from '../../components/view';
 import Text from '../../components/text';
@@ -13,26 +15,12 @@ import {Colors, Spacings} from '../../style';
 import {Constants} from '../../helpers';
 
 const DEFAULT_HEIGHT = 48;
-const {
-  Code,
-  Clock,
-  Value,
-  add,
-  sub,
-  cond,
-  eq,
-  stopClock,
-  startClock,
-  clockRunning,
-  timing,
-  block,
-  set,
-} = Reanimated;
+const {Code, Clock, Value, add, sub, cond, eq, stopClock, startClock, clockRunning, timing, block, set} = Reanimated;
 
 /**
-* @description: TabController's TabBar component
-* @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TabControllerScreen/index.js
-*/
+ * @description: TabController's TabBar component
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TabControllerScreen/index.js
+ */
 class TabBar extends PureComponent {
   static displayName = 'TabController.TabBar';
   static contextType = TabBarContext;
@@ -93,23 +81,26 @@ class TabBar extends PureComponent {
     containerWidth: Constants.screenWidth,
   };
 
-  state = {
-    itemsWidths: undefined,
-  };
-
-  tabBar = React.createRef();
-  _clock = new Clock();
-  _itemsWidths = _.times(React.Children.count(this.props.children), () => null);
-  _indicatorWidth = new Value(0);
-  _prevIndicatorWidth = new Value(0);
-  _prevOffset = new Value(0);
-  _offset = new Value(0);
-
   constructor(props, context) {
     super(props, context);
     const {registerTabItems} = this.context;
     const itemsCount = React.Children.count(this.props.children);
     const ignoredItems = [];
+
+    this.tabBar = React.createRef();
+
+    this._itemsWidths = _.times(React.Children.count(this.props.children), () => null);
+    this._indicatorOffset = new ReanimatedObject({duration: 300, easing: Easing.bezier(0.23, 1, 0.32, 1)});
+    this._indicatorWidth = new ReanimatedObject({duration: 300, easing: Easing.bezier(0.23, 1, 0.32, 1)});
+    this._indicatorTransitionStyle = {
+      width: this._indicatorWidth.value,
+      left: this._indicatorOffset.value,
+    };
+
+    this.state = {
+      itemsWidths: undefined,
+    };
+
     React.Children.toArray(this.props.children).forEach((child, index) => {
       if (child.props.ignore) {
         ignoredItems.push(index);
@@ -158,14 +149,19 @@ class TabBar extends PureComponent {
   }
 
   renderSelectedIndicator() {
+    // return null;
     const {itemsWidths} = this.state;
     const {indicatorStyle} = this.props;
     if (itemsWidths) {
-      const transitionStyle = {
-        width: this.runTiming(this._indicatorWidth, this._prevIndicatorWidth, 300),
-        left: this.runTiming(this._offset, this._prevOffset, 400),
-      };
-      return <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, transitionStyle]} />;
+      // const transitionStyle = {
+      //   width: this.runTiming(this._indicatorWidth, this._prevIndicatorWidth, 300),
+      //   left: this.runTiming(this._offset, this._prevOffset, 400),
+      // };
+      return (
+        <Reanimated.View
+          style={[styles.selectedIndicator, indicatorStyle /* , transitionStyle */, this._indicatorTransitionStyle]}
+        />
+      );
     }
   }
 
@@ -181,7 +177,12 @@ class TabBar extends PureComponent {
       activeBackgroundColor,
     } = this.props;
     if (!_.isEmpty(itemStates)) {
-      return React.Children.map(this.props.children, (child, index) => {
+
+      if (this.tabBarItems) {
+        return this.tabBarItems;
+      }
+
+      this.tabBarItems = React.Children.map(this.props.children, (child, index) => {
         return React.cloneElement(child, {
           labelColor,
           selectedLabelColor,
@@ -197,6 +198,7 @@ class TabBar extends PureComponent {
           onLayout: this.onItemLayout,
         });
       });
+      return this.tabBarItems;
     }
   }
 
@@ -210,8 +212,8 @@ class TabBar extends PureComponent {
           ref={this.tabBar}
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={{backgroundColor: Colors.white}}
-          contentContainerStyle={{minWidth: containerWidth}}
+          style={styles.tabBarScroll}
+          contentContainerStyle={styles.tabBarScrollContent}
         >
           <View style={[styles.tabBar, height && {height}]}>{this.renderTabBarItems()}</View>
           {this.renderSelectedIndicator()}
@@ -222,14 +224,23 @@ class TabBar extends PureComponent {
               const indicatorInset = Spacings.s4;
 
               return block([
+                // calc indicator current width
                 ..._.map(itemsWidths, (width, index) => {
                   return cond(eq(currentPage, index), [
-                    set(this._indicatorWidth, sub(itemsWidths[index], indicatorInset * 2)),
+                    set(this._indicatorWidth.nextValue, sub(itemsWidths[index], indicatorInset * 2)),
                   ]);
                 }),
+                // calc indicator current position
                 ..._.map(itemsOffsets, (offset, index) => {
-                  return cond(eq(currentPage, index), [set(this._offset, add(itemsOffsets[index], indicatorInset))]);
+                  return cond(eq(currentPage, index), [
+                    set(this._indicatorOffset.nextValue, add(itemsOffsets[index], indicatorInset)),
+                  ]);
                 }),
+
+                // Offset transition
+                this._indicatorOffset.getTransitionBlock(),
+                // Width transition
+                this._indicatorWidth.getTransitionBlock(),
               ]);
             }}
           </Code>
@@ -246,6 +257,12 @@ const styles = StyleSheet.create({
     height: DEFAULT_HEIGHT,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  tabBarScroll: {
+    backgroundColor: Colors.white,
+  },
+  tabBarScrollContent: {
+    minWidth: Constants.screenWidth,
   },
   tab: {
     flex: 1,
@@ -266,13 +283,13 @@ const styles = StyleSheet.create({
         shadowColor: Colors.dark10,
         shadowOpacity: 0.05,
         shadowRadius: 2,
-        shadowOffset: {height: 6, width: 0}
+        shadowOffset: {height: 6, width: 0},
       },
       android: {
         elevation: 5,
-        backgroundColor: Colors.white
-      }
-    })
+        backgroundColor: Colors.white,
+      },
+    }),
   },
 });
 
