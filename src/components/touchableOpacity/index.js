@@ -109,6 +109,6 @@ export default class TouchableOpacity extends PureBaseComponent {
   }
 
   onPress() {
-    _.invoke(this.props, 'onPress');
+    _.invoke(this.props, 'onPress', this.props);
   }
 }
