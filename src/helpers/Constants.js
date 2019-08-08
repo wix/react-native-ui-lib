@@ -35,13 +35,13 @@ function setStatusBarHeight() {
 export const isRTL = I18nManager.isRTL;
 
 const {height, width} = Dimensions.get(dimensionsScope.WINDOW);
+const screenAspectRatio = screenWidth < screenHeight ? screenHeight / screenWidth : screenWidth / screenHeight;
 export let orientation = getOrientation(height, width);
 export let screenWidth = width;
 export let screenHeight = height;
 export let isSmallScreen = screenWidth <= 340;
 export let isShortScreen = screenHeight <= 600;
-export const ratio = screenWidth < screenHeight ? screenHeight / screenWidth : screenWidth / screenHeight;
-export const isTablet = Platform.isPad || (ratio < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
+export const isTablet = Platform.isPad || (screenAspectRatio < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
 
 export function getSafeAreaInsets() {
   return (orientation === orientation.LANDSCAPE) ? 
