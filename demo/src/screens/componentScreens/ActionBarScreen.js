@@ -13,7 +13,10 @@ export default class ActionBarScreen extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {currentPage: 0};
+
+    this.state = {
+      currentPage: 0
+    };
   }
 
   render() {
@@ -36,7 +39,7 @@ export default class ActionBarScreen extends Component {
               actions={[
                 {label: 'Delete', onPress: () => Alert.alert('delete'), red30: true},
                 {label: 'Replace Photo', onPress: () => Alert.alert('replace photo')},
-                {label: 'Edit', onPress: () => Alert.alert('edit')},
+                {label: 'Edit', onPress: () => Alert.alert('edit')}
               ]}
             />
           </View>
@@ -47,7 +50,7 @@ export default class ActionBarScreen extends Component {
               actions={[
                 {label: 'Hide', onPress: () => Alert.alert('hide'), white: true},
                 {label: 'Add Discount', onPress: () => Alert.alert('add discount'), white: true},
-                {label: 'Duplicate', onPress: () => Alert.alert('duplicate'), white: true},
+                {label: 'Duplicate', onPress: () => Alert.alert('duplicate'), white: true}
               ]}
             />
           </View>
@@ -71,7 +74,7 @@ export default class ActionBarScreen extends Component {
               actions={[
                 {label: 'Bold', labelStyle: {color: Colors.dark10, ...Typography.text60, fontWeight: '400'}},
                 {label: 'Italic', text60: true, labelStyle: {fontStyle: 'italic', color: Colors.dark10}},
-                {label: 'Link', text60: true, labelStyle: {textDecorationLine: 'underline', color: Colors.dark10}},
+                {label: 'Link', text60: true, labelStyle: {textDecorationLine: 'underline', color: Colors.dark10}}
               ]}
             />
           </View>
@@ -98,8 +101,8 @@ const styles = StyleSheet.create({
   },
   absoluteContainer: {
     position: 'absolute',
-    bottom: 70,
+    bottom: 80,
     left: 0,
-    right: 0,
-  },
+    right: 0
+  }
 });

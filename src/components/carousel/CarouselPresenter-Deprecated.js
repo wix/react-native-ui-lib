@@ -6,7 +6,7 @@ export function getDirectionOffset(offset, props) {
   let fixedOffset = offset;
 
   if (Constants.isRTL && Constants.isAndroid) {
-    const {loop, pageWidth} = props;
+    const {loop, pageWidth = Constants.screenWidth} = props;
     const totalWidth = ((getChildrenLength(props) - 1) + (loop ? 2 : 0)) * pageWidth;
     fixedOffset = Math.abs(totalWidth - offset);
   }
@@ -21,7 +21,7 @@ export function getChildrenLength(props) {
 
 export function calcOffset(props, state) {
   const {currentPage} = state;
-  const {pageWidth, loop} = props;
+  const {pageWidth = Constants.screenWidth, loop} = props;
 
   const actualCurrentPage = loop ? currentPage + 1 : currentPage;
 
@@ -33,7 +33,7 @@ export function calcOffset(props, state) {
 
 export function calcPageIndex(offset, props) {
   const pagesCount = getChildrenLength(props);
-  const {pageWidth, loop} = props;
+  const {pageWidth = Constants.screenWidth, loop} = props;
   const pageIndexIncludingClonedPages = Math.round(offset / pageWidth);
 
   let actualPageIndex;
@@ -47,7 +47,7 @@ export function calcPageIndex(offset, props) {
 }
 
 export function isOutOfBounds(offset, props) {
-  const {pageWidth} = props;
+  const {pageWidth = Constants.screenWidth} = props;
   const length = getChildrenLength(props);
   const minLimit = 1;
   const maxLimit = ((length + 1) * pageWidth) - 1;
@@ -57,7 +57,7 @@ export function isOutOfBounds(offset, props) {
 
 // todo: need to support more cases of page width in loop mode
 export function calcCarouselWidth(props) {
-  const {pageWidth, loop} = props;
+  const {pageWidth = Constants.screenWidth, loop} = props;
   let length = getChildrenLength(props);
   length = loop ? length + 2 : length;
   return pageWidth * length;

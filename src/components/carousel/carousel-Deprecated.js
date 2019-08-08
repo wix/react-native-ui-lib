@@ -47,8 +47,7 @@ export default class CarouselDeprecated extends BaseComponent {
   };
 
   static defaultProps = {
-    initialPage: 0,
-    pageWidth: Constants.screenWidth
+    initialPage: 0
   };
 
   constructor(props) {
@@ -65,10 +64,6 @@ export default class CarouselDeprecated extends BaseComponent {
 
   generateStyles() {
     this.styles = createStyles(this.props);
-  }
-
-  get pageWidth() {
-    return Math.floor(this.props.pageWidth);
   }
 
   updateOffset = (animated = false) => {
