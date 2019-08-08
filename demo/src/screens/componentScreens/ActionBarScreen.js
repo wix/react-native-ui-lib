@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {Alert, StyleSheet} from 'react-native';
-import {Constants, Colors, Typography, View, ActionBar, PageControl, Carousel} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, Typography, View, ActionBar, PageControl, Carousel} from 'react-native-ui-lib'; //eslint-disable-line
 import cameraSelected from '../../assets/icons/cameraSelected.png';
 import video from '../../assets/icons/video.png';
 import tags from '../../assets/icons/tags.png';
@@ -27,6 +27,7 @@ export default class ActionBarScreen extends Component {
           size={15}
         />
         <Carousel
+          migrate
           onChangePage={currentPage => this.setState({currentPage})}
           initialPage={this.state.currentPage}
         >
@@ -90,12 +91,10 @@ export default class ActionBarScreen extends Component {
 
 const styles = StyleSheet.create({
   page: {
-    width: Constants.screenWidth,
-    flex: 1,
+    flex: 1
   },
   pageControl: {
-    zIndex: 1,
-    width: Constants.screenWidth,
+    zIndex: 1
   },
   absoluteContainer: {
     position: 'absolute',

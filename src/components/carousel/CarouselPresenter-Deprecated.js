@@ -2,14 +2,26 @@ import _ from 'lodash';
 import {Constants} from '../../helpers';
 
 
+export function getDirectionOffset(offset, props) {
+  let fixedOffset = offset;
+
+  if (Constants.isRTL && Constants.isAndroid) {
+    const {loop, pageWidth} = props;
+    const totalWidth = ((getChildrenLength(props) - 1) + (loop ? 2 : 0)) * pageWidth;
+    fixedOffset = Math.abs(totalWidth - offset);
+  }
+
+  return fixedOffset;
+}
+
 export function getChildrenLength(props) {
   const length = _.get(props, 'children.length') || 0;
   return length;
 }
 
 export function calcOffset(props, state) {
-  const {currentPage, pageWidth} = state;
-  const {loop} = props;
+  const {currentPage} = state;
+  const {pageWidth, loop} = props;
 
   const actualCurrentPage = loop ? currentPage + 1 : currentPage;
 
@@ -19,21 +31,9 @@ export function calcOffset(props, state) {
   return offset;
 }
 
-export function getDirectionOffset(offset, props, pageWidth) {
-  let fixedOffset = offset;
-
-  if (Constants.isRTL && Constants.isAndroid) {
-    const {loop} = props;
-    const totalWidth = ((getChildrenLength(props) - 1) + (loop ? 2 : 0)) * pageWidth;
-    fixedOffset = Math.abs(totalWidth - offset);
-  }
-
-  return fixedOffset;
-}
-
-export function calcPageIndex(offset, props, pageWidth) {
+export function calcPageIndex(offset, props) {
   const pagesCount = getChildrenLength(props);
-  const {loop} = props;
+  const {pageWidth, loop} = props;
   const pageIndexIncludingClonedPages = Math.round(offset / pageWidth);
 
   let actualPageIndex;
@@ -46,7 +46,8 @@ export function calcPageIndex(offset, props, pageWidth) {
   return actualPageIndex;
 }
 
-export function isOutOfBounds(offset, props, pageWidth) {
+export function isOutOfBounds(offset, props) {
+  const {pageWidth} = props;
   const length = getChildrenLength(props);
   const minLimit = 1;
   const maxLimit = ((length + 1) * pageWidth) - 1;
@@ -54,7 +55,7 @@ export function isOutOfBounds(offset, props, pageWidth) {
   return !_.inRange(offset, minLimit, maxLimit);
 }
 
-// TODO: need to support more cases of page width in loop mode
+// todo: need to support more cases of page width in loop mode
 export function calcCarouselWidth(props) {
   const {pageWidth, loop} = props;
   let length = getChildrenLength(props);
