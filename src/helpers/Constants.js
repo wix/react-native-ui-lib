@@ -44,7 +44,7 @@ export let isShortScreen = screenHeight <= 600;
 export const isTablet = Platform.isPad || (screenAspectRatio < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
 
 export function getSafeAreaInsets() {
-  return (orientation === orientation.LANDSCAPE) ? 
+  return (orientation === orientations.LANDSCAPE) ? 
     {left: 44, right: 44, bottom: 24, top: 0} : 
     {left: 0, right: 0, bottom: 34, top: 44};
 }
