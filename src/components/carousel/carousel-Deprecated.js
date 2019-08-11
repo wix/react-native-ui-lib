@@ -1,11 +1,11 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import {ScrollView, StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
-import View from '../view';
-import * as presenter from './CarouselPresenter';
+import * as presenter from './CarouselPresenter-Deprecated';
+import NewCarousel from './index';
 
 
 /**
@@ -16,8 +16,8 @@ import * as presenter from './CarouselPresenter';
  * @extendsLink: https://facebook.github.io/react-native/docs/scrollview 
  * @notes: This is screed width Component
  */
-export default class Carousel extends BaseComponent {
-  static displayName = 'Carousel';
+export default class CarouselDeprecated extends BaseComponent {
+  static displayName = 'IGNORE';
   
   static propTypes = {
     /**
@@ -54,33 +54,12 @@ export default class Carousel extends BaseComponent {
     super(props);
     
     this.carousel = React.createRef();
-    const defaultPageWidth = props.pageWidth || Constants.screenWidth;
-    
+
     this.state = {
       currentPage: props.initialPage,
       currentStandingPage: props.initialPage,
-      pageWidth: defaultPageWidth,
-      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage, pageWidth: defaultPageWidth})}
+      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage})}
     };
-  }
-
-  componentDidMount() {
-    Constants.addDimensionsEventListener(this.onOrientationChanged);
-  }
-
-  componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChanged);
-  }
-
-  onOrientationChanged = () => {
-    if (!this.props.pageWidth) {
-      this.setState({
-        pageWidth: Constants.screenWidth, 
-        initialOffset: {
-          x: presenter.calcOffset(this.props, {currentPage: this.state.currentPage, pageWidth: Constants.screenWidth})
-        }
-      });
-    }
   }
 
   generateStyles() {
@@ -90,8 +69,9 @@ export default class Carousel extends BaseComponent {
   updateOffset = (animated = false) => {
     const x = presenter.calcOffset(this.props, this.state);
     
-    if (this.carousel) {
+    if (this.carousel.current) {
       this.carousel.current.scrollTo({x, animated});
+
       if (Constants.isAndroid) {
         // this is done to handle onMomentumScrollEnd not being called in Android:
         // https://github.com/facebook/react-native/issues/11693
@@ -102,7 +82,11 @@ export default class Carousel extends BaseComponent {
   }
 
   goToPage(pageIndex, animated = true) {
-    this.setState({currentPage: pageIndex}, () => this.updateOffset(animated));
+    if (this.props.migrate) {
+      this.carousel.current.goToPage(pageIndex, animated)
+    } else {
+      this.setState({currentPage: pageIndex}, () => this.updateOffset(animated));
+    }
   }
 
   onContentSizeChange = () => {
@@ -127,46 +111,48 @@ export default class Carousel extends BaseComponent {
     }
 
     const {loop} = this.props;
-    const {pageWidth} = this.state;
-    const offsetX = presenter.getDirectionOffset(event.nativeEvent.contentOffset.x, this.props, pageWidth);
+    const offsetX = presenter.getDirectionOffset(event.nativeEvent.contentOffset.x, this.props);
     
     if (offsetX >= 0) {
-      const newPage = presenter.calcPageIndex(offsetX, this.props, pageWidth);
+      const newPage = presenter.calcPageIndex(offsetX, this.props);
+
       this.setState({currentPage: newPage});
     }
 
-    if (loop && presenter.isOutOfBounds(offsetX, this.props, pageWidth)) {
+    if (loop && presenter.isOutOfBounds(offsetX, this.props)) {
       this.updateOffset();
     }
     
     _.invoke(this.props, 'onScroll', event);
   }
 
-  renderChild = (child, key) => {
-    return (
-      <View style={{width: this.state.pageWidth}} key={key}>
-        {child}
-      </View>
-    );
+  cloneChild(child) {
+    if (!child.key) {
+      return child;
+    }
+    
+    return React.cloneElement(child, {
+      key: `${child.key}-clone`,
+    });
   }
 
   renderChildren() {
     const {children, loop} = this.props;
     const length = presenter.getChildrenLength(this.props);
-    
-    const childrenArray = React.Children.map(children, (child, index) => {
-      return this.renderChild(child, `${index}`);
-    });
+    const childrenArray = React.Children.toArray(children);
     
     if (loop) {
-      childrenArray.unshift(this.renderChild(children[length - 1], `${length - 1}-clone`));
-      childrenArray.push(this.renderChild(children[0], `${0}-clone`));
+      childrenArray.unshift(this.cloneChild(children[length - 1]));
+      childrenArray.push(this.cloneChild(children[0]));
     }
-    
     return childrenArray;
   }
 
   render() {
+    if (this.props.migrate) {
+      return <NewCarousel ref={this.carousel} {...this.props}/>;
+    }
+
     const {containerStyle, ...others} = this.props;
     const {initialOffset} = this.state;
     
