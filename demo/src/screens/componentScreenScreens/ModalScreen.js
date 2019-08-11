@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import {Alert, StyleSheet} from 'react-native';
 import {Navigation} from 'react-native-navigation';
-import {Colors, Carousel, PageControl, Modal, View, Text, Constants} from 'react-native-ui-lib';//eslint-disable-line
+import {Colors, Carousel, PageControl, Modal, View, Text} from 'react-native-ui-lib'; // eslint-disable-line
+
 
 export default class ModalScreen extends Component {
 
-  static options() {
+  static options() { // stopped working
     return {
       topBar: {
         drawBehind: true,
-        visible: false,
-      },
+        visible: false
+      }
     };
   }
 
@@ -18,8 +19,16 @@ export default class ModalScreen extends Component {
     super(props);
 
     this.state = {
-      currentPage: 0,
+      currentPage: 0
     };
+
+    const navigationStyle = {
+      topBar: {
+        drawBehind: true,
+        visible: false
+      }
+    };
+    Navigation.mergeOptions(props.componentId, navigationStyle);
   }
 
   closeScreen() {
@@ -36,7 +45,7 @@ export default class ModalScreen extends Component {
           color={Colors.dark10}
           size={15}
         />
-        <Carousel onChangePage={currentPage => this.setState({currentPage})}>
+        <Carousel migrate onChangePage={currentPage => this.setState({currentPage})}>
           <View bg-green50 flex style={styles.page}>
             <Modal.TopBar
               title='modal title'
@@ -101,7 +110,6 @@ export default class ModalScreen extends Component {
               </Text>
             </View>
           </View>
-
         </Carousel>
       </View>
     );
@@ -110,15 +118,15 @@ export default class ModalScreen extends Component {
 
 const styles = StyleSheet.create({
   page: {
-    width: Constants.screenWidth,
+    flex: 1
   },
   pageControl: {
-    zIndex: 1,
+    zIndex: 1
   },
   absoluteContainer: {
     position: 'absolute',
     bottom: 20,
     left: 20,
-    right: 0,
-  },
+    right: 0
+  }
 });
