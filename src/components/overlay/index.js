@@ -26,7 +26,7 @@ export default class Overlay extends PureBaseComponent {
     /** 
     * The type of overlay to set on top of the image 
     */
-    type: PropTypes.oneOfType([PropTypes.oneOf(Object.keys(OVERLY_TYPES)), PropTypes.string])
+    type: PropTypes.oneOf(_.values(OVERLY_TYPES))
   };
 
   static overlayTypes = OVERLY_TYPES;

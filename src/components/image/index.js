@@ -45,7 +45,7 @@ class Image extends PureBaseComponent {
     /**
      * the type of overly to place on top of the image
      */
-    overlayType: PropTypes.oneOfType([PropTypes.oneOf(Object.keys(Overlay.overlayTypes)), PropTypes.string])
+    overlayType: Overlay.propTypes.type
   };
 
   static defaultProps = {
