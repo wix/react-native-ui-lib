@@ -7,13 +7,14 @@ import {PureBaseComponent} from '../../commons';
 import View from '../view';
 
 
-const gradientImage = require('./assets/GradientOverlay.png');
 const OVERLY_TYPES = {
-  DEFAULT: 'default',
+  VERTICAL: 'vertical',
   TOP: 'top',
   BOTTOM: 'bottom',
   SOLID: 'solid'
 }
+const gradientImage = require('./assets/GradientOverlay.png');
+
 /**
  * @description: Overlay view with types (default, top, bottom, solid)
  * @extends: Image
@@ -44,13 +45,26 @@ export default class Overlay extends PureBaseComponent {
     }
   }
 
+  getAttributeStyles(style, attName) {
+    const flatten = StyleSheet.flatten(style);
+    let attributes;
+
+    if (flatten) {
+      attributes = _.chain(flatten)
+      .pickBy((value, key) => _.includes(key, attName))
+      .value();
+    }
+    return attributes;
+  }
+
   renderImage(typeStyle) {
     const {type, style} = this.props;
     const image = type !== OVERLY_TYPES.SOLID ? gradientImage : undefined;
+    const marginStyle = type !== OVERLY_TYPES.VERTICAL ? this.getAttributeStyles(style, 'margin') : undefined;
 
     return (
       <Image
-        style={[style, styles.container, typeStyle, {width: undefined}]}
+        style={[marginStyle, styles.container, typeStyle]}
         resizeMode={'stretch'}
         source={image}
       />
@@ -58,24 +72,27 @@ export default class Overlay extends PureBaseComponent {
   }
 
   render() {
-    const {style, type} = this.props;
-    const width = _.get(style, 'width');
+    const {type, style} = this.props;
     
-    if (type === OVERLY_TYPES.DEFAULT) {
+    if (type === OVERLY_TYPES.VERTICAL) {
+      const marginStyle = this.getAttributeStyles(style, 'margin');
+
       return (
-        <View style={[{width}, styles.container]}>
+        <View style={[styles.container, marginStyle]}>
           {this.renderImage(styles.top)}
           {this.renderImage(styles.bottom)}
         </View>
       );
     }
+    
     return this.renderImage(this.getStyleByType());
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFillObject,
+    width: undefined
   },
   top: {
     bottom: undefined,

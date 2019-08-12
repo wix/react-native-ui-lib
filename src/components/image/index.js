@@ -6,8 +6,9 @@ import {Image as RNImage, StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
 import {PureBaseComponent} from '../../commons';
 import Assets from '../../assets';
-import Overlay from '../overlay';
 import View from '../view';
+import Overlay from '../overlay';
+
 
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
@@ -49,7 +50,7 @@ class Image extends PureBaseComponent {
   };
 
   static defaultProps = {
-    assetGroup: 'icons',
+    assetGroup: 'icons'
   };
 
   static overlayTypes = Overlay.overlayTypes;
@@ -97,19 +98,14 @@ class Image extends PureBaseComponent {
     );
   }
 
-  onLayout = (event) => {
-    const width = event.nativeEvent.layout.width;
-    this.setState({width});
-  }
-
   render() {
     const {style, overlayType} = this.getThemeProps();
   
     if (overlayType) {
       return (
-        <View onLayout={this.onLayout}>
+        <View>
           {this.renderImage()}
-          <Overlay style={[style, {width: this.state.width}]} type={overlayType}/>
+          <Overlay style={style} type={overlayType}/>
         </View>
       );
     }
@@ -119,12 +115,12 @@ class Image extends PureBaseComponent {
 
 const styles = StyleSheet.create({
   rtlFlipped: {
-    transform: [{scaleX: -1}],
+    transform: [{scaleX: -1}]
   },
   coverImage: {
     width: Constants.screenWidth,
-    aspectRatio: 16 / 8,
-  },
+    aspectRatio: 16 / 8
+  }
 });
 
 hoistNonReactStatic(Image, RNImage);
