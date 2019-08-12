@@ -6,7 +6,7 @@ import {Colors, Carousel, PageControl, Modal, View, Text} from 'react-native-ui-
 
 export default class ModalScreen extends Component {
 
-  static options() { // stopped working
+  static options() {
     return {
       topBar: {
         drawBehind: true,
@@ -21,14 +21,6 @@ export default class ModalScreen extends Component {
     this.state = {
       currentPage: 0
     };
-
-    const navigationStyle = {
-      topBar: {
-        drawBehind: true,
-        visible: false
-      }
-    };
-    Navigation.mergeOptions(props.componentId, navigationStyle);
   }
 
   closeScreen() {
