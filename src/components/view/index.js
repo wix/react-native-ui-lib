@@ -15,7 +15,7 @@ class View extends PureComponent {
 
   static propTypes = {
     ...ViewPropTypes,
-    ...BaseComponent.propTypes,
+    // ...BaseComponent.propTypes,
     /**
      * If true, will render as SafeAreaView
      */
