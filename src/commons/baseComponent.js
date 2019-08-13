@@ -9,11 +9,11 @@ import * as Modifiers from './modifiers';
 export default function baseComponent(usePure) {
   const parent = usePure ? React.PureComponent : React.Component;
   class BaseComponent extends parent {
-    static propTypes = {
-      ..._.mapValues(Typography, () => PropTypes.bool),
-      ..._.mapValues(Colors, () => PropTypes.bool),
-      useNativeDriver: PropTypes.bool,
-    };
+    // static propTypes = {
+    //   ..._.mapValues(Typography, () => PropTypes.bool),
+    //   ..._.mapValues(Colors, () => PropTypes.bool),
+    //   useNativeDriver: PropTypes.bool,
+    // };
 
     static extractOwnProps = Modifiers.extractOwnProps;
 

@@ -13,7 +13,7 @@ export default class Text extends PureBaseComponent {
   static displayName = 'Text';
   static propTypes = {
     ...RNText.propTypes,
-    ...PureBaseComponent.propTypes,
+    // ...PureBaseComponent.propTypes,
     /**
      * color of the text
      */

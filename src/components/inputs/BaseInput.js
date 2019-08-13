@@ -9,7 +9,7 @@ export default class BaseInput extends BaseComponent {
   static displayName = 'BaseInput';
   static propTypes = {
     ...RNTextInput.propTypes,
-    ...BaseComponent.propTypes,
+    // ...BaseComponent.propTypes,
     /**
      * text color
      */

@@ -85,7 +85,7 @@ class NewDrawer extends PureBaseComponent {
     /**
      * Perform the animation in natively
      */
-    useNativeAnimations: PropTypes.bool,
+    useNativeAnimations: PropTypes.bool
   };
 
   static defaultProps = {
@@ -97,8 +97,10 @@ class NewDrawer extends PureBaseComponent {
 
     this._swipeableRow = React.createRef();
     this.animationOptions = {bounciness: props.bounciness || 5};
-    this.rightActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? [props.leftItem] : props.rightItems);
-    this.leftActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? props.rightItems : [props.leftItem]);
+    
+    this.rightActionsContainerStyle = this.getRightActionsContainerStyle();
+    this.leftActionsContainerStyle = this.getLeftActionsContainerStyle();
+
     this.leftRender = props.leftItem ? (Constants.isRTL ? this.renderRightActions : this.renderLeftActions) : undefined;
     this.rightRender = props.rightItems ? (Constants.isRTL ? this.renderLeftActions : this.renderRightActions) : undefined;
 
@@ -119,6 +121,16 @@ class NewDrawer extends PureBaseComponent {
     });
   }
 
+  getLeftActionsContainerStyle() {
+    const {rightItems, leftItem} = this.getThemeProps();
+    return this.getActionsContainerStyle(Constants.isRTL ? rightItems : [leftItem]);
+  }
+
+  getRightActionsContainerStyle() {
+    const {rightItems, leftItem} = this.getThemeProps();
+    return this.getActionsContainerStyle(Constants.isRTL ? [leftItem] : rightItems);
+  }
+
   getActionsContainerStyle(items) {
     return {backgroundColor: _.get(_.first(items), 'background', DEFAULT_BG)};
   }
@@ -137,6 +149,7 @@ class NewDrawer extends PureBaseComponent {
   onSwipeableWillOpen = () => {
     _.invoke(this.props, 'onSwipeableWillOpen', this.props);
   };
+
   onSwipeableWillClose = () => {
     _.invoke(this.props, 'onSwipeableWillClose', this.props);
   };
@@ -237,6 +250,7 @@ class NewDrawer extends PureBaseComponent {
 
   render() {
     const {children, style, ...others} = this.props;
+    
     return (
       <Swipeable
         {...others}
