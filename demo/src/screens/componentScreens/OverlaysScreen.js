@@ -4,10 +4,8 @@ import {View, Text, Image} from 'react-native-ui-lib'; // eslint-disable-line
 
 
 const image = require('../../assets/images/card-example.jpg');
-const icon1 = require('../../assets/icons/tags.png');
-const icon2 = require('../../assets/icons/collections.png');
-const icon3 = require('../../assets/icons/share.png');
-const icon4 = require('../../assets/icons/star.png');
+// const uri = 'https://static.pexels.com/photos/50721/pencils-crayons-colourful-rainbow-50721.jpeg';
+// const icon = require('../../assets/icons/tags.png');
 
 export default class OverlaysScreen extends Component {
   
@@ -53,28 +51,11 @@ export default class OverlaysScreen extends Component {
             </View>
           </View>
         </View>
-        <View row padding-20>
-          <Image
-            source={icon1}
-            overlayType={Image.overlayTypes.VERTICAL}
-            style={{margin: 10}}
-          />
-          <Image
-            source={icon2}
-            overlayType={Image.overlayTypes.VERTICAL}
-            style={{margin: 10}}
-          />
-          <Image
-            source={icon3}
-            overlayType={Image.overlayTypes.VERTICAL}
-            style={{margin: 10}}
-          />
-          <Image
-            source={icon4}
-            overlayType={Image.overlayTypes.VERTICAL}
-            style={{margin: 10}}
-          />
-        </View>
+        {/* <Image
+          source={icon}
+          overlayType={Image.overlayTypes.VERTICAL}
+          style={{margin: 10}}
+        /> */}
         <Image
           source={image}
           overlayType={Image.overlayTypes.VERTICAL}
