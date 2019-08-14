@@ -74,12 +74,8 @@ export default class Carousel extends BaseComponent {
 
   onOrientationChanged = () => {
     if (!this.props.pageWidth) {
-      this.setState({
-        pageWidth: Constants.screenWidth, 
-        initialOffset: {
-          x: presenter.calcOffset(this.props, {currentPage: this.state.currentPage, pageWidth: Constants.screenWidth})
-        }
-      });
+      this.setState({pageWidth: Constants.screenWidth});
+      this.goToPage(this.state.currentPage, true);
     }
   }
 
