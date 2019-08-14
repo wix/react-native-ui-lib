@@ -205,7 +205,7 @@ class Dialog extends BaseComponent {
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8;
 
     return (
-      <View useSafeArea={useSafeArea} style={[styles.safeArea, this.dynamicStyles.alignments]} pointerEvents="box-none">
+      <View useSafeArea={useSafeArea} style={[styles.container, this.dynamicStyles.alignments]} pointerEvents="box-none">
         <View style={this.dynamicStyles.size}>
           <PanningProvider>
             <PanDismissibleView
@@ -278,7 +278,7 @@ function getDialogWidth() {
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
+  container: {
     flex: 1,
   },
   centerContent: {
