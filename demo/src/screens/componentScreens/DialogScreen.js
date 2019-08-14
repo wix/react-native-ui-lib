@@ -97,6 +97,7 @@ export default class DialogScreen extends Component {
           width: '100%',
           height: '40%',
           top: true,
+          useSafeArea: true,
           centerH: true,
         },
       },

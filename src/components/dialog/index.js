@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, SafeAreaView} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -169,7 +169,7 @@ class Dialog extends BaseComponent {
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8;
 
     return (
-      <SafeAreaView style={[styles.safeArea, this.dynamicStyles.alignments]} pointerEvents="box-none">
+      <View useSafeArea={useSafeArea} style={[styles.safeArea, this.dynamicStyles.alignments]} pointerEvents="box-none">
         <View style={this.dynamicStyles.size}>
           <PanningProvider>
             <PanDismissibleView
@@ -195,7 +195,7 @@ class Dialog extends BaseComponent {
           {_.invoke(this.props, 'renderOverlay')}
         </View>
         {addBottomSafeArea && <View style={{marginTop: bottomInsets}} />}
-      </SafeAreaView>
+      </View>
     );
   };
 
