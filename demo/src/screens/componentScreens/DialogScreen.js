@@ -219,7 +219,7 @@ export default class DialogScreen extends Component {
         message={'Message'}
         visible={shouldShow}
         onDismiss={this.onDismiss}
-        renderHeader={renderHeader}
+        renderPannableHeader={renderHeader}
         supportedOrientations={['portrait', 'landscape']}
         {...extraProps}
       >
