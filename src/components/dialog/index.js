@@ -28,6 +28,12 @@ class Dialog extends BaseComponent {
   static propTypes = {
     ...DialogDeprecated.propTypes,
     /**
+     * If this is added only the header will be pannable;
+     * this allows for scrollable content (the children of the dialog)
+     * props are transferred to the renderPannableHeader
+     */
+    renderPannableHeader: PropTypes.func,
+    /**
      * Migration flag, send true to use the new (and improved) Dialog, default is false
      */
     migrate: PropTypes.bool,
@@ -136,21 +142,21 @@ class Dialog extends BaseComponent {
     }
   };
 
-  renderHeader = directions => {
-    const {renderHeader, ...others} = this.props;
-    if (renderHeader) {
-      return <PanListenerView directions={directions}>{renderHeader(others)}</PanListenerView>;
+  renderPannableHeader = directions => {
+    const {renderPannableHeader, ...others} = this.props;
+    if (renderPannableHeader) {
+      return <PanListenerView directions={directions}>{renderPannableHeader(others)}</PanListenerView>;
     }
   };
 
   getDirections = () => {
-    const {panDirections, disablePan, renderHeader} = this.props;
+    const {panDirections, disablePan, renderPannableHeader} = this.props;
     let directions;
     if (disablePan) {
       directions = [];
     } else if (this.props.top) {
       directions = [PanningProvider.Directions.UP];
-    } else if (!_.isUndefined(renderHeader) || _.isUndefined(panDirections)) {
+    } else if (!_.isUndefined(renderPannableHeader) || _.isUndefined(panDirections)) {
       directions = [PanningProvider.Directions.DOWN];
     } else {
       directions = panDirections;
@@ -162,9 +168,9 @@ class Dialog extends BaseComponent {
   // TODO: renderOverlay
   // TODO: animation configuration
   renderVisibleContainer = () => {
-    const {children, renderHeader, style, useSafeArea, bottom, useTemplate} = this.props;
+    const {children, renderPannableHeader, style, useSafeArea, bottom, useTemplate} = this.props;
     const addBottomSafeArea = Constants.isIphoneX && ((useSafeArea && bottom) || useTemplate);
-    const Container = !_.isUndefined(renderHeader) ? View : PanListenerView;
+    const Container = !_.isUndefined(renderPannableHeader) ? View : PanListenerView;
     const directions = this.getDirections();
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8;
 
@@ -187,7 +193,7 @@ class Dialog extends BaseComponent {
                   style,
                 ]}
               >
-                {this.renderHeader(directions)}
+                {this.renderPannableHeader(directions)}
                 {children}
               </Container>
             </PanDismissibleView>
