@@ -205,7 +205,7 @@ class Dialog extends BaseComponent {
 
   renderModal = () => {
     const {dialogKey} = this.state;
-    const {visible, overlayBackgroundColor, onModalDismissed} = this.getThemeProps();
+    const {visible, overlayBackgroundColor, onModalDismissed, supportedOrientations} = this.getThemeProps();
 
     return (
       <Modal
@@ -217,8 +217,7 @@ class Dialog extends BaseComponent {
         onRequestClose={this.animateDismiss}
         overlayBackgroundColor={overlayBackgroundColor}
         onDismiss={onModalDismissed}
-        // TODO:
-        supportedOrientations={['portrait', 'landscape']}
+        supportedOrientations={supportedOrientations}
       >
         {this.renderVisibleContainer()}
       </Modal>

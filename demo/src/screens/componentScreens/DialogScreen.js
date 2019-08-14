@@ -219,6 +219,7 @@ export default class DialogScreen extends Component {
         visible={shouldShow}
         onDismiss={this.onDismiss}
         renderHeader={renderHeader}
+        supportedOrientations={['portrait', 'landscape']}
         {...extraProps}
       >
         {contentFunction(stateId, functionExtraProps)}
