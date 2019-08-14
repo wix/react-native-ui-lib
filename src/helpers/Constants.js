@@ -36,11 +36,12 @@ export const isRTL = I18nManager.isRTL;
 
 const {height, width} = Dimensions.get(dimensionsScope.WINDOW);
 export let orientation = getOrientation(height, width);
+export let isLandscape = orientation === orientations.LANDSCAPE;
 export let screenWidth = width;
 export let screenHeight = height;
 export let isSmallScreen = screenWidth <= 340;
 export let isShortScreen = screenHeight <= 600;
-const screenAspectRatio = screenWidth < screenHeight ? screenHeight / screenWidth : screenWidth / screenHeight;
+export const screenAspectRatio = screenWidth < screenHeight ? screenHeight / screenWidth : screenWidth / screenHeight;
 export const isTablet = Platform.isPad || (screenAspectRatio < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
 
 export function getSafeAreaInsets() {
@@ -60,6 +61,7 @@ function getOrientation(height, width) {
 function updateConstants() {
   const {height, width} = Dimensions.get(dimensionsScope.WINDOW);
   orientation = getOrientation(height, width);
+  isLandscape = orientation === orientations.LANDSCAPE;
   screenWidth = width;
   screenHeight = height;
   isSmallScreen = screenWidth <= 340;
