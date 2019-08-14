@@ -12,7 +12,6 @@ import PanDismissibleView from '../panningViews/panDismissibleView';
 import PanningProvider from '../panningViews/panningProvider';
 import DialogDeprecated from './dialogDeprecated';
 
-
 /**
  * @description: Dialog component for displaying custom content inside a popup dialog
  * @notes: Use alignment modifiers to control the dialog position
@@ -36,19 +35,19 @@ class Dialog extends BaseComponent {
     /**
      * Use the template configuration (default is false)
      */
-    useTemplate: PropTypes.bool
+    useTemplate: PropTypes.bool,
   };
 
   static defaultProps = {
     migrate: false,
-    overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6)
+    overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
   };
 
   static getDialogMaxHeight() {
     const dialogMaxHeight = getDialogMaxHeight();
     return dialogMaxHeight - 2 * DIALOG_MARGIN;
   }
-  
+
   static getDialogWidth() {
     const dialogWidth = getDialogWidth();
     return dialogWidth - 2 * DIALOG_MARGIN;
@@ -59,17 +58,17 @@ class Dialog extends BaseComponent {
 
     this.state = {
       alignments: this.state.alignments,
-      dialogKey: undefined
+      dialogKey: undefined,
     };
 
     if (props.dismissSwipeDirection) {
-      console.warn('Dialog component\'s prop \'dismissSwipeDirection\' is deprecated, please remove it');
+      console.warn("Dialog component's prop 'dismissSwipeDirection' is deprecated, please remove it");
     }
-    
+
     if (props.migrate) {
       this.setAlignment();
       if (!_.isUndefined(props.useModal)) {
-        console.warn('Dialog component\'s prop \'useModal\' is deprecated (when using \'migrate\'), please remove it');
+        console.warn("Dialog component's prop 'useModal' is deprecated (when using 'migrate'), please remove it");
       }
     }
 
@@ -90,12 +89,12 @@ class Dialog extends BaseComponent {
     if (this.props.useTemplate) {
       this.calcDialogDimensionByOrientation();
     }
-    
+
     const dialogKey = Constants.orientation;
     if (this.state.dialogKey !== dialogKey) {
       this.setState({dialogKey});
     }
-  }
+  };
 
   calcDialogDimensionByOrientation = () => {
     const isInLandscape = Constants.orientation === Constants.orientations.LANDSCAPE;
@@ -164,7 +163,6 @@ class Dialog extends BaseComponent {
     return directions;
   };
 
-  // TODO: useSafeArea = false
   // TODO: renderOverlay
   // TODO: animation configuration
   renderVisibleContainer = () => {
@@ -190,7 +188,7 @@ class Dialog extends BaseComponent {
                   this.dynamicStyles.flexType,
                   this.dynamicStyles.presetStyle,
                   this.dynamicStyles.presetHeight,
-                  style
+                  style,
                 ]}
               >
                 {this.renderHeader(directions)}
@@ -200,10 +198,10 @@ class Dialog extends BaseComponent {
           </PanningProvider>
           {_.invoke(this.props, 'renderOverlay')}
         </View>
-        {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>}
+        {addBottomSafeArea && <View style={{marginTop: bottomInsets}} />}
       </SafeAreaView>
     );
-  }
+  };
 
   renderModal = () => {
     const {dialogKey} = this.state;
@@ -225,19 +223,15 @@ class Dialog extends BaseComponent {
         {this.renderVisibleContainer()}
       </Modal>
     );
-  }
+  };
 
   render() {
     const {migrate, ...others} = this.getThemeProps();
-    
+
     if (migrate) {
       return this.renderModal();
     } else {
-      return (
-        <DialogDeprecated
-          {...others}
-        />
-      );
+      return <DialogDeprecated {...others} />;
     }
   }
 }
@@ -254,29 +248,29 @@ function getDialogWidth() {
 
 const styles = StyleSheet.create({
   safeArea: {
-    flex: 1
+    flex: 1,
   },
   centerContent: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   bottomContent: {
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   withHeight: {
-    flex: 1
+    flex: 1,
   },
   dynamicHeight: {
     flex: 0,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   defaultDialogStyle: {
     backgroundColor: Colors.white,
     borderRadius: 12,
     margin: DIALOG_MARGIN,
-    marginBottom: Constants.isIphoneX ? 0 : DIALOG_MARGIN
-  }
+    marginBottom: Constants.isIphoneX ? 0 : DIALOG_MARGIN,
+  },
 });
 
 function createStyles(props) {
@@ -287,7 +281,7 @@ function createStyles(props) {
   return StyleSheet.create({
     size,
     flexType,
-    presetStyle
+    presetStyle,
   });
 }
 

@@ -46,7 +46,7 @@ class PanDismissibleView extends PureComponent {
 
     this.state = {
       ...this.getDefaultTranslations(props),
-      isAnimating: false
+      isAnimating: false,
     };
     shouldDismissAfterReset = false;
     this.ref = React.createRef();
@@ -127,13 +127,16 @@ class PanDismissibleView extends PureComponent {
     });
   }
 
-  initPositions = (runAfterSetState) => {
+  initPositions = runAfterSetState => {
     this.setNativeProps(0, 0);
-    this.setState({
-      animTranslateX: new Animated.Value(0),
-      animTranslateY: new Animated.Value(0),
-      isAnimating: false
-    }, runAfterSetState);
+    this.setState(
+      {
+        animTranslateX: new Animated.Value(0),
+        animTranslateY: new Animated.Value(0),
+        isAnimating: false,
+      },
+      runAfterSetState,
+    );
   };
 
   onPanStart = () => {
@@ -211,7 +214,7 @@ class PanDismissibleView extends PureComponent {
       speed: _.get(animationOptions, 'speed', 20),
       bounciness: _.get(animationOptions, 'bounciness', 6),
     });
-  }
+  };
 
   onResetPositionFinished = () => {
     const runAfterSetState = this.shouldDismissAfterReset ? this.animateDismiss : undefined;
@@ -304,7 +307,7 @@ class PanDismissibleView extends PureComponent {
       duration: _.get(animationOptions, 'duration', defaultDuration),
       easing: _.get(animationOptions, 'easing', defaultEasing),
     });
-  }
+  };
 
   onDismissAnimationFinished = ({finished}) => {
     if (finished) {

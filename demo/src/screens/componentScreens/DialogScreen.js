@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {FlatList, ScrollView, StyleSheet, Alert, TouchableWithoutFeedback} from 'react-native';
 import {Navigation} from 'react-native-navigation';
-import {Text, View, Button, Dialog, Colors, List, PanningProvider} from 'react-native-ui-lib'; // eslint-disable-line
+import {Text, View, Button, Dialog, Colors, PanningProvider} from 'react-native-ui-lib'; // eslint-disable-line
 
 export default class DialogScreen extends Component {
   static colors = [
@@ -25,7 +25,7 @@ export default class DialogScreen extends Component {
     {value: Colors.yellow10, label: 'Yellow10'},
     {value: Colors.yellow30, label: 'Yellow30'},
     {value: Colors.yellow50, label: 'Yellow50'},
-    {value: Colors.yellow70, label: 'Yellow70'}
+    {value: Colors.yellow70, label: 'Yellow70'},
   ];
 
   constructor(props) {
@@ -45,7 +45,7 @@ export default class DialogScreen extends Component {
       dialogSwipeHorizontal: false,
       dialogWithHeader: false,
       dialogWithVerticalScrollableContent: false,
-      dialogWithHorizontalScrollableContent: false
+      dialogWithHorizontalScrollableContent: false,
     };
 
     this.useCases = [
@@ -57,8 +57,8 @@ export default class DialogScreen extends Component {
         extraProps: {
           style: {backgroundColor: Colors.white},
           width: '90%',
-          height: '60%'
-        }
+          height: '60%',
+        },
       },
       {
         stateId: 'showDialog2',
@@ -71,8 +71,8 @@ export default class DialogScreen extends Component {
           height: '35%',
           bottom: true,
           useSafeArea: true,
-          centerH: true
-        }
+          centerH: true,
+        },
       },
       {
         stateId: 'showDialog3',
@@ -84,8 +84,8 @@ export default class DialogScreen extends Component {
           width: '90%',
           height: '60%',
           bottom: true,
-          centerH: true
-        }
+          centerH: true,
+        },
       },
       {
         stateId: 'showDialog4',
@@ -97,8 +97,8 @@ export default class DialogScreen extends Component {
           width: '100%',
           height: '40%',
           top: true,
-          centerH: true
-        }
+          centerH: true,
+        },
       },
       {
         stateId: 'showDialog5',
@@ -111,9 +111,9 @@ export default class DialogScreen extends Component {
           height: null,
           bottom: true,
           useSafeArea: true,
-          centerH: true
+          centerH: true,
         },
-        functionExtraProps: {flex: false}
+        functionExtraProps: {flex: false},
       },
       {
         stateId: 'showDialog6',
@@ -125,9 +125,9 @@ export default class DialogScreen extends Component {
           height: '40%',
           bottom: true,
           centerH: true,
-          animationConfig: {animation: 'slideInLeft', duration: 1000}
+          animationConfig: {animation: 'slideInLeft', duration: 1000},
         },
-        functionExtraProps: {'marginV-20': true, 'bg-yellow60': true}
+        functionExtraProps: {'marginV-20': true, 'bg-yellow60': true},
       },
       {
         stateId: 'showDialog7',
@@ -138,8 +138,8 @@ export default class DialogScreen extends Component {
           style: {backgroundColor: Colors.white},
           width: '80%',
           height: '40%',
-          disablePan: true
-        }
+          disablePan: true,
+        },
       },
       {
         stateId: 'dialogSwipeHorizontal',
@@ -150,8 +150,8 @@ export default class DialogScreen extends Component {
           style: {backgroundColor: Colors.white},
           width: '80%',
           height: '40%',
-          panDirections: [PanningProvider.Directions.LEFT, PanningProvider.Directions.RIGHT]
-        }
+          panDirections: [PanningProvider.Directions.LEFT, PanningProvider.Directions.RIGHT],
+        },
       },
       {
         stateId: 'dialogWithHeader',
@@ -159,9 +159,9 @@ export default class DialogScreen extends Component {
         showHeader: true,
         contentFunction: this.renderDialogContent,
         extraProps: {
-          useTemplate: true
+          useTemplate: true,
         },
-        functionExtraProps: {flex: false}
+        functionExtraProps: {flex: false},
       },
       {
         stateId: 'dialogWithVerticalScrollableContent',
@@ -169,8 +169,8 @@ export default class DialogScreen extends Component {
         showHeader: true,
         contentFunction: this.renderContentWithScrollableContent,
         extraProps: {
-          useTemplate: true
-        }
+          useTemplate: true,
+        },
       },
       {
         stateId: 'dialogWithHorizontalScrollableContent',
@@ -178,9 +178,9 @@ export default class DialogScreen extends Component {
         showHeader: true,
         contentFunction: this.renderContentWithHorizontalScrollableContent,
         extraProps: {
-          useTemplate: true
-        }
-      }
+          useTemplate: true,
+        },
+      },
     ];
   }
 
@@ -196,7 +196,7 @@ export default class DialogScreen extends Component {
   };
 
   renderButton = ({stateId, text}, onPress = () => this.setState({[stateId]: true})) => {
-    return <Button key={text + '-button'} size={'small'} label={text} style={styles.button} onPress={onPress}/>;
+    return <Button key={text + '-button'} size={'small'} label={text} style={styles.button} onPress={onPress} />;
   };
 
   renderDialogs = () => {
@@ -228,7 +228,7 @@ export default class DialogScreen extends Component {
 
   onDismiss = ({stateId}) => {
     this.setState({[stateId]: false});
-  }
+  };
 
   renderHeader = props => {
     const {title, message} = props;
@@ -238,7 +238,7 @@ export default class DialogScreen extends Component {
           <Text marginB-8>{title}</Text>
           <Text marginB-8>{message}</Text>
         </View>
-        <View height={2} bg-dark70/>
+        <View height={2} bg-dark70 />
       </View>
     );
   };
@@ -250,7 +250,7 @@ export default class DialogScreen extends Component {
           <Text text50>This is Dialog</Text>
         </View>
         <View right>
-          <Button stateId={stateId} text60 label="Done" link onPress={this.onDone}/>
+          <Button stateId={stateId} text60 label="Done" link onPress={this.onDone} />
         </View>
       </View>
     );
@@ -258,11 +258,11 @@ export default class DialogScreen extends Component {
 
   onDone = ({stateId}) => {
     this.setState({[stateId]: false});
-  }
+  };
 
-  keyExtractor = (item) => {
+  keyExtractor = item => {
     return item.value;
-  }
+  };
 
   renderContentWithScrollableContent = () => {
     return (
@@ -278,13 +278,15 @@ export default class DialogScreen extends Component {
 
   renderItem = ({item: color}) => {
     return (
-      <Text text50 margin-20 color={color.value}>{color.label}</Text>
+      <Text text50 margin-20 color={color.value}>
+        {color.label}
+      </Text>
     );
   };
 
   titlePressed = ({title}) => {
     Alert.alert('Pressed on', title);
-  }
+  };
 
   renderContentWithHorizontalScrollableContent = () => {
     return (
@@ -297,7 +299,9 @@ export default class DialogScreen extends Component {
           keyExtractor={this.keyExtractor}
         />
         <View row pointerEvents="none" style={styles.horizontalTextContainer}>
-          <Text>{'\u25c0'} Scroll me {'\u25b6'}</Text>
+          <Text>
+            {'\u25c0'} Scroll me {'\u25b6'}
+          </Text>
         </View>
       </View>
     );
@@ -308,7 +312,7 @@ export default class DialogScreen extends Component {
       // Note: you only need to wrap with a TouchableWithoutFeedback (or a TouchableOpacity) if you don't
       // already have it. This is done to make the scrolling possible within the FlatList \ ScrollList
       <TouchableWithoutFeedback>
-        <View flex width={100} height={1000} style={{backgroundColor: color.value}}/>
+        <View flex width={100} height={1000} style={{backgroundColor: color.value}} />
       </TouchableWithoutFeedback>
     );
   };
@@ -322,17 +326,17 @@ export default class DialogScreen extends Component {
       component: {
         name: 'unicorn.CustomScreen',
         passProps: {
-          onDismiss: this.dismissOverlay
+          onDismiss: this.dismissOverlay,
         },
         options: {
           layout: {
-            backgroundColor: 'transparent'
+            backgroundColor: 'transparent',
           },
           overlay: {
-            interceptTouchOutside: false
-          }
-        }
-      }
+            interceptTouchOutside: false,
+          },
+        },
+      },
     });
   };
 
@@ -358,17 +362,17 @@ export default class DialogScreen extends Component {
 const styles = StyleSheet.create({
   button: {
     margin: 5,
-    alignSelf: 'flex-start'
+    alignSelf: 'flex-start',
   },
   scrollView: {
-    paddingBottom: 12
+    paddingBottom: 12,
   },
   horizontalContainer: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   horizontalTextContainer: {
     position: 'absolute',
-    top: 10
-  }
+    top: 10,
+  },
 });
