@@ -84,7 +84,6 @@ export default class DialogScreen extends Component {
           width: '90%',
           height: '60%',
           bottom: true,
-          useSafeArea: true,
           centerH: true
         }
       },
@@ -125,7 +124,6 @@ export default class DialogScreen extends Component {
           width: '80%',
           height: '40%',
           bottom: true,
-          useSafeArea: true,
           centerH: true,
           animationConfig: {animation: 'slideInLeft', duration: 1000}
         },
