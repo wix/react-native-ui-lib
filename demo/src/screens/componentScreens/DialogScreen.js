@@ -180,15 +180,6 @@ export default class DialogScreen extends Component {
         extraProps: {
           useTemplate: true
         }
-      },
-      {
-        stateId: 'dialogWithTooLongContent',
-        text: 'Dialog too long content',
-        showHeader: true,
-        contentFunction: this.renderContentWithScrollableContent,
-        extraProps: {
-          useTemplate: true
-        }
       }
     ];
   }
