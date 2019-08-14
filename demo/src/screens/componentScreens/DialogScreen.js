@@ -212,11 +212,12 @@ export default class DialogScreen extends Component {
     return (
       <Dialog
         key={text + '-dialog'}
+        stateId={stateId}
         migrate
         title={text}
         message={'Message'}
         visible={shouldShow}
-        onDismiss={() => this.setState({[stateId]: false})}
+        onDismiss={this.onDismiss}
         renderHeader={renderHeader}
         {...extraProps}
       >
@@ -224,6 +225,10 @@ export default class DialogScreen extends Component {
       </Dialog>
     );
   };
+
+  onDismiss = ({stateId}) => {
+    this.setState({[stateId]: false});
+  }
 
   renderHeader = props => {
     const {title, message} = props;
@@ -245,11 +250,15 @@ export default class DialogScreen extends Component {
           <Text text50>This is Dialog</Text>
         </View>
         <View right>
-          <Button text60 label="Done" link onPress={() => this.setState({[stateId]: false})}/>
+          <Button stateId={stateId} text60 label="Done" link onPress={this.onDone}/>
         </View>
       </View>
     );
   };
+
+  onDone = ({stateId}) => {
+    this.setState({[stateId]: false});
+  }
 
   keyExtractor = (item) => {
     return item.value;

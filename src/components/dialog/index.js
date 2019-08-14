@@ -126,7 +126,7 @@ class Dialog extends BaseComponent {
   }
 
   onDismiss = () => {
-    _.invoke(this.props, 'onDismiss');
+    _.invoke(this.props, 'onDismiss', this.props);
   };
 
   setPanDismissibleViewRef = ref => {
