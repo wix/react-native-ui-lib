@@ -61,10 +61,6 @@ class Dialog extends BaseComponent {
       dialogKey: undefined,
     };
 
-    if (props.dismissSwipeDirection) {
-      console.warn("Dialog component's prop 'dismissSwipeDirection' is deprecated, please remove it");
-    }
-
     if (props.migrate) {
       this.setAlignment();
       if (!_.isUndefined(props.useModal)) {
