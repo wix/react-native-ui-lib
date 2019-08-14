@@ -1,9 +1,33 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
+import {FlatList, ScrollView, StyleSheet, Alert, TouchableWithoutFeedback} from 'react-native';
 import {Navigation} from 'react-native-navigation';
-import {Colors, View, Dialog, Button, Text} from 'react-native-ui-lib'; // eslint-disable-line
+import {Text, View, Button, Dialog, Colors, List, PanningProvider} from 'react-native-ui-lib'; // eslint-disable-line
 
+export default class DialogScreen extends Component {
+  static colors = [
+    {value: Colors.red10, label: 'Red10'},
+    {value: Colors.red30, label: 'Red30'},
+    {value: Colors.red50, label: 'Red50'},
+    {value: Colors.red70, label: 'Red70'},
+    {value: Colors.blue10, label: 'Blue10'},
+    {value: Colors.blue30, label: 'Blue30'},
+    {value: Colors.blue50, label: 'Blue50'},
+    {value: Colors.blue70, label: 'Blue70'},
+    {value: Colors.purple10, label: 'Purple10'},
+    {value: Colors.purple30, label: 'Purple30'},
+    {value: Colors.purple50, label: 'Purple50'},
+    {value: Colors.purple70, label: 'Purple70'},
+    {value: Colors.green10, label: 'Green10'},
+    {value: Colors.green30, label: 'Green30'},
+    {value: Colors.green50, label: 'Green50'},
+    {value: Colors.green70, label: 'Green70'},
+    {value: Colors.yellow10, label: 'Yellow10'},
+    {value: Colors.yellow30, label: 'Yellow30'},
+    {value: Colors.yellow50, label: 'Yellow50'},
+    {value: Colors.yellow70, label: 'Yellow70'}
+  ];
 
-class DialogScreen extends Component {
   constructor(props) {
     super(props);
 
@@ -17,9 +41,283 @@ class DialogScreen extends Component {
       showDialog5: false,
       showDialog6: false,
       showDialog7: false,
-      showDialog8: false
+      showDialog8: false,
+      dialogSwipeHorizontal: false,
+      dialogWithHeader: false,
+      dialogWithVerticalScrollableContent: false,
+      dialogWithHorizontalScrollableContent: false
     };
+
+    this.useCases = [
+      {
+        stateId: 'showDialog1',
+        text: 'Show default dialog in center',
+        showHeader: false,
+        contentFunction: this.renderDialogContent,
+        extraProps: {
+          style: {backgroundColor: Colors.white},
+          width: '90%',
+          height: '60%'
+        }
+      },
+      {
+        stateId: 'showDialog2',
+        text: 'Show bottom dialog',
+        showHeader: false,
+        contentFunction: this.renderDialogContent,
+        extraProps: {
+          style: {backgroundColor: Colors.white},
+          width: '100%',
+          height: '35%',
+          bottom: true,
+          useSafeArea: true,
+          centerH: true
+        }
+      },
+      {
+        stateId: 'showDialog3',
+        text: 'Show bottom dialog with padding',
+        showHeader: false,
+        contentFunction: this.renderDialogContent,
+        extraProps: {
+          style: {backgroundColor: Colors.white, marginVertical: 20, borderRadius: 12},
+          width: '90%',
+          height: '60%',
+          bottom: true,
+          useSafeArea: true,
+          centerH: true
+        }
+      },
+      {
+        stateId: 'showDialog4',
+        text: 'Show top dialog different animation',
+        showHeader: false,
+        contentFunction: this.renderDialogContent,
+        extraProps: {
+          style: {backgroundColor: Colors.white},
+          width: '100%',
+          height: '40%',
+          top: true,
+          centerH: true
+        }
+      },
+      {
+        stateId: 'showDialog5',
+        text: 'Show dialog with height based on content',
+        showHeader: false,
+        contentFunction: this.renderDialogContent,
+        extraProps: {
+          style: {backgroundColor: Colors.white},
+          width: '100%',
+          height: null,
+          bottom: true,
+          useSafeArea: true,
+          centerH: true
+        },
+        functionExtraProps: {flex: false}
+      },
+      {
+        stateId: 'showDialog6',
+        text: 'Show dialog with animation configuration',
+        showHeader: false,
+        contentFunction: this.renderDialogContent,
+        extraProps: {
+          width: '80%',
+          height: '40%',
+          bottom: true,
+          useSafeArea: true,
+          centerH: true,
+          animationConfig: {animation: 'slideInLeft', duration: 1000}
+        },
+        functionExtraProps: {'marginV-20': true, 'bg-yellow60': true}
+      },
+      {
+        stateId: 'showDialog7',
+        text: 'Show dialog with disabled pan gesture',
+        showHeader: false,
+        contentFunction: this.renderDialogContent,
+        extraProps: {
+          style: {backgroundColor: Colors.white},
+          width: '80%',
+          height: '40%',
+          disablePan: true
+        }
+      },
+      {
+        stateId: 'dialogSwipeHorizontal',
+        text: 'Show center dialog with horizontal swipe',
+        showHeader: false,
+        contentFunction: this.renderDialogContent,
+        extraProps: {
+          style: {backgroundColor: Colors.white},
+          width: '80%',
+          height: '40%',
+          panDirections: [PanningProvider.Directions.LEFT, PanningProvider.Directions.RIGHT]
+        }
+      },
+      {
+        stateId: 'dialogWithHeader',
+        text: 'Show bottom dialog with header (wrapped content)',
+        showHeader: true,
+        contentFunction: this.renderDialogContent,
+        extraProps: {
+          useTemplate: true
+        },
+        functionExtraProps: {flex: false}
+      },
+      {
+        stateId: 'dialogWithVerticalScrollableContent',
+        text: 'Dialog with vertical scrollable content',
+        showHeader: true,
+        contentFunction: this.renderContentWithScrollableContent,
+        extraProps: {
+          useTemplate: true
+        }
+      },
+      {
+        stateId: 'dialogWithHorizontalScrollableContent',
+        text: 'Dialog with horizontal scrollable content',
+        showHeader: true,
+        contentFunction: this.renderContentWithHorizontalScrollableContent,
+        extraProps: {
+          useTemplate: true
+        }
+      },
+      {
+        stateId: 'dialogWithTooLongContent',
+        text: 'Dialog too long content',
+        showHeader: true,
+        contentFunction: this.renderContentWithScrollableContent,
+        extraProps: {
+          useTemplate: true
+        }
+      }
+    ];
   }
+
+  renderButtons = () => {
+    return (
+      <View>
+        {_.map(this.useCases, useCase => {
+          return this.renderButton(useCase);
+        })}
+        {this.renderOverlayButton()}
+      </View>
+    );
+  };
+
+  renderButton = ({stateId, text}, onPress = () => this.setState({[stateId]: true})) => {
+    return <Button key={text + '-button'} size={'small'} label={text} style={styles.button} onPress={onPress}/>;
+  };
+
+  renderDialogs = () => {
+    return _.map(this.useCases, useCase => {
+      return this.renderDialog(useCase);
+    });
+  };
+
+  renderDialog = ({stateId, text, showHeader, contentFunction, extraProps, functionExtraProps}) => {
+    const shouldShow = this.state[stateId];
+    const renderHeader = showHeader ? this.renderHeader : undefined;
+
+    return (
+      <Dialog
+        key={text + '-dialog'}
+        migrate
+        title={text}
+        message={'Message'}
+        visible={shouldShow}
+        onDismiss={() => this.setState({[stateId]: false})}
+        renderHeader={renderHeader}
+        {...extraProps}
+      >
+        {contentFunction(stateId, functionExtraProps)}
+      </Dialog>
+    );
+  };
+
+  renderHeader = props => {
+    const {title, message} = props;
+    return (
+      <View>
+        <View marginT-20 marginL-20 marginR-20>
+          <Text marginB-8>{title}</Text>
+          <Text marginB-8>{message}</Text>
+        </View>
+        <View height={2} bg-dark70/>
+      </View>
+    );
+  };
+
+  renderDialogContent = (stateId, extraProps) => {
+    return (
+      <View flex padding-18 spread {...extraProps}>
+        <View height={100}>
+          <Text text50>This is Dialog</Text>
+        </View>
+        <View right>
+          <Button text60 label="Done" link onPress={() => this.setState({[stateId]: false})}/>
+        </View>
+      </View>
+    );
+  };
+
+  keyExtractor = (item) => {
+    return item.value;
+  }
+
+  renderContentWithScrollableContent = () => {
+    return (
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        style={styles.scrollView}
+        data={DialogScreen.colors}
+        renderItem={this.renderItem}
+        keyExtractor={this.keyExtractor}
+      />
+    );
+  };
+
+  renderItem = ({item: color}) => {
+    return (
+      <Text text50 margin-20 color={color.value}>{color.label}</Text>
+    );
+  };
+
+  titlePressed = ({title}) => {
+    Alert.alert('Pressed on', title);
+  }
+
+  renderContentWithHorizontalScrollableContent = () => {
+    return (
+      <View pointerEvents="box-none" style={styles.horizontalContainer}>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={DialogScreen.colors}
+          renderItem={this.renderHorizontalItem}
+          keyExtractor={this.keyExtractor}
+        />
+        <View row pointerEvents="none" style={styles.horizontalTextContainer}>
+          <Text>{'\u25c0'} Scroll me {'\u25b6'}</Text>
+        </View>
+      </View>
+    );
+  };
+
+  renderHorizontalItem = ({item: color}) => {
+    return (
+      // Note: you only need to wrap with a TouchableWithoutFeedback (or a TouchableOpacity) if you don't
+      // already have it. This is done to make the scrolling possible within the FlatList \ ScrollList
+      <TouchableWithoutFeedback>
+        <View flex width={100} height={1000} style={{backgroundColor: color.value}}/>
+      </TouchableWithoutFeedback>
+    );
+  };
+
+  renderOverlayButton = () => {
+    return this.renderButton({stateId: 'showDialog8', text: 'Show dialog in RNN overlay'}, this.showOverlay);
+  };
 
   showOverlay = async () => {
     this.overlay = await Navigation.showOverlay({
@@ -38,177 +336,41 @@ class DialogScreen extends Component {
         }
       }
     });
-  }
+  };
 
   dismissOverlay = () => {
     Navigation.dismissOverlay(this.overlay);
   };
 
-  renderDialogContent(dialogIndex, extraProps) {
-    return (
-      <View flex br20 padding-18 spread {...extraProps}>
-        <View height={100}>
-          <Text text50>This is Dialog</Text>
-        </View>
-        <View right>
-          <Button text60 label="Done" link onPress={() => this.setState({[`showDialog${dialogIndex}`]: false})}/>
-        </View>
-      </View>
-    );
-  }
-
   render() {
-    const {showDialog1, showDialog2, showDialog3, showDialog4, showDialog5, showDialog6, showDialog7, showDialog8} = this.state;
-    
     return (
-      <View flex bg-dark80 padding-12 center>
-        <Button
-          size={'small'}
-          label="show default dialog in center"
-          onPress={() => this.setState({showDialog1: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show bottom dialog"
-          onPress={() => this.setState({showDialog2: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show bottom dialog with padding"
-          onPress={() => this.setState({showDialog3: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show top dialog different animation"
-          onPress={() => this.setState({showDialog4: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show dialog with height based on content "
-          onPress={() => this.setState({showDialog5: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show dialog with animation configuration"
-          onPress={() => this.setState({showDialog6: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show dialog with disabled pan gesture"
-          onPress={() => this.setState({showDialog7: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show dialog without a modal"
-          onPress={() => this.setState({showDialog8: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show dialog in RNN overlay"
-          onPress={(this.showOverlay)}
-        />
-
-        <Dialog
-          visible={showDialog1}
-          width="90%"
-          height="60%"
-          onDismiss={() => this.setState({showDialog1: false})}
-          style={{backgroundColor: Colors.white}}
-        >
-          {this.renderDialogContent(1)}
-        </Dialog>
-        <Dialog
-          visible={showDialog2}
-          width="100%"
-          height="35%"
-          bottom
-          useSafeArea
-          centerH
-          onDismiss={() => this.setState({showDialog2: false})}
-          style={{backgroundColor: Colors.white}}
-        >
-          {this.renderDialogContent(2, {br0: true})}
-        </Dialog>
-        <Dialog
-          visible={showDialog3}
-          width="90%"
-          height="60%"
-          bottom
-          useSafeArea
-          centerH
-          onDismiss={() => this.setState({showDialog3: false})}
-        >
-          {this.renderDialogContent(3, {'marginV-20': true, 'bg-white': true})}
-        </Dialog>
-        <Dialog
-          visible={showDialog4}
-          height="40%"
-          width="100%"
-          top
-          centerH
-          onDismiss={() => this.setState({showDialog4: false})}
-          style={{backgroundColor: Colors.white}}
-        >
-          {this.renderDialogContent(4, {br0: true})}
-        </Dialog>
-        <Dialog
-          visible={showDialog5}
-          width="100%"
-          height={null}
-          bottom
-          useSafeArea
-          centerH
-          onDismiss={() => this.setState({showDialog5: false})}
-          style={{backgroundColor: Colors.white}}
-        >
-          {this.renderDialogContent(5, {flex: false})}
-        </Dialog>
-        <Dialog
-          visible={showDialog6}
-          width="80%"
-          height="40%"
-          bottom
-          useSafeArea
-          centerH
-          onDismiss={() => this.setState({showDialog6: false})}
-          animationConfig={{animation: 'slideInLeft', duration: 1000}}
-        >
-          {this.renderDialogContent(6, {'marginV-20': true, 'bg-yellow60': true})}
-        </Dialog>
-        <Dialog
-          visible={showDialog7}
-          width="80%"
-          height="40%"
-          onDismiss={() => this.setState({showDialog7: false})}
-          style={{backgroundColor: Colors.white}}
-          disablePan
-        >
-          {this.renderDialogContent(7)}
-        </Dialog>
-        {showDialog8 && 
-        <Dialog
-          visible={showDialog8}
-          height="40%"
-          width="100%"
-          top
-          centerH
-          onDismiss={() => this.setState({showDialog8: false})}
-          style={{backgroundColor: Colors.white}}
-          useModal={false}
-        >
-          {this.renderDialogContent(8)}
-        </Dialog>}
-      </View>
+      <ScrollView>
+        <View flex padding-12>
+          <Text text30 dark10 marginB-20>
+            Dialog
+          </Text>
+          {this.renderButtons()}
+          {this.renderDialogs()}
+        </View>
+      </ScrollView>
     );
   }
 }
 
-export default DialogScreen;
+const styles = StyleSheet.create({
+  button: {
+    margin: 5,
+    alignSelf: 'flex-start'
+  },
+  scrollView: {
+    paddingBottom: 12
+  },
+  horizontalContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  horizontalTextContainer: {
+    position: 'absolute',
+    top: 10
+  }
+});

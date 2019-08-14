@@ -1,14 +1,16 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, TouchableWithoutFeedback, SafeAreaView, Animated, Easing, TouchableOpacity} from 'react-native';
-import {View as AnimatableView} from 'react-native-animatable';
+import {StyleSheet, SafeAreaView} from 'react-native';
 import {Constants} from '../../helpers';
-import {AnimatableManager, Colors} from '../../style';
+import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import Modal from '../../screensComponents/modal';
 import View from '../view';
-import PanGestureView from '../panningViews/panGestureView';
+import PanListenerView from '../panningViews/panListenerView';
+import PanDismissibleView from '../panningViews/panDismissibleView';
+import PanningProvider from '../panningViews/panningProvider';
+import DialogDeprecated from './dialogDeprecated';
 
 
 /**
@@ -20,238 +22,263 @@ import PanGestureView from '../panningViews/panGestureView';
  * @gif: https://media.giphy.com/media/9S58XdLCoUiLzAc1b1/giphy.gif
  */
 
-const SWIPE_DIRECTIONS = {
-  UP: 'up',
-  DOWN: 'down'
-}; // DEFRECATED
+const DIALOG_MARGIN = 12;
 
 class Dialog extends BaseComponent {
-  static displayName = 'Dialog'
+  static displayName = 'Dialog';
   static propTypes = {
+    ...DialogDeprecated.propTypes,
     /**
-     * Control visibility of the dialog
+     * Migration flag, send true to use the new (and improved) Dialog, default is false
      */
-    visible: PropTypes.bool,
+    migrate: PropTypes.bool,
+
     /**
-     * Dismiss callback for when clicking on the background
+     * Use the template configuration (default is false)
      */
-    onDismiss: PropTypes.func,
-    /**
-     * The direction of the swipe to dismiss the dialog (default is 'down')
-     */
-    dismissSwipeDirection: PropTypes.oneOf(Object.values(SWIPE_DIRECTIONS)), // DEFRECATED
-    /**
-     * The color of the overlay background
-     */
-    overlayBackgroundColor: PropTypes.string,
-    /**
-     * The dialog width (default: 90%)
-     */
-    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    /**
-     * The dialog height (default: 70%)
-     */
-    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    /**
-     * The animation configuration to pass to the dialog (ex. {animation, delay, duration, easing})
-     */
-    animationConfig: PropTypes.object,
-    /**
-     * The dialog container style
-     */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * Disable the pan gesture recognizer
-     */
-    disablePan: PropTypes.bool,
-    /**
-     * Whether or not to handle SafeArea
-     */
-    useSafeArea: PropTypes.bool,
-    /**
-     * Whether to display the dialog in a modal
-     */
-    useModal: PropTypes.bool,
-    /**
-     * Called once the modal has been dissmissed (iOS only, modal only)
-     */
-    onModalDismissed: PropTypes.func
+    useTemplate: PropTypes.bool
   };
 
   static defaultProps = {
-    overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
-    width: '90%',
-    height: '70%',
-    useModal: true
+    migrate: false,
+    overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6)
   };
-
-  static swipeDirections = SWIPE_DIRECTIONS; // DEFRECATED
 
   constructor(props) {
     super(props);
 
-    this.initialPosition = props.top ? -Constants.screenHeight : Constants.screenHeight;
-
     this.state = {
       alignments: this.state.alignments,
-      deltaY: new Animated.Value(this.initialPosition)
+      dialogKey: undefined
     };
 
     if (props.dismissSwipeDirection) {
       console.warn('Dialog component\'s prop \'dismissSwipeDirection\' is deprecated, please remove it');
     }
+    
+    if (props.migrate) {
+      this.setAlignment();
+      if (!_.isUndefined(props.useModal)) {
+        console.warn('Dialog component\'s prop \'useModal\' is deprecated (when using \'migrate\'), please remove it');
+      }
+    }
 
-    if (props.visible) {
-      this.animateContent();
+    if (this.props.useTemplate) {
+      this.calcDialogDimensionByOrientation();
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (!prevProps.visible && this.props.visible) {
-      this.animateContent();
+  componentDidMount() {
+    if (this.props.useTemplate) {
+      Constants.addDimensionsEventListener(this.onOrientationChange);
     }
   }
+
+  componentWillUnmount() {
+    if (this.props.useTemplate) {
+      Constants.removeDimensionsEventListener(this.onOrientationChange);
+    }
+  }
+
+  onOrientationChange = () => {
+    this.calcDialogDimensionByOrientation();
+    const dialogKey = Constants.orientation;
+    if (this.state.dialogKey !== dialogKey) {
+      this.setState({dialogKey});
+    }
+  }
+
+  calcDialogDimensionByOrientation = () => {
+    const isInLandscape = Constants.orientation === Constants.orientations.LANDSCAPE;
+    const showOnBottom = !(Constants.isTablet || isInLandscape);
+    if (showOnBottom) {
+      this.dynamicStyles.alignments = styles.bottomContent;
+    } else {
+      this.dynamicStyles.alignments = styles.centerContent;
+    }
+
+    this.dynamicStyles.size = {width: _getDialogWidth()};
+    this.dynamicStyles.presetHeight = {maxHeight: _getDialogMaxHeight()};
+  };
 
   generateStyles() {
-    this.styles = createStyles(this.props);
+    if (this.props.migrate) {
+      this.dynamicStyles = createStyles(this.props);
+    }
+  }
+
+  setAlignment() {
+    const {alignments} = this.state;
+    if (_.isEmpty(alignments)) {
+      this.dynamicStyles.alignments = styles.centerContent;
+    } else {
+      this.dynamicStyles.alignments = alignments;
+    }
   }
 
   onDismiss = () => {
-    this.initPositions();
     _.invoke(this.props, 'onDismiss');
-  }
+  };
 
-  animatedDismiss = () => {
-    if (this.panGestureViewRef) {
-      this.panGestureViewRef.animateDismiss();
-    } else {
+  setPanDismissibleViewRef = ref => {
+    this.panDismissibleViewRef = ref;
+  };
+
+  onDialogDismiss = () => {
+    if (!this.panDismissibleViewRef) {
       this.onDismiss();
+    } else {
+      this.panDismissibleViewRef.contentRef.animateDismiss();
     }
-  }
+  };
 
-  initPositions() {
-    this.setState({
-      deltaY: new Animated.Value(this.initialPosition)
-    });
-  }
+  renderHeader = directions => {
+    const {renderHeader, ...others} = this.props;
+    if (renderHeader) {
+      return <PanListenerView directions={directions}>{renderHeader(others)}</PanListenerView>;
+    }
+  };
 
-  animateContent() {
-    const {animationConfig} = this.getThemeProps();
-    const {deltaY} = this.state;
- 
-    Animated.timing(deltaY, {
-      toValue: 0,
-      duration: _.get(animationConfig, 'duration', 400),
-      easing: _.get(animationConfig, 'easing', Easing.bezier(0.165, 0.84, 0.44, 1)),
-      useNativeDriver: _.get(animationConfig, 'useNativeDriver', true)
-    }).start();
-  }
+  getDirections = () => {
+    const {panDirections, disablePan, renderHeader} = this.props;
+    let directions;
+    if (disablePan) {
+      directions = [];
+    } else if (this.props.top) {
+      directions = [PanningProvider.Directions.UP];
+    } else if (!_.isUndefined(renderHeader) || _.isUndefined(panDirections)) {
+      directions = [PanningProvider.Directions.DOWN];
+    } else {
+      directions = panDirections;
+    }
 
-  renderContent() {
-    const {bottom, useSafeArea} = this.getThemeProps();
-    const bottomInsets = Constants.getSafeAreaInsets().bottom;
+    return directions;
+  };
+
+  // TODO: useSafeArea = false
+  // TODO: renderOverlay
+  // TODO: animation configuration
+  renderVisibleContainer = () => {
+    const {children, renderHeader, style, useSafeArea, bottom, useTemplate} = this.props;
+    const addBottomSafeArea = Constants.isIphoneX && ((useSafeArea && bottom) || useTemplate);
+    const Container = !_.isUndefined(renderHeader) ? View : PanListenerView;
+    const directions = this.getDirections();
+    const bottomInsets = Constants.getSafeAreaInsets().bottom - 8;
 
     return (
-      <TouchableWithoutFeedback>
-        <SafeAreaView style={{flexGrow: 1}}>
-          {this.props.children}
-          {useSafeArea && Constants.isIphoneX && bottom && <View style={{marginTop: bottomInsets}}/>}
-        </SafeAreaView>
-      </TouchableWithoutFeedback>
+      <SafeAreaView style={[styles.safeArea, this.dynamicStyles.alignments]} pointerEvents="box-none">
+        <View style={this.dynamicStyles.size}>
+          <PanningProvider>
+            <PanDismissibleView
+              directions={directions}
+              ref={this.setPanDismissibleViewRef}
+              onDismiss={this.onDismiss}
+              style={this.dynamicStyles.flexType}
+            >
+              <Container
+                directions={directions}
+                style={[
+                  this.dynamicStyles.flexType,
+                  this.dynamicStyles.presetStyle,
+                  this.dynamicStyles.presetHeight,
+                  style
+                ]}
+              >
+                {this.renderHeader(directions)}
+                {children}
+              </Container>
+            </PanDismissibleView>
+          </PanningProvider>
+          {_.invoke(this.props, 'renderOverlay')}
+        </View>
+        {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>}
+      </SafeAreaView>
     );
   }
 
-  renderDraggableContainer() {
-    const {style, top, disablePan} = this.getThemeProps();
-    const Container = disablePan ? View : PanGestureView;
+  renderModal = () => {
+    const {dialogKey} = this.state;
+    const {visible, overlayBackgroundColor, onModalDismissed} = this.getThemeProps();
 
     return (
-      <Container
-        ref={!disablePan && (r => this.panGestureViewRef = r)}
-        style={[this.styles.dialogContainer, style]}
-        direction={!disablePan && top && PanGestureView.directions.UP}
-        onDismiss={this.onDismiss}
+      <Modal
+        key={dialogKey}
+        transparent
+        visible={visible}
+        animationType={'fade'}
+        onBackgroundPress={this.onDialogDismiss}
+        onRequestClose={this.onDialogDismiss}
+        overlayBackgroundColor={overlayBackgroundColor}
+        onDismiss={onModalDismissed}
+        // TODO:
+        supportedOrientations={['portrait', 'landscape']}
       >
-        {this.renderContent()}
-      </Container>
-    );
-  }
-
-  renderAnimationContainer() {
-    const {animationConfig, top, testID} = this.getThemeProps();
-    const {alignments, deltaY} = this.state;
-    const centerByDefault = _.isEmpty(alignments);
-    const hasCustomAnimation = (animationConfig && animationConfig.animation);
-    const Container = hasCustomAnimation ? AnimatableView : Animated.View;
-    const defaultAnimation = top ? AnimatableManager.presets.slideInDown : AnimatableManager.presets.slideInUp;
-    const animation = hasCustomAnimation ? Object.assign(defaultAnimation, animationConfig) : {};
-
-    return (
-      <Container
-        testID={testID}
-        style={[
-          this.styles.overlay,
-          {...alignments},
-          centerByDefault && this.styles.centerContent,
-          !hasCustomAnimation && {
-            transform: [{
-              translateY: deltaY
-            }]
-          }
-        ]}
-        pointerEvents="box-none"
-        {...animation}
-      >
-        {this.renderDraggableContainer()}
-      </Container>
+        {this.renderVisibleContainer()}
+      </Modal>
     );
   }
 
   render() {
-    const {visible, overlayBackgroundColor, useModal, onModalDismissed, disablePan} = this.getThemeProps();
-    const dismissFunction = disablePan ? this.onDismiss : this.animatedDismiss;
+    const {migrate, ...others} = this.getThemeProps();
     
-    if (useModal) {
+    if (migrate) {
+      return this.renderModal();
+    } else {
       return (
-        <Modal
-          transparent
-          visible={visible}
-          animationType={'fade'}
-          onBackgroundPress={dismissFunction}
-          onRequestClose={dismissFunction}
-          overlayBackgroundColor={overlayBackgroundColor}
-          onDismiss={onModalDismissed}
-        >
-          {this.renderAnimationContainer()}
-        </Modal>
-      );
-    } else {      
-      return (
-        <TouchableOpacity 
-          onPress={this.onDismiss}
-          activeOpacity={1}
-          style={{position: 'absolute', bottom: 0, top: 0, left: 0, right: 0, backgroundColor: overlayBackgroundColor}}
-        >
-          {this.renderAnimationContainer()}
-        </TouchableOpacity>
+        <DialogDeprecated
+          {...others}
+        />
       );
     }
   }
 }
 
-function createStyles({width, height}) {
+function _getDialogMaxHeight() {
+  const isInLandscape = Constants.orientation === Constants.orientations.LANDSCAPE;
+  return Constants.screenHeight * (Constants.isTablet || isInLandscape ? 0.9 : 0.75);
+}
+
+function _getDialogWidth() {
+  const isInLandscape = Constants.orientation === Constants.orientations.LANDSCAPE;
+  return Constants.isTablet || isInLandscape ? 450 : Constants.screenWidth;
+}
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1
+  },
+  centerContent: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  bottomContent: {
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+  withHeight: {
+    flex: 1
+  },
+  dynamicHeight: {
+    flex: 0,
+    overflow: 'hidden'
+  },
+  defaultDialogStyle: {
+    backgroundColor: Colors.white,
+    borderRadius: 12,
+    margin: DIALOG_MARGIN,
+    marginBottom: Constants.isIphoneX ? 0 : DIALOG_MARGIN
+  }
+});
+
+function createStyles(props) {
+  const {useTemplate, width, height} = props;
+  const size = useTemplate ? {} : {width, height};
+  const flexType = height === null || useTemplate ? styles.dynamicHeight : styles.withHeight;
+  const presetStyle = useTemplate ? styles.defaultDialogStyle : {};
   return StyleSheet.create({
-    overlay: {
-      flex: 1
-    },
-    dialogContainer: {
-      width,
-      height
-    },
-    centerContent: {
-      justifyContent: 'center',
-      alignItems: 'center'
-    }
+    size,
+    flexType,
+    presetStyle
   });
 }
 

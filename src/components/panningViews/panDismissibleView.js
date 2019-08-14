@@ -1,14 +1,11 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
-import {Animated} from 'react-native';
+import {Animated, Easing} from 'react-native';
 import {Constants} from '../../helpers';
 import asPanViewConsumer from './asPanViewConsumer';
 import PanningProvider from './panningProvider';
 
-const DEFAULT_SPEED = 20;
-const DEFAULT_BOUNCINESS = 6;
-const DEFAULT_DISMISS_ANIMATION_DURATION = 280;
 const MAXIMUM_DRAGS_AFTER_SWIPE = 2;
 
 /**
@@ -29,16 +26,9 @@ class PanDismissibleView extends PureComponent {
      */
     onDismiss: PropTypes.func,
     /**
-     * Some animation options to choose from:
-     * speed - the animation speed (default is 20)
-     * bounciness - the animation bounciness (default is 6)
-     * duration - the dismiss animation duration (default is 280)
+     * Some animation options to control the different animations.
      */
-    animationOptions: PropTypes.shape({
-      speed: PropTypes.number,
-      bounciness: PropTypes.number,
-      duration: PropTypes.number,
-    }),
+    animationOptions: PropTypes.object,
   };
 
   static defaultProps = {
@@ -48,11 +38,6 @@ class PanDismissibleView extends PureComponent {
       PanningProvider.Directions.LEFT,
       PanningProvider.Directions.RIGHT,
     ],
-    animationOptions: {
-      speed: DEFAULT_SPEED,
-      bounciness: DEFAULT_BOUNCINESS,
-      duration: DEFAULT_DISMISS_ANIMATION_DURATION,
-    },
     onDismiss: _.noop,
   };
 
@@ -60,8 +45,7 @@ class PanDismissibleView extends PureComponent {
     super(props);
 
     this.state = {
-      animTranslateX: new Animated.Value(0),
-      animTranslateY: new Animated.Value(0),
+      ...this.getDefaultTranslations(props),
       isAnimating: false
     };
     shouldDismissAfterReset = false;
@@ -102,6 +86,25 @@ class PanDismissibleView extends PureComponent {
     }
   }
 
+  getDefaultTranslations(props) {
+    const {directions} = props;
+    if (directions.length === 0 || directions.includes(PanningProvider.Directions.DOWN)) {
+      this.startAnimId = 'animTranslateY';
+      return {animTranslateX: new Animated.Value(0), animTranslateY: new Animated.Value(Constants.screenHeight)};
+    } else if (directions.includes(PanningProvider.Directions.UP)) {
+      this.startAnimId = 'animTranslateY';
+      return {animTranslateX: new Animated.Value(0), animTranslateY: new Animated.Value(-Constants.screenHeight)};
+    } else if (directions.includes(PanningProvider.Directions.RIGHT)) {
+      this.startAnimId = 'animTranslateX';
+      return {animTranslateX: new Animated.Value(Constants.screenWidth), animTranslateY: new Animated.Value(0)};
+    } else if (directions.includes(PanningProvider.Directions.LEFT)) {
+      this.startAnimId = 'animTranslateX';
+      return {animTranslateX: new Animated.Value(-Constants.screenWidth), animTranslateY: new Animated.Value(0)};
+    } else {
+      return {animTranslateX: new Animated.Value(0), animTranslateY: new Animated.Value(0)};
+    }
+  }
+
   onLayout = event => {
     if (_.isUndefined(this.height)) {
       const layout = event.nativeEvent.layout;
@@ -109,16 +112,27 @@ class PanDismissibleView extends PureComponent {
       this.thresholdY = layout.height / 2;
       this.width = layout.width;
       this.thresholdX = layout.width / 2;
-      this.initPositions();
+      if (this.startAnimId) {
+        this.startEnterAnimation();
+      } else {
+        this.initPositions();
+      }
     }
   };
 
-  initPositions = (extraDataForSetState, runAfterSetState) => {
+  startEnterAnimation() {
+    const animation = this.getTimingAnimation(this.startAnimId, 0, 400, Easing.bezier(0.165, 0.84, 0.44, 1));
+    this.setState({isAnimating: true}, () => {
+      animation.start(() => this.initPositions());
+    });
+  }
+
+  initPositions = (runAfterSetState) => {
     this.setNativeProps(0, 0);
     this.setState({
       animTranslateX: new Animated.Value(0),
       animTranslateY: new Animated.Value(0),
-      ...extraDataForSetState
+      isAnimating: false
     }, runAfterSetState);
   };
 
@@ -174,29 +188,15 @@ class PanDismissibleView extends PureComponent {
   };
 
   resetPosition = () => {
-    const {animTranslateX, animTranslateY} = this.state;
-    const {speed, bounciness} = this.props.animationOptions;
     const toX = -this.left;
     const toY = -this.top;
     const animations = [];
     if (!_.isUndefined(toX)) {
-      animations.push(
-        Animated.spring(animTranslateX, {
-          toValue: Math.round(toX),
-          speed,
-          bounciness,
-        }),
-      );
+      animations.push(this.getSpringAnimation('animTranslateX', toX));
     }
 
     if (!_.isUndefined(toY)) {
-      animations.push(
-        Animated.spring(animTranslateY, {
-          toValue: Math.round(toY),
-          speed,
-          bounciness,
-        }),
-      );
+      animations.push(this.getSpringAnimation('animTranslateY', toY));
     }
 
     this.setState({isAnimating: true}, () => {
@@ -204,10 +204,19 @@ class PanDismissibleView extends PureComponent {
     });
   };
 
+  getSpringAnimation = (animId, toValue) => {
+    const {animationOptions} = this.props;
+    return Animated.spring(this.state[animId], {
+      toValue: Math.round(toValue),
+      speed: _.get(animationOptions, 'speed', 20),
+      bounciness: _.get(animationOptions, 'bounciness', 6),
+    });
+  }
+
   onResetPositionFinished = () => {
     const runAfterSetState = this.shouldDismissAfterReset ? this.animateDismiss : undefined;
     this.shouldDismissAfterReset = false;
-    this.initPositions({isAnimating: false}, runAfterSetState);
+    this.initPositions(runAfterSetState);
   };
 
   getDismissAnimationDirection = () => {
@@ -261,8 +270,6 @@ class PanDismissibleView extends PureComponent {
   };
 
   _animateDismiss = (isRight, isDown) => {
-    const {animTranslateX, animTranslateY} = this.state;
-    const {duration} = this.props.animationOptions;
     const animations = [];
     let toX;
     let toY;
@@ -278,27 +285,26 @@ class PanDismissibleView extends PureComponent {
     }
 
     if (!_.isUndefined(toX)) {
-      animations.push(
-        Animated.timing(animTranslateX, {
-          toValue: Math.round(toX),
-          duration,
-        }),
-      );
+      animations.push(this.getTimingAnimation('animTranslateX', toX, 280));
     }
 
     if (!_.isUndefined(toY)) {
-      animations.push(
-        Animated.timing(animTranslateY, {
-          toValue: Math.round(toY),
-          duration,
-        }),
-      );
+      animations.push(this.getTimingAnimation('animTranslateY', toY, 280));
     }
 
     this.setState({isAnimating: true}, () => {
       Animated.parallel(animations).start(this.onDismissAnimationFinished);
     });
   };
+
+  getTimingAnimation = (animId, toValue, defaultDuration, defaultEasing) => {
+    const {animationOptions} = this.props;
+    return Animated.timing(this.state[animId], {
+      toValue: Math.round(toValue),
+      duration: _.get(animationOptions, 'duration', defaultDuration),
+      easing: _.get(animationOptions, 'easing', defaultEasing),
+    });
+  }
 
   onDismissAnimationFinished = ({finished}) => {
     if (finished) {
