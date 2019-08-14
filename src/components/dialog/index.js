@@ -26,7 +26,38 @@ const DIALOG_MARGIN = 12;
 class Dialog extends BaseComponent {
   static displayName = 'Dialog';
   static propTypes = {
-    ...DialogDeprecated.propTypes,
+    /**
+     * Control visibility of the dialog
+     */
+    visible: PropTypes.bool,
+    /**
+     * Dismiss callback for when clicking on the background
+     */
+    onDismiss: PropTypes.func,
+    /**
+     * The color of the overlay background
+     */
+    overlayBackgroundColor: PropTypes.string,
+    /**
+     * The dialog width (default: 90%)
+     */
+    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    /**
+     * The dialog height (default: 70%)
+     */
+    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    /**
+     * Disable the pan gesture recognizer
+     */
+    disablePan: PropTypes.bool,
+    /**
+     * Whether or not to handle SafeArea
+     */
+    useSafeArea: PropTypes.bool,
+    /**
+     * Called once the modal has been dissmissed (iOS only, modal only)
+     */
+    onModalDismissed: PropTypes.func,
     /**
      * If this is added only the header will be pannable;
      * this allows for scrollable content (the children of the dialog)
@@ -47,6 +78,8 @@ class Dialog extends BaseComponent {
   static defaultProps = {
     migrate: false,
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
+    width: '90%',
+    height: '70%',
   };
 
   static getDialogMaxHeight() {
@@ -69,9 +102,6 @@ class Dialog extends BaseComponent {
 
     if (props.migrate) {
       this.setAlignment();
-      if (!_.isUndefined(props.useModal)) {
-        console.warn("Dialog component's prop 'useModal' is deprecated (when using 'migrate'), please remove it");
-      }
     }
 
     if (this.props.useTemplate) {
