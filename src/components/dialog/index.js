@@ -44,6 +44,16 @@ class Dialog extends BaseComponent {
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6)
   };
 
+  static getDialogMaxHeight() {
+    const dialogMaxHeight = getDialogMaxHeight();
+    return dialogMaxHeight - 2 * DIALOG_MARGIN;
+  }
+  
+  static getDialogWidth() {
+    const dialogWidth = getDialogWidth();
+    return dialogWidth - 2 * DIALOG_MARGIN;
+  }
+
   constructor(props) {
     super(props);
 
@@ -69,19 +79,18 @@ class Dialog extends BaseComponent {
   }
 
   componentDidMount() {
-    if (this.props.useTemplate) {
-      Constants.addDimensionsEventListener(this.onOrientationChange);
-    }
+    Constants.addDimensionsEventListener(this.onOrientationChange);
   }
 
   componentWillUnmount() {
-    if (this.props.useTemplate) {
-      Constants.removeDimensionsEventListener(this.onOrientationChange);
-    }
+    Constants.removeDimensionsEventListener(this.onOrientationChange);
   }
 
   onOrientationChange = () => {
-    this.calcDialogDimensionByOrientation();
+    if (this.props.useTemplate) {
+      this.calcDialogDimensionByOrientation();
+    }
+    
     const dialogKey = Constants.orientation;
     if (this.state.dialogKey !== dialogKey) {
       this.setState({dialogKey});
@@ -97,8 +106,8 @@ class Dialog extends BaseComponent {
       this.dynamicStyles.alignments = styles.centerContent;
     }
 
-    this.dynamicStyles.size = {width: _getDialogWidth()};
-    this.dynamicStyles.presetHeight = {maxHeight: _getDialogMaxHeight()};
+    this.dynamicStyles.size = {width: getDialogWidth()};
+    this.dynamicStyles.presetHeight = {maxHeight: getDialogMaxHeight()};
   };
 
   generateStyles() {
@@ -233,12 +242,12 @@ class Dialog extends BaseComponent {
   }
 }
 
-function _getDialogMaxHeight() {
+function getDialogMaxHeight() {
   const isInLandscape = Constants.orientation === Constants.orientations.LANDSCAPE;
   return Constants.screenHeight * (Constants.isTablet || isInLandscape ? 0.9 : 0.75);
 }
 
-function _getDialogWidth() {
+function getDialogWidth() {
   const isInLandscape = Constants.orientation === Constants.orientations.LANDSCAPE;
   return Constants.isTablet || isInLandscape ? 450 : Constants.screenWidth;
 }
