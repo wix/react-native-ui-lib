@@ -132,7 +132,7 @@ class Dialog extends BaseComponent {
     this.panDismissibleViewRef = ref;
   };
 
-  onDialogDismiss = () => {
+  animateDismiss = () => {
     if (!this.panDismissibleViewRef) {
       this.onDismiss();
     } else {
@@ -213,8 +213,8 @@ class Dialog extends BaseComponent {
         transparent
         visible={visible}
         animationType={'fade'}
-        onBackgroundPress={this.onDialogDismiss}
-        onRequestClose={this.onDialogDismiss}
+        onBackgroundPress={this.animateDismiss}
+        onRequestClose={this.animateDismiss}
         overlayBackgroundColor={overlayBackgroundColor}
         onDismiss={onModalDismissed}
         // TODO:
