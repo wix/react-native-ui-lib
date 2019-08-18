@@ -16,11 +16,6 @@ class panResponderView extends PureComponent {
   static displayName = 'panResponderView';
   static propTypes = {
     /**
-     * The directions of the allowed pan (default allows all directions)
-     * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###)
-     */
-    directions: PropTypes.arrayOf(PropTypes.oneOf(Object.values(PanningProvider.Directions))),
-    /**
      * The location ({left, top} of the top-left corner)
      */
     location: PropTypes.shape({left: PropTypes.number, top: PropTypes.number}),
