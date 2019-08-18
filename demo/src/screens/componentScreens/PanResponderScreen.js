@@ -11,10 +11,6 @@ export default class PanResponderScreen extends Component {
     isCoupled: false,
   };
 
-  onPanLocationChanged = (location) => {
-    this.setState({location});
-  }
-
   switchExample = () => {
     const {isCoupled, location} = this.state;
     if (isCoupled) {
@@ -43,7 +39,7 @@ export default class PanResponderScreen extends Component {
   }
 
   render() {
-    const {isCoupled, location} = this.state;
+    const {isCoupled} = this.state;
     const panListener = this.renderPanListener();
 
     return (
@@ -56,9 +52,7 @@ export default class PanResponderScreen extends Component {
         <PanningProvider>
           {!isCoupled && panListener}
           <PanResponderView
-            style={styles.panResponder}
-            location={location}
-            onPanLocationChanged={this.onPanLocationChanged}
+            style={[styles.panResponder, {marginTop: isCoupled ? PAN_LISTENER_VIEW_HEIGHT : undefined}]}
           >
             {isCoupled && panListener}
           </PanResponderView>

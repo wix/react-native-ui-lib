@@ -9,48 +9,53 @@ export default class PanAnimatableScreen extends Component {
   constructor(props) {
     super(props);
     this.key = 0;
+    this.currentLocationIndex = 0;
+    this.locations = [{left: 100, top: 200}, {left: 100, top: 100}, {left: 150, top: 100}, {left: 100, top: 150}];
     this.state = this.getDefaultState();
   }
 
   getDefaultState = () => {
     return ({
-        from: {left: 50, top: 50},
-        to: {left: 150, top: 150},
+        to: this.locations[this.currentLocationIndex],
         isAnimating: true,
         isCoupled: false,
         key: this.key,
       });
   }
 
+  goToNextLocation = () => {
+    this.currentLocationIndex = this.currentLocationIndex + 1;
+    if (this.currentLocationIndex === this.locations.length) {
+      this.currentLocationIndex = 0;
+    }
+
+    this.setState({
+      to: this.locations[this.currentLocationIndex],
+      isAnimating: true,
+    });
+  }
+
   reset = () => {
     this.key = this.key + 1;
+    this.currentLocationIndex = 0;
     this.setState(this.getDefaultState());
   }
 
   switchExample = () => {
-    const {isCoupled, from} = this.state;
+    const {isCoupled} = this.state;
     if (isCoupled) {
       this.setState({
         isCoupled: false,
-        from: {left: from.left, top: from.top - PAN_LISTENER_VIEW_HEIGHT},
-        to: {left: from.left, top: from.top - PAN_LISTENER_VIEW_HEIGHT},
       });
     } else {
       this.setState({
         isCoupled: true,
-        from: {left: from.left, top: from.top + PAN_LISTENER_VIEW_HEIGHT},
-        to: {left: from.left, top: from.top + PAN_LISTENER_VIEW_HEIGHT},
       });
     }
   }
 
   onAnimationEnd = () => {
-    const {to} = this.state;
-    this.setState({isAnimating: false, from: to});
-  }
-
-  onPanLocationChanged = (location) => {
-    this.setState({from: location});
+    this.setState({isAnimating: false});
   }
 
   renderPanListener = () => {
@@ -66,7 +71,7 @@ export default class PanAnimatableScreen extends Component {
   }
 
   render() {
-    const {isAnimating, isCoupled, from, to} = this.state;
+    const {isAnimating, isCoupled, to, key} = this.state;
     const panListener = this.renderPanListener();
 
     return (
@@ -74,21 +79,23 @@ export default class PanAnimatableScreen extends Component {
         <View style={styles.header}>
           <Text style={styles.largeText}>Pan Animatable</Text>
           <View>
-            <View style={styles.coupling}>
+            <View row>
               <Switch value={isCoupled} onValueChange={this.switchExample} disabled={isAnimating} style={styles.switch}/>
               <Text style={styles.smallText}>{isCoupled ? 'Coupled' : 'Uncoupled'}</Text>
             </View>
-            <Button style={styles.button} label={'Reset'} size={Button.sizes.xSmall} onPress={this.reset}/>
+            <View row>
+              <Button style={styles.button} label={'Reset'} size={Button.sizes.xSmall} onPress={this.reset}/>
+              <Button style={styles.button} label={'Next'} size={Button.sizes.xSmall} onPress={this.goToNextLocation}/>
+            </View>
           </View>
         </View>
         <PanningProvider>
           {!isCoupled && panListener}
           <PanAnimatableView
-            style={styles.panAnimatable}
-            from={from}
+            key={key}
+            style={[styles.panAnimatable, {marginTop: isCoupled ? PAN_LISTENER_VIEW_HEIGHT : undefined}]}
             to={to}
             onAnimationEnd={this.onAnimationEnd}
-            onPanLocationChanged={this.onPanLocationChanged}
           >
             {isCoupled && panListener}
           </PanAnimatableView>
@@ -103,9 +110,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 80,
     alignItems: 'center',
-  },
-  coupling: {
-    flexDirection: 'row',
   },
   panAnimatable: {
     width: 250,

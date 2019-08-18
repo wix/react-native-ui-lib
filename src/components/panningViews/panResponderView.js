@@ -1,10 +1,8 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
-import {Animated} from 'react-native';
 import View from '../view';
 import asPanViewConsumer from './asPanViewConsumer';
-import PanningProvider from './panningProvider';
 
 /**
  * @description: panResponderView component created to making listening to swipe and drag events easier.
@@ -15,10 +13,6 @@ import PanningProvider from './panningProvider';
 class panResponderView extends PureComponent {
   static displayName = 'panResponderView';
   static propTypes = {
-    /**
-     * The location ({left, top} of the top-left corner)
-     */
-    location: PropTypes.shape({left: PropTypes.number, top: PropTypes.number}),
     /**
      * Will be called with the current location ({left, top}) when the pan has ended
      */
@@ -32,9 +26,8 @@ class panResponderView extends PureComponent {
   constructor(props) {
     super(props);
 
-    const {location} = props;
-    this.initialLeft = _.get(location, 'left', 0);
-    this.initialTop = _.get(location, 'top', 0);
+    this.initialLeft = 0;
+    this.initialTop = 0;
 
     this.ref = React.createRef();
   }
@@ -44,9 +37,8 @@ class panResponderView extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const {location, ignorePanning} = this.props;
+    const {ignorePanning} = this.props;
     const {isPanning, dragDeltas} = this.props.context; // eslint-disable-line
-    const {location: prevLocation} = prevProps;
     const {
       isPanning: prevIsPanning,
       dragDeltas: prevDragDeltas,
@@ -64,18 +56,12 @@ class panResponderView extends PureComponent {
     ) {
       this.onDrag(dragDeltas);
     }
-
-    if (location !== prevLocation) {
-      this.left = location.left;
-      this.top = location.top;
-      this.initialLeft = this.left;
-      this.initialTop = this.top;
-      this.setNativeProps(this.left, this.top);
-    }
   }
 
   onPanEnd() {
     const location = {left: this.left, top: this.top};
+    this.initialLeft = this.left;
+    this.initialTop = this.top;
     _.invoke(this.props, 'onPanLocationChanged', location);
     _.invoke(this.props.context, 'onPanLocationChanged', location); // eslint-disable-line
   }

@@ -1,15 +1,10 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
-import {Animated, Easing, StyleSheet} from 'react-native';
-import {Constants} from '../../helpers';
+import {Animated, Easing} from 'react-native';
 import View from '../view';
 import asPanViewConsumer from './asPanViewConsumer';
-import PanningProvider from './panningProvider';
 import PanResponderView from './panResponderView';
-import { createNativeWrapper } from 'react-native-gesture-handler';
-
-const MAXIMUM_DRAGS_AFTER_SWIPE = 2;
 
 /**
  * @description: panAnimatableView component created to making listening to swipe and drag events easier, with animation.
@@ -20,12 +15,6 @@ const MAXIMUM_DRAGS_AFTER_SWIPE = 2;
 class panAnimatableView extends PureComponent {
   static displayName = 'panAnimatableView';
   static propTypes = {
-    // ...PanResponderView.PropTypes,
-
-    /**
-     * The start location ({left, top} of the top-left corner)
-     */
-    from: PropTypes.shape({left: PropTypes.number, top: PropTypes.number}),
     /**
      * The end location ({left, top} of the top-left corner)
      */
@@ -47,117 +36,86 @@ class panAnimatableView extends PureComponent {
   constructor(props) {
     super(props);
 
-    const from = {left: _.get(props.from, 'left', 0), top: _.get(props.from, 'top', 0)};
-    const to = {left: _.get(props.to, 'left', 0), top: _.get(props.to, 'top', 0)};
-    
+    this.translation = {
+      marginLeft: 0,
+      marginTop: 0,
+    };
+
+    this.animationValue = new Animated.Value(0);
     this.state = {
-      location: from,
-      diff: this.getDiff(from, to),
-      animTranslateX: new Animated.Value(0),
-      animTranslateY: new Animated.Value(0),
       isAnimating: false,
     };
   }
 
-
   componentDidMount() {
-    this.initAnimations();
+    this.initAnimation();
   }
-  
+
   componentDidUpdate(prevProps) {
-    const {from, to} = this.props;
-    const {from: prevFrom, to: prevTo} = prevProps;
-    const {panLocation} = this.props.context; // eslint-disable-line
-    const {
-      panLocation: prevPanLocation,
-    } = prevProps.context; // eslint-disable-line
-
-    if (panLocation !== prevPanLocation) {
-      this.setState({location: panLocation});
-    }
-
-    if (from !== prevFrom || to !== prevTo) {
-      if (to === prevTo) {
-        this.setState({location: from});
-      } else {
-        this.setState({location: from, diff: this.getDiff(from, to)}, this.initAnimations);
-      }
+    const {to} = this.props;
+    const {to: prevTo} = prevProps;
+    if (to !== prevTo) {
+      this.initAnimation();
     }
   }
 
-  getDiff(from, to) {
-    return {x: to.left - from.left, y: to.top - from.top};
+  getTo = () => {
+    const {to} = this.props;
+    return {left: _.get(to, 'left', 0), top: _.get(to, 'top', 0)};  
   }
 
-  startAnimation(animations) {
-    if (!_.isUndefined(animations)) {
-      if (Array.isArray(animations)) {
-        Animated.parallel(animations).start(this.onAnimationEnd);
-      } else {
-        animations.start(this.onAnimationEnd);
-      }
-    }
+  getDiff = () => {
+    const to = this.getTo();
+    return {x: to.left - this.translation.marginLeft, y: to.top - this.translation.marginTop};
   }
 
   onAnimationEnd = () => {
+    const to = this.getTo();
+    this.translation = {
+      marginLeft: to.left,
+      marginTop: to.top,
+    };
+
     this.setState({
       isAnimating: false,
-      location: this.props.to,
     }, () => _.invoke(this.props, 'onAnimationEnd'));
   }
 
-  getAnimation(animId, toValue) {
+  initAnimation() {
+    const diff = this.getDiff();
+    this.animationStyle = {
+      transform: [{translateX: this.animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, diff.x]
+      })}, {translateY: this.animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, diff.y]
+      })}]
+    }
+
     const {animationOptions} = this.props;
-    return Animated.timing(this.state[animId], {
-      toValue: Math.round(toValue),
+    const animation = Animated.timing(this.animationValue, {
+      toValue: 1,
       duration: 400,
       easing: Easing.bezier(0.165, 0.84, 0.44, 1),
       useNativeDriver: true,
       ...animationOptions
-      // TODO: change to one animation value (interpolate)
-      // this.style = {
-      //     transform: [{translateX: this.animValue.interpolate({
-      //         inputRange: [0, 1],
-      //         outputRange: []
-      //     })}]
-      // }
     });
-  }
 
-  getAnimations() {
-    const {diff} = this.state;
-    const animationX = diff.x !== 0 ? this.getAnimation('animTranslateX', diff.x) : undefined;
-    const animationY = diff.y !== 0 ? this.getAnimation('animTranslateY', diff.y) : undefined;
-    if (animationX && animationY) {
-      return [animationX, animationY];
-    } else if (animationX) {
-      return animationX;
-    } else if (animationY) {
-      return animationY;
-    } else {
-      return undefined;
-    }
-  }
-
-  initAnimations() {
-    const animations = this.getAnimations();
-    if (!_.isUndefined(animations)) {
-      this.setState({isAnimating: true}, () => this.startAnimation(animations));
-    }
+    this.setState({isAnimating: true}, () => animation.start(this.onAnimationEnd));
   }
 
   render() {
       const {children, style, onPanLocationChanged} = this.props;
-      const {isAnimating, location, animTranslateX, animTranslateY} = this.state;
-      const transform = isAnimating ? [{translateX: animTranslateX}, {translateY: animTranslateY}] : [];
+      const {isAnimating} = this.state;
+      const containerStyle = isAnimating ? [this.animationStyle, this.translation] : this.translation;
       const Container = isAnimating ? Animated.View : View; // this solves a bug on Android
 
       return (
-        <Container style={{transform}}>
+        <Container style={containerStyle}>
           <PanResponderView
             ignorePanning={isAnimating}
             style={style}
-            location={location}
             onPanLocationChanged={onPanLocationChanged}
           >
             {children}
