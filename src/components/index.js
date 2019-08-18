@@ -26,6 +26,8 @@ module.exports = {
   get PanningProvider() { return require('./panningViews/panningProvider').default; },
   get PanGestureView() { return require('./panningViews/panGestureView').default; },
   get PanListenerView() { return require('./panningViews/panListenerView').default; },
+  get PanResponderView() { return require('./panningViews/panResponderView').default; },
+  get PanAnimatableView() { return require('./panningViews/panAnimatableView').default; },
   get PanDismissibleView() { return require('./panningViews/panDismissibleView').default; },
   get Picker() { return require('./picker').default; },
   get ProgressBar() { return require('./progressBar').default; },
