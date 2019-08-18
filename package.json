@@ -40,6 +40,7 @@
     "@react-native-community/blur": "^3.3.1",
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
     "color": "^3.1.0",
+    "commons-validator-js": "^1.0.237",
     "hoist-non-react-statics": "^3.0.0",
     "lodash": "^4.0.0",
     "prop-types": "^15.5.10",
