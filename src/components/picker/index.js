@@ -149,7 +149,7 @@ class Picker extends BaseComponent {
     }
 
     if (props.useNativePicker && _.isPlainObject(props.value)) {
-      console.warn('UILib Picker: dont use object as value for native picker, use either string or a number');
+      console.warn('UILib Picker: don\'t use object as value for native picker, use either string or a number');
     }
   }
 
