@@ -96,6 +96,10 @@ class FeatureHighlight extends BaseComponent {
      */
     borderWidth: PropTypes.number,
     /**
+     * Border radius for the border corners around the highlighted element
+     */
+    borderRadius: PropTypes.number,
+    /**
      * The minimum size of the highlighted component (Android API 21+, and only when passing a ref in 'getTarget')
      */
     minimumRectSize: PropTypes.shape({
@@ -255,7 +259,7 @@ class FeatureHighlight extends BaseComponent {
     if (contentTopPosition === undefined) return null;
 
     const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding,
-      onBackgroundPress} = this.getThemeProps();
+      onBackgroundPress, borderRadius} = this.getThemeProps();
 
     return (
       <HighlighterOverlayView
@@ -268,6 +272,7 @@ class FeatureHighlight extends BaseComponent {
         strokeWidth={borderWidth || defaultStrokeWidth}
         minimumRectSize={minimumRectSize}
         innerPadding={innerPadding}
+        borderRadius={borderRadius}
       >
         <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onBackgroundPress}>
           <View flex/>
