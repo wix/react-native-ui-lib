@@ -84,12 +84,12 @@ class TabBar extends PureComponent {
   constructor(props, context) {
     super(props, context);
     const {registerTabItems} = this.context;
-    const itemsCount = React.Children.count(this.props.children);
+    const itemsCount = React.Children.count(this.children);
     const ignoredItems = [];
 
     this.tabBar = React.createRef();
 
-    this._itemsWidths = _.times(React.Children.count(this.props.children), () => null);
+    this._itemsWidths = _.times(itemsCount, () => null);
     this._indicatorOffset = new ReanimatedObject({duration: 300, easing: Easing.bezier(0.23, 1, 0.32, 1)});
     this._indicatorWidth = new ReanimatedObject({duration: 300, easing: Easing.bezier(0.23, 1, 0.32, 1)});
     this._indicatorTransitionStyle = {
@@ -102,12 +102,16 @@ class TabBar extends PureComponent {
       itemsWidths: undefined,
     };
 
-    React.Children.toArray(this.props.children).forEach((child, index) => {
+    React.Children.toArray(this.children).forEach((child, index) => {
       if (child.props.ignore) {
         ignoredItems.push(index);
       }
     });
     registerTabItems(itemsCount, ignoredItems);
+  }
+
+  get children() {
+    return _.filter(this.props.children, child => !!child);
   }
 
   onItemLayout = (itemWidth, itemIndex) => {
@@ -179,7 +183,7 @@ class TabBar extends PureComponent {
         return this.tabBarItems;
       }
 
-      this.tabBarItems = React.Children.map(this.props.children, (child, index) => {
+      this.tabBarItems = React.Children.map(this.children, (child, index) => {
         return React.cloneElement(child, {
           labelColor,
           selectedLabelColor,
