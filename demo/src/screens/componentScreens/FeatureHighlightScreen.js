@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {Constants, View, Text, Button, Image, FeatureHighlight} from 'react-native-ui-lib'; // eslint-disable-line
+import {Colors, View, Text, Button, FeatureHighlight} from 'react-native-ui-lib'; // eslint-disable-line
+
 
 const titles = [
   'Get Notified',
@@ -8,7 +9,7 @@ const titles = [
   'Title number three',
   'Title number four',
   'Title number five',
-  'Only a title and headline',
+  'Only a title and headline'
 ];
 const messages = [
   'Important notifications appear right on your clubs and groups. Tap them to get more information about the most' +
@@ -19,7 +20,7 @@ const messages = [
   ' warning about it',
   'Very short message',
   'Short message with information about the below highlighted feature',
-  undefined,
+  undefined
 ];
 const headlines = [
   'Welcome to uilib demo!'
@@ -32,14 +33,10 @@ class FeatureHighlightScreen extends Component {
 
     this.state = {
       showFTE: false,
-      currentTargetIndex: 0,
+      currentTargetIndex: 0
     };
 
     this.targets = {};
-
-    this.closeHighlight = this.closeHighlight.bind(this);
-    this.showHighlight = this.showHighlight.bind(this);
-    this.moveNext = this.moveNext.bind(this);
   }
 
   componentDidMount() {
@@ -49,11 +46,11 @@ class FeatureHighlightScreen extends Component {
     }, 1000);
   }
 
-  closeHighlight() {
+  closeHighlight = () => {
     this.setState({showFTE: false});
   }
 
-  showHighlight() {
+  showHighlight = () => {
     this.setState({showFTE: true});
   }
 
@@ -63,33 +60,53 @@ class FeatureHighlightScreen extends Component {
     }
   }
 
-  moveNext() {
+  moveNext = () => {
     const {currentTargetIndex} = this.state;
     const newTargetIndex = currentTargetIndex + 1;
 
-    if (newTargetIndex < _.size(this.targets)) {
-      this.setState({currentTargetIndex: newTargetIndex});
+    this.moveToPage(newTargetIndex);
+  }
+
+  moveToPage(index) {
+    if (index < _.size(this.targets)) {
+      this.setState({currentTargetIndex: index});
     } else {
       this.closeHighlight();
     }
   }
 
+  getPageControlProps() {
+    return {
+      numOfPages: titles.length, 
+      currentPage: this.state.currentTargetIndex, 
+      onPagePress: this.onPagePress,
+      color: Colors.dark30,
+      inactiveColor: Colors.dark80,
+      size: 8
+    };
+  }
+
+  onPagePress = (index) => {
+    this.moveToPage(index);
+  }
+
   renderHighlighterOverlay() {
     const {showFTE, currentTargetIndex} = this.state;
-    const headline = currentTargetIndex === 5 ? headlines[0] : undefined;
+    const lastPage = titles.length - 1;
 
     return (
       <FeatureHighlight
         visible={showFTE}
         title={titles[currentTargetIndex]}
         message={messages[currentTargetIndex]}
-        headline={headline}
+        headline={currentTargetIndex === lastPage ? headlines[0] : undefined}
         confirmButtonProps={{label: 'Got It', onPress: this.moveNext}}
         onBackgroundPress={this.closeHighlight}
         getTarget={() => this.targets[currentTargetIndex]}
         // highlightFrame={{x: 30, y: 70, width: 150, height: 30}}
         // highlightFrame={{x: 160, y: 336, width: 150, height: 56}}
         // borderRadius={4}
+        pageControlProps={currentTargetIndex < lastPage ? this.getPageControlProps() : undefined}
       />
     );
   }

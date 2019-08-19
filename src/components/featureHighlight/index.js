@@ -8,6 +8,7 @@ import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
 import Button from '../button';
+import PageControl from '../pageControl';
 import {HighlighterOverlayView} from '../../nativeComponents';
 
 
@@ -113,7 +114,11 @@ class FeatureHighlight extends BaseComponent {
     /**
      * The padding of the highlight frame around the highlighted element's frame (only when passing ref in 'getTarget')
      */
-    innerPadding: PropTypes.number
+    innerPadding: PropTypes.number,
+    /**
+     * PageControl component's props
+     */
+    pageControlProps: PropTypes.shape(PageControl.propTypes)
   };
 
   constructor(props) {
@@ -278,7 +283,7 @@ class FeatureHighlight extends BaseComponent {
     if (contentTopPosition === undefined) return null;
 
     const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding,
-      onBackgroundPress, borderRadius} = this.getThemeProps();
+      onBackgroundPress, borderRadius, pageControlProps} = this.getThemeProps();
 
     return (
       <HighlighterOverlayView
@@ -294,7 +299,13 @@ class FeatureHighlight extends BaseComponent {
         borderRadius={borderRadius}
       >
         <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onBackgroundPress}>
+          {pageControlProps ?
+          <View flex bottom>
+            <PageControl {...pageControlProps} containerStyle={{marginBottom: 24}}/>
+          </View>
+          : 
           <View flex/>
+          }
         </TouchableWithoutFeedback>
         {this.renderHighlightMessage()}
       </HighlighterOverlayView>
