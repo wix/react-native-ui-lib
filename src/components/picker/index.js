@@ -14,13 +14,12 @@ import NativePicker from './NativePicker';
 import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
 
-
 const PICKER_MODES = {
   SINGLE: 'SINGLE',
-  MULTI: 'MULTI',
+  MULTI: 'MULTI'
 };
 const ItemType = PropTypes.shape({
-  value: PropTypes.any, 
+  value: PropTypes.any,
   label: PropTypes.string
 });
 
@@ -36,7 +35,13 @@ class Picker extends BaseComponent {
     /**
      * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
      */
-    value: PropTypes.oneOfType([ItemType, PropTypes.arrayOf(ItemType), PropTypes.object, PropTypes.string, PropTypes.number]),
+    value: PropTypes.oneOfType([
+      ItemType,
+      PropTypes.arrayOf(ItemType),
+      PropTypes.object,
+      PropTypes.string,
+      PropTypes.number
+    ]),
     /**
      * Callback for when picker value change
      */
@@ -62,7 +67,7 @@ class Picker extends BaseComponent {
     /**
      * Render custom picker modal
      */
-    renderExpandableModal: PropTypes.func,
+    renderCustomModal: PropTypes.func,
     /**
      * Custom picker props (when using renderPicker, will apply on the button wrapper)
      */
@@ -133,7 +138,6 @@ class Picker extends BaseComponent {
 
     this.state = {
       value: props.value,
-      showModal: false,
       selectedItemPosition: 0,
     };
 
@@ -157,7 +161,7 @@ class Picker extends BaseComponent {
 
   getLabel() {
     const {value} = this.state;
-    
+
     if (_.isArray(value)) {
       return _.chain(value)
         .map('label')
@@ -172,34 +176,34 @@ class Picker extends BaseComponent {
   handlePickerOnPress = () => {
     this.toggleExpandableModal(true);
     _.invoke(this.props, 'onPress');
-  }
+  };
 
-  toggleExpandableModal = (value) => {
+  toggleExpandableModal = value => {
     this.setState({showExpandableModal: value});
-  }
+  };
 
-  toggleItemSelection = (item) => {
+  toggleItemSelection = item => {
     const {value} = this.state;
     const newValue = _.xorBy(value, [item], 'value');
     this.setState({
       value: newValue,
     });
-  }
+  };
 
   cancelSelect = () => {
     this.setState({
       value: this.props.value,
     });
     this.toggleExpandableModal(false);
-  }
+  };
 
-  onDoneSelecting = (item) => {
+  onDoneSelecting = item => {
     this.setState({searchValue: '', value: item}); // clean search when done selecting
     this.toggleExpandableModal(false);
     _.invoke(this.props, 'onChange', item);
-  }
+  };
 
-  onSearchChange = (searchValue) => {
+  onSearchChange = searchValue => {
     this.setState({
       searchValue,
     });
@@ -217,10 +221,10 @@ class Picker extends BaseComponent {
   appendPropsToChildren = () => {
     const {children, mode, getItemValue, showSearch, renderItem} = this.props;
     const {value, searchValue} = this.state;
-    const childrenWithProps = React.Children.map(children, (child) => {
+    const childrenWithProps = React.Children.map(children, child => {
       const childValue = PickerPresenter.getItemValue({getItemValue, ...child.props});
       const childLabel = PickerPresenter.getItemLabel({...child.props, getLabel: child.props.getItemLabel});
-      
+
       if (!showSearch || _.isEmpty(searchValue) || _.includes(_.lowerCase(childLabel), _.lowerCase(searchValue))) {
         const selectedValue = PickerPresenter.getItemValue({value, getItemValue});
         return React.cloneElement(child, {
@@ -234,7 +238,7 @@ class Picker extends BaseComponent {
     });
 
     return childrenWithProps;
-  }
+  };
 
   renderExpandableModal = () => {
     const {
@@ -245,14 +249,20 @@ class Picker extends BaseComponent {
       searchStyle,
       searchPlaceholder,
       renderCustomSearch,
-      renderExpandableModal,
-      listProps} = this.getThemeProps();
+      renderCustomModal,
+      listProps
+    } = this.getThemeProps();
     const {showExpandableModal, selectedItemPosition} = this.state;
+    const children = this.appendPropsToChildren(this.props.children);
 
-    if (renderExpandableModal) {
-      const children = this.appendPropsToChildren(this.props.children)
+    if (renderCustomModal) {
+      const modalProps = {
+        visible: showExpandableModal,
+        toggleModal: this.toggleExpandableModal,
+        children,
+      };
 
-      return renderExpandableModal(showExpandableModal, children)
+      return renderCustomModal(modalProps);
     }
 
     return (
@@ -272,15 +282,17 @@ class Picker extends BaseComponent {
         renderCustomSearch={renderCustomSearch}
         listProps={listProps}
       >
-        {this.appendPropsToChildren(this.props.children)}
+        {children}
       </PickerModal>
     );
-  }
+  };
 
   render() {
     const {useNativePicker, renderPicker, customPickerProps, testID} = this.props;
 
-    if (useNativePicker) return <NativePicker {...this.props}/>;
+    if (useNativePicker) {
+      return <NativePicker {...this.props} />;
+    }
 
     if (_.isFunction(renderPicker)) {
       const {value} = this.state;
