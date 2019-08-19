@@ -8,7 +8,7 @@ const titles = [
   'Title number three',
   'Title number four',
   'Title number five',
-  'Title number six',
+  'Only a title and headline',
 ];
 const messages = [
   'Important notifications appear right on your clubs and groups. Tap them to get more information about the most' +
@@ -19,8 +19,10 @@ const messages = [
   ' warning about it',
   'Very short message',
   'Short message with information about the below highlighted feature',
-  'Important notifications appear right on your clubs and groups. Tap them to get more information about the most' +
-  'important things that you should pay attention to.',
+  undefined,
+];
+const headlines = [
+  'Welcome to uilib demo!'
 ];
 
 class FeatureHighlightScreen extends Component {
@@ -74,16 +76,20 @@ class FeatureHighlightScreen extends Component {
 
   renderHighlighterOverlay() {
     const {showFTE, currentTargetIndex} = this.state;
+    const headline = currentTargetIndex === 5 ? headlines[0] : undefined;
+
     return (
       <FeatureHighlight
         visible={showFTE}
         title={titles[currentTargetIndex]}
         message={messages[currentTargetIndex]}
+        headline={headline}
         confirmButtonProps={{label: 'Got It', onPress: this.moveNext}}
         onBackgroundPress={this.closeHighlight}
         getTarget={() => this.targets[currentTargetIndex]}
         // highlightFrame={{x: 30, y: 70, width: 150, height: 30}}
         // highlightFrame={{x: 160, y: 336, width: 150, height: 56}}
+        // borderRadius={4}
       />
     );
   }

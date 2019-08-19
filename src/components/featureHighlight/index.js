@@ -64,6 +64,10 @@ class FeatureHighlight extends BaseComponent {
      */
     message: PropTypes.string,
     /**
+     * The headline to be displayed above the title
+     */
+    headline: PropTypes.string,
+    /**
      * Title's max number of lines
      */
     titleNumberOfLines: PropTypes.number,
@@ -220,7 +224,7 @@ class FeatureHighlight extends BaseComponent {
   }
 
   renderHighlightMessage() {
-    const {title, message, confirmButtonProps, textColor, titleNumberOfLines, messageNumberOfLines}
+    const {title, message, headline, confirmButtonProps, textColor, titleNumberOfLines, messageNumberOfLines}
       = this.getThemeProps();
     const color = textColor || defaultTextColor;
 
@@ -230,8 +234,23 @@ class FeatureHighlight extends BaseComponent {
         onLayout={this.getComponentDimensions}
         pointerEvents="box-none"
       >
+        {headline && (
+          <Text text70 style={[styles.headline, {color}]} numberOfLines={1} pointerEvents="none">
+          {headline}
+        </Text>
+        )}
         {title && (
-          <Text text60 style={[styles.title, {color}]} numberOfLines={titleNumberOfLines} pointerEvents="none">
+          <Text text60 
+            style={[
+              styles.title, 
+              {
+                color, 
+                marginBottom: message? titleBottomMargin : messageBottomMargin
+              }
+            ]} 
+            numberOfLines={titleNumberOfLines} 
+            pointerEvents="none"
+          >
             {title}
           </Text>
         )}
@@ -291,7 +310,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start'
   },
   title: {
-    marginBottom: titleBottomMargin,
     lineHeight: Typography.text60.lineHeight,
     fontWeight: '900'
   },
@@ -299,6 +317,9 @@ const styles = StyleSheet.create({
     marginBottom: messageBottomMargin,
     ...Typography.text70,
     lineHeight: messageLineHeight
+  },
+  headline: {
+    marginBottom: 8
   },
   touchableOverlay: {
     ...StyleSheet.absoluteFillObject
