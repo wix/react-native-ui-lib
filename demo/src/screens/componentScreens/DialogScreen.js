@@ -42,7 +42,10 @@ export default class DialogScreen extends Component {
       showDialog6: false,
       showDialog7: false,
       showDialog8: false,
+      showDialog9: false,
+      showDialog10: false,
       dialogSwipeHorizontal: false,
+      dialogSwipeRight: false,
       dialogWithHeader: false,
       dialogWithVerticalScrollableContent: false,
       dialogWithHorizontalScrollableContent: false,
@@ -62,6 +65,18 @@ export default class DialogScreen extends Component {
       },
       {
         stateId: 'showDialog2',
+        text: 'Show dialog in center pull up',
+        showHeader: false,
+        contentFunction: this.renderDialogContent,
+        extraProps: {
+          style: {backgroundColor: Colors.white},
+          width: '90%',
+          height: '60%',
+          panDirections: [PanningProvider.Directions.UP],
+        },
+      },
+      {
+        stateId: 'showDialog3',
         text: 'Show bottom dialog',
         showHeader: false,
         contentFunction: this.renderDialogContent,
@@ -75,7 +90,7 @@ export default class DialogScreen extends Component {
         },
       },
       {
-        stateId: 'showDialog3',
+        stateId: 'showDialog4',
         text: 'Show bottom dialog with padding',
         showHeader: false,
         contentFunction: this.renderDialogContent,
@@ -88,7 +103,7 @@ export default class DialogScreen extends Component {
         },
       },
       {
-        stateId: 'showDialog4',
+        stateId: 'showDialog5',
         text: 'Show top dialog different animation',
         showHeader: false,
         contentFunction: this.renderDialogContent,
@@ -102,7 +117,7 @@ export default class DialogScreen extends Component {
         },
       },
       {
-        stateId: 'showDialog5',
+        stateId: 'showDialog6',
         text: 'Show dialog with height based on content',
         showHeader: false,
         contentFunction: this.renderDialogContent,
@@ -117,7 +132,22 @@ export default class DialogScreen extends Component {
         functionExtraProps: {flex: false},
       },
       {
-        stateId: 'showDialog6',
+        stateId: 'showDialog7',
+        text: 'Show dialog with height based on content (top)',
+        showHeader: false,
+        contentFunction: this.renderDialogContent,
+        extraProps: {
+          style: {backgroundColor: Colors.white},
+          width: '100%',
+          height: null,
+          top: true,
+          useSafeArea: true,
+          centerH: true,
+        },
+        functionExtraProps: {flex: false},
+      },
+      {
+        stateId: 'showDialog8',
         text: 'Show dialog with animation configuration',
         showHeader: false,
         contentFunction: this.renderDialogContent,
@@ -131,7 +161,7 @@ export default class DialogScreen extends Component {
         functionExtraProps: {'marginV-20': true, 'bg-yellow60': true},
       },
       {
-        stateId: 'showDialog7',
+        stateId: 'showDialog9',
         text: 'Show dialog with disabled pan gesture',
         showHeader: false,
         contentFunction: this.renderDialogContent,
@@ -152,6 +182,18 @@ export default class DialogScreen extends Component {
           width: '80%',
           height: '40%',
           panDirections: [PanningProvider.Directions.LEFT, PanningProvider.Directions.RIGHT],
+        },
+      },
+      {
+        stateId: 'dialogSwipeRight',
+        text: 'Show center dialog with swipe to right',
+        showHeader: false,
+        contentFunction: this.renderDialogContent,
+        extraProps: {
+          style: {backgroundColor: Colors.white},
+          width: '80%',
+          height: '40%',
+          panDirections: [PanningProvider.Directions.RIGHT],
         },
       },
       {
@@ -320,7 +362,7 @@ export default class DialogScreen extends Component {
   };
 
   renderOverlayButton = () => {
-    return this.renderButton({stateId: 'showDialog8', text: 'Show dialog in RNN overlay'}, this.showOverlay);
+    return this.renderButton({stateId: 'showDialog10', text: 'Show dialog in RNN overlay'}, this.showOverlay);
   };
 
   showOverlay = async () => {

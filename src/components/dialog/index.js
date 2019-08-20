@@ -8,7 +8,7 @@ import {BaseComponent} from '../../commons';
 import Modal from '../../screensComponents/modal';
 import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
-import PanDismissibleView from '../panningViews/panDismissibleView';
+import DialogDismissibleView from './DialogDismissibleView';
 import PanningProvider from '../panningViews/panningProvider';
 import DialogDeprecated from './dialogDeprecated';
 
@@ -20,9 +20,6 @@ import DialogDeprecated from './dialogDeprecated';
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DialogScreen.js
  * @gif: https://media.giphy.com/media/9S58XdLCoUiLzAc1b1/giphy.gif
  */
-
-const DIALOG_MARGIN = 12;
-
 class Dialog extends BaseComponent {
   static displayName = 'Dialog';
   static propTypes = {
@@ -68,11 +65,6 @@ class Dialog extends BaseComponent {
      * Migration flag, send true to use the new (and improved) Dialog, default is false
      */
     migrate: PropTypes.bool,
-
-    /**
-     * Use the template configuration (default is false)
-     */
-    useTemplate: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -81,16 +73,6 @@ class Dialog extends BaseComponent {
     width: '90%',
     height: '70%',
   };
-
-  static getDialogMaxHeight() {
-    const dialogMaxHeight = getDialogMaxHeight();
-    return dialogMaxHeight - 2 * DIALOG_MARGIN;
-  }
-
-  static getDialogWidth() {
-    const dialogWidth = getDialogWidth();
-    return dialogWidth - 2 * DIALOG_MARGIN;
-  }
 
   constructor(props) {
     super(props);
@@ -103,10 +85,6 @@ class Dialog extends BaseComponent {
     if (props.migrate) {
       this.setAlignment();
     }
-
-    if (this.props.useTemplate) {
-      this.calcDialogDimensionByOrientation();
-    }
   }
 
   componentDidMount() {
@@ -118,27 +96,10 @@ class Dialog extends BaseComponent {
   }
 
   onOrientationChange = () => {
-    if (this.props.useTemplate) {
-      this.calcDialogDimensionByOrientation();
-    }
-
     const dialogKey = Constants.orientation;
     if (this.state.dialogKey !== dialogKey) {
       this.setState({dialogKey});
     }
-  };
-
-  calcDialogDimensionByOrientation = () => {
-    const isInLandscape = Constants.orientation === Constants.orientations.LANDSCAPE;
-    const showOnBottom = !(Constants.isTablet || isInLandscape);
-    if (showOnBottom) {
-      this.dynamicStyles.alignments = styles.bottomContent;
-    } else {
-      this.dynamicStyles.alignments = styles.centerContent;
-    }
-
-    this.dynamicStyles.size = {width: getDialogWidth()};
-    this.dynamicStyles.presetHeight = {maxHeight: getDialogMaxHeight()};
   };
 
   generateStyles() {
@@ -160,6 +121,7 @@ class Dialog extends BaseComponent {
     _.invoke(this.props, 'onDismiss', this.props);
   };
 
+  // TODO: rename
   setPanDismissibleViewRef = ref => {
     this.panDismissibleViewRef = ref;
   };
@@ -195,40 +157,38 @@ class Dialog extends BaseComponent {
     return directions;
   };
 
+  // TODO: safeArea
   // TODO: renderOverlay
   // TODO: animation configuration
   renderVisibleContainer = () => {
-    const {children, renderPannableHeader, style, useSafeArea, bottom, useTemplate} = this.props;
-    const addBottomSafeArea = Constants.isIphoneX && ((useSafeArea && bottom) || useTemplate);
+    const {children, renderPannableHeader, style, useSafeArea, bottom, top} = this.props;
+    const addBottomSafeArea = Constants.isIphoneX && ((useSafeArea && bottom));
     const Container = !_.isUndefined(renderPannableHeader) ? View : PanListenerView;
     const directions = this.getDirections();
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8;
+    const alignment = {bottom, top};
 
     return (
-      <View useSafeArea={useSafeArea} style={[styles.container, this.dynamicStyles.alignments]} pointerEvents="box-none">
-        <View style={this.dynamicStyles.size}>
+      <View useSafeArea={useSafeArea} style={[this.dynamicStyles.alignments, {flex: 1}]} pointerEvents="box-none">
+        <View style={this.dynamicStyles.size} pointerEvents="box-none">
           <PanningProvider>
-            <PanDismissibleView
+            <DialogDismissibleView
               directions={directions}
               ref={this.setPanDismissibleViewRef}
               onDismiss={this.onDismiss}
               style={this.dynamicStyles.flexType}
+              containerStyle={this.dynamicStyles.flexType}
+              alignment={alignment}
             >
               <Container
                 directions={directions}
-                style={[
-                  this.dynamicStyles.flexType,
-                  this.dynamicStyles.presetStyle,
-                  this.dynamicStyles.presetHeight,
-                  style,
-                ]}
+                style={[this.dynamicStyles.flexType, style]}
               >
                 {this.renderPannableHeader(directions)}
                 {children}
               </Container>
-            </PanDismissibleView>
+            </DialogDismissibleView>
           </PanningProvider>
-          {_.invoke(this.props, 'renderOverlay')}
         </View>
         {addBottomSafeArea && <View style={{marginTop: bottomInsets}} />}
       </View>
@@ -248,7 +208,7 @@ class Dialog extends BaseComponent {
         onBackgroundPress={this.animateDismiss}
         onRequestClose={this.animateDismiss}
         overlayBackgroundColor={overlayBackgroundColor}
-        onDismiss={onModalDismissed}
+        onDismiss={(onModalDismissed)}
         supportedOrientations={supportedOrientations}
       >
         {this.renderVisibleContainer()}
@@ -267,26 +227,12 @@ class Dialog extends BaseComponent {
   }
 }
 
-function getDialogMaxHeight() {
-  const isInLandscape = Constants.orientation === Constants.orientations.LANDSCAPE;
-  return Constants.screenHeight * (Constants.isTablet || isInLandscape ? 0.9 : 0.75);
-}
-
-function getDialogWidth() {
-  const isInLandscape = Constants.orientation === Constants.orientations.LANDSCAPE;
-  return Constants.isTablet || isInLandscape ? 450 : Constants.screenWidth;
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   centerContent: {
     justifyContent: 'center',
-    alignItems: 'center',
-  },
-  bottomContent: {
-    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   withHeight: {
@@ -296,23 +242,16 @@ const styles = StyleSheet.create({
     flex: 0,
     overflow: 'hidden',
   },
-  defaultDialogStyle: {
-    backgroundColor: Colors.white,
-    borderRadius: 12,
-    margin: DIALOG_MARGIN,
-    marginBottom: Constants.isIphoneX ? 0 : DIALOG_MARGIN,
-  },
 });
 
 function createStyles(props) {
-  const {useTemplate, width, height} = props;
-  const size = useTemplate ? {} : {width, height};
-  const flexType = height === null || useTemplate ? styles.dynamicHeight : styles.withHeight;
-  const presetStyle = useTemplate ? styles.defaultDialogStyle : {};
+  const {width, height} = props;
+  const flexType = height === null ? styles.dynamicHeight : styles.withHeight;
+  const dynamicHeight = height === null ? undefined : {height: '100%'};
   return StyleSheet.create({
-    size,
+    size: {width, height},
     flexType,
-    presetStyle,
+    height: dynamicHeight,
   });
 }
 

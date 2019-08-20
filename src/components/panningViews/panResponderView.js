@@ -82,13 +82,14 @@ class panResponderView extends PureComponent {
   };
 
   render() {
-    const {style} = this.props;
+    const {style, ...others} = this.props;
 
     return (
       <View
         ref={this.ref}
         style={style}
-        onLayout={this.onLayout}
+        pointerEvents={'box-none'}
+        {...others}
       >
         {this.props.children}
       </View>
