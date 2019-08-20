@@ -46,13 +46,13 @@ export default class PickerScreen extends Component {
         visible={visible}
         onDismiss={() => toggleModal(false)}
         width="100%"
-        height="50%"
+        height="45%"
         bottom
         useSafeArea
         style={{paddingTop: 20, backgroundColor: Colors.white}}
       >
         <View flex>
-          <Text marginL-10 text50>
+          <Text marginL-15 text60>
             Custom modal
           </Text>
           <ScrollView>{children}</ScrollView>
