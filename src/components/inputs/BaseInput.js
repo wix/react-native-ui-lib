@@ -138,7 +138,6 @@ export default class BaseInput extends BaseComponent {
   }
 
   validate = (value = _.get(this, 'state.value'), dryRun) => { // 'input.state.value'
-    console.warn('INBAL base validate: ', value);
     const {validate} = this.props;
     if (!validate) {
       return;
