@@ -65,7 +65,7 @@ class Picker extends BaseComponent {
      */
     renderItem: PropTypes.func,
     /**
-     * Render custom picker modal
+     * Render custom picker modal (e.g ({visible, children, toggleModal}) => {...})
      */
     renderCustomModal: PropTypes.func,
     /**
