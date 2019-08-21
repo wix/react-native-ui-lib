@@ -35,10 +35,10 @@ class CarouselScreen extends Component {
           pageControlProps={{onPagePress: this.onPagePress}}
           // showCounter
         >
-          <Page bg-cyan50>
+          <Page bg-red50>
             <Text margin-15>PAGE 0</Text>
           </Page>
-          <Page bg-red50>
+          <Page bg-yellow20>
             <Text margin-15>PAGE 1</Text>
           </Page>
           <Page bg-purple50>
@@ -47,13 +47,13 @@ class CarouselScreen extends Component {
           <Page bg-green50>
             <Text margin-15>PAGE 3</Text>
           </Page>
-          <Page bg-yellow20>
+          <Page bg-cyan50>
             <Text margin-15>PAGE 4</Text>
           </Page>
           <Page bg-purple20>
             <Text margin-15>PAGE 5</Text>
           </Page>
-          <Page bg-blue70>
+          <Page bg-blue60>
             <Text margin-15>PAGE 6</Text>
           </Page>
         </Carousel>

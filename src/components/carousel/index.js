@@ -188,16 +188,19 @@ export default class Carousel extends BaseComponent {
   }
 
   renderChildren() {
-    const {children, loop} = this.props;
+    const {children, loop, pageWidth} = this.props;
     const length = presenter.getChildrenLength(this.props);
     
     const childrenArray = React.Children.map(children, (child, index) => {
       return this.renderChild(child, `${index}`);
     });
-    
+
     if (loop) {
       childrenArray.unshift(this.renderChild(children[length - 1], `${length - 1}-clone`));
       childrenArray.push(this.renderChild(children[0], `${0}-clone`));
+      if (pageWidth) {
+        childrenArray.push(this.renderChild(children[1], `${1}-clone`));
+      }
     }
     
     return childrenArray;
