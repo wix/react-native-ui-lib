@@ -105,7 +105,7 @@ class FeatureHighlightScreen extends Component {
         getTarget={() => this.targets[currentTargetIndex]}
         // highlightFrame={{x: 30, y: 70, width: 150, height: 30}}
         // highlightFrame={{x: 160, y: 336, width: 150, height: 56}}
-        // borderRadius={4}
+        borderRadius={currentTargetIndex === 2 ? 4 : undefined}
         pageControlProps={currentTargetIndex < lastPage ? this.getPageControlProps() : undefined}
       />
     );
