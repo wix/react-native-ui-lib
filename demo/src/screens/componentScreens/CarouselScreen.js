@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {View, Text, Carousel} from 'react-native-ui-lib'; // eslint-disable-line
+import {Constants, View, Text, Carousel} from 'react-native-ui-lib'; // eslint-disable-line
 
 
 const INITIAL_PAGE = 0;
+const WIDTH = Constants.screenWidth - 120;
 
 class CarouselScreen extends Component {
   state = {
@@ -17,7 +18,14 @@ class CarouselScreen extends Component {
   render() {
     return (
       <View flex>
-        <Carousel migrate loop onChangePage={(index => this.onChangePage(index))} /* initialPage={INITIAL_PAGE} */>
+        <Carousel 
+          migrate 
+          loop 
+          onChangePage={(index => this.onChangePage(index))} 
+          pageWidth={WIDTH}
+          // itemSpacings={20}
+          // initialPage={INITIAL_PAGE}
+        >
           <Page bg-cyan50>
             <Text margin-15>PAGE 0</Text>
           </Page>
@@ -40,6 +48,7 @@ class CarouselScreen extends Component {
             <Text margin-15>PAGE 6</Text>
           </Page>
         </Carousel>
+        
         <View center style={{...StyleSheet.absoluteFillObject}} pointerEvents="none">
           <Text text10>{this.state.currentPage}</Text>
         </View>
@@ -58,7 +67,10 @@ const Page = ({children, ...others}) => {
 
 const styles = StyleSheet.create({
   page: {
-    flex: 1
+    // flex: 1,
+    height: 200,  
+    borderWidth: 1,
+    borderRadius: 4
   }
 });
 

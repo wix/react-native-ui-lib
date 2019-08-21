@@ -29,6 +29,10 @@ export default class Carousel extends BaseComponent {
      */
     pageWidth: PropTypes.number,
     /**
+     * the spacing between the items
+     */
+    itemSpacings: PropTypes.number,
+    /**
      * if true, will have infinite scroll
      */
     loop: PropTypes.bool,
@@ -47,20 +51,22 @@ export default class Carousel extends BaseComponent {
   };
 
   static defaultProps = {
-    initialPage: 0
+    initialPage: 0,
+    itemSpacings: 12
   };
 
   constructor(props) {
     super(props);
     
     this.carousel = React.createRef();
-    const defaultPageWidth = props.pageWidth || Constants.screenWidth;
+    const defaultPageWidth = props.pageWidth + props.itemSpacings || Constants.screenWidth;
+    const loopOffset = props.loop && props.pageWidth ? (Constants.screenWidth - defaultPageWidth) / 2 : 0;
     
     this.state = {
       currentPage: props.initialPage,
       currentStandingPage: props.initialPage,
       pageWidth: defaultPageWidth,
-      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage, pageWidth: defaultPageWidth})}
+      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage, pageWidth: defaultPageWidth}) - loopOffset}
     };
   }
 
@@ -140,7 +146,7 @@ export default class Carousel extends BaseComponent {
 
   renderChild = (child, key) => {
     return (
-      <View style={{width: this.state.pageWidth}} key={key}>
+      <View style={{width: this.state.pageWidth, paddingLeft: this.props.itemSpacings}} key={key}>
         {child}
       </View>
     );
@@ -162,18 +168,26 @@ export default class Carousel extends BaseComponent {
     return childrenArray;
   }
 
+  shouldAddPadding() {
+    const {loop, pageWidth} = this.props;
+    return !loop && pageWidth;
+  }
+
   render() {
     const {containerStyle, ...others} = this.props;
-    const {initialOffset} = this.state;
-    
+    const {initialOffset, pageWidth} = this.state;
+
     return (
       <ScrollView
         {...others}
         ref={this.carousel} 
         style={[containerStyle, {flexGrow: 1}]}
+        contentContainerStyle={{paddingRight: this.shouldAddPadding() ? this.props.itemSpacings : undefined}}
         horizontal
         showsHorizontalScrollIndicator={false}
-        pagingEnabled
+        snapToInterval={pageWidth}
+        snapToAlignment={'center'}
+        decelerationRate="fast"
         onScroll={this.onScroll}
         scrollEventThrottle={200}
         contentOffset={initialOffset}

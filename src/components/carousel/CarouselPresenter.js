@@ -53,11 +53,3 @@ export function isOutOfBounds(offset, props, pageWidth) {
 
   return !_.inRange(offset, minLimit, maxLimit);
 }
-
-// TODO: need to support more cases of page width in loop mode
-export function calcCarouselWidth(props) {
-  const {pageWidth, loop} = props;
-  let length = getChildrenLength(props);
-  length = loop ? length + 2 : length;
-  return pageWidth * length;
-}
