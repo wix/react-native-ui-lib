@@ -118,10 +118,12 @@ export default class Carousel extends BaseComponent {
   }
 
   updateOffset = (animated = false) => {
-    const x = presenter.calcOffset(this.props, this.state);
+    const centerOffset = this.props.pageWidth ? (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
+    const x = presenter.calcOffset(this.props, this.state) - centerOffset;
     
     if (this.carousel) {
       this.carousel.current.scrollTo({x, animated});
+      
       if (Constants.isAndroid) {
         // this is done to handle onMomentumScrollEnd not being called in Android:
         // https://github.com/facebook/react-native/issues/11693

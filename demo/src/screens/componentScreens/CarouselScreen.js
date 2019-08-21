@@ -15,11 +15,16 @@ class CarouselScreen extends Component {
     this.setState({currentPage: index});
   }
 
+  onPagePress = (index) => {
+    this.carousel.goToPage(index, true);
+  }
+
   render() {
     return (
       <View flex>
         <Carousel 
           migrate 
+          ref={r => this.carousel = r}
           loop 
           onChangePage={(index => this.onChangePage(index))} 
           pageWidth={WIDTH}
@@ -27,6 +32,7 @@ class CarouselScreen extends Component {
           // initialPage={INITIAL_PAGE}
           containerStyle={{height: 200/* , flex: 1 */}}
           pageControlPosition={'over'}
+          pageControlProps={{onPagePress: this.onPagePress}}
           // showCounter
         >
           <Page bg-cyan50>
