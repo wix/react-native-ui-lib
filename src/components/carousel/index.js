@@ -3,10 +3,19 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
+import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../view';
+import Text from '../text';
+import PageControl from '../pageControl';
 import * as presenter from './CarouselPresenter';
 
+
+const PAGE_CONTROL_POSITIONS = {
+  NONE: 'none',
+  OVER: 'over',
+  UNDER: 'under'
+}
 
 /**
  * @description: Carousel for scrolling pages horizontally
@@ -48,12 +57,31 @@ export default class Carousel extends BaseComponent {
      * the carousel style
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * PageControl component props
+     */
+    pageControlProps: PropTypes.shape(PageControl.propTypes),
+    /**
+     * The position of the PageControl component ['over', 'under']
+     */
+    pageControlPosition: PropTypes.oneOf(Object.values(PAGE_CONTROL_POSITIONS)),
+    /**
+     * whether to show a page counter (will not work with pageWidths)
+     */
+    showCounter: PropTypes.bool,
+    /**
+     * the counter's text style
+     */
+    counterTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
   };
 
   static defaultProps = {
     initialPage: 0,
-    itemSpacings: 12
+    itemSpacings: 12,
+    pageControlPosition: PAGE_CONTROL_POSITIONS.NONE
   };
+
+  static pageControlPositions = PAGE_CONTROL_POSITIONS;
 
   constructor(props) {
     super(props);
@@ -105,6 +133,11 @@ export default class Carousel extends BaseComponent {
 
   goToPage(pageIndex, animated = true) {
     this.setState({currentPage: pageIndex}, () => this.updateOffset(animated));
+  }
+
+  shouldAddPadding() {
+    const {loop, pageWidth} = this.props;
+    return !loop && pageWidth;
   }
 
   onContentSizeChange = () => {
@@ -168,9 +201,42 @@ export default class Carousel extends BaseComponent {
     return childrenArray;
   }
 
-  shouldAddPadding() {
-    const {loop, pageWidth} = this.props;
-    return !loop && pageWidth;
+  renderPageControl() {
+    const {pageControlPosition, pageControlProps} = this.props;
+
+    if (pageControlPosition === PAGE_CONTROL_POSITIONS.NONE) {
+      return;
+    }
+
+    const pagesCount = presenter.getChildrenLength(this.props);
+    const containerStyle = pageControlPosition === PAGE_CONTROL_POSITIONS.UNDER ? 
+      {marginVertical: 16} : {position: 'absolute', bottom: 16, alignSelf: 'center'};
+
+    return (
+      <PageControl 
+        size={6}
+        containerStyle={containerStyle}
+        inactiveColor={Colors.dark60}
+        color={Colors.dark20}
+        {...pageControlProps}
+        numOfPages={pagesCount} 
+        currentPage={this.state.currentPage}
+      />
+    );
+  }
+
+  renderCounter() {
+    const {pageWidth, showCounter, counterTextStyle} = this.props;
+    const {currentPage} = this.state;
+    const pagesCount = presenter.getChildrenLength(this.props);
+
+    if (showCounter && !pageWidth) {
+      return (
+        <View center style={this.styles.counter}>
+          <Text dark80 text90 style={[{fontWeight: 'bold'}, counterTextStyle]}>{currentPage + 1}/{pagesCount}</Text>
+        </View>
+      );
+    }
   }
 
   render() {
@@ -178,30 +244,41 @@ export default class Carousel extends BaseComponent {
     const {initialOffset, pageWidth} = this.state;
 
     return (
-      <ScrollView
-        {...others}
-        ref={this.carousel} 
-        style={[containerStyle, {flexGrow: 1}]}
-        contentContainerStyle={{paddingRight: this.shouldAddPadding() ? this.props.itemSpacings : undefined}}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        snapToInterval={pageWidth}
-        snapToAlignment={'center'}
-        decelerationRate="fast"
-        onScroll={this.onScroll}
-        scrollEventThrottle={200}
-        contentOffset={initialOffset}
-        onContentSizeChange={this.onContentSizeChange}
-        onMomentumScrollEnd={this.onMomentumScrollEnd}
-      >
-        {this.renderChildren()}
-      </ScrollView>
+      <View style={containerStyle}>
+        <ScrollView
+          {...others}
+          ref={this.carousel} 
+          contentContainerStyle={{paddingRight: this.shouldAddPadding() ? this.props.itemSpacings : undefined}}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          snapToInterval={pageWidth}
+          snapToAlignment={'center'}
+          decelerationRate="fast"
+          contentOffset={initialOffset}
+          scrollEventThrottle={200}
+          onScroll={this.onScroll}
+          onContentSizeChange={this.onContentSizeChange}
+          onMomentumScrollEnd={this.onMomentumScrollEnd}
+        >
+          {this.renderChildren()}
+        </ScrollView>
+        {this.renderPageControl()}
+        {this.renderCounter()}
+      </View>
     );
   }
 }
 
 function createStyles() {
   return StyleSheet.create({
-    
+    counter: {
+      paddingHorizontal: 8, 
+      paddingVertical: 3, // height: 24, 
+      borderRadius: 20, 
+      backgroundColor: Colors.rgba(Colors.black, 0.6),
+      position: 'absolute',
+      top: 12,
+      right: 12
+    }
   });
 }

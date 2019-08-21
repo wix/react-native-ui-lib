@@ -25,6 +25,9 @@ class CarouselScreen extends Component {
           pageWidth={WIDTH}
           // itemSpacings={20}
           // initialPage={INITIAL_PAGE}
+          containerStyle={{height: 200/* , flex: 1 */}}
+          pageControlPosition={'over'}
+          // showCounter
         >
           <Page bg-cyan50>
             <Text margin-15>PAGE 0</Text>
@@ -67,8 +70,7 @@ const Page = ({children, ...others}) => {
 
 const styles = StyleSheet.create({
   page: {
-    // flex: 1,
-    height: 200,  
+    flex: 1,
     borderWidth: 1,
     borderRadius: 4
   }
