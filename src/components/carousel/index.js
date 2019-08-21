@@ -12,7 +12,6 @@ import * as presenter from './CarouselPresenter';
 
 
 const PAGE_CONTROL_POSITIONS = {
-  NONE: 'none',
   OVER: 'over',
   UNDER: 'under'
 }
@@ -62,7 +61,7 @@ export default class Carousel extends BaseComponent {
      */
     pageControlProps: PropTypes.shape(PageControl.propTypes),
     /**
-     * The position of the PageControl component ['over', 'under']
+     * The position of the PageControl component ['over', 'under'], otherwise it won't display
      */
     pageControlPosition: PropTypes.oneOf(Object.values(PAGE_CONTROL_POSITIONS)),
     /**
@@ -77,8 +76,7 @@ export default class Carousel extends BaseComponent {
 
   static defaultProps = {
     initialPage: 0,
-    itemSpacings: 12,
-    pageControlPosition: PAGE_CONTROL_POSITIONS.NONE
+    itemSpacings: 12
   };
 
   static pageControlPositions = PAGE_CONTROL_POSITIONS;
@@ -209,25 +207,23 @@ export default class Carousel extends BaseComponent {
   renderPageControl() {
     const {pageControlPosition, pageControlProps} = this.props;
 
-    if (pageControlPosition === PAGE_CONTROL_POSITIONS.NONE) {
-      return;
+    if (pageControlPosition) {
+      const pagesCount = presenter.getChildrenLength(this.props);
+      const containerStyle = pageControlPosition === PAGE_CONTROL_POSITIONS.UNDER ? 
+        {marginVertical: 16} : {position: 'absolute', bottom: 16, alignSelf: 'center'};
+  
+      return (
+        <PageControl 
+          size={6}
+          containerStyle={containerStyle}
+          inactiveColor={Colors.dark60}
+          color={Colors.dark20}
+          {...pageControlProps}
+          numOfPages={pagesCount} 
+          currentPage={this.state.currentPage}
+        />
+      );
     }
-
-    const pagesCount = presenter.getChildrenLength(this.props);
-    const containerStyle = pageControlPosition === PAGE_CONTROL_POSITIONS.UNDER ? 
-      {marginVertical: 16} : {position: 'absolute', bottom: 16, alignSelf: 'center'};
-
-    return (
-      <PageControl 
-        size={6}
-        containerStyle={containerStyle}
-        inactiveColor={Colors.dark60}
-        color={Colors.dark20}
-        {...pageControlProps}
-        numOfPages={pagesCount} 
-        currentPage={this.state.currentPage}
-      />
-    );
   }
 
   renderCounter() {
