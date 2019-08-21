@@ -146,7 +146,7 @@ export default class Carousel extends BaseComponent {
 
   renderChild = (child, key) => {
     return (
-      <View style={{width: this.state.pageWidth, paddingLeft: this.props.itemSpacings}} key={key}>
+      <View style={{width: this.state.pageWidth, paddingLeft: this.props.pageWidth && this.props.itemSpacings}} key={key}>
         {child}
       </View>
     );
