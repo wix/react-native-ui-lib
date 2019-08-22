@@ -18,6 +18,7 @@ import DialogDeprecated from './dialogDeprecated';
 // 2. Hack to avoid the view returning to be visible after onDismiss
 //    DialogDismissibleView --> render --> isDismissed && {opacity: 0}
 // 3. Test examples in landscape
+// 4. SafeArea is transparent
 
 /**
  * @description: Dialog component for displaying custom content inside a popup dialog

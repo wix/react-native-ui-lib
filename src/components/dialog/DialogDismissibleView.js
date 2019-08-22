@@ -82,6 +82,7 @@ class DialogDismissibleView extends PureComponent {
     this.setState({isAnimating: false});
   };
 
+  // TODO: test all
   getInitialLocation = () => {
     const {alignment, style, direction} = this.props;
     const {bottom, top} = alignment;
