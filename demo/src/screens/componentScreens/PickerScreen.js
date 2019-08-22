@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, Image} from 'react-native';
-import {View, Colors, Text, Stepper, Typography, Picker, Avatar, Assets, TagsInput} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Colors, Dialog, Text, Stepper, Typography, Picker, Avatar, Assets, TagsInput} from 'react-native-ui-lib'; //eslint-disable-line
 import contacts from '../../data/conversations';
 import tagIcon from '../../assets/icons/tags.png';
 import dropdown from '../../assets/icons/chevronDown.png';
@@ -29,6 +29,7 @@ export default class PickerScreen extends Component {
       // language: {value: 'java', label: 'Java'},
       language: undefined,
       languages: [],
+      customModalValues: [],
       filter: filters[0],
       contact: contacts[0],
       tags: [{label: 'Amit'}, {label: 'Ethan'}],
@@ -37,11 +38,34 @@ export default class PickerScreen extends Component {
     };
   }
 
+  renderDialog = modalProps => {
+    const {visible, toggleModal, children} = modalProps;
+
+    return (
+      <Dialog
+        visible={visible}
+        onDismiss={() => toggleModal(false)}
+        width="100%"
+        height="45%"
+        bottom
+        useSafeArea
+        style={{paddingTop: 20, backgroundColor: Colors.white}}
+      >
+        <View flex>
+          <Text marginL-15 text60>
+            Custom modal
+          </Text>
+          <ScrollView>{children}</ScrollView>
+        </View>
+      </Dialog>
+    );
+  };
+
   render() {
     return (
       <ScrollView keyboardShouldPersistTaps="always">
         <View flex padding-20>
-          <Text text40 marginB-20>
+          <Text text40>
             Picker
           </Text>
           <Picker
@@ -97,7 +121,8 @@ export default class PickerScreen extends Component {
               style: {width: 200},
               color: Colors.violet30,
               labelStyle: {fontSize: 32, fontFamily: 'sans-serif-condensed-light'},
-              itemHeight: 55}}
+              itemHeight: 55
+            }}
             selectLabelStyle={{color: Colors.violet30}}
             cancelLabelStyle={{color: Colors.violet30}}
           >
@@ -105,6 +130,22 @@ export default class PickerScreen extends Component {
               <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled} />
             ))}
           </Picker>
+
+          <View marginT-20>
+            <Picker
+              title="Custom modal"
+              placeholder="Pick multiple Languages"
+              value={this.state.customModalValues}
+              onChange={items => this.setState({customModalValues: items})}
+              mode={Picker.modes.MULTI}
+              rightIconSource={dropdown}
+              renderCustomModal={this.renderDialog}
+            >
+              {_.map(options, option => (
+                <Picker.Item key={option.value} value={option} label={option.label} disabled={option.disabled} />
+              ))}
+            </Picker>
+          </View>
 
           <Text marginT-20 marginB-10 text70 dark60>
             Custom Picker:

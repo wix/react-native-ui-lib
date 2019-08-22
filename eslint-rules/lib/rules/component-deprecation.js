@@ -113,7 +113,9 @@ module.exports = {
                   const spreadSource = utils.findValueNodeOfIdentifier(att.argument.name, context.getScope());
                   if (spreadSource) {
                     _.forEach(spreadSource.properties, (property) => {
-                      checkPropDeprecation(property.key, property.key.name, props, name);
+                      const key = _.get(property, 'key');
+                      const propName = _.get(property, 'key.name');
+                      checkPropDeprecation(key, propName, props, name);
                     });
                   }
                 }

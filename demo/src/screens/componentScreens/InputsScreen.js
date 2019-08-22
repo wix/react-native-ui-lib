@@ -7,7 +7,6 @@ import {KeyboardAwareInsetsView} from 'react-native-keyboard-tracking-view';
 const richText = require('../../assets/icons/richText.png');
 const dropDown = require('../../assets/icons/chevronDown.png');
 const star = require('../../assets/icons/star.png');
-
 const LONG_TEXT =
   'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer' +
   'Martín Bollati. In this piece';
@@ -29,17 +28,8 @@ export default class InputsScreen extends Component {
     this.state = {
       error: '',
       topError: false,
-      customExpandableValue: 'Custom Expandable',
+      customExpandableValue: 'Custom Expandable'
     };
-  }
-
-  onButtonPressed = () => {
-    const {topError} = this.state;
-    this.setState({topError: !topError});
-  }
-
-  onPressInfo = () => {
-    Alert.alert('Info button press');
   }
 
   onChangeText = (text) => {
@@ -51,6 +41,37 @@ export default class InputsScreen extends Component {
       message = 'Please enter a valid text';
     }
     this.setState({error: message});
+  }
+
+  onButtonPressed = () => {
+    const {topError} = this.state;
+    this.setState({topError: !topError});
+  }
+
+  onPressInfo = () => {
+    Alert.alert('Info button pressed');
+  }
+
+  onPress = () => {
+    this.setState({customExpandableValue: 'New Value'}, () => {
+      this.input.toggleExpandableModal(false);
+    });
+  }
+
+  renderExpandable = () => {
+    return (
+      <Modal visible animationType={'slide'}>
+        <View flex bg-orange70 center>
+          <Text marginB-20 text50>
+            Do Whatever you want here
+          </Text>
+          <Button
+            label="Close Me"
+            onPress={this.onPress}
+          />
+        </View>
+      </Modal>
+    );
   }
 
   render() {
@@ -81,9 +102,10 @@ export default class InputsScreen extends Component {
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
-            placeholder="FloatingPlaceholder & error"
+            placeholder="FloatingPlaceholder & validator"
             onChangeText={this.onChangeText}
-            error={this.state.error}
+            validate={'required'}
+            errorMessage={'Required field!'}
             useTopErrors={this.state.topError}
             floatOnFocus
           />
@@ -212,25 +234,7 @@ export default class InputsScreen extends Component {
             placeholder="placeholder"
             expandable
             value={this.state.customExpandableValue}
-            renderExpandable={() => {
-              return (
-                <Modal visible animationType={'slide'}>
-                  <View flex bg-orange70 center>
-                    <Text marginB-20 text50>
-                      Do Whatever you want here
-                    </Text>
-                    <Button
-                      label="Close Me"
-                      onPress={() => {
-                        this.setState({customExpandableValue: 'New Value'}, () => {
-                          this.input.toggleExpandableModal(false);
-                        });
-                      }}
-                    />
-                  </View>
-                </Modal>
-              );
-            }}
+            renderExpandable={this.renderExpandable}
           />
 
           <TextField
@@ -319,7 +323,7 @@ export default class InputsScreen extends Component {
             hideUnderline
           />
         </ScrollView>
-        <KeyboardAwareInsetsView />
+        <KeyboardAwareInsetsView/>
       </View>
     );
   }
@@ -329,13 +333,13 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    padding: 25,
+    padding: 25
   },
   title: {
-    ...Typography.text20,
+    ...Typography.text20
   },
   header: {
     ...Typography.text60,
-    marginVertical: 20,
-  },
+    marginVertical: 20
+  }
 });
