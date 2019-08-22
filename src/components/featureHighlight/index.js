@@ -65,9 +65,13 @@ class FeatureHighlight extends BaseComponent {
      */
     message: PropTypes.string,
     /**
-     * The headline to be displayed above the title
+     * Title text style
      */
-    headline: PropTypes.string,
+    titleStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * Message text style
+     */
+    messageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * Title's max number of lines
      */
@@ -229,7 +233,7 @@ class FeatureHighlight extends BaseComponent {
   }
 
   renderHighlightMessage() {
-    const {title, message, headline, confirmButtonProps, textColor, titleNumberOfLines, messageNumberOfLines}
+    const {title, message, titleStyle, messageStyle, confirmButtonProps, textColor, titleNumberOfLines, messageNumberOfLines}
       = this.getThemeProps();
     const color = textColor || defaultTextColor;
 
@@ -239,19 +243,15 @@ class FeatureHighlight extends BaseComponent {
         onLayout={this.getComponentDimensions}
         pointerEvents="box-none"
       >
-        {headline && (
-          <Text text70 style={[styles.headline, {color}]} numberOfLines={1} pointerEvents="none">
-          {headline}
-        </Text>
-        )}
         {title && (
           <Text text60 
             style={[
               styles.title, 
               {
                 color, 
-                marginBottom: message? titleBottomMargin : messageBottomMargin
-              }
+                marginBottom: message ? titleBottomMargin : messageBottomMargin
+              },
+              titleStyle
             ]} 
             numberOfLines={titleNumberOfLines} 
             pointerEvents="none"
@@ -260,7 +260,15 @@ class FeatureHighlight extends BaseComponent {
           </Text>
         )}
         {message && (
-          <Text text70 style={[styles.message, {color}]} numberOfLines={messageNumberOfLines} pointerEvents="none">
+          <Text text70 
+            style={[
+              styles.message, 
+              {color},
+              messageStyle
+            ]} 
+            numberOfLines={messageNumberOfLines} 
+            pointerEvents="none"
+          >
             {message}
           </Text>
         )}
@@ -328,9 +336,6 @@ const styles = StyleSheet.create({
     marginBottom: messageBottomMargin,
     ...Typography.text70,
     lineHeight: messageLineHeight
-  },
-  headline: {
-    marginBottom: 8
   },
   touchableOverlay: {
     ...StyleSheet.absoluteFillObject

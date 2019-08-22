@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {Colors, View, Text, Button, FeatureHighlight} from 'react-native-ui-lib'; // eslint-disable-line
+import {Colors, Typography, View, Text, Button, FeatureHighlight} from 'react-native-ui-lib'; // eslint-disable-line
 
 
 const titles = [
@@ -9,7 +9,7 @@ const titles = [
   'Title number three',
   'Title number four',
   'Title number five',
-  'Only a title and headline'
+  'Welcome to Uilib demo!'
 ];
 const messages = [
   'Important notifications appear right on your clubs and groups. Tap them to get more information about the most' +
@@ -20,10 +20,7 @@ const messages = [
   ' warning about it',
   'Very short message',
   'Short message with information about the below highlighted feature',
-  undefined
-];
-const headlines = [
-  'Welcome to uilib demo!'
+  'Here is where you can view demos of all Uilib components'
 ];
 
 class FeatureHighlightScreen extends Component {
@@ -99,13 +96,14 @@ class FeatureHighlightScreen extends Component {
         visible={showFTE}
         title={titles[currentTargetIndex]}
         message={messages[currentTargetIndex]}
-        headline={currentTargetIndex === lastPage ? headlines[0] : undefined}
+        titleStyle={currentTargetIndex === lastPage ? {...Typography.text70} : undefined}
+        messageStyle={currentTargetIndex === lastPage ? {...Typography.text60, fontWeight: '900', lineHeight: 28} : undefined}
         confirmButtonProps={{label: 'Got It', onPress: this.moveNext}}
         onBackgroundPress={this.closeHighlight}
         getTarget={() => this.targets[currentTargetIndex]}
         // highlightFrame={{x: 30, y: 70, width: 150, height: 30}}
         // highlightFrame={{x: 160, y: 336, width: 150, height: 56}}
-        borderRadius={currentTargetIndex === 2 ? 4 : undefined}
+        borderRadius={currentTargetIndex === 4 ? 4 : undefined}
         pageControlProps={currentTargetIndex < lastPage ? this.getPageControlProps() : undefined}
       />
     );
