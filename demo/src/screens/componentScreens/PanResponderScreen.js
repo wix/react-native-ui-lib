@@ -27,13 +27,9 @@ export default class PanResponderScreen extends Component {
   }
 
   renderPanListener = () => {
-    const {isCoupled} = this.state;
-    const directions = isCoupled ? [PanningProvider.Directions.UP, PanningProvider.Directions.DOWN] : undefined;
-    const text = isCoupled ? "Drag up\\down" : "Drag here";
-
     return (
-      <PanListenerView style={styles.panListener} directions={directions}>
-        <Text style={styles.largeText}>{text}</Text>
+      <PanListenerView style={styles.panListener}>
+        <Text style={styles.largeText}>Drag here</Text>
       </PanListenerView>
     );
   }

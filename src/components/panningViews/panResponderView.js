@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
+import {Animated} from 'react-native';
 import View from '../view';
 import asPanViewConsumer from './asPanViewConsumer';
 
@@ -21,6 +22,14 @@ class panResponderView extends PureComponent {
      * Ignore panning events while this is true
      */
     ignorePanning: PropTypes.bool,
+    /**
+     * Allow the view to be animated (send animation via style; default is false)
+     */
+    isAnimated: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    isAnimated: false,
   };
 
   constructor(props) {
@@ -82,17 +91,18 @@ class panResponderView extends PureComponent {
   };
 
   render() {
-    const {style, ...others} = this.props;
+    const {style, isAnimated, ...others} = this.props;
+    const Container = isAnimated ? Animated.View : View;
 
     return (
-      <View
+      <Container
         ref={this.ref}
         style={style}
         pointerEvents={'box-none'}
         {...others}
       >
         {this.props.children}
-      </View>
+      </Container>
     );
   }
 }

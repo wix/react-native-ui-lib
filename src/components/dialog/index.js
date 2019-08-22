@@ -12,6 +12,13 @@ import DialogDismissibleView from './DialogDismissibleView';
 import PanningProvider from '../panningViews/panningProvider';
 import DialogDeprecated from './dialogDeprecated';
 
+// TODO: KNOWN ISSUES
+// 1. iOS pressing on the background while enter animation is happening will not call onDismiss
+//    Touch events are not registered?
+// 2. Hack to avoid the view returning to be visible after onDismiss
+//    DialogDismissibleView --> render --> isDismissed && {opacity: 0}
+// 3. Test examples in landscape
+
 /**
  * @description: Dialog component for displaying custom content inside a popup dialog
  * @notes: Use alignment modifiers to control the dialog position
@@ -43,6 +50,11 @@ class Dialog extends BaseComponent {
      * The dialog height (default: 70%)
      */
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    /**
+     * The direction of the allowed pan (default is DOWN)
+     * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###)
+     */
+    panDirection: PropTypes.oneOf(Object.values(PanningProvider.Directions)),
     /**
      * Disable the pan gesture recognizer
      */
@@ -80,6 +92,7 @@ class Dialog extends BaseComponent {
     this.state = {
       alignments: this.state.alignments,
       dialogKey: undefined,
+      visible: props.visible,
     };
 
     if (props.migrate) {
@@ -94,6 +107,17 @@ class Dialog extends BaseComponent {
   componentWillUnmount() {
     Constants.removeDimensionsEventListener(this.onOrientationChange);
   }
+
+  componentDidUpdate(prevProps) {
+    const {visible} = this.props;
+    const {visible: prevVisible} = prevProps;
+
+    if (visible && !prevVisible) {
+      this.setState({visible: true});
+    } else if (prevVisible && !visible) {
+      this.animateDismiss();
+    }
+  };
 
   onOrientationChange = () => {
     const dialogKey = Constants.orientation;
@@ -118,7 +142,7 @@ class Dialog extends BaseComponent {
   }
 
   onDismiss = () => {
-    _.invoke(this.props, 'onDismiss', this.props);
+    this.setState({visible: false}, () => _.invoke(this.props, 'onDismiss', this.props));
   };
 
   // TODO: rename
@@ -141,30 +165,28 @@ class Dialog extends BaseComponent {
     }
   };
 
-  getDirections = () => {
-    const {panDirections, disablePan, renderPannableHeader} = this.props;
-    let directions;
+  getDirection = () => {
+    const {panDirection, disablePan, renderPannableHeader} = this.props;
+    let direction;
     if (disablePan) {
-      directions = [];
+      direction = undefined;
     } else if (this.props.top) {
-      directions = [PanningProvider.Directions.UP];
-    } else if (!_.isUndefined(renderPannableHeader) || _.isUndefined(panDirections)) {
-      directions = [PanningProvider.Directions.DOWN];
+      direction = PanningProvider.Directions.UP;
+    } else if (!_.isUndefined(renderPannableHeader) || _.isUndefined(panDirection)) {
+      direction = PanningProvider.Directions.DOWN;
     } else {
-      directions = panDirections;
+      direction = panDirection;
     }
 
-    return directions;
+    return direction;
   };
 
-  // TODO: safeArea
-  // TODO: renderOverlay
-  // TODO: animation configuration
+  // TODO: renderOverlay {_.invoke(this.props, 'renderOverlay')}
   renderVisibleContainer = () => {
     const {children, renderPannableHeader, style, useSafeArea, bottom, top} = this.props;
     const addBottomSafeArea = Constants.isIphoneX && ((useSafeArea && bottom));
     const Container = !_.isUndefined(renderPannableHeader) ? View : PanListenerView;
-    const directions = this.getDirections();
+    const direction = this.getDirection();
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8;
     const alignment = {bottom, top};
 
@@ -173,18 +195,17 @@ class Dialog extends BaseComponent {
         <View style={this.dynamicStyles.size} pointerEvents="box-none">
           <PanningProvider>
             <DialogDismissibleView
-              directions={directions}
+              direction={direction}
               ref={this.setPanDismissibleViewRef}
               onDismiss={this.onDismiss}
               style={this.dynamicStyles.flexType}
-              containerStyle={this.dynamicStyles.flexType}
               alignment={alignment}
             >
               <Container
-                directions={directions}
+                directions={[direction]}
                 style={[this.dynamicStyles.flexType, style]}
               >
-                {this.renderPannableHeader(directions)}
+                {this.renderPannableHeader([direction])}
                 {children}
               </Container>
             </DialogDismissibleView>
@@ -196,8 +217,8 @@ class Dialog extends BaseComponent {
   };
 
   renderModal = () => {
-    const {dialogKey} = this.state;
-    const {visible, overlayBackgroundColor, onModalDismissed, supportedOrientations} = this.getThemeProps();
+    const {dialogKey, visible} = this.state;
+    const {overlayBackgroundColor, onModalDismissed, supportedOrientations} = this.getThemeProps();
 
     return (
       <Modal
@@ -208,7 +229,7 @@ class Dialog extends BaseComponent {
         onBackgroundPress={this.animateDismiss}
         onRequestClose={this.animateDismiss}
         overlayBackgroundColor={overlayBackgroundColor}
-        onDismiss={(onModalDismissed)}
+        onDismiss={onModalDismissed}
         supportedOrientations={supportedOrientations}
       >
         {this.renderVisibleContainer()}

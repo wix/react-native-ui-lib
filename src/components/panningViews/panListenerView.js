@@ -90,10 +90,6 @@ class PanListenerView extends PureBaseComponent {
       onPanResponderMove: this.handlePanMove,
       onPanResponderRelease: this.handlePanRelease,
       onPanResponderTerminate: this.handlePanTerminate,
-      // TODO: remove
-      // onPanResponderReject: this.bla,
-      // onPanResponderTerminationRequest: this.bla,
-      // onShouldBlockNativeResponder: this.bla,
     });
   }
 
@@ -103,10 +99,6 @@ class PanListenerView extends PureBaseComponent {
 
   no = () => {
     return false;
-  };
-
-  bla = () =>{
-    alert('bla');
   };
 
   shouldPan = (e, gestureState) => {
@@ -207,7 +199,7 @@ class PanListenerView extends PureBaseComponent {
     const {children, ...others} = this.getThemeProps();
 
     return (
-      <View {...others} {...this.panResponder.panHandlers} onLayout={this.onLayout} pointerEvents={'box-only'}>
+      <View {...others} {...this.panResponder.panHandlers} onLayout={this.onLayout}>
         {children}
       </View>
     );

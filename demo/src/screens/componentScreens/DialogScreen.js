@@ -43,8 +43,7 @@ export default class DialogScreen extends Component {
       showDialog7: false,
       showDialog8: false,
       showDialog9: false,
-      showDialog10: false,
-      dialogSwipeHorizontal: false,
+      dialogSwipeLeft: false,
       dialogSwipeRight: false,
       dialogWithHeader: false,
       dialogWithVerticalScrollableContent: false,
@@ -72,7 +71,7 @@ export default class DialogScreen extends Component {
           style: {backgroundColor: Colors.white},
           width: '90%',
           height: '60%',
-          panDirections: [PanningProvider.Directions.UP],
+          panDirection: PanningProvider.Directions.UP,
         },
       },
       {
@@ -148,20 +147,6 @@ export default class DialogScreen extends Component {
       },
       {
         stateId: 'showDialog8',
-        text: 'Show dialog with animation configuration',
-        showHeader: false,
-        contentFunction: this.renderDialogContent,
-        extraProps: {
-          width: '80%',
-          height: '40%',
-          bottom: true,
-          centerH: true,
-          animationConfig: {animation: 'slideInLeft', duration: 1000},
-        },
-        functionExtraProps: {'marginV-20': true, 'bg-yellow60': true},
-      },
-      {
-        stateId: 'showDialog9',
         text: 'Show dialog with disabled pan gesture',
         showHeader: false,
         contentFunction: this.renderDialogContent,
@@ -173,15 +158,15 @@ export default class DialogScreen extends Component {
         },
       },
       {
-        stateId: 'dialogSwipeHorizontal',
-        text: 'Show center dialog with horizontal swipe',
+        stateId: 'dialogSwipeLeft',
+        text: 'Show center dialog with swipe to left',
         showHeader: false,
         contentFunction: this.renderDialogContent,
         extraProps: {
           style: {backgroundColor: Colors.white},
           width: '80%',
           height: '40%',
-          panDirections: [PanningProvider.Directions.LEFT, PanningProvider.Directions.RIGHT],
+          panDirection: PanningProvider.Directions.LEFT,
         },
       },
       {
@@ -193,7 +178,7 @@ export default class DialogScreen extends Component {
           style: {backgroundColor: Colors.white},
           width: '80%',
           height: '40%',
-          panDirections: [PanningProvider.Directions.RIGHT],
+          panDirection: PanningProvider.Directions.RIGHT,
         },
       },
       {
@@ -362,7 +347,7 @@ export default class DialogScreen extends Component {
   };
 
   renderOverlayButton = () => {
-    return this.renderButton({stateId: 'showDialog10', text: 'Show dialog in RNN overlay'}, this.showOverlay);
+    return this.renderButton({stateId: 'showDialog9', text: 'Show dialog in RNN overlay'}, this.showOverlay);
   };
 
   showOverlay = async () => {
