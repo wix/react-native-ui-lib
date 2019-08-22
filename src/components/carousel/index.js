@@ -253,7 +253,7 @@ export default class Carousel extends BaseComponent {
           horizontal
           showsHorizontalScrollIndicator={false}
           snapToInterval={pageWidth}
-          snapToAlignment={'center'}
+          snapToAlignment={'center'} // iOS only
           decelerationRate="fast"
           contentOffset={initialOffset}
           scrollEventThrottle={200}
