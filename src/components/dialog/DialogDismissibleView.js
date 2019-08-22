@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 import {Animated, Easing} from 'react-native';
 import {Constants} from '../../helpers';
-import View from '../view';
 import asPanViewConsumer from '../panningViews/asPanViewConsumer';
 import PanningProvider from '../panningViews/panningProvider';
 import PanResponderView from '../panningViews/panResponderView';

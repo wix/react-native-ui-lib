@@ -190,7 +190,7 @@ class Dialog extends BaseComponent {
     const alignment = {bottom, top};
 
     return (
-      <View useSafeArea={useSafeArea} style={[this.dynamicStyles.alignments, {flex: 1}]} pointerEvents="box-none">
+      <View useSafeArea={useSafeArea} style={[this.dynamicStyles.alignments, styles.container]} pointerEvents="box-none">
         <View style={this.dynamicStyles.size} pointerEvents="box-none">
           <PanningProvider>
             <DialogDismissibleView
