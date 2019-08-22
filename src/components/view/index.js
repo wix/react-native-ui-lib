@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
-import {View as RNView, ViewPropTypes, SafeAreaView} from 'react-native';
+import {View as RNView, ViewPropTypes, SafeAreaView, Animated} from 'react-native';
 import {BaseComponent, asBaseComponent, forwardRef} from '../../commons';
 import * as Constants from '../../helpers/Constants';
 
@@ -20,7 +20,20 @@ class View extends PureComponent {
      * If true, will render as SafeAreaView
      */
     useSafeArea: PropTypes.bool,
+    /**
+     * Use Animate.View as a container
+     */
+    animated: PropTypes.bool
   };
+
+  constructor(props) {
+    super(props);
+
+    this.Container = props.useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
+    if (props.animated) {
+      this.Container = Animated.createAnimatedComponent(this.Container);
+    }
+  }
 
   // TODO: do we need this?
   setNativeProps(nativeProps) {
@@ -41,7 +54,7 @@ class View extends PureComponent {
       ...others
     } = this.props;
     const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
-    const Element = useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
+    const Element = this.Container;
 
     return (
       <Element
