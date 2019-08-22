@@ -48,10 +48,7 @@ class panResponderView extends PureComponent {
   componentDidUpdate(prevProps) {
     const {ignorePanning} = this.props;
     const {isPanning, dragDeltas} = this.props.context; // eslint-disable-line
-    const {
-      isPanning: prevIsPanning,
-      dragDeltas: prevDragDeltas,
-    } = prevProps.context; // eslint-disable-line
+    const {isPanning: prevIsPanning, dragDeltas: prevDragDeltas} = prevProps.context; // eslint-disable-line
 
     if (!ignorePanning && !isPanning && prevIsPanning) {
       this.onPanEnd();
@@ -78,9 +75,9 @@ class panResponderView extends PureComponent {
   onDrag(deltas) {
     const left = this.initialLeft + (deltas.x ? Math.round(deltas.x) : 0);
     const top = this.initialTop + (deltas.y ? Math.round(deltas.y) : 0);
-    
+
     this.setNativeProps(left, top);
-  };
+  }
 
   setNativeProps(left, top) {
     if (this.ref.current) {
@@ -88,19 +85,14 @@ class panResponderView extends PureComponent {
       this.left = left;
       this.top = top;
     }
-  };
+  }
 
   render() {
     const {style, isAnimated, ...others} = this.props;
     const Container = isAnimated ? Animated.View : View;
 
     return (
-      <Container
-        ref={this.ref}
-        style={style}
-        pointerEvents={'box-none'}
-        {...others}
-      >
+      <Container ref={this.ref} style={style} pointerEvents={'box-none'} {...others}>
         {this.props.children}
       </Container>
     );

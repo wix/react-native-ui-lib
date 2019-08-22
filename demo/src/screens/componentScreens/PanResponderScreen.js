@@ -1,7 +1,16 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {View, Text, Switch, Colors, Typography, PanListenerView, PanningProvider, PanResponderView} from 'react-native-ui-lib'; //eslint-disable-line
+import {
+  View,
+  Text,
+  Switch,
+  Colors,
+  Typography,
+  PanListenerView,
+  PanningProvider,
+  PanResponderView,
+} from 'react-native-ui-lib'; //eslint-disable-line
 
 const PAN_LISTENER_VIEW_HEIGHT = 100;
 
@@ -24,7 +33,7 @@ export default class PanResponderScreen extends Component {
         location: {left: location.left, top: location.top + PAN_LISTENER_VIEW_HEIGHT},
       });
     }
-  }
+  };
 
   renderPanListener = () => {
     return (
@@ -32,7 +41,7 @@ export default class PanResponderScreen extends Component {
         <Text style={styles.largeText}>Drag here</Text>
       </PanListenerView>
     );
-  }
+  };
 
   render() {
     const {isCoupled} = this.state;
@@ -42,7 +51,7 @@ export default class PanResponderScreen extends Component {
       <View flex bg-dark80>
         <View style={styles.container}>
           <Text style={styles.largeText}>Pan Responder</Text>
-          <Switch value={isCoupled} onValueChange={this.switchExample} style={styles.switch}/>
+          <Switch value={isCoupled} onValueChange={this.switchExample} style={styles.switch} />
           <Text style={styles.smallText}>{isCoupled ? 'Coupled' : 'Uncoupled'}</Text>
         </View>
         <PanningProvider>
@@ -78,7 +87,6 @@ const styles = StyleSheet.create({
   largeText: {
     ...Typography.text50,
     marginLeft: 40,
-
   },
   smallText: {
     ...Typography.text70,

@@ -117,7 +117,7 @@ class Dialog extends BaseComponent {
     } else if (prevVisible && !visible) {
       this.animateDismiss();
     }
-  };
+  }
 
   onOrientationChange = () => {
     const dialogKey = Constants.orientation;
@@ -183,7 +183,7 @@ class Dialog extends BaseComponent {
   // TODO: renderOverlay {_.invoke(this.props, 'renderOverlay')}
   renderVisibleContainer = () => {
     const {children, renderPannableHeader, style, useSafeArea, bottom, top} = this.props;
-    const addBottomSafeArea = Constants.isIphoneX && ((useSafeArea && bottom));
+    const addBottomSafeArea = Constants.isIphoneX && (useSafeArea && bottom);
     const Container = !_.isUndefined(renderPannableHeader) ? View : PanListenerView;
     const direction = this.getDirection();
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8;
@@ -200,10 +200,7 @@ class Dialog extends BaseComponent {
               style={this.dynamicStyles.flexType}
               alignment={alignment}
             >
-              <Container
-                directions={[direction]}
-                style={[this.dynamicStyles.flexType, style]}
-              >
+              <Container directions={[direction]} style={[this.dynamicStyles.flexType, style]}>
                 {this.renderPannableHeader([direction])}
                 {children}
               </Container>
