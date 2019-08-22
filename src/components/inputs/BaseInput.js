@@ -67,6 +67,7 @@ export default class BaseInput extends BaseComponent {
     super(props);
 
     this.state = {
+      ...this.state,
       value: props.value,
       focused: false,
       valid: false,
