@@ -48,6 +48,7 @@ export default class DialogScreen extends Component {
       dialogWithHeader: false,
       dialogWithVerticalScrollableContent: false,
       dialogWithHorizontalScrollableContent: false,
+      reactNativeOverlay: false,
     };
 
     this.useCases = [
@@ -347,7 +348,7 @@ export default class DialogScreen extends Component {
   };
 
   renderOverlayButton = () => {
-    return this.renderButton({stateId: 'showDialog9', text: 'Show dialog in RNN overlay'}, this.showOverlay);
+    return this.renderButton({stateId: 'reactNativeOverlay', text: 'Show dialog in RNN overlay'}, this.showOverlay);
   };
 
   showOverlay = async () => {
