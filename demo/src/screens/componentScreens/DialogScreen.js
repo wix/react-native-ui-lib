@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {FlatList, ScrollView, StyleSheet, Alert, TouchableWithoutFeedback} from 'react-native';
+import {FlatList, ScrollView, StyleSheet, Alert} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {Text, View, Button, Dialog, Colors, PanningProvider} from 'react-native-ui-lib'; // eslint-disable-line
 
@@ -46,8 +46,8 @@ export default class DialogScreen extends Component {
       dialogSwipeLeft: false,
       dialogSwipeRight: false,
       dialogWithHeader: false,
-      dialogWithVerticalScrollableContent: false,
-      dialogWithHorizontalScrollableContent: false,
+      dialogWithVerticalScroll: false,
+      dialogWithHorizontalScroll: false,
       reactNativeOverlay: false,
     };
 
@@ -184,30 +184,37 @@ export default class DialogScreen extends Component {
       },
       {
         stateId: 'dialogWithHeader',
-        text: 'Show bottom dialog with header (wrapped content)',
+        text: 'Show bottom dialog with header',
         showHeader: true,
         contentFunction: this.renderDialogContent,
         extraProps: {
-          useTemplate: true,
+          style: {backgroundColor: Colors.white, marginVertical: 20, borderRadius: 12},
+          height: null,
+          bottom: true,
+          centerH: true,
         },
         functionExtraProps: {flex: false},
       },
       {
-        stateId: 'dialogWithVerticalScrollableContent',
-        text: 'Dialog with vertical scrollable content',
+        stateId: 'dialogWithVerticalScroll',
+        text: 'Dialog with vertical scroll',
         showHeader: true,
-        contentFunction: this.renderContentWithScrollableContent,
+        contentFunction: this.renderContentWithVerticalScroll,
         extraProps: {
-          useTemplate: true,
+          style: {backgroundColor: Colors.white, marginVertical: 20, borderRadius: 12},
+          bottom: true,
+          centerH: true,
         },
       },
       {
-        stateId: 'dialogWithHorizontalScrollableContent',
-        text: 'Dialog with horizontal scrollable content',
+        stateId: 'dialogWithHorizontalScroll',
+        text: 'Dialog with horizontal scroll',
         showHeader: true,
-        contentFunction: this.renderContentWithHorizontalScrollableContent,
+        contentFunction: this.renderContentWithHorizontalScroll,
         extraProps: {
-          useTemplate: true,
+          style: {backgroundColor: Colors.white, marginVertical: 20, borderRadius: 12},
+          bottom: true,
+          centerH: true,
         },
       },
     ];
@@ -264,9 +271,9 @@ export default class DialogScreen extends Component {
     const {title, message} = props;
     return (
       <View>
-        <View marginT-20 marginL-20 marginR-20>
+        <View margin-20>
           <Text marginB-8>{title}</Text>
-          <Text marginB-8>{message}</Text>
+          <Text>{message}</Text>
         </View>
         <View height={2} bg-dark70 />
       </View>
@@ -294,7 +301,7 @@ export default class DialogScreen extends Component {
     return item.value;
   };
 
-  renderContentWithScrollableContent = () => {
+  renderContentWithVerticalScroll = () => {
     return (
       <FlatList
         showsVerticalScrollIndicator={false}
@@ -318,7 +325,7 @@ export default class DialogScreen extends Component {
     Alert.alert('Pressed on', title);
   };
 
-  renderContentWithHorizontalScrollableContent = () => {
+  renderContentWithHorizontalScroll = () => {
     return (
       <View pointerEvents="box-none" style={styles.horizontalContainer}>
         <FlatList
@@ -339,11 +346,7 @@ export default class DialogScreen extends Component {
 
   renderHorizontalItem = ({item: color}) => {
     return (
-      // Note: you only need to wrap with a TouchableWithoutFeedback (or a TouchableOpacity) if you don't
-      // already have it. This is done to make the scrolling possible within the FlatList \ ScrollList
-      <TouchableWithoutFeedback>
-        <View flex width={100} height={1000} style={{backgroundColor: color.value}} />
-      </TouchableWithoutFeedback>
+      <View flex width={100} height={1000} style={{backgroundColor: color.value}} />
     );
   };
 

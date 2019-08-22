@@ -255,6 +255,7 @@ const styles = StyleSheet.create({
   },
   withHeight: {
     flex: 1,
+    overflow: 'hidden',
   },
   dynamicHeight: {
     flex: 0,
