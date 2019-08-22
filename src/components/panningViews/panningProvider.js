@@ -9,7 +9,7 @@ const DIRECTIONS = {
 };
 
 /**
- * @description: Wraps the panDismissibleView and panListenerView to provide a shared context
+ * @description: Wraps the panResponderView and panListenerView to provide a shared context
  */
 export default class PanningProvider extends Component {
   static displayName = 'PanningProvider'

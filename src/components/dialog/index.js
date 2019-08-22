@@ -145,16 +145,15 @@ class Dialog extends BaseComponent {
     this.setState({visible: false}, () => _.invoke(this.props, 'onDismiss', this.props));
   };
 
-  // TODO: rename
-  setPanDismissibleViewRef = ref => {
-    this.panDismissibleViewRef = ref;
+  setDismissibleViewRef = ref => {
+    this.dismissibleViewRef = ref;
   };
 
   animateDismiss = () => {
-    if (!this.panDismissibleViewRef) {
+    if (!this.dismissibleViewRef) {
       this.onDismiss();
     } else {
-      this.panDismissibleViewRef.contentRef.animateDismiss();
+      this.dismissibleViewRef.contentRef.animateDismiss();
     }
   };
 
@@ -196,7 +195,7 @@ class Dialog extends BaseComponent {
           <PanningProvider>
             <DialogDismissibleView
               direction={direction}
-              ref={this.setPanDismissibleViewRef}
+              ref={this.setDismissibleViewRef}
               onDismiss={this.onDismiss}
               style={this.dynamicStyles.flexType}
               alignment={alignment}
