@@ -103,7 +103,7 @@ class DialogDismissibleView extends PureComponent {
     const {direction} = this.props;
     const topInset = Constants.isIphoneX ? Constants.getSafeAreaInsets().top : Constants.isIOS ? 20 : 0;
     let result;
-    switch(direction) {
+    switch (direction) {
       case PanningProvider.Directions.LEFT:
         result = {top: 0, left: -left - this.width};
         break;
@@ -118,7 +118,7 @@ class DialogDismissibleView extends PureComponent {
         result = {top: Constants.screenHeight - top, left: 0};
         break;
     }
-    
+
     return result;
   };
 
@@ -134,28 +134,26 @@ class DialogDismissibleView extends PureComponent {
   };
 
   getAnimationStyle = () => {
-    return (
-      {
-        transform: [
-          {
-            translateX: this.animatedValue.interpolate({
-              inputRange: [0, 1],
-              outputRange: [this.hiddenLocation.left, 0],
-            }),
-          },
-          {
-            translateY: this.animatedValue.interpolate({
-              inputRange: [0, 1],
-              outputRange: [this.hiddenLocation.top, 0],
-            }),
-          },
-        ],
-      }
-    );
-  }
+    return {
+      transform: [
+        {
+          translateX: this.animatedValue.interpolate({
+            inputRange: [0, 1],
+            outputRange: [this.hiddenLocation.left, 0],
+          }),
+        },
+        {
+          translateY: this.animatedValue.interpolate({
+            inputRange: [0, 1],
+            outputRange: [this.hiddenLocation.top, 0],
+          }),
+        },
+      ],
+    };
+  };
 
-  onLayout = (event) => {
-    // DO NOT move the width\height into the measureInWindow - it causes errors with orientation change 
+  onLayout = event => {
+    // DO NOT move the width\height into the measureInWindow - it causes errors with orientation change
     const layout = event.nativeEvent.layout;
     this.width = layout.width;
     this.height = layout.height;
@@ -228,4 +226,3 @@ const styles = StyleSheet.create({
     opacity: 0,
   },
 });
-

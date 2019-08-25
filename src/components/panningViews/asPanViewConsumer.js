@@ -3,9 +3,9 @@ import PanningContext from './panningContext';
 
 function asPanViewConsumer(WrappedComponent) {
   class PanViewConsumer extends Component {
-    saveRef = (r) => {
+    saveRef = r => {
       this.contentRef = r;
-    }
+    };
 
     render() {
       return (

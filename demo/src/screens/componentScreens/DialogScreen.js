@@ -343,9 +343,7 @@ export default class DialogScreen extends Component {
   };
 
   renderHorizontalItem = ({item: color}) => {
-    return (
-      <View flex width={100} height={1000} style={{backgroundColor: color.value}} />
-    );
+    return <View flex width={100} height={1000} style={{backgroundColor: color.value}} />;
   };
 
   renderOverlayButton = () => {
