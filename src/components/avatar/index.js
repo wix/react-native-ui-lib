@@ -24,7 +24,9 @@ export const STATUS_MODES = {
 
 export const BADGE_POSITIONS = {
   TOP_RIGHT: 'TOP_RIGHT',
+  TOP_LEFT: 'TOP_LEFT',
   BOTTOM_RIGHT: 'BOTTOM_RIGHT',
+  BOTTOM_LEFT: 'BOTTOM_LEFT'
 };
 
 const DEFAULT_BADGE_SIZE = 'pimpleBig';
