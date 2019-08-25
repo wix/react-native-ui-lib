@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
-import {Animated, Easing} from 'react-native';
+import {Animated, Easing, StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
 import View from '../view';
 import asPanViewConsumer from '../panningViews/asPanViewConsumer';
@@ -77,7 +77,7 @@ class DialogDismissibleView extends PureComponent {
     if (visible && !prevVisible) {
       this.setState({visible: true});
     } else if (prevVisible && !visible) {
-      this.animateDismiss();
+      this.hide();
     }
   }
 
@@ -168,14 +168,13 @@ class DialogDismissibleView extends PureComponent {
     });
   };
 
-  animateDismiss = () => {
+  hide = () => {
     const {onDismiss} = this.props;
     // TODO: test we're not animating?
     this.animateTo(1, () => this.setState({visible: false}, onDismiss));
   };
 
-  // TODO: animateToStart ?
-  resetPosition = (left, top, direction) => {
+  resetToShown = (left, top, direction) => {
     const toValue =
       direction === PanningProvider.Directions.LEFT || direction === PanningProvider.Directions.RIGHT
         ? -left / this.hiddenLocation.left
@@ -188,7 +187,7 @@ class DialogDismissibleView extends PureComponent {
     const {direction} = this.props;
     const endValue = {x: Math.round(left), y: Math.round(top)};
     if (this.swipe.x || this.swipe.y) {
-      this.animateDismiss();
+      this.hide();
     } else {
       this.swipe = {};
       if (
@@ -197,9 +196,9 @@ class DialogDismissibleView extends PureComponent {
         (direction === PanningProvider.Directions.UP && endValue.y <= -this.thresholdY) ||
         (direction === PanningProvider.Directions.DOWN && endValue.y >= this.thresholdY)
       ) {
-        this.animateDismiss();
+        this.hide();
       } else {
-        this.resetPosition(left, top, direction);
+        this.resetToShown(left, top, direction);
       }
     }
   };
@@ -211,7 +210,7 @@ class DialogDismissibleView extends PureComponent {
     return (
       <View ref={r => (this.ref = r)} style={containerStyle} onLayout={this.onLayout}>
         <PanResponderView
-          style={[style, this.animationStyle, !visible && {opacity: 0}]}
+          style={[style, this.animationStyle, !visible && styles.hidden]} // !visible && styles.hidden is done to fix a bug is iOS
           isAnimated
           onPanLocationChanged={this.onPanLocationChanged}
         >
@@ -223,3 +222,10 @@ class DialogDismissibleView extends PureComponent {
 }
 
 export default asPanViewConsumer(DialogDismissibleView);
+
+const styles = StyleSheet.create({
+  hidden: {
+    opacity: 0,
+  },
+});
+
