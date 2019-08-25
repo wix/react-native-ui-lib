@@ -45,7 +45,7 @@ class DialogDismissibleView extends PureComponent {
 
     this.hiddenLocation = {};
     this.swipe = {};
-    this.animatedValue = new Animated.Value(1);
+    this.animatedValue = new Animated.Value(0);
     this.state = {
       visible: props.visible,
       isAnimating: false,
@@ -140,13 +140,13 @@ class DialogDismissibleView extends PureComponent {
           {
             translateX: this.animatedValue.interpolate({
               inputRange: [0, 1],
-              outputRange: [0, this.hiddenLocation.left],
+              outputRange: [this.hiddenLocation.left, 0],
             }),
           },
           {
             translateY: this.animatedValue.interpolate({
               inputRange: [0, 1],
-              outputRange: [0, this.hiddenLocation.top],
+              outputRange: [this.hiddenLocation.top, 0],
             }),
           },
         ],
@@ -164,21 +164,21 @@ class DialogDismissibleView extends PureComponent {
     this.ref.measureInWindow((x, y) => {
       this.hiddenLocation = this.getHiddenLocation(x, y);
       this.animationStyle = this.getAnimationStyle();
-      this.animateTo(0, this.onAnimationEnd);
+      this.animateTo(1, this.onAnimationEnd);
     });
   };
 
   hide = () => {
     const {onDismiss} = this.props;
     // TODO: test we're not animating?
-    this.animateTo(1, () => this.setState({visible: false}, onDismiss));
+    this.animateTo(0, () => this.setState({visible: false}, onDismiss));
   };
 
   resetToShown = (left, top, direction) => {
     const toValue =
       direction === PanningProvider.Directions.LEFT || direction === PanningProvider.Directions.RIGHT
-        ? -left / this.hiddenLocation.left
-        : -top / this.hiddenLocation.top;
+        ? 1 + left / this.hiddenLocation.left
+        : 1 + top / this.hiddenLocation.top;
 
     this.animateTo(toValue, this.onAnimationEnd);
   };
