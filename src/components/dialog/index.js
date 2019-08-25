@@ -48,7 +48,7 @@ class Dialog extends BaseComponent {
      */
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
-     * The dialog height (default: 70%)
+     * The dialog height (default: undefined)
      */
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
@@ -84,7 +84,6 @@ class Dialog extends BaseComponent {
     migrate: false,
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
     width: '90%',
-    height: '70%',
   };
 
   constructor(props) {
@@ -130,16 +129,16 @@ class Dialog extends BaseComponent {
 
   generateStyles() {
     if (this.props.migrate) {
-      this.dynamicStyles = createStyles(this.props);
+      this.styles = createStyles(this.props);
     }
   }
 
   setAlignment() {
     const {alignments} = this.state;
     if (_.isEmpty(alignments)) {
-      this.dynamicStyles.alignments = styles.centerContent;
+      this.styles.alignments = this.styles.centerContent;
     } else {
-      this.dynamicStyles.alignments = alignments;
+      this.styles.alignments = alignments;
     }
   }
 
@@ -166,17 +165,17 @@ class Dialog extends BaseComponent {
     const alignment = {bottom, top};
 
     return (
-      <View style={this.dynamicStyles.size} pointerEvents="box-none">
+      <View style={this.styles.size} pointerEvents="box-none">
         <PanningProvider>
           <DialogDismissibleView
             direction={direction}
             visible={dialogVisibility}
             onDismiss={this.onDismiss}
-            containerStyle={this.dynamicStyles.flexType}
-            style={this.dynamicStyles.flexType}
+            containerStyle={this.styles.flexType}
+            style={this.styles.flexType}
             alignment={alignment}
           >
-            <Container directions={[direction]} style={[styles.overflow, this.dynamicStyles.flexType, style]}>
+            <Container directions={[direction]} style={[this.styles.overflow, this.styles.flexType, style]}>
               {this.renderPannableHeader([direction])}
               {children}
             </Container>
@@ -211,7 +210,7 @@ class Dialog extends BaseComponent {
     return (
       <View
         useSafeArea={useSafeArea}
-        style={[this.dynamicStyles.alignments, styles.container]}
+        style={[this.styles.alignments, this.styles.container]}
         pointerEvents="box-none"
       >
         {this.renderDialogView()}
@@ -252,33 +251,22 @@ class Dialog extends BaseComponent {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  centerContent: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  withHeight: {
-    flex: 1,
-  },
-  dynamicHeight: {
-    flex: 0,
-  },
-  overflow: {
-    overflow: 'hidden',
-  },
-});
-
 function createStyles(props) {
   const {width, height} = props;
-  const flexType = height === null ? styles.dynamicHeight : styles.withHeight;
-  const dynamicHeight = height === null ? undefined : {height: '100%'};
+  const flexType = height ? {flex: 1} : {flex: 0};
   return StyleSheet.create({
     size: {width, height},
     flexType,
-    height: dynamicHeight,
+    container: {
+      flex: 1,
+    },
+    centerContent: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    overflow: {
+      overflow: 'hidden',
+    },
   });
 }
 

@@ -123,7 +123,6 @@ export default class DialogScreen extends Component {
         extraProps: {
           style: {backgroundColor: Colors.white},
           width: '100%',
-          height: null,
           bottom: true,
           useSafeArea: true,
           centerH: true,
@@ -138,7 +137,6 @@ export default class DialogScreen extends Component {
         extraProps: {
           style: {backgroundColor: Colors.white},
           width: '100%',
-          height: null,
           top: true,
           useSafeArea: true,
           centerH: true,
@@ -188,7 +186,6 @@ export default class DialogScreen extends Component {
         contentFunction: this.renderDialogContent,
         extraProps: {
           style: {backgroundColor: Colors.white, marginVertical: 20, borderRadius: 12},
-          height: null,
           bottom: true,
           centerH: true,
         },
@@ -201,6 +198,7 @@ export default class DialogScreen extends Component {
         contentFunction: this.renderContentWithVerticalScroll,
         extraProps: {
           style: {backgroundColor: Colors.white, marginVertical: 20, borderRadius: 12},
+          height: '70%',
           bottom: true,
           centerH: true,
         },
@@ -212,6 +210,7 @@ export default class DialogScreen extends Component {
         contentFunction: this.renderContentWithHorizontalScroll,
         extraProps: {
           style: {backgroundColor: Colors.white, marginVertical: 20, borderRadius: 12},
+          height: '70%',
           bottom: true,
           centerH: true,
         },
