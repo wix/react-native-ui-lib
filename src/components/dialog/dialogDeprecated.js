@@ -118,7 +118,7 @@ class DialogDeprecated extends BaseComponent {
 
   onDismiss = () => {
     this.initPositions();
-    _.invoke(this.props, 'onDismiss');
+    _.invoke(this.props, 'onDismiss', this.props);
   }
 
   animatedDismiss = () => {
