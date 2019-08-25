@@ -113,7 +113,7 @@ class Dialog extends BaseComponent {
     if (visible && !prevVisible) {
       this.setState({modalVisibility: true, dialogVisibility: true});
     } else if (prevVisible && !visible) {
-      this.hideDialog();
+      this.hideDialogView();
     }
   }
 
@@ -143,7 +143,7 @@ class Dialog extends BaseComponent {
     this.setState({modalVisibility: false}, () => _.invoke(this.props, 'onDismiss', this.props));
   };
 
-  hideDialog = () => {
+  hideDialogView = () => {
     this.setState({dialogVisibility: false});
   };
 
@@ -222,8 +222,8 @@ class Dialog extends BaseComponent {
         transparent
         visible={modalVisibility}
         animationType={'fade'}
-        onBackgroundPress={this.hideDialog}
-        onRequestClose={this.hideDialog}
+        onBackgroundPress={this.hideDialogView}
+        onRequestClose={this.hideDialogView}
         overlayBackgroundColor={overlayBackgroundColor}
         onDismiss={onModalDismissed}
         supportedOrientations={supportedOrientations}
