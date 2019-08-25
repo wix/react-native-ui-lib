@@ -29,6 +29,10 @@ class DialogDismissibleView extends PureComponent {
      * The dialog`s container style
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * Whether to show the dialog or not
+     */
+    visible: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -43,14 +47,16 @@ class DialogDismissibleView extends PureComponent {
     this.swipe = {};
     this.animatedValue = new Animated.Value(1);
     this.state = {
+      visible: props.visible,
       isAnimating: false,
-      isDismissed: false,
     };
   }
 
   componentDidUpdate(prevProps) {
     const {isPanning, dragDeltas, swipeDirections} = this.props.context; // eslint-disable-line
     const {dragDeltas: prevDragDeltas, swipeDirections: prevSwipeDirections} = prevProps.context; // eslint-disable-line
+    const {visible} = this.props;
+    const {visible: prevVisible} = prevProps;
 
     if (
       isPanning &&
@@ -66,6 +72,12 @@ class DialogDismissibleView extends PureComponent {
       (swipeDirections.x !== prevSwipeDirections.x || swipeDirections.y !== prevSwipeDirections.y)
     ) {
       this.onSwipe(swipeDirections);
+    }
+
+    if (visible && !prevVisible) {
+      this.setState({visible: true});
+    } else if (prevVisible && !visible) {
+      this.animateDismiss();
     }
   }
 
@@ -160,7 +172,7 @@ class DialogDismissibleView extends PureComponent {
   animateDismiss = () => {
     const {onDismiss} = this.props;
     // TODO: test we're not animating?
-    this.animateTo(1, () => this.setState({isDismissed: true}, onDismiss));
+    this.animateTo(1, () => this.setState({visible: false}, onDismiss));
   };
 
   // TODO: animateToStart ?
@@ -195,12 +207,12 @@ class DialogDismissibleView extends PureComponent {
 
   render() {
     const {containerStyle, style} = this.props;
-    const {isDismissed} = this.state;
+    const {visible} = this.state;
 
     return (
       <View ref={r => (this.ref = r)} style={containerStyle} onLayout={this.onLayout}>
         <PanResponderView
-          style={[style, this.animationStyle, isDismissed && {opacity: 0}]}
+          style={[style, this.animationStyle, !visible && {opacity: 0}]}
           isAnimated
           onPanLocationChanged={this.onPanLocationChanged}
         >

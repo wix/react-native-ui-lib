@@ -93,7 +93,8 @@ class Dialog extends BaseComponent {
     this.state = {
       alignments: this.state.alignments,
       orientationKey: undefined,
-      visible: props.visible,
+      modalVisibility: props.visible,
+      dialogVisibility: props.visible,
     };
 
     if (props.migrate) {
@@ -114,9 +115,9 @@ class Dialog extends BaseComponent {
     const {visible: prevVisible} = prevProps;
 
     if (visible && !prevVisible) {
-      this.setState({visible: true});
+      this.setState({modalVisibility: true, dialogVisibility: true});
     } else if (prevVisible && !visible) {
-      this.animateDismiss();
+      this.hideDialog();
     }
   }
 
@@ -143,19 +144,11 @@ class Dialog extends BaseComponent {
   }
 
   onDismiss = () => {
-    this.setState({visible: false}, () => _.invoke(this.props, 'onDismiss', this.props));
+    this.setState({modalVisibility: false}, () => _.invoke(this.props, 'onDismiss', this.props));
   };
 
-  setDismissibleViewRef = ref => {
-    this.dismissibleViewRef = ref;
-  };
-
-  animateDismiss = () => {
-    if (!this.dismissibleViewRef) {
-      this.onDismiss();
-    } else {
-      this.dismissibleViewRef.contentRef.animateDismiss();
-    }
+  hideDialog = () => {
+    this.setState({dialogVisibility: false});
   };
 
   renderPannableHeader = directions => {
@@ -167,6 +160,7 @@ class Dialog extends BaseComponent {
 
   renderDialogView = () => {
     const {children, renderPannableHeader, style, bottom, top} = this.props;
+    const {dialogVisibility} = this.state;
     const Container = !_.isUndefined(renderPannableHeader) ? View : PanListenerView;
     const direction = this.getDirection();
     const alignment = {bottom, top};
@@ -176,7 +170,7 @@ class Dialog extends BaseComponent {
         <PanningProvider>
           <DialogDismissibleView
             direction={direction}
-            ref={this.setDismissibleViewRef}
+            visible={dialogVisibility}
             onDismiss={this.onDismiss}
             containerStyle={this.dynamicStyles.flexType}
             style={this.dynamicStyles.flexType}
@@ -227,17 +221,17 @@ class Dialog extends BaseComponent {
   };
 
   renderModal = () => {
-    const {orientationKey, visible} = this.state;
+    const {orientationKey, modalVisibility} = this.state;
     const {overlayBackgroundColor, onModalDismissed, supportedOrientations} = this.getThemeProps();
 
     return (
       <Modal
         key={orientationKey}
         transparent
-        visible={visible}
+        visible={modalVisibility}
         animationType={'fade'}
-        onBackgroundPress={this.animateDismiss}
-        onRequestClose={this.animateDismiss}
+        onBackgroundPress={this.hideDialog}
+        onRequestClose={this.hideDialog}
         overlayBackgroundColor={overlayBackgroundColor}
         onDismiss={onModalDismissed}
         supportedOrientations={supportedOrientations}
