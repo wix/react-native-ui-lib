@@ -105,17 +105,17 @@ class DialogDismissibleView extends PureComponent {
     let result;
     switch(direction) {
       case PanningProvider.Directions.LEFT:
-        result = {left: -left - this.width};
+        result = {top: 0, left: -left - this.width};
         break;
       case PanningProvider.Directions.RIGHT:
-        result = {left: Constants.screenWidth - left};
+        result = {top: 0, left: Constants.screenWidth - left};
         break;
       case PanningProvider.Directions.UP:
-        result = {top: -top - this.height - topInset};
+        result = {top: -top - this.height - topInset, left: 0};
         break;
       case PanningProvider.Directions.DOWN:
       default:
-        result = {top: Constants.screenHeight - top};
+        result = {top: Constants.screenHeight - top, left: 0};
         break;
     }
     
@@ -142,12 +142,6 @@ class DialogDismissibleView extends PureComponent {
     this.thresholdY = this.height / 2;
     this.ref.measureInWindow((x, y) => {
       this.initialLocation = this.getInitialLocation(x, y);
-      this.initialLocation = {
-        // "|| 0" to handle null values in left\top TODO: remove?
-        left: _.get(this.initialLocation, 'left', 0) || 0,
-        top: _.get(this.initialLocation, 'top', 0) || 0,
-      };
-
       this.animationStyle = {
         transform: [
           {
