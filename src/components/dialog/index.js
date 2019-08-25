@@ -92,7 +92,7 @@ class Dialog extends BaseComponent {
 
     this.state = {
       alignments: this.state.alignments,
-      dialogKey: undefined,
+      orientationKey: undefined,
       visible: props.visible,
     };
 
@@ -121,9 +121,9 @@ class Dialog extends BaseComponent {
   }
 
   onOrientationChange = () => {
-    const dialogKey = Constants.orientation;
-    if (this.state.dialogKey !== dialogKey) {
-      this.setState({dialogKey});
+    const orientationKey = Constants.orientation;
+    if (this.state.orientationKey !== orientationKey) {
+      this.setState({orientationKey});
     }
   };
 
@@ -165,6 +165,33 @@ class Dialog extends BaseComponent {
     }
   };
 
+  renderDialogView = () => {
+    const {children, renderPannableHeader, style, bottom, top} = this.props;
+    const Container = !_.isUndefined(renderPannableHeader) ? View : PanListenerView;
+    const direction = this.getDirection();
+    const alignment = {bottom, top};
+
+    return (
+      <View style={this.dynamicStyles.size} pointerEvents="box-none">
+        <PanningProvider>
+          <DialogDismissibleView
+            direction={direction}
+            ref={this.setDismissibleViewRef}
+            onDismiss={this.onDismiss}
+            containerStyle={this.dynamicStyles.flexType}
+            style={this.dynamicStyles.flexType}
+            alignment={alignment}
+          >
+            <Container directions={[direction]} style={[styles.overflow, this.dynamicStyles.flexType, style]}>
+              {this.renderPannableHeader([direction])}
+              {children}
+            </Container>
+          </DialogDismissibleView>
+        </PanningProvider>
+      </View>
+    );
+  };
+
   getDirection = () => {
     const {panDirection, disablePan, renderPannableHeader} = this.props;
     let direction;
@@ -182,45 +209,30 @@ class Dialog extends BaseComponent {
   };
 
   // TODO: renderOverlay {_.invoke(this.props, 'renderOverlay')}
-  renderVisibleContainer = () => {
-    const {children, renderPannableHeader, style, useSafeArea, bottom, top} = this.props;
+  renderDialogContainer = () => {
+    const {useSafeArea, bottom} = this.props;
     const addBottomSafeArea = Constants.isIphoneX && (useSafeArea && bottom);
-    const Container = !_.isUndefined(renderPannableHeader) ? View : PanListenerView;
-    const direction = this.getDirection();
-    const bottomInsets = Constants.getSafeAreaInsets().bottom - 8;
-    const alignment = {bottom, top};
+    const bottomInsets = Constants.getSafeAreaInsets().bottom - 8; // TODO: should this be here or in the input style?
 
     return (
-      <View useSafeArea={useSafeArea} style={[this.dynamicStyles.alignments, styles.container]} pointerEvents="box-none">
-        <View style={this.dynamicStyles.size} pointerEvents="box-none">
-          <PanningProvider>
-            <DialogDismissibleView
-              direction={direction}
-              ref={this.setDismissibleViewRef}
-              onDismiss={this.onDismiss}
-              containerStyle={this.dynamicStyles.flexType}
-              style={this.dynamicStyles.flexType}
-              alignment={alignment}
-            >
-              <Container directions={[direction]} style={[styles.overflow, this.dynamicStyles.flexType, style]}>
-                {this.renderPannableHeader([direction])}
-                {children}
-              </Container>
-            </DialogDismissibleView>
-          </PanningProvider>
-        </View>
+      <View
+        useSafeArea={useSafeArea}
+        style={[this.dynamicStyles.alignments, styles.container]}
+        pointerEvents="box-none"
+      >
+        {this.renderDialogView()}
         {addBottomSafeArea && <View style={{marginTop: bottomInsets}} />}
       </View>
     );
   };
 
   renderModal = () => {
-    const {dialogKey, visible} = this.state;
+    const {orientationKey, visible} = this.state;
     const {overlayBackgroundColor, onModalDismissed, supportedOrientations} = this.getThemeProps();
 
     return (
       <Modal
-        key={dialogKey}
+        key={orientationKey}
         transparent
         visible={visible}
         animationType={'fade'}
@@ -230,7 +242,7 @@ class Dialog extends BaseComponent {
         onDismiss={onModalDismissed}
         supportedOrientations={supportedOrientations}
       >
-        {this.renderVisibleContainer()}
+        {this.renderDialogContainer()}
       </Modal>
     );
   };
@@ -262,7 +274,7 @@ const styles = StyleSheet.create({
   },
   overflow: {
     overflow: 'hidden',
-  }
+  },
 });
 
 function createStyles(props) {
