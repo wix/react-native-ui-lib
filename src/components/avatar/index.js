@@ -61,7 +61,7 @@ export default class Avatar extends PureBaseComponent {
     animate: PropTypes.bool,
     /**
      * Background color for Avatar
-     */
+     */ 
     backgroundColor: PropTypes.string,
     /**
      * Badge location on Avatar
@@ -222,18 +222,10 @@ export default class Avatar extends PureBaseComponent {
     const x = Math.sqrt(radius ** 2 * 2);
     const y = x - radius;
     const shift = Math.sqrt(y ** 2 / 2) - (BADGE_SIZES[this.getBadgeSize()] + this.getBadgeBorderWidth() * 2) / 2;
+    const badgeLocation = _.split(_.toLower(badgePosition), '_', 2)
+    const badgeAlignment = {position: 'absolute', [badgeLocation[0]]: shift, [badgeLocation[1]]: shift}
 
-    let badgeAlignment = {};
-    switch (badgePosition) {
-      case BADGE_POSITIONS.BOTTOM_RIGHT:
-        badgeAlignment = {bottom: shift, right: shift};
-        break;
-      case BADGE_POSITIONS.TOP_RIGHT:
-      default:
-        badgeAlignment = {top: shift, right: shift};
-        break;
-    }
-    return {position: 'absolute', ...badgeAlignment};
+    return badgeAlignment;
   }
 
   renderBadge() {
