@@ -198,10 +198,11 @@ class Dialog extends BaseComponent {
               direction={direction}
               ref={this.setDismissibleViewRef}
               onDismiss={this.onDismiss}
+              containerStyle={this.dynamicStyles.flexType}
               style={this.dynamicStyles.flexType}
               alignment={alignment}
             >
-              <Container directions={[direction]} style={[this.dynamicStyles.flexType, style]}>
+              <Container directions={[direction]} style={[styles.overflow, this.dynamicStyles.flexType, style]}>
                 {this.renderPannableHeader([direction])}
                 {children}
               </Container>
@@ -255,12 +256,13 @@ const styles = StyleSheet.create({
   },
   withHeight: {
     flex: 1,
-    overflow: 'hidden',
   },
   dynamicHeight: {
     flex: 0,
-    overflow: 'hidden',
   },
+  overflow: {
+    overflow: 'hidden',
+  }
 });
 
 function createStyles(props) {

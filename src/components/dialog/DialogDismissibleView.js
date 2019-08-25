@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 import {Animated, Easing} from 'react-native';
 import {Constants} from '../../helpers';
+import View from '../view';
 import asPanViewConsumer from '../panningViews/asPanViewConsumer';
 import PanningProvider from '../panningViews/panningProvider';
 import PanResponderView from '../panningViews/panResponderView';
@@ -24,6 +25,10 @@ class DialogDismissibleView extends PureComponent {
      * Is this bottom, top or none (center)
      */
     alignment: PropTypes.shape(PropTypes.arrayOf[PropTypes.bool]),
+    /**
+     * The dialog`s container style
+     */
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
   };
 
   static defaultProps = {
@@ -38,7 +43,7 @@ class DialogDismissibleView extends PureComponent {
     this.swipe = {};
     this.animatedValue = new Animated.Value(1);
     this.state = {
-      isAnimating: false, // TODO: remove?
+      isAnimating: false,
       isDismissed: false,
     };
   }
@@ -82,38 +87,27 @@ class DialogDismissibleView extends PureComponent {
     this.setState({isAnimating: false});
   };
 
-  // TODO: test all
-  getInitialLocation = () => {
-    const {alignment, style, direction} = this.props;
-    const {bottom, top} = alignment;
-    const center = !bottom && !top;
-    if (direction === PanningProvider.Directions.DOWN) {
-      if (bottom) {
-        const dynamicHeight = _.isUndefined(style) || _.isUndefined(style.height);
-        if (dynamicHeight) {
-          return {top: Constants.screenHeight};
-        } else {
-          return {top: this.height + 11}; // iPhoneX 11, iPhone -7, Android 0
-        }
-      } else if (center) {
-        return {top: (Constants.screenHeight + this.height) / 2};
-      } else {
-        return {top: Constants.screenHeight};
-      }
-    } else if (direction === PanningProvider.Directions.UP) {
-      if (top) {
-        return {top: -this.height - 44}; // iPhoneX -44, iPhone -20, Android 0
-      } else if (center) {
-        return {top: -(Constants.screenHeight + this.height) / 2};
-      } else {
-        return {top: Constants.screenHeight};
-      }
-    } else if (direction === PanningProvider.Directions.LEFT) {
-      return {left: -(Constants.screenWidth + this.width) / 2 - 1};
-    } else {
-      // RIGHT
-      return {left: (Constants.screenWidth + this.width) / 2};
+  getInitialLocation = (left, top) => {
+    const {direction} = this.props;
+    const topInset = Constants.isIphoneX ? Constants.getSafeAreaInsets().top : Constants.isIOS ? 20 : 0;
+    let result;
+    switch(direction) {
+      case PanningProvider.Directions.LEFT:
+        result = {left: -left - this.width};
+        break;
+      case PanningProvider.Directions.RIGHT:
+        result = {left: Constants.screenWidth - left};
+        break;
+      case PanningProvider.Directions.UP:
+        result = {top: -top - this.height - topInset};
+        break;
+      case PanningProvider.Directions.DOWN:
+      default:
+        result = {top: Constants.screenHeight - top};
+        break;
     }
+    
+    return result;
   };
 
   animateTo = (toValue, animationEndCallback) => {
@@ -127,14 +121,15 @@ class DialogDismissibleView extends PureComponent {
     this.setState({isAnimating: true}, () => animation.start(animationEndCallback));
   };
 
-  onLayout = event => {
-    if (_.isEmpty(this.initialLocation)) {
-      const layout = event.nativeEvent.layout;
-      this.height = layout.height;
-      this.thresholdY = layout.height / 2;
-      this.width = layout.width;
-      this.thresholdX = layout.width / 2;
-      this.initialLocation = this.getInitialLocation();
+  onLayout = (event) => {
+    // DO NOT move the width\height into the measureInWindow - it causes errors with orientation change 
+    const layout = event.nativeEvent.layout;
+    this.width = layout.width;
+    this.height = layout.height;
+    this.thresholdX = this.width / 2;
+    this.thresholdY = this.height / 2;
+    this.ref.measureInWindow((x, y) => {
+      this.initialLocation = this.getInitialLocation(x, y);
       this.initialLocation = {
         // "|| 0" to handle null values in left\top TODO: remove?
         left: _.get(this.initialLocation, 'left', 0) || 0,
@@ -159,7 +154,7 @@ class DialogDismissibleView extends PureComponent {
       };
 
       this.animateTo(0, this.onAnimationEnd);
-    }
+    });
   };
 
   animateDismiss = () => {
@@ -199,18 +194,19 @@ class DialogDismissibleView extends PureComponent {
   };
 
   render() {
-    const {style} = this.props;
+    const {containerStyle, style} = this.props;
     const {isDismissed} = this.state;
 
     return (
-      <PanResponderView
-        style={[style, this.animationStyle, isDismissed && {opacity: 0}]}
-        isAnimated
-        onLayout={this.onLayout}
-        onPanLocationChanged={this.onPanLocationChanged}
-      >
-        {this.props.children}
-      </PanResponderView>
+      <View ref={r => (this.ref = r)} style={containerStyle} onLayout={this.onLayout}>
+        <PanResponderView
+          style={[style, this.animationStyle, isDismissed && {opacity: 0}]}
+          isAnimated
+          onPanLocationChanged={this.onPanLocationChanged}
+        >
+          {this.props.children}
+        </PanResponderView>
+      </View>
     );
   }
 }

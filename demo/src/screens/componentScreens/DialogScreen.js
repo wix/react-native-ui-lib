@@ -42,7 +42,6 @@ export default class DialogScreen extends Component {
       showDialog6: false,
       showDialog7: false,
       showDialog8: false,
-      showDialog9: false,
       dialogSwipeLeft: false,
       dialogSwipeRight: false,
       dialogWithHeader: false,
@@ -104,7 +103,7 @@ export default class DialogScreen extends Component {
       },
       {
         stateId: 'showDialog5',
-        text: 'Show top dialog different animation',
+        text: 'Show top dialog',
         showHeader: false,
         contentFunction: this.renderDialogContent,
         extraProps: {
@@ -118,7 +117,7 @@ export default class DialogScreen extends Component {
       },
       {
         stateId: 'showDialog6',
-        text: 'Show dialog with height based on content',
+        text: 'Show dialog with height based on content (bottom)',
         showHeader: false,
         contentFunction: this.renderDialogContent,
         extraProps: {
