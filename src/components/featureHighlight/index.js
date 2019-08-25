@@ -8,6 +8,7 @@ import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
 import Button from '../button';
+import PageControl from '../pageControl';
 import {HighlighterOverlayView} from '../../nativeComponents';
 
 
@@ -64,6 +65,14 @@ class FeatureHighlight extends BaseComponent {
      */
     message: PropTypes.string,
     /**
+     * Title text style
+     */
+    titleStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * Message text style
+     */
+    messageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
      * Title's max number of lines
      */
     titleNumberOfLines: PropTypes.number,
@@ -96,6 +105,10 @@ class FeatureHighlight extends BaseComponent {
      */
     borderWidth: PropTypes.number,
     /**
+     * Border radius for the border corners around the highlighted element
+     */
+    borderRadius: PropTypes.number,
+    /**
      * The minimum size of the highlighted component (Android API 21+, and only when passing a ref in 'getTarget')
      */
     minimumRectSize: PropTypes.shape({
@@ -105,7 +118,11 @@ class FeatureHighlight extends BaseComponent {
     /**
      * The padding of the highlight frame around the highlighted element's frame (only when passing ref in 'getTarget')
      */
-    innerPadding: PropTypes.number
+    innerPadding: PropTypes.number,
+    /**
+     * PageControl component's props
+     */
+    pageControlProps: PropTypes.shape(PageControl.propTypes)
   };
 
   constructor(props) {
@@ -216,7 +233,7 @@ class FeatureHighlight extends BaseComponent {
   }
 
   renderHighlightMessage() {
-    const {title, message, confirmButtonProps, textColor, titleNumberOfLines, messageNumberOfLines}
+    const {title, message, titleStyle, messageStyle, confirmButtonProps, textColor, titleNumberOfLines, messageNumberOfLines}
       = this.getThemeProps();
     const color = textColor || defaultTextColor;
 
@@ -227,12 +244,31 @@ class FeatureHighlight extends BaseComponent {
         pointerEvents="box-none"
       >
         {title && (
-          <Text text60 style={[styles.title, {color}]} numberOfLines={titleNumberOfLines} pointerEvents="none">
+          <Text text60 
+            style={[
+              styles.title, 
+              {
+                color, 
+                marginBottom: message ? titleBottomMargin : messageBottomMargin
+              },
+              titleStyle
+            ]} 
+            numberOfLines={titleNumberOfLines} 
+            pointerEvents="none"
+          >
             {title}
           </Text>
         )}
         {message && (
-          <Text text70 style={[styles.message, {color}]} numberOfLines={messageNumberOfLines} pointerEvents="none">
+          <Text text70 
+            style={[
+              styles.message, 
+              {color},
+              messageStyle
+            ]} 
+            numberOfLines={messageNumberOfLines} 
+            pointerEvents="none"
+          >
             {message}
           </Text>
         )}
@@ -255,7 +291,7 @@ class FeatureHighlight extends BaseComponent {
     if (contentTopPosition === undefined) return null;
 
     const {testID, visible, highlightFrame, overlayColor, borderColor, borderWidth, minimumRectSize, innerPadding,
-      onBackgroundPress} = this.getThemeProps();
+      onBackgroundPress, borderRadius, pageControlProps} = this.getThemeProps();
 
     return (
       <HighlighterOverlayView
@@ -268,9 +304,16 @@ class FeatureHighlight extends BaseComponent {
         strokeWidth={borderWidth || defaultStrokeWidth}
         minimumRectSize={minimumRectSize}
         innerPadding={innerPadding}
+        borderRadius={borderRadius}
       >
         <TouchableWithoutFeedback style={styles.touchableOverlay} onPress={onBackgroundPress}>
+          {pageControlProps ?
+          <View flex bottom>
+            <PageControl {...pageControlProps} containerStyle={{marginBottom: 24}}/>
+          </View>
+          : 
           <View flex/>
+          }
         </TouchableWithoutFeedback>
         {this.renderHighlightMessage()}
       </HighlighterOverlayView>
@@ -286,7 +329,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start'
   },
   title: {
-    marginBottom: titleBottomMargin,
     lineHeight: Typography.text60.lineHeight,
     fontWeight: '900'
   },
