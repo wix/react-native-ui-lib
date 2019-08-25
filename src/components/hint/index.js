@@ -107,6 +107,10 @@ class Hint extends BaseComponent {
      */
     onBackgroundPress: PropTypes.func,
     /**
+     * The Screen width for the hint container
+     */
+    screenWidth: PropTypes.number,
+    /**
      * The hint's test identifier
      */
     testID: PropTypes.string,
@@ -140,6 +144,11 @@ class Hint extends BaseComponent {
       });
     }
   };
+
+  get screenWidth() {
+    const {screenWidth} = this.getThemeProps();
+    return screenWidth || Constants.screenWidth;
+  }
 
   get targetLayout() {
     const {onBackgroundPress, targetFrame} = this.props;
@@ -181,9 +190,9 @@ class Hint extends BaseComponent {
   getTargetPositionOnScreen() {
     const targetMidPosition = this.targetLayout.x + this.targetLayout.width / 2;
     
-    if (targetMidPosition > Constants.screenWidth * (2 / 3)) {
+    if (targetMidPosition > this.screenWidth * (2 / 3)) {
       return TARGET_POSITIONS.RIGHT; 
-    } else if (targetMidPosition < Constants.screenWidth * (1 / 3)) {
+    } else if (targetMidPosition < this.screenWidth * (1 / 3)) {
       return TARGET_POSITIONS.LEFT; 
     }
     return TARGET_POSITIONS.CENTER;
@@ -222,7 +231,7 @@ class Hint extends BaseComponent {
       if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
         paddings.paddingLeft = this.targetLayout.x;
       } else if (targetPositionOnScreen === TARGET_POSITIONS.RIGHT) {
-        paddings.paddingRight = Constants.screenWidth - this.targetLayout.x - this.targetLayout.width;
+        paddings.paddingRight = this.screenWidth - this.targetLayout.x - this.targetLayout.width;
       }
     }
     return paddings;
@@ -243,8 +252,8 @@ class Hint extends BaseComponent {
 
     const leftPosition = this.useSideTip ? this.targetLayout.x : this.targetLayout.x + targetMidWidth - tipMidWidth;
     const rightPosition = this.useSideTip
-      ? Constants.screenWidth - this.targetLayout.x - this.targetLayout.width
-      : Constants.screenWidth - this.targetLayout.x - targetMidWidth - tipMidWidth;
+      ? this.screenWidth - this.targetLayout.x - this.targetLayout.width
+      : this.screenWidth - this.targetLayout.x - targetMidWidth - tipMidWidth;
     const targetPositionOnScreen = this.getTargetPositionOnScreen();
 
     switch (targetPositionOnScreen) {
@@ -315,7 +324,7 @@ class Hint extends BaseComponent {
         <AnimatableView
           animation={shownUp ? AnimatableManager.animations.hintAppearUp : AnimatableManager.animations.hintAppearDown}
           duration={200}
-          style={[{width: Constants.screenWidth}, styles.animatedContainer, this.getHintPosition(), this.getHintPadding()]}
+          style={[{width: this.screenWidth}, styles.animatedContainer, this.getHintPosition(), this.getHintPadding()]}
           pointerEvents="box-none"
           testID={testID}
         >
