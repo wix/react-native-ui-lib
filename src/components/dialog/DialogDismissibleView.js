@@ -43,7 +43,7 @@ class DialogDismissibleView extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.initialLocation = {};
+    this.hiddenLocation = {};
     this.swipe = {};
     this.animatedValue = new Animated.Value(1);
     this.state = {
@@ -99,7 +99,7 @@ class DialogDismissibleView extends PureComponent {
     this.setState({isAnimating: false});
   };
 
-  getInitialLocation = (left, top) => {
+  getHiddenLocation = (left, top) => {
     const {direction} = this.props;
     const topInset = Constants.isIphoneX ? Constants.getSafeAreaInsets().top : Constants.isIOS ? 20 : 0;
     let result;
@@ -133,6 +133,27 @@ class DialogDismissibleView extends PureComponent {
     this.setState({isAnimating: true}, () => animation.start(animationEndCallback));
   };
 
+  getAnimationStyle = () => {
+    return (
+      {
+        transform: [
+          {
+            translateX: this.animatedValue.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0, this.hiddenLocation.left],
+            }),
+          },
+          {
+            translateY: this.animatedValue.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0, this.hiddenLocation.top],
+            }),
+          },
+        ],
+      }
+    );
+  }
+
   onLayout = (event) => {
     // DO NOT move the width\height into the measureInWindow - it causes errors with orientation change 
     const layout = event.nativeEvent.layout;
@@ -141,24 +162,8 @@ class DialogDismissibleView extends PureComponent {
     this.thresholdX = this.width / 2;
     this.thresholdY = this.height / 2;
     this.ref.measureInWindow((x, y) => {
-      this.initialLocation = this.getInitialLocation(x, y);
-      this.animationStyle = {
-        transform: [
-          {
-            translateX: this.animatedValue.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0, this.initialLocation.left],
-            }),
-          },
-          {
-            translateY: this.animatedValue.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0, this.initialLocation.top],
-            }),
-          },
-        ],
-      };
-
+      this.hiddenLocation = this.getHiddenLocation(x, y);
+      this.animationStyle = this.getAnimationStyle();
       this.animateTo(0, this.onAnimationEnd);
     });
   };
@@ -173,8 +178,8 @@ class DialogDismissibleView extends PureComponent {
   resetPosition = (left, top, direction) => {
     const toValue =
       direction === PanningProvider.Directions.LEFT || direction === PanningProvider.Directions.RIGHT
-        ? -left / this.initialLocation.left
-        : -top / this.initialLocation.top;
+        ? -left / this.hiddenLocation.left
+        : -top / this.hiddenLocation.top;
 
     this.animateTo(toValue, this.onAnimationEnd);
   };
