@@ -15,10 +15,7 @@ import DialogDeprecated from './dialogDeprecated';
 // TODO: KNOWN ISSUES
 // 1. iOS pressing on the background while enter animation is happening will not call onDismiss
 //    Touch events are not registered?
-// 2. Hack to avoid the view returning to be visible after onDismiss
-//    DialogDismissibleView --> render --> isDismissed && {opacity: 0}
-// 3. Test examples in landscape
-// 4. SafeArea is transparent
+// 2. SafeArea is transparent
 
 /**
  * @description: Dialog component for displaying custom content inside a popup dialog
