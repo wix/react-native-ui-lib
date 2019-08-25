@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {PanResponder, TouchableWithoutFeedback} from 'react-native';
+import {PanResponder} from 'react-native';
 import {PureBaseComponent} from '../../commons';
 import {View} from 'react-native-ui-lib'; //eslint-disable-line
 import asPanViewConsumer from './asPanViewConsumer';
