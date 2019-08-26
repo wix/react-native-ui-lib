@@ -37,7 +37,7 @@ export default class ModalScreen extends Component {
           color={Colors.dark10}
           size={15}
         />
-        <Carousel migrate onChangePage={currentPage => this.setState({currentPage})}>
+        <Carousel migrate onChangePage={currentPage => this.setState({currentPage})} containerStyle={{flex: 1}}>
           <View bg-green50 flex style={styles.page}>
             <Modal.TopBar
               title='modal title'
