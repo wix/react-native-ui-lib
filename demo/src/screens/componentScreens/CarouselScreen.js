@@ -22,16 +22,17 @@ class CarouselScreen extends Component {
   render() {
     return (
       <View flex>
+        <Text text30 margin-20>Carousel</Text>
         <Carousel 
           migrate 
           ref={r => this.carousel = r}
-          loop 
+          // loop 
           onChangePage={(index => this.onChangePage(index))} 
           pageWidth={WIDTH}
           // itemSpacings={20}
           // initialPage={INITIAL_PAGE}
           containerStyle={{height: 200/* , flex: 1 */}}
-          pageControlPosition={'over'}
+          pageControlPosition={'under'}
           pageControlProps={{onPagePress: this.onPagePress}}
           // showCounter
         >
@@ -58,7 +59,7 @@ class CarouselScreen extends Component {
           </Page>
         </Carousel>
         
-        <View center style={{...StyleSheet.absoluteFillObject}} pointerEvents="none">
+        <View margin-20 center /*style={{...StyleSheet.absoluteFillObject}} */ pointerEvents="none">
           <Text text10>{this.state.currentPage}</Text>
         </View>
       </View>

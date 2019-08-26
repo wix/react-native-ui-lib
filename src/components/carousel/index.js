@@ -33,7 +33,7 @@ export default class Carousel extends BaseComponent {
      */
     initialPage: PropTypes.number,
     /**
-     * the page width (all pages should have the same width)
+     * the page width (all pages should have the same width). Does not work if passing 'loop' prop
      */
     pageWidth: PropTypes.number,
     /**
