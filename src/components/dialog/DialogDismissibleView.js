@@ -44,7 +44,7 @@ class DialogDismissibleView extends PureComponent {
     super(props);
 
     this.hiddenLocation = {};
-    this.swipe = {};
+    this.resetSwipe();
     this.animatedValue = new Animated.Value(0);
     this.state = {
       visible: props.visible,
@@ -81,12 +81,17 @@ class DialogDismissibleView extends PureComponent {
     }
   }
 
+  resetSwipe = () => {
+    this.counter = 0;
+    this.swipe = {};
+  }
+
   onDrag = () => {
     if (this.swipe.x || this.swipe.y) {
       if (this.counter < MAXIMUM_DRAGS_AFTER_SWIPE) {
         this.counter += 1;
       } else {
-        this.swipe = {};
+        this.resetSwipe();
       }
     }
   };
@@ -186,7 +191,7 @@ class DialogDismissibleView extends PureComponent {
     if (this.swipe.x || this.swipe.y) {
       this.hide();
     } else {
-      this.swipe = {};
+      this.resetSwipe();
       if (
         (direction === PanningProvider.Directions.LEFT && endValue.x <= -this.thresholdX) ||
         (direction === PanningProvider.Directions.RIGHT && endValue.x >= this.thresholdX) ||
