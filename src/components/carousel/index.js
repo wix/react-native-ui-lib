@@ -71,7 +71,7 @@ export default class Carousel extends BaseComponent {
     /**
      * the counter's text style
      */
-    counterTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    counterTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
   };
 
   static defaultProps = {
@@ -115,7 +115,7 @@ export default class Carousel extends BaseComponent {
   }
 
   updateOffset = (animated = false) => {
-    const centerOffset = this.shouldUsePageWidth() ? (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
+    const centerOffset = Constants.isIOS && this.shouldUsePageWidth() ? (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
     const x = presenter.calcOffset(this.props, this.state) - centerOffset;
     
     if (this.carousel) {
@@ -242,8 +242,8 @@ export default class Carousel extends BaseComponent {
     const {containerStyle, itemSpacings, initialPage, ...others} = this.props;
     const {initialOffset, pageWidth} = this.state;
     const scrollContainerStyle = this.shouldUsePageWidth() && {
-      paddingRight: Constants.isAndroid ? itemSpacings * 5 : itemSpacings,
-      marginLeft: Constants.isAndroid ? ((Constants.screenWidth - pageWidth + itemSpacings) / 2) : undefined, // itemSpacings * 4
+      paddingRight: itemSpacings,
+      paddingLeft: Constants.isAndroid ? ((Constants.screenWidth - pageWidth - itemSpacings) / 2) : undefined,
     }
 
     return (
@@ -259,8 +259,8 @@ export default class Carousel extends BaseComponent {
           decelerationRate="fast"
           contentOffset={initialOffset} // iOS only
           scrollEventThrottle={200}
-          onScroll={this.onScroll}
           onContentSizeChange={this.onContentSizeChange}
+          onScroll={this.onScroll}
           onMomentumScrollEnd={this.onMomentumScrollEnd}
         >
           {this.renderChildren()}
