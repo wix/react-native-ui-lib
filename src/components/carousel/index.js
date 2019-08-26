@@ -85,14 +85,13 @@ export default class Carousel extends BaseComponent {
     super(props);
     
     this.carousel = React.createRef();
-    const defaultPageWidth = props.pageWidth + props.itemSpacings || Constants.screenWidth;
-    const loopOffset = props.loop && props.pageWidth ? (Constants.screenWidth - defaultPageWidth) / 2 : 0;
-    
+    const defaultPageWidth = props.loop ? Constants.screenWidth : (props.pageWidth + props.itemSpacings || Constants.screenWidth);
+
     this.state = {
       currentPage: props.initialPage,
       currentStandingPage: props.initialPage,
       pageWidth: defaultPageWidth,
-      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage, pageWidth: defaultPageWidth}) - loopOffset}
+      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage, pageWidth: defaultPageWidth})}
     };
   }
 
@@ -105,7 +104,7 @@ export default class Carousel extends BaseComponent {
   }
 
   onOrientationChanged = () => {
-    if (!this.props.pageWidth) {
+    if (!this.props.pageWidth || this.props.loop) {
       this.setState({pageWidth: Constants.screenWidth});
       this.goToPage(this.state.currentPage, true);
     }
@@ -116,7 +115,7 @@ export default class Carousel extends BaseComponent {
   }
 
   updateOffset = (animated = false) => {
-    const centerOffset = this.props.pageWidth ? (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
+    const centerOffset = this.shouldUsePageWidth() ? (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
     const x = presenter.calcOffset(this.props, this.state) - centerOffset;
     
     if (this.carousel) {
@@ -135,7 +134,7 @@ export default class Carousel extends BaseComponent {
     this.setState({currentPage: pageIndex}, () => this.updateOffset(animated));
   }
 
-  shouldAddPadding() {
+  shouldUsePageWidth() {
     const {loop, pageWidth} = this.props;
     return !loop && pageWidth;
   }
@@ -178,15 +177,17 @@ export default class Carousel extends BaseComponent {
   }
 
   renderChild = (child, key) => {
+    const paddingLeft = this.shouldUsePageWidth() ? this.props.itemSpacings : undefined;
+
     return (
-      <View style={{width: this.state.pageWidth, paddingLeft: this.props.pageWidth && this.props.itemSpacings}} key={key}>
+      <View style={{width: this.state.pageWidth, paddingLeft}} key={key}>
         {child}
       </View>
     );
   }
 
   renderChildren() {
-    const {children, loop, pageWidth} = this.props;
+    const {children, loop} = this.props;
     const length = presenter.getChildrenLength(this.props);
     
     const childrenArray = React.Children.map(children, (child, index) => {
@@ -196,9 +197,6 @@ export default class Carousel extends BaseComponent {
     if (loop) {
       childrenArray.unshift(this.renderChild(children[length - 1], `${length - 1}-clone`));
       childrenArray.push(this.renderChild(children[0], `${0}-clone`));
-      if (pageWidth) {
-        childrenArray.push(this.renderChild(children[1], `${1}-clone`));
-      }
     }
     
     return childrenArray;
@@ -241,21 +239,25 @@ export default class Carousel extends BaseComponent {
   }
 
   render() {
-    const {containerStyle, ...others} = this.props;
+    const {containerStyle, itemSpacings, initialPage, ...others} = this.props;
     const {initialOffset, pageWidth} = this.state;
+    const scrollContainerStyle = this.shouldUsePageWidth() && {
+      paddingRight: Constants.isAndroid ? itemSpacings * 5 : itemSpacings,
+      marginLeft: Constants.isAndroid ? ((Constants.screenWidth - pageWidth + itemSpacings) / 2) : undefined, // itemSpacings * 4
+    }
 
     return (
       <View style={containerStyle}>
         <ScrollView
           {...others}
           ref={this.carousel} 
-          contentContainerStyle={{paddingRight: this.shouldAddPadding() ? this.props.itemSpacings : undefined}}
+          contentContainerStyle={scrollContainerStyle}
           horizontal
           showsHorizontalScrollIndicator={false}
           snapToInterval={pageWidth}
           snapToAlignment={'center'} // iOS only
           decelerationRate="fast"
-          contentOffset={initialOffset}
+          contentOffset={initialOffset} // iOS only
           scrollEventThrottle={200}
           onScroll={this.onScroll}
           onContentSizeChange={this.onContentSizeChange}
