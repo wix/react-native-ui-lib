@@ -88,11 +88,11 @@ class panResponderView extends PureComponent {
   }
 
   render() {
-    const {style, isAnimated, ...others} = this.props;
+    const {isAnimated, ...others} = this.props;
     const Container = isAnimated ? Animated.View : View;
 
     return (
-      <Container ref={this.ref} style={style} pointerEvents={'box-none'} {...others}>
+      <Container ref={this.ref} pointerEvents={'box-none'} {...others}>
         {this.props.children}
       </Container>
     );
