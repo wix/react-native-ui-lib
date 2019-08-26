@@ -102,20 +102,20 @@ class DialogDismissibleView extends PureComponent {
   getHiddenLocation = (left, top) => {
     const {direction} = this.props;
     const topInset = Constants.isIphoneX ? Constants.getSafeAreaInsets().top : Constants.isIOS ? 20 : 0;
-    let result;
+    let result = {left: 0, top: 0};
     switch (direction) {
       case PanningProvider.Directions.LEFT:
-        result = {top: 0, left: -left - this.width};
+        result.left = -left - this.width;
         break;
       case PanningProvider.Directions.RIGHT:
-        result = {top: 0, left: Constants.screenWidth - left};
+        result.left = Constants.screenWidth - left;
         break;
       case PanningProvider.Directions.UP:
-        result = {top: -top - this.height - topInset, left: 0};
+        result.top = -top - this.height - topInset;
         break;
       case PanningProvider.Directions.DOWN:
       default:
-        result = {top: Constants.screenHeight - top, left: 0};
+        result.top = Constants.screenHeight - top;
         break;
     }
 
@@ -173,10 +173,9 @@ class DialogDismissibleView extends PureComponent {
   };
 
   resetToShown = (left, top, direction) => {
-    const toValue =
-      direction === PanningProvider.Directions.LEFT || direction === PanningProvider.Directions.RIGHT
-        ? 1 + left / this.hiddenLocation.left
-        : 1 + top / this.hiddenLocation.top;
+    const toValue = [PanningProvider.Directions.LEFT, PanningProvider.Directions.RIGHT].includes(direction)
+      ? 1 + left / this.hiddenLocation.left
+      : 1 + top / this.hiddenLocation.top;
 
     this.animateTo(toValue, this.onAnimationEnd);
   };
