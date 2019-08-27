@@ -172,16 +172,23 @@ class Card extends PureBaseComponent {
     const {selectionOptions, borderRadius, selected} = this.getThemeProps();
     const {animatedSelected} = this.state;
 
+    const selectionColor = _.get(selectionOptions, 'color', DEFAULT_SELECTION_PROPS.color);
+
     if (_.isUndefined(selected)) {
       return null;
     }
 
     return (
       <Animated.View
-        style={[this.styles.selectedBorder, borderRadius && {borderRadius}, {opacity: animatedSelected}]}
+        style={[
+          this.styles.selectedBorder,
+          {borderColor: selectionColor},
+          borderRadius && {borderRadius},
+          {opacity: animatedSelected},
+        ]}
         pointerEvents="none"
       >
-        <View style={this.styles.selectedIndicator}>
+        <View style={[this.styles.selectedIndicator, {backgroundColor: selectionColor}]}>
           <Image source={_.get(selectionOptions, 'icon', DEFAULT_SELECTION_PROPS.icon)} />
         </View>
       </Animated.View>
