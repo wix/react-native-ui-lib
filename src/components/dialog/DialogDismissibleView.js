@@ -22,10 +22,6 @@ class DialogDismissibleView extends PureComponent {
      */
     onDismiss: PropTypes.func,
     /**
-     * Is this bottom, top or none (center)
-     */
-    alignment: PropTypes.shape(PropTypes.arrayOf[PropTypes.bool]),
-    /**
      * The dialog`s container style
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
@@ -84,7 +80,7 @@ class DialogDismissibleView extends PureComponent {
   resetSwipe = () => {
     this.counter = 0;
     this.swipe = {};
-  }
+  };
 
   onDrag = () => {
     if (this.swipe.x || this.swipe.y) {

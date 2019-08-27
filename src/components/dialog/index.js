@@ -155,11 +155,10 @@ class Dialog extends BaseComponent {
   };
 
   renderDialogView = () => {
-    const {children, renderPannableHeader, style, bottom, top} = this.props;
+    const {children, renderPannableHeader, style} = this.props;
     const {dialogVisibility} = this.state;
     const Container = !_.isUndefined(renderPannableHeader) ? View : PanListenerView;
     const direction = this.getDirection();
-    const alignment = {bottom, top};
 
     return (
       <View style={this.styles.size} pointerEvents="box-none">
@@ -170,7 +169,6 @@ class Dialog extends BaseComponent {
             onDismiss={this.onDismiss}
             containerStyle={this.styles.flexType}
             style={this.styles.flexType}
-            alignment={alignment}
           >
             <Container directions={[direction]} style={[this.styles.overflow, this.styles.flexType, style]}>
               {this.renderPannableHeader([direction])}
