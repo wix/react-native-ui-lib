@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import {Constants} from '../../helpers';
 
 
 export function getChildrenLength(props) {
@@ -10,25 +9,10 @@ export function getChildrenLength(props) {
 export function calcOffset(props, state) {
   const {currentPage, pageWidth} = state;
   const {loop} = props;
-
   const actualCurrentPage = loop ? currentPage + 1 : currentPage;
-
-  let offset = pageWidth * actualCurrentPage;
-  offset = getDirectionOffset(offset, props);
+  const offset = pageWidth * actualCurrentPage;
 
   return offset;
-}
-
-export function getDirectionOffset(offset, props, pageWidth) {
-  let fixedOffset = offset;
-
-  if (Constants.isRTL && Constants.isAndroid) {
-    const {loop} = props;
-    const totalWidth = ((getChildrenLength(props) - 1) + (loop ? 2 : 0)) * pageWidth;
-    fixedOffset = Math.abs(totalWidth - offset);
-  }
-
-  return fixedOffset;
 }
 
 export function calcPageIndex(offset, props, pageWidth) {
@@ -42,7 +26,6 @@ export function calcPageIndex(offset, props, pageWidth) {
   } else {
     actualPageIndex = Math.min(pagesCount - 1, pageIndexIncludingClonedPages);
   }
-
   return actualPageIndex;
 }
 
@@ -57,6 +40,7 @@ export function isOutOfBounds(offset, props, pageWidth) {
 // TODO: need to support more cases of page width in loop mode
 export function calcCarouselWidth(props) {
   const {pageWidth, loop} = props;
+
   let length = getChildrenLength(props);
   length = loop ? length + 2 : length;
   return pageWidth * length;
