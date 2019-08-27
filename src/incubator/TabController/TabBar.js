@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import TabBarContext from './TabBarContext';
+import TabBarItem from './TabBarItem';
 import ReanimatedObject from './ReanimatedObject';
 import {asBaseComponent, forwardRef} from '../../commons';
 import View from '../../components/view';
@@ -26,6 +27,10 @@ class TabBar extends PureComponent {
   static contextType = TabBarContext;
 
   static propTypes = {
+    /**
+     * The list of tab bar items
+     */
+    items: PropTypes.arrayOf(PropTypes.shape(TabBarItem)),
     /**
      * Tab Bar height
      */
@@ -83,9 +88,12 @@ class TabBar extends PureComponent {
 
   constructor(props, context) {
     super(props, context);
-    const {registerTabItems} = this.context;
-    const itemsCount = React.Children.count(this.children);
-    const ignoredItems = [];
+
+    if (this.props.children) {
+      console.warn('uilib: Please pass the "items" prop to TabController.TabBar instead of children');
+    }
+
+    const itemsCount = this.itemsCount;
 
     this.tabBar = React.createRef();
 
@@ -102,16 +110,46 @@ class TabBar extends PureComponent {
       itemsWidths: undefined,
     };
 
-    React.Children.toArray(this.children).forEach((child, index) => {
-      if (child.props.ignore) {
-        ignoredItems.push(index);
-      }
-    });
-    registerTabItems(itemsCount, ignoredItems);
+    this.registerTabItems();
   }
 
   get children() {
     return _.filter(this.props.children, child => !!child);
+  }
+
+  get itemsCount() {
+    const {items} = this.props;
+    if (items) {
+      return _.size(items);
+    } else {
+      return React.Children.count(this.children);
+    }
+  }
+
+  registerTabItems() {
+    const {registerTabItems} = this.context;
+    const {items} = this.props;
+    const ignoredItems = [];
+    let itemsCount;
+
+    if (items) {
+      itemsCount = _.size(items);
+      _.forEach(items, (item, index) => {
+        if (item.ignore) {
+          ignoredItems.push(index);
+        }
+      });
+      // TODO: deprecate with props.children
+    } else {
+      itemsCount = React.Children.count(this.children);
+      React.Children.toArray(this.children).forEach((child, index) => {
+        if (child.props.ignore) {
+          ignoredItems.push(index);
+        }
+      });
+    }
+
+    registerTabItems(itemsCount, ignoredItems);
   }
 
   onItemLayout = (itemWidth, itemIndex) => {
@@ -170,6 +208,7 @@ class TabBar extends PureComponent {
   renderTabBarItems() {
     const {itemStates} = this.context;
     const {
+      items,
       labelColor,
       selectedLabelColor,
       labelStyle,
@@ -178,7 +217,33 @@ class TabBar extends PureComponent {
       selectedIconColor,
       activeBackgroundColor,
     } = this.props;
-    if (!_.isEmpty(itemStates)) {
+
+    if (_.isEmpty(itemStates)) {
+      return;
+    }
+
+    if (items) {
+      return _.map(items, (item, index) => {
+        return (
+          <TabBarItem
+            labelColor={labelColor}
+            selectedLabelColor={selectedLabelColor}
+            labelStyle={labelStyle}
+            uppercase={uppercase}
+            iconColor={iconColor}
+            selectedIconColor={selectedIconColor}
+            activeBackgroundColor={activeBackgroundColor}
+            {...item}
+            {...this.context}
+            index={index}
+            state={itemStates[index]}
+            onLayout={this.onItemLayout}
+          />
+        );
+      });
+    } else {
+      // TODO: Remove once props.children is deprecated
+
       if (this.tabBarItems) {
         return this.tabBarItems;
       }

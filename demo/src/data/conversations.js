@@ -1,10 +1,10 @@
-const conversations = 
-[
+const conversations = [
   {
     name: 'rallylongmailname@wix.com',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
-    thumbail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     leftTitleBadge: 'badgeOfficial',
   },
   {
@@ -17,7 +17,8 @@ const conversations =
     text: 'Do you also carry these shoes in black?',
     timestamp: '36 min',
     count: '5',
-    thumbnail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     isNew: false,
   },
   {
@@ -25,7 +26,8 @@ const conversations =
     text: 'This might be the subject\nAnd the content is on a new line',
     timestamp: '2 hours',
     count: '1',
-    thumbnail: 'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
     isNew: true,
   },
   {
@@ -33,7 +35,8 @@ const conversations =
     text: 'Yep',
     timestamp: '3 hours',
     count: '12',
-    thumbnail: 'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
+    thumbnail:
+      'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
     isNew: true,
     leftTitleBadge: 'badgeOfficial',
   },
@@ -42,7 +45,8 @@ const conversations =
     text: 'Do you have international shipping?',
     timestamp: '1 Day',
     count: '2',
-    thumbnil: 'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
     isNew: false,
   },
   {
@@ -50,7 +54,8 @@ const conversations =
     text: 'will get to you next week with that',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -59,7 +64,8 @@ const conversations =
     text: 'Will I be able to receive it before July 3rd?',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
     isNew: false,
   },
   {
@@ -67,7 +73,8 @@ const conversations =
     text: 'When will you have them back in stock?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
     isNew: true,
     leftTitleBadge: 'facebookOn',
   },
@@ -84,7 +91,8 @@ const conversations =
     text: '2 - 3 weeks',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
     isNew: true,
   },
   {
@@ -92,7 +100,8 @@ const conversations =
     text: 'Do you have these in other colors?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -100,7 +109,8 @@ const conversations =
     name: 'Sir Robert Walpole',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
-    thumbail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     leftTitleBadge: 'badgeOfficial',
   },
   {
@@ -121,7 +131,8 @@ const conversations =
     text: 'This might be the subject\nAnd the content is on a new line',
     timestamp: '2 hours',
     count: '1',
-    thumbnail: 'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
     isNew: true,
   },
   {
@@ -129,7 +140,8 @@ const conversations =
     text: 'Yep',
     timestamp: '3 hours',
     count: '12',
-    thumbnail: 'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
+    thumbnail:
+      'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
     isNew: true,
     leftTitleBadge: 'badgeOfficial',
   },
@@ -138,7 +150,8 @@ const conversations =
     text: 'Do you have international shipping?',
     timestamp: '1 Day',
     count: '2',
-    thumbnil: 'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
     isNew: false,
   },
   {
@@ -146,7 +159,8 @@ const conversations =
     text: 'will get to you next week with that',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -155,7 +169,8 @@ const conversations =
     text: 'Will I be able to receive it before July 3rd?',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
     isNew: false,
   },
   {
@@ -163,7 +178,8 @@ const conversations =
     text: 'When will you have them back in stock?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
     isNew: true,
     leftTitleBadge: 'facebookOn',
   },
@@ -180,7 +196,8 @@ const conversations =
     text: '2 - 3 weeks',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
     isNew: true,
   },
   {
@@ -188,7 +205,8 @@ const conversations =
     text: 'Do you have these in other colors?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -196,7 +214,8 @@ const conversations =
     name: 'Spencer Compton',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
-    thumbail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     leftTitleBadge: 'badgeOfficial',
   },
   {
@@ -217,7 +236,8 @@ const conversations =
     text: 'This might be the subject\nAnd the content is on a new line',
     timestamp: '2 hours',
     count: '1',
-    thumbnail: 'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
     isNew: true,
   },
   {
@@ -225,7 +245,8 @@ const conversations =
     text: 'Yep',
     timestamp: '3 hours',
     count: '12',
-    thumbnail: 'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
+    thumbnail:
+      'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
     isNew: true,
     leftTitleBadge: 'badgeOfficial',
   },
@@ -234,7 +255,8 @@ const conversations =
     text: 'Do you have international shipping?',
     timestamp: '1 Day',
     count: '2',
-    thumbnil: 'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
     isNew: false,
   },
   {
@@ -242,7 +264,8 @@ const conversations =
     text: 'will get to you next week with that',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -251,7 +274,8 @@ const conversations =
     text: 'Will I be able to receive it before July 3rd?',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
     isNew: false,
   },
   {
@@ -259,7 +283,8 @@ const conversations =
     text: 'When will you have them back in stock?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
     isNew: true,
     leftTitleBadge: 'facebookOn',
   },
@@ -276,7 +301,8 @@ const conversations =
     text: '2 - 3 weeks',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
     isNew: true,
   },
   {
@@ -284,7 +310,8 @@ const conversations =
     text: 'Do you have these in other colors?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -292,7 +319,8 @@ const conversations =
     name: 'Henry Pelham',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
-    thumbail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     leftTitleBadge: 'badgeOfficial',
   },
   {
@@ -313,7 +341,8 @@ const conversations =
     text: 'This might be the subject\nAnd the content is on a new line',
     timestamp: '2 hours',
     count: '1',
-    thumbnail: 'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
     isNew: true,
   },
   {
@@ -321,7 +350,8 @@ const conversations =
     text: 'Yep',
     timestamp: '3 hours',
     count: '12',
-    thumbnail: 'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
+    thumbnail:
+      'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
     isNew: true,
     leftTitleBadge: 'badgeOfficial',
   },
@@ -330,7 +360,8 @@ const conversations =
     text: 'Do you have international shipping?',
     timestamp: '1 Day',
     count: '2',
-    thumbnil: 'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
     isNew: false,
   },
   {
@@ -338,7 +369,8 @@ const conversations =
     text: 'will get to you next week with that',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -347,7 +379,8 @@ const conversations =
     text: 'Will I be able to receive it before July 3rd?',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
     isNew: false,
   },
   {
@@ -355,7 +388,8 @@ const conversations =
     text: 'When will you have them back in stock?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
     isNew: true,
     leftTitleBadge: 'facebookOn',
   },
@@ -372,7 +406,8 @@ const conversations =
     text: '2 - 3 weeks',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
     isNew: true,
   },
   {
@@ -380,7 +415,8 @@ const conversations =
     text: 'Do you have these in other colors?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -388,7 +424,8 @@ const conversations =
     name: 'Duke of Newcastle',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
-    thumbail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     leftTitleBadge: 'badgeOfficial',
   },
   {
@@ -409,7 +446,8 @@ const conversations =
     text: 'This might be the subject\nAnd the content is on a new line',
     timestamp: '2 hours',
     count: '1',
-    thumbnail: 'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
     isNew: true,
   },
   {
@@ -417,7 +455,8 @@ const conversations =
     text: 'Yep',
     timestamp: '3 hours',
     count: '12',
-    thumbnail: 'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
+    thumbnail:
+      'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
     isNew: true,
     leftTitleBadge: 'badgeOfficial',
   },
@@ -426,7 +465,8 @@ const conversations =
     text: 'Do you have international shipping?',
     timestamp: '1 Day',
     count: '2',
-    thumbnil: 'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
     isNew: false,
   },
   {
@@ -434,7 +474,8 @@ const conversations =
     text: 'will get to you next week with that',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -443,7 +484,8 @@ const conversations =
     text: 'Will I be able to receive it before July 3rd?',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
     isNew: false,
   },
   {
@@ -451,7 +493,8 @@ const conversations =
     text: 'When will you have them back in stock?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
     isNew: true,
     leftTitleBadge: 'facebookOn',
   },
@@ -468,7 +511,8 @@ const conversations =
     text: '2 - 3 weeks',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
     isNew: true,
   },
   {
@@ -476,7 +520,8 @@ const conversations =
     text: 'Do you have these in other colors?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -484,7 +529,8 @@ const conversations =
     name: 'John Stuart',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
-    thumbail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     leftTitleBadge: 'badgeOfficial',
   },
   {
@@ -505,7 +551,8 @@ const conversations =
     text: 'This might be the subject\nAnd the content is on a new line',
     timestamp: '2 hours',
     count: '1',
-    thumbnail: 'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
     isNew: true,
   },
   {
@@ -513,7 +560,8 @@ const conversations =
     text: 'Yep',
     timestamp: '3 hours',
     count: '12',
-    thumbnail: 'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
+    thumbnail:
+      'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
     isNew: true,
     leftTitleBadge: 'badgeOfficial',
   },
@@ -522,7 +570,8 @@ const conversations =
     text: 'Do you have international shipping?',
     timestamp: '1 Day',
     count: '2',
-    thumbnil: 'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
     isNew: false,
   },
   {
@@ -530,7 +579,8 @@ const conversations =
     text: 'will get to you next week with that',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -539,7 +589,8 @@ const conversations =
     text: 'Will I be able to receive it before July 3rd?',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
     isNew: false,
   },
   {
@@ -547,7 +598,8 @@ const conversations =
     text: 'When will you have them back in stock?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
     isNew: true,
     leftTitleBadge: 'facebookOn',
   },
@@ -564,7 +616,8 @@ const conversations =
     text: '2 - 3 weeks',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
     isNew: true,
   },
   {
@@ -572,7 +625,8 @@ const conversations =
     text: 'Do you have these in other colors?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -580,7 +634,8 @@ const conversations =
     name: 'George Grenville',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
-    thumbail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     leftTitleBadge: 'badgeOfficial',
   },
   {
@@ -601,7 +656,8 @@ const conversations =
     text: 'This might be the subject\nAnd the content is on a new line',
     timestamp: '2 hours',
     count: '1',
-    thumbnail: 'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
     isNew: true,
   },
   {
@@ -609,7 +665,8 @@ const conversations =
     text: 'Yep',
     timestamp: '3 hours',
     count: '12',
-    thumbnail: 'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
+    thumbnail:
+      'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
     isNew: true,
     leftTitleBadge: 'badgeOfficial',
   },
@@ -618,7 +675,8 @@ const conversations =
     text: 'Do you have international shipping?',
     timestamp: '1 Day',
     count: '2',
-    thumbnil: 'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
     isNew: false,
   },
   {
@@ -626,7 +684,8 @@ const conversations =
     text: 'will get to you next week with that',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -635,7 +694,8 @@ const conversations =
     text: 'Will I be able to receive it before July 3rd?',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
     isNew: false,
   },
   {
@@ -643,7 +703,8 @@ const conversations =
     text: 'When will you have them back in stock?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
     isNew: true,
     leftTitleBadge: 'facebookOn',
   },
@@ -660,7 +721,8 @@ const conversations =
     text: '2 - 3 weeks',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
     isNew: true,
   },
   {
@@ -668,7 +730,8 @@ const conversations =
     text: 'Do you have these in other colors?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -676,7 +739,8 @@ const conversations =
     name: 'Charles Watson-Wentworth',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
-    thumbail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     leftTitleBadge: 'badgeOfficial',
   },
   {
@@ -697,7 +761,8 @@ const conversations =
     text: 'This might be the subject\nAnd the content is on a new line',
     timestamp: '2 hours',
     count: '1',
-    thumbnail: 'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
     isNew: true,
   },
   {
@@ -705,7 +770,8 @@ const conversations =
     text: 'Yep',
     timestamp: '3 hours',
     count: '12',
-    thumbnail: 'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
+    thumbnail:
+      'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
     isNew: true,
     leftTitleBadge: 'badgeOfficial',
   },
@@ -714,7 +780,8 @@ const conversations =
     text: 'Do you have international shipping?',
     timestamp: '1 Day',
     count: '2',
-    thumbnil: 'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
     isNew: false,
   },
   {
@@ -722,7 +789,8 @@ const conversations =
     text: 'will get to you next week with that',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -731,7 +799,8 @@ const conversations =
     text: 'Will I be able to receive it before July 3rd?',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
     isNew: false,
   },
   {
@@ -739,7 +808,8 @@ const conversations =
     text: 'When will you have them back in stock?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
     isNew: true,
     leftTitleBadge: 'facebookOn',
   },
@@ -756,7 +826,8 @@ const conversations =
     text: '2 - 3 weeks',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
     isNew: true,
   },
   {
@@ -764,7 +835,8 @@ const conversations =
     text: 'Do you have these in other colors?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -772,7 +844,8 @@ const conversations =
     name: 'William Pitt',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
-    thumbail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     leftTitleBadge: 'badgeOfficial',
   },
   {
@@ -793,7 +866,8 @@ const conversations =
     text: 'This might be the subject\nAnd the content is on a new line',
     timestamp: '2 hours',
     count: '1',
-    thumbnail: 'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
     isNew: true,
   },
   {
@@ -801,7 +875,8 @@ const conversations =
     text: 'Yep',
     timestamp: '3 hours',
     count: '12',
-    thumbnail: 'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
+    thumbnail:
+      'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
     isNew: true,
     leftTitleBadge: 'badgeOfficial',
   },
@@ -810,7 +885,8 @@ const conversations =
     text: 'Do you have international shipping?',
     timestamp: '1 Day',
     count: '2',
-    thumbnil: 'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
     isNew: false,
   },
   {
@@ -818,7 +894,8 @@ const conversations =
     text: 'will get to you next week with that',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -827,7 +904,8 @@ const conversations =
     text: 'Will I be able to receive it before July 3rd?',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
     isNew: false,
   },
   {
@@ -835,7 +913,8 @@ const conversations =
     text: 'When will you have them back in stock?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
     isNew: true,
     leftTitleBadge: 'facebookOn',
   },
@@ -852,7 +931,8 @@ const conversations =
     text: '2 - 3 weeks',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
     isNew: true,
   },
   {
@@ -860,7 +940,8 @@ const conversations =
     text: 'Do you have these in other colors?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -868,7 +949,8 @@ const conversations =
     name: 'Augustus FitzRoy',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
-    thumbail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     leftTitleBadge: 'badgeOfficial',
   },
   {
@@ -889,7 +971,8 @@ const conversations =
     text: 'This might be the subject\nAnd the content is on a new line',
     timestamp: '2 hours',
     count: '1',
-    thumbnail: 'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
     isNew: true,
   },
   {
@@ -897,7 +980,8 @@ const conversations =
     text: 'Yep',
     timestamp: '3 hours',
     count: '12',
-    thumbnail: 'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
+    thumbnail:
+      'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
     isNew: true,
     leftTitleBadge: 'badgeOfficial',
   },
@@ -906,7 +990,8 @@ const conversations =
     text: 'Do you have international shipping?',
     timestamp: '1 Day',
     count: '2',
-    thumbnil: 'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
     isNew: false,
   },
   {
@@ -914,7 +999,8 @@ const conversations =
     text: 'will get to you next week with that',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -923,7 +1009,8 @@ const conversations =
     text: 'Will I be able to receive it before July 3rd?',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
     isNew: false,
   },
   {
@@ -931,7 +1018,8 @@ const conversations =
     text: 'When will you have them back in stock?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
     isNew: true,
     leftTitleBadge: 'facebookOn',
   },
@@ -948,7 +1036,8 @@ const conversations =
     text: '2 - 3 weeks',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
     isNew: true,
   },
   {
@@ -956,7 +1045,8 @@ const conversations =
     text: 'Do you have these in other colors?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -964,7 +1054,8 @@ const conversations =
     name: 'Frederick North',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
-    thumbail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     leftTitleBadge: 'badgeOfficial',
   },
   {
@@ -985,7 +1076,8 @@ const conversations =
     text: 'This might be the subject\nAnd the content is on a new line',
     timestamp: '2 hours',
     count: '1',
-    thumbnail: 'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
     isNew: true,
   },
   {
@@ -993,7 +1085,8 @@ const conversations =
     text: 'Yep',
     timestamp: '3 hours',
     count: '12',
-    thumbnail: 'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
+    thumbnail:
+      'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
     isNew: true,
     leftTitleBadge: 'badgeOfficial',
   },
@@ -1002,7 +1095,8 @@ const conversations =
     text: 'Do you have international shipping?',
     timestamp: '1 Day',
     count: '2',
-    thumbnil: 'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
     isNew: false,
   },
   {
@@ -1010,7 +1104,8 @@ const conversations =
     text: 'will get to you next week with that',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -1019,7 +1114,8 @@ const conversations =
     text: 'Will I be able to receive it before July 3rd?',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
     isNew: false,
   },
   {
@@ -1027,7 +1123,8 @@ const conversations =
     text: 'When will you have them back in stock?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
     isNew: true,
     leftTitleBadge: 'facebookOn',
   },
@@ -1044,7 +1141,8 @@ const conversations =
     text: '2 - 3 weeks',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
     isNew: true,
   },
   {
@@ -1052,7 +1150,8 @@ const conversations =
     text: 'Do you have these in other colors?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -1060,7 +1159,8 @@ const conversations =
     name: 'Charles Watson-Wentworth',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
-    thumbail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     leftTitleBadge: 'badgeOfficial',
   },
   {
@@ -1081,7 +1181,8 @@ const conversations =
     text: 'This might be the subject\nAnd the content is on a new line',
     timestamp: '2 hours',
     count: '1',
-    thumbnail: 'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
     isNew: true,
   },
   {
@@ -1089,7 +1190,8 @@ const conversations =
     text: 'Yep',
     timestamp: '3 hours',
     count: '12',
-    thumbnail: 'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
+    thumbnail:
+      'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
     isNew: true,
     leftTitleBadge: 'badgeOfficial',
   },
@@ -1098,7 +1200,8 @@ const conversations =
     text: 'Do you have international shipping?',
     timestamp: '1 Day',
     count: '2',
-    thumbnil: 'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
     isNew: false,
   },
   {
@@ -1106,7 +1209,8 @@ const conversations =
     text: 'will get to you next week with that',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -1115,7 +1219,8 @@ const conversations =
     text: 'Will I be able to receive it before July 3rd?',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
     isNew: false,
   },
   {
@@ -1123,7 +1228,8 @@ const conversations =
     text: 'When will you have them back in stock?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
     isNew: true,
     leftTitleBadge: 'facebookOn',
   },
@@ -1140,7 +1246,8 @@ const conversations =
     text: '2 - 3 weeks',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
     isNew: true,
   },
   {
@@ -1148,7 +1255,8 @@ const conversations =
     text: 'Do you have these in other colors?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -1156,7 +1264,8 @@ const conversations =
     name: 'William Petty',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
-    thumbail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     leftTitleBadge: 'badgeOfficial',
   },
   {
@@ -1177,7 +1286,8 @@ const conversations =
     text: 'This might be the subject\nAnd the content is on a new line',
     timestamp: '2 hours',
     count: '1',
-    thumbnail: 'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
     isNew: true,
   },
   {
@@ -1185,7 +1295,8 @@ const conversations =
     text: 'Yep',
     timestamp: '3 hours',
     count: '12',
-    thumbnail: 'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
+    thumbnail:
+      'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
     isNew: true,
     leftTitleBadge: 'badgeOfficial',
   },
@@ -1194,7 +1305,8 @@ const conversations =
     text: 'Do you have international shipping?',
     timestamp: '1 Day',
     count: '2',
-    thumbnil: 'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
     isNew: false,
   },
   {
@@ -1202,7 +1314,8 @@ const conversations =
     text: 'will get to you next week with that',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -1211,7 +1324,8 @@ const conversations =
     text: 'Will I be able to receive it before July 3rd?',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
     isNew: false,
   },
   {
@@ -1219,7 +1333,8 @@ const conversations =
     text: 'When will you have them back in stock?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
     isNew: true,
     leftTitleBadge: 'facebookOn',
   },
@@ -1236,7 +1351,8 @@ const conversations =
     text: '2 - 3 weeks',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
     isNew: true,
   },
   {
@@ -1244,7 +1360,8 @@ const conversations =
     text: 'Do you have these in other colors?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -1252,7 +1369,8 @@ const conversations =
     name: 'William Cavendish-Bentinck',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
-    thumbail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     leftTitleBadge: 'badgeOfficial',
   },
   {
@@ -1273,7 +1391,8 @@ const conversations =
     text: 'This might be the subject\nAnd the content is on a new line',
     timestamp: '2 hours',
     count: '1',
-    thumbnail: 'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
     isNew: true,
   },
   {
@@ -1281,7 +1400,8 @@ const conversations =
     text: 'Yep',
     timestamp: '3 hours',
     count: '12',
-    thumbnail: 'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
+    thumbnail:
+      'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
     isNew: true,
     leftTitleBadge: 'badgeOfficial',
   },
@@ -1290,7 +1410,8 @@ const conversations =
     text: 'Do you have international shipping?',
     timestamp: '1 Day',
     count: '2',
-    thumbnil: 'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
     isNew: false,
   },
   {
@@ -1298,7 +1419,8 @@ const conversations =
     text: 'will get to you next week with that',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -1307,7 +1429,8 @@ const conversations =
     text: 'Will I be able to receive it before July 3rd?',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
     isNew: false,
   },
   {
@@ -1315,7 +1438,8 @@ const conversations =
     text: 'When will you have them back in stock?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
     isNew: true,
     leftTitleBadge: 'facebookOn',
   },
@@ -1332,7 +1456,8 @@ const conversations =
     text: '2 - 3 weeks',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
     isNew: true,
   },
   {
@@ -1340,7 +1465,8 @@ const conversations =
     text: 'Do you have these in other colors?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -1348,7 +1474,8 @@ const conversations =
     name: 'Henry Addington',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
-    thumbail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     leftTitleBadge: 'badgeOfficial',
   },
   {
@@ -1369,7 +1496,8 @@ const conversations =
     text: 'This might be the subject\nAnd the content is on a new line',
     timestamp: '2 hours',
     count: '1',
-    thumbnail: 'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
     isNew: true,
   },
   {
@@ -1377,7 +1505,8 @@ const conversations =
     text: 'Yep',
     timestamp: '3 hours',
     count: '12',
-    thumbnail: 'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
+    thumbnail:
+      'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
     isNew: true,
     leftTitleBadge: 'badgeOfficial',
   },
@@ -1386,7 +1515,8 @@ const conversations =
     text: 'Do you have international shipping?',
     timestamp: '1 Day',
     count: '2',
-    thumbnil: 'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
     isNew: false,
   },
   {
@@ -1394,7 +1524,8 @@ const conversations =
     text: 'will get to you next week with that',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -1403,7 +1534,8 @@ const conversations =
     text: 'Will I be able to receive it before July 3rd?',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
     isNew: false,
   },
   {
@@ -1411,7 +1543,8 @@ const conversations =
     text: 'When will you have them back in stock?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
     isNew: true,
     leftTitleBadge: 'facebookOn',
   },
@@ -1428,7 +1561,8 @@ const conversations =
     text: '2 - 3 weeks',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
     isNew: true,
   },
   {
@@ -1436,7 +1570,8 @@ const conversations =
     text: 'Do you have these in other colors?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -1444,7 +1579,8 @@ const conversations =
     name: 'William Grenville',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
-    thumbail: 'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/87994e3d0dda4479a7f4d8c803e1323e.jpg/v1/fit/w_750,h_750/87994e3d0dda4479a7f4d8c803e1323e.jpg',
     leftTitleBadge: 'badgeOfficial',
   },
   {
@@ -1465,7 +1601,8 @@ const conversations =
     text: 'This might be the subject\nAnd the content is on a new line',
     timestamp: '2 hours',
     count: '1',
-    thumbnail: 'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/c1ca83a468ae4c998fe4fddea60ea84d.jpg/v1/fit/w_750,h_750/c1ca83a468ae4c998fe4fddea60ea84d.jpg',
     isNew: true,
   },
   {
@@ -1473,7 +1610,8 @@ const conversations =
     text: 'Yep',
     timestamp: '3 hours',
     count: '12',
-    thumbnail: 'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
+    thumbnail:
+      'https://static.wixstatic.com/media/43cddb4301684a01a26eaea100162934.jpeg/v1/fit/w_750,h_750/43cddb4301684a01a26eaea100162934.jpeg',
     isNew: true,
     leftTitleBadge: 'badgeOfficial',
   },
@@ -1482,7 +1620,8 @@ const conversations =
     text: 'Do you have international shipping?',
     timestamp: '1 Day',
     count: '2',
-    thumbnil: 'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/84e86e9bec8d46dd8296c510629a8d97.jpg/v1/fit/w_750,h_750/84e86e9bec8d46dd8296c510629a8d97.jpg',
     isNew: false,
   },
   {
@@ -1490,7 +1629,8 @@ const conversations =
     text: 'will get to you next week with that',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/b27921b8c46841b48032f11c16d6e009.jpg/v1/fit/w_750,h_750/b27921b8c46841b48032f11c16d6e009.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
   },
@@ -1499,7 +1639,8 @@ const conversations =
     text: 'Will I be able to receive it before July 3rd?',
     timestamp: '1 Week',
     count: '99',
-    thumbnail: 'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/7c69c135804b473c9788266540cd90d3.jpg/v1/fit/w_750,h_750/7c69c135804b473c9788266540cd90d3.jpg',
     isNew: false,
   },
   {
@@ -1507,7 +1648,8 @@ const conversations =
     text: 'When will you have them back in stock?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/a7adbc41a9f24a64803cac9aec2deb6b.jpg/v1/fit/w_750,h_750/a7adbc41a9f24a64803cac9aec2deb6b.jpg',
     isNew: true,
     leftTitleBadge: 'facebookOn',
   },
@@ -1524,7 +1666,8 @@ const conversations =
     text: '2 - 3 weeks',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/66003687fdce4e6197cbaf816ca8fd17.jpg/v1/fit/w_750,h_750/66003687fdce4e6197cbaf816ca8fd17.jpg',
     isNew: true,
   },
   {
@@ -1532,10 +1675,11 @@ const conversations =
     text: 'Do you have these in other colors?',
     timestamp: '1 Week',
     count: '',
-    thumbnail: 'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
+    thumbnail:
+      'https://static.wixstatic.com/media/d4367b20ae2e4036b18c34262d5ed031.jpg/v1/fit/w_750,h_750/d4367b20ae2e4036b18c34262d5ed031.jpg',
     isNew: true,
     leftTitleBadge: 'twitterOn',
-  }
-];
+  },
+]
 
-export default conversations;
+export default conversations

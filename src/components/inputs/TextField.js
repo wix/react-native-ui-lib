@@ -157,6 +157,7 @@ export default class TextField extends BaseInput {
     this.toggleExpandableModal = this.toggleExpandableModal.bind(this);
 
     this.state = {
+      ...this.state,
       value: props.value, // for floatingPlaceholder functionality
       floatingPlaceholderState: new Animated.Value(this.shouldFloatPlaceholder(props.value) ? 1 : 0),
       showExpandableModal: false
@@ -553,11 +554,12 @@ export default class TextField extends BaseInput {
   }
 
   render() {
+    const {margins} = this.state;
     const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
     const underlineStateColor = this.getStateColor(underlineColor, true);
 
     return (
-      <View style={[this.styles.container, containerStyle]} collapsable={false}>
+      <View style={[this.styles.container, margins, containerStyle]} collapsable={false}>
         {this.shouldShowTopError() ? this.renderError(useTopErrors) : this.renderTitle()}
         
         <View
