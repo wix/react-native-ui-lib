@@ -203,7 +203,11 @@ class Dialog extends BaseComponent {
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8; // TODO: should this be here or in the input style?
 
     return (
-      <View useSafeArea={useSafeArea} style={[this.styles.alignments, this.styles.container]} pointerEvents="box-none">
+      <View
+        useSafeArea={useSafeArea}
+        style={[this.styles.centerHorizontal, this.styles.alignments, this.styles.container]}
+        pointerEvents="box-none"
+      >
         {this.renderDialogView()}
         {addBottomSafeArea && <View style={{marginTop: bottomInsets}} />}
       </View>
@@ -251,9 +255,11 @@ function createStyles(props) {
     container: {
       flex: 1,
     },
+    centerHorizontal: {
+      alignItems: 'center',
+    },
     centerContent: {
       justifyContent: 'center',
-      alignItems: 'center',
     },
     overflow: {
       overflow: 'hidden',
