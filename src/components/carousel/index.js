@@ -88,6 +88,7 @@ export default class Carousel extends BaseComponent {
     
     if (this.carousel) {
       this.carousel.current.scrollTo({x, animated});
+      
       if (Constants.isAndroid) {
         // this is done to handle onMomentumScrollEnd not being called in Android:
         // https://github.com/facebook/react-native/issues/11693
@@ -98,21 +99,32 @@ export default class Carousel extends BaseComponent {
   }
 
   goToPage(pageIndex, animated = true) {
-    this.setState({currentPage: pageIndex}, () => this.updateOffset(animated));
+    this.setState({currentPage: this.getCalcIndex(pageIndex)}, () => this.updateOffset(animated));
+  }
+
+  getCalcIndex(index) {
+    // to handle scrollView index issue in Android's RTL layout
+    if (Constants.isRTL && Constants.isAndroid) {
+      const length = presenter.getChildrenLength(this.props) - 1;
+      return length - index;
+    }
+    return index;
   }
 
   onContentSizeChange = () => {
+    // this is to handle initial scroll position (content offset)
     if (Constants.isAndroid) {
       this.updateOffset();
     }
   }
 
-  // finished full page scroll
   onMomentumScrollEnd = () => {
+    // finished full page scroll
     const {currentStandingPage, currentPage} = this.state;
-    this.setState({currentStandingPage: currentPage});  
-    if (currentStandingPage !== currentPage) {
-      _.invoke(this.props, 'onChangePage', currentPage, currentStandingPage);
+    const index = this.getCalcIndex(currentPage);
+    this.setState({currentStandingPage: index});  
+    if (currentStandingPage !== index) {
+      _.invoke(this.props, 'onChangePage', index, currentStandingPage);
     }
   }
 
@@ -124,7 +136,7 @@ export default class Carousel extends BaseComponent {
 
     const {loop} = this.props;
     const {pageWidth} = this.state;
-    const offsetX = presenter.getDirectionOffset(event.nativeEvent.contentOffset.x, this.props, pageWidth);
+    const offsetX = event.nativeEvent.contentOffset.x;
     
     if (offsetX >= 0) {
       const newPage = presenter.calcPageIndex(offsetX, this.props, pageWidth);
