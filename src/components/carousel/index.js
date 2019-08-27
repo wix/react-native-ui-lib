@@ -220,7 +220,7 @@ export default class Carousel extends BaseComponent {
       const pagesCount = presenter.getChildrenLength(this.props);
       const containerStyle = pageControlPosition === PAGE_CONTROL_POSITIONS.UNDER ? 
         {marginVertical: 16} : {position: 'absolute', bottom: 16, alignSelf: 'center'};
-  
+
       return (
         <PageControl 
           size={6}
@@ -229,7 +229,7 @@ export default class Carousel extends BaseComponent {
           color={Colors.dark20}
           {...pageControlProps}
           numOfPages={pagesCount} 
-          currentPage={this.state.currentPage}
+          currentPage={this.getCalcIndex(this.state.currentPage)}
         />
       );
     }
