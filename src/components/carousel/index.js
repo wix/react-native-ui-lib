@@ -88,7 +88,7 @@ export default class Carousel extends BaseComponent {
     const defaultPageWidth = props.loop ? Constants.screenWidth : (props.pageWidth + props.itemSpacings || Constants.screenWidth);
 
     this.state = {
-      currentPage: props.initialPage,
+      currentPage: this.shouldUsePageWidth() ? this.getCalcIndex(props.initialPage) : props.initialPage,
       currentStandingPage: props.initialPage,
       pageWidth: defaultPageWidth,
       initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage, pageWidth: defaultPageWidth})}
