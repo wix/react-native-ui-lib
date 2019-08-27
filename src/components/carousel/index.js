@@ -254,8 +254,11 @@ export default class Carousel extends BaseComponent {
     const {initialOffset, pageWidth} = this.state;
     const scrollContainerStyle = this.shouldUsePageWidth() && {
       paddingRight: itemSpacings,
-      paddingLeft: Constants.isAndroid ? ((Constants.screenWidth - pageWidth - itemSpacings) / 2) : undefined,
+      // paddingLeft: Constants.isAndroid ? ((Constants.screenWidth - pageWidth - itemSpacings) / 2) : undefined,
     }
+
+    const initialBreak = pageWidth - (Constants.screenWidth - pageWidth - itemSpacings) / 2;
+    const snapToOffsets = _.times(presenter.getChildrenLength(this.props), (index) => initialBreak + index * pageWidth);
 
     return (
       <View style={containerStyle}>
@@ -265,8 +268,9 @@ export default class Carousel extends BaseComponent {
           contentContainerStyle={scrollContainerStyle}
           horizontal
           showsHorizontalScrollIndicator={false}
-          snapToInterval={pageWidth}
+          // snapToInterval={pageWidth}
           snapToAlignment={'center'} // iOS only
+          snapToOffsets={snapToOffsets}
           decelerationRate="fast"
           contentOffset={initialOffset} // iOS only
           scrollEventThrottle={200}
