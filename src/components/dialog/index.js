@@ -54,10 +54,6 @@ class Dialog extends BaseComponent {
      */
     panDirection: PropTypes.oneOf(Object.values(PanningProvider.Directions)),
     /**
-     * Disable the pan gesture recognizer
-     */
-    disablePan: PropTypes.bool,
-    /**
      * Whether or not to handle SafeArea
      */
     useSafeArea: PropTypes.bool,
@@ -136,7 +132,7 @@ class Dialog extends BaseComponent {
     this.styles.size = {width, height};
     this.styles.flexType = height ? {flex: 1} : {flex: 0};
   }
-  
+
   createStyles(props) {
     const {width, height} = props;
     this.styles = StyleSheet.create({
@@ -153,7 +149,7 @@ class Dialog extends BaseComponent {
         overflow: 'hidden',
       },
     });
-  
+
     this.setSizeAndFlexType(width, height);
   }
 
@@ -188,45 +184,28 @@ class Dialog extends BaseComponent {
   };
 
   renderDialogView = () => {
-    const {children, renderPannableHeader, style} = this.props;
+    const {children, renderPannableHeader, style, panDirection} = this.props;
     const {dialogVisibility} = this.state;
     const Container = !_.isUndefined(renderPannableHeader) ? View : PanListenerView;
-    const direction = this.getDirection();
 
     return (
       <View style={this.styles.size} pointerEvents="box-none">
         <PanningProvider>
           <DialogDismissibleView
-            direction={direction}
+            direction={panDirection}
             visible={dialogVisibility}
             onDismiss={this.onDismiss}
             containerStyle={this.styles.flexType}
             style={this.styles.flexType}
           >
-            <Container directions={[direction]} style={[this.styles.overflow, this.styles.flexType, style]}>
-              {this.renderPannableHeader([direction])}
+            <Container directions={[panDirection]} style={[this.styles.overflow, this.styles.flexType, style]}>
+              {this.renderPannableHeader([panDirection])}
               {children}
             </Container>
           </DialogDismissibleView>
         </PanningProvider>
       </View>
     );
-  };
-
-  getDirection = () => {
-    const {panDirection, disablePan, renderPannableHeader} = this.props;
-    let direction;
-    if (disablePan) {
-      direction = undefined;
-    } else if (this.props.top) {
-      direction = PanningProvider.Directions.UP;
-    } else if (!_.isUndefined(renderPannableHeader) || _.isUndefined(panDirection)) {
-      direction = PanningProvider.Directions.DOWN;
-    } else {
-      direction = panDirection;
-    }
-
-    return direction;
   };
 
   // TODO: renderOverlay {_.invoke(this.props, 'renderOverlay')}

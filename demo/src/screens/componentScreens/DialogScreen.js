@@ -47,7 +47,7 @@ export default class DialogScreen extends Component {
     };
 
     this.state = {
-      panDirection: PanningProvider.Directions.UP,
+      panDirection: null,
       position: 'top',
       scroll: this.SCROLL_TYPE.NONE,
       showHeader: false,
@@ -100,7 +100,7 @@ export default class DialogScreen extends Component {
   getMessage = () => {
     const {panDirection, position, scroll} = this.state;
 
-    return `Panning direction: ${panDirection}
+    return `Panning direction: ${panDirection ? panDirection : 'none'}
 Position: ${position ? position : 'center'}
 Scroll: ${scroll}`;
   };
@@ -202,7 +202,7 @@ Scroll: ${scroll}`;
   renderDialog = () => {
     const {showDialog, panDirection, position, scroll, showHeader, isRounded} = this.state;
     const renderPannableHeader = showHeader ? this.renderPannableHeader : undefined;
-    const height = scroll !== this.SCROLL_TYPE.NONE ? "70%" : undefined;
+    const height = scroll !== this.SCROLL_TYPE.NONE ? '70%' : undefined;
 
     return (
       <Dialog
@@ -237,7 +237,8 @@ Scroll: ${scroll}`;
           <RadioGroup marginT-20 initialValue={panDirection} onValueChange={this.setPanDirection}>
             <Text>Panning Direction:</Text>
             <View row marginV-10>
-              <RadioButton value={PanningProvider.Directions.UP} label={'Up'} />
+              <RadioButton value={null} label={'None'} />
+              <RadioButton value={PanningProvider.Directions.UP} label={'Up'} marginL-10 />
               <RadioButton value={PanningProvider.Directions.DOWN} label={'Down'} marginL-10 />
               <RadioButton value={PanningProvider.Directions.LEFT} label={'Left'} marginL-10 />
               <RadioButton value={PanningProvider.Directions.RIGHT} label={'Right'} marginL-10 />
