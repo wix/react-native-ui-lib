@@ -6,10 +6,17 @@ import {WheelPicker} from '../../nativeComponents';
 import PickerDialog from './PickerDialog';
 
 class NativePicker extends BaseComponent {
-  state = {
-    selectedValue: this.props.value,
-    items: this.extractPickerItems(this.props),
-  };
+  constructor(props) {
+    super(props);
+
+    const items = this.extractPickerItems(props);
+
+    this.state = {
+      focusedValue: items[0].value,
+      selectedValue: props.value,
+      items,
+    };
+  }
 
   extractPickerItems(props) {
     const {children, useNativePicker} = props;
@@ -27,13 +34,14 @@ class NativePicker extends BaseComponent {
   };
 
   onDone = () => {
-    const {selectedValue} = this.state;
-    _.invoke(this.props, 'onChange', selectedValue);
+    const {selectedValue, focusedValue} = this.state;
+    _.invoke(this.props, 'onChange', selectedValue || focusedValue);
     this.input.toggleExpandableModal(false);
   };
 
-  onValueChange = (selectedValue) => {
+  onValueChange = selectedValue => {
     this.setState({
+      focusedValue: selectedValue,
       selectedValue,
     });
   };
@@ -51,7 +59,7 @@ class NativePicker extends BaseComponent {
 
   renderPickerDialog = () => {
     const {selectedValue} = this.state;
-    
+
     return (
       <PickerDialog
         {...this.getThemeProps()}
@@ -68,7 +76,7 @@ class NativePicker extends BaseComponent {
   render() {
     const textInputProps = TextField.extractOwnProps(this.props);
     const label = this.getLabel();
-    
+
     return (
       <TextField
         {...textInputProps}
