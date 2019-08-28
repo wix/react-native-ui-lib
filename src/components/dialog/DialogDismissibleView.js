@@ -82,8 +82,12 @@ class DialogDismissibleView extends PureComponent {
     this.swipe = {};
   };
 
+  isSwiping = () => {
+    return this.swipe.x || this.swipe.y;
+  }
+
   onDrag = () => {
-    if (this.swipe.x || this.swipe.y) {
+    if (this.isSwiping()) {
       if (this.counter < MAXIMUM_DRAGS_AFTER_SWIPE) {
         this.counter += 1;
       } else {
@@ -184,7 +188,7 @@ class DialogDismissibleView extends PureComponent {
   onPanLocationChanged = ({left, top}) => {
     const {direction} = this.props;
     const endValue = {x: Math.round(left), y: Math.round(top)};
-    if (this.swipe.x || this.swipe.y) {
+    if (this.isSwiping()) {
       this.hide();
     } else {
       this.resetSwipe();
