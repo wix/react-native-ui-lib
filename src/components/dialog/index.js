@@ -107,13 +107,21 @@ class Dialog extends BaseComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const {visible} = this.props;
-    const {visible: prevVisible} = prevProps;
+    const {visible, top, bottom, width, height} = this.props;
+    const {visible: prevVisible, top: prevTop, bottom: prevBottom, width: prevWidth, height: prevHeight} = prevProps;
 
     if (visible && !prevVisible) {
       this.setState({modalVisibility: true, dialogVisibility: true});
     } else if (prevVisible && !visible) {
       this.hideDialogView();
+    }
+
+    if (top !== prevTop || bottom !== prevBottom) {
+      this.setAlignment();
+    }
+
+    if (width !== prevWidth || height !== prevHeight) {
+      this.setSizeAndFlexType(width, height);
     }
   }
 
@@ -124,9 +132,34 @@ class Dialog extends BaseComponent {
     }
   };
 
+  setSizeAndFlexType(width, height) {
+    this.styles.size = {width, height};
+    this.styles.flexType = height ? {flex: 1} : {flex: 0};
+  }
+  
+  createStyles(props) {
+    const {width, height} = props;
+    this.styles = StyleSheet.create({
+      container: {
+        flex: 1,
+      },
+      centerHorizontal: {
+        alignItems: 'center',
+      },
+      centerContent: {
+        justifyContent: 'center',
+      },
+      overflow: {
+        overflow: 'hidden',
+      },
+    });
+  
+    this.setSizeAndFlexType(width, height);
+  }
+
   generateStyles() {
     if (this.props.migrate) {
-      this.styles = createStyles(this.props);
+      this.createStyles(this.props);
     }
   }
 
@@ -244,27 +277,6 @@ class Dialog extends BaseComponent {
       return <DialogDeprecated {...others} />;
     }
   }
-}
-
-function createStyles(props) {
-  const {width, height} = props;
-  const flexType = height ? {flex: 1} : {flex: 0};
-  return StyleSheet.create({
-    size: {width, height},
-    flexType,
-    container: {
-      flex: 1,
-    },
-    centerHorizontal: {
-      alignItems: 'center',
-    },
-    centerContent: {
-      justifyContent: 'center',
-    },
-    overflow: {
-      overflow: 'hidden',
-    },
-  });
 }
 
 export default Dialog;

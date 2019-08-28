@@ -1,8 +1,17 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {FlatList, ScrollView, StyleSheet, Alert} from 'react-native';
-import {Navigation} from 'react-native-navigation';
-import {Text, View, Button, Dialog, Colors, PanningProvider} from 'react-native-ui-lib'; // eslint-disable-line
+import {
+  Text,
+  View,
+  Button,
+  Dialog,
+  Colors,
+  PanningProvider,
+  RadioGroup,
+  RadioButton,
+  Switch,
+} from 'react-native-ui-lib'; // eslint-disable-line
 
 export default class DialogScreen extends Component {
   static colors = [
@@ -31,287 +40,96 @@ export default class DialogScreen extends Component {
   constructor(props) {
     super(props);
 
-    Navigation.events().bindComponent(this);
-
-    this.state = {
-      showDialog1: false,
-      showDialog2: false,
-      showDialog3: false,
-      showDialog4: false,
-      showDialog5: false,
-      showDialog6: false,
-      showDialog7: false,
-      showDialog8: false,
-      dialogSwipeLeft: false,
-      dialogSwipeRight: false,
-      dialogWithHeader: false,
-      dialogWithVerticalScroll: false,
-      dialogWithHorizontalScroll: false,
-      reactNativeOverlay: false,
+    this.SCROLL_TYPE = {
+      NONE: 'none',
+      VERTICAL: 'vertical',
+      HORIZONTAL: 'horizontal',
     };
 
-    this.useCases = [
-      {
-        stateId: 'showDialog1',
-        text: 'Show default dialog in center',
-        showHeader: false,
-        contentFunction: this.renderDialogContent,
-        extraProps: {
-          style: {backgroundColor: Colors.white},
-          width: '90%',
-          height: '60%',
-        },
-      },
-      {
-        stateId: 'showDialog2',
-        text: 'Show dialog in center pull up',
-        showHeader: false,
-        contentFunction: this.renderDialogContent,
-        extraProps: {
-          style: {backgroundColor: Colors.white},
-          width: '90%',
-          height: '60%',
-          panDirection: PanningProvider.Directions.UP,
-        },
-      },
-      {
-        stateId: 'showDialog3',
-        text: 'Show bottom dialog',
-        showHeader: false,
-        contentFunction: this.renderDialogContent,
-        extraProps: {
-          style: {backgroundColor: Colors.white},
-          width: '100%',
-          height: '35%',
-          bottom: true,
-          useSafeArea: true,
-          centerH: true,
-        },
-      },
-      {
-        stateId: 'showDialog4',
-        text: 'Show bottom dialog with padding',
-        showHeader: false,
-        contentFunction: this.renderDialogContent,
-        extraProps: {
-          style: {backgroundColor: Colors.white, marginVertical: 20, borderRadius: 12},
-          width: '90%',
-          height: '60%',
-          bottom: true,
-          centerH: true,
-        },
-      },
-      {
-        stateId: 'showDialog5',
-        text: 'Show top dialog',
-        showHeader: false,
-        contentFunction: this.renderDialogContent,
-        extraProps: {
-          style: {backgroundColor: Colors.white},
-          width: '100%',
-          height: '40%',
-          top: true,
-          useSafeArea: true,
-          centerH: true,
-        },
-      },
-      {
-        stateId: 'showDialog6',
-        text: 'Show dialog with height based on content (bottom)',
-        showHeader: false,
-        contentFunction: this.renderDialogContent,
-        extraProps: {
-          style: {backgroundColor: Colors.white},
-          width: '100%',
-          bottom: true,
-          useSafeArea: true,
-          centerH: true,
-        },
-        functionExtraProps: {flex: false},
-      },
-      {
-        stateId: 'showDialog7',
-        text: 'Show dialog with height based on content (top)',
-        showHeader: false,
-        contentFunction: this.renderDialogContent,
-        extraProps: {
-          style: {backgroundColor: Colors.white},
-          width: '100%',
-          top: true,
-          useSafeArea: true,
-          centerH: true,
-        },
-        functionExtraProps: {flex: false},
-      },
-      {
-        stateId: 'showDialog8',
-        text: 'Show dialog with disabled pan gesture',
-        showHeader: false,
-        contentFunction: this.renderDialogContent,
-        extraProps: {
-          style: {backgroundColor: Colors.white},
-          width: '80%',
-          height: '40%',
-          disablePan: true,
-        },
-      },
-      {
-        stateId: 'dialogSwipeLeft',
-        text: 'Show center dialog with swipe to left',
-        showHeader: false,
-        contentFunction: this.renderDialogContent,
-        extraProps: {
-          style: {backgroundColor: Colors.white},
-          width: '80%',
-          height: '40%',
-          panDirection: PanningProvider.Directions.LEFT,
-        },
-      },
-      {
-        stateId: 'dialogSwipeRight',
-        text: 'Show center dialog with swipe to right',
-        showHeader: false,
-        contentFunction: this.renderDialogContent,
-        extraProps: {
-          style: {backgroundColor: Colors.white},
-          width: '80%',
-          height: '40%',
-          panDirection: PanningProvider.Directions.RIGHT,
-        },
-      },
-      {
-        stateId: 'dialogWithHeader',
-        text: 'Show bottom dialog with header',
-        showHeader: true,
-        contentFunction: this.renderDialogContent,
-        extraProps: {
-          style: {backgroundColor: Colors.white, marginVertical: 20, borderRadius: 12},
-          bottom: true,
-          centerH: true,
-        },
-        functionExtraProps: {flex: false},
-      },
-      {
-        stateId: 'dialogWithVerticalScroll',
-        text: 'Dialog with vertical scroll',
-        showHeader: true,
-        contentFunction: this.renderContentWithVerticalScroll,
-        extraProps: {
-          style: {backgroundColor: Colors.white, marginVertical: 20, borderRadius: 12},
-          height: '70%',
-          bottom: true,
-          centerH: true,
-        },
-      },
-      {
-        stateId: 'dialogWithHorizontalScroll',
-        text: 'Dialog with horizontal scroll',
-        showHeader: true,
-        contentFunction: this.renderContentWithHorizontalScroll,
-        extraProps: {
-          style: {backgroundColor: Colors.white, marginVertical: 20, borderRadius: 12},
-          height: '70%',
-          bottom: true,
-          centerH: true,
-        },
-      },
-    ];
+    this.state = {
+      panDirection: PanningProvider.Directions.UP,
+      position: 'top',
+      scroll: this.SCROLL_TYPE.NONE,
+      showHeader: false,
+      isRounded: true,
+      showDialog: false,
+    };
   }
 
-  renderButtons = () => {
-    return (
-      <View>
-        {_.map(this.useCases, useCase => {
-          return this.renderButton(useCase);
-        })}
-        {this.renderOverlayButton()}
-      </View>
-    );
+  titlePressed = ({title}) => {
+    Alert.alert('Pressed on', title);
   };
 
-  renderButton = ({stateId, text}, onPress = () => this.setState({[stateId]: true})) => {
-    return <Button key={text + '-button'} size={'small'} label={text} style={styles.button} onPress={onPress} />;
+  setPanDirection = panDirection => {
+    this.setState({panDirection});
   };
 
-  renderDialogs = () => {
-    return _.map(this.useCases, useCase => {
-      return this.renderDialog(useCase);
+  setPosition = position => {
+    this.setState({position});
+  };
+
+  setScroll = scroll => {
+    this.setState({scroll});
+  };
+
+  toggleShowHeader = () => {
+    this.setState({
+      showHeader: !this.state.showHeader,
     });
   };
 
-  renderDialog = ({stateId, text, showHeader, contentFunction, extraProps, functionExtraProps}) => {
-    const shouldShow = this.state[stateId];
-    const renderHeader = showHeader ? this.renderHeader : undefined;
-
-    return (
-      <Dialog
-        key={text + '-dialog'}
-        stateId={stateId}
-        migrate
-        title={text}
-        message={'Message'}
-        visible={shouldShow}
-        onDismiss={this.onDismiss}
-        renderPannableHeader={renderHeader}
-        supportedOrientations={['portrait', 'landscape']}
-        {...extraProps}
-      >
-        {contentFunction(stateId, functionExtraProps)}
-      </Dialog>
-    );
+  toggleIsRounded = () => {
+    this.setState({
+      isRounded: !this.state.isRounded,
+    });
   };
 
-  onDismiss = ({stateId}) => {
-    this.setState({[stateId]: false});
+  showDialog = () => {
+    this.setState({showDialog: true});
   };
 
-  renderHeader = props => {
-    const {title, message} = props;
+  hideDialog = () => {
+    this.setState({showDialog: false});
+  };
+
+  getTitle = () => {
+    const {showHeader} = this.state;
+    return showHeader ? 'This is a pannable header Dialog' : 'This is a Dialog';
+  };
+
+  getMessage = () => {
+    const {panDirection, position, scroll} = this.state;
+
+    return `Panning direction: ${panDirection}
+Position: ${position ? position : 'center'}
+Scroll: ${scroll}`;
+  };
+
+  renderPannableHeader = props => {
+    const {title} = props;
     return (
       <View>
         <View margin-20>
-          <Text marginB-8>{title}</Text>
-          <Text>{message}</Text>
+          <Text>{title}</Text>
         </View>
         <View height={2} bg-dark70 />
       </View>
     );
   };
 
-  renderDialogContent = (stateId, extraProps) => {
+  renderPlainContent = () => {
     return (
-      <View flex padding-18 spread {...extraProps}>
-        <View height={100}>
-          <Text text50>This is Dialog</Text>
-        </View>
-        <View right>
-          <Button stateId={stateId} text60 label="Done" link onPress={this.onDone} />
-        </View>
+      <View margin-20 right>
+        <Button text60 label="Done" link onPress={this.hideDialog} />
       </View>
     );
-  };
-
-  onDone = ({stateId}) => {
-    this.setState({[stateId]: false});
   };
 
   keyExtractor = item => {
     return item.value;
   };
 
-  renderContentWithVerticalScroll = () => {
-    return (
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        style={styles.scrollView}
-        data={DialogScreen.colors}
-        renderItem={this.renderItem}
-        keyExtractor={this.keyExtractor}
-      />
-    );
-  };
-
-  renderItem = ({item: color}) => {
+  renderVerticalItem = ({item: color}) => {
     return (
       <Text text50 margin-20 color={color.value}>
         {color.label}
@@ -319,13 +137,25 @@ export default class DialogScreen extends Component {
     );
   };
 
-  titlePressed = ({title}) => {
-    Alert.alert('Pressed on', title);
+  renderVerticalScroll = () => {
+    return (
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        style={styles.verticalScroll}
+        data={DialogScreen.colors}
+        renderItem={this.renderVerticalItem}
+        keyExtractor={this.keyExtractor}
+      />
+    );
   };
 
-  renderContentWithHorizontalScroll = () => {
+  renderHorizontalItem = ({item: color}) => {
+    return <View flex width={100} height={1000} style={{backgroundColor: color.value}} />;
+  };
+
+  renderHorizontalScroll = () => {
     return (
-      <View pointerEvents="box-none" style={styles.horizontalContainer}>
+      <View marginT-20 pointerEvents="box-none">
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -342,46 +172,109 @@ export default class DialogScreen extends Component {
     );
   };
 
-  renderHorizontalItem = ({item: color}) => {
-    return <View flex width={100} height={1000} style={{backgroundColor: color.value}} />;
+  renderContent = () => {
+    const {scroll, showHeader} = this.state;
+    let content;
+    switch (scroll) {
+      case this.SCROLL_TYPE.VERTICAL:
+        content = this.renderVerticalScroll();
+        break;
+      case this.SCROLL_TYPE.HORIZONTAL:
+        content = this.renderHorizontalScroll();
+        break;
+      case this.SCROLL_TYPE.NONE:
+      default:
+        content = this.renderPlainContent();
+        break;
+    }
+
+    return (
+      <View spread flex={scroll !== this.SCROLL_TYPE.NONE}>
+        <View marginT-20 marginH-20>
+          {!showHeader && <Text text50>{this.getTitle()}</Text>}
+          <Text marginT-20={!showHeader}>{this.getMessage()}</Text>
+        </View>
+        {content}
+      </View>
+    );
   };
 
-  renderOverlayButton = () => {
-    return this.renderButton({stateId: 'reactNativeOverlay', text: 'Show dialog in RNN overlay'}, this.showOverlay);
-  };
+  renderDialog = () => {
+    const {showDialog, panDirection, position, scroll, showHeader, isRounded} = this.state;
+    const renderPannableHeader = showHeader ? this.renderPannableHeader : undefined;
+    const height = scroll !== this.SCROLL_TYPE.NONE ? "70%" : undefined;
 
-  showOverlay = async () => {
-    this.overlay = await Navigation.showOverlay({
-      component: {
-        name: 'unicorn.CustomScreen',
-        passProps: {
-          onDismiss: this.dismissOverlay,
-        },
-        options: {
-          layout: {
-            backgroundColor: 'transparent',
-          },
-          overlay: {
-            interceptTouchOutside: false,
-          },
-        },
-      },
-    });
-  };
-
-  dismissOverlay = () => {
-    Navigation.dismissOverlay(this.overlay);
+    return (
+      <Dialog
+        migrate
+        useSafeArea
+        top={position === 'top'}
+        bottom={position === 'bottom'}
+        height={height}
+        panDirection={panDirection}
+        title={this.getTitle()}
+        style={[styles.dialog, isRounded && styles.roundedDialog]}
+        visible={showDialog}
+        onDismiss={this.hideDialog}
+        renderPannableHeader={renderPannableHeader}
+        supportedOrientations={['portrait', 'landscape']}
+      >
+        {this.renderContent()}
+      </Dialog>
+    );
   };
 
   render() {
+    const {panDirection, position, scroll, showHeader, isRounded} = this.state;
+
     return (
       <ScrollView>
         <View flex padding-12>
           <Text text30 dark10 marginB-20>
             Dialog
           </Text>
-          {this.renderButtons()}
-          {this.renderDialogs()}
+
+          <RadioGroup marginT-20 initialValue={panDirection} onValueChange={this.setPanDirection}>
+            <Text>Panning Direction:</Text>
+            <View row marginV-10>
+              <RadioButton value={PanningProvider.Directions.UP} label={'Up'} />
+              <RadioButton value={PanningProvider.Directions.DOWN} label={'Down'} marginL-10 />
+              <RadioButton value={PanningProvider.Directions.LEFT} label={'Left'} marginL-10 />
+              <RadioButton value={PanningProvider.Directions.RIGHT} label={'Right'} marginL-10 />
+            </View>
+          </RadioGroup>
+
+          <RadioGroup marginT-20 initialValue={position} onValueChange={this.setPosition}>
+            <Text>Position:</Text>
+            <View row marginV-10>
+              <RadioButton value={'top'} label={'Top'} />
+              <RadioButton value={null} label={'Center'} marginL-10 />
+              <RadioButton value={'bottom'} label={'Bottom'} marginL-10 />
+            </View>
+          </RadioGroup>
+
+          <RadioGroup marginT-20 initialValue={scroll} onValueChange={this.setScroll}>
+            <Text>Scroll:</Text>
+            <View row marginV-10>
+              <RadioButton value={this.SCROLL_TYPE.NONE} label={'None'} />
+              <RadioButton value={this.SCROLL_TYPE.VERTICAL} label={'Vertical'} marginL-10 />
+              <RadioButton value={this.SCROLL_TYPE.HORIZONTAL} label={'Horizontal'} marginL-10 />
+            </View>
+          </RadioGroup>
+
+          <View row marginT-20 centerV>
+            <Text>Toggle pannable header:</Text>
+            <Switch value={showHeader} onValueChange={this.toggleShowHeader} marginL-10 />
+          </View>
+
+          <View row marginT-20 centerV>
+            <Text>Add some style:</Text>
+            <Switch value={isRounded} onValueChange={this.toggleIsRounded} marginL-10 />
+          </View>
+
+          <Button marginT-50 label={'Show dialog'} onPress={this.showDialog} />
+
+          {this.renderDialog()}
         </View>
       </ScrollView>
     );
@@ -389,18 +282,21 @@ export default class DialogScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  dialog: {
+    backgroundColor: Colors.white,
+  },
+  roundedDialog: {
+    borderRadius: 12,
+  },
   button: {
     margin: 5,
     alignSelf: 'flex-start',
   },
-  scrollView: {
-    paddingBottom: 12,
-  },
-  horizontalContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  verticalScroll: {
+    marginTop: 20,
   },
   horizontalTextContainer: {
+    alignSelf: 'center',
     position: 'absolute',
     top: 10,
   },
