@@ -69,10 +69,6 @@ class TabController extends Component {
     this.setState({itemStates, ignoredItems});
   };
 
-  onChangeIndex = () => {
-    _.invoke(this.props, 'onChangeIndex', this.props);
-  };
-
   render() {
     const {itemStates, ignoredItems} = this.state;
     return (

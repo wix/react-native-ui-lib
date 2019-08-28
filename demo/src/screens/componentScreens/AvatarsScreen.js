@@ -26,15 +26,18 @@ const examples = [
         'https://lh3.googleusercontent.com/-cw77lUnOvmI/AAAAAAAAAAI/AAAAAAAAAAA/WMNck32dKbc/s181-c/104220521160525129167.jpg',
     },
     badgeProps: {size: 'pimpleBig', backgroundColor: Colors.yellow30},
+    badgePosition: 'BOTTOM_RIGHT',
   },
 
   {
-    title: 'Smaller size',
+    title: 'Smaller size, Badge ("offline")',
     size: 40,
     imageSource: {
       uri:
         'https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg',
     },
+    badgeProps: {size: 'pimpleBig', backgroundColor: Colors.dark50},
+    badgePosition: 'BOTTOM_LEFT',
   },
   {
     title: 'Image with fade in animation',
@@ -44,14 +47,14 @@ const examples = [
     imageSource: {uri: 'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg'},
   },
   {
-    title: 'Big pimple, bottom right',
+    title: 'Big pimple',
     size: 70,
     backgroundColor: 'red',
     imageSource: {
       uri: 'https://randomuser.me/api/portraits/women/24.jpg',
     },
     badgeProps: {size: 'pimpleHuge', borderWidth: 0, backgroundColor: onlineColor},
-    badgePosition: 'BOTTOM_RIGHT',
+    badgePosition: 'TOP_LEFT',
   },
   {
     title: 'Icon badge',

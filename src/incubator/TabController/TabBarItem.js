@@ -110,7 +110,7 @@ export default class TabBarItem extends PureComponent {
     {
       nativeEvent: {state: this.props.state},
     },
-  ]);
+  ], {useNativeDriver: true});
 
   onLayout = ({
     nativeEvent: {
@@ -191,7 +191,7 @@ export default class TabBarItem extends PureComponent {
 
     return (
       <TouchableOpacity
-        state={state}
+        pressState={state}
         style={[styles.tabItem, this.getItemStyle()]}
         onLayout={this.onLayout}
         feedbackColor={activeBackgroundColor}

@@ -127,7 +127,6 @@ class Dialog extends BaseComponent {
     Animated.timing(deltaY, {
       toValue: 0,
       duration: _.get(animationConfig, 'duration', 400),
-      delay: _.get(animationConfig, 'delay', 250),
       easing: _.get(animationConfig, 'easing', Easing.bezier(0.165, 0.84, 0.44, 1)),
       useNativeDriver: _.get(animationConfig, 'useNativeDriver', true)
     }).start();

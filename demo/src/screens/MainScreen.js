@@ -305,7 +305,12 @@ export default class MainScreen extends Component {
     const keys = _.keys(data);
 
     return (
-      <Carousel onChangePage={this.onChangePage} ref={carousel => (this.carousel = carousel)}>
+      <Carousel
+        migrate 
+        ref={carousel => (this.carousel = carousel)}
+        containerStyle={{flex: 1}}
+        onChangePage={this.onChangePage} 
+      >
         {_.map(data, (section, key) => {
           return (
             <View key={key} style={[styles.page, pageStyle]}>
@@ -333,7 +338,6 @@ export default class MainScreen extends Component {
   }
 
   renderSearchResults(data) {
-    const {renderItem} = this.props;
     const flatData = _.flatMap(data);
 
     return (
@@ -341,7 +345,7 @@ export default class MainScreen extends Component {
         keyboardShouldPersistTaps="always"
         data={flatData}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={renderItem || this.renderItem}
+        renderItem={this.renderItem}
       />
     );
   }
@@ -384,7 +388,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   page: {
-    width: Constants.screenWidth,
     flex: 1,
     paddingLeft: 24,
   },

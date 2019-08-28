@@ -2,7 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, ViewPropTypes, TouchableOpacity} from 'react-native';
-import {Colors, BorderRadiuses} from '../../style';
+import {Colors} from '../../style';
 import {PureBaseComponent} from '../../commons';
 import Badge, {BADGE_SIZES} from '../badge';
 import View from '../view';
@@ -24,7 +24,9 @@ export const STATUS_MODES = {
 
 export const BADGE_POSITIONS = {
   TOP_RIGHT: 'TOP_RIGHT',
+  TOP_LEFT: 'TOP_LEFT',
   BOTTOM_RIGHT: 'BOTTOM_RIGHT',
+  BOTTOM_LEFT: 'BOTTOM_LEFT'
 };
 
 const DEFAULT_BADGE_SIZE = 'pimpleBig';
@@ -59,7 +61,7 @@ export default class Avatar extends PureBaseComponent {
     animate: PropTypes.bool,
     /**
      * Background color for Avatar
-     */
+     */ 
     backgroundColor: PropTypes.string,
     /**
      * Badge location on Avatar
@@ -155,6 +157,39 @@ export default class Avatar extends PureBaseComponent {
     this.styles = createStyles(this.props);
   }
 
+  getContainerStyle() {
+    const {size} = this.props;
+
+    return {
+      width: size,
+      height: size,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: size / 2,
+    };
+  }
+
+  getInitialsContainer() {
+    const {size} = this.props;
+    return {
+      ...StyleSheet.absoluteFillObject,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: size / 2,
+    };
+  }
+
+  getRibbonStyle() {
+    const {size} = this.props;
+
+    return {
+      position: 'absolute',
+      top: '10%',
+      left: size / 1.7,
+      borderRadius: size / 2,
+    };
+  }
+
   getStatusBadgeColor(status) {
     switch (status) {
       case Avatar.modes.AWAY:
@@ -187,18 +222,10 @@ export default class Avatar extends PureBaseComponent {
     const x = Math.sqrt(radius ** 2 * 2);
     const y = x - radius;
     const shift = Math.sqrt(y ** 2 / 2) - (BADGE_SIZES[this.getBadgeSize()] + this.getBadgeBorderWidth() * 2) / 2;
+    const badgeLocation = _.split(_.toLower(badgePosition), '_', 2)
+    const badgeAlignment = {position: 'absolute', [badgeLocation[0]]: shift, [badgeLocation[1]]: shift}
 
-    let badgeAlignment = {};
-    switch (badgePosition) {
-      case BADGE_POSITIONS.BOTTOM_RIGHT:
-        badgeAlignment = {bottom: shift, right: shift};
-        break;
-      case BADGE_POSITIONS.TOP_RIGHT:
-      default:
-        badgeAlignment = {top: shift, right: shift};
-        break;
-    }
-    return {position: 'absolute', ...badgeAlignment};
+    return badgeAlignment;
   }
 
   renderBadge() {
@@ -222,9 +249,9 @@ export default class Avatar extends PureBaseComponent {
     const {ribbonLabel, ribbonStyle, ribbonLabelStyle, customRibbon} = this.props;
     if (ribbonLabel) {
       return customRibbon ? (
-        <View style={this.styles.customRibbon}>{customRibbon}</View>
+        <View style={this.getRibbonStyle()}>{customRibbon}</View>
       ) : (
-        <View style={[this.styles.ribbon, ribbonStyle]}>
+        <View style={[this.getRibbonStyle(), this.styles.ribbon, ribbonStyle]}>
           <Text numberOfLines={1} text100 white style={[ribbonLabelStyle]}>
             {ribbonLabel}
           </Text>
@@ -246,17 +273,18 @@ export default class Avatar extends PureBaseComponent {
     } = this.props;
     const hasImage = !_.isUndefined(imageSource);
     const ImageContainer = animate ? AnimatedImage : Image;
+
     if (hasImage) {
       return (
         <ImageContainer
           animate={animate}
-          style={[this.styles.image, imageStyle]}
+          style={[this.getContainerStyle(), StyleSheet.absoluteFillObject, imageStyle]}
           source={imageSource}
           onLoadStart={onImageLoadStart}
           onLoadEnd={onImageLoadEnd}
           onError={onImageLoadError}
           testID={`${testID}.image`}
-          containerStyle={this.styles.container}
+          containerStyle={this.getContainerStyle()}
           {...imageProps}
         />
       );
@@ -273,16 +301,20 @@ export default class Avatar extends PureBaseComponent {
       onPress,
       containerStyle,
       children,
+      size,
       testID,
     } = this.props;
     const Container = onPress ? TouchableOpacity : View;
     const hasImage = !_.isUndefined(imageSource);
+    const fontSizeToImageSizeRatio = 0.32;
+    const fontSize = size * fontSizeToImageSizeRatio;
+
     return (
-      <Container style={[this.styles.container, containerStyle]} testID={testID} onPress={onPress}>
+      <Container style={[this.getContainerStyle(), containerStyle]} testID={testID} onPress={onPress}>
         <View
-          style={[this.styles.initialsContainer, {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
+          style={[this.getInitialsContainer(), {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
         >
-          <Text numberOfLines={1} style={[this.styles.initials, {color}]}>
+          <Text numberOfLines={1} style={[{fontSize}, this.styles.initials, {color}]}>
             {label}
           </Text>
         </View>
@@ -295,67 +327,22 @@ export default class Avatar extends PureBaseComponent {
   }
 }
 
-function createStyles({size, labelColor}) {
-  const borderRadius = size / 2;
-  const fontSizeToImageSizeRatio = 0.32;
-  const ribbonPosition = {
-    position: 'absolute',
-    top: '10%',
-    left: size / 1.7,
-  };
+function createStyles({labelColor}) {
   const styles = StyleSheet.create({
-    container: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: size,
-      height: size,
-      borderRadius,
-    },
-    initialsContainer: {
-      ...StyleSheet.absoluteFillObject,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius,
-    },
     initialsContainerWithInset: {
       top: 1,
       right: 1,
       bottom: 1,
       left: 1,
     },
-    /*eslint-disable*/
     initials: {
-      fontSize: size * fontSizeToImageSizeRatio,
       color: labelColor,
       backgroundColor: 'transparent',
     },
-    /*eslint-enable*/
-    defaultImage: {
-      width: size,
-      height: size,
-      borderRadius,
-    },
-    image: {
-      ...StyleSheet.absoluteFillObject,
-      position: 'absolute',
-      width: size,
-      height: size,
-      borderRadius,
-    },
-    fixAbsolutePosition: {
-      position: undefined,
-      left: undefined,
-      bottom: undefined,
-    },
     ribbon: {
-      ...ribbonPosition,
       backgroundColor: Colors.blue30,
-      borderRadius: BorderRadiuses.br100,
       paddingHorizontal: 6,
       paddingVertical: 3,
-    },
-    customRibbon: {
-      ...ribbonPosition,
     },
   });
 
