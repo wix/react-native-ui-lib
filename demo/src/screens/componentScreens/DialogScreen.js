@@ -11,6 +11,7 @@ import {
   RadioGroup,
   RadioButton,
   Switch,
+  Constants,
 } from 'react-native-ui-lib'; // eslint-disable-line
 
 export default class DialogScreen extends Component {
@@ -47,7 +48,7 @@ export default class DialogScreen extends Component {
     };
 
     this.state = {
-      panDirection: null,
+      panDirection: PanningProvider.Directions.UP,
       position: 'top',
       scroll: this.SCROLL_TYPE.NONE,
       showHeader: false,
@@ -96,6 +97,15 @@ export default class DialogScreen extends Component {
     const {showHeader} = this.state;
     return showHeader ? 'This is a pannable header Dialog' : 'This is a Dialog';
   };
+
+  getWarning = () => {
+    const {showHeader, scroll, panDirection} = this.state;
+    if (!showHeader && scroll !== this.SCROLL_TYPE.NONE) {
+      return <Text color={Colors.red30}>It is recommended to have pannable header with scrollable content</Text>;
+    } else if (showHeader && panDirection !== PanningProvider.Directions.DOWN) {
+      return <Text color={Colors.red30}>It is recommended to have pannable header with direction=down</Text>;
+    }
+  }
 
   getMessage = () => {
     const {panDirection, position, scroll} = this.state;
@@ -193,6 +203,7 @@ Scroll: ${scroll}`;
         <View marginT-20 marginH-20>
           {!showHeader && <Text text50>{this.getTitle()}</Text>}
           <Text marginT-20={!showHeader}>{this.getMessage()}</Text>
+          {this.getWarning()}
         </View>
         {content}
       </View>
@@ -287,6 +298,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   roundedDialog: {
+    marginBottom: Constants.isIphoneX ? 0 : 20,
     borderRadius: 12,
   },
   button: {
