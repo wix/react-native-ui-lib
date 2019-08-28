@@ -306,7 +306,6 @@ export default class MainScreen extends Component {
 
     return (
       <Carousel
-        migrate 
         ref={carousel => (this.carousel = carousel)}
         containerStyle={{flex: 1}}
         onChangePage={this.onChangePage} 

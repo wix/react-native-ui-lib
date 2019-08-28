@@ -24,7 +24,6 @@ class CarouselScreen extends Component {
       <View flex>
         <Text text30 margin-20>Carousel</Text>
         <Carousel 
-          migrate 
           ref={r => this.carousel = r}
           // loop 
           onChangePage={(index => this.onChangePage(index))} 

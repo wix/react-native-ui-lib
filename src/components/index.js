@@ -7,7 +7,7 @@ module.exports = {
   get Badge() { return require('./badge').default; },
   get Button() { return require('./button').default; },
   get Card() { return require('./card').default; },
-  get Carousel() { return require('./carousel/carousel-Deprecated').default; },
+  get Carousel() { return require('./carousel').default; },
   get Checkbox() { return require('./checkbox').default; },
   get ConnectionStatusBar() { return require('./connectionStatusBar').default; },
   get Dialog() { return require('./dialog').default; },
