@@ -51,7 +51,8 @@
     "react-native-text-size": "^2.0.4",
     "semver": "^5.5.0",
     "url-parse": "^1.2.0",
-    "react-native-color": "0.0.10"
+    "react-native-color": "0.0.10",
+    "memoize-one": "^5.0.5"
   },
   "devDependencies": {
     "@react-native-community/async-storage": "1.2.4",
