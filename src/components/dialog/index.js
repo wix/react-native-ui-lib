@@ -117,7 +117,7 @@ class Dialog extends BaseComponent {
     }
 
     if (width !== prevWidth || height !== prevHeight) {
-      this.setSizeAndFlexType(width, height);
+      this.setDialogSizeAndFlexType(width, height);
     }
   }
 
@@ -128,8 +128,8 @@ class Dialog extends BaseComponent {
     }
   };
 
-  setSizeAndFlexType(width, height) {
-    this.styles.size = {width, height};
+  setDialogSizeAndFlexType(width, height) {
+    this.styles.dialogViewSize = {width, height};
     this.styles.flexType = height ? {flex: 1} : {flex: 0};
   }
 
@@ -150,7 +150,7 @@ class Dialog extends BaseComponent {
       },
     });
 
-    this.setSizeAndFlexType(width, height);
+    this.setDialogSizeAndFlexType(width, height);
   }
 
   generateStyles() {
@@ -189,7 +189,7 @@ class Dialog extends BaseComponent {
     const Container = !_.isUndefined(renderPannableHeader) ? View : PanListenerView;
 
     return (
-      <View style={this.styles.size} pointerEvents="box-none">
+      <View style={this.styles.dialogViewSize} pointerEvents="box-none">
         <PanningProvider>
           <DialogDismissibleView
             direction={panDirection}
