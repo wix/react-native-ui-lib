@@ -210,6 +210,11 @@ Scroll: ${scroll}`;
     );
   };
 
+  getDialogKey = (height) => {
+    const {position} = this.state;
+    return `dialog-key-${position}-${height}`;
+  }
+
   renderDialog = () => {
     const {showDialog, panDirection, position, scroll, showHeader, isRounded} = this.state;
     const renderPannableHeader = showHeader ? this.renderPannableHeader : undefined;
@@ -219,6 +224,7 @@ Scroll: ${scroll}`;
       <Dialog
         migrate
         useSafeArea
+        key={this.getDialogKey(height)}
         top={position === 'top'}
         bottom={position === 'bottom'}
         height={height}
