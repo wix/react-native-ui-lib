@@ -48,10 +48,10 @@ export default class DialogScreen extends Component {
     };
 
     this.state = {
-      panDirection: PanningProvider.Directions.UP,
-      position: 'top',
+      panDirection: PanningProvider.Directions.DOWN,
+      position: 'bottom',
       scroll: this.SCROLL_TYPE.NONE,
-      showHeader: false,
+      showHeader: true,
       isRounded: true,
       showDialog: false,
     };
