@@ -12,6 +12,7 @@ module.exports = {
   get ConnectionStatusBar() { return require('./connectionStatusBar').default; },
   get Dialog() { return require('./dialog').default; },
   get FeatureHighlight() { return require('./featureHighlight').default; },
+  get FloatingButton() { return require('./floatingButton').default; },
   get Hint() { return require('./hint').default; },
   get Image() { return require('./image').default; },
 

@@ -29,6 +29,7 @@ export const navigationData = {
       {title: 'Carousel', tags: 'carousel', screen: 'unicorn.components.CarouselScreen'},
       {title: 'Connection Status Bar', tags: 'connection status bar', screen: 'unicorn.components.ConnectionStatusBar'},
       {title: 'Dialog', tags: 'dialog modal popup alert', screen: 'unicorn.components.DialogScreen'},
+      {title: 'Floating Button', tags: 'floating button', screen: 'unicorn.components.FloatingButtonScreen'},
       {title: 'Feature Highlight', tags: 'feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
       {title: 'Hint', tags: 'hints tooltip', screen: 'unicorn.components.HintsScreen'},
       {title: 'Overlays', tags: 'overlay image', screen: 'unicorn.components.OverlaysScreen'},

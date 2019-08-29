@@ -12,6 +12,7 @@ module.exports = {
   get Checkbox() { return require('./components').Checkbox; },
   get ConnectionStatusBar() { return require('./components').ConnectionStatusBar; },
   get Dialog() { return require('./components').Dialog; },
+  get FloatingButton() { return require('./components').FloatingButton; },
   get FeatureHighlight() { return require('./components').FeatureHighlight; },
   get Hint() { return require('./components').Hint; },
   get Image() { return require('./components').Image; },
