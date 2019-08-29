@@ -16,6 +16,7 @@ import DialogDeprecated from './dialogDeprecated';
 // 1. iOS pressing on the background while enter animation is happening will not call onDismiss
 //    Touch events are not registered?
 // 2. SafeArea is transparent
+// 3. Check why we need the state change in DialogDismissibleView -> onLayout -> animateTo
 
 /**
  * @description: Dialog component for displaying custom content inside a popup dialog
