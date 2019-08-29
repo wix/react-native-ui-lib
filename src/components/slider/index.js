@@ -15,8 +15,7 @@ const INACTIVE_COLOR = Colors.dark60;
 
 /**
  * @description: A Slider component
- * @example: https://github.com/wix-private/wix-react-native-ui-lib/blob/master/example/screens/components/SliderScreen.js
- * @guidelines: https://zpl.io/2yOLDRo
+ * @example: https://github.com/wix/react-native-ui-lib/blob/feat/new_components/demo/src/screens/componentScreens/SliderScreen.js
  */
 export default class Slider extends PureBaseComponent {
   static displayName = 'Slider';
