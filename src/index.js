@@ -28,6 +28,10 @@ module.exports = {
   get PanDismissibleView() { return require('./components').PanDismissibleView; },
   get Picker() { return require('./components').Picker; },
   get ProgressBar() { return require('./components').ProgressBar; },
+  get Slider() { return require('./components').Slider; },
+  get GradientSlider() { return require('./components').GradientSlider; },
+  get ColorSliderGroup() { return require('./components').ColorSliderGroup; },
+
   get Stepper() { return require('./components').Stepper; },
   get TabBar() { return require('./components').TabBar; },
   get TagsInput() { return require('./components').TagsInput; },

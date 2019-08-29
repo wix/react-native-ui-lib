@@ -38,6 +38,10 @@ module.exports = {
 
   get SharedTransition() { return require('./sharedTransition').default; },
 
+  get Slider() { return require('./slider').default; },
+  get GradientSlider() { return require('./slider/GradientSlider').default; },
+  get ColorSliderGroup() { return require('./slider/ColorSliderGroup').default; },
+
   get Switch() { return require('./switch').default; },
   get Text() { return require('./text').default; },
   get Toast() { return require('./toast').default; },

@@ -48,6 +48,7 @@ export const navigationData = {
       {title: 'Picker', tags: 'picker form', screen: 'unicorn.components.PickerScreen'},
       {title: 'RadioButton', tags: 'radio button group controls', screen: 'unicorn.components.RadioButtonScreen'},
       {title: 'Stepper', tags: 'stepper form', screen: 'unicorn.components.StepperScreen'},
+      {title: 'Slider', tags: 'slider', screen: 'unicorn.components.SliderScreen'},
       {title: 'Switch', tags: 'switch toggle', screen: 'unicorn.components.SwitchScreen'},
       {title: 'TagsInput', tags: 'tags input form', screen: 'unicorn.components.TagsInputScreen'},
       {title: 'Masked Inputs', tags: 'text input form mask', screen: 'unicorn.components.MaskedInputScreen'},
