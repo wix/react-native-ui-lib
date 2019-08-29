@@ -64,7 +64,7 @@ class PanDismissibleView extends PureComponent {
       animTranslateY: new Animated.Value(0),
       isAnimating: false
     };
-    shouldDismissAfterReset = false;
+    this.shouldDismissAfterReset = false;
     this.ref = React.createRef();
   }
 
