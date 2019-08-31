@@ -138,7 +138,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     backgroundColor: Colors.dark70,
-    overflow: 'visible'
   },
   iconBadgeColumnContainer: {
     flex: 1,
