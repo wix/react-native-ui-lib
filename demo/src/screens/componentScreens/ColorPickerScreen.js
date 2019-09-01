@@ -2,13 +2,15 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import {Colors, View, Text, ColorPicker, ColorPalette} from 'react-native-ui-lib';
+import {colorsPalette} from '../../../../src/style/colorsPalette';
 
 
 const INITIAL_COLOR = Colors.blue30;
-const mainColors = [
-  '#66737C', '#459FED', '#1D5382', '#3CC7C5', '#65C888', '#FAAD4D', '#F27052', '#F2564D', 
-  '#B13DAC', '#733CA6', '#79838A', '#5847FF', '#00BBF2', '#00CD8B', '#FF563D', '#ffb600'
-];
+const colors = Object.values(colorsPalette);
+// const colors = [
+//   '#66737C', '#459FED', '#1D5382', '#3CC7C5', '#65C888', '#FAAD4D', '#F27052', '#F2564D', 
+//   '#B13DAC', '#733CA6', '#79838A', '#5847FF', '#00BBF2', '#00CD8B', '#FF563D', '#ffb600'
+// ];
 
 
 export default class ColorPickerScreen extends Component {
@@ -57,7 +59,7 @@ export default class ColorPickerScreen extends Component {
         <View bg-white>
           <Text text60 marginL-20 marginB-4 marginT-24>Theme Color</Text>
           <Text marginL-20>Choose a color for your place’s theme.</Text>
-          <ColorPalette value={paletteValue} onValueChange={this.onPaletteValueChange} colors={mainColors}/>
+          <ColorPalette value={paletteValue} onValueChange={this.onPaletteValueChange} colors={colors}/>
           <Text marginL-20 marginT-16>Custom Colors</Text>
           <ColorPicker
             initialColor={color}
