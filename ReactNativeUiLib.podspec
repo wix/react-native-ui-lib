@@ -8,11 +8,11 @@ Pod::Spec.new do |s|
   s.summary      = "React Native UI Library"
 
   s.authors      = "Wix.com"
-  s.homepage     = "https://github.com/wix/react-native-ui-lib"
+  s.homepage     = package['homepage']
   s.license      = package['license']
   s.platforms    = { :ios => "9.0", :tvos => "9.2" }
 
-  s.module_name  = 'ReactNativeNavigation'
+  s.module_name  = 'ReactNativeUiLib'
 
   s.source       = { :git => "https://github.com/wix/react-native-ui-lib.git", :tag => "#{s.version}" }
   s.source_files  = "lib/ios/**/*.{h,m}"
