@@ -121,31 +121,6 @@ class Dialog extends BaseComponent {
     }
   };
 
-  setDialogSizeAndFlexType(width, height) {
-    this.styles.dialogViewSize = {width, height};
-    this.styles.flexType = height ? {flex: 1} : {flex: 0};
-  }
-
-  createStyles(props) {
-    const {width, height} = props;
-    this.styles = StyleSheet.create({
-      container: {
-        flex: 1,
-      },
-      centerHorizontal: {
-        alignItems: 'center',
-      },
-      centerContent: {
-        justifyContent: 'center',
-      },
-      overflow: {
-        overflow: 'hidden',
-      },
-    });
-
-    this.setDialogSizeAndFlexType(width, height);
-  }
-
   generateStyles() {
     if (this.props.migrate) {
       this.styles = createStyles(this.props);
