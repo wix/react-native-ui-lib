@@ -44,10 +44,4 @@ describe('Carousel presenter', () => {
     expect(uut.isOutOfBounds(481, {migrate: true, children: [{}, {}, {}]}, 120)).toBe(true);
     expect(uut.isOutOfBounds(1875, {migrate: true, children: [{}, {}, {}, {}]}, 375)).toBe(true);
   });
-
-  it('should calcCarouselWidth', () => {
-    expect(uut.calcCarouselWidth({migrate: true, pageWidth: 70, children: [{}, {}, {}]})).toBe(210);
-    expect(uut.calcCarouselWidth({migrate: true, pageWidth: 50, children: [{}, {}, {}]})).toBe(150);
-    expect(uut.calcCarouselWidth({migrate: true, pageWidth: 150, loop: true, children: [{}, {}, {}]})).toBe(750);
-  });
 });

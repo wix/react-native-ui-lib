@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {View, Text, Carousel} from 'react-native-ui-lib'; // eslint-disable-line
+import {Constants, View, Text, Carousel} from 'react-native-ui-lib'; // eslint-disable-line
 
 
 const INITIAL_PAGE = 0;
+const WIDTH = Constants.screenWidth - 120;
 
 class CarouselScreen extends Component {
   state = {
@@ -14,14 +15,31 @@ class CarouselScreen extends Component {
     this.setState({currentPage: index});
   }
 
+  onPagePress = (index) => {
+    this.carousel.goToPage(index, true);
+  }
+
   render() {
     return (
       <View flex>
-        <Carousel migrate loop onChangePage={(index => this.onChangePage(index))} /* initialPage={INITIAL_PAGE} */>
-          <Page bg-cyan50>
+        <Text text30 margin-20>Carousel</Text>
+        <Carousel 
+          migrate 
+          ref={r => this.carousel = r}
+          // loop 
+          onChangePage={(index => this.onChangePage(index))} 
+          pageWidth={WIDTH}
+          // itemSpacings={20}
+          // initialPage={INITIAL_PAGE}
+          containerStyle={{height: 200/* , flex: 1 */}}
+          pageControlPosition={'under'}
+          pageControlProps={{onPagePress: this.onPagePress}}
+          // showCounter
+        >
+          <Page bg-red50>
             <Text margin-15>PAGE 0</Text>
           </Page>
-          <Page bg-red50>
+          <Page bg-yellow20>
             <Text margin-15>PAGE 1</Text>
           </Page>
           <Page bg-purple50>
@@ -30,17 +48,18 @@ class CarouselScreen extends Component {
           <Page bg-green50>
             <Text margin-15>PAGE 3</Text>
           </Page>
-          <Page bg-yellow20>
+          <Page bg-cyan50>
             <Text margin-15>PAGE 4</Text>
           </Page>
           <Page bg-purple20>
             <Text margin-15>PAGE 5</Text>
           </Page>
-          <Page bg-blue70>
+          <Page bg-blue60>
             <Text margin-15>PAGE 6</Text>
           </Page>
         </Carousel>
-        <View center style={{...StyleSheet.absoluteFillObject}} pointerEvents="none">
+        
+        <View margin-20 center /*style={{...StyleSheet.absoluteFillObject}} */ pointerEvents="none">
           <Text text10>{this.state.currentPage}</Text>
         </View>
       </View>
@@ -58,7 +77,9 @@ const Page = ({children, ...others}) => {
 
 const styles = StyleSheet.create({
   page: {
-    flex: 1
+    flex: 1,
+    borderWidth: 1,
+    borderRadius: 4
   }
 });
 

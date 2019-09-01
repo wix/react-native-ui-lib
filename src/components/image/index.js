@@ -44,7 +44,11 @@ class Image extends PureBaseComponent {
      */
     cover: PropTypes.bool,
     /**
-     * the type of overly to place on top of the image
+     * The aspect ratio for the image
+     */
+    aspectRatio: PropTypes.number,
+    /**
+     * The type of overly to place on top of the image
      */
     overlayType: Overlay.propTypes.type
   };
@@ -90,6 +94,7 @@ class Image extends PureBaseComponent {
           {tintColor},
           shouldFlipRTL && styles.rtlFlipped,
           cover && styles.coverImage,
+          aspectRatio && {aspectRatio},
           style
         ]}
         {...others}
