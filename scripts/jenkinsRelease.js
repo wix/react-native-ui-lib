@@ -91,8 +91,6 @@ function tagAndPublish(newVersion) {
   exec.execSync(`npm publish --tag ${VERSION_TAG}`);
   if (isRelease) {
     exec.execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
-  } else {
-    exec.execSync(`git tag ${newVersion}`);
   }
   exec.execSyncSilent(`git push deploy ${newVersion} || true`);
 }
