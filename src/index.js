@@ -29,7 +29,7 @@ module.exports = {
   get PanningProvider() { return require('./components').PanningProvider; },
   get PanGestureView() { return require('./components').PanGestureView; },
   get PanListenerView() { return require('./components').PanListenerView; },
-  get PanResponderView() { return require('./components').PanResponderView; },
+  get PanDismissibleView() { return require('./components').PanDismissibleView; },
   get Picker() { return require('./components').Picker; },
   get ProgressBar() { return require('./components').ProgressBar; },
   get Slider() { return require('./components').Slider; },
