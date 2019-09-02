@@ -165,6 +165,12 @@ export function extractFlexStyle(props) {
   }
 }
 
+export function extractAccessibilityProps(props = this.props) {
+  return _.pickBy(props, (value, key) => {
+    return /.*access.*/.test(key);
+  });
+}
+
 export function extractBorderRadiusValue(props) {
   let borderRadius;
 
