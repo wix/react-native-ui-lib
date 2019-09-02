@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import Color from 'color';
+import tinycolor from 'tinycolor2';
 import {colorsPalette} from './colorsPalette';
 
 class Colors {
@@ -127,6 +128,26 @@ class Colors {
     const adjusted = adjustSaturation(sliced, color);
     return adjusted || sliced;
   });
+
+  isDark(color) {
+    const lum = tinycolor(color).getLuminance();
+    return lum < 0.55;
+  };
+  isValidHex(string) {
+    return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(string);
+  };
+  getHexString(color) {
+    return tinycolor(color).toHexString();
+  };
+  getHSL(color) {
+    return tinycolor(color).toHsl();
+  };
+  isTransparent(color) {
+    return _.toUpper(color) === _.toUpper('transparent');
+  };
+  areEqual(colorA, colorB) {
+    return _.toLower(colorA) === _.toLower(colorB);
+  };
 }
 
 function adjustSaturation(colors, color) {
@@ -170,6 +191,7 @@ function validateHex(value) {
   }
   return value.replace('#', '');
 }
+
 
 const colorObject = new Colors();
 colorObject.loadColors(colorsPalette);

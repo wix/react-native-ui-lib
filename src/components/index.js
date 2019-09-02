@@ -9,9 +9,13 @@ module.exports = {
   get Card() { return require('./card').default; },
   get Carousel() { return require('./carousel/carousel-Deprecated').default; },
   get Checkbox() { return require('./checkbox').default; },
+  get ColorPalette() { return require('./colorPicker/ColorPalette').default; },
+  get ColorPicker() { return require('./colorPicker').default; },
+  get ColorSwatch() { return require('./colorPicker/ColorSwatch').default; },
   get ConnectionStatusBar() { return require('./connectionStatusBar').default; },
   get Dialog() { return require('./dialog').default; },
   get FeatureHighlight() { return require('./featureHighlight').default; },
+  get FloatingButton() { return require('./floatingButton').default; },
   get Hint() { return require('./hint').default; },
   get Image() { return require('./image').default; },
 
@@ -37,6 +41,10 @@ module.exports = {
   get RadioGroup() { return require('./radioButton').RadioGroup; },
 
   get SharedTransition() { return require('./sharedTransition').default; },
+
+  get Slider() { return require('./slider').default; },
+  get GradientSlider() { return require('./slider/GradientSlider').default; },
+  get ColorSliderGroup() { return require('./slider/ColorSliderGroup').default; },
 
   get Switch() { return require('./switch').default; },
   get Text() { return require('./text').default; },
