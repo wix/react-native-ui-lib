@@ -152,7 +152,7 @@ class Dialog extends BaseComponent {
     const bottomInsets = Constants.getSafeAreaInsets().bottom;
 
     return (
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback accessible={false}>
         <SafeAreaView style={{flexGrow: 1}}>
           {this.props.children}
           {useSafeArea && Constants.isIphoneX && bottom && <View style={{marginTop: bottomInsets}}/>}
