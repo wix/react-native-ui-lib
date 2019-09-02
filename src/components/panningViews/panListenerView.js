@@ -149,7 +149,7 @@ class PanListenerView extends PureBaseComponent {
       selectedDirections.y = PanningProvider.Directions.DOWN;
       selectedAmounts.y = y;
     }
-    
+
     return {selectedDirections, selectedAmounts};
   };
 

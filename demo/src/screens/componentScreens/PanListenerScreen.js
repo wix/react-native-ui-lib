@@ -5,7 +5,7 @@ import {View, Text, PanListenerView, PanningProvider} from 'react-native-ui-lib'
 export default class PanListenerScreen extends Component {
   state = {
     locationText: '',
-    endType: ''
+    endType: '',
   };
 
   onDrag = ({directions, deltas}) => {
@@ -41,14 +41,16 @@ export default class PanListenerScreen extends Component {
           centerV
           height={300}
           width="100%"
-        //   directions={[PanningProvider.Directions.UP, PanningProvider.Directions.DOWN]}
+          //   directions={[PanningProvider.Directions.UP, PanningProvider.Directions.DOWN]}
           onDrag={this.onDrag}
           onSwipe={this.onSwipe}
           onPanStart={this.onPanStart}
           onPanRelease={this.onPanRelease}
           onPanTerminated={this.onPanTerminated}
         >
-          <Text text50 margin-40>Drag\swipe here</Text>
+          <Text text50 margin-40>
+            Drag\swipe here
+          </Text>
         </PanListenerView>
         <Text text50 margin-40>
           {locationText}
