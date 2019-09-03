@@ -49,6 +49,13 @@ export default class TouchableOpacity extends PureBaseComponent {
     active: false,
   };
 
+  getAccessibilityInfo() {
+    const {disabled} = this.props;
+    return {
+      accessibilityStates: disabled ? ['disabled'] : undefined
+    }
+  }
+
   onPressIn(...args) {
     this.setState({
       active: true,
@@ -89,6 +96,7 @@ export default class TouchableOpacity extends PureBaseComponent {
 
     return (
       <RNTouchableOpacity
+        {...this.getAccessibilityInfo()}
         {...others}
         onPress={this.onPress}
         onPressIn={this.onPressIn}

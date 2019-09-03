@@ -210,6 +210,12 @@ export default class Button extends PureBaseComponent {
     return iconSource && !label;
   }
 
+  getAccessibilityInfo() {
+    return {
+      accessibilityRole: this.isIconButton ? 'imagebutton' : 'button',
+    }
+  }
+
   getBackgroundColor() {
     const {backgroundColor: themeBackgroundColor} = this.getThemeProps();
     const {disabled, outline, link, backgroundColor: propsBackgroundColor} = this.props;
@@ -472,6 +478,7 @@ export default class Button extends PureBaseComponent {
         onPress={onPress}
         disabled={disabled}
         testID={testID}
+        {...this.getAccessibilityInfo()}
         {...others}
         ref={this.setRef}
       >
