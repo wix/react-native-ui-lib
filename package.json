@@ -4,6 +4,7 @@
   "main": "index.js",
   "typings": "typings/index.d.ts",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
+  "homepage": "https://github.com/wix/react-native-ui-lib",
   "license": "MIT",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -50,7 +51,9 @@
     "react-native-reanimated": "1.1.0",
     "react-native-text-size": "^2.0.4",
     "semver": "^5.5.0",
-    "url-parse": "^1.2.0"
+    "url-parse": "^1.2.0",
+    "react-native-color": "0.0.10",
+    "memoize-one": "^5.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",

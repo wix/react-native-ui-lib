@@ -28,6 +28,9 @@ import TabBarScreen from './TabBarScreen';
 import TourScreen from './TourScreen';
 import FeatureHighlightScreen from './FeatureHighlightScreen';
 import WheelPickerDialogScreen from './WheelPickerDialogScreen';
+import SliderScreen from './SliderScreen';
+import FloatingButtonScreen from './FloatingButtonScreen';
+import ColorPickerScreen from './ColorPickerScreen';
 
 
 Navigation.registerComponent('unicorn.components.ActionSheetScreen', () => ActionSheetScreen);
@@ -59,3 +62,6 @@ Navigation.registerComponent('unicorn.components.TabBarScreen', () => TabBarScre
 Navigation.registerComponent('unicorn.components.TourScreen', () => TourScreen);
 Navigation.registerComponent('unicorn.components.FeatureHighlightScreen', () => FeatureHighlightScreen);
 Navigation.registerComponent('unicorn.components.WheelPickerDialogScreen', () => WheelPickerDialogScreen);
+Navigation.registerComponent('unicorn.components.SliderScreen', () => SliderScreen);
+Navigation.registerComponent('unicorn.components.FloatingButtonScreen', () => FloatingButtonScreen);
+Navigation.registerComponent('unicorn.components.ColorPickerScreen', () => ColorPickerScreen);
