@@ -211,8 +211,10 @@ export default class Button extends PureBaseComponent {
   }
 
   getAccessibilityInfo() {
-    return {
-      accessibilityRole: this.isIconButton ? 'imagebutton' : 'button',
+    if (this.isIconButton) {
+      return {
+        accessibilityRole: 'imagebutton'
+      }
     }
   }
 

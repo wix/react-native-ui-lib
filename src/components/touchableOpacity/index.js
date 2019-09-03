@@ -52,6 +52,7 @@ export default class TouchableOpacity extends PureBaseComponent {
   getAccessibilityInfo() {
     const {disabled} = this.props;
     return {
+      accessibilityRole: 'button',
       accessibilityStates: disabled ? ['disabled'] : undefined
     }
   }
