@@ -43,11 +43,13 @@ export default function baseComponent(usePure) {
 
     getThemeProps = Modifiers.getThemeProps;
 
+    extractAccessibilityProps = Modifiers.extractAccessibilityProps;
+
     extractTypographyValue() {
       return Modifiers.extractTypographyValue(this.props);
     }
 
-    extractColorValue = () => Modifiers.extractColorValue(this.getThemeProps())
+    extractColorValue = () => Modifiers.extractColorValue(this.getThemeProps());
 
     extractAnimationProps() {
       return _.pick(this.props, [

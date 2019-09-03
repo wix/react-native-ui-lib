@@ -4,6 +4,7 @@
   "main": "index.js",
   "typings": "typings/index.d.ts",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
+  "homepage": "https://github.com/wix/react-native-ui-lib",
   "license": "MIT",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -50,18 +51,20 @@
     "react-native-reanimated": "1.1.0",
     "react-native-text-size": "^2.0.4",
     "semver": "^5.5.0",
-    "url-parse": "^1.2.0"
+    "url-parse": "^1.2.0",
+    "react-native-color": "0.0.10",
+    "memoize-one": "^5.0.5"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/runtime": "^7.4.2",
     "@react-native-community/async-storage": "1.2.4",
     "@react-native-community/eslint-config": "0.0.5",
     "@types/prop-types": "^15.5.3",
     "@types/react-native": "^0.55.21",
-    "babel-cli": "^6.23.0",
-    "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.5.0",
-    "babel-preset-es2015": "^6.22.0",
-    "babel-preset-react": "^6.22.0",
+    "babel-preset-react-native": "*",
     "eslint": "^5.16.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-uilib": "file:./eslint-rules",
@@ -98,18 +101,5 @@
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
     }
-  },
-  "babel_IGNORE": {
-    "env": {
-      "test": {
-        "presets": [
-          "react-native"
-        ],
-        "retainLines": true
-      }
-    },
-    "plugins": [
-      "transform-inline-environment-variables"
-    ]
   }
 }

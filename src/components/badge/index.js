@@ -5,8 +5,9 @@ import {StyleSheet, Text, ViewPropTypes} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {PureBaseComponent} from '../../commons';
 import {BorderRadiuses, Colors, ThemeManager, Typography} from '../../style';
-import View from '../view';
 import Image from '../image';
+import TouchableOpacity from '../touchableOpacity';
+import View from '../view';
 
 const LABEL_FORMATTER_VALUES = [1, 2, 3, 4];
 
@@ -192,13 +193,24 @@ export default class Badge extends PureBaseComponent {
 
   render() {
     // TODO: remove testId after deprecation
-    const {borderWidth, backgroundColor, borderColor, containerStyle, icon, testId, testID, ...others} = this.props;
+    const {
+      activeOpacity,
+      borderWidth,
+      backgroundColor,
+      borderColor,
+      containerStyle,
+      icon,
+      onPress,
+      testId,
+      testID,
+      ...others
+    } = this.props;
     const backgroundStyle = backgroundColor && {backgroundColor};
     const sizeStyle = this.getBadgeSizeStyle();
     const borderStyle = borderWidth ? this.getBorderStyling() : undefined;
 
     const animationProps = this.extractAnimationProps();
-    const Container = !_.isEmpty(animationProps) ? AnimatableView : View;
+    const Container = !_.isEmpty(animationProps) ? AnimatableView : onPress ? TouchableOpacity : View;
     if (!_.isEmpty(animationProps)) {
       console.warn(
         'Badge component will soon stop supporting animationProps.' +
@@ -213,6 +225,8 @@ export default class Badge extends PureBaseComponent {
           testID={testID || testId}
           pointerEvents={'none'}
           style={[sizeStyle, this.styles.badge, borderStyle, backgroundStyle]}
+          onPress={onPress}
+          activeOpacity={activeOpacity}
           {...animationProps}
         >
           {icon ? this.renderIcon() : this.renderLabel()}
