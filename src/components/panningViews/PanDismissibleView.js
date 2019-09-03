@@ -67,8 +67,6 @@ class PanDismissibleView extends PureComponent {
     };
     this.shouldDismissAfterReset = false;
     this.ref = React.createRef();
-    
-    console.warn('PanDismissibleView is deprecated and should not be used');
   }
 
   componentDidUpdate(prevProps) {
