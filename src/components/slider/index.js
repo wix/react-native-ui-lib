@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, PanResponder, ViewPropTypes} from 'react-native';
+import {StyleSheet, PanResponder, ViewPropTypes, AccessibilityInfo} from 'react-native';
 import {Constants, Colors, PureBaseComponent, View} from 'react-native-ui-lib';
 
 
@@ -333,6 +333,26 @@ export default class Slider extends PureBaseComponent {
     }
   };
 
+  onAccessibilityAction = event => {
+    const {maximumValue, minimumValue, step} = this.props;
+    const value = this.getValueForX(this._x);
+    let newValue;
+
+    switch (event.nativeEvent.action) {
+      case 'increment':
+        newValue = value !== maximumValue ? value + step : value;
+        break;
+      case 'decrement':
+        newValue = value !== minimumValue ? value - step : value;
+        break;
+    }
+
+    this._x = this.getXForValue(newValue);
+    this.updateValue(this._x);
+    this.updateStyles(this._x); 
+    AccessibilityInfo.announceForAccessibility(`New value ${newValue}`);
+  }
+
   /* Renders */
 
   render() {
@@ -346,7 +366,17 @@ export default class Slider extends PureBaseComponent {
     } = this.getThemeProps();
 
     return (
-      <View style={[this.styles.container, containerStyle]} onLayout={this.onContainerLayout}>
+      <View 
+        style={[this.styles.container, containerStyle]} 
+        onLayout={this.onContainerLayout}
+        accessible
+        accessibilityLabel={'Slider'}
+        {...this.extractAccessibilityProps()}
+        accessibilityRole={'adjustable'}
+        accessibilityStates={disabled && ['disabled']}
+        accessibilityActions={['increment', 'decrement']}
+        onAccessibilityAction={this.onAccessibilityAction}
+      >
         {_.isFunction(renderTrack) ? (
           <View style={[this.styles.track, trackStyle]} onLayout={this.onTrackLayout}>{renderTrack()}</View>
         ) : (
