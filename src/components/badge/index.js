@@ -97,6 +97,17 @@ export default class Badge extends PureBaseComponent {
     }
   }
 
+  getAccessibilityProps() {
+    const {onPress, icon, label} = this.props;
+    
+    return {
+    accessibilityLabel: icon ? 'badge' : `badge ${label}` || 'badge',
+    ...this.extractAccessibilityProps(),
+    accessible: true,
+    accessibilityRole: onPress ? 'button' : icon ? 'image' : 'text',
+    }
+  }
+
   isSmallBadge() {
     const {size} = this.props;
     return size === 'small';
@@ -209,6 +220,7 @@ export default class Badge extends PureBaseComponent {
     const sizeStyle = this.getBadgeSizeStyle();
     const borderStyle = borderWidth ? this.getBorderStyling() : undefined;
 
+
     const animationProps = this.extractAnimationProps();
     const Container = !_.isEmpty(animationProps) ? AnimatableView : onPress ? TouchableOpacity : View;
     if (!_.isEmpty(animationProps)) {
@@ -217,10 +229,9 @@ export default class Badge extends PureBaseComponent {
           'Please wrap your Badge component with your own animation component, such as Animatable.View',
       );
     }
-
     return (
       // The extra View wrapper is to break badge's flex-ness
-      <View style={containerStyle} {...others} backgroundColor={undefined}>
+      <View style={containerStyle} {...others} backgroundColor={undefined} {...this.getAccessibilityProps()} >
         <Container
           testID={testID || testId}
           pointerEvents={'none'}

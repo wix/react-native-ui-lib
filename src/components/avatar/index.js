@@ -311,7 +311,7 @@ export default class Avatar extends PureBaseComponent {
     const fontSize = size * fontSizeToImageSizeRatio;
 
     return (
-      <Container style={[this.getContainerStyle(), containerStyle]} testID={testID} onPress={onPress} accessibilityLabel={accessibilityLabel || 'Avatar'} accessibilityRole={'image'}>
+      <Container style={[this.getContainerStyle(), containerStyle]} testID={testID} onPress={onPress} accessibilityLabel={'Avatar'} {...this.extractAccessibilityProps()}>
         <View
           style={[this.getInitialsContainer(), {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
         >
