@@ -294,6 +294,7 @@ export default class Avatar extends PureBaseComponent {
 
   render() {
     const {
+      accessibilityLabel,
       label,
       labelColor: color,
       imageSource,
@@ -310,7 +311,7 @@ export default class Avatar extends PureBaseComponent {
     const fontSize = size * fontSizeToImageSizeRatio;
 
     return (
-      <Container style={[this.getContainerStyle(), containerStyle]} testID={testID} onPress={onPress}>
+      <Container style={[this.getContainerStyle(), containerStyle]} testID={testID} onPress={onPress} accessibilityLabel={accessibilityLabel || 'Avatar'} accessibilityRole={'image'}>
         <View
           style={[this.getInitialsContainer(), {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
         >
