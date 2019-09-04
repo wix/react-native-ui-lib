@@ -357,6 +357,7 @@ export default class TextField extends BaseInput {
           numberOfLines={1}
           onPress={() => expandable && this.toggleExpandableModal(true)}
           suppressHighlighting
+          accessible={false}
         >
           {placeholder}
         </Animated.Text>
@@ -391,6 +392,7 @@ export default class TextField extends BaseInput {
       return (
         <Text
           style={[{color}, this.styles.bottomLabel, this.styles.label]}
+          accessibilityLabel={`${counter} out of ${maxLength} max characters`}
         >
           {counter} / {maxLength}
         </Text>
@@ -405,7 +407,10 @@ export default class TextField extends BaseInput {
 
     if (visible && enableErrors) {
       return (
-        <Text style={[this.styles.errorMessage, this.styles.label, positionStyle]}>
+        <Text 
+          style={[this.styles.errorMessage, this.styles.label, positionStyle]}
+          accessible={!_.isEmpty(error)}
+        >
           {error}
         </Text>
       );
@@ -469,6 +474,7 @@ export default class TextField extends BaseInput {
     const {value} = this.state; // value set on state for floatingPlaceholder functionality    
     const {
       style,
+      title,
       placeholder,
       placeholderTextColor,
       floatingPlaceholder,
@@ -519,6 +525,9 @@ export default class TextField extends BaseInput {
         ref={(input) => { this.input = input; }}
         editable={isEditable}
         pointerEvents={expandable ? 'none' : undefined}
+        accessibilityLabel={placeholder}
+        {...this.extractAccessibilityProps()}
+        accessibilityStates={this.isDisabled() ? ['disabled'] : undefined}
       />
     );
   }
