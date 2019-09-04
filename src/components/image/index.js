@@ -97,6 +97,8 @@ class Image extends PureBaseComponent {
           aspectRatio && {aspectRatio},
           style
         ]}
+        accessible
+        accessibilityRole={'image'}
         {...others}
         source={source}
       />

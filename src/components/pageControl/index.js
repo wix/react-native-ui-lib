@@ -76,7 +76,11 @@ export default class PageControl extends BaseComponent {
       = this.props;
 
     return (
-      <View style={[styles.container, containerStyle]}>
+      <View 
+        style={[styles.container, containerStyle]} 
+        accessible 
+        accessibilityLabel={`page control page ${this.props.currentPage}`}
+      >
         {
           _.map([...new Array(numOfPages)], (item, index) =>
             <TouchableOpacity

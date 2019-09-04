@@ -8,7 +8,6 @@ import {BaseComponent} from '../../commons';
 import TopBar from './TopBar';
 import View from '../../components/view';
 
-
 /**
  * @description: Component that present content on top of the invoking screen
  * @extends: Modal
@@ -41,9 +40,14 @@ export default class Modal extends BaseComponent {
     const {overlayBackgroundColor, onBackgroundPress} = this.props;
     if (_.isFunction(onBackgroundPress) || !!overlayBackgroundColor) {
       return (
-        <View style={[styles.touchableOverlay, {backgroundColor: overlayBackgroundColor}]}>
+        <View
+          accessible
+          accessibilityLabel="Dismiss"
+          accessibilityRole="button"
+          style={[styles.touchableOverlay, {backgroundColor: overlayBackgroundColor}]}
+        >
           <TouchableWithoutFeedback onPress={onBackgroundPress}>
-            <View flex/>
+            <View flex />
           </TouchableWithoutFeedback>
         </View>
       );
