@@ -525,7 +525,7 @@ export default class TextField extends BaseInput {
         ref={(input) => { this.input = input; }}
         editable={isEditable}
         pointerEvents={expandable ? 'none' : undefined}
-        accessibilityLabel={title || placeholder}
+        accessibilityLabel={placeholder}
         {...this.extractAccessibilityProps()}
         accessibilityStates={this.isDisabled() ? ['disabled'] : undefined}
       />
