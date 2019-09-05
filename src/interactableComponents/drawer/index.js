@@ -277,6 +277,7 @@ class NewDrawer extends PureBaseComponent {
               itemsTextStyle
             ]}
             accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
             accessible={false}
           >
             {item.text}
