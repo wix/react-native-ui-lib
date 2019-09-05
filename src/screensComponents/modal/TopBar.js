@@ -79,7 +79,7 @@ export default class TopBar extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
-  renderTopBarButton({onPress, label, icon, buttonProps}) {
+  renderTopBarButton({onPress, label, icon, accessibilityLabel, buttonProps}) {
     if (onPress && (label || icon)) {
       const {iconStyle, labelStyle, ...otherButtonProps} = buttonProps;
 
@@ -92,6 +92,7 @@ export default class TopBar extends BaseComponent {
           iconSource={icon}
           iconStyle={[this.styles.icon, iconStyle]}
           {...DEFAULT_BUTTON_PROPS}
+          accessibilityLabel={accessibilityLabel}
           {...otherButtonProps}
           hitSlop={{top: 10, bottom: 10, left: 20, right: 20}}
         />
@@ -102,14 +103,14 @@ export default class TopBar extends BaseComponent {
   renderDone() {
     const {doneButtonProps, doneLabel, doneIcon, onDone} = this.props;
     return this.renderTopBarButton({
-      onPress: onDone, label: doneLabel, icon: doneIcon, buttonProps: doneButtonProps,
+      onPress: onDone, label: doneLabel, icon: doneIcon, accessibilityLabel: 'Done', buttonProps: doneButtonProps,
     });
   }
 
   renderCancel() {
     const {cancelButtonProps, cancelLabel, cancelIcon, onCancel} = this.props;
     return this.renderTopBarButton({
-      onPress: onCancel, label: cancelLabel, icon: cancelIcon, buttonProps: cancelButtonProps,
+      onPress: onCancel, label: cancelLabel, icon: cancelIcon, accessibilityLabel: 'Cancel', buttonProps: cancelButtonProps,
     });
   }
 
@@ -124,7 +125,7 @@ export default class TopBar extends BaseComponent {
             {this.renderCancel()}
           </View>
           <View row flex-3 bottom centerH centerV>
-            <Text numberOfLines={1} text70 style={[this.styles.title, titleStyle]}>{title}</Text>
+            <Text accessible={!!title} numberOfLines={1} text70 style={[this.styles.title, titleStyle]}>{title}</Text>
           </View>
           <View row flex bottom right paddingR-15 centerV>
             {this.renderDone()}
