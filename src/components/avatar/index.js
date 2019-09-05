@@ -61,7 +61,7 @@ export default class Avatar extends PureBaseComponent {
     animate: PropTypes.bool,
     /**
      * Background color for Avatar
-     */ 
+     */
     backgroundColor: PropTypes.string,
     /**
      * Badge location on Avatar
@@ -222,8 +222,8 @@ export default class Avatar extends PureBaseComponent {
     const x = Math.sqrt(radius ** 2 * 2);
     const y = x - radius;
     const shift = Math.sqrt(y ** 2 / 2) - (BADGE_SIZES[this.getBadgeSize()] + this.getBadgeBorderWidth() * 2) / 2;
-    const badgeLocation = _.split(_.toLower(badgePosition), '_', 2)
-    const badgeAlignment = {position: 'absolute', [badgeLocation[0]]: shift, [badgeLocation[1]]: shift}
+    const badgeLocation = _.split(_.toLower(badgePosition), '_', 2);
+    const badgeAlignment = {position: 'absolute', [badgeLocation[0]]: shift, [badgeLocation[1]]: shift};
 
     return badgeAlignment;
   }
@@ -310,7 +310,13 @@ export default class Avatar extends PureBaseComponent {
     const fontSize = size * fontSizeToImageSizeRatio;
 
     return (
-      <Container style={[this.getContainerStyle(), containerStyle]} testID={testID} onPress={onPress}>
+      <Container
+        style={[this.getContainerStyle(), containerStyle]}
+        testID={testID}
+        onPress={onPress}
+        accessibilityLabel={'Avatar'}
+        {...this.extractAccessibilityProps()}
+      >
         <View
           style={[this.getInitialsContainer(), {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
         >
