@@ -79,7 +79,7 @@ export default class PageControl extends BaseComponent {
       <View 
         style={[styles.container, containerStyle]} 
         accessible 
-        accessibilityLabel={`page control page ${this.props.currentPage}`}
+        accessibilityLabel={`page control page ${this.props.currentPage + 1}`}
       >
         {
           _.map([...new Array(numOfPages)], (item, index) =>
