@@ -509,7 +509,9 @@ export default class TextField extends BaseInput {
 
     return (
       <RNTextInput
+        accessibilityLabel={floatingPlaceholder ? placeholder : undefined}
         {...others}
+        accessibilityStates={this.isDisabled() ? ['disabled'] : undefined}
         value={value}
         placeholder={placeholderText}
         placeholderTextColor={placeholderColor}
@@ -525,9 +527,6 @@ export default class TextField extends BaseInput {
         ref={(input) => { this.input = input; }}
         editable={isEditable}
         pointerEvents={expandable ? 'none' : undefined}
-        accessibilityLabel={placeholder}
-        {...this.extractAccessibilityProps()}
-        accessibilityStates={this.isDisabled() ? ['disabled'] : undefined}
       />
     );
   }

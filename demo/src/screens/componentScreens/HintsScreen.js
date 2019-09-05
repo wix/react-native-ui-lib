@@ -39,7 +39,7 @@ export default class HintsScreen extends Component {
       : 'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
 
     return (
-      <View>
+      <View flex>
         <View
           flex
           padding-20

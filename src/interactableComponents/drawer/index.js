@@ -110,6 +110,8 @@ class NewDrawer extends PureBaseComponent {
     // this.checkDeprecations(props);
   }
 
+  /** Actions */
+
   checkDeprecations(props) {
     if (props.onPress !== undefined) {
       console.warn("Drawer's 'onPress' prop is deprecated. " +
@@ -145,6 +147,8 @@ class NewDrawer extends PureBaseComponent {
     }
   };
 
+  /** Events */
+
   onActionPress(item) {
     if (!item.keepOpen) {
       this.closeDrawer();
@@ -159,6 +163,32 @@ class NewDrawer extends PureBaseComponent {
   onSwipeableWillClose = () => {
     _.invoke(this.props, 'onSwipeableWillClose', this.props);
   };
+
+  /** Accessability */
+
+  getAccessibilityActions() {
+    const {rightItems, leftItem} = this.props;
+    let actions = {};
+    if (leftItem && leftItem.onPress && leftItem.text) {
+      actions[leftItem.text] = leftItem;
+    }
+    if (rightItems) {
+      rightItems.forEach(item => {
+        if (item.onPress && item.text) {
+          actions[item.text] = item;
+        }
+      });
+    }
+    return actions;
+  }
+
+  onAccessibilityAction = event => {
+    const actions = this.getAccessibilityActions();
+    const action = _.find(actions, function(o) { return o.text === event.nativeEvent.action; });
+    _.invoke(action, 'onPress');
+  }
+
+  /** Renders */
 
   // TODO: enable support for rendering more than one left item
   renderLeftActions = (progress, dragX) => {
@@ -246,6 +276,8 @@ class NewDrawer extends PureBaseComponent {
               },
               itemsTextStyle
             ]}
+            accessibilityElementsHidden
+            accessible={false}
           >
             {item.text}
           </Animated.Text>
@@ -275,7 +307,14 @@ class NewDrawer extends PureBaseComponent {
         onSwipeableWillOpen={this.onSwipeableWillOpen}
         onSwipeableWillClose={this.onSwipeableWillClose}
       >
-        {children}
+        <View 
+          flex
+          accessible
+          accessibilityActions={Object.keys(this.getAccessibilityActions())}
+          onAccessibilityAction={this.onAccessibilityAction}
+        >
+          {children}
+        </View>
       </Swipeable>
     );
   }
