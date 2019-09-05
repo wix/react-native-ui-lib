@@ -101,7 +101,7 @@ export default class Badge extends PureBaseComponent {
     const {onPress, icon, label} = this.props;
     
     return {
-    accessibilityLabel: icon ? 'badge' : `badge ${label}` || 'badge',
+    accessibilityLabel: icon ? 'badge' : label ? `${label} new items` : undefined,
     ...this.extractAccessibilityProps(),
     accessible: true,
     accessibilityRole: onPress ? 'button' : icon ? 'image' : 'text',
