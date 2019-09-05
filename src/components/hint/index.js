@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet/* , TouchableWithoutFeedback */} from 'react-native';
+import {StyleSheet, AccessibilityInfo, findNodeHandle/* , TouchableWithoutFeedback */} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {Typography, Spacings, Colors, BorderRadiuses, AnimatableManager} from '../../style';
 import {Constants} from '../../helpers';
@@ -126,9 +126,26 @@ class Hint extends BaseComponent {
     targetLayout: this.props.targetFrame
   };
 
+  focusAccessibilityOnHint = () => {
+    const {message} = this.props;
+    const targetRefTag = findNodeHandle(this.targetRef);
+    const hintRefTag = findNodeHandle(this.hintRef);
+    if (targetRefTag && _.isString(message)) {
+      AccessibilityInfo.setAccessibilityFocus(targetRefTag);
+    } else if (hintRefTag) {
+      AccessibilityInfo.setAccessibilityFocus(hintRefTag);
+    }
+  }
+
   setTargetRef = ref => {
     this.targetRef = ref;
+    this.focusAccessibilityOnHint();
   };
+
+  setHintRef = (ref) => {
+    this.hintRef = ref;
+    this.focusAccessibilityOnHint();
+  }
 
   onTargetLayout = ({nativeEvent: {layout}}) => {
     if (!_.isEqual(this.state.targetLayout, layout)) {
@@ -144,6 +161,17 @@ class Hint extends BaseComponent {
       });
     }
   };
+
+  getAccessibilityInfo() {
+    const {visible, message} = this.props;
+
+    if (visible && _.isString(message)) {
+      return {
+        accessible : true,
+        accessibilityLabel : message,
+      }
+    }
+  }
 
   get containerWidth() {
     const {containerWidth} = this.getThemeProps();
@@ -180,7 +208,7 @@ class Hint extends BaseComponent {
 
   get useSideTip() {
     const {useSideTip} = this.props;
-    
+
     if (!_.isUndefined(useSideTip)) {
       return useSideTip;
     }
@@ -189,11 +217,11 @@ class Hint extends BaseComponent {
 
   getTargetPositionOnScreen() {
     const targetMidPosition = this.targetLayout.x + this.targetLayout.width / 2;
-    
+
     if (targetMidPosition > this.containerWidth * (2 / 3)) {
-      return TARGET_POSITIONS.RIGHT; 
+      return TARGET_POSITIONS.RIGHT;
     } else if (targetMidPosition < this.containerWidth * (1 / 3)) {
-      return TARGET_POSITIONS.LEFT; 
+      return TARGET_POSITIONS.LEFT;
     }
     return TARGET_POSITIONS.CENTER;
   }
@@ -333,6 +361,7 @@ class Hint extends BaseComponent {
             row
             centerV
             style={[styles.hint, color && {backgroundColor: color}, !_.isUndefined(borderRadius) && {borderRadius}]}
+            ref={this.setHintRef}
           >
             {icon && <Image source={icon} style={[styles.icon, iconStyle]} />}
             <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>
@@ -353,12 +382,13 @@ class Hint extends BaseComponent {
 
   renderChildren() {
     const {targetFrame} = this.props;
-    
+
     if (!targetFrame) {
       return React.cloneElement(this.props.children, {
         collapsable: false,
         onLayout: this.onTargetLayout,
-        ref: this.setTargetRef
+        ref: this.setTargetRef,
+        ...this.getAccessibilityInfo()
       });
     }
   }

@@ -52,15 +52,15 @@ export default class HintsScreen extends Component {
           <Hint
             visible={showHint}
             // color={Colors.orange30}
-            // message={message}
-            message={
-              <Text>
-                {message}{' '}
-                <Text style={{textDecorationLine: 'underline'}} onPress={() => {}}>
-                  click here
-                </Text>
-              </Text>
-            }
+            message={message}
+            // message={
+            //   <Text>
+            //     {message}{' '}
+            //     <Text style={{textDecorationLine: 'underline'}} onPress={() => {}}>
+            //       click here
+            //     </Text>
+            //   </Text>
+            // }
             // messageStyle={{color: 'red'}}
             icon={showIcon ? Assets.icons.settings : undefined}
             // iconStyle={{tintColor: 'red'}}
