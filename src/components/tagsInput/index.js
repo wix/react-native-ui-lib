@@ -237,13 +237,14 @@ export default class TagsInput extends BaseComponent {
 
   renderLabel(tag, shouldMarkTag) {
     const typography = this.extractTypographyValue();
+    const label = this.getLabel(tag);
     
     return (
       <View row centerV>
         {shouldMarkTag &&
           <Image style={styles.removeIcon} source={Assets.icons.x}/>}
-        <Text style={[styles.tagLabel, typography]}>
-          {shouldMarkTag ? 'Remove' : this.getLabel(tag)}
+        <Text style={[styles.tagLabel, typography]} accessibilityLabel={`${label} tag`}>
+          {shouldMarkTag ? 'Remove' : label}
         </Text>
       </View>
     );
@@ -274,6 +275,7 @@ export default class TagsInput extends BaseComponent {
         key={index}
         activeOpacity={1}
         onPress={() => this.onTagPress(index)}
+        accessibilityHint={!this.props.disableTagRemoval ? 'tap twice for remove tag mode' : undefined}
       >
         {this.renderTag(tag, index)}
       </TouchableOpacity>
@@ -302,6 +304,7 @@ export default class TagsInput extends BaseComponent {
           style={inputStyle}
           containerStyle={{flexGrow: 0}}
           collapsable={false}
+          accessibilityHint={!this.props.disableTagRemoval ? 'press keyboard delete button to remove last tag' : undefined}
         />
       </View>
     );
