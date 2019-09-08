@@ -12,14 +12,14 @@ import AnimatedImage from '../animatedImage';
 
 const deprecatedProps = [
   {old: 'isOnline', new: 'badgeProps.backgroundColor'},
-  {old: 'status', new: 'badgeProps.backgroundColor'},
+  {old: 'status', new: 'badgeProps.backgroundColor'}
 ];
 
 export const STATUS_MODES = {
   ONLINE: 'ONLINE',
   OFFLINE: 'OFFLINE',
   AWAY: 'AWAY',
-  NONE: 'NONE',
+  NONE: 'NONE'
 };
 
 export const BADGE_POSITIONS = {
@@ -142,7 +142,7 @@ export default class Avatar extends PureBaseComponent {
     /**
      * Press handler
      */
-    onPress: PropTypes.func,
+    onPress: PropTypes.func
   };
 
   static defaultProps = {
@@ -150,7 +150,7 @@ export default class Avatar extends PureBaseComponent {
     backgroundColor: Colors.dark80,
     size: 50,
     labelColor: Colors.dark10,
-    badgePosition: DEFAULT_BADGE_POSITION,
+    badgePosition: DEFAULT_BADGE_POSITION
   };
 
   generateStyles() {
@@ -165,7 +165,7 @@ export default class Avatar extends PureBaseComponent {
       height: size,
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius: size / 2,
+      borderRadius: size / 2
     };
   }
 
@@ -175,7 +175,7 @@ export default class Avatar extends PureBaseComponent {
       ...StyleSheet.absoluteFillObject,
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius: size / 2,
+      borderRadius: size / 2
     };
   }
 
@@ -186,7 +186,7 @@ export default class Avatar extends PureBaseComponent {
       position: 'absolute',
       top: '10%',
       left: size / 1.7,
-      borderRadius: size / 2,
+      borderRadius: size / 2
     };
   }
 
@@ -269,7 +269,7 @@ export default class Avatar extends PureBaseComponent {
       onImageLoadError,
       testID,
       imageProps,
-      imageStyle,
+      imageStyle
     } = this.props;
     const hasImage = !_.isUndefined(imageSource);
     const ImageContainer = animate ? AnimatedImage : Image;
@@ -277,6 +277,8 @@ export default class Avatar extends PureBaseComponent {
     if (hasImage) {
       return (
         <ImageContainer
+          accessible
+          accessibilityLabel={'Avatar'}
           animate={animate}
           style={[this.getContainerStyle(), StyleSheet.absoluteFillObject, imageStyle]}
           source={imageSource}
@@ -302,7 +304,7 @@ export default class Avatar extends PureBaseComponent {
       containerStyle,
       children,
       size,
-      testID,
+      testID
     } = this.props;
     const Container = onPress ? TouchableOpacity : View;
     const hasImage = !_.isUndefined(imageSource);
@@ -314,8 +316,6 @@ export default class Avatar extends PureBaseComponent {
         style={[this.getContainerStyle(), containerStyle]}
         testID={testID}
         onPress={onPress}
-        accessibilityLabel={'Avatar'}
-        {...this.extractAccessibilityProps()}
       >
         <View
           style={[this.getInitialsContainer(), {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
@@ -339,17 +339,17 @@ function createStyles({labelColor}) {
       top: 1,
       right: 1,
       bottom: 1,
-      left: 1,
+      left: 1
     },
     initials: {
       color: labelColor,
-      backgroundColor: 'transparent',
+      backgroundColor: 'transparent'
     },
     ribbon: {
       backgroundColor: Colors.blue30,
       paddingHorizontal: 6,
-      paddingVertical: 3,
-    },
+      paddingVertical: 3
+    }
   });
 
   return styles;
