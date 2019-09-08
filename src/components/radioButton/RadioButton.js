@@ -136,6 +136,19 @@ class RadioButton extends BaseComponent {
     }
   };
 
+  getAccessibilityProps = () => {
+    const {label, selected, disabled} = this.getThemeProps();
+    const selectedAccessibilityText = selected ? 'selected. ' : 'unselected. ';
+    const accessibilityLabel = selectedAccessibilityText + (label ? label : '');
+
+    return {
+      accessible: true,
+      accessibilityStates: disabled ? ['disabled'] : undefined,
+      // accessibilityRole: 'radio', TODO: uncomment when switching to RN60
+      accessibilityLabel
+    };
+  };
+
   getRadioButtonOutlineStyle() {
     const {color, size, borderRadius, style: propsStyle, disabled} = this.getThemeProps();
     const style = [this.styles.radioButtonOutline];
@@ -187,16 +200,14 @@ class RadioButton extends BaseComponent {
   }
 
   render() {
-    const {onPress, onValueChange, selected, ...others} = this.getThemeProps();
+    const {style, onPress, onValueChange, ...others} = this.getThemeProps();
     const {opacityAnimationValue, scaleAnimationValue} = this.state;
     const Container = onPress || onValueChange ? TouchableOpacity : View;
-    const accessibilityLabel = selected ? 'selected' : 'unselected';
 
     return (
-      <Container row centerV activeOpacity={1} {...others} onPress={this.onPress}>
+      <Container row centerV activeOpacity={1} {...others} onPress={this.onPress} {...this.getAccessibilityProps()}>
         <View style={this.getRadioButtonOutlineStyle()}>
           <Animated.View
-            accessibilityLabel={accessibilityLabel}
             style={[
               this.getRadioButtonInnerStyle(),
               {opacity: opacityAnimationValue},
