@@ -41,7 +41,9 @@ class View extends PureComponent {
   }
 
   render() {
-    const {modifiers, style, forwardedRef, ...others} = this.props;
+    // (!) extract left, top, bottom... props to avoid passing them on Android
+    // eslint-disable-next-line
+    const {modifiers, style, left, top, right, bottom, flex: propsFlex, forwardedRef, ...others} = this.props;
     const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
     const Element = this.Container;
 
