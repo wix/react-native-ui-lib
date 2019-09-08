@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Animated, Easing, ActivityIndicator} from 'react-native';
+import {AccessibilityInfo, findNodeHandle, StyleSheet, Animated, Easing, ActivityIndicator} from 'react-native';
 import {
   ThemeManager,
   Spacings,
@@ -123,6 +123,19 @@ export default class Toast extends PureBaseComponent {
     }
   }
 
+  playAccessibilityFeatures() {
+    const {visible, message, action, showDismiss} = this.props;
+
+    if (visible) {
+      if (this.viewRef && action || showDismiss) {
+        const reactTag = findNodeHandle(this.viewRef);
+        AccessibilityInfo.setAccessibilityFocus(reactTag);
+      } else {
+        AccessibilityInfo.announceForAccessibility(`notification ${message}`);
+      }
+    }
+  }
+
   setAnimationStatus = (inAnimation) => this.setState({inAnimation});
       
   toggleToast(show, {delay} = {}) {
@@ -147,6 +160,8 @@ export default class Toast extends PureBaseComponent {
     } else {
       this.setAnimationStatus(false);
     }
+
+    this.playAccessibilityFeatures();
     _.invoke(this.props, 'onAnimationEnd', visible);
   };
 
@@ -192,7 +207,15 @@ export default class Toast extends PureBaseComponent {
     const textColor = color || COLOR;
     const textAlign = centerMessage ? 'center' : 'left';
 
-    return <Text style={[this.styles.message, {color: textColor, textAlign}]}>{message}</Text>;
+    return (
+      <Text 
+        ref={r => this.viewRef = r} 
+        style={[this.styles.message, {color: textColor, textAlign}]}
+        accessibilityLabel={`notification ${message}`}
+      >
+        {message}
+      </Text>
+    );
   }
 
   renderAction() {
@@ -218,6 +241,8 @@ export default class Toast extends PureBaseComponent {
           iconSource={Assets.icons.x}
           onPress={this.onDismiss}
           paddingR-20
+          accessibilityLabel={'dismiss'}
+          accessibilityRole={'button'}
         />
       );
     }
@@ -230,6 +255,7 @@ export default class Toast extends PureBaseComponent {
           color={textColor}
           {...action}
           labelStyle={Typography.text70BO}
+          accessibilityRole={'button'}
         />
       );
     }

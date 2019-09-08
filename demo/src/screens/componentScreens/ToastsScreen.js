@@ -108,7 +108,7 @@ export default class ToastsScreen extends Component {
           onDismiss={this.dismissTopToast}
           // autoDismiss={3000}
           showDismiss={showDismiss}
-          action={{iconSource: Assets.icons.x, onPress: () => console.log('dismiss')}}
+          // action={{iconSource: Assets.icons.x, onPress: () => console.log('dismiss')}}
           showLoader={showLoader}
         />
         <Toast
