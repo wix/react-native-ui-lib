@@ -1,25 +1,24 @@
 import _ from 'lodash';
 import * as Animatable from 'react-native-animatable';
 
-
 /** Animations Definitions */
 const definitions = {
   itemEntrance: {
     from: {opacity: 0, translateY: 40},
-    to: {opacity: 1, translateY: 0},
+    to: {opacity: 1, translateY: 0}
   },
   itemAddition: {
     from: {opacity: 0, scale: 0.6, translateY: -60},
-    to: {opacity: 1, scale: 1, translateY: 0},
+    to: {opacity: 1, scale: 1, translateY: 0}
   },
   itemRemoval: {
     from: {opacity: 1, scale: 1, translateY: 0},
-    to: {opacity: 0, scale: 0.6, translateY: -60},
+    to: {opacity: 0, scale: 0.6, translateY: -60}
   },
   listItemAddition: {
     from: {scaleY: 0.8, translateY: -40},
-    to: {scaleY: 1, translateY: 0},
-  },
+    to: {scaleY: 1, translateY: 0}
+  }
 };
 
 const presets = {
@@ -27,36 +26,36 @@ const presets = {
     animation: 'slideInUp',
     easing: 'ease-out-quint',
     duration: 500,
-    useNativeDriver: true,
+    useNativeDriver: true
   },
   slideInDown: {
     animation: 'slideInDown',
     easing: 'ease-out-quint',
     duration: 500,
-    useNativeDriver: true,
+    useNativeDriver: true
   },
   fadeIn: {
     animation: 'fadeIn',
     duration: 300,
-    useNativeDriver: true,
+    useNativeDriver: true
   },
   fadeOut: {
     animation: 'fadeOut',
     duration: 300,
-    useNativeDriver: true,
+    useNativeDriver: true
   },
   fadeInRight: {
     animation: 'fadeInRight',
     easing: 'ease-out-expo',
     duration: 500,
-    useNativeDriver: true,
-  },
+    useNativeDriver: true
+  }
 };
 
 /**
  * @description: Animatable animations and presets
  * @extendsnotes: To have access to uilib's animations, and load your custom animations (optional), call:
- * 'Animatable.initializeRegistryWithDefinitions(AnimatableManager.loadAnimationDefinitions(<OPTIONAL_CUSTOM_ANIMATION>));' 
+ * 'Animatable.initializeRegistryWithDefinitions(AnimatableManager.loadAnimationDefinitions(<OPTIONAL_CUSTOM_ANIMATION>));'
  * in your app entry point
  */
 class AnimatableManager {
@@ -87,29 +86,29 @@ class AnimatableManager {
     // bottom
     definition[`slideInUp_${suffix}`] = {
       from: {translateY: height},
-      to: {translateY: 0},
+      to: {translateY: 0}
     };
     definition[`slideOutDown_${suffix}`] = {
       from: {translateY: 0},
-      to: {translateY: height},
+      to: {translateY: height}
     };
     // top
     definition[`slideInDown_${suffix}`] = {
       from: {translateY: -height},
-      to: {translateY: 0},
+      to: {translateY: 0}
     };
     definition[`slideOutUp_${suffix}`] = {
       from: {translateY: 0},
-      to: {translateY: -height},
+      to: {translateY: -height}
     };
     // relative
     definition[`slideIn_${suffix}`] = {
       from: {height: 0},
-      to: {height},
+      to: {height}
     };
     definition[`slideOut_${suffix}`] = {
       from: {height},
-      to: {height: 0},
+      to: {height: 0}
     };
 
     return this.loadAnimationDefinitions(definition);
@@ -123,7 +122,7 @@ class AnimatableManager {
       duration: 600,
       delay: _.sample(delays),
       useNativeDriver: true,
-      ...options,
+      ...options
     };
   }
 
@@ -132,11 +131,11 @@ class AnimatableManager {
       animation: 'itemEntrance',
       easing: 'ease-out-quint',
       duration: 600,
-      delay: 10 + ((Number(index) % 12) * 100),
+      delay: 10 + (Number(index) % 12) * 100,
       useNativeDriver: true,
-      ...options,
+      ...options
     };
-  }
+  };
 
   getZoomInSlideDown(index = 0, options, zoomIndex = 0) {
     const {onAnimationEnd, ...others} = options;
@@ -146,7 +145,7 @@ class AnimatableManager {
         easing: 'ease-out-quart',
         duration: 600,
         useNativeDriver: true,
-        onAnimationEnd,
+        onAnimationEnd
       };
     }
     if (index > zoomIndex) {
@@ -155,7 +154,7 @@ class AnimatableManager {
         easing: 'ease-out-quart',
         duration: 600,
         useNativeDriver: true,
-        ...others,
+        ...others
       };
     }
   }
@@ -169,7 +168,7 @@ class AnimatableManager {
         duration: 600,
         delay: 150,
         useNativeDriver: true,
-        onAnimationEnd,
+        onAnimationEnd
       };
     }
     if (index > zoomIndex) {
@@ -178,7 +177,7 @@ class AnimatableManager {
         easing: 'ease-out-quart',
         duration: 600,
         useNativeDriver: true,
-        ...others,
+        ...others
       };
     }
   }
@@ -186,7 +185,7 @@ class AnimatableManager {
 
 function getObjectMap(object) {
   const map = {};
-  _.forEach(Object.keys(object), (key) => {
+  _.forEach(Object.keys(object), key => {
     map[key] = `${key}`;
   });
   return map;

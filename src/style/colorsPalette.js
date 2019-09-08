@@ -82,7 +82,7 @@ const colorsPalette = {
   violet80: '#F1EBF6',
   // WHITE,
   white: '#ffffff',
-  black: '#000000',
+  black: '#000000'
 };
 
 // For Eslint --fix
@@ -90,10 +90,7 @@ const extraFixColorsMap = {
   black: 'black',
   white: 'white',
   '#000': 'black',
-  '#fff': 'white',
+  '#fff': 'white'
 };
 
-export {
-  colorsPalette,
-  extraFixColorsMap,
-};
+export {colorsPalette, extraFixColorsMap};

@@ -25,7 +25,7 @@ export default class Text extends PureBaseComponent {
     /**
      * whether to change the text to uppercase
      */
-    uppercase: PropTypes.bool,
+    uppercase: PropTypes.bool
   };
 
   // static defaultProps = {
@@ -51,7 +51,7 @@ export default class Text extends PureBaseComponent {
       color && {color},
       margins,
       center && {textAlign: 'center'},
-      style,
+      style
     ];
     const children = uppercase ? this.transformToUppercase(this.props.children) : this.props.children;
 
@@ -75,6 +75,6 @@ function createStyles() {
     container: {
       backgroundColor: 'transparent',
       textAlign: 'left'
-    },
+    }
   });
 }

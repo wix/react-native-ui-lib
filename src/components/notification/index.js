@@ -12,6 +12,6 @@ export default class Notification extends BaseComponent {
   }
 
   render() {
-    return <Toast {...this.props} />;
+    return <Toast {...this.props}/>;
   }
 }

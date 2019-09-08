@@ -1,15 +1,13 @@
-import _ from 'lodash';
 import {Platform, Dimensions, NativeModules, I18nManager} from 'react-native';
-
 
 const dimensionsScope = {
   WINDOW: 'window',
   SCREEN: 'screen'
-}
+};
 export const orientations = {
   PORTRAIT: 'portrait',
   LANDSCAPE: 'landscape'
-}
+};
 
 /* Platform */
 export const isAndroid = Platform.OS === 'android';
@@ -45,9 +43,9 @@ export const screenAspectRatio = screenWidth < screenHeight ? screenHeight / scr
 export const isTablet = Platform.isPad || (screenAspectRatio < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
 
 export function getSafeAreaInsets() {
-  return (orientation === orientations.LANDSCAPE) ? 
-    {left: 44, right: 44, bottom: 24, top: 0} : 
-    {left: 0, right: 0, bottom: 34, top: 44};
+  return orientation === orientations.LANDSCAPE
+    ? {left: 44, right: 44, bottom: 24, top: 0}
+    : {left: 0, right: 0, bottom: 34, top: 44};
 }
 
 /* Devices */

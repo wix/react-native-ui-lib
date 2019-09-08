@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  Text,
-  View,
-} from 'react-native';
+import {Text, View} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import createStyles from './style';
@@ -40,14 +37,14 @@ export default class Stepper extends BaseComponent {
     /**
      * the initial value
      */
-    initialValue: PropTypes.number.isRequired,
+    initialValue: PropTypes.number.isRequired
   };
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
-      value: props.initialValue,
+      value: props.initialValue
     };
   }
 
@@ -70,12 +67,13 @@ export default class Stepper extends BaseComponent {
     newValue = _.min([newValue, this.props.max]);
     if (this.state.value !== newValue) {
       this.setState({
-        value: newValue,
-      }, () => {
+        value: newValue
+      },
+      () => {
         if (this.props.onValueChange) {
           this.props.onValueChange(newValue);
         }
-      });
+      },);
     }
   }
 
@@ -84,7 +82,9 @@ export default class Stepper extends BaseComponent {
     return (
       <View style={[this.styles.container, this.props.containerStyle]}>
         <View style={this.styles.title}>
-          <Text testID={`${testID}.label`} style={this.styles.titleText}>{this.getLabel()}</Text>
+          <Text testID={`${testID}.label`} style={this.styles.titleText}>
+            {this.getLabel()}
+          </Text>
         </View>
         <View style={this.styles.buttons}>
           <StepperButton

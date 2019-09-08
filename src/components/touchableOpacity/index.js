@@ -31,7 +31,7 @@ export default class TouchableOpacity extends PureBaseComponent {
     /**
      * Apply background color on TouchableOpacity when active (press is on)
      */
-    activeBackgroundColor: PropTypes.string,
+    activeBackgroundColor: PropTypes.string
   };
 
   constructor(props) {
@@ -46,7 +46,7 @@ export default class TouchableOpacity extends PureBaseComponent {
 
   state = {
     ...this.state,
-    active: false,
+    active: false
   };
 
   getAccessibilityInfo() {
@@ -54,19 +54,19 @@ export default class TouchableOpacity extends PureBaseComponent {
     return {
       accessibilityRole: 'button',
       accessibilityStates: disabled ? ['disabled'] : undefined
-    }
+    };
   }
 
   onPressIn(...args) {
     this.setState({
-      active: true,
+      active: true
     });
     _.invoke(this.props, 'onPressIn', ...args);
   }
 
   onPressOut(...args) {
     this.setState({
-      active: false,
+      active: false
     });
     _.invoke(this.props, 'onPressOut', ...args);
   }
@@ -93,7 +93,7 @@ export default class TouchableOpacity extends PureBaseComponent {
 
   render() {
     const {borderRadius, paddings, margins, alignments, flexStyle} = this.state;
-    const {throttle, style, ...others} = this.getThemeProps();
+    const {style, ...others} = this.getThemeProps();
 
     return (
       <RNTouchableOpacity
@@ -110,7 +110,7 @@ export default class TouchableOpacity extends PureBaseComponent {
           margins,
           alignments,
           style,
-          this.activeBackgroundStyle,
+          this.activeBackgroundStyle
         ]}
         ref={this.setRef}
       />

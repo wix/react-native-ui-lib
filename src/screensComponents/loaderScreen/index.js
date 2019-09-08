@@ -9,7 +9,6 @@ import {BaseComponent} from '../../commons';
 import Text from '../../components/text';
 import View from '../../components/view';
 
-
 /**
  * @description: Component that shows a full screen with an activity indicator
  * @extends: Animatable.View
@@ -37,24 +36,24 @@ export default class LoaderScreen extends BaseComponent {
      */
     messageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
-    * Show the screen as an absolute overlay
-    */
-    overlay: PropTypes.bool,
+     * Show the screen as an absolute overlay
+     */
+    overlay: PropTypes.bool
     /**
-     * Custom container style 
+     * Custom container style
      */
   };
 
   render() {
     const {message, messageStyle, loaderColor, overlay, backgroundColor, containerStyle, ...others} = this.props;
-    
+
     const animationProps = this.extractAnimationProps();
     const Container = !_.isEmpty(animationProps) ? AnimatableView : View;
     if (!_.isEmpty(animationProps)) {
       console.warn('LoaderScreen component will soon stop supporting animationProps.' +
-        'Please wrap your LoaderScreen component with your own animation component, such as Animatable.View');
+          'Please wrap your LoaderScreen component with your own animation component, such as Animatable.View',);
     }
-    
+
     return (
       <Container
         style={[overlay ? [styles.overlayContainer, {backgroundColor}] : styles.container, containerStyle]}
@@ -76,16 +75,16 @@ export default class LoaderScreen extends BaseComponent {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   overlayContainer: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: Colors.rgba(Colors.white, 0.85),
-    zIndex: 100,
+    zIndex: 100
   },
   message: {
     ...Typography.text70,
     marginTop: 18,
     color: Colors.dark10
-  },
+  }
 });

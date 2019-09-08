@@ -9,7 +9,7 @@ class SourceElement extends Component {
     /**
      * Data to share between shared element and placeholder
      */
-    data: PropTypes.object,
+    data: PropTypes.object
   };
 
   state = {};

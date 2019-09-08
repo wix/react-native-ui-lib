@@ -27,12 +27,10 @@ class Spacings {
   }
 
   generateKeysPattern() {
-    return new RegExp(
-      _.chain(this)
-        .keys()
-        .join('|')
-        .value(),
-    );
+    return new RegExp(_.chain(this)
+      .keys()
+      .join('|')
+      .value(),);
   }
 }
 

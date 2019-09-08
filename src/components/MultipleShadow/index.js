@@ -10,7 +10,7 @@ import {Shadows} from '../../style';
  */
 export default class MultipleShadow extends BaseComponent {
   static displayName = 'IGNORE';
-  
+
   static propTypes = {
     /**
      * top shadow style to use
@@ -31,11 +31,11 @@ export default class MultipleShadow extends BaseComponent {
     /**
      * card border radius (will be passed to inner Card.Image component)
      */
-    borderRadius: PropTypes.number,
+    borderRadius: PropTypes.number
   };
 
   static defaultProps = {
-    shadowType: 'white40',
+    shadowType: 'white40'
   };
 
   generateStyles() {
@@ -60,10 +60,13 @@ export default class MultipleShadow extends BaseComponent {
   render() {
     const {shadowColor, borderRadius, ...others} = this.props;
     const {topShadow, bottomShadow} = this.getShadowStyles();
-    
+
     return (
       <View {...others} style={[this.styles.wrapper, {...topShadow}, shadowColor && {shadowColor}, {borderRadius}]}>
-        <View {...others} style={[this.styles.wrapper, {...bottomShadow}, shadowColor && {shadowColor}, {borderRadius}]}>
+        <View
+          {...others}
+          style={[this.styles.wrapper, {...bottomShadow}, shadowColor && {shadowColor}, {borderRadius}]}
+        >
           {this.props.children}
         </View>
       </View>
@@ -75,7 +78,7 @@ function createStyles() {
   return StyleSheet.create({
     wrapper: {
       flexGrow: 1,
-      backgroundColor: 'transparent',
-    },
+      backgroundColor: 'transparent'
+    }
   });
 }

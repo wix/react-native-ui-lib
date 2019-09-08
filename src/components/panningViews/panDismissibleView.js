@@ -37,8 +37,8 @@ class PanDismissibleView extends PureComponent {
     animationOptions: PropTypes.shape({
       speed: PropTypes.number,
       bounciness: PropTypes.number,
-      duration: PropTypes.number,
-    }),
+      duration: PropTypes.number
+    })
   };
 
   static defaultProps = {
@@ -46,14 +46,14 @@ class PanDismissibleView extends PureComponent {
       PanningProvider.Directions.UP,
       PanningProvider.Directions.DOWN,
       PanningProvider.Directions.LEFT,
-      PanningProvider.Directions.RIGHT,
+      PanningProvider.Directions.RIGHT
     ],
     animationOptions: {
       speed: DEFAULT_SPEED,
       bounciness: DEFAULT_BOUNCINESS,
-      duration: DEFAULT_DISMISS_ANIMATION_DURATION,
+      duration: DEFAULT_DISMISS_ANIMATION_DURATION
     },
-    onDismiss: _.noop,
+    onDismiss: _.noop
   };
 
   constructor(props) {
@@ -74,7 +74,7 @@ class PanDismissibleView extends PureComponent {
     const {
       isPanning: prevIsPanning,
       dragDeltas: prevDragDeltas,
-      swipeDirections: prevSwipeDirections,
+      swipeDirections: prevSwipeDirections
     } = prevProps.context; // eslint-disable-line
     if (isPanning !== prevIsPanning) {
       if (isPanning && !isAnimating) {
@@ -119,7 +119,8 @@ class PanDismissibleView extends PureComponent {
       animTranslateX: new Animated.Value(0),
       animTranslateY: new Animated.Value(0),
       ...extraDataForSetState
-    }, runAfterSetState);
+    },
+    runAfterSetState,);
   };
 
   onPanStart = () => {
@@ -180,23 +181,19 @@ class PanDismissibleView extends PureComponent {
     const toY = -this.top;
     const animations = [];
     if (!_.isUndefined(toX)) {
-      animations.push(
-        Animated.spring(animTranslateX, {
-          toValue: Math.round(toX),
-          speed,
-          bounciness,
-        }),
-      );
+      animations.push(Animated.spring(animTranslateX, {
+        toValue: Math.round(toX),
+        speed,
+        bounciness
+      }),);
     }
 
     if (!_.isUndefined(toY)) {
-      animations.push(
-        Animated.spring(animTranslateY, {
-          toValue: Math.round(toY),
-          speed,
-          bounciness,
-        }),
-      );
+      animations.push(Animated.spring(animTranslateY, {
+        toValue: Math.round(toY),
+        speed,
+        bounciness
+      }),);
     }
 
     this.setState({isAnimating: true}, () => {
@@ -278,21 +275,17 @@ class PanDismissibleView extends PureComponent {
     }
 
     if (!_.isUndefined(toX)) {
-      animations.push(
-        Animated.timing(animTranslateX, {
-          toValue: Math.round(toX),
-          duration,
-        }),
-      );
+      animations.push(Animated.timing(animTranslateX, {
+        toValue: Math.round(toX),
+        duration
+      }),);
     }
 
     if (!_.isUndefined(toY)) {
-      animations.push(
-        Animated.timing(animTranslateY, {
-          toValue: Math.round(toY),
-          duration,
-        }),
-      );
+      animations.push(Animated.timing(animTranslateY, {
+        toValue: Math.round(toY),
+        duration
+      }),);
     }
 
     this.setState({isAnimating: true}, () => {
@@ -318,8 +311,8 @@ class PanDismissibleView extends PureComponent {
         style={[
           style,
           {
-            transform,
-          },
+            transform
+          }
         ]}
         onLayout={this.onLayout}
       >

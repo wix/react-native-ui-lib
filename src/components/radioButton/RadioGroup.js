@@ -25,7 +25,7 @@ class RadioGroup extends BaseComponent {
     /**
      * Invoked once when value changes, by selecting one of the radio buttons in the group
      */
-    onValueChange: PropTypes.func,
+    onValueChange: PropTypes.func
   };
 
   constructor(props) {
@@ -36,7 +36,7 @@ class RadioGroup extends BaseComponent {
     }
 
     this.state = {
-      value: props.initialValue !== undefined ? props.initialValue : props.value,
+      value: props.initialValue !== undefined ? props.initialValue : props.value
     };
   }
 
@@ -47,7 +47,7 @@ class RadioGroup extends BaseComponent {
       this.setState({value: nextProps.value});
     }
   }
-  
+
   getContextProviderValue() {
     const {value} = this.state;
     return {value, onValueChange: this.onValueChange};
@@ -61,7 +61,9 @@ class RadioGroup extends BaseComponent {
   render() {
     return (
       <View {...this.props}>
-        <RadioGroupContext.Provider value={this.getContextProviderValue()}>{this.props.children}</RadioGroupContext.Provider>
+        <RadioGroupContext.Provider value={this.getContextProviderValue()}>
+          {this.props.children}
+        </RadioGroupContext.Provider>
       </View>
     );
   }
