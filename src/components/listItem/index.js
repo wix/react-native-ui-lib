@@ -9,7 +9,6 @@ import TouchableOpacity from '../../components/touchableOpacity';
 import View from '../view';
 import ListItemPart from './ListItemPart';
 
-
 /**
  * @description: List item component to render inside a List component
  * @extends: TouchableOpacity
@@ -18,7 +17,6 @@ import ListItemPart from './ListItemPart';
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/listScreens/BasicListScreen.js
  */
 class ListItem extends BaseComponent {
-
   static displayName = 'ListItem';
 
   static propTypes = {
@@ -47,13 +45,13 @@ class ListItem extends BaseComponent {
   static defaultProps = {
     height: 63,
     containerElement: TouchableOpacity,
-    underlayColor: Colors.dark70,
+    underlayColor: Colors.dark70
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      pressed: false,
+      pressed: false
     };
   }
 
@@ -84,13 +82,13 @@ class ListItem extends BaseComponent {
     } = this.props;
     const {pressed} = this.state;
     const pressedStyle = {backgroundColor: underlayColor};
-    const Container = (onPress || onLongPress) ? containerElement : View;
+    const Container = onPress || onLongPress ? containerElement : View;
 
     const animationProps = this.extractAnimationProps();
     const InnerContainer = !_.isEmpty(animationProps) ? AnimatableView : View;
     if (!_.isEmpty(animationProps)) {
       console.warn('ListItem component will soon stop supporting animationProps.' +
-        'Please wrap your ListItem component with your own animation component, such as Animatable.View');
+          'Please wrap your ListItem component with your own animation component, such as Animatable.View',);
     }
 
     return (
@@ -104,10 +102,7 @@ class ListItem extends BaseComponent {
         testID={testID}
         {...others}
       >
-        <InnerContainer
-          {...animationProps}
-          style={[this.styles.innerContainer, style, pressed && pressedStyle]}
-        >
+        <InnerContainer {...animationProps} style={[this.styles.innerContainer, style, pressed && pressedStyle]}>
           {this.props.children}
         </InnerContainer>
       </Container>
@@ -118,7 +113,7 @@ class ListItem extends BaseComponent {
 function createStyles({height}) {
   return StyleSheet.create({
     container: {
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white
     },
     innerContainer: {
       flexDirection: 'row',

@@ -49,26 +49,26 @@ class Checkbox extends BaseComponent {
     /**
      * The selected icon color
      */
-    iconColor: PropTypes.string,
+    iconColor: PropTypes.string
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      isChecked: new Animated.Value(this.props.value ? 1 : 0),
+      isChecked: new Animated.Value(this.props.value ? 1 : 0)
     };
 
     this.animationStyle = {
       opacity: this.state.isChecked,
       transform: [
         {
-          scaleX: this.state.isChecked,
+          scaleX: this.state.isChecked
         },
         {
-          scaleY: this.state.isChecked,
-        },
-      ],
+          scaleY: this.state.isChecked
+        }
+      ]
     };
   }
 
@@ -89,7 +89,7 @@ class Checkbox extends BaseComponent {
       duration: 170,
       easing: Easing.bezier(0.77, 0.0, 0.175, 1.0),
       toValue: Number(value),
-      useNativeDriver: true,
+      useNativeDriver: true
     }).start();
   }
 
@@ -114,7 +114,7 @@ class Checkbox extends BaseComponent {
   }
 
   render() {
-    const {value, selectedIcon, style, color, iconColor, disabled, testID, ...others} = this.getThemeProps();
+    const {value, selectedIcon, color, iconColor, disabled, testID, ...others} = this.getThemeProps();
     const accessibilityLabel = value ? 'checked' : 'unchecked';
 
     return (
@@ -135,7 +135,7 @@ class Checkbox extends BaseComponent {
                 this.styles.selectedIcon,
                 color && {tintColor: iconColor},
                 {transform: this.animationStyle.transform},
-                disabled && {tintColor: DEFAULT_ICON_COLOR},
+                disabled && {tintColor: DEFAULT_ICON_COLOR}
               ]}
               source={selectedIcon || Assets.icons.checkSmall}
               testID={`${testID}.selected`}
@@ -155,13 +155,13 @@ function createStyles({color = DEFAULT_COLOR, iconColor = DEFAULT_ICON_COLOR, si
       borderRadius: borderRadius || 8,
       alignItems: 'center',
       justifyContent: 'center',
-      borderColor: color,
+      borderColor: color
     },
     selectedIcon: {
       tintColor: iconColor,
       alignItems: 'center',
-      justifyContent: 'center',
-    },
+      justifyContent: 'center'
+    }
   });
 }
 

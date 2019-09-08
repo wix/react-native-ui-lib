@@ -98,7 +98,7 @@ class Picker extends BaseComponent {
     searchStyle: PropTypes.shape({
       color: PropTypes.string,
       placeholderTextColor: PropTypes.string,
-      selectionColor: PropTypes.string,
+      selectionColor: PropTypes.string
     }),
     /**
      * Placeholder text for the search input (only when passing showSearch)
@@ -138,7 +138,7 @@ class Picker extends BaseComponent {
 
     this.state = {
       value: props.value,
-      selectedItemPosition: 0,
+      selectedItemPosition: 0
     };
 
     if (props.mode === Picker.modes.SINGLE && Array.isArray(props.value)) {
@@ -155,8 +155,19 @@ class Picker extends BaseComponent {
 
   UNSAFE_componentWillReceiveProps(nexProps) {
     this.setState({
-      value: nexProps.value,
+      value: nexProps.value
     });
+  }
+
+  getAccessibilityInfo() {
+    const {placeholder} = this.props;
+    return {
+      accessibilityLabel: this.getLabel() ? `${placeholder} ${this.getLabel()}` : `Select ${placeholder}`,
+      accessibilityHint: this.getLabel()
+        ? 'Double tap to edit'
+        : `Goes to ${placeholder}. Suggestions will be provided`,
+      ...this.extractAccessibilityProps()
+    };
   }
 
   getLabel() {
@@ -186,13 +197,13 @@ class Picker extends BaseComponent {
     const {value} = this.state;
     const newValue = _.xorBy(value, [item], 'value');
     this.setState({
-      value: newValue,
+      value: newValue
     });
   };
 
   cancelSelect = () => {
     this.setState({
-      value: this.props.value,
+      value: this.props.value
     });
     this.toggleExpandableModal(false);
   };
@@ -205,15 +216,15 @@ class Picker extends BaseComponent {
 
   onSearchChange = searchValue => {
     this.setState({
-      searchValue,
+      searchValue
     });
     _.invoke(this.props, 'onSearchChange', searchValue);
   };
 
   onSelectedItemLayout = ({
     nativeEvent: {
-      layout: {y},
-    },
+      layout: {y}
+    }
   }) => {
     this.setState({selectedItemPosition: y});
   };
@@ -233,6 +244,7 @@ class Picker extends BaseComponent {
           getItemValue: child.props.getItemValue || getItemValue,
           onSelectedLayout: this.onSelectedItemLayout,
           renderItem: child.props.renderItem || renderItem,
+          accessibilityHint: 'Double click to select this suggestion'
         });
       }
     });
@@ -259,7 +271,7 @@ class Picker extends BaseComponent {
       const modalProps = {
         visible: showExpandableModal,
         toggleModal: this.toggleExpandableModal,
-        children,
+        children
       };
 
       return renderCustomModal(modalProps);
@@ -273,7 +285,7 @@ class Picker extends BaseComponent {
         topBarProps={{
           ...topBarProps,
           onCancel: this.cancelSelect,
-          onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(this.state.value) : undefined,
+          onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(this.state.value) : undefined
         }}
         showSearch={showSearch}
         searchStyle={searchStyle}
@@ -291,7 +303,7 @@ class Picker extends BaseComponent {
     const {useNativePicker, renderPicker, customPickerProps, testID} = this.props;
 
     if (useNativePicker) {
-      return <NativePicker {...this.props} />;
+      return <NativePicker {...this.props}/>;
     }
 
     if (_.isFunction(renderPicker)) {
@@ -311,6 +323,7 @@ class Picker extends BaseComponent {
     return (
       <TextField
         {...textInputProps}
+        {...this.getAccessibilityInfo()}
         enableErrors={false}
         value={label}
         expandable

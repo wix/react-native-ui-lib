@@ -79,11 +79,11 @@ class TabBar extends PureComponent {
     /**
      * The TabBar container width
      */
-    containerWidth: PropTypes.number,
+    containerWidth: PropTypes.number
   };
 
   static defaultProps = {
-    containerWidth: Constants.screenWidth,
+    containerWidth: Constants.screenWidth
   };
 
   constructor(props, context) {
@@ -102,12 +102,12 @@ class TabBar extends PureComponent {
     this._indicatorWidth = new ReanimatedObject({duration: 300, easing: Easing.bezier(0.23, 1, 0.32, 1)});
     this._indicatorTransitionStyle = {
       width: this._indicatorWidth.value,
-      left: this._indicatorOffset.value,
+      left: this._indicatorOffset.value
     };
 
     this.state = {
       scrollEnabled: false,
-      itemsWidths: undefined,
+      itemsWidths: undefined
     };
 
     this.registerTabItems();
@@ -174,13 +174,13 @@ class TabBar extends PureComponent {
       finished: new Value(0),
       position: prevValue,
       time: new Value(0),
-      frameTime: new Value(0),
+      frameTime: new Value(0)
     };
 
     const config = {
       duration,
       toValue: targetValue,
-      easing: Easing.bezier(0.23, 1, 0.32, 1),
+      easing: Easing.bezier(0.23, 1, 0.32, 1)
     };
 
     return block([
@@ -191,9 +191,9 @@ class TabBar extends PureComponent {
         set(state.finished, 0),
         set(state.time, 0),
         set(state.frameTime, 0),
-        set(prevValue, state.position),
+        set(prevValue, state.position)
       ]),
-      state.position,
+      state.position
     ]);
   }
 
@@ -201,7 +201,7 @@ class TabBar extends PureComponent {
     const {itemsWidths} = this.state;
     const {indicatorStyle} = this.props;
     if (itemsWidths) {
-      return <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, this._indicatorTransitionStyle]} />;
+      return <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, this._indicatorTransitionStyle]}/>;
     }
   }
 
@@ -215,7 +215,7 @@ class TabBar extends PureComponent {
       uppercase,
       iconColor,
       selectedIconColor,
-      activeBackgroundColor,
+      activeBackgroundColor
     } = this.props;
 
     if (_.isEmpty(itemStates)) {
@@ -261,7 +261,7 @@ class TabBar extends PureComponent {
           ...this.context,
           index,
           state: itemStates[index],
-          onLayout: this.onItemLayout,
+          onLayout: this.onItemLayout
         });
       });
       return this.tabBarItems;
@@ -270,7 +270,7 @@ class TabBar extends PureComponent {
 
   render() {
     const {currentPage} = this.context;
-    const {containerWidth, height, enableShadow} = this.props;
+    const {height, enableShadow} = this.props;
     const {itemsWidths, itemsOffsets, scrollEnabled} = this.state;
     return (
       <View style={enableShadow && styles.containerShadow}>
@@ -295,20 +295,20 @@ class TabBar extends PureComponent {
                 // calc indicator current width
                 ..._.map(itemsWidths, (width, index) => {
                   return cond(eq(currentPage, index), [
-                    set(this._indicatorWidth.nextValue, sub(itemsWidths[index], indicatorInset * 2)),
+                    set(this._indicatorWidth.nextValue, sub(itemsWidths[index], indicatorInset * 2))
                   ]);
                 }),
                 // calc indicator current position
                 ..._.map(itemsOffsets, (offset, index) => {
                   return cond(eq(currentPage, index), [
-                    set(this._indicatorOffset.nextValue, add(itemsOffsets[index], indicatorInset)),
+                    set(this._indicatorOffset.nextValue, add(itemsOffsets[index], indicatorInset))
                   ]);
                 }),
 
                 // Offset transition
                 this._indicatorOffset.getTransitionBlock(),
                 // Width transition
-                this._indicatorWidth.getTransitionBlock(),
+                this._indicatorWidth.getTransitionBlock()
               ]);
             }}
           </Code>
@@ -324,18 +324,18 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     height: DEFAULT_HEIGHT,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   tabBarScroll: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.white
   },
   tabBarScrollContent: {
-    minWidth: Constants.screenWidth,
+    minWidth: Constants.screenWidth
   },
   tab: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   selectedIndicator: {
     position: 'absolute',
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
     left: 0,
     width: 70,
     height: 2,
-    backgroundColor: Colors.blue30,
+    backgroundColor: Colors.blue30
   },
   containerShadow: {
     ...Platform.select({
@@ -351,14 +351,14 @@ const styles = StyleSheet.create({
         shadowColor: Colors.dark10,
         shadowOpacity: 0.05,
         shadowRadius: 2,
-        shadowOffset: {height: 6, width: 0},
+        shadowOffset: {height: 6, width: 0}
       },
       android: {
         elevation: 5,
-        backgroundColor: Colors.white,
-      },
-    }),
-  },
+        backgroundColor: Colors.white
+      }
+    })
+  }
 });
 
 export default asBaseComponent(forwardRef(TabBar));

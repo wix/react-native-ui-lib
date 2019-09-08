@@ -23,15 +23,15 @@ export default class TabPage extends PureComponent {
     /**
      * Whether this page should be loaded lazily
      */
-    lazy: PropTypes.bool,
+    lazy: PropTypes.bool
   };
 
   static defaultProps = {
-    activeOpacity: 0.6,
+    activeOpacity: 0.6
   };
 
   state = {
-    loaded: !this.props.lazy,
+    loaded: !this.props.lazy
   };
 
   _opacity = new Value(0);
@@ -40,7 +40,7 @@ export default class TabPage extends PureComponent {
 
   lazyLoad = () => {
     this.setState({
-      loaded: true,
+      loaded: true
     });
   };
 
@@ -56,11 +56,9 @@ export default class TabPage extends PureComponent {
           {() => {
             return block([
               cond(and(eq(currentPage, index), lazy, !loaded), call([], this.lazyLoad)),
-              cond(
-                eq(currentPage, index),
+              cond(eq(currentPage, index),
                 [set(this._opacity, 1), set(this._zIndex, 1)],
-                [set(this._opacity, 0), set(this._zIndex, 0)],
-              ),
+                [set(this._opacity, 0), set(this._zIndex, 0)],)
             ]);
           }}
         </Code>
@@ -71,6 +69,6 @@ export default class TabPage extends PureComponent {
 
 const styles = StyleSheet.create({
   page: {
-    ...StyleSheet.absoluteFillObject,
-  },
+    ...StyleSheet.absoluteFillObject
+  }
 });

@@ -11,7 +11,6 @@ import View from '../view';
 import Button from '../button';
 import Image from '../image';
 
-
 const DURATION = 300;
 const DELAY = 100;
 const ANIMATION_SUFFIX = 'toast';
@@ -101,14 +100,14 @@ export default class Toast extends BaseComponent {
     /**
      * custom zIndex for toast
      */
-    zIndex: PropTypes.number,
+    zIndex: PropTypes.number
   };
 
   static defaultProps = {
     position: 'top',
     color: Colors.white,
     animated: true,
-    zIndex: 100,
+    zIndex: 100
   };
 
   constructor(props) {
@@ -121,7 +120,7 @@ export default class Toast extends BaseComponent {
       animationConfig: animated ? this.getAnimation(true) : {},
       contentAnimation: animated ? this.getContentAnimation(true) : {},
       duration: DURATION,
-      delay: DELAY,
+      delay: DELAY
     };
 
     if (animated) {
@@ -140,11 +139,11 @@ export default class Toast extends BaseComponent {
       const newState = animated
         ? {
           animationConfig: this.getAnimation(visible),
-          contentAnimation: this.getContentAnimation(visible),
+          contentAnimation: this.getContentAnimation(visible)
         }
         : {
           animationConfig: {},
-          contentAnimation: {},
+          contentAnimation: {}
         };
       this.setState(newState);
     }
@@ -177,18 +176,18 @@ export default class Toast extends BaseComponent {
         animation: shouldShow ? 'fadeIn' : 'fadeOut',
         duration,
         delay: shouldShow ? delay : 0,
-        onAnimationEnd: () => this.onAnimationEnd(),
+        onAnimationEnd: () => this.onAnimationEnd()
       };
     }
   }
 
   getBlurOptions() {
     const {blurOptions} = this.getThemeProps();
-    
+
     return {
       blurType: 'light',
       amount: 5,
-      ...blurOptions,
+      ...blurOptions
     };
   }
 
@@ -258,8 +257,8 @@ export default class Toast extends BaseComponent {
 
     return (
       <AnimatableView style={[this.styles.containerWithTwoActions, {backgroundColor}]} {...contentAnimation}>
-        <Button size="small" {...actions[0]} />
-        <Button marginL-12 size="small" {...actions[1]} />
+        <Button size="small" {...actions[0]}/>
+        <Button marginL-12 size="small" {...actions[1]}/>
       </AnimatableView>
     );
   }
@@ -305,11 +304,11 @@ export default class Toast extends BaseComponent {
             !renderContent && !hasTwoActions && {paddingHorizontal: 20},
             backgroundColor && {backgroundColor},
             hasOneAction && this.styles.containerWithOneAction,
-            {zIndex},
+            {zIndex}
           ]}
           {...animationConfig}
         >
-          {enableBlur && <BlurView style={this.styles.blurView} {...blurOptions} />}
+          {enableBlur && <BlurView style={this.styles.blurView} {...blurOptions}/>}
           {this.renderContent()}
         </AnimatableView>
       </View>
@@ -325,7 +324,7 @@ export default class Toast extends BaseComponent {
   onAnimationEnd() {
     const {visible} = this.props;
     this.setState({
-      isVisible: visible,
+      isVisible: visible
     });
     this.setDismissTimer();
     _.invoke(this.props, 'onAnimationEnd', visible);
@@ -340,52 +339,52 @@ export default class Toast extends BaseComponent {
     }
   }
 
-  onDismiss = (timer) => {
-    if (timer) { 
-      clearTimeout(timer); 
+  onDismiss = timer => {
+    if (timer) {
+      clearTimeout(timer);
     }
     _.invoke(this.props, 'onDismiss');
-  }
+  };
 }
 
 function createStyles() {
   return StyleSheet.create({
     container: {
       ...StyleSheet.absoluteFillObject,
-      backgroundColor: Colors.rgba(ThemeManager.primaryColor, 0.8),
+      backgroundColor: Colors.rgba(ThemeManager.primaryColor, 0.8)
     },
     containerWithOneAction: {
-      paddingRight: 0,
+      paddingRight: 0
     },
     containerWithTwoActions: {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      paddingBottom: 14,
+      paddingBottom: 14
     },
     message: {
       color: Colors.white,
-      ...Typography.text80,
+      ...Typography.text80
     },
     oneActionStyle: {
       borderRadius: BorderRadiuses.br0,
       minWidth: undefined,
-      height: '100%',
+      height: '100%'
     },
     dismissIconStyle: {
       width: 12,
       height: 12,
-      tintColor: Colors.white,
+      tintColor: Colors.white
     },
     blurView: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFillObject
     },
     icon: {
       flex: 1,
       width: 24,
       height: 24,
-      marginRight: 16,
-    },
+      marginRight: 16
+    }
   });
 }
 
@@ -394,16 +393,16 @@ function getAnimationDescriptor(name, {duration = DURATION, delay = DELAY}) {
   const animationDescriptorMap = {
     top: {
       enter: {...defaultProps, animation: AnimatableManager.animations.slideInDown_toast},
-      exit: {...defaultProps, animation: AnimatableManager.animations.slideOutUp_toast},
+      exit: {...defaultProps, animation: AnimatableManager.animations.slideOutUp_toast}
     },
     bottom: {
       enter: {...defaultProps, animation: AnimatableManager.animations.slideInUp_toast},
-      exit: {...defaultProps, animation: AnimatableManager.animations.slideOutDown_toast},
+      exit: {...defaultProps, animation: AnimatableManager.animations.slideOutDown_toast}
     },
     relative: {
       enter: {...defaultProps, animation: AnimatableManager.animations.slideIn_toast},
-      exit: {...defaultProps, animation: AnimatableManager.animations.slideOut_toast, delay},
-    },
+      exit: {...defaultProps, animation: AnimatableManager.animations.slideOut_toast, delay}
+    }
   };
   return animationDescriptorMap[name] || {};
 }
@@ -413,7 +412,7 @@ function getAbsolutePositionStyle(location) {
     position: 'absolute',
     left: 0,
     right: 0,
-    [location]: 0,
+    [location]: 0
   };
 }
 

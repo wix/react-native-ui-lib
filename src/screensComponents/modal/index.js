@@ -47,7 +47,7 @@ export default class Modal extends BaseComponent {
           style={[styles.touchableOverlay, {backgroundColor: overlayBackgroundColor}]}
         >
           <TouchableWithoutFeedback onPress={onBackgroundPress}>
-            <View flex />
+            <View flex/>
           </TouchableWithoutFeedback>
         </View>
       );
@@ -73,7 +73,7 @@ export default class Modal extends BaseComponent {
 const styles = StyleSheet.create({
   touchableOverlay: {
     ...StyleSheet.absoluteFillObject
-  },
+  }
 });
 
 Modal.TopBar = TopBar;

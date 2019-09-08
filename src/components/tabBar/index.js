@@ -12,7 +12,7 @@ import TabBarItem from './TabBarItem';
 
 const LAYOUT_MODES = {
   FIT: 'FIT',
-  SCROLL: 'SCROLL',
+  SCROLL: 'SCROLL'
 };
 
 /**
@@ -67,13 +67,13 @@ export default class TabBar extends BaseComponent {
     /**
      * Show Tab Bar bottom shadow (iOS only)
      */
-    enableShadow: PropTypes.bool,
+    enableShadow: PropTypes.bool
   };
 
   static defaultProps = {
     mode: LAYOUT_MODES.FIT,
     selectedIndex: 0,
-    height: 51,
+    height: 51
   };
 
   static modes = LAYOUT_MODES;
@@ -92,7 +92,7 @@ export default class TabBar extends BaseComponent {
       selectedIndicatorPosition: new Animated.Value(0),
       gradientValue: new Animated.Value(1),
       fadeAnim: 0,
-      currentMode: props.mode,
+      currentMode: props.mode
     };
 
     this.checkPropsMatch();
@@ -101,7 +101,7 @@ export default class TabBar extends BaseComponent {
   getLabels(items) {
     if (Array.isArray(items)) {
       const lbls = [];
-      items.forEach((element) => {
+      items.forEach(element => {
         lbls.push(element.props.label);
       });
       return lbls;
@@ -133,7 +133,7 @@ export default class TabBar extends BaseComponent {
       if (!_.isEqual(this.labels, labels)) {
         /** dynamic items' labels */
         const differences = this.getDifferences(this.labels, labels);
-        differences.forEach((element) => {
+        differences.forEach(element => {
           this.itemsWidths[element] = undefined;
         });
         this.labels = labels;
@@ -147,7 +147,9 @@ export default class TabBar extends BaseComponent {
   }
 
   initializeValues(props) {
-    if (!this.scrollLayout) { this.itemsWidths = {}; }
+    if (!this.scrollLayout) {
+      this.itemsWidths = {};
+    }
     this.contentWidth = undefined;
     this.childrenCount = React.Children.count(props.children);
 
@@ -165,28 +167,30 @@ export default class TabBar extends BaseComponent {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  isIgnoredTab = (index) => {
+  isIgnoredTab = index => {
     const {ignoreLastTab} = this.getThemeProps();
-    return (ignoreLastTab && index === (this.childrenCount - 1));
-  }
+    return ignoreLastTab && index === this.childrenCount - 1;
+  };
 
   /** Indicator */
 
-  hasMeasurements() {    
-    return (_.keys(this.itemsWidths).length === this.childrenCount);
+  hasMeasurements() {
+    return _.keys(this.itemsWidths).length === this.childrenCount;
   }
 
-  updateIndicatorPosition = () => {    
+  updateIndicatorPosition = () => {
     if (this.hasMeasurements() && this.contentWidth) {
-      this.setState({selectedIndicatorPosition: new Animated.Value(this.calcIndicatorPosition(this.state.selectedIndex))});
+      this.setState({
+        selectedIndicatorPosition: new Animated.Value(this.calcIndicatorPosition(this.state.selectedIndex))
+      });
     }
-  }
+  };
 
-  calcIndicatorWidth() {    
+  calcIndicatorWidth() {
     if (this.childrenCount === 0) {
       return '0%';
     }
-    const itemWidth = this.itemsWidths[this.state.selectedIndex] - (this.itemContentSpacing * 2);
+    const itemWidth = this.itemsWidths[this.state.selectedIndex] - this.itemContentSpacing * 2;
     const width = (itemWidth / this.contentWidth) * 100;
     return `${width}%`;
   }
@@ -201,12 +205,12 @@ export default class TabBar extends BaseComponent {
       itemPosition += this.itemContentSpacing;
       position = (itemPosition / this.contentWidth) * 100;
     } else {
-      position = (index * (100 / this.childrenCount)) + this.itemContentSpacing;
+      position = index * (100 / this.childrenCount) + this.itemContentSpacing;
     }
     return position;
   }
 
-  animateIndicatorPosition = (index) => {
+  animateIndicatorPosition = index => {
     const {disableAnimatedTransition} = this.getThemeProps();
     const {selectedIndicatorPosition} = this.state;
 
@@ -218,10 +222,10 @@ export default class TabBar extends BaseComponent {
       Animated.spring(selectedIndicatorPosition, {
         toValue: newPosition,
         tension: 30,
-        friction: 8,
+        friction: 8
       }).start();
     }
-  }
+  };
 
   onChangeIndex(index) {
     if (this.isIgnoredTab(index)) {
@@ -233,7 +237,7 @@ export default class TabBar extends BaseComponent {
     }
   }
 
-  onTabSelected(index) {    
+  onTabSelected(index) {
     _.invoke(this.props, 'onTabSelected', index);
   }
 
@@ -249,13 +253,13 @@ export default class TabBar extends BaseComponent {
       this.itemsWidths[index] = width;
     }
     this.updateIndicatorPosition();
-  }
+  };
 
   /** Renders */
 
   renderChildren() {
     const {selectedIndex} = this.state;
-    const children = React.Children.map(this.props.children, (child, index) => {    
+    const children = React.Children.map(this.props.children, (child, index) => {
       return React.cloneElement(child, {
         selected: selectedIndex === index,
         width: this.itemsWidths[index], // HACK: keep initial item's width for indicator's width
@@ -264,9 +268,9 @@ export default class TabBar extends BaseComponent {
           this.onTabSelected(index);
           _.invoke(child.props, 'onPress');
         },
-        onLayout: (width) => {
+        onLayout: width => {
           this.onItemLayout(index, width);
-        },
+        }
       });
     });
     return children;
@@ -275,14 +279,16 @@ export default class TabBar extends BaseComponent {
   renderSelectedIndicator() {
     const {indicatorStyle} = this.getThemeProps();
     const {selectedIndicatorPosition} = this.state;
-    
+
     // if only one tab - don't render indicator at all
-    if (this.childrenCount - 1 === 0) { return; }
-    
+    if (this.childrenCount - 1 === 0) {
+      return;
+    }
+
     const width = this.calcIndicatorWidth();
     const left = selectedIndicatorPosition.interpolate({
       inputRange: [0, 100],
-      outputRange: ['0%', '100%'],
+      outputRange: ['0%', '100%']
     });
     return (
       <Animated.View
@@ -351,9 +357,14 @@ export default class TabBar extends BaseComponent {
           height: height - 2,
           position: 'absolute',
           right: 0,
-          opacity: this.state.gradientValue}}
+          opacity: this.state.gradientValue
+        }}
       >
-        <Image source={Assets.images.gradient} style={{width: gradientWidth, height: height - 3, tintColor}} supportRTL/>
+        <Image
+          source={Assets.images.gradient}
+          style={{width: gradientWidth, height: height - 3, tintColor}}
+          supportRTL
+        />
       </Animated.View>
     );
   }
@@ -361,20 +372,17 @@ export default class TabBar extends BaseComponent {
   render() {
     switch (this.state.currentMode) {
       case LAYOUT_MODES.FIT:
-        return (
-          this.renderBar()
-        );
+        return this.renderBar();
       case LAYOUT_MODES.SCROLL:
-        return (
-          this.renderScrollBar()
-        );
-      default: break;
+        return this.renderScrollBar();
+      default:
+        break;
     }
   }
 
   /** Render Events */
 
-  onLayout = (event) => {
+  onLayout = event => {
     this.containerWidth = event.nativeEvent.layout.width;
 
     switch (this.state.currentMode) {
@@ -385,14 +393,15 @@ export default class TabBar extends BaseComponent {
       case LAYOUT_MODES.SCROLL:
         this.calcLayoutMode();
         break;
-      default: break;
+      default:
+        break;
     }
-  }
+  };
 
-  onContentSizeChange = (width) => {
-    this.contentWidth = width;    
+  onContentSizeChange = width => {
+    this.contentWidth = width;
     this.calcLayoutMode();
-  }
+  };
 
   calcLayoutMode() {
     if (this.contentWidth && this.containerWidth) {
@@ -413,49 +422,49 @@ export default class TabBar extends BaseComponent {
     }
   }
 
-  onScroll = (event) => {
+  onScroll = event => {
     const {useGradientFinish} = this.getThemeProps();
     if (useGradientFinish) {
       const x = event.nativeEvent.contentOffset.x;
       this.animateGradientOpacity(x);
     }
-  }
+  };
 
-  animateGradientOpacity = (x) => {
+  animateGradientOpacity = x => {
     const overflow = this.contentWidth - this.containerWidth;
-    const newValue = (x > 0 && x >= overflow - 1) ? 0 : 1;
-  
+    const newValue = x > 0 && x >= overflow - 1 ? 0 : 1;
+
     Animated.spring(this.state.gradientValue, {
       toValue: newValue,
-      speed: 20,
+      speed: 20
     }).start();
-  }
+  };
 }
 
 function createStyles() {
   return StyleSheet.create({
     container: {
       borderBottomWidth: StyleSheet.hairlineWidth,
-      borderColor: Colors.dark70,
+      borderColor: Colors.dark70
     },
     containerShadow: {
       shadowColor: Colors.dark10,
       shadowOpacity: 0.09,
       shadowRadius: 2,
-      shadowOffset: {height: 2, width: 0},
+      shadowOffset: {height: 2, width: 0}
     },
     selectedIndicator: {
       borderBottomWidth: 1.5,
-      borderColor: Colors.blue30,
+      borderColor: Colors.blue30
     },
     absoluteContainer: {
       position: 'absolute',
       bottom: 0,
-      left: 0,
+      left: 0
     },
     linearGradient: {
-      flex: 1,
-    },
+      flex: 1
+    }
   });
 }
 
