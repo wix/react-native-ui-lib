@@ -1,4 +1,4 @@
-import { Assets } from '../Assets';
+import {Assets} from '../Assets';
 
 describe('Assets', () => {
   let assets;
@@ -13,7 +13,7 @@ describe('Assets', () => {
     });
 
     it('should create nested groups', () => {
-      assets.loadAssetsGroup('emojis.ascii', { smile: ':)' });
+      assets.loadAssetsGroup('emojis.ascii', {smile: ':)'});
       expect(assets.emojis.ascii.smile).toBe(':)');
     });
 
@@ -32,7 +32,7 @@ describe('Assets', () => {
         it('should create root asset groups', () => {
           const emojis = {};
           const icons = {};
-          assets.loadAssetsGroup('', { emojis, icons });
+          assets.loadAssetsGroup('', {emojis, icons});
 
           expect(assets.emojis).toBe(emojis);
           expect(assets.icons).toBe(icons);
@@ -47,7 +47,9 @@ describe('Assets', () => {
 
           assets.loadAssetsGroup('', {
             emojis,
-            get icons() { return requireHeavyIcons(); },
+            get icons() {
+              return requireHeavyIcons();
+            }
           });
 
           expect(assets.emojis).toBe(emojis);
@@ -64,20 +66,30 @@ describe('Assets', () => {
 
       beforeEach(() => {
         iconsModule = {
-          get apply() { return './apply.png'; },
-          get back() { return './back.png'; },
+          get apply() {
+            return './apply.png';
+          },
+          get back() {
+            return './back.png';
+          }
         };
 
         assets.loadAssetsGroup('', {
-          get icons() { return iconsModule; },
+          get icons() {
+            return iconsModule;
+          }
         });
       });
 
       describe('and called with the same group name', () => {
         beforeEach(() => {
           assets.loadAssetsGroup('icons', {
-            get back() { return './back-dark.png'; },
-            get forward() { return './forward-dark.png'; },
+            get back() {
+              return './back-dark.png';
+            },
+            get forward() {
+              return './forward-dark.png';
+            }
           });
         });
 

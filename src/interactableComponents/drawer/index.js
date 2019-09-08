@@ -26,7 +26,7 @@ const ITEM_PROP_TYPES = {
 /**
  * @description: Drawer Component
  * @important: If your app works with RNN, your screen must be wrapped
- * with gestureHandlerRootHOC from 'react-native-gesture-handler'. see  
+ * with gestureHandlerRootHOC from 'react-native-gesture-handler'. see
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
 class NewDrawer extends PureBaseComponent {
@@ -99,12 +99,16 @@ class NewDrawer extends PureBaseComponent {
     this._swipeableRow = React.createRef();
     this._oldDrawer = React.createRef();
     this.animationOptions = {bounciness: props.bounciness || 5};
-    
+
     this.rightActionsContainerStyle = this.getRightActionsContainerStyle();
     this.leftActionsContainerStyle = this.getLeftActionsContainerStyle();
 
     this.leftRender = props.leftItem ? (Constants.isRTL ? this.renderRightActions : this.renderLeftActions) : undefined;
-    this.rightRender = props.rightItems ? (Constants.isRTL ? this.renderLeftActions : this.renderRightActions) : undefined;
+    this.rightRender = props.rightItems
+      ? Constants.isRTL
+        ? this.renderLeftActions
+        : this.renderRightActions
+      : undefined;
 
     // TODO: deprecate when removing old drawer version
     // this.checkDeprecations(props);
@@ -114,8 +118,8 @@ class NewDrawer extends PureBaseComponent {
 
   checkDeprecations(props) {
     if (props.onPress !== undefined) {
-      console.warn("Drawer's 'onPress' prop is deprecated. " +
-        "For items, send 'onPress' handler in the item's object and for content use your own.");
+      console.warn('Drawer\'s \'onPress\' prop is deprecated. ' +
+          'For items, send \'onPress\' handler in the item\'s object and for content use your own.',);
     }
 
     deprecatedProps.forEach(prop => {
@@ -154,7 +158,7 @@ class NewDrawer extends PureBaseComponent {
       this.closeDrawer();
     }
     _.invoke(item, 'onPress');
-  };
+  }
 
   onSwipeableWillOpen = () => {
     _.invoke(this.props, 'onSwipeableWillOpen', this.props);
@@ -168,7 +172,7 @@ class NewDrawer extends PureBaseComponent {
 
   getAccessibilityActions() {
     const {rightItems, leftItem} = this.props;
-    let actions = {};
+    const actions = {};
     if (leftItem && leftItem.onPress && leftItem.text) {
       actions[leftItem.text] = leftItem;
     }
@@ -184,9 +188,11 @@ class NewDrawer extends PureBaseComponent {
 
   onAccessibilityAction = event => {
     const actions = this.getAccessibilityActions();
-    const action = _.find(actions, function(o) { return o.text === event.nativeEvent.action; });
+    const action = _.find(actions, (o) => {
+      return o.text === event.nativeEvent.action;
+    });
     _.invoke(action, 'onPress');
-  }
+  };
 
   /** Renders */
 
@@ -291,9 +297,9 @@ class NewDrawer extends PureBaseComponent {
     const {migrate, children, style, ...others} = this.getThemeProps();
 
     if (!migrate) {
-      return <OldDrawer {...this.getThemeProps()} ref={this._oldDrawer}/>
+      return <OldDrawer {...this.getThemeProps()} ref={this._oldDrawer}/>;
     }
-    
+
     return (
       <Swipeable
         {...others}
@@ -308,7 +314,7 @@ class NewDrawer extends PureBaseComponent {
         onSwipeableWillOpen={this.onSwipeableWillOpen}
         onSwipeableWillClose={this.onSwipeableWillClose}
       >
-        <View 
+        <View
           flex
           accessible
           accessibilityActions={Object.keys(this.getAccessibilityActions())}
@@ -327,7 +333,7 @@ const styles = StyleSheet.create({
   leftAction: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: /* Constants.isRTL ? 'flex-end' :  */'flex-start',
+    alignItems: /* Constants.isRTL ? 'flex-end' :  */ 'flex-start',
     backgroundColor: '#388e3c'
   },
   actionIcon: {

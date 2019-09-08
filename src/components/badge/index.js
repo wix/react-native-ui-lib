@@ -18,7 +18,7 @@ export const BADGE_SIZES = {
   pimpleHuge: 14,
   small: 16,
   default: 20,
-  large: 24,
+  large: 24
 };
 
 /**
@@ -82,30 +82,30 @@ export default class Badge extends PureBaseComponent {
     /**
      * Use to identify the badge in tests
      */
-    testId: PropTypes.string,
+    testId: PropTypes.string
   };
 
   static defaultProps = {
-    size: 'default',
+    size: 'default'
   };
 
   constructor(props) {
     super(props);
 
     if (props.testId) {
-      console.warn("Badge prop 'testId' is deprecated. Please use RN 'testID' prop instead.");
+      console.warn('Badge prop \'testId\' is deprecated. Please use RN \'testID\' prop instead.');
     }
   }
 
   getAccessibilityProps() {
     const {onPress, icon, label} = this.props;
-    
+
     return {
-    accessibilityLabel: icon ? 'badge' : label ? `${label} new items` : undefined,
-    ...this.extractAccessibilityProps(),
-    accessible: true,
-    accessibilityRole: onPress ? 'button' : icon ? 'image' : 'text',
-    }
+      accessibilityLabel: icon ? 'badge' : label ? `${label} new items` : undefined,
+      ...this.extractAccessibilityProps(),
+      accessible: true,
+      accessibilityRole: onPress ? 'button' : icon ? 'image' : 'text'
+    };
   }
 
   isSmallBadge() {
@@ -125,7 +125,7 @@ export default class Badge extends PureBaseComponent {
     const style = {
       paddingHorizontal: this.isSmallBadge() ? 4 : 6,
       height: badgeHeight,
-      minWidth: badgeHeight,
+      minWidth: badgeHeight
     };
 
     const isPimple = label === undefined;
@@ -168,7 +168,7 @@ export default class Badge extends PureBaseComponent {
     const {borderWidth, borderColor} = this.props;
     return {
       borderWidth,
-      borderColor,
+      borderColor
     };
   }
 
@@ -196,7 +196,7 @@ export default class Badge extends PureBaseComponent {
         {...iconProps}
         style={{
           flex: 1,
-          ...iconStyle,
+          ...iconStyle
         }}
       />
     );
@@ -208,7 +208,6 @@ export default class Badge extends PureBaseComponent {
       activeOpacity,
       borderWidth,
       backgroundColor,
-      borderColor,
       containerStyle,
       icon,
       onPress,
@@ -220,18 +219,15 @@ export default class Badge extends PureBaseComponent {
     const sizeStyle = this.getBadgeSizeStyle();
     const borderStyle = borderWidth ? this.getBorderStyling() : undefined;
 
-
     const animationProps = this.extractAnimationProps();
     const Container = !_.isEmpty(animationProps) ? AnimatableView : onPress ? TouchableOpacity : View;
     if (!_.isEmpty(animationProps)) {
-      console.warn(
-        'Badge component will soon stop supporting animationProps.' +
-          'Please wrap your Badge component with your own animation component, such as Animatable.View',
-      );
+      console.warn('Badge component will soon stop supporting animationProps.' +
+          'Please wrap your Badge component with your own animation component, such as Animatable.View',);
     }
     return (
       // The extra View wrapper is to break badge's flex-ness
-      <View style={containerStyle} {...others} backgroundColor={undefined} {...this.getAccessibilityProps()} >
+      <View style={containerStyle} {...others} backgroundColor={undefined} {...this.getAccessibilityProps()}>
         <Container
           testID={testID || testId}
           pointerEvents={'none'}
@@ -255,16 +251,16 @@ function createStyles(props) {
       backgroundColor: !props.icon ? ThemeManager.primaryColor : undefined,
       alignItems: 'center',
       justifyContent: 'center',
-      overflow: 'hidden',
+      overflow: 'hidden'
     },
     label: {
       ...Typography.text90,
       color: Colors.white,
-      backgroundColor: 'transparent',
+      backgroundColor: 'transparent'
     },
     labelSmall: {
       ...Typography.text100,
-      lineHeight: undefined,
-    },
+      lineHeight: undefined
+    }
   });
 }

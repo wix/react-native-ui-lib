@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet/* , TouchableWithoutFeedback */} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {Typography, Spacings, Colors, BorderRadiuses, AnimatableManager} from '../../style';
 import {Constants} from '../../helpers';
@@ -11,7 +11,6 @@ import View from '../view';
 import Text from '../text';
 import Image from '../image';
 import Modal from '../../screensComponents/modal';
-
 
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
@@ -41,10 +40,10 @@ AnimatableManager.loadAnimationDefinitions({
 });
 
 /**
-* @description: Hint component for displaying a tooltip over wrapped component
-* @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.js
-* @notes: You can either wrap a component or pass a specific targetFrame
-*/
+ * @description: Hint component for displaying a tooltip over wrapped component
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.js
+ * @notes: You can either wrap a component or pass a specific targetFrame
+ */
 class Hint extends BaseComponent {
   static displayName = 'Hint';
 
@@ -113,7 +112,7 @@ class Hint extends BaseComponent {
     /**
      * The hint's test identifier
      */
-    testID: PropTypes.string,
+    testID: PropTypes.string
   };
 
   static defaultProps = {
@@ -180,7 +179,7 @@ class Hint extends BaseComponent {
 
   get useSideTip() {
     const {useSideTip} = this.props;
-    
+
     if (!_.isUndefined(useSideTip)) {
       return useSideTip;
     }
@@ -189,11 +188,11 @@ class Hint extends BaseComponent {
 
   getTargetPositionOnScreen() {
     const targetMidPosition = this.targetLayout.x + this.targetLayout.width / 2;
-    
+
     if (targetMidPosition > this.containerWidth * (2 / 3)) {
-      return TARGET_POSITIONS.RIGHT; 
+      return TARGET_POSITIONS.RIGHT;
     } else if (targetMidPosition < this.containerWidth * (1 / 3)) {
-      return TARGET_POSITIONS.LEFT; 
+      return TARGET_POSITIONS.LEFT;
     }
     return TARGET_POSITIONS.CENTER;
   }
@@ -324,7 +323,12 @@ class Hint extends BaseComponent {
         <AnimatableView
           animation={shownUp ? AnimatableManager.animations.hintAppearUp : AnimatableManager.animations.hintAppearDown}
           duration={200}
-          style={[{width: this.containerWidth}, styles.animatedContainer, this.getHintPosition(), this.getHintPadding()]}
+          style={[
+            {width: this.containerWidth},
+            styles.animatedContainer,
+            this.getHintPosition(),
+            this.getHintPadding()
+          ]}
           pointerEvents="box-none"
           testID={testID}
         >
@@ -334,7 +338,7 @@ class Hint extends BaseComponent {
             centerV
             style={[styles.hint, color && {backgroundColor: color}, !_.isUndefined(borderRadius) && {borderRadius}]}
           >
-            {icon && <Image source={icon} style={[styles.icon, iconStyle]} />}
+            {icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
             <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>
           </View>
         </AnimatableView>
@@ -343,7 +347,7 @@ class Hint extends BaseComponent {
   }
 
   renderHintContainer() {
-    const {visible, style, position, onBackgroundPress, ...others} = this.props;
+    const {style, ...others} = this.props;
     return (
       <View {...others} style={[styles.container, style, this.getContainerPosition()]} collapsable={false}>
         {this.renderHint()}
@@ -353,7 +357,7 @@ class Hint extends BaseComponent {
 
   renderChildren() {
     const {targetFrame} = this.props;
-    
+
     if (!targetFrame) {
       return React.cloneElement(this.props.children, {
         collapsable: false,
@@ -366,7 +370,9 @@ class Hint extends BaseComponent {
   render() {
     const {visible, onBackgroundPress} = this.props;
 
-    if (!visible) return this.props.children;
+    if (!visible) {
+      return this.props.children;
+    }
 
     return (
       <React.Fragment>

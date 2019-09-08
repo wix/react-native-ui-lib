@@ -16,7 +16,7 @@ describe('services/AvatarService', () => {
       Colors.orange20,
       Colors.red20,
       Colors.purple20,
-      Colors.violet20,
+      Colors.violet20
     ]);
   });
 
@@ -80,11 +80,11 @@ describe('services/AvatarService', () => {
     it('should return false if the url does not contain the blank param', () => {
       expect(uut.isBlankGravatarUrl('https://www.gravatar.com/avatar/00000000000000000000000000000000')).toEqual(false);
     });
-    
+
     it('should return true if the url contains the blank param', () => {
-      expect(uut.isBlankGravatarUrl('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=blank')).toEqual(true);
+      expect(uut.isBlankGravatarUrl('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=blank'),).toEqual(true);
     });
-    
+
     it('should return false if it is not a gravatar url', () => {
       expect(uut.isBlankGravatarUrl('https://some/random/url/avatar/000000000?d=blank')).toEqual(false);
     });

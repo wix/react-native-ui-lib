@@ -8,12 +8,12 @@ class ExampleComponent extends React.Component {
     color: PropTypes.string,
     label: PropTypes.string,
     size: PropTypes.number,
-    disabled: PropTypes.bool,
-  }
+    disabled: PropTypes.bool
+  };
 
   static defaultProps = {
-    color: 'blue',
-  }
+    color: 'blue'
+  };
 }
 
 describe('DocsGenerator Helper', () => {
@@ -23,7 +23,8 @@ describe('DocsGenerator Helper', () => {
     expect(componentInfo).toEqual({
       componentName: 'ExampleComponent',
       defaultProps: {color: 'blue'},
-      props: {color: 'red'}});
+      props: {color: 'red'}
+    });
   });
 
   it('should generateSnippet handle basic usage with no props', () => {
