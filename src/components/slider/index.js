@@ -338,6 +338,8 @@ export default class Slider extends PureBaseComponent {
       case 'decrement':
         newValue = value !== minimumValue ? value - step : value;
         break;
+      default: 
+        break;
     }
 
     this._x = this.getXForValue(newValue);

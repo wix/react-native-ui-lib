@@ -319,6 +319,7 @@ class NewDrawer extends PureBaseComponent {
           accessible
           accessibilityActions={Object.keys(this.getAccessibilityActions())}
           onAccessibilityAction={this.onAccessibilityAction}
+          {...this.extractAccessibilityProps()}
         >
           {children}
         </View>
