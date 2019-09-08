@@ -200,12 +200,20 @@ class RadioButton extends BaseComponent {
   }
 
   render() {
-    const {style, onPress, onValueChange, ...others} = this.getThemeProps();
+    const {onPress, onValueChange, ...others} = this.getThemeProps();
     const {opacityAnimationValue, scaleAnimationValue} = this.state;
     const Container = onPress || onValueChange ? TouchableOpacity : View;
 
     return (
-      <Container row centerV activeOpacity={1} {...others} onPress={this.onPress} {...this.getAccessibilityProps()}>
+      <Container
+        row
+        centerV
+        activeOpacity={1}
+        {...others}
+        style={undefined}
+        onPress={this.onPress}
+        {...this.getAccessibilityProps()}
+      >
         <View style={this.getRadioButtonOutlineStyle()}>
           <Animated.View
             style={[
