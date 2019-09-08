@@ -159,6 +159,17 @@ class Picker extends BaseComponent {
     });
   }
 
+  getAccessibilityInfo() {
+    const {placeholder} = this.props;
+    return {
+      accessibilityLabel: this.getLabel() ? `${placeholder} ${this.getLabel()}` : `Select ${placeholder}`,
+      accessibilityHint: this.getLabel()
+        ? 'Double tap to edit'
+        : `Goes to ${placeholder}. Suggestions will be provided`,
+      ...this.extractAccessibilityProps()
+    };
+  }
+
   getLabel() {
     const {value} = this.state;
 
@@ -232,7 +243,8 @@ class Picker extends BaseComponent {
           onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
           getItemValue: child.props.getItemValue || getItemValue,
           onSelectedLayout: this.onSelectedItemLayout,
-          renderItem: child.props.renderItem || renderItem
+          renderItem: child.props.renderItem || renderItem,
+          accessibilityHint: 'Double click to select this suggestion'
         });
       }
     });
@@ -311,6 +323,7 @@ class Picker extends BaseComponent {
     return (
       <TextField
         {...textInputProps}
+        {...this.getAccessibilityInfo()}
         enableErrors={false}
         value={label}
         expandable

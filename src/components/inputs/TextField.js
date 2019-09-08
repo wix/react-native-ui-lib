@@ -451,6 +451,7 @@ export default class TextField extends BaseInput {
         activeOpacity={1}
         onPress={() => !this.isDisabled() && this.toggleExpandableModal(true)}
         testID={`${testID}.expandable`}
+        {...this.extractAccessibilityProps()}
       >
         {this.renderTextInput()}
       </TouchableOpacity>

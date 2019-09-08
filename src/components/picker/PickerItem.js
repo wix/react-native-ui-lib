@@ -119,6 +119,7 @@ class PickerItem extends BaseComponent {
         onLayout={isSelected ? this.onSelectedLayout : undefined}
         disabled={disabled}
         testID={testID}
+        {...this.extractAccessibilityProps()}
       >
         {renderItem ? renderItem(value, this.props, this.getLabel()) : this.renderItem()}
       </TouchableOpacity>

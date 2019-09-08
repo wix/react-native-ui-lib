@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, AccessibilityInfo, findNodeHandle} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {Typography, Spacings, Colors, BorderRadiuses, AnimatableManager} from '../../style';
 import {Constants} from '../../helpers';
@@ -125,8 +125,25 @@ class Hint extends BaseComponent {
     targetLayout: this.props.targetFrame
   };
 
+  focusAccessibilityOnHint = () => {
+    const {message} = this.props;
+    const targetRefTag = findNodeHandle(this.targetRef);
+    const hintRefTag = findNodeHandle(this.hintRef);
+    if (targetRefTag && _.isString(message)) {
+      AccessibilityInfo.setAccessibilityFocus(targetRefTag);
+    } else if (hintRefTag) {
+      AccessibilityInfo.setAccessibilityFocus(hintRefTag);
+    }
+  };
+
   setTargetRef = ref => {
     this.targetRef = ref;
+    this.focusAccessibilityOnHint();
+  };
+
+  setHintRef = ref => {
+    this.hintRef = ref;
+    this.focusAccessibilityOnHint();
   };
 
   onTargetLayout = ({nativeEvent: {layout}}) => {
@@ -143,6 +160,17 @@ class Hint extends BaseComponent {
       });
     }
   };
+
+  getAccessibilityInfo() {
+    const {visible, message} = this.props;
+
+    if (visible && _.isString(message)) {
+      return {
+        accessible: true,
+        accessibilityLabel: message
+      };
+    }
+  }
 
   get containerWidth() {
     const {containerWidth} = this.getThemeProps();
@@ -337,6 +365,7 @@ class Hint extends BaseComponent {
             row
             centerV
             style={[styles.hint, color && {backgroundColor: color}, !_.isUndefined(borderRadius) && {borderRadius}]}
+            ref={this.setHintRef}
           >
             {icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
             <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>
@@ -362,7 +391,8 @@ class Hint extends BaseComponent {
       return React.cloneElement(this.props.children, {
         collapsable: false,
         onLayout: this.onTargetLayout,
-        ref: this.setTargetRef
+        ref: this.setTargetRef,
+        ...this.getAccessibilityInfo()
       });
     }
   }
