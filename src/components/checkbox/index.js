@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Animated, Easing, StyleSheet} from 'react-native';
+import {AccessibilityInfo, Animated, Easing, StyleSheet} from 'react-native';
 import {Colors} from '../../style';
 import Assets from '../../assets';
 import {BaseComponent} from '../../commons';
@@ -73,9 +73,25 @@ class Checkbox extends BaseComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.value !== this.props.value) {
-      this.animateCheckbox(this.props.value);
+    const {value} = this.props;
+    if (prevProps.value !== value) {
+      const checkedState = value ? 'checked' : 'unchecked';
+      
+      this.animateCheckbox(value);
+      AccessibilityInfo.announceForAccessibility(checkedState);
     }
+  }
+
+  getAccessibilityProps() {
+    const {disabled, value} = this.props;
+    const checkedState = value ? 'checked' : 'unchecked';
+
+    return {
+      accessible: true,
+      accessibilityLabel: !disabled ? 'checkbox' : `checkbox ${checkedState}`,
+      accessibilityRole: !disabled ? 'button' : 'none',
+      accessibilityStates: disabled ? ['disabled'] : undefined
+    };
   }
 
   generateStyles() {
@@ -95,6 +111,7 @@ class Checkbox extends BaseComponent {
 
   onPress = () => {
     const {disabled} = this.getThemeProps();
+
     if (!disabled) {
       _.invoke(this.props, 'onValueChange', !this.props.value);
     }
@@ -114,12 +131,10 @@ class Checkbox extends BaseComponent {
   }
 
   render() {
-    const {value, selectedIcon, color, iconColor, disabled, testID, ...others} = this.getThemeProps();
-    const accessibilityLabel = value ? 'checked' : 'unchecked';
-
+    const {selectedIcon, color, iconColor, disabled, testID, ...others} = this.getThemeProps();
     return (
       <TouchableOpacity
-        accessibilityLabel={accessibilityLabel}
+        {...this.getAccessibilityProps()}
         activeOpacity={1}
         testID={testID}
         {...others}
