@@ -167,7 +167,7 @@ class Hint extends BaseComponent {
     if (visible && _.isString(message)) {
       return {
         accessible: true,
-        accessibilityLabel: message
+        accessibilityLabel: `hint: ${message}`
       };
     }
   }
