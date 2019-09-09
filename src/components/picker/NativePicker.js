@@ -8,7 +8,7 @@ import PickerDialog from './PickerDialog';
 class NativePicker extends BaseComponent {
   state = {
     selectedValue: this.props.value,
-    items: this.extractPickerItems(this.props),
+    items: this.extractPickerItems(this.props)
   };
 
   extractPickerItems(props) {
@@ -21,20 +21,20 @@ class NativePicker extends BaseComponent {
 
   onCancel = () => {
     this.setState({
-      selectedValue: this.props.value,
+      selectedValue: this.props.value
     });
     this.input.toggleExpandableModal(false);
   };
 
   onDone = () => {
-    const {selectedValue} = this.state;
-    _.invoke(this.props, 'onChange', selectedValue);
+    const {selectedValue, items} = this.state;
+    _.invoke(this.props, 'onChange', selectedValue || items ? items[0].value : undefined);
     this.input.toggleExpandableModal(false);
   };
 
-  onValueChange = (selectedValue) => {
+  onValueChange = selectedValue => {
     this.setState({
-      selectedValue,
+      selectedValue
     });
   };
 
@@ -51,7 +51,7 @@ class NativePicker extends BaseComponent {
 
   renderPickerDialog = () => {
     const {selectedValue} = this.state;
-    
+
     return (
       <PickerDialog
         {...this.getThemeProps()}
@@ -68,7 +68,7 @@ class NativePicker extends BaseComponent {
   render() {
     const textInputProps = TextField.extractOwnProps(this.props);
     const label = this.getLabel();
-    
+
     return (
       <TextField
         {...textInputProps}

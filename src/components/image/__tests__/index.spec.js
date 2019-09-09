@@ -23,9 +23,9 @@ describe('Image', () => {
       ThemeManager.setTheme({
         components: {
           Image: {
-            sourceTransformer: jest.fn(() => 3),
-          },
-        },
+            sourceTransformer: jest.fn(() => 3)
+          }
+        }
       });
       const uut = new Image({source: 1});
       expect(uut.getImageSource()).toBe(3);
@@ -41,11 +41,11 @@ describe('Image', () => {
 
     it('should return asset according to assetName', () => {
       Assets.loadAssetsGroup('icons', {
-        test: 'test.png',
+        test: 'test.png'
       });
 
       Assets.loadAssetsGroup('icons.general', {
-        test: 'test.png',
+        test: 'test.png'
       });
 
       let uut = new Image({assetGroup: 'icons', assetName: 'test'});

@@ -6,7 +6,7 @@ describe('TabBar', () => {
       const uut = new TabBar({});
       uut.itemsWidths = [80, 80, 80, 80];
       uut.state = {
-        selectedIndex: 1,
+        selectedIndex: 1
       };
       uut.childrenCount = 4;
       uut.contentWidth = 320;
@@ -18,7 +18,7 @@ describe('TabBar', () => {
       const uut = new TabBar({});
       uut.itemsWidths = [150, 150, 300];
       uut.state = {
-        selectedIndex: 2,
+        selectedIndex: 2
       };
       uut.childrenCount = 2;
       uut.contentWidth = 600;

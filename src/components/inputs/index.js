@@ -7,5 +7,5 @@ module.exports = {
   },
   get MaskedInput() {
     return require('./MaskedInput').default;
-  },
+  }
 };

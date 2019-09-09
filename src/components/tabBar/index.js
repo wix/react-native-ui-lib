@@ -56,11 +56,11 @@ export default class TabBar extends BaseComponent {
     /**
      * Tab Bar height
      */
-    height: PropTypes.number,
+    height: PropTypes.number
   };
 
   static defaultProps = {
-    selectedIndex: 0,
+    selectedIndex: 0
   };
 
   constructor(props) {
@@ -69,7 +69,7 @@ export default class TabBar extends BaseComponent {
     this.state = {
       gradientOpacity: new Animated.Value(0),
       scrollEnabled: false,
-      currentIndex: props.selectedIndex,
+      currentIndex: props.selectedIndex
     };
 
     this.scrollContainerWidth = Constants.screenWidth;
@@ -164,7 +164,7 @@ export default class TabBar extends BaseComponent {
     Animated.spring(this.state.gradientOpacity, {
       toValue: newValue,
       speed: 20,
-      useNativeDriver: true,
+      useNativeDriver: true
     }).start();
   };
 
@@ -212,7 +212,7 @@ export default class TabBar extends BaseComponent {
             height: height - INDICATOR_HEIGHT,
             position: 'absolute',
             right: 0,
-            opacity: this.state.gradientOpacity,
+            opacity: this.state.gradientOpacity
           }}
         >
           <Image
@@ -270,7 +270,7 @@ export default class TabBar extends BaseComponent {
         },
         ref: r => {
           this.itemsRefs[index] = r;
-        },
+        }
       });
     });
     return children;
@@ -293,7 +293,7 @@ export default class TabBar extends BaseComponent {
 function createStyles(props) {
   return StyleSheet.create({
     container: {
-      zIndex: 100,
+      zIndex: 100
     },
     containerShadow: {
       ...Platform.select({
@@ -301,22 +301,22 @@ function createStyles(props) {
           shadowColor: Colors.dark10,
           shadowOpacity: 0.05,
           shadowRadius: 2,
-          shadowOffset: {height: 6, width: 0},
+          shadowOffset: {height: 6, width: 0}
         },
         android: {
           elevation: 5,
-          backgroundColor: Colors.white,
-        },
-      }),
+          backgroundColor: Colors.white
+        }
+      })
     },
     tabBar: {
       flex: 1,
       height: DEFAULT_HEIGHT,
-      backgroundColor: DEFAULT_BACKGROUND_COLOR,
+      backgroundColor: DEFAULT_BACKGROUND_COLOR
     },
     shadowImage: {
-      width: '100%',
-    },
+      width: '100%'
+    }
   });
 }
 

@@ -10,10 +10,12 @@ const Components = StyleSheet.create({
     borderTopWidth: 3 / PixelRatio.get(),
     borderRightWidth: 3 / PixelRatio.get(),
     borderColor: Colors.dark60,
-    transform: [{
-      rotate: '45deg',
-    }],
-  },
+    transform: [
+      {
+        rotate: '45deg'
+      }
+    ]
+  }
 });
 
 export default Components;

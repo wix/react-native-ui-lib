@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, ActivityIndicator} from 'react-native';
@@ -36,7 +35,7 @@ export default class LoaderScreen extends BaseComponent {
     /**
      * Show the screen as an absolute overlay
      */
-    overlay: PropTypes.bool,
+    overlay: PropTypes.bool
     /**
      * Custom container style
      */
@@ -63,16 +62,16 @@ export default class LoaderScreen extends BaseComponent {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   overlayContainer: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: Colors.rgba(Colors.white, 0.85),
-    zIndex: 100,
+    zIndex: 100
   },
   message: {
     ...Typography.text70,
     marginTop: 18,
-    color: Colors.dark10,
-  },
+    color: Colors.dark10
+  }
 });

@@ -31,11 +31,11 @@ class AnimatedImage extends BaseComponent {
     /**
      * A component to render while the image is loading
      */
-    loader: PropTypes.element,
+    loader: PropTypes.element
   };
 
   static defaultProps = {
-    animationDuration: 300,
+    animationDuration: 300
   };
 
   constructor(props) {

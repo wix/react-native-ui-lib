@@ -43,13 +43,13 @@ export default class ActionBar extends BaseComponent {
     /**
      * style the action bar
      */
-    style: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
   };
 
   static defaultProps = {
     height: 48,
     backgroundColor: Colors.white,
-    useSafeArea: true,
+    useSafeArea: true
   };
 
   generateStyles() {
@@ -63,7 +63,7 @@ export default class ActionBar extends BaseComponent {
     return {
       left: centered ? false : first,
       center: centered || (!first && !last) || (first && last),
-      right: centered ? false : last,
+      right: centered ? false : last
     };
   }
 
@@ -72,19 +72,9 @@ export default class ActionBar extends BaseComponent {
 
     return (
       <View useSafeArea={useSafeArea} style={[!keepRelative && this.styles.absoluteContainer]}>
-        <View
-          row
-          centerV
-          paddingH-20={!centered}
-          style={[this.styles.container, style]}
-          {...others}
-        >
+        <View row centerV paddingH-20={!centered} style={[this.styles.container, style]} {...others}>
           {_.map(actions, (action, i) => (
-            <View
-              key={i}
-              flex
-              {...this.getAlignment(i)}
-            >
+            <View key={i} flex {...this.getAlignment(i)}>
               <Button link size="medium" blue30 {...action}/>
             </View>
           ))}
@@ -97,13 +87,13 @@ export default class ActionBar extends BaseComponent {
 function createStyles({height, backgroundColor}) {
   return StyleSheet.create({
     container: {
-      height,
+      height
     },
     absoluteContainer: {
       ...StyleSheet.absoluteFillObject,
       top: undefined,
       backgroundColor,
-      ...Shadows.white40.top,
-    },
+      ...Shadows.white40.top
+    }
   });
 }

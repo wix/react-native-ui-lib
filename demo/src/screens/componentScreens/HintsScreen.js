@@ -42,7 +42,7 @@ export default class HintsScreen extends Component {
       : 'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
 
     return (
-      <View>
+      <View flex>
         <View
           flex
           padding-20
@@ -55,15 +55,15 @@ export default class HintsScreen extends Component {
           <Hint
             visible={showHint}
             // color={Colors.orange30}
-            // message={message}
-            message={
-              <Text>
-                {message}{' '}
-                <Text style={{textDecorationLine: 'underline'}} onPress={() => {}}>
-                  click here
-                </Text>
-              </Text>
-            }
+            message={message}
+            // message={
+            //   <Text>
+            //     {message}{' '}
+            //     <Text style={{textDecorationLine: 'underline'}} onPress={() => {}}>
+            //       click here
+            //     </Text>
+            //   </Text>
+            // }
             // messageStyle={{color: 'red'}}
             icon={showIcon ? settingsIcon : undefined}
             // iconStyle={{tintColor: 'red'}}

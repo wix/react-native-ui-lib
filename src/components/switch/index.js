@@ -7,7 +7,6 @@ import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
 
-
 const INNER_PADDING = 2;
 const DEFAULT_WIDTH = 42;
 const DEFAULT_HEIGHT = 24;
@@ -63,11 +62,11 @@ class Switch extends BaseComponent {
     /**
      * The Switch's thumb style
      */
-    thumbStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    thumbStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
   };
 
   state = {
-    thumbPosition: new Animated.Value(this.props.value ? 1 : 0),
+    thumbPosition: new Animated.Value(this.props.value ? 1 : 0)
   };
 
   generateStyles() {
@@ -87,7 +86,7 @@ class Switch extends BaseComponent {
       toValue: value ? 1 : 0,
       duration: 200,
       easing: Easing.bezier(0.77, 0.0, 0.175, 1.0),
-      useNativeDriver: true,
+      useNativeDriver: true
     }).start();
   }
 
@@ -104,7 +103,7 @@ class Switch extends BaseComponent {
     const width = props.width || DEFAULT_WIDTH;
     const thumbSize = props.thumbSize || DEFAULT_THUMB_SIZE;
     let position = width - (2 * INNER_PADDING + thumbSize);
-    position *= (Constants.isRTL ? -1 : 1);
+    position *= Constants.isRTL ? -1 : 1;
     return position;
   }
 
@@ -127,21 +126,21 @@ class Switch extends BaseComponent {
   renderThumb() {
     const {thumbStyle} = this.getThemeProps();
     const {thumbPosition} = this.state;
-    
+
     const interpolatedTranslateX = thumbPosition.interpolate({
       inputRange: [0, 1],
-      outputRange: [0, this.calcThumbOnPosition()],
+      outputRange: [0, this.calcThumbOnPosition()]
     });
 
     const thumbPositionStyle = {
-      transform: [{translateX: interpolatedTranslateX}],
+      transform: [{translateX: interpolatedTranslateX}]
     };
 
-    return <Animated.View style={[this.styles.thumb, thumbPositionStyle, thumbStyle]} />;
+    return <Animated.View style={[this.styles.thumb, thumbPositionStyle, thumbStyle]}/>;
   }
 
   render() {
-    const {value, style, ...others} = this.getThemeProps();
+    const {value, ...others} = this.getThemeProps();
     const accessibilityLabel = value ? 'switchOn' : 'switchOff';
 
     return (
@@ -165,7 +164,7 @@ function createStyles({
   offColor = Colors.blue60,
   disabledColor = Colors.dark70,
   thumbColor = Colors.white,
-  thumbSize = DEFAULT_THUMB_SIZE,
+  thumbSize = DEFAULT_THUMB_SIZE
 }) {
   return StyleSheet.create({
     switch: {
@@ -173,23 +172,23 @@ function createStyles({
       height,
       borderRadius: BorderRadiuses.br100,
       justifyContent: 'center',
-      padding: INNER_PADDING,
+      padding: INNER_PADDING
     },
     switchOn: {
-      backgroundColor: onColor,
+      backgroundColor: onColor
     },
     switchOff: {
-      backgroundColor: offColor,
+      backgroundColor: offColor
     },
     switchDisabled: {
-      backgroundColor: disabledColor,
+      backgroundColor: disabledColor
     },
     thumb: {
       width: thumbSize,
       height: thumbSize,
       borderRadius: thumbSize / 2,
-      backgroundColor: thumbColor,
-    },
+      backgroundColor: thumbColor
+    }
   });
 }
 

@@ -22,7 +22,7 @@ export function extractBackgroundColorValue(props) {
   let backgroundColor;
 
   const keys = Object.keys(props);
-  const bgProp = _.findLast(keys, (prop) => Colors.getBackgroundKeysPattern().test(prop));
+  const bgProp = _.findLast(keys, prop => Colors.getBackgroundKeysPattern().test(prop));
   if (bgProp) {
     const key = bgProp.replace(Colors.getBackgroundKeysPattern(), '');
     backgroundColor = Colors[key];
@@ -54,7 +54,7 @@ export function extractPaddingValues(props) {
     paddingR: 'paddingRight',
     paddingB: 'paddingBottom',
     paddingH: 'paddingHorizontal',
-    paddingV: 'paddingVertical',
+    paddingV: 'paddingVertical'
   };
   const paddings = {};
   const paddingPropsKeys = _.chain(props)
@@ -85,7 +85,7 @@ export function extractMarginValues(props) {
     marginR: 'marginRight',
     marginB: 'marginBottom',
     marginH: 'marginHorizontal',
-    marginV: 'marginVertical',
+    marginV: 'marginVertical'
   };
 
   const margins = {};
@@ -151,11 +151,11 @@ export function extractFlexStyle(props) {
   const STYLE_KEY_CONVERTERS = {
     flex: 'flex',
     flexG: 'flexGrow',
-    flexS: 'flexShrink',
+    flexS: 'flexShrink'
   };
 
   const keys = Object.keys(props);
-  const flexProp = keys.find((item) => FLEX_KEY_PATTERN.test(item));
+  const flexProp = keys.find(item => FLEX_KEY_PATTERN.test(item));
   if (flexProp && props[flexProp] === true) {
     let [flexKey, flexValue] = flexProp.split('-');
     flexKey = STYLE_KEY_CONVERTERS[flexKey];
@@ -165,11 +165,17 @@ export function extractFlexStyle(props) {
   }
 }
 
+export function extractAccessibilityProps(props = this.props) {
+  return _.pickBy(props, (value, key) => {
+    return /.*access.*/.test(key);
+  });
+}
+
 export function extractBorderRadiusValue(props) {
   let borderRadius;
 
   const keys = Object.keys(props);
-  const radiusProp = keys.find((prop) => BorderRadiuses.getKeysPattern().test(prop));
+  const radiusProp = keys.find(prop => BorderRadiuses.getKeysPattern().test(prop));
   if (radiusProp) {
     borderRadius = BorderRadiuses[radiusProp];
   }
@@ -183,7 +189,7 @@ export function extractModifierProps(props) {
     PADDING_KEY_PATTERN,
     MARGIN_KEY_PATTERN,
     ALIGNMENT_KEY_PATTERN,
-    Colors.getBackgroundKeysPattern(),
+    Colors.getBackgroundKeysPattern()
   ];
   const modifierProps = _.pickBy(props, (value, key) => {
     const isModifier = _.find(patterns, pattern => pattern.test(key));
@@ -214,17 +220,15 @@ export function getThemeProps(props = this.props, context = this.context) {
   return {...themeProps, ...props};
 }
 
-export function generateModifiersStyle(
-  options = {
-    backgroundColor: true,
-    borderRadius: true,
-    paddings: true,
-    margins: true,
-    alignments: true,
-    flex: true,
-  },
-  props = this.props,
-) {
+export function generateModifiersStyle(options = {
+  backgroundColor: true,
+  borderRadius: true,
+  paddings: true,
+  margins: true,
+  alignments: true,
+  flex: true
+},
+props = this.props,) {
   const style = {};
 
   if (options.backgroundColor) {
@@ -248,7 +252,6 @@ export function generateModifiersStyle(
 
   return style;
 }
-
 
 export function getAlteredModifiersOptions(currentProps, nextProps) {
   const allKeys = _.union([..._.keys(currentProps), ..._.keys(nextProps)]);

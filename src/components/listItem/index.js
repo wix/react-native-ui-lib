@@ -37,19 +37,19 @@ class ListItem extends BaseComponent {
     /**
      * The container element to wrap the ListItem
      */
-    containerElement: PropTypes.func,
+    containerElement: PropTypes.func
   };
 
   static defaultProps = {
     height: 63,
     containerElement: TouchableOpacity,
-    underlayColor: Colors.dark70,
+    underlayColor: Colors.dark70
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      pressed: false,
+      pressed: false
     };
   }
 
@@ -102,12 +102,12 @@ class ListItem extends BaseComponent {
 function createStyles({height}) {
   return StyleSheet.create({
     container: {
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white
     },
     innerContainer: {
       flexDirection: 'row',
-      height,
-    },
+      height
+    }
   });
 }
 

@@ -18,7 +18,7 @@ const ITEM_PROP_TYPES = {
   onPress: PropTypes.func,
   keepOpen: PropTypes.bool,
   style: ViewPropTypes.style,
-  testID: PropTypes.string,
+  testID: PropTypes.string
 };
 
 /**
@@ -27,7 +27,7 @@ const ITEM_PROP_TYPES = {
  * with gestureHandlerRootHOC from 'react-native-gesture-handler'. see
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
-class Drawer extends PureBaseComponent {
+class NewDrawer extends PureBaseComponent {
   static displayName = 'Drawer';
 
   static propTypes = {
@@ -67,12 +67,12 @@ class Drawer extends PureBaseComponent {
     /**
      * Perform the animation in natively
      */
-    useNativeAnimations: PropTypes.bool,
+    useNativeAnimations: PropTypes.bool
   };
 
   static defaultProps = {
     itemsTintColor: Colors.white,
-    itemsIconSize: 24,
+    itemsIconSize: 24
   };
 
   constructor(props) {
@@ -80,18 +80,28 @@ class Drawer extends PureBaseComponent {
 
     this._swipeableRow = React.createRef();
     this.animationOptions = {bounciness: props.bounciness || 5};
-    this.rightActionsContainerStyle = this.getActionsContainerStyle(
-      Constants.isRTL ? [props.leftItem] : props.rightItems,
-    );
-    this.leftActionsContainerStyle = this.getActionsContainerStyle(
-      Constants.isRTL ? props.rightItems : [props.leftItem],
-    );
+
+    this.rightActionsContainerStyle = this.getRightActionsContainerStyle();
+    this.leftActionsContainerStyle = this.getLeftActionsContainerStyle();
+
     this.leftRender = props.leftItem ? (Constants.isRTL ? this.renderRightActions : this.renderLeftActions) : undefined;
     this.rightRender = props.rightItems
       ? Constants.isRTL
         ? this.renderLeftActions
         : this.renderRightActions
       : undefined;
+  }
+
+  /** Actions */
+
+  getLeftActionsContainerStyle() {
+    const {rightItems, leftItem} = this.getThemeProps();
+    return this.getActionsContainerStyle(Constants.isRTL ? rightItems : [leftItem]);
+  }
+
+  getRightActionsContainerStyle() {
+    const {rightItems, leftItem} = this.getThemeProps();
+    return this.getActionsContainerStyle(Constants.isRTL ? [leftItem] : rightItems);
   }
 
   getActionsContainerStyle(items) {
@@ -101,6 +111,8 @@ class Drawer extends PureBaseComponent {
   closeDrawer = () => {
     this._swipeableRow.current.close();
   };
+
+  /** Events */
 
   onActionPress(item) {
     if (!item.keepOpen) {
@@ -116,6 +128,34 @@ class Drawer extends PureBaseComponent {
   onSwipeableWillClose = () => {
     _.invoke(this.props, 'onSwipeableWillClose', this.props);
   };
+
+  /** Accessability */
+
+  getAccessibilityActions() {
+    const {rightItems, leftItem} = this.props;
+    const actions = {};
+    if (leftItem && leftItem.onPress && leftItem.text) {
+      actions[leftItem.text] = leftItem;
+    }
+    if (rightItems) {
+      rightItems.forEach(item => {
+        if (item.onPress && item.text) {
+          actions[item.text] = item;
+        }
+      });
+    }
+    return actions;
+  }
+
+  onAccessibilityAction = event => {
+    const actions = this.getAccessibilityActions();
+    const action = _.find(actions, o => {
+      return o.text === event.nativeEvent.action;
+    });
+    _.invoke(action, 'onPress');
+  };
+
+  /** Renders */
 
   // TODO: enable support for rendering more than one left item
   renderLeftActions = (progress, dragX) => {
@@ -139,7 +179,7 @@ class Drawer extends PureBaseComponent {
               index: items.length - index - 1,
               progress,
               dragX,
-              itemsCount: items.length,
+              itemsCount: items.length
             });
           })}
         </View>
@@ -155,13 +195,13 @@ class Drawer extends PureBaseComponent {
     const scale = progress.interpolate({
       inputRange,
       outputRange,
-      extrapolate: 'clamp',
+      extrapolate: 'clamp'
     });
 
     const opacity = progress.interpolate({
       inputRange,
       outputRange,
-      extrapolate: 'clamp',
+      extrapolate: 'clamp'
     });
 
     return (
@@ -173,7 +213,7 @@ class Drawer extends PureBaseComponent {
           item.style,
           {backgroundColor: item.background || DEFAULT_BG},
           {width: item.width},
-          {minWidth: itemsMinWidth},
+          {minWidth: itemsMinWidth}
         ]}
         onPress={() => this.onActionPress(item)}
       >
@@ -187,8 +227,8 @@ class Drawer extends PureBaseComponent {
                 height: itemsIconSize,
                 tintColor: itemsTintColor,
                 opacity,
-                transform: [{scale}],
-              },
+                transform: [{scale}]
+              }
             ]}
           />
         )}
@@ -199,10 +239,13 @@ class Drawer extends PureBaseComponent {
               {
                 color: itemsTintColor,
                 opacity,
-                transform: [{scale}],
+                transform: [{scale}]
               },
-              itemsTextStyle,
+              itemsTextStyle
             ]}
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+            accessible={false}
           >
             {item.text}
           </Animated.Text>
@@ -212,7 +255,8 @@ class Drawer extends PureBaseComponent {
   };
 
   render() {
-    const {children, style, ...others} = this.props;
+    const {children, style, ...others} = this.getThemeProps();
+
     return (
       <Swipeable
         {...others}
@@ -227,32 +271,40 @@ class Drawer extends PureBaseComponent {
         onSwipeableWillOpen={this.onSwipeableWillOpen}
         onSwipeableWillClose={this.onSwipeableWillClose}
       >
-        {children}
+        <View
+          flex
+          accessible
+          accessibilityActions={Object.keys(this.getAccessibilityActions())}
+          onAccessibilityAction={this.onAccessibilityAction}
+          {...this.extractAccessibilityProps()}
+        >
+          {children}
+        </View>
       </Swipeable>
     );
   }
 }
 
-export default Drawer;
+export default NewDrawer;
 
 const styles = StyleSheet.create({
   leftAction: {
     flex: 1,
     justifyContent: 'center',
     alignItems: /* Constants.isRTL ? 'flex-end' :  */ 'flex-start',
-    backgroundColor: '#388e3c',
+    backgroundColor: '#388e3c'
   },
   actionIcon: {
     width: 30,
-    marginHorizontal: 10,
+    marginHorizontal: 10
   },
   actionText: {
-    color: '#ffffff',
+    color: '#ffffff'
   },
   action: {
     paddingHorizontal: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#dd2c00',
-  },
+    backgroundColor: '#dd2c00'
+  }
 });

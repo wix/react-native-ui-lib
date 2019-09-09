@@ -55,7 +55,7 @@ class PickerItem extends BaseComponent {
     /**
      * Callback for onLayout event
      */
-    onSelectedLayout: PropTypes.func,
+    onSelectedLayout: PropTypes.func
   };
 
   /* eslint-disable */
@@ -88,7 +88,7 @@ class PickerItem extends BaseComponent {
     const {isSelected, disabled} = this.props;
     if (isSelected) {
       return (
-        <Image style={[this.styles.checkIcon, disabled && this.styles.checkIconDisabled]} source={Assets.icons.check} />
+        <Image style={[this.styles.checkIcon, disabled && this.styles.checkIconDisabled]} source={Assets.icons.check}/>
       );
     }
   }
@@ -119,12 +119,13 @@ class PickerItem extends BaseComponent {
         onLayout={isSelected ? this.onSelectedLayout : undefined}
         disabled={disabled}
         testID={testID}
+        {...this.extractAccessibilityProps()}
       >
         {renderItem ? renderItem(value, this.props, this.getLabel()) : this.renderItem()}
       </TouchableOpacity>
     );
   }
-  
+
   // TODO: deprecate the check for object
   onPress = () => {
     const {label, value, onPress} = this.props;
@@ -138,23 +139,23 @@ function createStyles() {
       height: 56.5,
       paddingHorizontal: 23,
       borderColor: Colors.rgba(Colors.dark10, 0.1),
-      borderBottomWidth: 1,
+      borderBottomWidth: 1
     },
     labelText: {
       ...Typography.text70,
       color: Colors.dark10,
       flex: 1,
-      textAlign: 'left',
+      textAlign: 'left'
     },
     labelTextDisabled: {
-      color: Colors.dark60,
+      color: Colors.dark60
     },
     checkIcon: {
-      tintColor: ThemeManager.primaryColor,
+      tintColor: ThemeManager.primaryColor
     },
     checkIconDisabled: {
-      tintColor: Colors.dark60,
-    },
+      tintColor: Colors.dark60
+    }
   });
 }
 

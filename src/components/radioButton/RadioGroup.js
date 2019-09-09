@@ -20,14 +20,14 @@ class RadioGroup extends BaseComponent {
     /**
      * Invoked once when value changes, by selecting one of the radio buttons in the group
      */
-    onValueChange: PropTypes.func,
+    onValueChange: PropTypes.func
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      value: props.initialValue,
+      value: props.initialValue
     };
   }
 

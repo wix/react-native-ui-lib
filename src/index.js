@@ -30,6 +30,15 @@ module.exports = {
   get Checkbox() {
     return require('./components').Checkbox;
   },
+  get ColorPalette() {
+    return require('./components').ColorPalette;
+  },
+  get ColorPicker() {
+    return require('./components').ColorPicker;
+  },
+  get ColorSwatch() {
+    return require('./components').ColorSwatch;
+  },
   get ConnectionStatusBar() {
     return require('./components').ConnectionStatusBar;
   },
@@ -38,6 +47,9 @@ module.exports = {
   },
   get Drawer() {
     return require('./components').Drawer;
+  },
+  get FloatingButton() {
+    return require('./components').FloatingButton;
   },
   get FeatureHighlight() {
     return require('./components').FeatureHighlight;
@@ -75,11 +87,23 @@ module.exports = {
   get PanDismissibleView() {
     return require('./components').PanDismissibleView;
   },
+  get PanResponderView() {
+    return require('./components').PanResponderView;
+  },
   get Picker() {
     return require('./components').Picker;
   },
   get ProgressBar() {
     return require('./components').ProgressBar;
+  },
+  get Slider() {
+    return require('./components').Slider;
+  },
+  get GradientSlider() {
+    return require('./components').GradientSlider;
+  },
+  get ColorSliderGroup() {
+    return require('./components').ColorSliderGroup;
   },
   get Stepper() {
     return require('./components').Stepper;
@@ -208,5 +232,5 @@ module.exports = {
   // Incubator
   get Incubator() {
     return require('./incubator');
-  },
+  }
 };

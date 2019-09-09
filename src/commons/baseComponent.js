@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import {StyleSheet} from 'react-native';
 import _ from 'lodash';
-import {Typography, Colors} from '../style';
+import {Colors} from '../style';
 import {DocsGenerator} from '../helpers';
 import * as Modifiers from './modifiers';
 
@@ -24,7 +24,7 @@ export default function baseComponent(usePure) {
       }
 
       this.state = {
-        ...this.buildStyleOutOfModifiers(),
+        ...this.buildStyleOutOfModifiers()
       };
     }
 
@@ -43,11 +43,13 @@ export default function baseComponent(usePure) {
 
     getThemeProps = Modifiers.getThemeProps;
 
+    extractAccessibilityProps = Modifiers.extractAccessibilityProps;
+
     extractTypographyValue() {
       return Modifiers.extractTypographyValue(this.props);
     }
 
-    extractColorValue = () => Modifiers.extractColorValue(this.getThemeProps())
+    extractColorValue = () => Modifiers.extractColorValue(this.getThemeProps());
 
     extractAnimationProps() {
       return _.pick(this.props, [
@@ -60,7 +62,7 @@ export default function baseComponent(usePure) {
         'transition',
         'onAnimationBegin',
         'onAnimationEnd',
-        'useNativeDriver',
+        'useNativeDriver'
       ]);
     }
 
@@ -107,22 +109,20 @@ export default function baseComponent(usePure) {
 
       if (!_.isEmpty(options)) {
         this.setState({
-          ...this.buildStyleOutOfModifiers(options, nextProps),
+          ...this.buildStyleOutOfModifiers(options, nextProps)
         });
       }
     }
 
-    buildStyleOutOfModifiers(
-      options = {
-        backgroundColor: true,
-        borderRadius: true,
-        paddings: true,
-        margins: true,
-        alignments: true,
-        flex: true,
-      },
-      props = this.props,
-    ) {
+    buildStyleOutOfModifiers(options = {
+      backgroundColor: true,
+      borderRadius: true,
+      paddings: true,
+      margins: true,
+      alignments: true,
+      flex: true
+    },
+    props = this.props,) {
       const style = {};
 
       if (options.backgroundColor) {

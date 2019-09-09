@@ -4,5 +4,5 @@ module.exports = {
   },
   get RadioGroup() {
     return require('./RadioGroup').default;
-  },
+  }
 };

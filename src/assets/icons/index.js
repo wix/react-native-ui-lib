@@ -10,5 +10,5 @@ export const icons = {
   },
   get x() {
     return require('./x.png');
-  },
+  }
 };

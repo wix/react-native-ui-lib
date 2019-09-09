@@ -19,7 +19,7 @@ const ITEM_PROP_TYPES = {
   background: PropTypes.string,
   text: PropTypes.string,
   icon: PropTypes.number,
-  onPress: PropTypes.func,
+  onPress: PropTypes.func
 };
 
 /**
@@ -73,14 +73,14 @@ export default class Drawer extends PureBaseComponent {
     /**
      * Perform the animation in natively
      */
-    useNativeAnimations: PropTypes.bool,
+    useNativeAnimations: PropTypes.bool
   };
 
   static defaultProps = {
     damping: 0.7,
     tension: 300,
     itemsTintColor: Colors.white,
-    itemsIconSize: DEFAULT_ICON_SIZE,
+    itemsIconSize: DEFAULT_ICON_SIZE
   };
 
   constructor(props) {
@@ -92,13 +92,15 @@ export default class Drawer extends PureBaseComponent {
     this.state = {
       inMotion: false,
       position: 1,
-      width: screenWidth,
+      width: screenWidth
     };
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (JSON.stringify(this.props.leftItem) !== JSON.stringify(nextProps.leftItem) ||
-    JSON.stringify(this.props.rightItems) !== JSON.stringify(nextProps.rightItems)) {
+    if (
+      JSON.stringify(this.props.leftItem) !== JSON.stringify(nextProps.leftItem) ||
+      JSON.stringify(this.props.rightItems) !== JSON.stringify(nextProps.rightItems)
+    ) {
       this.closeDrawer();
     }
   }
@@ -112,37 +114,37 @@ export default class Drawer extends PureBaseComponent {
     if (event.includes('"second":"enter"')) {
       this.interactableElem.snapTo({index: 1});
     }
-  }
+  };
   onSnap = ({nativeEvent}) => {
     const {index} = nativeEvent;
     const {position} = this.state;
     if (index !== position) {
       this.setState({position: index});
     }
-  }
+  };
   onDrag = ({nativeEvent}) => {
     const {state} = nativeEvent;
     if (state === 'start') {
       this.setState({inMotion: true});
       _.invoke(this.props, 'onDragStart');
     }
-  }
+  };
   onStop = () => {
     const {inMotion} = this.state;
     if (inMotion) {
       this.setState({inMotion: false});
     }
-  }
+  };
   onPress = () => {
     this.closeDrawer();
     setTimeout(() => {
       _.invoke(this.props, 'onPress');
     }, 0);
-  }
+  };
 
   closeDrawer = () => {
     this.interactableElem.snapTo({index: 1});
-  }
+  };
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
   }
@@ -150,20 +152,20 @@ export default class Drawer extends PureBaseComponent {
     const {animationConfig} = this.getThemeProps();
     return {
       useNativeDriver: true,
-      ...animationConfig,
+      ...animationConfig
     };
   }
 
   getMaxItemWidth() {
     const {rightItems} = this.props;
     const {width} = this.state;
-    return rightItems ? (width - MIN_LEFT_MARGIN) / rightItems.length : (width - MIN_LEFT_MARGIN);
+    return rightItems ? (width - MIN_LEFT_MARGIN) / rightItems.length : width - MIN_LEFT_MARGIN;
   }
   getMinItemWidth() {
     const {equalWidths} = this.getThemeProps();
     const maxWidth = this.getMaxItemWidth();
     const minWidth = equalWidths ? maxWidth : MIN_ITEM_WIDTH;
-    return (minWidth > maxWidth) ? maxWidth : minWidth;
+    return minWidth > maxWidth ? maxWidth : minWidth;
   }
   getRightItemsTotalWidth(numberOfItems) {
     const {rightItems} = this.getThemeProps();
@@ -197,7 +199,9 @@ export default class Drawer extends PureBaseComponent {
     const rightBound = rightWidth > 0 ? -rightWidth - rightSpring : 0;
 
     return {
-      right: _.isEmpty(leftItem) ? 0 : leftBound, left: _.isEmpty(rightItems) ? 0 : rightBound};
+      right: _.isEmpty(leftItem) ? 0 : leftBound,
+      left: _.isEmpty(rightItems) ? 0 : rightBound
+    };
   }
   getSnapPoints() {
     const {leftItem, rightItems, damping, tension} = this.getThemeProps();
@@ -205,8 +209,7 @@ export default class Drawer extends PureBaseComponent {
 
     const left = !_.isEmpty(leftItem) ? {x: this.getItemWidth(leftItem), damping, tension} : {};
     const initial = {x: 0, damping, tension};
-    const last = rightItems && !_.isEmpty(rightItems[0]) ?
-      {x: -(this.getRightItemsTotalWidth()), damping, tension} : {};
+    const last = rightItems && !_.isEmpty(rightItems[0]) ? {x: -this.getRightItemsTotalWidth(), damping, tension} : {};
 
     switch (size) {
       case 0:
@@ -219,8 +222,8 @@ export default class Drawer extends PureBaseComponent {
     const {rightItems} = this.props;
     const size = rightItems ? rightItems.length : 0;
 
-    const first = {id: 'first', influenceArea: {left: -(this.getRightItemsTotalWidth(1))}};
-    const second = {id: 'second', influenceArea: {left: -(this.getRightItemsTotalWidth(size - 1))}};
+    const first = {id: 'first', influenceArea: {left: -this.getRightItemsTotalWidth(1)}};
+    const second = {id: 'second', influenceArea: {left: -this.getRightItemsTotalWidth(size - 1)}};
 
     switch (size) {
       case 0:
@@ -240,15 +243,15 @@ export default class Drawer extends PureBaseComponent {
 
     for (let i = 0; i < size; i++) {
       const itemWidth = this.getItemWidth(rightItems[i]);
-      const end = itemWidth - (size * BLEED);
-      const max = -(end + (interval * i));
+      const end = itemWidth - size * BLEED;
+      const max = -(end + interval * i);
       const min = -(itemWidth * (i + 1));
       inputRanges.push([min, max]);
     }
     return inputRanges.reverse();
   }
 
-  onLayout = (event) => {
+  onLayout = event => {
     const {width, height} = event.nativeEvent.layout;
 
     const typography = height >= SCALE_POINT ? Typography.text70 : Typography.text80;
@@ -266,94 +269,96 @@ export default class Drawer extends PureBaseComponent {
     const onLeftPress = leftItem ? leftItem.onPress : undefined;
 
     return (
-      <View
-        style={this.styles.leftItemContainer}
-        pointerEvents={'box-none'}
-      >
+      <View style={this.styles.leftItemContainer} pointerEvents={'box-none'}>
         <Animated.View
           style={{
             backgroundColor: background,
             position: 'absolute',
             left: 0,
             right: 0,
-            transform: [{
-              translateX: this.deltaX.interpolate({
-                inputRange: [0, leftItemWidth],
-                outputRange: [-leftItemWidth, 0],
-                extrapolateRight: 'clamp',
-              }),
-            }],
+            transform: [
+              {
+                translateX: this.deltaX.interpolate({
+                  inputRange: [0, leftItemWidth],
+                  outputRange: [-leftItemWidth, 0],
+                  extrapolateRight: 'clamp'
+                })
+              }
+            ]
           }}
           {...this.getAnimationConfig()}
         >
-          <TouchableHighlight
-            onPress={onLeftPress}
-            underlayColor={Colors.rgba(Colors.white, 0.3)}
-          >
+          <TouchableHighlight onPress={onLeftPress} underlayColor={Colors.rgba(Colors.white, 0.3)}>
             <View
               style={{
                 height,
                 width: leftItemWidth,
                 padding: ITEM_PADDING,
                 justifyContent: 'center',
-                alignItems: 'center',
+                alignItems: 'center'
               }}
             >
-              {leftItem && leftItem.icon &&
-              <Animated.Image
-                source={leftItem.icon}
-                style={
-                [{
-                  tintColor: itemsTintColor,
-                  width: itemsIconSize,
-                  height: itemsIconSize,
-                  opacity: this.deltaX.interpolate({
-                    inputRange: [leftItemWidth - BLEED, leftItemWidth],
-                    outputRange: [0, 1],
-                    extrapolateLeft: 'clamp',
-                    extrapolateRight: 'clamp',
-                  }),
-                  transform: [{
-                    scale: this.deltaX.interpolate({
-                      inputRange: [leftItemWidth - BLEED, leftItemWidth],
-                      outputRange: [0.7, 1],
-                      extrapolateLeft: 'clamp',
-                      extrapolateRight: 'clamp',
-                    }),
-                  }],
-                },
-                ]}
-                {...this.getAnimationConfig()}
-              />}
-              {leftItem && leftItem.text &&
-              <Animated.Text
-                numberOfLines={1}
-                style={
-                [{
-                  color: itemsTintColor,
-                  ...typography,
-                  ...itemsTextStyle,
-                  marginTop: textTopMargin,
-                  opacity: this.deltaX.interpolate({
-                    inputRange: [leftItemWidth - BLEED, leftItemWidth],
-                    outputRange: [0, 1],
-                    extrapolateLeft: 'clamp',
-                    extrapolateRight: 'clamp',
-                  }),
-                  transform: [{
-                    scale: this.deltaX.interpolate({
-                      inputRange: [leftItemWidth - BLEED, leftItemWidth],
-                      outputRange: [0.7, 1],
-                      extrapolateLeft: 'clamp',
-                      extrapolateRight: 'clamp',
-                    }),
-                  }],
-                },
-                ]}
-                {...this.getAnimationConfig()}
-              >
-                {leftItem.text}
-              </Animated.Text>}
+              {leftItem && leftItem.icon && (
+                <Animated.Image
+                  source={leftItem.icon}
+                  style={[
+                    {
+                      tintColor: itemsTintColor,
+                      width: itemsIconSize,
+                      height: itemsIconSize,
+                      opacity: this.deltaX.interpolate({
+                        inputRange: [leftItemWidth - BLEED, leftItemWidth],
+                        outputRange: [0, 1],
+                        extrapolateLeft: 'clamp',
+                        extrapolateRight: 'clamp'
+                      }),
+                      transform: [
+                        {
+                          scale: this.deltaX.interpolate({
+                            inputRange: [leftItemWidth - BLEED, leftItemWidth],
+                            outputRange: [0.7, 1],
+                            extrapolateLeft: 'clamp',
+                            extrapolateRight: 'clamp'
+                          })
+                        }
+                      ]
+                    }
+                  ]}
+                  {...this.getAnimationConfig()}
+                />
+              )}
+              {leftItem && leftItem.text && (
+                <Animated.Text
+                  numberOfLines={1}
+                  style={[
+                    {
+                      color: itemsTintColor,
+                      ...typography,
+                      ...itemsTextStyle,
+                      marginTop: textTopMargin,
+                      opacity: this.deltaX.interpolate({
+                        inputRange: [leftItemWidth - BLEED, leftItemWidth],
+                        outputRange: [0, 1],
+                        extrapolateLeft: 'clamp',
+                        extrapolateRight: 'clamp'
+                      }),
+                      transform: [
+                        {
+                          scale: this.deltaX.interpolate({
+                            inputRange: [leftItemWidth - BLEED, leftItemWidth],
+                            outputRange: [0.7, 1],
+                            extrapolateLeft: 'clamp',
+                            extrapolateRight: 'clamp'
+                          })
+                        }
+                      ]
+                    }
+                  ]}
+                  {...this.getAnimationConfig()}
+                >
+                  {leftItem.text}
+                </Animated.Text>
+              )}
             </View>
           </TouchableHighlight>
         </Animated.View>
@@ -365,10 +370,11 @@ export default class Drawer extends PureBaseComponent {
       <TouchableHighlight
         key={index}
         style={[
-          this.styles.item, {
+          this.styles.item,
+          {
             width: this.getItemWidth(item),
             backgroundColor: Colors.rgba(Colors.white, 0)
-          },
+          }
         ]}
         onPress={item.onPress}
         underlayColor={Colors.rgba(Colors.white, 0.3)}
@@ -376,9 +382,11 @@ export default class Drawer extends PureBaseComponent {
         <View/>
       </TouchableHighlight>
     );
-  }
+  };
   renderRightItem(item, index) {
-    if (!item) return;
+    if (!item) {
+      return;
+    }
     const {itemsTintColor, itemsIconSize, itemsTextStyle} = this.getThemeProps();
     const {itemPadding, typography, textTopMargin} = this.state;
     const inputRanges = this.getInputRanges();
@@ -387,68 +395,75 @@ export default class Drawer extends PureBaseComponent {
       <View
         key={index}
         style={[
-          this.styles.item, {
+          this.styles.item,
+          {
             width: this.getItemWidth(item),
             backgroundColor: item.background || ITEM_BG,
-            padding: itemPadding,
-          },
+            padding: itemPadding
+          }
         ]}
       >
-        {item.icon &&
-        <Animated.Image
-          source={item.icon}
-          style={
-          [{
-            tintColor: itemsTintColor,
-            width: itemsIconSize,
-            height: itemsIconSize,
-            opacity: this.deltaX.interpolate({
-              inputRange: inputRanges[index],
-              outputRange: [1, 0],
-              extrapolateLeft: 'clamp',
-              extrapolateRight: 'clamp',
-            }),
-            transform: [{
-              scale: this.deltaX.interpolate({
-                inputRange: inputRanges[index],
-                outputRange: [1, 0.7],
-                extrapolateLeft: 'clamp',
-                extrapolateRight: 'clamp',
-              }),
-            }],
-          },
-          ]}
-          {...this.getAnimationConfig()}
-        />}
-        {item.text &&
-        <Animated.Text
-          numberOfLines={1}
-          style={
-          [{
-            color: itemsTintColor,
-            ...typography,
-            ...itemsTextStyle,
-            marginTop: textTopMargin,
-            opacity: this.deltaX.interpolate({
-              inputRange: inputRanges[index],
-              outputRange: [1, 0],
-              extrapolateLeft: 'clamp',
-              extrapolateRight: 'clamp',
-            }),
-            transform: [{
-              scale: this.deltaX.interpolate({
-                inputRange: inputRanges[index],
-                outputRange: [1, 0.7],
-                extrapolateLeft: 'clamp',
-                extrapolateRight: 'clamp',
-              }),
-            }],
-          },
-          ]}
-          {...this.getAnimationConfig()}
-        >
-          {item.text}
-        </Animated.Text>}
+        {item.icon && (
+          <Animated.Image
+            source={item.icon}
+            style={[
+              {
+                tintColor: itemsTintColor,
+                width: itemsIconSize,
+                height: itemsIconSize,
+                opacity: this.deltaX.interpolate({
+                  inputRange: inputRanges[index],
+                  outputRange: [1, 0],
+                  extrapolateLeft: 'clamp',
+                  extrapolateRight: 'clamp'
+                }),
+                transform: [
+                  {
+                    scale: this.deltaX.interpolate({
+                      inputRange: inputRanges[index],
+                      outputRange: [1, 0.7],
+                      extrapolateLeft: 'clamp',
+                      extrapolateRight: 'clamp'
+                    })
+                  }
+                ]
+              }
+            ]}
+            {...this.getAnimationConfig()}
+          />
+        )}
+        {item.text && (
+          <Animated.Text
+            numberOfLines={1}
+            style={[
+              {
+                color: itemsTintColor,
+                ...typography,
+                ...itemsTextStyle,
+                marginTop: textTopMargin,
+                opacity: this.deltaX.interpolate({
+                  inputRange: inputRanges[index],
+                  outputRange: [1, 0],
+                  extrapolateLeft: 'clamp',
+                  extrapolateRight: 'clamp'
+                }),
+                transform: [
+                  {
+                    scale: this.deltaX.interpolate({
+                      inputRange: inputRanges[index],
+                      outputRange: [1, 0.7],
+                      extrapolateLeft: 'clamp',
+                      extrapolateRight: 'clamp'
+                    })
+                  }
+                ]
+              }
+            ]}
+            {...this.getAnimationConfig()}
+          >
+            {item.text}
+          </Animated.Text>
+        )}
       </View>
     );
   }
@@ -457,7 +472,9 @@ export default class Drawer extends PureBaseComponent {
 
     return (
       <View style={this.styles.rightItemsContainer}>
-        {_.map(rightItems, (item, index) => { return this.renderRightItem(item, index); })}
+        {_.map(rightItems, (item, index) => {
+          return this.renderRightItem(item, index);
+        })}
       </View>
     );
   }
@@ -495,11 +512,11 @@ export default class Drawer extends PureBaseComponent {
               {this.props.children}
             </Container>
           </View>
-          {rightItems &&
+          {rightItems && (
             <View style={{width: containerWidth, flexDirection: 'row'}}>
               {_.map(rightItems, this.renderGhostButton)}
             </View>
-          }
+          )}
         </Interactable.View>
       </View>
     );
@@ -534,6 +551,6 @@ function createStyles() {
     item: {
       justifyContent: 'center',
       alignItems: 'center'
-    },
+    }
   });
 }

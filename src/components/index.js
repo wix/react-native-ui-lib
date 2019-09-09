@@ -29,6 +29,15 @@ module.exports = {
   get Checkbox() {
     return require('./checkbox').default;
   },
+  get ColorPalette() {
+    return require('./colorPicker/ColorPalette').default;
+  },
+  get ColorPicker() {
+    return require('./colorPicker').default;
+  },
+  get ColorSwatch() {
+    return require('./colorPicker/ColorSwatch').default;
+  },
   get ConnectionStatusBar() {
     return require('./connectionStatusBar').default;
   },
@@ -40,6 +49,9 @@ module.exports = {
   },
   get FeatureHighlight() {
     return require('./featureHighlight').default;
+  },
+  get FloatingButton() {
+    return require('./floatingButton').default;
   },
   get Hint() {
     return require('./hint').default;
@@ -79,6 +91,9 @@ module.exports = {
   get PanDismissibleView() {
     return require('./panningViews/panDismissibleView').default;
   },
+  get PanResponderView() {
+    return require('./panningViews/panResponderView').default;
+  },
   get Picker() {
     return require('./picker').default;
   },
@@ -105,7 +120,15 @@ module.exports = {
   get SharedTransition() {
     return require('./sharedTransition').default;
   },
-
+  get Slider() {
+    return require('./slider').default;
+  },
+  get GradientSlider() {
+    return require('./slider/GradientSlider').default;
+  },
+  get ColorSliderGroup() {
+    return require('./slider/ColorSliderGroup').default;
+  },
   get Switch() {
     return require('./switch').default;
   },
@@ -123,5 +146,5 @@ module.exports = {
   },
   get WheelPickerDialog() {
     return require('./wheelPickerDialog').default;
-  },
+  }
 };

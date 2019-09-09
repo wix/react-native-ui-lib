@@ -77,19 +77,19 @@ export default class TabBarItem extends PureBaseComponent {
     /**
      * Apply background color on press for TouchableOpacity
      */
-    activeBackgroundColor: PropTypes.string,
+    activeBackgroundColor: PropTypes.string
   };
 
   static defaultProps = {
     test: true, // this will enable by the new tab bar design
-    maxLines: 1,
+    maxLines: 1
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      indicatorOpacity: props.selected ? new Animated.Value(1) : new Animated.Value(0),
+      indicatorOpacity: props.selected ? new Animated.Value(1) : new Animated.Value(0)
     };
   }
 
@@ -104,7 +104,7 @@ export default class TabBarItem extends PureBaseComponent {
       toValue: newValue ? 1 : 0,
       easing: Easing.ease,
       duration: 150,
-      useNativeDriver: true,
+      useNativeDriver: true
     }).start();
   }
 
@@ -157,7 +157,7 @@ export default class TabBarItem extends PureBaseComponent {
       width,
       onPress,
       activeBackgroundColor,
-      testID,
+      testID
     } = this.getThemeProps();
 
     const iconTint = iconColor || this.getColorFromStyle(labelStyle) || this.getColorFromStyle(this.styles.label);
@@ -204,7 +204,7 @@ export default class TabBarItem extends PureBaseComponent {
             />
           )}
         </View>
-        <Animated.View style={[{opacity: indicatorOpacity}, this.styles.indicator, indicatorStyle]} />
+        <Animated.View style={[{opacity: indicatorOpacity}, this.styles.indicator, indicatorStyle]}/>
       </TouchableOpacity>
     );
   }
@@ -214,25 +214,25 @@ function createStyles() {
   return StyleSheet.create({
     label: {
       color: Colors.dark30,
-      ...Typography.text80,
+      ...Typography.text80
     },
     selectedLabel: {
       color: Colors.blue30,
       ...Typography.text80,
-      fontWeight: 'bold',
+      fontWeight: 'bold'
     },
     divider: {
       borderRightWidth: 1,
       borderRightColor: Colors.dark70,
-      marginVertical: 14, // NOTE: will not cut long text at the top and bottom in iOS if TabBar not high enough
+      marginVertical: 14 // NOTE: will not cut long text at the top and bottom in iOS if TabBar not high enough
     },
     indicator: {
       backgroundColor: INDICATOR_BG_COLOR,
       height: INDICATOR_HEIGHT,
-      marginHorizontal: INDICATOR_SPACINGS,
+      marginHorizontal: INDICATOR_SPACINGS
     },
     badge: {
-      marginLeft: 4,
-    },
+      marginLeft: 4
+    }
   });
 }

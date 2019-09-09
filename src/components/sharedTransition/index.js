@@ -5,5 +5,5 @@ import Area from './SharedArea';
 export default {
   Area,
   Source,
-  Target,
+  Target
 };
