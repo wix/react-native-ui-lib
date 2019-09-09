@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Animated, Easing} from 'react-native';
+import {AccessibilityInfo, StyleSheet, Animated, Easing} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -74,9 +74,28 @@ class Switch extends BaseComponent {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.value !== nextProps.value) {
+    const {value} = this.getThemeProps();
+    if (value !== nextProps.value) {
       this.toggle(nextProps.value);
     }
+    this.announceForAccessibility(nextProps.value);
+  }
+
+  announceForAccessibility(value) {
+    const switchState = value ? 'on' : 'off';
+    AccessibilityInfo.announceForAccessibility(switchState);
+  }
+
+  getAccessibilityProps() {
+    const {disabled, value} = this.getThemeProps();
+    const switchState = value ? 'off' : 'on';
+
+    return {
+      accessible: true,
+      accessibilityLabel: disabled ? `switch ${switchState}` : 'switch',
+      accessibilityRole: disabled ? 'none' : 'button',
+      accessibilityStates: disabled ? ['disabled'] : undefined
+    };
   }
 
   toggle(value) {
@@ -140,12 +159,11 @@ class Switch extends BaseComponent {
   }
 
   render() {
-    const {value, ...others} = this.getThemeProps();
-    const accessibilityLabel = value ? 'switchOn' : 'switchOff';
+    const {...others} = this.getThemeProps();
 
     return (
       <TouchableOpacity
-        accessibilityLabel={accessibilityLabel}
+        {...this.getAccessibilityProps()}
         activeOpacity={1}
         {...others}
         style={this.getSwitchStyle()}
