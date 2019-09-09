@@ -73,7 +73,7 @@ class Checkbox extends BaseComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const {value} = this.props;
+    const {value} = this.getThemeProps();
     if (prevProps.value !== value) {
       const checkedState = value ? 'checked' : 'unchecked';
       
@@ -83,13 +83,13 @@ class Checkbox extends BaseComponent {
   }
 
   getAccessibilityProps() {
-    const {disabled, value} = this.props;
+    const {disabled, value} = this.getThemeProps();
     const checkedState = value ? 'checked' : 'unchecked';
 
     return {
       accessible: true,
-      accessibilityLabel: !disabled ? 'checkbox' : `checkbox ${checkedState}`,
-      accessibilityRole: !disabled ? 'button' : 'none',
+      accessibilityLabel: disabled ? `checkbox ${checkedState}` : 'checkbox',
+      accessibilityRole: disabled ? 'none' : 'button',
       accessibilityStates: disabled ? ['disabled'] : undefined
     };
   }
