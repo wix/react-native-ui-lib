@@ -277,8 +277,6 @@ export default class Avatar extends PureBaseComponent {
     if (hasImage) {
       return (
         <ImageContainer
-          accessible
-          accessibilityLabel={'Avatar'}
           animate={animate}
           style={[this.getContainerStyle(), StyleSheet.absoluteFillObject, imageStyle]}
           source={imageSource}
@@ -316,6 +314,10 @@ export default class Avatar extends PureBaseComponent {
         style={[this.getContainerStyle(), containerStyle]}
         testID={testID}
         onPress={onPress}
+        accessible
+        accessibilityLabel={'Avatar'}
+        accessibilityRole={onPress ? 'button' : 'image'}
+        {...this.extractAccessibilityProps()}
       >
         <View
           style={[this.getInitialsContainer(), {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
