@@ -10,7 +10,6 @@ import Modal from '../../screensComponents/modal';
 import View from '../view';
 import PanGestureView from '../panningViews/panGestureView';
 
-
 /**
  * @description: Dialog component for displaying custom content inside a popup dialog
  * @notes: Use alignment modifiers to control the dialog position
@@ -21,7 +20,7 @@ import PanGestureView from '../panningViews/panGestureView';
  */
 
 class Dialog extends BaseComponent {
-  static displayName = 'Dialog'
+  static displayName = 'Dialog';
   static propTypes = {
     /**
      * Control visibility of the dialog
@@ -66,14 +65,14 @@ class Dialog extends BaseComponent {
     /**
      * Called once the modal has been dissmissed (iOS only, modal only)
      */
-    onModalDismissed: PropTypes.func
+    onModalDismissed: PropTypes.func,
   };
 
   static defaultProps = {
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
     width: '90%',
     height: '70%',
-    useModal: true
+    useModal: true,
   };
 
   constructor(props) {
@@ -83,7 +82,7 @@ class Dialog extends BaseComponent {
 
     this.state = {
       alignments: this.state.alignments,
-      deltaY: new Animated.Value(this.initialPosition)
+      deltaY: new Animated.Value(this.initialPosition),
     };
 
     if (props.visible) {
@@ -104,7 +103,7 @@ class Dialog extends BaseComponent {
   onDismiss = () => {
     this.initPositions();
     _.invoke(this.props, 'onDismiss');
-  }
+  };
 
   animatedDismiss = () => {
     if (this.panGestureViewRef) {
@@ -112,23 +111,23 @@ class Dialog extends BaseComponent {
     } else {
       this.onDismiss();
     }
-  }
+  };
 
   initPositions() {
     this.setState({
-      deltaY: new Animated.Value(this.initialPosition)
+      deltaY: new Animated.Value(this.initialPosition),
     });
   }
 
   animateContent() {
     const {animationConfig} = this.getThemeProps();
     const {deltaY} = this.state;
- 
+
     Animated.timing(deltaY, {
       toValue: 0,
       duration: _.get(animationConfig, 'duration', 400),
       easing: _.get(animationConfig, 'easing', Easing.bezier(0.165, 0.84, 0.44, 1)),
-      useNativeDriver: _.get(animationConfig, 'useNativeDriver', true)
+      useNativeDriver: _.get(animationConfig, 'useNativeDriver', true),
     }).start();
   }
 
@@ -140,7 +139,7 @@ class Dialog extends BaseComponent {
       <TouchableWithoutFeedback>
         <SafeAreaView style={{flexGrow: 1}}>
           {this.props.children}
-          {useSafeArea && Constants.isIphoneX && bottom && <View style={{marginTop: bottomInsets}}/>}
+          {useSafeArea && Constants.isIphoneX && bottom && <View style={{marginTop: bottomInsets}} />}
         </SafeAreaView>
       </TouchableWithoutFeedback>
     );
@@ -152,7 +151,7 @@ class Dialog extends BaseComponent {
 
     return (
       <Container
-        ref={!disablePan && (r => this.panGestureViewRef = r)}
+        ref={!disablePan && (r => (this.panGestureViewRef = r))}
         style={[this.styles.dialogContainer, style]}
         direction={!disablePan && top && PanGestureView.directions.UP}
         onDismiss={this.onDismiss}
@@ -166,7 +165,7 @@ class Dialog extends BaseComponent {
     const {animationConfig, top, testID} = this.getThemeProps();
     const {alignments, deltaY} = this.state;
     const centerByDefault = _.isEmpty(alignments);
-    const hasCustomAnimation = (animationConfig && animationConfig.animation);
+    const hasCustomAnimation = animationConfig && animationConfig.animation;
     const Container = hasCustomAnimation ? AnimatableView : Animated.View;
     const defaultAnimation = top ? AnimatableManager.presets.slideInDown : AnimatableManager.presets.slideInUp;
     const animation = hasCustomAnimation ? Object.assign(defaultAnimation, animationConfig) : {};
@@ -179,10 +178,12 @@ class Dialog extends BaseComponent {
           {...alignments},
           centerByDefault && this.styles.centerContent,
           !hasCustomAnimation && {
-            transform: [{
-              translateY: deltaY
-            }]
-          }
+            transform: [
+              {
+                translateY: deltaY,
+              },
+            ],
+          },
         ]}
         pointerEvents="box-none"
         {...animation}
@@ -195,7 +196,7 @@ class Dialog extends BaseComponent {
   render() {
     const {visible, overlayBackgroundColor, useModal, onModalDismissed, disablePan} = this.getThemeProps();
     const dismissFunction = disablePan ? this.onDismiss : this.animatedDismiss;
-    
+
     if (useModal) {
       return (
         <Modal
@@ -210,9 +211,9 @@ class Dialog extends BaseComponent {
           {this.renderAnimationContainer()}
         </Modal>
       );
-    } else {      
+    } else {
       return (
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={this.onDismiss}
           activeOpacity={1}
           style={{position: 'absolute', bottom: 0, top: 0, left: 0, right: 0, backgroundColor: overlayBackgroundColor}}
@@ -227,16 +228,16 @@ class Dialog extends BaseComponent {
 function createStyles({width, height}) {
   return StyleSheet.create({
     overlay: {
-      flex: 1
+      flex: 1,
     },
     dialogContainer: {
       width,
-      height
+      height,
     },
     centerContent: {
       justifyContent: 'center',
-      alignItems: 'center'
-    }
+      alignItems: 'center',
+    },
   });
 }
 

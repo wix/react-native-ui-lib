@@ -8,14 +8,13 @@ import {BaseComponent} from '../../commons';
 import View from '../../components/view';
 import Text from '../../components/text';
 
-
 /**
  * @description: Component that shows a full screen with an activity indicator
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreenScreens/LoadingScreen.js
  */
 export default class LoaderScreen extends BaseComponent {
   static displayName = 'LoaderScreen';
-  
+
   static propTypes = {
     ...ActivityIndicator.propTypes,
     /**
@@ -35,21 +34,19 @@ export default class LoaderScreen extends BaseComponent {
      */
     messageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
-    * Show the screen as an absolute overlay
-    */
+     * Show the screen as an absolute overlay
+     */
     overlay: PropTypes.bool,
     /**
-     * Custom container style 
+     * Custom container style
      */
   };
 
   render() {
     const {message, messageStyle, loaderColor, overlay, backgroundColor, containerStyle, ...others} = this.props;
-    
+
     return (
-      <View
-        style={[overlay ? [styles.overlayContainer, {backgroundColor}] : styles.container, containerStyle]}
-      >
+      <View style={[overlay ? [styles.overlayContainer, {backgroundColor}] : styles.container, containerStyle]}>
         <View flex center>
           <ActivityIndicator
             size={'large'}
@@ -66,16 +63,16 @@ export default class LoaderScreen extends BaseComponent {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   overlayContainer: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: Colors.rgba(Colors.white, 0.85),
-    zIndex: 100
+    zIndex: 100,
   },
   message: {
     ...Typography.text70,
     marginTop: 18,
-    color: Colors.dark10
-  }
+    color: Colors.dark10,
+  },
 });

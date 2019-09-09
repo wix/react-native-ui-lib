@@ -31,11 +31,11 @@ class AnimatedImage extends BaseComponent {
     /**
      * A component to render while the image is loading
      */
-    loader: PropTypes.element
+    loader: PropTypes.element,
   };
 
   static defaultProps = {
-    animationDuration: 300
+    animationDuration: 300,
   };
 
   constructor(props) {
@@ -62,9 +62,7 @@ class AnimatedImage extends BaseComponent {
           testID={testID}
         />
         {this.state.isLoading && loader && (
-          <View style={{...StyleSheet.absoluteFillObject, justifyContent: 'center'}}>
-            {loader}
-          </View>
+          <View style={{...StyleSheet.absoluteFillObject, justifyContent: 'center'}}>{loader}</View>
         )}
       </View>
     );

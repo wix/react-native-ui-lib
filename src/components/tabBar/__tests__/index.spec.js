@@ -13,7 +13,7 @@ describe('TabBar', () => {
       jest.spyOn(uut, 'calcIndicatorWidth');
       expect(uut.calcIndicatorWidth()).toEqual('25%');
     });
-    
+
     it('should equale 50%', () => {
       const uut = new TabBar({});
       uut.itemsWidths = [150, 150, 300];

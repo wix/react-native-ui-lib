@@ -35,7 +35,11 @@ export const navigationData = {
       {title: 'Overlays', tags: 'overlay image', screen: 'unicorn.components.OverlaysScreen'},
       {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
       {title: 'Pan Listener', tags: 'pan swipe drag listener', screen: 'unicorn.components.PanListenerScreen'},
-      {title: 'Shared Transition', tags: 'shared transition element', screen: 'unicorn.components.SharedTransitionScreen'},
+      {
+        title: 'Shared Transition',
+        tags: 'shared transition element',
+        screen: 'unicorn.components.SharedTransitionScreen',
+      },
       {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
       {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'},
       {title: 'Wheel Picker Dialog', tags: 'wheel picker dialog', screen: 'unicorn.components.WheelPickerDialogScreen'},
@@ -57,7 +61,11 @@ export const navigationData = {
   Native: {
     title: 'Native',
     screens: [
-      {title: 'Highlight Overlay', tags: 'native overlay', screen: 'unicorn.nativeComponents.HighlightOverlayViewScreen'},
+      {
+        title: 'Highlight Overlay',
+        tags: 'native overlay',
+        screen: 'unicorn.nativeComponents.HighlightOverlayViewScreen',
+      },
       {title: 'Wheel Picker', tags: 'wheel picker', screen: 'unicorn.nativeComponents.WheelPickerViewScreen'},
       {title: 'SafeArea Spacer', tags: 'native safe area', screen: 'unicorn.nativeComponents.SafeAreaSpacerViewScreen'},
     ],
@@ -92,13 +100,13 @@ export const navigationData = {
     title: 'Incubator',
     screens: [
       {title: 'TabBarController', tags: 'tabbar controller native', screen: 'unicorn.incubator.TabControllerScreen'},
-    ]
+    ],
   },
   Examples: {
     title: 'Examples',
     screens: [
       {title: 'Apple Music', tags: 'apple music demo screen', screen: 'unicorn.examples.AppleMusic'},
-      {title: 'List Actions', tags: 'list actions demo screen', screen: 'unicorn.examples.ListActionsScreen'}
+      {title: 'List Actions', tags: 'list actions demo screen', screen: 'unicorn.examples.ListActionsScreen'},
     ],
   },
 };

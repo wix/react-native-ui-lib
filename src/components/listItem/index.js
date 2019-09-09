@@ -106,8 +106,8 @@ function createStyles({height}) {
     },
     innerContainer: {
       flexDirection: 'row',
-      height
-    }
+      height,
+    },
   });
 }
 

@@ -9,7 +9,6 @@ import View from '../view';
 import Image from '../image';
 import TabBarItem from './TabBarItem';
 
-
 const MIN_TABS_FOR_SCROLL = 1;
 const DEFAULT_BACKGROUND_COLOR = Colors.white;
 const DEFAULT_HEIGHT = 48;
@@ -22,12 +21,12 @@ const gradientImage = () => require('./assets/gradient.png');
  * @modifiers: alignment, flex, padding, margin, background, typography, color (list of supported modifiers)
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabBarScreen.js
  * @extends: ScrollView
- * @extendsLink: https://facebook.github.io/react-native/docs/scrollview 
- * @notes: This is screen width component. 
+ * @extendsLink: https://facebook.github.io/react-native/docs/scrollview
+ * @notes: This is screen width component.
  */
 export default class TabBar extends BaseComponent {
   static displayName = 'TabBar';
-  
+
   static propTypes = {
     ...ViewPropTypes.height,
     /**
@@ -57,11 +56,11 @@ export default class TabBar extends BaseComponent {
     /**
      * Tab Bar height
      */
-    height: PropTypes.number
+    height: PropTypes.number,
   };
 
   static defaultProps = {
-    selectedIndex: 0
+    selectedIndex: 0,
   };
 
   constructor(props) {
@@ -70,7 +69,7 @@ export default class TabBar extends BaseComponent {
     this.state = {
       gradientOpacity: new Animated.Value(0),
       scrollEnabled: false,
-      currentIndex: props.selectedIndex
+      currentIndex: props.selectedIndex,
     };
 
     this.scrollContainerWidth = Constants.screenWidth;
@@ -165,7 +164,7 @@ export default class TabBar extends BaseComponent {
     Animated.spring(this.state.gradientOpacity, {
       toValue: newValue,
       speed: 20,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start();
   };
 
@@ -183,16 +182,16 @@ export default class TabBar extends BaseComponent {
     if (this.scrollContentWidth !== width) {
       const {minTabsForScroll} = this.getThemeProps();
       const minChildrenCount = minTabsForScroll || MIN_TABS_FOR_SCROLL;
-      
+
       this.scrollContentWidth = width;
-      
+
       if (this.hasOverflow() && this.childrenCount > minChildrenCount) {
         this.setState({gradientOpacity: new Animated.Value(1), scrollEnabled: true});
       }
     }
   };
 
-  hasOverflow() {    
+  hasOverflow() {
     if (this.scrollContentWidth) {
       if (this.scrollContentWidth > this.scrollContainerWidth) {
         return true;
@@ -213,7 +212,7 @@ export default class TabBar extends BaseComponent {
             height: height - INDICATOR_HEIGHT,
             position: 'absolute',
             right: 0,
-            opacity: this.state.gradientOpacity
+            opacity: this.state.gradientOpacity,
           }}
         >
           <Image
@@ -261,7 +260,7 @@ export default class TabBar extends BaseComponent {
   renderChildren() {
     this.itemsRefs = [];
     const {indicatorStyle} = this.getThemeProps();
-    
+
     const children = React.Children.map(this.props.children, (child, index) => {
       return React.cloneElement(child, {
         indicatorStyle,
@@ -271,7 +270,7 @@ export default class TabBar extends BaseComponent {
         },
         ref: r => {
           this.itemsRefs[index] = r;
-        }
+        },
       });
     });
     return children;
@@ -294,7 +293,7 @@ export default class TabBar extends BaseComponent {
 function createStyles(props) {
   return StyleSheet.create({
     container: {
-      zIndex: 100
+      zIndex: 100,
     },
     containerShadow: {
       ...Platform.select({
@@ -302,22 +301,22 @@ function createStyles(props) {
           shadowColor: Colors.dark10,
           shadowOpacity: 0.05,
           shadowRadius: 2,
-          shadowOffset: {height: 6, width: 0}
+          shadowOffset: {height: 6, width: 0},
         },
         android: {
           elevation: 5,
-          backgroundColor: Colors.white
-        }
-      })
+          backgroundColor: Colors.white,
+        },
+      }),
     },
     tabBar: {
       flex: 1,
       height: DEFAULT_HEIGHT,
-      backgroundColor: DEFAULT_BACKGROUND_COLOR
+      backgroundColor: DEFAULT_BACKGROUND_COLOR,
     },
     shadowImage: {
-      width: '100%'
-    }
+      width: '100%',
+    },
   });
 }
 

@@ -27,7 +27,7 @@ class RadioGroup extends BaseComponent {
     super(props);
 
     this.state = {
-      value: props.initialValue
+      value: props.initialValue,
     };
   }
 
@@ -36,7 +36,7 @@ class RadioGroup extends BaseComponent {
       this.setState({value: nextProps.initialValue});
     }
   }
-  
+
   getContextProviderValue() {
     const {value} = this.state;
     return {value, onValueChange: this.onValueChange};
@@ -50,7 +50,9 @@ class RadioGroup extends BaseComponent {
   render() {
     return (
       <View {...this.props}>
-        <RadioGroupContext.Provider value={this.getContextProviderValue()}>{this.props.children}</RadioGroupContext.Provider>
+        <RadioGroupContext.Provider value={this.getContextProviderValue()}>
+          {this.props.children}
+        </RadioGroupContext.Provider>
       </View>
     );
   }

@@ -6,7 +6,6 @@ import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
 
-
 // TODO: add finisher animation (check icon animation or something)
 /**
  * @description: Scanner component for progress indication
@@ -41,12 +40,12 @@ export default class AnimatedScanner extends BaseComponent {
     /**
      * should hide the scanner line
      */
-    hideScannerLine: PropTypes.bool
+    hideScannerLine: PropTypes.bool,
   };
 
   static defaultProps = {
     progress: 0,
-    duration: 1000
+    duration: 1000,
   };
 
   constructor(props) {
@@ -54,7 +53,7 @@ export default class AnimatedScanner extends BaseComponent {
 
     this.state = {
       animatedProgress: new Animated.Value(0),
-      isDone: false
+      isDone: false,
     };
   }
 
@@ -102,7 +101,8 @@ export default class AnimatedScanner extends BaseComponent {
     return (
       <View style={{...StyleSheet.absoluteFillObject}}>
         <Animated.View
-          style={[this.styles.container,
+          style={[
+            this.styles.container,
             style,
             opacity && {opacity},
             backgroundColor && {backgroundColor},
@@ -110,11 +110,11 @@ export default class AnimatedScanner extends BaseComponent {
               left: animatedProgress.interpolate({
                 inputRange: [0, 100],
                 outputRange: ['0%', '100%'],
-              })
-            }
+              }),
+            },
           ]}
         >
-          {isDone && !hideScannerLine && <View style={this.styles.scanner}/>}
+          {isDone && !hideScannerLine && <View style={this.styles.scanner} />}
         </Animated.View>
       </View>
     );
@@ -126,12 +126,12 @@ function createStyles() {
     container: {
       ...StyleSheet.absoluteFillObject,
       backgroundColor: Colors.white,
-      opacity: 0.9
+      opacity: 0.9,
     },
     scanner: {
       ...StyleSheet.absoluteFillObject,
       borderWidth: StyleSheet.hairlineWidth,
-      borderColor: Colors.dark50
-    }
+      borderColor: Colors.dark50,
+    },
   });
 }

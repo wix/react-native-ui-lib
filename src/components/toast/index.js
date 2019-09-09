@@ -13,18 +13,17 @@ import {
   View,
   Image,
   Button,
-  Text
+  Text,
 } from 'react-native-ui-lib';
-
 
 // Create animated view base on uilib view for the safeArea support
 const AnimatedView = Animated.createAnimatedComponent(View);
 const COLOR = Colors.white;
 
 /**
-* @description: A toast component
-* @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ToastsScreen.js
-*/
+ * @description: A toast component
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ToastsScreen.js
+ */
 export default class Toast extends PureBaseComponent {
   static displayName = 'Toast';
 
@@ -86,19 +85,19 @@ export default class Toast extends PureBaseComponent {
      */
     onAnimationEnd: PropTypes.func,
     /**
-     * render a custom view that will appear permanently above or below a Toast, 
+     * render a custom view that will appear permanently above or below a Toast,
      * depends on the Toast's position, and animate with it when the Toast is made visible or dismissed
      */
     renderAttachment: PropTypes.func,
     /**
      * render a custom loader component instead of the default when passing showLoader
      */
-    customLoader: PropTypes.func
+    customLoader: PropTypes.func,
   };
 
   static defaultProps = {
     position: 'top',
-    zIndex: 100
+    zIndex: 100,
   };
 
   constructor(props) {
@@ -106,7 +105,7 @@ export default class Toast extends PureBaseComponent {
 
     this.state = {
       toastHeight: 0,
-      inAnimation: false
+      inAnimation: false,
     };
 
     this.toastAnim = new Animated.Value(0);
@@ -130,7 +129,7 @@ export default class Toast extends PureBaseComponent {
     const {visible, message, action, showDismiss} = this.props;
 
     if (visible) {
-      if (this.viewRef && action || showDismiss) {
+      if ((this.viewRef && action) || showDismiss) {
         const reactTag = findNodeHandle(this.viewRef);
         AccessibilityInfo.setAccessibilityFocus(reactTag);
       } else {
@@ -139,15 +138,15 @@ export default class Toast extends PureBaseComponent {
     }
   }
 
-  setAnimationStatus = (inAnimation) => this.setState({inAnimation});
-      
+  setAnimationStatus = inAnimation => this.setState({inAnimation});
+
   toggleToast(show, {delay} = {}) {
     Animated.timing(this.toastAnim, {
       toValue: Number(show),
       duration: 300,
       delay,
       easing: Easing.bezier(0.215, 0.61, 0.355, 1),
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start(this.onAnimationEnd);
     this.setAnimationStatus(true);
   }
@@ -191,18 +190,18 @@ export default class Toast extends PureBaseComponent {
       position: 'absolute',
       left: 0,
       right: 0,
-      [location]: 0
+      [location]: 0,
     };
   }
 
   onToastLayout = ({
     nativeEvent: {
-      layout: {height}
-    }
+      layout: {height},
+    },
   }) => {
     if (height > this.state.toastHeight) {
       this.setState({
-        toastHeight: height
+        toastHeight: height,
       });
     }
   };
@@ -213,8 +212,8 @@ export default class Toast extends PureBaseComponent {
     const textAlign = centerMessage ? 'center' : 'left';
 
     return (
-      <Text 
-        ref={r => this.viewRef = r} 
+      <Text
+        ref={r => (this.viewRef = r)}
         style={[this.styles.message, {color: textColor, textAlign}]}
         accessibilityLabel={`notification ${message}`}
       >
@@ -234,15 +233,10 @@ export default class Toast extends PureBaseComponent {
           <View center marginR-20>
             {customLoader()}
           </View>
-        );;
+        );
       }
 
-      return <ActivityIndicator
-        size={'small'}
-        animating
-        color={Colors.white}
-        style={{marginRight: 20}}
-      />
+      return <ActivityIndicator size={'small'} animating color={Colors.white} style={{marginRight: 20}} />;
     }
 
     if (showDismiss) {
@@ -280,7 +274,7 @@ export default class Toast extends PureBaseComponent {
     const tintColor = color || COLOR;
 
     if (icon) {
-      return <Image source={icon} resizeMode={'contain'} style={this.styles.icon} tintColor={tintColor}/>;
+      return <Image source={icon} resizeMode={'contain'} style={this.styles.icon} tintColor={tintColor} />;
     }
   }
 
@@ -318,10 +312,7 @@ export default class Toast extends PureBaseComponent {
     if (!visible && !inAnimation) {
       if (renderAttachment) {
         return (
-          <View
-            style={[positionStyle, {zIndex}]}
-            pointerEvents={'box-none'}
-          >
+          <View style={[positionStyle, {zIndex}]} pointerEvents={'box-none'}>
             {this.renderAttachmentContent()}
           </View>
         );
@@ -334,11 +325,11 @@ export default class Toast extends PureBaseComponent {
     const positionMultiplier = isTop ? -1 : 1;
     const translateY = this.toastAnim.interpolate({
       inputRange: [0, 1],
-      outputRange: [positionMultiplier * (toastHeight || 500), 0]
+      outputRange: [positionMultiplier * (toastHeight || 500), 0],
     });
     const opacity = this.toastAnim.interpolate({
       inputRange: [0, 0.01, 1],
-      outputRange: [0, 1, 1]
+      outputRange: [0, 1, 1],
     });
 
     return (
@@ -370,21 +361,21 @@ function createStyles() {
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingHorizontal: 20,
-      paddingVertical: 12
+      paddingVertical: 12,
     },
     message: {
       flex: 1,
-      ...Typography.text70
+      ...Typography.text70,
     },
     icon: {
       width: 24,
       height: 24,
-      marginRight: 16
+      marginRight: 16,
     },
     action: {
       borderRadius: BorderRadiuses.br0,
       minWidth: undefined,
-      paddingRight: 20
-    }
+      paddingRight: 20,
+    },
   });
 }

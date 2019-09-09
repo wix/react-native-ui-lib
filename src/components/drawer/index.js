@@ -9,7 +9,6 @@ import {Colors} from '../../style';
 import View from '../../components/view';
 import Swipeable from './Swipeable';
 
-
 const DEFAULT_BG = Colors.blue30;
 const ITEM_PROP_TYPES = {
   width: PropTypes.number,
@@ -19,13 +18,13 @@ const ITEM_PROP_TYPES = {
   onPress: PropTypes.func,
   keepOpen: PropTypes.bool,
   style: ViewPropTypes.style,
-  testID: PropTypes.string
+  testID: PropTypes.string,
 };
 
 /**
  * @description: Drawer Component
  * @important: If your app works with RNN, your screen must be wrapped
- * with gestureHandlerRootHOC from 'react-native-gesture-handler'. see  
+ * with gestureHandlerRootHOC from 'react-native-gesture-handler'. see
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
 class Drawer extends PureBaseComponent {
@@ -73,7 +72,7 @@ class Drawer extends PureBaseComponent {
 
   static defaultProps = {
     itemsTintColor: Colors.white,
-    itemsIconSize: 24
+    itemsIconSize: 24,
   };
 
   constructor(props) {
@@ -81,10 +80,18 @@ class Drawer extends PureBaseComponent {
 
     this._swipeableRow = React.createRef();
     this.animationOptions = {bounciness: props.bounciness || 5};
-    this.rightActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? [props.leftItem] : props.rightItems);
-    this.leftActionsContainerStyle = this.getActionsContainerStyle(Constants.isRTL ? props.rightItems : [props.leftItem]);
+    this.rightActionsContainerStyle = this.getActionsContainerStyle(
+      Constants.isRTL ? [props.leftItem] : props.rightItems,
+    );
+    this.leftActionsContainerStyle = this.getActionsContainerStyle(
+      Constants.isRTL ? props.rightItems : [props.leftItem],
+    );
     this.leftRender = props.leftItem ? (Constants.isRTL ? this.renderRightActions : this.renderLeftActions) : undefined;
-    this.rightRender = props.rightItems ? (Constants.isRTL ? this.renderLeftActions : this.renderRightActions) : undefined;
+    this.rightRender = props.rightItems
+      ? Constants.isRTL
+        ? this.renderLeftActions
+        : this.renderRightActions
+      : undefined;
   }
 
   getActionsContainerStyle(items) {
@@ -100,12 +107,12 @@ class Drawer extends PureBaseComponent {
       this.closeDrawer();
     }
     _.invoke(item, 'onPress');
-  };
+  }
 
   onSwipeableWillOpen = () => {
     _.invoke(this.props, 'onSwipeableWillOpen', this.props);
   };
-  
+
   onSwipeableWillClose = () => {
     _.invoke(this.props, 'onSwipeableWillClose', this.props);
   };
@@ -132,7 +139,7 @@ class Drawer extends PureBaseComponent {
               index: items.length - index - 1,
               progress,
               dragX,
-              itemsCount: items.length
+              itemsCount: items.length,
             });
           })}
         </View>
@@ -148,13 +155,13 @@ class Drawer extends PureBaseComponent {
     const scale = progress.interpolate({
       inputRange,
       outputRange,
-      extrapolate: 'clamp'
+      extrapolate: 'clamp',
     });
 
     const opacity = progress.interpolate({
       inputRange,
       outputRange,
-      extrapolate: 'clamp'
+      extrapolate: 'clamp',
     });
 
     return (
@@ -166,7 +173,7 @@ class Drawer extends PureBaseComponent {
           item.style,
           {backgroundColor: item.background || DEFAULT_BG},
           {width: item.width},
-          {minWidth: itemsMinWidth}
+          {minWidth: itemsMinWidth},
         ]}
         onPress={() => this.onActionPress(item)}
       >
@@ -180,8 +187,8 @@ class Drawer extends PureBaseComponent {
                 height: itemsIconSize,
                 tintColor: itemsTintColor,
                 opacity,
-                transform: [{scale}]
-              }
+                transform: [{scale}],
+              },
             ]}
           />
         )}
@@ -192,9 +199,9 @@ class Drawer extends PureBaseComponent {
               {
                 color: itemsTintColor,
                 opacity,
-                transform: [{scale}]
+                transform: [{scale}],
               },
-              itemsTextStyle
+              itemsTextStyle,
             ]}
           >
             {item.text}
@@ -232,20 +239,20 @@ const styles = StyleSheet.create({
   leftAction: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: /* Constants.isRTL ? 'flex-end' :  */'flex-start',
-    backgroundColor: '#388e3c'
+    alignItems: /* Constants.isRTL ? 'flex-end' :  */ 'flex-start',
+    backgroundColor: '#388e3c',
   },
   actionIcon: {
     width: 30,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   actionText: {
-    color: '#ffffff'
+    color: '#ffffff',
   },
   action: {
     paddingHorizontal: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#dd2c00'
-  }
+    backgroundColor: '#dd2c00',
+  },
 });
