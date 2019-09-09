@@ -4,18 +4,17 @@ import React from 'react';
 import {AccessibilityInfo, findNodeHandle, StyleSheet, Animated, Easing, ActivityIndicator} from 'react-native';
 import {
   ThemeManager,
-  Spacings,
+  Assets,
   Colors,
   Typography,
+  Spacings,
   BorderRadiuses,
-  Assets,
   PureBaseComponent,
   View,
+  Image,
   Button,
-  Text,
-  Image
+  Text
 } from 'react-native-ui-lib';
-// import Loader from '../Loader';
 
 
 // Create animated view base on uilib view for the safeArea support
@@ -24,8 +23,7 @@ const COLOR = Colors.white;
 
 /**
 * @description: A toast component
-* @example: https://github.com/wix-private/wix-react-native-ui-lib/blob/master/example/screens/components/ToastsScreen.js
-* @guidelines: https://zpl.io/VDqq4Rr
+* @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ToastsScreen.js
 */
 export default class Toast extends PureBaseComponent {
   static displayName = 'Toast';
@@ -91,7 +89,11 @@ export default class Toast extends PureBaseComponent {
      * render a custom view that will appear permanently above or below a Toast, 
      * depends on the Toast's position, and animate with it when the Toast is made visible or dismissed
      */
-    renderAttachment: PropTypes.func
+    renderAttachment: PropTypes.func,
+    /**
+     * render a custom loader component instead of the default when passing showLoader
+     */
+    customLoader: PropTypes.func
   };
 
   static defaultProps = {
@@ -112,6 +114,7 @@ export default class Toast extends PureBaseComponent {
 
   componentDidMount() {
     const {visible} = this.props;
+
     if (visible) {
       this.toggleToast(visible, {delay: 100});
     }
@@ -155,6 +158,7 @@ export default class Toast extends PureBaseComponent {
 
   onAnimationEnd = () => {
     const {visible} = this.props;
+
     if (visible) {
       this.setDismissTimer();
     } else {
@@ -167,6 +171,7 @@ export default class Toast extends PureBaseComponent {
 
   setDismissTimer() {
     const {autoDismiss, onDismiss} = this.props;
+
     if (autoDismiss && onDismiss) {
       const timer = setTimeout(() => {
         this.onDismiss(timer);
@@ -219,13 +224,19 @@ export default class Toast extends PureBaseComponent {
   }
 
   renderAction() {
-    const {showLoader, showDismiss, action, color, backgroundColor} = this.props;
+    const {showLoader, showDismiss, action, color, backgroundColor, customLoader} = this.props;
     const textColor = color || COLOR;
 
     // NOTE: order does matter
     if (showLoader && !showDismiss) {
-      // const loaderColors = [Colors.rgba(Colors.white, 0.3), Colors.rgba(Colors.dark50, 0.7)];
-      // return <Loader size={'small'} color={loaderColors} style={{marginRight: 20}}/>;
+      if (customLoader) {
+        return (
+          <View center marginR-20>
+            {customLoader()}
+          </View>
+        );;
+      }
+
       return <ActivityIndicator
         size={'small'}
         animating
@@ -233,6 +244,7 @@ export default class Toast extends PureBaseComponent {
         style={{marginRight: 20}}
       />
     }
+
     if (showDismiss) {
       return (
         <Button
@@ -246,8 +258,10 @@ export default class Toast extends PureBaseComponent {
         />
       );
     }
+
     if (action) {
       const actionBg = backgroundColor || Colors.rgba(ThemeManager.primaryColor, 0);
+
       return (
         <Button
           style={this.styles.action}
@@ -290,6 +304,7 @@ export default class Toast extends PureBaseComponent {
 
   renderAttachmentContent() {
     const {renderAttachment} = this.props;
+
     if (renderAttachment) {
       return <View pointerEvents={'box-none'}>{renderAttachment()}</View>;
     }
@@ -354,8 +369,8 @@ function createStyles() {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingHorizontal: Spacings.s5,
-      paddingVertical: Spacings.s3
+      paddingHorizontal: 20,
+      paddingVertical: 12
     },
     message: {
       flex: 1,
