@@ -8,7 +8,7 @@ class CheckboxScreen extends Component {
     value2: false,
     value3: true,
     value4: true,
-    value5: false,
+    value5: false
   };
   
   render() {
