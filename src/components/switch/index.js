@@ -20,6 +20,10 @@ class Switch extends BaseComponent {
 
   static propTypes = {
     /**
+     * Component accessibility label
+     */
+    accessibilityLabel: PropTypes.string,
+    /**
      * The value of the switch. If true the switch will be turned on. Default value is false
      */
     value: PropTypes.bool,
@@ -73,27 +77,21 @@ class Switch extends BaseComponent {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const {value} = this.getThemeProps();
-    if (value !== nextProps.value) {
-      this.toggle(nextProps.value);
+    if (prevProps.value !== value) {
+      this.toggle(value);
     }
-    this.announceForAccessibility(nextProps.value);
-  }
-
-  announceForAccessibility(value) {
-    const switchState = value ? 'on' : 'off';
-    AccessibilityInfo.announceForAccessibility(switchState);
   }
 
   getAccessibilityProps() {
-    const {disabled, value} = this.getThemeProps();
-    const switchState = value ? 'off' : 'on';
+    const {accessibilityLabel, disabled, value} = this.getThemeProps();
+    const switchState = value ? 'on' : 'off';
 
     return {
       accessible: true,
-      accessibilityLabel: disabled ? `switch ${switchState}` : 'switch',
-      accessibilityRole: disabled ? 'none' : 'button',
+      accessibilityLabel: accessibilityLabel ? `${accessibilityLabel} ${switchState}` : `switch ${switchState}`, //TODO RN60 fix label and role and convert to accessibilityActions
+      accessibilityRole: 'button',
       accessibilityStates: disabled ? ['disabled'] : undefined
     };
   }
