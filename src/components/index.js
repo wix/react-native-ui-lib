@@ -91,6 +91,9 @@ module.exports = {
   get PanDismissibleView() {
     return require('./panningViews/panDismissibleView').default;
   },
+  get PanResponderView() {
+    return require('./panningViews/panResponderView').default;
+  },
   get Picker() {
     return require('./picker').default;
   },

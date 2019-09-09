@@ -90,6 +90,9 @@ module.exports = {
   get PanDismissibleView() {
     return require('./components').PanDismissibleView;
   },
+  get PanResponderView() {
+    return require('./components').PanResponderView;
+  },
   get Picker() {
     return require('./components').Picker;
   },
