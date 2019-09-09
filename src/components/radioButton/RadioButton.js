@@ -67,7 +67,7 @@ class RadioButton extends BaseComponent {
     /**
      * Should the icon be on the right side of the label
      */
-    iconOnRight: PropTypes.bool,
+    iconOnRight: PropTypes.bool
   };
 
   static defaultProps = {
@@ -101,25 +101,25 @@ class RadioButton extends BaseComponent {
       Animated.parallel([
         Animated.timing(opacityAnimationValue, {
           toValue: 1,
-          duration: animationTime,
+          duration: animationTime
         }),
         Animated.timing(scaleAnimationValue, {
           toValue: 1,
           delay: animationDelay,
           duration: animationTime,
-          easing: Easing.bezier(0.165, 0.84, 0.44, 1),
-        }),
+          easing: Easing.bezier(0.165, 0.84, 0.44, 1)
+        })
       ]).start();
     } else {
       Animated.parallel([
         Animated.timing(scaleAnimationValue, {
           toValue: 0.8,
-          duration: animationTime,
+          duration: animationTime
         }),
         Animated.timing(opacityAnimationValue, {
           toValue: 0,
-          duration: animationTime,
-        }),
+          duration: animationTime
+        })
       ]).start();
     }
   }
@@ -171,7 +171,11 @@ class RadioButton extends BaseComponent {
   renderLabel() {
     const {label, labelStyle} = this.props;
     return (
-      label && (<Text marginL-10 style={labelStyle} >{label}</Text>)
+      label && (
+        <Text marginL-10 style={labelStyle}>
+          {label}
+        </Text>
+      )
     );
   }
 
@@ -179,34 +183,29 @@ class RadioButton extends BaseComponent {
     const {iconSource} = this.props;
     const {iconStyle} = this.getThemeProps();
     const style = [this.styles.image, iconStyle];
-    return (
-      iconSource && (<Image style={style} source={iconSource} />)
-    );
+    return iconSource && <Image style={style} source={iconSource}/>;
   }
 
   render() {
-    const {style, onPress, onValueChange, selected, ...others} = this.getThemeProps();
+    const {onPress, onValueChange, selected, ...others} = this.getThemeProps();
     const {opacityAnimationValue, scaleAnimationValue} = this.state;
     const Container = onPress || onValueChange ? TouchableOpacity : View;
     const accessibilityLabel = selected ? 'selected' : 'unselected';
 
-
     return (
       <Container row centerV activeOpacity={1} {...others} onPress={this.onPress}>
         <View style={this.getRadioButtonOutlineStyle()}>
-        
           <Animated.View
             accessibilityLabel={accessibilityLabel}
             style={[
               this.getRadioButtonInnerStyle(),
               {opacity: opacityAnimationValue},
-              {transform: [{ scale: scaleAnimationValue }]}
+              {transform: [{scale: scaleAnimationValue}]}
             ]}
           />
         </View>
         {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
         {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
-        
       </Container>
     );
   }
@@ -220,15 +219,15 @@ function createStyles({size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, col
       width: size,
       height: size,
       borderRadius,
-      padding: 3,
+      padding: 3
     },
     radioButtonInner: {
       backgroundColor: disabled ? Colors.dark70 : color,
       flex: 1,
-      borderRadius,
+      borderRadius
     },
     image: {
-      marginLeft: 6,
+      marginLeft: 6
     }
   });
 }

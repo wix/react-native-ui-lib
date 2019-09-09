@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
 import {FlatList, ScrollView, StyleSheet, Alert} from 'react-native';
 import {
@@ -11,7 +10,7 @@ import {
   RadioGroup,
   RadioButton,
   Switch,
-  Constants,
+  Constants
 } from 'react-native-ui-lib'; // eslint-disable-line
 
 export default class DialogScreen extends Component {
@@ -35,7 +34,7 @@ export default class DialogScreen extends Component {
     {value: Colors.yellow10, label: 'Yellow10'},
     {value: Colors.yellow30, label: 'Yellow30'},
     {value: Colors.yellow50, label: 'Yellow50'},
-    {value: Colors.yellow70, label: 'Yellow70'},
+    {value: Colors.yellow70, label: 'Yellow70'}
   ];
 
   constructor(props) {
@@ -44,7 +43,7 @@ export default class DialogScreen extends Component {
     this.SCROLL_TYPE = {
       NONE: 'none',
       VERTICAL: 'vertical',
-      HORIZONTAL: 'horizontal',
+      HORIZONTAL: 'horizontal'
     };
 
     this.state = {
@@ -53,7 +52,7 @@ export default class DialogScreen extends Component {
       scroll: this.SCROLL_TYPE.NONE,
       showHeader: true,
       isRounded: true,
-      showDialog: false,
+      showDialog: false
     };
   }
 
@@ -75,13 +74,13 @@ export default class DialogScreen extends Component {
 
   toggleShowHeader = () => {
     this.setState({
-      showHeader: !this.state.showHeader,
+      showHeader: !this.state.showHeader
     });
   };
 
   toggleIsRounded = () => {
     this.setState({
-      isRounded: !this.state.isRounded,
+      isRounded: !this.state.isRounded
     });
   };
 
@@ -105,7 +104,7 @@ export default class DialogScreen extends Component {
     } else if (showHeader && panDirection !== PanningProvider.Directions.DOWN) {
       return <Text color={Colors.red30}>It is recommended to have pannable header with direction=down</Text>;
     }
-  }
+  };
 
   getMessage = () => {
     const {panDirection, position, scroll} = this.state;
@@ -122,7 +121,7 @@ Scroll: ${scroll}`;
         <View margin-20>
           <Text>{title}</Text>
         </View>
-        <View height={2} bg-dark70 />
+        <View height={2} bg-dark70/>
       </View>
     );
   };
@@ -130,7 +129,7 @@ Scroll: ${scroll}`;
   renderPlainContent = () => {
     return (
       <View margin-20 right>
-        <Button text60 label="Done" link onPress={this.hideDialog} />
+        <Button text60 label="Done" link onPress={this.hideDialog}/>
       </View>
     );
   };
@@ -160,7 +159,7 @@ Scroll: ${scroll}`;
   };
 
   renderHorizontalItem = ({item: color}) => {
-    return <View flex width={100} height={1000} style={{backgroundColor: color.value}} />;
+    return <View flex width={100} height={1000} style={{backgroundColor: color.value}}/>;
   };
 
   renderHorizontalScroll = () => {
@@ -210,10 +209,10 @@ Scroll: ${scroll}`;
     );
   };
 
-  getDialogKey = (height) => {
+  getDialogKey = height => {
     const {position} = this.state;
     return `dialog-key-${position}-${height}`;
-  }
+  };
 
   renderDialog = () => {
     const {showDialog, panDirection, position, scroll, showHeader, isRounded} = this.state;
@@ -254,43 +253,43 @@ Scroll: ${scroll}`;
           <RadioGroup marginT-20 initialValue={panDirection} onValueChange={this.setPanDirection}>
             <Text>Panning Direction:</Text>
             <View row marginV-10>
-              <RadioButton value={null} label={'None'} />
-              <RadioButton value={PanningProvider.Directions.UP} label={'Up'} marginL-10 />
-              <RadioButton value={PanningProvider.Directions.DOWN} label={'Down'} marginL-10 />
-              <RadioButton value={PanningProvider.Directions.LEFT} label={'Left'} marginL-10 />
-              <RadioButton value={PanningProvider.Directions.RIGHT} label={'Right'} marginL-10 />
+              <RadioButton value={null} label={'None'}/>
+              <RadioButton value={PanningProvider.Directions.UP} label={'Up'} marginL-10/>
+              <RadioButton value={PanningProvider.Directions.DOWN} label={'Down'} marginL-10/>
+              <RadioButton value={PanningProvider.Directions.LEFT} label={'Left'} marginL-10/>
+              <RadioButton value={PanningProvider.Directions.RIGHT} label={'Right'} marginL-10/>
             </View>
           </RadioGroup>
 
           <RadioGroup marginT-20 initialValue={position} onValueChange={this.setPosition}>
             <Text>Position:</Text>
             <View row marginV-10>
-              <RadioButton value={'top'} label={'Top'} />
-              <RadioButton value={null} label={'Center'} marginL-10 />
-              <RadioButton value={'bottom'} label={'Bottom'} marginL-10 />
+              <RadioButton value={'top'} label={'Top'}/>
+              <RadioButton value={null} label={'Center'} marginL-10/>
+              <RadioButton value={'bottom'} label={'Bottom'} marginL-10/>
             </View>
           </RadioGroup>
 
           <RadioGroup marginT-20 initialValue={scroll} onValueChange={this.setScroll}>
             <Text>Scroll:</Text>
             <View row marginV-10>
-              <RadioButton value={this.SCROLL_TYPE.NONE} label={'None'} />
-              <RadioButton value={this.SCROLL_TYPE.VERTICAL} label={'Vertical'} marginL-10 />
-              <RadioButton value={this.SCROLL_TYPE.HORIZONTAL} label={'Horizontal'} marginL-10 />
+              <RadioButton value={this.SCROLL_TYPE.NONE} label={'None'}/>
+              <RadioButton value={this.SCROLL_TYPE.VERTICAL} label={'Vertical'} marginL-10/>
+              <RadioButton value={this.SCROLL_TYPE.HORIZONTAL} label={'Horizontal'} marginL-10/>
             </View>
           </RadioGroup>
 
           <View row marginT-20 centerV>
             <Text>Toggle pannable header:</Text>
-            <Switch value={showHeader} onValueChange={this.toggleShowHeader} marginL-10 />
+            <Switch value={showHeader} onValueChange={this.toggleShowHeader} marginL-10/>
           </View>
 
           <View row marginT-20 centerV>
             <Text>Add some style:</Text>
-            <Switch value={isRounded} onValueChange={this.toggleIsRounded} marginL-10 />
+            <Switch value={isRounded} onValueChange={this.toggleIsRounded} marginL-10/>
           </View>
 
-          <Button marginT-50 label={'Show dialog'} onPress={this.showDialog} />
+          <Button marginT-50 label={'Show dialog'} onPress={this.showDialog}/>
 
           {this.renderDialog()}
         </View>
@@ -301,22 +300,22 @@ Scroll: ${scroll}`;
 
 const styles = StyleSheet.create({
   dialog: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.white
   },
   roundedDialog: {
     marginBottom: Constants.isIphoneX ? 0 : 20,
-    borderRadius: 12,
+    borderRadius: 12
   },
   button: {
     margin: 5,
-    alignSelf: 'flex-start',
+    alignSelf: 'flex-start'
   },
   verticalScroll: {
-    marginTop: 20,
+    marginTop: 20
   },
   horizontalTextContainer: {
     alignSelf: 'center',
     position: 'absolute',
-    top: 10,
-  },
+    top: 10
+  }
 });

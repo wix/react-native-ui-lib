@@ -69,7 +69,7 @@ export default class PickerScreen extends Component {
             Picker
           </Text>
           <Picker
-            placeholder="Pick a single language"
+            placeholder="Favorite Language"
             floatingPlaceholder
             value={this.state.language}
             enableModalBlur={false}
@@ -88,7 +88,7 @@ export default class PickerScreen extends Component {
 
           <View marginT-20>
             <Picker
-              placeholder="Pick multiple Languages"
+              placeholder="Favorite Languages"
               value={this.state.languages}
               onChange={items => this.setState({languages: items})}
               mode={Picker.modes.MULTI}

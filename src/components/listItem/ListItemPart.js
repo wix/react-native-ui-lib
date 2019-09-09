@@ -34,7 +34,7 @@ export default class ListItemPart extends BaseComponent {
     /**
      * container style
      */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
   };
 
   generateStyles() {
@@ -73,7 +73,7 @@ function createStyles({left, right, middle, column}) {
       flexDirection: column ? undefined : 'row',
       flex: middle ? 1 : 0,
       justifyContent,
-      alignItems: column ? undefined : 'center',
-    },
+      alignItems: column ? undefined : 'center'
+    }
   });
 }

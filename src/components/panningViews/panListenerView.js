@@ -62,7 +62,7 @@ class PanListenerView extends PureBaseComponent {
      * The sensitivity beyond which a pan is no longer considered a drag, but a swipe (default is 1.8)
      * Note: a pan would have to occur (i.e. the panSensitivity has already been surpassed)
      */
-    swipeVelocitySensitivity: PropTypes.number,
+    swipeVelocitySensitivity: PropTypes.number
   };
 
   static defaultProps = {
@@ -70,10 +70,10 @@ class PanListenerView extends PureBaseComponent {
       PanningProvider.Directions.UP,
       PanningProvider.Directions.DOWN,
       PanningProvider.Directions.LEFT,
-      PanningProvider.Directions.RIGHT,
+      PanningProvider.Directions.RIGHT
     ],
     panSensitivity: DEFAULT_PAN_SENSITIVITY,
-    swipeVelocitySensitivity: DEFAULT_SWIPE_VELOCITY,
+    swipeVelocitySensitivity: DEFAULT_SWIPE_VELOCITY
   };
 
   constructor(props) {
@@ -89,7 +89,7 @@ class PanListenerView extends PureBaseComponent {
       onPanResponderGrant: this.handlePanStart,
       onPanResponderMove: this.handlePanMove,
       onPanResponderRelease: this.handlePanRelease,
-      onPanResponderTerminate: this.handlePanTerminate,
+      onPanResponderTerminate: this.handlePanTerminate
     });
   }
 

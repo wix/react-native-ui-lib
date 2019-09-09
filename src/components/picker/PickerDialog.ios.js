@@ -17,7 +17,7 @@ class PickerDialog extends BaseComponent {
     onDone: PropTypes.func,
     onCancel: PropTypes.func,
     topBarProps: PropTypes.object,
-    children: PropTypes.array,
+    children: PropTypes.array
   };
 
   state = {};
@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 17,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-  },
+    alignItems: 'center'
+  }
 });
 
 export default PickerDialog;

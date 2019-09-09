@@ -7,7 +7,11 @@ import {BaseComponent} from '../../commons';
 
 const UIAnimatedImage = Animated.createAnimatedComponent(Image);
 
-const deprecatedProps = [{old: 'imageSource', new: 'source'}, {old: 'imageStyle', new: 'style'}, {old: 'testId', new: 'testID'}];
+const deprecatedProps = [
+  {old: 'imageSource', new: 'source'},
+  {old: 'imageStyle', new: 'style'},
+  {old: 'testId', new: 'testID'}
+];
 
 /**
  * @description: Image component that fades-in the image with animation once it's loaded
@@ -101,9 +105,7 @@ class AnimatedImage extends BaseComponent {
           testID={this.testID}
         />
         {this.state.isLoading && loader && (
-          <View style={{...StyleSheet.absoluteFillObject, justifyContent: 'center'}}>
-            {loader}
-          </View>
+          <View style={{...StyleSheet.absoluteFillObject, justifyContent: 'center'}}>{loader}</View>
         )}
       </View>
     );

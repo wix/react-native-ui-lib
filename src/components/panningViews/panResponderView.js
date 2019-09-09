@@ -25,11 +25,11 @@ class panResponderView extends PureComponent {
     /**
      * Allow the view to be animated (send animation via style; default is false)
      */
-    isAnimated: PropTypes.bool,
+    isAnimated: PropTypes.bool
   };
 
   static defaultProps = {
-    isAnimated: false,
+    isAnimated: false
   };
 
   constructor(props) {

@@ -1,11 +1,11 @@
 import Picker from '../index';
 
 const countries = [
-  {label: 'Israel', value: 'IL' },
-  {label: 'United States', value: 'US' },
-  {label: 'Germany', value: 'DE' },
-  {label: 'Italy', value: 'IT' },
-  {label: 'Spain', value: 'ES ' },
+  {label: 'Israel', value: 'IL'},
+  {label: 'United States', value: 'US'},
+  {label: 'Germany', value: 'DE'},
+  {label: 'Italy', value: 'IT'},
+  {label: 'Spain', value: 'ES '}
 ];
 
 describe('Picker', () => {

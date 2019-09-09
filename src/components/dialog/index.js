@@ -71,13 +71,13 @@ class Dialog extends BaseComponent {
     /**
      * Migration flag, send true to use the new (and improved) Dialog, default is false
      */
-    migrate: PropTypes.bool,
+    migrate: PropTypes.bool
   };
 
   static defaultProps = {
     migrate: false,
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
-    width: '90%',
+    width: '90%'
   };
 
   constructor(props) {
@@ -87,7 +87,7 @@ class Dialog extends BaseComponent {
       alignments: this.state.alignments,
       orientationKey: undefined,
       modalVisibility: props.visible,
-      dialogVisibility: props.visible,
+      dialogVisibility: props.visible
     };
 
     if (props.migrate) {
@@ -189,7 +189,7 @@ class Dialog extends BaseComponent {
         pointerEvents="box-none"
       >
         {this.renderDialogView()}
-        {addBottomSafeArea && <View style={{marginTop: bottomInsets}} />}
+        {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>}
       </View>
     );
   };
@@ -221,7 +221,7 @@ class Dialog extends BaseComponent {
     if (migrate) {
       return this.renderModal();
     } else {
-      return <DialogDeprecated {...others} />;
+      return <DialogDeprecated {...others}/>;
     }
   }
 }
@@ -233,17 +233,17 @@ function createStyles(props) {
     dialogViewSize: {width, height},
     flexType,
     container: {
-      flex: 1,
+      flex: 1
     },
     centerHorizontal: {
-      alignItems: 'center',
+      alignItems: 'center'
     },
     centerContent: {
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
     overflow: {
-      overflow: 'hidden',
-    },
+      overflow: 'hidden'
+    }
   });
 }
 

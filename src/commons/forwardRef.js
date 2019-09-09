@@ -3,7 +3,7 @@ import hoistStatics from 'hoist-non-react-statics';
 
 export default WrappedComponent => {
   function forwardRef(props, ref) {
-    return <WrappedComponent {...props} forwardedRef={ref} />;
+    return <WrappedComponent {...props} forwardedRef={ref}/>;
   }
 
   const ForwardedComponent = React.forwardRef(forwardRef);

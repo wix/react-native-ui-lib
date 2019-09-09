@@ -65,11 +65,11 @@ export default class TabBarItem extends BaseComponent {
     /**
      * A callback to invoke for onLayout event
      */
-    onLayout: PropTypes.func,
+    onLayout: PropTypes.func
   };
 
   static defaultProps = {
-    maxLines: 1,
+    maxLines: 1
   };
 
   constructor(props) {
@@ -77,7 +77,7 @@ export default class TabBarItem extends BaseComponent {
 
     this.state = {
       // HACK: for indicator width in TabBar
-      fontStyle: this.getFontStyle(this.getThemeProps()),
+      fontStyle: this.getFontStyle(this.getThemeProps())
     };
   }
 
@@ -97,7 +97,7 @@ export default class TabBarItem extends BaseComponent {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  onLayout = (event) => {
+  onLayout = event => {
     // HACK: for indicator width in TabBar
     const {width} = event.nativeEvent.layout;
     if (this.state.fontStyle !== undefined) {
@@ -105,7 +105,7 @@ export default class TabBarItem extends BaseComponent {
 
       this.setState({fontStyle: undefined});
     }
-  }
+  };
 
   getColorFromStyle(style) {
     const flatten = StyleSheet.flatten(style);
@@ -116,7 +116,7 @@ export default class TabBarItem extends BaseComponent {
     return undefined;
   }
 
-  render() {   
+  render() {
     const {
       children,
       icon,
@@ -130,13 +130,15 @@ export default class TabBarItem extends BaseComponent {
       showDivider,
       width,
       onPress,
-      testID,
+      testID
     } = this.getThemeProps();
 
     const iconTint = iconColor || this.getColorFromStyle(labelStyle) || this.getColorFromStyle(this.styles.label);
-    const iconSelectedTint = iconSelectedColor || this.getColorFromStyle(selectedLabelStyle) || 
+    const iconSelectedTint =
+      iconSelectedColor ||
+      this.getColorFromStyle(selectedLabelStyle) ||
       this.getColorFromStyle(this.styles.labelSelected);
-    
+
     return (
       <TouchableOpacity
         activeOpacity={1}
@@ -146,25 +148,23 @@ export default class TabBarItem extends BaseComponent {
         onLayout={this.onLayout}
       >
         <View row flex center style={[showDivider && this.styles.divider, {paddingHorizontal: Spacings.s4}]}>
-          {icon &&
+          {icon && (
             <View paddingR-6={!_.isEmpty(label)}>
-              <Image
-                source={icon}
-                tintColor={selected ? iconSelectedTint : iconTint}
-              />
+              <Image source={icon} tintColor={selected ? iconSelectedTint : iconTint}/>
             </View>
-          }
-          {!_.isEmpty(label) &&
+          )}
+          {!_.isEmpty(label) && (
             <Text
               numberOfLines={maxLines}
               style={[
                 labelStyle || this.styles.label,
                 selected && (selectedLabelStyle || this.styles.labelSelected),
-                this.state.fontStyle, // HACK: for indicator width in TabBar
+                this.state.fontStyle // HACK: for indicator width in TabBar
               ]}
             >
               {label}
-            </Text>}
+            </Text>
+          )}
           {children}
         </View>
       </TouchableOpacity>
@@ -175,20 +175,20 @@ export default class TabBarItem extends BaseComponent {
 function createStyles() {
   return StyleSheet.create({
     container: {
-      flex: 1,
+      flex: 1
     },
     label: {
       color: Colors.dark10,
-      ...Typography.text90,
+      ...Typography.text90
     },
     labelSelected: {
       color: Colors.blue30,
-      fontWeight: Constants.isIOS ? '600' : '700',
+      fontWeight: Constants.isIOS ? '600' : '700'
     },
     divider: {
       borderRightWidth: 1,
       borderRightColor: Colors.dark70,
-      marginVertical: 14, // NOTE: will not cut long text at the top and bottom in iOS if TabBar not height enough
-    },
+      marginVertical: 14 // NOTE: will not cut long text at the top and bottom in iOS if TabBar not height enough
+    }
   });
 }

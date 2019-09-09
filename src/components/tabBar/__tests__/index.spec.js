@@ -6,19 +6,19 @@ describe('TabBar', () => {
       const uut = new TabBar({});
       uut.itemsWidths = [80, 80, 80, 80];
       uut.state = {
-        selectedIndex: 1,
+        selectedIndex: 1
       };
       uut.childrenCount = 4;
       uut.contentWidth = 320;
       jest.spyOn(uut, 'calcIndicatorWidth');
       expect(uut.calcIndicatorWidth()).toEqual('25%');
     });
-    
+
     it('should equale 50%', () => {
       const uut = new TabBar({});
       uut.itemsWidths = [150, 150, 300];
       uut.state = {
-        selectedIndex: 2,
+        selectedIndex: 2
       };
       uut.childrenCount = 2;
       uut.contentWidth = 600;

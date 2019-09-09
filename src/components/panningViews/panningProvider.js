@@ -5,7 +5,7 @@ const DIRECTIONS = {
   UP: 'up',
   DOWN: 'down',
   LEFT: 'left',
-  RIGHT: 'right',
+  RIGHT: 'right'
 };
 
 /**
@@ -25,7 +25,7 @@ export default class PanningProvider extends Component {
       dragDeltas: {},
       swipeDirections: {},
       swipeVelocities: {},
-      panLocation: {},
+      panLocation: {}
     };
   }
 
@@ -37,7 +37,7 @@ export default class PanningProvider extends Component {
       dragDeltas,
       swipeDirections,
       swipeVelocities,
-      panLocation,
+      panLocation
     } = this.state;
 
     return {
@@ -53,7 +53,7 @@ export default class PanningProvider extends Component {
       swipeDirections,
       swipeVelocities,
       onPanLocationChanged: this.onPanLocationChanged,
-      panLocation,
+      panLocation
     };
   };
 

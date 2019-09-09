@@ -28,12 +28,12 @@ class DialogDismissibleView extends PureComponent {
     /**
      * Whether to show the dialog or not
      */
-    visible: PropTypes.bool,
+    visible: PropTypes.bool
   };
 
   static defaultProps = {
     direction: PanningProvider.Directions.DOWN,
-    onDismiss: _.noop,
+    onDismiss: _.noop
   };
 
   constructor(props) {
@@ -44,7 +44,7 @@ class DialogDismissibleView extends PureComponent {
     this.animatedValue = new Animated.Value(0);
     this.state = {
       visible: props.visible,
-      isAnimating: false,
+      isAnimating: false
     };
   }
 
@@ -107,7 +107,7 @@ class DialogDismissibleView extends PureComponent {
   getHiddenLocation = (left, top) => {
     const {direction} = this.props;
     const topInset = Constants.isIphoneX ? Constants.getSafeAreaInsets().top : Constants.isIOS ? 20 : 0;
-    let result = {left: 0, top: 0};
+    const result = {left: 0, top: 0};
     switch (direction) {
       case PanningProvider.Directions.LEFT:
         result.left = -left - this.width;
@@ -132,7 +132,7 @@ class DialogDismissibleView extends PureComponent {
       toValue,
       duration: 400,
       easing: Easing.bezier(0.165, 0.84, 0.44, 1),
-      useNativeDriver: true,
+      useNativeDriver: true
     });
 
     this.setState({isAnimating: true}, () => animation.start(animationEndCallback));
@@ -144,16 +144,16 @@ class DialogDismissibleView extends PureComponent {
         {
           translateX: this.animatedValue.interpolate({
             inputRange: [0, 1],
-            outputRange: [this.hiddenLocation.left, 0],
-          }),
+            outputRange: [this.hiddenLocation.left, 0]
+          })
         },
         {
           translateY: this.animatedValue.interpolate({
             inputRange: [0, 1],
-            outputRange: [this.hiddenLocation.top, 0],
-          }),
-        },
-      ],
+            outputRange: [this.hiddenLocation.top, 0]
+          })
+        }
+      ]
     };
   };
 
@@ -212,7 +212,8 @@ class DialogDismissibleView extends PureComponent {
     return (
       <View ref={r => (this.ref = r)} style={containerStyle} onLayout={this.onLayout}>
         <PanResponderView
-          style={[style, this.animationStyle, !visible && styles.hidden]} // !visible && styles.hidden is done to fix a bug is iOS
+          // !visible && styles.hidden is done to fix a bug is iOS
+          style={[style, this.animationStyle, !visible && styles.hidden]}
           isAnimated
           onPanLocationChanged={this.onPanLocationChanged}
         >
@@ -227,6 +228,6 @@ export default asPanViewConsumer(DialogDismissibleView);
 
 const styles = StyleSheet.create({
   hidden: {
-    opacity: 0,
-  },
+    opacity: 0
+  }
 });

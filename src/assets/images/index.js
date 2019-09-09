@@ -1,3 +1,5 @@
 export const images = {
-  get gradient() { return require('./gradient.png'); },
+  get gradient() {
+    return require('./gradient.png');
+  }
 };

@@ -11,7 +11,6 @@ import TouchableOpacity from '../touchableOpacity';
 import {TextField} from '../inputs';
 import Text from '../text';
 
-
 // TODO: support updating tags externally
 // TODO: support char array as tag creators (like comma)
 // TODO: add notes to Docs about the Android fix for onKeyPress
@@ -33,9 +32,7 @@ export default class TagsInput extends BaseComponent {
     /**
      * list of tags. can be string or custom object when implementing getLabel
      */
-    tags: PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    ),
+    tags: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])),
     /**
      * callback for extracting the label out of the tag item
      */
@@ -124,7 +121,7 @@ export default class TagsInput extends BaseComponent {
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.tags !== this.state.tags) {
       this.setState({
-        tags: nextProps.tags,
+        tags: nextProps.tags
       });
     }
   }
@@ -132,16 +129,20 @@ export default class TagsInput extends BaseComponent {
   addTag() {
     const {onCreateTag, disableTagAdding} = this.getThemeProps();
     const {value, tags} = this.state;
-    
-    if (disableTagAdding) return;
-    if (_.isNil(value) || _.isEmpty(value.trim())) return;
+
+    if (disableTagAdding) {
+      return;
+    }
+    if (_.isNil(value) || _.isEmpty(value.trim())) {
+      return;
+    }
 
     const newTag = _.isFunction(onCreateTag) ? onCreateTag(value) : value;
     const newTags = [...tags, newTag];
-    
+
     this.setState({
       value: '',
-      tags: newTags,
+      tags: newTags
     });
     _.invoke(this.props, 'onChangeTags', newTags, TagsInput.onChangeTagsActions.ADDED, newTag);
     this.clear();
@@ -149,14 +150,14 @@ export default class TagsInput extends BaseComponent {
 
   removeMarkedTag() {
     const {tags, tagIndexToRemove} = this.state;
-    
+
     if (!_.isUndefined(tagIndexToRemove)) {
       const removedTag = tags[tagIndexToRemove];
-      
+
       tags.splice(tagIndexToRemove, 1);
       this.setState({
         tags,
-        tagIndexToRemove: undefined,
+        tagIndexToRemove: undefined
       });
       _.invoke(this.props, 'onChangeTags', tags, TagsInput.onChangeTagsActions.REMOVED, removedTag);
     }
@@ -193,13 +194,13 @@ export default class TagsInput extends BaseComponent {
     const {tags, tagIndexToRemove} = this.state;
     const tagsCount = _.size(tags);
     const isLastTagMarked = tagIndexToRemove === tagsCount - 1;
-    
+
     return isLastTagMarked;
   }
 
   onKeyPress(event) {
     _.invoke(this.props, 'onKeyPress', event);
-    
+
     const {disableTagRemoval} = this.getThemeProps();
     if (disableTagRemoval) {
       return;
@@ -215,7 +216,7 @@ export default class TagsInput extends BaseComponent {
     if (pressedBackspace) {
       if (hasNoValue && hasTags && _.isUndefined(tagIndexToRemove)) {
         this.setState({
-          tagIndexToRemove: tagsCount - 1,
+          tagIndexToRemove: tagsCount - 1
         });
       } else if (!_.isUndefined(tagIndexToRemove)) {
         this.removeMarkedTag();
@@ -225,7 +226,7 @@ export default class TagsInput extends BaseComponent {
 
   getLabel(item) {
     const {getLabel} = this.props;
-    
+
     if (getLabel) {
       return getLabel(item);
     }
@@ -237,13 +238,13 @@ export default class TagsInput extends BaseComponent {
 
   renderLabel(tag, shouldMarkTag) {
     const typography = this.extractTypographyValue();
-    
+    const label = this.getLabel(tag);
+
     return (
       <View row centerV>
-        {shouldMarkTag &&
-          <Image style={styles.removeIcon} source={Assets.icons.x}/>}
-        <Text style={[styles.tagLabel, typography]}>
-          {shouldMarkTag ? 'Remove' : this.getLabel(tag)}
+        {shouldMarkTag && <Image style={styles.removeIcon} source={Assets.icons.x}/>}
+        <Text style={[styles.tagLabel, typography]} accessibilityLabel={`${label} tag`}>
+          {shouldMarkTag ? 'Remove' : label}
         </Text>
       </View>
     );
@@ -253,16 +254,13 @@ export default class TagsInput extends BaseComponent {
     const {tagStyle, renderTag} = this.getThemeProps();
     const {tagIndexToRemove} = this.state;
     const shouldMarkTag = tagIndexToRemove === index;
-    
+
     if (_.isFunction(renderTag)) {
       return renderTag(tag, index, shouldMarkTag, this.getLabel(tag));
     }
-    
+
     return (
-      <View
-        key={index}
-        style={[styles.tag, tagStyle, shouldMarkTag && styles.tagMarked]}
-      >
+      <View key={index} style={[styles.tag, tagStyle, shouldMarkTag && styles.tagMarked]}>
         {this.renderLabel(tag, shouldMarkTag)}
       </View>
     );
@@ -274,6 +272,7 @@ export default class TagsInput extends BaseComponent {
         key={index}
         activeOpacity={1}
         onPress={() => this.onTagPress(index)}
+        accessibilityHint={!this.props.disableTagRemoval ? 'tap twice for remove tag mode' : undefined}
       >
         {this.renderTag(tag, index)}
       </TouchableOpacity>
@@ -281,14 +280,14 @@ export default class TagsInput extends BaseComponent {
   }
 
   renderTextInput() {
-    const {containerStyle, inputStyle, selectionColor, ...others} = this.getThemeProps();
+    const {inputStyle, selectionColor, ...others} = this.getThemeProps();
     const {value} = this.state;
     const isLastTagMarked = this.isLastTagMarked();
-    
+
     return (
       <View style={styles.inputWrapper}>
         <TextField
-          ref={r => this.input = r}
+          ref={r => (this.input = r)}
           text80
           blurOnSubmit={false}
           {...others}
@@ -302,6 +301,9 @@ export default class TagsInput extends BaseComponent {
           style={inputStyle}
           containerStyle={{flexGrow: 0}}
           collapsable={false}
+          accessibilityHint={
+            !this.props.disableTagRemoval ? 'press keyboard delete button to remove last tag' : undefined
+          }
         />
       </View>
     );
@@ -311,7 +313,7 @@ export default class TagsInput extends BaseComponent {
     const {disableTagRemoval, containerStyle, hideUnderline} = this.getThemeProps();
     const tagRenderFn = disableTagRemoval ? this.renderTag : this.renderTagWrapper;
     const {tags} = this.state;
-    
+
     return (
       <View style={[!hideUnderline && styles.withUnderline, containerStyle]}>
         <View style={styles.tagsList}>

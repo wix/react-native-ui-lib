@@ -38,13 +38,15 @@ export function generateSnippet({componentName, defaultProps, props}) {
   });
 
   if (props.children) {
-    const childrenSnippets = React.Children.map(props.children, (child) => {
+    const childrenSnippets = React.Children.map(props.children, child => {
       if (_.get(child, 'type.displayName')) {
-        const childSnippet = TAB + generateSnippet({
-          componentName: child.type.displayName,
-          props: child.props || {},
-          defaultProps: child.type.defaultProps || {},
-        });
+        const childSnippet =
+          TAB +
+          generateSnippet({
+            componentName: child.type.displayName,
+            props: child.props || {},
+            defaultProps: child.type.defaultProps || {}
+          });
         return childSnippet;
       }
       if (typeof child === 'string') {
