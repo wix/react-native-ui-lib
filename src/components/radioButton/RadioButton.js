@@ -137,14 +137,14 @@ class RadioButton extends BaseComponent {
   };
 
   getAccessibilityProps = () => {
-    const {label, selected, disabled} = this.getThemeProps();
-    const selectedAccessibilityText = selected ? 'selected. ' : 'unselected. ';
-    const accessibilityLabel = selectedAccessibilityText + (label ? label : '');
+    const {label = '', selected, disabled} = this.getThemeProps();
+    const selectedAccessibilityText = selected ? 'selected' : 'unselected';
+    const accessibilityLabel = `${selectedAccessibilityText}. ${label}`;
 
     return {
       accessible: true,
       accessibilityStates: disabled ? ['disabled'] : undefined,
-      // accessibilityRole: 'radio', TODO: uncomment when switching to RN60
+      accessibilityRole: 'button', // 'radio', TODO: uncomment when switching to RN60
       accessibilityLabel
     };
   };
