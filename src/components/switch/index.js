@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {AccessibilityInfo, StyleSheet, Animated, Easing} from 'react-native';
+import {StyleSheet, Animated, Easing} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -90,7 +90,7 @@ class Switch extends BaseComponent {
 
     return {
       accessible: true,
-      accessibilityLabel: accessibilityLabel ? `${accessibilityLabel} ${switchState}` : `switch ${switchState}`, //TODO RN60 fix label and role and convert to accessibilityActions
+      accessibilityLabel: accessibilityLabel ? `${accessibilityLabel} ${switchState}` : `switch ${switchState}`, //TODO: RN60 fix label and role and convert to accessibilityActions
       accessibilityRole: 'button',
       accessibilityStates: disabled ? ['disabled'] : undefined
     };

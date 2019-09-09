@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {AccessibilityInfo, Animated, Easing, StyleSheet} from 'react-native';
+import {Animated, Easing, StyleSheet} from 'react-native';
 import {Colors} from '../../style';
 import Assets from '../../assets';
 import {BaseComponent} from '../../commons';
@@ -78,10 +78,8 @@ class Checkbox extends BaseComponent {
 
   componentDidUpdate(prevProps) {
     const {value} = this.getThemeProps();
-    // const checkedState = value ? 'checked' : 'unchecked';
-    if (prevProps.value !== value) {  
+    if (prevProps.value !== value) {
       this.animateCheckbox(value);
-      // AccessibilityInfo.announceForAccessibility(checkedState);
     }
   }
 
@@ -91,7 +89,7 @@ class Checkbox extends BaseComponent {
 
     return {
       accessible: true,
-      accessibilityLabel: accessibilityLabel ? `${accessibilityLabel} ${checkedState}` : `checkbox ${checkedState}`, //TODO RN60 fix - label and role and convert to accessibilityActions
+      accessibilityLabel: accessibilityLabel ? `${accessibilityLabel} ${checkedState}` : `checkbox ${checkedState}`, //TODO: RN60 fix - label and role and convert to accessibilityActions
       accessibilityRole: 'button',
       accessibilityStates: disabled ? ['disabled'] : undefined
     };
