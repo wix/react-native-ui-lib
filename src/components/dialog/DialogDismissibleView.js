@@ -44,6 +44,7 @@ class DialogDismissibleView extends PureComponent {
     this.animatedValue = new Animated.Value(0);
     this.state = {
       visible: props.visible,
+      hide: false,
       isAnimating: false
     };
   }
@@ -51,8 +52,7 @@ class DialogDismissibleView extends PureComponent {
   componentDidUpdate(prevProps) {
     const {isPanning, dragDeltas, swipeDirections} = this.props.context; // eslint-disable-line
     const {dragDeltas: prevDragDeltas, swipeDirections: prevSwipeDirections} = prevProps.context; // eslint-disable-line
-    const {visible} = this.props;
-    const {visible: prevVisible} = prevProps;
+    const {hide, isAnimating} = this.state;
 
     if (
       isPanning &&
@@ -70,11 +70,22 @@ class DialogDismissibleView extends PureComponent {
       this.onSwipe(swipeDirections);
     }
 
-    if (visible && !prevVisible) {
-      this.setState({visible: true});
-    } else if (prevVisible && !visible) {
+    if (hide && !isAnimating) {
       this.hide();
     }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const {visible} = nextProps;
+    const {visible: prevVisible} = prevState;
+
+    if (visible && !prevVisible) {
+      return {visible: true};
+    } else if (prevVisible && !visible) {
+      return {hide: true};
+    }
+
+    return null;
   }
 
   resetSwipe = () => {
@@ -84,7 +95,7 @@ class DialogDismissibleView extends PureComponent {
 
   isSwiping = () => {
     return this.swipe.x || this.swipe.y;
-  }
+  };
 
   onDrag = () => {
     if (this.isSwiping()) {
@@ -174,7 +185,7 @@ class DialogDismissibleView extends PureComponent {
   hide = () => {
     const {onDismiss} = this.props;
     // TODO: test we're not animating?
-    this.animateTo(0, () => this.setState({visible: false}, onDismiss));
+    this.animateTo(0, () => this.setState({visible: false, hide: false}, onDismiss));
   };
 
   resetToShown = (left, top, direction) => {

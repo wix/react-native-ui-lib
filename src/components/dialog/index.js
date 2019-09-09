@@ -103,13 +103,13 @@ class Dialog extends BaseComponent {
     Constants.removeDimensionsEventListener(this.onOrientationChange);
   }
 
-  componentDidUpdate(prevProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const {visible: nexVisible} = nextProps;
     const {visible} = this.props;
-    const {visible: prevVisible} = prevProps;
 
-    if (visible && !prevVisible) {
+    if (nexVisible && !visible) {
       this.setState({modalVisibility: true, dialogVisibility: true});
-    } else if (prevVisible && !visible) {
+    } else if (visible && !nexVisible) {
       this.hideDialogView();
     }
   }
