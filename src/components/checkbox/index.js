@@ -19,6 +19,10 @@ class Checkbox extends BaseComponent {
   static displayName = 'Checkbox';
   static propTypes = {
     /**
+     * Component accessibility label
+     */
+    accessibilityLabel: PropTypes.string,
+    /**
      * The value of the Checkbox. If true the switch will be turned on. Default value is false.
      */
     value: PropTypes.bool,
@@ -74,22 +78,21 @@ class Checkbox extends BaseComponent {
 
   componentDidUpdate(prevProps) {
     const {value} = this.getThemeProps();
-    if (prevProps.value !== value) {
-      const checkedState = value ? 'checked' : 'unchecked';
-      
+    // const checkedState = value ? 'checked' : 'unchecked';
+    if (prevProps.value !== value) {  
       this.animateCheckbox(value);
-      AccessibilityInfo.announceForAccessibility(checkedState);
+      // AccessibilityInfo.announceForAccessibility(checkedState);
     }
   }
 
   getAccessibilityProps() {
-    const {disabled, value} = this.getThemeProps();
+    const {accessibilityLabel, disabled, value} = this.getThemeProps();
     const checkedState = value ? 'checked' : 'unchecked';
 
     return {
       accessible: true,
-      accessibilityLabel: disabled ? `checkbox ${checkedState}` : 'checkbox',
-      accessibilityRole: disabled ? 'none' : 'button',
+      accessibilityLabel: accessibilityLabel ? `${accessibilityLabel} ${checkedState}` : `checkbox ${checkedState}`, //TODO RN60 fix - label and role and convert to accessibilityActions
+      accessibilityRole: 'button',
       accessibilityStates: disabled ? ['disabled'] : undefined
     };
   }
