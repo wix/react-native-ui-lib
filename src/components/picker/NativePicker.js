@@ -28,7 +28,7 @@ class NativePicker extends BaseComponent {
 
   onDone = () => {
     const {selectedValue, items} = this.state;
-    _.invoke(this.props, 'onChange', selectedValue || items ? items[0].value : undefined);
+    _.invoke(this.props, 'onChange', _.isUndefined(selectedValue) ? _.get(items, '[0].value') : selectedValue);
     this.input.toggleExpandableModal(false);
   };
 
