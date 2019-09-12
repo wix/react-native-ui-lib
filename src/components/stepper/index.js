@@ -68,30 +68,31 @@ export default class Stepper extends PureBaseComponent {
   onAccessibilityAction = event => {
     const {value} = this.state;
     const {min, max} = this.props;
+    const eventMsgContext = event.nativeEvent.action === 'decrement' ? 'Minimum' : 'Maximum';
+    const stepperLimitMsg = `${eventMsgContext} stepper value, ${value}, reached`;
+
     switch (event.nativeEvent.action) {
       case 'decrement':
         if (value <= min) {
-          this.announceForAccessibility(`Minimum stepper value, ${value}, reached`);
+          AccessibilityInfo.announceForAccessibility(`${stepperLimitMsg}`);
         } else {
           this.updateValue(value - 1);
-          this.announceForAccessibility(value - 1);
+          AccessibilityInfo.announceForAccessibility(value - 1);
         }
         break;
       case 'increment':
         if (value >= max) {
-          this.announceForAccessibility(`Maximum stepper value, ${value}, reached`);
+          AccessibilityInfo.announceForAccessibility(`${stepperLimitMsg}`);
         } else {
           this.updateValue(value + 1);
-          this.announceForAccessibility(value + 1);
+          AccessibilityInfo.announceForAccessibility(value + 1);
         }
         break;
       default:
         break;
     }
   };
-
-  announceForAccessibility = msg => AccessibilityInfo.announceForAccessibility(msg);
-
+  
   generateStyles() {
     this.styles = createStyles(this.props.size);
   }
