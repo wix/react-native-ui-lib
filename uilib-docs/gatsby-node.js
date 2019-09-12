@@ -1,15 +1,26 @@
+/**
+ * Implement Gatsby's Node APIs in this file.
+ *
+ * See: https://www.gatsbyjs.org/docs/node-apis/
+ */
+
+// You can delete this file if you're not using it
 const path = require('path');
+const {GraphQLBoolean} = require('gatsby/graphql');
 const _ = require('lodash');
+
+const publicComponentsIds = [];
 
 exports.createPages = ({graphql, boundActionCreators}) => {
   const {createPage} = boundActionCreators;
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     graphql(`
       {
         allComponentMetadata {
           edges {
             node {
               displayName
+              isPublic
               docblock
               description {
                 text
@@ -30,10 +41,10 @@ exports.createPages = ({graphql, boundActionCreators}) => {
           }
         }
       }
-    `).then((result) => {
+    `).then(result => {
       result.data.allComponentMetadata.edges.map(({node}) => {
         createPage({
-          path: `/docs/${node.displayName}`,
+          path: `/docs/${node.isPublic ? 'public/' : ''}${node.displayName}`,
           component: path.resolve('./src/templates/component.js'),
           context: {
             // Data passed to context is available in page queries as GraphQL variables.
@@ -45,4 +56,28 @@ exports.createPages = ({graphql, boundActionCreators}) => {
       resolve();
     });
   });
+};
+
+exports.setFieldsOnGraphQLNodeType = ({type}) => {
+  if (type.name === 'ComponentMetadata') {
+    const componentsByGroups = _.groupBy(type.nodes, 'displayName');
+    _.forEach(componentsByGroups, group => {
+      // has public origin
+      if (group.length === 2) {
+        publicComponentsIds.push(_.last(group).id);
+      }
+    });
+
+    return {
+      isPublic: {
+        type: GraphQLBoolean,
+
+        resolve: source => {
+          return _.includes(publicComponentsIds, source.id);
+        },
+      },
+    };
+  }
+
+  return {};
 };

@@ -1,15 +1,24 @@
 import React from 'react';
+import Link from 'gatsby-link';
 
+import mainLogo from '../images/logo_big.png';
 import './index.scss';
+import Layout from '../components/layout';
 
-const IndexPage = () => (
-  <div className="main-page">
-    <div className="welcome">
-      <div className="title">{'<RNUILIB/>'}</div>
-      <p>Your favorite UI Lib</p>
-      <p>[This page is a work in progress and will improve over time]</p>
-    </div>
-  </div>
-);
+const IndexPage = (props) => {
+  return (
+    <Layout {...props}>
+      <div className="main-page">
+        <div className="logo-box">
+          <img className="logo" src={mainLogo} alt="main-logo"/>
+
+          <Link className="docs-button" to="/docs/">
+            Enter Docs
+          </Link>
+        </div>
+      </div>
+    </Layout>
+  );
+};
 
 export default IndexPage;
