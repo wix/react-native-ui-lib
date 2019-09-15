@@ -1,17 +1,45 @@
-@import 'src/styles/constants';
+@import "src/styles/constants";
 
 .main-page {
-  text-align: center;
   height: 100%;
-  
-  .welcome {
-    padding: 50px 0;
-    color: $white;
+  display: flex;
+  background: $primary;
 
-    .title {
-      font-size: 50px;
-      font-weight: 600;
+  .logo-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+
+    .logo {
+      height: 400px;
     }
-    
+
+    .docs-button {
+      background: $secondary;
+      color: $dark10;
+      display: inline-block;
+      margin-top: -30px;
+      padding: 10px 25px;
+      border-radius: 2px;
+      font-size: $text10;
+      letter-spacing: 3px;
+      box-shadow: 3px 3px 1px 1px $dark60;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: $white;
+      }
+
+      &:active {
+        box-shadow: 1px 1px 0px 0px $dark60;
+      }
+    }
   }
 }

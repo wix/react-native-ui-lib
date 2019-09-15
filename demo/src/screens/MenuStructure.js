@@ -35,6 +35,7 @@ export const navigationData = {
       {title: 'Overlays', tags: 'overlay image', screen: 'unicorn.components.OverlaysScreen'},
       {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
       {title: 'Pan Listener', tags: 'pan swipe drag listener', screen: 'unicorn.components.PanListenerScreen'},
+      {title: 'Pan Responder', tags: 'pan swipe drag responder', screen: 'unicorn.components.PanResponderScreen'},
       {title: 'Shared Transition', tags: 'shared transition element', screen: 'unicorn.components.SharedTransitionScreen'},
       {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
       {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'},

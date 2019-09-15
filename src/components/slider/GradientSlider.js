@@ -150,7 +150,7 @@ class GradientSlider extends BaseComponent {
     const {type, containerStyle, disabled} = this.props;
     const color = this.getColor();
     const thumbTintColor = Colors.getHexString(color);
-    const step = 0.01;
+    let step = 0.01;
     let maximumValue = 1;
     let value = color.a;
     let renderTrack = this.renderDefaultGradient;
@@ -158,6 +158,7 @@ class GradientSlider extends BaseComponent {
 
     switch (type) {
       case GRADIENT_TYPES.HUE:
+        step = 1;
         maximumValue = 359;
         value = color.h;
         renderTrack = this.renderHueGradient;

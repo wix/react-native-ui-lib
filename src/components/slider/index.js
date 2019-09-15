@@ -1,9 +1,8 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, PanResponder, ViewPropTypes} from 'react-native';
+import {StyleSheet, PanResponder, ViewPropTypes, AccessibilityInfo} from 'react-native';
 import {Constants, Colors, PureBaseComponent, View} from 'react-native-ui-lib';
-
 
 const TRACK_SIZE = 6;
 const THUMB_SIZE = 24;
@@ -183,7 +182,7 @@ export default class Slider extends PureBaseComponent {
     let x = this._x;
     x += dx;
     x = Math.max(Math.min(x, this.state.trackSize.width), 0);
-    
+
     this._x = x;
 
     this.updateStyles(this._x);
@@ -205,7 +204,7 @@ export default class Slider extends PureBaseComponent {
       const {trackSize} = this.state;
       const position = x - this.initialThumbSize.width / 2;
       const deviation = 3;
-      
+
       if (position + deviation < 0) {
         this._thumbStyles.left = 0;
       } else if (position - deviation > trackSize.width - this.initialThumbSize.width) {
@@ -233,7 +232,7 @@ export default class Slider extends PureBaseComponent {
       const {thumbStyle, activeThumbStyle} = this.props;
       const style = thumbStyle || this.styles.thumb;
       const activeStyle = activeThumbStyle || this.styles.activeThumb;
-      
+
       this._thumbStyles.style = !this.props.disabled && (start ? activeStyle : style);
       this.thumb.setNativeProps(this._thumbStyles);
     }
@@ -247,7 +246,7 @@ export default class Slider extends PureBaseComponent {
 
   getValueInRange(value) {
     const {minimumValue, maximumValue} = this.props;
-    const v = value < minimumValue ? minimumValue : (value > maximumValue ? maximumValue : value);
+    const v = value < minimumValue ? minimumValue : value > maximumValue ? maximumValue : value;
     return v;
   }
 
@@ -267,15 +266,9 @@ export default class Slider extends PureBaseComponent {
     const range = this.getRange();
 
     if (step) {
-      return Math.max(
-        minimumValue,
-        Math.min(maximumValue, minimumValue + Math.round((ratio * range) / step) * step)
-      );
+      return Math.max(minimumValue, Math.min(maximumValue, minimumValue + Math.round((ratio * range) / step) * step));
     } else {
-      return Math.max(
-        minimumValue, 
-        Math.min(maximumValue, ratio * range + minimumValue)
-      );
+      return Math.max(minimumValue, Math.min(maximumValue, ratio * range + minimumValue));
     }
   }
 
@@ -285,13 +278,13 @@ export default class Slider extends PureBaseComponent {
     return range;
   }
 
-  setMinTrackRef = (r) => {
+  setMinTrackRef = r => {
     this.minTrack = r;
-  }
+  };
 
-  setThumbRef = (r) => {
+  setThumbRef = r => {
     this.thumb = r;
-  }
+  };
 
   /* Events */
 
@@ -316,7 +309,7 @@ export default class Slider extends PureBaseComponent {
     const size = {width, height};
     const layoutName = `${name}`;
     const currentSize = this[layoutName];
-    
+
     if (currentSize && width === currentSize.width && height === currentSize.height) {
       return;
     }
@@ -333,22 +326,49 @@ export default class Slider extends PureBaseComponent {
     }
   };
 
+  onAccessibilityAction = event => {
+    const {maximumValue, minimumValue, step} = this.props;
+    const value = this.getValueForX(this._x);
+    let newValue;
+
+    switch (event.nativeEvent.action) {
+      case 'increment':
+        newValue = value !== maximumValue ? value + step : value;
+        break;
+      case 'decrement':
+        newValue = value !== minimumValue ? value - step : value;
+        break;
+      default: 
+        break;
+    }
+
+    this._x = this.getXForValue(newValue);
+    this.updateValue(this._x);
+    this.updateStyles(this._x);
+    AccessibilityInfo.announceForAccessibility(`New value ${newValue}`);
+  };
+
   /* Renders */
 
   render() {
-    const {
-      containerStyle,
-      thumbStyle,
-      trackStyle,
-      renderTrack,
-      disabled,
-      thumbTintColor
-    } = this.getThemeProps();
+    const {containerStyle, thumbStyle, trackStyle, renderTrack, disabled, thumbTintColor} = this.getThemeProps();
 
     return (
-      <View style={[this.styles.container, containerStyle]} onLayout={this.onContainerLayout}>
+      <View
+        style={[this.styles.container, containerStyle]}
+        onLayout={this.onContainerLayout}
+        accessible
+        accessibilityLabel={'Slider'}
+        {...this.extractAccessibilityProps()}
+        accessibilityRole={'adjustable'}
+        accessibilityStates={disabled ? ['disabled'] : undefined}
+        accessibilityActions={['increment', 'decrement']}
+        onAccessibilityAction={this.onAccessibilityAction}
+      >
         {_.isFunction(renderTrack) ? (
-          <View style={[this.styles.track, trackStyle]} onLayout={this.onTrackLayout}>{renderTrack()}</View>
+          <View style={[this.styles.track, trackStyle]} onLayout={this.onTrackLayout}>
+            {renderTrack()}
+          </View>
         ) : (
           <View>
             <View

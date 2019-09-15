@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
+import {AccessibilityInfo, findNodeHandle} from 'react-native';
 import {Colors, Typography, View, Text, Button, FeatureHighlight} from 'react-native-ui-lib'; // eslint-disable-line
 
 
@@ -44,7 +45,12 @@ class FeatureHighlightScreen extends Component {
   }
 
   closeHighlight = () => {
-    this.setState({showFTE: false});
+    this.setState({showFTE: false}, () => {
+      if (this.viewRef) {
+        const reactTag = findNodeHandle(this.viewRef);
+        AccessibilityInfo.setAccessibilityFocus(reactTag);
+      }
+    });
   }
 
   showHighlight = () => {
@@ -142,7 +148,7 @@ class FeatureHighlightScreen extends Component {
           </View>
         </View>
         <View center padding-25>
-          <View>
+          <View ref={r => this.viewRef = r}>
             <Text marginT-20>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
               industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and

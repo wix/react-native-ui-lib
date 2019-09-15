@@ -6,13 +6,12 @@ import {Colors} from '../../style';
 import {PureBaseComponent} from '../../commons';
 import View from '../view';
 
-
 const OVERLY_TYPES = {
   VERTICAL: 'vertical',
   TOP: 'top',
   BOTTOM: 'bottom',
   SOLID: 'solid'
-}
+};
 const gradientImage = require('./assets/GradientOverlay.png');
 
 /**
@@ -24,9 +23,9 @@ export default class Overlay extends PureBaseComponent {
   static displayName = 'Overlay';
 
   static propTypes = {
-    /** 
-    * The type of overlay to set on top of the image 
-    */
+    /**
+     * The type of overlay to set on top of the image
+     */
     type: PropTypes.oneOf(_.values(OVERLY_TYPES))
   };
 
@@ -34,12 +33,12 @@ export default class Overlay extends PureBaseComponent {
 
   getStyleByType() {
     switch (this.props.type) {
-      case OVERLY_TYPES.TOP: 
+      case OVERLY_TYPES.TOP:
         return styles.top;
-      case OVERLY_TYPES.BOTTOM: 
+      case OVERLY_TYPES.BOTTOM:
         return styles.bottom;
-      case OVERLY_TYPES.SOLID: 
-        return styles.solid
+      case OVERLY_TYPES.SOLID:
+        return styles.solid;
       default:
         break;
     }
@@ -51,8 +50,8 @@ export default class Overlay extends PureBaseComponent {
 
     if (flatten) {
       attributes = _.chain(flatten)
-      .pickBy((value, key) => _.includes(key, attName))
-      .value();
+        .pickBy((value, key) => _.includes(key, attName))
+        .value();
     }
     return attributes;
   }
@@ -62,18 +61,12 @@ export default class Overlay extends PureBaseComponent {
     const image = type !== OVERLY_TYPES.SOLID ? gradientImage : undefined;
     const marginStyle = type !== OVERLY_TYPES.VERTICAL ? this.getAttributeStyles(style, 'margin') : undefined;
 
-    return (
-      <Image
-        style={[marginStyle, styles.container, typeStyle]}
-        resizeMode={'stretch'}
-        source={image}
-      />
-    );
+    return <Image style={[marginStyle, styles.container, typeStyle]} resizeMode={'stretch'} source={image}/>;
   }
 
   render() {
     const {type, style} = this.props;
-    
+
     if (type === OVERLY_TYPES.VERTICAL) {
       const marginStyle = this.getAttributeStyles(style, 'margin');
 
@@ -84,7 +77,7 @@ export default class Overlay extends PureBaseComponent {
         </View>
       );
     }
-    
+
     return this.renderImage(this.getStyleByType());
   }
 }

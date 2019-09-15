@@ -7,18 +7,17 @@ import {BaseComponent} from '../../commons';
 import * as presenter from './CarouselPresenter-Deprecated';
 import NewCarousel from './index';
 
-
 /**
  * @description: Carousel for scrolling pages horizontally
  * @gif: https://media.giphy.com/media/l0HU7f8gjpRlMRhKw/giphy.gif, https://media.giphy.com/media/3oFzmcjX9OhpyckhcQ/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CarouselScreen.js
  * @extends: ScrollView
- * @extendsLink: https://facebook.github.io/react-native/docs/scrollview 
+ * @extendsLink: https://facebook.github.io/react-native/docs/scrollview
  * @notes: This is screed width Component
  */
 export default class CarouselDeprecated extends BaseComponent {
   static displayName = 'IGNORE';
-  
+
   static propTypes = {
     /**
      * the first page to start with
@@ -43,7 +42,7 @@ export default class CarouselDeprecated extends BaseComponent {
     /**
      * the carousel style
      */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
   };
 
   static defaultProps = {
@@ -52,7 +51,7 @@ export default class CarouselDeprecated extends BaseComponent {
 
   constructor(props) {
     super(props);
-    
+
     this.carousel = React.createRef();
 
     this.state = {
@@ -68,7 +67,7 @@ export default class CarouselDeprecated extends BaseComponent {
 
   updateOffset = (animated = false) => {
     const x = presenter.calcOffset(this.props, this.state);
-    
+
     if (this.carousel.current) {
       this.carousel.current.scrollTo({x, animated});
 
@@ -79,11 +78,11 @@ export default class CarouselDeprecated extends BaseComponent {
         this.onMomentumScrollEnd();
       }
     }
-  }
+  };
 
   goToPage(pageIndex, animated = true) {
     if (this.props.migrate) {
-      this.carousel.current.goToPage(pageIndex, animated)
+      this.carousel.current.goToPage(pageIndex, animated);
     } else {
       this.setState({currentPage: pageIndex}, () => this.updateOffset(animated));
     }
@@ -93,18 +92,18 @@ export default class CarouselDeprecated extends BaseComponent {
     if (Constants.isAndroid) {
       this.updateOffset();
     }
-  }
+  };
 
   // finished full page scroll
   onMomentumScrollEnd = () => {
     const {currentStandingPage, currentPage} = this.state;
-    this.setState({currentStandingPage: currentPage});  
+    this.setState({currentStandingPage: currentPage});
     if (currentStandingPage !== currentPage) {
       _.invoke(this.props, 'onChangePage', currentPage, currentStandingPage);
     }
-  }
+  };
 
-  onScroll = (event) => {
+  onScroll = event => {
     if (!this.skippedInitialScroll) {
       this.skippedInitialScroll = true;
       return;
@@ -112,7 +111,7 @@ export default class CarouselDeprecated extends BaseComponent {
 
     const {loop} = this.props;
     const offsetX = presenter.getDirectionOffset(event.nativeEvent.contentOffset.x, this.props);
-    
+
     if (offsetX >= 0) {
       const newPage = presenter.calcPageIndex(offsetX, this.props);
 
@@ -122,17 +121,17 @@ export default class CarouselDeprecated extends BaseComponent {
     if (loop && presenter.isOutOfBounds(offsetX, this.props)) {
       this.updateOffset();
     }
-    
+
     _.invoke(this.props, 'onScroll', event);
-  }
+  };
 
   cloneChild(child) {
     if (!child.key) {
       return child;
     }
-    
+
     return React.cloneElement(child, {
-      key: `${child.key}-clone`,
+      key: `${child.key}-clone`
     });
   }
 
@@ -140,7 +139,7 @@ export default class CarouselDeprecated extends BaseComponent {
     const {children, loop} = this.props;
     const length = presenter.getChildrenLength(this.props);
     const childrenArray = React.Children.toArray(children);
-    
+
     if (loop) {
       childrenArray.unshift(this.cloneChild(children[length - 1]));
       childrenArray.push(this.cloneChild(children[0]));
@@ -155,11 +154,11 @@ export default class CarouselDeprecated extends BaseComponent {
 
     const {containerStyle, ...others} = this.props;
     const {initialOffset} = this.state;
-    
+
     return (
       <ScrollView
         {...others}
-        ref={this.carousel} 
+        ref={this.carousel}
         style={[containerStyle, {flexGrow: 1}]}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -177,7 +176,5 @@ export default class CarouselDeprecated extends BaseComponent {
 }
 
 function createStyles() {
-  return StyleSheet.create({
-    
-  });
+  return StyleSheet.create({});
 }

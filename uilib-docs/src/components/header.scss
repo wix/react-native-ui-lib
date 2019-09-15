@@ -1,0 +1,41 @@
+@import "src/styles/constants";
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: $headerHeight;
+  display: flex;
+  align-items: center;
+  padding: 0px 20px;
+  background: $white;
+
+  .logo {
+    height: 50px;
+    border-radius: 2px;
+    padding: 4px;
+    border: 1px solid $primary;
+    vertical-align: middle;
+  }
+
+  .logo-title {
+    font-size: $text10;
+    color: $primary;
+    letter-spacing: 2px;
+    vertical-align: middle;
+    margin-left: 5px;
+  }
+
+  .links {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+
+    a {
+      margin-right: 40px;
+      font-size: $text20;
+      color: $primary;
+      text-decoration: none;
+    }
+  }
+}

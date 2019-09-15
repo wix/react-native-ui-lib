@@ -2,7 +2,6 @@ import React from 'react';
 import {View, TextInput as RNTextInput, StyleSheet} from 'react-native';
 import BaseInput from './BaseInput';
 
-
 /**
  * @description: a wrapper for Text Field component to create enclosed text area
  * @modifiers: Typography
@@ -16,7 +15,7 @@ export default class TextArea extends BaseInput {
 
   static propTypes = {
     ...RNTextInput.propTypes,
-    ...BaseInput.propTypes,
+    ...BaseInput.propTypes
   };
 
   generateStyles() {
@@ -36,7 +35,9 @@ export default class TextArea extends BaseInput {
           style={inputStyle}
           underlineColorAndroid="transparent"
           onChangeText={this.onChangeText}
-          ref={(input) => { this.input = input; }}
+          ref={input => {
+            this.input = input;
+          }}
         />
       </View>
     );
@@ -46,13 +47,13 @@ export default class TextArea extends BaseInput {
 function createStyles() {
   return StyleSheet.create({
     container: {
-      flex: 1,
+      flex: 1
     },
     input: {
       flex: 1,
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
-      textAlignVertical: 'top',
-    },
+      textAlignVertical: 'top'
+    }
   });
 }

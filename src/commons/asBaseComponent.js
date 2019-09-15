@@ -19,7 +19,7 @@ function asBaseComponent(WrappedComponent) {
     render() {
       const themeProps = Modifiers.getThemeProps.call(WrappedComponent, this.props, this.context);
       const {forwardedRef, ...others} = themeProps;
-      return <WrappedComponent /* {...this.props} */ {...others} modifiers={this.state} ref={forwardedRef} />;
+      return <WrappedComponent /* {...this.props} */ {...others} modifiers={this.state} ref={forwardedRef}/>;
     }
   }
 

@@ -100,7 +100,7 @@ export default class ActionSheet extends BaseComponent {
 
   static defaultProps = {
     title: undefined,
-    message: undefined,
+    message: undefined
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -118,16 +118,14 @@ export default class ActionSheet extends BaseComponent {
         cancelBtnIndex = optionsArray.length - 1;
       }
 
-      ActionSheetIOS.showActionSheetWithOptions(
-        {
-          title,
-          message,
-          options: _.map(optionsArray, 'label'),
-          cancelButtonIndex: cancelBtnIndex,
-          destructiveButtonIndex,
-        },
-        this.onOptionPress,
-      );
+      ActionSheetIOS.showActionSheetWithOptions({
+        title,
+        message,
+        options: _.map(optionsArray, 'label'),
+        cancelButtonIndex: cancelBtnIndex,
+        destructiveButtonIndex
+      },
+      this.onOptionPress,);
     }
   }
 
@@ -135,11 +133,9 @@ export default class ActionSheet extends BaseComponent {
     _.invoke(this.props, `options[${optionIndex}].onPress`);
     _.invoke(this.props, 'onDismiss');
   }
-  
+
   renderIcon(icon) {
-    return (
-      <Image source={icon} resizeMode={'contain'} style={{width: 20, height: 20, marginRight: 16}}/>
-    );
+    return <Image source={icon} resizeMode={'contain'} style={{width: 20, height: 20, marginRight: 16}}/>;
   }
 
   renderAction(option, index) {
@@ -165,20 +161,19 @@ export default class ActionSheet extends BaseComponent {
   renderActions() {
     const {title, options, cancelButtonIndex, renderAction, optionsStyle} = this.props;
     const optionsToRender = _.filter(options, (option, index) => index !== cancelButtonIndex);
-    
+
     return (
       <View style={[_.isEmpty(title) ? styles.listNoTitle : styles.listWithTitle, optionsStyle]}>
-        {_.isFunction(renderAction) ?
-          optionsToRender.map((option, index) => renderAction(option, index, this.onOptionPress)) :
-          _.map(optionsToRender, this.renderAction)
-        }
+        {_.isFunction(renderAction)
+          ? optionsToRender.map((option, index) => renderAction(option, index, this.onOptionPress))
+          : _.map(optionsToRender, this.renderAction)}
       </View>
     );
   }
 
   renderTitle() {
     const {title} = this.props;
-    
+
     if (!_.isEmpty(title)) {
       return (
         <View height={56} paddingL-16 centerV>
@@ -194,7 +189,7 @@ export default class ActionSheet extends BaseComponent {
     const {renderTitle} = this.props;
     const {containerStyle} = this.getThemeProps();
     return (
-      <View style={[styles.sheet, containerStyle]} >
+      <View style={[styles.sheet, containerStyle]}>
         {_.isFunction(renderTitle) ? renderTitle() : this.renderTitle()}
         {this.renderActions()}
       </View>
@@ -202,10 +197,21 @@ export default class ActionSheet extends BaseComponent {
   }
 
   render() {
-    const {useNativeIOS, visible, onDismiss, useModal, dialogStyle, onModalDismissed, testID, useSafeArea} = this.getThemeProps();
-    
-    if (Constants.isIOS && useNativeIOS) return null;
-    
+    const {
+      useNativeIOS,
+      visible,
+      onDismiss,
+      useModal,
+      dialogStyle,
+      onModalDismissed,
+      testID,
+      useSafeArea
+    } = this.getThemeProps();
+
+    if (Constants.isIOS && useNativeIOS) {
+      return null;
+    }
+
     return (
       <Dialog
         useSafeArea={useSafeArea}
@@ -239,5 +245,5 @@ const styles = StyleSheet.create({
   listNoTitle: {
     paddingTop: VERTICAL_PADDING,
     paddingBottom: VERTICAL_PADDING
-  },
+  }
 });

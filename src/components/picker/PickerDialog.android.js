@@ -28,7 +28,7 @@ class PickerDialog extends BaseComponent {
     /**
      * cancel label style
      */
-    cancelLabelStyle: Text.propTypes.style,
+    cancelLabelStyle: Text.propTypes.style
   };
 
   state = {};
@@ -100,17 +100,17 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     overflow: 'hidden',
     borderRadius: BorderRadiuses.br10,
-    paddingHorizontal: 24,
+    paddingHorizontal: 24
   },
   header: {
-    paddingTop: 21,
+    paddingTop: 21
   },
   footer: {
     height: 52,
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
+    alignItems: 'center'
+  }
 });
 
 export default PickerDialog;

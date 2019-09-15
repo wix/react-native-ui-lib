@@ -9,7 +9,6 @@ import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 import Text from '../text';
 
-
 const PADDINGS = {
   XSMALL: 3,
   SMALL: 4.5,
@@ -178,7 +177,7 @@ export default class Button extends PureBaseComponent {
   }
 
   // This method will be called more than once in case of layout change!
-  onLayout = (event) => {
+  onLayout = event => {
     const height = event.nativeEvent.layout.height;
     if (this.props.round) {
       const width = event.nativeEvent.layout.width;
@@ -189,7 +188,7 @@ export default class Button extends PureBaseComponent {
     if (Constants.isAndroid && Platform.Version <= 17) {
       this.setState({borderRadius: height / 2});
     }
-  }
+  };
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
@@ -208,6 +207,14 @@ export default class Button extends PureBaseComponent {
   get isIconButton() {
     const {iconSource, label} = this.getThemeProps();
     return iconSource && !label;
+  }
+
+  getAccessibilityInfo() {
+    if (this.isIconButton) {
+      return {
+        accessibilityRole: 'imagebutton'
+      };
+    }
   }
 
   getBackgroundColor() {
@@ -271,37 +278,37 @@ export default class Button extends PureBaseComponent {
     const outlineWidth = this.getThemeProps().outlineWidth || 1;
 
     const CONTAINER_STYLE_BY_SIZE = {};
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round ?
-    {height: this.state.size, width: this.state.size, padding: PADDINGS.XSMALL} :
-    {
-      paddingVertical: PADDINGS.XSMALL,
-      paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
-      minWidth: MIN_WIDTH.XSMALL,
-    };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = round ?
-    {height: this.state.size, width: this.state.size, padding: PADDINGS.SMALL} :
-    {
-      paddingVertical: PADDINGS.SMALL,
-      paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
-      minWidth: MIN_WIDTH.SMALL,
-    };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = round ?
-    {height: this.state.size, width: this.state.size, padding: PADDINGS.MEDIUM} :
-    {
-      paddingVertical: PADDINGS.MEDIUM,
-      paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
-      minWidth: MIN_WIDTH.MEDIUM,
-    };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = round ?
-    {height: this.state.size, width: this.state.size, padding: PADDINGS.LARGE} :
-    {
-      paddingVertical: PADDINGS.LARGE,
-      paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
-      minWidth: MIN_WIDTH.LARGE,
-    };
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round
+      ? {height: this.state.size, width: this.state.size, padding: PADDINGS.XSMALL}
+      : {
+        paddingVertical: PADDINGS.XSMALL,
+        paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
+        minWidth: MIN_WIDTH.XSMALL
+      };
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = round
+      ? {height: this.state.size, width: this.state.size, padding: PADDINGS.SMALL}
+      : {
+        paddingVertical: PADDINGS.SMALL,
+        paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
+        minWidth: MIN_WIDTH.SMALL
+      };
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = round
+      ? {height: this.state.size, width: this.state.size, padding: PADDINGS.MEDIUM}
+      : {
+        paddingVertical: PADDINGS.MEDIUM,
+        paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
+        minWidth: MIN_WIDTH.MEDIUM
+      };
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = round
+      ? {height: this.state.size, width: this.state.size, padding: PADDINGS.LARGE}
+      : {
+        paddingVertical: PADDINGS.LARGE,
+        paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
+        minWidth: MIN_WIDTH.LARGE
+      };
 
     if (outline) {
-      _.forEach(CONTAINER_STYLE_BY_SIZE, (style) => {
+      _.forEach(CONTAINER_STYLE_BY_SIZE, style => {
         if (round) {
           style.padding -= outlineWidth; // eslint-disable-line
         } else {
@@ -338,7 +345,7 @@ export default class Button extends PureBaseComponent {
     if ((outline || outlineColor) && !link) {
       outlineStyle = {
         borderWidth: outlineWidth || 1,
-        borderColor: outlineColor || Colors.blue30,
+        borderColor: outlineColor || Colors.blue30
       };
 
       if (disabled) {
@@ -371,7 +378,7 @@ export default class Button extends PureBaseComponent {
     const {disabled, iconStyle: propsIconStyle, iconOnRight} = this.getThemeProps();
     const size = this.getThemeProps().size || DEFAULT_SIZE;
     const iconStyle = {
-      tintColor: this.getLabelColor(),
+      tintColor: this.getLabelColor()
     };
 
     const marginSide = [Button.sizes.large, Button.sizes.medium].includes(size) ? 8 : 4;
@@ -457,14 +464,14 @@ export default class Button extends PureBaseComponent {
           this.styles.container,
           animateLayout && this.getAnimationDirectionStyle(),
           containerSizeStyle,
-          (link) && this.styles.innerContainerLink,
+          link && this.styles.innerContainerLink,
           shadowStyle,
           margins,
           containerStyle,
           backgroundColor && {backgroundColor},
           borderRadiusStyle,
           outlineStyle,
-          style,
+          style
         ]}
         activeOpacity={0.6}
         activeBackgroundColor={this.getActiveBackgroundColor()}
@@ -472,6 +479,7 @@ export default class Button extends PureBaseComponent {
         onPress={onPress}
         disabled={disabled}
         testID={testID}
+        {...this.getAccessibilityInfo()}
         {...others}
         ref={this.setRef}
       >
@@ -493,7 +501,7 @@ function createStyles() {
       alignItems: 'center'
     },
     containerDisabled: {
-      backgroundColor: Colors.dark60,
+      backgroundColor: Colors.dark60
     },
     innerContainerLink: {
       minWidth: undefined,

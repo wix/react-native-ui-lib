@@ -44,7 +44,7 @@ describe('Button', () => {
 
     it('should return defined theme backgroundColor', () => {
       ThemeManager.setComponentTheme('Button', {
-        backgroundColor: Colors.purple40,
+        backgroundColor: Colors.purple40
       });
       const uut = new Button({});
       expect(uut.getBackgroundColor()).toEqual(Colors.purple40);
@@ -102,7 +102,7 @@ describe('Button', () => {
 
     it('should return Theme linkColor color for link', () => {
       ThemeManager.setComponentTheme('Button', {
-        linkColor: Colors.yellow40,
+        linkColor: Colors.yellow40
       });
       const uut = new Button({link: true});
       expect(uut.getLabelColor()).toEqual(Colors.yellow40);
@@ -134,7 +134,7 @@ describe('Button', () => {
       const uut = new Button({red10: true, color: 'green', link: true, disabled: true});
       expect(uut.getLabelColor()).toEqual(ThemeManager.CTADisabledColor);
     });
-    
+
     it('should return dark10 color if this is an icon button (without label)', () => {
       const uut = new Button({iconSource: 12});
       expect(uut.getLabelColor()).toEqual(Colors.dark10);
@@ -255,7 +255,7 @@ describe('Button', () => {
       expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 3, paddingHorizontal: 11, minWidth: 66});
       expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 2, paddingHorizontal: 10, minWidth: 66});
     });
-    
+
     it('should reduce padding by outlineWidth in case of outline button', () => {
       const uut = new Button({size: Button.sizes.large, outline: true, outlineWidth: 2});
       expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 7.5, paddingHorizontal: 18, minWidth: 90});
@@ -270,7 +270,7 @@ describe('Button', () => {
       const uut = new Button({size: 'medium', link: true});
       expect(uut.getContainerSizeStyle()).toEqual({});
     });
-    
+
     it('should have no padding of button is an icon button', () => {
       const uut = new Button({size: 'medium', iconSource: 14});
       expect(uut.getContainerSizeStyle()).toEqual({});
@@ -287,16 +287,16 @@ describe('Button', () => {
       const uut2 = new Button({size: 'medium', round: true});
       const uut3 = new Button({size: 'large', round: true});
       uut.state = {
-        size: 30,
+        size: 30
       };
       uut1.state = {
-        size: 40,
+        size: 40
       };
       uut2.state = {
-        size: 50,
+        size: 50
       };
       uut3.state = {
-        size: 60,
+        size: 60
       };
       expect(uut.getContainerSizeStyle()).toEqual({height: 30, width: 30, padding: 3});
       expect(uut1.getContainerSizeStyle()).toEqual({height: 40, width: 40, padding: 4.5});
@@ -348,7 +348,7 @@ describe('Button', () => {
       let uut = new Button({size: Button.sizes.large, iconStyle: {marginRight: 9, tintColor: 'red'}});
       expect(uut.getIconStyle()).toEqual([
         {marginRight: 8, tintColor: Colors.white},
-        {marginRight: 9, tintColor: 'red'},
+        {marginRight: 9, tintColor: 'red'}
       ]);
       uut = new Button({size: Button.sizes.large, iconStyle: 123}); // style can be StyleSheet id
       expect(uut.getIconStyle()).toEqual([{marginRight: 8, tintColor: Colors.white}, 123]);

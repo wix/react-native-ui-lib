@@ -12,7 +12,7 @@ export default function asRadioGroupChild(WrappedComponent) {
       /**
        * When using RadioButton without a RadioGroup, use this prop to toggle selection
        */
-      selected: PropTypes.bool,
+      selected: PropTypes.bool
     };
 
     render() {

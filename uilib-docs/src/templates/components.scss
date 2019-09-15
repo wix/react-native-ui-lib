@@ -1,4 +1,4 @@
-@import 'src/styles/constants';
+@import "src/styles/constants";
 
 @mixin component-props() {
   .component-props {
@@ -9,15 +9,35 @@
 
       tr {
         &:first-child {
-          background-color: $violet60;
+          background-color: $secondary;
+          color: $primary;
+          font-size: $text30;
+          text-transform: capitalize;
+        }
+
+        &:hover {
+          td {
+            border-color: $primary;
+          }
         }
 
         th {
-          padding: 9px;
+          padding: 16px 20px;
+
+          &:first-child {
+            border-top-left-radius: 6px;
+            border-bottom-left-radius: 6px;
+          }
+          &:last-child {
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+          }
         }
+
         td {
-          padding: 9px;
+          padding: 12px;
           border-bottom: 1px solid $dark60;
+          transition: all 0.2s;
         }
       }
     }
@@ -26,11 +46,11 @@
 
 .docs-page {
   @include component-props();
+  padding-left: $navbarWidth;
 
   div {
     display: block;
   }
-
 
   display: flex;
   flex-direction: row;
@@ -40,5 +60,14 @@
     padding: 24px 72px;
     flex: 1;
     overflow-y: auto;
+  }
+
+  .title {
+    margin-bottom: 0;
+  }
+
+  .code-example {
+    margin-left: 8px;
+    font-size: $text30;
   }
 }

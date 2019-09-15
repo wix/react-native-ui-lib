@@ -1,20 +1,17 @@
-import React from 'react';
-import {
-  Text,
-  View,
-} from 'react-native';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
-import createStyles from './style';
-import {BaseComponent} from '../../commons';
+import React from 'react';
+import {AccessibilityInfo, Text, View} from 'react-native';
+import PropTypes from 'prop-types';
 import StepperButton from './StepperButton';
+import createStyles from './style';
+import {PureBaseComponent} from '../../commons';
 
 /**
  * @description: Stepper component with increase and decrease buttons
  * @gif: https://media.giphy.com/media/3oFzm47bk0v4WV15O8/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FormScreen.js
  */
-export default class Stepper extends BaseComponent {
+export default class Stepper extends PureBaseComponent {
   static displayName = 'Stepper';
   static propTypes = {
     /**
@@ -40,17 +37,58 @@ export default class Stepper extends BaseComponent {
     /**
      * the initial value
      */
-    initialValue: PropTypes.number.isRequired,
+    initialValue: PropTypes.number.isRequired
   };
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
-      value: props.initialValue,
+      value: props.initialValue
     };
   }
 
+  getAccessibilityProps() {
+    const {value} = this.state;
+    const {accessibilityLabel} = this.props;
+    const labelSuffix = `value = ${value}`;
+    return {
+      accessibilityLabel: accessibilityLabel ? `${accessibilityLabel}, ${labelSuffix}` : `Stepper, ${labelSuffix}`,
+      accessible: true,
+      accessibilityRole: 'adjustable',
+      accessibilityActions: ['decrement', 'increment'],
+      onAccessibilityAction: this.onAccessibilityAction
+    };
+  }
+
+  onAccessibilityAction = event => {
+    const {value} = this.state;
+    const {min, max} = this.props;
+    const eventMsgContext = event.nativeEvent.action === 'decrement' ? 'Minimum' : 'Maximum';
+    const stepperLimitMsg = `${eventMsgContext} stepper value, ${value}, reached`;
+
+    switch (event.nativeEvent.action) {
+      case 'decrement':
+        if (value <= min) {
+          AccessibilityInfo.announceForAccessibility(`${stepperLimitMsg}`);
+        } else {
+          this.updateValue(value - 1);
+          AccessibilityInfo.announceForAccessibility(value - 1);
+        }
+        break;
+      case 'increment':
+        if (value >= max) {
+          AccessibilityInfo.announceForAccessibility(`${stepperLimitMsg}`);
+        } else {
+          this.updateValue(value + 1);
+          AccessibilityInfo.announceForAccessibility(value + 1);
+        }
+        break;
+      default:
+        break;
+    }
+  };
+  
   generateStyles() {
     this.styles = createStyles(this.props.size);
   }
@@ -70,21 +108,24 @@ export default class Stepper extends BaseComponent {
     newValue = _.min([newValue, this.props.max]);
     if (this.state.value !== newValue) {
       this.setState({
-        value: newValue,
-      }, () => {
+        value: newValue
+      },
+      () => {
         if (this.props.onValueChange) {
           this.props.onValueChange(newValue);
         }
-      });
+      },);
     }
   }
 
   render() {
     const {minusDisabled, plusDisabled, testID} = this.getDisabledState();
     return (
-      <View style={[this.styles.container, this.props.containerStyle]}>
+      <View {...this.getAccessibilityProps()} style={[this.styles.container, this.props.containerStyle]}>
         <View style={this.styles.title}>
-          <Text testID={`${testID}.label`} style={this.styles.titleText}>{this.getLabel()}</Text>
+          <Text testID={`${testID}.label`} style={this.styles.titleText}>
+            {this.getLabel()}
+          </Text>
         </View>
         <View style={this.styles.buttons}>
           <StepperButton
