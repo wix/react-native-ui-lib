@@ -19,10 +19,6 @@ class Checkbox extends BaseComponent {
   static displayName = 'Checkbox';
   static propTypes = {
     /**
-     * Component accessibility label
-     */
-    accessibilityLabel: PropTypes.string,
-    /**
      * The value of the Checkbox. If true the switch will be turned on. Default value is false.
      */
     value: PropTypes.bool,

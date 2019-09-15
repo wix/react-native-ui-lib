@@ -20,10 +20,6 @@ class Switch extends BaseComponent {
 
   static propTypes = {
     /**
-     * Component accessibility label
-     */
-    accessibilityLabel: PropTypes.string,
-    /**
      * The value of the switch. If true the switch will be turned on. Default value is false
      */
     value: PropTypes.bool,

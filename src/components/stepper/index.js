@@ -15,10 +15,6 @@ export default class Stepper extends PureBaseComponent {
   static displayName = 'Stepper';
   static propTypes = {
     /**
-     * Component accessibility label
-     */
-    accessibilityLabel: PropTypes.string,
-    /**
      * Text to show next to the current number
      */
     label: PropTypes.string,
