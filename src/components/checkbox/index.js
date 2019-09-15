@@ -73,9 +73,22 @@ class Checkbox extends BaseComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.value !== this.props.value) {
-      this.animateCheckbox(this.props.value);
+    const {value} = this.getThemeProps();
+    if (prevProps.value !== value) {
+      this.animateCheckbox(value);
     }
+  }
+
+  getAccessibilityProps() {
+    const {accessibilityLabel, disabled, value} = this.getThemeProps();
+    const checkedState = value ? 'checked' : 'unchecked';
+
+    return {
+      accessible: true,
+      accessibilityLabel: accessibilityLabel ? `${accessibilityLabel} ${checkedState}` : `checkbox ${checkedState}`, //TODO: RN60 fix - label and role and convert to accessibilityActions
+      accessibilityRole: 'button',
+      accessibilityStates: disabled ? ['disabled'] : undefined
+    };
   }
 
   generateStyles() {
@@ -95,6 +108,7 @@ class Checkbox extends BaseComponent {
 
   onPress = () => {
     const {disabled} = this.getThemeProps();
+
     if (!disabled) {
       _.invoke(this.props, 'onValueChange', !this.props.value);
     }
@@ -114,12 +128,10 @@ class Checkbox extends BaseComponent {
   }
 
   render() {
-    const {value, selectedIcon, color, iconColor, disabled, testID, ...others} = this.getThemeProps();
-    const accessibilityLabel = value ? 'checked' : 'unchecked';
-
+    const {selectedIcon, color, iconColor, disabled, testID, ...others} = this.getThemeProps();
     return (
       <TouchableOpacity
-        accessibilityLabel={accessibilityLabel}
+        {...this.getAccessibilityProps()}
         activeOpacity={1}
         testID={testID}
         {...others}
