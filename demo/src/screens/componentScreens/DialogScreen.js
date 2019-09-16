@@ -228,11 +228,11 @@ Scroll: ${scroll}`;
         bottom={position === 'bottom'}
         height={height}
         panDirection={panDirection}
-        title={this.getTitle()}
-        style={[styles.dialog, isRounded && styles.roundedDialog]}
+        containerStyle={[styles.dialog, isRounded && styles.roundedDialog]}
         visible={showDialog}
         onDismiss={this.hideDialog}
         renderPannableHeader={renderPannableHeader}
+        pannableHeaderProps={{title: this.getTitle()}}
         supportedOrientations={['portrait', 'landscape']}
       >
         {this.renderContent()}
