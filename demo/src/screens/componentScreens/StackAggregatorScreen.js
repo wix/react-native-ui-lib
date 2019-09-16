@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
-import {Constants, Colors, View, Text, Card, StackAggregator} from 'react-native-ui-lib'; //eslint-disable-line
+import {StyleSheet, ScrollView} from 'react-native';
+import {Constants, Colors, View, Text, TextField, Card, StackAggregator} from 'react-native-ui-lib'; //eslint-disable-line
 
 
 const items = [
@@ -39,14 +39,19 @@ export default class StackAggregatorScreen extends Component {
 
   render() {
     return (
-      <View bg-dark80 flex>
+      <ScrollView bg-dark80 flex keyboardShouldPersistTaps={'handled'}>
         <StackAggregator
           items={items}
           renderItem={this.renderItem}
           // collapsed={false}
           containerStyle={{marginTop: 50}}
         />
-      </View>
+        <Text marginH-20>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
+        <TextField
+          placeholder="Search.."
+          margin-20
+        />
+      </ScrollView>
     );
   }
 }

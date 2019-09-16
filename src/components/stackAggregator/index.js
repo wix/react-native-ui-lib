@@ -197,12 +197,9 @@ export default class StackAggregator extends PureBaseComponent {
     this.setState({collapsed: true}, () => this.animate());
   }
 
-  open() {
+  open = () => {
+    const {items} = this.state;
     this.setState({collapsed: false}, () => this.animate());
-  }
-
-  onPress = () => {
-    this.open();
   }
 
   renderItem = (item, index) => {
@@ -233,44 +230,46 @@ export default class StackAggregator extends PureBaseComponent {
   render() {
     const {containerStyle} = this.props;
     const {items, collapsed} = this.state;
+    const containerHeight = collapsed ? items[0].height + (PEEP * 3) : items[items.length - 1].top + items[items.length - 1].height; // Height !!!!
 
     return (
       <View style={containerStyle}>
-        <Animated.View 
-          style={{
-            alignItems: 'flex-end',
-            opacity: this.animatedOpacity,
-            transform: [
-              {scale: this.animatedScale}
-            ]
-          }}
-        >
-          <Button 
-            size={'small'} 
-            marginH-24 
-            marginB-20
-            bg-dark60 
-            dark10 
-            label={'Show less'} 
-            onPress={this.close}
-          />
-        </Animated.View>
-        {_.map(items, (item, index) => {
-          return this.renderItem(item, index);
-        })}
-        {collapsed && 
-          <TouchableOpacity 
-            onPress={this.onPress} 
-            activeOpacity={1} 
-            style={[
-              this.styles.touchable, 
-              {
-                height: items[0].height + (PEEP * 2), // Height !!!!
-                zIndex: items.length
-              }
-            ]}
-          />
-        }
+        <View style={{height: containerHeight}}>
+          <Animated.View 
+            style={{
+              alignItems: 'flex-end',
+              opacity: this.animatedOpacity,
+              transform: [
+                {scale: this.animatedScale}
+              ]
+            }}
+          >
+            <Button 
+              size={'small'} 
+              marginH-24 
+              bg-dark60 
+              dark10 
+              label={'Show less'} 
+              onPress={this.close}
+            />
+          </Animated.View>
+          {_.map(items, (item, index) => {
+            return this.renderItem(item, index);
+          })}
+          {collapsed && 
+            <TouchableOpacity 
+              onPress={this.open} 
+              activeOpacity={1} 
+              style={[
+                this.styles.touchable, 
+                {
+                  height: containerHeight,
+                  zIndex: items.length
+                }
+              ]}
+            />
+          }
+        </View>
       </View>
     );
   }
