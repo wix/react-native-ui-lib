@@ -70,18 +70,18 @@ export default class Stepper extends PureBaseComponent {
     switch (event.nativeEvent.action) {
       case 'decrement':
         if (value <= min) {
-          AccessibilityInfo.announceForAccessibility(`${stepperLimitMsg}`);
+          _.invoke(AccessibilityInfo, 'announceForAccessibility', stepperLimitMsg);
         } else {
           this.updateValue(value - 1);
-          AccessibilityInfo.announceForAccessibility(value - 1);
+          _.invoke(AccessibilityInfo, 'announceForAccessibility', value - 1);
         }
         break;
       case 'increment':
         if (value >= max) {
-          AccessibilityInfo.announceForAccessibility(`${stepperLimitMsg}`);
+          _.invoke(AccessibilityInfo, 'announceForAccessibility', stepperLimitMsg);
         } else {
           this.updateValue(value + 1);
-          AccessibilityInfo.announceForAccessibility(value + 1);
+          _.invoke(AccessibilityInfo, 'announceForAccessibility', value + 1);
         }
         break;
       default:

@@ -345,7 +345,7 @@ export default class Slider extends PureBaseComponent {
     this._x = this.getXForValue(newValue);
     this.updateValue(this._x);
     this.updateStyles(this._x);
-    AccessibilityInfo.announceForAccessibility(`New value ${newValue}`);
+    _.invoke(AccessibilityInfo, 'announceForAccessibility', `New value ${newValue}`);
   };
 
   /* Renders */
