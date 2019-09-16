@@ -120,6 +120,9 @@ module.exports = {
   get SharedTransition() {
     return require('./sharedTransition').default;
   },
+  get StackAggregator() {
+    return require('./stackAggregator').default;
+  },
 
   get Slider() {
     return require('./slider').default;
