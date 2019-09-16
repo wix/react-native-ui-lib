@@ -69,9 +69,17 @@ class Dialog extends BaseComponent {
      */
     renderPannableHeader: PropTypes.func,
     /**
+     * The props that will be passed to the pannable header
+     */
+    pannableHeaderProps: PropTypes.any,
+    /**
      * Migration flag, send true to use the new (and improved) Dialog, default is false
      */
-    migrate: PropTypes.bool
+    migrate: PropTypes.bool,
+    /**
+     * The Dialog`s container style
+     */
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
   };
 
   static defaultProps = {
@@ -85,7 +93,7 @@ class Dialog extends BaseComponent {
 
     this.state = {
       alignments: this.state.alignments,
-      orientationKey: undefined,
+      orientationKey: Constants.orientation,
       modalVisibility: props.visible,
       dialogVisibility: props.visible
     };
@@ -145,19 +153,19 @@ class Dialog extends BaseComponent {
   };
 
   renderPannableHeader = directions => {
-    const {renderPannableHeader, ...others} = this.props;
+    const {renderPannableHeader, pannableHeaderProps} = this.props;
     if (renderPannableHeader) {
-      return <PanListenerView directions={directions}>{renderPannableHeader(others)}</PanListenerView>;
+      return <PanListenerView directions={directions}>{renderPannableHeader(pannableHeaderProps)}</PanListenerView>;
     }
   };
 
   renderDialogView = () => {
-    const {children, renderPannableHeader, style, panDirection} = this.props;
+    const {children, renderPannableHeader, panDirection, containerStyle} = this.props;
     const {dialogVisibility} = this.state;
     const Container = renderPannableHeader ? View : PanListenerView;
 
     return (
-      <View style={this.styles.dialogViewSize} pointerEvents="box-none">
+      <View style={[this.styles.dialogViewSize]} pointerEvents="box-none">
         <PanningProvider>
           <DialogDismissibleView
             direction={panDirection}
@@ -166,7 +174,7 @@ class Dialog extends BaseComponent {
             containerStyle={this.styles.flexType}
             style={this.styles.flexType}
           >
-            <Container directions={[panDirection]} style={[this.styles.overflow, this.styles.flexType, style]}>
+            <Container directions={[panDirection]} style={[this.styles.overflow, this.styles.flexType, containerStyle]}>
               {this.renderPannableHeader([panDirection])}
               {children}
             </Container>
