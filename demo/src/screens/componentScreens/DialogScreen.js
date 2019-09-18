@@ -37,8 +37,14 @@ export default class DialogScreen extends Component {
     {value: Colors.yellow70, label: 'Yellow70'}
   ];
 
+  static pannableTitle = {title: 'This is a pannable header Dialog'};
+  static title = 'This is a Dialog';
+  static supportedOrientations = ['portrait', 'landscape'];
+
   constructor(props) {
     super(props);
+
+    this.content = {};
 
     this.SCROLL_TYPE = {
       NONE: 'none',
@@ -61,15 +67,21 @@ export default class DialogScreen extends Component {
   };
 
   setPanDirection = panDirection => {
-    this.setState({panDirection});
+    if (panDirection !== this.state.panDirection) {
+      this.setState({panDirection});
+    }
   };
 
   setPosition = position => {
-    this.setState({position});
+    if (position !== this.state.position) {
+      this.setState({position});
+    }
   };
 
   setScroll = scroll => {
-    this.setState({scroll});
+    if (scroll !== this.state.scroll) {
+      this.setState({scroll});
+    }
   };
 
   toggleShowHeader = () => {
@@ -90,11 +102,6 @@ export default class DialogScreen extends Component {
 
   hideDialog = () => {
     this.setState({showDialog: false});
-  };
-
-  getTitle = () => {
-    const {showHeader} = this.state;
-    return showHeader ? 'This is a pannable header Dialog' : 'This is a Dialog';
   };
 
   getWarning = () => {
@@ -183,6 +190,10 @@ Scroll: ${scroll}`;
 
   renderContent = () => {
     const {scroll, showHeader} = this.state;
+    if (this.content[scroll]) {
+      return this.content[scroll];
+    }
+
     let content;
     switch (scroll) {
       case this.SCROLL_TYPE.VERTICAL:
@@ -197,16 +208,19 @@ Scroll: ${scroll}`;
         break;
     }
 
-    return (
+    const data = (
       <View spread flex={scroll !== this.SCROLL_TYPE.NONE}>
         <View marginT-20 marginH-20>
-          {!showHeader && <Text text50>{this.getTitle()}</Text>}
+          {!showHeader && <Text text50>{DialogScreen.title}</Text>}
           <Text marginT-20={!showHeader}>{this.getMessage()}</Text>
           {this.getWarning()}
         </View>
         {content}
       </View>
     );
+
+    this.content[scroll] = data;
+    return data;
   };
 
   getDialogKey = height => {
@@ -228,12 +242,12 @@ Scroll: ${scroll}`;
         bottom={position === 'bottom'}
         height={height}
         panDirection={panDirection}
-        containerStyle={[styles.dialog, isRounded && styles.roundedDialog]}
+        containerStyle={isRounded ? styles.roundedDialog : styles.dialog}
         visible={showDialog}
         onDismiss={this.hideDialog}
         renderPannableHeader={renderPannableHeader}
-        pannableHeaderProps={{title: this.getTitle()}}
-        supportedOrientations={['portrait', 'landscape']}
+        pannableHeaderProps={DialogScreen.pannableTitle}
+        supportedOrientations={DialogScreen.supportedOrientations}
       >
         {this.renderContent()}
       </Dialog>
@@ -303,6 +317,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white
   },
   roundedDialog: {
+    backgroundColor: Colors.white,
     marginBottom: Constants.isIphoneX ? 0 : 20,
     borderRadius: 12
   },
