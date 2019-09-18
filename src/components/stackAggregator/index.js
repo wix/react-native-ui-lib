@@ -198,7 +198,6 @@ export default class StackAggregator extends PureBaseComponent {
   }
 
   open = () => {
-    const {items} = this.state;
     this.setState({collapsed: false}, () => this.animate());
   }
 
