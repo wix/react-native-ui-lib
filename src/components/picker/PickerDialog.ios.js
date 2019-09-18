@@ -52,7 +52,7 @@ class PickerDialog extends BaseComponent {
   render() {
     const dialogProps = Dialog.extractOwnProps(this.props);
     return (
-      <Dialog {...dialogProps} visible height={250} width="100%" bottom animationConfig={{duration: 300}}>
+      <Dialog {...dialogProps} height={250} width="100%" bottom animationConfig={{duration: 300}}>
         <View flex bg-white>
           {this.renderHeader()}
           <View centerV flex>
