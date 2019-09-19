@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Animated, Easing} from 'react-native';
+import {StyleSheet, Animated, Easing, LayoutAnimation} from 'react-native';
 import {PureBaseComponent} from '../../commons';
 import {Colors} from '../../style';
 import View from '../view';
@@ -9,14 +9,10 @@ import TouchableOpacity from '../touchableOpacity';
 import Button from '../button';
 
 
-const VALUE_TYPES = {
-  TRANSLATE: 0,
-  SCALE: 1,
-  HEIGHT: 2
-};
 const PEEP = 8;
 const DURATION = 300;
 const buttonStartValue = 0.9;
+const MARGIN_BOTTOM = 24;
 
 /**
  * @description: Stack aggregator component
@@ -53,24 +49,28 @@ export default class StackAggregator extends PureBaseComponent {
     super(props);
 
     this.state = {
-      items: this.getItems(),
-      collapsed: props.collapsed
+      collapsed: props.collapsed,
+      firstItemHeight: undefined
     };
+
+    this.itemsCount = props.items.length;
 
     this.easeOut = Easing.bezier(0, 0, 0.58, 1);
     this.animatedScale = new Animated.Value(this.state.collapsed ? buttonStartValue : 1),
     this.animatedOpacity = new Animated.Value(this.state.collapsed ? buttonStartValue : 1)
-    this.animatedTranslateArray = this.getAnimatedValues(VALUE_TYPES.TRANSLATE);
-    this.animatedScaleArray = this.getAnimatedValues(VALUE_TYPES.SCALE);
-    this.animatedHeightArray = this.getAnimatedValues(VALUE_TYPES.HEIGHT);
+    this.animatedScaleArray = this.getAnimatedValues();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.collapsed !== this.props.collapsed) {
       console.warn('INBAL collapsed updated: ', );
     }
     if (prevProps.items !== this.props.items) {
       console.warn('INBAL items update: ', );
+    }
+
+    if (prevState.collapsed !== this.state.collapsed) {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
   }
 
@@ -78,63 +78,22 @@ export default class StackAggregator extends PureBaseComponent {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  getAnimatedValues(type) {
-    return _.map(this.state.items, (item, index) => {
-      switch (type) {
-        case VALUE_TYPES.HEIGHT:
-          return new Animated.Value(this.getHeightValue(item));
-        case VALUE_TYPES.SCALE:
-          return new Animated.Value(this.getItemScale(index));
-        case VALUE_TYPES.TRANSLATE:
-        default:
-          return new Animated.Value(this.getTranslateValue(item, index)); 
-      }
+  getAnimatedValues() {
+    return _.map(this.props.items, (item, index) => {
+      return new Animated.Value(this.getItemScale(index));
     });
   }
 
-  getHeightValue(item) {
-    return this.state.collapsed ? item.heightRatio : 1; // Height !!!!
-  }
-
-  getTranslateValue(item, index) {
-    const {items, collapsed} = this.state;
-    let start = items[0].height < item.height ? (items[0].height - item.height) / 2 : 0; // Height !!!!
-    if (index === items.length - 1) {
-      start += (PEEP * 2);
-    }
-    if (index === items.length - 2) {
-      start += PEEP;
-    }
-    return collapsed ? start : item.top;
-  }
-
   getItemScale(index) {
-    return this.state.collapsed ? 1 - (0.05 * index) : 1;
-  }
-
-  getItems() {
-    const {items} = this.props;
-
-    return _.map(items, (item, index) => {
-      const top = this.getTopByIndex(index);
-      item.top = top;
-      item.heightRatio = items[0].height / item.height; // Height !!!!
-      return item;
-    });
-  }
-
-  getTopByIndex(index) {
-    const {items} = this.props;
-    const cardsTopPosition = 40;
-    const cardBottomMargin = 24;
-
-    const array = items.slice(0, index);
-    let total = cardsTopPosition;
-
-    array.forEach(element => {
-      total += element.height + cardBottomMargin; // Height !!!!
-    });
-    return total;
+    if (this.state.collapsed) {
+      if (index === this.itemsCount - 2) {
+        return 0.95;
+      }
+      if (index === this.itemsCount - 1) {
+        return 0.90;
+      }
+    }
+    return 1;
   }
 
   animate = () => {
@@ -161,35 +120,16 @@ export default class StackAggregator extends PureBaseComponent {
     ]).start();
   }
 
-  animateCards() {
-    const {items} = this.state;
-    
-    for (let index = 0; index < items.length; index++) {
-      const item = items[index];
-      const newPosition = this.getTranslateValue(item, index);
+  animateCards() {    
+    for (let index = 0; index < this.itemsCount; index++) {
       const newScale = this.getItemScale(index);
-      const newHeight = this.getHeightValue(item);
-      
-      Animated.parallel([
-        Animated.timing(this.animatedTranslateArray[index], {
-          toValue: Number(newPosition),
-          easing: this.easeOut,
-          duration: DURATION,
-          useNativeDriver: true
-        }),
-        Animated.timing(this.animatedScaleArray[index], {
-          toValue: Number(newScale),
-          easing: this.easeOut,
-          duration: DURATION,
-          useNativeDriver: true
-        }),
-        Animated.timing(this.animatedHeightArray[index], {
-          toValue: Number(newHeight),
-          easing: this.easeOut,
-          duration: DURATION,
-          useNativeDriver: true
-        })
-      ]).start();
+
+      Animated.timing(this.animatedScaleArray[index], {
+        toValue: Number(newScale),
+        easing: this.easeOut,
+        duration: DURATION,
+        useNativeDriver: true
+      }).start();
     }
   }
 
@@ -201,23 +141,59 @@ export default class StackAggregator extends PureBaseComponent {
     this.setState({collapsed: false}, () => this.animate());
   }
 
+  getTop(index) {
+    let start = 0;
+    
+    if (index === this.itemsCount - 1) {
+      start += (PEEP * 2);
+    }
+    if (index === this.itemsCount - 2) {
+      start += PEEP;
+    }
+    return start;
+  }
+
+  getStyle(index) {
+    const {collapsed} = this.state;
+    const top = this.getTop(index);
+
+    if (collapsed) {
+      return {
+        position: index !== 0 ? 'absolute' : undefined, 
+        top: top
+      }
+    }
+    return {
+      marginBottom: MARGIN_BOTTOM,
+      marginTop: index === 0 ? 40 : undefined
+    }
+  }
+
+  onLayout = (event, index) => {
+    const height = event.nativeEvent.layout.height;
+    if (index === 0 && height) {
+      this.setState({firstItemHeight: height});
+    }
+  }
+
   renderItem = (item, index) => {
     const {renderItem} = this.props;
-    const {items} = this.state;
-  
+    const {firstItemHeight, collapsed} = this.state;
+
     return (
       <Animated.View 
         key={index}
+        onLayout={(event) => this.onLayout(event, index)}
         style={[
           this.styles.containerShadow,
+          this.getStyle(index),
           {
-            position: 'absolute', 
-            zIndex: items.length - index,
+            zIndex: this.itemsCount - index,
             transform: [
-              {translateY: this.animatedTranslateArray[index]},
-              {scaleX: index !== 0 ? this.animatedScaleArray[index] : 1},
-              {scaleY: index !== 0 ? this.animatedHeightArray[index] : 1}
-            ]
+              {scaleX: this.animatedScaleArray[index]}
+            ],
+            height: collapsed ? firstItemHeight : undefined,
+            borderWidth: 1
           }
         ]}
       >
@@ -227,16 +203,16 @@ export default class StackAggregator extends PureBaseComponent {
   }
 
   render() {
-    const {containerStyle} = this.props;
-    const {items, collapsed} = this.state;
-    const containerHeight = collapsed ? items[0].height + (PEEP * 3) : items[items.length - 1].top + items[items.length - 1].height; // Height !!!!
+    const {items, containerStyle} = this.props;
+    const {collapsed, firstItemHeight} = this.state;
 
     return (
       <View style={containerStyle}>
-        <View style={{height: containerHeight}}>
+        <View style={{marginBottom: PEEP * 2}}>
           <Animated.View 
             style={{
-              alignItems: 'flex-end',
+              position: 'absolute',
+              right: 0,
               opacity: this.animatedOpacity,
               transform: [
                 {scale: this.animatedScale}
@@ -246,6 +222,7 @@ export default class StackAggregator extends PureBaseComponent {
             <Button 
               size={'small'} 
               marginH-24 
+              marginB-20
               bg-dark60 
               dark10 
               label={'Show less'} 
@@ -262,8 +239,8 @@ export default class StackAggregator extends PureBaseComponent {
               style={[
                 this.styles.touchable, 
                 {
-                  height: containerHeight,
-                  zIndex: items.length
+                  height: firstItemHeight,
+                  zIndex: this.itemsCount
                 }
               ]}
             />

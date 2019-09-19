@@ -23,16 +23,18 @@ export default class StackAggregatorScreen extends Component {
     return (
       <Card
         key={index}
-        height={item.height}
-        width={Constants.screenWidth - (cardHorizontalMargin * 2)}
+        // height={item.height}
+        // width={Constants.screenWidth - (cardHorizontalMargin * 2)}
         style={{marginHorizontal: cardHorizontalMargin, backgroundColor: item.backgroundColor || Colors.white/* , height: item.height, width: Constants.screenWidth - (cardHorizontalMargin * 2) */}}
         center
         activeOpacity={1}
         onPress={() => this.onItemPress(item, index)}
+        padding-15
+        paddingB-50={index > 1}
       >
         {/* <Card.Image height={'100%'} imageSource={cardImage} style={{width: '30%'}}/> */}
-        <Text text50>{index}</Text>
-        <Text marginH-10>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
+          <Text text50 marginB-10>{index}</Text>
+          <Text>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
       </Card>
     );
   }
@@ -46,11 +48,19 @@ export default class StackAggregatorScreen extends Component {
           // collapsed={false}
           containerStyle={{marginTop: 50}}
         />
-        <Text marginH-20>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
-        <TextField
+        <View>
+          <Text marginH-20 text60 red30>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
+        </View>
+        {/* <TextField
           placeholder="Search.."
           margin-20
-        />
+        /> */}
+        {/* <StackAggregator
+          items={items}
+          renderItem={this.renderItem}
+          // collapsed={false}
+          containerStyle={{marginTop: 50}}
+        /> */}
       </ScrollView>
     );
   }
