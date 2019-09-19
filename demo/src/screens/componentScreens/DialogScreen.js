@@ -14,33 +14,6 @@ import {
 } from 'react-native-ui-lib'; // eslint-disable-line
 
 export default class DialogScreen extends Component {
-  static colors = [
-    {value: Colors.red10, label: 'Red10'},
-    {value: Colors.red30, label: 'Red30'},
-    {value: Colors.red50, label: 'Red50'},
-    {value: Colors.red70, label: 'Red70'},
-    {value: Colors.blue10, label: 'Blue10'},
-    {value: Colors.blue30, label: 'Blue30'},
-    {value: Colors.blue50, label: 'Blue50'},
-    {value: Colors.blue70, label: 'Blue70'},
-    {value: Colors.purple10, label: 'Purple10'},
-    {value: Colors.purple30, label: 'Purple30'},
-    {value: Colors.purple50, label: 'Purple50'},
-    {value: Colors.purple70, label: 'Purple70'},
-    {value: Colors.green10, label: 'Green10'},
-    {value: Colors.green30, label: 'Green30'},
-    {value: Colors.green50, label: 'Green50'},
-    {value: Colors.green70, label: 'Green70'},
-    {value: Colors.yellow10, label: 'Yellow10'},
-    {value: Colors.yellow30, label: 'Yellow30'},
-    {value: Colors.yellow50, label: 'Yellow50'},
-    {value: Colors.yellow70, label: 'Yellow70'}
-  ];
-
-  static pannableTitle = {title: 'This is a pannable header Dialog'};
-  static title = 'This is a Dialog';
-  static supportedOrientations = ['portrait', 'landscape'];
-
   constructor(props) {
     super(props);
 
@@ -51,6 +24,32 @@ export default class DialogScreen extends Component {
       VERTICAL: 'vertical',
       HORIZONTAL: 'horizontal'
     };
+
+    this.pannableTitle = {title: 'This is a pannable header Dialog'};
+    this.title = 'This is a Dialog';
+    this.supportedOrientations = ['portrait', 'landscape'];
+    this.colors = [
+      {value: Colors.red10, label: 'Red10'},
+      {value: Colors.red30, label: 'Red30'},
+      {value: Colors.red50, label: 'Red50'},
+      {value: Colors.red70, label: 'Red70'},
+      {value: Colors.blue10, label: 'Blue10'},
+      {value: Colors.blue30, label: 'Blue30'},
+      {value: Colors.blue50, label: 'Blue50'},
+      {value: Colors.blue70, label: 'Blue70'},
+      {value: Colors.purple10, label: 'Purple10'},
+      {value: Colors.purple30, label: 'Purple30'},
+      {value: Colors.purple50, label: 'Purple50'},
+      {value: Colors.purple70, label: 'Purple70'},
+      {value: Colors.green10, label: 'Green10'},
+      {value: Colors.green30, label: 'Green30'},
+      {value: Colors.green50, label: 'Green50'},
+      {value: Colors.green70, label: 'Green70'},
+      {value: Colors.yellow10, label: 'Yellow10'},
+      {value: Colors.yellow30, label: 'Yellow30'},
+      {value: Colors.yellow50, label: 'Yellow50'},
+      {value: Colors.yellow70, label: 'Yellow70'}
+    ];
 
     this.state = {
       panDirection: PanningProvider.Directions.DOWN,
@@ -158,7 +157,7 @@ Scroll: ${scroll}`;
       <FlatList
         showsVerticalScrollIndicator={false}
         style={styles.verticalScroll}
-        data={DialogScreen.colors}
+        data={this.colors}
         renderItem={this.renderVerticalItem}
         keyExtractor={this.keyExtractor}
       />
@@ -175,7 +174,7 @@ Scroll: ${scroll}`;
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={DialogScreen.colors}
+          data={this.colors}
           renderItem={this.renderHorizontalItem}
           keyExtractor={this.keyExtractor}
         />
@@ -190,8 +189,8 @@ Scroll: ${scroll}`;
 
   renderContent = () => {
     const {scroll, showHeader} = this.state;
-    if (this.content[scroll]) {
-      return this.content[scroll];
+    if (this.content[scroll + showHeader]) {
+      return this.content[scroll + showHeader];
     }
 
     let content;
@@ -211,7 +210,7 @@ Scroll: ${scroll}`;
     const data = (
       <View spread flex={scroll !== this.SCROLL_TYPE.NONE}>
         <View marginT-20 marginH-20>
-          {!showHeader && <Text text50>{DialogScreen.title}</Text>}
+          {!showHeader && <Text text50>{this.title}</Text>}
           <Text marginT-20={!showHeader}>{this.getMessage()}</Text>
           {this.getWarning()}
         </View>
@@ -219,7 +218,7 @@ Scroll: ${scroll}`;
       </View>
     );
 
-    this.content[scroll] = data;
+    this.content[scroll + showHeader] = data;
     return data;
   };
 
@@ -246,8 +245,8 @@ Scroll: ${scroll}`;
         visible={showDialog}
         onDismiss={this.hideDialog}
         renderPannableHeader={renderPannableHeader}
-        pannableHeaderProps={DialogScreen.pannableTitle}
-        supportedOrientations={DialogScreen.supportedOrientations}
+        pannableHeaderProps={this.pannableTitle}
+        supportedOrientations={this.supportedOrientations}
       >
         {this.renderContent()}
       </Dialog>
