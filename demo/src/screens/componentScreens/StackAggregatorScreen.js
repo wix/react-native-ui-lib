@@ -4,12 +4,12 @@ import {StyleSheet, ScrollView} from 'react-native';
 import {Constants, Colors, View, Text, TextField, Card, StackAggregator} from 'react-native-ui-lib'; //eslint-disable-line
 
 
-const items = [
-  {height: 100}, 
-  {height: 120/* , backgroundColor: 'yellow' */}, 
-  {height: 140/* , backgroundColor: 'red' */},
-  {height: 200/* , backgroundColor: 'blue' */}
-];
+const contents = [
+  'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+  'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+  'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+  'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+]
 // const cardImage = require('../../assets/images/card-example.jpg');
 const cardHorizontalMargin = 20;
 
@@ -23,18 +23,17 @@ export default class StackAggregatorScreen extends Component {
     return (
       <Card
         key={index}
-        // height={item.height}
-        // width={Constants.screenWidth - (cardHorizontalMargin * 2)}
-        style={{marginHorizontal: cardHorizontalMargin, backgroundColor: item.backgroundColor || Colors.white/* , height: item.height, width: Constants.screenWidth - (cardHorizontalMargin * 2) */}}
+        width={Constants.screenWidth - (cardHorizontalMargin * 2)}
+        style={{marginHorizontal: cardHorizontalMargin, backgroundColor: item.backgroundColor || Colors.white}}
         center
         activeOpacity={1}
         onPress={() => this.onItemPress(item, index)}
-        padding-15
-        paddingB-50={index > 1}
+        // padding-15
+        // paddingB-50={index > 1}
       >
         {/* <Card.Image height={'100%'} imageSource={cardImage} style={{width: '30%'}}/> */}
           <Text text50 marginB-10>{index}</Text>
-          <Text>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
+          <Text margin-10>{contents[index]}</Text>
       </Card>
     );
   }
@@ -43,23 +42,29 @@ export default class StackAggregatorScreen extends Component {
     return (
       <ScrollView bg-dark80 flex keyboardShouldPersistTaps={'handled'}>
         <StackAggregator
-          items={items}
-          renderItem={this.renderItem}
           // collapsed={false}
           containerStyle={{marginTop: 50}}
-        />
-        <View>
+        >
+          {_.map(contents, (item, index) => {
+            return this.renderItem(item, index);
+          })}
+        </StackAggregator>
+        
+        <StackAggregator
+          // collapsed={false}
+          containerStyle={{marginTop: 50}}
+        >
+          {_.map(contents, (item, index) => {
+            return this.renderItem(item, index);
+          })}
+        </StackAggregator>
+
+        {/* <View>
           <Text marginH-20 text60 red30>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
-        </View>
+        </View> */}
         {/* <TextField
           placeholder="Search.."
           margin-20
-        /> */}
-        {/* <StackAggregator
-          items={items}
-          renderItem={this.renderItem}
-          // collapsed={false}
-          containerStyle={{marginTop: 50}}
         /> */}
       </ScrollView>
     );

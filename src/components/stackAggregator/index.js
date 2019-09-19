@@ -11,8 +11,8 @@ import Button from '../button';
 
 const PEEP = 8;
 const DURATION = 300;
-const buttonStartValue = 0.9;
 const MARGIN_BOTTOM = 24;
+const buttonStartValue = 0.8;
 
 /**
  * @description: Stack aggregator component
@@ -23,14 +23,6 @@ export default class StackAggregator extends PureBaseComponent {
   static displayName = 'StackAggregator';
 
   static propTypes = {
-    /**
-     * The items to render
-     */
-    items: PropTypes.arrayOf(PropTypes.object),
-    /**
-     * The render item function
-     */
-    renderItem: PropTypes.func,
     /**
      * The container style
      */
@@ -53,7 +45,7 @@ export default class StackAggregator extends PureBaseComponent {
       firstItemHeight: undefined
     };
 
-    this.itemsCount = props.items.length;
+    this.itemsCount = React.Children.count(props.children);
 
     this.easeOut = Easing.bezier(0, 0, 0.58, 1);
     this.animatedScale = new Animated.Value(this.state.collapsed ? buttonStartValue : 1),
@@ -62,13 +54,6 @@ export default class StackAggregator extends PureBaseComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.collapsed !== this.props.collapsed) {
-      console.warn('INBAL collapsed updated: ', );
-    }
-    if (prevProps.items !== this.props.items) {
-      console.warn('INBAL items update: ', );
-    }
-
     if (prevState.collapsed !== this.state.collapsed) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
@@ -79,7 +64,7 @@ export default class StackAggregator extends PureBaseComponent {
   }
 
   getAnimatedValues() {
-    return _.map(this.props.items, (item, index) => {
+    return React.Children.map(this.props.children, (item, index) => {
       return new Animated.Value(this.getItemScale(index));
     });
   }
@@ -177,7 +162,6 @@ export default class StackAggregator extends PureBaseComponent {
   }
 
   renderItem = (item, index) => {
-    const {renderItem} = this.props;
     const {firstItemHeight, collapsed} = this.state;
 
     return (
@@ -188,6 +172,7 @@ export default class StackAggregator extends PureBaseComponent {
           this.styles.containerShadow,
           this.getStyle(index),
           {
+            alignSelf: 'center',
             zIndex: this.itemsCount - index,
             transform: [
               {scaleX: this.animatedScaleArray[index]}
@@ -197,13 +182,13 @@ export default class StackAggregator extends PureBaseComponent {
           }
         ]}
       >
-        {renderItem(item, index)}
+        {item}
       </Animated.View>
     );
   }
 
   render() {
-    const {items, containerStyle} = this.props;
+    const {children, containerStyle} = this.props;
     const {collapsed, firstItemHeight} = this.state;
 
     return (
@@ -229,7 +214,7 @@ export default class StackAggregator extends PureBaseComponent {
               onPress={this.close}
             />
           </Animated.View>
-          {_.map(items, (item, index) => {
+          {React.Children.map(children, (item, index) => {
             return this.renderItem(item, index);
           })}
           {collapsed && 
@@ -239,7 +224,7 @@ export default class StackAggregator extends PureBaseComponent {
               style={[
                 this.styles.touchable, 
                 {
-                  height: firstItemHeight,
+                  height: firstItemHeight ? firstItemHeight + (PEEP * 2) : undefined,
                   zIndex: this.itemsCount
                 }
               ]}
