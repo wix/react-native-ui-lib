@@ -193,7 +193,7 @@ export default class Carousel extends BaseComponent {
     const paddingLeft = this.shouldUsePageWidth() ? this.props.itemSpacings : undefined;
 
     return (
-      <View style={{width: this.state.pageWidth, paddingLeft}} key={key}>
+      <View style={{width: this.state.pageWidth, paddingLeft}} key={key} collapsable={false}>
         {child}
       </View>
     );
