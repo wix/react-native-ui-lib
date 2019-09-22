@@ -2,11 +2,13 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, Easing, LayoutAnimation} from 'react-native';
-import {PureBaseComponent} from '../../commons';
+import {Constants} from '../../helpers';
 import {Colors} from '../../style';
+import {PureBaseComponent} from '../../commons';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Button from '../button';
+import Card from '../card';
 
 
 const PEEP = 8;
@@ -51,6 +53,7 @@ export default class StackAggregator extends PureBaseComponent {
     this.animatedScale = new Animated.Value(this.state.collapsed ? buttonStartValue : 1),
     this.animatedOpacity = new Animated.Value(this.state.collapsed ? buttonStartValue : 1)
     this.animatedScaleArray = this.getAnimatedValues();
+    this.animatedContentOpacity = new Animated.Value(this.state.collapsed ? 0 : 1)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -82,11 +85,11 @@ export default class StackAggregator extends PureBaseComponent {
   }
 
   animate = () => {
-    this.animateButton();
+    this.animateValues();
     this.animateCards();
   }
 
-  animateButton() {
+  animateValues() {
     const {collapsed} = this.state;
     const newValue = collapsed ? buttonStartValue : 1;
 
@@ -98,6 +101,12 @@ export default class StackAggregator extends PureBaseComponent {
       }),
       Animated.timing(this.animatedScale, {
         toValue: Number(newValue),
+        easing: this.easeOut,
+        duration: DURATION,
+        useNativeDriver: true
+      }),
+      Animated.timing(this.animatedContentOpacity, {
+        toValue: Number(this.state.collapsed ? 0 : 1),
         easing: this.easeOut,
         duration: DURATION,
         useNativeDriver: true
@@ -164,6 +173,7 @@ export default class StackAggregator extends PureBaseComponent {
 
   renderItem = (item, index) => {
     const {firstItemHeight, collapsed} = this.state;
+    const cardHorizontalMargin = 20;
 
     return (
       <Animated.View 
@@ -178,14 +188,20 @@ export default class StackAggregator extends PureBaseComponent {
             transform: [
               {scaleX: this.animatedScaleArray[index]}
             ],
-            height: collapsed ? firstItemHeight : undefined,
-            borderWidth: 1
+            width: Constants.screenWidth - (cardHorizontalMargin * 2),
+            height: collapsed ? firstItemHeight : undefined
           }
         ]}
       >
-        <View style={{overflow: 'hidden', flexShrink: 1}}>
-          {item}
-        </View>
+        <Card
+          style={{overflow: 'hidden', flexShrink: 1}}
+          activeOpacity={1}
+          onPress={() => this.onItemPress(item, index)}
+          >
+          <Animated.View style={index !== 0 ? {opacity: this.animatedContentOpacity} : undefined}>
+            {item}
+          </Animated.View>
+        </Card>
       </Animated.View>
     );
   }
