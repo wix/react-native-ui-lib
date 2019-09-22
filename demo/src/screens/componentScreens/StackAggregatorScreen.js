@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {View, Text, TextField, StackAggregator} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, Typography, View, Text, Button, TextField, StackAggregator} from 'react-native-ui-lib'; //eslint-disable-line
 
-
+const icon = require('../../assets/icons/plus.png');
 const contents = [
   'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
@@ -13,14 +13,18 @@ const contents = [
 
 export default class StackAggregatorScreen extends Component {
   
-  onItemPress = (item, index) => {
-    console.warn('INBAL Screen item pressed: ', item);
+  onItemPress = (index) => {
+    console.warn('INBAL item pressed: ', index);
+  }
+
+  onPress = (index) => {
+    console.warn('INBAL item button pressed: ', index);
   }
 
   renderItem = (item, index) => {
     return (
       <View key={index} center padding-12>
-        <Text text50 marginB-10>{index}</Text>
+        <Button label={`${index}`} marginB-10 size={'small'} onPress={() => this.onPress(index)}/>
         <Text>{contents[index]}</Text>
       </View>
     );
@@ -28,32 +32,30 @@ export default class StackAggregatorScreen extends Component {
 
   render() {
     return (
-      <ScrollView bg-dark80 flex keyboardShouldPersistTaps={'handled'} showsVerticalScrollIndicator={false}>
+      <ScrollView bg-dark80 keyboardShouldPersistTaps={'handled'} showsVerticalScrollIndicator={false}>
+        <Text center dark40 text90 marginT-20>Thu, 10 Dec, 11:29</Text>
+        {/* <StackAggregator
+          containerStyle={{marginTop: 12}}
+          onItemPress={this.onItemPress}
+        >
+          {_.map(contents, (item, index) => {
+            return this.renderItem(item, index);
+          })}
+        </StackAggregator> */}
+
+        <Text center dark40 text90 marginT-20>Thu, 11 Dec, 13:03</Text>
         <StackAggregator
-          // collapsed={false}
-          containerStyle={{marginTop: 50}}
+          containerStyle={{marginTop: 12}}
+          onItemPress={this.onItemPress}
+          collapsed={false}
+          // contentContainerStyle={{backgroundColor: Colors.red30}}
+          // itemBorderRadius={10}
+          // buttonProps={{color: Colors.green30, labelStyle: {...Typography.text80, fontWeight: '500'}}}
         >
           {_.map(contents, (item, index) => {
             return this.renderItem(item, index);
           })}
         </StackAggregator>
-
-        <StackAggregator
-          // collapsed={false}
-          containerStyle={{marginTop: 50}}
-        >
-          {_.map(contents, (item, index) => {
-            return this.renderItem(item, index);
-          })}
-        </StackAggregator>
-
-        {/* <View>
-          <Text marginH-20 text60 red30>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
-        </View> */}
-        {/* <TextField
-          placeholder="Search.."
-          margin-20
-        /> */}
       </ScrollView>
     );
   }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, Easing, LayoutAnimation} from 'react-native';
 import {Constants} from '../../helpers';
-import {Colors} from '../../style';
+import {Colors, Typography} from '../../style';
 import {PureBaseComponent} from '../../commons';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
@@ -15,6 +15,7 @@ const PEEP = 8;
 const DURATION = 300;
 const MARGIN_BOTTOM = 24;
 const buttonStartValue = 0.8;
+const icon = require('./assets/arrow-down.png');
 
 /**
  * @description: Stack aggregator component
@@ -32,7 +33,23 @@ export default class StackAggregator extends PureBaseComponent {
     /**
      * The initial state of the stack
      */
-    collapsed: PropTypes.bool
+    collapsed: PropTypes.bool,
+    /**
+     * The content container style
+     */
+    contentContainerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * Item border radius
+     */
+    itemBorderRadius: PropTypes.number,
+    /**
+     * Props to pass the button
+     */
+    buttonProps: PropTypes.object,
+    /**
+     * A callback for item press
+     */
+    onItemPress: PropTypes.func
   }
 
   static defaultProps = {
@@ -106,7 +123,7 @@ export default class StackAggregator extends PureBaseComponent {
         useNativeDriver: true
       }),
       Animated.timing(this.animatedContentOpacity, {
-        toValue: Number(this.state.collapsed ? 0 : 1),
+        toValue: Number(collapsed ? 0 : 1),
         easing: this.easeOut,
         duration: DURATION,
         useNativeDriver: true
@@ -171,33 +188,40 @@ export default class StackAggregator extends PureBaseComponent {
     }
   }
 
+  onItemPress = (index) => {
+    _.invoke(this.props, 'onItemPress', index);
+  }
+
   renderItem = (item, index) => {
+    const {contentContainerStyle, itemBorderRadius} = this.props;
     const {firstItemHeight, collapsed} = this.state;
-    const cardHorizontalMargin = 20;
+    const shadowStyle = Constants.isAndroid ? undefined : this.styles.containerShadow;
 
     return (
       <Animated.View 
         key={index}
         onLayout={(event) => this.onLayout(event, index)}
         style={[
-          this.styles.containerShadow,
+          shadowStyle,
           this.getStyle(index),
           {
+            borderRadius: itemBorderRadius,
             alignSelf: 'center',
             zIndex: this.itemsCount - index,
             transform: [
               {scaleX: this.animatedScaleArray[index]}
             ],
-            width: Constants.screenWidth - (cardHorizontalMargin * 2),
+            width: Constants.screenWidth - 40,
             height: collapsed ? firstItemHeight : undefined
-          }
+          },
         ]}
+        collapsable={false}
       >
         <Card
-          style={{overflow: 'hidden', flexShrink: 1}}
-          activeOpacity={1}
-          onPress={() => this.onItemPress(item, index)}
-          >
+          style={[{overflow: 'hidden', flexShrink: 1}, contentContainerStyle]}
+          onPress={() => this.onItemPress(index)}
+          borderRadius={itemBorderRadius || 1}
+        >
           <Animated.View style={index !== 0 ? {opacity: this.animatedContentOpacity} : undefined}>
             {item}
           </Animated.View>
@@ -207,12 +231,12 @@ export default class StackAggregator extends PureBaseComponent {
   }
 
   render() {
-    const {children, containerStyle} = this.props;
+    const {children, containerStyle, buttonProps} = this.props;
     const {collapsed, firstItemHeight} = this.state;
 
     return (
       <View style={containerStyle}>
-        <View style={{marginBottom: PEEP * 2}}>
+        <View style={{marginBottom: PEEP * 2.5}}>
           <Animated.View 
             style={{
               position: 'absolute',
@@ -224,12 +248,13 @@ export default class StackAggregator extends PureBaseComponent {
             }}
           >
             <Button 
+              label={'Show less'} 
+              iconSource={icon}
+              link
               size={'small'} 
+              {...buttonProps}
               marginH-24 
               marginB-20
-              bg-dark60 
-              dark10 
-              label={'Show less'} 
               onPress={this.close}
             />
           </Animated.View>
@@ -262,11 +287,12 @@ function createStyles() {
       width: '100%'
     },
     containerShadow: {
+      backgroundColor: Colors.white,
       shadowColor: Colors.dark40,
       shadowOpacity: 0.25,
       shadowRadius: 12,
       shadowOffset: {height: 5, width: 0},
-      elevation: 2
+      // elevation: 2
     }
   });
 }
