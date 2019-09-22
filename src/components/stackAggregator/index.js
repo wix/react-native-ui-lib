@@ -129,19 +129,20 @@ export default class StackAggregator extends PureBaseComponent {
   getTop(index) {
     let start = 0;
     
-    if (index === this.itemsCount - 1) {
-      start += (PEEP * 2);
-    }
     if (index === this.itemsCount - 2) {
       start += PEEP;
     }
+    if (index === this.itemsCount - 1) {
+      start += (PEEP * 2);
+    }
+
     return start;
   }
 
   getStyle(index) {
     const {collapsed} = this.state;
     const top = this.getTop(index);
-
+    
     if (collapsed) {
       return {
         position: index !== 0 ? 'absolute' : undefined, 
@@ -182,7 +183,9 @@ export default class StackAggregator extends PureBaseComponent {
           }
         ]}
       >
-        {item}
+        <View style={{overflow: 'hidden', flexShrink: 1}}>
+          {item}
+        </View>
       </Animated.View>
     );
   }
