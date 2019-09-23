@@ -221,7 +221,7 @@ export default class StackAggregator extends PureBaseComponent {
           style={[contentContainerStyle, {overflow: 'hidden', flexShrink: 1}]}
           onPress={() => this.onItemPress(index)}
           borderRadius={itemBorderRadius}
-          elevation={6}
+          elevation={5}
         >
           <Animated.View style={index !== 0 ? {opacity: this.animatedContentOpacity} : undefined} collapsable={false}>
             {item}
