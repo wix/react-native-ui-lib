@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, Easing, LayoutAnimation} from 'react-native';
 import {Constants} from '../../helpers';
-import {Colors, Typography} from '../../style';
+import {Colors} from '../../style';
 import {PureBaseComponent} from '../../commons';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
@@ -195,14 +195,13 @@ export default class StackAggregator extends PureBaseComponent {
   renderItem = (item, index) => {
     const {contentContainerStyle, itemBorderRadius} = this.props;
     const {firstItemHeight, collapsed} = this.state;
-    const shadowStyle = Constants.isAndroid ? undefined : this.styles.containerShadow;
 
     return (
       <Animated.View 
         key={index}
         onLayout={(event) => this.onLayout(event, index)}
         style={[
-          shadowStyle,
+          Constants.isIOS && this.styles.containerShadow,
           this.getStyle(index),
           {
             borderRadius: itemBorderRadius,
@@ -222,7 +221,7 @@ export default class StackAggregator extends PureBaseComponent {
           onPress={() => this.onItemPress(index)}
           borderRadius={itemBorderRadius || 1}
         >
-          <Animated.View style={index !== 0 ? {opacity: this.animatedContentOpacity} : undefined}>
+          <Animated.View style={index !== 0 ? {opacity: this.animatedContentOpacity} : undefined} collapsable={false}>
             {item}
           </Animated.View>
         </Card>
