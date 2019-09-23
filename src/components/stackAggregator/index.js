@@ -20,30 +20,30 @@ const icon = require('./assets/arrow-down.png');
 /**
  * @description: Stack aggregator component
  * @modifiers: margin, padding
- * @example: 
+ * @example: https://github.com/wix/react-native-ui-lib/blob/feat/StackAggregator/demo/src/screens/componentScreens/StackAggregatorScreen.js
  */
 export default class StackAggregator extends PureBaseComponent {
   static displayName = 'StackAggregator';
 
   static propTypes = {
     /**
-     * The container style
-     */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
      * The initial state of the stack
      */
     collapsed: PropTypes.bool,
+    /**
+     * The container style
+     */
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * The content container style
      */
     contentContainerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
-     * Item border radius
+     * The items border radius
      */
     itemBorderRadius: PropTypes.number,
     /**
-     * Props to pass the button
+     * Props passed to the 'show less' button
      */
     buttonProps: PropTypes.object,
     /**
@@ -53,7 +53,8 @@ export default class StackAggregator extends PureBaseComponent {
   }
 
   static defaultProps = {
-    collapsed: true
+    collapsed: true,
+    itemBorderRadius: 0
   }
 
   constructor(props) {
@@ -65,11 +66,10 @@ export default class StackAggregator extends PureBaseComponent {
     };
 
     this.itemsCount = React.Children.count(props.children);
-
     this.easeOut = Easing.bezier(0, 0, 0.58, 1);
     this.animatedScale = new Animated.Value(this.state.collapsed ? buttonStartValue : 1),
     this.animatedOpacity = new Animated.Value(this.state.collapsed ? buttonStartValue : 1)
-    this.animatedScaleArray = this.getAnimatedValues();
+    this.animatedScaleArray = this.getAnimatedScales();
     this.animatedContentOpacity = new Animated.Value(this.state.collapsed ? 0 : 1)
   }
 
@@ -83,7 +83,7 @@ export default class StackAggregator extends PureBaseComponent {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  getAnimatedValues() {
+  getAnimatedScales() {
     return React.Children.map(this.props.children, (item, index) => {
       return new Animated.Value(this.getItemScale(index));
     });
@@ -183,6 +183,7 @@ export default class StackAggregator extends PureBaseComponent {
 
   onLayout = (event, index) => {
     const height = event.nativeEvent.layout.height;
+    
     if (index === 0 && height) {
       this.setState({firstItemHeight: height});
     }
@@ -204,7 +205,7 @@ export default class StackAggregator extends PureBaseComponent {
           Constants.isIOS && this.styles.containerShadow,
           this.getStyle(index),
           {
-            borderRadius: itemBorderRadius,
+            borderRadius: Constants.isIOS ? itemBorderRadius : undefined,
             alignSelf: 'center',
             zIndex: this.itemsCount - index,
             transform: [
@@ -217,9 +218,9 @@ export default class StackAggregator extends PureBaseComponent {
         collapsable={false}
       >
         <Card
-          style={[{overflow: 'hidden', flexShrink: 1}, contentContainerStyle]}
+          style={[contentContainerStyle, {overflow: 'hidden', flexShrink: 1}]}
           onPress={() => this.onItemPress(index)}
-          borderRadius={itemBorderRadius || 1}
+          borderRadius={itemBorderRadius}
         >
           <Animated.View style={index !== 0 ? {opacity: this.animatedContentOpacity} : undefined} collapsable={false}>
             {item}
@@ -257,9 +258,11 @@ export default class StackAggregator extends PureBaseComponent {
               onPress={this.close}
             />
           </Animated.View>
+
           {React.Children.map(children, (item, index) => {
             return this.renderItem(item, index);
           })}
+
           {collapsed && 
             <TouchableOpacity 
               onPress={this.open} 
