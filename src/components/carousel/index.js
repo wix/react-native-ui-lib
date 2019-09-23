@@ -32,7 +32,7 @@ export default class Carousel extends BaseComponent {
      */
     initialPage: PropTypes.number,
     /**
-     * the page width (all pages should have the same width). Does not work if passing 'loop' prop
+     * the page width (all pages should have the same width).
      */
     pageWidth: PropTypes.number,
     /**
@@ -84,12 +84,10 @@ export default class Carousel extends BaseComponent {
     super(props);
 
     this.carousel = React.createRef();
-    const defaultPageWidth = props.loop
-      ? Constants.screenWidth
-      : props.pageWidth + props.itemSpacings || Constants.screenWidth;
+    const defaultPageWidth = props.pageWidth ? props.pageWidth + props.itemSpacings : Constants.screenWidth;
 
     this.state = {
-      currentPage: this.shouldUsePageWidth() ? this.getCalcIndex(props.initialPage) : props.initialPage,
+      currentPage: props.pageWidth ? this.getCalcIndex(props.initialPage) : props.initialPage,
       currentStandingPage: props.initialPage,
       pageWidth: defaultPageWidth,
       initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage, pageWidth: defaultPageWidth})}
@@ -105,7 +103,7 @@ export default class Carousel extends BaseComponent {
   }
 
   onOrientationChanged = () => {
-    if (!this.props.pageWidth || this.props.loop) {
+    if (!this.props.pageWidth) {
       this.setState({pageWidth: Constants.screenWidth});
       this.goToPage(this.state.currentPage, true);
     }
@@ -117,7 +115,7 @@ export default class Carousel extends BaseComponent {
 
   updateOffset = (animated = false) => {
     const centerOffset =
-      Constants.isIOS && this.shouldUsePageWidth() ? (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
+      Constants.isIOS && this.props.pageWidth ? (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
     const x = presenter.calcOffset(this.props, this.state) - centerOffset;
 
     if (this.carousel) {
@@ -143,11 +141,6 @@ export default class Carousel extends BaseComponent {
       return length - index;
     }
     return index;
-  }
-
-  shouldUsePageWidth() {
-    const {loop, pageWidth} = this.props;
-    return !loop && pageWidth;
   }
 
   onContentSizeChange = () => {
@@ -190,7 +183,7 @@ export default class Carousel extends BaseComponent {
   };
 
   renderChild = (child, key) => {
-    const paddingLeft = this.shouldUsePageWidth() ? this.props.itemSpacings : undefined;
+    const paddingLeft = this.props.pageWidth ? this.props.itemSpacings : undefined;
 
     return (
       <View style={{width: this.state.pageWidth, paddingLeft}} key={key} collapsable={false}>
@@ -256,10 +249,10 @@ export default class Carousel extends BaseComponent {
   }
 
   render() {
-    const {containerStyle, itemSpacings, ...others} = this.props;
+    const {containerStyle, itemSpacings, pageWidth: pWidth, ...others} = this.props;
     const {initialOffset, pageWidth} = this.state;
 
-    const scrollContainerStyle = this.shouldUsePageWidth() ? {paddingRight: itemSpacings} : undefined;
+    const scrollContainerStyle = pWidth ? {paddingRight: itemSpacings} : undefined;
     const spacings = pageWidth === Constants.screenWidth ? 0 : itemSpacings;
     const initialBreak = pageWidth - (Constants.screenWidth - pageWidth - spacings) / 2;
     const snapToOffsets = _.times(presenter.getChildrenLength(this.props), index => initialBreak + index * pageWidth);
