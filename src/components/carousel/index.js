@@ -85,12 +85,13 @@ export default class Carousel extends BaseComponent {
 
     this.carousel = React.createRef();
     const defaultPageWidth = props.pageWidth ? props.pageWidth + props.itemSpacings : Constants.screenWidth;
+    const peep = props.loop && props.pageWidth ? (Constants.screenWidth - props.pageWidth - props.itemSpacings) / 2 : 0;
 
     this.state = {
       currentPage: props.pageWidth ? this.getCalcIndex(props.initialPage) : props.initialPage,
       currentStandingPage: props.initialPage,
       pageWidth: defaultPageWidth,
-      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage, pageWidth: defaultPageWidth})}
+      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage, pageWidth: defaultPageWidth}) - peep}
     };
   }
 
@@ -154,6 +155,7 @@ export default class Carousel extends BaseComponent {
     // finished full page scroll
     const {currentStandingPage, currentPage} = this.state;
     const index = this.getCalcIndex(currentPage);
+    
     this.setState({currentStandingPage: index});
     if (currentStandingPage !== index) {
       _.invoke(this.props, 'onChangePage', index, currentStandingPage);
@@ -193,7 +195,7 @@ export default class Carousel extends BaseComponent {
   };
 
   renderChildren() {
-    const {children, loop} = this.props;
+    const {children, loop, pageWidth} = this.props;
     const length = presenter.getChildrenLength(this.props);
 
     const childrenArray = React.Children.map(children, (child, index) => {
@@ -203,6 +205,10 @@ export default class Carousel extends BaseComponent {
     if (loop) {
       childrenArray.unshift(this.renderChild(children[length - 1], `${length - 1}-clone`));
       childrenArray.push(this.renderChild(children[0], `${0}-clone`));
+      
+      if (pageWidth) {
+        childrenArray.push(this.renderChild(children[1], `${1}-clone`));
+      }
     }
 
     return childrenArray;
