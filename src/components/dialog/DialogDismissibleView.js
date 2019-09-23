@@ -39,13 +39,30 @@ class DialogDismissibleView extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.hiddenLocation = {};
-    this.resetSwipe();
-    this.animatedValue = new Animated.Value(0);
+    this.setInitialValues();
     this.state = {
       visible: props.visible,
       hide: false,
       isAnimating: false
+    };
+  }
+
+  setInitialValues() {
+    this.hiddenLocation = {};
+    this.resetSwipe();
+    this.animatedValue = new Animated.Value(0);
+    this.width = Constants.screenWidth;
+    this.height = Constants.screenHeight;
+    this.hiddenLocation = this.getHiddenLocation(0, 0);
+    this.animationStyle = {
+      transform: [
+        {
+          translateX: this.hiddenLocation.left
+        },
+        {
+          translateY: this.hiddenLocation.top
+        }
+      ]
     };
   }
 
@@ -79,9 +96,7 @@ class DialogDismissibleView extends PureComponent {
     const {visible} = nextProps;
     const {visible: prevVisible} = prevState;
 
-    if (visible && !prevVisible) {
-      return {visible: true};
-    } else if (prevVisible && !visible) {
+    if (prevVisible && !visible) {
       return {hide: true};
     }
 
