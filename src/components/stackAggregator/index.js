@@ -237,7 +237,7 @@ export default class StackAggregator extends PureBaseComponent {
 
     return (
       <View style={containerStyle}>
-        <View style={{marginBottom: PEEP * 2.5}}>
+        <View style={{marginBottom: PEEP * 3}}>
           <Animated.View 
             style={{
               position: 'absolute',
