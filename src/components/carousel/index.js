@@ -10,6 +10,7 @@ import Text from '../text';
 import PageControl from '../pageControl';
 import * as presenter from './CarouselPresenter';
 
+
 const PAGE_CONTROL_POSITIONS = {
   OVER: 'over',
   UNDER: 'under'
@@ -115,8 +116,7 @@ export default class Carousel extends BaseComponent {
   }
 
   updateOffset = (animated = false) => {
-    const centerOffset =
-      Constants.isIOS && this.props.pageWidth ? (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
+    const centerOffset = this.props.pageWidth ? (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
     const x = presenter.calcOffset(this.props, this.state) - centerOffset;
 
     if (this.carousel) {
@@ -168,9 +168,9 @@ export default class Carousel extends BaseComponent {
       return;
     }
 
+    const offsetX = event.nativeEvent.contentOffset.x;
     const {loop} = this.props;
     const {pageWidth} = this.state;
-    const offsetX = event.nativeEvent.contentOffset.x;
 
     if (offsetX >= 0) {
       const newPage = presenter.calcPageIndex(offsetX, this.props, pageWidth);
