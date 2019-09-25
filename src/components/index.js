@@ -58,7 +58,7 @@ module.exports = {
   },
   
   get BaseInput() {
-    return require('./components').BaseInput;
+    return require('./inputs').BaseInput;
   },
   get TextArea() {
     return require('./inputs').TextArea;
