@@ -67,10 +67,10 @@ export default class StackAggregator extends PureBaseComponent {
 
     this.itemsCount = React.Children.count(props.children);
     this.easeOut = Easing.bezier(0, 0, 0.58, 1);
-    this.animatedScale = new Animated.Value(this.state.collapsed ? buttonStartValue : 1),
-    this.animatedOpacity = new Animated.Value(this.state.collapsed ? buttonStartValue : 1)
+    this.animatedScale = new Animated.Value(this.state.collapsed ? buttonStartValue : 1);
+    this.animatedOpacity = new Animated.Value(this.state.collapsed ? buttonStartValue : 1);
     this.animatedScaleArray = this.getAnimatedScales();
-    this.animatedContentOpacity = new Animated.Value(this.state.collapsed ? 0 : 1)
+    this.animatedContentOpacity = new Animated.Value(this.state.collapsed ? 0 : 1);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -83,11 +83,11 @@ export default class StackAggregator extends PureBaseComponent {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  getAnimatedScales() {
-    return React.Children.map(this.props.children, (item, index) => {
-      return new Animated.Value(this.getItemScale(index));
-    });
-  }
+  getAnimatedScales() {
+    return React.Children.map(this.props.children, (item, index) => {
+      return new Animated.Value(this.getItemScale(index));
+    });
+  }
 
   getItemScale(index) {
     if (this.state.collapsed) {
@@ -172,13 +172,13 @@ export default class StackAggregator extends PureBaseComponent {
     if (collapsed) {
       return {
         position: index !== 0 ? 'absolute' : undefined, 
-        top: top
-      }
+        top
+      };
     }
     return {
       marginBottom: MARGIN_BOTTOM,
       marginTop: index === 0 ? 40 : undefined
-    }
+    };
   }
 
   onLayout = (event, index) => {
@@ -213,7 +213,7 @@ export default class StackAggregator extends PureBaseComponent {
             ],
             width: Constants.screenWidth - 40,
             height: collapsed ? firstItemHeight : undefined
-          },
+          }
         ]}
         collapsable={false}
       >
@@ -294,8 +294,7 @@ function createStyles() {
       shadowColor: Colors.dark40,
       shadowOpacity: 0.25,
       shadowRadius: 12,
-      shadowOffset: {height: 5, width: 0},
-      // elevation: 2
+      shadowOffset: {height: 5, width: 0}
     }
   });
 }
