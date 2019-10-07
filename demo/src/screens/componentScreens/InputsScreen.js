@@ -287,7 +287,7 @@ export default class InputsScreen extends Component {
               borderWidth: 1,
               marginBottom: INPUT_SPACING,
               padding: 10,
-              borderColor: Colors.dark60,
+              borderColor: Colors.dark60
             }}
           >
             <TextArea placeholder="Write something.."/>
@@ -320,8 +320,24 @@ export default class InputsScreen extends Component {
             placeholder="Centered"
             centered
             containerStyle={{marginBottom: INPUT_SPACING}}
-            hideUnderline
+            // hideUnderline
           />
+
+          <TextField
+            text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            placeholder="Main Input"
+            mainInput
+          />
+
+          <TextField
+            text70
+            floatingPlaceholder
+            containerStyle={{marginBottom: INPUT_SPACING}}
+            placeholder="Prominent"
+            prominent
+          />
+
         </ScrollView>
         <KeyboardAwareInsetsView/>
       </View>

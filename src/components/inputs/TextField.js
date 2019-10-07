@@ -140,11 +140,18 @@ export default class TextField extends BaseInput {
       iconColor: PropTypes.string,
       onPress: PropTypes.func,
       style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
-    })
+    }),
+    /**
+     * Emphasize the input by enlarging font size
+     */
+    prominent: PropTypes.bool,
+    /**
+     * Sets the input as main, will center the input and text
+     */
+    mainInput: PropTypes.bool
   };
 
   static defaultProps = {
-    placeholderTextColor: DEFAULT_COLOR_BY_STATE.default,
     enableErrors: true,
     validateOnBlur: true
   };
@@ -159,10 +166,12 @@ export default class TextField extends BaseInput {
       ...this.state,
       value: props.value, // for floatingPlaceholder functionality
       floatingPlaceholderState: new Animated.Value(this.shouldFloatPlaceholder(props.value) ? 1 : 0),
-      showExpandableModal: false
+      showExpandableModal: false,
+      minWidth: 92
     };
 
     this.generatePropsWarnings(props);
+    this.setMainInputVariables();
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -191,6 +200,35 @@ export default class TextField extends BaseInput {
     this.styles = createStyles(this.getThemeProps());
   }
 
+  setMainInputVariables() {
+    const {autoCapitalize, mainInput, placeholder} = this.props;
+    const letterSpacing = autoCapitalize === 'characters' ? 3 : undefined;
+    this.mainInputTypography = {...Typography.text60, letterSpacing}; // TODO: move typography to prop
+    
+    if (Constants.isAndroid && mainInput && placeholder) {
+      this.measurePlaceholderWidth();
+    }
+  }
+
+  measurePlaceholderWidth = async () => {
+    const {placeholder} = this.props;
+    const newPlaceholder = this.getRequiredPlaceholder(placeholder);
+    
+    if (newPlaceholder) {
+      try {
+        const size = await Typography.measureTextSize(newPlaceholder, this.mainInputTypography);
+        
+        if (_.get(size, 'width') > this.state.minWidth) {
+          setTimeout(() => {
+            this.setState({minWidth: size.width + 2 * 16}); // NOTE: without the timeout will throw error
+          }, 0);
+        }
+      } catch (error) {
+        console.warn('TextField measurePlaceholderWidth ERROR: ', newPlaceholder, error);
+      }
+    }
+  };
+
   toggleExpandableModal(value) {
     this.setState({showExpandableModal: value});
     _.invoke(this.props, 'onToggleExpandableModal', value);
@@ -216,7 +254,7 @@ export default class TextField extends BaseInput {
         : ' '
       : this.shouldShowTopError() && this.shouldShowHelperText()
         ? helperText
-        : placeholder;
+        : this.getRequiredPlaceholder(placeholder);
     return text;
   }
 
@@ -294,8 +332,8 @@ export default class TextField extends BaseInput {
   }
 
   shouldFakePlaceholder() {
-    const {floatingPlaceholder, centered} = this.getThemeProps();
-    return Boolean(floatingPlaceholder && !centered && !this.shouldShowTopError());
+    const {floatingPlaceholder, centered, mainInput} = this.getThemeProps();
+    return Boolean(floatingPlaceholder && !centered && !mainInput && !this.shouldShowTopError());
   }
 
   shouldShowError() {
@@ -322,9 +360,10 @@ export default class TextField extends BaseInput {
   /** Renders */
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
-    const {expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} = this.getThemeProps();
-    const typography = this.getTypography();
-    const placeholderColor = this.getStateColor(placeholderTextColor);
+    const {expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline, prominent} 
+    = this.getThemeProps();
+    const typography = prominent ? {...Typography.text50, fontWeight: '800'} : this.getTypography();
+    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_COLOR_BY_STATE.default);
 
     if (this.shouldFakePlaceholder()) {
       return (
@@ -354,7 +393,7 @@ export default class TextField extends BaseInput {
           suppressHighlighting
           accessible={false}
         >
-          {placeholder}
+          {this.getRequiredPlaceholder(placeholder)}
         </Animated.Text>
       );
     }
@@ -470,11 +509,14 @@ export default class TextField extends BaseInput {
       numberOfLines,
       expandable,
       rightIconSource,
+      color,
+      prominent,
+      mainInput,
       ...others
     } = this.getThemeProps();
-    const typography = this.getTypography();
+    const typography = prominent ? {...Typography.text50, fontWeight: '800'} : this.getTypography();
     const {lineHeight, ...typographyStyle} = typography;
-    const color = this.getStateColor(this.props.color || this.extractColorValue());
+    const textColor = this.getStateColor(color || this.extractColorValue());
     const hasRightElement = this.shouldDisplayRightButton() || rightIconSource;
     const inputStyle = [
       hasRightElement && this.styles.rightElement,
@@ -484,11 +526,13 @@ export default class TextField extends BaseInput {
       Constants.isAndroid && {lineHeight},
       expandable && {maxHeight: lineHeight * (Constants.isAndroid ? 3 : 3.3)},
       Constants.isRTL && {minHeight: lineHeight + 3},
-      color && {color},
+      mainInput && this.styles.mainText, 
+      mainInput && this.mainInputTypography,
+      {color: textColor},
       style
     ];
     const placeholderText = this.getPlaceholderText();
-    const placeholderColor = this.getStateColor(placeholderTextColor);
+    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_COLOR_BY_STATE.default);
     const shouldUseMultiline = multiline ? multiline : expandable;
     const isEditable = !this.isDisabled() && !expandable;
 
@@ -548,13 +592,13 @@ export default class TextField extends BaseInput {
     }
   }
 
-  render() {
-    const {margins} = this.state;
-    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
+  renderTextField() {
+    const {minWidth} = this.state;
+    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline, mainInput} = this.getThemeProps();
     const underlineStateColor = this.getStateColor(underlineColor, true);
 
     return (
-      <View style={[this.styles.container, margins, containerStyle]} collapsable={false}>
+      <View style={[this.styles.container, mainInput && {minWidth}, containerStyle]} collapsable={false}>
         {this.shouldShowTopError() ? this.renderError(useTopErrors) : this.renderTitle()}
 
         <View
@@ -578,6 +622,13 @@ export default class TextField extends BaseInput {
         </View>
       </View>
     );
+  }
+
+  render() {
+    const {mainInput} = this.props;
+
+    return !mainInput ?
+      this.renderTextField() : <View style={this.styles.mainContainer}>{this.renderTextField()}</View>;
   }
 
   /** Events */
@@ -616,15 +667,15 @@ export default class TextField extends BaseInput {
   };
 }
 
-function createStyles({placeholderTextColor, centered, multiline, expandable}) {
+function createStyles({centered, mainInput, multiline, expandable}) {
   const inputTextAlign = Constants.isRTL ? 'right' : 'left';
 
   return StyleSheet.create({
     container: {},
     innerContainer: {
-      flexGrow: 1,
+      // flexGrow: 1, // create bugs with lineHeight
       flexDirection: 'row',
-      justifyContent: centered ? 'center' : undefined,
+      justifyContent: centered || mainInput ? 'center' : undefined,
       borderBottomWidth: 1,
       borderColor: Colors.dark70
     },
@@ -633,7 +684,7 @@ function createStyles({placeholderTextColor, centered, multiline, expandable}) {
     },
     input: {
       flexGrow: 1,
-      textAlign: centered ? 'center' : inputTextAlign,
+      textAlign: centered || mainInput ? 'center' : inputTextAlign,
       backgroundColor: 'transparent',
       marginBottom: Constants.isIOS ? 10 : 5,
       padding: 0, // for Android
@@ -660,12 +711,11 @@ function createStyles({placeholderTextColor, centered, multiline, expandable}) {
       backgroundColor: 'transparent'
     },
     placeholder: {
-      color: placeholderTextColor,
       textAlign: 'left'
     },
     errorMessage: {
       color: Colors.red30,
-      textAlign: centered ? 'center' : undefined
+      textAlign: centered || mainInput ? 'center' : undefined
     },
     topLabel: {
       marginBottom: Constants.isIOS ? (multiline ? 1 : 6) : 7
@@ -694,6 +744,15 @@ function createStyles({placeholderTextColor, centered, multiline, expandable}) {
     rightButtonImage: {
       width: ICON_SIZE,
       height: ICON_SIZE
+    },
+    mainContainer: {
+      flexDirection: 'row',
+      alignSelf: 'center',
+      justifyContent: 'center'
+    },
+    mainText: {
+      paddingLeft: 16,
+      paddingRight: 16
     }
   });
 }

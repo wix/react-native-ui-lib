@@ -14,7 +14,7 @@ import {
   Button,
   Carousel,
   TextField,
-  Image,
+  Image
 } from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 
@@ -23,7 +23,7 @@ export default class MainScreen extends Component {
     containerStyle: ViewPropTypes.style,
     renderItem: PropTypes.func,
     renderSectionTitle: PropTypes.func,
-    pageStyle: ViewPropTypes.style,
+    pageStyle: ViewPropTypes.style
   };
 
   constructor(props) {
@@ -34,7 +34,7 @@ export default class MainScreen extends Component {
 
     this.state = {
       currentPage: 0,
-      filteredNavigationData: data,
+      filteredNavigationData: data
     };
 
     this.filterExplorerScreens = _.throttle(this.filterExplorerScreens, 300);
@@ -45,7 +45,7 @@ export default class MainScreen extends Component {
     navigationStyle.topBar.rightButtons.push({
       id: 'uilib.settingsButton',
       enabled: true,
-      icon: Assets.icons.settings,
+      icon: Assets.icons.settings
     });
     Navigation.mergeOptions(props.componentId, navigationStyle);
   }
@@ -74,10 +74,10 @@ export default class MainScreen extends Component {
           {
             id: 'uilib.searchButton',
             enabled: true,
-            icon: Assets.icons.search,
-          },
-        ],
-      },
+            icon: Assets.icons.search
+          }
+        ]
+      }
     };
   }
 
@@ -89,7 +89,7 @@ export default class MainScreen extends Component {
       case 'uilib.settingsButton':
         this.pushScreen({
           name: 'unicorn.Settings',
-          passProps: {navigationData: data, playground: this.props.playground},
+          passProps: {navigationData: data, playground: this.props.playground}
         });
         break;
       case 'uilib.searchButton':
@@ -109,11 +109,11 @@ export default class MainScreen extends Component {
         options: {
           topBar: {
             title: {
-              text: options.title,
-            },
-          },
-        },
-      },
+              text: options.title
+            }
+          }
+        }
+      }
     });
   }
 
@@ -128,14 +128,14 @@ export default class MainScreen extends Component {
               options: {
                 topBar: {
                   title: {
-                    text: options.title,
-                  },
-                },
-              },
-            },
-          },
-        ],
-      },
+                    text: options.title
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
     });
   }
 
@@ -144,8 +144,8 @@ export default class MainScreen extends Component {
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         visible: shouldShow,
-        animate: true,
-      },
+        animate: true
+      }
     });
   };
 
@@ -188,7 +188,7 @@ export default class MainScreen extends Component {
 
     this.setState({
       filterText,
-      filteredNavigationData,
+      filteredNavigationData
     });
   }
 
@@ -206,9 +206,10 @@ export default class MainScreen extends Component {
             marginTop: Constants.isIOS ? Constants.statusBarHeight + 10 : 14,
             marginLeft: 16,
             color: ThemeManager.primaryColor,
-            width: Constants.screenWidth - 80,
+            width: Constants.screenWidth - 80
           }}
           hideUnderline
+          floatingPlaceholder={false}
         />
         <Button
           style={{marginRight: 16, marginTop: Constants.isIOS ? Constants.statusBarHeight : 0}}
@@ -230,7 +231,7 @@ export default class MainScreen extends Component {
 
     return (
       <View centerV row paddingL-20 marginB-10>
-        <Image source={Assets.icons.chevronRight} style={{tintColor: Colors.dark10}} supportRTL />
+        <Image source={Assets.icons.chevronRight} style={{tintColor: Colors.dark10}} supportRTL/>
         <Text
           style={[item.deprecate && styles.entryTextDeprecated]}
           dark10
@@ -295,7 +296,7 @@ export default class MainScreen extends Component {
   }
 
   renderCarousel(data) {
-    const {renderItem, pageStyle} = this.props;
+    const {pageStyle} = this.props;
     const dividerTransforms = [-10, -55, -20];
     const dividerWidths = ['60%', '75%', '90%'];
     const keys = _.keys(data);
@@ -315,7 +316,7 @@ export default class MainScreen extends Component {
                 style={[
                   styles.pageTitleExtraDivider,
                   {width: dividerWidths[_.indexOf(keys, key) % dividerWidths.length]},
-                  {transform: [{translateX: dividerTransforms[_.indexOf(keys, key) % dividerTransforms.length]}]},
+                  {transform: [{translateX: dividerTransforms[_.indexOf(keys, key) % dividerTransforms.length]}]}
                 ]}
               />
               <View flex>
@@ -381,22 +382,22 @@ const styles = StyleSheet.create({
     padding: 12,
     flexWrap: 'wrap',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   page: {
     flex: 1,
-    paddingLeft: 24,
+    paddingLeft: 24
   },
   pageTitleContainer: {
     borderBottomWidth: 1,
     paddingBottom: 4,
-    borderColor: Colors.dark60,
+    borderColor: Colors.dark60
   },
   pageTitleExtraDivider: {
-    marginTop: 5,
     // marginBottom: 22,
+    marginTop: 5
   },
   entryTextDeprecated: {
-    textDecorationLine: 'line-through',
-  },
+    textDecorationLine: 'line-through'
+  }
 });
