@@ -181,10 +181,10 @@ export default class StackAggregator extends PureBaseComponent {
     };
   }
 
-  onLayout = (event, index) => {
+  onLayout = event => {
     const height = event.nativeEvent.layout.height;
     
-    if (index === 0 && height) {
+    if (height) {
       this.setState({firstItemHeight: height});
     }
   }
@@ -200,7 +200,7 @@ export default class StackAggregator extends PureBaseComponent {
     return (
       <Animated.View 
         key={index}
-        onLayout={(event) => this.onLayout(event, index)}
+        onLayout={index === 0 ? this.onLayout : undefined}
         style={[
           Constants.isIOS && this.styles.containerShadow,
           this.getStyle(index),
@@ -218,7 +218,7 @@ export default class StackAggregator extends PureBaseComponent {
         collapsable={false}
       >
         <Card
-          style={[contentContainerStyle, {overflow: 'hidden', flexShrink: 1}]}
+          style={[contentContainerStyle, this.styles.card]}
           onPress={() => this.onItemPress(index)}
           borderRadius={itemBorderRadius}
           elevation={5}
@@ -295,6 +295,10 @@ function createStyles() {
       shadowOpacity: 0.25,
       shadowRadius: 12,
       shadowOffset: {height: 5, width: 0}
+    },
+    card: {
+      overflow: 'hidden', 
+      flexShrink: 1
     }
   });
 }
