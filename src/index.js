@@ -57,6 +57,9 @@ module.exports = {
   get Image() {
     return require('./components').Image;
   },
+  get BaseInput() {
+    return require('./components').BaseInput;
+  },
   get TextArea() {
     return require('./components').TextArea;
   },
