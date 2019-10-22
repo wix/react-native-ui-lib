@@ -255,14 +255,15 @@ export default class Carousel extends BaseComponent {
   }
 
   render() {
-    const {containerStyle, itemSpacings, pageWidth: pWidth, ...others} = this.props;
+    const {containerStyle, itemSpacings, pageWidth: pWidth, loop, ...others} = this.props;
     const {initialOffset, pageWidth} = this.state;
 
     const scrollContainerStyle = pWidth ? {paddingRight: itemSpacings} : undefined;
     const spacings = pageWidth === Constants.screenWidth ? 0 : itemSpacings;
     const initialBreak = pageWidth - (Constants.screenWidth - pageWidth - spacings) / 2;
-    const snapToOffsets = _.times(presenter.getChildrenLength(this.props), index => initialBreak + index * pageWidth);
-
+    const count = presenter.getChildrenLength(this.props) + (loop ? 1 : 0);
+    const snapToOffsets = _.times(count, index => initialBreak + index * pageWidth);
+    
     return (
       <View style={containerStyle}>
         <ScrollView

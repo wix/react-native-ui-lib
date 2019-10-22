@@ -26,7 +26,7 @@ class CarouselScreen extends Component {
         <Carousel 
           migrate 
           ref={r => this.carousel = r}
-          // loop 
+          loop 
           onChangePage={(index => this.onChangePage(index))} 
           pageWidth={WIDTH}
           // itemSpacings={20}
