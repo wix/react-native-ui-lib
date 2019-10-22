@@ -203,7 +203,8 @@ export default class BaseInput extends BaseComponent {
   }
 
   getRequiredPlaceholder(placeholder) {
-    if (this.isRequiredField() && this.props.markRequired) {
+    const {markRequired} = this.getThemeProps();
+    if (this.isRequiredField() && markRequired) {
       return `${placeholder} *`;
     }
     return placeholder;
