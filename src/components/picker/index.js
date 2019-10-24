@@ -262,7 +262,8 @@ class Picker extends BaseComponent {
       searchPlaceholder,
       renderCustomSearch,
       renderCustomModal,
-      listProps
+      listProps,
+      testID
     } = this.getThemeProps();
     const {showExpandableModal, selectedItemPosition} = this.state;
     const children = this.appendPropsToChildren(this.props.children);
@@ -279,6 +280,7 @@ class Picker extends BaseComponent {
 
     return (
       <PickerModal
+        testID={`${testID}.modal`}
         visible={showExpandableModal}
         scrollPosition={selectedItemPosition}
         enableModalBlur={enableModalBlur}

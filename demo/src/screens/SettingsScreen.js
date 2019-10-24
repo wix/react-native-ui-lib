@@ -71,6 +71,7 @@ class SettingsScreen extends Component {
             Set default screen to open on app startup
           </Text>
           <Picker
+            testID={'uilib.defaultScreenPicker'}
             placeholder="Pick default screen..."
             showSearch
             value={defaultScreen}

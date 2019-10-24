@@ -57,6 +57,9 @@ module.exports = {
   get Image() {
     return require('./components').Image;
   },
+  get BaseInput() {
+    return require('./components').BaseInput;
+  },
   get TextArea() {
     return require('./components').TextArea;
   },
@@ -126,6 +129,9 @@ module.exports = {
   },
   get SharedTransition() {
     return require('./components').SharedTransition;
+  },
+  get StackAggregator() {
+    return require('./components').StackAggregator;
   },
   get Switch() {
     return require('./components').Switch;

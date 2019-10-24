@@ -56,7 +56,10 @@ module.exports = {
   get Image() {
     return require('./image').default;
   },
-
+  
+  get BaseInput() {
+    return require('./inputs').BaseInput;
+  },
   get TextArea() {
     return require('./inputs').TextArea;
   },
@@ -119,6 +122,9 @@ module.exports = {
 
   get SharedTransition() {
     return require('./sharedTransition').default;
+  },
+  get StackAggregator() {
+    return require('./stackAggregator').default;
   },
 
   get Slider() {
