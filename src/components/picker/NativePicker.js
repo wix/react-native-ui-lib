@@ -14,6 +14,13 @@ class NativePicker extends BaseComponent {
     showDialog: false
   };
 
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const items = this.extractPickerItems(nextProps);
+    if (!_.isEqual(items, this.state.items)) {
+      this.setState({items});
+    }
+  }
+
   extractPickerItems(props) {
     const {children, useNativePicker} = props;
     if (useNativePicker) {
