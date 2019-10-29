@@ -1,11 +1,13 @@
 import _ from 'lodash';
 import React from 'react';
+import {StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
 import TextField from '../inputs/TextField';
 import {WheelPicker} from '../../nativeComponents';
 import PickerDialog from './PickerDialog';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
+import {Colors} from '../../style';
 
 class NativePicker extends BaseComponent {
   state = {
@@ -75,8 +77,6 @@ class NativePicker extends BaseComponent {
 
   render() {
     const {renderPicker, customPickerProps, testID} = this.props;
-    const textInputProps = TextField.extractOwnProps(this.props);
-    const label = this.getLabel();
 
     if (_.isFunction(renderPicker)) {
       const {selectedValue} = this.state;
@@ -90,9 +90,13 @@ class NativePicker extends BaseComponent {
       );
     }
 
+    const textInputProps = TextField.extractOwnProps(this.props);
+    const style = textInputProps.style;
+    const label = this.getLabel();
     return (
       <TextField
         {...textInputProps}
+        style={[styles.textField, style]}
         enableErrors={false}
         value={label}
         expandable
@@ -102,6 +106,12 @@ class NativePicker extends BaseComponent {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  textField: {
+    color: Colors.dark10
+  }
+});
 
 NativePicker.Item = WheelPicker.Item;
 export default NativePicker;

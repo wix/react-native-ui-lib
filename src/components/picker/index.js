@@ -4,6 +4,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
 import Modal from '../../screensComponents/modal';
@@ -13,6 +14,7 @@ import * as PickerPresenter from './PickerPresenter';
 import NativePicker from './NativePicker';
 import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
+import {Colors} from '../../style';
 
 const PICKER_MODES = {
   SINGLE: 'SINGLE',
@@ -321,10 +323,12 @@ class Picker extends BaseComponent {
     }
 
     const textInputProps = TextField.extractOwnProps(this.props);
+    const style = textInputProps.style;
     const label = this.getLabel();
     return (
       <TextField
         {...textInputProps}
+        style={[styles.textField, style]}
         {...this.getAccessibilityInfo()}
         enableErrors={false}
         value={label}
@@ -335,6 +339,12 @@ class Picker extends BaseComponent {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  textField: {
+    color: Colors.dark10
+  }
+});
 
 Picker.Item = PickerItem;
 export default Picker;
