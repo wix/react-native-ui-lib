@@ -4,6 +4,7 @@ import React from 'react';
 import {StyleSheet, ViewPropTypes, TouchableOpacity} from 'react-native';
 import {Colors} from '../../style';
 import {PureBaseComponent} from '../../commons';
+import {LogService} from '../../services';
 import Badge, {BADGE_SIZES} from '../badge';
 import View from '../view';
 import Text from '../text';
@@ -46,7 +47,11 @@ export default class Avatar extends PureBaseComponent {
 
     deprecatedProps.forEach(prop => {
       if (props[prop.old]) {
-        console.warn(`"Avatar's ${prop.old}" property is deprecated, please use "${prop.new}"`);
+        LogService.deprecationWarn({
+          component: 'Avatar',
+          oldProp: `${prop.old}`,
+          newProp: `${prop.new}`
+        });
       }
     });
   }

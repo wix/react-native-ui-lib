@@ -5,6 +5,7 @@ import {StyleSheet, Text, ViewPropTypes} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {PureBaseComponent} from '../../commons';
 import {BorderRadiuses, Colors, ThemeManager, Typography} from '../../style';
+import {LogService} from '../../services';
 import Image from '../image';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
@@ -93,7 +94,11 @@ export default class Badge extends PureBaseComponent {
     super(props);
 
     if (props.testId) {
-      console.warn('Badge prop \'testId\' is deprecated. Please use RN \'testID\' prop instead.');
+      LogService.deprecationWarn({
+        component: 'Badge',
+        oldProp: 'testId',
+        newProp: 'testID'
+      });
     }
   }
 
@@ -222,7 +227,7 @@ export default class Badge extends PureBaseComponent {
     const animationProps = this.extractAnimationProps();
     const Container = !_.isEmpty(animationProps) ? AnimatableView : onPress ? TouchableOpacity : View;
     if (!_.isEmpty(animationProps)) {
-      console.warn('Badge component will soon stop supporting animationProps.' +
+      LogService.warn('Badge component will soon stop supporting animationProps.' +
           'Please wrap your Badge component with your own animation component, such as Animatable.View',);
     }
     return (

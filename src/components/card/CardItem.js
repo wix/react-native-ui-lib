@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet} from 'react-native';
 import {BaseComponent} from '../../commons';
+import {LogService} from '../../services';
+
 
 /**
  * @description: Card.Item, a sub Card component for layout-ing inside a card
@@ -11,11 +13,10 @@ export default class CardItem extends BaseComponent {
   constructor(props) {
     super(props);
 
-    console.warn('uilib will depreciate "Card.Item" soon, please use "View" component with modifiers instead');
+    LogService.warn('UiLib will deprecate "Card.Item" soon, please use "View" component with modifiers instead');
   }
 
   static displayName = 'Card.Item';
-
   static propTypes = {
     /**
      * align flex as a row (default)

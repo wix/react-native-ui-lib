@@ -4,6 +4,7 @@ import memoize from 'memoize-one';
 import React from 'react';
 import {StyleSheet, ScrollView, Animated, Easing, UIManager, findNodeHandle} from 'react-native';
 import {Constants, Colors, PureBaseComponent, View, Carousel, PageControl, Image} from 'react-native-ui-lib';
+import {LogService} from '../../services';
 import ColorSwatch, {SWATCH_SIZE} from './ColorSwatch';
 
 
@@ -137,7 +138,7 @@ export default class ColorPalette extends PureBaseComponent {
     const {numberOfRows} = this.props;
 
     if (!_.inRange(numberOfRows, 2, 6)) {
-      console.warn(
+      LogService.warn(
         `${numberOfRows} is not within valid range of color rows (2 to 5); defaulting to ${DEFAULT_NUMBER_OF_ROWS}.`
       );
       return DEFAULT_NUMBER_OF_ROWS;
@@ -200,7 +201,7 @@ export default class ColorPalette extends PureBaseComponent {
           UIManager.measureLayoutRelativeToParent(
             handle,
             e => {
-              console.warn(e);
+              LogService.warn(e);
             },
             (x, y, w, h) => {
               if (x + w > Constants.screenWidth) {

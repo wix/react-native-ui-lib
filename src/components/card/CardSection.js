@@ -4,6 +4,7 @@ import {StyleSheet} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
+import {LogService} from '../../services';
 import View from '../view';
 
 /**
@@ -17,11 +18,10 @@ export default class CardSection extends BaseComponent {
   constructor(props) {
     super(props);
 
-    console.warn('uilib will depreciate "Card.Section" soon, please use "View" component with modifiers instead');
+    LogService.warn('UiLib will deprecate "Card.Section" soon, please use "View" component with modifiers instead');
   }
 
   static displayName = 'Card.Section';
-
   static propTypes = {
     /**
      * Enable blur view for the section

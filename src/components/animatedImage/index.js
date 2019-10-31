@@ -4,6 +4,7 @@ import React from 'react';
 import {Animated, View, StyleSheet} from 'react-native';
 import Image from '../../components/image';
 import {BaseComponent} from '../../commons';
+import {LogService} from '../../services';
 
 const UIAnimatedImage = Animated.createAnimatedComponent(Image);
 
@@ -65,7 +66,11 @@ class AnimatedImage extends BaseComponent {
   checkForDeprecatedProps(props) {
     deprecatedProps.forEach(prop => {
       if (props[prop.old]) {
-        console.warn(`'${prop.old}' property is deprecated, use '${prop.new}' instead`);
+        LogService.deprecationWarn({
+          component: 'AnimatedImage',
+          oldProp: `${prop.old}`,
+          newProp: `${prop.new}`
+        });
       }
     });
   }

@@ -6,6 +6,7 @@ import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
+import {LogService} from '../../services';
 
 // TODO: add finisher animation (check icon animation or something)
 // TODO: remove deprecated functionality
@@ -59,7 +60,7 @@ export default class AnimatedScanner extends BaseComponent {
     };
 
     if (!_.isNumber(props.progress)) {
-      console.warn('[react-native-ui-lib]! please check out the new api for AnimatedScanner. progress now accepts number instead of Animated Value',
+      LogService.warn('[react-native-ui-lib]! please check out the new api for AnimatedScanner. progress now accepts number instead of Animated Value',
       ); // eslint-disable-line
     }
   }
