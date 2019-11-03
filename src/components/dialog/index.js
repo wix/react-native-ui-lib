@@ -160,12 +160,12 @@ class Dialog extends BaseComponent {
   };
 
   renderDialogView = () => {
-    const {children, renderPannableHeader, panDirection, containerStyle} = this.props;
+    const {children, renderPannableHeader, panDirection, containerStyle, testID} = this.props;
     const {dialogVisibility} = this.state;
     const Container = renderPannableHeader ? View : PanListenerView;
 
     return (
-      <View style={[this.styles.dialogViewSize]} pointerEvents="box-none">
+      <View testID={testID} style={[this.styles.dialogViewSize]} pointerEvents="box-none">
         <PanningProvider>
           <DialogDismissibleView
             direction={panDirection}
