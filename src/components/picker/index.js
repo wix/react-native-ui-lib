@@ -8,6 +8,7 @@ import {BaseComponent} from '../../commons';
 import View from '../../components/view';
 import Modal from '../../screensComponents/modal';
 import Button from '../../components/button';
+import {LogService} from '../../services';
 import {TextField} from '../inputs';
 import * as PickerPresenter from './PickerPresenter';
 import NativePicker from './NativePicker';
@@ -142,14 +143,14 @@ class Picker extends BaseComponent {
     };
 
     if (props.mode === Picker.modes.SINGLE && Array.isArray(props.value)) {
-      console.warn('Picker in SINGLE mode cannot accept an array for value');
+      LogService.warn('Picker in SINGLE mode cannot accept an array for value');
     }
     if (props.mode === Picker.modes.MULTI && !Array.isArray(props.value)) {
-      console.warn('Picker in MULTI mode must accept an array for value');
+      LogService.warn('Picker in MULTI mode must accept an array for value');
     }
 
     if (props.useNativePicker && _.isPlainObject(props.value)) {
-      console.warn('UILib Picker: don\'t use object as value for native picker, use either string or a number');
+      LogService.warn('UiLib Picker: don\'t use object as value for native picker, use either string or a number');
     }
   }
 

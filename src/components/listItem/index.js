@@ -5,6 +5,7 @@ import {StyleSheet} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
+import {LogService} from '../../services';
 import TouchableOpacity from '../../components/touchableOpacity';
 import View from '../view';
 import ListItemPart from './ListItemPart';
@@ -87,7 +88,7 @@ class ListItem extends BaseComponent {
     const animationProps = this.extractAnimationProps();
     const InnerContainer = !_.isEmpty(animationProps) ? AnimatableView : View;
     if (!_.isEmpty(animationProps)) {
-      console.warn('ListItem component will soon stop supporting animationProps.' +
+      LogService.warn('ListItem component will soon stop supporting animationProps.' +
           'Please wrap your ListItem component with your own animation component, such as Animatable.View',);
     }
 

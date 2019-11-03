@@ -2,6 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {BaseComponent} from '../../commons';
+import {LogService} from '../../services';
 import View from '../view';
 
 export const RadioGroupContext = React.createContext({value: undefined, onValueChange: undefined});
@@ -32,7 +33,7 @@ class RadioGroup extends BaseComponent {
     super(props);
 
     if (props.value) {
-      console.warn(`Please use "initialValue" instead of "value" in RadioGroup with value of "${props.value}"`);
+      LogService.warn(`Please use "initialValue" instead of "value" in RadioGroup with value of "${props.value}"`);
     }
 
     this.state = {

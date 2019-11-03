@@ -7,6 +7,7 @@ import Text from '../text';
 import {Colors, Typography} from '../../style';
 import {Constants} from '../../helpers';
 import {Modal} from '../../screensComponents';
+import {LogService} from '../../services';
 import TextArea from './TextArea';
 import View from '../view';
 import Image from '../image';
@@ -129,7 +130,7 @@ export default class TextInput extends BaseInput {
   constructor(props) {
     super(props);
 
-    console.warn('uilib TextInput component will be deprecated soon, please use TextField instead');
+    LogService.warn('UiLib TextInput component will be deprecated soon, please use TextField instead');
 
     this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(this);
     this.toggleExpandableModal = this.toggleExpandableModal.bind(this);
@@ -156,10 +157,10 @@ export default class TextInput extends BaseInput {
   /** Actions */
   generatePropsWarnings(props) {
     if (props.maxLength === 0) {
-      console.warn('Setting maxLength to zero will block typing in this input');
+      LogService.warn('Setting maxLength to zero will block typing in this input');
     }
     if (props.showCharacterCounter && !props.maxLength) {
-      console.warn('In order to use showCharacterCount please pass \'maxLength\' prop');
+      LogService.warn('In order to use showCharacterCount please pass \'maxLength\' prop');
     }
   }
 

@@ -6,6 +6,7 @@ import {View as AnimatableView} from 'react-native-animatable';
 import {Colors, Typography, ThemeManager} from '../../style';
 import * as Constants from '../../helpers/Constants';
 import {BaseComponent} from '../../commons';
+import {LogService} from '../../services';
 import Text from '../../components/text';
 import View from '../../components/view';
 
@@ -50,7 +51,7 @@ export default class LoaderScreen extends BaseComponent {
     const animationProps = this.extractAnimationProps();
     const Container = !_.isEmpty(animationProps) ? AnimatableView : View;
     if (!_.isEmpty(animationProps)) {
-      console.warn('LoaderScreen component will soon stop supporting animationProps.' +
+      LogService.warn('LoaderScreen component will soon stop supporting animationProps.' +
           'Please wrap your LoaderScreen component with your own animation component, such as Animatable.View',);
     }
 

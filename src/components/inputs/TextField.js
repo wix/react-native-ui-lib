@@ -6,6 +6,7 @@ import {Constants} from '../../helpers';
 import {Colors, Typography} from '../../style';
 import BaseInput from './BaseInput';
 import {Modal} from '../../screensComponents';
+import {LogService} from '../../services';
 import TextArea from './TextArea';
 import View from '../view';
 import Image from '../image';
@@ -180,10 +181,10 @@ export default class TextField extends BaseInput {
   /** Actions */
   generatePropsWarnings(props) {
     if (props.maxLength === 0) {
-      console.warn('Setting maxLength to zero will block typing in this input');
+      LogService.warn('Setting maxLength to zero will block typing in this input');
     }
     if (props.showCharacterCounter && !props.maxLength) {
-      console.warn('In order to use showCharacterCount please pass \'maxLength\' prop');
+      LogService.warn('In order to use showCharacterCount please pass \'maxLength\' prop');
     }
   }
 

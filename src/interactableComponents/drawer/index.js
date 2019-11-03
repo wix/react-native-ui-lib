@@ -7,6 +7,7 @@ import {PureBaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import View from '../../components/view';
+import {LogService} from '../../services';
 import Swipeable from './Swipeable';
 import OldDrawer from './drawer.deprecated';
 
@@ -118,13 +119,13 @@ class NewDrawer extends PureBaseComponent {
 
   checkDeprecations(props) {
     if (props.onPress !== undefined) {
-      console.warn('Drawer\'s \'onPress\' prop is deprecated. ' +
+      LogService.warn('Drawer\'s \'onPress\' prop is deprecated. ' +
           'For items, send \'onPress\' handler in the item\'s object and for content use your own.',);
     }
 
     deprecatedProps.forEach(prop => {
       if (props[prop]) {
-        console.warn(`"Drawer's ${prop}" property is deprecated.`);
+        LogService.warn(`"Drawer's ${prop}" property is deprecated.`);
       }
     });
   }

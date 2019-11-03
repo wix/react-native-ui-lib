@@ -8,6 +8,7 @@ import {Constants} from '../../helpers';
 import View from '../view';
 import Image from '../image';
 import Assets from '../../assets';
+import {LogService} from '../../services';
 import TabBarItem from './TabBarItem';
 
 const LAYOUT_MODES = {
@@ -159,7 +160,7 @@ export default class TabBar extends BaseComponent {
   checkPropsMatch() {
     const {selectedIndex} = this.state;
     if (this.isIgnoredTab(selectedIndex)) {
-      console.warn('Your selectedIndex is the last tab. Please change it or remove the ignoreLastTab prop');
+      LogService.warn('Your selectedIndex is the last tab. Please change it or remove the ignoreLastTab prop');
     }
   }
 

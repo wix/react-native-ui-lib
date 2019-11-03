@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, PanResponder, ViewPropTypes, AccessibilityInfo} from 'react-native';
 import {Constants, Colors, PureBaseComponent, View} from 'react-native-ui-lib';
+import {LogService} from '../../services';
 
 const TRACK_SIZE = 6;
 const THUMB_SIZE = 24;
@@ -114,10 +115,10 @@ export default class Slider extends PureBaseComponent {
 
   checkProps(props) {
     if (props.minimumValue >= props.maximumValue) {
-      console.warn('Slider minimumValue must be lower than maximumValue');
+      LogService.warn('Slider minimumValue must be lower than maximumValue');
     }
     if (props.value < props.minimumValue || props.value > props.maximumValue) {
-      console.warn('Slider value is not in range');
+      LogService.warn('Slider value is not in range');
     }
   }
 

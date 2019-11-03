@@ -7,6 +7,7 @@ import {Constants} from '../../helpers';
 import {AnimatableManager, Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import Modal from '../../screensComponents/modal';
+import {LogService} from '../../services';
 import View from '../view';
 import PanGestureView from '../panningViews/panGestureView';
 
@@ -39,7 +40,7 @@ class DialogDeprecated extends BaseComponent {
     /**
      * The direction of the swipe to dismiss the dialog (default is 'down')
      */
-    dismissSwipeDirection: PropTypes.oneOf(Object.values(SWIPE_DIRECTIONS)), // DEFRECATED
+    dismissSwipeDirection: PropTypes.oneOf(Object.values(SWIPE_DIRECTIONS)), // DEPRECATED
     /**
      * The color of the overlay background
      */
@@ -98,7 +99,7 @@ class DialogDeprecated extends BaseComponent {
     };
 
     if (props.dismissSwipeDirection) {
-      console.warn('Dialog component\'s prop \'dismissSwipeDirection\' is deprecated, please remove it');
+      LogService.warn('Dialog component\'s prop \'dismissSwipeDirection\' is deprecated, please remove it');
     }
 
     if (props.visible) {

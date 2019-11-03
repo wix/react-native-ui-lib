@@ -5,6 +5,7 @@ import {StyleSheet, findNodeHandle, TouchableWithoutFeedback, Animated, Accessib
 import {Colors, Typography} from '../../style';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
+import {LogService} from '../../services';
 import View from '../view';
 import Text from '../text';
 import Button from '../button';
@@ -213,7 +214,7 @@ class FeatureHighlight extends BaseComponent {
       topPosition = isUnderMin ? topPosition + innerPadding : targetCenter + minRectHeight / 2 + innerPadding / 2;
     }
     if (topPosition < 0 || topPosition + this.contentHeight > Constants.screenHeight) {
-      console.warn(`Content is too long and might appear off screen. Please adjust the message length for better results.`,);
+      LogService.warn(`Content is too long and might appear off screen. Please adjust the message length for better results.`,);
     }
     return topPosition;
   }

@@ -5,6 +5,7 @@ import {StyleSheet} from 'react-native';
 import * as Constants from '../../helpers/Constants';
 import {Typography, ThemeManager} from '../../style';
 import {BaseComponent} from '../../commons';
+import {LogService} from '../../services';
 import View from '../../components/view';
 import Image from '../../components/image';
 import Button from '../../components/button';
@@ -48,7 +49,11 @@ export default class StateScreen extends BaseComponent {
     super(props);
 
     if (props.testId) {
-      console.warn('StateScreen prop \'testId\' is deprecated. Please use RN \'testID\' prop instead.');
+      LogService.deprecationWarn({
+        component: 'StateScreen',
+        oldProp: 'testId',
+        newProp: 'testID'
+      });
     }
   }
 

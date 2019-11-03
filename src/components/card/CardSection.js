@@ -32,11 +32,11 @@ export default class CardSection extends BaseComponent {
      */
     blurOptions: PropTypes.object,
     /**
-     * thid modifier apply inner padding
+     * Applies inner padding
      */
     body: PropTypes.bool,
     /**
-     * style as a footer, remove bottom spacing
+     * Style as a footer, remove bottom spacing
      */
     footer: PropTypes.bool
   };

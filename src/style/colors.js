@@ -2,6 +2,8 @@ import _ from 'lodash';
 import Color from 'color';
 import tinycolor from 'tinycolor2';
 import {colorsPalette} from './colorsPalette';
+import {LogService} from '../services';
+
 
 class Colors {
   /**
@@ -62,7 +64,7 @@ class Colors {
       Color(color);
       return false;
     } catch (error) {
-      console.warn('Colors.isEmpty failed:', error);
+      LogService.warn('Colors.isEmpty failed:', error);
       return true;
     }
   }
