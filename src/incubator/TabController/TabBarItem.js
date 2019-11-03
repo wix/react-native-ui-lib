@@ -155,11 +155,13 @@ export default class TabBarItem extends PureComponent {
 
   getLabelStyle() {
     const {itemWidth} = this.state;
-    const {index, currentPage, labelColor, selectedLabelColor, labelStyle} = this.props;
+    const {index, currentPage, labelColor, selectedLabelColor, labelStyle, ignore} = this.props;
     const fontWeight = cond(and(eq(currentPage, index), defined(itemWidth)), '700', '300');
+    const activeColor = selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
+    const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
     const color = cond(eq(currentPage, index),
-      processColor(selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR),
-      processColor(labelColor || DEFAULT_LABEL_COLOR),);
+      processColor(activeColor),
+      processColor(ignore ? activeColor : inactiveColor),);
 
     return [
       {
@@ -171,12 +173,16 @@ export default class TabBarItem extends PureComponent {
   }
 
   getIconStyle() {
-    const {index, currentPage, iconColor, selectedIconColor, labelColor, selectedLabelColor} = this.props;
+    const {index, currentPage, iconColor, selectedIconColor, labelColor, selectedLabelColor, ignore} = this.props;
+
+    const activeColor = selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
+    const inactiveColor = iconColor || labelColor || DEFAULT_LABEL_COLOR;
+
     const tintColor = cond(eq(currentPage, index),
       // TODO: using processColor here broke functionality,
       // not using it seem to not be very performant
-      selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR,
-      iconColor || labelColor || DEFAULT_LABEL_COLOR,);
+      activeColor,
+      ignore ? activeColor : inactiveColor,);
 
     return {
       tintColor
@@ -196,7 +202,7 @@ export default class TabBarItem extends PureComponent {
         onPress={this.onPress}
         testID={testID}
       >
-        {icon && <Reanimated.Image source={icon} style={[this.getIconStyle()]}/>}
+        {icon && <Reanimated.Image source={icon} style={[styles.tabItemIcon, this.getIconStyle()]}/>}
         {!_.isEmpty(label) && (
           <Reanimated.Text style={[styles.tabItemLabel, this.getLabelStyle()]}>
             {uppercase ? _.toUpper(label) : label}
@@ -218,6 +224,9 @@ const styles = StyleSheet.create({
   },
   tabItemLabel: {
     ...Typography.text80
+  },
+  tabItemIcon: {
+    marginRight: 10
   },
   badge: {
     marginLeft: Spacings.s1

@@ -1,4 +1,7 @@
 module.exports = {
+  get BaseInput() {
+    return require('./BaseInput').default;
+  },
   get TextArea() {
     return require('./TextArea').default;
   },

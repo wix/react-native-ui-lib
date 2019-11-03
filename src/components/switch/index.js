@@ -73,10 +73,23 @@ class Switch extends BaseComponent {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.value !== nextProps.value) {
-      this.toggle(nextProps.value);
+  componentDidUpdate(prevProps) {
+    const {value} = this.getThemeProps();
+    if (prevProps.value !== value) {
+      this.toggle(value);
     }
+  }
+
+  getAccessibilityProps() {
+    const {accessibilityLabel, disabled, value} = this.getThemeProps();
+    const switchState = value ? 'on' : 'off';
+
+    return {
+      accessible: true,
+      accessibilityLabel: accessibilityLabel ? `${accessibilityLabel} ${switchState}` : `switch ${switchState}`, //TODO: RN60 fix label and role and convert to accessibilityActions
+      accessibilityRole: 'button',
+      accessibilityStates: disabled ? ['disabled'] : undefined
+    };
   }
 
   toggle(value) {
@@ -140,12 +153,11 @@ class Switch extends BaseComponent {
   }
 
   render() {
-    const {value, ...others} = this.getThemeProps();
-    const accessibilityLabel = value ? 'switchOn' : 'switchOff';
+    const {...others} = this.getThemeProps();
 
     return (
       <TouchableOpacity
-        accessibilityLabel={accessibilityLabel}
+        {...this.getAccessibilityProps()}
         activeOpacity={1}
         {...others}
         style={this.getSwitchStyle()}

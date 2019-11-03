@@ -45,7 +45,7 @@ class AnimatedImage extends BaseComponent {
 
   onLoad = () => {
     this.setState({isLoading: false}, () => {
-      const animationParams = {toValue: 1, duration: this.props.animationDuration, useNativeDriver: false};
+      const animationParams = {toValue: 1, duration: this.props.animationDuration, useNativeDriver: true};
       Animated.timing(this.state.opacity, animationParams).start();
     });
   };

@@ -32,6 +32,7 @@ import WheelPickerDialogScreen from './WheelPickerDialogScreen';
 import SliderScreen from './SliderScreen';
 import FloatingButtonScreen from './FloatingButtonScreen';
 import ColorPickerScreen from './ColorPickerScreen';
+import StackAggregatorScreen from './StackAggregatorScreen';
 
 
 Navigation.registerComponent('unicorn.components.ActionSheetScreen', () => ActionSheetScreen);
@@ -67,3 +68,4 @@ Navigation.registerComponent('unicorn.components.WheelPickerDialogScreen', () =>
 Navigation.registerComponent('unicorn.components.SliderScreen', () => SliderScreen);
 Navigation.registerComponent('unicorn.components.FloatingButtonScreen', () => FloatingButtonScreen);
 Navigation.registerComponent('unicorn.components.ColorPickerScreen', () => ColorPickerScreen);
+Navigation.registerComponent('unicorn.components.StackAggregatorScreen', () => StackAggregatorScreen);

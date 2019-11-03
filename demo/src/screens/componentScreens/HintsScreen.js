@@ -102,7 +102,7 @@ export default class HintsScreen extends Component {
           )}
         </View>
 
-        <View padding-20 collapsabe={false}>
+        <View padding-20 collapsable={false}>
           <RadioGroup
             row
             centerV

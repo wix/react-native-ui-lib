@@ -314,7 +314,9 @@ export default class Avatar extends PureBaseComponent {
         style={[this.getContainerStyle(), containerStyle]}
         testID={testID}
         onPress={onPress}
+        accessible
         accessibilityLabel={'Avatar'}
+        accessibilityRole={onPress ? 'button' : 'image'}
         {...this.extractAccessibilityProps()}
       >
         <View

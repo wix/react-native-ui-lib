@@ -4,11 +4,14 @@ import {BaseComponent} from '../../commons';
 import TextField from '../inputs/TextField';
 import {WheelPicker} from '../../nativeComponents';
 import PickerDialog from './PickerDialog';
+import TouchableOpacity from '../touchableOpacity';
+import View from '../view';
 
 class NativePicker extends BaseComponent {
   state = {
     selectedValue: this.props.value,
-    items: this.extractPickerItems(this.props)
+    items: this.extractPickerItems(this.props),
+    showDialog: false
   };
 
   extractPickerItems(props) {
@@ -23,13 +26,13 @@ class NativePicker extends BaseComponent {
     this.setState({
       selectedValue: this.props.value
     });
-    this.input.toggleExpandableModal(false);
+    this.toggleDialog(false);
   };
 
   onDone = () => {
     const {selectedValue, items} = this.state;
-    _.invoke(this.props, 'onChange', selectedValue || items ? items[0].value : undefined);
-    this.input.toggleExpandableModal(false);
+    _.invoke(this.props, 'onChange', _.isUndefined(selectedValue) ? _.get(items, '[0].value') : selectedValue);
+    this.toggleDialog(false);
   };
 
   onValueChange = selectedValue => {
@@ -49,12 +52,17 @@ class NativePicker extends BaseComponent {
     return _.get(selectedItem, 'label');
   }
 
+  toggleDialog = showDialog => {
+    this.setState({showDialog});
+  };
+
   renderPickerDialog = () => {
-    const {selectedValue} = this.state;
+    const {selectedValue, showDialog} = this.state;
 
     return (
       <PickerDialog
         {...this.getThemeProps()}
+        visible={showDialog}
         disablePan
         onDismiss={this.onCancel}
         onValueChange={this.onValueChange}
@@ -66,17 +74,30 @@ class NativePicker extends BaseComponent {
   };
 
   render() {
+    const {renderPicker, customPickerProps, testID} = this.props;
     const textInputProps = TextField.extractOwnProps(this.props);
     const label = this.getLabel();
+
+    if (_.isFunction(renderPicker)) {
+      const {selectedValue} = this.state;
+      return (
+        <View left>
+          <TouchableOpacity {...customPickerProps} link onPress={() => this.toggleDialog(true)} testID={testID}>
+            {renderPicker(selectedValue)}
+          </TouchableOpacity>
+          {this.renderPickerDialog()}
+        </View>
+      );
+    }
 
     return (
       <TextField
         {...textInputProps}
-        ref={r => (this.input = r)}
         enableErrors={false}
         value={label}
         expandable
         renderExpandable={this.renderPickerDialog}
+        onToggleExpandableModal={this.toggleDialog}
       />
     );
   }
