@@ -1,0 +1,1 @@
+../../../../../node_modules/react-native-navigation/lib/ios/UITabBarController+RNNOptions.h

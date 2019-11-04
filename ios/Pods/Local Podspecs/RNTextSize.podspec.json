@@ -1,0 +1,29 @@
+{
+  "name": "RNTextSize",
+  "version": "4.0.0-rc.1",
+  "summary": "Measure text accurately before laying it out and get font information from your App",
+  "description": "React Native library to measure blocks of text before laying it on screen and get fonts info,\nbased originally on Airam's react-native-measure-text (support iOS and Android).",
+  "homepage": "https://github.com/aMarCruz/react-native-text-size",
+  "license": "BSD-2-Clause",
+  "authors": {
+    "name": "aMarCruz",
+    "email": "amarcruzbox_git@yahoo.com"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source": {
+    "git": {
+      "type": "git",
+      "url": "git+https://github.com/aMarCruz/react-native-text-size.git"
+    },
+    "tag": "v4.0.0-rc.1"
+  },
+  "source_files": "*.{h,m}",
+  "requires_arc": true,
+  "dependencies": {
+    "React": [
+
+    ]
+  }
+}
