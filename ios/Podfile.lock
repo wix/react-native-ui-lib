@@ -182,10 +182,6 @@ PODS:
     - React-cxxreact (= 0.61.3)
     - React-jsi (= 0.61.3)
   - React-jsinspector (0.61.3)
-  - react-native-async-storage (1.2.4):
-    - React
-  - react-native-blur (0.8.0):
-    - React
   - React-RCTActionSheet (0.61.3):
     - React-Core/RCTActionSheetHeaders (= 0.61.3)
   - React-RCTAnimation (0.61.3):
@@ -223,6 +219,8 @@ PODS:
     - ReactCommon/jscallinvoker (= 0.61.3)
   - ReactNativeNavigation (3.4.0):
     - React
+  - RNCAsyncStorage (1.6.2):
+    - React
   - RNGestureHandler (1.5.0):
     - React
   - RNReanimated (1.4.0):
@@ -248,8 +246,6 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
-  - "react-native-async-storage (from `../node_modules/@react-native-community/async-storage`)"
-  - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
@@ -262,6 +258,7 @@ DEPENDENCIES:
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeNavigation (from `../node_modules/react-native-navigation`)
+  - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNTextSize (from `../node_modules/react-native-text-size/ios`)
@@ -300,10 +297,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
-  react-native-async-storage:
-    :path: "../node_modules/@react-native-community/async-storage"
-  react-native-blur:
-    :path: "../node_modules/@react-native-community/blur"
   React-RCTActionSheet:
     :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
@@ -326,6 +319,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeNavigation:
     :path: "../node_modules/react-native-navigation"
+  RNCAsyncStorage:
+    :path: "../node_modules/@react-native-community/async-storage"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
@@ -351,8 +346,6 @@ SPEC CHECKSUMS:
   React-jsi: 8bcf5836caa8a759c135ab9ef97f3e023a7b94af
   React-jsiexecutor: ae078e9df9c65bcdcf68f9a17656657932d95528
   React-jsinspector: a8939cc6909607eb5e8a5ecfff7c6226984e174d
-  react-native-async-storage: b1af7d8633ac994da2c5e633cac3ba2dca358156
-  react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   React-RCTActionSheet: 94671eef55b01a93be735605822ef712d5ea208e
   React-RCTAnimation: 524ae33e73de9c0fe6501a7a4bda8e01d26499d9
   React-RCTBlob: 5481c2db702f57207af7e7a9b32d90524b821b72
@@ -364,6 +357,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: 262588c97551b0b1c675468cda857466ba5af18f
   ReactCommon: c2c63d9290b422ca6ad5b3663073a015dd892ae9
   ReactNativeNavigation: 8c8c90fec3ee912010ce4cfb6c9678912c056b9b
+  RNCAsyncStorage: 5ae4d57458804e99f73d427214442a6b10a53856
   RNGestureHandler: a4ddde1ffc6e590c8127b8b7eabfdade45475c74
   RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
   RNTextSize: 91955a6ea2adda9dc7802ce472b7a4dc717686f6

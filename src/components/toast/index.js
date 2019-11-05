@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {View as AnimatableView, Text as AnimatableText} from 'react-native-animatable';
-import {BlurView} from '@react-native-community/blur';
+// import {BlurView} from '@react-native-community/blur';
 import {BaseComponent} from '../../commons';
 import {AnimatableManager, ThemeManager, Colors, Typography, BorderRadiuses} from '../../style';
 import Assets from '../../assets';
@@ -308,7 +308,7 @@ export default class Toast extends BaseComponent {
           ]}
           {...animationConfig}
         >
-          {enableBlur && <BlurView style={this.styles.blurView} {...blurOptions}/>}
+          {/* {enableBlur && <BlurView style={this.styles.blurView} {...blurOptions}/>} */}
           {this.renderContent()}
         </AnimatableView>
       </View>

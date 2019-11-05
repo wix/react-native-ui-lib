@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet} from 'react-native';
-import {BlurView} from '@react-native-community/blur';
+// import {BlurView} from '@react-native-community/blur';
 import {BaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
 import View from '../view';
@@ -46,8 +46,8 @@ export default class CardSection extends BaseComponent {
   }
 
   render() {
-    const {enableBlur, blurOptions, style, ...others} = this.props;
-    const Container = Constants.isIOS && enableBlur ? BlurView : View;
+    const {/* enableBlur,  */blurOptions, style, ...others} = this.props;
+    const Container = /* Constants.isIOS && enableBlur ? BlurView :  */View;
     const {paddings} = this.state;
     return (
       <Container {...blurOptions} style={[this.styles.container, paddings, style]} {...others}>

@@ -15,7 +15,6 @@
   },
   "scripts": {
     "start": "watchman watch-del-all && export DEV_MODE=true && react-native start",
-    "ios": "react-native run-ios --simulator='iPhone 7'",
     "android": "react-native run-android",
     "pretest": "npm run lint",
     "test": "jest",
@@ -38,28 +37,27 @@
     "build:typings": "rm -rf ./typings && ./scripts/build-typings.sh && tsc"
   },
   "dependencies": {
-    "@react-native-community/blur": "^3.3.1",
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
     "color": "^3.1.0",
     "commons-validator-js": "^1.0.237",
     "hoist-non-react-statics": "^3.0.0",
     "lodash": "^4.0.0",
+    "memoize-one": "^5.0.5",
     "prop-types": "^15.5.10",
     "react-native-animatable": "^1.1.0",
+    "react-native-color": "0.0.10",
     "react-native-gesture-handler": "1.5.0",
     "react-native-interactable": "1.0.0",
     "react-native-reanimated": "1.4.0",
     "react-native-text-size": "4.0.0-rc.1",
     "semver": "^5.5.0",
-    "url-parse": "^1.2.0",
-    "react-native-color": "0.0.10",
-    "memoize-one": "^5.0.5"
+    "url-parse": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
     "@babel/preset-env": "^7.3.1",
     "@babel/runtime": "^7.4.2",
-    "@react-native-community/async-storage": "1.2.4",
+    "@react-native-community/async-storage": "^1.6.2",
     "@react-native-community/eslint-config": "latest",
     "@types/prop-types": "^15.5.3",
     "@types/react-native": "^0.55.21",
