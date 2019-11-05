@@ -3,6 +3,7 @@ package com.rnuilib;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.react.PackageList;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 
@@ -42,7 +43,9 @@ public class MainApplication extends NavigationApplication {
 
     @Override
     public List<ReactPackage> createAdditionalReactPackages() {
-        return getPackages();
+        @SuppressWarnings("UnnecessaryLocalVariable")
+        List<ReactPackage> packages = new PackageList(this).getPackages();
+        return packages;
     }
 }
 
