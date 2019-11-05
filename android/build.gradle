@@ -3,21 +3,18 @@
 buildscript {
     ext {
         buildToolsVersion = "28.0.3"
-        // minSdkVersion = 16
         minSdkVersion = 19
         compileSdkVersion = 28
         targetSdkVersion = 28
     }
     repositories {
-        google()
         mavenLocal()
         mavenCentral()
+        google()
         jcenter()
     }
     dependencies {
-        // classpath("com.android.tools.build:gradle:3.4.2")
-        classpath 'com.android.tools.build:gradle:3.0.1'
-
+        classpath("com.android.tools.build:gradle:3.4.2")
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -26,7 +23,6 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
         mavenLocal()
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
@@ -42,19 +38,3 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
-
-
-//subprojects { subproject ->
-//    afterEvaluate {
-//        if ((subproject.plugins.hasPlugin('android') || subproject.plugins.hasPlugin('android-library'))) {
-//            android {
-//                variantFilter { variant ->
-//                    def names = variant.flavors*.name
-//                    if (names.contains("reactNative60")) {
-//                        setIgnore(true)
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
