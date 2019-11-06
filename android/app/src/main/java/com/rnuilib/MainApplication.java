@@ -14,6 +14,10 @@ import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
 
+import com.wix.reactnativeuilib.highlighterview.HighlighterViewPackage;
+import com.wix.reactnativeuilib.textinput.TextInputDelKeyHandlerPackage;
+import com.wix.reactnativeuilib.wheelpicker.WheelPickerPackage;
+
 
 public class MainApplication extends NavigationApplication {
 
@@ -45,6 +49,9 @@ public class MainApplication extends NavigationApplication {
     public List<ReactPackage> createAdditionalReactPackages() {
         @SuppressWarnings("UnnecessaryLocalVariable")
         List<ReactPackage> packages = new PackageList(this).getPackages();
+        packages.add(new HighlighterViewPackage());
+        packages.add(new WheelPickerPackage());
+        packages.add(new TextInputDelKeyHandlerPackage());
         return packages;
     }
 }

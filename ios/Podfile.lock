@@ -219,6 +219,8 @@ PODS:
     - ReactCommon/jscallinvoker (= 0.61.3)
   - ReactNativeNavigation (3.4.0):
     - React
+  - ReactNativeUiLib (3.3.132):
+    - React
   - RNCAsyncStorage (1.6.2):
     - React
   - RNGestureHandler (1.5.0):
@@ -258,6 +260,7 @@ DEPENDENCIES:
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeNavigation (from `../node_modules/react-native-navigation`)
+  - ReactNativeUiLib (from `../ReactNativeUiLib.podspec`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -319,6 +322,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeNavigation:
     :path: "../node_modules/react-native-navigation"
+  ReactNativeUiLib:
+    :path: "../ReactNativeUiLib.podspec"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
   RNGestureHandler:
@@ -357,12 +362,13 @@ SPEC CHECKSUMS:
   React-RCTVibration: 262588c97551b0b1c675468cda857466ba5af18f
   ReactCommon: c2c63d9290b422ca6ad5b3663073a015dd892ae9
   ReactNativeNavigation: 8c8c90fec3ee912010ce4cfb6c9678912c056b9b
+  ReactNativeUiLib: 752234a614cce1f99c58f62ca5b825ac88124d7c
   RNCAsyncStorage: 5ae4d57458804e99f73d427214442a6b10a53856
   RNGestureHandler: a4ddde1ffc6e590c8127b8b7eabfdade45475c74
   RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
   RNTextSize: 91955a6ea2adda9dc7802ce472b7a4dc717686f6
   Yoga: 02036f6383c0008edb7ef0773a0e6beb6ce82bd1
 
-PODFILE CHECKSUM: 13927131729890d5c15133ce62c9a639aaeef039
+PODFILE CHECKSUM: 9286e3ad14555869c9a58140620f0fb838796ff3
 
 COCOAPODS: 1.8.4
