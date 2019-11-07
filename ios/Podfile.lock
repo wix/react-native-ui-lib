@@ -217,6 +217,8 @@ PODS:
     - React-cxxreact (= 0.61.3)
     - React-jsi (= 0.61.3)
     - ReactCommon/jscallinvoker (= 0.61.3)
+  - ReactNativeKeyboardTrackingView (5.6.1):
+    - React
   - ReactNativeNavigation (3.4.0):
     - React
   - ReactNativeUiLib (3.3.132):
@@ -259,6 +261,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - ReactNativeKeyboardTrackingView (from `../node_modules/react-native-keyboard-tracking-view`)
   - ReactNativeNavigation (from `../node_modules/react-native-navigation`)
   - ReactNativeUiLib (from `../ReactNativeUiLib.podspec`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
@@ -320,6 +323,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  ReactNativeKeyboardTrackingView:
+    :path: "../node_modules/react-native-keyboard-tracking-view"
   ReactNativeNavigation:
     :path: "../node_modules/react-native-navigation"
   ReactNativeUiLib:
@@ -361,6 +366,7 @@ SPEC CHECKSUMS:
   React-RCTText: b8f895b94aa0e7778fef28d13f3d71eed4a10c3d
   React-RCTVibration: 262588c97551b0b1c675468cda857466ba5af18f
   ReactCommon: c2c63d9290b422ca6ad5b3663073a015dd892ae9
+  ReactNativeKeyboardTrackingView: a240a6a0dba852bb107109a7ec7e98b884055977
   ReactNativeNavigation: 8c8c90fec3ee912010ce4cfb6c9678912c056b9b
   ReactNativeUiLib: 752234a614cce1f99c58f62ca5b825ac88124d7c
   RNCAsyncStorage: 5ae4d57458804e99f73d427214442a6b10a53856

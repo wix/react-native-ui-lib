@@ -331,7 +331,8 @@ export default class Slider extends PureBaseComponent {
     const value = this.getValueForX(this._x);
     let newValue;
 
-    switch (event.nativeEvent.action) {
+    // switch (event.nativeEvent.action) {
+    switch (event.nativeEvent.actionName) {
       case 'increment':
         newValue = value !== maximumValue ? value + step : value;
         break;
@@ -362,7 +363,8 @@ export default class Slider extends PureBaseComponent {
         {...this.extractAccessibilityProps()}
         accessibilityRole={'adjustable'}
         accessibilityStates={disabled ? ['disabled'] : undefined}
-        accessibilityActions={['increment', 'decrement']}
+        // accessibilityActions={['increment', 'decrement']}
+        accessibilityActions={[{name: 'increment', label: 'increment'}, {name: 'decrement', label: 'decrement'}]}
         onAccessibilityAction={this.onAccessibilityAction}
       >
         {_.isFunction(renderTrack) ? (
