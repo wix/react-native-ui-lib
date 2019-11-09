@@ -8,7 +8,7 @@ import Assets from '../assets';
 
 const INDICATOR_TYPES = {
   CIRCLE: 'circle',
-  CLEAN: 'clean',
+  CLEAN: 'clean'
 };
 
 const BaseComponent = baseComponent(false);
@@ -35,13 +35,13 @@ export default class SelectableComponent extends BaseComponent {
     /**
      * color of selectable indicator
      */
-    selectableIndicatorColor: PropTypes.string,
+    selectableIndicatorColor: PropTypes.string
   };
 
   static defaultProps = {
     selectableIndicatorSize: 36,
     selectableIndicatorType: INDICATOR_TYPES.CIRCLE,
-    selectableIndicatorColor: Colors.blue30,
+    selectableIndicatorColor: Colors.blue30
   };
 
   static indicatorTypes = INDICATOR_TYPES;
@@ -50,7 +50,7 @@ export default class SelectableComponent extends BaseComponent {
     super(props);
 
     this.state = {
-      selected: props.selected,
+      selected: props.selected
     };
 
     this.onSelect = this.onSelect.bind(this);
@@ -59,7 +59,7 @@ export default class SelectableComponent extends BaseComponent {
   UNSAFE_componentWillReceiveProps(newProps) {
     if (newProps.selected !== this.state.selected) {
       this.setState({
-        selected: newProps.selected,
+        selected: newProps.selected
       });
     }
   }
@@ -98,7 +98,7 @@ export default class SelectableComponent extends BaseComponent {
     if (selectable) {
       return (
         <View style={this.getIndicatorContainerStyle()}>
-          {selected && <Image style={this.getIndicatorIconStyle()} source={Assets.icons.check} />}
+          {selected && <Image style={this.getIndicatorIconStyle()} source={Assets.icons.check}/>}
         </View>
       );
     }
@@ -106,7 +106,7 @@ export default class SelectableComponent extends BaseComponent {
 
   onSelect() {
     this.setState({
-      selected: !this.state.selected,
+      selected: !this.state.selected
     });
     _.invoke(this.props, 'onPress');
   }
@@ -118,19 +118,19 @@ function createStyles({selectableIndicatorSize}) {
       width: selectableIndicatorSize,
       height: selectableIndicatorSize,
       justifyContent: 'center',
-      borderRadius: BorderRadiuses.br100,
+      borderRadius: BorderRadiuses.br100
     },
     circleContainer: {
       borderWidth: 1,
-      borderColor: Colors.blue30,
+      borderColor: Colors.blue30
     },
     checkIcon: {
       alignSelf: 'center',
-      resizeMode: 'contain',
+      resizeMode: 'contain'
     },
     checkIconInCircle: {
       width: selectableIndicatorSize / 2,
-      tintColor: Colors.white,
-    },
+      tintColor: Colors.white
+    }
   });
 }

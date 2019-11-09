@@ -7,7 +7,6 @@ import TextField from './TextField';
 import View from '../view';
 import Text from '../text';
 
-
 /**
  * @description: Mask Input to create custom looking inputs with custom formats
  * @extends: TextInput
@@ -26,7 +25,7 @@ export default class MaskedInput extends BaseInput {
     /**
      * container style for the masked input container
      */
-    containerStyle: ViewPropTypes.style,
+    containerStyle: ViewPropTypes.style
   };
 
   componentDidMount() {
@@ -54,7 +53,7 @@ export default class MaskedInput extends BaseInput {
   render() {
     const {containerStyle} = this.props;
     const TextInputProps = TextField.extractOwnProps(this.props, ['containerStyle', 'style']);
-    
+
     return (
       <View style={containerStyle}>
         <TextField
@@ -70,9 +69,7 @@ export default class MaskedInput extends BaseInput {
           multiline={false}
           onChangeText={this.onChangeText}
         />
-        <View style={styles.maskedInputWrapper}>
-          {this.renderMaskedText()}
-        </View>
+        <View style={styles.maskedInputWrapper}>{this.renderMaskedText()}</View>
       </View>
     );
   }
@@ -81,14 +78,14 @@ export default class MaskedInput extends BaseInput {
 const styles = StyleSheet.create({
   hiddenInputContainer: {
     ...StyleSheet.absoluteFillObject,
-    zIndex: 1,
+    zIndex: 1
   },
   hiddenInput: {
     color: 'transparent',
     backgroundColor: 'transparent',
-    height: undefined,
+    height: undefined
   },
   maskedInputWrapper: {
-    zIndex: 0,
-  },
+    zIndex: 0
+  }
 });

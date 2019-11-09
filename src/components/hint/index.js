@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet/* , TouchableWithoutFeedback */} from 'react-native';
+import {StyleSheet, AccessibilityInfo, findNodeHandle} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {Typography, Spacings, Colors, BorderRadiuses, AnimatableManager} from '../../style';
 import {Constants} from '../../helpers';
@@ -20,7 +20,7 @@ const DEFAULT_HINT_OFFSET = Spacings.s4;
 const DEFAULT_EDGE_MARGINS = Spacings.s5;
 const HINT_POSITIONS = {
   TOP: 'top',
-  BOTTOM: 'bottom',
+  BOTTOM: 'bottom'
 };
 const TARGET_POSITIONS = {
   LEFT: 'left',
@@ -31,16 +31,18 @@ const TARGET_POSITIONS = {
 AnimatableManager.loadAnimationDefinitions({
   hintAppearDown: {
     from: {opacity: 0, translateY: 20},
-    to: {opacity: 1, translateY: 0},
+    to: {opacity: 1, translateY: 0}
   },
   hintAppearUp: {
     from: {opacity: 0, translateY: -20},
-    to: {opacity: 1, translateY: 0},
-  },
+    to: {opacity: 1, translateY: 0}
+  }
 });
 
 /**
- * @description: Hint component.
+ * @description: Hint component for displaying a tooltip over wrapped component
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/HintsScreen.js
+ * @notes: You can either wrap a component or pass a specific targetFrame
  */
 class Hint extends BaseComponent {
   static displayName = 'Hint';
@@ -81,7 +83,7 @@ class Hint extends BaseComponent {
       x: PropTypes.number,
       y: PropTypes.number,
       width: PropTypes.number,
-      height: PropTypes.number,
+      height: PropTypes.number
     }),
     /**
      * Show side tips instead of the middle tip
@@ -104,43 +106,76 @@ class Hint extends BaseComponent {
      */
     onBackgroundPress: PropTypes.func,
     /**
+     * The hint container width
+     */
+    containerWidth: PropTypes.number,
+    /**
      * The hint's test identifier
      */
-    testID: PropTypes.string,
+    testID: PropTypes.string
   };
 
   static defaultProps = {
-    position: HINT_POSITIONS.BOTTOM,
+    position: HINT_POSITIONS.BOTTOM
   };
 
   static positions = HINT_POSITIONS;
 
   state = {
-    targetLayout: this.props.targetFrame,
+    targetLayout: this.props.targetFrame
+  };
+
+  focusAccessibilityOnHint = () => {
+    const {message} = this.props;
+    const targetRefTag = findNodeHandle(this.targetRef);
+    const hintRefTag = findNodeHandle(this.hintRef);
+    if (targetRefTag && _.isString(message)) {
+      AccessibilityInfo.setAccessibilityFocus(targetRefTag);
+    } else if (hintRefTag) {
+      AccessibilityInfo.setAccessibilityFocus(hintRefTag);
+    }
   };
 
   setTargetRef = ref => {
     this.targetRef = ref;
+    this.focusAccessibilityOnHint();
+  };
+
+  setHintRef = ref => {
+    this.hintRef = ref;
+    this.focusAccessibilityOnHint();
   };
 
   onTargetLayout = ({nativeEvent: {layout}}) => {
     if (!_.isEqual(this.state.targetLayout, layout)) {
-      this.setState({
-        targetLayout: layout,
-      });
+      this.setState({targetLayout: layout});
     }
 
     if (!this.state.targetLayoutInWindow) {
       setTimeout(() => {
         this.targetRef.measureInWindow((x, y, width, height) => {
           const targetLayoutInWindow = {x, y, width, height};
-          this.setState({
-            targetLayoutInWindow,
-          });
+          this.setState({targetLayoutInWindow});
         });
       });
     }
   };
+
+  getAccessibilityInfo() {
+    const {visible, message} = this.props;
+
+    if (visible && _.isString(message)) {
+      return {
+        accessible: true,
+        accessibilityLabel: `hint: ${message}`
+      };
+    }
+  }
+
+  get containerWidth() {
+    const {containerWidth} = this.getThemeProps();
+    return containerWidth || Constants.screenWidth;
+  }
 
   get targetLayout() {
     const {onBackgroundPress, targetFrame} = this.props;
@@ -149,8 +184,7 @@ class Hint extends BaseComponent {
     if (targetFrame) {
       return targetFrame;
     }
-
-    return (onBackgroundPress) ? targetLayoutInWindow : targetLayout;
+    return onBackgroundPress ? targetLayoutInWindow : targetLayout;
   }
 
   get showHint() {
@@ -173,6 +207,7 @@ class Hint extends BaseComponent {
 
   get useSideTip() {
     const {useSideTip} = this.props;
+
     if (!_.isUndefined(useSideTip)) {
       return useSideTip;
     }
@@ -181,12 +216,12 @@ class Hint extends BaseComponent {
 
   getTargetPositionOnScreen() {
     const targetMidPosition = this.targetLayout.x + this.targetLayout.width / 2;
-    if (targetMidPosition > Constants.screenWidth * (2 / 3)) {
-      return TARGET_POSITIONS.RIGHT; 
-    } else if (targetMidPosition < Constants.screenWidth * (1 / 3)) {
-      return TARGET_POSITIONS.LEFT; 
-    }
 
+    if (targetMidPosition > this.containerWidth * (2 / 3)) {
+      return TARGET_POSITIONS.RIGHT;
+    } else if (targetMidPosition < this.containerWidth * (1 / 3)) {
+      return TARGET_POSITIONS.LEFT;
+    }
     return TARGET_POSITIONS.CENTER;
   }
 
@@ -223,10 +258,9 @@ class Hint extends BaseComponent {
       if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
         paddings.paddingLeft = this.targetLayout.x;
       } else if (targetPositionOnScreen === TARGET_POSITIONS.RIGHT) {
-        paddings.paddingRight = Constants.screenWidth - this.targetLayout.x - this.targetLayout.width;
+        paddings.paddingRight = this.containerWidth - this.targetLayout.x - this.targetLayout.width;
       }
     }
-
     return paddings;
   }
 
@@ -245,10 +279,10 @@ class Hint extends BaseComponent {
 
     const leftPosition = this.useSideTip ? this.targetLayout.x : this.targetLayout.x + targetMidWidth - tipMidWidth;
     const rightPosition = this.useSideTip
-      ? Constants.screenWidth - this.targetLayout.x - this.targetLayout.width
-      : Constants.screenWidth - this.targetLayout.x - targetMidWidth - tipMidWidth;
-
+      ? this.containerWidth - this.targetLayout.x - this.targetLayout.width
+      : this.containerWidth - this.targetLayout.x - targetMidWidth - tipMidWidth;
     const targetPositionOnScreen = this.getTargetPositionOnScreen();
+
     switch (targetPositionOnScreen) {
       case TARGET_POSITIONS.LEFT:
         tipPositionStyle.left = Constants.isRTL ? rightPosition : leftPosition;
@@ -261,7 +295,6 @@ class Hint extends BaseComponent {
         tipPositionStyle.left = this.targetLayout.x + targetMidWidth - tipMidWidth;
         break;
     }
-
     return tipPositionStyle;
   }
 
@@ -297,7 +330,7 @@ class Hint extends BaseComponent {
     const flipVertically = position === HINT_POSITIONS.TOP;
     const flipHorizontally = this.getTargetPositionOnScreen() === TARGET_POSITIONS.RIGHT;
     const flipStyle = {
-      transform: [{scaleY: flipVertically ? -1 : 1}, {scaleX: flipHorizontally ? -1 : 1}],
+      transform: [{scaleY: flipVertically ? -1 : 1}, {scaleX: flipHorizontally ? -1 : 1}]
     };
 
     return (
@@ -312,12 +345,18 @@ class Hint extends BaseComponent {
   renderHint() {
     const {position, message, messageStyle, icon, iconStyle, borderRadius, color, testID} = this.getThemeProps();
     const shownUp = position === HINT_POSITIONS.TOP;
+
     if (this.showHint) {
       return (
         <AnimatableView
           animation={shownUp ? AnimatableManager.animations.hintAppearUp : AnimatableManager.animations.hintAppearDown}
           duration={200}
-          style={[styles.hintContainer, this.getHintPosition(), this.getHintPadding()]}
+          style={[
+            {width: this.containerWidth},
+            styles.animatedContainer,
+            this.getHintPosition(),
+            this.getHintPadding()
+          ]}
           pointerEvents="box-none"
           testID={testID}
         >
@@ -326,8 +365,9 @@ class Hint extends BaseComponent {
             row
             centerV
             style={[styles.hint, color && {backgroundColor: color}, !_.isUndefined(borderRadius) && {borderRadius}]}
+            ref={this.setHintRef}
           >
-            {icon && <Image source={icon} style={[styles.icon, iconStyle]} />}
+            {icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
             <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>
           </View>
         </AnimatableView>
@@ -336,7 +376,7 @@ class Hint extends BaseComponent {
   }
 
   renderHintContainer() {
-    const {visible, style, position, onBackgroundPress, ...others} = this.props;
+    const {style, ...others} = this.props;
     return (
       <View {...others} style={[styles.container, style, this.getContainerPosition()]} collapsable={false}>
         {this.renderHint()}
@@ -346,11 +386,13 @@ class Hint extends BaseComponent {
 
   renderChildren() {
     const {targetFrame} = this.props;
+
     if (!targetFrame) {
       return React.cloneElement(this.props.children, {
         collapsable: false,
         onLayout: this.onTargetLayout,
         ref: this.setTargetRef,
+        ...this.getAccessibilityInfo()
       });
     }
   }
@@ -358,7 +400,9 @@ class Hint extends BaseComponent {
   render() {
     const {visible, onBackgroundPress} = this.props;
 
-    if (!visible) return this.props.children;
+    if (!visible) {
+      return this.props.children;
+    }
 
     return (
       <React.Fragment>
@@ -389,36 +433,36 @@ const styles = StyleSheet.create({
     zIndex: 100,
     // This is a hack to make hint render correctly on Android
     borderWidth: 1,
-    borderColor: 'transparent',
+    borderColor: 'transparent'
   },
   // overlay: {
   //   position: 'absolute',
   //   width: Constants.screenWidth,
-  //   height: Constants.screenHeight,
+  //   height: Constants.screenHeight
   // },
-  hintContainer: {
-    position: 'absolute',
-    width: Constants.screenWidth,
+  animatedContainer: {
+    position: 'absolute'
   },
   hintTip: {
-    position: 'absolute',
+    position: 'absolute'
   },
   hint: {
+    maxWidth: 400,
     backgroundColor: DEFAULT_COLOR,
     paddingHorizontal: Spacings.s5,
     paddingTop: Spacings.s3,
     paddingBottom: Spacings.s4,
-    borderRadius: BorderRadiuses.br60,
+    borderRadius: BorderRadiuses.br60
   },
   hintMessage: {
     ...Typography.text70,
     color: Colors.white,
-    flexShrink: 1,
+    flexShrink: 1
   },
   icon: {
     marginRight: Spacings.s4,
-    tintColor: Colors.white,
-  },
+    tintColor: Colors.white
+  }
 });
 
 export default Hint;

@@ -14,13 +14,13 @@ import CardItem from './CardItem';
 import CardImage from './CardImage';
 import Assets from '../../assets';
 
-const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 
+const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 const DEFAULT_SELECTION_PROPS = {
   borderWidth: 2,
   color: Colors.blue30,
   indicatorSize: 20,
-  icon: Assets.icons.checkSmall,
+  icon: Assets.icons.checkSmall
 };
 
 /**
@@ -87,16 +87,16 @@ class Card extends PureBaseComponent {
       icon: PropTypes.number,
       color: PropTypes.string,
       borderWidth: PropTypes.number,
-      indicatorSize: PropTypes.number,
-    }),
+      indicatorSize: PropTypes.number
+    })
   };
 
   static defaultProps = {
-    enableShadow: true,
+    enableShadow: true
   };
 
   state = {
-    animatedSelected: new Animated.Value(Number(this.props.selected)),
+    animatedSelected: new Animated.Value(Number(this.props.selected))
   };
 
   componentDidUpdate(prevProps) {
@@ -111,7 +111,7 @@ class Card extends PureBaseComponent {
     Animated.timing(animatedSelected, {
       toValue: Number(selected),
       duration: 120,
-      useNativeDriver: true,
+      useNativeDriver: true
     }).start();
   }
 
@@ -124,7 +124,7 @@ class Card extends PureBaseComponent {
     return {
       blurType: 'light',
       blurAmount: 5,
-      ...blurOptions,
+      ...blurOptions
     };
   }
 
@@ -147,6 +147,7 @@ class Card extends PureBaseComponent {
 
   get elevationStyle() {
     const {elevation, enableShadow} = this.getThemeProps();
+    
     if (enableShadow) {
       return {elevation: elevation || 2};
     }
@@ -154,6 +155,7 @@ class Card extends PureBaseComponent {
 
   get shadowStyle() {
     const {enableShadow} = this.getThemeProps();
+    
     if (enableShadow) {
       return this.styles.containerShadow;
     }
@@ -161,6 +163,7 @@ class Card extends PureBaseComponent {
 
   get blurBgStyle() {
     const {enableBlur} = this.getThemeProps();
+    
     if (Constants.isIOS && enableBlur) {
       return {backgroundColor: Colors.rgba(Colors.white, 0.85)};
     } else {
@@ -168,9 +171,16 @@ class Card extends PureBaseComponent {
     }
   }
 
+  get borderRadius() {
+    const {borderRadius} = this.getThemeProps();
+    
+    return borderRadius === undefined ? DEFAULT_BORDER_RADIUS : borderRadius;
+  }
+
   renderSelection() {
-    const {selectionOptions, borderRadius, selected} = this.getThemeProps();
+    const {selectionOptions, selected} = this.getThemeProps();
     const {animatedSelected} = this.state;
+    const selectionColor = _.get(selectionOptions, 'color', DEFAULT_SELECTION_PROPS.color);
 
     if (_.isUndefined(selected)) {
       return null;
@@ -178,24 +188,28 @@ class Card extends PureBaseComponent {
 
     return (
       <Animated.View
-        style={[this.styles.selectedBorder, borderRadius && {borderRadius}, {opacity: animatedSelected}]}
+        style={[
+          this.styles.selectedBorder,
+          {borderColor: selectionColor},
+          {borderRadius: this.borderRadius},
+          {opacity: animatedSelected}
+        ]}
         pointerEvents="none"
       >
-        <View style={this.styles.selectedIndicator}>
-          <Image source={_.get(selectionOptions, 'icon', DEFAULT_SELECTION_PROPS.icon)} />
+        <View style={[this.styles.selectedIndicator, {backgroundColor: selectionColor}]}>
+          <Image source={_.get(selectionOptions, 'icon', DEFAULT_SELECTION_PROPS.icon)}/>
         </View>
       </Animated.View>
     );
   }
 
   renderChildren() {
-    const {borderRadius} = this.getThemeProps();
     const children = React.Children.map(this.props.children, (child, index) => {
       if (_.get(child, 'type.displayName') === CardImage.displayName) {
         const position = this.calcImagePosition(index);
         return React.cloneElement(child, {
           position,
-          borderRadius: borderRadius || DEFAULT_BORDER_RADIUS,
+          borderRadius: this.borderRadius
         });
       }
       return child;
@@ -204,10 +218,10 @@ class Card extends PureBaseComponent {
   }
 
   render() {
-    const {onPress, style, containerStyle, enableShadow, borderRadius, enableBlur, ...others} = this.getThemeProps();
+    const {onPress, style, containerStyle, enableBlur, ...others} = this.getThemeProps();
     const blurOptions = this.getBlurOptions();
     const Container = onPress ? TouchableOpacity : View;
-    const brRadius = borderRadius || DEFAULT_BORDER_RADIUS;
+    const brRadius = this.borderRadius;
 
     return (
       <Container
@@ -218,7 +232,7 @@ class Card extends PureBaseComponent {
           this.shadowStyle,
           this.blurBgStyle,
           containerStyle,
-          style,
+          style
         ]}
         onPress={onPress}
         delayPressIn={10}
@@ -227,7 +241,7 @@ class Card extends PureBaseComponent {
         ref={this.setRef}
       >
         {Constants.isIOS && enableBlur && (
-          <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions} />
+          <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions}/>
         )}
 
         {this.renderChildren()}
@@ -237,31 +251,33 @@ class Card extends PureBaseComponent {
   }
 }
 
-function createStyles({width, height, borderRadius = DEFAULT_BORDER_RADIUS, selectionOptions}) {
+function createStyles({width, height, borderRadius, selectionOptions}) {
   const selectionOptionsWithDefaults = _.merge(DEFAULT_SELECTION_PROPS, selectionOptions);
+  const brRadius = borderRadius === undefined ? DEFAULT_BORDER_RADIUS : borderRadius;
+
   return StyleSheet.create({
     container: {
       width,
       height,
       overflow: 'visible',
-      borderRadius,
+      borderRadius: brRadius
     },
     containerShadow: {
       // sh30 bottom
       shadowColor: Colors.dark40,
       shadowOpacity: 0.25,
       shadowRadius: 12,
-      shadowOffset: {height: 5, width: 0},
+      shadowOffset: {height: 5, width: 0}
     },
     blurView: {
       ...StyleSheet.absoluteFillObject,
-      borderRadius,
+      borderRadius: brRadius
     },
     selectedBorder: {
       ...StyleSheet.absoluteFillObject,
       borderRadius: DEFAULT_BORDER_RADIUS,
       borderWidth: selectionOptionsWithDefaults.borderWidth,
-      borderColor: selectionOptionsWithDefaults.color,
+      borderColor: selectionOptionsWithDefaults.color
     },
     selectedIndicator: {
       borderRadius: BorderRadiuses.br100,
@@ -272,8 +288,8 @@ function createStyles({width, height, borderRadius = DEFAULT_BORDER_RADIUS, sele
       height: selectionOptionsWithDefaults.indicatorSize,
       backgroundColor: selectionOptionsWithDefaults.color,
       alignItems: 'center',
-      justifyContent: 'center',
-    },
+      justifyContent: 'center'
+    }
   });
 }
 

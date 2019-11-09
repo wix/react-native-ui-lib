@@ -10,6 +10,8 @@ import {Colors} from '../../style';
  * @description: Animated progress bar
  * @gif:https://media.giphy.com/media/3o752o08oY0oCvOxR6/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/animationScreens/ProgressBarScreen.js
+ * @extends: AnimatedScanner
+ * @extendsLink: https://wix-private.github.io/wix-react-native-ui-lib/docs/public/AnimatedScanner/
  */
 export default class ProgressBar extends BaseComponent {
   static displayName = 'ProgressBar';
@@ -30,12 +32,12 @@ export default class ProgressBar extends BaseComponent {
     /**
      * the progress bar container style
      */
-    containerStyle: ViewPropTypes.style,
+    containerStyle: ViewPropTypes.style
   };
 
   static defaultProps = {
     backgroundColor: Colors.dark60,
-    progressBackgroundColor: Colors.dark10,
+    progressBackgroundColor: Colors.dark10
   };
 
   render() {

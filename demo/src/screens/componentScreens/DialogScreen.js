@@ -1,214 +1,335 @@
 import React, {Component} from 'react';
-import {Navigation} from 'react-native-navigation';
-import {Colors, View, Dialog, Button, Text} from 'react-native-ui-lib'; // eslint-disable-line
+import {FlatList, ScrollView, StyleSheet, Alert} from 'react-native';
+import {
+  Text,
+  View,
+  Button,
+  Dialog,
+  Colors,
+  PanningProvider,
+  RadioGroup,
+  RadioButton,
+  Switch,
+  Constants
+} from 'react-native-ui-lib'; // eslint-disable-line
 
-
-class DialogScreen extends Component {
+export default class DialogScreen extends Component {
   constructor(props) {
     super(props);
 
-    Navigation.events().bindComponent(this);
+    this.content = {};
+
+    this.SCROLL_TYPE = {
+      NONE: 'none',
+      VERTICAL: 'vertical',
+      HORIZONTAL: 'horizontal'
+    };
+
+    this.pannableTitle = {title: 'This is a pannable header Dialog'};
+    this.title = 'This is a Dialog';
+    this.supportedOrientations = ['portrait', 'landscape'];
+    this.colors = [
+      {value: Colors.red10, label: 'Red10'},
+      {value: Colors.red30, label: 'Red30'},
+      {value: Colors.red50, label: 'Red50'},
+      {value: Colors.red70, label: 'Red70'},
+      {value: Colors.blue10, label: 'Blue10'},
+      {value: Colors.blue30, label: 'Blue30'},
+      {value: Colors.blue50, label: 'Blue50'},
+      {value: Colors.blue70, label: 'Blue70'},
+      {value: Colors.purple10, label: 'Purple10'},
+      {value: Colors.purple30, label: 'Purple30'},
+      {value: Colors.purple50, label: 'Purple50'},
+      {value: Colors.purple70, label: 'Purple70'},
+      {value: Colors.green10, label: 'Green10'},
+      {value: Colors.green30, label: 'Green30'},
+      {value: Colors.green50, label: 'Green50'},
+      {value: Colors.green70, label: 'Green70'},
+      {value: Colors.yellow10, label: 'Yellow10'},
+      {value: Colors.yellow30, label: 'Yellow30'},
+      {value: Colors.yellow50, label: 'Yellow50'},
+      {value: Colors.yellow70, label: 'Yellow70'}
+    ];
 
     this.state = {
-      showDialog1: false,
-      showDialog2: false,
-      showDialog3: false,
-      showDialog4: false,
-      showDialog5: false,
-      showDialog6: false,
-      showDialog7: false,
-      showDialog8: false
+      panDirection: PanningProvider.Directions.DOWN,
+      position: 'bottom',
+      scroll: this.SCROLL_TYPE.NONE,
+      showHeader: true,
+      isRounded: true,
+      showDialog: false
     };
   }
 
-  showOverlay = async () => {
-    this.overlay = await Navigation.showOverlay({
-      component: {
-        name: 'unicorn.CustomScreen',
-        passProps: {
-          onDismiss: this.dismissOverlay
-        },
-        options: {
-          layout: {
-            backgroundColor: 'transparent'
-          },
-          overlay: {
-            interceptTouchOutside: false
-          }
-        }
-      }
-    });
-  }
-
-  dismissOverlay = () => {
-    Navigation.dismissOverlay(this.overlay);
+  titlePressed = ({title}) => {
+    Alert.alert('Pressed on', title);
   };
 
-  renderDialogContent(dialogIndex, extraProps) {
+  setPanDirection = panDirection => {
+    if (panDirection !== this.state.panDirection) {
+      this.setState({panDirection});
+    }
+  };
+
+  setPosition = position => {
+    if (position !== this.state.position) {
+      this.setState({position});
+    }
+  };
+
+  setScroll = scroll => {
+    if (scroll !== this.state.scroll) {
+      this.setState({scroll});
+    }
+  };
+
+  toggleShowHeader = () => {
+    this.setState({
+      showHeader: !this.state.showHeader
+    });
+  };
+
+  toggleIsRounded = () => {
+    this.setState({
+      isRounded: !this.state.isRounded
+    });
+  };
+
+  showDialog = () => {
+    this.setState({showDialog: true});
+  };
+
+  hideDialog = () => {
+    this.setState({showDialog: false});
+  };
+
+  getWarning = () => {
+    const {showHeader, scroll, panDirection} = this.state;
+    if (!showHeader && scroll !== this.SCROLL_TYPE.NONE) {
+      return <Text color={Colors.red30}>It is recommended to have pannable header with scrollable content</Text>;
+    } else if (showHeader && panDirection !== PanningProvider.Directions.DOWN) {
+      return <Text color={Colors.red30}>It is recommended to have pannable header with direction=down</Text>;
+    }
+  };
+
+  getMessage = () => {
+    const {panDirection, position, scroll} = this.state;
+
+    return `Panning direction: ${panDirection ? panDirection : 'none'}
+Position: ${position ? position : 'center'}
+Scroll: ${scroll}`;
+  };
+
+  renderPannableHeader = props => {
+    const {title} = props;
     return (
-      <View flex br20 padding-18 spread {...extraProps}>
-        <View height={100}>
-          <Text text50>This is Dialog</Text>
+      <View>
+        <View margin-20>
+          <Text>{title}</Text>
         </View>
-        <View right>
-          <Button text60 label="Done" link onPress={() => this.setState({[`showDialog${dialogIndex}`]: false})}/>
+        <View height={2} bg-dark70/>
+      </View>
+    );
+  };
+
+  renderPlainContent = () => {
+    return (
+      <View margin-20 right>
+        <Button text60 label="Done" link onPress={this.hideDialog}/>
+      </View>
+    );
+  };
+
+  keyExtractor = item => {
+    return item.value;
+  };
+
+  renderVerticalItem = ({item: color}) => {
+    return (
+      <Text text50 margin-20 color={color.value}>
+        {color.label}
+      </Text>
+    );
+  };
+
+  renderVerticalScroll = () => {
+    return (
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        style={styles.verticalScroll}
+        data={this.colors}
+        renderItem={this.renderVerticalItem}
+        keyExtractor={this.keyExtractor}
+      />
+    );
+  };
+
+  renderHorizontalItem = ({item: color}) => {
+    return <View flex width={100} height={1000} style={{backgroundColor: color.value}}/>;
+  };
+
+  renderHorizontalScroll = () => {
+    return (
+      <View marginT-20 pointerEvents="box-none">
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={this.colors}
+          renderItem={this.renderHorizontalItem}
+          keyExtractor={this.keyExtractor}
+        />
+        <View row pointerEvents="none" style={styles.horizontalTextContainer}>
+          <Text>
+            {'\u25c0'} Scroll me {'\u25b6'}
+          </Text>
         </View>
       </View>
     );
-  }
+  };
+
+  renderContent = () => {
+    const {scroll, showHeader} = this.state;
+    if (this.content[scroll + showHeader]) {
+      return this.content[scroll + showHeader];
+    }
+
+    let content;
+    switch (scroll) {
+      case this.SCROLL_TYPE.VERTICAL:
+        content = this.renderVerticalScroll();
+        break;
+      case this.SCROLL_TYPE.HORIZONTAL:
+        content = this.renderHorizontalScroll();
+        break;
+      case this.SCROLL_TYPE.NONE:
+      default:
+        content = this.renderPlainContent();
+        break;
+    }
+
+    const data = (
+      <View spread flex={scroll !== this.SCROLL_TYPE.NONE}>
+        <View marginT-20 marginH-20>
+          {!showHeader && <Text text50>{this.title}</Text>}
+          <Text marginT-20={!showHeader}>{this.getMessage()}</Text>
+          {this.getWarning()}
+        </View>
+        {content}
+      </View>
+    );
+
+    this.content[scroll + showHeader] = data;
+    return data;
+  };
+
+  getDialogKey = height => {
+    const {position} = this.state;
+    return `dialog-key-${position}-${height}`;
+  };
+
+  renderDialog = () => {
+    const {showDialog, panDirection, position, scroll, showHeader, isRounded} = this.state;
+    const renderPannableHeader = showHeader ? this.renderPannableHeader : undefined;
+    const height = scroll !== this.SCROLL_TYPE.NONE ? '70%' : undefined;
+
+    return (
+      <Dialog
+        migrate
+        useSafeArea
+        key={this.getDialogKey(height)}
+        top={position === 'top'}
+        bottom={position === 'bottom'}
+        height={height}
+        panDirection={panDirection}
+        containerStyle={isRounded ? styles.roundedDialog : styles.dialog}
+        visible={showDialog}
+        onDismiss={this.hideDialog}
+        renderPannableHeader={renderPannableHeader}
+        pannableHeaderProps={this.pannableTitle}
+        supportedOrientations={this.supportedOrientations}
+      >
+        {this.renderContent()}
+      </Dialog>
+    );
+  };
 
   render() {
-    const {showDialog1, showDialog2, showDialog3, showDialog4, showDialog5, showDialog6, showDialog7, showDialog8} = this.state;
-    
-    return (
-      <View flex bg-dark80 padding-12 center>
-        <Button
-          size={'small'}
-          label="show default dialog in center"
-          onPress={() => this.setState({showDialog1: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show bottom dialog"
-          onPress={() => this.setState({showDialog2: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show bottom dialog with padding"
-          onPress={() => this.setState({showDialog3: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show top dialog different animation"
-          onPress={() => this.setState({showDialog4: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show dialog with height based on content "
-          onPress={() => this.setState({showDialog5: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show dialog with animation configuration"
-          onPress={() => this.setState({showDialog6: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show dialog with disabled pan gesture"
-          onPress={() => this.setState({showDialog7: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show dialog without a modal"
-          onPress={() => this.setState({showDialog8: true})}
-        />
-        <Button
-          marginT-20
-          size={'small'}
-          label="show dialog in RNN overlay"
-          onPress={(this.showOverlay)}
-        />
+    const {panDirection, position, scroll, showHeader, isRounded} = this.state;
 
-        <Dialog
-          visible={showDialog1}
-          width="90%"
-          height="60%"
-          onDismiss={() => this.setState({showDialog1: false})}
-          style={{backgroundColor: Colors.white}}
-        >
-          {this.renderDialogContent(1)}
-        </Dialog>
-        <Dialog
-          visible={showDialog2}
-          width="100%"
-          height="35%"
-          bottom
-          useSafeArea
-          centerH
-          onDismiss={() => this.setState({showDialog2: false})}
-          style={{backgroundColor: Colors.white}}
-        >
-          {this.renderDialogContent(2, {br0: true})}
-        </Dialog>
-        <Dialog
-          visible={showDialog3}
-          width="90%"
-          height="60%"
-          bottom
-          useSafeArea
-          centerH
-          onDismiss={() => this.setState({showDialog3: false})}
-        >
-          {this.renderDialogContent(3, {'marginV-20': true, 'bg-white': true})}
-        </Dialog>
-        <Dialog
-          visible={showDialog4}
-          height="40%"
-          width="100%"
-          top
-          centerH
-          onDismiss={() => this.setState({showDialog4: false})}
-          style={{backgroundColor: Colors.white}}
-        >
-          {this.renderDialogContent(4, {br0: true})}
-        </Dialog>
-        <Dialog
-          visible={showDialog5}
-          width="100%"
-          height={null}
-          bottom
-          useSafeArea
-          centerH
-          onDismiss={() => this.setState({showDialog5: false})}
-          style={{backgroundColor: Colors.white}}
-        >
-          {this.renderDialogContent(5, {flex: false})}
-        </Dialog>
-        <Dialog
-          visible={showDialog6}
-          width="80%"
-          height="40%"
-          bottom
-          useSafeArea
-          centerH
-          onDismiss={() => this.setState({showDialog6: false})}
-          animationConfig={{animation: 'slideInLeft', duration: 1000}}
-        >
-          {this.renderDialogContent(6, {'marginV-20': true, 'bg-yellow60': true})}
-        </Dialog>
-        <Dialog
-          visible={showDialog7}
-          width="80%"
-          height="40%"
-          onDismiss={() => this.setState({showDialog7: false})}
-          style={{backgroundColor: Colors.white}}
-          disablePan
-        >
-          {this.renderDialogContent(7)}
-        </Dialog>
-        {showDialog8 && 
-        <Dialog
-          visible={showDialog8}
-          height="40%"
-          width="100%"
-          top
-          centerH
-          onDismiss={() => this.setState({showDialog8: false})}
-          style={{backgroundColor: Colors.white}}
-          useModal={false}
-        >
-          {this.renderDialogContent(8)}
-        </Dialog>}
-      </View>
+    return (
+      <ScrollView>
+        <View flex padding-12>
+          <Text text30 dark10 marginB-20>
+            Dialog
+          </Text>
+
+          <RadioGroup marginT-20 initialValue={panDirection} onValueChange={this.setPanDirection}>
+            <Text>Panning Direction:</Text>
+            <View row marginV-10>
+              <RadioButton value={null} label={'None'}/>
+              <RadioButton value={PanningProvider.Directions.UP} label={'Up'} marginL-10/>
+              <RadioButton value={PanningProvider.Directions.DOWN} label={'Down'} marginL-10/>
+              <RadioButton value={PanningProvider.Directions.LEFT} label={'Left'} marginL-10/>
+              <RadioButton value={PanningProvider.Directions.RIGHT} label={'Right'} marginL-10/>
+            </View>
+          </RadioGroup>
+
+          <RadioGroup marginT-20 initialValue={position} onValueChange={this.setPosition}>
+            <Text>Position:</Text>
+            <View row marginV-10>
+              <RadioButton value={'top'} label={'Top'}/>
+              <RadioButton value={null} label={'Center'} marginL-10/>
+              <RadioButton value={'bottom'} label={'Bottom'} marginL-10/>
+            </View>
+          </RadioGroup>
+
+          <RadioGroup marginT-20 initialValue={scroll} onValueChange={this.setScroll}>
+            <Text>Scroll:</Text>
+            <View row marginV-10>
+              <RadioButton value={this.SCROLL_TYPE.NONE} label={'None'}/>
+              <RadioButton value={this.SCROLL_TYPE.VERTICAL} label={'Vertical'} marginL-10/>
+              <RadioButton value={this.SCROLL_TYPE.HORIZONTAL} label={'Horizontal'} marginL-10/>
+            </View>
+          </RadioGroup>
+
+          <View row marginT-20 centerV>
+            <Text>Toggle pannable header:</Text>
+            <Switch value={showHeader} onValueChange={this.toggleShowHeader} marginL-10/>
+          </View>
+
+          <View row marginT-20 centerV>
+            <Text>Add some style:</Text>
+            <Switch value={isRounded} onValueChange={this.toggleIsRounded} marginL-10/>
+          </View>
+
+          <Button marginT-50 label={'Show dialog'} onPress={this.showDialog}/>
+
+          {this.renderDialog()}
+        </View>
+      </ScrollView>
     );
   }
 }
 
-export default DialogScreen;
+const styles = StyleSheet.create({
+  dialog: {
+    backgroundColor: Colors.white
+  },
+  roundedDialog: {
+    backgroundColor: Colors.white,
+    marginBottom: Constants.isIphoneX ? 0 : 20,
+    borderRadius: 12
+  },
+  button: {
+    margin: 5,
+    alignSelf: 'flex-start'
+  },
+  verticalScroll: {
+    marginTop: 20
+  },
+  horizontalTextContainer: {
+    alignSelf: 'center',
+    position: 'absolute',
+    top: 10
+  }
+});

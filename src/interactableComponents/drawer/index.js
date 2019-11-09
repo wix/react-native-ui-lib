@@ -1,49 +1,55 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Animated, View, TouchableOpacity, TouchableHighlight} from 'react-native';
-import Interactable from 'react-native-interactable';
+import {Animated, StyleSheet, ViewPropTypes} from 'react-native';
+import {RectButton} from 'react-native-gesture-handler';
 import {PureBaseComponent} from '../../commons';
-import {screenWidth} from '../../helpers/Constants';
-import {Colors, Typography} from '../../style';
-import NewDrawer from './newDrawer';
+import {Constants} from '../../helpers';
+import {Colors} from '../../style';
+import View from '../../components/view';
+import Swipeable from './Swipeable';
+import OldDrawer from './drawer.deprecated';
 
-
-const SCALE_POINT = 72; // scaling content style by height
-const MIN_LEFT_MARGIN = 56;
-const DEFAULT_ICON_SIZE = 24;
-const MIN_ITEM_WIDTH = 43; // NOTE: this is the min for the input ranges calc!
-const ITEM_BG = Colors.blue30;
-const ITEM_PADDING = 12;
-const BLEED = 15;
+const deprecatedProps = ['damping', 'tension', 'onPress', 'equalWidths'];
+const DEFAULT_BG = Colors.blue30;
 const ITEM_PROP_TYPES = {
   width: PropTypes.number,
   background: PropTypes.string,
   text: PropTypes.string,
   icon: PropTypes.number,
   onPress: PropTypes.func,
+  keepOpen: PropTypes.bool,
+  style: ViewPropTypes.style,
+  testID: PropTypes.string
 };
 
 /**
- * @description: Interactable Drawer component
- * @extendslink:
+ * @description: Drawer Component
+ * @important: If your app works with RNN, your screen must be wrapped
+ * with gestureHandlerRootHOC from 'react-native-gesture-handler'. see
+ * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
-export default class Drawer extends PureBaseComponent {
+class NewDrawer extends PureBaseComponent {
   static displayName = 'Drawer';
 
   static propTypes = {
+    ...Swipeable.PropTypes,
     /**
-     * The drawer top layer's damping
+     * The drawer top layer's damping - DEPRECATED
      */
     damping: PropTypes.number,
     /**
-     * The drawer top layer's tention
+     * The drawer top layer's tension - DEPRECATED
      */
     tension: PropTypes.number,
     /**
-     * Press handler
+     * Press handler - DEPRECATED
      */
     onPress: PropTypes.func,
+    /**
+     * The drawer animation bounciness
+     */
+    bounciness: PropTypes.number,
     /**
      * OnDragStart handler
      */
@@ -57,9 +63,13 @@ export default class Drawer extends PureBaseComponent {
      */
     leftItem: PropTypes.shape(ITEM_PROP_TYPES),
     /**
-     * Whether to give the items equal width (the max width)
+     * Whether to give the items equal width (the max width) - DEPRECATED
      */
     equalWidths: PropTypes.bool,
+    /**
+     * Set a different minimum width
+     */
+    itemsMinWidth: PropTypes.number,
     /**
      * The color for the text and icon tint of the items
      */
@@ -75,481 +85,269 @@ export default class Drawer extends PureBaseComponent {
     /**
      * Perform the animation in natively
      */
-    useNativeAnimations: PropTypes.bool,
+    useNativeAnimations: PropTypes.bool
   };
 
   static defaultProps = {
-    damping: 0.7,
-    tension: 300,
     itemsTintColor: Colors.white,
-    itemsIconSize: DEFAULT_ICON_SIZE,
+    itemsIconSize: 24
   };
 
   constructor(props) {
     super(props);
 
-    this.deltaX = new Animated.Value(0);
-    this.drawer = React.createRef();
+    this._swipeableRow = React.createRef();
+    this._oldDrawer = React.createRef();
+    this.animationOptions = {bounciness: props.bounciness || 5};
 
-    this.state = {
-      inMotion: false,
-      position: 1,
-      width: screenWidth,
-    };
+    this.rightActionsContainerStyle = this.getRightActionsContainerStyle();
+    this.leftActionsContainerStyle = this.getLeftActionsContainerStyle();
+
+    this.leftRender = props.leftItem ? (Constants.isRTL ? this.renderRightActions : this.renderLeftActions) : undefined;
+    this.rightRender = props.rightItems
+      ? Constants.isRTL
+        ? this.renderLeftActions
+        : this.renderRightActions
+      : undefined;
+
+    // TODO: deprecate when removing old drawer version
+    // this.checkDeprecations(props);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (JSON.stringify(this.props.leftItem) !== JSON.stringify(nextProps.leftItem) ||
-    JSON.stringify(this.props.rightItems) !== JSON.stringify(nextProps.rightItems)) {
-      this.closeDrawer();
+  /** Actions */
+
+  checkDeprecations(props) {
+    if (props.onPress !== undefined) {
+      console.warn('Drawer\'s \'onPress\' prop is deprecated. ' +
+          'For items, send \'onPress\' handler in the item\'s object and for content use your own.',);
     }
-  }
 
-  onAlert = ({nativeEvent}) => {
-    const event = JSON.stringify(nativeEvent);
-
-    if (event.includes('"first":"leave"')) {
-      this.interactableElem.snapTo({index: 2});
-    }
-    if (event.includes('"second":"enter"')) {
-      this.interactableElem.snapTo({index: 1});
-    }
-  }
-  onSnap = ({nativeEvent}) => {
-    const {index} = nativeEvent;
-    const {position} = this.state;
-    if (index !== position) {
-      this.setState({position: index});
-    }
-  }
-  onDrag = ({nativeEvent}) => {
-    const {state} = nativeEvent;
-    if (state === 'start') {
-      this.setState({inMotion: true});
-      _.invoke(this.props, 'onDragStart');
-    }
-  }
-  onStop = () => {
-    const {inMotion} = this.state;
-    if (inMotion) {
-      this.setState({inMotion: false});
-    }
-  }
-  onPress = () => {
-    this.closeDrawer();
-    setTimeout(() => {
-      _.invoke(this.props, 'onPress');
-    }, 0);
-  }
-
-  closeDrawer() {
-    // const {inMotion, position} = this.state;
-    // if (!inMotion && position !== 1) {
-    //   this.interactableElem.snapTo({index: 1});
-    // }
-    if (this.props.migrate) {
-      this.drawer.current.closeDrawer();
-    } else {
-      this.interactableElem.snapTo({index: 1});
-    }
-  }
-  generateStyles() {
-    this.styles = createStyles(this.getThemeProps());
-  }
-  getAnimationConfig() {
-    const {animationConfig} = this.getThemeProps();
-    return {
-      useNativeDriver: true,
-      ...animationConfig,
-    };
-  }
-
-  getMaxItemWidth() {
-    const {rightItems} = this.props;
-    const {width} = this.state;
-    return rightItems ? (width - MIN_LEFT_MARGIN) / rightItems.length : (width - MIN_LEFT_MARGIN);
-  }
-  getMinItemWidth() {
-    const {equalWidths} = this.getThemeProps();
-    const maxWidth = this.getMaxItemWidth();
-    const minWidth = equalWidths ? maxWidth : MIN_ITEM_WIDTH;
-    return (minWidth > maxWidth) ? maxWidth : minWidth;
-  }
-  getRightItemsTotalWidth(numberOfItems) {
-    const {rightItems} = this.getThemeProps();
-    let total = 0;
-
-    if (_.size(rightItems) > 0) {
-      const items = rightItems.reverse();
-      const size = numberOfItems && numberOfItems >= 0 ? numberOfItems : items.length;
-
-      for (let i = 0; i < size; i++) {
-        total += this.getItemWidth(items[i]);
+    deprecatedProps.forEach(prop => {
+      if (props[prop]) {
+        console.warn(`"Drawer's ${prop}" property is deprecated.`);
       }
+    });
+  }
+
+  getLeftActionsContainerStyle() {
+    const {rightItems, leftItem} = this.getThemeProps();
+    return this.getActionsContainerStyle(Constants.isRTL ? rightItems : [leftItem]);
+  }
+
+  getRightActionsContainerStyle() {
+    const {rightItems, leftItem} = this.getThemeProps();
+    return this.getActionsContainerStyle(Constants.isRTL ? [leftItem] : rightItems);
+  }
+
+  getActionsContainerStyle(items) {
+    return {backgroundColor: _.get(_.first(items), 'background', DEFAULT_BG)};
+  }
+
+  closeDrawer = () => {
+    if (this.props.migrate) {
+      this._swipeableRow.current.close();
+    } else {
+      this._oldDrawer.current.closeDrawer();
     }
-    return total;
-  }
-  getItemWidth(item) {
-    let width = this.getMinItemWidth();
-    if (item && item.width) {
-      width = Math.max(item.width, width);
-      width = Math.min(width, this.getMaxItemWidth());
-    }
-    return width;
-  }
-
-  getBoundaries() {
-    const {leftItem, rightItems, equalWidths} = this.getThemeProps();
-    const leftSpring = 80;
-    const leftBound = this.getItemWidth(leftItem) + leftSpring;
-    const rightSpring = equalWidths ? 0 : 30;
-    const rightWidth = this.getRightItemsTotalWidth();
-    const rightBound = rightWidth > 0 ? -rightWidth - rightSpring : 0;
-
-    return {
-      right: _.isEmpty(leftItem) ? 0 : leftBound, left: _.isEmpty(rightItems) ? 0 : rightBound};
-  }
-  getSnapPoints() {
-    const {leftItem, rightItems, damping, tension} = this.getThemeProps();
-    const size = rightItems ? rightItems.length : 0;
-
-    const left = !_.isEmpty(leftItem) ? {x: this.getItemWidth(leftItem), damping, tension} : {};
-    const initial = {x: 0, damping, tension};
-    const last = rightItems && !_.isEmpty(rightItems[0]) ?
-      {x: -(this.getRightItemsTotalWidth()), damping, tension} : {};
-
-    switch (size) {
-      case 0:
-        return [left, initial];
-      default:
-        return [left, initial, last];
-    }
-  }
-  getAlertAreas() {
-    const {rightItems} = this.props;
-    const size = rightItems ? rightItems.length : 0;
-
-    const first = {id: 'first', influenceArea: {left: -(this.getRightItemsTotalWidth(1))}};
-    const second = {id: 'second', influenceArea: {left: -(this.getRightItemsTotalWidth(size - 1))}};
-
-    switch (size) {
-      case 0:
-      case 1:
-        return [];
-      case 2:
-        return [first];
-      default:
-        return [first, second];
-    }
-  }
-  getInputRanges() {
-    const {rightItems} = this.getThemeProps();
-    const size = rightItems ? rightItems.length : 0;
-    const interval = 65;
-    const inputRanges = [];
-
-    for (let i = 0; i < size; i++) {
-      const itemWidth = this.getItemWidth(rightItems[i]);
-      const end = itemWidth - (size * BLEED);
-      const max = -(end + (interval * i));
-      const min = -(itemWidth * (i + 1));
-      inputRanges.push([min, max]);
-    }
-    return inputRanges.reverse();
-  }
-
-  onLayout = (event) => {
-    const {width, height} = event.nativeEvent.layout;
-
-    const typography = height >= SCALE_POINT ? Typography.text70 : Typography.text80;
-    const textTopMargin = height > SCALE_POINT ? 8 : 0;
-    const itemPadding = height >= SCALE_POINT ? ITEM_PADDING : 8;
-
-    this.setState({width, height, typography, textTopMargin, itemPadding});
   };
 
-  renderLeftItem() {
-    const {leftItem, itemsTintColor, itemsIconSize, itemsTextStyle} = this.getThemeProps();
-    const {height, typography, textTopMargin} = this.state;
-    const leftItemWidth = this.getItemWidth(leftItem);
-    const background = (leftItem ? leftItem.background : undefined) || ITEM_BG;
-    const onLeftPress = leftItem ? leftItem.onPress : undefined;
+  /** Events */
 
-    return (
-      <View
-        style={this.styles.leftItemContainer}
-        pointerEvents={'box-none'}
-      >
-        <Animated.View
-          style={{
-            backgroundColor: background,
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            transform: [{
-              translateX: this.deltaX.interpolate({
-                inputRange: [0, leftItemWidth],
-                outputRange: [-leftItemWidth, 0],
-                extrapolateRight: 'clamp',
-              }),
-            }],
-          }}
-          {...this.getAnimationConfig()}
-        >
-          <TouchableHighlight
-            onPress={onLeftPress}
-            underlayColor={Colors.rgba(Colors.white, 0.3)}
-          >
-            <View
-              style={{
-                height,
-                width: leftItemWidth,
-                padding: ITEM_PADDING,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              {leftItem && leftItem.icon &&
-              <Animated.Image
-                source={leftItem.icon}
-                style={
-                [{
-                  tintColor: itemsTintColor,
-                  width: itemsIconSize,
-                  height: itemsIconSize,
-                  opacity: this.deltaX.interpolate({
-                    inputRange: [leftItemWidth - BLEED, leftItemWidth],
-                    outputRange: [0, 1],
-                    extrapolateLeft: 'clamp',
-                    extrapolateRight: 'clamp',
-                  }),
-                  transform: [{
-                    scale: this.deltaX.interpolate({
-                      inputRange: [leftItemWidth - BLEED, leftItemWidth],
-                      outputRange: [0.7, 1],
-                      extrapolateLeft: 'clamp',
-                      extrapolateRight: 'clamp',
-                    }),
-                  }],
-                },
-                ]}
-                {...this.getAnimationConfig()}
-              />}
-              {leftItem && leftItem.text &&
-              <Animated.Text
-                numberOfLines={1}
-                style={
-                [{
-                  color: itemsTintColor,
-                  ...typography,
-                  ...itemsTextStyle,
-                  marginTop: textTopMargin,
-                  opacity: this.deltaX.interpolate({
-                    inputRange: [leftItemWidth - BLEED, leftItemWidth],
-                    outputRange: [0, 1],
-                    extrapolateLeft: 'clamp',
-                    extrapolateRight: 'clamp',
-                  }),
-                  transform: [{
-                    scale: this.deltaX.interpolate({
-                      inputRange: [leftItemWidth - BLEED, leftItemWidth],
-                      outputRange: [0.7, 1],
-                      extrapolateLeft: 'clamp',
-                      extrapolateRight: 'clamp',
-                    }),
-                  }],
-                },
-                ]}
-                {...this.getAnimationConfig()}
-              >
-                {leftItem.text}
-              </Animated.Text>}
-            </View>
-          </TouchableHighlight>
-        </Animated.View>
-      </View>
-    );
+  onActionPress(item) {
+    if (!item.keepOpen) {
+      this.closeDrawer();
+    }
+    _.invoke(item, 'onPress');
   }
-  renderGhostButton = (item, index) => {
-    return (
-      <TouchableHighlight
-        key={index}
-        style={[
-          this.styles.item, {
-            width: this.getItemWidth(item),
-            backgroundColor: Colors.rgba(Colors.white, 0)
-          },
-        ]}
-        onPress={item.onPress}
-        underlayColor={Colors.rgba(Colors.white, 0.3)}
-      >
-        <View/>
-      </TouchableHighlight>
-    );
-  }
-  renderRightItem(item, index) {
-    if (!item) return;
-    const {itemsTintColor, itemsIconSize, itemsTextStyle} = this.getThemeProps();
-    const {itemPadding, typography, textTopMargin} = this.state;
-    const inputRanges = this.getInputRanges();
 
-    return (
-      <View
-        key={index}
-        style={[
-          this.styles.item, {
-            width: this.getItemWidth(item),
-            backgroundColor: item.background || ITEM_BG,
-            padding: itemPadding,
-          },
-        ]}
-      >
-        {item.icon &&
-        <Animated.Image
-          source={item.icon}
-          style={
-          [{
-            tintColor: itemsTintColor,
-            width: itemsIconSize,
-            height: itemsIconSize,
-            opacity: this.deltaX.interpolate({
-              inputRange: inputRanges[index],
-              outputRange: [1, 0],
-              extrapolateLeft: 'clamp',
-              extrapolateRight: 'clamp',
-            }),
-            transform: [{
-              scale: this.deltaX.interpolate({
-                inputRange: inputRanges[index],
-                outputRange: [1, 0.7],
-                extrapolateLeft: 'clamp',
-                extrapolateRight: 'clamp',
-              }),
-            }],
-          },
-          ]}
-          {...this.getAnimationConfig()}
-        />}
-        {item.text &&
-        <Animated.Text
-          numberOfLines={1}
-          style={
-          [{
-            color: itemsTintColor,
-            ...typography,
-            ...itemsTextStyle,
-            marginTop: textTopMargin,
-            opacity: this.deltaX.interpolate({
-              inputRange: inputRanges[index],
-              outputRange: [1, 0],
-              extrapolateLeft: 'clamp',
-              extrapolateRight: 'clamp',
-            }),
-            transform: [{
-              scale: this.deltaX.interpolate({
-                inputRange: inputRanges[index],
-                outputRange: [1, 0.7],
-                extrapolateLeft: 'clamp',
-                extrapolateRight: 'clamp',
-              }),
-            }],
-          },
-          ]}
-          {...this.getAnimationConfig()}
-        >
-          {item.text}
-        </Animated.Text>}
-      </View>
-    );
+  onSwipeableWillOpen = () => {
+    _.invoke(this.props, 'onSwipeableWillOpen', this.props);
+  };
+
+  onSwipeableWillClose = () => {
+    _.invoke(this.props, 'onSwipeableWillClose', this.props);
+  };
+
+  /** Accessability */
+
+  getAccessibilityActions() {
+    const {rightItems, leftItem} = this.props;
+    const actions = {};
+    if (leftItem && leftItem.onPress && leftItem.text) {
+      actions[leftItem.text] = leftItem;
+    }
+    if (rightItems) {
+      rightItems.forEach(item => {
+        if (item.onPress && item.text) {
+          actions[item.text] = item;
+        }
+      });
+    }
+    return actions;
   }
-  renderRightItems() {
+
+  onAccessibilityAction = event => {
+    const actions = this.getAccessibilityActions();
+    const action = _.find(actions, (o) => {
+      return o.text === event.nativeEvent.action;
+    });
+    _.invoke(action, 'onPress');
+  };
+
+  /** Renders */
+
+  // TODO: enable support for rendering more than one left item
+  renderLeftActions = (progress, dragX) => {
+    const {leftItem} = this.getThemeProps();
+    const leftItems = leftItem ? [leftItem] : undefined;
+    return this.renderActions(leftItems, progress, dragX);
+  };
+
+  renderRightActions = (progress, dragX) => {
     const {rightItems} = this.getThemeProps();
+    return this.renderActions(rightItems, progress, dragX);
+  };
+
+  renderActions(items, progress, dragX) {
+    if (items) {
+      return (
+        <View row>
+          {_.map(items, (item, index) => {
+            return this.renderAction({
+              item,
+              index: items.length - index - 1,
+              progress,
+              dragX,
+              itemsCount: items.length
+            });
+          })}
+        </View>
+      );
+    }
+  }
+
+  renderAction = ({item, index, progress, itemsCount}) => {
+    const {itemsTintColor, itemsIconSize, itemsTextStyle, itemsMinWidth} = this.getThemeProps();
+    const inputRange = [index / itemsCount, (index + 1) / itemsCount];
+    const outputRange = [0.2, 1];
+
+    const scale = progress.interpolate({
+      inputRange,
+      outputRange,
+      extrapolate: 'clamp'
+    });
+
+    const opacity = progress.interpolate({
+      inputRange,
+      outputRange,
+      extrapolate: 'clamp'
+    });
 
     return (
-      <View style={this.styles.rightItemsContainer}>
-        {_.map(rightItems, (item, index) => { return this.renderRightItem(item, index); })}
-      </View>
+      <RectButton
+        key={index}
+        testID={item.testID}
+        style={[
+          styles.action,
+          item.style,
+          {backgroundColor: item.background || DEFAULT_BG},
+          {width: item.width},
+          {minWidth: itemsMinWidth}
+        ]}
+        onPress={() => this.onActionPress(item)}
+      >
+        {item.icon && (
+          <Animated.Image
+            source={item.icon}
+            style={[
+              styles.actionIcon,
+              {
+                width: itemsIconSize,
+                height: itemsIconSize,
+                tintColor: itemsTintColor,
+                opacity,
+                transform: [{scale}]
+              }
+            ]}
+          />
+        )}
+        {item.text && (
+          <Animated.Text
+            style={[
+              styles.actionText,
+              {
+                color: itemsTintColor,
+                opacity,
+                transform: [{scale}]
+              },
+              itemsTextStyle
+            ]}
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+            accessible={false}
+          >
+            {item.text}
+          </Animated.Text>
+        )}
+      </RectButton>
     );
-  }
-  render() {
-    const {migrate} = this.getThemeProps();
+  };
 
-    if (migrate) {
-      return <NewDrawer ref={this.drawer} {...this.getThemeProps()} />;
+  render() {
+    const {migrate, children, style, ...others} = this.getThemeProps();
+
+    if (!migrate) {
+      return <OldDrawer {...this.getThemeProps()} ref={this._oldDrawer}/>;
     }
 
-    const {style, onPress, rightItems} = this.getThemeProps();
-    const Container = onPress ? TouchableOpacity : View;
-    const backgroundColor = _.get(rightItems, '[0].background', ITEM_BG);
-    const containerWidth = this.state.width || screenWidth;
-
     return (
-      <View style={[style, this.styles.container, {backgroundColor}]} onLayout={this.onLayout}>
-        {rightItems && this.renderRightItems()}
-        {this.renderLeftItem()}
-
-        <Interactable.View
-          ref={el => (this.interactableElem = el)}
-          horizontalOnly
-          boundaries={this.getBoundaries()}
-          snapPoints={this.getSnapPoints()}
-          alertAreas={this.getAlertAreas()}
-          onAlert={this.onAlert}
-          onSnap={this.onSnap}
-          onDrag={this.onDrag}
-          onStop={this.onStop}
-          dragToss={0.01}
-          animatedValueX={this.deltaX}
-          style={[this.styles.interactable, {width: containerWidth * 2}]}
+      <Swipeable
+        {...others}
+        ref={this._swipeableRow}
+        friction={1}
+        containerStyle={style}
+        animationOptions={this.animationOptions}
+        renderLeftActions={this.leftRender}
+        renderRightActions={this.rightRender}
+        rightActionsContainerStyle={this.rightActionsContainerStyle}
+        leftActionsContainerStyle={this.leftActionsContainerStyle}
+        onSwipeableWillOpen={this.onSwipeableWillOpen}
+        onSwipeableWillClose={this.onSwipeableWillClose}
+      >
+        <View
+          flex
+          accessible
+          accessibilityActions={Object.keys(this.getAccessibilityActions())}
+          onAccessibilityAction={this.onAccessibilityAction}
+          {...this.extractAccessibilityProps()}
         >
-          <View style={{backgroundColor: Colors.white}}>
-            <Container
-              style={[this.styles.childrenContainer, {width: containerWidth}]}
-              activeOpacity={0.7}
-              onPress={this.onPress}
-            >
-              {this.props.children}
-            </Container>
-          </View>
-          {rightItems &&
-            <View style={{width: containerWidth, flexDirection: 'row'}}>
-              {_.map(rightItems, this.renderGhostButton)}
-            </View>
-          }
-        </Interactable.View>
-      </View>
+          {children}
+        </View>
+      </Swipeable>
     );
   }
 }
 
-function createStyles() {
-  return StyleSheet.create({
-    container: {
-      overflow: 'hidden'
-    },
-    interactable: {
-      flexDirection: 'row',
-      backgroundColor: 'transparent'
-    },
-    childrenContainer: {
-      left: 0,
-      right: 0
-    },
-    rightItemsContainer: {
-      position: 'absolute',
-      right: 0,
-      height: '100%',
-      flexDirection: 'row'
-    },
-    leftItemContainer: {
-      position: 'absolute',
-      left: 0,
-      right: 100,
-      flexDirection: 'row'
-    },
-    item: {
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-  });
-}
+export default NewDrawer;
+
+const styles = StyleSheet.create({
+  leftAction: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: /* Constants.isRTL ? 'flex-end' :  */ 'flex-start',
+    backgroundColor: '#388e3c'
+  },
+  actionIcon: {
+    width: 30,
+    marginHorizontal: 10
+  },
+  actionText: {
+    color: '#ffffff'
+  },
+  action: {
+    paddingHorizontal: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#dd2c00'
+  }
+});

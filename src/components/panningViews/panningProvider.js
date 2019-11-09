@@ -5,10 +5,14 @@ const DIRECTIONS = {
   UP: 'up',
   DOWN: 'down',
   LEFT: 'left',
-  RIGHT: 'right',
+  RIGHT: 'right'
 };
 
+/**
+ * @description: Wraps the panResponderView and panListenerView to provide a shared context
+ */
 export default class PanningProvider extends Component {
+  static displayName = 'PanningProvider';
   static Directions = DIRECTIONS;
 
   constructor(props) {
@@ -21,11 +25,20 @@ export default class PanningProvider extends Component {
       dragDeltas: {},
       swipeDirections: {},
       swipeVelocities: {},
+      panLocation: {}
     };
   }
 
   getProviderContextValue = () => {
-    const {isPanning, wasTerminated, dragDirections, dragDeltas, swipeDirections, swipeVelocities} = this.state;
+    const {
+      isPanning,
+      wasTerminated,
+      dragDirections,
+      dragDeltas,
+      swipeDirections,
+      swipeVelocities,
+      panLocation
+    } = this.state;
 
     return {
       onPanStart: this.onPanStart,
@@ -39,6 +52,8 @@ export default class PanningProvider extends Component {
       onSwipe: this.onSwipe,
       swipeDirections,
       swipeVelocities,
+      onPanLocationChanged: this.onPanLocationChanged,
+      panLocation
     };
   };
 
@@ -55,11 +70,15 @@ export default class PanningProvider extends Component {
   };
 
   onDrag = ({directions, deltas}) => {
-    this.setState({dragDirections: directions, dragDeltas: deltas});
+    this.setState({dragDirections: directions, dragDeltas: deltas, swipeDirections: {}, swipeVelocities: {}});
   };
 
   onSwipe = ({directions, velocities}) => {
-    this.setState({swipeDirections: directions, swipeVelocities: velocities});
+    this.setState({swipeDirections: directions, swipeVelocities: velocities, dragDirections: {}, dragDeltas: {}});
+  };
+
+  onPanLocationChanged = location => {
+    this.setState({panLocation: location});
   };
 
   render() {

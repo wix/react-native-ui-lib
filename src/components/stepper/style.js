@@ -8,7 +8,7 @@ export default function createStyles() {
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'center'
       // paddingLeft: Constants.isIOS ? 16 : undefined,
       // paddingRight: Constants.isIOS ? 16 : undefined,
     },
@@ -18,40 +18,39 @@ export default function createStyles() {
       borderWidth: 1,
       borderColor: separatorColor,
       width: Constants.isIOS ? 100 : 98,
-      height: Constants.isIOS ? 42 : 35,
+      height: Constants.isIOS ? 42 : 35
     },
     button: {
       flex: 0.5,
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
     title: {
       justifyContent: 'center',
       flex: 0.6,
-      height: Constants.isIOS ? 70 : 68,
+      height: Constants.isIOS ? 70 : 68
     },
     titleText: {
       ...Typography.text70,
-      color: Colors.dark10,
+      color: Colors.dark10
     },
     separator: {
       marginTop: Constants.isIOS ? 4 : 2,
       height: Constants.isIOS ? 32 : 30,
       borderWidth: Constants.isIOS ? 1 / PixelRatio.get() : undefined,
       borderLeftWidth: Constants.isIOS ? undefined : 1,
-      borderColor: separatorColor,
+      borderColor: separatorColor
     },
     buttonText: {
       ...Typography.text40,
       fontWeight: '200',
       color: ThemeManager.primaryColor,
       backgroundColor: 'transparent',
-      marginBottom: bottomTextMargin,
+      marginBottom: bottomTextMargin
     },
     disableText: {
       color: Colors.dark70,
-      marginBottom: bottomTextMargin,
-    },
+      marginBottom: bottomTextMargin
+    }
   });
 }
-

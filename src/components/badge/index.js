@@ -5,8 +5,9 @@ import {StyleSheet, Text, ViewPropTypes} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {PureBaseComponent} from '../../commons';
 import {BorderRadiuses, Colors, ThemeManager, Typography} from '../../style';
-import View from '../view';
 import Image from '../image';
+import TouchableOpacity from '../touchableOpacity';
+import View from '../view';
 
 const LABEL_FORMATTER_VALUES = [1, 2, 3, 4];
 
@@ -17,7 +18,7 @@ export const BADGE_SIZES = {
   pimpleHuge: 14,
   small: 16,
   default: 20,
-  large: 24,
+  large: 24
 };
 
 /**
@@ -81,19 +82,30 @@ export default class Badge extends PureBaseComponent {
     /**
      * Use to identify the badge in tests
      */
-    testId: PropTypes.string,
+    testId: PropTypes.string
   };
 
   static defaultProps = {
-    size: 'default',
+    size: 'default'
   };
 
   constructor(props) {
     super(props);
 
     if (props.testId) {
-      console.warn("Badge prop 'testId' is deprecated. Please use RN 'testID' prop instead.");
+      console.warn('Badge prop \'testId\' is deprecated. Please use RN \'testID\' prop instead.');
     }
+  }
+
+  getAccessibilityProps() {
+    const {onPress, icon, label} = this.props;
+
+    return {
+      accessibilityLabel: icon ? 'badge' : label ? `${label} new items` : undefined,
+      ...this.extractAccessibilityProps(),
+      accessible: true,
+      accessibilityRole: onPress ? 'button' : icon ? 'image' : 'text'
+    };
   }
 
   isSmallBadge() {
@@ -113,7 +125,7 @@ export default class Badge extends PureBaseComponent {
     const style = {
       paddingHorizontal: this.isSmallBadge() ? 4 : 6,
       height: badgeHeight,
-      minWidth: badgeHeight,
+      minWidth: badgeHeight
     };
 
     const isPimple = label === undefined;
@@ -156,7 +168,7 @@ export default class Badge extends PureBaseComponent {
     const {borderWidth, borderColor} = this.props;
     return {
       borderWidth,
-      borderColor,
+      borderColor
     };
   }
 
@@ -184,7 +196,7 @@ export default class Badge extends PureBaseComponent {
         {...iconProps}
         style={{
           flex: 1,
-          ...iconStyle,
+          ...iconStyle
         }}
       />
     );
@@ -192,27 +204,36 @@ export default class Badge extends PureBaseComponent {
 
   render() {
     // TODO: remove testId after deprecation
-    const {borderWidth, backgroundColor, borderColor, containerStyle, icon, testId, testID, ...others} = this.props;
+    const {
+      activeOpacity,
+      borderWidth,
+      backgroundColor,
+      containerStyle,
+      icon,
+      onPress,
+      testId,
+      testID,
+      ...others
+    } = this.props;
     const backgroundStyle = backgroundColor && {backgroundColor};
     const sizeStyle = this.getBadgeSizeStyle();
     const borderStyle = borderWidth ? this.getBorderStyling() : undefined;
 
     const animationProps = this.extractAnimationProps();
-    const Container = !_.isEmpty(animationProps) ? AnimatableView : View;
+    const Container = !_.isEmpty(animationProps) ? AnimatableView : onPress ? TouchableOpacity : View;
     if (!_.isEmpty(animationProps)) {
-      console.warn(
-        'Badge component will soon stop supporting animationProps.' +
-          'Please wrap your Badge component with your own animation component, such as Animatable.View',
-      );
+      console.warn('Badge component will soon stop supporting animationProps.' +
+          'Please wrap your Badge component with your own animation component, such as Animatable.View',);
     }
-
     return (
       // The extra View wrapper is to break badge's flex-ness
-      <View style={containerStyle} {...others} backgroundColor={undefined}>
+      <View style={containerStyle} {...others} backgroundColor={undefined} {...this.getAccessibilityProps()}>
         <Container
           testID={testID || testId}
           pointerEvents={'none'}
           style={[sizeStyle, this.styles.badge, borderStyle, backgroundStyle]}
+          onPress={onPress}
+          activeOpacity={activeOpacity}
           {...animationProps}
         >
           {icon ? this.renderIcon() : this.renderLabel()}
@@ -230,16 +251,16 @@ function createStyles(props) {
       backgroundColor: !props.icon ? ThemeManager.primaryColor : undefined,
       alignItems: 'center',
       justifyContent: 'center',
-      overflow: 'hidden',
+      overflow: 'hidden'
     },
     label: {
       ...Typography.text90,
       color: Colors.white,
-      backgroundColor: 'transparent',
+      backgroundColor: 'transparent'
     },
     labelSmall: {
       ...Typography.text100,
-      lineHeight: undefined,
-    },
+      lineHeight: undefined
+    }
   });
 }

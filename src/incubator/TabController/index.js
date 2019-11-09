@@ -13,7 +13,15 @@ import TabPage from './TabPage';
 
 const {cond, Code, and, eq, set, Value, block} = Reanimated;
 
+/**
+ * @description: A performant solution for a tab controller with lazy load mechanism
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TabControllerScreen/index.js
+ * @notes: This component is based on react-native-gesture-handler
+ * @important: On Android, if using react-native-navigation, make sure to wrap your screen with gestureHandlerRootHOC
+ * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
+ */
 class TabController extends Component {
+  static displayName = 'TabController';
   static contextType = TabBarContext;
 
   static propTypes = {
@@ -25,7 +33,7 @@ class TabController extends Component {
     /**
      * callback for when index has change (will not be called on ignored items)
      */
-    onChangeIndex: PropTypes.func,
+    onChangeIndex: PropTypes.func
     // /**
     //  * callback for when tab selected
     //  */
@@ -34,11 +42,11 @@ class TabController extends Component {
 
   static defaultProps = {
     selectedIndex: 0,
-    activeOpacity: 0.2,
+    activeOpacity: 0.2
   };
 
   state = {
-    itemStates: [],
+    itemStates: []
   };
 
   _targetPage = new Value(-1);
@@ -52,17 +60,13 @@ class TabController extends Component {
       currentPage: this._currentPage,
       itemStates,
       registerTabItems: this.registerTabItems,
-      onChangeIndex,
+      onChangeIndex
     };
   };
 
   registerTabItems = (tabItemsCount, ignoredItems) => {
     const itemStates = _.times(tabItemsCount, () => new Value(-1));
     this.setState({itemStates, ignoredItems});
-  };
-
-  onChangeIndex = () => {
-    _.invoke(this.props, 'onChangeIndex', this.props);
   };
 
   render() {
@@ -77,12 +81,10 @@ class TabController extends Component {
                 ..._.map(itemStates, (state, index) => {
                   return [
                     cond(and(eq(state, State.BEGAN), !_.includes(ignoredItems, index)), set(this._targetPage, index)),
-                    cond(
-                      and(eq(this._targetPage, index), eq(state, State.END), !_.includes(ignoredItems, index)),
-                      set(this._currentPage, index),
-                    ),
+                    cond(and(eq(this._targetPage, index), eq(state, State.END), !_.includes(ignoredItems, index)),
+                      set(this._currentPage, index),)
                   ];
-                }),
+                })
               ])
             }
           </Code>

@@ -12,11 +12,11 @@ class SharedArea extends Component {
     /**
      * render details screen
      */
-    renderDetails: PropTypes.func,
+    renderDetails: PropTypes.func
   };
 
   static defaultProps = {
-    renderDetails: _.noop,
+    renderDetails: _.noop
   };
 
   state = {};
@@ -28,7 +28,7 @@ class SharedArea extends Component {
       setSharedData: this.setSharedData,
       setSource: this.setSource,
       setTarget: this.setTarget,
-      showDetails,
+      showDetails
     };
   }
 
@@ -36,14 +36,14 @@ class SharedArea extends Component {
     return {
       ...StyleSheet.absoluteFillObject,
       backgroundColor: Colors.white,
-      opacity: Animated.interpolate(this.transition, {inputRange: [0, 1], outputRange: [0, 1]}),
+      opacity: Animated.interpolate(this.transition, {inputRange: [0, 1], outputRange: [0, 1]})
     };
   }
 
   getDetailsStyle() {
     return {
       ...StyleSheet.absoluteFillObject,
-      opacity: Animated.interpolate(this.transition, {inputRange: [90, 100], outputRange: [0, 1]}),
+      opacity: Animated.interpolate(this.transition, {inputRange: [90, 100], outputRange: [0, 1]})
     };
   }
 
@@ -54,46 +54,44 @@ class SharedArea extends Component {
         position: 'absolute',
         width: Animated.interpolate(this.transition, {
           inputRange: [0, 100],
-          outputRange: [sourceLayout.width, targetLayout.width],
+          outputRange: [sourceLayout.width, targetLayout.width]
         }),
         height: Animated.interpolate(this.transition, {
           inputRange: [0, 100],
-          outputRange: [sourceLayout.height, targetLayout.height],
+          outputRange: [sourceLayout.height, targetLayout.height]
         }),
         top: Animated.interpolate(this.transition, {
           inputRange: [0, 100],
-          outputRange: [sourceLayout.y, targetLayout.y],
+          outputRange: [sourceLayout.y, targetLayout.y]
         }),
         left: Animated.interpolate(this.transition, {
           inputRange: [0, 100],
-          outputRange: [sourceLayout.x, targetLayout.x],
-        }),
+          outputRange: [sourceLayout.x, targetLayout.x]
+        })
       };
     }
   }
 
   setSharedData = data => {
     this.setState({
-      data,
+      data
     });
   };
 
   setSource = (sourceLayout, element) => {
-    this.setState(
-      {
-        sourceLayout,
-        element,
-        showDetails: true,
-      },
-      () => {
-        this.startTransition(true);
-      },
-    );
+    this.setState({
+      sourceLayout,
+      element,
+      showDetails: true
+    },
+    () => {
+      this.startTransition(true);
+    },);
   };
 
   setTarget = targetLayout => {
     this.setState({
-      targetLayout,
+      targetLayout
     });
   };
 
@@ -103,7 +101,7 @@ class SharedArea extends Component {
         showDetails: false,
         data: undefined,
         sourceLayout: undefined,
-        element: undefined,
+        element: undefined
       });
     });
   };
@@ -113,7 +111,7 @@ class SharedArea extends Component {
       toValue: show ? 100 : 0,
       duration: 600,
       easing: Easing.bezier(0.19, 1, 0.22, 1),
-      useNativeDriver: false,
+      useNativeDriver: false
     }).start(onAnimationEnd);
   }
 

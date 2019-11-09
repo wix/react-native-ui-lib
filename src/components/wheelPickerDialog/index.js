@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component} from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import Colors from '../../style/colors';
 import Typography from '../../style/typography';
@@ -19,14 +19,14 @@ export default class WheelPickerDialog extends Component {
 
   state = {
     initalSelectedValue: this.props.selectedValue,
-    currentValue: false,
-  }
+    currentValue: false
+  };
 
   onValueChange(value, index) {
     if (this.props.onValueChange) {
       this.props.onValueChange(value, index);
     }
-    this.setState({currentValue: value });
+    this.setState({currentValue: value});
   }
 
   onSelect() {
@@ -39,9 +39,7 @@ export default class WheelPickerDialog extends Component {
     const {title, items, onCancel, wheelPickerProps, selectLabelStyle, cancelLabelStyle} = this.props;
     return (
       <View style={styles.container} bg-white center>
-        <Text style={styles.title} >
-          {title}
-        </Text>
+        <Text style={styles.title}>{title}</Text>
 
         <WheelPicker
           onValueChange={this.onValueChange}
@@ -50,24 +48,20 @@ export default class WheelPickerDialog extends Component {
           {...wheelPickerProps}
         >
           {items.map((item, idx) => {
-            return (
-              <WheelPicker.Item key={String(idx) + String(item.value)} value={item.value} label={item.label} />
-            );
+            return <WheelPicker.Item key={String(idx) + String(item.value)} value={item.value} label={item.label}/>;
           })}
         </WheelPicker>
         <View style={styles.bottomButtonsContainer}>
-
-          <TouchableOpacity onPress={onCancel} >
+          <TouchableOpacity onPress={onCancel}>
             <Text style={[styles.cancelButton, cancelLabelStyle]} text80-medium>
               {'CANCEL'}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.onSelect} >
+          <TouchableOpacity onPress={this.onSelect}>
             <Text style={[styles.okButton, selectLabelStyle]} text80-medium>
               {'OK'}
             </Text>
           </TouchableOpacity>
-
         </View>
       </View>
     );
@@ -88,14 +82,11 @@ WheelPickerDialog.propTypes = {
    */
   cancelLabelStyle: Text.propTypes.style,
   items: PropTypes.array,
-  selectedValue: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   title: PropTypes.string,
   onCancel: PropTypes.func,
   onSelect: PropTypes.func,
-  onValueChange: PropTypes.func,
+  onValueChange: PropTypes.func
 };
 
 const styles = StyleSheet.create({
@@ -115,7 +106,7 @@ const styles = StyleSheet.create({
   picker: {
     marginTop: 24,
     width: 56,
-    height: 148,
+    height: 148
   },
   bottomButtonsContainer: {
     flexDirection: 'row',
@@ -139,7 +130,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     marginHorizontal: 8
-  },
-
+  }
 });
-

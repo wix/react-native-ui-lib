@@ -7,7 +7,6 @@ import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
 
-
 // TODO: add finisher animation (check icon animation or something)
 // TODO: remove deprecated functionality
 /**
@@ -60,7 +59,8 @@ export default class AnimatedScanner extends BaseComponent {
     };
 
     if (!_.isNumber(props.progress)) {
-      console.warn('[react-native-ui-lib]! please check out the new api for AnimatedScanner. progress now accepts number instead of Animated Value'); // eslint-disable-line
+      console.warn('[react-native-ui-lib]! please check out the new api for AnimatedScanner. progress now accepts number instead of Animated Value',
+      ); // eslint-disable-line
     }
   }
 
@@ -90,12 +90,12 @@ export default class AnimatedScanner extends BaseComponent {
     const {animatedProgress} = this.state;
     Animated.timing(animatedProgress, {
       toValue,
-      duration,
+      duration
     }).start(({finished}) => {
       if (finished) {
         const isDone = toValue >= 100;
         this.setState({
-          isDone,
+          isDone
         });
         _.invoke(this.props, 'onBreakpoint', {progress: toValue, isDone});
       }
@@ -108,14 +108,15 @@ export default class AnimatedScanner extends BaseComponent {
     return (
       <View style={{...StyleSheet.absoluteFillObject}}>
         <Animated.View
-          style={[this.styles.container,
+          style={[
+            this.styles.container,
             style,
             opacity && {opacity},
             backgroundColor && {backgroundColor},
             {
               left: animatedProgress.interpolate({
                 inputRange: [0, 100],
-                outputRange: ['0%', '100%'],
+                outputRange: ['0%', '100%']
               })
             }
           ]}
@@ -139,15 +140,16 @@ export default class AnimatedScanner extends BaseComponent {
     const {progress, opacity, backgroundColor} = this.props;
     return (
       <Animated.View
-        style={[this.styles.container,
+        style={[
+          this.styles.container,
           opacity && {opacity},
           backgroundColor && {backgroundColor},
           {
             right: progress.interpolate({
               inputRange: [0, 5, 55, 100],
-              outputRange: [Constants.screenWidth, Constants.screenWidth / 2, Constants.screenWidth / 3, 0],
-            }),
-          },
+              outputRange: [Constants.screenWidth, Constants.screenWidth / 2, Constants.screenWidth / 3, 0]
+            })
+          }
         ]}
       >
         {JSON.stringify(progress) !== '100' && <View style={this.styles.scanner}/>}

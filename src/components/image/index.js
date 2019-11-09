@@ -6,6 +6,9 @@ import {Image as RNImage, StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
 import {PureBaseComponent} from '../../commons';
 import Assets from '../../assets';
+import View from '../view';
+import Overlay from '../overlay';
+
 
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
@@ -39,12 +42,22 @@ class Image extends PureBaseComponent {
     /**
      * Show image as a cover, full width, image (according to aspect ratio, default: 16:8)
      */
-    cover: PropTypes.bool
+    cover: PropTypes.bool,
+    /**
+     * The aspect ratio for the image
+     */
+    aspectRatio: PropTypes.number,
+    /**
+     * The type of overly to place on top of the image
+     */
+    overlayType: Overlay.propTypes.type
   };
 
   static defaultProps = {
-    assetGroup: 'icons',
+    assetGroup: 'icons'
   };
+
+  static overlayTypes = Overlay.overlayTypes;
 
   constructor(props) {
     super(props);
@@ -70,7 +83,7 @@ class Image extends PureBaseComponent {
     return source;
   }
 
-  render() {
+  renderImage() {
     const source = this.getImageSource();
     const {tintColor, style, supportRTL, cover, aspectRatio, ...others} = this.getThemeProps();
     const shouldFlipRTL = supportRTL && Constants.isRTL;
@@ -81,23 +94,40 @@ class Image extends PureBaseComponent {
           {tintColor},
           shouldFlipRTL && styles.rtlFlipped,
           cover && styles.coverImage,
+          aspectRatio && {aspectRatio},
           style
         ]}
+        accessible
+        accessibilityRole={'image'}
         {...others}
         source={source}
       />
     );
   }
+
+  render() {
+    const {style, overlayType} = this.getThemeProps();
+  
+    if (overlayType) {
+      return (
+        <View>
+          {this.renderImage()}
+          <Overlay style={style} type={overlayType}/>
+        </View>
+      );
+    }
+    return this.renderImage();
+  }
 }
 
 const styles = StyleSheet.create({
   rtlFlipped: {
-    transform: [{scaleX: -1}],
+    transform: [{scaleX: -1}]
   },
   coverImage: {
     width: Constants.screenWidth,
-    aspectRatio: 16 / 8,
-  },
+    aspectRatio: 16 / 8
+  }
 });
 
 hoistNonReactStatic(Image, RNImage);

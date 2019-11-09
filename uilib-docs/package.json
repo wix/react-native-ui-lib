@@ -1,31 +1,48 @@
 {
   "name": "gatsby-starter-default",
-  "description": "Gatsby default starter",
-  "version": "1.0.0",
+  "private": true,
+  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^1.9.119",
-    "gatsby-link": "^1.6.28",
-    "gatsby-plugin-react-helmet": "^1.0.8",
-    "gatsby-plugin-sass": "^1.0.14",
-    "gatsby-source-filesystem": "^1.5.9",
-    "gatsby-transformer-react-docgen": "^1.0.9",
-    "metro-react-native-babel-preset": "^0.48.1",
-    "lodash": "^4.17.4",
-    "prop-types": "^15.6.0"
+    "classnames": "^2.2.6",
+    "gatsby": "^2.2.2",
+    "gatsby-image": "^2.0.34",
+    "gatsby-plugin-manifest": "^2.0.24",
+    "gatsby-plugin-offline": "^2.0.25",
+    "gatsby-plugin-react-helmet": "^3.0.10",
+    "gatsby-plugin-sass": "^2.0.11",
+    "gatsby-plugin-sharp": "^2.0.29",
+    "gatsby-source-filesystem": "^2.0.27",
+    "gatsby-transformer-react-docgen": "^3.0.7",
+    "gatsby-transformer-sharp": "^2.1.17",
+    "lodash": "^4.17.11",
+    "node-sass": "^4.11.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-helmet": "^5.2.0"
+  },
+  "devDependencies": {
+    "prettier": "^1.16.4"
   },
   "keywords": [
     "gatsby"
   ],
   "license": "MIT",
-  "main": "n/a",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "format": "prettier --write src/**/*.{js,jsx}",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
   },
-  "devDependencies": {
-    "prettier": "^1.8.2"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
   }
 }

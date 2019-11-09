@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {Constants, View, Text, Button, Image, FeatureHighlight} from 'react-native-ui-lib'; // eslint-disable-line
+import {AccessibilityInfo, findNodeHandle} from 'react-native';
+import {Colors, Typography, View, Text, Button, FeatureHighlight} from 'react-native-ui-lib'; // eslint-disable-line
+
 
 const titles = [
   'Get Notified',
@@ -8,7 +10,7 @@ const titles = [
   'Title number three',
   'Title number four',
   'Title number five',
-  'Title number six',
+  'Welcome to Uilib demo!'
 ];
 const messages = [
   'Important notifications appear right on your clubs and groups. Tap them to get more information about the most' +
@@ -19,8 +21,7 @@ const messages = [
   ' warning about it',
   'Very short message',
   'Short message with information about the below highlighted feature',
-  'Important notifications appear right on your clubs and groups. Tap them to get more information about the most' +
-  'important things that you should pay attention to.',
+  'Here is where you can view demos of all Uilib components'
 ];
 
 class FeatureHighlightScreen extends Component {
@@ -30,14 +31,10 @@ class FeatureHighlightScreen extends Component {
 
     this.state = {
       showFTE: false,
-      currentTargetIndex: 0,
+      currentTargetIndex: 0
     };
 
     this.targets = {};
-
-    this.closeHighlight = this.closeHighlight.bind(this);
-    this.showHighlight = this.showHighlight.bind(this);
-    this.moveNext = this.moveNext.bind(this);
   }
 
   componentDidMount() {
@@ -47,11 +44,16 @@ class FeatureHighlightScreen extends Component {
     }, 1000);
   }
 
-  closeHighlight() {
-    this.setState({showFTE: false});
+  closeHighlight = () => {
+    this.setState({showFTE: false}, () => {
+      if (this.viewRef) {
+        const reactTag = findNodeHandle(this.viewRef);
+        AccessibilityInfo.setAccessibilityFocus(reactTag);
+      }
+    });
   }
 
-  showHighlight() {
+  showHighlight = () => {
     this.setState({showFTE: true});
   }
 
@@ -61,29 +63,54 @@ class FeatureHighlightScreen extends Component {
     }
   }
 
-  moveNext() {
+  moveNext = () => {
     const {currentTargetIndex} = this.state;
     const newTargetIndex = currentTargetIndex + 1;
 
-    if (newTargetIndex < _.size(this.targets)) {
-      this.setState({currentTargetIndex: newTargetIndex});
+    this.moveToPage(newTargetIndex);
+  }
+
+  moveToPage(index) {
+    if (index < _.size(this.targets)) {
+      this.setState({currentTargetIndex: index});
     } else {
       this.closeHighlight();
     }
   }
 
+  getPageControlProps() {
+    return {
+      numOfPages: titles.length, 
+      currentPage: this.state.currentTargetIndex, 
+      onPagePress: this.onPagePress,
+      color: Colors.dark30,
+      inactiveColor: Colors.dark80,
+      size: 8
+    };
+  }
+
+  onPagePress = (index) => {
+    this.moveToPage(index);
+  }
+
   renderHighlighterOverlay() {
     const {showFTE, currentTargetIndex} = this.state;
+    const lastPage = titles.length - 1;
+
     return (
       <FeatureHighlight
         visible={showFTE}
         title={titles[currentTargetIndex]}
         message={messages[currentTargetIndex]}
+        titleStyle={currentTargetIndex === lastPage ? {...Typography.text70} : undefined}
+        messageStyle={currentTargetIndex === lastPage ? {...Typography.text60, fontWeight: '900', lineHeight: 28} : undefined}
         confirmButtonProps={{label: 'Got It', onPress: this.moveNext}}
         onBackgroundPress={this.closeHighlight}
         getTarget={() => this.targets[currentTargetIndex]}
         // highlightFrame={{x: 30, y: 70, width: 150, height: 30}}
         // highlightFrame={{x: 160, y: 336, width: 150, height: 56}}
+        borderRadius={currentTargetIndex === 4 ? 4 : undefined}
+        pageControlProps={currentTargetIndex < lastPage ? this.getPageControlProps() : undefined}
       />
     );
   }
@@ -121,7 +148,7 @@ class FeatureHighlightScreen extends Component {
           </View>
         </View>
         <View center padding-25>
-          <View>
+          <View ref={r => this.viewRef = r}>
             <Text marginT-20>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
               industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and

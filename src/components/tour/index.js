@@ -44,13 +44,13 @@ class Tour extends BaseComponent {
     /**
      * the message custom style
      */
-    messageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    messageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
   };
 
   static defaultProps = {
     visible: false,
     overlayColor: Colors.white,
-    overlayOpacity: 0.9,
+    overlayOpacity: 0.9
   };
 
   state = {};
@@ -67,8 +67,8 @@ class Tour extends BaseComponent {
           left: x,
           top: y,
           width,
-          height,
-        },
+          height
+        }
       });
     });
   }
@@ -84,7 +84,7 @@ class Tour extends BaseComponent {
     return (
       <View style={{position: 'absolute', bottom: targetPosition.height, width: Constants.screenWidth}}>
         <Text style={[styles.message, messageStyle]}>{message}</Text>
-        <Button link label="Got It!" onPress={onClose} />
+        <Button link label="Got It!" onPress={onClose}/>
       </View>
     );
   }
@@ -101,7 +101,7 @@ class Tour extends BaseComponent {
           <View flex style={{backgroundColor: Colors.rgba(overlayColor, overlayOpacity)}}>
             {shouldShowTour && (
               <View style={{position: 'absolute', top: targetPosition.top, left: targetPosition.left}}>
-                <View style={styles.glowWrapper} />
+                <View style={styles.glowWrapper}/>
                 {this.renderTargetClone()}
                 {this.renderMessage()}
               </View>
@@ -116,7 +116,7 @@ class Tour extends BaseComponent {
 const styles = StyleSheet.create({
   message: {
     color: Colors.white,
-    ...Typography.text70,
+    ...Typography.text70
   },
   glowWrapper: {
     backgroundColor: Colors.blue70,
@@ -125,8 +125,8 @@ const styles = StyleSheet.create({
     left: -4,
     right: -4,
     bottom: -4,
-    borderRadius: 999,
-  },
+    borderRadius: 999
+  }
 });
 
 export default Tour;

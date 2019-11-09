@@ -15,7 +15,14 @@ const {cond, eq, call, block, event, and, defined} = Reanimated;
 const DEFAULT_LABEL_COLOR = Colors.black;
 const DEFAULT_SELECTED_LABEL_COLOR = Colors.blue30;
 
+/**
+ * @description: TabController's TabBarItem
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TabControllerScreen/index.js
+ * @notes: Must be rendered as a direct child of TabController.TabBar.
+ */
 export default class TabBarItem extends PureComponent {
+  static displayName = 'TabController.TabBarItem';
+
   static propTypes = {
     /**
      * label of the tab
@@ -87,28 +94,29 @@ export default class TabBarItem extends PureComponent {
     index: PropTypes.number,
     state: PropTypes.object,
     currentPage: PropTypes.object,
-    onLayout: PropTypes.func,
+    onLayout: PropTypes.func
   };
 
   static defaultProps = {
     activeOpacity: 1,
-    onPress: _.noop,
+    onPress: _.noop
   };
 
   state = {
-    itemWidth: undefined,
+    itemWidth: undefined
   };
 
   onStateChange = event([
     {
-      nativeEvent: {state: this.props.state},
-    },
-  ]);
+      nativeEvent: {state: this.props.state}
+    }
+  ],
+  {useNativeDriver: true},);
 
   onLayout = ({
     nativeEvent: {
-      layout: {width},
-    },
+      layout: {width}
+    }
   }) => {
     const {index, onLayout} = this.props;
     const {itemWidth} = this.state;
@@ -129,14 +137,15 @@ export default class TabBarItem extends PureComponent {
     const {itemWidth} = this.state;
     const opacity = block([
       cond(eq(state, State.END), call([], this.onPress)),
-      cond(eq(state, State.BEGAN), this.props.activeOpacity, 1),
+      cond(eq(state, State.BEGAN), this.props.activeOpacity, 1)
     ]);
 
     const style = {
-      opacity,
+      opacity
     };
 
     if (width || itemWidth) {
+      style.flex = undefined;
       style.width = width || itemWidth;
       style.paddingHorizontal = undefined;
     }
@@ -146,35 +155,37 @@ export default class TabBarItem extends PureComponent {
 
   getLabelStyle() {
     const {itemWidth} = this.state;
-    const {index, currentPage, labelColor, selectedLabelColor, labelStyle} = this.props;
+    const {index, currentPage, labelColor, selectedLabelColor, labelStyle, ignore} = this.props;
     const fontWeight = cond(and(eq(currentPage, index), defined(itemWidth)), '700', '300');
-    const color = cond(
-      eq(currentPage, index),
-      processColor(selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR),
-      processColor(labelColor || DEFAULT_LABEL_COLOR),
-    );
+    const activeColor = selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
+    const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
+    const color = cond(eq(currentPage, index),
+      processColor(activeColor),
+      processColor(ignore ? activeColor : inactiveColor),);
 
     return [
       {
         fontWeight,
-        color,
+        color
       },
       labelStyle
     ];
   }
 
   getIconStyle() {
-    const {index, currentPage, iconColor, selectedIconColor, labelColor, selectedLabelColor} = this.props;
-    const tintColor = cond(
-      eq(currentPage, index),
+    const {index, currentPage, iconColor, selectedIconColor, labelColor, selectedLabelColor, ignore} = this.props;
+
+    const activeColor = selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
+    const inactiveColor = iconColor || labelColor || DEFAULT_LABEL_COLOR;
+
+    const tintColor = cond(eq(currentPage, index),
       // TODO: using processColor here broke functionality,
       // not using it seem to not be very performant
-      selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR,
-      iconColor || labelColor || DEFAULT_LABEL_COLOR,
-    );
+      activeColor,
+      ignore ? activeColor : inactiveColor,);
 
     return {
-      tintColor,
+      tintColor
     };
   }
 
@@ -183,7 +194,7 @@ export default class TabBarItem extends PureComponent {
 
     return (
       <TouchableOpacity
-        state={state}
+        pressState={state}
         style={[styles.tabItem, this.getItemStyle()]}
         onLayout={this.onLayout}
         feedbackColor={activeBackgroundColor}
@@ -191,13 +202,13 @@ export default class TabBarItem extends PureComponent {
         onPress={this.onPress}
         testID={testID}
       >
-        {icon && <Reanimated.Image source={icon} style={[this.getIconStyle()]} />}
+        {icon && <Reanimated.Image source={icon} style={[styles.tabItemIcon, this.getIconStyle()]}/>}
         {!_.isEmpty(label) && (
           <Reanimated.Text style={[styles.tabItemLabel, this.getLabelStyle()]}>
             {uppercase ? _.toUpper(label) : label}
           </Reanimated.Text>
         )}
-        {badge && <Badge backgroundColor={Colors.red30} size={'default'} {...badge} containerStyle={styles.badge} />}
+        {badge && <Badge backgroundColor={Colors.red30} size={'default'} {...badge} containerStyle={styles.badge}/>}
       </TouchableOpacity>
     );
   }
@@ -209,12 +220,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: Spacings.s4,
+    paddingHorizontal: Spacings.s4
   },
   tabItemLabel: {
-    ...Typography.text80,
+    ...Typography.text80
+  },
+  tabItemIcon: {
+    marginRight: 10
   },
   badge: {
-    marginLeft: Spacings.s1,
-  },
+    marginLeft: Spacings.s1
+  }
 });

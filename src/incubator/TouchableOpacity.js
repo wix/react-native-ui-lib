@@ -14,32 +14,38 @@ export default class TouchableOpacity extends Component {
     backgroundColor: PropTypes.string,
     activeOpacity: PropTypes.number,
     onPress: PropTypes.func,
-    state: PropTypes.object,
+    pressState: PropTypes.object
   };
 
   static defaultProps = {
     activeOpacity: 0.2,
     feedbackColor: 'transparent',
-    onPress: _.noop,
-    state: new Value(-1),
+    onPress: _.noop
   };
+
+  state = {
+    pressState: new Value(-1)
+  };
+
+  get pressState() {
+    return this.props.pressState || this.state.pressState;
+  }
 
   onStateChange = event([
     {
-      nativeEvent: {state: this.props.state},
-    },
-  ]);
+      nativeEvent: {state: this.pressState}
+    }
+  ],
+  {useNativeDriver: true},);
 
   _opacity = block([
-    cond(eq(this.props.state, State.END), call([], () => this.props.onPress(this.props))),
-    cond(eq(this.props.state, State.BEGAN), this.props.activeOpacity, 1),
+    cond(eq(this.pressState, State.END), call([], () => this.props.onPress(this.props))),
+    cond(eq(this.pressState, State.BEGAN), this.props.activeOpacity, 1)
   ]);
 
-  _color = cond(
-    eq(this.props.state, State.BEGAN),
+  _color = cond(eq(this.pressState, State.BEGAN),
     processColor(this.props.feedbackColor || this.props.backgroundColor),
-    processColor(this.props.backgroundColor),
-  );
+    processColor(this.props.backgroundColor),);
 
   render() {
     const {style, ...others} = this.props;

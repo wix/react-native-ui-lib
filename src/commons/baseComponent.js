@@ -1,19 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import {StyleSheet} from 'react-native';
 import _ from 'lodash';
-import {Typography, Colors} from '../style';
+import {Colors} from '../style';
 import {DocsGenerator} from '../helpers';
 import * as Modifiers from './modifiers';
 
 export default function baseComponent(usePure) {
   const parent = usePure ? React.PureComponent : React.Component;
   class BaseComponent extends parent {
-    static propTypes = {
-      ..._.mapValues(Typography, () => PropTypes.bool),
-      ..._.mapValues(Colors, () => PropTypes.bool),
-      useNativeDriver: PropTypes.bool,
-    };
+    // static propTypes = {
+    //   ..._.mapValues(Typography, () => PropTypes.bool),
+    //   ..._.mapValues(Colors, () => PropTypes.bool),
+    //   useNativeDriver: PropTypes.bool,
+    // };
 
     static extractOwnProps = Modifiers.extractOwnProps;
 
@@ -24,7 +24,7 @@ export default function baseComponent(usePure) {
       }
 
       this.state = {
-        ...this.buildStyleOutOfModifiers(),
+        ...this.buildStyleOutOfModifiers()
       };
     }
 
@@ -43,11 +43,13 @@ export default function baseComponent(usePure) {
 
     getThemeProps = Modifiers.getThemeProps;
 
+    extractAccessibilityProps = Modifiers.extractAccessibilityProps;
+
     extractTypographyValue() {
       return Modifiers.extractTypographyValue(this.props);
     }
 
-    extractColorValue = () => Modifiers.extractColorValue(this.getThemeProps())
+    extractColorValue = () => Modifiers.extractColorValue(this.getThemeProps());
 
     extractAnimationProps() {
       return _.pick(this.props, [
@@ -60,7 +62,7 @@ export default function baseComponent(usePure) {
         'transition',
         'onAnimationBegin',
         'onAnimationEnd',
-        'useNativeDriver',
+        'useNativeDriver'
       ]);
     }
 
@@ -81,7 +83,8 @@ export default function baseComponent(usePure) {
     }
 
     updateModifiers(currentProps, nextProps) {
-      const allKeys = _.union([..._.keys(currentProps), ..._.keys(nextProps)]);
+      const ignoredKeys = ['children', 'forwardedRef', 'style', 'testID'];
+      const allKeys = _.union([..._.keys(currentProps), ..._.keys(nextProps)]).filter((key) => !ignoredKeys.includes(key));
       const changedKeys = _.filter(allKeys, key => !_.isEqual(currentProps[key], nextProps[key]));
 
       const options = {};
@@ -107,22 +110,20 @@ export default function baseComponent(usePure) {
 
       if (!_.isEmpty(options)) {
         this.setState({
-          ...this.buildStyleOutOfModifiers(options, nextProps),
+          ...this.buildStyleOutOfModifiers(options, nextProps)
         });
       }
     }
 
-    buildStyleOutOfModifiers(
-      options = {
-        backgroundColor: true,
-        borderRadius: true,
-        paddings: true,
-        margins: true,
-        alignments: true,
-        flex: true,
-      },
-      props = this.props,
-    ) {
+    buildStyleOutOfModifiers(options = {
+      backgroundColor: true,
+      borderRadius: true,
+      paddings: true,
+      margins: true,
+      alignments: true,
+      flex: true
+    },
+    props = this.props,) {
       const style = {};
 
       if (options.backgroundColor) {

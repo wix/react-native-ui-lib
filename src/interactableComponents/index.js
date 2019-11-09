@@ -1,3 +1,5 @@
 module.exports = {
-  get Drawer() { return require('./drawer').default; },
+  get Drawer() {
+    return require('./drawer').default;
+  }
 };

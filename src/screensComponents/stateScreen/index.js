@@ -10,7 +10,6 @@ import Image from '../../components/image';
 import Button from '../../components/button';
 import Text from '../../components/text';
 
-
 /**
  * @description: Component that shows a full screen for a certain state, like an empty state
  * @image: https://user-images.githubusercontent.com/33805983/34672894-f262ab84-f488-11e7-83f0-4ee0f0ac34ba.png
@@ -62,16 +61,16 @@ export default class StateScreen extends BaseComponent {
   render() {
     // TODO: remove testId after deprecation
     const {title, subtitle, imageSource, ctaLabel, onCtaPress, testId, testID} = this.props;
-    
+
     return (
       <View style={this.styles.container} testID={testID || testId}>
-        <Image style={this.styles.image} resizeMode={'contain'} source={imageSource} />
+        <Image style={this.styles.image} resizeMode={'contain'} source={imageSource}/>
         <Text style={[this.styles.title]}>{title}</Text>
         <Text style={[this.styles.subtitle]}>{subtitle}</Text>
-        <Button 
-          link 
+        <Button
+          link
           marginT-30
-          onPress={onCtaPress} 
+          onPress={onCtaPress}
           labelStyle={this.styles.ctaLabel}
           label={Constants.isAndroid ? _.toUpper(ctaLabel) : ctaLabel}
         />
