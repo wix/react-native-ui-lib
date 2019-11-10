@@ -2,7 +2,6 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView, Animated, Easing} from 'react-native';
 import {Colors, Image, Card, View, Text} from 'react-native-ui-lib'; //eslint-disable-line
-import _ from 'lodash';
 
 const data = [
   {
