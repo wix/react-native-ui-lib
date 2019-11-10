@@ -282,13 +282,13 @@ export default class Toast extends BaseComponent {
 
   // This weird layout should support iphoneX safe area
   render() {
-    const {backgroundColor, actions, enableBlur, testID, zIndex, renderContent} = this.getThemeProps();
+    const {backgroundColor, actions, /* enableBlur,  */testID, zIndex, renderContent} = this.getThemeProps();
     const {animationConfig} = this.state;
     const hasOneAction = _.size(actions) === 1;
     const hasTwoActions = _.size(actions) === 2;
     const positionStyle = this.getPositionStyle();
     const height = getHeight(this.props);
-    const blurOptions = this.getBlurOptions();
+    // const blurOptions = this.getBlurOptions();
 
     const shouldShowToast = this.shouldShowToast();
     if (!shouldShowToast) {

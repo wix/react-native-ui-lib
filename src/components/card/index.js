@@ -218,8 +218,8 @@ class Card extends PureBaseComponent {
   }
 
   render() {
-    const {onPress, style, containerStyle, enableBlur, ...others} = this.getThemeProps();
-    const blurOptions = this.getBlurOptions();
+    const {onPress, style, containerStyle, /* enableBlur, */ ...others} = this.getThemeProps();
+    // const blurOptions = this.getBlurOptions();
     const Container = onPress ? TouchableOpacity : View;
     const brRadius = this.borderRadius;
 
