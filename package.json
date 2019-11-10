@@ -58,6 +58,7 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/runtime": "^7.4.2",
     "@react-native-community/async-storage": "^1.6.2",
+    "@react-native-community/blur": "^3.3.1",
     "@react-native-community/eslint-config": "latest",
     "@types/prop-types": "^15.5.3",
     "@types/react-native": "^0.55.21",
