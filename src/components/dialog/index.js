@@ -11,6 +11,7 @@ import PanListenerView from '../panningViews/panListenerView';
 import DialogDismissibleView from './DialogDismissibleView';
 import PanningProvider from '../panningViews/panningProvider';
 import DialogDeprecated from './dialogDeprecated';
+import * as Modifiers from '../../commons/modifiers';
 
 // TODO: KNOWN ISSUES
 // 1. iOS pressing on the background while enter animation is happening will not call onDismiss
@@ -87,6 +88,14 @@ class Dialog extends BaseComponent {
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
     width: '90%'
   };
+
+  static extractOwnProps(props, ignoreProps) {
+    if (props && props.migrate) {
+      return Modifiers.extractOwnProps(props, ignoreProps);
+    } else {
+      return DialogDeprecated.extractOwnProps(props, ignoreProps);
+    }
+  }
 
   constructor(props) {
     super(props);
