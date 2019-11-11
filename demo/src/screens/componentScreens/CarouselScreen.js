@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {Constants, View, Text, Carousel} from 'react-native-ui-lib'; // eslint-disable-line
-
+import {Constants, View, Text, Carousel, Card} from 'react-native-ui-lib'; // eslint-disable-line
+import _ from 'lodash';
 
 const INITIAL_PAGE = 0;
 const WIDTH = Constants.screenWidth - 120;
@@ -31,7 +31,7 @@ class CarouselScreen extends Component {
           pageWidth={WIDTH}
           // itemSpacings={20}
           // initialPage={INITIAL_PAGE}
-          containerStyle={{height: 200/* , flex: 1 */}}
+          containerStyle={{height: 160/* , flex: 1 */}}
           pageControlPosition={'under'}
           pageControlProps={{onPagePress: this.onPagePress}}
           // showCounter
@@ -61,6 +61,20 @@ class CarouselScreen extends Component {
         
         <View margin-20 center /*style={{...StyleSheet.absoluteFillObject}} */ pointerEvents="none">
           <Text text10>{this.state.currentPage}</Text>
+        </View>
+
+        <View padding-20>
+          <Carousel test migrate containerStyle={{height: 160}}>
+            {_.times(5, index => {
+              return (
+                <View key={index} flex padding-20>
+                  <Card flex padding-20>
+                    <Text text40>Card {index}</Text>
+                  </Card>
+                </View>
+              );
+            })}
+          </Carousel>
         </View>
       </View>
     );
