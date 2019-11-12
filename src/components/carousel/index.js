@@ -89,6 +89,7 @@ export default class Carousel extends BaseComponent {
       : props.pageWidth + props.itemSpacings || Constants.screenWidth;
 
     this.state = {
+      containerWidth: undefined,
       currentPage: this.shouldUsePageWidth() ? this.getCalcIndex(props.initialPage) : props.initialPage,
       currentStandingPage: props.initialPage,
       pageWidth: defaultPageWidth,
@@ -145,9 +146,29 @@ export default class Carousel extends BaseComponent {
     return index;
   }
 
+  getSnapToOffsets = () => {
+    const {itemSpacings} = this.props;
+    const {containerWidth, pageWidth} = this.state;
+
+    if (containerWidth) {
+      const spacings = pageWidth === containerWidth ? 0 : itemSpacings;
+      const initialBreak = pageWidth - (containerWidth - pageWidth - spacings) / 2;
+      const snapToOffsets = _.times(presenter.getChildrenLength(this.props), index => initialBreak + index * pageWidth);
+      return snapToOffsets;
+    }
+  }
+
   shouldUsePageWidth() {
     const {loop, pageWidth} = this.props;
     return !loop && pageWidth;
+  }
+
+  onContainerLayout = ({nativeEvent: {layout: {width: containerWidth}}}) => {
+    const update = {containerWidth};
+    if (!this.props.pageWidth) {
+      update.pageWidth = containerWidth;
+    }
+    this.setState(update);
   }
 
   onContentSizeChange = () => {
@@ -200,6 +221,11 @@ export default class Carousel extends BaseComponent {
   };
 
   renderChildren() {
+    const {containerWidth} = this.state;
+    if (!containerWidth && !this.shouldUsePageWidth()) {
+      return null;
+    }
+
     const {children, loop} = this.props;
     const length = presenter.getChildrenLength(this.props);
 
@@ -257,15 +283,13 @@ export default class Carousel extends BaseComponent {
 
   render() {
     const {containerStyle, itemSpacings, ...others} = this.props;
-    const {initialOffset, pageWidth} = this.state;
+    const {initialOffset} = this.state;
 
     const scrollContainerStyle = this.shouldUsePageWidth() ? {paddingRight: itemSpacings} : undefined;
-    const spacings = pageWidth === Constants.screenWidth ? 0 : itemSpacings;
-    const initialBreak = pageWidth - (Constants.screenWidth - pageWidth - spacings) / 2;
-    const snapToOffsets = _.times(presenter.getChildrenLength(this.props), index => initialBreak + index * pageWidth);
+    const snapToOffsets = this.getSnapToOffsets();
 
     return (
-      <View style={containerStyle}>
+      <View style={containerStyle} onLayout={this.onContainerLayout}>
         <ScrollView
           {...others}
           ref={this.carousel}
