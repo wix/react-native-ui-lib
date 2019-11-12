@@ -13,7 +13,8 @@ import {
   Dialog,
   Button,
   Text,
-  ColorSliderGroup
+  ColorSliderGroup,
+  PanningProvider
 } from 'react-native-ui-lib';
 import ColorPalette from './ColorPalette';
 import {SWATCH_MARGIN, SWATCH_SIZE} from './ColorSwatch';
@@ -314,13 +315,15 @@ export default class ColorPicker extends PureBaseComponent {
 
     return (
       <Dialog
+        migrate
         visible={show}
         width="100%"
         height={null}
         bottom
         centerH
         onDismiss={this.onDismiss}
-        style={this.styles.dialog}
+        containerStyle={this.styles.dialog}
+        panDirection={PanningProvider.Directions.DOWN}
       >
         {this.renderHeader()}
         {this.renderPreview()}
