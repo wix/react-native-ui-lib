@@ -175,6 +175,10 @@ export default class TextField extends BaseInput {
     if (prevState.value !== this.state.value || prevProps.focused !== this.state.focused) {
       this.updateFloatingPlaceholderState();
     }
+
+    if (prevProps.value !== this.props.value) {
+      this.validate();
+    }
   }
 
   /** Actions */
