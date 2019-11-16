@@ -73,6 +73,7 @@
     "jest": "^24.5.0",
     "metro-react-native-babel-preset": "^0.53.1",
     "mocha": "^5.0.0",
+    "prettier-eslint": "^9.0.0",
     "react": "16.8.3",
     "react-autobind": "^1.0.6",
     "react-dom": "^15.4.2",
