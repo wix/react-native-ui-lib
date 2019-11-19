@@ -17,8 +17,6 @@ export default class DialogScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.content = {};
-
     this.SCROLL_TYPE = {
       NONE: 'none',
       VERTICAL: 'vertical',
@@ -189,9 +187,6 @@ Scroll: ${scroll}`;
 
   renderContent = () => {
     const {scroll, showHeader} = this.state;
-    if (this.content[scroll + showHeader]) {
-      return this.content[scroll + showHeader];
-    }
 
     let content;
     switch (scroll) {
@@ -218,7 +213,6 @@ Scroll: ${scroll}`;
       </View>
     );
 
-    this.content[scroll + showHeader] = data;
     return data;
   };
 

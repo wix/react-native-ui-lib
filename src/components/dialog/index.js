@@ -145,7 +145,11 @@ class Dialog extends BaseComponent {
   }
 
   onDismiss = () => {
-    this.setState({modalVisibility: false}, () => _.invoke(this.props, 'onDismiss', this.props));
+    this.setState({modalVisibility: false}, () => {
+      if (this.props.visible) {
+        _.invoke(this.props, 'onDismiss', this.props);
+      }
+    });
   };
 
   hideDialogView = () => {

@@ -474,7 +474,8 @@ export default class TextField extends BaseInput {
     } = this.getThemeProps();
     const typography = this.getTypography();
     const {lineHeight, ...typographyStyle} = typography;
-    const color = this.getStateColor(this.props.color || this.extractColorValue());
+    // color priority is: user's color prop, then modifiers, then theme props.
+    const color = this.getStateColor(this.props.color || this.extractColorValue() || this.getThemeProps().color);
     const hasRightElement = this.shouldDisplayRightButton() || rightIconSource;
     const inputStyle = [
       hasRightElement && this.styles.rightElement,
