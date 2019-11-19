@@ -13,6 +13,7 @@ import * as PickerPresenter from './PickerPresenter';
 import NativePicker from './NativePicker';
 import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
+import {Colors} from '../../style';
 
 const PICKER_MODES = {
   SINGLE: 'SINGLE',
@@ -324,6 +325,7 @@ class Picker extends BaseComponent {
     const label = this.getLabel();
     return (
       <TextField
+        color={Colors.dark10}
         {...textInputProps}
         {...this.getAccessibilityInfo()}
         enableErrors={false}
