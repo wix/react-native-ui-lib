@@ -11,6 +11,7 @@ import Text from '../text';
 import Button from '../button';
 import Image from '../image';
 import ListItem from '../listItem';
+import PanningProvider from '../panningViews/panningProvider';
 
 const VERTICAL_PADDING = 8;
 
@@ -214,6 +215,7 @@ export default class ActionSheet extends BaseComponent {
 
     return (
       <Dialog
+        migrate
         useSafeArea={useSafeArea}
         testID={testID}
         bottom
@@ -225,6 +227,7 @@ export default class ActionSheet extends BaseComponent {
         onDismiss={onDismiss}
         useModal={useModal}
         onModalDismissed={onModalDismissed}
+        panDirection={PanningProvider.Directions.DOWN}
       >
         {this.renderSheet()}
       </Dialog>
