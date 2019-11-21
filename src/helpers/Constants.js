@@ -19,14 +19,16 @@ export function getAndroidVersion() {
 
 /* Navigation */
 const {StatusBarManager} = NativeModules;
-export let statusBarHeight = setStatusBarHeight();
+export const statusBarHeight = setStatusBarHeight();
 
 function setStatusBarHeight() {
-  statusBarHeight = isIOS ? 20 : StatusBarManager.HEIGHT;
+  let height = 0;
+  height = isIOS ? 20 : StatusBarManager.HEIGHT;
   if (isIOS) {
     // override guesstimate height with the actual height from StatusBarManager
-    StatusBarManager.getHeight(data => (statusBarHeight = data.height));
+    StatusBarManager.getHeight(data => (height = data.height));
   }
+  return height;
 }
 
 /* Layout */
