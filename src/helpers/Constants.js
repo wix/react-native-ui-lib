@@ -34,7 +34,7 @@ function setStatusBarHeight() {
 /* Layout */
 export const isRTL = I18nManager.isRTL;
 
-const {height, width} = Dimensions.get(dimensionsScope.WINDOW);
+const {height, width} = Dimensions.get(dimensionsScope.SCREEN);
 export let orientation = getOrientation(height, width);
 export let isLandscape = orientation === orientations.LANDSCAPE;
 export let screenWidth = width;
@@ -58,8 +58,8 @@ function getOrientation(height, width) {
   return width < height ? orientations.PORTRAIT : orientations.LANDSCAPE;
 }
 
-function updateConstants() {
-  const {height, width} = Dimensions.get(dimensionsScope.WINDOW);
+function updateConstants(dimensions) {
+  const {height, width} = dimensions.screen;
   orientation = getOrientation(height, width);
   isLandscape = orientation === orientations.LANDSCAPE;
   screenWidth = width;
