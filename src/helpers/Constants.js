@@ -19,7 +19,7 @@ export function getAndroidVersion() {
 
 /* Navigation */
 const {StatusBarManager} = NativeModules;
-export let statusBarHeight = setStatusBarHeight();
+export const statusBarHeight = setStatusBarHeight();
 
 function setStatusBarHeight() {
   let height = 0;
