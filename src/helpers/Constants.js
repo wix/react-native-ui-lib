@@ -4,78 +4,91 @@ const dimensionsScope = {
   WINDOW: 'window',
   SCREEN: 'screen'
 };
-export const orientations = {
+
+const constants = {};
+
+constants.orientations = {
   PORTRAIT: 'portrait',
   LANDSCAPE: 'landscape'
 };
 
 /* Platform */
-export const isAndroid = Platform.OS === 'android';
-export const isIOS = Platform.OS === 'ios';
+constants.isAndroid = Platform.OS === 'android';
+constants.isIOS = Platform.OS === 'ios';
 
-export function getAndroidVersion() {
-  return isAndroid ? parseInt(Platform.Version, 10) : undefined;
-}
+constants.getAndroidVersion = () => {
+  return constants.isAndroid ? parseInt(Platform.Version, 10) : undefined;
+};
 
 /* Navigation */
-const {StatusBarManager} = NativeModules;
-export const statusBarHeight = setStatusBarHeight();
-
 function setStatusBarHeight() {
-  let height = 0;
-  height = isIOS ? 20 : StatusBarManager.HEIGHT;
-  if (isIOS) {
+  const {StatusBarManager} = NativeModules;
+  constants.statusBarHeight = 0; // so there will be a value for any case
+  constants.statusBarHeight = constants.isIOS ? 20 : StatusBarManager.HEIGHT;
+  if (constants.isIOS) {
     // override guesstimate height with the actual height from StatusBarManager
-    StatusBarManager.getHeight(data => (height = data.height));
+    StatusBarManager.getHeight(data => (constants.statusBarHeight = data.height));
   }
-  return height;
 }
+
+setStatusBarHeight();
 
 /* Layout */
-export const isRTL = I18nManager.isRTL;
+const {height, width} = Dimensions.get(dimensionsScope.SCREEN);
 
-const {height, width} = Dimensions.get(dimensionsScope.WINDOW);
-export let orientation = getOrientation(height, width);
-export let isLandscape = orientation === orientations.LANDSCAPE;
-export let screenWidth = width;
-export let screenHeight = height;
-export let isSmallScreen = screenWidth <= 340;
-export let isShortScreen = screenHeight <= 600;
-export const screenAspectRatio = screenWidth < screenHeight ? screenHeight / screenWidth : screenWidth / screenHeight;
-export const isTablet = Platform.isPad || (screenAspectRatio < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
+constants.isRTL = I18nManager.isRTL;
+constants.orientation = getOrientation(height, width);
+constants.isLandscape = constants.orientation === constants.orientations.LANDSCAPE;
+constants.screenWidth = width;
+constants.screenHeight = height;
+constants.isSmallScreen = constants.screenWidth <= 340;
+constants.isShortScreen = constants.screenHeight <= 600;
+constants.screenAspectRatio =
+  constants.screenWidth < constants.screenHeight
+    ? constants.screenHeight / constants.screenWidth
+    : constants.screenWidth / constants.screenHeight;
+constants.isTablet =
+  Platform.isPad ||
+  (constants.screenAspectRatio < 1.6 && Math.max(constants.screenWidth, constants.screenHeight) >= 900);
 
-export function getSafeAreaInsets() {
-  return orientation === orientations.LANDSCAPE
+constants.getSafeAreaInsets = () => {
+  return constants.orientation === constants.orientations.LANDSCAPE
     ? {left: 44, right: 44, bottom: 24, top: 0}
     : {left: 0, right: 0, bottom: 34, top: 44};
-}
+};
 
 /* Devices */
-export const isIphoneX = isIOS && !Platform.isPad && !Platform.isTVOS && (screenHeight >= 812 || screenWidth >= 812);
+constants.isIphoneX =
+  constants.isIOS &&
+  !Platform.isPad &&
+  !Platform.isTVOS &&
+  (constants.screenHeight >= 812 || constants.screenWidth >= 812);
 
 /* Orientation */
 function getOrientation(height, width) {
-  return width < height ? orientations.PORTRAIT : orientations.LANDSCAPE;
+  return width < height ? constants.orientations.PORTRAIT : constants.orientations.LANDSCAPE;
 }
 
-function updateConstants() {
-  const {height, width} = Dimensions.get(dimensionsScope.WINDOW);
-  orientation = getOrientation(height, width);
-  isLandscape = orientation === orientations.LANDSCAPE;
-  screenWidth = width;
-  screenHeight = height;
-  isSmallScreen = screenWidth <= 340;
-  isShortScreen = screenHeight <= 600;
+function updateConstants(dimensions) {
+  const {height, width} = dimensions.screen;
+  constants.orientation = getOrientation(height, width);
+  constants.isLandscape = constants.orientation === constants.orientations.LANDSCAPE;
+  constants.screenWidth = width;
+  constants.screenHeight = height;
+  constants.isSmallScreen = constants.screenWidth <= 340;
+  constants.isShortScreen = constants.screenHeight <= 600;
 
   setStatusBarHeight();
 }
 
 Dimensions.addEventListener('change', updateConstants);
 
-export function addDimensionsEventListener(callback) {
+constants.addDimensionsEventListener = (callback) => {
   Dimensions.addEventListener('change', callback);
-}
+};
 
-export function removeDimensionsEventListener(callback) {
+constants.removeDimensionsEventListener = (callback) => {
   Dimensions.removeEventListener('change', callback);
-}
+};
+
+export default constants;
