@@ -2,7 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import * as Constants from '../../helpers/Constants';
+import {Constants} from '../../helpers';
 import {Typography, ThemeManager} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
