@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {StyleSheet, Text, NetInfo} from 'react-native';
-import * as Constants from '../../helpers/Constants';
+import {Constants} from '../../helpers';
 import {PureBaseComponent} from '../../commons';
 import {Colors, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
