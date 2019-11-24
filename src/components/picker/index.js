@@ -13,6 +13,7 @@ import * as PickerPresenter from './PickerPresenter';
 import NativePicker from './NativePicker';
 import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
+import {Colors} from '../../style';
 
 const PICKER_MODES = {
   SINGLE: 'SINGLE',
@@ -128,7 +129,6 @@ class Picker extends BaseComponent {
 
   static defaultProps = {
     ...TextField.defaultProps,
-    enableErrors: undefined,
     mode: PICKER_MODES.SINGLE
   };
 
@@ -303,7 +303,7 @@ class Picker extends BaseComponent {
   };
 
   render() {
-    const {useNativePicker, renderPicker, customPickerProps, testID, enableErrors} = this.props;
+    const {useNativePicker, renderPicker, customPickerProps, testID} = this.props;
 
     if (useNativePicker) {
       return <NativePicker {...this.props}/>;
@@ -321,11 +321,11 @@ class Picker extends BaseComponent {
       );
     }
 
-    const textInputProps = TextField.extractOwnProps(this.props, 'enableErrors');
+    const textInputProps = TextField.extractOwnProps(this.props);
     const label = this.getLabel();
     return (
       <TextField
-        enableErrors={enableErrors || false}
+        color={Colors.dark10}
         {...textInputProps}
         {...this.getAccessibilityInfo()}
         value={label}

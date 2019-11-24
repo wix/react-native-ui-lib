@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import * as Constants from '../../../helpers/Constants';
+import {Constants} from '../../../helpers';
 import TagsInput from '../index';
 
 describe('TagsInput', () => {

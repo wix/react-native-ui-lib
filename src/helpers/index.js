@@ -3,7 +3,7 @@ module.exports = {
     return require('./AvatarHelper');
   },
   get Constants() {
-    return require('./Constants');
+    return require('./Constants').default;
   },
   get DocsGenerator() {
     return require('./DocsGenerator');

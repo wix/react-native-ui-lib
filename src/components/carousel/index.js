@@ -156,20 +156,28 @@ export default class Carousel extends BaseComponent {
       const snapToOffsets = _.times(presenter.getChildrenLength(this.props), index => initialBreak + index * pageWidth);
       return snapToOffsets;
     }
-  }
+  };
 
   shouldUsePageWidth() {
     const {loop, pageWidth} = this.props;
     return !loop && pageWidth;
   }
 
-  onContainerLayout = ({nativeEvent: {layout: {width: containerWidth}}}) => {
+  onContainerLayout = ({
+    nativeEvent: {
+      layout: {width: containerWidth}
+    }
+  }) => {
+    const {initialPage, pageWidth} = this.props;
     const update = {containerWidth};
-    if (!this.props.pageWidth) {
+    if (!pageWidth) {
       update.pageWidth = containerWidth;
+      update.initialOffset = {
+        x: presenter.calcOffset(this.props, {currentPage: initialPage, pageWidth: containerWidth})
+      };
     }
     this.setState(update);
-  }
+  };
 
   onContentSizeChange = () => {
     // this is to handle initial scroll position (content offset)
