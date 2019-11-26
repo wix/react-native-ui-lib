@@ -1,5 +1,5 @@
 import {StyleSheet, PixelRatio} from 'react-native';
-import * as Constants from '../../helpers/Constants';
+import {Constants} from '../../helpers';
 import {Colors, Typography, ThemeManager} from '../../style';
 
 export default function createStyles() {
