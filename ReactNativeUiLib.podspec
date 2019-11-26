@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.module_name  = 'ReactNativeUiLib'
 
   s.source       = { :git => "https://github.com/wix/react-native-ui-lib.git", :tag => "#{s.version}" }
-  s.source_files  = "ios/**/*.{h,m}"
+  s.source_files  = "lib/ios/**/*.{h,m}"
 
   s.dependency 'React'
   s.frameworks = 'UIKit'

@@ -225,7 +225,7 @@ PODS:
     - React
   - ReactNativeNavigation (3.7.0):
     - React
-  - ReactNativeUiLib (2.0.0):
+  - ReactNativeUiLib (3.3.132):
     - React
   - RNCAsyncStorage (1.6.3):
     - React
@@ -269,7 +269,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeKeyboardTrackingView (from `../node_modules/react-native-keyboard-tracking-view`)
   - ReactNativeNavigation (from `../node_modules/react-native-navigation`)
-  - ReactNativeUiLib (from `../lib/ReactNativeUiLib.podspec`)
+  - ReactNativeUiLib (from `../ReactNativeUiLib.podspec`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -338,7 +338,7 @@ EXTERNAL SOURCES:
   ReactNativeNavigation:
     :path: "../node_modules/react-native-navigation"
   ReactNativeUiLib:
-    :path: "../lib/ReactNativeUiLib.podspec"
+    :path: "../ReactNativeUiLib.podspec"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
   RNGestureHandler:
@@ -380,13 +380,13 @@ SPEC CHECKSUMS:
   ReactCommon: a6a294e7028ed67b926d29551aa9394fd989c24c
   ReactNativeKeyboardTrackingView: a240a6a0dba852bb107109a7ec7e98b884055977
   ReactNativeNavigation: bed6f504aa1a4dadd151503bf99d0ef96d06847f
-  ReactNativeUiLib: 7a6e0ef371701efcddde251ca8ca5cfe2c54a259
+  ReactNativeUiLib: 752234a614cce1f99c58f62ca5b825ac88124d7c
   RNCAsyncStorage: 6b57de0f6cb0dcfd17521af1681fa39001d3efff
   RNGestureHandler: a4ddde1ffc6e590c8127b8b7eabfdade45475c74
   RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
   RNTextSize: 91955a6ea2adda9dc7802ce472b7a4dc717686f6
   Yoga: ba3d99dbee6c15ea6bbe3783d1f0cb1ffb79af0f
 
-PODFILE CHECKSUM: d416c9a81250d09164f44143386be7b603a03113
+PODFILE CHECKSUM: 9286e3ad14555869c9a58140620f0fb838796ff3
 
 COCOAPODS: 1.8.4

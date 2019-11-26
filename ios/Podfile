@@ -2,7 +2,7 @@ platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 target 'rnuilib' do
-  pod 'ReactNativeUiLib', :path => "../lib/ReactNativeUiLib.podspec"
+  pod 'ReactNativeUiLib', :path => "../ReactNativeUiLib.podspec"
   # Pods for rnuilib
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
