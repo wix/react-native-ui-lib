@@ -6,6 +6,7 @@ import {WheelPicker} from '../../nativeComponents';
 import PickerDialog from './PickerDialog';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
+import {Colors} from '../../style';
 
 class NativePicker extends BaseComponent {
   state = {
@@ -75,8 +76,6 @@ class NativePicker extends BaseComponent {
 
   render() {
     const {renderPicker, customPickerProps, testID} = this.props;
-    const textInputProps = TextField.extractOwnProps(this.props);
-    const label = this.getLabel();
 
     if (_.isFunction(renderPicker)) {
       const {selectedValue} = this.state;
@@ -90,10 +89,12 @@ class NativePicker extends BaseComponent {
       );
     }
 
+    const textInputProps = TextField.extractOwnProps(this.props);
+    const label = this.getLabel();
     return (
       <TextField
+        color={Colors.dark10}
         {...textInputProps}
-        enableErrors={false}
         value={label}
         expandable
         renderExpandable={this.renderPickerDialog}
