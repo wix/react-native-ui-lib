@@ -238,7 +238,6 @@ export default class Avatar extends PureBaseComponent {
           size={this.getBadgeSize()}
           {...badgeProps}
           containerStyle={this.getBadgePosition()}
-          label={undefined}
           testID={`${testID}.onlineBadge`}
         />
       );
