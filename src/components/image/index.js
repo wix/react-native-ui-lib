@@ -9,7 +9,6 @@ import Assets from '../../assets';
 import View from '../view';
 import Overlay from '../overlay';
 
-
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
  * @extends: Image
@@ -63,6 +62,21 @@ class Image extends PureBaseComponent {
     super(props);
 
     this.sourceTransformer = this.getThemeProps().sourceTransformer;
+    const flatStyle = StyleSheet.flatten(props.style);
+    this.absoluteStyle = Overlay.getAttributeStyles(flatStyle, [
+      'position',
+      'bottom',
+      'top',
+      'left',
+      'right',
+      'start',
+      'end',
+      'height',
+      'width'
+    ]);
+    if (this.absoluteStyle && this.absoluteStyle.position !== 'absolute') {
+      this.absoluteStyle = undefined;
+    }
   }
 
   getImageSource() {
@@ -107,10 +121,10 @@ class Image extends PureBaseComponent {
 
   render() {
     const {style, overlayType} = this.getThemeProps();
-  
+
     if (overlayType) {
       return (
-        <View>
+        <View style={this.absoluteStyle}>
           {this.renderImage()}
           <Overlay style={style} type={overlayType}/>
         </View>

@@ -31,6 +31,11 @@ export default class Overlay extends PureBaseComponent {
 
   static overlayTypes = OVERLY_TYPES;
 
+  constructor(props) {
+    super(props);
+    this.flatStyle = StyleSheet.flatten(props.style);
+  }
+
   getStyleByType() {
     switch (this.props.type) {
       case OVERLY_TYPES.TOP:
@@ -44,34 +49,59 @@ export default class Overlay extends PureBaseComponent {
     }
   }
 
-  getAttributeStyles(style, attName) {
-    const flatten = StyleSheet.flatten(style);
+  static getAttributeStyles(flatStyle, attNames) {
     let attributes;
 
-    if (flatten) {
-      attributes = _.chain(flatten)
-        .pickBy((value, key) => _.includes(key, attName))
+    if (flatStyle) {
+      attributes = _.chain(flatStyle)
+        .pickBy((value, key) => _.includes(attNames, key))
         .value();
     }
+
     return attributes;
   }
 
-  renderImage(typeStyle) {
-    const {type, style} = this.props;
-    const image = type !== OVERLY_TYPES.SOLID ? gradientImage : undefined;
-    const marginStyle = type !== OVERLY_TYPES.VERTICAL ? this.getAttributeStyles(style, 'margin') : undefined;
+  getStyle = typeStyle => {
+    const {type} = this.props;
+    const marginStyle =
+      type !== OVERLY_TYPES.VERTICAL || !typeStyle ? Overlay.getAttributeStyles(this.flatStyle, 'margin') : undefined;
+    const absoluteStyle = Overlay.getAttributeStyles(this.flatStyle, [
+      'position',
+      'bottom',
+      'top',
+      'left',
+      'right',
+      'start',
+      'end',
+      'height',
+      'width'
+    ]);
 
-    return <Image style={[marginStyle, styles.container, typeStyle]} resizeMode={'stretch'} source={image}/>;
+    if (absoluteStyle.position === 'absolute') {
+      const marginTop = type === OVERLY_TYPES.TOP ? -marginStyle.margin - absoluteStyle.bottom : undefined;
+
+      return {...absoluteStyle, ...typeStyle, ...marginStyle, marginTop};
+    } else {
+      return {...styles.container, ...typeStyle, ...marginStyle};
+    }
+  };
+
+  renderImage(typeStyle) {
+    const {type} = this.props;
+    const image = type !== OVERLY_TYPES.SOLID ? gradientImage : undefined;
+    const style = this.getStyle(typeStyle);
+
+    return <Image style={[style]} resizeMode={'stretch'} source={image}/>;
   }
 
   render() {
-    const {type, style} = this.props;
+    const {type} = this.props;
 
     if (type === OVERLY_TYPES.VERTICAL) {
-      const marginStyle = this.getAttributeStyles(style, 'margin');
+      const style = this.getStyle();
 
       return (
-        <View style={[styles.container, marginStyle]}>
+        <View style={[styles.container, style]}>
           {this.renderImage(styles.top)}
           {this.renderImage(styles.bottom)}
         </View>
