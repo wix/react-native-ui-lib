@@ -107,7 +107,8 @@ export default class Carousel extends BaseComponent {
 
   onOrientationChanged = () => {
     if (!this.props.pageWidth || this.props.loop) {
-      this.setState({pageWidth: Constants.screenWidth});
+      // HACK: setting to containerWidth for Android's call when view disappear
+      this.setState({pageWidth: this.state.containerWidth || Constants.screenWidth});
       this.goToPage(this.state.currentPage, true);
     }
   };
