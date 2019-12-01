@@ -273,6 +273,8 @@ class Picker extends BaseComponent {
       const modalProps = {
         visible: showExpandableModal,
         toggleModal: this.toggleExpandableModal,
+        listProps,
+        onSearchChange: this.onSearchChange,
         children
       };
 
