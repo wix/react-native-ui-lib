@@ -95,7 +95,6 @@ class NativePicker extends BaseComponent {
       <TextField
         color={Colors.dark10}
         {...textInputProps}
-        enableErrors={false}
         value={label}
         expandable
         renderExpandable={this.renderPickerDialog}
