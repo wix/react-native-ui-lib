@@ -49,12 +49,17 @@ export default class CardImage extends BaseComponent {
   }
 
   render() {
-    const {imageSource, style, position, borderRadius, testID} = this.props;
+    const {imageSource, style, position, borderRadius, testID, overlayType} = this.props;
     const borderStyle = CardPresenter.generateBorderRadiusStyle({position, borderRadius});
     if (imageSource) {
       return (
         <View style={[this.styles.container, borderStyle, style]}>
-          <Image testID={testID} source={imageSource} style={[this.styles.image/* , borderStyle */]}/>
+          <Image
+            testID={testID}
+            source={imageSource}
+            style={[this.styles.image/* , borderStyle */]}
+            overlayType={overlayType}
+          />
         </View>
       );
     }

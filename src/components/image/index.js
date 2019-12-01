@@ -63,7 +63,7 @@ class Image extends PureBaseComponent {
 
     this.sourceTransformer = this.getThemeProps().sourceTransformer;
     const flatStyle = StyleSheet.flatten(props.style);
-    this.absoluteStyle = Overlay.getAttributeStyles(flatStyle, [
+    this.containerStyle = Overlay.getAttributeStyles(flatStyle, [
       'position',
       'bottom',
       'top',
@@ -74,8 +74,10 @@ class Image extends PureBaseComponent {
       'height',
       'width'
     ]);
-    if (this.absoluteStyle && this.absoluteStyle.position !== 'absolute') {
-      this.absoluteStyle = undefined;
+    if (this.containerStyle && this.containerStyle.position !== 'absolute') {
+      const style = Overlay.getAttributeStyles(flatStyle, 'height');
+      const noHeight = _.isUndefined(style) || _.isNil(style.height);
+      this.containerStyle = noHeight ? {flex: 1} : undefined;
     }
   }
 
@@ -124,7 +126,7 @@ class Image extends PureBaseComponent {
 
     if (overlayType) {
       return (
-        <View style={this.absoluteStyle}>
+        <View style={this.containerStyle}>
           {this.renderImage()}
           <Overlay style={style} type={overlayType}/>
         </View>
