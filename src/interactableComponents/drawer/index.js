@@ -173,6 +173,7 @@ class NewDrawer extends PureBaseComponent {
   getAccessibilityActions() {
     const {rightItems, leftItem} = this.props;
     const actions = [];
+
     if (leftItem && leftItem.onPress && leftItem.text) {
       // actions[leftItem.text] = leftItem;
       actions.push({name: leftItem.text, label: leftItem.text, onPress: leftItem.onPress});
@@ -181,7 +182,7 @@ class NewDrawer extends PureBaseComponent {
       rightItems.forEach(item => {
         if (item.onPress && item.text) {
           // actions[item.text] = item;
-          actions.push({name: leftItem.text, label: leftItem.text, onPress: item.onPress});
+          actions.push({name: item.text, label: item.text, onPress: item.onPress});
         }
       });
     }
