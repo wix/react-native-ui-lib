@@ -329,7 +329,6 @@ class Picker extends BaseComponent {
         color={Colors.dark10}
         {...textInputProps}
         {...this.getAccessibilityInfo()}
-        enableErrors={false}
         value={label}
         expandable
         renderExpandable={this.renderExpandableModal}

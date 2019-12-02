@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 import {View as RNView, ViewPropTypes, SafeAreaView, Animated} from 'react-native';
 import {asBaseComponent, forwardRef} from '../../commons';
-import * as Constants from '../../helpers/Constants';
+import {Constants} from '../../helpers';
 
 /**
  * @description: Wrapper component for React Native View component
