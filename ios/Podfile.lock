@@ -225,7 +225,7 @@ PODS:
     - React
   - ReactNativeNavigation (3.7.0):
     - React
-  - ReactNativeUiLib (2.0.0):
+  - ReactNativeUiLib (2.0.1):
     - React
   - RNCAsyncStorage (1.6.3):
     - React
@@ -380,7 +380,7 @@ SPEC CHECKSUMS:
   ReactCommon: a6a294e7028ed67b926d29551aa9394fd989c24c
   ReactNativeKeyboardTrackingView: a240a6a0dba852bb107109a7ec7e98b884055977
   ReactNativeNavigation: bed6f504aa1a4dadd151503bf99d0ef96d06847f
-  ReactNativeUiLib: 7a6e0ef371701efcddde251ca8ca5cfe2c54a259
+  ReactNativeUiLib: 217f90ec42d9cfcd136a442f6963cd9c744e0bc1
   RNCAsyncStorage: 6b57de0f6cb0dcfd17521af1681fa39001d3efff
   RNGestureHandler: a4ddde1ffc6e590c8127b8b7eabfdade45475c74
   RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
