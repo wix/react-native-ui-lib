@@ -15,5 +15,9 @@ Check out our [Docs](https://wix.github.io/react-native-ui-lib/). <br>
 Our [Discord Channel](https://discord.gg/2eW4g6Z)
 
 
-### RN60
-please use `react-native-ui-lib@rn61` for React Native >= 0.60.0 (till it will publish officially)
+### Installing
+#### For React Native >= 0.60.0
+please use `react-native-ui-lib@^4.0.0`
+
+#### For React Native < 0.60.0
+please use `react-native-ui-lib@^3.0.0`
