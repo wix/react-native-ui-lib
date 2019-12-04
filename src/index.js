@@ -181,6 +181,11 @@ module.exports = {
     return require('./helpers').DocsGenerator;
   },
 
+  // Services
+  get LogService() {
+    return require('./services').LogService;
+  },
+
   // ScreenComponents
   get LoaderScreen() {
     return require('./screensComponents').LoaderScreen;

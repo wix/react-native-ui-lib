@@ -174,6 +174,21 @@ export default class Button extends PureBaseComponent {
     }
   }
 
+  componentDidMount() {
+    Constants.addDimensionsEventListener(this.onOrientationChanged);
+  }
+
+  componentWillUnmount() {
+    Constants.removeDimensionsEventListener(this.onOrientationChanged);
+  }
+
+  onOrientationChanged = () => {
+    if (Constants.isTablet && this.props.fullWidth) {
+      // only to trigger re-render
+      this.setState({isLandscape: Constants.isLandscape});
+    }
+  };
+
   // This method will be called more than once in case of layout change!
   onLayout = event => {
     const height = event.nativeEvent.layout.height;

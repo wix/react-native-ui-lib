@@ -65,7 +65,7 @@ export default class ButtonsScreen extends DemoScreen {
     return (
       <View useSafeArea>
         {!!snippet && <SnippetBlock snippet={snippet} onClose={() => this.hideSnippet()}/>}
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View centerH>
             <Text style={styles.title}>Buttons</Text>
 

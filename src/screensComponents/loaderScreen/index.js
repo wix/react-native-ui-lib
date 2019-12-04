@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, ActivityIndicator} from 'react-native';
 import {Colors, Typography, ThemeManager} from '../../style';
-import * as Constants from '../../helpers/Constants';
+import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
 import Text from '../../components/text';
