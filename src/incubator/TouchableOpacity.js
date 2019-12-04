@@ -12,6 +12,8 @@ const {
   Clock,
   Code,
   cond,
+  and,
+  not,
   eq,
   Value,
   call,
@@ -46,6 +48,19 @@ export default class TouchableOpacity extends Component {
     pressState: new Value(-1)
   };
 
+  isAnimating = new Value(0);
+  clock = new Clock();
+  _scale = new Value(1);
+  _color = new Value(1);
+
+  _opacity = block([
+    cond(eq(this.pressState, State.BEGAN), this.props.activeOpacity, 1)
+  ]);
+
+  _color = cond(eq(this.pressState, State.BEGAN),
+    processColor(this.props.feedbackColor || this.props.backgroundColor),
+    processColor(this.props.backgroundColor));
+
   get pressState() {
     return this.props.pressState || this.state.pressState;
   }
@@ -56,20 +71,6 @@ export default class TouchableOpacity extends Component {
     }
   ],
   {useNativeDriver: true});
-
-  clock = new Clock();
-  colorClock = new Clock();
-  _scale = new Value(1);
-  _color = new Value(1);
-  _opacity = block([
-    // cond(eq(this.pressState, State.END),
-    //   call([], () => this.props.onPress(this.props))),
-    cond(eq(this.pressState, State.BEGAN), this.props.activeOpacity, 1)
-  ]);
-
-  _color = cond(eq(this.pressState, State.BEGAN),
-    processColor(this.props.feedbackColor || this.props.backgroundColor),
-    processColor(this.props.backgroundColor));
 
   render() {
     const {style, activeScale, onPress, ...others} = this.props;
@@ -85,13 +86,18 @@ export default class TouchableOpacity extends Component {
           <Code>
             {() =>
               block([
-                cond(eq(this.pressState, State.END),
-                  call([], () => onPress(this.props))),
-                // TODO: investigate why this code trigger onPress callback too
-                // many times
-                cond(eq(this.pressState, State.BEGAN),
-                  block([runTiming(this.clock, this._scale, 1, activeScale)]),
-                  block([runTiming(this.clock, this._scale, activeScale, 1)]))
+                // trigger onPress callback on END state once
+                cond(and(eq(this.isAnimating, 0), eq(this.pressState, State.END)), [
+                  set(this.isAnimating, 1),
+
+                  call([], () => onPress(this.props))
+                ]),
+                // Active state - scale animation
+                cond(eq(this.pressState, State.BEGAN), block([runTiming(this.clock, this._scale, 1, activeScale)])),
+                // End state - scale animation
+                cond(eq(this.pressState, State.END), block([runTiming(this.clock, this._scale, activeScale, 1)])),
+                // Reset isAnimating flag
+                cond(and(eq(this.pressState, State.END), not(clockRunning(this.clock))), set(this.isAnimating, 0))
               ])
             }
           </Code>
@@ -104,7 +110,6 @@ export default class TouchableOpacity extends Component {
 function runTiming(clock, position, value, dest) {
   const state = {
     finished: new Value(0),
-    // position: new Value(0),
     position,
     time: new Value(0),
     frameTime: new Value(0)
