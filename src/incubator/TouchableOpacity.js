@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Reanimated, {Easing} from 'react-native-reanimated';
 import {TapGestureHandler, State} from 'react-native-gesture-handler';
+import {asBaseComponent, forwardRef} from '../commons';
 
 const {
   Clock,
@@ -27,7 +28,7 @@ const {
   stopClock
 } = Reanimated;
 
-export default class TouchableOpacity extends Component {
+class TouchableOpacity extends Component {
   static propTypes = {
     backgroundColor: PropTypes.string,
     feedbackColor: PropTypes.string,
@@ -40,7 +41,6 @@ export default class TouchableOpacity extends Component {
   static defaultProps = {
     activeOpacity: 0.2,
     activeScale: 1,
-    // feedbackColor: 'transparent',
     onPress: _.noop
   };
 
@@ -53,16 +53,20 @@ export default class TouchableOpacity extends Component {
   _scale = new Value(1);
   _color = new Value(1);
 
-  _opacity = block([
-    cond(eq(this.pressState, State.BEGAN), this.props.activeOpacity, 1)
-  ]);
+  _opacity = block([cond(eq(this.pressState, State.BEGAN), this.props.activeOpacity, 1)]);
 
   _color = cond(eq(this.pressState, State.BEGAN),
-    processColor(this.props.feedbackColor || this.props.backgroundColor),
-    processColor(this.props.backgroundColor));
+    processColor(this.props.feedbackColor || this.backgroundColor),
+    processColor(this.backgroundColor));
 
   get pressState() {
     return this.props.pressState || this.state.pressState;
+  }
+
+  get backgroundColor() {
+    const {modifiers, backgroundColor: backgroundColorProp} = this.props;
+    const {backgroundColor} = modifiers;
+    return backgroundColorProp || backgroundColor;
   }
 
   onStateChange = event([
@@ -73,13 +77,22 @@ export default class TouchableOpacity extends Component {
   {useNativeDriver: true});
 
   render() {
-    const {style, activeScale, onPress, ...others} = this.props;
+    const {modifiers, style, activeScale, onPress, forwardedRef, ...others} = this.props;
+    const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
 
     return (
-      <TapGestureHandler onHandlerStateChange={this.onStateChange} shouldCancelWhenOutside>
+      <TapGestureHandler onHandlerStateChange={this.onStateChange} shouldCancelWhenOutside ref={forwardedRef}>
         <Reanimated.View
           {...others}
-          style={[style, {backgroundColor: this._color, opacity: this._opacity, transform: [{scale: this._scale}]}]}
+          style={[
+            borderRadius && {borderRadius},
+            flexStyle,
+            paddings,
+            margins,
+            alignments,
+            style,
+            {backgroundColor: this._color, opacity: this._opacity, transform: [{scale: this._scale}]}
+          ]}
         >
           {this.props.children}
 
@@ -144,3 +157,5 @@ function runTiming(clock, position, value, dest) {
     state.position
   ]);
 }
+
+export default asBaseComponent(forwardRef(TouchableOpacity));
