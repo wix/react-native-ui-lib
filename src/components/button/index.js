@@ -464,8 +464,18 @@ export default class Button extends PureBaseComponent {
     return null;
   }
 
-  render() {
-    const {onPress, disabled, link, style, containerStyle, testID, animateLayout, ...others} = this.getThemeProps();
+  renderButton = () => {
+    const {
+      onPress,
+      disabled,
+      link,
+      style,
+      containerStyle,
+      testID,
+      animateLayout,
+      useSafeArea,
+      ...others
+    } = this.getThemeProps();
     const shadowStyle = this.getShadowStyle();
     const {margins} = this.state;
     const backgroundColor = this.getBackgroundColor();
@@ -483,7 +493,7 @@ export default class Button extends PureBaseComponent {
           shadowStyle,
           margins,
           containerStyle,
-          backgroundColor && {backgroundColor},
+          backgroundColor && !useSafeArea && {backgroundColor},
           borderRadiusStyle,
           outlineStyle,
           style
@@ -505,6 +515,21 @@ export default class Button extends PureBaseComponent {
         </View>
       </TouchableOpacity>
     );
+  };
+
+  render() {
+    const {useSafeArea} = this.getThemeProps();
+    const backgroundColor = this.getBackgroundColor();
+
+    if (useSafeArea) {
+      return (
+        <View useSafeArea={useSafeArea} style={backgroundColor && useSafeArea && {backgroundColor}}>
+          {this.renderButton()}
+        </View>
+      );
+    } else {
+      return this.renderButton();
+    }
   }
 }
 
