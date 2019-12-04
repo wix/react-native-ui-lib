@@ -7,15 +7,17 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
-import android.support.annotation.ColorInt;
 import android.view.View;
 import android.util.SizeF;
+
+import androidx.annotation.ColorInt;
 
 public class HighlighterView extends View {
     private RectF highlightFrame;
     private RectF viewBasedHighlightFrame;
     HighlightViewTagParams highlightViewTagParams;
-    private @ColorInt int overlayColor;
+    private @ColorInt
+    int overlayColor;
     private @ColorInt int strokeColor;
     private float strokeWidth;
     private float borderRadius;

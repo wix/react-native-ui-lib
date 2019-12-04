@@ -56,7 +56,7 @@ export default class Stepper extends PureBaseComponent {
       accessibilityLabel: accessibilityLabel ? `${accessibilityLabel}, ${labelSuffix}` : `Stepper, ${labelSuffix}`,
       accessible: true,
       accessibilityRole: 'adjustable',
-      accessibilityActions: ['decrement', 'increment'],
+      accessibilityActions: [{name: 'increment', label: 'increment'}, {name: 'decrement', label: 'decrement'}],
       onAccessibilityAction: this.onAccessibilityAction
     };
   }
@@ -67,7 +67,8 @@ export default class Stepper extends PureBaseComponent {
     const eventMsgContext = event.nativeEvent.action === 'decrement' ? 'Minimum' : 'Maximum';
     const stepperLimitMsg = `${eventMsgContext} stepper value, ${value}, reached`;
 
-    switch (event.nativeEvent.action) {
+    // switch (event.nativeEvent.action) {
+    switch (event.nativeEvent.actionName) {
       case 'decrement':
         if (value <= min) {
           _.invoke(AccessibilityInfo, 'announceForAccessibility', stepperLimitMsg);

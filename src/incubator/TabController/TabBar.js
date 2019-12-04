@@ -273,7 +273,7 @@ class TabBar extends PureComponent {
     const {height, enableShadow} = this.props;
     const {itemsWidths, itemsOffsets, scrollEnabled} = this.state;
     return (
-      <View style={enableShadow && styles.containerShadow}>
+      <View style={[styles.container, enableShadow && styles.containerShadow]}>
         <ScrollView
           ref={this.tabBar}
           horizontal
@@ -319,6 +319,9 @@ class TabBar extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    zIndex: 100
+  },
   tabBar: {
     flex: 1,
     backgroundColor: Colors.white,

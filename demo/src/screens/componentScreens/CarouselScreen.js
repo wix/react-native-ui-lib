@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import {Constants, View, Text, Carousel, Image, Card} from 'react-native-ui-lib'; // eslint-disable-line
 import _ from 'lodash';
 
-const INITIAL_PAGE = 0;
+const INITIAL_PAGE = 2;
 const WIDTH = Constants.screenWidth - 120;
 
 const IMAGES = [
@@ -39,7 +39,7 @@ class CarouselScreen extends Component {
           onChangePage={index => this.onChangePage(index)}
           pageWidth={WIDTH}
           // itemSpacings={20}
-          // initialPage={INITIAL_PAGE}
+          initialPage={INITIAL_PAGE}
           containerStyle={{height: 160/* , flex: 1 */}}
           pageControlPosition={'under'}
           pageControlProps={{onPagePress: this.onPagePress}}
@@ -73,7 +73,7 @@ class CarouselScreen extends Component {
         </View>
 
         <View padding-20>
-          <Carousel test migrate containerStyle={{height: 160}}>
+          <Carousel migrate containerStyle={{height: 160}} initialPage={INITIAL_PAGE} loop>
             {_.map(IMAGES, (image, index) => {
               return (
                 <View key={index} flex padding-10 bottom>

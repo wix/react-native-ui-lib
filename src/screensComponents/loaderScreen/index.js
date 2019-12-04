@@ -4,7 +4,7 @@ import React from 'react';
 import {StyleSheet, ActivityIndicator} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {Colors, Typography, ThemeManager} from '../../style';
-import * as Constants from '../../helpers/Constants';
+import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import Text from '../../components/text';
 import View from '../../components/view';

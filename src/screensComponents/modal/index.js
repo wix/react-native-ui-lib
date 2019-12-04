@@ -2,8 +2,8 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Modal as RNModal, TouchableWithoutFeedback} from 'react-native';
-import {BlurView} from '@react-native-community/blur';
-import {Constants} from '../../helpers';
+// import {BlurView} from '@react-native-community/blur';
+// import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import TopBar from './TopBar';
 import View from '../../components/view';
@@ -55,8 +55,8 @@ export default class Modal extends BaseComponent {
   }
 
   render() {
-    const {blurView, enableModalBlur, visible, ...others} = this.props;
-    const defaultContainer = enableModalBlur && Constants.isIOS ? BlurView : View;
+    const {blurView, /* enableModalBlur, */ visible, ...others} = this.props;
+    const defaultContainer = /* enableModalBlur && Constants.isIOS ? BlurView :  */View;
     const Container = blurView ? blurView : defaultContainer;
 
     return (

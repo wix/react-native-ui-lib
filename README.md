@@ -13,3 +13,11 @@ UI Toolset & Components Library for React Native
 Read more in our [Wiki](https://github.com/wix/react-native-ui-lib/wiki). <br>
 Check out our [Docs](https://wix.github.io/react-native-ui-lib/). <br>
 Our [Discord Channel](https://discord.gg/2eW4g6Z)
+
+
+### Installing
+#### For React Native >= 0.60.0
+please use `react-native-ui-lib@^4.0.0`
+
+#### For React Native < 0.60.0
+please use `react-native-ui-lib@^3.0.0`
