@@ -103,7 +103,7 @@ export default class Badge extends PureBaseComponent {
     return {
       accessibilityLabel: icon ? 'badge' : label ? `${label} new items` : undefined,
       ...this.extractAccessibilityProps(),
-      accessible: true,
+      accessible: !_.isUndefined(label),
       accessibilityRole: onPress ? 'button' : icon ? 'image' : 'text'
     };
   }
@@ -209,6 +209,7 @@ export default class Badge extends PureBaseComponent {
       borderWidth,
       backgroundColor,
       containerStyle,
+      label,
       icon,
       onPress,
       testId,
@@ -236,7 +237,7 @@ export default class Badge extends PureBaseComponent {
           activeOpacity={activeOpacity}
           {...animationProps}
         >
-          {icon ? this.renderIcon() : this.renderLabel()}
+          {icon ? this.renderIcon() : label ? this.renderLabel() : undefined}
         </Container>
       </View>
     );
