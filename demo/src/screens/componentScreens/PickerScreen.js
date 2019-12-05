@@ -29,6 +29,7 @@ export default class PickerScreen extends Component {
       // language: {value: 'java', label: 'Java'},
       language: undefined,
       languages: [],
+      nativePickerValue: 'java',
       customModalValues: [],
       filter: filters[0],
       contact: contacts[0],
