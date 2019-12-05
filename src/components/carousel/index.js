@@ -10,6 +10,7 @@ import Text from '../text';
 import PageControl from '../pageControl';
 import * as presenter from './CarouselPresenter';
 
+
 const PAGE_CONTROL_POSITIONS = {
   OVER: 'over',
   UNDER: 'under'
@@ -84,10 +85,9 @@ export default class Carousel extends BaseComponent {
     super(props);
 
     this.carousel = React.createRef();
-    const defaultPageWidth = props.loop
-      ? Constants.screenWidth
-      : props.pageWidth + props.itemSpacings || Constants.screenWidth;
-
+    const defaultPageWidth = props.loop ? 
+      Constants.screenWidth : props.pageWidth + props.itemSpacings || Constants.screenWidth;
+    
     this.state = {
       containerWidth: undefined,
       currentPage: this.shouldUsePageWidth() ? this.getCalcIndex(props.initialPage) : props.initialPage,
@@ -117,8 +117,8 @@ export default class Carousel extends BaseComponent {
   }
 
   updateOffset = (animated = false) => {
-    const centerOffset =
-      Constants.isIOS && this.shouldUsePageWidth() ? (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
+    const centerOffset = Constants.isIOS && this.shouldUsePageWidth() ? 
+      (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
     const x = presenter.calcOffset(this.props, this.state) - centerOffset;
 
     if (this.carousel) {
@@ -163,13 +163,10 @@ export default class Carousel extends BaseComponent {
     return !loop && pageWidth;
   }
 
-  onContainerLayout = ({
-    nativeEvent: {
-      layout: {width: containerWidth}
-    }
-  }) => {
+  onContainerLayout = ({nativeEvent: {layout: {width: containerWidth}}}) => {
     const {initialPage, pageWidth} = this.props;
     const update = {containerWidth};
+
     if (!pageWidth) {
       update.pageWidth = containerWidth;
       update.initialOffset = {
@@ -190,6 +187,7 @@ export default class Carousel extends BaseComponent {
     // finished full page scroll
     const {currentStandingPage, currentPage} = this.state;
     const index = this.getCalcIndex(currentPage);
+    
     this.setState({currentStandingPage: index});
     if (currentStandingPage !== index) {
       _.invoke(this.props, 'onChangePage', index, currentStandingPage);
@@ -229,11 +227,6 @@ export default class Carousel extends BaseComponent {
   };
 
   renderChildren() {
-    const {containerWidth} = this.state;
-    if (!containerWidth && !this.shouldUsePageWidth()) {
-      return null;
-    }
-
     const {children, loop} = this.props;
     const length = presenter.getChildrenLength(this.props);
 
@@ -254,10 +247,8 @@ export default class Carousel extends BaseComponent {
 
     if (pageControlPosition) {
       const pagesCount = presenter.getChildrenLength(this.props);
-      const containerStyle =
-        pageControlPosition === PAGE_CONTROL_POSITIONS.UNDER
-          ? {marginVertical: 16}
-          : {position: 'absolute', bottom: 16, alignSelf: 'center'};
+      const containerStyle = pageControlPosition === PAGE_CONTROL_POSITIONS.UNDER ? 
+        {marginVertical: 16} : {position: 'absolute', bottom: 16, alignSelf: 'center'};
 
       return (
         <PageControl
@@ -292,7 +283,6 @@ export default class Carousel extends BaseComponent {
   render() {
     const {containerStyle, itemSpacings, ...others} = this.props;
     const {initialOffset} = this.state;
-
     const scrollContainerStyle = this.shouldUsePageWidth() ? {paddingRight: itemSpacings} : undefined;
     const snapToOffsets = this.getSnapToOffsets();
 
