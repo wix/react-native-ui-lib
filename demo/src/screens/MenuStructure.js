@@ -100,6 +100,7 @@ export const navigationData = {
     title: 'Incubator',
     screens: [
       {title: 'TabBarController', tags: 'tabbar controller native', screen: 'unicorn.incubator.TabControllerScreen'},
+      {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'}
     ]
   },
   Examples: {

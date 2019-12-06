@@ -1,6 +1,7 @@
 package com.wix.reactnativeuilib.highlighterview;
 
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.facebook.react.uimanager.NativeViewHierarchyManager;
 import com.facebook.react.uimanager.UIBlock;

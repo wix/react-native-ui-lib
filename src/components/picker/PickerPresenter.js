@@ -23,5 +23,5 @@ export function getItemValue(props) {
 }
 
 export function getItemLabel(props) {
-  return _.invoke(props, 'getLabel', props.value) || _.get(props.value, 'label');
+  return _.invoke(props, 'getLabel', props.value) || _.get(props.value, 'label') || _.get(props, 'label');
 }
