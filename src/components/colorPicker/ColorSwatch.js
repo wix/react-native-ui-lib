@@ -2,7 +2,12 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, Easing} from 'react-native';
-import {Assets, Colors, PureBaseComponent, View, TouchableOpacity, Image} from 'react-native-ui-lib';
+import Assets from '../../assets';
+import View from '../view';
+import TouchableOpacity from '../touchableOpacity';
+import Image from '../image';
+import {PureBaseComponent} from '../../commons';
+import {Colors} from '../../style';
 
 
 const transparentImage = require('./assets/transparentSwatch/TransparentSwatch.png');
