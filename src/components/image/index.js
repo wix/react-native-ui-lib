@@ -2,13 +2,12 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
-import {Image as RNImage, StyleSheet} from 'react-native';
+import {Image as RNImage, StyleSheet, ImageBackground} from 'react-native';
 import {Constants} from '../../helpers';
 import {PureBaseComponent} from '../../commons';
 import Assets from '../../assets';
 import View from '../view';
 import Overlay from '../overlay';
-
 
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
@@ -62,6 +61,9 @@ class Image extends PureBaseComponent {
   constructor(props) {
     super(props);
 
+    this.flatStyle = StyleSheet.flatten(props.style);
+    this.containerStyle = [{flex: 1}, this.getAttributeStyles(this.flatStyle, 'margin')];
+    this.isDynamicSize = this.isDynamicSize();
     this.sourceTransformer = this.getThemeProps().sourceTransformer;
   }
 
@@ -83,40 +85,63 @@ class Image extends PureBaseComponent {
     return source;
   }
 
-  renderImage() {
+  getAttributeStyles(flatStyle, attNames) {
+    let attributes;
+
+    if (flatStyle) {
+      attributes = _.chain(flatStyle)
+        .pickBy((value, key) => _.includes(attNames, key))
+        .value();
+    }
+
+    return attributes;
+  }
+
+  isDynamicSize() {
+    const style = this.getAttributeStyles(this.flatStyle, ['height', 'width', 'flex']);
+    const noSize = _.isUndefined(style) || _.isNil(style.height) || _.isNil(style.width);
+    return noSize;
+  }
+
+  renderImage(noMargin, overlayType) {
     const source = this.getImageSource();
     const {tintColor, style, supportRTL, cover, aspectRatio, ...others} = this.getThemeProps();
     const shouldFlipRTL = supportRTL && Constants.isRTL;
+    const ImageView = overlayType ? ImageBackground : RNImage;
 
     return (
-      <RNImage
+      <ImageView
         style={[
           {tintColor},
           shouldFlipRTL && styles.rtlFlipped,
           cover && styles.coverImage,
           aspectRatio && {aspectRatio},
-          style
+          style,
+          noMargin && {margin: undefined}
         ]}
         accessible={false}
         accessibilityRole={'image'}
         {...others}
         source={source}
-      />
+      >
+        {overlayType && <Overlay style={style} type={overlayType}/>}
+      </ImageView>
     );
   }
 
   render() {
     const {style, overlayType} = this.getThemeProps();
-  
-    if (overlayType) {
+
+    if (this.isDynamicSize && overlayType) {
       return (
-        <View>
-          {this.renderImage()}
+        <View style={this.containerStyle}>
+          {this.renderImage(true)}
           <Overlay style={style} type={overlayType}/>
         </View>
       );
     }
-    return this.renderImage();
+
+    return this.renderImage(false, overlayType);
   }
 }
 
