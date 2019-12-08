@@ -77,7 +77,7 @@ export default class Overlay extends PureBaseComponent {
       'width'
     ]);
 
-    if (absoluteStyle.position === 'absolute') {
+    if (absoluteStyle && absoluteStyle.position === 'absolute') {
       const marginTop = type === OVERLY_TYPES.TOP ? -marginStyle.margin - absoluteStyle.bottom : undefined;
 
       return {...absoluteStyle, ...typeStyle, ...marginStyle, marginTop};
