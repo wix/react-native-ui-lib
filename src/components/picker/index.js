@@ -163,7 +163,7 @@ class Picker extends BaseComponent {
   getAccessibilityInfo() {
     const {placeholder} = this.props;
     return {
-      accessibilityLabel: this.getLabel() ? `${placeholder} ${this.getLabel()}` : `Select ${placeholder}`,
+      accessibilityLabel: this.getLabel() ? `${placeholder}. selected value = ${this.getLabel()}` : `Select ${placeholder}`,
       accessibilityHint: this.getLabel()
         ? 'Double tap to edit'
         : `Goes to ${placeholder}. Suggestions will be provided`,
