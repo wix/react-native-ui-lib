@@ -165,13 +165,12 @@ export default class Carousel extends BaseComponent {
   }
 
   onContainerLayout = ({nativeEvent: {layout: {width: containerWidth}}}) => {
-    const {initialPage, pageWidth} = this.props;
     const update = {containerWidth};
 
-    if (!pageWidth) {
+    if (!this.props.pageWidth) {
       update.pageWidth = containerWidth;
       update.initialOffset = {
-        x: presenter.calcOffset(this.props, {currentPage: initialPage, pageWidth: containerWidth})
+        x: presenter.calcOffset(this.props, {currentPage: this.state.currentPage, pageWidth: containerWidth})
       };
     }
     this.setState(update);
