@@ -2,23 +2,19 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {LayoutAnimation, StyleSheet, Keyboard, TextInput, PixelRatio} from 'react-native';
-import {
-  Constants,
-  Assets,
-  Colors,
-  Typography,
-  PureBaseComponent,
-  View,
-  TouchableOpacity,
-  Dialog,
-  Button,
-  Text,
-  ColorSliderGroup,
-  PanningProvider
-} from 'react-native-ui-lib';
 import ColorPalette from './ColorPalette';
 import {SWATCH_MARGIN, SWATCH_SIZE} from './ColorSwatch';
-
+import {Constants} from '../../helpers';
+import {PureBaseComponent} from '../../commons';
+import Assets from '../../assets';
+import {Colors, Typography} from '../../style';
+import View from '../view';
+import Text from '../text';
+import TouchableOpacity from '../touchableOpacity';
+import Dialog from '../dialog';
+import Button from '../button';
+import ColorSliderGroup from '../slider/ColorSliderGroup';
+import PanningProvider from '../panningViews/panningProvider';
 
 const KEYBOARD_HEIGHT = 216;
 
