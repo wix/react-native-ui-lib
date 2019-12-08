@@ -10,7 +10,7 @@ export default class ColorSwatchScreen extends Component {
     
     this.colors = ['transparent', Colors.green30, Colors.yellow30, Colors.red30];
     this.mainColors = ['#66737C', '#459FED', '#1D5382', '#3CC7C5', '#65C888', '#FAAD4D', '#F27052', '#F2564D', '#B13DAC', '#733CA6', '#79838A', '#5847FF', '#00BBF2', '#00CD8B', '#FF563D', '#ffb600'];
-    this.allColors = colorsPalette;
+    this.allColors = Object.values(colorsPalette);
 
     this.state = {
       color: this.colors[0],
