@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import memoize from 'memoize-one';
 import React from 'react';
 import {StyleSheet, ScrollView, Animated, Easing, UIManager, findNodeHandle} from 'react-native';
-import {Constants, Colors, PureBaseComponent, View, Carousel, PageControl, Image} from 'react-native-ui-lib';
+import {Constants} from '../../helpers';
+import {Colors} from '../../style';
+import {PureBaseComponent} from '../../commons';
+import View from '../view';
+import Carousel from '../carousel';
+import PageControl from '../pageControl';
+import Image from '../image';
 import ColorSwatch, {SWATCH_SIZE} from './ColorSwatch';
 
 

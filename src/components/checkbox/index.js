@@ -85,8 +85,8 @@ class Checkbox extends BaseComponent {
 
     return {
       accessible: true,
-      accessibilityLabel: accessibilityLabel ? `${accessibilityLabel} ${checkedState}` : `checkbox ${checkedState}`, //TODO: RN60 fix - label and role and convert to accessibilityActions
-      accessibilityRole: 'button',
+      accessibilityLabel: accessibilityLabel ? `${accessibilityLabel} ${checkedState}` : `${checkedState}`,
+      accessibilityRole: 'checkbox',
       accessibilityStates: disabled ? ['disabled'] : undefined
     };
   }
