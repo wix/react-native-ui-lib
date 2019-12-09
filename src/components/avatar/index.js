@@ -322,7 +322,7 @@ export default class Avatar extends PureBaseComponent {
         <View
           style={[this.getInitialsContainer(), {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
         >
-          {label && <Text numberOfLines={1} style={[{fontSize}, this.styles.initials, {color}]}>
+          {!_.isUndefined(label) && <Text numberOfLines={1} style={[{fontSize}, this.styles.initials, {color}]}>
             {label}
           </Text>}
         </View>
