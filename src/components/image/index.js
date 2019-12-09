@@ -6,7 +6,6 @@ import {Image as RNImage, StyleSheet, ImageBackground} from 'react-native';
 import {Constants} from '../../helpers';
 import {PureBaseComponent} from '../../commons';
 import Assets from '../../assets';
-import View from '../view';
 import Overlay from '../overlay';
 
 /**
@@ -47,7 +46,8 @@ class Image extends PureBaseComponent {
      */
     aspectRatio: PropTypes.number,
     /**
-     * The type of overly to place on top of the image
+     * The type of overly to place on top of the image. Note: you MUST image has to have proper size, see examples in: 
+     * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.js
      */
     overlayType: Overlay.propTypes.type
   };
@@ -61,9 +61,6 @@ class Image extends PureBaseComponent {
   constructor(props) {
     super(props);
 
-    this.flatStyle = StyleSheet.flatten(props.style);
-    this.containerStyle = [{flex: 1}, this.getAttributeStyles(this.flatStyle, 'margin')];
-    this.isDynamicSize = this.isDynamicSize();
     this.sourceTransformer = this.getThemeProps().sourceTransformer;
   }
 
@@ -85,27 +82,9 @@ class Image extends PureBaseComponent {
     return source;
   }
 
-  getAttributeStyles(flatStyle, attNames) {
-    let attributes;
-
-    if (flatStyle) {
-      attributes = _.chain(flatStyle)
-        .pickBy((value, key) => _.includes(attNames, key))
-        .value();
-    }
-
-    return attributes;
-  }
-
-  isDynamicSize() {
-    const style = this.getAttributeStyles(this.flatStyle, ['height', 'width', 'flex']);
-    const noSize = _.isUndefined(style) || _.isNil(style.height) || _.isNil(style.width);
-    return noSize;
-  }
-
-  renderImage(noMargin, overlayType) {
+  render() {
     const source = this.getImageSource();
-    const {tintColor, style, supportRTL, cover, aspectRatio, ...others} = this.getThemeProps();
+    const {tintColor, style, supportRTL, cover, aspectRatio, overlayType, ...others} = this.getThemeProps();
     const shouldFlipRTL = supportRTL && Constants.isRTL;
     const ImageView = overlayType ? ImageBackground : RNImage;
 
@@ -116,8 +95,7 @@ class Image extends PureBaseComponent {
           shouldFlipRTL && styles.rtlFlipped,
           cover && styles.coverImage,
           aspectRatio && {aspectRatio},
-          style,
-          noMargin && {margin: undefined}
+          style
         ]}
         accessible={false}
         accessibilityRole={'image'}
@@ -127,21 +105,6 @@ class Image extends PureBaseComponent {
         {overlayType && <Overlay style={style} type={overlayType}/>}
       </ImageView>
     );
-  }
-
-  render() {
-    const {style, overlayType} = this.getThemeProps();
-
-    if (this.isDynamicSize && overlayType) {
-      return (
-        <View style={this.containerStyle}>
-          {this.renderImage(true)}
-          <Overlay style={style} type={overlayType}/>
-        </View>
-      );
-    }
-
-    return this.renderImage(false, overlayType);
   }
 }
 

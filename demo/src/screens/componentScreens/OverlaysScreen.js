@@ -6,7 +6,6 @@ const image = require('../../assets/images/card-example.jpg');
 const uri = {
   uri: 'https://images.pexels.com/photos/140234/pexels-photo-140234.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260'
 };
-const icon = require('../../assets/icons/tags.png');
 
 export default class OverlaysScreen extends Component {
   getImageWithOverlay = type => {
@@ -61,10 +60,18 @@ export default class OverlaysScreen extends Component {
         </View>
 
         <Text text60BO margin-10>
-          Image Overlay (fill container)
+          Image Overlay (cover, remote)
         </Text>
-        <Image source={icon} overlayType={Image.overlayTypes.VERTICAL} style={styles.icon}/>
         <Image cover source={uri} overlayType={Image.overlayTypes.VERTICAL}/>
+
+        <Text text60BO margin-10>
+        Image Overlay (cover, asset)
+        </Text>
+        <Image cover source={image} overlayType={Image.overlayTypes.VERTICAL}/>
+
+        <Text text60BO margin-10>
+        Image Overlay (fill, specific height)
+        </Text>
         <Image source={image} overlayType={Image.overlayTypes.VERTICAL} style={styles.imageFillContainer}/>
       </ScrollView>
     );
@@ -118,10 +125,7 @@ const styles = StyleSheet.create({
     width: 100,
     borderRadius: 4
   },
-  icon: {
-    margin: 10
-  },
   imageFillContainer: {
-    margin: 10
+    height: 100
   }
 });
