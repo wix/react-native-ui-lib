@@ -48,6 +48,7 @@ export const navigationData = {
     screens: [
       {title: 'Checkbox', tags: 'checkbox toggle controls', screen: 'unicorn.components.CheckboxScreen'},
       {title: 'Color Picker', tags: 'color picker control', screen: 'unicorn.components.ColorPickerScreen'},
+      {title: 'Color Swatch', tags: 'color swatch and palette', screen: 'unicorn.components.ColorSwatchScreen'},
       {title: 'TextField', tags: 'text input field form', screen: 'unicorn.components.InputsScreen'},
       {title: 'Picker', tags: 'picker form', screen: 'unicorn.components.PickerScreen'},
       {title: 'RadioButton', tags: 'radio button group controls', screen: 'unicorn.components.RadioButtonScreen'},
