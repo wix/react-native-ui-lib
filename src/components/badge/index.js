@@ -212,7 +212,6 @@ export default class Badge extends PureBaseComponent {
       borderWidth,
       backgroundColor,
       containerStyle,
-      label,
       icon,
       onPress,
       testId,
