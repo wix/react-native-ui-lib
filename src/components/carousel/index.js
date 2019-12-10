@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
+import Animated from 'react-native-reanimated';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -121,8 +122,9 @@ export default class Carousel extends BaseComponent {
       (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
     const x = presenter.calcOffset(this.props, this.state) - centerOffset;
 
-    if (this.carousel) {
-      this.carousel.current.scrollTo({x, animated});
+    const node = _.invoke(this.carousel, 'current.getNode') || _.get(this.carousel, 'current');
+    if (node) {
+      node.scrollTo({x, animated});
 
       if (Constants.isAndroid) {
         // this is done to handle onMomentumScrollEnd not being called in Android:
@@ -133,7 +135,7 @@ export default class Carousel extends BaseComponent {
     }
   };
 
-  goToPage(pageIndex, animated = true) {
+  goToPage = (pageIndex, animated = true) => {
     this.setState({currentPage: this.getCalcIndex(pageIndex)}, () => this.updateOffset(animated));
   }
 
@@ -281,14 +283,14 @@ export default class Carousel extends BaseComponent {
   }
 
   render() {
-    const {containerStyle, itemSpacings, ...others} = this.props;
+    const {containerStyle, itemSpacings, onScroll, ...others} = this.props;
     const {initialOffset} = this.state;
     const scrollContainerStyle = this.shouldUsePageWidth() ? {paddingRight: itemSpacings} : undefined;
     const snapToOffsets = this.getSnapToOffsets();
 
     return (
       <View style={containerStyle} onLayout={this.onContainerLayout}>
-        <ScrollView
+        <Animated.ScrollView
           {...others}
           ref={this.carousel}
           contentContainerStyle={scrollContainerStyle}
@@ -299,11 +301,11 @@ export default class Carousel extends BaseComponent {
           contentOffset={initialOffset} // iOS only
           scrollEventThrottle={200}
           onContentSizeChange={this.onContentSizeChange}
-          onScroll={this.onScroll}
+          onScroll={_.isObject(onScroll) ? onScroll : this.onScroll}
           onMomentumScrollEnd={this.onMomentumScrollEnd}
         >
           {this.renderChildren()}
-        </ScrollView>
+        </Animated.ScrollView>
         {this.renderPageControl()}
         {this.renderCounter()}
       </View>

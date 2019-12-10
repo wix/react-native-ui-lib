@@ -6,12 +6,14 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Reanimated from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
+import {Constants} from '../../helpers';
 import TabBarContext from './TabBarContext';
 import TabBar from './TabBar';
 import TabBarItem from './TabBarItem';
 import TabPage from './TabPage';
+import PageCarousel from './PageCarousel';
 
-const {cond, Code, and, eq, set, Value, block} = Reanimated;
+const {cond, Code, and, eq, set, Value, block, round} = Reanimated;
 
 /**
  * @description: A performant solution for a tab controller with lazy load mechanism
@@ -51,6 +53,7 @@ class TabController extends Component {
 
   _targetPage = new Value(-1);
   _currentPage = new Value(this.props.selectedIndex);
+  _carouselOffset = new Value(0);
 
   getProviderContextValue = () => {
     const {itemStates} = this.state;
@@ -58,6 +61,7 @@ class TabController extends Component {
     return {
       selectedIndex,
       currentPage: this._currentPage,
+      carouselOffset: this._carouselOffset,
       itemStates,
       registerTabItems: this.registerTabItems,
       onChangeIndex
@@ -71,6 +75,8 @@ class TabController extends Component {
 
   render() {
     const {itemStates, ignoredItems} = this.state;
+    const screenWidth = Math.round(Constants.screenWidth);
+
     return (
       <TabBarContext.Provider value={this.getProviderContextValue()}>
         {this.props.children}
@@ -78,11 +84,18 @@ class TabController extends Component {
           <Code>
             {() =>
               block([
+                // Carousel Page change
+                cond(eq(round(this._carouselOffset), 0), set(this._currentPage, 0)),
+                cond(eq(round(this._carouselOffset), screenWidth), set(this._currentPage, 1)),
+                cond(eq(round(this._carouselOffset), screenWidth * 2), set(this._currentPage, 2)),
+                // TabBar Page change
                 ..._.map(itemStates, (state, index) => {
                   return [
                     cond(and(eq(state, State.BEGAN), !_.includes(ignoredItems, index)), set(this._targetPage, index)),
-                    cond(and(eq(this._targetPage, index), eq(state, State.END), !_.includes(ignoredItems, index)),
-                      set(this._currentPage, index),)
+                    cond(and(eq(this._targetPage, index), eq(state, State.END), !_.includes(ignoredItems, index)), [
+                      set(this._currentPage, index),
+                      set(this._targetPage, -1)
+                    ])
                   ];
                 })
               ])
@@ -97,4 +110,5 @@ class TabController extends Component {
 TabController.TabBar = TabBar;
 TabController.TabBarItem = TabBarItem;
 TabController.TabPage = TabPage;
+TabController.PageCarousel = PageCarousel;
 export default TabController;
