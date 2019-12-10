@@ -173,17 +173,20 @@ export default class Badge extends PureBaseComponent {
   }
 
   renderLabel() {
-    const {labelStyle} = this.props;
-    return (
-      <Text
-        style={[this.styles.label, this.isSmallBadge() && this.styles.labelSmall, labelStyle]}
-        allowFontScaling={false}
-        numberOfLines={1}
-        testID="badge"
-      >
-        {this.getFormattedLabel()}
-      </Text>
-    );
+    const {labelStyle, label} = this.props;
+
+    if (label) {
+      return (
+        <Text
+          style={[this.styles.label, this.isSmallBadge() && this.styles.labelSmall, labelStyle]}
+          allowFontScaling={false}
+          numberOfLines={1}
+          testID="badge"
+        >
+          {this.getFormattedLabel()}
+        </Text>
+      );
+    }
   }
 
   renderIcon() {
@@ -237,7 +240,7 @@ export default class Badge extends PureBaseComponent {
           activeOpacity={activeOpacity}
           {...animationProps}
         >
-          {icon ? this.renderIcon() : label ? this.renderLabel() : undefined}
+          {icon ? this.renderIcon() : this.renderLabel()}
         </Container>
       </View>
     );
