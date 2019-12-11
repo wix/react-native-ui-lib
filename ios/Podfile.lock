@@ -229,7 +229,7 @@ PODS:
     - React
   - RNCAsyncStorage (1.6.3):
     - React
-  - RNGestureHandler (1.5.0):
+  - RNGestureHandler (1.5.2):
     - React
   - RNReanimated (1.4.0):
     - React
@@ -382,7 +382,7 @@ SPEC CHECKSUMS:
   ReactNativeNavigation: bed6f504aa1a4dadd151503bf99d0ef96d06847f
   ReactNativeUiLib: 217f90ec42d9cfcd136a442f6963cd9c744e0bc1
   RNCAsyncStorage: 6b57de0f6cb0dcfd17521af1681fa39001d3efff
-  RNGestureHandler: a4ddde1ffc6e590c8127b8b7eabfdade45475c74
+  RNGestureHandler: 946a7691e41df61e2c4b1884deab41a4cdc3afff
   RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
   RNTextSize: 91955a6ea2adda9dc7802ce472b7a4dc717686f6
   Yoga: ba3d99dbee6c15ea6bbe3783d1f0cb1ffb79af0f

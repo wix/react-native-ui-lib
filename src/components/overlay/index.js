@@ -44,34 +44,20 @@ export default class Overlay extends PureBaseComponent {
     }
   }
 
-  getAttributeStyles(style, attName) {
-    const flatten = StyleSheet.flatten(style);
-    let attributes;
-
-    if (flatten) {
-      attributes = _.chain(flatten)
-        .pickBy((value, key) => _.includes(key, attName))
-        .value();
-    }
-    return attributes;
-  }
-
   renderImage(typeStyle) {
-    const {type, style} = this.props;
+    const {type} = this.props;
     const image = type !== OVERLY_TYPES.SOLID ? gradientImage : undefined;
-    const marginStyle = type !== OVERLY_TYPES.VERTICAL ? this.getAttributeStyles(style, 'margin') : undefined;
 
-    return <Image style={[marginStyle, styles.container, typeStyle]} resizeMode={'stretch'} source={image}/>;
+    return <Image style={[styles.container, typeStyle]} resizeMode={'stretch'} source={image}/>;
   }
 
   render() {
-    const {type, style} = this.props;
+    const {type} = this.props;
 
     if (type === OVERLY_TYPES.VERTICAL) {
-      const marginStyle = this.getAttributeStyles(style, 'margin');
 
       return (
-        <View style={[styles.container, marginStyle]}>
+        <View style={[styles.container]}>
           {this.renderImage(styles.top)}
           {this.renderImage(styles.bottom)}
         </View>
