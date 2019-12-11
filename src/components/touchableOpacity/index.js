@@ -1,8 +1,10 @@
 import React from 'react';
-import {TouchableOpacity as RNTouchableOpacity} from 'react-native';
+import {TouchableOpacity as RNTouchableOpacity, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {PureBaseComponent} from '../../commons';
+import View from '../view';
+import {Constants} from '../../helpers';
 
 /**
  * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
@@ -91,7 +93,7 @@ export default class TouchableOpacity extends PureBaseComponent {
     }
   }
 
-  render() {
+  renderTouchableOpacity() {
     const {borderRadius, paddings, margins, alignments, flexStyle} = this.state;
     const {style, ...others} = this.getThemeProps();
 
@@ -117,7 +119,28 @@ export default class TouchableOpacity extends PureBaseComponent {
     );
   }
 
+  render() {
+    const {useSafeArea, safeAreaBackgroundColor} = this.getThemeProps();
+
+    if (useSafeArea && Constants.isIphoneX) {
+      return (
+        <View>
+          {this.renderTouchableOpacity()}
+          <View backgroundColor={safeAreaBackgroundColor} style={styles.safeArea}/>
+        </View>
+      );
+    } else {
+      return this.renderTouchableOpacity();
+    }
+  }
+
   onPress() {
     _.invoke(this.props, 'onPress', this.props);
   }
 }
+
+const styles = StyleSheet.create({
+  safeArea: {
+    height: Constants.getSafeAreaInsets().bottom
+  }
+});
