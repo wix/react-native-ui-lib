@@ -34,13 +34,19 @@ function setStatusBarHeight() {
 setStatusBarHeight();
 
 /* Layout */
-const {height, width} = Dimensions.get(dimensionsScope.SCREEN);
+const {height: screenHeight, width: screenWidth} = Dimensions.get(dimensionsScope.SCREEN);
+const {height: windowHeight, width: windowWidth} = Dimensions.get(dimensionsScope.WINDOW);
 
 constants.isRTL = I18nManager.isRTL;
-constants.orientation = getOrientation(height, width);
+constants.orientation = getOrientation(screenHeight, screenWidth);
 constants.isLandscape = constants.orientation === constants.orientations.LANDSCAPE;
-constants.screenWidth = width;
-constants.screenHeight = height;
+
+constants.screenWidth = screenWidth;
+constants.screenHeight = screenHeight;
+
+constants.windowWidth = windowWidth;
+constants.windowHeight = windowHeight;
+
 constants.isSmallScreen = constants.screenWidth <= 340;
 constants.isShortScreen = constants.screenHeight <= 600;
 constants.screenAspectRatio =
@@ -70,11 +76,14 @@ function getOrientation(height, width) {
 }
 
 function updateConstants(dimensions) {
-  const {height, width} = dimensions.screen;
-  constants.orientation = getOrientation(height, width);
+  const {height: screenHeight, width: screenWidth} = dimensions.screen;
+  const {height: windowHeight, width: windowWidth} = dimensions.window;
+  constants.orientation = getOrientation(screenHeight, screenWidth);
   constants.isLandscape = constants.orientation === constants.orientations.LANDSCAPE;
-  constants.screenWidth = width;
-  constants.screenHeight = height;
+  constants.screenWidth = screenWidth;
+  constants.screenHeight = screenHeight;
+  constants.windowWidth = windowWidth;
+  constants.windowHeight = windowHeight;
   constants.isSmallScreen = constants.screenWidth <= 340;
   constants.isShortScreen = constants.screenHeight <= 600;
 
