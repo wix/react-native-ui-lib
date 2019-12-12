@@ -13,7 +13,7 @@ import TabBarItem from './TabBarItem';
 import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
 
-const {cond, Code, and, eq, set, Value, block, round} = Reanimated;
+const {cond, Code, and, eq, set, Value, block} = Reanimated;
 
 /**
  * @description: A performant solution for a tab controller with lazy load mechanism
@@ -75,7 +75,6 @@ class TabController extends Component {
 
   render() {
     const {itemStates, ignoredItems} = this.state;
-    const screenWidth = Math.round(Constants.screenWidth);
 
     return (
       <TabBarContext.Provider value={this.getProviderContextValue()}>
@@ -85,9 +84,9 @@ class TabController extends Component {
             {() =>
               block([
                 // Carousel Page change
-                cond(eq(round(this._carouselOffset), 0), set(this._currentPage, 0)),
-                cond(eq(round(this._carouselOffset), screenWidth), set(this._currentPage, 1)),
-                cond(eq(round(this._carouselOffset), screenWidth * 2), set(this._currentPage, 2)),
+                ..._.times(itemStates.length, (index) => {
+                  return cond(eq(this._carouselOffset, index * Constants.screenWidth), set(this._currentPage, index));
+                }),
                 // TabBar Page change
                 ..._.map(itemStates, (state, index) => {
                   return [
