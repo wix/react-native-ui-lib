@@ -52,7 +52,7 @@ export default class Carousel extends BaseComponent {
     /**
      * callback for onScroll event of the internal ScrollView
      */
-    onScroll: PropTypes.func,
+    onScroll: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     /**
      * the carousel style
      */
