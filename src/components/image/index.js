@@ -2,13 +2,11 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
-import {Image as RNImage, StyleSheet} from 'react-native';
+import {Image as RNImage, StyleSheet, ImageBackground} from 'react-native';
 import {Constants} from '../../helpers';
 import {PureBaseComponent} from '../../commons';
 import Assets from '../../assets';
-import View from '../view';
 import Overlay from '../overlay';
-
 
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
@@ -48,7 +46,8 @@ class Image extends PureBaseComponent {
      */
     aspectRatio: PropTypes.number,
     /**
-     * The type of overly to place on top of the image
+     * The type of overly to place on top of the image. Note: the image MUST have proper size, see examples in:
+     * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.js
      */
     overlayType: Overlay.propTypes.type
   };
@@ -63,6 +62,20 @@ class Image extends PureBaseComponent {
     super(props);
 
     this.sourceTransformer = this.getThemeProps().sourceTransformer;
+  }
+
+  isGif() {
+    if (Constants.isAndroid) {
+      const {source} = this.props;
+      const url = _.get(source, 'uri');
+      const isGif = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/.test(url);
+      return isGif;
+    }
+  }
+
+  shouldUseImageBackground() {
+    const {overlayType} = this.props;
+    return !!overlayType || this.isGif();
   }
 
   getImageSource() {
@@ -83,17 +96,19 @@ class Image extends PureBaseComponent {
     return source;
   }
 
-  renderImage() {
+  render() {
     const source = this.getImageSource();
-    const {tintColor, style, supportRTL, cover, aspectRatio, ...others} = this.getThemeProps();
+    const {tintColor, style, supportRTL, cover, aspectRatio, overlayType, ...others} = this.getThemeProps();
     const shouldFlipRTL = supportRTL && Constants.isRTL;
+    const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
 
     return (
-      <RNImage
+      <ImageView
         style={[
           {tintColor},
           shouldFlipRTL && styles.rtlFlipped,
           cover && styles.coverImage,
+          this.isGif() && styles.gifImage,
           aspectRatio && {aspectRatio},
           style
         ]}
@@ -101,22 +116,10 @@ class Image extends PureBaseComponent {
         accessibilityRole={'image'}
         {...others}
         source={source}
-      />
+      >
+        {overlayType && <Overlay style={style} type={overlayType}/>}
+      </ImageView>
     );
-  }
-
-  render() {
-    const {style, overlayType} = this.getThemeProps();
-  
-    if (overlayType) {
-      return (
-        <View>
-          {this.renderImage()}
-          <Overlay style={style} type={overlayType}/>
-        </View>
-      );
-    }
-    return this.renderImage();
   }
 }
 
@@ -127,6 +130,9 @@ const styles = StyleSheet.create({
   coverImage: {
     width: Constants.screenWidth,
     aspectRatio: 16 / 8
+  }, 
+  gifImage: {
+    overflow: 'hidden'
   }
 });
 

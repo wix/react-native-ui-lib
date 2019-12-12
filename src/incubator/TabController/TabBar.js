@@ -83,7 +83,7 @@ class TabBar extends PureComponent {
   };
 
   static defaultProps = {
-    containerWidth: Constants.screenWidth
+    // containerWidth: Constants.screenWidth
   };
 
   constructor(props, context) {
@@ -111,6 +111,10 @@ class TabBar extends PureComponent {
     };
 
     this.registerTabItems();
+  }
+
+  get containerWidth() {
+    return this.props.containerWidth || Constants.screenWidth;
   }
 
   get children() {
@@ -163,7 +167,7 @@ class TabBar extends PureComponent {
   };
 
   onContentSizeChange = width => {
-    if (width > Constants.screenWidth) {
+    if (width > this.containerWidth) {
       this.setState({scrollEnabled: true});
     }
   };
@@ -270,16 +274,16 @@ class TabBar extends PureComponent {
 
   render() {
     const {currentPage} = this.context;
-    const {height, enableShadow} = this.props;
+    const {height, enableShadow, containerStyle} = this.props;
     const {itemsWidths, itemsOffsets, scrollEnabled} = this.state;
     return (
-      <View style={[styles.container, enableShadow && styles.containerShadow]}>
+      <View style={[styles.container, enableShadow && styles.containerShadow, {width: this.containerWidth}, containerStyle]}>
         <ScrollView
           ref={this.tabBar}
           horizontal
           showsHorizontalScrollIndicator={false}
           style={styles.tabBarScroll}
-          contentContainerStyle={styles.tabBarScrollContent}
+          contentContainerStyle={{minWidth: this.containerWidth}}
           scrollEnabled={scrollEnabled}
           onContentSizeChange={this.onContentSizeChange}
         >

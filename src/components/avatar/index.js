@@ -314,7 +314,7 @@ export default class Avatar extends PureBaseComponent {
         style={[this.getContainerStyle(), containerStyle]}
         testID={testID}
         onPress={onPress}
-        accessible
+        accessible={!_.isUndefined(onPress)}
         accessibilityLabel={'Avatar'}
         accessibilityRole={onPress ? 'button' : 'image'}
         {...this.extractAccessibilityProps()}
@@ -322,9 +322,9 @@ export default class Avatar extends PureBaseComponent {
         <View
           style={[this.getInitialsContainer(), {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
         >
-          <Text numberOfLines={1} style={[{fontSize}, this.styles.initials, {color}]}>
+          {!_.isUndefined(label) && <Text numberOfLines={1} style={[{fontSize}, this.styles.initials, {color}]}>
             {label}
-          </Text>
+          </Text>}
         </View>
         {this.renderImage()}
         {this.renderBadge()}
