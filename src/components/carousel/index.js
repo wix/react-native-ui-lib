@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
@@ -116,6 +116,11 @@ export default class Carousel extends BaseComponent {
 
   generateStyles() {
     this.styles = createStyles(this.props);
+  }
+
+  shouldUseAnimatedCarousel() {
+    const {onScroll} = this.props;
+    return _.isObject(onScroll);
   }
 
   updateOffset = (animated = false) => {
@@ -288,9 +293,11 @@ export default class Carousel extends BaseComponent {
     const scrollContainerStyle = this.shouldUsePageWidth() ? {paddingRight: itemSpacings} : undefined;
     const snapToOffsets = this.getSnapToOffsets();
 
+    const ScrollViewContainer = this.shouldUseAnimatedCarousel() ? Animated.ScrollView : ScrollView;
+
     return (
       <View style={containerStyle} onLayout={this.onContainerLayout}>
-        <Animated.ScrollView
+        <ScrollViewContainer
           {...others}
           ref={this.carousel}
           contentContainerStyle={scrollContainerStyle}
@@ -301,11 +308,11 @@ export default class Carousel extends BaseComponent {
           contentOffset={initialOffset} // iOS only
           scrollEventThrottle={200}
           onContentSizeChange={this.onContentSizeChange}
-          onScroll={_.isObject(onScroll) ? onScroll : this.onScroll}
+          onScroll={this.shouldUseAnimatedCarousel() ? onScroll : this.onScroll}
           onMomentumScrollEnd={this.onMomentumScrollEnd}
         >
           {this.renderChildren()}
-        </Animated.ScrollView>
+        </ScrollViewContainer>
         {this.renderPageControl()}
         {this.renderCounter()}
       </View>

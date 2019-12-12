@@ -10,9 +10,6 @@ class PageCarousel extends Component {
   state = {
     scrollOffset: new Animated.Value(0)
   };
-
-  onChangePage = (index) => {
-  };
   
   onTabChange = ([index]) => {
     this.carousel.goToPage(index, true);
@@ -20,8 +17,6 @@ class PageCarousel extends Component {
 
   onScroll = Animated.event([{nativeEvent: {contentOffset: {x: this.context.carouselOffset}}}], {
     useNativeDriver: true
-    // listener: event => {
-    // }
   });
 
   render() {
