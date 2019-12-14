@@ -208,7 +208,7 @@ class Dialog extends BaseComponent {
 
   renderModal = () => {
     const {orientationKey, modalVisibility} = this.state;
-    const {overlayBackgroundColor, onModalDismissed, supportedOrientations} = this.getThemeProps();
+    const {overlayBackgroundColor, onModalDismissed, supportedOrientations, accessibilityLabel} = this.getThemeProps();
 
     return (
       <Modal
@@ -221,6 +221,7 @@ class Dialog extends BaseComponent {
         overlayBackgroundColor={overlayBackgroundColor}
         onDismiss={onModalDismissed}
         supportedOrientations={supportedOrientations}
+        accessibilityLabel={accessibilityLabel}
       >
         {this.renderDialogContainer()}
       </Modal>

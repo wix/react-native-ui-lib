@@ -1,4 +1,4 @@
-// TODO: deprecate value allowing passing an object, allow only string or number
+// TODO: deprecate value allowing passing an object, separate between label and value props
 // TODO: extract picker labels from children in order to obtain the correct label to render (similar to NativePicker)
 
 import _ from 'lodash';
@@ -139,7 +139,8 @@ class Picker extends BaseComponent {
 
     this.state = {
       value: props.value,
-      selectedItemPosition: 0
+      selectedItemPosition: 0,
+      items: this.extractPickerItems(props)
     };
 
     if (props.mode === Picker.modes.SINGLE && Array.isArray(props.value)) {
@@ -149,9 +150,11 @@ class Picker extends BaseComponent {
       console.warn('Picker in MULTI mode must accept an array for value');
     }
 
-    if (props.useNativePicker && _.isPlainObject(props.value)) {
-      console.warn('UILib Picker: don\'t use object as value for native picker, use either string or a number');
-    }
+    // TODO: this warning should be replaced by the opposite
+    // we should warn user NOT to pass an object to the value prop
+    // if (props.useNativePicker && _.isPlainObject(props.value)) {
+    //   console.warn('UILib Picker: don\'t use object as value for native picker, use either string or a number');
+    // }
   }
 
   UNSAFE_componentWillReceiveProps(nexProps) {
@@ -163,12 +166,18 @@ class Picker extends BaseComponent {
   getAccessibilityInfo() {
     const {placeholder} = this.props;
     return {
-      accessibilityLabel: this.getLabel() ? `${placeholder} ${this.getLabel()}` : `Select ${placeholder}`,
+      accessibilityLabel: this.getLabel() ? `${placeholder}. selected value = ${this.getLabel()}` : `Select ${placeholder}`,
       accessibilityHint: this.getLabel()
         ? 'Double tap to edit'
         : `Goes to ${placeholder}. Suggestions will be provided`,
       ...this.extractAccessibilityProps()
     };
+  }
+
+  extractPickerItems(props) {
+    const {children} = props;
+    const items = React.Children.map(children, child => ({value: child.props.value, label: child.props.label}));
+    return items;
   }
 
   getLabel() {
@@ -182,7 +191,18 @@ class Picker extends BaseComponent {
     }
 
     const {getLabel} = this.props;
-    return _.isFunction(getLabel) ? getLabel(value) : _.get(value, 'label');
+    if (_.isFunction(getLabel)) {
+      return getLabel(value);
+    }
+
+    if (_.isPlainObject(value)) {
+      return _.get(value, 'label'); 
+    }
+
+    // otherwise, extract from picker items
+    const {items} = this.state;
+    const selectedItem = _.find(items, {value});
+    return _.get(selectedItem, 'label');
   }
 
   handlePickerOnPress = () => {
@@ -273,6 +293,7 @@ class Picker extends BaseComponent {
       const modalProps = {
         visible: showExpandableModal,
         toggleModal: this.toggleExpandableModal,
+        onSearchChange: this.onSearchChange,
         children
       };
 
@@ -328,6 +349,7 @@ class Picker extends BaseComponent {
         color={Colors.dark10}
         {...textInputProps}
         {...this.getAccessibilityInfo()}
+        importantForAccessibility={'no-hide-descendants'}
         value={label}
         expandable
         renderExpandable={this.renderExpandableModal}
