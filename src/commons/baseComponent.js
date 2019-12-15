@@ -28,6 +28,7 @@ export default function baseComponent(usePure) {
       };
     }
 
+    // TODO: remove this after migrating all components to use asBaseComponent HOC
     UNSAFE_componentWillReceiveProps(nextProps) {
       this.updateModifiers(this.props, nextProps);
     }
