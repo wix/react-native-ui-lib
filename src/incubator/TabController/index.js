@@ -35,11 +35,15 @@ class TabController extends Component {
     /**
      * callback for when index has change (will not be called on ignored items)
      */
-    onChangeIndex: PropTypes.func
+    onChangeIndex: PropTypes.func,
     // /**
     //  * callback for when tab selected
     //  */
     // onTabSelected: PropTypes.func,
+    /**
+     * When using TabController.PageCarousel this should be turned on
+     */
+    asCarousel: PropTypes.bool
   };
 
   static defaultProps = {
@@ -57,14 +61,15 @@ class TabController extends Component {
 
   getProviderContextValue = () => {
     const {itemStates} = this.state;
-    const {onChangeIndex, selectedIndex} = this.props;
+    const {onChangeIndex, selectedIndex, asCarousel} = this.props;
     return {
       selectedIndex,
       currentPage: this._currentPage,
       carouselOffset: this._carouselOffset,
       itemStates,
       registerTabItems: this.registerTabItems,
-      onChangeIndex
+      onChangeIndex,
+      asCarousel
     };
   };
 

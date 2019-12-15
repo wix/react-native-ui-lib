@@ -23,11 +23,7 @@ export default class TabPage extends PureComponent {
     /**
      * Whether this page should be loaded lazily
      */
-    lazy: PropTypes.bool,
-    /**
-     * Is page being rendered in a page carousel
-     */
-    asCarouselPage: PropTypes.bool
+    lazy: PropTypes.bool
   };
 
   static defaultProps = {
@@ -42,7 +38,7 @@ export default class TabPage extends PureComponent {
   _zIndex = new Value(0);
   _pageStyle = [
     {opacity: this._opacity},
-    this.props.asCarouselPage ? styles.carouselPage : styles.page,
+    this.context.asCarousel ? styles.carouselPage : styles.page,
     {zIndex: this._zIndex}
   ];
 
