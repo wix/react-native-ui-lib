@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, ScrollView} from 'react-native';
-import Animated from 'react-native-reanimated';
+import {ScrollView, StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -52,7 +51,7 @@ export default class Carousel extends BaseComponent {
     /**
      * callback for onScroll event of the internal ScrollView
      */
-    onScroll: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    onScroll: PropTypes.func,
     /**
      * the carousel style
      */
@@ -118,19 +117,13 @@ export default class Carousel extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
-  shouldUseAnimatedCarousel() {
-    const {onScroll} = this.props;
-    return _.isObject(onScroll);
-  }
-
   updateOffset = (animated = false) => {
     const centerOffset = Constants.isIOS && this.shouldUsePageWidth() ? 
       (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
     const x = presenter.calcOffset(this.props, this.state) - centerOffset;
 
-    const node = _.invoke(this.carousel, 'current.getNode') || _.get(this.carousel, 'current');
-    if (node) {
-      node.scrollTo({x, animated});
+    if (this.carousel) {
+      this.carousel.current.scrollTo({x, animated});
 
       if (Constants.isAndroid) {
         // this is done to handle onMomentumScrollEnd not being called in Android:
@@ -141,7 +134,7 @@ export default class Carousel extends BaseComponent {
     }
   };
 
-  goToPage = (pageIndex, animated = true) => {
+  goToPage(pageIndex, animated = true) {
     this.setState({currentPage: this.getCalcIndex(pageIndex)}, () => this.updateOffset(animated));
   }
 
@@ -288,16 +281,14 @@ export default class Carousel extends BaseComponent {
   }
 
   render() {
-    const {containerStyle, itemSpacings, onScroll, ...others} = this.props;
+    const {containerStyle, itemSpacings, ...others} = this.props;
     const {initialOffset} = this.state;
     const scrollContainerStyle = this.shouldUsePageWidth() ? {paddingRight: itemSpacings} : undefined;
     const snapToOffsets = this.getSnapToOffsets();
 
-    const ScrollViewContainer = this.shouldUseAnimatedCarousel() ? Animated.ScrollView : ScrollView;
-
     return (
       <View style={containerStyle} onLayout={this.onContainerLayout}>
-        <ScrollViewContainer
+        <ScrollView
           {...others}
           ref={this.carousel}
           contentContainerStyle={scrollContainerStyle}
@@ -308,11 +299,11 @@ export default class Carousel extends BaseComponent {
           contentOffset={initialOffset} // iOS only
           scrollEventThrottle={200}
           onContentSizeChange={this.onContentSizeChange}
-          onScroll={this.shouldUseAnimatedCarousel() ? onScroll : this.onScroll}
+          onScroll={this.onScroll}
           onMomentumScrollEnd={this.onMomentumScrollEnd}
         >
           {this.renderChildren()}
-        </ScrollViewContainer>
+        </ScrollView>
         {this.renderPageControl()}
         {this.renderCounter()}
       </View>

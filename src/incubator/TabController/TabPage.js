@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import Reanimated from 'react-native-reanimated';
 import TabBarContext from './TabBarContext';
+import {Constants} from '../../helpers';
 
 const {Code, Value, cond, set, and, call, block, eq} = Reanimated;
 
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject
   },
   carouselPage: {
+    width: Constants.screenWidth,
     flex: 1,
     opacity: 1
   }

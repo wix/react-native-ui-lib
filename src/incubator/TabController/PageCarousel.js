@@ -1,41 +1,40 @@
 import React, {Component} from 'react';
-import Carousel from '../../components/carousel';
 import TabBarContext from './TabBarContext';
 import Animated from 'react-native-reanimated';
+import {Constants} from '../../helpers';
 
 const {Code, block, call} = Animated;
 
 class PageCarousel extends Component {
   static contextType = TabBarContext;
-  state = {
-    scrollOffset: new Animated.Value(0)
-  };
-  
-  onTabChange = ([index]) => {
-    this.carousel.goToPage(index, true);
-  };
+  carousel = React.createRef();
 
   onScroll = Animated.event([{nativeEvent: {contentOffset: {x: this.context.carouselOffset}}}], {
     useNativeDriver: true
   });
 
+  onTabChange = ([index]) => {
+    const node = this.carousel.current.getNode();
+    node.scrollTo({x: index * Constants.screenWidth, animated: true});
+  };
+
   render() {
     const {currentPage} = this.context;
     return (
       <>
-        <Carousel
-          ref={r => (this.carousel = r)}
+        <Animated.ScrollView
           {...this.props}
-          onChangePage={this.onChangePage}
-          containerStyle={{flex: 1}}
+          ref={this.carousel}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
           onScroll={this.onScroll}
-          scrollEventThrottle={100}
+          scrollEventThrottle={200}
         />
+
         <Code>
           {() => {
-            return block([
-              call([currentPage], this.onTabChange)
-            ]);
+            return block([call([currentPage], this.onTabChange)]);
           }}
         </Code>
       </>
