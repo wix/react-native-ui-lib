@@ -6,18 +6,19 @@ import Tab1 from './tab1';
 import Tab2 from './tab2';
 import Tab3 from './tab3';
 
-const TABS = ['tab1', 'tab2' , 'tab3', 'account', 'groups', 'blog'];
+const USE_CAROUSEL = true;
+const TABS = ['tab1', 'tab2', 'tab3', 'account', 'groups', 'blog'];
 
 class TabControllerScreen extends Component {
   state = {
     selectedIndex: 0,
     items: [
       ..._.map(TABS, tab => ({label: tab, key: tab})),
-      {key: 'addTabs', icon: Assets.icons.settings, ignore: true, onPress: this.addTab},
+      {key: 'addTabs', icon: Assets.icons.settings, ignore: true, onPress: this.addTab}
     ],
 
     tabsCount: 3,
-    key: Date.now(),
+    key: Date.now()
   };
 
   componentDidMount() {
@@ -44,11 +45,14 @@ class TabControllerScreen extends Component {
 
   getItems = () => {
     const {tabsCount} = this.state;
-    const items = _.chain(TABS).take(tabsCount).map(tab => ({label: tab, key: tab})).value();
+    const items = _.chain(TABS)
+      .take(tabsCount)
+      .map(tab => ({label: tab, key: tab}))
+      .value();
     items.push({key: 'addTabs', icon: Assets.icons.settings, ignore: true, onPress: this.addTab});
 
     return items;
-  }
+  };
 
   // renderTabItems() {
   //   const {tabsCount} = this.state;
@@ -68,18 +72,20 @@ class TabControllerScreen extends Component {
   // }
 
   renderTabPages() {
+    const Container = USE_CAROUSEL ? Incubator.TabController.PageCarousel : View;
+    const containerProps = USE_CAROUSEL ? {} : {flex: true};
     return (
-      <View flex>
+      <Container {...containerProps}>
         <Incubator.TabController.TabPage index={0}>
-          <Tab1 />
+          <Tab1/>
         </Incubator.TabController.TabPage>
-        <Incubator.TabController.TabPage index={1} lazy>
-          <Tab2 />
+        <Incubator.TabController.TabPage index={1} lazy={!USE_CAROUSEL}>
+          <Tab2/>
         </Incubator.TabController.TabPage>
         <Incubator.TabController.TabPage index={2}>
-          <Tab3 />
+          <Tab3/>
         </Incubator.TabController.TabPage>
-        <Incubator.TabController.TabPage index={3}>
+        {/* <Incubator.TabController.TabPage index={3}>
           <Text text40>ACCOUNT</Text>
         </Incubator.TabController.TabPage>
         <Incubator.TabController.TabPage index={4}>
@@ -87,18 +93,19 @@ class TabControllerScreen extends Component {
         </Incubator.TabController.TabPage>
         <Incubator.TabController.TabPage index={5}>
           <Text text40>BLOG</Text>
-        </Incubator.TabController.TabPage>
-      </View>
+        </Incubator.TabController.TabPage> */}
+      </Container>
     );
   }
 
   render() {
-    const {key, selectedIndex, items} = this.state;
+    const {key, selectedIndex} = this.state;
     return (
       <View flex bg-dark80>
         <View flex>
           <Incubator.TabController
             key={key}
+            asCarousel={USE_CAROUSEL}
             selectedIndex={selectedIndex}
             _onChangeIndex={index => console.warn('tab index is', index)}
           >
