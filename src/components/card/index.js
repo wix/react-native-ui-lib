@@ -2,7 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, ViewPropTypes, Animated} from 'react-native';
-// import {BlurView} from '@react-native-community/blur';
+import {BlurView} from '@react-native-community/blur';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import {PureBaseComponent} from '../../commons';
@@ -218,8 +218,8 @@ class Card extends PureBaseComponent {
   }
 
   render() {
-    const {onPress, style, selected, containerStyle, /* enableBlur, */ ...others} = this.getThemeProps();
-    // const blurOptions = this.getBlurOptions();
+    const {onPress, style, selected, containerStyle, enableBlur, ...others} = this.getThemeProps();
+    const blurOptions = this.getBlurOptions();
     const Container = onPress ? TouchableOpacity : View;
     const brRadius = this.borderRadius;
 
@@ -241,9 +241,9 @@ class Card extends PureBaseComponent {
         {...others}
         ref={this.setRef}
       >
-        {/* {Constants.isIOS && enableBlur && (
+        {Constants.isIOS && enableBlur && (
           <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions}/>
-        )} */}
+        )}
 
         {this.renderChildren()}
         {this.renderSelection()}
