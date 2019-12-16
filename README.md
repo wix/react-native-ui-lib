@@ -16,6 +16,9 @@ Our [Discord Channel](https://discord.gg/2eW4g6Z)
 
 
 ### Installing
+
+See setup instruction [here](https://github.com/wix/react-native-ui-lib/wiki/SETUP)
+
 #### For React Native >= 0.60.0
 please use `react-native-ui-lib@^4.0.0`
 
