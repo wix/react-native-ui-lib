@@ -140,11 +140,7 @@ export default class TextField extends BaseInput {
       iconColor: PropTypes.string,
       onPress: PropTypes.func,
       style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
-    }),
-    /**
-     * Sets the input as main, will center the input and text
-     */
-    mainInput: PropTypes.bool
+    })
   };
 
   static defaultProps = {
@@ -162,12 +158,10 @@ export default class TextField extends BaseInput {
       ...this.state,
       value: props.value, // for floatingPlaceholder functionality
       floatingPlaceholderState: new Animated.Value(this.shouldFloatPlaceholder(props.value) ? 1 : 0),
-      showExpandableModal: false,
-      minWidth: 92
+      showExpandableModal: false
     };
 
     this.generatePropsWarnings(props);
-    this.setMainInputVariables();
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -195,35 +189,6 @@ export default class TextField extends BaseInput {
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
   }
-
-  setMainInputVariables() {
-    const {autoCapitalize, mainInput, placeholder} = this.props;
-    const letterSpacing = autoCapitalize === 'characters' ? 3 : undefined;
-    this.mainInputTypography = {...Typography.text60, letterSpacing}; // TODO: move typography to prop
-    
-    if (Constants.isAndroid && mainInput && placeholder) {
-      this.measurePlaceholderWidth();
-    }
-  }
-
-  measurePlaceholderWidth = async () => {
-    const {placeholder} = this.props;
-    const newPlaceholder = this.getRequiredPlaceholder(placeholder);
-    
-    if (newPlaceholder) {
-      try {
-        const size = await Typography.measureTextSize(newPlaceholder, this.mainInputTypography);
-        
-        if (_.get(size, 'width') > this.state.minWidth) {
-          setTimeout(() => {
-            this.setState({minWidth: size.width + 2 * 16}); // NOTE: without the timeout will throw error
-          }, 0);
-        }
-      } catch (error) {
-        console.warn('TextField measurePlaceholderWidth ERROR: ', newPlaceholder, error);
-      }
-    }
-  };
 
   toggleExpandableModal(value) {
     this.setState({showExpandableModal: value});
@@ -328,8 +293,8 @@ export default class TextField extends BaseInput {
   }
 
   shouldFakePlaceholder() {
-    const {floatingPlaceholder, centered, mainInput} = this.getThemeProps();
-    return Boolean(floatingPlaceholder && !centered && !mainInput && !this.shouldShowTopError());
+    const {floatingPlaceholder, centered} = this.getThemeProps();
+    return Boolean(floatingPlaceholder && !centered && !this.shouldShowTopError());
   }
 
   shouldShowError() {
@@ -506,7 +471,6 @@ export default class TextField extends BaseInput {
       expandable,
       rightIconSource,
       color,
-      mainInput,
       ...others
     } = this.getThemeProps();
     const typography = this.getTypography();
@@ -521,8 +485,6 @@ export default class TextField extends BaseInput {
       Constants.isAndroid && {lineHeight},
       expandable && {maxHeight: lineHeight * (Constants.isAndroid ? 3 : 3.3)},
       Constants.isRTL && {minHeight: lineHeight + 3},
-      mainInput && this.styles.mainText, 
-      mainInput && this.mainInputTypography,
       {color: textColor},
       style
     ];
@@ -587,13 +549,12 @@ export default class TextField extends BaseInput {
     }
   }
 
-  renderTextField() {
-    const {minWidth} = this.state;
-    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline, mainInput} = this.getThemeProps();
+  render() {
+    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
     const underlineStateColor = this.getStateColor(underlineColor, true);
 
     return (
-      <View style={[this.styles.container, mainInput && {minWidth}, containerStyle]} collapsable={false}>
+      <View style={[this.styles.container, containerStyle]} collapsable={false}>
         {this.shouldShowTopError() ? this.renderError(useTopErrors) : this.renderTitle()}
 
         <View
@@ -617,13 +578,6 @@ export default class TextField extends BaseInput {
         </View>
       </View>
     );
-  }
-
-  render() {
-    const {mainInput} = this.props;
-
-    return !mainInput ?
-      this.renderTextField() : <View style={this.styles.mainContainer}>{this.renderTextField()}</View>;
   }
 
   /** Events */
@@ -662,7 +616,7 @@ export default class TextField extends BaseInput {
   };
 }
 
-function createStyles({centered, mainInput, multiline, expandable}) {
+function createStyles({centered, multiline, expandable}) {
   const inputTextAlign = Constants.isRTL ? 'right' : 'left';
 
   return StyleSheet.create({
@@ -670,7 +624,7 @@ function createStyles({centered, mainInput, multiline, expandable}) {
     innerContainer: {
       // flexGrow: 1, // create bugs with lineHeight
       flexDirection: 'row',
-      justifyContent: centered || mainInput ? 'center' : undefined,
+      justifyContent: centered ? 'center' : undefined,
       borderBottomWidth: 1,
       borderColor: Colors.dark70
     },
@@ -679,7 +633,7 @@ function createStyles({centered, mainInput, multiline, expandable}) {
     },
     input: {
       flexGrow: 1,
-      textAlign: centered || mainInput ? 'center' : inputTextAlign,
+      textAlign: centered ? 'center' : inputTextAlign,
       backgroundColor: 'transparent',
       marginBottom: Constants.isIOS ? 10 : 5,
       padding: 0, // for Android
@@ -710,7 +664,7 @@ function createStyles({centered, mainInput, multiline, expandable}) {
     },
     errorMessage: {
       color: Colors.red30,
-      textAlign: centered || mainInput ? 'center' : undefined
+      textAlign: centered ? 'center' : undefined
     },
     topLabel: {
       marginBottom: Constants.isIOS ? (multiline ? 1 : 6) : 7

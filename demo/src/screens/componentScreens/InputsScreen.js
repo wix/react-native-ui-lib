@@ -322,13 +322,6 @@ export default class InputsScreen extends Component {
             containerStyle={{marginBottom: INPUT_SPACING}}
             // hideUnderline
           />
-
-          <TextField
-            text70
-            containerStyle={{marginBottom: INPUT_SPACING}}
-            placeholder="Main Input"
-            mainInput
-          />
         </ScrollView>
         <KeyboardAwareInsetsView/>
       </View>
