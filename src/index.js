@@ -99,6 +99,9 @@ module.exports = {
   get Picker() {
     return require('./components').Picker;
   },
+  get DateTimePicker() {
+    return require('./components').DateTimePicker;
+  },
   get ProgressBar() {
     return require('./components').ProgressBar;
   },

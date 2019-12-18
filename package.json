@@ -38,6 +38,7 @@
     "build:typings": "rm -rf ./typings && ./scripts/build-typings.sh && tsc"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^2.1.0",
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
     "color": "^3.1.0",
     "commons-validator-js": "^1.0.237",

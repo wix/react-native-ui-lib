@@ -4,6 +4,8 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 target 'rnuilib' do
   pod 'ReactNativeUiLib', :path => "../lib/ReactNativeUiLib.podspec"
   # Pods for rnuilib
+  pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec'
+
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
