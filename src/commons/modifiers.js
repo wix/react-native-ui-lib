@@ -23,7 +23,7 @@ export function extractBackgroundColorValue(props) {
 
   const keys = Object.keys(props);
   const bgProp = _.findLast(keys, prop => Colors.getBackgroundKeysPattern().test(prop));
-  if (bgProp) {
+  if (props[bgProp]) {
     const key = bgProp.replace(Colors.getBackgroundKeysPattern(), '');
     backgroundColor = Colors[key];
   }
@@ -254,7 +254,8 @@ props = this.props,) {
 }
 
 export function getAlteredModifiersOptions(currentProps, nextProps) {
-  const allKeys = _.union([..._.keys(currentProps), ..._.keys(nextProps)]);
+  const ignoredKeys = ['children', 'forwardedRef', 'style', 'testID'];
+  const allKeys = _.union([..._.keys(currentProps), ..._.keys(nextProps)]).filter((key) => !ignoredKeys.includes(key));
   const changedKeys = _.filter(allKeys, key => !_.isEqual(currentProps[key], nextProps[key]));
 
   const options = {};

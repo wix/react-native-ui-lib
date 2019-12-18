@@ -145,7 +145,11 @@ class Dialog extends BaseComponent {
   }
 
   onDismiss = () => {
-    this.setState({modalVisibility: false}, () => _.invoke(this.props, 'onDismiss', this.props));
+    this.setState({modalVisibility: false}, () => {
+      if (this.props.visible) {
+        _.invoke(this.props, 'onDismiss', this.props);
+      }
+    });
   };
 
   hideDialogView = () => {
@@ -160,12 +164,12 @@ class Dialog extends BaseComponent {
   };
 
   renderDialogView = () => {
-    const {children, renderPannableHeader, panDirection, containerStyle} = this.props;
+    const {children, renderPannableHeader, panDirection, containerStyle, testID} = this.props;
     const {dialogVisibility} = this.state;
     const Container = renderPannableHeader ? View : PanListenerView;
 
     return (
-      <View style={[this.styles.dialogViewSize]} pointerEvents="box-none">
+      <View testID={testID} style={[this.styles.dialogViewSize]} pointerEvents="box-none">
         <PanningProvider>
           <DialogDismissibleView
             direction={panDirection}
@@ -204,7 +208,7 @@ class Dialog extends BaseComponent {
 
   renderModal = () => {
     const {orientationKey, modalVisibility} = this.state;
-    const {overlayBackgroundColor, onModalDismissed, supportedOrientations} = this.getThemeProps();
+    const {overlayBackgroundColor, onModalDismissed, supportedOrientations, accessibilityLabel} = this.getThemeProps();
 
     return (
       <Modal
@@ -217,6 +221,7 @@ class Dialog extends BaseComponent {
         overlayBackgroundColor={overlayBackgroundColor}
         onDismiss={onModalDismissed}
         supportedOrientations={supportedOrientations}
+        accessibilityLabel={accessibilityLabel}
       >
         {this.renderDialogContainer()}
       </Modal>

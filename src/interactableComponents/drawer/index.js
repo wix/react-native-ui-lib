@@ -170,26 +170,37 @@ class NewDrawer extends PureBaseComponent {
 
   /** Accessability */
 
-  getAccessibilityActions() {
+  getAccessibilityActions(withOnPress = false) {
     const {rightItems, leftItem} = this.props;
-    const actions = {};
+    const actions = [];
+
     if (leftItem && leftItem.onPress && leftItem.text) {
-      actions[leftItem.text] = leftItem;
+      const action = {name: leftItem.text, label: leftItem.text};
+      if (withOnPress) {
+        action.onPress = leftItem.onPress;
+      }
+      actions.push(action);
     }
     if (rightItems) {
       rightItems.forEach(item => {
         if (item.onPress && item.text) {
-          actions[item.text] = item;
+          const action = {name: item.text, label: item.text};
+          if (withOnPress) {
+            action.onPress = item.onPress;
+          }
+          actions.push(action);
         }
       });
     }
+
     return actions;
   }
 
   onAccessibilityAction = event => {
-    const actions = this.getAccessibilityActions();
+    const actions = this.getAccessibilityActions(true);
     const action = _.find(actions, (o) => {
-      return o.text === event.nativeEvent.action;
+      // return o.text === event.nativeEvent.action;
+      return o.name === event.nativeEvent.actionName;
     });
     _.invoke(action, 'onPress');
   };
@@ -317,7 +328,7 @@ class NewDrawer extends PureBaseComponent {
         <View
           flex
           accessible
-          accessibilityActions={Object.keys(this.getAccessibilityActions())}
+          accessibilityActions={this.getAccessibilityActions()}
           onAccessibilityAction={this.onAccessibilityAction}
           {...this.extractAccessibilityProps()}
         >

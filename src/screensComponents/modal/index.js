@@ -37,12 +37,12 @@ export default class Modal extends BaseComponent {
   };
 
   renderTouchableOverlay() {
-    const {overlayBackgroundColor, onBackgroundPress} = this.props;
+    const {overlayBackgroundColor, onBackgroundPress, accessibilityLabel = 'Dismiss'} = this.props;
     if (_.isFunction(onBackgroundPress) || !!overlayBackgroundColor) {
       return (
         <View
           accessible
-          accessibilityLabel="Dismiss"
+          accessibilityLabel={accessibilityLabel}
           accessibilityRole="button"
           style={[styles.touchableOverlay, {backgroundColor: overlayBackgroundColor}]}
         >

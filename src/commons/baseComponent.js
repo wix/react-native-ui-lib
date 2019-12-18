@@ -28,6 +28,7 @@ export default function baseComponent(usePure) {
       };
     }
 
+    // TODO: remove this after migrating all components to use asBaseComponent HOC
     UNSAFE_componentWillReceiveProps(nextProps) {
       this.updateModifiers(this.props, nextProps);
     }
@@ -83,7 +84,8 @@ export default function baseComponent(usePure) {
     }
 
     updateModifiers(currentProps, nextProps) {
-      const allKeys = _.union([..._.keys(currentProps), ..._.keys(nextProps)]);
+      const ignoredKeys = ['children', 'forwardedRef', 'style', 'testID'];
+      const allKeys = _.union([..._.keys(currentProps), ..._.keys(nextProps)]).filter((key) => !ignoredKeys.includes(key));
       const changedKeys = _.filter(allKeys, key => !_.isEqual(currentProps[key], nextProps[key]));
 
       const options = {};

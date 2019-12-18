@@ -44,6 +44,7 @@ export default class MainScreen extends Component {
     const navigationStyle = this.getSearchNavigationStyle();
     navigationStyle.topBar.rightButtons.push({
       id: 'uilib.settingsButton',
+      testID: 'uilib.settingsButton',
       enabled: true,
       icon: Assets.icons.settings
     });
@@ -73,6 +74,7 @@ export default class MainScreen extends Component {
         rightButtons: [
           {
             id: 'uilib.searchButton',
+            testID: 'uilib.searchButton',
             enabled: true,
             icon: Assets.icons.search
           }
@@ -199,7 +201,7 @@ export default class MainScreen extends Component {
         <TextField
           ref={r => (this.input = r)}
           value={this.state.filterText}
-          placeholder="Search your component.."
+          placeholder="Search for your component..."
           onChangeText={this.filterExplorerScreens}
           onBlur={this.onSearchBoxBlur}
           style={{
@@ -212,6 +214,7 @@ export default class MainScreen extends Component {
           floatingPlaceholder={false}
         />
         <Button
+          testID={'SearchButton'}
           style={{marginRight: 16, marginTop: Constants.isIOS ? Constants.statusBarHeight : 0}}
           iconSource={Assets.icons.search}
           size={'small'}

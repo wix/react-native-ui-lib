@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {TouchableOpacity as RNTouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import {PureBaseComponent} from '../../commons';
+import {asBaseComponent, forwardRef} from '../../commons';
 
 /**
  * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
@@ -12,7 +12,7 @@ import {PureBaseComponent} from '../../commons';
  * @gif: https://media.giphy.com/media/xULW8AMIgw7l31zjm8/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.js
  */
-export default class TouchableOpacity extends PureBaseComponent {
+class TouchableOpacity extends PureComponent {
   static displayName = 'TouchableOpacity';
 
   static propTypes = {
@@ -37,7 +37,7 @@ export default class TouchableOpacity extends PureBaseComponent {
   constructor(props) {
     super(props);
 
-    const {throttleTime, throttleOptions} = this.getThemeProps();
+    const {throttleTime, throttleOptions} = this.props;
 
     this.onPress = _.throttle(this.onPress.bind(this), throttleTime, throttleOptions);
     this.onPressIn = this.onPressIn.bind(this);
@@ -72,10 +72,8 @@ export default class TouchableOpacity extends PureBaseComponent {
   }
 
   get backgroundColorStyle() {
-    const {backgroundColor: modifiersBackgroundColor} = this.state;
-    const {backgroundColor: propsBackgroundColor} = this.getThemeProps();
-
-    const backgroundColor = propsBackgroundColor || modifiersBackgroundColor;
+    const {backgroundColor: propsBackgroundColor, modifiers} = this.props;
+    const backgroundColor = propsBackgroundColor || modifiers.backgroundColor;
 
     if (backgroundColor) {
       return {backgroundColor};
@@ -92,8 +90,8 @@ export default class TouchableOpacity extends PureBaseComponent {
   }
 
   render() {
-    const {borderRadius, paddings, margins, alignments, flexStyle} = this.state;
-    const {style, ...others} = this.getThemeProps();
+    const {style, modifiers, ...others} = this.props;
+    const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
 
     return (
       <RNTouchableOpacity
@@ -121,3 +119,5 @@ export default class TouchableOpacity extends PureBaseComponent {
     _.invoke(this.props, 'onPress', this.props);
   }
 }
+
+export default asBaseComponent(forwardRef(TouchableOpacity));

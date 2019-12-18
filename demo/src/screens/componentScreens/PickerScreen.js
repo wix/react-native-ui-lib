@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, Image} from 'react-native';
-import {View, Colors, Dialog, Text, Stepper, Typography, Picker, Avatar, Assets, TagsInput} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Colors, Dialog, Text, Stepper, Typography, Picker, Avatar, Assets, TagsInput, PanningProvider} from 'react-native-ui-lib'; //eslint-disable-line
 import contacts from '../../data/conversations';
 import tagIcon from '../../assets/icons/tags.png';
 import dropdown from '../../assets/icons/chevronDown.png';
@@ -29,6 +29,7 @@ export default class PickerScreen extends Component {
       // language: {value: 'java', label: 'Java'},
       language: undefined,
       languages: [],
+      nativePickerValue: 'java',
       customModalValues: [],
       filter: filters[0],
       contact: contacts[0],
@@ -38,25 +39,33 @@ export default class PickerScreen extends Component {
     };
   }
 
+  dialogHeader = props => {
+    const {title} = props;
+    return (
+      <Text margin-15 text60>
+        {title}
+      </Text>
+    );
+  };
+
   renderDialog = modalProps => {
     const {visible, toggleModal, children} = modalProps;
 
     return (
       <Dialog
+        migrate
         visible={visible}
         onDismiss={() => toggleModal(false)}
         width="100%"
         height="45%"
         bottom
         useSafeArea
-        style={{paddingTop: 20, backgroundColor: Colors.white}}
+        containerStyle={{backgroundColor: Colors.white}}
+        renderPannableHeader={this.dialogHeader}
+        panDirection={PanningProvider.Directions.DOWN}
+        pannableHeaderProps={{title: 'Custom modal'}}
       >
-        <View flex>
-          <Text marginL-15 text60>
-            Custom modal
-          </Text>
-          <ScrollView>{children}</ScrollView>
-        </View>
+        <ScrollView>{children}</ScrollView>
       </Dialog>
     );
   };

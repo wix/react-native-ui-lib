@@ -71,6 +71,13 @@ const examples = [
     },
   },
   {
+    title: 'GIF',
+    size: 48, 
+    imageSource: {
+      uri: 'https://media.giphy.com/media/3oEdv8elIVRa3daNl6/giphy.gif'
+    }
+  },
+  {
     title: 'Invalid Gravatar (see logs)',
     label: '🤦',
     backgroundColor: Colors.dark60,

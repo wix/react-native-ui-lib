@@ -26,7 +26,7 @@ const SWIPE_DIRECTIONS = {
 }; // DEFRECATED
 
 class DialogDeprecated extends BaseComponent {
-  static displayName = 'Dialog'
+  static displayName = 'Dialog (deprecated)'
   static propTypes = {
     /**
      * Control visibility of the dialog
