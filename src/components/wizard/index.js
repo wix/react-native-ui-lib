@@ -8,9 +8,7 @@ import Constants from '../../helpers/Constants';
 import Colors from '../../style/colors';
 import Shadows from '../../style/shadows';
 import WizardStep from './WizardStep';
-import {States} from './WizardStates';
-
-const DEFAULT_ACTIVE_CONFIG = {color: Colors.blue10, circleColor: Colors.blue10, notClickable: true};
+import {States, StatesConfig} from './WizardStates';
 
 /**
  * @description: Wizard Component: a wizard presents a series of steps in  prescribed order
@@ -29,16 +27,9 @@ export default class Wizard extends BaseComponent {
      */
     activeIndex: PropTypes.number,
     /**
-     * The configuration of the active step;
-     * includes: color of the step index (or of the icon, when provided),
-     * the color of the circle, an icon and whether the state is not clickable
+     * The configuration of the active step (see Wizard.Step.propTypes)
      */
-    activeConfig: PropTypes.shape({
-      color: PropTypes.string,
-      circleColor: PropTypes.string,
-      icon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-      notClickable: PropTypes.bool
-    }),
+    activeConfig: PropTypes.shape(WizardStep.propTypes),
     /**
      * Callback that is called when the active step is changed (i.e. a step was clicked on).
      * The new activeIndex will be the input of the callback.
@@ -83,17 +74,15 @@ export default class Wizard extends BaseComponent {
 
   renderChildren() {
     const {maxWidth} = this.state;
-    const {activeIndex, testID, activeConfig = DEFAULT_ACTIVE_CONFIG} = this.getThemeProps();
+    const {activeIndex, activeConfig = StatesConfig.active, testID} = this.getThemeProps();
 
     const children = React.Children.map(this.props.children, (child, index) => {
-      const propState = child.props.state;
-      const state = index === activeIndex ? activeConfig : propState;
       return React.cloneElement(child, {
         testID: `${testID}.step${index}`,
         maxWidth,
         index,
         activeIndex,
-        state,
+        activeConfig,
         onPress: () => {
           _.invoke(this.props, 'onActiveIndexChanged', index);
         }

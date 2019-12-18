@@ -5,8 +5,8 @@ import {View, Button, Wizard, Text, RadioGroup, RadioButton, TextField, Toast} f
 
 const flavors = ['Chocolate', 'Vanilla'];
 const initialFlavor = flavors[0];
-const stepTypes = _.map(Wizard.States, (value, key) => {
-  return <Text key={key}>{key.toLowerCase()}</Text>;
+const stepTypes = _.map(Wizard.States, state => {
+  return <Text key={state}>{state}</Text>;
 });
 
 export default class WizardScreen extends Component {
@@ -61,7 +61,6 @@ export default class WizardScreen extends Component {
     return (
       <Button
         testID={'uilib.prevButton'}
-        useCustomTheme
         size={Button.sizes.large}
         label={'Back'}
         marginT-10
@@ -96,7 +95,6 @@ export default class WizardScreen extends Component {
     return (
       <Button
         testID={'uilib.nextAndResetButton'}
-        useCustomTheme
         size={Button.sizes.large}
         label={label}
         marginT-10
@@ -108,7 +106,7 @@ export default class WizardScreen extends Component {
 
   renderFlavorRadioButton = index => {
     const value = flavors[index];
-    return <RadioButton testID={value} useCustomTheme marginL-10={index > 0} value={value} label={value}/>;
+    return <RadioButton testID={value} marginL-10={index > 0} value={value} label={value}/>;
   };
 
   setSelectedFlavor = selectedFlavor => {
@@ -199,14 +197,10 @@ export default class WizardScreen extends Component {
       <View useSafeArea flex>
         <ScrollView contentContainerStyle={styles.scrollView}>
           <View style={styles.container}>
-            <Wizard
-              testID={'uilib.wizard'}
-              activeIndex={activeIndex}
-              onActiveIndexChanged={this.onActiveIndexChanged}
-            >
-              <Wizard.Step useCustomTheme state={this.getStepState(0)} label={'Select items'}/>
-              <Wizard.Step useCustomTheme state={this.getStepState(1)} label={'Customer details'}/>
-              <Wizard.Step useCustomTheme state={this.getStepState(2)} label={'Checkout'}/>
+            <Wizard testID={'uilib.wizard'} activeIndex={activeIndex} onActiveIndexChanged={this.onActiveIndexChanged}>
+              <Wizard.Step state={this.getStepState(0)} label={'Select items'}/>
+              <Wizard.Step state={this.getStepState(1)} label={'Customer details'}/>
+              <Wizard.Step state={this.getStepState(2)} label={'Checkout'}/>
             </Wizard>
             {this.renderCurrentStep()}
 
@@ -220,8 +214,8 @@ export default class WizardScreen extends Component {
               activeIndex={allTypesIndex}
               onActiveIndexChanged={this.onAllTypesIndexChanged}
             >
-              {_.map(Wizard.States, (value, key) => {
-                return <Wizard.Step useCustomTheme key={key} state={value} label={key.toLowerCase()}/>;
+              {_.map(Wizard.States, state => {
+                return <Wizard.Step key={state} state={state} label={state}/>;
               })}
             </Wizard>
             <Text text50 margin-10 center>

@@ -10,6 +10,7 @@ import {PureBaseComponent} from '../../commons';
 import Colors from '../../style/colors';
 import BorderRadiuses from '../../style/borderRadiuses';
 import Spacings from '../../style/spacings';
+import {States, StatesConfig} from './WizardStates';
 
 /**
  * @description: WizardStep Component: a wizard presents a series of steps in  prescribed order
@@ -32,43 +33,66 @@ export default class WizardStep extends PureBaseComponent {
      */
     labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
-     * Additional styles for the index's label
-     */
-    indexLabelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
      * Additional styles for the connector
      */
     connectorStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
-     * The configuration of this step;
-     * ('Wizard.Step.states.' default configurations are: 'ENABLED', 'DISABLED', 'COMPLETED', 'ERROR' or 'SKIPPED')
-     * includes: color of the step index (or of the icon, when provided),
-     * the color of the circle, textStyle (when no icon is provided),
-     * an icon and whether the state is not clickable
+     * Color of the step index (or of the icon, when provided)
      */
-    state: PropTypes.shape({
-      color: PropTypes.string,
-      circleColor: PropTypes.string,
-      icon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-      notClickable: PropTypes.bool
-    })
+    color: PropTypes.string,
+    /**
+     * Color of the circle
+     */
+    circleColor: PropTypes.string,
+    /**
+     * Icon to replace the (default) index
+     */
+    icon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * Additional styles for the index's label (when icon is not provided)
+     */
+    indexLabelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * Whether the step should be enabled
+     */
+    enabled: PropTypes.bool
   };
 
-  renderCircle() {
-    const {testID, index, state, onPress, indexLabelStyle} = this.getThemeProps();
-    const {color, circleColor, icon, notClickable} = state;
+  getProp(activeConfig, config, propName) {
+    const props = this.getThemeProps();
+    const {index, activeIndex} = props;
+
+    if (index === activeIndex) {
+      return activeConfig[propName];
+    } else if (!_.isUndefined(props[propName])) {
+      return props[propName];
+    } else {
+      return config[propName];
+    }
+  }
+
+  renderCircle(config, activeConfig) {
+    const {testID, index, onPress, indexLabelStyle} = this.getThemeProps();
     const hitSlopSize = Spacings.s2;
+    const color = this.getProp(activeConfig, config, 'color');
+    const circleColor = this.getProp(activeConfig, config, 'circleColor');
+    const icon = this.getProp(activeConfig, config, 'icon');
+    const enabled = this.getProp(activeConfig, config, 'enabled');
 
     return (
       <TouchableOpacity
         testID={`${testID}.circle`}
         style={[styles.circle, {borderColor: circleColor}]}
-        onPress={notClickable ? undefined : onPress}
+        onPress={enabled ? onPress : undefined}
         hitSlop={{top: hitSlopSize, bottom: hitSlopSize, left: hitSlopSize, right: hitSlopSize}}
-        disabled={notClickable}
+        disabled={!enabled}
       >
         {_.isUndefined(icon) ? (
-          <Text text80 testID={`${testID}.index`} style={[{color}, indexLabelStyle]}>
+          <Text
+            text80
+            testID={`${testID}.index`}
+            style={[{color}, config.indexLabelStyle, indexLabelStyle, activeConfig.indexLabelStyle]}
+          >
             {index + 1}
           </Text>
         ) : (
@@ -79,14 +103,33 @@ export default class WizardStep extends PureBaseComponent {
   }
 
   render() {
-    const {testID, label, labelStyle, index, activeIndex, maxWidth, connectorStyle} = this.getThemeProps();
+    const {
+      testID,
+      state,
+      activeConfig: propsActiveConfig,
+      label,
+      labelStyle,
+      index,
+      activeIndex,
+      maxWidth,
+      connectorStyle
+    } = this.getThemeProps();
+    const config = StatesConfig[state];
+    const activeConfig = index === activeIndex ? propsActiveConfig : {};
 
     return (
       <View testID={testID} row center flex={index !== activeIndex}>
-        {index > activeIndex && <View flex style={[styles.connector, connectorStyle]}/>}
-        {this.renderCircle()}
+        {index > activeIndex && (
+          <View flex style={[styles.connector, config.connectorStyle, connectorStyle, activeConfig.connectorStyle]}/>
+        )}
+        {this.renderCircle(config, activeConfig)}
         {index === activeIndex && (
-          <Text text80 testID={`${testID}.label`} numberOfLines={1} style={[styles.label, {maxWidth}, labelStyle]}>
+          <Text
+            text80
+            testID={`${testID}.label`}
+            numberOfLines={1}
+            style={[styles.label, {maxWidth}, config.labelStyle, labelStyle, activeConfig.labelStyle]}
+          >
             {label}
           </Text>
         )}
