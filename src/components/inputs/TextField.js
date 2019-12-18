@@ -622,7 +622,7 @@ function createStyles({centered, multiline, expandable}) {
   return StyleSheet.create({
     container: {},
     innerContainer: {
-      // flexGrow: 1, // create bugs with lineHeight
+      flexGrow: 1, // create bugs with lineHeight
       flexDirection: 'row',
       justifyContent: centered ? 'center' : undefined,
       borderBottomWidth: 1,
