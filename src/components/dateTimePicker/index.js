@@ -114,7 +114,7 @@ class DateTimePicker extends BaseComponent {
         onDismiss={this.toggleExpandableModal}
         containerStyle={this.styles.dialog}
         testID={`${testID}.dialog`}
-        supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOs only
+        supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOS only
       >
         <View useSafeArea>
           {this.renderHeader()}
