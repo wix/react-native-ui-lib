@@ -329,15 +329,6 @@ export default class InputsScreen extends Component {
             placeholder="Main Input"
             mainInput
           />
-
-          <TextField
-            text70
-            floatingPlaceholder
-            containerStyle={{marginBottom: INPUT_SPACING}}
-            placeholder="Prominent"
-            prominent
-          />
-
         </ScrollView>
         <KeyboardAwareInsetsView/>
       </View>

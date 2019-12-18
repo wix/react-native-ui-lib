@@ -142,10 +142,6 @@ export default class TextField extends BaseInput {
       style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
     }),
     /**
-     * Emphasize the input by enlarging font size
-     */
-    prominent: PropTypes.bool,
-    /**
      * Sets the input as main, will center the input and text
      */
     mainInput: PropTypes.bool
@@ -360,9 +356,9 @@ export default class TextField extends BaseInput {
   /** Renders */
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
-    const {expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline, prominent} 
+    const {expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} 
     = this.getThemeProps();
-    const typography = prominent ? {...Typography.text50, fontWeight: '800'} : this.getTypography();
+    const typography = this.getTypography();
     const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_COLOR_BY_STATE.default);
 
     if (this.shouldFakePlaceholder()) {
@@ -510,11 +506,10 @@ export default class TextField extends BaseInput {
       expandable,
       rightIconSource,
       color,
-      prominent,
       mainInput,
       ...others
     } = this.getThemeProps();
-    const typography = prominent ? {...Typography.text50, fontWeight: '800'} : this.getTypography();
+    const typography = this.getTypography();
     const {lineHeight, ...typographyStyle} = typography;
     const textColor = this.getStateColor(color || this.extractColorValue());
     const hasRightElement = this.shouldDisplayRightButton() || rightIconSource;
