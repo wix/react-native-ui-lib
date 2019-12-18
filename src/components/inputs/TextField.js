@@ -693,15 +693,6 @@ function createStyles({centered, multiline, expandable}) {
     rightButtonImage: {
       width: ICON_SIZE,
       height: ICON_SIZE
-    },
-    mainContainer: {
-      flexDirection: 'row',
-      alignSelf: 'center',
-      justifyContent: 'center'
-    },
-    mainText: {
-      paddingLeft: 16,
-      paddingRight: 16
     }
   });
 }
