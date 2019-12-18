@@ -11,7 +11,8 @@ const VALIDATORS = {
   REQUIRED: 'required',
   EMAIL: 'email',
   URL: 'url',
-  NUMBER: 'number'
+  NUMBER: 'number',
+  PRICE: 'price'
 };
 
 export default class BaseInput extends BaseComponent {
