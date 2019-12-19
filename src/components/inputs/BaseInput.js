@@ -11,7 +11,8 @@ const VALIDATORS = {
   REQUIRED: 'required',
   EMAIL: 'email',
   URL: 'url',
-  NUMBER: 'number'
+  NUMBER: 'number',
+  PRICE: 'price'
 };
 
 export default class BaseInput extends BaseComponent {
@@ -37,6 +38,10 @@ export default class BaseInput extends BaseComponent {
       PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.oneOf(_.values(VALIDATORS)), PropTypes.func])) // array of validators
     ]),
     /**
+     * Whether to mark required field with an asterisk
+     */
+    markRequired: PropTypes.bool,
+    /**
      * the message to be displayed when the validation fails
      */
     errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
@@ -59,7 +64,6 @@ export default class BaseInput extends BaseComponent {
   };
 
   static defaultProps = {
-    placeholderTextColor: Colors.dark60,
     validateOnBlur: true
   };
 
@@ -200,7 +204,8 @@ export default class BaseInput extends BaseComponent {
   }
 
   getRequiredPlaceholder(placeholder) {
-    if (this.isRequiredField()) {
+    const {markRequired} = this.getThemeProps();
+    if (this.isRequiredField() && markRequired) {
       return `${placeholder} *`;
     }
     return placeholder;
