@@ -80,7 +80,6 @@ dependencies {
     implementation project(':react-native-ui-lib')
     implementation 'com.facebook.fresco:fresco:2.0.0'
     implementation 'com.facebook.fresco:animated-gif:2.0.0'
-    implementation project(':react-native-datetimepicker')
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

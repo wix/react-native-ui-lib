@@ -17,7 +17,6 @@ import com.reactnativenavigation.react.ReactGateway;
 import com.wix.reactnativeuilib.highlighterview.HighlighterViewPackage;
 import com.wix.reactnativeuilib.textinput.TextInputDelKeyHandlerPackage;
 import com.wix.reactnativeuilib.wheelpicker.WheelPickerPackage;
-// import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 
 
 public class MainApplication extends NavigationApplication {
@@ -53,7 +52,6 @@ public class MainApplication extends NavigationApplication {
         packages.add(new HighlighterViewPackage());
         packages.add(new WheelPickerPackage());
         packages.add(new TextInputDelKeyHandlerPackage());
-        // packages.add(new RNDateTimePickerPackage());
         return packages;
     }
 }

@@ -273,7 +273,7 @@ DEPENDENCIES:
   - ReactNativeNavigation (from `../node_modules/react-native-navigation`)
   - ReactNativeUiLib (from `../lib/ReactNativeUiLib.podspec`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
-  - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec`)"
+  - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNTextSize (from `../node_modules/react-native-text-size/ios`)
@@ -345,7 +345,7 @@ EXTERNAL SOURCES:
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
   RNDateTimePicker:
-    :path: "../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec"
+    :path: "../node_modules/@react-native-community/datetimepicker"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
@@ -393,6 +393,6 @@ SPEC CHECKSUMS:
   RNTextSize: 91955a6ea2adda9dc7802ce472b7a4dc717686f6
   Yoga: ba3d99dbee6c15ea6bbe3783d1f0cb1ffb79af0f
 
-PODFILE CHECKSUM: 9035edb129051207b9f46ca218f60ecb9203d6ee
+PODFILE CHECKSUM: d416c9a81250d09164f44143386be7b603a03113
 
 COCOAPODS: 1.8.4

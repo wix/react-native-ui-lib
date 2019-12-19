@@ -7,6 +7,3 @@ project(':react-native-navigation').projectDir = new File(rootProject.projectDir
 
 include ':react-native-ui-lib'
 project(':react-native-ui-lib').projectDir = new File(rootProject.projectDir, '../lib/android')
-
-include ':react-native-datetimepicker'
-project(':react-native-datetimepicker').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/datetimepicker/android')
