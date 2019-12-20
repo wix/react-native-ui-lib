@@ -94,6 +94,7 @@ class DateTimePicker extends BaseComponent {
 
   onDonePressed = () => {
     this.toggleExpandableModal();
+    
     setTimeout(() => {
       this.setState({chosenDate: this.chosenDate});
     }, 0);
