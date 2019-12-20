@@ -78,11 +78,26 @@ class TabController extends Component {
     this.setState({itemStates, ignoredItems});
   };
 
+  getCarouselPageChangeCode() {
+    const {asCarousel} = this.props;
+    const {itemStates} = this.state;
+
+    if (asCarousel) {
+      // Rounding on Android, cause it cause issues when comparing values
+      const screenWidth = Constants.isAndroid ? Math.round(Constants.screenWidth) : Constants.screenWidth;
+
+      return _.times(itemStates.length, index => {
+        return cond(eq(Constants.isAndroid ? round(this._carouselOffset) : this._carouselOffset, index * screenWidth), [
+          set(this._currentPage, index)
+        ]);
+      });
+    }
+
+    return [];
+  }
+
   render() {
     const {itemStates, ignoredItems} = this.state;
-    
-    // Rounding on Android, cause it cause issues when comparing values
-    const screenWidth = Constants.isAndroid ? Math.round(Constants.screenWidth) : Constants.screenWidth;
 
     return (
       <TabBarContext.Provider value={this.getProviderContextValue()}>
@@ -92,11 +107,7 @@ class TabController extends Component {
             {() =>
               block([
                 // Carousel Page change
-                ..._.times(itemStates.length, index => {
-                  return cond(eq(Constants.isAndroid ? round(this._carouselOffset) : this._carouselOffset,
-                    index * screenWidth),
-                  [set(this._currentPage, index)]);
-                }),
+                ...this.getCarouselPageChangeCode(),
                 // TabBar Page change
                 ..._.map(itemStates, (state, index) => {
                   return [
