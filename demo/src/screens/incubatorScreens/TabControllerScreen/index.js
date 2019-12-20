@@ -79,10 +79,10 @@ class TabControllerScreen extends Component {
         <Incubator.TabController.TabPage index={0}>
           <Tab1/>
         </Incubator.TabController.TabPage>
-        <Incubator.TabController.TabPage index={1} lazy={!USE_CAROUSEL}>
+        <Incubator.TabController.TabPage index={1}>
           <Tab2/>
         </Incubator.TabController.TabPage>
-        <Incubator.TabController.TabPage index={2}>
+        <Incubator.TabController.TabPage index={2} lazy>
           <Tab3/>
         </Incubator.TabController.TabPage>
         {/* <Incubator.TabController.TabPage index={3}>
