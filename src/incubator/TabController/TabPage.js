@@ -35,6 +35,7 @@ export default class TabPage extends PureComponent {
     loaded: !this.props.lazy
   };
 
+  _loaded = new Value(Number(!this.props.lazy));
   _opacity = new Value(0);
   _zIndex = new Value(0);
   _pageStyle = [
@@ -44,9 +45,11 @@ export default class TabPage extends PureComponent {
   ];
 
   lazyLoad = () => {
-    this.setState({
-      loaded: true
-    });
+    setTimeout(() => {
+      this.setState({
+        loaded: true
+      });
+    }, 300); // tab bar indicator transition time
   };
 
   render() {
@@ -60,7 +63,10 @@ export default class TabPage extends PureComponent {
         <Code>
           {() => {
             return block([
-              cond(and(eq(currentPage, index), lazy, !loaded), call([], this.lazyLoad)),
+              cond(and(eq(currentPage, index), lazy, eq(this._loaded, 0)), [
+                set(this._loaded, 1),
+                call([], this.lazyLoad)
+              ]),
               cond(eq(currentPage, index),
                 [set(this._opacity, 1), set(this._zIndex, 1)],
                 [set(this._opacity, 0), set(this._zIndex, 0)])
