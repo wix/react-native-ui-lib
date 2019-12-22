@@ -62,26 +62,17 @@ export default class WizardStep extends PureBaseComponent {
     enabled: PropTypes.bool
   };
 
-  getProp(activeConfig, config, propName) {
+  getProps() {
     const props = this.getThemeProps();
-    const {index, activeIndex} = props;
-
-    if (index === activeIndex) {
-      return activeConfig[propName];
-    } else if (!_.isUndefined(props[propName])) {
-      return props[propName];
-    } else {
-      return config[propName];
-    }
+    const {state, activeConfig: propsActiveConfig, index, activeIndex} = props;
+    const config = StatesConfig[state];
+    const activeConfig = index === activeIndex ? propsActiveConfig : {};
+    return {...config, ...props, ...activeConfig};
   }
 
-  renderCircle(config, activeConfig) {
-    const {testID, index, onPress, indexLabelStyle} = this.getThemeProps();
+  renderCircle(props) {
+    const {testID, index, activeIndex, onPress, indexLabelStyle, color, circleColor, icon, enabled} = props;
     const hitSlopSize = Spacings.s2;
-    const color = this.getProp(activeConfig, config, 'color');
-    const circleColor = this.getProp(activeConfig, config, 'circleColor');
-    const icon = this.getProp(activeConfig, config, 'icon');
-    const enabled = this.getProp(activeConfig, config, 'enabled');
 
     return (
       <TouchableOpacity
@@ -91,12 +82,8 @@ export default class WizardStep extends PureBaseComponent {
         hitSlop={{top: hitSlopSize, bottom: hitSlopSize, left: hitSlopSize, right: hitSlopSize}}
         disabled={!enabled}
       >
-        {_.isUndefined(icon) ? (
-          <Text
-            text80
-            testID={`${testID}.index`}
-            style={[{color}, config.indexLabelStyle, indexLabelStyle, activeConfig.indexLabelStyle]}
-          >
+        {index === activeIndex || _.isUndefined(icon) ? (
+          <Text text80 testID={`${testID}.index`} style={[{color}, indexLabelStyle]}>
             {index + 1}
           </Text>
         ) : (
@@ -107,33 +94,15 @@ export default class WizardStep extends PureBaseComponent {
   }
 
   render() {
-    const {
-      testID,
-      state,
-      activeConfig: propsActiveConfig,
-      label,
-      labelStyle,
-      index,
-      activeIndex,
-      maxWidth,
-      connectorStyle
-    } = this.getThemeProps();
-    const config = StatesConfig[state];
-    const activeConfig = index === activeIndex ? propsActiveConfig : {};
+    const props = this.getProps();
+    const {testID, label, labelStyle, index, activeIndex, maxWidth, connectorStyle} = props;
 
     return (
       <View testID={testID} row center flex={index !== activeIndex}>
-        {index > activeIndex && (
-          <View flex style={[styles.connector, config.connectorStyle, connectorStyle, activeConfig.connectorStyle]}/>
-        )}
-        {this.renderCircle(config, activeConfig)}
+        {index > activeIndex && <View flex style={[styles.connector, connectorStyle]}/>}
+        {this.renderCircle(props)}
         {index === activeIndex && (
-          <Text
-            text80
-            testID={`${testID}.label`}
-            numberOfLines={1}
-            style={[styles.label, {maxWidth}, config.labelStyle, labelStyle, activeConfig.labelStyle]}
-          >
+          <Text text80 testID={`${testID}.label`} numberOfLines={1} style={[styles.label, {maxWidth}, labelStyle]}>
             {label}
           </Text>
         )}
