@@ -71,7 +71,7 @@ export default class WizardStep extends PureBaseComponent {
   }
 
   renderCircle(props) {
-    const {testID, index, activeIndex, onPress, indexLabelStyle, color, circleColor, icon, enabled} = props;
+    const {testID, index, activeIndex, onPress, indexLabelStyle, color, circleColor = color, icon, enabled} = props;
     const hitSlopSize = Spacings.s2;
 
     return (
