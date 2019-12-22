@@ -25,6 +25,10 @@ export default class WizardStep extends PureBaseComponent {
 
   static propTypes = {
     /**
+     * The state of the step (Wizard.States.X)
+     */
+    state: PropTypes.oneOf(Object.values(States)),
+    /**
      * The label of the item
      */
     label: PropTypes.string,
