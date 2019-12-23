@@ -67,7 +67,7 @@ class DateTimePicker extends BaseComponent {
     this.chosenDate = initialValue;
 
     this.state = {
-      showExpandableModal: false,
+      showExpandableOverlay: false,
       chosenDate: initialValue
     };
   }
@@ -81,38 +81,38 @@ class DateTimePicker extends BaseComponent {
       this.chosenDate = date;
 
       if (Constants.isAndroid) {
-        this.setState({chosenDate: this.chosenDate, showExpandableModal: false});
+        this.setState({chosenDate: this.chosenDate, showExpandableOverlay: false});
       }
     }
 
     _.invoke(this.props, 'onChange');
   }
 
-  toggleExpandableModal = () => {
-    this.setState({showExpandableModal: !this.state.showExpandableModal});
+  toggleExpandableOverlay = (callback) => {
+    this.setState({showExpandableOverlay: !this.state.showExpandableOverlay}, () => {
+      if (_.isFunction(callback)) {
+        callback();
+      }
+    });
   };
 
   onDonePressed = () => {
-    this.toggleExpandableModal();
-    
-    setTimeout(() => {
-      this.setState({chosenDate: this.chosenDate});
-    }, 0);
+    this.toggleExpandableOverlay(() => this.setState({chosenDate: this.chosenDate}));
   }
 
   renderExpandableOverlay = () => {
     const {testID} = this.getThemeProps();
-    const {showExpandableModal} = this.state;
+    const {showExpandableOverlay} = this.state;
 
     return (
       <Dialog
         migrate
-        visible={showExpandableModal}
+        visible={showExpandableOverlay}
         width="100%"
         height={null}
         bottom
         centerH
-        onDismiss={this.toggleExpandableModal}
+        onDismiss={this.toggleExpandableOverlay}
         containerStyle={this.styles.dialog}
         testID={`${testID}.dialog`}
         supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOS only
@@ -134,7 +134,7 @@ class DateTimePicker extends BaseComponent {
           link
           iconSource={Assets.icons.x}
           iconStyle={{tintColor: Colors.dark10}}
-          onPress={this.toggleExpandableModal}
+          onPress={this.toggleExpandableOverlay}
         />
         <Button
           useCustomTheme={useCustomTheme}
@@ -147,10 +147,10 @@ class DateTimePicker extends BaseComponent {
   }
 
   renderDateTimePicker() {
-    const {chosenDate, showExpandableModal} = this.state;
+    const {chosenDate, showExpandableOverlay} = this.state;
     const {mode, minimumDate, maximumDate} = this.props;
 
-    if (showExpandableModal) {
+    if (showExpandableOverlay) {
       return (
         <RNDateTimePicker 
           mode={mode}
@@ -180,7 +180,7 @@ class DateTimePicker extends BaseComponent {
         value={dateString}
         expandable
         renderExpandable={this.renderExpandable}
-        onToggleExpandableModal={this.toggleExpandableModal}
+        onToggleExpandableModal={this.toggleExpandableOverlay}
       />
     );
   }
