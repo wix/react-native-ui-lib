@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		10823FAF23AFB12900429E9A /* KeyboardTrackingViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 10823FAE23AFB12900429E9A /* KeyboardTrackingViewManager.m */; };
+		10823FB123AFB14700429E9A /* ObservingInputAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10823FB023AFB14700429E9A /* ObservingInputAccessoryView.m */; };
+		10823FB323AFB15D00429E9A /* UIResponder+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = 10823FB223AFB15D00429E9A /* UIResponder+FirstResponder.m */; };
 		D8AFAC9F204E004D00D28FED /* SafeAreaSpacerViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D8AFAC99204E004C00D28FED /* SafeAreaSpacerViewManager.m */; };
 		D8AFACA0204E004D00D28FED /* SafeAreaSpacerShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8AFAC9A204E004C00D28FED /* SafeAreaSpacerShadowView.m */; };
 		D8AFACA1204E004D00D28FED /* SafeAreaSpacerViewLocalData.m in Sources */ = {isa = PBXBuildFile; fileRef = D8AFAC9D204E004C00D28FED /* SafeAreaSpacerViewLocalData.m */; };
@@ -29,6 +32,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		10823FAD23AFB0C900429E9A /* KeyboardTrackingViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyboardTrackingViewManager.h; sourceTree = "<group>"; };
+		10823FAE23AFB12900429E9A /* KeyboardTrackingViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyboardTrackingViewManager.m; sourceTree = "<group>"; };
+		10823FB023AFB14700429E9A /* ObservingInputAccessoryView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObservingInputAccessoryView.m; sourceTree = "<group>"; };
+		10823FB223AFB15D00429E9A /* UIResponder+FirstResponder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+FirstResponder.m"; sourceTree = "<group>"; };
+		10823FB423AFB16E00429E9A /* UIResponder+FirstResponder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIResponder+FirstResponder.h"; sourceTree = "<group>"; };
+		10823FB523AFB17B00429E9A /* ObservingInputAccessoryView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObservingInputAccessoryView.h; sourceTree = "<group>"; };
 		D8AFAC97204E004C00D28FED /* SafeAreaSpacerShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SafeAreaSpacerShadowView.h; sourceTree = "<group>"; };
 		D8AFAC98204E004C00D28FED /* SafeAreaSpacerViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SafeAreaSpacerViewManager.h; sourceTree = "<group>"; };
 		D8AFAC99204E004C00D28FED /* SafeAreaSpacerViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SafeAreaSpacerViewManager.m; sourceTree = "<group>"; };
@@ -57,6 +66,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		10823FAC23AFB06E00429E9A /* keyboardtrackingview */ = {
+			isa = PBXGroup;
+			children = (
+				10823FAD23AFB0C900429E9A /* KeyboardTrackingViewManager.h */,
+				10823FAE23AFB12900429E9A /* KeyboardTrackingViewManager.m */,
+				10823FB023AFB14700429E9A /* ObservingInputAccessoryView.m */,
+				10823FB223AFB15D00429E9A /* UIResponder+FirstResponder.m */,
+				10823FB423AFB16E00429E9A /* UIResponder+FirstResponder.h */,
+				10823FB523AFB17B00429E9A /* ObservingInputAccessoryView.h */,
+			);
+			path = keyboardtrackingview;
+			sourceTree = "<group>";
+		};
 		D8D93E5B20161A7F00A39331 = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +98,7 @@
 		D8D93E6620161A7F00A39331 /* reactnativeuilib */ = {
 			isa = PBXGroup;
 			children = (
+				10823FAC23AFB06E00429E9A /* keyboardtrackingview */,
 				D8E5A535204C4F170000DA01 /* safearea */,
 				D8D93E7020161B1F00A39331 /* highlighterview */,
 			);
@@ -169,8 +192,11 @@
 			files = (
 				D8AFACA2204E004D00D28FED /* SafeAreaSpacerView.m in Sources */,
 				D8AFACA0204E004D00D28FED /* SafeAreaSpacerShadowView.m in Sources */,
+				10823FB123AFB14700429E9A /* ObservingInputAccessoryView.m in Sources */,
+				10823FAF23AFB12900429E9A /* KeyboardTrackingViewManager.m in Sources */,
 				D8D93E7620161B1F00A39331 /* HighlighterViewManager.m in Sources */,
 				D8E5A538204C4F170000DA01 /* SafeAreaManager.m in Sources */,
+				10823FB323AFB15D00429E9A /* UIResponder+FirstResponder.m in Sources */,
 				D8AFAC9F204E004D00D28FED /* SafeAreaSpacerViewManager.m in Sources */,
 				D8AFACA1204E004D00D28FED /* SafeAreaSpacerViewLocalData.m in Sources */,
 				D8D93E7520161B1F00A39331 /* HighlighterView.m in Sources */,
