@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import Reanimated from 'react-native-reanimated';
 import TabBarContext from './TabBarContext';
+import {Constants} from '../../helpers';
 
 const {Code, Value, cond, set, and, call, block, eq} = Reanimated;
 
@@ -34,14 +35,21 @@ export default class TabPage extends PureComponent {
     loaded: !this.props.lazy
   };
 
+  _loaded = new Value(Number(!this.props.lazy));
   _opacity = new Value(0);
   _zIndex = new Value(0);
-  _pageStyle = [styles.page, {opacity: this._opacity}, {zIndex: this._zIndex}];
+  _pageStyle = [
+    {opacity: this._opacity},
+    this.context.asCarousel ? styles.carouselPage : styles.page,
+    {zIndex: this._zIndex}
+  ];
 
   lazyLoad = () => {
-    this.setState({
-      loaded: true
-    });
+    setTimeout(() => {
+      this.setState({
+        loaded: true
+      });
+    }, 300); // tab bar indicator transition time
   };
 
   render() {
@@ -55,10 +63,13 @@ export default class TabPage extends PureComponent {
         <Code>
           {() => {
             return block([
-              cond(and(eq(currentPage, index), lazy, !loaded), call([], this.lazyLoad)),
+              cond(and(eq(currentPage, index), lazy, eq(this._loaded, 0)), [
+                set(this._loaded, 1),
+                call([], this.lazyLoad)
+              ]),
               cond(eq(currentPage, index),
                 [set(this._opacity, 1), set(this._zIndex, 1)],
-                [set(this._opacity, 0), set(this._zIndex, 0)],)
+                [set(this._opacity, 0), set(this._zIndex, 0)])
             ]);
           }}
         </Code>
@@ -70,5 +81,10 @@ export default class TabPage extends PureComponent {
 const styles = StyleSheet.create({
   page: {
     ...StyleSheet.absoluteFillObject
+  },
+  carouselPage: {
+    width: Constants.screenWidth,
+    flex: 1,
+    opacity: 1
   }
 });

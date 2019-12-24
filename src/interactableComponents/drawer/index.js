@@ -170,19 +170,25 @@ class NewDrawer extends PureBaseComponent {
 
   /** Accessability */
 
-  getAccessibilityActions() {
+  getAccessibilityActions(withOnPress = false) {
     const {rightItems, leftItem} = this.props;
     const actions = [];
 
     if (leftItem && leftItem.onPress && leftItem.text) {
-      // actions[leftItem.text] = leftItem;
-      actions.push({name: leftItem.text, label: leftItem.text, onPress: leftItem.onPress});
+      const action = {name: leftItem.text, label: leftItem.text};
+      if (withOnPress) {
+        action.onPress = leftItem.onPress;
+      }
+      actions.push(action);
     }
     if (rightItems) {
       rightItems.forEach(item => {
         if (item.onPress && item.text) {
-          // actions[item.text] = item;
-          actions.push({name: item.text, label: item.text, onPress: item.onPress});
+          const action = {name: item.text, label: item.text};
+          if (withOnPress) {
+            action.onPress = item.onPress;
+          }
+          actions.push(action);
         }
       });
     }
@@ -191,7 +197,7 @@ class NewDrawer extends PureBaseComponent {
   }
 
   onAccessibilityAction = event => {
-    const actions = this.getAccessibilityActions();
+    const actions = this.getAccessibilityActions(true);
     const action = _.find(actions, (o) => {
       // return o.text === event.nativeEvent.action;
       return o.name === event.nativeEvent.actionName;

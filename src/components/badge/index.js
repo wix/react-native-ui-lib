@@ -103,7 +103,7 @@ export default class Badge extends PureBaseComponent {
     return {
       accessibilityLabel: icon ? 'badge' : label ? `${label} new items` : undefined,
       ...this.extractAccessibilityProps(),
-      accessible: true,
+      accessible: !_.isUndefined(label),
       accessibilityRole: onPress ? 'button' : icon ? 'image' : 'text'
     };
   }
@@ -173,17 +173,20 @@ export default class Badge extends PureBaseComponent {
   }
 
   renderLabel() {
-    const {labelStyle} = this.props;
-    return (
-      <Text
-        style={[this.styles.label, this.isSmallBadge() && this.styles.labelSmall, labelStyle]}
-        allowFontScaling={false}
-        numberOfLines={1}
-        testID="badge"
-      >
-        {this.getFormattedLabel()}
-      </Text>
-    );
+    const {labelStyle, label} = this.props;
+
+    if (label) {
+      return (
+        <Text
+          style={[this.styles.label, this.isSmallBadge() && this.styles.labelSmall, labelStyle]}
+          allowFontScaling={false}
+          numberOfLines={1}
+          testID="badge"
+        >
+          {this.getFormattedLabel()}
+        </Text>
+      );
+    }
   }
 
   renderIcon() {

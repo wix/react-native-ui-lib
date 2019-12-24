@@ -1,10 +1,8 @@
-import React from 'react';
-import {TouchableOpacity as RNTouchableOpacity, StyleSheet} from 'react-native';
+import React, {PureComponent} from 'react';
+import {TouchableOpacity as RNTouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import {PureBaseComponent} from '../../commons';
-import View from '../view';
-import {Constants} from '../../helpers';
+import {asBaseComponent, forwardRef} from '../../commons';
 
 /**
  * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
@@ -14,7 +12,7 @@ import {Constants} from '../../helpers';
  * @gif: https://media.giphy.com/media/xULW8AMIgw7l31zjm8/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.js
  */
-export default class TouchableOpacity extends PureBaseComponent {
+class TouchableOpacity extends PureComponent {
   static displayName = 'TouchableOpacity';
 
   static propTypes = {
@@ -39,7 +37,7 @@ export default class TouchableOpacity extends PureBaseComponent {
   constructor(props) {
     super(props);
 
-    const {throttleTime, throttleOptions} = this.getThemeProps();
+    const {throttleTime, throttleOptions} = this.props;
 
     this.onPress = _.throttle(this.onPress.bind(this), throttleTime, throttleOptions);
     this.onPressIn = this.onPressIn.bind(this);
@@ -74,10 +72,8 @@ export default class TouchableOpacity extends PureBaseComponent {
   }
 
   get backgroundColorStyle() {
-    const {backgroundColor: modifiersBackgroundColor} = this.state;
-    const {backgroundColor: propsBackgroundColor} = this.getThemeProps();
-
-    const backgroundColor = propsBackgroundColor || modifiersBackgroundColor;
+    const {backgroundColor: propsBackgroundColor, modifiers} = this.props;
+    const backgroundColor = propsBackgroundColor || modifiers.backgroundColor;
 
     if (backgroundColor) {
       return {backgroundColor};
@@ -93,9 +89,9 @@ export default class TouchableOpacity extends PureBaseComponent {
     }
   }
 
-  renderTouchableOpacity() {
-    const {borderRadius, paddings, margins, alignments, flexStyle} = this.state;
-    const {style, ...others} = this.getThemeProps();
+  render() {
+    const {style, modifiers, forwardedRef, ...others} = this.props;
+    const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
 
     return (
       <RNTouchableOpacity
@@ -114,24 +110,9 @@ export default class TouchableOpacity extends PureBaseComponent {
           style,
           this.activeBackgroundStyle
         ]}
-        ref={this.setRef}
+        ref={forwardedRef}
       />
     );
-  }
-
-  render() {
-    const {useSafeArea, safeAreaBackgroundColor} = this.getThemeProps();
-
-    if (useSafeArea && Constants.isIphoneX) {
-      return (
-        <View>
-          {this.renderTouchableOpacity()}
-          <View backgroundColor={safeAreaBackgroundColor} style={styles.safeArea}/>
-        </View>
-      );
-    } else {
-      return this.renderTouchableOpacity();
-    }
   }
 
   onPress() {
@@ -139,8 +120,4 @@ export default class TouchableOpacity extends PureBaseComponent {
   }
 }
 
-const styles = StyleSheet.create({
-  safeArea: {
-    height: Constants.getSafeAreaInsets().bottom
-  }
-});
+export default asBaseComponent(forwardRef(TouchableOpacity));

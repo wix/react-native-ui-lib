@@ -28,6 +28,7 @@ export default function baseComponent(usePure) {
       };
     }
 
+    // TODO: remove this after migrating all components to use asBaseComponent HOC
     UNSAFE_componentWillReceiveProps(nextProps) {
       this.updateModifiers(this.props, nextProps);
     }
@@ -46,7 +47,7 @@ export default function baseComponent(usePure) {
     extractAccessibilityProps = Modifiers.extractAccessibilityProps;
 
     extractTypographyValue() {
-      return Modifiers.extractTypographyValue(this.props);
+      return Modifiers.extractTypographyValue(this.getThemeProps());
     }
 
     extractColorValue = () => Modifiers.extractColorValue(this.getThemeProps());

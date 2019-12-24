@@ -144,7 +144,6 @@ export default class TextField extends BaseInput {
   };
 
   static defaultProps = {
-    placeholderTextColor: DEFAULT_COLOR_BY_STATE.default,
     enableErrors: true,
     validateOnBlur: true
   };
@@ -216,7 +215,7 @@ export default class TextField extends BaseInput {
         : ' '
       : this.shouldShowTopError() && this.shouldShowHelperText()
         ? helperText
-        : placeholder;
+        : this.getRequiredPlaceholder(placeholder);
     return text;
   }
 
@@ -322,9 +321,10 @@ export default class TextField extends BaseInput {
   /** Renders */
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
-    const {expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} = this.getThemeProps();
+    const {expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} 
+    = this.getThemeProps();
     const typography = this.getTypography();
-    const placeholderColor = this.getStateColor(placeholderTextColor);
+    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_COLOR_BY_STATE.default);
 
     if (this.shouldFakePlaceholder()) {
       return (
@@ -354,7 +354,7 @@ export default class TextField extends BaseInput {
           suppressHighlighting
           accessible={false}
         >
-          {placeholder}
+          {this.getRequiredPlaceholder(placeholder)}
         </Animated.Text>
       );
     }
@@ -470,12 +470,12 @@ export default class TextField extends BaseInput {
       numberOfLines,
       expandable,
       rightIconSource,
+      color,
       ...others
     } = this.getThemeProps();
     const typography = this.getTypography();
     const {lineHeight, ...typographyStyle} = typography;
-    // color priority is: user's color prop, then modifiers, then theme props.
-    const color = this.getStateColor(this.props.color || this.extractColorValue() || this.getThemeProps().color);
+    const textColor = this.getStateColor(color || this.extractColorValue());
     const hasRightElement = this.shouldDisplayRightButton() || rightIconSource;
     const inputStyle = [
       hasRightElement && this.styles.rightElement,
@@ -485,11 +485,11 @@ export default class TextField extends BaseInput {
       Constants.isAndroid && {lineHeight},
       expandable && {maxHeight: lineHeight * (Constants.isAndroid ? 3 : 3.3)},
       Constants.isRTL && {minHeight: lineHeight + 3},
-      color && {color},
+      {color: textColor},
       style
     ];
     const placeholderText = this.getPlaceholderText();
-    const placeholderColor = this.getStateColor(placeholderTextColor);
+    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_COLOR_BY_STATE.default);
     const shouldUseMultiline = multiline ? multiline : expandable;
     const isEditable = !this.isDisabled() && !expandable;
 
@@ -550,12 +550,11 @@ export default class TextField extends BaseInput {
   }
 
   render() {
-    const {margins} = this.state;
     const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
     const underlineStateColor = this.getStateColor(underlineColor, true);
 
     return (
-      <View style={[this.styles.container, margins, containerStyle]} collapsable={false}>
+      <View style={[this.styles.container, containerStyle]} collapsable={false}>
         {this.shouldShowTopError() ? this.renderError(useTopErrors) : this.renderTitle()}
 
         <View
@@ -617,13 +616,13 @@ export default class TextField extends BaseInput {
   };
 }
 
-function createStyles({placeholderTextColor, centered, multiline, expandable}) {
+function createStyles({centered, multiline, expandable}) {
   const inputTextAlign = Constants.isRTL ? 'right' : 'left';
 
   return StyleSheet.create({
     container: {},
     innerContainer: {
-      flexGrow: 1,
+      flexGrow: 1, // create bugs with lineHeight
       flexDirection: 'row',
       justifyContent: centered ? 'center' : undefined,
       borderBottomWidth: 1,
@@ -661,7 +660,6 @@ function createStyles({placeholderTextColor, centered, multiline, expandable}) {
       backgroundColor: 'transparent'
     },
     placeholder: {
-      color: placeholderTextColor,
       textAlign: 'left'
     },
     errorMessage: {
