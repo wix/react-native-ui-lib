@@ -223,7 +223,7 @@ export default class WizardScreen extends Component {
             </Text>
           </View>
         </ScrollView>
-        {!_.isNil(toastMessage) && <Toast visible position="bottom" message={toastMessage}/>}
+        {!_.isNil(toastMessage) && <Toast testID={'uilib.toast'} visible position="bottom" message={toastMessage}/>}
       </View>
     );
   }
