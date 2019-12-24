@@ -1,8 +1,9 @@
 import React, {PureComponent} from 'react';
-import {TouchableOpacity as RNTouchableOpacity} from 'react-native';
+import {TouchableOpacity as RNTouchableOpacity, SafeAreaView, StyleSheet, TouchableWithoutFeedback} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {asBaseComponent, forwardRef} from '../../commons';
+import {Constants} from '../../helpers';
 
 /**
  * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
@@ -90,7 +91,7 @@ class TouchableOpacity extends PureComponent {
   }
 
   render() {
-    const {style, modifiers, forwardedRef, ...others} = this.props;
+    const {style, modifiers, forwardedRef, useSafeArea, ...others} = this.props;
     const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
 
     return (
@@ -111,7 +112,14 @@ class TouchableOpacity extends PureComponent {
           this.activeBackgroundStyle
         ]}
         ref={forwardedRef}
-      />
+      >
+        {this.props.children}
+        {useSafeArea && Constants.isIOS && (
+          <TouchableWithoutFeedback style={styles.safeArea}>
+            <SafeAreaView/>
+          </TouchableWithoutFeedback>
+        )}
+      </RNTouchableOpacity>
     );
   }
 
@@ -119,5 +127,11 @@ class TouchableOpacity extends PureComponent {
     _.invoke(this.props, 'onPress', this.props);
   }
 }
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1
+  }
+});
 
 export default asBaseComponent(forwardRef(TouchableOpacity));
