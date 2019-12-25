@@ -478,7 +478,7 @@ export default class TextField extends BaseInput {
     const {lineHeight, ...typographyStyle} = typography;
     const textColor = this.getStateColor(color || this.extractColorValue());
     const hasRightElement = this.shouldDisplayRightButton() || rightIconSource;
-    const shouldUseMultiline = multiline ? multiline : expandable;
+    const shouldUseMultiline = multiline || expandable;
 
     const inputStyle = [
       hasRightElement && this.styles.rightElement,
