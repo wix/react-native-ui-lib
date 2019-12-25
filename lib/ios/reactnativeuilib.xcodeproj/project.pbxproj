@@ -10,6 +10,12 @@
 		10823FAF23AFB12900429E9A /* KeyboardTrackingViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 10823FAE23AFB12900429E9A /* KeyboardTrackingViewManager.m */; };
 		10823FB123AFB14700429E9A /* ObservingInputAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10823FB023AFB14700429E9A /* ObservingInputAccessoryView.m */; };
 		10823FB323AFB15D00429E9A /* UIResponder+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = 10823FB223AFB15D00429E9A /* UIResponder+FirstResponder.m */; };
+		10823FBE23B0BAA200429E9A /* Color+Interpolation.m in Sources */ = {isa = PBXBuildFile; fileRef = 10823FBD23B0BAA200429E9A /* Color+Interpolation.m */; };
+		10823FC023B0BE5600429E9A /* LNAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 10823FBF23B0BE5600429E9A /* LNAnimator.m */; };
+		10823FC223B0BE9100429E9A /* LNInterpolable.m in Sources */ = {isa = PBXBuildFile; fileRef = 10823FC123B0BE9100429E9A /* LNInterpolable.m */; };
+		10823FC623B0BF0C00429E9A /* NSValue+Interpolation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10823FC523B0BF0C00429E9A /* NSValue+Interpolation.mm */; };
+		10823FCA23B0BF8400429E9A /* RCTCustomInputController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10823FC923B0BF8400429E9A /* RCTCustomInputController.m */; };
+		10823FCD23B0BFAC00429E9A /* RCTCustomKeyboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10823FCC23B0BFAC00429E9A /* RCTCustomKeyboardViewController.m */; };
 		D8AFAC9F204E004D00D28FED /* SafeAreaSpacerViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D8AFAC99204E004C00D28FED /* SafeAreaSpacerViewManager.m */; };
 		D8AFACA0204E004D00D28FED /* SafeAreaSpacerShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8AFAC9A204E004C00D28FED /* SafeAreaSpacerShadowView.m */; };
 		D8AFACA1204E004D00D28FED /* SafeAreaSpacerViewLocalData.m in Sources */ = {isa = PBXBuildFile; fileRef = D8AFAC9D204E004C00D28FED /* SafeAreaSpacerViewLocalData.m */; };
@@ -38,6 +44,19 @@
 		10823FB223AFB15D00429E9A /* UIResponder+FirstResponder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+FirstResponder.m"; sourceTree = "<group>"; };
 		10823FB423AFB16E00429E9A /* UIResponder+FirstResponder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIResponder+FirstResponder.h"; sourceTree = "<group>"; };
 		10823FB523AFB17B00429E9A /* ObservingInputAccessoryView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObservingInputAccessoryView.h; sourceTree = "<group>"; };
+		10823FB823B0B9D000429E9A /* Color+Interpolation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Color+Interpolation.h"; sourceTree = "<group>"; };
+		10823FB923B0B9DC00429E9A /* LNAnimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LNAnimator.h; sourceTree = "<group>"; };
+		10823FBA23B0B9ED00429E9A /* LNInterpolable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LNInterpolable.h; sourceTree = "<group>"; };
+		10823FBB23B0B9FA00429E9A /* LNInterpolation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LNInterpolation.h; sourceTree = "<group>"; };
+		10823FBC23B0BA0900429E9A /* NSValue+Interpolation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSValue+Interpolation.h"; sourceTree = "<group>"; };
+		10823FBD23B0BAA200429E9A /* Color+Interpolation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Color+Interpolation.m"; sourceTree = "<group>"; };
+		10823FBF23B0BE5600429E9A /* LNAnimator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LNAnimator.m; sourceTree = "<group>"; };
+		10823FC123B0BE9100429E9A /* LNInterpolable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LNInterpolable.m; sourceTree = "<group>"; };
+		10823FC523B0BF0C00429E9A /* NSValue+Interpolation.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSValue+Interpolation.mm"; sourceTree = "<group>"; };
+		10823FC823B0BF6B00429E9A /* RCTCustomInputController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTCustomInputController.h; sourceTree = "<group>"; };
+		10823FC923B0BF8400429E9A /* RCTCustomInputController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTCustomInputController.m; sourceTree = "<group>"; };
+		10823FCB23B0BF9600429E9A /* RCTCustomKeyboardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTCustomKeyboardViewController.h; sourceTree = "<group>"; };
+		10823FCC23B0BFAC00429E9A /* RCTCustomKeyboardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTCustomKeyboardViewController.m; sourceTree = "<group>"; };
 		D8AFAC97204E004C00D28FED /* SafeAreaSpacerShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SafeAreaSpacerShadowView.h; sourceTree = "<group>"; };
 		D8AFAC98204E004C00D28FED /* SafeAreaSpacerViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SafeAreaSpacerViewManager.h; sourceTree = "<group>"; };
 		D8AFAC99204E004C00D28FED /* SafeAreaSpacerViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SafeAreaSpacerViewManager.m; sourceTree = "<group>"; };
@@ -79,6 +98,42 @@
 			path = keyboardtrackingview;
 			sourceTree = "<group>";
 		};
+		10823FB623B0B98400429E9A /* keyboardinput */ = {
+			isa = PBXGroup;
+			children = (
+				10823FC723B0BF5100429E9A /* rctcustomInputcontroller */,
+				10823FB723B0B9AC00429E9A /* lninterpolation */,
+			);
+			path = keyboardinput;
+			sourceTree = "<group>";
+		};
+		10823FB723B0B9AC00429E9A /* lninterpolation */ = {
+			isa = PBXGroup;
+			children = (
+				10823FB823B0B9D000429E9A /* Color+Interpolation.h */,
+				10823FB923B0B9DC00429E9A /* LNAnimator.h */,
+				10823FBA23B0B9ED00429E9A /* LNInterpolable.h */,
+				10823FBB23B0B9FA00429E9A /* LNInterpolation.h */,
+				10823FBC23B0BA0900429E9A /* NSValue+Interpolation.h */,
+				10823FBD23B0BAA200429E9A /* Color+Interpolation.m */,
+				10823FBF23B0BE5600429E9A /* LNAnimator.m */,
+				10823FC123B0BE9100429E9A /* LNInterpolable.m */,
+				10823FC523B0BF0C00429E9A /* NSValue+Interpolation.mm */,
+			);
+			path = lninterpolation;
+			sourceTree = "<group>";
+		};
+		10823FC723B0BF5100429E9A /* rctcustomInputcontroller */ = {
+			isa = PBXGroup;
+			children = (
+				10823FC823B0BF6B00429E9A /* RCTCustomInputController.h */,
+				10823FC923B0BF8400429E9A /* RCTCustomInputController.m */,
+				10823FCB23B0BF9600429E9A /* RCTCustomKeyboardViewController.h */,
+				10823FCC23B0BFAC00429E9A /* RCTCustomKeyboardViewController.m */,
+			);
+			path = rctcustomInputcontroller;
+			sourceTree = "<group>";
+		};
 		D8D93E5B20161A7F00A39331 = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +153,7 @@
 		D8D93E6620161A7F00A39331 /* reactnativeuilib */ = {
 			isa = PBXGroup;
 			children = (
+				10823FB623B0B98400429E9A /* keyboardinput */,
 				10823FAC23AFB06E00429E9A /* keyboardtrackingview */,
 				D8E5A535204C4F170000DA01 /* safearea */,
 				D8D93E7020161B1F00A39331 /* highlighterview */,
@@ -190,15 +246,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10823FCD23B0BFAC00429E9A /* RCTCustomKeyboardViewController.m in Sources */,
+				10823FC023B0BE5600429E9A /* LNAnimator.m in Sources */,
 				D8AFACA2204E004D00D28FED /* SafeAreaSpacerView.m in Sources */,
 				D8AFACA0204E004D00D28FED /* SafeAreaSpacerShadowView.m in Sources */,
+				10823FC623B0BF0C00429E9A /* NSValue+Interpolation.mm in Sources */,
 				10823FB123AFB14700429E9A /* ObservingInputAccessoryView.m in Sources */,
 				10823FAF23AFB12900429E9A /* KeyboardTrackingViewManager.m in Sources */,
+				10823FC223B0BE9100429E9A /* LNInterpolable.m in Sources */,
 				D8D93E7620161B1F00A39331 /* HighlighterViewManager.m in Sources */,
 				D8E5A538204C4F170000DA01 /* SafeAreaManager.m in Sources */,
 				10823FB323AFB15D00429E9A /* UIResponder+FirstResponder.m in Sources */,
 				D8AFAC9F204E004D00D28FED /* SafeAreaSpacerViewManager.m in Sources */,
 				D8AFACA1204E004D00D28FED /* SafeAreaSpacerViewLocalData.m in Sources */,
+				10823FCA23B0BF8400429E9A /* RCTCustomInputController.m in Sources */,
+				10823FBE23B0BAA200429E9A /* Color+Interpolation.m in Sources */,
 				D8D93E7520161B1F00A39331 /* HighlighterView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
