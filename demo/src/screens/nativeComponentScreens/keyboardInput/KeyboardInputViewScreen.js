@@ -13,7 +13,8 @@ import {
   Spacings,
   Switch,
   Constants,
-  Typography
+  Typography,
+  Button
 } from 'react-native-ui-lib';
 
 // import './demoKeyboards';
@@ -93,16 +94,12 @@ export default class KeyboardInputViewScreen extends PureComponent {
             underlineColorAndroid="transparent"
             onFocus={this.resetKeyboardView}
           />
-          <TouchableOpacity style={styles.closeButton} onPress={KeyboardUtils.dismiss}>
-            <Text>Close</Text>
-          </TouchableOpacity>
+          <Button label="Close" link onPress={KeyboardUtils.dismiss} style={styles.button}/>
         </View>
 
         <View style={styles.keyboardModesContainer}>
           {this.getToolbarButtons().map((button, index) => (
-            <TouchableOpacity onPress={button.onPress} style={styles.modeButton} key={index} testID={button.testID}>
-              <Text>{button.text}</Text>
-            </TouchableOpacity>
+            <Button label={button.text} link onPress={button.onPress} key={index} style={styles.button}/>
           ))}
         </View>
       </View>
@@ -159,7 +156,7 @@ const styles = StyleSheet.create({
     padding: Spacings.s2,
     ...Typography.text70
   },
-  closeButton: {
+  button: {
     padding: Spacings.s2
   },
   keyboardContainer: {
@@ -169,8 +166,5 @@ const styles = StyleSheet.create({
   },
   keyboardModesContainer: {
     flexDirection: 'row'
-  },
-  modeButton: {
-    padding: 5
   }
 });
