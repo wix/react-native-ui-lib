@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import com.facebook.react.ReactRootView;
 
 import static com.wix.reactnativeuilib.keyboardinput.AppContextHolder.getCurrentActivity;
-import static com.wix.reactnativeuilib.keyboardinput.GlobalDefs.TAG;
 
 public class ViewUtils {
 
@@ -40,7 +39,6 @@ public class ViewUtils {
         }
 
         final ReactRootView view = findChildByClass((ViewGroup) window.getDecorView(), sVisibleReactRootViewMatcher);
-        Logger.v(TAG, "Visible RCT view: " + (view != null ? view.hashCode() : null));
         return view;
     }
 
