@@ -33,6 +33,7 @@ import FloatingButtonScreen from './FloatingButtonScreen';
 import ColorPickerScreen from './ColorPickerScreen';
 import ColorSwatchScreen from './ColorSwatchScreen';
 import StackAggregatorScreen from './StackAggregatorScreen';
+import DateTimePickerScreen from './DateTimePickerScreen';
 import WizardScreen from './WizardScreen';
 
 
@@ -70,4 +71,5 @@ Navigation.registerComponent('unicorn.components.FloatingButtonScreen', () => Fl
 Navigation.registerComponent('unicorn.components.ColorPickerScreen', () => ColorPickerScreen);
 Navigation.registerComponent('unicorn.components.ColorSwatchScreen', () => ColorSwatchScreen);
 Navigation.registerComponent('unicorn.components.StackAggregatorScreen', () => StackAggregatorScreen);
+Navigation.registerComponent('unicorn.components.DateTimePickerScreen', () => DateTimePickerScreen);
 Navigation.registerComponent('unicorn.components.WizardScreen', () => WizardScreen);
