@@ -158,6 +158,9 @@ module.exports = {
   get View() {
     return require('./view').default;
   },
+  get Wizard() {
+    return require('./wizard').default;
+  },
   get WheelPickerDialog() {
     return require('./wheelPickerDialog').default;
   }

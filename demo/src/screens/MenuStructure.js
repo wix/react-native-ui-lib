@@ -41,6 +41,7 @@ export const navigationData = {
       {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
       {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'},
       {title: 'Wheel Picker Dialog', tags: 'wheel picker dialog', screen: 'unicorn.components.WheelPickerDialogScreen'},
+      {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'},
     ],
   },
   Form: {

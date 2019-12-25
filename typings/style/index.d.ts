@@ -1,9 +1,10 @@
-import Typography from "./typography";
-import BorderRadiuses from "./borderRadiuses";
-import Colors from "./colors";
-import Shadows from "./shadows";
-import Spacings from "./spacings";
-import ComponentsColors from "./componentsColors";
-import Components from "./components";
-import ThemeManager from "./themeManager";
-export { Colors, BorderRadiuses, Shadows, Spacings, Components, ComponentsColors, ThemeManager, Typography };
+
+export * from './animatableManager';
+export * from './borderRadiuses';
+export * from './colors';
+export * from './components';
+export * from './componentsColors';
+export * from './shadows';
+export * from './spacings';
+export * from './themeManager';
+export * from './typography';

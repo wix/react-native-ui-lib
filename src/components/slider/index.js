@@ -125,7 +125,7 @@ export default class Slider extends PureBaseComponent {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this._panResponder = PanResponder.create({
       onMoveShouldSetPanResponder: this.handleMoveShouldSetPanResponder,
       onPanResponderGrant: this.handlePanResponderGrant,

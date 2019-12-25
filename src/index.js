@@ -154,6 +154,9 @@ module.exports = {
   get View() {
     return require('./components').View;
   },
+  get Wizard() {
+    return require('./components').Wizard;
+  },
   get WheelPickerDialog() {
     return require('./components').WheelPickerDialog;
   },
