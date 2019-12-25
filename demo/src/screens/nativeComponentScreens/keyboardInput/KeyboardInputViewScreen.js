@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
     padding: Spacings.s5
   },
   textInput: {
+    flex: 1,
     padding: Spacings.s2,
     ...Typography.text70
   },
