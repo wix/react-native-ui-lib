@@ -220,9 +220,9 @@ module.exports = {
   get KeyboardAwareInsetsView() {
     return require('./nativeComponents').KeyboardAwareInsetsView;
   },
-  get KeyboardTrackingView() {
-    return require('./nativeComponents').KeyboardTrackingView;
-  },
+  // get KeyboardTrackingView() {
+  //   return require('./nativeComponents').KeyboardTrackingView;
+  // },
 
   // InteractableComponents
   get Drawer() {
