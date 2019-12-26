@@ -9,9 +9,9 @@ import {
   TextArea,
   Modal,
   Button,
-  KeyboardAwareInsetsView
+  Keyboard
 } from 'react-native-ui-lib'; //eslint-disable-line
-
+const KeyboardAwareInsetsView = Keyboard.KeyboardAwareInsetsView;
 
 const richText = require('../../assets/icons/richText.png');
 const dropDown = require('../../assets/icons/chevronDown.png');
