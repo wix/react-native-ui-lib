@@ -259,7 +259,7 @@ class Picker extends BaseComponent {
 
       if (!showSearch || _.isEmpty(searchValue) || _.includes(_.lowerCase(childLabel), _.lowerCase(searchValue))) {
         const selectedValue = PickerPresenter.getItemValue({value, getItemValue});
-        const isSelected = PickerPresenter.isItemSelected(childValue, selectedValue)
+        const isSelected = PickerPresenter.isItemSelected(childValue, selectedValue);
         return React.cloneElement(child, {
           isSelected,
           onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
