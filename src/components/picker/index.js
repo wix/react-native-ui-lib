@@ -166,7 +166,7 @@ class Picker extends BaseComponent {
   getAccessibilityInfo() {
     const {placeholder} = this.props;
     return {
-      accessibilityLabel: this.getLabel() ? `${placeholder}. selected value = ${this.getLabel()}` : `Select ${placeholder}`,
+      accessibilityLabel: this.getLabel() ? `${placeholder}. selected. ${this.getLabel()}` : `Select ${placeholder}`,
       accessibilityHint: this.getLabel()
         ? 'Double tap to edit'
         : `Goes to ${placeholder}. Suggestions will be provided`,
@@ -196,7 +196,7 @@ class Picker extends BaseComponent {
     }
 
     if (_.isPlainObject(value)) {
-      return _.get(value, 'label'); 
+      return _.get(value, 'label');
     }
 
     // otherwise, extract from picker items
@@ -259,13 +259,15 @@ class Picker extends BaseComponent {
 
       if (!showSearch || _.isEmpty(searchValue) || _.includes(_.lowerCase(childLabel), _.lowerCase(searchValue))) {
         const selectedValue = PickerPresenter.getItemValue({value, getItemValue});
+        const isSelected = PickerPresenter.isItemSelected(childValue, selectedValue)
         return React.cloneElement(child, {
-          isSelected: PickerPresenter.isItemSelected(childValue, selectedValue),
+          isSelected,
           onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
           getItemValue: child.props.getItemValue || getItemValue,
           onSelectedLayout: this.onSelectedItemLayout,
           renderItem: child.props.renderItem || renderItem,
-          accessibilityHint: 'Double click to select this suggestion'
+          accessibilityHint: 'Double click to select this suggestion',
+          accessibilityState: isSelected ? {selected: true} : undefined
         });
       }
     });
