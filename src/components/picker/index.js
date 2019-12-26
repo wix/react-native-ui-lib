@@ -266,8 +266,8 @@ class Picker extends BaseComponent {
           getItemValue: child.props.getItemValue || getItemValue,
           onSelectedLayout: this.onSelectedItemLayout,
           renderItem: child.props.renderItem || renderItem,
-          accessibilityHint: 'Double click to select this suggestion',
-          accessibilityState: isSelected ? {selected: true} : undefined
+          accessibilityState: isSelected ? {selected: true} : undefined,
+          accessibilityHint: 'Double click to select this suggestion'
         });
       }
     });
