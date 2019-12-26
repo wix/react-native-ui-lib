@@ -16,7 +16,7 @@ import {
   Typography
 } from 'react-native-ui-lib';
 
-import './demoKeyboards';
+// import './demoKeyboards';
 
 const TrackInteractive = true;
 

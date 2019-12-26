@@ -220,24 +220,24 @@ module.exports = {
   get KeyboardAwareInsetsView() {
     return require('./nativeComponents').KeyboardAwareInsetsView;
   },
-  get KeyboardTrackingView() {
-    return require('./nativeComponents').KeyboardTrackingView;
-  },
-  get TextInputKeyboardMangerIOS() {
-    return require('./nativeComponents').TextInputKeyboardMangerIOS;
-  },
-  get CustomKeyboardView() {
-    return require('./nativeComponents').CustomKeyboardView;
-  },
-  get KeyboardRegistry() {
-    return require('./nativeComponents').KeyboardRegistry;
-  },
-  get KeyboardAccessoryView() {
-    return require('./nativeComponents').KeyboardAccessoryView;
-  },
-  get KeyboardUtils() {
-    return require('./nativeComponents').KeyboardUtils;
-  },
+  // get KeyboardTrackingView() {
+  //   return require('./nativeComponents').KeyboardTrackingView;
+  // },
+  // get TextInputKeyboardMangerIOS() {
+  //   return require('./nativeComponents').TextInputKeyboardMangerIOS;
+  // },
+  // get CustomKeyboardView() {
+  //   return require('./nativeComponents').CustomKeyboardView;
+  // },
+  // get KeyboardRegistry() {
+  //   return require('./nativeComponents').KeyboardRegistry;
+  // },
+  // get KeyboardAccessoryView() {
+  //   return require('./nativeComponents').KeyboardAccessoryView;
+  // },
+  // get KeyboardUtils() {
+  //   return require('./nativeComponents').KeyboardUtils;
+  // },
 
   // InteractableComponents
   get Drawer() {
