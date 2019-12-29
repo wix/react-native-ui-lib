@@ -73,7 +73,7 @@ class CarouselScreen extends Component {
         </View>
 
         <View padding-20>
-          <Carousel migrate containerStyle={{height: 160}} initialPage={INITIAL_PAGE} loop>
+          <Carousel migrate containerStyle={{height: 160}} initialPage={INITIAL_PAGE} loop usePagination>
             {_.map(IMAGES, (image, index) => {
               return (
                 <View key={index} flex padding-10 bottom>

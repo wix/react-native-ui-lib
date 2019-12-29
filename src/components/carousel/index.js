@@ -65,13 +65,17 @@ export default class Carousel extends BaseComponent {
      */
     pageControlPosition: PropTypes.oneOf(Object.values(PAGE_CONTROL_POSITIONS)),
     /**
-     * whether to show a page counter (will not work with pageWidths)
+     * whether to show a page counter (will not work with 'pageWidth' prop)
      */
     showCounter: PropTypes.bool,
     /**
      * the counter's text style
      */
-    counterTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
+    counterTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * will block multiple pages scroll (will not work with 'pageWidth' prop)
+     */
+    pagingEnabled: PropTypes.bool
   };
 
   static defaultProps = {
@@ -151,6 +155,10 @@ export default class Carousel extends BaseComponent {
     const {itemSpacings} = this.props;
     const {containerWidth, pageWidth} = this.state;
 
+    if (this.shouldEnablePagination()) {
+      return undefined;
+    }
+
     if (containerWidth) {
       const spacings = pageWidth === containerWidth ? 0 : itemSpacings;
       const initialBreak = pageWidth - (containerWidth - pageWidth - spacings) / 2;
@@ -162,6 +170,11 @@ export default class Carousel extends BaseComponent {
   shouldUsePageWidth() {
     const {loop, pageWidth} = this.props;
     return !loop && pageWidth;
+  }
+
+  shouldEnablePagination() {
+    const {pagingEnabled} = this.props;
+    return pagingEnabled && !this.shouldUsePageWidth();
   }
 
   onContainerLayout = ({nativeEvent: {layout: {width: containerWidth}}}) => {
@@ -294,6 +307,7 @@ export default class Carousel extends BaseComponent {
           contentContainerStyle={scrollContainerStyle}
           horizontal
           showsHorizontalScrollIndicator={false}
+          pagingEnabled={this.shouldEnablePagination()}
           snapToOffsets={snapToOffsets}
           decelerationRate="fast"
           contentOffset={initialOffset} // iOS only
