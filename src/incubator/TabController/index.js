@@ -57,7 +57,7 @@ class TabController extends Component {
 
   _targetPage = new Value(-1);
   _currentPage = new Value(this.props.selectedIndex);
-  _carouselOffset = new Value(0);
+  _carouselOffset = new Value(this.props.selectedIndex * Math.round(Constants.screenWidth));
 
   getProviderContextValue = () => {
     const {itemStates} = this.state;
