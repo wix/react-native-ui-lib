@@ -13,7 +13,7 @@ import TabBarItem from './TabBarItem';
 import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
 
-const {cond, Code, and, eq, set, Value, block, round} = Reanimated;
+const {cond, Code, and, eq, set, Value, block, round, onChange, call} = Reanimated;
 
 /**
  * @description: A performant solution for a tab controller with lazy load mechanism
@@ -78,6 +78,10 @@ class TabController extends Component {
     this.setState({itemStates, ignoredItems});
   };
 
+  onPageChange = ([index]) => {
+    _.invoke(this.props, 'onChangeIndex', index);
+  }
+
   getCarouselPageChangeCode() {
     const {asCarousel} = this.props;
     const {itemStates} = this.state;
@@ -117,7 +121,8 @@ class TabController extends Component {
                       set(this._targetPage, -1)
                     ])
                   ];
-                })
+                }),
+                onChange(this._currentPage, call([this._currentPage], this.onPageChange))
               ])
             }
           </Code>

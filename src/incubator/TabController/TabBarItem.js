@@ -128,7 +128,6 @@ export default class TabBarItem extends PureComponent {
 
   onPress = () => {
     const {index, onPress} = this.props;
-    _.invoke(this.props, 'onChangeIndex', index);
     onPress(index);
   };
 
