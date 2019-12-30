@@ -7,7 +7,6 @@ import {
   TextField,
   Image,
   Colors,
-  Spacings,
   Switch,
   Constants
 } from 'react-native-ui-lib';
