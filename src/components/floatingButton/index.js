@@ -44,7 +44,11 @@ class FloatingButton extends BaseComponent {
     /**
      * Whether to show/hide the button without animation
      */
-    withoutAnimation: PropTypes.bool
+    withoutAnimation: PropTypes.bool,
+    /**
+     * Whether to show background overlay
+     */
+    hideBackgroundOverlay: PropTypes.bool
   };
 
   constructor(props) {
@@ -98,6 +102,16 @@ class FloatingButton extends BaseComponent {
     );
   }
 
+  renderOverlay = () => {
+    if (!this.props.hideBackgroundOverlay) {
+      return (
+        <View pointerEvents={'none'} style={styles.image}>
+          <Image style={styles.image} source={gradientImage()} resizeMode={'stretch'}/>
+        </View>
+      );
+    }
+  }
+
   renderSecondaryButton() {
     const {secondaryButton, bottomMargin} = this.getThemeProps();
 
@@ -132,9 +146,7 @@ class FloatingButton extends BaseComponent {
         easing={'ease-out'}
         onAnimationEnd={this.onAnimationEnd}
       >
-        <View pointerEvents="none" style={styles.image}>
-          <Image style={styles.image} source={gradientImage()} resizeMode={'stretch'}/>
-        </View>
+        {this.renderOverlay()}
         {this.renderButton()}
         {secondaryButton && this.renderSecondaryButton()}
       </Container>

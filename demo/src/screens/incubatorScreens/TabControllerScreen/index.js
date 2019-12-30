@@ -107,7 +107,7 @@ class TabControllerScreen extends Component {
             key={key}
             asCarousel={USE_CAROUSEL}
             selectedIndex={selectedIndex}
-            _onChangeIndex={index => console.warn('tab index is', index)}
+            onChangeIndex={index => console.warn('tab index is', index)}
           >
             <Incubator.TabController.TabBar
               items={this.getItems()}

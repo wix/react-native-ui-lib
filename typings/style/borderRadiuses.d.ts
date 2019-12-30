@@ -1,13 +1,14 @@
-declare class BorderRadiuses {
-    br0: number;
-    br10: number;
-    br20: number;
-    br30: number;
-    br40: number;
-    br50: number;
-    br60: number;
-    br100: number;
-    getKeysPattern(): RegExp;
-}
-declare const _default: BorderRadiuses;
-export default _default;
+
+export type BorderRadiusName =
+  | 'br0'
+  | 'br10'
+  | 'br20'
+  | 'br30'
+  | 'br40'
+  | 'br50'
+  | 'br60'
+  | 'br100';
+
+type BorderRadiusesList = Record<BorderRadiusName, number>;
+
+export const BorderRadiuses: Readonly<BorderRadiusesList>;

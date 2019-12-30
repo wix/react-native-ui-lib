@@ -35,7 +35,7 @@
     "release": "node ./scripts/release.js",
     "jenkinsRelease": "node ./scripts/jenkinsRelease.js",
     "build:ts": "rm -rf dist-ts && ./scripts/build-ts.sh",
-    "build:typings": "rm -rf ./typings && ./scripts/build-typings.sh && tsc"
+    "build:typings": "rm -rf ./typings && ./scripts/build-typings.sh && tsc --emitDeclarationOnly"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
@@ -57,6 +57,7 @@
     "@babel/runtime": "^7.4.2",
     "@react-native-community/async-storage": "^1.6.2",
     "@react-native-community/blur": "^3.4.1",
+    "@react-native-community/datetimepicker": "^2.1.0",
     "@react-native-community/eslint-config": "latest",
     "@types/prop-types": "^15.5.3",
     "@types/react-native": "^0.55.21",
@@ -89,6 +90,7 @@
     "react-native-gesture-handler": ">=1.5.0",
     "react-native-reanimated": ">=1.4.0",
     "@react-native-community/blur": ">=3.4.1",
+    "@react-native-community/datetimepicker": "^2.1.0",
     "react-native-interactable": ">=2.0.0"
   },
   "jest": {

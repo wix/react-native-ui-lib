@@ -90,7 +90,7 @@ class TouchableOpacity extends PureComponent {
   }
 
   render() {
-    const {style, modifiers, ...others} = this.props;
+    const {style, modifiers, forwardedRef, ...others} = this.props;
     const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
 
     return (
@@ -110,7 +110,7 @@ class TouchableOpacity extends PureComponent {
           style,
           this.activeBackgroundStyle
         ]}
-        ref={this.setRef}
+        ref={forwardedRef}
       />
     );
   }

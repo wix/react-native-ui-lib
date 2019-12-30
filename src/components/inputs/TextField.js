@@ -670,7 +670,7 @@ function createStyles({centered, multiline, expandable}) {
       marginBottom: Constants.isIOS ? (multiline ? 1 : 6) : 7
     },
     bottomLabel: {
-      marginTop: 1
+      marginTop: 9
     },
     label: {
       ...LABEL_TYPOGRAPHY,
