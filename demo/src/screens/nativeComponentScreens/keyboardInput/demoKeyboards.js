@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Keyboard, Colors} from 'react-native-ui-lib';
+import {Keyboard, Colors, Constants} from 'react-native-ui-lib';
 const KeyboardRegistry = Keyboard.KeyboardRegistry;
 import KeyboardView from './KeyboardView';
 
@@ -11,7 +11,7 @@ class KeyboardView1 extends Component {
 
   onButtonPress() {
     KeyboardRegistry.onItemSelected('KeyboardView1', {
-      message: 'item selected from KeyboardView'
+      message: 'Item selected from keyboard 1'
     });
   }
 
@@ -33,7 +33,13 @@ class KeyboardView2 extends Component {
   };
 
   onButtonPress() {
-    KeyboardRegistry.toggleExpandedKeyboard('KeyboardView2');
+    if (Constants.isIOS) {
+      KeyboardRegistry.toggleExpandedKeyboard('KeyboardView2');
+    } else {
+      KeyboardRegistry.onItemSelected('KeyboardView2', {
+        message: 'Item selected from keyboard 2'
+      });
+    }
   }
 
   render() {
