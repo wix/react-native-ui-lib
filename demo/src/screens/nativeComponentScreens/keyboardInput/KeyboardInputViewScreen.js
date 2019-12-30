@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {ScrollView, StyleSheet, TextInput} from 'react-native';
 import {
@@ -18,6 +19,7 @@ const KeyboardAccessoryView = Keyboard.KeyboardAccessoryView;
 const KeyboardUtils = Keyboard.KeyboardUtils;
 
 import './demoKeyboards';
+const KeyboardRegistry = Keyboard.KeyboardRegistry;
 
 const TrackInteractive = true;
 
@@ -40,23 +42,25 @@ export default class KeyboardInputViewScreen extends PureComponent {
   };
 
   getToolbarButtons() {
-    return [
-      {
-        text: 'show1',
-        testID: 'show1',
-        onPress: () => this.showKeyboardView('KeyboardView', 'FIRST - 1 (passed prop)')
-      },
-      {
-        text: 'show2',
-        testID: 'show2',
-        onPress: () => this.showKeyboardView('AnotherKeyboardView', 'SECOND - 2 (passed prop)')
-      },
-      {
-        text: 'reset',
-        testID: 'reset',
-        onPress: () => this.resetKeyboardView()
-      }
-    ];
+    const keyboards = KeyboardRegistry.getAllKeyboards();
+    const buttons = [];
+    for (let index = 0; index < keyboards.length; ++index) {
+      const string = `Show KB ${index + 1}`;
+      const title = `Title ${index + 1} (passed prop)`;
+      buttons.push({
+        text: string,
+        testID: string,
+        onPress: () => this.showKeyboardView(keyboards[index].id, title)
+      });
+    }
+
+    buttons.push({
+      text: 'reset',
+      testID: 'reset',
+      onPress: () => this.resetKeyboardView()
+    });
+
+    return buttons;
   }
 
   resetKeyboardView = () => {
