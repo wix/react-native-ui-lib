@@ -1,20 +1,7 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {ScrollView, StyleSheet, TextInput} from 'react-native';
-import {
-  Keyboard,
-  TouchableOpacity,
-  Text,
-  View,
-  TextField,
-  Image,
-  Colors,
-  Spacings,
-  Switch,
-  Constants,
-  Typography,
-  Button
-} from 'react-native-ui-lib';
+import {Keyboard, Text, View, Colors, Spacings, Constants, Typography, Button} from 'react-native-ui-lib';
 const KeyboardAccessoryView = Keyboard.KeyboardAccessoryView;
 const KeyboardUtils = Keyboard.KeyboardUtils;
 
@@ -76,10 +63,16 @@ export default class KeyboardInputViewScreen extends PureComponent {
     });
   }
 
+  onHeightChanged = keyboardAccessoryViewHeight => {
+    if (Constants.isIOS) {
+      this.setState({keyboardAccessoryViewHeight});
+    }
+  };
+
   keyboardAccessoryViewContent = () => {
     return (
       <View style={styles.keyboardContainer}>
-        <View style={styles.inputContainer}>
+        <View row padding-s5>
           <TextInput
             maxHeight={200}
             style={styles.textInput}
@@ -93,7 +86,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
           <Button label="Close" link onPress={KeyboardUtils.dismiss} style={styles.button}/>
         </View>
 
-        <View style={styles.keyboardModesContainer}>
+        <View row>
           {this.getToolbarButtons().map((button, index) => (
             <Button label={button.text} link onPress={button.onPress} key={index} style={styles.button}/>
           ))}
@@ -104,7 +97,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View flex bg-dark80>
         <ScrollView
           contentContainerStyle={styles.scrollContainer}
           keyboardDismissMode={TrackInteractive ? 'interactive' : 'none'}
@@ -117,7 +110,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
 
         <KeyboardAccessoryView
           renderContent={this.keyboardAccessoryViewContent}
-          onHeightChanged={Constants.isIOS ? height => this.setState({keyboardAccessoryViewHeight: height}) : undefined}
+          onHeightChanged={this.onHeightChanged}
           trackInteractive={TrackInteractive}
           kbInputRef={this.textInputRef}
           kbComponent={this.state.customKeyboard.component}
@@ -132,20 +125,10 @@ export default class KeyboardInputViewScreen extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.dark80
-  },
   scrollContainer: {
     paddingHorizontal: Spacings.s5,
     flex: 1,
     justifyContent: 'center'
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: Spacings.s5
   },
   textInput: {
     flex: 1,
@@ -159,8 +142,5 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderWidth: 1,
     borderColor: Colors.dark60
-  },
-  keyboardModesContainer: {
-    flexDirection: 'row'
   }
 });
