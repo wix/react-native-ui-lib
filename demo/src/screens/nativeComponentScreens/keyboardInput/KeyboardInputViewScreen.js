@@ -22,30 +22,22 @@ const KeyboardUtils = Keyboard.KeyboardUtils;
 const TrackInteractive = true;
 
 export default class KeyboardInputViewScreen extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.keyboardAccessoryViewContent = this.keyboardAccessoryViewContent.bind(this);
-    this.onKeyboardItemSelected = this.onKeyboardItemSelected.bind(this);
-    this.resetKeyboardView = this.resetKeyboardView.bind(this);
-    this.onKeyboardResigned = this.onKeyboardResigned.bind(this);
+  state = {
+    customKeyboard: {
+      component: undefined,
+      initialProps: undefined
+    },
+    receivedKeyboardData: undefined
+  };
 
-    this.state = {
-      customKeyboard: {
-        component: undefined,
-        initialProps: undefined
-      },
-      receivedKeyboardData: undefined
-    };
-  }
-
-  onKeyboardItemSelected(keyboardId, params) {
+  onKeyboardItemSelected = (keyboardId, params) => {
     const receivedKeyboardData = `onItemSelected from "${keyboardId}"\nreceived params: ${JSON.stringify(params)}`;
     this.setState({receivedKeyboardData});
-  }
+  };
 
-  onKeyboardResigned() {
+  onKeyboardResigned = () => {
     this.resetKeyboardView();
-  }
+  };
 
   getToolbarButtons() {
     return [
@@ -67,9 +59,9 @@ export default class KeyboardInputViewScreen extends PureComponent {
     ];
   }
 
-  resetKeyboardView() {
+  resetKeyboardView = () => {
     this.setState({customKeyboard: {}});
-  }
+  };
 
   showKeyboardView(component, title) {
     this.setState({
@@ -80,7 +72,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
     });
   }
 
-  keyboardAccessoryViewContent() {
+  keyboardAccessoryViewContent = () => {
     return (
       <View style={styles.keyboardContainer}>
         <View style={styles.inputContainer}>
@@ -104,7 +96,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
         </View>
       </View>
     );
-  }
+  };
 
   render() {
     return (
