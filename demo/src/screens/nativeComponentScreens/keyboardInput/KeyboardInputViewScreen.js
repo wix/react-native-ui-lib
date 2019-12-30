@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {ScrollView, StyleSheet, TextInput} from 'react-native';
 import {Keyboard, Text, View, Colors, Spacings, Constants, Typography, Button} from 'react-native-ui-lib';
