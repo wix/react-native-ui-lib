@@ -96,6 +96,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
 
   render() {
     const {message} = this.props;
+    const {receivedKeyboardData, customKeyboard} = this.state;
 
     return (
       <View flex bg-dark80>
@@ -106,7 +107,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
           <Text text40 dark10 marginV-20 center>
             {message || 'Keyboards example'}
           </Text>
-          <Text testID={'demo-message'}>{this.state.receivedKeyboardData}</Text>
+          <Text testID={'demo-message'}>{receivedKeyboardData}</Text>
         </ScrollView>
 
         <KeyboardAccessoryView
@@ -114,8 +115,8 @@ export default class KeyboardInputViewScreen extends PureComponent {
           onHeightChanged={this.onHeightChanged}
           trackInteractive={TrackInteractive}
           kbInputRef={this.textInputRef}
-          kbComponent={this.state.customKeyboard.component}
-          kbInitialProps={this.state.customKeyboard.initialProps}
+          kbComponent={customKeyboard.component}
+          kbInitialProps={customKeyboard.initialProps}
           onItemSelected={this.onKeyboardItemSelected}
           onKeyboardResigned={this.onKeyboardResigned}
           revealKeyboardInteractive
