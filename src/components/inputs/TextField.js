@@ -473,10 +473,13 @@ export default class TextField extends BaseInput {
       color,
       ...others
     } = this.getThemeProps();
+
     const typography = this.getTypography();
     const {lineHeight, ...typographyStyle} = typography;
     const textColor = this.getStateColor(color || this.extractColorValue());
     const hasRightElement = this.shouldDisplayRightButton() || rightIconSource;
+    const shouldUseMultiline = multiline || expandable;
+
     const inputStyle = [
       hasRightElement && this.styles.rightElement,
       this.styles.input,
@@ -485,12 +488,13 @@ export default class TextField extends BaseInput {
       Constants.isAndroid && {lineHeight},
       expandable && {maxHeight: lineHeight * (Constants.isAndroid ? 3 : 3.3)},
       Constants.isRTL && {minHeight: lineHeight + 3},
+      Constants.isIOS && shouldUseMultiline && {paddingTop: 0}, // fix for iOS topPadding in multiline TextInput
       {color: textColor},
       style
     ];
+    
     const placeholderText = this.getPlaceholderText();
     const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_COLOR_BY_STATE.default);
-    const shouldUseMultiline = multiline ? multiline : expandable;
     const isEditable = !this.isDisabled() && !expandable;
 
     return (
