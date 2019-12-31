@@ -94,6 +94,19 @@ export default class KeyboardInputViewScreen extends PureComponent {
     );
   };
 
+  requestShowKeyboard = () => {
+    KeyboardRegistry.requestShowKeyboard('KeyboardView1');
+  };
+
+  onRequestShowKeyboard = componentID => {
+    this.setState({
+      customKeyboard: {
+        component: componentID,
+        initialProps: {title: 'Keyboard 1 opened by button'}
+      }
+    });
+  };
+
   render() {
     const {message} = this.props;
     const {receivedKeyboardData, customKeyboard} = this.state;
@@ -108,6 +121,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
             {message || 'Keyboards example'}
           </Text>
           <Text testID={'demo-message'}>{receivedKeyboardData}</Text>
+          <Button label={'Open keyboard #1'} link onPress={this.requestShowKeyboard} style={styles.button}/>
         </ScrollView>
 
         <KeyboardAccessoryView
@@ -120,6 +134,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
           onItemSelected={this.onKeyboardItemSelected}
           onKeyboardResigned={this.onKeyboardResigned}
           revealKeyboardInteractive
+          onRequestShowKeyboard={this.onRequestShowKeyboard}
         />
       </View>
     );
