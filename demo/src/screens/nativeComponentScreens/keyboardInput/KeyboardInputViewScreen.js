@@ -95,6 +95,8 @@ export default class KeyboardInputViewScreen extends PureComponent {
   };
 
   render() {
+    const {message} = this.props;
+
     return (
       <View flex bg-dark80>
         <ScrollView
@@ -102,7 +104,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
           keyboardDismissMode={TrackInteractive ? 'interactive' : 'none'}
         >
           <Text text40 dark10 marginV-20 center>
-            {this.props.message || 'Keyboards example'}
+            {message || 'Keyboards example'}
           </Text>
           <Text testID={'demo-message'}>{this.state.receivedKeyboardData}</Text>
         </ScrollView>
