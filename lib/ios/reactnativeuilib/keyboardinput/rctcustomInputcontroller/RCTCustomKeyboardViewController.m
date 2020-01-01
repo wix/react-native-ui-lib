@@ -7,9 +7,9 @@
 
 #import "RCTCustomKeyboardViewController.h"
 
-#if __has_include(<KeyboardTrackingView/ObservingInputAccessoryView.h>)
-    #import <KeyboardTrackingView/ObservingInputAccessoryView.h>
-    #define ObservingInputAccessoryView_IsAvailable true
+#if __has_include(<KeyboardTrackingView/ObservingInputAccessoryViewTemp.h>)
+    #import <KeyboardTrackingView/ObservingInputAccessoryViewTemp.h>
+    #define ObservingInputAccessoryViewTemp_IsAvailable true
 #endif
 
 @implementation RCTCustomKeyboardViewController
@@ -24,11 +24,11 @@
 
         self.heightConstraint = [self.inputView.heightAnchor constraintEqualToConstant:0];
         
-#ifdef ObservingInputAccessoryView_IsAvailable
-        ObservingInputAccessoryView *activeObservingInputAccessoryView = [ObservingInputAccessoryViewManager sharedInstance].activeObservingInputAccessoryView;
-        if (activeObservingInputAccessoryView != nil)
+#ifdef ObservingInputAccessoryViewTemp_IsAvailable
+        ObservingInputAccessoryViewTemp *activeObservingInputAccessoryViewTemp = [ObservingInputAccessoryViewTempManager sharedInstance].activeObservingInputAccessoryViewTemp;
+        if (activeObservingInputAccessoryViewTemp != nil)
         {
-            CGFloat keyboardHeight = activeObservingInputAccessoryView.keyboardHeight;
+            CGFloat keyboardHeight = activeObservingInputAccessoryViewTemp.keyboardHeight;
             if (keyboardHeight > 0)
             {
                 self.heightConstraint.constant = keyboardHeight;

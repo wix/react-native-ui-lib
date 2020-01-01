@@ -1,5 +1,5 @@
 //
-//  KeyboardTrackingViewManager.h
+//  KeyboardTrackingViewTempManager.h
 //  ReactNativeChat
 //
 //  Created by Artal Druk on 19/04/2016.
@@ -10,5 +10,5 @@
 #import <React/RCTViewManager.h>
 #import <React/RCTBridgeModule.h>
 
-@interface KeyboardTrackingViewManager : RCTViewManager
+@interface KeyboardTrackingViewTempManager : RCTViewManager
 @end
