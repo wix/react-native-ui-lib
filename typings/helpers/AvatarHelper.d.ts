@@ -1,5 +1,10 @@
-export declare function getAvatarColors(): any[];
-export declare function getColorById(id: any, avatarColors?: any[]): any;
-export declare function getInitials(name: any): any;
-export declare function isGravatarUrl(url: any): any;
-export declare function patchGravatarUrl(gravatarUrl: any): any;
+import {ColorValue} from '../style/colors';
+
+export namespace AvatarHelper {
+  export function getAvatarColors(): ColorValue[];
+  export function getColorById(id: string, avatarColors?: ColorValue[]): ColorValue;
+  export function getInitials(name: string): string;
+  export function isGravatarUrl(url: string): boolean;
+  export function isBlankGravatarUrl(url: string): boolean;
+  export function patchGravatarUrl(gravatarUrl: string): string;
+}

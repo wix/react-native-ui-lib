@@ -13,13 +13,25 @@ class PageCarousel extends Component {
     useNativeDriver: true
   });
 
+  componentDidMount() {
+    if (Constants.isAndroid) {
+      setTimeout(() => {
+        this.scrollToPage(this.context.selectedIndex, false);
+      }, 0);
+    }
+  }
+
   onTabChange = ([index]) => {
-    const node = this.carousel.current.getNode();
-    node.scrollTo({x: index * Constants.screenWidth, animated: true});
+    this.scrollToPage(index, true);
   };
 
+  scrollToPage = (pageIndex, animated) => {
+    const node = this.carousel.current.getNode();
+    node.scrollTo({x: pageIndex * Constants.screenWidth, animated});
+  }
+
   render() {
-    const {currentPage} = this.context;
+    const {selectedIndex, currentPage} = this.context;
     return (
       <>
         <Animated.ScrollView
@@ -30,11 +42,14 @@ class PageCarousel extends Component {
           showsHorizontalScrollIndicator={false}
           onScroll={this.onScroll}
           scrollEventThrottle={200}
+          contentOffset={{x: selectedIndex * Constants.screenWidth}} // iOS only
         />
 
         <Code>
           {() => {
-            return block([call([currentPage], this.onTabChange)]);
+            return block([
+              Animated.onChange(currentPage, call([currentPage], this.onTabChange))
+            ]);
           }}
         </Code>
       </>

@@ -13,7 +13,7 @@ import TabBarItem from './TabBarItem';
 import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
 
-const {cond, Code, and, eq, set, Value, block, round} = Reanimated;
+const {cond, Code, and, eq, set, Value, block, round, onChange, call} = Reanimated;
 
 /**
  * @description: A performant solution for a tab controller with lazy load mechanism
@@ -57,7 +57,7 @@ class TabController extends Component {
 
   _targetPage = new Value(-1);
   _currentPage = new Value(this.props.selectedIndex);
-  _carouselOffset = new Value(0);
+  _carouselOffset = new Value(this.props.selectedIndex * Math.round(Constants.screenWidth));
 
   getProviderContextValue = () => {
     const {itemStates} = this.state;
@@ -77,6 +77,10 @@ class TabController extends Component {
     const itemStates = _.times(tabItemsCount, () => new Value(-1));
     this.setState({itemStates, ignoredItems});
   };
+
+  onPageChange = ([index]) => {
+    _.invoke(this.props, 'onChangeIndex', index);
+  }
 
   getCarouselPageChangeCode() {
     const {asCarousel} = this.props;
@@ -117,7 +121,8 @@ class TabController extends Component {
                       set(this._targetPage, -1)
                     ])
                   ];
-                })
+                }),
+                onChange(this._currentPage, call([this._currentPage], this.onPageChange))
               ])
             }
           </Code>
