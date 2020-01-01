@@ -12,14 +12,14 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		13D71DE7B17D935DEA875BE9 /* libPods-rnuilib-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8658ED238442D10C061F3D7 /* libPods-rnuilib-tvOSTests.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		2D29C518841627E6B8AD9EE1 /* libPods-rnuilibTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7ABEAC26258A0FB7CE038F0 /* libPods-rnuilibTests.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* rnuilibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* rnuilibTests.m */; };
-		325C1936BF41BA6B24F7537F /* libPods-rnuilib-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EED86EC31C53024EED36ED09 /* libPods-rnuilib-tvOS.a */; };
-		3E86A0174D7B2C47FD7DE0D5 /* libPods-rnuilib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1843F7659ED6559E74AC0E54 /* libPods-rnuilib.a */; };
-		4D1C745BCCEBB1A61F09B85C /* libPods-rnuilibTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E46B481E6DCAC8F70DE3FFF7 /* libPods-rnuilibTests.a */; };
-		805ED2D6F47256DBE13667FD /* libPods-rnuilib-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8345B1871F81AE9A557267 /* libPods-rnuilib-tvOSTests.a */; };
+		9E56B9386CA1CEB5F3E36FF0 /* libPods-rnuilib-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B933607BC5FA5526FE76218 /* libPods-rnuilib-tvOS.a */; };
+		BAE6CEB0A3B0233D1D9F10C4 /* libPods-rnuilib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ACE7CD1D2352086F493FEC09 /* libPods-rnuilib.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +44,7 @@
 		00E356EE1AD99517003FC87E /* rnuilibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rnuilibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* rnuilibTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rnuilibTests.m; sourceTree = "<group>"; };
+		08DF5EB70C7CAF5A53E6C450 /* Pods-rnuilibTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilibTests.release.xcconfig"; path = "Target Support Files/Pods-rnuilibTests/Pods-rnuilibTests.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* rnuilib.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rnuilib.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = rnuilib/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = rnuilib/AppDelegate.m; sourceTree = "<group>"; };
@@ -51,22 +52,21 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = rnuilib/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = rnuilib/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = rnuilib/main.m; sourceTree = "<group>"; };
-		1843F7659ED6559E74AC0E54 /* libPods-rnuilib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilib.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1B933607BC5FA5526FE76218 /* libPods-rnuilib-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilib-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E47B1E0B4A5D006451C7 /* rnuilib-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "rnuilib-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* rnuilib-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "rnuilib-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F8345B1871F81AE9A557267 /* libPods-rnuilib-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilib-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		627B8E6B44EFD1254DBB0903 /* Pods-rnuilib-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib-tvOSTests/Pods-rnuilib-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		64F6E246FCBA08D9E6DED1A4 /* Pods-rnuilib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib.release.xcconfig"; path = "Target Support Files/Pods-rnuilib/Pods-rnuilib.release.xcconfig"; sourceTree = "<group>"; };
-		91C9CF68DC215BBC513E3298 /* Pods-rnuilib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib/Pods-rnuilib.debug.xcconfig"; sourceTree = "<group>"; };
-		9DBCA3E583B95DF88DD0B0D4 /* Pods-rnuilibTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilibTests.release.xcconfig"; path = "Target Support Files/Pods-rnuilibTests/Pods-rnuilibTests.release.xcconfig"; sourceTree = "<group>"; };
-		A3A6316467692E989E7943EC /* Pods-rnuilib-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib-tvOS/Pods-rnuilib-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		B28373A36C5412F37C71E20D /* Pods-rnuilib-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-tvOS.release.xcconfig"; path = "Target Support Files/Pods-rnuilib-tvOS/Pods-rnuilib-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		C90DD1B23543A0E3496D6DF1 /* Pods-rnuilibTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilibTests.debug.xcconfig"; path = "Target Support Files/Pods-rnuilibTests/Pods-rnuilibTests.debug.xcconfig"; sourceTree = "<group>"; };
-		E46B481E6DCAC8F70DE3FFF7 /* libPods-rnuilibTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilibTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		71948FE36072FEABAC938826 /* Pods-rnuilibTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilibTests.debug.xcconfig"; path = "Target Support Files/Pods-rnuilibTests/Pods-rnuilibTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9BC16A210A00F3ED63D82EE0 /* Pods-rnuilib-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib-tvOSTests/Pods-rnuilib-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		ACE7CD1D2352086F493FEC09 /* libPods-rnuilib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilib.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B74F479150191F23BC6F9F39 /* Pods-rnuilib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib/Pods-rnuilib.debug.xcconfig"; sourceTree = "<group>"; };
+		D8658ED238442D10C061F3D7 /* libPods-rnuilib-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilib-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA679D455720E14361BB8241 /* Pods-rnuilib-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-rnuilib-tvOSTests/Pods-rnuilib-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		E7ABEAC26258A0FB7CE038F0 /* libPods-rnuilibTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilibTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		EED86EC31C53024EED36ED09 /* libPods-rnuilib-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilib-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F3DE813D51D14A170F715C23 /* Pods-rnuilib-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-rnuilib-tvOSTests/Pods-rnuilib-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		EF4A81A4598D076F2808DA50 /* Pods-rnuilib-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-tvOS.release.xcconfig"; path = "Target Support Files/Pods-rnuilib-tvOS/Pods-rnuilib-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		F302AB51572EE27CD87F7F89 /* Pods-rnuilib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib.release.xcconfig"; path = "Target Support Files/Pods-rnuilib/Pods-rnuilib.release.xcconfig"; sourceTree = "<group>"; };
+		F4907DB4E8E800C36B71BD70 /* Pods-rnuilib-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib-tvOS/Pods-rnuilib-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D1C745BCCEBB1A61F09B85C /* libPods-rnuilibTests.a in Frameworks */,
+				2D29C518841627E6B8AD9EE1 /* libPods-rnuilibTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E86A0174D7B2C47FD7DE0D5 /* libPods-rnuilib.a in Frameworks */,
+				BAE6CEB0A3B0233D1D9F10C4 /* libPods-rnuilib.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				325C1936BF41BA6B24F7537F /* libPods-rnuilib-tvOS.a in Frameworks */,
+				9E56B9386CA1CEB5F3E36FF0 /* libPods-rnuilib-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				805ED2D6F47256DBE13667FD /* libPods-rnuilib-tvOSTests.a in Frameworks */,
+				13D71DE7B17D935DEA875BE9 /* libPods-rnuilib-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,10 +141,10 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				1843F7659ED6559E74AC0E54 /* libPods-rnuilib.a */,
-				EED86EC31C53024EED36ED09 /* libPods-rnuilib-tvOS.a */,
-				4F8345B1871F81AE9A557267 /* libPods-rnuilib-tvOSTests.a */,
-				E46B481E6DCAC8F70DE3FFF7 /* libPods-rnuilibTests.a */,
+				ACE7CD1D2352086F493FEC09 /* libPods-rnuilib.a */,
+				1B933607BC5FA5526FE76218 /* libPods-rnuilib-tvOS.a */,
+				D8658ED238442D10C061F3D7 /* libPods-rnuilib-tvOSTests.a */,
+				E7ABEAC26258A0FB7CE038F0 /* libPods-rnuilibTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -185,14 +185,14 @@
 		A5219FDDDDFBAABBAD9F08DC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				91C9CF68DC215BBC513E3298 /* Pods-rnuilib.debug.xcconfig */,
-				64F6E246FCBA08D9E6DED1A4 /* Pods-rnuilib.release.xcconfig */,
-				A3A6316467692E989E7943EC /* Pods-rnuilib-tvOS.debug.xcconfig */,
-				B28373A36C5412F37C71E20D /* Pods-rnuilib-tvOS.release.xcconfig */,
-				627B8E6B44EFD1254DBB0903 /* Pods-rnuilib-tvOSTests.debug.xcconfig */,
-				F3DE813D51D14A170F715C23 /* Pods-rnuilib-tvOSTests.release.xcconfig */,
-				C90DD1B23543A0E3496D6DF1 /* Pods-rnuilibTests.debug.xcconfig */,
-				9DBCA3E583B95DF88DD0B0D4 /* Pods-rnuilibTests.release.xcconfig */,
+				B74F479150191F23BC6F9F39 /* Pods-rnuilib.debug.xcconfig */,
+				F302AB51572EE27CD87F7F89 /* Pods-rnuilib.release.xcconfig */,
+				F4907DB4E8E800C36B71BD70 /* Pods-rnuilib-tvOS.debug.xcconfig */,
+				EF4A81A4598D076F2808DA50 /* Pods-rnuilib-tvOS.release.xcconfig */,
+				9BC16A210A00F3ED63D82EE0 /* Pods-rnuilib-tvOSTests.debug.xcconfig */,
+				DA679D455720E14361BB8241 /* Pods-rnuilib-tvOSTests.release.xcconfig */,
+				71948FE36072FEABAC938826 /* Pods-rnuilibTests.debug.xcconfig */,
+				08DF5EB70C7CAF5A53E6C450 /* Pods-rnuilibTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -204,7 +204,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "rnuilibTests" */;
 			buildPhases = (
-				475A14889E92528D5BF13E93 /* [CP] Check Pods Manifest.lock */,
+				51B728D7C55570C9A6263634 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
@@ -223,7 +223,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "rnuilib" */;
 			buildPhases = (
-				484097F6012CB66E37F53CBA /* [CP] Check Pods Manifest.lock */,
+				80D43796F64FF4A486E7A13B /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
@@ -243,7 +243,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "rnuilib-tvOS" */;
 			buildPhases = (
-				C73D3912957CF9714D2EBD03 /* [CP] Check Pods Manifest.lock */,
+				7DFEC925300081BB98F81792 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
@@ -263,7 +263,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "rnuilib-tvOSTests" */;
 			buildPhases = (
-				D0EDB4DEE72707D7A9FCA525 /* [CP] Check Pods Manifest.lock */,
+				D164C5C78E126BD482D7EC70 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -393,7 +393,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		475A14889E92528D5BF13E93 /* [CP] Check Pods Manifest.lock */ = {
+		51B728D7C55570C9A6263634 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -415,29 +415,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		484097F6012CB66E37F53CBA /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-rnuilib-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C73D3912957CF9714D2EBD03 /* [CP] Check Pods Manifest.lock */ = {
+		7DFEC925300081BB98F81792 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -459,7 +437,29 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D0EDB4DEE72707D7A9FCA525 /* [CP] Check Pods Manifest.lock */ = {
+		80D43796F64FF4A486E7A13B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-rnuilib-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D164C5C78E126BD482D7EC70 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -586,7 +586,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C90DD1B23543A0E3496D6DF1 /* Pods-rnuilibTests.debug.xcconfig */;
+			baseConfigurationReference = 71948FE36072FEABAC938826 /* Pods-rnuilibTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = XPHGA2FMQQ;
@@ -610,7 +610,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9DBCA3E583B95DF88DD0B0D4 /* Pods-rnuilibTests.release.xcconfig */;
+			baseConfigurationReference = 08DF5EB70C7CAF5A53E6C450 /* Pods-rnuilibTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -631,7 +631,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 91C9CF68DC215BBC513E3298 /* Pods-rnuilib.debug.xcconfig */;
+			baseConfigurationReference = B74F479150191F23BC6F9F39 /* Pods-rnuilib.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
@@ -653,7 +653,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 64F6E246FCBA08D9E6DED1A4 /* Pods-rnuilib.release.xcconfig */;
+			baseConfigurationReference = F302AB51572EE27CD87F7F89 /* Pods-rnuilib.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
@@ -674,7 +674,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A3A6316467692E989E7943EC /* Pods-rnuilib-tvOS.debug.xcconfig */;
+			baseConfigurationReference = F4907DB4E8E800C36B71BD70 /* Pods-rnuilib-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -703,7 +703,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B28373A36C5412F37C71E20D /* Pods-rnuilib-tvOS.release.xcconfig */;
+			baseConfigurationReference = EF4A81A4598D076F2808DA50 /* Pods-rnuilib-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -732,7 +732,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 627B8E6B44EFD1254DBB0903 /* Pods-rnuilib-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = 9BC16A210A00F3ED63D82EE0 /* Pods-rnuilib-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -760,7 +760,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F3DE813D51D14A170F715C23 /* Pods-rnuilib-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = DA679D455720E14361BB8241 /* Pods-rnuilib-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
