@@ -107,9 +107,9 @@ export default class Carousel extends BaseComponent {
 
   onOrientationChanged = () => {
     if (!this.props.pageWidth || this.props.loop) {
+      this.orientationChange = true;
       // HACK: setting to containerWidth for Android's call when view disappear
       this.setState({pageWidth: this.state.containerWidth || Constants.screenWidth});
-      this.goToPage(this.state.currentPage, true);
     }
   };
 
@@ -205,8 +205,11 @@ export default class Carousel extends BaseComponent {
     const offsetX = event.nativeEvent.contentOffset.x;
 
     if (offsetX >= 0) {
-      const newPage = presenter.calcPageIndex(offsetX, this.props, pageWidth);
-      this.setState({currentPage: newPage});
+      if (!this.orientationChange) { // Avoid new calculation on orientation change
+        const newPage = presenter.calcPageIndex(offsetX, this.props, pageWidth);
+        this.setState({currentPage: newPage});
+      }
+      this.orientationChange = false;
     }
 
     if (loop && presenter.isOutOfBounds(offsetX, this.props, pageWidth)) {
