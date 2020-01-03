@@ -10,8 +10,6 @@ export interface WheelPickerItemProps {
   label?: string;
 }
 
-declare class WheelPickerItem extends Component<WheelPickerItemProps> {}
-
 export type WheelPickerOnValueChange = (value: WheelPickerItemValue, index: number) => void;
 
 export interface WheelPickerProps {
@@ -24,6 +22,8 @@ export interface WheelPickerProps {
   itemStyle?: StyleProp<ViewStyle>;
 }
 
-export class WheelPicker extends Component<WheelPickerProps> {
-  Item: typeof WheelPickerItem;
+export class WheelPicker extends Component<WheelPickerProps> {}
+
+export namespace WheelPicker {
+  export class Item extends Component<WheelPickerItemProps> {}
 }

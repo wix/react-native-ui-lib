@@ -22,7 +22,7 @@ interface Theme {
   };
 }
 
-declare class ThemeManagerClass {
+export declare class ThemeManagerClass {
   setTheme(overrides: Partial<Theme>): void;
   getTheme(): Theme;
 
@@ -41,4 +41,4 @@ declare class ThemeManagerClass {
   readonly dividerColor: ColorValue;
 }
 
-declare const ThemeManager: ThemeManagerClass;
+export const ThemeManager: ThemeManagerClass;

@@ -1,5 +1,4 @@
-
-interface TypographyDescription {
+export interface TypographyDescription {
   fontSize: number;
   fontWeight: string;
   lineHeight: number;
@@ -18,9 +17,7 @@ export type TypographyName =
   | 'text90'
   | 'text100';
 
-type TypographyList = Record<TypographyName, TypographyDescription>;
-
-declare class TypographyClass {
+export declare class TypographyClass {
   measureWidth(
     text: string,
     typography?: TypographyDescription,
@@ -33,4 +30,4 @@ declare class TypographyClass {
   ): Promise<{heigth: number, width: number}>;
 }
 
-export const Typography: TypographyClass & Readonly<TypographyList>;
+export const Typography: TypographyClass & Readonly<Record<TypographyName, TypographyDescription>>;

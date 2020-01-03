@@ -6,4 +6,4 @@ interface ComponentsColorsList {
   disabledText: ColorValue;
 }
 
-declare const ComponentsColors: Readonly<ComponentsColorsList>;
+export const ComponentsColors: Readonly<ComponentsColorsList>;

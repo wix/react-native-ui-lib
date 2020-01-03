@@ -42,8 +42,8 @@ export interface CardProps {
   selectionOptions?: CardSelectionOptions;
 }
 
-declare class CardImage extends BaseComponent<CardImageProps> {}
+export class Card extends PureBaseComponent<CardProps> {}
 
-export class Card extends PureBaseComponent<CardProps> {
-  Image: typeof CardImage;
+export namespace Card {
+  export class Image extends BaseComponent<CardImageProps> {}
 }

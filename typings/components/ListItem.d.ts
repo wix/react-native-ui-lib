@@ -20,8 +20,8 @@ export interface ListItemProps {
   containerElement?: ComponentType;
 }
 
-declare class ListItemPart extends BaseComponent<ListItemPartProps> {}
+export class ListItem extends BaseComponent<ListItemProps> {}
 
-export class ListItem extends BaseComponent<ListItemProps> {
-  List: typeof ListItemPart;
+export namespace ListItem {
+  export class Part extends BaseComponent<ListItemPartProps> {}
 }
