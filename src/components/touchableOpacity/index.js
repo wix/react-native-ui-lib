@@ -3,6 +3,7 @@ import {TouchableOpacity as RNTouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {asBaseComponent, forwardRef} from '../../commons';
+import Incubator from '../../incubator';
 
 /**
  * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
@@ -31,7 +32,11 @@ class TouchableOpacity extends PureComponent {
     /**
      * Apply background color on TouchableOpacity when active (press is on)
      */
-    activeBackgroundColor: PropTypes.string
+    activeBackgroundColor: PropTypes.string,
+    /**
+     * Should use a more native touchable opacity component
+     */
+    useNative: PropTypes.bool
   };
 
   constructor(props) {
@@ -90,8 +95,12 @@ class TouchableOpacity extends PureComponent {
   }
 
   render() {
-    const {style, modifiers, forwardedRef, ...others} = this.props;
+    const {useNative, style, modifiers, forwardedRef, ...others} = this.props;
     const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
+
+    if (useNative) {
+      return <Incubator.TouchableOpacity {...this.props}/>;
+    }
 
     return (
       <RNTouchableOpacity
