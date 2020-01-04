@@ -106,10 +106,11 @@ export const navigationData = {
       {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'}
     ]
   },
-  Examples: {
-    title: 'Examples',
+  Inspirations: {
+    title: 'Inspirations',
     screens: [
       {title: 'Apple Music', tags: 'apple music demo screen', screen: 'unicorn.examples.AppleMusic'},
+      {title: 'Pinterest', tags: 'pinterest demo screen', screen: 'unicorn.examples.Pinterest'},
       {title: 'List Actions', tags: 'list actions demo screen', screen: 'unicorn.examples.ListActionsScreen'}
     ],
   },
