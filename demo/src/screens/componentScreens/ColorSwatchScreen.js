@@ -50,7 +50,7 @@ export default class ColorSwatchScreen extends Component {
           </View>
           
           <Text marginT-20 text60 dark10>ColorPalette</Text>
-          <Text marginB-10 text70 style={{color}}>Slected Color: {color}</Text>
+          <Text marginB-10 text70 style={{color}}>Selected Color: {color}</Text>
           <ColorPalette value={color} onValueChange={this.onValueChange} colors={this.colors}/>
 
           <Text margin-10 text60 dark10>Scrollable</Text>
