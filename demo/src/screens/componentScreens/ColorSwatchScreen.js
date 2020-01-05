@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {Colors, View, Text, ColorSwatch, ColorPalette} from 'react-native-ui-lib'; //eslint-disable-line
+import {Constants, Colors, View, Text, ColorSwatch, ColorPalette} from 'react-native-ui-lib'; //eslint-disable-line
 
 
 export default class ColorSwatchScreen extends Component {
@@ -57,7 +57,7 @@ export default class ColorSwatchScreen extends Component {
           <ColorPalette value={color1} onValueChange={this.onValueChange1} colors={this.mainColors}/>
           
           <Text margin-10 text60 dark10>Pagination</Text>
-          <ColorPalette numberOfRows={4} value={color2} onValueChange={this.onValueChange2} colors={this.allColors}/>
+          <ColorPalette numberOfRows={!Constants.isTablet ? 4 : undefined} value={color2} onValueChange={this.onValueChange2} colors={this.allColors}/>
         </View>
       </ScrollView>
     );
