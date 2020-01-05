@@ -307,6 +307,7 @@ export default class ColorPicker extends PureBaseComponent {
   }
 
   renderDialog() {
+    const {testID} = this.props;
     const {show} = this.state;
 
     return (
@@ -320,6 +321,7 @@ export default class ColorPicker extends PureBaseComponent {
         onDismiss={this.onDismiss}
         containerStyle={this.styles.dialog}
         panDirection={PanningProvider.Directions.DOWN}
+        testID={`${testID}-dialog`}
       >
         {this.renderHeader()}
         {this.renderPreview()}
@@ -329,10 +331,10 @@ export default class ColorPicker extends PureBaseComponent {
   }
 
   render() {
-    const {colors, value} = this.props;
+    const {colors, value, testID} = this.props;
 
     return (
-      <View row>
+      <View row testID={testID}>
         <ColorPalette
           value={value}
           colors={colors}
@@ -340,6 +342,7 @@ export default class ColorPicker extends PureBaseComponent {
           usePagination={false}
           animatedIndex={this.animatedIndex}
           onValueChange={this.onValueChange}
+          testID={`${testID}-palette`}
         />
         <View style={this.styles.buttonContainer}>
           <Button
@@ -350,6 +353,7 @@ export default class ColorPicker extends PureBaseComponent {
             outline
             iconSource={Assets.icons.plusSmall}
             onPress={this.showDialog}
+            testID={`${testID}-button`}
           />
         </View>
         {this.renderDialog()}

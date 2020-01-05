@@ -307,7 +307,7 @@ export default class ColorPalette extends PureBaseComponent {
   };
 
   renderColorSwatch(color, index) {
-    const {animatedIndex} = this.props;
+    const {animatedIndex, testID} = this.props;
 
     return (
       <ColorSwatch
@@ -320,6 +320,7 @@ export default class ColorPalette extends PureBaseComponent {
         animated={index === animatedIndex}
         onPress={this.onValueChange}
         ref={r => (this.itemsRefs[index] = r)}
+        testID={`${testID}-${color}`}
       />
     );
   }
