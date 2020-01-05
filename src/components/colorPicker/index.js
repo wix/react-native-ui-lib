@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {LayoutAnimation, StyleSheet, Keyboard, TextInput, PixelRatio} from 'react-native';
+import {LayoutAnimation, StyleSheet, Keyboard, TextInput, PixelRatio, I18nManager} from 'react-native';
 import ColorPalette from './ColorPalette';
 import {SWATCH_MARGIN, SWATCH_SIZE} from './ColorSwatch';
 import {Constants} from '../../helpers';
@@ -275,7 +275,16 @@ export default class ColorPicker extends PureBaseComponent {
       <View style={[this.styles.preview, {backgroundColor: hex}]}>
         <TouchableOpacity center onPress={this.setFocus} activeOpacity={1}>
           <View style={this.styles.inputContainer}>
-            <Text text60 white marginL-13 marginR-5={Constants.isIOS} style={{color: textColor}}>
+            <Text 
+              text60 
+              white 
+              marginL-13 
+              marginR-5={Constants.isIOS} 
+              style={{
+                color: textColor,
+                transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
+              }}
+            >
               #
             </Text>
             <TextInput
@@ -413,11 +422,13 @@ function createStyles(props) {
       alignItems: 'center',
       justifyContent: 'center',
       flexDirection: 'row',
-      marginBottom: Constants.isAndroid ? 5 : 8
+      marginBottom: Constants.isAndroid ? 5 : 8,
+      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
     },
     input: {
       ...Typography.text60,
-      letterSpacing: 3
+      letterSpacing: 3,
+      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
     },
     underline: {
       height: 1.5,

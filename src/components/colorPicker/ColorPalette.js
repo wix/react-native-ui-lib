@@ -275,6 +275,7 @@ export default class ColorPalette extends PureBaseComponent {
           source={gradientImage()}
           resizeMode={'stretch'}
           style={{width: GRADIENT_WIDTH, height: SCROLLABLE_HEIGHT - 12, tintColor: Colors.white}}
+          supportRTL
         />
       </Animated.View>
     );
