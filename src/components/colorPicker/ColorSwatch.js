@@ -8,10 +8,11 @@ import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import {PureBaseComponent} from '../../commons';
 import {Colors} from '../../style';
+import {Constants} from '../../helpers';
 
 
 const transparentImage = require('./assets/transparentSwatch/TransparentSwatch.png');
-const DEFAULT_SIZE = 36;
+const DEFAULT_SIZE = Constants.isTablet ? 44 : 36;
 export const SWATCH_MARGIN = 12;
 export const SWATCH_SIZE = DEFAULT_SIZE;
 
@@ -144,7 +145,7 @@ export default class ColorSwatch extends PureBaseComponent {
         onLayout={this.onLayout}
       >
         {Colors.isTransparent(color) && (
-          <Image source={transparentImage} style={this.styles.transparentImage} resizeMode={'center'}/>
+          <Image source={transparentImage} style={this.styles.transparentImage} resizeMode={'cover'}/>
         )}
         <Animated.Image
           source={Assets.icons.check}
@@ -194,7 +195,9 @@ function createStyles({color = Colors.dark30}) {
       borderColor: Colors.rgba(Colors.dark30, 0.2)
     },
     transparentImage: {
-      ...StyleSheet.absoluteFillObject
+      ...StyleSheet.absoluteFillObject,
+      width: DEFAULT_SIZE,
+      height: DEFAULT_SIZE
     }
   });
 }
