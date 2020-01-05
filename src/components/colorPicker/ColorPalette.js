@@ -40,6 +40,10 @@ export default class ColorPalette extends PureBaseComponent {
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
+     * The container margins
+     */
+    containerMargins: PropTypes.number,
+    /**
      * Whether to use pagination when number of colors exceeds the number of rows
      */
     usePagination: PropTypes.bool,
@@ -127,6 +131,11 @@ export default class ColorPalette extends PureBaseComponent {
     return this.getUniqueColors(this.props.colors);
   }
 
+  get containerWidth() {
+    const {containerMargins} = this.props;
+    return Constants.screenWidth - (containerMargins ? containerMargins * 2 : 0);
+  }
+
   getUniqueColors = memoize(
     (colors) => {
       const c = _.map(colors, color => {
@@ -158,7 +167,7 @@ export default class ColorPalette extends PureBaseComponent {
     // additional items have the minimum width of the margin between them and the previous item's width
     const additionalItemMinimumWidth = SWATCH_SIZE + MINIMUM_MARGIN;
     // floor(space left / size of additional items)
-    itemsPerRow += Math.floor((Constants.screenWidth - firstItemWidth) / additionalItemMinimumWidth);
+    itemsPerRow += Math.floor((this.containerWidth - firstItemWidth) / additionalItemMinimumWidth);
 
     return itemsPerRow;
   }
@@ -174,7 +183,7 @@ export default class ColorPalette extends PureBaseComponent {
     }
 
     // Now that we have the itemsPerRow set, we can calculate the actual innerMargin
-    const remainingSpace = Constants.screenWidth - this.itemsPerRow * SWATCH_SIZE - 2 * HORIZONTAL_PADDING;
+    const remainingSpace = this.containerWidth - this.itemsPerRow * SWATCH_SIZE - 2 * HORIZONTAL_PADDING;
     // With pagination - there's 1 less space than the number of items
     const numberOfMargins = this.itemsPerRow - 1;
     const margin = remainingSpace / numberOfMargins;
@@ -183,7 +192,7 @@ export default class ColorPalette extends PureBaseComponent {
   }
 
   animateGradientOpacity = (offsetX, contentWidth) => {
-    const overflow = contentWidth - Constants.screenWidth;
+    const overflow = contentWidth - this.containerWidth;
     const newValue = offsetX > 0 && offsetX >= overflow - 1 ? 0 : 1;
 
     Animated.timing(this.state.gradientOpacity, {
@@ -209,9 +218,9 @@ export default class ColorPalette extends PureBaseComponent {
               console.warn(e);
             },
             (x, y, w, h) => {
-              if (x + w > Constants.screenWidth) {
+              if (x + w > this.containerWidth) {
                 this.scrollView.current.scrollTo({
-                  x: x + w + HORIZONTAL_PADDING - Constants.screenWidth,
+                  x: x + w + HORIZONTAL_PADDING - this.containerWidth,
                   y: 0,
                   animated: false
                 });
@@ -226,7 +235,7 @@ export default class ColorPalette extends PureBaseComponent {
   }
 
   onContentSizeChange = contentWidth => {
-    if (contentWidth > Constants.screenWidth) {
+    if (contentWidth > this.containerWidth) {
       this.setState({scrollable: true, gradientOpacity: new Animated.Value(1)});
     }
   };
@@ -382,9 +391,9 @@ export default class ColorPalette extends PureBaseComponent {
 
     return (
       <View center style={[containerStyle, styles.paginationContainer]}>
-        <Carousel loop={loop} onChangePage={this.onChangePage} ref={this.carousel}>
+        <Carousel migrate loop={loop} onChangePage={this.onChangePage} ref={this.carousel}>
           {_.map(colorGroups, (colorsPerPage, index) => {
-            return this.renderPalette(others, {...styles.page, width: Constants.screenWidth}, colorsPerPage, index);
+            return this.renderPalette(others, {...styles.page, width: this.containerWidth}, colorsPerPage, index);
           })}
         </Carousel>
         <PageControl
@@ -407,7 +416,7 @@ export default class ColorPalette extends PureBaseComponent {
 const styles = StyleSheet.create({
   paletteContainer: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     paddingLeft: HORIZONTAL_PADDING,
     paddingVertical: VERTICAL_PADDING
   },
