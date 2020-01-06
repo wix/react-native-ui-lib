@@ -1,5 +1,5 @@
 
-declare class AnimatableManagerClass {
+export declare class AnimatableManagerClass {
   /** Tools */
   getRandomDelay(delays: number[], options: any): object;
   getEntranceByIndex: (index: number, options: any) => object;

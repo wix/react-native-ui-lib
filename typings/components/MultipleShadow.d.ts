@@ -1,11 +1,11 @@
 
 import {BaseComponent} from '../commons';
-import {ShadowType} from '../style/shadows';
+import {ShadowName} from '../style/shadows';
 
 export interface MultipleShadowProps {
   topShadow?: object;
   bottomShadow?: object;
-  shadowType?: ShadowType;
+  shadowType?: ShadowName;
   shadowColor?: string;
   borderRadius?: number;
 }
