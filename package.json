@@ -14,6 +14,7 @@
     "url": "https://github.com/wix/react-native-ui-lib"
   },
   "scripts": {
+    "postinstall": "ln -s lib/ReactNativeUiLib.podspec ./",
     "start": "watchman watch-del-all && export DEV_MODE=true && react-native start",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
