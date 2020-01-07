@@ -12,7 +12,8 @@ import AnimatedImage from '../animatedImage';
 
 const deprecatedProps = [
   {old: 'isOnline', new: 'badgeProps.backgroundColor'},
-  {old: 'status', new: 'badgeProps.backgroundColor'}
+  {old: 'status', new: 'badgeProps.backgroundColor'},
+  {old: 'imageSource', new: 'source'}
 ];
 
 export const STATUS_MODES = {
@@ -78,7 +79,7 @@ export default class Avatar extends PureBaseComponent {
     /**
      * The image source (external or assets)
      */
-    imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    source: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
      * Image props object
      */
@@ -263,6 +264,7 @@ export default class Avatar extends PureBaseComponent {
   renderImage() {
     const {
       animate,
+      source,
       imageSource,
       onImageLoadStart,
       onImageLoadEnd,
@@ -271,15 +273,16 @@ export default class Avatar extends PureBaseComponent {
       imageProps,
       imageStyle
     } = this.props;
-    const hasImage = !_.isUndefined(imageSource);
+    const hasImage = !_.isUndefined(imageSource) || !_.isUndefined(source);
     const ImageContainer = animate ? AnimatedImage : Image;
+    const avatarImageSource = imageSource || source;
 
     if (hasImage) {
       return (
         <ImageContainer
           animate={animate}
           style={[this.getContainerStyle(), StyleSheet.absoluteFillObject, imageStyle]}
-          source={imageSource}
+          source={avatarImageSource}
           onLoadStart={onImageLoadStart}
           onLoadEnd={onImageLoadEnd}
           onError={onImageLoadError}
@@ -296,6 +299,7 @@ export default class Avatar extends PureBaseComponent {
     const {
       label,
       labelColor: color,
+      source,
       imageSource,
       backgroundColor,
       onPress,
@@ -305,7 +309,7 @@ export default class Avatar extends PureBaseComponent {
       testID
     } = this.props;
     const Container = onPress ? TouchableOpacity : View;
-    const hasImage = !_.isUndefined(imageSource);
+    const hasImage = !_.isUndefined(imageSource) || !_.isUndefined(source);
     const fontSizeToImageSizeRatio = 0.32;
     const fontSize = size * fontSizeToImageSizeRatio;
 
