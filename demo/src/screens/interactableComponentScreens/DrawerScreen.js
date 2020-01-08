@@ -30,14 +30,14 @@ class DrawerScreen extends Component {
 
   onItemPress = () => {
     Alert.alert('Right drawer item pressed');
-    
+
     this.toggleDynamicItem();
     this.firstDrawer.closeDrawer();
   };
   onItemPress2 = () => {
     const {itemsTintColor} = this.state;
     const color = itemsTintColor === undefined ? Colors.blue30 : undefined;
-    
+
     this.setState({itemsTintColor: color});
   };
   onLeftItemPressed = () => {
@@ -84,7 +84,7 @@ class DrawerScreen extends Component {
       <ListItem key={id} onPress={() => this.onContentPress(id)} style={styles.listContent}>
         <ListItem.Part left>
           <Avatar
-            imageSource={row.thumbnail ? {uri: row.thumbnail} : null}
+            source={row.thumbnail ? {uri: row.thumbnail} : null}
             label={initials}
             badgeProps={{backgroundColor: Number(id) % 3 === 0 ? Colors.green30 : undefined}}
             containerStyle={{marginHorizontal: 18}}
