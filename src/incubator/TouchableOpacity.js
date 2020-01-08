@@ -129,7 +129,7 @@ function runTiming(clock, position, value, dest) {
   };
 
   const config = {
-    duration: 100,
+    duration: 150,
     toValue: new Value(0),
     easing: Easing.inOut(Easing.ease)
   };
