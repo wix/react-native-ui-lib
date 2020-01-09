@@ -2,9 +2,9 @@ import uut from '../colors';
 
 describe('style/Colors', () => {
   it('should add alpha to hex color value', () => {
-    expect(uut.rgba(uut.green30, 0.7)).toBe('rgba(101, 200, 136, 0.7)');
-    expect(uut.rgba(uut.red10, 0.7)).toBe('rgba(207, 38, 47, 0.7)');
-    expect(uut.rgba(uut.green30, 0.25)).toBe('rgba(101, 200, 136, 0.25)');
+    expect(uut.rgba(uut.green30, 0.7)).toBe('rgba(0, 205, 139, 0.7)');
+    expect(uut.rgba(uut.red10, 0.7)).toBe('rgba(215, 46, 21, 0.7)');
+    expect(uut.rgba(uut.green30, 0.25)).toBe('rgba(0, 205, 139, 0.25)');
     // expect(uut.rgba('#ff2442', 0.05)).toBe(`${'#ff2442'}0D`);
     // expect(uut.rgba(uut.blue20, 1)).toBe(`${uut.blue20}FF`);
     // expect(uut.rgba(uut.blue20)).toBe(`${uut.blue20}FF`);
