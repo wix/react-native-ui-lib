@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import {Constants} from '../helpers';
 
 class Spacings {
   s1 = 4;
