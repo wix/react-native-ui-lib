@@ -80,7 +80,8 @@ export default class Carousel extends BaseComponent {
 
   static defaultProps = {
     initialPage: 0,
-    itemSpacings: 12
+    itemSpacings: 12,
+    pagingEnabled: true
   };
 
   static pageControlPositions = PAGE_CONTROL_POSITIONS;
