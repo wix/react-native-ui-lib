@@ -125,7 +125,7 @@ function startApp(defaultScreen) {
               options: {
                 topBar: {
                   title: {
-                    text: 'UILIB'
+                    text: 'R N U I L I B'
                   }
                 }
               }
