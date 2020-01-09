@@ -533,8 +533,7 @@ function createStyles() {
       backgroundColor: 'transparent',
       flex: 0,
       flexDirection: 'row',
-      ...Typography.text70,
-      fontWeight: '100'
+      ...Typography.text70
     }
   });
 }
