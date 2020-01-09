@@ -1,5 +1,9 @@
-declare const ComponentsColors: {
-    CTA: any;
-    disabledText: any;
-};
-export default ComponentsColors;
+
+import {ColorValue} from './colors';
+
+interface ComponentsColorsList {
+  CTA: ColorValue;
+  disabledText: ColorValue;
+}
+
+export const ComponentsColors: Readonly<ComponentsColorsList>;

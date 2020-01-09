@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import {Constants, View, Text, Carousel, Image, Card} from 'react-native-ui-lib'; // eslint-disable-line
 import _ from 'lodash';
 
@@ -28,12 +28,15 @@ class CarouselScreen extends Component {
 
   render() {
     return (
-      <View flex>
-        <Text text30 margin-20>Carousel</Text>
-        <Carousel 
-          ref={r => this.carousel = r}
-          // loop 
-          onChangePage={(index => this.onChangePage(index))} 
+      <ScrollView>
+        <Text text30 margin-20>
+          Carousel
+        </Text>
+        <Carousel
+          migrate
+          ref={r => (this.carousel = r)}
+          // loop
+          onChangePage={index => this.onChangePage(index)}
           pageWidth={WIDTH}
           // itemSpacings={20}
           initialPage={INITIAL_PAGE}
@@ -86,7 +89,7 @@ class CarouselScreen extends Component {
             })}
           </Carousel>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

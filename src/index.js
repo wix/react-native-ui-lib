@@ -96,6 +96,9 @@ module.exports = {
   get Picker() {
     return require('./components').Picker;
   },
+  get DateTimePicker() {
+    return require('./components').DateTimePicker;
+  },
   get ProgressBar() {
     return require('./components').ProgressBar;
   },
@@ -143,6 +146,9 @@ module.exports = {
   },
   get View() {
     return require('./components').View;
+  },
+  get Wizard() {
+    return require('./components').Wizard;
   },
   get WheelPickerDialog() {
     return require('./components').WheelPickerDialog;

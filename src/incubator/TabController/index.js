@@ -6,12 +6,14 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Reanimated from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
+import {Constants} from '../../helpers';
 import TabBarContext from './TabBarContext';
 import TabBar from './TabBar';
 import TabBarItem from './TabBarItem';
 import TabPage from './TabPage';
+import PageCarousel from './PageCarousel';
 
-const {cond, Code, and, eq, set, Value, block} = Reanimated;
+const {cond, Code, and, eq, set, Value, block, round, onChange, call} = Reanimated;
 
 /**
  * @description: A performant solution for a tab controller with lazy load mechanism
@@ -33,11 +35,15 @@ class TabController extends Component {
     /**
      * callback for when index has change (will not be called on ignored items)
      */
-    onChangeIndex: PropTypes.func
+    onChangeIndex: PropTypes.func,
     // /**
     //  * callback for when tab selected
     //  */
     // onTabSelected: PropTypes.func,
+    /**
+     * When using TabController.PageCarousel this should be turned on
+     */
+    asCarousel: PropTypes.bool
   };
 
   static defaultProps = {
@@ -51,16 +57,19 @@ class TabController extends Component {
 
   _targetPage = new Value(-1);
   _currentPage = new Value(this.props.selectedIndex);
+  _carouselOffset = new Value(this.props.selectedIndex * Math.round(Constants.screenWidth));
 
   getProviderContextValue = () => {
     const {itemStates} = this.state;
-    const {onChangeIndex, selectedIndex} = this.props;
+    const {onChangeIndex, selectedIndex, asCarousel} = this.props;
     return {
       selectedIndex,
       currentPage: this._currentPage,
+      carouselOffset: this._carouselOffset,
       itemStates,
       registerTabItems: this.registerTabItems,
-      onChangeIndex
+      onChangeIndex,
+      asCarousel
     };
   };
 
@@ -69,8 +78,31 @@ class TabController extends Component {
     this.setState({itemStates, ignoredItems});
   };
 
+  onPageChange = ([index]) => {
+    _.invoke(this.props, 'onChangeIndex', index);
+  }
+
+  getCarouselPageChangeCode() {
+    const {asCarousel} = this.props;
+    const {itemStates} = this.state;
+
+    if (asCarousel) {
+      // Rounding on Android, cause it cause issues when comparing values
+      const screenWidth = Constants.isAndroid ? Math.round(Constants.screenWidth) : Constants.screenWidth;
+
+      return _.times(itemStates.length, index => {
+        return cond(eq(Constants.isAndroid ? round(this._carouselOffset) : this._carouselOffset, index * screenWidth), [
+          set(this._currentPage, index)
+        ]);
+      });
+    }
+
+    return [];
+  }
+
   render() {
     const {itemStates, ignoredItems} = this.state;
+
     return (
       <TabBarContext.Provider value={this.getProviderContextValue()}>
         {this.props.children}
@@ -78,13 +110,19 @@ class TabController extends Component {
           <Code>
             {() =>
               block([
+                // Carousel Page change
+                ...this.getCarouselPageChangeCode(),
+                // TabBar Page change
                 ..._.map(itemStates, (state, index) => {
                   return [
                     cond(and(eq(state, State.BEGAN), !_.includes(ignoredItems, index)), set(this._targetPage, index)),
-                    cond(and(eq(this._targetPage, index), eq(state, State.END), !_.includes(ignoredItems, index)),
-                      set(this._currentPage, index),)
+                    cond(and(eq(this._targetPage, index), eq(state, State.END), !_.includes(ignoredItems, index)), [
+                      set(this._currentPage, index),
+                      set(this._targetPage, -1)
+                    ])
                   ];
-                })
+                }),
+                onChange(this._currentPage, call([this._currentPage], this.onPageChange))
               ])
             }
           </Code>
@@ -97,4 +135,5 @@ class TabController extends Component {
 TabController.TabBar = TabBar;
 TabController.TabBarItem = TabBarItem;
 TabController.TabPage = TabPage;
+TabController.PageCarousel = PageCarousel;
 export default TabController;

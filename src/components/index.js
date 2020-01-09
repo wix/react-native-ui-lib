@@ -100,6 +100,9 @@ module.exports = {
   get Picker() {
     return require('./picker').default;
   },
+  get DateTimePicker() {
+    return require('./dateTimePicker').default;
+  },
   get ProgressBar() {
     return require('./progressBar').default;
   },
@@ -149,6 +152,9 @@ module.exports = {
   },
   get View() {
     return require('./view').default;
+  },
+  get Wizard() {
+    return require('./wizard').default;
   },
   get WheelPickerDialog() {
     return require('./wheelPickerDialog').default;

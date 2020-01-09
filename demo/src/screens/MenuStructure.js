@@ -41,7 +41,8 @@ export const navigationData = {
       {title: 'Stack Aggregator', tags: 'stack aggregator', screen: 'unicorn.components.StackAggregatorScreen'},
       {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
       {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'},
-      {title: 'Wheel Picker Dialog', tags: 'wheel picker dialog', screen: 'unicorn.components.WheelPickerDialogScreen'}
+      {title: 'Wheel Picker Dialog', tags: 'wheel picker dialog', screen: 'unicorn.components.WheelPickerDialogScreen'},
+      {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'}
     ]
   },
   Form: {
@@ -52,6 +53,7 @@ export const navigationData = {
       {title: 'Color Swatch', tags: 'color swatch and palette', screen: 'unicorn.components.ColorSwatchScreen'},
       {title: 'TextField', tags: 'text input field form', screen: 'unicorn.components.InputsScreen'},
       {title: 'Picker', tags: 'picker form', screen: 'unicorn.components.PickerScreen'},
+      {title: 'DateTimePicker', tags: 'date time picker form', screen: 'unicorn.components.DateTimePickerScreen'},
       {title: 'RadioButton', tags: 'radio button group controls', screen: 'unicorn.components.RadioButtonScreen'},
       {title: 'Stepper', tags: 'stepper form', screen: 'unicorn.components.StepperScreen'},
       {title: 'Slider', tags: 'slider', screen: 'unicorn.components.SliderScreen'},
@@ -105,10 +107,11 @@ export const navigationData = {
       {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'}
     ]
   },
-  Examples: {
-    title: 'Examples',
+  Inspirations: {
+    title: 'Inspirations',
     screens: [
       {title: 'Apple Music', tags: 'apple music demo screen', screen: 'unicorn.examples.AppleMusic'},
+      {title: 'Pinterest', tags: 'pinterest demo screen', screen: 'unicorn.examples.Pinterest'},
       {title: 'List Actions', tags: 'list actions demo screen', screen: 'unicorn.examples.ListActionsScreen'}
     ]
   }
