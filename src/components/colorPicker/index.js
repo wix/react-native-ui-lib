@@ -27,7 +27,7 @@ export default class ColorPicker extends PureBaseComponent {
   static displayName = 'ColorPicker';
 
   static propTypes = {
-    ...Dialog.PropTypes,
+    // ...Dialog.PropTypes,
     /**
      * Array of colors for the picker's color palette (hex values)
      */
@@ -51,7 +51,11 @@ export default class ColorPicker extends PureBaseComponent {
     /**
      * onSubmit callback for the picker dialog color change
      */
-    onSubmit: PropTypes.func
+    onSubmit: PropTypes.func,
+    /**
+     * Props to pass the Dialog component
+     */
+    dialogProps: PropTypes.object
   };
 
   static defaultProps = {
@@ -316,7 +320,7 @@ export default class ColorPicker extends PureBaseComponent {
   }
 
   renderDialog() {
-    const {testID} = this.props;
+    const {testID, dialogProps} = this.getThemeProps();
     const {show} = this.state;
 
     return (
@@ -330,7 +334,9 @@ export default class ColorPicker extends PureBaseComponent {
         onDismiss={this.onDismiss}
         containerStyle={this.styles.dialog}
         panDirection={PanningProvider.Directions.DOWN}
-        testID={`${testID}-dialog`}
+        testID={`${testID}.dialog`}
+        supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOS only
+        {...dialogProps}
       >
         {this.renderHeader()}
         {this.renderPreview()}
