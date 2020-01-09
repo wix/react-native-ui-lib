@@ -16,7 +16,7 @@ class ConversationListScreen extends Component {
 
   constructor(props) {
     super(props);
-    
+
     this.lastIndex = undefined;
     this.refArray = [];
     this.batchCounter = 0;
@@ -74,7 +74,7 @@ class ConversationListScreen extends Component {
   getNewItems() {
     this.batchCounter++;
     const newItems = this.createItems({
-      min: batchSize * this.batchCounter, 
+      min: batchSize * this.batchCounter,
       max: batchSize + (batchSize * this.batchCounter)
     });
     const items = _.concat(this.state.items, newItems);
@@ -150,7 +150,7 @@ class ContactItem extends PureComponent {
           <ListItem.Part left>
             <Avatar
               size={54}
-              imageSource={item.imageSource}
+              source={item.imageSource}
               label={item.initials}
               badgeProps={item.avatarBadgeProps}
               containerStyle={styles.avatar}
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     marginBottom: 3
   },
   text: {
-    flex: 1, 
+    flex: 1,
     marginRight: 10
   },
   subtitle: {

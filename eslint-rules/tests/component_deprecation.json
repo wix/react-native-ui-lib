@@ -6,7 +6,7 @@
     "props": [
       {
         "prop": "url",
-        "message": "Please use the 'imageSource' prop instead."
+        "message": "Please use the 'source' prop instead."
       }
     ]
   },

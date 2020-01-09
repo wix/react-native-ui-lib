@@ -202,7 +202,7 @@ export default class PickerScreen extends Component {
             renderPicker={contact => {
               return (
                 <View row center>
-                  <Avatar size={30} imageSource={{uri: contact.thumbnail}}/>
+                  <Avatar size={30} source={{uri: contact.thumbnail}}/>
                   <Text text70 marginL-10>
                     {contact.name}
                   </Text>
@@ -227,7 +227,7 @@ export default class PickerScreen extends Component {
                     spread
                   >
                     <View row centerV>
-                      <Avatar size={35} imageSource={{uri: item.thumbnail}}/>
+                      <Avatar size={35} source={{uri: item.thumbnail}}/>
                       <Text marginL-10 text70 dark10>
                         {item.name}
                       </Text>
