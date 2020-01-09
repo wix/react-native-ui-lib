@@ -27,7 +27,6 @@ export default class ColorPicker extends PureBaseComponent {
   static displayName = 'ColorPicker';
 
   static propTypes = {
-    // ...Dialog.PropTypes,
     /**
      * Array of colors for the picker's color palette (hex values)
      */
