@@ -9,14 +9,14 @@ export const navigationData = {
       {title: 'Typography', tags: 'fonts text', screen: 'unicorn.style.TypographyScreen'}
     ]
   },
-  Wrappers: {
-    title: 'Wrappers',
-    screens: [
-      // {title: 'View', tags: 'view wrapper', screen: 'unicorn.wrappers.ViewScreen'},
-      // {title: 'Text', tags: 'text wrapper', screen: 'unicorn.wrappers.TextScreen'},
-      {title: 'TouchableOpacity', tags: 'touchableOpacity wrapper', screen: 'unicorn.wrappers.TouchableOpacityScreen'}
-    ]
-  },
+  // Wrappers: {
+  //   title: 'Wrappers',
+  //   screens: [
+  //     // {title: 'View', tags: 'view wrapper', screen: 'unicorn.wrappers.ViewScreen'},
+  //     // {title: 'Text', tags: 'text wrapper', screen: 'unicorn.wrappers.TextScreen'},
+  //     {title: 'TouchableOpacity', tags: 'touchableOpacity wrapper', screen: 'unicorn.wrappers.TouchableOpacityScreen'}
+  //   ]
+  // },
   Components: {
     title: 'Components',
     screens: [
