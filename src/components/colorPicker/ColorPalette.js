@@ -127,25 +127,21 @@ export default class ColorPalette extends PureBaseComponent {
     return this.getUniqueColors(this.props.colors);
   }
 
-  getUniqueColors = memoize(
-    (colors) => {
-      const c = _.map(colors, color => {
-        if (Colors.isTransparent(color)) {
-          return color;
-        }
-        return _.toUpper(color);
-      });
-      return _.uniq(c);
-    }
-  );
+  getUniqueColors = memoize((colors) => {
+    const c = _.map(colors, color => {
+      if (Colors.isTransparent(color)) {
+        return color;
+      }
+      return _.toUpper(color);
+    });
+    return _.uniq(c);
+  });
 
   getNumberOfRows() {
     const {numberOfRows} = this.props;
 
     if (!_.inRange(numberOfRows, 2, 6)) {
-      console.warn(
-        `${numberOfRows} is not within valid range of color rows (2 to 5); defaulting to ${DEFAULT_NUMBER_OF_ROWS}.`
-      );
+      console.warn(`${numberOfRows} is not within valid range of color rows (2 to 5); defaulting to ${DEFAULT_NUMBER_OF_ROWS}.`);
       return DEFAULT_NUMBER_OF_ROWS;
     }
     return numberOfRows;
@@ -203,21 +199,18 @@ export default class ColorPalette extends PureBaseComponent {
       if (childRef) {
         const handle = findNodeHandle(childRef);
         if (handle) {
-          UIManager.measureLayoutRelativeToParent(
-            handle,
-            e => {
-              console.warn(e);
-            },
-            (x, y, w, h) => {
-              if (x + w > Constants.screenWidth) {
-                this.scrollView.current.scrollTo({
-                  x: x + w + HORIZONTAL_PADDING - Constants.screenWidth,
-                  y: 0,
-                  animated: false
-                });
-              }
+          UIManager.measureLayoutRelativeToParent(handle, e => {
+            console.warn(e);
+          },
+          (x, y, w, h) => {
+            if (x + w > Constants.screenWidth) {
+              this.scrollView.current.scrollTo({
+                x: x + w + HORIZONTAL_PADDING - Constants.screenWidth,
+                y: 0,
+                animated: false
+              });
             }
-          );
+          });
         }
       }
     } else if (this.usePagination) {
