@@ -45,6 +45,9 @@ module.exports = {
   get Dialog() {
     return require('./components').Dialog;
   },
+  get Drawer() {
+    return require('./components').Drawer;
+  },
   get FloatingButton() {
     return require('./components').FloatingButton;
   },
@@ -66,17 +69,11 @@ module.exports = {
   get TextField() {
     return require('./components').TextField;
   },
-  get TextInput() {
-    return require('./components').TextInput;
-  },
   get MaskedInput() {
     return require('./components').MaskedInput;
   },
   get ListItem() {
     return require('./components').ListItem;
-  },
-  get Notification() {
-    return require('./components').Notification;
   },
   get PageControl() {
     return require('./components').PageControl;
@@ -114,7 +111,6 @@ module.exports = {
   get ColorSliderGroup() {
     return require('./components').ColorSliderGroup;
   },
-
   get Stepper() {
     return require('./components').Stepper;
   },
@@ -147,9 +143,6 @@ module.exports = {
   },
   get TouchableOpacity() {
     return require('./components').TouchableOpacity;
-  },
-  get Tour() {
-    return require('./components').Tour;
   },
   get View() {
     return require('./components').View;
@@ -222,11 +215,6 @@ module.exports = {
   },
   get SafeAreaInsetsManager() {
     return require('./nativeComponents').SafeAreaInsetsManager;
-  },
-
-  // InteractableComponents
-  get Drawer() {
-    return require('./interactableComponents').Drawer;
   },
 
   // Style

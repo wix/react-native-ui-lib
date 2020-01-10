@@ -135,7 +135,6 @@ class ContactItem extends PureComponent {
 
     return (
       <Drawer
-        migrate
         leftItem={item.leftButton}
         rightItems={item.rightButtons}
         // itemsMinWidth={80}

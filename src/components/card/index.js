@@ -9,8 +9,6 @@ import {PureBaseComponent} from '../../commons';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
-import CardSection from './CardSection';
-import CardItem from './CardItem';
 import CardImage from './CardImage';
 import Assets from '../../assets';
 
@@ -294,8 +292,6 @@ function createStyles({width, height, borderRadius, selectionOptions}) {
   });
 }
 
-Card.Section = CardSection;
-Card.Item = CardItem;
 Card.Image = CardImage;
 
 export default Card;
