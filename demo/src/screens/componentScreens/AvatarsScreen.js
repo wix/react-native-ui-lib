@@ -16,17 +16,17 @@ const examples = [
     backgroundColor: Colors.yellow60,
     labelColor: Colors.orange20,
     ribbonLabel: 'New',
-    ribbonStyle: {backgroundColor: Colors.purple30},
+    ribbonStyle: {backgroundColor: Colors.purple30}
   },
   {title: 'Initials, badge ("online")', label: 'ES', badgeProps: {backgroundColor: onlineColor}},
   {
     title: 'Image, badge ("away")',
     imageSource: {
       uri:
-        'https://lh3.googleusercontent.com/-cw77lUnOvmI/AAAAAAAAAAI/AAAAAAAAAAA/WMNck32dKbc/s181-c/104220521160525129167.jpg',
+        'https://lh3.googleusercontent.com/-cw77lUnOvmI/AAAAAAAAAAI/AAAAAAAAAAA/WMNck32dKbc/s181-c/104220521160525129167.jpg'
     },
     badgeProps: {size: 'pimpleBig', backgroundColor: Colors.yellow30},
-    badgePosition: 'BOTTOM_RIGHT',
+    badgePosition: 'BOTTOM_RIGHT'
   },
 
   {
@@ -34,45 +34,45 @@ const examples = [
     size: 40,
     imageSource: {
       uri:
-        'https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg',
+        'https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg'
     },
     badgeProps: {size: 'pimpleBig', backgroundColor: Colors.dark50},
-    badgePosition: 'BOTTOM_LEFT',
+    badgePosition: 'BOTTOM_LEFT'
   },
   {
     title: 'Image with fade in animation',
     size: 60,
     animate: true,
     imageProps: {animationDuration: 1000},
-    imageSource: {uri: 'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg'},
+    imageSource: {uri: 'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg'}
   },
   {
     title: 'Big pimple',
     size: 70,
     backgroundColor: 'red',
     imageSource: {
-      uri: 'https://randomuser.me/api/portraits/women/24.jpg',
+      uri: 'https://randomuser.me/api/portraits/women/24.jpg'
     },
     badgeProps: {size: 'pimpleHuge', borderWidth: 0, backgroundColor: onlineColor},
-    badgePosition: 'TOP_LEFT',
+    badgePosition: 'TOP_LEFT'
   },
   {
     title: 'Icon badge',
     size: 60,
     imageSource: {
-      uri: 'https://randomuser.me/api/portraits/women/24.jpg',
+      uri: 'https://randomuser.me/api/portraits/women/24.jpg'
     },
     badgeProps: {
       icon: star,
       size: 'pimpleHuge',
       borderWidth: 1.5,
       borderColor: Colors.white,
-      iconStyle: {backgroundColor: Colors.yellow20},
-    },
+      iconStyle: {backgroundColor: Colors.yellow20}
+    }
   },
   {
     title: 'GIF',
-    size: 48, 
+    size: 48,
     imageSource: {
       uri: 'https://media.giphy.com/media/3oEdv8elIVRa3daNl6/giphy.gif'
     }
@@ -84,7 +84,7 @@ const examples = [
     imageSource: {uri: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=404'},
     onImageLoadStart: () => console.log('AvatarScreen: Invalid avatar load STARTED...'), // eslint-disable-line
     onImageLoadEnd: () => console.log('AvatarScreen: Invalid avatar load ENDED'), // eslint-disable-line
-    onImageLoadError: () => console.log('AvatarScreen: Invalid avatar load FAILED'), // eslint-disable-line
+    onImageLoadError: () => console.log('AvatarScreen: Invalid avatar load FAILED') // eslint-disable-line
   },
   {
     title: 'Monitored Avatar (see logs)',
@@ -92,13 +92,13 @@ const examples = [
     backgroundColor: Colors.blue20,
     imageSource: {uri: 'https://static.altomusic.com/media/catalog/product/M/A/MAJ100SBK_0.jpg'},
     onImageLoadStart: () => console.log('AvatarScreen: Monitored avatar load STARTED...'), // eslint-disable-line
-    onImageLoadEnd: () => console.log('AvatarScreen: Monitored avatar load ENDED'), // eslint-disable-line
+    onImageLoadEnd: () => console.log('AvatarScreen: Monitored avatar load ENDED') // eslint-disable-line
   },
   {
     title: 'Empty Gravatar',
     backgroundColor: Colors.red60,
-    imageSource: {uri: 'https://www.gravatar.com/avatar/2497473d558a37020c558bf26e380a7c?d=blank'},
-  },
+    imageSource: {uri: 'https://www.gravatar.com/avatar/2497473d558a37020c558bf26e380a7c?d=blank'}
+  }
 ];
 
 export default class AvatarsScreen extends Component {
@@ -125,7 +125,7 @@ export default class AvatarsScreen extends Component {
         {_.map(examples, (example, i) => (
           <View key={i} style={styles.section}>
             <Text style={{...Typography.text80}}>{example.title}</Text>
-            <Avatar containerStyle={{marginVertical: 5}} {...example} onPress={() => this.onAvatarPress(example)} />
+            <Avatar containerStyle={{marginVertical: 5}} {...example} onPress={() => this.onAvatarPress(example)}/>
           </View>
         ))}
       </ScrollView>
@@ -135,12 +135,12 @@ export default class AvatarsScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 25,
+    padding: 25
   },
   section: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 15,
-  },
+    marginBottom: 15
+  }
 });
