@@ -30,7 +30,7 @@ export default class Overlay extends PureBaseComponent {
     /**
      * Custom overlay content to be rendered on top of the image
      */
-    customContent: PropTypes.func
+    customContent: PropTypes.element
   };
 
   static overlayTypes = OVERLY_TYPES;
@@ -50,7 +50,15 @@ export default class Overlay extends PureBaseComponent {
 
   renderCustomContent = () => {
     const {customContent} = this.props;
-    return <View style={styles.customContent}>{customContent()}</View>;
+    return (
+      <View pointerEvents="none" style={styles.customContent}>
+        {customContent}
+      </View>
+    );
+  };
+
+  getImage = (style, source) => {
+    return <Image style={[styles.container, style]} resizeMode={'stretch'} source={source}/>;
   };
 
   renderImage(typeStyle) {
@@ -59,7 +67,7 @@ export default class Overlay extends PureBaseComponent {
 
     return (
       <View style={styles.container}>
-        {type && <Image style={[styles.container, typeStyle]} resizeMode={'stretch'} source={image}/>}
+        {type && this.getImage(typeStyle, image)}
         {customContent && this.renderCustomContent()}
       </View>
     );
@@ -67,17 +75,17 @@ export default class Overlay extends PureBaseComponent {
 
   render() {
     const {type, customContent} = this.props;
+    const verticalOverlay = type === OVERLY_TYPES.VERTICAL;
 
-    if (type === OVERLY_TYPES.VERTICAL) {
+    if (verticalOverlay) {
       return (
-        <View style={[styles.container]}>
-          {this.renderImage(styles.top)}
-          {this.renderImage(styles.bottom)}
+        <View style={styles.container}>
+          {this.getImage(styles.top, gradientImage)}
+          {this.getImage(styles.bottom, gradientImage)}
           {customContent && this.renderCustomContent()}
         </View>
       );
     }
-
     return this.renderImage(this.getStyleByType());
   }
 }
