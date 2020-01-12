@@ -26,7 +26,11 @@ export default class Overlay extends PureBaseComponent {
     /**
      * The type of overlay to set on top of the image
      */
-    type: PropTypes.oneOf(_.values(OVERLY_TYPES))
+    type: PropTypes.oneOf(_.values(OVERLY_TYPES)),
+    /**
+     * Custom overlay content to be rendereds on top of the image
+     */
+    customContent: PropTypes.func
   };
 
   static overlayTypes = OVERLY_TYPES;
@@ -44,22 +48,32 @@ export default class Overlay extends PureBaseComponent {
     }
   }
 
+  renderCustomContent = () => {
+    const {customContent} = this.props;
+    return <View style={styles.customContent}>{customContent()}</View>;
+  };
+
   renderImage(typeStyle) {
-    const {type} = this.props;
+    const {type, customContent} = this.props;
     const image = type !== OVERLY_TYPES.SOLID ? gradientImage : undefined;
 
-    return <Image style={[styles.container, typeStyle]} resizeMode={'stretch'} source={image}/>;
+    return (
+      <View style={[styles.container]}>
+        {type && <Image style={[styles.container, typeStyle]} resizeMode={'stretch'} source={image}/>}
+        {customContent && this.renderCustomContent()}
+      </View>
+    );
   }
 
   render() {
-    const {type} = this.props;
+    const {type, customContent} = this.props;
 
     if (type === OVERLY_TYPES.VERTICAL) {
-
       return (
         <View style={[styles.container]}>
           {this.renderImage(styles.top)}
           {this.renderImage(styles.bottom)}
+          {customContent && this.renderCustomContent()}
         </View>
       );
     }
@@ -86,5 +100,8 @@ const styles = StyleSheet.create({
   },
   solid: {
     backgroundColor: Colors.rgba(Colors.dark10, 0.4)
+  },
+  customContent: {
+    ...StyleSheet.absoluteFillObject
   }
 });
