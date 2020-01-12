@@ -83,7 +83,7 @@ class Dialog extends BaseComponent {
   };
 
   static defaultProps = {
-    migrate: false,
+    migrate: true,
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
     width: '90%'
   };

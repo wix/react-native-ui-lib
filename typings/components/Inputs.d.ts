@@ -28,11 +28,11 @@ export interface BaseInputProps extends RNTextInputProps {
   onChangeValidity?: (isValid: boolean) => void;
 }
 
-export class BaseInput extends BaseComponent<BaseInputProps> {}
+export class BaseInput<Props extends BaseInputProps = BaseInputProps, State = {}> extends BaseComponent<Props, State> {}
 
 export interface TextAreaProps extends BaseInputProps {}
 
-export class TextArea extends BaseComponent<TextAreaProps> {}
+export class TextArea extends BaseInput<TextAreaProps> {}
 
 export type InputColorValue = ColorValue | { [key: string]: ColorValue };
 
@@ -74,7 +74,7 @@ export interface TextFieldProps extends BaseInputProps, TextBaseInputProps {
 
 export type TextFieldState = any;
 
-export class TextField extends BaseComponent<TextFieldProps, TextFieldState> {}
+export class TextField extends BaseInput<TextFieldProps, TextFieldState> {}
 
 export interface TextInputProps extends BaseInputProps, TextBaseInputProps {
   renderExpandableInput?: (props: TextInputProps) => ReactElement | ReactElement[];
@@ -83,11 +83,11 @@ export interface TextInputProps extends BaseInputProps, TextBaseInputProps {
 
 export type TextInputState = any;
 
-export class TextInput extends BaseComponent<TextInputProps, TextInputState> {}
+export class TextInput extends BaseInput<TextInputProps, TextInputState> {}
 
 export interface MaskedInputProps extends TextFieldProps {
   renderMaskedText?: (value?: string) => ReactElement | ReactElement[];
   containerStyle?: StyleProp<ViewStyle>;
 }
 
-export class MaskedInput extends BaseComponent<MaskedInputProps> {}
+export class MaskedInput extends BaseInput<MaskedInputProps> {}

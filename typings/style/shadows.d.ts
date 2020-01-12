@@ -1,24 +1,24 @@
 
 import {ColorValue} from './colors';
 
-interface Shadow {
+export interface Shadow {
   top: ShadowDescription;
   bottom: ShadowDescription;
 }
 
-interface ShadowDescription {
+export interface ShadowDescription {
   shadowColor: ColorValue;
   shadowOpacity: number;
   shadowRadius: number;
   shadowOffset?: ShadowOffset;
 }
 
-interface ShadowOffset {
+export interface ShadowOffset {
   height: number;
   width: number;
 }
 
-export type ShadowType =
+export type ShadowName =
   | 'white10'
   | 'white20'
   | 'white30'
@@ -28,6 +28,4 @@ export type ShadowType =
   | 'dark30'
   | 'dark40';
 
-type ShadowsList = Record<ShadowType, Shadow>;
-
-export const Shadows: Readonly<ShadowsList>;
+export const Shadows: Readonly<Record<ShadowName, Shadow>>;

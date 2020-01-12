@@ -1,5 +1,5 @@
 
-type SpacingType =
+type SpacingName =
   | 's1'
   | 's2'
   | 's3'
@@ -11,6 +11,4 @@ type SpacingType =
   | 's9'
   | 's10';
 
-type SpacingsList = Record<SpacingType, number>;
-
-export const Spacings: Readonly<SpacingsList>;
+export const Spacings: Readonly<Record<SpacingName, number>>;

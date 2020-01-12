@@ -41,7 +41,7 @@ class PageCarousel extends Component {
           pagingEnabled
           showsHorizontalScrollIndicator={false}
           onScroll={this.onScroll}
-          scrollEventThrottle={200}
+          scrollEventThrottle={16}
           contentOffset={{x: selectedIndex * Constants.screenWidth}} // iOS only
         />
 

@@ -9,6 +9,4 @@ export type BorderRadiusName =
   | 'br60'
   | 'br100';
 
-type BorderRadiusesList = Record<BorderRadiusName, number>;
-
-export const BorderRadiuses: Readonly<BorderRadiusesList>;
+export const BorderRadiuses: Readonly<Record<BorderRadiusName, number>>;

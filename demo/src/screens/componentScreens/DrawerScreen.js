@@ -30,14 +30,14 @@ class DrawerScreen extends Component {
 
   onItemPress = () => {
     Alert.alert('Right drawer item pressed');
-    
+
     this.toggleDynamicItem();
     this.firstDrawer.closeDrawer();
   };
   onItemPress2 = () => {
     const {itemsTintColor} = this.state;
     const color = itemsTintColor === undefined ? Colors.blue30 : undefined;
-    
+
     this.setState({itemsTintColor: color});
   };
   onLeftItemPressed = () => {
@@ -84,7 +84,7 @@ class DrawerScreen extends Component {
       <ListItem key={id} onPress={() => this.onContentPress(id)} style={styles.listContent}>
         <ListItem.Part left>
           <Avatar
-            imageSource={row.thumbnail ? {uri: row.thumbnail} : null}
+            source={row.thumbnail ? {uri: row.thumbnail} : null}
             label={initials}
             badgeProps={{backgroundColor: Number(id) % 3 === 0 ? Colors.green30 : undefined}}
             containerStyle={{marginHorizontal: 18}}
@@ -104,17 +104,16 @@ class DrawerScreen extends Component {
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <Drawer
-          migrate
           leftItem={leftItem}
           rightItems={rightItems}
           style={styles.drawer}
+          itemsIconSize={20}
           ref={r => this.firstDrawer = r}
         >
           {this.renderContent('0', conversations[0])}
         </Drawer>
 
         <Drawer
-          migrate
           leftItem={leftItem}
           rightItems={[
             {icon: shareIcon, text: 'Share', onPress: this.onItemPress},
@@ -126,7 +125,6 @@ class DrawerScreen extends Component {
         </Drawer>
 
         {/* <Drawer
-          migrate
           // leftItem={leftItem}
           rightItems={rightItems}
           style={styles.drawer}
@@ -136,8 +134,7 @@ class DrawerScreen extends Component {
         </Drawer> */}
 
         <Drawer
-          migrate
-          leftItem={{text: 'Archive', background: Colors.green10, width: 100, onPress: this.onLeftItemPressed}}
+          leftItem={{text: 'Archive', background: Colors.blue10, width: 100, onPress: this.onLeftItemPressed}}
           // rightItems={rightItems}
           style={styles.drawer}
           itemsTextStyle={{fontSize: 18, fontWeight: 'bold'}}
@@ -147,17 +144,17 @@ class DrawerScreen extends Component {
 
         <View style={{paddingHorizontal: 50}}>
           <Drawer
-            migrate
             leftItem={leftItem}
             rightItems={[rightItems[1], rightItems[2]]}
-            style={styles.drawer}
-            >
-            {this.renderContent('3', conversations[3])}
+            itemsIconSize={24}
+            style={{marginTop: 20}}
+            onPress={this.onPress}
+          >
+            {this.renderContent('2', conversations[2])}
           </Drawer>
         </View>
 
         <Drawer
-          migrate
           leftItem={{icon: collectionsIcon, background: Colors.blue10, width: 100}}
           rightItems={[
             {icon: starIcon, background: Colors.dark60},
@@ -173,7 +170,6 @@ class DrawerScreen extends Component {
         </Drawer>
 
         <Drawer
-          migrate
           leftItem={leftItem}
           rightItems={rightItems}
           style={styles.drawer}

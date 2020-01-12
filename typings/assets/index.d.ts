@@ -3,7 +3,7 @@ import {ImageRequireSource} from 'react-native';
 
 export type EmojisList = { readonly [key: string]: string };
 
-export type IconNames =
+export type IconName =
   | 'check'
   | 'checkSmall'
   | 'chevronRight'
@@ -12,12 +12,12 @@ export type IconNames =
   | 'settings'
   | 'x';
 
-export type IconsList = Record<IconNames, ImageRequireSource> & { readonly [key: string]: ImageRequireSource };
+export type IconsList = Record<IconName, ImageRequireSource> & { readonly [key: string]: ImageRequireSource };
 
-export type ImageNames =
+export type ImageName =
   | 'gradient';
 
-export type ImagesList = Record<ImageNames, ImageRequireSource> & { readonly [key: string]: ImageRequireSource };
+export type ImagesList = Record<ImageName, ImageRequireSource> & { readonly [key: string]: ImageRequireSource };
 
 export namespace Assets {
   const icons: Readonly<IconsList>;

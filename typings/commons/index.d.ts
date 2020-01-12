@@ -4,7 +4,7 @@ import {TypographyName} from '../style/typography';
 import {BorderRadiusName} from '../style/borderRadiuses';
 import {BaseComponentPaddingModifier, BaseComponentMarginModifier} from './spacings';
 
-declare class UIComponent extends React.PureComponent {}
+export class UIComponent extends React.PureComponent {}
 export function forwardRef<T, P>(
   WrappedComponent: React.RefForwardingComponent<T, P>
 ): React.RefForwardingComponent<T, P>;

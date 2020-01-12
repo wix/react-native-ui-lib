@@ -273,11 +273,13 @@ class TabBar extends PureComponent {
   }
 
   render() {
-    const {currentPage} = this.context;
+    const {currentPage, carouselOffset, asCarousel} = this.context;
     const {height, enableShadow, containerStyle} = this.props;
     const {itemsWidths, itemsOffsets, scrollEnabled} = this.state;
     return (
-      <View style={[styles.container, enableShadow && styles.containerShadow, {width: this.containerWidth}, containerStyle]}>
+      <View
+        style={[styles.container, enableShadow && styles.containerShadow, {width: this.containerWidth}, containerStyle]}
+      >
         <ScrollView
           ref={this.tabBar}
           horizontal
@@ -295,25 +297,40 @@ class TabBar extends PureComponent {
             {() => {
               const indicatorInset = Spacings.s4;
 
-              return block([
-                // calc indicator current width
-                ..._.map(itemsWidths, (width, index) => {
-                  return cond(eq(currentPage, index), [
-                    set(this._indicatorWidth.nextValue, sub(itemsWidths[index], indicatorInset * 2))
-                  ]);
-                }),
-                // calc indicator current position
-                ..._.map(itemsOffsets, (offset, index) => {
-                  return cond(eq(currentPage, index), [
-                    set(this._indicatorOffset.nextValue, add(itemsOffsets[index], indicatorInset))
-                  ]);
-                }),
+              return block(asCarousel
+                /* Transition for carousel pages */
+                ? [
+                  set(this._indicatorOffset.value,
+                    Reanimated.interpolate(carouselOffset, {
+                      inputRange: itemsOffsets.map((offset, index) => index * Constants.screenWidth),
+                      outputRange: itemsOffsets.map(offset => offset + indicatorInset)
+                    })),
+                  set(this._indicatorWidth.value,
+                    Reanimated.interpolate(carouselOffset, {
+                      inputRange: itemsWidths.map((width, index) => index * Constants.screenWidth),
+                      outputRange: itemsWidths.map((width, index) => width - 2 * indicatorInset)
+                    }))
+                ]
+                /* Default transition */
+                : [
+                  // calc indicator current width
+                  ..._.map(itemsWidths, (width, index) => {
+                    return cond(eq(currentPage, index), [
+                      set(this._indicatorWidth.nextValue, sub(itemsWidths[index], indicatorInset * 2))
+                    ]);
+                  }),
+                  // calc indicator current position
+                  ..._.map(itemsOffsets, (offset, index) => {
+                    return cond(eq(currentPage, index), [
+                      set(this._indicatorOffset.nextValue, add(itemsOffsets[index], indicatorInset))
+                    ]);
+                  }),
 
-                // Offset transition
-                this._indicatorOffset.getTransitionBlock(),
-                // Width transition
-                this._indicatorWidth.getTransitionBlock()
-              ]);
+                  // Offset transition
+                  this._indicatorOffset.getTransitionBlock(),
+                  // Width transition
+                  this._indicatorWidth.getTransitionBlock()
+                ]);
             }}
           </Code>
         )}
