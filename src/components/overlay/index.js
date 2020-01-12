@@ -61,32 +61,26 @@ export default class Overlay extends PureBaseComponent {
     return <Image style={[styles.container, style]} resizeMode={'stretch'} source={source}/>;
   };
 
-  renderImage(typeStyle) {
+  render() {
     const {type, customContent} = this.props;
     const image = type !== OVERLY_TYPES.SOLID ? gradientImage : undefined;
 
-    return (
-      <View style={styles.container}>
-        {type && this.getImage(typeStyle, image)}
-        {customContent && this.renderCustomContent()}
-      </View>
-    );
-  }
-
-  render() {
-    const {type, customContent} = this.props;
-    const verticalOverlay = type === OVERLY_TYPES.VERTICAL;
-
-    if (verticalOverlay) {
+    if (type === OVERLY_TYPES.VERTICAL) {
       return (
         <View style={styles.container}>
-          {this.getImage(styles.top, gradientImage)}
-          {this.getImage(styles.bottom, gradientImage)}
+          {this.getImage(styles.top, image)}
+          {this.getImage(styles.bottom, image)}
           {customContent && this.renderCustomContent()}
         </View>
       );
     }
-    return this.renderImage(this.getStyleByType());
+
+    return (
+      <View style={styles.container}>
+        {type && this.getImage(this.getStyleByType(), image)}
+        {customContent && this.renderCustomContent()}
+      </View>
+    );
   }
 }
 
