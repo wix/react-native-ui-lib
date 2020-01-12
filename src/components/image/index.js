@@ -53,7 +53,7 @@ class Image extends PureBaseComponent {
     /**
      * Render an overlay with custom content
      */
-    customOverlay: PropTypes.func
+    customOverlayContent: PropTypes.element
   };
 
   static defaultProps = {
@@ -78,9 +78,9 @@ class Image extends PureBaseComponent {
   }
 
   shouldUseImageBackground() {
-    const {overlayType, customOverlay} = this.props;
+    const {overlayType, customOverlayContent} = this.props;
 
-    return !!overlayType || this.isGif() || !_.isUndefined(customOverlay);
+    return !!overlayType || this.isGif() || !_.isUndefined(customOverlayContent);
   }
 
   getImageSource() {
@@ -110,7 +110,7 @@ class Image extends PureBaseComponent {
       cover,
       aspectRatio,
       overlayType,
-      customOverlay,
+      customOverlayContent,
       ...others
     } = this.getThemeProps();
     const shouldFlipRTL = supportRTL && Constants.isRTL;
@@ -131,8 +131,8 @@ class Image extends PureBaseComponent {
         {...others}
         source={source}
       >
-        {(overlayType || customOverlay) && (
-          <Overlay style={style} type={overlayType} customContent={customOverlay}/>
+        {(overlayType || customOverlayContent) && (
+          <Overlay style={style} type={overlayType} customContent={customOverlayContent}/>
         )}
       </ImageView>
     );
