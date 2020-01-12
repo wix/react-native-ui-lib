@@ -132,7 +132,7 @@ class Image extends PureBaseComponent {
         source={source}
       >
         {(overlayType || customOverlay) && (
-          <Overlay style={style} type={overlayType} customContent={customOverlay && customOverlay}/>
+          <Overlay style={style} type={overlayType} customContent={customOverlay}/>
         )}
       </ImageView>
     );
