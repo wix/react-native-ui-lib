@@ -56,9 +56,9 @@ export default class Overlay extends PureBaseComponent {
   renderImage(typeStyle) {
     const {type, customContent} = this.props;
     const image = type !== OVERLY_TYPES.SOLID ? gradientImage : undefined;
-
+    console.warn('az', [styles.container])
     return (
-      <View style={[styles.container]}>
+      <View style={styles.container}>
         {type && <Image style={[styles.container, typeStyle]} resizeMode={'stretch'} source={image}/>}
         {customContent && this.renderCustomContent()}
       </View>
