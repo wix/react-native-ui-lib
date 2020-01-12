@@ -7,6 +7,7 @@ import mainLogo from '../images/logo_big.png';
 import datePicker from '../images/examples/datepicker.png';
 import actionSheet from '../images/examples/actionSheet.png';
 import rtl from '../images/examples/rtl.png';
+import accessibility from '../images/examples/accessibility.gif';
 
 const IndexPage = props => {
   return (
@@ -48,7 +49,7 @@ const PlatformSection = () => {
         </p>
         <p>
           <b>ActionSheet</b> is a good example of an iOS component that just does not exist on Android.{' '}
-          <b>DatePicker</b> has a different API and behavior for each platform instead of unified component.
+          <b>DatePicker</b> has a different API and behavior for each platform instead of a unified component.
         </p>
         <p>The UILIB aims to solve that.</p>
       </div>
@@ -125,8 +126,8 @@ class MyScreen extends Component {
 
 const NativeSection = () => {
   return (
-    <div className="native-section">
-      <h2>True, Beautiful components</h2>
+    <div className="components-section">
+      <h2>Over than 60 Beautiful Components</h2>
       <p>
         Basic components like <b>Button</b>, <b>Avatar</b> and <b>Card</b> and more sophisticated ones like <b>Hints</b>
         , <b>ColorPicker</b> and <b>Drawer</b>
@@ -148,9 +149,10 @@ const OthersSection = () => {
     <div className="support-section">
       <div>
         <h2>RTL and Accessibility in Mind</h2>
-        <p>We provide full out-of-the-box support to RTL and Accessibility</p>
+        <p>We provide a full, out-of-the-box support to RTL and Accessibility</p>
       </div>
       <div>
+        <img src={accessibility} height="500"/>
         <img src={rtl} height="500"/>
       </div>
     </div>

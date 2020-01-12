@@ -16,6 +16,7 @@ import InputsScreen from './InputsScreen';
 import MaskedInputScreen from './MaskedInputScreen';
 import OverlaysScreen from './OverlaysScreen';
 import PageControlScreen from './PageControlScreen';
+import PanDismissibleScreen from './PanDismissibleScreen';
 import PanListenerScreen from './PanListenerScreen';
 import PanResponderScreen from './PanResponderScreen';
 import PickerScreen from './PickerScreen';
@@ -56,6 +57,7 @@ Navigation.registerComponent('unicorn.components.InputsScreen', () => InputsScre
 Navigation.registerComponent('unicorn.components.MaskedInputScreen', () => MaskedInputScreen);
 Navigation.registerComponent('unicorn.components.OverlaysScreen', () => OverlaysScreen);
 Navigation.registerComponent('unicorn.components.PageControlScreen', () => PageControlScreen);
+Navigation.registerComponent('unicorn.components.PanDismissibleScreen', () => PanDismissibleScreen);
 Navigation.registerComponent('unicorn.components.PanListenerScreen', () => PanListenerScreen);
 Navigation.registerComponent('unicorn.components.PanResponderScreen', () => PanResponderScreen);
 Navigation.registerComponent('unicorn.components.PickerScreen', () => PickerScreen);

@@ -72,32 +72,43 @@
     }
   }
 
-  .native-section {
+  .components-section {
     padding: 40px;
     text-align: center;
-
+    background-color: $dark80;
+    margin-top: 20px;
+    
     > .image-examples {
       display: flex;
       justify-content: space-evenly;
-
+      
       img {
         height: 500px;
       }
     }
   }
-
+  
   .support-section {
     display: flex;
-    padding: 40px;
-    background: $dark20;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: $blue10;
     color: $white;
+    // width: 60vw;
+    // margin: 0 auto;
+    margin-top: 20px;
+    padding: 40px;
 
     > div:first-child {
-      width: 25%;
+      // width: 25%;
     }
     
     > div:nth-child(2) {
-      padding-left: 20px;
+
+      img {
+        margin-right: 20px;
+      }
     }
   }
 
