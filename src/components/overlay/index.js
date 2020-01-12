@@ -28,7 +28,7 @@ export default class Overlay extends PureBaseComponent {
      */
     type: PropTypes.oneOf(_.values(OVERLY_TYPES)),
     /**
-     * Custom overlay content to be rendereds on top of the image
+     * Custom overlay content to be rendered on top of the image
      */
     customContent: PropTypes.func
   };
