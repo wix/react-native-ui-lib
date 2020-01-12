@@ -1,6 +1,6 @@
 {
   "name": "react-native-ui-lib",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "main": "index.js",
   "typings": "typings/index.d.ts",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
@@ -83,7 +83,6 @@
     "react-native-navigation": "^3.4.0",
     "react-native-gesture-handler": "1.5.2",
     "react-native-reanimated": "1.4.0",
-    "react-native-interactable": "^2.0.0",
     "shell-utils": "^1.0.10",
     "typescript": "^2.9.2"
   },
@@ -93,8 +92,7 @@
     "react-native-gesture-handler": ">=1.5.0",
     "react-native-reanimated": ">=1.4.0",
     "@react-native-community/blur": ">=3.4.1",
-    "@react-native-community/datetimepicker": "^2.1.0",
-    "react-native-interactable": ">=2.0.0"
+    "@react-native-community/datetimepicker": "^2.1.0"
   },
   "jest": {
     "preset": "react-native",

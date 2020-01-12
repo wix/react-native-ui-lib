@@ -3,7 +3,6 @@ import { gestureHandlerRootHOC } from 'react-native-gesture-handler'
 
 import './componentScreens';
 import './nativeComponentScreens';
-import './interactableComponentScreens';
 import './componentScreenScreens';
 import './listScreens';
 import './styleScreens';

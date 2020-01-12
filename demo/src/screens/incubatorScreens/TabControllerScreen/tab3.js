@@ -50,7 +50,7 @@ class Tab2 extends Component {
                 <Card row centerV margin-20 padding-20 key={index} onPress={_.noop}>
                   <Avatar
                     size={50}
-                    imageSource={{
+                    source={{
                       uri: 'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg',
                     }}
                   />

@@ -8,9 +8,7 @@ import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import View from '../../components/view';
 import Swipeable from './Swipeable';
-import OldDrawer from './drawer.deprecated';
 
-const deprecatedProps = ['damping', 'tension', 'onPress', 'equalWidths'];
 const DEFAULT_BG = Colors.blue30;
 const ITEM_PROP_TYPES = {
   width: PropTypes.number,
@@ -35,18 +33,6 @@ class NewDrawer extends PureBaseComponent {
   static propTypes = {
     ...Swipeable.PropTypes,
     /**
-     * The drawer top layer's damping - DEPRECATED
-     */
-    damping: PropTypes.number,
-    /**
-     * The drawer top layer's tension - DEPRECATED
-     */
-    tension: PropTypes.number,
-    /**
-     * Press handler - DEPRECATED
-     */
-    onPress: PropTypes.func,
-    /**
      * The drawer animation bounciness
      */
     bounciness: PropTypes.number,
@@ -62,10 +48,6 @@ class NewDrawer extends PureBaseComponent {
      * The bottom layer's item to appear when opened from the left (a single item)
      */
     leftItem: PropTypes.shape(ITEM_PROP_TYPES),
-    /**
-     * Whether to give the items equal width (the max width) - DEPRECATED
-     */
-    equalWidths: PropTypes.bool,
     /**
      * Set a different minimum width
      */
@@ -97,7 +79,6 @@ class NewDrawer extends PureBaseComponent {
     super(props);
 
     this._swipeableRow = React.createRef();
-    this._oldDrawer = React.createRef();
     this.animationOptions = {bounciness: props.bounciness || 5};
 
     this.rightActionsContainerStyle = this.getRightActionsContainerStyle();
@@ -109,25 +90,9 @@ class NewDrawer extends PureBaseComponent {
         ? this.renderLeftActions
         : this.renderRightActions
       : undefined;
-
-    // TODO: deprecate when removing old drawer version
-    // this.checkDeprecations(props);
   }
 
   /** Actions */
-
-  checkDeprecations(props) {
-    if (props.onPress !== undefined) {
-      console.warn('Drawer\'s \'onPress\' prop is deprecated. ' +
-          'For items, send \'onPress\' handler in the item\'s object and for content use your own.',);
-    }
-
-    deprecatedProps.forEach(prop => {
-      if (props[prop]) {
-        console.warn(`"Drawer's ${prop}" property is deprecated.`);
-      }
-    });
-  }
 
   getLeftActionsContainerStyle() {
     const {rightItems, leftItem} = this.getThemeProps();
@@ -144,11 +109,7 @@ class NewDrawer extends PureBaseComponent {
   }
 
   closeDrawer = () => {
-    if (this.props.migrate) {
-      this._swipeableRow.current.close();
-    } else {
-      this._oldDrawer.current.closeDrawer();
-    }
+    this._swipeableRow.current.close();
   };
 
   /** Events */
@@ -305,11 +266,7 @@ class NewDrawer extends PureBaseComponent {
   };
 
   render() {
-    const {migrate, children, style, ...others} = this.getThemeProps();
-
-    if (!migrate) {
-      return <OldDrawer {...this.getThemeProps()} ref={this._oldDrawer}/>;
-    }
+    const {children, style, ...others} = this.getThemeProps();
 
     return (
       <Swipeable

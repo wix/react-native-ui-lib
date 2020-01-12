@@ -21,7 +21,7 @@ const examples = [
   {title: 'Initials, badge ("online")', label: 'ES', badgeProps: {backgroundColor: onlineColor}},
   {
     title: 'Image, badge ("away")',
-    imageSource: {
+    source: {
       uri:
         'https://lh3.googleusercontent.com/-cw77lUnOvmI/AAAAAAAAAAI/AAAAAAAAAAA/WMNck32dKbc/s181-c/104220521160525129167.jpg'
     },
@@ -32,7 +32,7 @@ const examples = [
   {
     title: 'Smaller size, Badge ("offline")',
     size: 40,
-    imageSource: {
+    source: {
       uri:
         'https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg'
     },
@@ -44,13 +44,13 @@ const examples = [
     size: 60,
     animate: true,
     imageProps: {animationDuration: 1000},
-    imageSource: {uri: 'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg'}
+    source: {uri: 'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg'}
   },
   {
     title: 'Big pimple',
     size: 70,
     backgroundColor: 'red',
-    imageSource: {
+    source: {
       uri: 'https://randomuser.me/api/portraits/women/24.jpg'
     },
     badgeProps: {size: 'pimpleHuge', borderWidth: 0, backgroundColor: onlineColor},
@@ -59,7 +59,7 @@ const examples = [
   {
     title: 'Icon badge',
     size: 60,
-    imageSource: {
+    source: {
       uri: 'https://randomuser.me/api/portraits/women/24.jpg'
     },
     badgeProps: {
@@ -73,7 +73,7 @@ const examples = [
   {
     title: 'GIF',
     size: 48,
-    imageSource: {
+    source: {
       uri: 'https://media.giphy.com/media/3oEdv8elIVRa3daNl6/giphy.gif'
     }
   },
@@ -81,7 +81,7 @@ const examples = [
     title: 'Invalid Gravatar (see logs)',
     label: '🤦',
     backgroundColor: Colors.dark60,
-    imageSource: {uri: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=404'},
+    source: {uri: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=404'},
     onImageLoadStart: () => console.log('AvatarScreen: Invalid avatar load STARTED...'), // eslint-disable-line
     onImageLoadEnd: () => console.log('AvatarScreen: Invalid avatar load ENDED'), // eslint-disable-line
     onImageLoadError: () => console.log('AvatarScreen: Invalid avatar load FAILED') // eslint-disable-line
@@ -90,14 +90,14 @@ const examples = [
     title: 'Monitored Avatar (see logs)',
     label: '?!',
     backgroundColor: Colors.blue20,
-    imageSource: {uri: 'https://static.altomusic.com/media/catalog/product/M/A/MAJ100SBK_0.jpg'},
+    source: {uri: 'https://static.altomusic.com/media/catalog/product/M/A/MAJ100SBK_0.jpg'},
     onImageLoadStart: () => console.log('AvatarScreen: Monitored avatar load STARTED...'), // eslint-disable-line
     onImageLoadEnd: () => console.log('AvatarScreen: Monitored avatar load ENDED') // eslint-disable-line
   },
   {
     title: 'Empty Gravatar',
     backgroundColor: Colors.red60,
-    imageSource: {uri: 'https://www.gravatar.com/avatar/2497473d558a37020c558bf26e380a7c?d=blank'}
+    source: {uri: 'https://www.gravatar.com/avatar/2497473d558a37020c558bf26e380a7c?d=blank'}
   }
 ];
 
@@ -109,8 +109,8 @@ export default class AvatarsScreen extends Component {
   }
 
   onAvatarPress(item) {
-    const {title, imageSource, label} = item;
-    const uri = _.get(imageSource, 'uri');
+    const {title, source, label} = item;
+    const uri = _.get(source, 'uri');
     const isGravatar = !!uri && AvatarHelper.isGravatarUrl(uri);
     const patchedGravatar = isGravatar ? AvatarHelper.patchGravatarUrl(uri) : undefined;
     const message = `Label: ${label}\n\nImage-source: ${uri}\n\nIs Gravatar: ${isGravatar}\n\n${
