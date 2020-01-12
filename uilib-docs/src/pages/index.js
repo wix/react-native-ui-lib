@@ -7,6 +7,7 @@ import mainLogo from '../images/logo_big.png';
 import datePicker from '../images/examples/datepicker.png';
 import actionSheet from '../images/examples/actionSheet.png';
 import rtl from '../images/examples/rtl.png';
+import accessibility from '../images/examples/accessibility.gif';
 
 const IndexPage = props => {
   return (
@@ -125,7 +126,7 @@ class MyScreen extends Component {
 
 const NativeSection = () => {
   return (
-    <div className="native-section">
+    <div className="components-section">
       <h2>Over than 60 Beautiful Components</h2>
       <p>
         Basic components like <b>Button</b>, <b>Avatar</b> and <b>Card</b> and more sophisticated ones like <b>Hints</b>
@@ -148,9 +149,10 @@ const OthersSection = () => {
     <div className="support-section">
       <div>
         <h2>RTL and Accessibility in Mind</h2>
-        <p>We provide full out-of-the-box support to RTL and Accessibility</p>
+        <p>We provide a full, out-of-the-box support to RTL and Accessibility</p>
       </div>
       <div>
+        <img src={accessibility} height="500"/>
         <img src={rtl} height="500"/>
       </div>
     </div>
