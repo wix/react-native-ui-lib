@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   overlayImageAbsoluteVertical: {
     position: 'absolute',
     top: 30,
-    left: 20,
+    left: 10,
     width: 150,
     height: 150,
     margin: 5
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   overlayImageAbsoluteSolid: {
     position: 'absolute',
     top: 30,
-    right: 20,
+    right: 10,
     width: 150,
     height: 150,
     margin: 5
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   overlayImageAbsoluteTop: {
     position: 'absolute',
     bottom: 20,
-    left: 20,
+    left: 10,
     width: 150,
     height: 150,
     margin: 5
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   overlayImageAbsoluteBottom: {
     position: 'absolute',
     bottom: 20,
-    right: 20,
+    right: 10,
     width: 150,
     height: 150,
     margin: 5
