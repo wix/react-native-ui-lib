@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Animated, TextInput as RNTextInput} from 'react-native';
+import {StyleSheet, Animated, TextInput as RNTextInput, Image as RNImage} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, Typography} from '../../style';
 import BaseInput from './BaseInput';
@@ -136,7 +136,7 @@ export default class TextField extends BaseInput {
      * Props for the right button {iconSource, onPress, style}
      */
     rightButtonProps: PropTypes.shape({
-      iconSource: PropTypes.number,
+      iconSource: RNImage.propTypes.source,
       iconColor: PropTypes.string,
       onPress: PropTypes.func,
       style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
