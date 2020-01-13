@@ -2,15 +2,15 @@ import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Alert} from 'react-native';
 import {Colors, Typography, View, Text, TextField, TextArea, Modal, Button} from 'react-native-ui-lib'; //eslint-disable-line
 import {KeyboardAwareInsetsView} from 'react-native-keyboard-tracking-view';
+import {Navigation} from 'react-native-navigation';
 
-
-const richText = require('../../assets/icons/richText.png');
-const dropDown = require('../../assets/icons/chevronDown.png');
-const star = require('../../assets/icons/star.png');
+const richText = require('../../../assets/icons/richText.png');
+const dropDown = require('../../../assets/icons/chevronDown.png');
+const star = require('../../../assets/icons/star.png');
 const LONG_TEXT =
   'Concept, edition and design direction for the editorial piece “La Forma Bruta” by the photographer' +
   'Martín Bollati. In this piece';
-const transformPrice = (value) => {
+const transformPrice = value => {
   let cleanValue;
   let priceText = '';
   if (value) {
@@ -32,7 +32,7 @@ export default class InputsScreen extends Component {
     };
   }
 
-  onChangeText = (text) => {
+  onChangeText = text => {
     let message = '';
     if (text === '') {
       message = 'This field is mandatory';
@@ -41,22 +41,22 @@ export default class InputsScreen extends Component {
       message = 'Please enter a valid text';
     }
     this.setState({error: message});
-  }
+  };
 
   onButtonPressed = () => {
     const {topError} = this.state;
     this.setState({topError: !topError});
-  }
+  };
 
   onPressInfo = () => {
     Alert.alert('Info button pressed');
-  }
+  };
 
   onPress = () => {
     this.setState({customExpandableValue: 'New Value'}, () => {
       this.input.toggleExpandableModal(false);
     });
-  }
+  };
 
   renderExpandable = () => {
     return (
@@ -65,20 +65,17 @@ export default class InputsScreen extends Component {
           <Text marginB-20 text50>
             Do Whatever you want here
           </Text>
-          <Button
-            label="Close Me"
-            onPress={this.onPress}
-          />
+          <Button label="Close Me" onPress={this.onPress}/>
         </View>
       </Modal>
     );
-  }
+  };
 
   render() {
     const {topError} = this.state;
     const state = topError ? 'On' : 'Off';
     const btnLabel = `Top Errors: ${state}`;
-    
+
     return (
       <View flex>
         <ScrollView
@@ -213,7 +210,7 @@ export default class InputsScreen extends Component {
             containerStyle={{marginBottom: INPUT_SPACING}}
             placeholder="Share your story"
             value={
-              "Share Your Story exists to provide spaces to hear people's stories, in order to inspire us to" +
+              'Share Your Story exists to provide spaces to hear people\'s stories, in order to inspire us to' +
               'live better ones ourselves.'
             }
             multiline
@@ -262,7 +259,7 @@ export default class InputsScreen extends Component {
             multiline
             rightButtonProps={{iconSource: richText, onPress: this.onPressInfo, iconColor: Colors.red30}}
           />
-          
+
           <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
@@ -280,7 +277,9 @@ export default class InputsScreen extends Component {
             rightIconSource={dropDown}
           />
 
-          <Text dark10 marginB-5>Text Area</Text>
+          <Text dark10 marginB-5>
+            Text Area
+          </Text>
           <View
             style={{
               height: 150,
@@ -343,3 +342,5 @@ const styles = StyleSheet.create({
     marginVertical: 20
   }
 });
+
+Navigation.registerComponent('unicorn.components.InputsScreen', () => InputsScreen);
