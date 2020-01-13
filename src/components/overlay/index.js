@@ -57,7 +57,7 @@ export default class Overlay extends PureBaseComponent {
     );
   };
 
-  getImage = (style, source) => {
+  renderImage = (style, source) => {
     return <Image style={[styles.container, style]} resizeMode={'stretch'} source={source}/>;
   };
 
@@ -68,8 +68,8 @@ export default class Overlay extends PureBaseComponent {
     if (type === OVERLY_TYPES.VERTICAL) {
       return (
         <View style={styles.container}>
-          {this.getImage(styles.top, image)}
-          {this.getImage(styles.bottom, image)}
+          {this.renderImage(styles.top, image)}
+          {this.renderImage(styles.bottom, image)}
           {customContent && this.renderCustomContent()}
         </View>
       );
@@ -77,7 +77,7 @@ export default class Overlay extends PureBaseComponent {
 
     return (
       <View style={styles.container}>
-        {type && this.getImage(this.getStyleByType(), image)}
+        {type && this.renderImage(this.getStyleByType(), image)}
         {customContent && this.renderCustomContent()}
       </View>
     );
