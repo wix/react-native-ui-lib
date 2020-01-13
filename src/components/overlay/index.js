@@ -51,7 +51,7 @@ export default class Overlay extends PureBaseComponent {
   renderCustomContent = () => {
     const {customContent} = this.props;
     return (
-      <View pointerEvents="none" style={styles.customContent}>
+      <View pointerEvents="box-none" style={styles.customContent}>
         {customContent}
       </View>
     );
@@ -67,19 +67,19 @@ export default class Overlay extends PureBaseComponent {
 
     if (type === OVERLY_TYPES.VERTICAL) {
       return (
-        <View style={styles.container}>
+        <>
           {this.renderImage(styles.top, image)}
           {this.renderImage(styles.bottom, image)}
           {customContent && this.renderCustomContent()}
-        </View>
+        </>
       );
     }
 
     return (
-      <View style={styles.container}>
+      <>
         {type && this.renderImage(this.getStyleByType(), image)}
         {customContent && this.renderCustomContent()}
-      </View>
+      </>
     );
   }
 }
