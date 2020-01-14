@@ -14,6 +14,7 @@ import View from '../../components/view';
 import Text from '../../components/text';
 import {Colors, Spacings} from '../../style';
 import {Constants} from '../../helpers';
+import {LogService} from '../../services';
 
 const DEFAULT_HEIGHT = 48;
 const {Code, Clock, Value, add, sub, cond, eq, stopClock, startClock, clockRunning, timing, block, set} = Reanimated;
@@ -90,7 +91,7 @@ class TabBar extends PureComponent {
     super(props, context);
 
     if (this.props.children) {
-      console.warn('uilib: Please pass the "items" prop to TabController.TabBar instead of children');
+      LogService.warn('uilib: Please pass the "items" prop to TabController.TabBar instead of children');
     }
 
     const itemsCount = this.itemsCount;
