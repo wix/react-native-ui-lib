@@ -12,6 +12,7 @@ import ConnectionStatusBarScreen from './ConnectionStatusBarScreen';
 import DialogScreen from './DialogScreen';
 import DrawerScreen from './DrawerScreen';
 import HintsScreen from './HintsScreen';
+import KeyboardAwareScrollViewScreen from './KeyboardAwareScrollViewScreen';
 import InputsScreen from './InputsScreen';
 import MaskedInputScreen from './MaskedInputScreen';
 import OverlaysScreen from './OverlaysScreen';
@@ -53,6 +54,7 @@ Navigation.registerComponent('unicorn.components.DialogScreen', () => DialogScre
 Navigation.registerComponent('unicorn.components.DrawerScreen', () => DrawerScreen);
 Navigation.registerComponent('unicorn.components.TagsInputScreen', () => TagsInputScreen);
 Navigation.registerComponent('unicorn.components.HintsScreen', () => HintsScreen);
+Navigation.registerComponent('unicorn.components.KeyboardAwareScrollViewScreen', () => KeyboardAwareScrollViewScreen);
 Navigation.registerComponent('unicorn.components.InputsScreen', () => InputsScreen);
 Navigation.registerComponent('unicorn.components.MaskedInputScreen', () => MaskedInputScreen);
 Navigation.registerComponent('unicorn.components.OverlaysScreen', () => OverlaysScreen);
