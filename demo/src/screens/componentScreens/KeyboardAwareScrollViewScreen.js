@@ -6,8 +6,8 @@ import {
   KeyboardAwareScrollView,
   KeyboardAwareListView,
   TextField,
-  Typography,
   Text,
+  Typography,
   View
 } from 'react-native-ui-lib';
 
@@ -58,7 +58,6 @@ export default class KeyboardAwareScrollViewScreen extends Component {
 
   _renderBodyButton(bodyHeaderTitle) {
     return (
-
       <Button
         text80
         link
@@ -79,12 +78,8 @@ export default class KeyboardAwareScrollViewScreen extends Component {
           keyboardShouldPersistTaps="always"
           dataSource={this.state.data}
           renderRow={this._renderRow}
-          renderScrollComponent={props => (
-            <RecyclerViewBackedScrollView {...props} />
-          )}
-          renderSeparator={(sectionID, rowID) => (
-            <View key={`${sectionID}-${rowID}`} style={styles.separator} />
-          )}
+          renderScrollComponent={props => <RecyclerViewBackedScrollView {...props}/>}
+          renderSeparator={(sectionID, rowID) => <View key={`${sectionID}-${rowID}`} style={styles.separator}/>}
         />
       </View>
     );
@@ -93,7 +88,10 @@ export default class KeyboardAwareScrollViewScreen extends Component {
   _renderKeyboardAwareScrollView() {
     return (
       <View style={styles.container}>
-        <Text style={styles.mainTitle}>Example Form</Text>
+        <Text text65 marginB-20>
+          KeyboardAwareScrollView
+        </Text>
+        <Text text65R style={{marginBottom: 10}}>Example Form</Text>
 
         {this.state.listToggle && this._renderBodyButton('Switch to ListView')}
         <KeyboardAwareScrollView
@@ -201,16 +199,10 @@ export default class KeyboardAwareScrollViewScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 20
   },
-  mainTitle: {
-    fontSize: 20,
-    marginBottom: 15,
-    textAlign: 'center'
-  },
   TextField: {
-    ...Typography.text65
+    ...Typography.text70R
   },
   topButton: {
     width: '100%',
