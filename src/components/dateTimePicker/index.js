@@ -178,7 +178,7 @@ class DateTimePicker extends BaseComponent {
 
   render() {
     const {chosenDate} = this.state;
-    const {mode, dateFormat, timeFormat} = this.props;
+    const {mode, dateFormat, timeFormat} = this.getThemeProps();
     const textInputProps = TextField.extractOwnProps(this.getThemeProps());
     const dateString = mode === MODES.DATE ? 
       (dateFormat ? moment(chosenDate).format(dateFormat) : chosenDate.toLocaleDateString()) : 
