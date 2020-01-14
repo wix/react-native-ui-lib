@@ -59,7 +59,12 @@ module.exports = {
   get Image() {
     return require('./image').default;
   },
-  
+  get KeyboardAwareScrollView() {
+    return require('./KeyboardAwareScrollView').KeyboardAwareScrollView;
+  },
+  get KeyboardAwareListView() {
+    return require('./KeyboardAwareScrollView').KeyboardAwareListView;
+  },
   get BaseInput() {
     return require('./inputs').BaseInput;
   },
