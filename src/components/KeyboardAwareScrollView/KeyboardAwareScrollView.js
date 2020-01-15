@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import {ScrollView} from 'react-native';
 import KeyboardAwareBase from './KeyboardAwareBase';
 
+/**
+ * @description: A wrapper component which handles the ScrollView insets properly when the keyboard is shown and hides the content, scrolling content above the keybaord.
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/KeyboardAwareScrollViewScreen.js
+ */
 export default class KeyboardAwareScrollView extends KeyboardAwareBase {
   static displayName = 'KeyboardAwareScrollView';
 
@@ -16,7 +20,7 @@ export default class KeyboardAwareScrollView extends KeyboardAwareBase {
     getTextInputRefs: () => {
       return [];
     }
-  }
+  };
 
   render() {
     return (
