@@ -210,8 +210,7 @@ export default class ColorPalette extends PureBaseComponent {
       if (childRef) {
         const handle = findNodeHandle(childRef);
         if (handle) {
-          UIManager.measureLayoutRelativeToParent(
-            handle,
+          UIManager.measureLayoutRelativeToParent(handle,
             e => {
               console.warn(e);
             },
@@ -223,8 +222,7 @@ export default class ColorPalette extends PureBaseComponent {
                   animated: false
                 });
               }
-            }
-          });
+            });
         }
       }
     } else if (this.usePagination) {
