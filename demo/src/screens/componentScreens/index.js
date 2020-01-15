@@ -26,6 +26,7 @@ import SharedTransitionScreen from './SharedTransitionScreen';
 import StepperScreen from './StepperScreen';
 import SwitchScreen from './SwitchScreen';
 import TagsInputScreen from './TagsInputScreen';
+import TextFieldScreen from './TextFieldScreen';
 import ToastsScreen from './ToastsScreen';
 import TabBarScreen from './TabBarScreen';
 import TourScreen from './TourScreen';
@@ -69,6 +70,7 @@ Navigation.registerComponent('unicorn.components.StepperScreen', () => StepperSc
 Navigation.registerComponent('unicorn.components.SwitchScreen', () => SwitchScreen);
 Navigation.registerComponent('unicorn.components.ToastsScreen', () => ToastsScreen);
 Navigation.registerComponent('unicorn.components.TabBarScreen', () => TabBarScreen);
+Navigation.registerComponent('unicorn.components.TextFieldScreen', () => TextFieldScreen);
 Navigation.registerComponent('unicorn.components.TourScreen', () => TourScreen);
 Navigation.registerComponent('unicorn.components.FeatureHighlightScreen', () => FeatureHighlightScreen);
 Navigation.registerComponent('unicorn.components.WheelPickerDialogScreen', () => WheelPickerDialogScreen);

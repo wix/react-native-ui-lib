@@ -1,3 +1,9 @@
+// TODO: hideUnderline should be true by default
+// TODO: enableErrors should be false by default
+// TODO: enableErrors should derived from errorMessage prop
+// TODO: use forwardRef to allow access to inner TextInput API
+// TODO: add trailing/leading icon props
+// TODO: support margin modifiers
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -329,6 +335,7 @@ export default class TextField extends BaseInput {
     if (this.shouldFakePlaceholder()) {
       return (
         <Animated.Text
+          pointerEvents="none"
           style={[
             this.styles.floatingPlaceholder,
             this.styles.placeholder,
@@ -661,7 +668,8 @@ function createStyles({centered, multiline, expandable}) {
     floatingPlaceholder: {
       position: 'absolute',
       width: '100%',
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
+      zIndex: 10
     },
     placeholder: {
       textAlign: 'left'
