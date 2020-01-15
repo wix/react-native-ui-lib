@@ -16,7 +16,6 @@ export default class KeyboardAwareListView extends KeyboardAwareBase {
 
   render() {
     const initialOpacity = this.props.startScrolledToBottom ? 0 : 1;
-    console.warn('az', this.props)
     return (
       <ScrollView
         {...this.props}
