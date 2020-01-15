@@ -30,9 +30,12 @@ Check out our [Docs](https://wix.github.io/react-native-ui-lib/). <br>
 Our [Discord Channel](https://discord.gg/2eW4g6Z)
 
 
-### Installing
+## Installing
 
 See setup instructions [here](https://github.com/wix/react-native-ui-lib/wiki/SETUP).
+
+#### New Major Version 5.0
+See [beaking changes](https://github.com/wix/react-native-ui-lib/wiki/V5-%5BBreaking-Change%5D)
 
 #### For React Native >= 0.60.0
 please use `react-native-ui-lib@^4.0.0`
