@@ -51,7 +51,7 @@ class TouchableOpacity extends Component {
   isAnimating = new Value(0);
   clock = new Clock();
   _scale = new Value(1);
-  _color = new Value(1);
+  // _color = new Value(1);
 
   _opacity = block([cond(eq(this.pressState, State.BEGAN), this.props.activeOpacity, 1)]);
 
@@ -69,6 +69,20 @@ class TouchableOpacity extends Component {
     return backgroundColorProp || backgroundColor;
   }
 
+  get animatedStyle() {
+    const {feedbackColor} = this.props;
+    const style = {
+      opacity: this._opacity,
+      transform: [{scale: this._scale}]
+    };
+
+    if (feedbackColor) {
+      style.backgroundColor = this._color;
+    }
+
+    return style;
+  }
+
   onStateChange = event([
     {
       nativeEvent: {state: this.pressState}
@@ -81,7 +95,12 @@ class TouchableOpacity extends Component {
     const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
 
     return (
-      <TapGestureHandler onHandlerStateChange={this.onStateChange} shouldCancelWhenOutside ref={forwardedRef}>
+      <TapGestureHandler
+        onHandlerStateChange={this.onStateChange}
+        shouldCancelWhenOutside
+        ref={forwardedRef}
+        maxDurationMs={500}
+      >
         <Reanimated.View
           {...others}
           style={[
@@ -91,7 +110,8 @@ class TouchableOpacity extends Component {
             margins,
             alignments,
             style,
-            {backgroundColor: this._color, opacity: this._opacity, transform: [{scale: this._scale}]}
+            this.animatedStyle
+            // {backgroundColor: this._color, opacity: this._opacity, transform: [{scale: this._scale}]}
           ]}
         >
           {this.props.children}
@@ -129,7 +149,7 @@ function runTiming(clock, position, value, dest) {
   };
 
   const config = {
-    duration: 100,
+    duration: 150,
     toValue: new Value(0),
     easing: Easing.inOut(Easing.ease)
   };

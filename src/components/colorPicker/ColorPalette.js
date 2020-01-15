@@ -152,9 +152,7 @@ export default class ColorPalette extends PureBaseComponent {
     const {numberOfRows} = this.props;
 
     if (!_.inRange(numberOfRows, 2, 6)) {
-      console.warn(
-        `${numberOfRows} is not within valid range of color rows (2 to 5); defaulting to ${DEFAULT_NUMBER_OF_ROWS}.`
-      );
+      console.warn(`${numberOfRows} is not within valid range of color rows (2 to 5); defaulting to ${DEFAULT_NUMBER_OF_ROWS}.`);
       return DEFAULT_NUMBER_OF_ROWS;
     }
     return numberOfRows;
@@ -226,7 +224,7 @@ export default class ColorPalette extends PureBaseComponent {
                 });
               }
             }
-          );
+          });
         }
       }
     } else if (this.usePagination) {

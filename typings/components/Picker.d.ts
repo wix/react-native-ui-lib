@@ -29,8 +29,6 @@ export interface PickerItemProps {
   onSelectedLayout?: (event: LayoutChangeEvent) => void;
 }
 
-declare class PickerItem extends BaseComponent<PickerItemProps> {}
-
 export type PickerMode = 'SINGLE' | 'MULTI';
 
 export interface PickerSearchStyle {
@@ -64,6 +62,8 @@ export interface PickerProps extends Omit<TextFieldProps, 'value'> {
   listProps?: PickerListProps;
 }
 
-export class Picker extends BaseComponent<PickerProps> {
-  Item: typeof PickerItem;
+export class Picker extends BaseComponent<PickerProps> {}
+
+export namespace Picker {
+  export class Item extends BaseComponent<PickerItemProps> {}
 }

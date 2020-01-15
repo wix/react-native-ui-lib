@@ -46,4 +46,4 @@ export interface DrawerProps {
   useNativeAnimations?: boolean;
 }
 
-export declare class Drawer extends PureBaseComponent<DrawerProps> {}
+export class Drawer extends PureBaseComponent<DrawerProps> {}

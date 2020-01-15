@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
@@ -53,6 +54,14 @@ class DateTimePicker extends BaseComponent {
      * The maximum date or time value to use
      */
     maximumDate: PropTypes.instanceOf(Date),
+    /**
+     * The date format for the text display
+     */
+    dateFormat: PropTypes.string,
+    /**
+     * The time format for the text display
+     */
+    timeFormat: PropTypes.string,
     /**
      * Props to pass the Dialog component
      */
@@ -163,7 +172,6 @@ class DateTimePicker extends BaseComponent {
           onChange={this.setDate} 
           minimumDate={minimumDate}
           maximumDate={maximumDate}
-          is24Hour // Android only
         />
       );
     }
@@ -175,10 +183,12 @@ class DateTimePicker extends BaseComponent {
 
   render() {
     const {chosenDate} = this.state;
-    const {mode} = this.props;
+    const {mode, dateFormat, timeFormat} = this.getThemeProps();
     const textInputProps = TextField.extractOwnProps(this.getThemeProps());
-    const dateString = mode === MODES.DATE ? chosenDate.toLocaleDateString() : chosenDate.toLocaleTimeString();
-
+    const dateString = mode === MODES.DATE ? 
+      (dateFormat ? moment(chosenDate).format(dateFormat) : chosenDate.toLocaleDateString()) : 
+      (timeFormat ? moment(chosenDate).format(timeFormat) : chosenDate.toLocaleTimeString());
+    
     return (
       <TextField 
         {...textInputProps} 

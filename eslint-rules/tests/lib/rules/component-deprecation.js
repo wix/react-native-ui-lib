@@ -10,7 +10,7 @@ RuleTester.setDefaultConfig({
 const ruleTester = new RuleTester();
 
 const ruleOptions = [{deprecations: deprecationsJson}];
-const validExample = "const test = <Avatar imageSource={{uri: 'some_uri_string'}}/>";
+const validExample = "const test = <Avatar source={{uri: 'some_uri_string'}}/>";
 const validImportExample = "import {Avatar} from 'another-module'; const test = <Avatar url={'some_uri_string'}/>";
 const invalidExample = "import {Avatar} from 'module-with-deprecations'; const test = <Avatar url={'some_uri_string'}/>";
 
@@ -30,7 +30,7 @@ ruleTester.run('component-deprecation', rule, {
     {
       options: ruleOptions,
       code: invalidExample,
-      errors: [{message: "The 'Avatar' component's prop 'url' is deprecated. Please use the 'imageSource' prop instead."}],
+      errors: [{message: "The 'Avatar' component's prop 'url' is deprecated. Please use the 'source' prop instead."}],
     },
     {
       options: [{...ruleOptions[0], dueDate: '10/11/18'}],
@@ -38,7 +38,7 @@ ruleTester.run('component-deprecation', rule, {
       errors: [
         {
           message:
-            "The 'Avatar' component's prop 'url' is deprecated. Please use the 'imageSource' prop instead. Please fix this issue by 10/11/18!", // eslint-disable-line
+            "The 'Avatar' component's prop 'url' is deprecated. Please use the 'source' prop instead. Please fix this issue by 10/11/18!", // eslint-disable-line
         },
       ],
     },
@@ -64,7 +64,7 @@ ruleTester.run('component-deprecation', rule, {
     {
       options: ruleOptions,
       code:
-        'import {Button} from \'module-with-deprecations\'; const props = {text: "button", color: "red"}; <Button {...props} value="value"/>', // eslint-disable-line 
+        'import {Button} from \'module-with-deprecations\'; const props = {text: "button", color: "red"}; <Button {...props} value="value"/>', // eslint-disable-line
       errors: [{message: "The 'Button' component's prop 'text' is deprecated. Please use the 'label' prop instead."}],
     },
   ],

@@ -162,12 +162,10 @@ export default class Button extends PureBaseComponent {
     right: 'right'
   };
 
+  // This redundant constructor for some reason fix tests :/
+  // eslint-disable-next-line
   constructor(props) {
     super(props);
-
-    if (!_.isUndefined(props.containerStyle)) {
-      console.error('Button "containerStyle" prop will be deprecated soon, please use "style" instead');
-    }
   }
 
   componentDidUpdate(prevProps) {
@@ -465,7 +463,7 @@ export default class Button extends PureBaseComponent {
   }
 
   render() {
-    const {onPress, disabled, link, style, containerStyle, testID, animateLayout, ...others} = this.getThemeProps();
+    const {onPress, disabled, link, style, testID, animateLayout, ...others} = this.getThemeProps();
     const shadowStyle = this.getShadowStyle();
     const {margins} = this.state;
     const backgroundColor = this.getBackgroundColor();
@@ -482,7 +480,6 @@ export default class Button extends PureBaseComponent {
           link && this.styles.innerContainerLink,
           shadowStyle,
           margins,
-          containerStyle,
           backgroundColor && {backgroundColor},
           borderRadiusStyle,
           outlineStyle,
@@ -536,8 +533,7 @@ function createStyles() {
       backgroundColor: 'transparent',
       flex: 0,
       flexDirection: 'row',
-      ...Typography.text70,
-      fontWeight: '100'
+      ...Typography.text70
     }
   });
 }

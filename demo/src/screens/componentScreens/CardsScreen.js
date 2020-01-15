@@ -4,7 +4,6 @@ import {StyleSheet, ScrollView} from 'react-native';
 import {Constants, Colors, View, Card, Button, Text, Image} from 'react-native-ui-lib'; // eslint-disable-line
 import posts from '../../data/posts';
 
-
 const featureIcon = require('../../assets/icons/star.png');
 const shareIcon = require('../../assets/icons/share.png');
 const cardImage = require('../../assets/images/card-example.jpg');
@@ -73,7 +72,7 @@ export default class CardsScreen extends Component {
                 selectionOptions={{
                   color: Colors.dark10,
                   indicatorSize: 25,
-                  borderWidth: 3,
+                  borderWidth: 3
                 }}
               >
                 <Card.Image height={'100%'} imageSource={cardImage}/>
@@ -112,7 +111,18 @@ export default class CardsScreen extends Component {
               )}
             </View>
 
-            <Card row height={160} style={{marginBottom: 15}} onPress={() => {}} enableBlur borderRadius={0}>
+            <Card
+              row
+              height={160}
+              style={{marginBottom: 15}}
+              onPress={() => {}}
+              enableBlur
+              borderRadius={0}
+              useNative
+              backgroundColor={Colors.white}
+              activeOpacity={1}
+              activeScale={0.96}
+            >
               <Card.Image width={115} imageSource={cardImage}/>
               <View padding-20 flex>
                 <Text text70 dark10>
@@ -127,7 +137,17 @@ export default class CardsScreen extends Component {
               </View>
             </Card>
 
-            <Card row height={160} style={{marginBottom: 15}} onPress={() => {}} br10>
+            <Card
+              row
+              height={160}
+              style={{marginBottom: 15}}
+              onPress={() => {}}
+              br10
+              useNative
+              backgroundColor={Colors.white}
+              activeOpacity={1}
+              activeScale={1.04}
+            >
               <View padding-20 flex>
                 <Text text70 dark10>
                   You’re Invited!
@@ -156,7 +176,7 @@ export default class CardsScreen extends Component {
 
             {_.map(posts, (post, i) => {
               const statusColor = post.status === 'Published' ? Colors.green30 : Colors.orange30;
-              
+
               return (
                 <Card key={i} style={{marginBottom: 15}} onPress={() => console.log('press on a card')}>
                   <Card.Image height={160} imageSource={post.coverImage}/>

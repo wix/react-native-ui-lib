@@ -39,7 +39,12 @@ class PanDismissibleView extends PureComponent {
       speed: PropTypes.number,
       bounciness: PropTypes.number,
       duration: PropTypes.number
-    })
+    }),
+    /**
+     * Allow diagonal dismiss, this is false by default,
+     * since it looks better and most cases.
+     */
+    allowDiagonalDismiss: PropTypes.bool
   };
 
   static defaultProps = {
@@ -54,7 +59,8 @@ class PanDismissibleView extends PureComponent {
       bounciness: DEFAULT_BOUNCINESS,
       duration: DEFAULT_DISMISS_ANIMATION_DURATION
     },
-    onDismiss: _.noop
+    onDismiss: _.noop,
+    allowDiagonalDismiss: false
   };
 
   constructor(props) {
@@ -209,13 +215,24 @@ class PanDismissibleView extends PureComponent {
   };
 
   getDismissAnimationDirection = () => {
-    const {swipeDirections, dragDirections} = this.props.context; // eslint-disable-line
+    const {allowDiagonalDismiss} = this.props;
+    const {swipeDirections, swipeVelocities, dragDirections, dragDeltas} = this.props.context; // eslint-disable-line
     const hasHorizontalSwipe = !_.isUndefined(swipeDirections.x);
     const hasVerticalSwipe = !_.isUndefined(swipeDirections.y);
     let isRight;
     let isDown;
 
     if (hasHorizontalSwipe || hasVerticalSwipe) {
+      if (!allowDiagonalDismiss && hasHorizontalSwipe && hasVerticalSwipe) {
+        if (Math.abs(swipeVelocities.y) > Math.abs(swipeVelocities.x)) {
+          isDown = swipeDirections.y === PanningProvider.Directions.DOWN;
+        } else {
+          isRight = swipeDirections.x === PanningProvider.Directions.RIGHT;
+        }
+
+        return {isRight, isDown};
+      }
+      
       if (hasHorizontalSwipe) {
         isRight = swipeDirections.x === PanningProvider.Directions.RIGHT;
       }
@@ -225,11 +242,23 @@ class PanDismissibleView extends PureComponent {
       }
     } else {
       // got here from a drag beyond threshold
-      if (!_.isUndefined(dragDirections.x)) {
+      const hasHorizontalDrag = !_.isUndefined(dragDirections.x);
+      const hasVerticalDrag = !_.isUndefined(dragDirections.y);
+      if (!allowDiagonalDismiss && hasHorizontalDrag && hasVerticalDrag) {
+        if (Math.abs(dragDeltas.y) > Math.abs(dragDeltas.x)) {
+          isDown = dragDirections.y === PanningProvider.Directions.DOWN;
+        } else {
+          isRight = dragDirections.x === PanningProvider.Directions.RIGHT;
+        }
+
+        return {isRight, isDown};
+      }
+
+      if (hasHorizontalDrag) {
         isRight = dragDirections.x === PanningProvider.Directions.RIGHT;
       }
 
-      if (!_.isUndefined(dragDirections.y)) {
+      if (hasVerticalDrag) {
         isDown = dragDirections.y === PanningProvider.Directions.DOWN;
       }
     }
@@ -296,8 +325,7 @@ class PanDismissibleView extends PureComponent {
 
   onDismissAnimationFinished = ({finished}) => {
     if (finished) {
-      const {onDismiss} = this.props;
-      onDismiss();
+      _.invoke(this.props, 'onDismiss');
     }
   };
 

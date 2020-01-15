@@ -77,16 +77,14 @@ export type ColorName =
   | 'white'
   | 'black';
 
-type ColorsPalette = Record<ColorName, ColorValue>;
-
-interface HSLValue {
+export interface HSLValue {
   h: number;
   s: number;
   l: number;
   a: number;
 }
 
-declare class ColorsClass {
+export declare class ColorsClass {
   rgba(p1: string | number, p2: number, p3: number, p4: number): ColorValue;
   isEmpty(color: ColorValue): boolean;
   getColorTint(color: ColorValue, tintKey: number): any;
@@ -99,4 +97,4 @@ declare class ColorsClass {
   areEqual(colorA: ColorValue, colorB: ColorValue): boolean;
 }
 
-export const Colors: ColorsClass & Readonly<ColorsPalette>;
+export const Colors: ColorsClass & Readonly<Record<ColorName, ColorValue>>;

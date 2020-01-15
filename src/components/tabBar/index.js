@@ -1,55 +1,48 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, ViewPropTypes, Animated, ScrollView} from 'react-native';
-import {Colors, Spacings} from '../../style';
-import {BaseComponent} from '../../commons';
+import {Platform, StyleSheet, ViewPropTypes, Animated, ScrollView} from 'react-native';
 import {Constants} from '../../helpers';
+import {Colors} from '../../style';
+import {BaseComponent} from '../../commons';
 import View from '../view';
 import Image from '../image';
-import Assets from '../../assets';
 import TabBarItem from './TabBarItem';
 
-const LAYOUT_MODES = {
-  FIT: 'FIT',
-  SCROLL: 'SCROLL'
-};
+const MIN_TABS_FOR_SCROLL = 1;
+const DEFAULT_BACKGROUND_COLOR = Colors.white;
+const DEFAULT_HEIGHT = 48;
+const GRADIENT_WIDTH = 74;
+const INDICATOR_HEIGHT = 2;
+const gradientImage = () => require('./assets/gradient.png');
 
 /**
- * @description: Basic TabBar component
- * @gif: https://media.giphy.com/media/3o751YHFZVlv3Ay4k8/giphy.gif
+ * @description: TabBar Component
+ * @modifiers: alignment, flex, padding, margin, background, typography, color (list of supported modifiers)
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabBarScreen.js
+ * @extends: ScrollView
+ * @extendsLink: https://facebook.github.io/react-native/docs/scrollview
+ * @notes: This is screen width component.
  */
 export default class TabBar extends BaseComponent {
   static displayName = 'TabBar';
+
   static propTypes = {
     ...ViewPropTypes.height,
+    /**
+     * Show Tab Bar bottom shadow
+     */
+    enableShadow: PropTypes.bool,
+    /**
+     * The minimum number of tabs to render
+     */
+    minTabsForScroll: PropTypes.number,
     /**
      * current selected tab index
      */
     selectedIndex: PropTypes.number,
     /**
-     * custom style for the tab bar
-     */
-    style: ViewPropTypes.style,
-    /**
-     * custom style for the selected indicator
-     */
-    indicatorStyle: ViewPropTypes.style,
-    /**
-     * whethere the indicator should mark item's content instead of the whole item's width
-     */
-    isContentIndicator: PropTypes.bool,
-    /**
-     * whethere the indicator should mark the last tab or not (onTabSelected will return tab's index when selected)
-     */
-    ignoreLastTab: PropTypes.bool,
-    /**
-     * disable the animated transition of the tab indicator
-     */
-    disableAnimatedTransition: PropTypes.bool,
-    /**
-     * callback for when index has change (will not be called on last tab when passing ignoreLastTab)
+     * callback for when index has change (will not be called on ignored items)
      */
     onChangeIndex: PropTypes.func,
     /**
@@ -57,413 +50,272 @@ export default class TabBar extends BaseComponent {
      */
     onTabSelected: PropTypes.func,
     /**
-     * FIT to force the content to fit to screen, or SCROLL to allow content overflow
+     * custom style for the selected indicator
      */
-    mode: PropTypes.oneOf(Object.keys(LAYOUT_MODES)),
+    indicatorStyle: ViewPropTypes.style,
     /**
-     * Add gradiant effect for scroll overflow. IMPORTANT: must have a native module available!
+     * Tab Bar height
      */
-    useGradientFinish: PropTypes.bool,
-    /**
-     * Show Tab Bar bottom shadow (iOS only)
-     */
-    enableShadow: PropTypes.bool
+    height: PropTypes.number
   };
 
   static defaultProps = {
-    mode: LAYOUT_MODES.FIT,
-    selectedIndex: 0,
-    height: 51
+    selectedIndex: 0
   };
-
-  static modes = LAYOUT_MODES;
 
   constructor(props) {
     super(props);
 
-    this.itemsWidths = {};
-    this.contentWidth = undefined;
-    this.containerWidth = undefined;
-    this.childrenCount = React.Children.count(props.children);
-    this.itemContentSpacing = this.getThemeProps().isContentIndicator ? Spacings.s4 : 0;
-
     this.state = {
-      selectedIndex: props.selectedIndex,
-      selectedIndicatorPosition: new Animated.Value(0),
-      gradientValue: new Animated.Value(1),
-      fadeAnim: 0,
-      currentMode: props.mode
+      gradientOpacity: new Animated.Value(0),
+      scrollEnabled: false,
+      currentIndex: props.selectedIndex
     };
 
-    this.checkPropsMatch();
-  }
-
-  getLabels(items) {
-    if (Array.isArray(items)) {
-      const lbls = [];
-      items.forEach(element => {
-        lbls.push(element.props.label);
-      });
-      return lbls;
-    }
-  }
-
-  getDifferences(array, array2) {
-    const dif = [];
-    for (let i = 0; i < array.length; i++) {
-      if (array[i] !== array2[i]) {
-        if (dif.indexOf(i) === -1) {
-          dif.push(i);
-        }
-      }
-    }
-    return dif;
-  }
-
-  componentDidMount() {
-    this.labels = this.getLabels(this.props.children);
+    this.scrollContainerWidth = Constants.screenWidth;
+    this.scrollContentWidth = undefined;
+    this.contentOffset = {x: 0, y: 0};
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (React.Children.count(nextProps.children) !== this.childrenCount) {
-      /** dynamic children count */
-      this.initializeValues(nextProps);
-    } else if (this.scrollLayout) {
-      const labels = this.getLabels(nextProps.children);
-      if (!_.isEqual(this.labels, labels)) {
-        /** dynamic items' labels */
-        const differences = this.getDifferences(this.labels, labels);
-        differences.forEach(element => {
-          this.itemsWidths[element] = undefined;
-        });
-        this.labels = labels;
-      }
-    }
-
-    if (nextProps.selectedIndex !== this.state.selectedIndex && this.props.selectedIndex !== nextProps.selectedIndex) {
-      this.animateIndicatorPosition(nextProps.selectedIndex);
-      this.setState({selectedIndex: nextProps.selectedIndex});
+    // TODO: since we're implementing an uncontrolled component here, we should verify the selectedIndex has changed
+    // between this.props and nextProps (basically the meaning of selectedIndex should be initialIndex)
+    const isIndexManuallyChanged =
+      nextProps.selectedIndex !== this.state.currentIndex && this.props.selectedIndex !== nextProps.selectedIndex;
+    if (isIndexManuallyChanged) {
+      this.updateIndicator(nextProps.selectedIndex);
     }
   }
 
-  initializeValues(props) {
-    if (!this.scrollLayout) {
-      this.itemsWidths = {};
+  componentDidUpdate(prevProps) {
+    const prevChildrenCount = React.Children.count(prevProps.children);
+    if (this.childrenCount < prevChildrenCount) {
+      this.updateIndicator(0);
     }
-    this.contentWidth = undefined;
-    this.childrenCount = React.Children.count(props.children);
-
-    this.setState({currentMode: props.mode});
   }
 
-  checkPropsMatch() {
-    const {selectedIndex} = this.state;
-    if (this.isIgnoredTab(selectedIndex)) {
-      console.warn('Your selectedIndex is the last tab. Please change it or remove the ignoreLastTab prop');
-    }
+  get childrenCount() {
+    return React.Children.count(this.props.children);
   }
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  isIgnoredTab = index => {
-    const {ignoreLastTab} = this.getThemeProps();
-    return ignoreLastTab && index === this.childrenCount - 1;
-  };
-
-  /** Indicator */
-
-  hasMeasurements() {
-    return _.keys(this.itemsWidths).length === this.childrenCount;
+  isIgnored(index) {
+    const child = React.Children.toArray(this.props.children)[index];
+    return _.get(child, 'props.ignore');
   }
 
-  updateIndicatorPosition = () => {
-    if (this.hasMeasurements() && this.contentWidth) {
-      this.setState({
-        selectedIndicatorPosition: new Animated.Value(this.calcIndicatorPosition(this.state.selectedIndex))
+  updateIndicator(index) {
+    if (!this.isIgnored(index)) {
+      this.setState({currentIndex: index}, () => {
+        this.scrollToSelected();
       });
     }
-  };
-
-  calcIndicatorWidth() {
-    if (this.childrenCount === 0) {
-      return '0%';
-    }
-    const itemWidth = this.itemsWidths[this.state.selectedIndex] - this.itemContentSpacing * 2;
-    const width = (itemWidth / this.contentWidth) * 100;
-    return `${width}%`;
   }
 
-  calcIndicatorPosition(index) {
-    let position = 0;
-    if (!_.isEmpty(this.itemsWidths)) {
-      let itemPosition = 0;
-      for (let i = 0; i < index; i++) {
-        itemPosition += this.itemsWidths[i];
+  scrollToSelected(animated = true) {
+    const childRef = this.itemsRefs[this.state.currentIndex];
+    const childLayout = childRef.getLayout();
+
+    if (childLayout && this.hasOverflow()) {
+      if (childLayout.x + childLayout.width - this.contentOffset.x > this.scrollContainerWidth) {
+        this.scrollView.scrollTo({x: childLayout.x - this.scrollContainerWidth + childLayout.width, y: 0, animated});
+      } else if (childLayout.x - this.contentOffset.x < 0) {
+        this.scrollView.scrollTo({x: childLayout.x, y: 0, animated});
       }
-      itemPosition += this.itemContentSpacing;
-      position = (itemPosition / this.contentWidth) * 100;
-    } else {
-      position = index * (100 / this.childrenCount) + this.itemContentSpacing;
     }
-    return position;
   }
-
-  animateIndicatorPosition = index => {
-    const {disableAnimatedTransition} = this.getThemeProps();
-    const {selectedIndicatorPosition} = this.state;
-
-    const newPosition = this.calcIndicatorPosition(index);
-
-    if (disableAnimatedTransition) {
-      selectedIndicatorPosition.setValue(newPosition);
-    } else {
-      Animated.spring(selectedIndicatorPosition, {
-        toValue: newPosition,
-        tension: 30,
-        friction: 8
-      }).start();
-    }
-  };
 
   onChangeIndex(index) {
-    if (this.isIgnoredTab(index)) {
-      // ignoring the last tab selection
-    } else {
-      this.animateIndicatorPosition(index);
-      this.setState({selectedIndex: index});
-      _.invoke(this.props, 'onChangeIndex', index);
-    }
+    _.invoke(this.props, 'onChangeIndex', index);
   }
 
   onTabSelected(index) {
     _.invoke(this.props, 'onTabSelected', index);
   }
 
-  onItemLayout = (index, width) => {
-    if (_.isUndefined(this.itemsWidths[index])) {
-      if (this.isIgnoredTab(index)) {
-        this.itemsWidths[index] = 0;
-      } else {
-        this.itemsWidths[index] = width;
+  onItemPress = (index, props) => {
+    this.updateIndicator(index);
+
+    setTimeout(() => {
+      if (!props.ignore) {
+        this.onChangeIndex(index);
       }
-    } else if (this.scrollLayout) {
-      this.itemsWidths[index + 1] = this.itemsWidths[index];
-      this.itemsWidths[index] = width;
-    }
-    this.updateIndicatorPosition();
+      this.onTabSelected(index);
+      _.invoke(props, 'onPress');
+    }, 0);
   };
 
-  /** Renders */
+  getStylePropValue(flattenStyle, propName) {
+    let prop;
+    if (flattenStyle) {
+      const propObject = _.pick(flattenStyle, [propName]);
+      prop = propObject[propName];
+    }
+    return prop;
+  }
+
+  animateGradientOpacity = (x, contentWidth, containerWidth) => {
+    const overflow = contentWidth - containerWidth;
+    const newValue = x > 0 && x >= overflow - 1 ? 0 : 1;
+
+    Animated.spring(this.state.gradientOpacity, {
+      toValue: newValue,
+      speed: 20,
+      useNativeDriver: true
+    }).start();
+  };
+
+  onScroll = event => {
+    const {layoutMeasurement, contentOffset, contentSize} = event.nativeEvent;
+    this.contentOffset = contentOffset;
+    const x = contentOffset.x;
+    const contentWidth = contentSize.width;
+    const containerWidth = layoutMeasurement.width;
+
+    this.animateGradientOpacity(x, contentWidth, containerWidth);
+  };
+
+  onContentSizeChange = width => {
+    if (this.scrollContentWidth !== width) {
+      const {minTabsForScroll} = this.getThemeProps();
+      const minChildrenCount = minTabsForScroll || MIN_TABS_FOR_SCROLL;
+
+      this.scrollContentWidth = width;
+
+      if (this.hasOverflow() && this.childrenCount > minChildrenCount) {
+        this.setState({gradientOpacity: new Animated.Value(1), scrollEnabled: true});
+      }
+    }
+  };
+
+  hasOverflow() {
+    if (this.scrollContentWidth) {
+      if (this.scrollContentWidth > this.scrollContainerWidth) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  renderGradient(height, tintColor) {
+    const width = GRADIENT_WIDTH;
+
+    if (this.hasOverflow()) {
+      return (
+        <Animated.View
+          pointerEvents="none"
+          style={{
+            width,
+            height: height - INDICATOR_HEIGHT,
+            position: 'absolute',
+            right: 0,
+            opacity: this.state.gradientOpacity
+          }}
+        >
+          <Image
+            source={gradientImage()}
+            style={{width, height: height - INDICATOR_HEIGHT, tintColor}}
+            resizeMode={'stretch'}
+            supportRTL
+          />
+        </Animated.View>
+      );
+    }
+  }
+
+  renderTabBar() {
+    const {height} = this.getThemeProps();
+    const {scrollEnabled} = this.state;
+    const containerHeight = height || DEFAULT_HEIGHT;
+
+    return (
+      <View row>
+        <ScrollView
+          ref={r => (this.scrollView = r)}
+          style={{height: containerHeight}}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          scrollEnabled={scrollEnabled}
+          scrollEventThrottle={16}
+          onScroll={this.onScroll}
+          onContentSizeChange={this.onContentSizeChange}
+          contentContainerStyle={{minWidth: '100%'}}
+        >
+          <View row style={this.styles.tabBar}>
+            {this.renderChildren()}
+          </View>
+        </ScrollView>
+        {this.renderGradient(containerHeight, DEFAULT_BACKGROUND_COLOR)}
+      </View>
+    );
+  }
+
+  shouldBeMarked = index => {
+    return this.state.currentIndex === index && !this.isIgnored(index) && this.childrenCount > 1;
+  };
 
   renderChildren() {
-    const {selectedIndex} = this.state;
+    this.itemsRefs = [];
+    const {indicatorStyle} = this.getThemeProps();
+
     const children = React.Children.map(this.props.children, (child, index) => {
       return React.cloneElement(child, {
-        selected: selectedIndex === index,
-        width: this.itemsWidths[index], // HACK: keep initial item's width for indicator's width
+        indicatorStyle,
+        selected: this.shouldBeMarked(index),
         onPress: () => {
-          this.onChangeIndex(index);
-          this.onTabSelected(index);
-          _.invoke(child.props, 'onPress');
+          this.onItemPress(index, child.props);
         },
-        onLayout: width => {
-          this.onItemLayout(index, width);
+        ref: r => {
+          this.itemsRefs[index] = r;
         }
       });
     });
     return children;
   }
 
-  renderSelectedIndicator() {
-    const {indicatorStyle} = this.getThemeProps();
-    const {selectedIndicatorPosition} = this.state;
+  render() {
+    const {enableShadow, style} = this.getThemeProps();
 
-    // if only one tab - don't render indicator at all
-    if (this.childrenCount - 1 === 0) {
-      return;
-    }
-
-    const width = this.calcIndicatorWidth();
-    const left = selectedIndicatorPosition.interpolate({
-      inputRange: [0, 100],
-      outputRange: ['0%', '100%']
-    });
-    return (
-      <Animated.View
-        style={[this.styles.selectedIndicator, this.styles.absoluteContainer, {left, width}, indicatorStyle]}
-      />
-    );
-  }
-
-  renderBar() {
-    const {height, style, enableShadow} = this.getThemeProps();
     return (
       <View
-        style={[this.styles.container, enableShadow && this.styles.containerShadow, style]}
-        bg-white
-        row
-        height={height}
-        onLayout={this.onLayout}
         useSafeArea
+        style={[this.styles.container, enableShadow && this.styles.containerShadow, style, {height: undefined}]}
       >
-        {this.renderChildren()}
-        {this.hasMeasurements() && this.renderSelectedIndicator()}
+        {this.renderTabBar()}
       </View>
     );
   }
-
-  renderScrollBar() {
-    const {height, style, enableShadow, useGradientFinish} = this.getThemeProps();
-    let backgroundColor;
-    let sizeStyle;
-    let otherStyle;
-    const flatten = StyleSheet.flatten(style);
-    if (flatten) {
-      backgroundColor = flatten.backgroundColor;
-      sizeStyle = _.pick(flatten, ['width', 'height']);
-      otherStyle = _.omit(flatten, ['width', 'height']);
-    }
-    const gradientColor = backgroundColor || Colors.white;
-
-    return (
-      <View row style={{opacity: this.state.fadeAnim, height}} useSafeArea>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          onLayout={this.onLayout}
-          onContentSizeChange={this.onContentSizeChange}
-          onScroll={this.onScroll}
-          style={[sizeStyle, Constants.isIOS && {overflow: 'visible'}]}
-        >
-          <View style={[this.styles.container, enableShadow && this.styles.containerShadow, otherStyle]} bg-white row>
-            {this.renderChildren()}
-            {this.hasMeasurements() && this.renderSelectedIndicator()}
-          </View>
-        </ScrollView>
-        {useGradientFinish && this.renderGradient(height, gradientColor)}
-      </View>
-    );
-  }
-
-  renderGradient(height, tintColor) {
-    const gradientWidth = 28;
-    return (
-      <Animated.View
-        pointerEvents="none"
-        style={{
-          width: gradientWidth,
-          height: height - 2,
-          position: 'absolute',
-          right: 0,
-          opacity: this.state.gradientValue
-        }}
-      >
-        <Image
-          source={Assets.images.gradient}
-          style={{width: gradientWidth, height: height - 3, tintColor}}
-          supportRTL
-        />
-      </Animated.View>
-    );
-  }
-
-  render() {
-    switch (this.state.currentMode) {
-      case LAYOUT_MODES.FIT:
-        return this.renderBar();
-      case LAYOUT_MODES.SCROLL:
-        return this.renderScrollBar();
-      default:
-        break;
-    }
-  }
-
-  /** Render Events */
-
-  onLayout = event => {
-    this.containerWidth = event.nativeEvent.layout.width;
-
-    switch (this.state.currentMode) {
-      case LAYOUT_MODES.FIT:
-        this.contentWidth = this.containerWidth;
-        this.updateIndicatorPosition();
-        break;
-      case LAYOUT_MODES.SCROLL:
-        this.calcLayoutMode();
-        break;
-      default:
-        break;
-    }
-  };
-
-  onContentSizeChange = width => {
-    this.contentWidth = width;
-    this.calcLayoutMode();
-  };
-
-  calcLayoutMode() {
-    if (this.contentWidth && this.containerWidth) {
-      if (this.contentWidth < this.containerWidth) {
-        // clean and change to FIT layout
-        this.contentWidth = this.containerWidth;
-        this.itemsWidths = {};
-        this.scrollLayout = false;
-        this.setState({currentMode: LAYOUT_MODES.FIT});
-      } else {
-        // display SCROLL layout
-        this.scrollLayout = true;
-        this.updateIndicatorPosition();
-        if (this.state.fadeAnim === 0) {
-          this.setState({fadeAnim: 1});
-        }
-      }
-    }
-  }
-
-  onScroll = event => {
-    const {useGradientFinish} = this.getThemeProps();
-    if (useGradientFinish) {
-      const x = event.nativeEvent.contentOffset.x;
-      this.animateGradientOpacity(x);
-    }
-  };
-
-  animateGradientOpacity = x => {
-    const overflow = this.contentWidth - this.containerWidth;
-    const newValue = x > 0 && x >= overflow - 1 ? 0 : 1;
-
-    Animated.spring(this.state.gradientValue, {
-      toValue: newValue,
-      speed: 20
-    }).start();
-  };
 }
 
-function createStyles() {
+function createStyles(props) {
   return StyleSheet.create({
     container: {
-      borderBottomWidth: StyleSheet.hairlineWidth,
-      borderColor: Colors.dark70
+      zIndex: 100
     },
     containerShadow: {
-      shadowColor: Colors.dark10,
-      shadowOpacity: 0.09,
-      shadowRadius: 2,
-      shadowOffset: {height: 2, width: 0}
+      ...Platform.select({
+        ios: {
+          shadowColor: Colors.dark10,
+          shadowOpacity: 0.05,
+          shadowRadius: 2,
+          shadowOffset: {height: 6, width: 0}
+        },
+        android: {
+          elevation: 5,
+          backgroundColor: Colors.white
+        }
+      })
     },
-    selectedIndicator: {
-      borderBottomWidth: 1.5,
-      borderColor: Colors.blue30
+    tabBar: {
+      flex: 1,
+      height: DEFAULT_HEIGHT,
+      backgroundColor: DEFAULT_BACKGROUND_COLOR
     },
-    absoluteContainer: {
-      position: 'absolute',
-      bottom: 0,
-      left: 0
-    },
-    linearGradient: {
-      flex: 1
+    shadowImage: {
+      width: '100%'
     }
   });
 }

@@ -1,21 +1,15 @@
-import {Component} from 'react';
+import {Component, ReactElement} from 'react';
 
 export interface SharedTransitionAreaProps {
-    renderDetails?: (...args: any[]) => any;
+    renderDetails?: (data: object) => ReactElement | ReactElement[];
 }
-
-declare class SharedTransitionArea extends Component<SharedTransitionAreaProps> {}
 
 export interface SharedTransitionSourceProps {
     data?: object;
 }
 
-declare class SharedTransitionSource extends Component<SharedTransitionSourceProps> {}
-
-declare class SharedTransitionTarget extends Component {}
-
-export const SharedTransition: {
-  Area: typeof SharedTransitionArea;
-  Source: typeof SharedTransitionSource;
-  Target: typeof SharedTransitionTarget;
+export namespace SharedTransition {
+  export class Area extends Component<SharedTransitionAreaProps> {}
+  export class Source extends Component<SharedTransitionSourceProps> {}
+  export class Target extends Component {}
 }

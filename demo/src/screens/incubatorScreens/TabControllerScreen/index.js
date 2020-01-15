@@ -7,7 +7,7 @@ import Tab2 from './tab2';
 import Tab3 from './tab3';
 
 const USE_CAROUSEL = true;
-const TABS = ['tab1', 'tab2', 'tab3', 'account', 'groups', 'blog'];
+const TABS = ['Home', 'Me', 'Dashboard', 'account', 'groups', 'blog'];
 
 class TabControllerScreen extends Component {
   state = {
@@ -112,7 +112,7 @@ class TabControllerScreen extends Component {
             <Incubator.TabController.TabBar
               items={this.getItems()}
               // key={key}
-              uppercase
+              // uppercase
               // indicatorStyle={{backgroundColor: 'green', height: 3}}
               // labelColor={'green'}
               // selectedLabelColor={'red'}
