@@ -39,7 +39,7 @@ export default class ColorPalette extends PureBaseComponent {
     /**
      * The container margins
      */
-    containerMargins: PropTypes.number,
+    containerWidth: PropTypes.number,
     /**
      * Whether to use pagination when number of colors exceeds the number of rows
      */
@@ -128,8 +128,7 @@ export default class ColorPalette extends PureBaseComponent {
   }
 
   get containerWidth() {
-    const {containerMargins} = this.props;
-    return Constants.screenWidth - (containerMargins ? containerMargins * 2 : 0);
+    return this.props.containerWidth || Constants.screenWidth;
   }
 
   getUniqueColors = memoize(
