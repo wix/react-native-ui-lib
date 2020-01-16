@@ -126,6 +126,9 @@ module.exports = {
   get RadioGroup() {
     return require('./components').RadioGroup;
   },
+  get ScrollBar() {
+    return require('./components').ScrollBar;
+  },
   get SharedTransition() {
     return require('./components').SharedTransition;
   },

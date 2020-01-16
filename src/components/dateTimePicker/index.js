@@ -61,7 +61,11 @@ class DateTimePicker extends BaseComponent {
     /**
      * The time format for the text display
      */
-    timeFormat: PropTypes.string
+    timeFormat: PropTypes.string,
+    /**
+     * Props to pass the Dialog component
+     */
+    dialogProps: PropTypes.object
   }
 
   static defaultProps = {
@@ -110,7 +114,7 @@ class DateTimePicker extends BaseComponent {
   }
 
   renderExpandableOverlay = () => {
-    const {testID} = this.getThemeProps();
+    const {testID, dialogProps} = this.getThemeProps();
     const {showExpandableOverlay} = this.state;
 
     return (
@@ -125,6 +129,7 @@ class DateTimePicker extends BaseComponent {
         containerStyle={this.styles.dialog}
         testID={`${testID}.dialog`}
         supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOS only
+        {...dialogProps}
       >
         <View useSafeArea>
           {this.renderHeader()}
