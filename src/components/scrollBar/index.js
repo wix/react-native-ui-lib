@@ -49,6 +49,10 @@ class ScrollBar extends BaseComponent {
      */
     gradientWidth: PropTypes.number,
     /**
+     * The gradient's margins for the edge
+     */
+    gradientMargins: PropTypes.number,
+    /**
      * The gradient's tint color
      */
     gradientColor: PropTypes.string,
@@ -60,8 +64,9 @@ class ScrollBar extends BaseComponent {
   }
 
   static defaultProps = {
-    gradientWidth: GRADIENT_WIDTH,
     height: CONTAINER_HEIGHT,
+    gradientWidth: GRADIENT_WIDTH,
+    gradientMargins: 0,
     gradientColor: Colors.white
   };
 
@@ -146,7 +151,7 @@ class ScrollBar extends BaseComponent {
 
   renderGradient(left) {
     const {gradientOpacity, gradientOpacityLeft} = this.state;
-    const {gradientWidth, gradientHeight, height, gradientColor, gradientImage} = this.getThemeProps();
+    const {gradientWidth, gradientHeight, gradientMargins, height, gradientColor, gradientImage} = this.getThemeProps();
     const imageTransform = Constants.isRTL ? (left ? undefined : [{scaleX: -1}]) : (left ? [{scaleX: -1}] : undefined);
 
     return (
@@ -157,8 +162,8 @@ class ScrollBar extends BaseComponent {
           width: gradientWidth,
           height: gradientHeight || height,
           position: 'absolute',
-          right: !left ? 0 : undefined,
-          left: left ? 0 : undefined
+          right: !left ? gradientMargins : undefined,
+          left: left ? gradientMargins : undefined
         }}
       >
         <Image
