@@ -126,11 +126,10 @@ class ScrollBar extends BaseComponent {
 
   onLayout = ({nativeEvent}) => {
     this.containerWidth = nativeEvent.layout.width;
-
-    // for race condition, in case onContentSizeChange() is called before
-    if (this.scrollContentWidth > this.containerWidth) {
-      this.setState({gradientOpacity: new Animated.Value(1)});
-    }
+    
+    // 1 - for race condition, in case onContentSizeChange() is called before
+    // 0 - for containerWidth change, when onContentSizeChange() is called first
+    this.setState({gradientOpacity: new Animated.Value(this.scrollContentWidth > this.containerWidth ? 1 : 0)});
   }
 
   renderScrollable() {
