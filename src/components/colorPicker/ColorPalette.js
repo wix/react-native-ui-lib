@@ -128,7 +128,8 @@ export default class ColorPalette extends PureBaseComponent {
   }
 
   get containerWidth() {
-    return this.props.containerWidth || Constants.screenWidth;
+    const {containerWidth} = this.getThemeProps();
+    return containerWidth || Constants.screenWidth;
   }
 
   getUniqueColors = memoize(
