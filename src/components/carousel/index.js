@@ -80,7 +80,7 @@ export default class Carousel extends BaseComponent {
 
   static defaultProps = {
     initialPage: 0,
-    itemSpacings: 12,
+    itemSpacings: 16,
     pagingEnabled: true
   };
 
@@ -270,6 +270,7 @@ export default class Carousel extends BaseComponent {
       return (
         <PageControl
           size={6}
+          spacing={8}
           containerStyle={containerStyle}
           inactiveColor={Colors.dark60}
           color={Colors.dark20}

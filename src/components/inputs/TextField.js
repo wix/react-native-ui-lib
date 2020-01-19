@@ -1,7 +1,13 @@
+// TODO: hideUnderline should be true by default
+// TODO: enableErrors should be false by default
+// TODO: enableErrors should derived from errorMessage prop
+// TODO: use forwardRef to allow access to inner TextInput API
+// TODO: add trailing/leading icon props
+// TODO: support margin modifiers
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Animated, TextInput as RNTextInput} from 'react-native';
+import {StyleSheet, Animated, TextInput as RNTextInput, Image as RNImage} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, Typography} from '../../style';
 import BaseInput from './BaseInput';
@@ -136,7 +142,7 @@ export default class TextField extends BaseInput {
      * Props for the right button {iconSource, onPress, style}
      */
     rightButtonProps: PropTypes.shape({
-      iconSource: PropTypes.number,
+      iconSource: RNImage.propTypes.source,
       iconColor: PropTypes.string,
       onPress: PropTypes.func,
       style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
@@ -329,6 +335,7 @@ export default class TextField extends BaseInput {
     if (this.shouldFakePlaceholder()) {
       return (
         <Animated.Text
+          pointerEvents="none"
           style={[
             this.styles.floatingPlaceholder,
             this.styles.placeholder,
@@ -661,7 +668,8 @@ function createStyles({centered, multiline, expandable}) {
     floatingPlaceholder: {
       position: 'absolute',
       width: '100%',
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
+      zIndex: 10
     },
     placeholder: {
       textAlign: 'left'

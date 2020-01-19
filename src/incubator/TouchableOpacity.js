@@ -95,7 +95,12 @@ class TouchableOpacity extends Component {
     const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
 
     return (
-      <TapGestureHandler onHandlerStateChange={this.onStateChange} shouldCancelWhenOutside ref={forwardedRef}>
+      <TapGestureHandler
+        onHandlerStateChange={this.onStateChange}
+        shouldCancelWhenOutside
+        ref={forwardedRef}
+        maxDurationMs={500}
+      >
         <Reanimated.View
           {...others}
           style={[

@@ -3,7 +3,6 @@ import PanningContext from './panningContext';
 
 function asPanViewConsumer(WrappedComponent) {
   class PanViewConsumer extends Component {
-    // TODO: remove when removing PanDismissibleView
     saveRef = r => {
       this.contentRef = r;
     };

@@ -49,7 +49,11 @@ class Image extends PureBaseComponent {
      * The type of overly to place on top of the image. Note: the image MUST have proper size, see examples in:
      * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.js
      */
-    overlayType: Overlay.propTypes.type
+    overlayType: Overlay.propTypes.type,
+    /**
+     * Render an overlay with custom content
+     */
+    customOverlayContent: PropTypes.element
   };
 
   static defaultProps = {
@@ -74,8 +78,9 @@ class Image extends PureBaseComponent {
   }
 
   shouldUseImageBackground() {
-    const {overlayType} = this.props;
-    return !!overlayType || this.isGif();
+    const {overlayType, customOverlayContent} = this.props;
+
+    return !!overlayType || this.isGif() || !_.isUndefined(customOverlayContent);
   }
 
   getImageSource() {
@@ -98,7 +103,16 @@ class Image extends PureBaseComponent {
 
   render() {
     const source = this.getImageSource();
-    const {tintColor, style, supportRTL, cover, aspectRatio, overlayType, ...others} = this.getThemeProps();
+    const {
+      tintColor,
+      style,
+      supportRTL,
+      cover,
+      aspectRatio,
+      overlayType,
+      customOverlayContent,
+      ...others
+    } = this.getThemeProps();
     const shouldFlipRTL = supportRTL && Constants.isRTL;
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
 
@@ -117,7 +131,9 @@ class Image extends PureBaseComponent {
         {...others}
         source={source}
       >
-        {overlayType && <Overlay style={style} type={overlayType}/>}
+        {(overlayType || customOverlayContent) && (
+          <Overlay style={style} type={overlayType} customContent={customOverlayContent}/>
+        )}
       </ImageView>
     );
   }
@@ -130,7 +146,7 @@ const styles = StyleSheet.create({
   coverImage: {
     width: Constants.screenWidth,
     aspectRatio: 16 / 8
-  }, 
+  },
   gifImage: {
     overflow: 'hidden'
   }
