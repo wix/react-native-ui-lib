@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
-import {View as RNView, ViewPropTypes, SafeAreaView, Animated} from 'react-native';
+import {View as RNView, SafeAreaView, Animated} from 'react-native';
 import {asBaseComponent, forwardRef} from '../../commons';
 import {Constants} from '../../helpers';
 
@@ -14,7 +14,7 @@ class View extends PureComponent {
   static displayName = 'View';
 
   static propTypes = {
-    ...ViewPropTypes,
+    ...RNView.propTypes,
     // ...BaseComponent.propTypes,
     /**
      * If true, will render as SafeAreaView
