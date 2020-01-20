@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
+import memoize from 'memoize-one';
 import {Animated, StyleSheet, ViewPropTypes} from 'react-native';
 import {RectButton} from 'react-native-gesture-handler';
 import {PureBaseComponent} from '../../commons';
@@ -81,9 +82,6 @@ class NewDrawer extends PureBaseComponent {
     this._swipeableRow = React.createRef();
     this.animationOptions = {bounciness: props.bounciness || 5};
 
-    this.rightActionsContainerStyle = this.getRightActionsContainerStyle();
-    this.leftActionsContainerStyle = this.getLeftActionsContainerStyle();
-
     this.leftRender = props.leftItem ? (Constants.isRTL ? this.renderRightActions : this.renderLeftActions) : undefined;
     this.rightRender = props.rightItems
       ? Constants.isRTL
@@ -94,15 +92,13 @@ class NewDrawer extends PureBaseComponent {
 
   /** Actions */
 
-  getLeftActionsContainerStyle() {
-    const {rightItems, leftItem} = this.getThemeProps();
+  getLeftActionsContainerStyle = memoize((leftItem, rightItems) => {
     return this.getActionsContainerStyle(Constants.isRTL ? rightItems : [leftItem]);
-  }
+  })
 
-  getRightActionsContainerStyle() {
-    const {rightItems, leftItem} = this.getThemeProps();
+  getRightActionsContainerStyle = memoize((rightItems, leftItem) => {
     return this.getActionsContainerStyle(Constants.isRTL ? [leftItem] : rightItems);
-  }
+  })
 
   getActionsContainerStyle(items) {
     return {backgroundColor: _.get(_.first(items), 'background', DEFAULT_BG)};
@@ -266,7 +262,7 @@ class NewDrawer extends PureBaseComponent {
   };
 
   render() {
-    const {children, style, ...others} = this.getThemeProps();
+    const {children, style, leftItem, rightItems, ...others} = this.getThemeProps();
 
     return (
       <Swipeable
@@ -277,13 +273,13 @@ class NewDrawer extends PureBaseComponent {
         animationOptions={this.animationOptions}
         renderLeftActions={this.leftRender}
         renderRightActions={this.rightRender}
-        rightActionsContainerStyle={this.rightActionsContainerStyle}
-        leftActionsContainerStyle={this.leftActionsContainerStyle}
+        rightActionsContainerStyle={this.getRightActionsContainerStyle(rightItems, leftItem)}
+        leftActionsContainerStyle={this.getLeftActionsContainerStyle(leftItem, rightItems)}
         onSwipeableWillOpen={this.onSwipeableWillOpen}
         onSwipeableWillClose={this.onSwipeableWillClose}
       >
         <View
-          flex
+          // flex
           accessible
           accessibilityActions={this.getAccessibilityActions()}
           onAccessibilityAction={this.onAccessibilityAction}
