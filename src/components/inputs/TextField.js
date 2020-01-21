@@ -668,8 +668,7 @@ function createStyles({centered, multiline, expandable}) {
     floatingPlaceholder: {
       position: 'absolute',
       width: '100%',
-      backgroundColor: 'transparent',
-      zIndex: 10
+      backgroundColor: 'transparent'
     },
     placeholder: {
       textAlign: 'left'
