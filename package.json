@@ -63,6 +63,7 @@
     "@react-native-community/eslint-config": "latest",
     "@types/prop-types": "^15.5.3",
     "@types/react-native": "^0.55.21",
+    "@welldone-software/why-did-you-render": "^3.2.1",
     "babel-jest": "^24.5.0",
     "babel-preset-react-native": "*",
     "eslint": "^5.16.0",
