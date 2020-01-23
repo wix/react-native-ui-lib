@@ -7,7 +7,8 @@ export const States = {
   DISABLED: 'disabled',
   ERROR: 'error',
   SKIPPED: 'skipped',
-  COMPLETED: 'completed'
+  COMPLETED: 'completed',
+  COMPLETED_DISABLED: 'completed_disabled'
 };
 
 export const StatesConfig = {
@@ -16,5 +17,6 @@ export const StatesConfig = {
   error: {color: Colors.red30, icon: exclamationSmall, enabled: true},
   skipped: {color: Colors.red30, enabled: true},
   completed: {color: Colors.dark30, circleColor: Colors.dark60, icon: checkMarkSmall, enabled: true},
+  completed_disabled: {color: Colors.dark30, circleColor: Colors.dark60, icon: checkMarkSmall, enabled: false},
   active: {color: Colors.blue10, circleColor: Colors.blue10}
 };
