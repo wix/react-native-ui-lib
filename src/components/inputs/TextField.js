@@ -19,12 +19,14 @@ import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
 
 const DEFAULT_COLOR_BY_STATE = {
-  default: Colors.dark40,
-  focus: Colors.blue30,
-  error: Colors.red30
+  default: Colors.grey10,
+  focus: Colors.grey10,
+  error: Colors.grey10,
+  disable: Colors.grey50
 };
+
 const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
-  default: Colors.dark70,
+  default: Colors.grey50,
   focus: Colors.blue30,
   error: Colors.red30
 };
@@ -52,7 +54,7 @@ export default class TextField extends BaseInput {
      */
     floatingPlaceholder: PropTypes.bool,
     /**
-     * floating placeholder color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue'}
+     * floating placeholder color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disable: 'grey'}
      */
     floatingPlaceholderColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     /**
@@ -65,7 +67,7 @@ export default class TextField extends BaseInput {
      */
     hideUnderline: PropTypes.bool,
     /**
-     * underline color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue'}
+     * underline color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disable: 'grey'}
      */
     underlineColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     /**
@@ -115,7 +117,7 @@ export default class TextField extends BaseInput {
      */
     title: PropTypes.string,
     /**
-     * The title's color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue'}
+     * The title's color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disable: 'grey'}
      */
     titleColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     /**
@@ -225,34 +227,28 @@ export default class TextField extends BaseInput {
     return text;
   }
 
-  getStateColor(colorProp, isUnderline) {
+  getStateColor(colorProp = {}) {
     const {focused} = this.state;
-    const {disabledColor} = this.getThemeProps();
     const error = this.getErrorMessage();
-    const colorByState = _.cloneDeep(isUnderline ? DEFAULT_UNDERLINE_COLOR_BY_STATE : DEFAULT_COLOR_BY_STATE);
+    const {disabledColor} = this.getThemeProps();
 
-    if (this.isDisabled() && disabledColor) {
-      return disabledColor;
-    }
+    if (_.isString(colorProp)) {
+      return colorProp || Colors.dark10;
+    } else if (_.isPlainObject(colorProp)) {
+      const mergedColorState = {...DEFAULT_COLOR_BY_STATE, ...colorProp};
 
-    if (colorProp) {
-      if (_.isString(colorProp)) {
-        // use given color for any state
-        return colorProp;
-      } else if (_.isObject(colorProp)) {
-        // set given colors by states
-        _.merge(colorByState, colorProp);
+      if (this.isDisabled()) {
+        return disabledColor || mergedColorState.disable;
+      } else if (error) {
+        return mergedColorState.error;
+      } else if (focused) {
+        return mergedColorState.focus;
+      } else {
+        return mergedColorState.default;
       }
     }
 
-    // return the right color for the current state
-    let color = colorByState.default;
-    if (error && isUnderline) {
-      color = colorByState.error;
-    } else if (focused) {
-      color = colorByState.focus;
-    }
-    return color;
+    return colorProp || Colors.dark10;
   }
 
   getCharCount() {
@@ -330,7 +326,7 @@ export default class TextField extends BaseInput {
     const {expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} 
     = this.getThemeProps();
     const typography = this.getTypography();
-    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_COLOR_BY_STATE.default);
+    const placeholderColor = this.getStateColor(placeholderTextColor || Colors.grey30);
 
     if (this.shouldFakePlaceholder()) {
       return (
@@ -351,7 +347,7 @@ export default class TextField extends BaseInput {
               }),
               color: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [placeholderColor, this.getStateColor(floatingPlaceholderColor)]
+                outputRange: [placeholderColor, this.getStateColor(floatingPlaceholderColor || {focus: Colors.blue30, default: Colors.grey30})]
               }),
               lineHeight: this.shouldFloatPlaceholder() ? LABEL_TYPOGRAPHY.lineHeight : typography.lineHeight
             }
@@ -369,7 +365,7 @@ export default class TextField extends BaseInput {
 
   renderTitle() {
     const {floatingPlaceholder, title, titleColor, titleStyle} = this.getThemeProps();
-    const color = this.getStateColor(titleColor);
+    const color = this.getStateColor(titleColor || {focus: Colors.blue30, default: Colors.grey30});
 
     if (!floatingPlaceholder && title) {
       return <Text style={[{color}, this.styles.topLabel, this.styles.label, titleStyle]}>{title}</Text>;
@@ -501,7 +497,7 @@ export default class TextField extends BaseInput {
     ];
     
     const placeholderText = this.getPlaceholderText();
-    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_COLOR_BY_STATE.default);
+    const placeholderColor = this.getStateColor(placeholderTextColor || Colors.grey30);
     const isEditable = !this.isDisabled() && !expandable;
 
     return (
@@ -562,7 +558,7 @@ export default class TextField extends BaseInput {
 
   render() {
     const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
-    const underlineStateColor = this.getStateColor(underlineColor, true);
+    const underlineStateColor = this.getStateColor(underlineColor || DEFAULT_UNDERLINE_COLOR_BY_STATE);
 
     return (
       <View style={[this.styles.container, containerStyle]} collapsable={false}>
