@@ -22,7 +22,7 @@ const DEFAULT_COLOR_BY_STATE = {
   default: Colors.grey10,
   focus: Colors.grey10,
   error: Colors.grey10,
-  disable: Colors.grey50
+  disabled: Colors.grey50
 };
 
 const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
@@ -238,7 +238,7 @@ export default class TextField extends BaseInput {
       const mergedColorState = {...DEFAULT_COLOR_BY_STATE, ...colorProp};
 
       if (this.isDisabled()) {
-        return disabledColor || mergedColorState.disable;
+        return disabledColor || mergedColorState.disabled;
       } else if (error) {
         return mergedColorState.error;
       } else if (focused) {
