@@ -54,7 +54,7 @@ export default class TextField extends BaseInput {
      */
     floatingPlaceholder: PropTypes.bool,
     /**
-     * floating placeholder color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disable: 'grey'}
+     * floating placeholder color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disabled: 'grey'}
      */
     floatingPlaceholderColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     /**
@@ -67,7 +67,7 @@ export default class TextField extends BaseInput {
      */
     hideUnderline: PropTypes.bool,
     /**
-     * underline color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disable: 'grey'}
+     * underline color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disabled: 'grey'}
      */
     underlineColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     /**
@@ -117,7 +117,7 @@ export default class TextField extends BaseInput {
      */
     title: PropTypes.string,
     /**
-     * The title's color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disable: 'grey'}
+     * The title's color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disabled: 'grey'}
      */
     titleColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     /**
