@@ -253,7 +253,7 @@ export default class Button extends PureBaseComponent {
     } else if (outline) {
       color = outlineColor || Colors.blue30;
     } else if (this.isIconButton) {
-      color = Colors.dark10;
+      color = undefined; // Colors.dark10;
     }
 
     if (disabled && (link || outline)) {
