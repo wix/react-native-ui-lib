@@ -24,12 +24,12 @@ const DEFAULT_COLOR_BY_STATE = {
   error: Colors.grey10,
   disabled: Colors.grey50
 };
-
 const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
   default: Colors.grey50,
   focus: Colors.blue30,
   error: Colors.red30
 };
+const DEFAULT_PLACEHOLDER_COLOR = Colors.grey30;
 const LABEL_TYPOGRAPHY = Typography.text80;
 const ICON_SIZE = 24;
 const ICON_RIGHT_PADDING = 3;
@@ -326,7 +326,7 @@ export default class TextField extends BaseInput {
     const {expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} 
     = this.getThemeProps();
     const typography = this.getTypography();
-    const placeholderColor = this.getStateColor(placeholderTextColor || Colors.grey30);
+    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_PLACEHOLDER_COLOR);
 
     if (this.shouldFakePlaceholder()) {
       return (
@@ -347,7 +347,7 @@ export default class TextField extends BaseInput {
               }),
               color: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [placeholderColor, this.getStateColor(floatingPlaceholderColor || {focus: Colors.blue30, default: Colors.grey30})]
+                outputRange: [placeholderColor, this.getStateColor(floatingPlaceholderColor || {focus: Colors.blue30, default: DEFAULT_PLACEHOLDER_COLOR})]
               }),
               lineHeight: this.shouldFloatPlaceholder() ? LABEL_TYPOGRAPHY.lineHeight : typography.lineHeight
             }
@@ -497,7 +497,7 @@ export default class TextField extends BaseInput {
     ];
     
     const placeholderText = this.getPlaceholderText();
-    const placeholderColor = this.getStateColor(placeholderTextColor || Colors.grey30);
+    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_PLACEHOLDER_COLOR);
     const isEditable = !this.isDisabled() && !expandable;
 
     return (
