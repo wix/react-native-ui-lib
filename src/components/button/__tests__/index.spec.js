@@ -135,9 +135,9 @@ describe('Button', () => {
       expect(uut.getLabelColor()).toEqual(ThemeManager.CTADisabledColor);
     });
 
-    it('should return dark10 color if this is an icon button (without label)', () => {
+    it('should return undefined color if this is an icon button (without label)', () => {
       const uut = new Button({iconSource: 12});
-      expect(uut.getLabelColor()).toEqual(Colors.dark10);
+      expect(uut.getLabelColor()).toEqual(undefined);
     });
   });
 
