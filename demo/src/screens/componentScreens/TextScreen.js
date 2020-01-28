@@ -62,7 +62,6 @@ class TextScreen extends Component {
             Dancing in The Dark
           </Text>
         </View>
-        {this.renderDivider()}
       </View>
     );
   }
