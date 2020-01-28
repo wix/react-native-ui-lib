@@ -81,11 +81,10 @@ class Switch extends BaseComponent {
   }
 
   getAccessibilityProps() {
-    const {accessibilityLabel, disabled, value} = this.getThemeProps();
+    const {disabled, value} = this.getThemeProps();
 
     return {
       accessible: true,
-      accessibilityLabel: accessibilityLabel ? `${accessibilityLabel}` : undefined,
       accessibilityRole: 'switch',
       accessibilityStates: disabled ? ['disabled'] : value ? ['checked'] : ['unchecked']
     };
