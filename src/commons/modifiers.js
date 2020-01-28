@@ -22,7 +22,7 @@ export function extractBackgroundColorValue(props) {
   let backgroundColor;
 
   const keys = Object.keys(props);
-  const bgProp = _.findLast(keys, prop => Colors.getBackgroundKeysPattern().test(prop));
+  const bgProp = _.findLast(keys, prop => Colors.getBackgroundKeysPattern().test(prop) && !!props[prop]);
   if (props[bgProp]) {
     const key = bgProp.replace(Colors.getBackgroundKeysPattern(), '');
     backgroundColor = Colors[key];

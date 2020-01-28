@@ -18,33 +18,54 @@ describe('TextField', () => {
   });
 
   describe('getStateColor', () => {
-    it('should return dark70 when blur (inactive)', () => {
+    it('should return grey10 when no color state or color was passed', () => {
       const uut = new TextField({});
-      expect(uut.getStateColor(undefined, true)).toEqual(Colors.dark70);
-    });
-    it('should return red30 when error', () => {
-      const uut = new TextField({error: 'test error'});
-      expect(uut.getStateColor(undefined, true)).toEqual(Colors.red30);
-    });
-    it('should return blue30 when focused', () => {
-      const uut = new TextField({});
-      uut.state = {focused: true};
-      expect(uut.getStateColor(undefined, true)).toEqual(Colors.blue30);
+      expect(uut.getStateColor(undefined)).toEqual(Colors.grey10);
     });
 
-    const underlines = {default: Colors.cyan40, focus: Colors.orange60, error: Colors.purple50};
-    it('should return cyan40 when passing underlineColor and when blur (inactive)', () => {
-      const uut = new TextField({underlineColor: underlines});
-      expect(uut.getStateColor(uut.props.underlineColor, true)).toEqual(Colors.cyan40);
+    it('should return the string color given as the first argument ', () => {
+      const uut = new TextField({});
+      expect(uut.getStateColor(Colors.blue30)).toEqual(Colors.blue30);
     });
-    it('should return purple50 when passing underlineColor and when error', () => {
-      const uut = new TextField({underlineColor: underlines, error: 'test error'});
-      expect(uut.getStateColor(uut.props.underlineColor, true)).toEqual(Colors.purple50);
+
+    it('should return "default" color from the color states object passed', () => {
+      const uut = new TextField({});
+      expect(uut.getStateColor({default: Colors.blue30})).toEqual(Colors.blue30);
     });
-    it('should return orange60 when passing underlineColor and when focused', () => {
-      const uut = new TextField({underlineColor: underlines});
+
+    it('should return "focus" color from the color states object passed when input is focused', () => {
+      const uut = new TextField({});
       uut.state = {focused: true};
-      expect(uut.getStateColor(uut.props.underlineColor, true)).toEqual(Colors.orange60);
+      expect(uut.getStateColor({default: Colors.grey10, focus: Colors.green30})).toEqual(Colors.green30);
+    });
+    
+    it('should return default component state colors by default', () => {
+      const uut = new TextField({});
+      expect(uut.getStateColor()).toEqual(Colors.grey10);
+      uut.state = {focused: true};
+      expect(uut.getStateColor()).toEqual(Colors.grey10);
+    });
+    
+    it('should return default component state colors by default even when given partial color state', () => {
+      const uut = new TextField({});
+      expect(uut.getStateColor({focus: Colors.blue30})).toEqual(Colors.grey10);
+      uut.state = {focused: true};
+      expect(uut.getStateColor({default: Colors.dark20})).toEqual(Colors.grey10);
+    });
+    
+    it('should return default "error" state when there is an error', () => {
+      const uut = new TextField({error: 'error'});
+      expect(uut.getStateColor()).toEqual(Colors.grey10);
+    });
+    
+    it('should return given "error" state when there is an error', () => {
+      const uut = new TextField({error: 'error'});
+      expect(uut.getStateColor({default: Colors.grey10, error: Colors.red20})).toEqual(Colors.red20);
+    });
+    
+    it('should return disabled color when disabled', () => {
+      const uut = new TextField({editable: false});
+      expect(uut.getStateColor()).toEqual(Colors.grey50);
     });
   });
 

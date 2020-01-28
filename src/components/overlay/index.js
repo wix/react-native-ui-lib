@@ -28,6 +28,10 @@ export default class Overlay extends PureBaseComponent {
      */
     type: PropTypes.oneOf(_.values(OVERLY_TYPES)),
     /**
+     * The overlay color
+     */
+    color: PropTypes.string,
+    /**
      * Custom overlay content to be rendered on top of the image
      */
     customContent: PropTypes.element
@@ -58,7 +62,15 @@ export default class Overlay extends PureBaseComponent {
   };
 
   renderImage = (style, source) => {
-    return <Image style={[styles.container, style]} resizeMode={'stretch'} source={source}/>;
+    const {color, type} = this.props;
+    const colorStyle = type === OVERLY_TYPES.SOLID ? {backgroundColor: color} : {tintColor: color};
+    return (
+      <Image
+        style={[styles.container, style, colorStyle]}
+        resizeMode={'stretch'}
+        source={source}
+      />
+    );
   };
 
   render() {

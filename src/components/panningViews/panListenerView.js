@@ -24,17 +24,17 @@ class PanListenerView extends PureBaseComponent {
     directions: PropTypes.arrayOf(PropTypes.oneOf(Object.values(PanningProvider.Directions))),
     /**
      * This is were you will get notified when a drag occurs
-     * onDrag = ({directions, velocities}) => {...}
+     * onDrag = ({directions, deltas}) => {...}
      * directions - array of directions
-     * velocities - array of velocities (same length and order as directions)
+     * deltas - array of deltas (same length and order as directions)
      * Both arrays will have {x, y} - if no x or y drag has occurred this value will be undefined
      */
     onDrag: PropTypes.func,
     /**
      * This is were you will get notified when a swipe occurs
-     * onSwipe = ({directions, deltas}) => {...}
+     * onSwipe = ({directions, velocities}) => {...}
      * directions - array of directions
-     * deltas - array of deltas (same length and order as directions)
+     * velocities - array of velocities (same length and order as directions)
      * Both arrays will have {x, y} - if no x or y swipe has occurred this value will be undefined
      */
     onSwipe: PropTypes.func,

@@ -12,7 +12,7 @@ import asPanViewConsumer from './asPanViewConsumer';
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PanResponderScreen.js
  */
 class panResponderView extends PureComponent {
-  static displayName = 'panResponderView';
+  static displayName = 'PanResponderView';
   static propTypes = {
     /**
      * Will be called with the current location ({left, top}) when the pan has ended
