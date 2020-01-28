@@ -19,15 +19,22 @@ import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
 
 const DEFAULT_COLOR_BY_STATE = {
-  default: Colors.dark40,
-  focus: Colors.blue30,
-  error: Colors.red30
+  default: Colors.grey10,
+  focus: Colors.grey10,
+  error: Colors.grey10,
+  disabled: Colors.grey50
 };
 const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
-  default: Colors.dark70,
+  default: Colors.grey50,
   focus: Colors.blue30,
   error: Colors.red30
 };
+
+const DEFAULT_PLACEHOLDER_COLOR_BY_STATE = {
+  default: Colors.grey30,
+  focus: Colors.blue30
+};
+
 const LABEL_TYPOGRAPHY = Typography.text80;
 const ICON_SIZE = 24;
 const ICON_RIGHT_PADDING = 3;
@@ -52,7 +59,7 @@ export default class TextField extends BaseInput {
      */
     floatingPlaceholder: PropTypes.bool,
     /**
-     * floating placeholder color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue'}
+     * floating placeholder color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disabled: 'grey'}
      */
     floatingPlaceholderColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     /**
@@ -65,7 +72,7 @@ export default class TextField extends BaseInput {
      */
     hideUnderline: PropTypes.bool,
     /**
-     * underline color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue'}
+     * underline color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disabled: 'grey'}
      */
     underlineColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     /**
@@ -115,7 +122,7 @@ export default class TextField extends BaseInput {
      */
     title: PropTypes.string,
     /**
-     * The title's color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue'}
+     * The title's color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disabled: 'grey'}
      */
     titleColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     /**
@@ -225,34 +232,28 @@ export default class TextField extends BaseInput {
     return text;
   }
 
-  getStateColor(colorProp, isUnderline) {
+  getStateColor(colorProp = {}) {
     const {focused} = this.state;
-    const {disabledColor} = this.getThemeProps();
     const error = this.getErrorMessage();
-    const colorByState = _.cloneDeep(isUnderline ? DEFAULT_UNDERLINE_COLOR_BY_STATE : DEFAULT_COLOR_BY_STATE);
+    const {disabledColor} = this.getThemeProps();
 
-    if (this.isDisabled() && disabledColor) {
-      return disabledColor;
-    }
+    if (_.isString(colorProp)) {
+      return colorProp || Colors.dark10;
+    } else if (_.isPlainObject(colorProp)) {
+      const mergedColorState = {...DEFAULT_COLOR_BY_STATE, ...colorProp};
 
-    if (colorProp) {
-      if (_.isString(colorProp)) {
-        // use given color for any state
-        return colorProp;
-      } else if (_.isObject(colorProp)) {
-        // set given colors by states
-        _.merge(colorByState, colorProp);
+      if (this.isDisabled()) {
+        return disabledColor || mergedColorState.disabled;
+      } else if (error) {
+        return mergedColorState.error;
+      } else if (focused) {
+        return mergedColorState.focus;
+      } else {
+        return mergedColorState.default;
       }
     }
 
-    // return the right color for the current state
-    let color = colorByState.default;
-    if (error && isUnderline) {
-      color = colorByState.error;
-    } else if (focused) {
-      color = colorByState.focus;
-    }
-    return color;
+    return colorProp || Colors.dark10;
   }
 
   getCharCount() {
@@ -330,7 +331,7 @@ export default class TextField extends BaseInput {
     const {expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} 
     = this.getThemeProps();
     const typography = this.getTypography();
-    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_COLOR_BY_STATE.default);
+    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_PLACEHOLDER_COLOR_BY_STATE.default);
 
     if (this.shouldFakePlaceholder()) {
       return (
@@ -351,7 +352,7 @@ export default class TextField extends BaseInput {
               }),
               color: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [placeholderColor, this.getStateColor(floatingPlaceholderColor)]
+                outputRange: [placeholderColor, this.getStateColor(floatingPlaceholderColor || DEFAULT_PLACEHOLDER_COLOR_BY_STATE)]
               }),
               lineHeight: this.shouldFloatPlaceholder() ? LABEL_TYPOGRAPHY.lineHeight : typography.lineHeight
             }
@@ -369,7 +370,7 @@ export default class TextField extends BaseInput {
 
   renderTitle() {
     const {floatingPlaceholder, title, titleColor, titleStyle} = this.getThemeProps();
-    const color = this.getStateColor(titleColor);
+    const color = this.getStateColor(titleColor || DEFAULT_PLACEHOLDER_COLOR_BY_STATE);
 
     if (!floatingPlaceholder && title) {
       return <Text style={[{color}, this.styles.topLabel, this.styles.label, titleStyle]}>{title}</Text>;
@@ -501,7 +502,7 @@ export default class TextField extends BaseInput {
     ];
     
     const placeholderText = this.getPlaceholderText();
-    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_COLOR_BY_STATE.default);
+    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_PLACEHOLDER_COLOR_BY_STATE.default);
     const isEditable = !this.isDisabled() && !expandable;
 
     return (
@@ -562,7 +563,7 @@ export default class TextField extends BaseInput {
 
   render() {
     const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
-    const underlineStateColor = this.getStateColor(underlineColor, true);
+    const underlineStateColor = this.getStateColor(underlineColor || DEFAULT_UNDERLINE_COLOR_BY_STATE);
 
     return (
       <View style={[this.styles.container, containerStyle]} collapsable={false}>
