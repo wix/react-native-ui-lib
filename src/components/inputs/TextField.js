@@ -29,7 +29,12 @@ const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
   focus: Colors.blue30,
   error: Colors.red30
 };
-const DEFAULT_PLACEHOLDER_COLOR = Colors.grey30;
+
+const DEFAULT_PLACEHOLDER_COLOR_BY_STATE = {
+  default: Colors.grey30,
+  focus: Colors.blue30
+};
+
 const LABEL_TYPOGRAPHY = Typography.text80;
 const ICON_SIZE = 24;
 const ICON_RIGHT_PADDING = 3;
@@ -326,7 +331,7 @@ export default class TextField extends BaseInput {
     const {expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} 
     = this.getThemeProps();
     const typography = this.getTypography();
-    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_PLACEHOLDER_COLOR);
+    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_PLACEHOLDER_COLOR_BY_STATE.default);
 
     if (this.shouldFakePlaceholder()) {
       return (
@@ -347,7 +352,7 @@ export default class TextField extends BaseInput {
               }),
               color: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [placeholderColor, this.getStateColor(floatingPlaceholderColor || {focus: Colors.blue30, default: DEFAULT_PLACEHOLDER_COLOR})]
+                outputRange: [placeholderColor, this.getStateColor(floatingPlaceholderColor || DEFAULT_PLACEHOLDER_COLOR_BY_STATE)]
               }),
               lineHeight: this.shouldFloatPlaceholder() ? LABEL_TYPOGRAPHY.lineHeight : typography.lineHeight
             }
@@ -365,7 +370,7 @@ export default class TextField extends BaseInput {
 
   renderTitle() {
     const {floatingPlaceholder, title, titleColor, titleStyle} = this.getThemeProps();
-    const color = this.getStateColor(titleColor || {focus: Colors.blue30, default: Colors.grey30});
+    const color = this.getStateColor(titleColor || DEFAULT_PLACEHOLDER_COLOR_BY_STATE);
 
     if (!floatingPlaceholder && title) {
       return <Text style={[{color}, this.styles.topLabel, this.styles.label, titleStyle]}>{title}</Text>;
@@ -497,7 +502,7 @@ export default class TextField extends BaseInput {
     ];
     
     const placeholderText = this.getPlaceholderText();
-    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_PLACEHOLDER_COLOR);
+    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_PLACEHOLDER_COLOR_BY_STATE.default);
     const isEditable = !this.isDisabled() && !expandable;
 
     return (
