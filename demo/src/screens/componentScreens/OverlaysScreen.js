@@ -15,7 +15,7 @@ export default class OverlaysScreen extends Component {
     return (
       <View centerH>
         <Text dark10>{text}</Text>
-        <Image style={styles.image} source={image} overlayType={type} customOverlayContent={customOverylay}/>
+        <Image /* overlayColor={'red'} */ style={styles.image} source={image} overlayType={type} customOverlayContent={customOverylay}/>
       </View>
     );
   };
