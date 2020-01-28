@@ -62,8 +62,15 @@ export default class Overlay extends PureBaseComponent {
   };
 
   renderImage = (style, source) => {
-    const {color} = this.props;
-    return <Image style={[styles.container, {tintColor: color}, style]} resizeMode={'stretch'} source={source}/>;
+    const {color, type} = this.props;
+    const colorStyle = type === OVERLY_TYPES.SOLID ? {backgroundColor: color} : {tintColor: color};
+    return (
+      <Image
+        style={[styles.container, style, colorStyle]}
+        resizeMode={'stretch'}
+        source={source}
+      />
+    );
   };
 
   render() {
