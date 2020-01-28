@@ -13,7 +13,6 @@ import Dialog from '../dialog';
 import View from '../view';
 import Button from '../button';
 
-
 const MODES = {
   DATE: 'date',
   TIME: 'time'
@@ -66,7 +65,7 @@ class DateTimePicker extends BaseComponent {
      * Props to pass the Dialog component
      */
     dialogProps: PropTypes.object
-  }
+  };
 
   static defaultProps = {
     ...TextField.defaultProps,
@@ -89,29 +88,30 @@ class DateTimePicker extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
-  setDate = (event, date) => {
-    if (date !== undefined) {
+  handleChange = (event = {}, date) => {
+    if (event.type !== 'dismissed' && date !== undefined) {
       this.chosenDate = date;
 
       if (Constants.isAndroid) {
-        this.setState({chosenDate: this.chosenDate, showExpandableOverlay: false});
+        this.onDonePressed();
       }
     }
-
-    _.invoke(this.props, 'onChange');
-  }
-
-  toggleExpandableOverlay = (callback) => {
-    this.setState({showExpandableOverlay: !this.state.showExpandableOverlay}, () => {
-      if (_.isFunction(callback)) {
-        callback();
-      }
-    });
   };
 
-  onDonePressed = () => {
-    this.toggleExpandableOverlay(() => this.setState({chosenDate: this.chosenDate}));
-  }
+  toggleExpandableOverlay = callback => {
+    this.setState({showExpandableOverlay: !this.state.showExpandableOverlay},
+      () => {
+        if (_.isFunction(callback)) {
+          callback();
+        }
+      });
+  };
+
+  onDonePressed = () =>
+    this.toggleExpandableOverlay(() => {
+      _.invoke(this.props, 'onChange', this.chosenDate);
+      this.setState({chosenDate: this.chosenDate});
+    });
 
   renderExpandableOverlay = () => {
     const {testID, dialogProps} = this.getThemeProps();
@@ -128,7 +128,12 @@ class DateTimePicker extends BaseComponent {
         onDismiss={this.toggleExpandableOverlay}
         containerStyle={this.styles.dialog}
         testID={`${testID}.dialog`}
-        supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOS only
+        supportedOrientations={[
+          'portrait',
+          'landscape',
+          'landscape-left',
+          'landscape-right'
+        ]} // iOS only
         {...dialogProps}
       >
         <View useSafeArea>
@@ -166,10 +171,10 @@ class DateTimePicker extends BaseComponent {
 
     if (showExpandableOverlay) {
       return (
-        <RNDateTimePicker 
+        <RNDateTimePicker
           mode={mode}
           value={chosenDate}
-          onChange={this.setDate} 
+          onChange={this.handleChange}
           minimumDate={minimumDate}
           maximumDate={maximumDate}
         />
@@ -177,21 +182,28 @@ class DateTimePicker extends BaseComponent {
     }
   }
 
-  renderExpandable = () => {    
-    return Constants.isAndroid ? this.renderDateTimePicker() : this.renderExpandableOverlay();
-  }
+  renderExpandable = () => {
+    return Constants.isAndroid
+      ? this.renderDateTimePicker()
+      : this.renderExpandableOverlay();
+  };
 
   render() {
     const {chosenDate} = this.state;
     const {mode, dateFormat, timeFormat} = this.getThemeProps();
     const textInputProps = TextField.extractOwnProps(this.getThemeProps());
-    const dateString = mode === MODES.DATE ? 
-      (dateFormat ? moment(chosenDate).format(dateFormat) : chosenDate.toLocaleDateString()) : 
-      (timeFormat ? moment(chosenDate).format(timeFormat) : chosenDate.toLocaleTimeString());
-    
+    const dateString =
+      mode === MODES.DATE
+        ? dateFormat
+          ? moment(chosenDate).format(dateFormat)
+          : chosenDate.toLocaleDateString()
+        : timeFormat
+          ? moment(chosenDate).format(timeFormat)
+          : chosenDate.toLocaleTimeString();
+
     return (
-      <TextField 
-        {...textInputProps} 
+      <TextField
+        {...textInputProps}
         value={dateString}
         expandable
         renderExpandable={this.renderExpandable}
