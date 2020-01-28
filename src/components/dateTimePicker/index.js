@@ -93,7 +93,6 @@ class DateTimePicker extends BaseComponent {
       this.chosenDate = date;
 
       if (Constants.isAndroid) {
-        this.setState({showExpandableOverlay: false});
         this.onDonePressed();
       }
     }
