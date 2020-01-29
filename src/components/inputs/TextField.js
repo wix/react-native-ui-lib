@@ -203,6 +203,20 @@ export default class TextField extends BaseInput {
     this.styles = createStyles(this.getThemeProps());
   }
 
+  getAccessibilityInfo() {
+    const {floatingPlaceholder, placeholder} = this.props;
+
+    let accessibilityLabel = floatingPlaceholder ? placeholder : undefined;
+    if (this.isRequiredField()) {
+      accessibilityLabel = `${accessibilityLabel || ''}. Mandatory`;
+    }
+
+    return {
+      accessibilityLabel,
+      accessibilityStates: this.isDisabled() ? ['disabled'] : undefined
+    };
+  }
+
   toggleExpandableModal(value) {
     this.setState({showExpandableModal: value});
     _.invoke(this.props, 'onToggleExpandableModal', value);
@@ -469,10 +483,8 @@ export default class TextField extends BaseInput {
   renderTextInput() {
     const {value} = this.state; // value set on state for floatingPlaceholder functionality
     const {
-      style,
-      placeholder,
+      style,  
       placeholderTextColor,
-      floatingPlaceholder,
       multiline,
       hideUnderline,
       numberOfLines,
@@ -507,10 +519,9 @@ export default class TextField extends BaseInput {
 
     return (
       <RNTextInput
-        accessibilityLabel={floatingPlaceholder ? placeholder : undefined}
+        {...this.getAccessibilityInfo()}
         pointerEvents={expandable ? 'none' : undefined}
         {...others}
-        accessibilityStates={this.isDisabled() ? ['disabled'] : undefined}
         value={value}
         placeholder={placeholderText}
         placeholderTextColor={placeholderColor}
