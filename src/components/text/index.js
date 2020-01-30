@@ -74,11 +74,11 @@ export default class Text extends PureBaseComponent {
     return textParts;
   }
 
-  renderText(children = this.props.children) {
+  renderText(children) {
     const {highlightString, highlightStyle} = this.props;
-
+    
     if (!_.isEmpty(highlightString)) {
-
+      
       if (_.isArray(children)) {
         return _.map(children, child => {
           return this.renderText(child);
@@ -103,7 +103,7 @@ export default class Text extends PureBaseComponent {
   render() {
     const color = this.getThemeProps().color || this.extractColorValue();
     const typography = this.extractTypographyValue();
-    const {style, center, uppercase, ...others} = this.getThemeProps();
+    const {style, center, uppercase, children, ...others} = this.getThemeProps();
     const {margins} = this.state;
     const textStyle = [
       this.styles.container,
@@ -117,7 +117,7 @@ export default class Text extends PureBaseComponent {
 
     return (
       <RNText {...others} style={textStyle} ref={this.setRef}>
-        {this.renderText()}
+        {this.renderText(children)}
       </RNText>
     );
   }
