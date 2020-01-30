@@ -29,7 +29,7 @@ export default class Text extends PureBaseComponent {
      */
     uppercase: PropTypes.bool,
     /**
-     * Substring to highlight (would work when children is a string)
+     * Substring to highlight
      */
     highlightString: PropTypes.string,
     /**
@@ -74,18 +74,28 @@ export default class Text extends PureBaseComponent {
     return textParts;
   }
 
-  renderText() {
-    const {children, highlightString, highlightStyle} = this.props;
-    if (_.isString(children) && !_.isEmpty(highlightString)) {
-      const textParts = this.getTextPartsByHighlight(children, highlightString);
-      return _.map(textParts, (text, index) => {
-        const shouldHighlight = _.lowerCase(text) === _.lowerCase(highlightString);
-        return (
-          <Text key={index} style={shouldHighlight && [this.styles.highlight, highlightStyle]}>
-            {text}
-          </Text>
-        );
-      });
+  renderText(children = this.props.children) {
+    const {highlightString, highlightStyle} = this.props;
+
+    if (!_.isEmpty(highlightString)) {
+
+      if (_.isArray(children)) {
+        return _.map(children, child => {
+          return this.renderText(child);
+        });
+      }
+
+      if (_.isString(children)) {
+        const textParts = this.getTextPartsByHighlight(children, highlightString);
+        return _.map(textParts, (text, index) => {
+          const shouldHighlight = _.lowerCase(text) === _.lowerCase(highlightString);
+          return (
+            <Text key={index} style={shouldHighlight && [this.styles.highlight, highlightStyle]}>
+              {text}
+            </Text>
+          );
+        });
+      }
     }
     return children;
   }
