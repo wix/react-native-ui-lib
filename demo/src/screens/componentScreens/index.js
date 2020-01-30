@@ -27,6 +27,7 @@ Navigation.registerComponent('unicorn.components.StepperScreen', () => require('
 Navigation.registerComponent('unicorn.components.SwitchScreen', () => require('./SwitchScreen').default);
 Navigation.registerComponent('unicorn.components.ToastsScreen', () => require('./ToastsScreen').default);
 Navigation.registerComponent('unicorn.components.TabBarScreen', () => require('./TabBarScreen').default);
+Navigation.registerComponent('unicorn.components.TextScreen', () => require('./TextScreen').default);
 Navigation.registerComponent('unicorn.components.TextFieldScreen', () => require('./TextFieldScreen').default);
 Navigation.registerComponent('unicorn.components.TourScreen', () => require('./TourScreen').default);
 Navigation.registerComponent('unicorn.components.FeatureHighlightScreen', () => require('./FeatureHighlightScreen').default);
