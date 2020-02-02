@@ -183,7 +183,7 @@ class DateTimePicker extends BaseComponent {
 
   renderDateTimePicker() {
     const {chosenDate, showExpandableOverlay} = this.state;
-    const {mode, minimumDate, maximumDate, ...others} = this.props;
+    const {mode, minimumDate, maximumDate, locale, is24Hour, minuteInterval, timeZoneOffsetInMinutes} = this.props;
 
     if (showExpandableOverlay) {
       return (
