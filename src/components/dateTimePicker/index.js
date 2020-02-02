@@ -91,12 +91,12 @@ class DateTimePicker extends BaseComponent {
   constructor(props) {
     super(props);
 
-    const initialValue = props.value || new Date();
+    const initialValue = props.value;
     this.chosenDate = initialValue;
 
     this.state = {
       showExpandableOverlay: false,
-      chosenDate: initialValue
+      value: initialValue
     };
   }
 
@@ -115,19 +115,34 @@ class DateTimePicker extends BaseComponent {
   };
 
   toggleExpandableOverlay = callback => {
-    this.setState({showExpandableOverlay: !this.state.showExpandableOverlay},
-      () => {
-        if (_.isFunction(callback)) {
-          callback();
-        }
-      });
+    this.setState({showExpandableOverlay: !this.state.showExpandableOverlay}, () => {
+      if (_.isFunction(callback)) {
+        callback();
+      }
+    });
   };
 
   onDonePressed = () =>
     this.toggleExpandableOverlay(() => {
       _.invoke(this.props, 'onChange', this.chosenDate);
-      this.setState({chosenDate: this.chosenDate});
+      this.setState({value: this.chosenDate});
     });
+
+  getValue = () => {
+    const {value} = this.state;
+    const {mode, dateFormat, timeFormat} = this.getThemeProps();
+    if (value) {
+      const dateString =
+        mode === MODES.DATE
+          ? dateFormat
+            ? moment(value).format(dateFormat)
+            : value.toLocaleDateString()
+          : timeFormat
+            ? moment(value).format(timeFormat)
+            : value.toLocaleTimeString();
+      return dateString;
+    }
+  };
 
   renderExpandableOverlay = () => {
     const {testID, dialogProps} = this.getThemeProps();
@@ -144,12 +159,7 @@ class DateTimePicker extends BaseComponent {
         onDismiss={this.toggleExpandableOverlay}
         containerStyle={this.styles.dialog}
         testID={`${testID}.dialog`}
-        supportedOrientations={[
-          'portrait',
-          'landscape',
-          'landscape-left',
-          'landscape-right'
-        ]} // iOS only
+        supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOS only
         {...dialogProps}
       >
         <View useSafeArea>
@@ -171,25 +181,20 @@ class DateTimePicker extends BaseComponent {
           iconStyle={{tintColor: Colors.dark10}}
           onPress={this.toggleExpandableOverlay}
         />
-        <Button
-          useCustomTheme={useCustomTheme}
-          link
-          iconSource={Assets.icons.check}
-          onPress={this.onDonePressed}
-        />
+        <Button useCustomTheme={useCustomTheme} link iconSource={Assets.icons.check} onPress={this.onDonePressed}/>
       </View>
     );
   }
 
   renderDateTimePicker() {
-    const {chosenDate, showExpandableOverlay} = this.state;
+    const {value, showExpandableOverlay} = this.state;
     const {mode, minimumDate, maximumDate, locale, is24Hour, minuteInterval, timeZoneOffsetInMinutes} = this.props;
 
     if (showExpandableOverlay) {
       return (
         <RNDateTimePicker
           mode={mode}
-          value={chosenDate}
+          value={value || new Date()}
           onChange={this.handleChange}
           minimumDate={minimumDate}
           maximumDate={maximumDate}
@@ -203,28 +208,16 @@ class DateTimePicker extends BaseComponent {
   }
 
   renderExpandable = () => {
-    return Constants.isAndroid
-      ? this.renderDateTimePicker()
-      : this.renderExpandableOverlay();
+    return Constants.isAndroid ? this.renderDateTimePicker() : this.renderExpandableOverlay();
   };
 
   render() {
-    const {chosenDate} = this.state;
-    const {mode, dateFormat, timeFormat} = this.getThemeProps();
     const textInputProps = TextField.extractOwnProps(this.getThemeProps());
-    const dateString =
-      mode === MODES.DATE
-        ? dateFormat
-          ? moment(chosenDate).format(dateFormat)
-          : chosenDate.toLocaleDateString()
-        : timeFormat
-          ? moment(chosenDate).format(timeFormat)
-          : chosenDate.toLocaleTimeString();
 
     return (
       <TextField
         {...textInputProps}
-        value={dateString}
+        value={this.getValue()}
         expandable
         renderExpandable={this.renderExpandable}
         onToggleExpandableModal={this.toggleExpandableOverlay}
