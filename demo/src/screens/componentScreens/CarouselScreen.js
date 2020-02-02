@@ -28,7 +28,7 @@ const BACKGROUND_COLORS = [
 
 class CarouselScreen extends Component {
   state = {
-    limitShownPages: true, // TODO:
+    limitShownPages: false,
     numberOfPagesShown: 7,
     currentPage: INITIAL_PAGE
   };
@@ -46,7 +46,7 @@ class CarouselScreen extends Component {
   };
 
   setNumberOfPagesShown = ({value: numberOfPagesShown}) => {
-    this.setState({numberOfPagesShown});
+    this.setState({numberOfPagesShown, currentPage: INITIAL_PAGE});
   };
 
   render() {
@@ -75,6 +75,7 @@ class CarouselScreen extends Component {
         </Picker>
 
         <Carousel
+          key={numberOfPagesShown}
           migrate
           ref={r => (this.carousel = r)}
           // loop
