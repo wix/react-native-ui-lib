@@ -23,7 +23,11 @@ class View extends PureComponent {
     /**
      * Use Animate.View as a container
      */
-    animated: PropTypes.bool
+    animated: PropTypes.bool,
+    /**
+     * Turn off accessibility for this view and its nested children
+     */
+    inaccessible: PropTypes.bool
   };
 
   constructor(props) {
@@ -43,12 +47,14 @@ class View extends PureComponent {
   render() {
     // (!) extract left, top, bottom... props to avoid passing them on Android
     // eslint-disable-next-line
-    const {modifiers, style, left, top, right, bottom, flex: propsFlex, forwardedRef, ...others} = this.props;
+    const {modifiers, style, left, top, right, bottom, flex: propsFlex, forwardedRef, inaccessible, ...others} = this.props;
     const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
     const Element = this.Container;
 
     return (
       <Element
+        accessibilityElementsHidden={inaccessible}
+        importantForAccessibility={inaccessible ? 'no-hide-descendants' : undefined}
         {...others}
         style={[
           backgroundColor && {backgroundColor},
