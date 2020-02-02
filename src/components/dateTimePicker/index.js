@@ -62,6 +62,22 @@ class DateTimePicker extends BaseComponent {
      */
     timeFormat: PropTypes.string,
     /**
+     * Allows changing of the locale of the component (iOS only)
+     */
+    locale: PropTypes.string,
+    /**
+     * Allows changing of the time picker to a 24 hour format (Android only)
+     */
+    is24Hour: PropTypes.bool,
+    /**
+     * The interval at which minutes can be selected. Possible values are: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30 (iOS only)
+     */
+    minuteInterval: PropTypes.number,
+    /**
+     * Allows changing of the timeZone of the date picker. By default it uses the device's time zone (iOS only)
+     */
+    timeZoneOffsetInMinutes: PropTypes.number,
+    /**
      * Props to pass the Dialog component
      */
     dialogProps: PropTypes.object
@@ -167,7 +183,7 @@ class DateTimePicker extends BaseComponent {
 
   renderDateTimePicker() {
     const {chosenDate, showExpandableOverlay} = this.state;
-    const {mode, minimumDate, maximumDate} = this.props;
+    const {mode, minimumDate, maximumDate, ...others} = this.props;
 
     if (showExpandableOverlay) {
       return (
@@ -177,6 +193,10 @@ class DateTimePicker extends BaseComponent {
           onChange={this.handleChange}
           minimumDate={minimumDate}
           maximumDate={maximumDate}
+          locale={locale}
+          is24Hour={is24Hour}
+          minuteInterval={minuteInterval}
+          timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
         />
       );
     }
