@@ -1,17 +1,19 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {StyleSheet} from 'react-native';
 import {ThemeManager} from '../../style';
-import {BaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 
-function getColorStyle(color, inactiveColor, index, currentPage) {
+const MAX_SHOWN_PAGES = 7;
+const NUM_LARGE_INDICATORS = 3;
+
+function getColorStyle(color, inactiveColor, isCurrentPage) {
   const compColor = color || ThemeManager.primaryColor;
   return {
-    borderColor: index === currentPage ? compColor : inactiveColor || compColor,
-    backgroundColor: index === currentPage ? compColor : inactiveColor || 'transparent'
+    borderColor: isCurrentPage ? compColor : inactiveColor || compColor,
+    backgroundColor: isCurrentPage ? compColor : inactiveColor || 'transparent'
   };
 }
 
@@ -25,9 +27,27 @@ function getSizeStyle(size, enlargeActive, index, currentPage) {
  * @image: https://user-images.githubusercontent.com/33805983/34663655-76698110-f460-11e7-854b-243d27f66fec.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PageControlScreen.js
  */
-export default class PageControl extends BaseComponent {
+export default class PageControl extends PureComponent {
   static displayName = 'PageControl';
   static propTypes = {
+    /**
+     * Limit the number of page indicators shown.
+     * enlargeActive prop is disabled in this state,
+     * while mediumSize and smallSize are enabled (and disabled when this is disabled).
+     * When set to true there will be maximum of 7 shown.
+     * Only relevant when numOfPages > 5.
+     */
+    limitShownPages: PropTypes.bool,
+    /**
+     * Size of page indicator to the sides of the regular one.
+     * Only relevant when limitShownPages is in effect.
+     */
+    mediumSize: PropTypes.number,
+    /**
+     * Size of page indicator to the side of the medium one (on other side of the regular one).
+     * Only relevant when limitShownPages is in effect.
+     */
+    smallSize: PropTypes.number,
     /**
      * Additional styles for the top container
      */
@@ -58,6 +78,7 @@ export default class PageControl extends BaseComponent {
     size: PropTypes.number,
     /**
      * Whether to enlarge the active page indicator
+     * Irrelevant when limitShownPages is in effect.
      */
     enlargeActive: PropTypes.bool,
     /**
@@ -72,18 +93,119 @@ export default class PageControl extends BaseComponent {
     enlargeActive: false
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      numOfPagesShown: Math.min(MAX_SHOWN_PAGES, props.numOfPages),
+      largeIndicatorsOffset: 0,
+      pagesOffset: 0,
+      isReverse: false,
+      prevPage: undefined
+    };
+
+    if (this.showLimitedVersion(props)) {
+      const {smallSize, mediumSize, size} = props;
+      if (mediumSize >= size || smallSize >= mediumSize) {
+        console.warn('It is recommended that size > mediumSize > smallSize, currently: size=',
+          size,
+          'mediumSize=',
+          mediumSize,
+          'smallSize=',
+          smallSize);
+      }
+    }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const {currentPage} = nextProps;
+    const {largeIndicatorsOffset: prevLargeIndicatorsOffset, isReverse: prevIsReverse, prevPage} = prevState;
+    const newState = {};
+
+    if (currentPage !== prevPage) {
+      newState.prevPage = currentPage;
+      const isReverse = currentPage - prevPage < 0;
+      if (prevIsReverse !== isReverse) {
+        newState.isReverse = isReverse;
+      }
+
+      if (currentPage >= prevLargeIndicatorsOffset + NUM_LARGE_INDICATORS) {
+        newState.pagesOffset = Math.max(0, currentPage - NUM_LARGE_INDICATORS - 1);
+        newState.largeIndicatorsOffset = currentPage - NUM_LARGE_INDICATORS + 1;
+      } else if (currentPage < prevLargeIndicatorsOffset) {
+        newState.pagesOffset = Math.max(0, currentPage - 2);
+        newState.largeIndicatorsOffset = currentPage;
+      }
+    }
+
+    return _.isEmpty(newState) ? null : newState;
+  }
+
+  showLimitedVersion({limitShownPages, numOfPages}) {
+    return limitShownPages && numOfPages > 5;
+  }
+
+  getSize(index) {
+    const {largeIndicatorsOffset} = this.state;
+    const {numOfPages, size, smallSize, mediumSize} = this.props;
+    if (index < 0 || index > numOfPages - 1) {
+      return undefined;
+    } else if (index >= largeIndicatorsOffset && index < largeIndicatorsOffset + NUM_LARGE_INDICATORS) {
+      return size;
+    } else if (index === largeIndicatorsOffset - 1 || index === largeIndicatorsOffset + NUM_LARGE_INDICATORS) {
+      return mediumSize;
+    } else if (index === largeIndicatorsOffset - 2 || index === largeIndicatorsOffset + NUM_LARGE_INDICATORS + 1) {
+      return smallSize;
+    }
+  }
+
+  renderDifferentSizeIndicators() {
+    const {numOfPagesShown, pagesOffset} = this.state;
+    const {currentPage, color, inactiveColor, onPagePress, spacing} = this.props;
+
+    return _.map([...new Array(numOfPagesShown)], (item, index) => {
+      const adjustedIndex = index + pagesOffset;
+      const adjustedSize = this.getSize(adjustedIndex);
+      if (adjustedSize) {
+        return (
+          <TouchableOpacity
+            disabled={_.isUndefined(onPagePress)}
+            onPress={() => onPagePress && onPagePress(adjustedIndex)}
+            key={adjustedIndex}
+            style={[
+              styles.pageIndicator,
+              {marginRight: spacing / 2, marginLeft: spacing / 2},
+              getColorStyle(color, inactiveColor, adjustedIndex === currentPage),
+              getSizeStyle(adjustedSize, false, adjustedIndex, currentPage)
+            ]}
+          />
+        );
+      } else {
+        return null;
+      }
+    });
+  }
+
+  renderSameSizeIndicators() {
+    const {numOfPages, currentPage, color, inactiveColor, onPagePress, size, spacing, enlargeActive} = this.props;
+
+    return _.map([...new Array(numOfPages)], (item, index) => (
+      <TouchableOpacity
+        disabled={_.isUndefined(onPagePress)}
+        onPress={() => onPagePress && onPagePress(index)}
+        key={index}
+        style={[
+          styles.pageIndicator,
+          {marginRight: spacing / 2, marginLeft: spacing / 2},
+          getColorStyle(color, inactiveColor, index === currentPage),
+          getSizeStyle(size, enlargeActive, index, currentPage)
+        ]}
+      />
+    ));
+  }
+
   render() {
-    const {
-      numOfPages,
-      currentPage,
-      color,
-      inactiveColor,
-      containerStyle,
-      onPagePress,
-      size,
-      spacing,
-      enlargeActive
-    } = this.props;
+    const {containerStyle} = this.props;
 
     return (
       <View
@@ -91,19 +213,7 @@ export default class PageControl extends BaseComponent {
         accessible
         accessibilityLabel={`page control page ${this.props.currentPage + 1}`}
       >
-        {_.map([...new Array(numOfPages)], (item, index) => (
-          <TouchableOpacity
-            disabled={_.isUndefined(onPagePress)}
-            onPress={() => onPagePress && onPagePress(index)}
-            key={index}
-            style={[
-              styles.pageIndicator,
-              {marginRight: spacing / 2, marginLeft: spacing / 2},
-              getColorStyle(color, inactiveColor, index, currentPage),
-              getSizeStyle(size, enlargeActive, index, currentPage)
-            ]}
-          />
-        ))}
+        {this.showLimitedVersion(this.props) ? this.renderDifferentSizeIndicators() : this.renderSameSizeIndicators()}
       </View>
     );
   }

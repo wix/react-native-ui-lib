@@ -272,6 +272,8 @@ export default class Carousel extends BaseComponent {
       return (
         <PageControl
           size={6}
+          mediumSize={4}
+          smallSize={2}
           spacing={8}
           containerStyle={containerStyle}
           inactiveColor={Colors.dark60}
