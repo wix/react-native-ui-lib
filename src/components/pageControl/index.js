@@ -159,37 +159,9 @@ export default class PageControl extends PureComponent {
     }
   }
 
-  renderDifferentSizeIndicators() {
-    const {numOfPagesShown, pagesOffset} = this.state;
+  renderTouchableOpacity(index, size, enlargeActive) {
     const {currentPage, color, inactiveColor, onPagePress, spacing} = this.props;
-
-    return _.map([...new Array(numOfPagesShown)], (item, index) => {
-      const adjustedIndex = index + pagesOffset;
-      const adjustedSize = this.getSize(adjustedIndex);
-      if (adjustedSize) {
-        return (
-          <TouchableOpacity
-            disabled={_.isUndefined(onPagePress)}
-            onPress={() => onPagePress && onPagePress(adjustedIndex)}
-            key={adjustedIndex}
-            style={[
-              styles.pageIndicator,
-              {marginRight: spacing / 2, marginLeft: spacing / 2},
-              getColorStyle(color, inactiveColor, adjustedIndex === currentPage),
-              getSizeStyle(adjustedSize, false, adjustedIndex, currentPage)
-            ]}
-          />
-        );
-      } else {
-        return null;
-      }
-    });
-  }
-
-  renderSameSizeIndicators() {
-    const {numOfPages, currentPage, color, inactiveColor, onPagePress, size, spacing, enlargeActive} = this.props;
-
-    return _.map([...new Array(numOfPages)], (item, index) => (
+    return (
       <TouchableOpacity
         disabled={_.isUndefined(onPagePress)}
         onPress={() => onPagePress && onPagePress(index)}
@@ -201,7 +173,27 @@ export default class PageControl extends PureComponent {
           getSizeStyle(size, enlargeActive, index, currentPage)
         ]}
       />
-    ));
+    );
+  }
+
+  renderDifferentSizeIndicators() {
+    const {numOfPagesShown, pagesOffset} = this.state;
+
+    return _.map([...new Array(numOfPagesShown)], (item, index) => {
+      const adjustedIndex = index + pagesOffset;
+      const adjustedSize = this.getSize(adjustedIndex);
+      if (adjustedSize) {
+        return this.renderTouchableOpacity(adjustedIndex, adjustedSize, false);
+      } else {
+        return null;
+      }
+    });
+  }
+
+  renderSameSizeIndicators() {
+    const {numOfPages, size, enlargeActive} = this.props;
+
+    return _.map([...new Array(numOfPages)], (item, index) => this.renderTouchableOpacity(index, size, enlargeActive));
   }
 
   render() {
