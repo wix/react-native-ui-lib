@@ -100,7 +100,6 @@ export default class PageControl extends PureComponent {
       numOfPagesShown: Math.min(MAX_SHOWN_PAGES, props.numOfPages),
       largeIndicatorsOffset: 0,
       pagesOffset: 0,
-      isReverse: false,
       prevPage: undefined
     };
 
@@ -119,16 +118,11 @@ export default class PageControl extends PureComponent {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const {currentPage} = nextProps;
-    const {largeIndicatorsOffset: prevLargeIndicatorsOffset, isReverse: prevIsReverse, prevPage} = prevState;
+    const {largeIndicatorsOffset: prevLargeIndicatorsOffset, prevPage} = prevState;
     const newState = {};
 
     if (currentPage !== prevPage) {
       newState.prevPage = currentPage;
-      const isReverse = currentPage - prevPage < 0;
-      if (prevIsReverse !== isReverse) {
-        newState.isReverse = isReverse;
-      }
-
       if (currentPage >= prevLargeIndicatorsOffset + NUM_LARGE_INDICATORS) {
         newState.pagesOffset = Math.max(0, currentPage - NUM_LARGE_INDICATORS - 1);
         newState.largeIndicatorsOffset = currentPage - NUM_LARGE_INDICATORS + 1;
