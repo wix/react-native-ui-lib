@@ -336,7 +336,13 @@ class Picker extends BaseComponent {
       const {value} = this.state;
       return (
         <View left>
-          <Button {...customPickerProps} link onPress={this.handlePickerOnPress} testID={testID}>
+          <Button
+            {...this.getAccessibilityInfo()}
+            {...customPickerProps}
+            link
+            onPress={this.handlePickerOnPress}
+            testID={testID}
+          >
             {renderPicker(value)}
           </Button>
           {this.renderExpandableModal()}
