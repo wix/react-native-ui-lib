@@ -12,6 +12,7 @@ const OVERLY_TYPES = {
   BOTTOM: 'bottom',
   SOLID: 'solid'
 };
+
 const gradientImage = require('./assets/GradientOverlay.png');
 
 /**
@@ -39,14 +40,16 @@ export default class Overlay extends PureBaseComponent {
 
   static overlayTypes = OVERLY_TYPES;
 
-  getStyleByType() {
-    switch (this.props.type) {
+  getStyleByType(type = this.props.type) {
+    const {color} = this.props;
+
+    switch (type) {
       case OVERLY_TYPES.TOP:
-        return styles.top;
+        return [styles.top, color && {tintColor: color}];
       case OVERLY_TYPES.BOTTOM:
-        return styles.bottom;
+        return [styles.bottom, color && {tintColor: color}];
       case OVERLY_TYPES.SOLID:
-        return styles.solid;
+        return [styles.solid, color && {backgroundColor: color}];
       default:
         break;
     }
@@ -62,15 +65,7 @@ export default class Overlay extends PureBaseComponent {
   };
 
   renderImage = (style, source) => {
-    const {color, type} = this.props;
-    const colorStyle = type === OVERLY_TYPES.SOLID ? {backgroundColor: color} : {tintColor: color};
-    return (
-      <Image
-        style={[styles.container, style, colorStyle]}
-        resizeMode={'stretch'}
-        source={source}
-      />
-    );
+    return <Image style={[styles.container, style]} resizeMode={'stretch'} source={source}/>;
   };
 
   render() {
@@ -80,8 +75,8 @@ export default class Overlay extends PureBaseComponent {
     if (type === OVERLY_TYPES.VERTICAL) {
       return (
         <>
-          {this.renderImage(styles.top, image)}
-          {this.renderImage(styles.bottom, image)}
+          {this.renderImage(this.getStyleByType(OVERLY_TYPES.TOP), image)}
+          {this.renderImage(this.getStyleByType(OVERLY_TYPES.BOTTOM), image)}
           {customContent && this.renderCustomContent()}
         </>
       );
