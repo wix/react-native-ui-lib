@@ -155,7 +155,7 @@ export default class TabBarItem extends PureComponent {
   getLabelStyle() {
     const {itemWidth} = this.state;
     const {index, currentPage, labelColor, selectedLabelColor, labelStyle, ignore} = this.props;
-    const fontWeight = cond(and(eq(currentPage, index), defined(itemWidth)), '700', '300');
+    const fontWeight = cond(and(eq(currentPage, index), defined(itemWidth)), '700', '400');
     const activeColor = selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
     const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
     const color = cond(eq(currentPage, index),

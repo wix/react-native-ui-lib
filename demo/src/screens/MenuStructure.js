@@ -33,6 +33,7 @@ export const navigationData = {
       {title: 'Floating Button', tags: 'floating button', screen: 'unicorn.components.FloatingButtonScreen'},
       {title: 'Feature Highlight', tags: 'feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
       {title: 'Hint', tags: 'hints tooltip', screen: 'unicorn.components.HintsScreen'},
+      {title: 'Image', tags: 'image cover overlay', screen: 'unicorn.components.ImageScreen'},
       {title: 'Overlays', tags: 'overlay image', screen: 'unicorn.components.OverlaysScreen'},
       {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
       {title: 'Pan Dismissible', tags: 'pan swipe drag dismiss', screen: 'unicorn.components.PanDismissibleScreen'},
@@ -41,6 +42,7 @@ export const navigationData = {
       {title: 'Shared Transition', tags: 'shared transition element', screen: 'unicorn.components.SharedTransitionScreen'},
       {title: 'Stack Aggregator', tags: 'stack aggregator', screen: 'unicorn.components.StackAggregatorScreen'},
       {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
+      {title: 'Text', tags: 'text', screen: 'unicorn.components.TextScreen'},
       {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'},
       {title: 'Wheel Picker Dialog', tags: 'wheel picker dialog', screen: 'unicorn.components.WheelPickerDialogScreen'},
       {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'}
@@ -104,7 +106,7 @@ export const navigationData = {
   Incubator: {
     title: 'Incubator',
     screens: [
-      {title: 'TabBarController', tags: 'tabbar controller native', screen: 'unicorn.incubator.TabControllerScreen'},
+      {title: 'TabController', tags: 'tabbar controller native', screen: 'unicorn.incubator.TabControllerScreen'},
       {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'}
     ]
   },

@@ -5,4 +5,5 @@ I18nManager.allowRTL(true);
 
 module.exports = {
   name: 'unicorn demo app',
+  ExampleScreenPresenter: require('./screens/ExampleScreenPresenter')
 };

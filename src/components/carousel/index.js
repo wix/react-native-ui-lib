@@ -234,13 +234,15 @@ export default class Carousel extends BaseComponent {
   };
 
   renderChild = (child, key) => {
-    const paddingLeft = this.shouldUsePageWidth() ? this.props.itemSpacings : undefined;
-
-    return (
-      <View style={{width: this.state.pageWidth, paddingLeft}} key={key} collapsable={false}>
-        {child}
-      </View>
-    );
+    if (child) {
+      const paddingLeft = this.shouldUsePageWidth() ? this.props.itemSpacings : undefined;
+  
+      return (
+        <View style={{width: this.state.pageWidth, paddingLeft}} key={key} collapsable={false}>
+          {child}
+        </View>
+      );
+    }
   };
 
   renderChildren() {
@@ -264,8 +266,10 @@ export default class Carousel extends BaseComponent {
 
     if (pageControlPosition) {
       const pagesCount = presenter.getChildrenLength(this.props);
-      const containerStyle = pageControlPosition === PAGE_CONTROL_POSITIONS.UNDER ? 
-        {marginVertical: 16} : {position: 'absolute', bottom: 16, alignSelf: 'center'};
+      const containerStyle =
+        pageControlPosition === PAGE_CONTROL_POSITIONS.UNDER
+          ? this.styles.pageControlContainerStyleUnder
+          : this.styles.pageControlContainerStyle;
 
       return (
         <PageControl
@@ -340,6 +344,14 @@ function createStyles() {
       position: 'absolute',
       top: 12,
       right: 12
+    },
+    pageControlContainerStyle: {
+      position: 'absolute',
+      bottom: 16,
+      alignSelf: 'center'
+    },
+    pageControlContainerStyleUnder: {
+      marginVertical: 16
     }
   });
 }

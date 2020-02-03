@@ -298,7 +298,7 @@ class TabBar extends PureComponent {
             {() => {
               const indicatorInset = Spacings.s4;
 
-              return block(asCarousel
+              return block(asCarousel && _.size(itemsWidths) > 1
                 /* Transition for carousel pages */
                 ? [
                   set(this._indicatorOffset.value,
