@@ -128,7 +128,7 @@ class DateTimePicker extends BaseComponent {
       this.setState({value: this.chosenDate});
     });
 
-  getValue = () => {
+  getStringValue = () => {
     const {value} = this.state;
     const {mode, dateFormat, timeFormat} = this.getThemeProps();
     if (value) {
@@ -217,7 +217,7 @@ class DateTimePicker extends BaseComponent {
     return (
       <TextField
         {...textInputProps}
-        value={this.getValue()}
+        value={this.getStringValue()}
         expandable
         renderExpandable={this.renderExpandable}
         onToggleExpandableModal={this.toggleExpandableOverlay}
