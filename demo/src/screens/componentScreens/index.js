@@ -14,6 +14,7 @@ Navigation.registerComponent('unicorn.components.DialogScreen', () => require('.
 Navigation.registerComponent('unicorn.components.DrawerScreen', () => require('./DrawerScreen').default);
 Navigation.registerComponent('unicorn.components.TagsInputScreen', () => require('./TagsInputScreen').default);
 Navigation.registerComponent('unicorn.components.HintsScreen', () => require('./HintsScreen').default);
+Navigation.registerComponent('unicorn.components.ImageScreen', () => require('./ImageScreen').default);
 Navigation.registerComponent('unicorn.components.MaskedInputScreen', () => require('./MaskedInputScreen').default);
 Navigation.registerComponent('unicorn.components.OverlaysScreen', () => require('./OverlaysScreen').default);
 Navigation.registerComponent('unicorn.components.PageControlScreen', () => require('./PageControlScreen').default);
