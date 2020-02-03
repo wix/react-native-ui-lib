@@ -1,18 +1,14 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {
-  Colors,
-  View,
-  Text,
-  TextField,
-  RadioGroup,
-  RadioButton,
-  Checkbox,
-  Slider,
-  ColorPalette
-} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, View, Text, TextField, Slider, ColorPalette} from 'react-native-ui-lib'; //eslint-disable-line
 import {Navigation} from 'react-native-navigation';
-import _ from 'lodash';
+
+import {
+  renderBooleanOption,
+  renderRadioGroup,
+  renderSliderOption,
+  renderColorOption
+} from '../../ExampleScreenPresenter';
 
 const ERROR_STATES = {
   noError: 'No Error',
@@ -37,79 +33,12 @@ export default class BasicTextFieldScreen extends Component {
       disabled: false,
       centered: false,
       useHelperText: false,
-      titleColor: Colors.blue30,
+      titleColor: undefined,
       error: ERROR_STATES.noError,
       multiline: false,
       typography: 70,
       charCount: 0
     };
-  }
-
-  renderColorOption(title, key) {
-    const value = this.state[key];
-    return (
-      <View marginV-s2>
-        <Text text70M>{title}</Text>
-        <ColorPalette
-          value={value}
-          colors={['transparent', Colors.blue30, Colors.grey10, Colors.yellow30, Colors.green30, Colors.purple30]}
-          onValueChange={value => this.setState({[key]: value === 'transparent' ? undefined : value})}
-        />
-      </View>
-    );
-  }
-
-  renderSliderOption(title, key, {min = 0, max = 10, step = 1, initial = 0}) {
-    const value = this.state[key];
-    return (
-      <View marginV-s2>
-        <Text marginB-s1 text70M>
-          {title}
-        </Text>
-        <View row centerV>
-          <Slider
-            testID={key}
-            value={initial}
-            containerStyle={{flex: 1}}
-            minimumValue={min}
-            maximumValue={max}
-            step={step}
-            onValueChange={value => this.setState({[key]: value})}
-          />
-          <Text marginL-s4 text70>
-            text{value}
-          </Text>
-        </View>
-      </View>
-    );
-  }
-
-  renderRadioGroup(title, key, options) {
-    const value = this.state[key];
-    return (
-      <View marginB-s2>
-        <Text text70M marginB-s2>
-          {title}
-        </Text>
-        <RadioGroup initialValue={value} onValueChange={value => this.setState({[key]: value})}>
-          {_.map(options, (value, key) => {
-            return <RadioButton testID={key} key={key} marginB-s2 label={value} value={options[key]}/>;
-          })}
-        </RadioGroup>
-      </View>
-    );
-  }
-
-  renderBooleanOption(title, key) {
-    const value = this.state[key];
-    return (
-      <View row centerV spread marginB-s4>
-        <Text text70M style={{flex: 1}}>
-          {title}
-        </Text>
-        <Checkbox textID={key} value={value} onValueChange={value => this.setState({[key]: value})}/>
-      </View>
-    );
   }
 
   render() {
@@ -158,16 +87,21 @@ export default class BasicTextFieldScreen extends Component {
             <Text text50M marginB-s4>
               Options
             </Text>
-            {this.renderSliderOption('Typography (modifier)', 'typography', {min: 30, max: 100, step: 10, initial: 70})}
-            {this.renderBooleanOption('Multiline', 'multiline')}
-            {this.renderBooleanOption('Disabled', 'disabled')}
-            {this.renderBooleanOption('Centered', 'centered')}
-            {this.renderBooleanOption('Hide Underline', 'hideUnderline')}
-            {this.renderColorOption('Underline Color', 'underlineColor')}
-            {this.renderRadioGroup('Guiding Text', 'guidingText', GUIDING_TEXTS)}
-            {this.renderColorOption('Title Color', 'titleColor')}
-            {this.renderSliderOption('Character Counter', 'charCount', {min: 0, max: 150, step: 3})}
-            {this.renderRadioGroup('Errors', 'error', ERROR_STATES)}
+            {renderSliderOption.call(this, 'Typography (modifier)', 'typography', {
+              min: 30,
+              max: 100,
+              step: 10,
+              initial: 70
+            })}
+            {renderBooleanOption.call(this, 'Multiline', 'multiline')}
+            {renderBooleanOption.call(this, 'Disabled', 'disabled')}
+            {renderBooleanOption.call(this, 'Centered', 'centered')}
+            {renderBooleanOption.call(this, 'Hide Underline', 'hideUnderline')}
+            {renderColorOption.call(this, 'Underline Color', 'underlineColor')}
+            {renderRadioGroup.call(this, 'Guiding Text', 'guidingText', GUIDING_TEXTS)}
+            {renderColorOption.call(this, 'Title Color', 'titleColor')}
+            {renderSliderOption.call(this, 'Character Counter', 'charCount', {min: 0, max: 150, step: 3})}
+            {renderRadioGroup.call(this, 'Errors', 'error', ERROR_STATES)}
           </View>
         </ScrollView>
       </View>
