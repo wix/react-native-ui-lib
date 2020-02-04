@@ -204,7 +204,7 @@ export default class TextField extends BaseInput {
   }
 
   getAccessibilityInfo() {
-    const {floatingPlaceholder, placeholder} = this.props;
+    const {floatingPlaceholder, placeholder} = this.getThemeProps();
 
     let accessibilityLabel = floatingPlaceholder ? placeholder : undefined;
     if (this.isRequiredField()) {
