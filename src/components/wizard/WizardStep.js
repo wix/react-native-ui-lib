@@ -49,6 +49,10 @@ export default class WizardStep extends PureBaseComponent {
      */
     circleColor: PropTypes.string,
     /**
+     * The step's circle size (diameter)
+     */
+    circleSize: PropTypes.number,
+    /**
      * Icon to replace the (default) index
      */
     icon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
@@ -71,13 +75,24 @@ export default class WizardStep extends PureBaseComponent {
   }
 
   renderCircle(props) {
-    const {testID, index, activeIndex, onPress, indexLabelStyle, color, circleColor = color, icon, enabled} = props;
+    const {
+      testID,
+      index,
+      activeIndex,
+      onPress,
+      indexLabelStyle,
+      circleSize,
+      color,
+      circleColor = color,
+      icon,
+      enabled
+    } = props;
     const hitSlopSize = Spacings.s2;
 
     return (
       <TouchableOpacity
         testID={`${testID}.circle`}
-        style={[styles.circle, {borderColor: circleColor}]}
+        style={[styles.circle, circleSize && {width: circleSize, height: circleSize}, {borderColor: circleColor}]}
         onPress={enabled ? onPress : undefined}
         hitSlop={{top: hitSlopSize, bottom: hitSlopSize, left: hitSlopSize, right: hitSlopSize}}
         disabled={!enabled}
@@ -114,7 +129,7 @@ export default class WizardStep extends PureBaseComponent {
 
 const styles = StyleSheet.create({
   connector: {
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: Colors.dark60
   },
   circle: {
