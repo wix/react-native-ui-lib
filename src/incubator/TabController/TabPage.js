@@ -33,7 +33,7 @@ export default class TabPage extends PureComponent {
     /**
      * Render a custom loading page when lazy loading
      */
-    renderLoading: PropTypes.func
+    renderLoading: PropTypes.elementType
   };
 
   static defaultProps = {
