@@ -13,12 +13,11 @@
     height: 100%;
     border: 20px solid $white;
     border-top: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 
-    .sidebar {
-    }
-
-    .content {
-      flex: 1;
-    }
+  .fill {
+    background: $primary;
   }
 }
