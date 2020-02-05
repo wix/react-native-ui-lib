@@ -63,7 +63,11 @@ export default class WizardStep extends PureBaseComponent {
     /**
      * Whether the step should be enabled
      */
-    enabled: PropTypes.bool
+    enabled: PropTypes.bool,
+    /**
+     * Extra text to be read in accessibility mode
+     */
+    accessibilityInfo: PropTypes.string
   };
 
   getProps() {
@@ -72,6 +76,13 @@ export default class WizardStep extends PureBaseComponent {
     const config = StatesConfig[state];
     const activeConfig = index === activeIndex ? propsActiveConfig : {};
     return {...config, ...props, ...activeConfig};
+  }
+
+  getAccessibilityLabel() {
+    const {index, label, state} = this.props;
+    const config = StatesConfig[state];
+    const extraInfo = config.accessibilityInfo || '';
+    return `Step ${index + 1}, ${label}, ${extraInfo}`;
   }
 
   renderCircle(props) {
@@ -96,6 +107,7 @@ export default class WizardStep extends PureBaseComponent {
         onPress={enabled ? onPress : undefined}
         hitSlop={{top: hitSlopSize, bottom: hitSlopSize, left: hitSlopSize, right: hitSlopSize}}
         disabled={!enabled}
+        accessibilityLabel={this.getAccessibilityLabel()}
       >
         {index === activeIndex || _.isUndefined(icon) ? (
           <Text text80 testID={`${testID}.index`} style={[{color}, indexLabelStyle]}>
@@ -117,7 +129,13 @@ export default class WizardStep extends PureBaseComponent {
         {index > activeIndex && <View flex style={[styles.connector, connectorStyle]}/>}
         {this.renderCircle(props)}
         {index === activeIndex && (
-          <Text text80 testID={`${testID}.label`} numberOfLines={1} style={[styles.label, {maxWidth}, labelStyle]}>
+          <Text
+            text80
+            testID={`${testID}.label`}
+            numberOfLines={1}
+            style={[styles.label, {maxWidth}, labelStyle]}
+            inaccessible
+          >
             {label}
           </Text>
         )}
