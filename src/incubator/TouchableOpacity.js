@@ -92,7 +92,7 @@ class TouchableOpacity extends Component {
 
   render() {
     const {modifiers, style, activeScale, onPress, forwardedRef, ...others} = this.props;
-    const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
+    const {borderRadius, paddings, margins, alignments, flexStyle, backgroundColor} = modifiers;
 
     return (
       <TapGestureHandler
@@ -109,6 +109,7 @@ class TouchableOpacity extends Component {
             paddings,
             margins,
             alignments,
+            backgroundColor && {backgroundColor},
             style,
             this.animatedStyle
             // {backgroundColor: this._color, opacity: this._opacity, transform: [{scale: this._scale}]}
