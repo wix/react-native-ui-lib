@@ -65,7 +65,7 @@ export default class PageControl extends PureComponent {
     /**
      * The size of the page indicator.
      * When setting limitShownPages the medium sized will be 2/3 of size and the small will be 1/3 of size.
-     * An alternative is to send an array [largeSize, mediumSize, smallSize].
+     * An alternative is to send an array [smallSize, mediumSize, largeSize].
      */
     size: PropTypes.oneOfType([PropTypes.number, PropTypes.array]),
     /**
@@ -95,13 +95,13 @@ export default class PageControl extends PureComponent {
       prevPage: undefined
     };
 
-    if (this.showLimitedVersion(props) && Array.isArray(props.size)) {
-      if (props.size[1] >= props.size[0] || props.size[2] >= props.size[1]) {
-        console.warn('It is recommended that largeSize > mediumSize > smallSize, currently: largeSize=',
+    if (Array.isArray(props.size)) {
+      if (props.size[0] >= props.size[1] || props.size[1] >= props.size[2]) {
+        console.warn('It is recommended that largeSize > mediumSize > smallSize, currently: smallSize=',
           props.size[0],
           'mediumSize=',
           props.size[1],
-          'smallSize=',
+          'largeSize=',
           props.size[2]);
       }
     }
@@ -137,9 +137,9 @@ export default class PageControl extends PureComponent {
       smallSize,
       {size} = this.props;
     if (Array.isArray(size)) {
-      smallSize = size[2];
+      smallSize = size[0];
       mediumSize = size[1];
-      size = size[0];
+      size = size[2];
     } else {
       mediumSize = (size * 2) / 3;
       smallSize = size / 3;
@@ -188,7 +188,8 @@ export default class PageControl extends PureComponent {
   }
 
   renderSameSizeIndicators() {
-    const {numOfPages, size, enlargeActive} = this.props;
+    const {numOfPages, size: sizeFromProps, enlargeActive} = this.props;
+    const size = Array.isArray(sizeFromProps) ? sizeFromProps[2] : sizeFromProps;
 
     return _.map(_.times(numOfPages), index => this.renderIndicator(index, size, enlargeActive));
   }
