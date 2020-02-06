@@ -329,7 +329,7 @@ export default class MainScreen extends Component {
                 <FlatList
                   showsVerticalScrollIndicator={false}
                   data={section.screens}
-                  keyExtractor={item => item.title}
+                  keyExtractor={item => item.screen ? item.title : `header_${item.title}`}
                   renderItem={this.renderItem}
                 />
               </View>
