@@ -34,21 +34,10 @@ export default class PageControl extends PureComponent {
     /**
      * Limit the number of page indicators shown.
      * enlargeActive prop is disabled in this state,
-     * while mediumSize and smallSize are enabled (and disabled when this is disabled).
      * When set to true there will be maximum of 7 shown.
      * Only relevant when numOfPages > 5.
      */
     limitShownPages: PropTypes.bool,
-    /**
-     * Size of page indicator to the sides of the regular one.
-     * Only relevant when limitShownPages is in effect.
-     */
-    mediumSize: PropTypes.number,
-    /**
-     * Size of page indicator to the side of the medium one (on other side of the regular one).
-     * Only relevant when limitShownPages is in effect.
-     */
-    smallSize: PropTypes.number,
     /**
      * Additional styles for the top container
      */
@@ -74,9 +63,11 @@ export default class PageControl extends PureComponent {
      */
     inactiveColor: PropTypes.string,
     /**
-     * The size of the page indicator
+     * The size of the page indicator.
+     * When setting limitShownPages the medium sized will be 2/3 of size and the small will be 1/3 of size.
+     * An alternative is to send an array [largeSize, mediumSize, smallSize].
      */
-    size: PropTypes.number,
+    size: PropTypes.oneOfType([PropTypes.number, PropTypes.array]),
     /**
      * Whether to enlarge the active page indicator
      * Irrelevant when limitShownPages is in effect.
@@ -104,15 +95,14 @@ export default class PageControl extends PureComponent {
       prevPage: undefined
     };
 
-    if (this.showLimitedVersion(props)) {
-      const {smallSize, mediumSize, size} = props;
-      if (mediumSize >= size || smallSize >= mediumSize) {
-        console.warn('It is recommended that size > mediumSize > smallSize, currently: size=',
-          size,
+    if (this.showLimitedVersion(props) && Array.isArray(props.size)) {
+      if (props.size[1] >= props.size[0] || props.size[2] >= props.size[1]) {
+        console.warn('It is recommended that largeSize > mediumSize > smallSize, currently: largeSize=',
+          props.size[0],
           'mediumSize=',
-          mediumSize,
+          props.size[1],
           'smallSize=',
-          smallSize);
+          props.size[2]);
       }
     }
   }
@@ -142,7 +132,19 @@ export default class PageControl extends PureComponent {
 
   getSize(index) {
     const {largeIndicatorsOffset} = this.state;
-    const {numOfPages, size, smallSize, mediumSize} = this.props;
+    const {numOfPages} = this.props;
+    let mediumSize,
+      smallSize,
+      {size} = this.props;
+    if (Array.isArray(size)) {
+      smallSize = size[2];
+      mediumSize = size[1];
+      size = size[0];
+    } else {
+      mediumSize = (size * 2) / 3;
+      smallSize = size / 3;
+    }
+
     if (index < 0 || index > numOfPages - 1) {
       return undefined;
     } else if (index >= largeIndicatorsOffset && index < largeIndicatorsOffset + NUM_LARGE_INDICATORS) {
