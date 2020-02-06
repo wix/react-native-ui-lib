@@ -134,7 +134,7 @@ export default class WizardStep extends PureBaseComponent {
             testID={`${testID}.label`}
             numberOfLines={1}
             style={[styles.label, {maxWidth}, labelStyle]}
-            inaccessible
+            accessible={false}
           >
             {label}
           </Text>
