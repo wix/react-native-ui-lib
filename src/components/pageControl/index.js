@@ -162,7 +162,7 @@ export default class PageControl extends PureComponent {
         key={index}
         style={[
           styles.pageIndicator,
-          {marginRight: spacing / 2, marginLeft: spacing / 2},
+          {marginHorizontal: spacing / 2},
           getColorStyle(color, inactiveColor, index === currentPage),
           getSizeStyle(size, enlargeActive, index, currentPage)
         ]}
