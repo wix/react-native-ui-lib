@@ -35,11 +35,7 @@ export default class Text extends PureBaseComponent {
     /**
      * Custom highlight style for highlight string
      */
-    highlightStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * Turn off accessibility for this view and its nested children
-     */
-    inaccessible: PropTypes.bool
+    highlightStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
   };
 
   // static defaultProps = {
@@ -106,7 +102,7 @@ export default class Text extends PureBaseComponent {
   render() {
     const color = this.getThemeProps().color || this.extractColorValue();
     const typography = this.extractTypographyValue();
-    const {style, center, uppercase, children, inaccessible, ...others} = this.getThemeProps();
+    const {style, center, uppercase, children, ...others} = this.getThemeProps();
     const {margins} = this.state;
     const textStyle = [
       this.styles.container,
@@ -119,14 +115,7 @@ export default class Text extends PureBaseComponent {
     ];
 
     return (
-      <RNText
-        {...others}
-        style={textStyle}
-        ref={this.setRef}
-        accessible={!inaccessible}
-        accessibilityElementsHidden={inaccessible}
-        importantForAccessibility={inaccessible ? 'no-hide-descendants' : undefined}
-      >
+      <RNText {...others} style={textStyle} ref={this.setRef}>
         {this.renderText(children)}
       </RNText>
     );
