@@ -153,7 +153,7 @@ export default class PageControl extends PureComponent {
     }
   }
 
-  renderTouchableOpacity(index, size, enlargeActive) {
+  renderIndicator(index, size, enlargeActive) {
     const {currentPage, color, inactiveColor, onPagePress, spacing} = this.props;
     return (
       <TouchableOpacity
@@ -177,7 +177,7 @@ export default class PageControl extends PureComponent {
       const adjustedIndex = index + pagesOffset;
       const adjustedSize = this.getSize(adjustedIndex);
       if (adjustedSize) {
-        return this.renderTouchableOpacity(adjustedIndex, adjustedSize, false);
+        return this.renderIndicator(adjustedIndex, adjustedSize, false);
       } else {
         return null;
       }
@@ -187,7 +187,7 @@ export default class PageControl extends PureComponent {
   renderSameSizeIndicators() {
     const {numOfPages, size, enlargeActive} = this.props;
 
-    return _.map([...new Array(numOfPages)], (item, index) => this.renderTouchableOpacity(index, size, enlargeActive));
+    return _.map([...new Array(numOfPages)], (item, index) => this.renderIndicator(index, size, enlargeActive));
   }
 
   render() {
