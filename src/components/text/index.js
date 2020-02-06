@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {Text as RNText, StyleSheet} from 'react-native';
 import {PureBaseComponent} from '../../commons';
+import {Colors} from '../../style';
+import _ from 'lodash';
 
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
@@ -25,7 +27,15 @@ export default class Text extends PureBaseComponent {
     /**
      * whether to change the text to uppercase
      */
-    uppercase: PropTypes.bool
+    uppercase: PropTypes.bool,
+    /**
+     * Substring to highlight
+     */
+    highlightString: PropTypes.string,
+    /**
+     * Custom highlight style for highlight string
+     */
+    highlightStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
   };
 
   // static defaultProps = {
@@ -40,24 +50,74 @@ export default class Text extends PureBaseComponent {
     this._root.setNativeProps(nativeProps); // eslint-disable-line
   }
 
+  getTextPartsByHighlight(targetString = '', highlightString = '') {
+    if (_.isEmpty(highlightString.trim())) {
+      return [targetString];
+    }
+
+    const textParts = [];
+    let highlightIndex;
+
+    do {
+      highlightIndex = _.lowerCase(targetString).indexOf(_.lowerCase(highlightString));
+      if (highlightIndex !== -1) {
+        if (highlightIndex > 0) {
+          textParts.push(targetString.substring(0, highlightIndex));
+        }
+        textParts.push(targetString.substr(highlightIndex, highlightString.length));
+        targetString = targetString.substr(highlightIndex + highlightString.length);
+      } else {
+        textParts.push(targetString);
+      }
+    } while (highlightIndex !== -1);
+
+    return textParts;
+  }
+
+  renderText(children) {
+    const {highlightString, highlightStyle} = this.props;
+    
+    if (!_.isEmpty(highlightString)) {
+      
+      if (_.isArray(children)) {
+        return _.map(children, child => {
+          return this.renderText(child);
+        });
+      }
+
+      if (_.isString(children)) {
+        const textParts = this.getTextPartsByHighlight(children, highlightString);
+        return _.map(textParts, (text, index) => {
+          const shouldHighlight = _.lowerCase(text) === _.lowerCase(highlightString);
+          return (
+            <Text key={index} style={shouldHighlight && [this.styles.highlight, highlightStyle]}>
+              {text}
+            </Text>
+          );
+        });
+      }
+    }
+    return children;
+  }
+
   render() {
     const color = this.getThemeProps().color || this.extractColorValue();
     const typography = this.extractTypographyValue();
-    const {style, center, uppercase, ...others} = this.getThemeProps();
+    const {style, center, uppercase, children, ...others} = this.getThemeProps();
     const {margins} = this.state;
     const textStyle = [
       this.styles.container,
       typography,
       color && {color},
       margins,
-      center && {textAlign: 'center'},
+      center && this.styles.centered,
+      uppercase && this.styles.uppercase,
       style
     ];
-    const children = uppercase ? this.transformToUppercase(this.props.children) : this.props.children;
 
     return (
       <RNText {...others} style={textStyle} ref={this.setRef}>
-        {children}
+        {this.renderText(children)}
       </RNText>
     );
   }
@@ -75,6 +135,15 @@ function createStyles() {
     container: {
       backgroundColor: 'transparent',
       textAlign: 'left'
+    },
+    centered: {
+      textAlign: 'center'
+    },
+    uppercase: {
+      textTransform: 'uppercase'
+    },
+    highlight: {
+      color: Colors.grey30
     }
   });
 }

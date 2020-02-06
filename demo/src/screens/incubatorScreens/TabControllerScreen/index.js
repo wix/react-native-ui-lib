@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {ActivityIndicator} from 'react-native';
 import {Incubator, Colors, View, Text, Image, Assets, Button} from 'react-native-ui-lib'; //eslint-disable-line
 import _ from 'lodash';
 
@@ -71,6 +72,17 @@ class TabControllerScreen extends Component {
   //   ];
   // }
 
+  renderLoadingPage() {
+    return (
+      <View flex center>
+        <ActivityIndicator size="large"/>
+        <Text text60L marginT-10>
+          Loading
+        </Text>
+      </View>
+    );
+  }
+
   renderTabPages() {
     const Container = USE_CAROUSEL ? Incubator.TabController.PageCarousel : View;
     const containerProps = USE_CAROUSEL ? {} : {flex: true};
@@ -82,7 +94,7 @@ class TabControllerScreen extends Component {
         <Incubator.TabController.TabPage index={1}>
           <Tab2/>
         </Incubator.TabController.TabPage>
-        <Incubator.TabController.TabPage index={2} lazy>
+        <Incubator.TabController.TabPage index={2} lazy lazyLoadTime={1500} renderLoading={this.renderLoadingPage}>
           <Tab3/>
         </Incubator.TabController.TabPage>
         {/* <Incubator.TabController.TabPage index={3}>

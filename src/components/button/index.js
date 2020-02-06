@@ -6,7 +6,6 @@ import {Constants} from '../../helpers';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 import {PureBaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
-import View from '../view';
 import Text from '../text';
 
 const PADDINGS = {
@@ -253,7 +252,7 @@ export default class Button extends PureBaseComponent {
     } else if (outline) {
       color = outlineColor || Colors.blue30;
     } else if (this.isIconButton) {
-      color = Colors.dark10;
+      color = undefined; // Colors.dark10;
     }
 
     if (disabled && (link || outline)) {
@@ -465,6 +464,8 @@ export default class Button extends PureBaseComponent {
 
     return (
       <TouchableOpacity
+        row
+        centerV
         style={[
           this.styles.container,
           animateLayout && this.getAnimationDirectionStyle(),
@@ -486,11 +487,9 @@ export default class Button extends PureBaseComponent {
         {...others}
         ref={this.setRef}
       >
-        <View row centerV>
-          {this.props.children}
-          {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
-          {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
-        </View>
+        {this.props.children}
+        {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
+        {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
       </TouchableOpacity>
     );
   }

@@ -234,13 +234,15 @@ export default class Carousel extends BaseComponent {
   };
 
   renderChild = (child, key) => {
-    const paddingLeft = this.shouldUsePageWidth() ? this.props.itemSpacings : undefined;
-
-    return (
-      <View style={{width: this.state.pageWidth, paddingLeft}} key={key} collapsable={false}>
-        {child}
-      </View>
-    );
+    if (child) {
+      const paddingLeft = this.shouldUsePageWidth() ? this.props.itemSpacings : undefined;
+  
+      return (
+        <View style={{width: this.state.pageWidth, paddingLeft}} key={key} collapsable={false}>
+          {child}
+        </View>
+      );
+    }
   };
 
   renderChildren() {

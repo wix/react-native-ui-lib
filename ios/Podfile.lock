@@ -229,9 +229,9 @@ PODS:
     - React
   - RNDateTimePicker (2.1.0):
     - React
-  - RNGestureHandler (1.5.2):
+  - RNGestureHandler (1.5.3):
     - React
-  - RNReanimated (1.4.0):
+  - RNReanimated (1.7.0):
     - React
   - RNTextSize (4.0.0-rc.1):
     - React
@@ -382,8 +382,8 @@ SPEC CHECKSUMS:
   ReactNativeUiLib: 217f90ec42d9cfcd136a442f6963cd9c744e0bc1
   RNCAsyncStorage: 8539fc80a0075fcc9c8e2dff84cd22dc5bf1dacf
   RNDateTimePicker: 68e542a59ff1b73563744145bfc45c2b88a3deea
-  RNGestureHandler: 946a7691e41df61e2c4b1884deab41a4cdc3afff
-  RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
+  RNGestureHandler: 02905abe54e1f6e59c081a10b4bd689721e17aa6
+  RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
   RNTextSize: 91955a6ea2adda9dc7802ce472b7a4dc717686f6
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
