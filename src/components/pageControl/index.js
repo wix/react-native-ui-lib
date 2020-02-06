@@ -2,15 +2,16 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 import {StyleSheet} from 'react-native';
-import {ThemeManager} from '../../style';
+import {Colors} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 
 const MAX_SHOWN_PAGES = 7;
 const NUM_LARGE_INDICATORS = 3;
+const DEFAULT_INDICATOR_COLOR = Colors.blue30;
 
 function getColorStyle(color, inactiveColor, isCurrentPage) {
-  const compColor = color || ThemeManager.primaryColor;
+  const compColor = color || DEFAULT_INDICATOR_COLOR;
   return {
     borderColor: isCurrentPage ? compColor : inactiveColor || compColor,
     backgroundColor: isCurrentPage ? compColor : inactiveColor || 'transparent'
