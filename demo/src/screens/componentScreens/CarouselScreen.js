@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Constants, Spacings, View, Text, Carousel, Image, Switch, Picker, Colors} from 'react-native-ui-lib';
+import {Constants, Spacings, View, Text, Carousel, Image, Colors} from 'react-native-ui-lib';
+import {renderBooleanOption, renderSliderOption} from '../ExampleScreenPresenter';
 
-const TOP_BAR_PROPS = {title: 'Number of pages shown'};
 const INITIAL_PAGE = 2;
 const WIDTH = Constants.screenWidth - Spacings.s5 * 2;
 const IMAGES = [
@@ -57,22 +57,15 @@ class CarouselScreen extends Component {
         <Text text30 margin-20>
           Carousel
         </Text>
-        <View row marginH-20 centerV>
-          <Text>Limit number of pages shown in page control:</Text>
-          <Switch value={limitShownPages} onValueChange={this.toggleLimitShownPages} marginL-10/>
+        <View marginH-20>
+          {renderBooleanOption.call(this, 'Limit number of pages shown in page control', 'limitShownPages')}
+          {renderSliderOption.call(this, 'Number of pages shown', 'numberOfPagesShown', {
+            min: 5,
+            max: 10,
+            step: 1,
+            initial: 7
+          })}
         </View>
-        <Picker
-          containerStyle={styles.picker}
-          placeholder={TOP_BAR_PROPS.title}
-          floatingPlaceholder
-          value={numberOfPagesShown}
-          onChange={this.setNumberOfPagesShown}
-          topBarProps={TOP_BAR_PROPS}
-        >
-          {_.map([...Array(11).keys()].splice(5), item => (
-            <Picker.Item key={item} value={item} label={`${item}`}/>
-          ))}
-        </Picker>
 
         <Carousel
           key={numberOfPagesShown}
