@@ -14,7 +14,7 @@ export function renderBooleanOption(title, key) {
   );
 }
 
-export function renderRadioGroup(title, key, options, isRow) {
+export function renderRadioGroup(title, key, options, {isRow} = {}) {
   const value = this.state[key];
   return (
     <View marginB-s2>
