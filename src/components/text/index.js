@@ -76,8 +76,9 @@ export default class Text extends PureBaseComponent {
 
   renderText(children) {
     const {highlightString, highlightStyle} = this.props;
-
+    
     if (!_.isEmpty(highlightString)) {
+      
       if (_.isArray(children)) {
         return _.map(children, child => {
           return this.renderText(child);
