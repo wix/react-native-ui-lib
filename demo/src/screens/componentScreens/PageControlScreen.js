@@ -22,6 +22,10 @@ export default class PageControlScreen extends Component {
     this.setState({currentPage: this.state.currentPage + 1});
   }
 
+  onPagePress = (index) => {
+    this.setState({currentPage: index});
+  }
+
   render() {
     const {currentPage, limitShownPages, numberOfPagesShown} = this.state;
 
@@ -71,7 +75,7 @@ export default class PageControlScreen extends Component {
           })}
 
           <PageControl
-            size={6}
+            size={12}
             spacing={8}
             limitShownPages={limitShownPages}
             containerStyle={containerStyle}
@@ -79,6 +83,7 @@ export default class PageControlScreen extends Component {
             color={Colors.dark20}
             numOfPages={numberOfPagesShown}
             currentPage={currentPage}
+            onPagePress={this.onPagePress}
           />
           <View row flex spread centerV>
             <Button label={'Prev page'} onPress={this.prevPage} disabled={currentPage === 0}/>

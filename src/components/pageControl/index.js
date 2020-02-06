@@ -156,12 +156,16 @@ export default class PageControl extends PureComponent {
     }
   }
 
+  onPagePress = ({index}) => {
+    _.invoke(this.props, 'onPagePress', index);
+  }
+
   renderIndicator(index, size, enlargeActive) {
     const {currentPage, color, inactiveColor, onPagePress, spacing} = this.props;
     return (
       <TouchableOpacity
-        disabled={_.isUndefined(onPagePress)}
-        onPress={() => onPagePress && onPagePress(index)}
+        index={index}
+        onPress={onPagePress && this.onPagePress}
         key={index}
         style={[
           styles.pageIndicator,
