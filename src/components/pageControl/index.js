@@ -11,10 +11,10 @@ const NUM_LARGE_INDICATORS = 3;
 const DEFAULT_INDICATOR_COLOR = Colors.blue30;
 
 function getColorStyle(color, inactiveColor, isCurrentPage) {
-  const compColor = color || DEFAULT_INDICATOR_COLOR;
+  const activeColor = color || DEFAULT_INDICATOR_COLOR;
   return {
-    borderColor: isCurrentPage ? compColor : inactiveColor || compColor,
-    backgroundColor: isCurrentPage ? compColor : inactiveColor || 'transparent'
+    borderColor: isCurrentPage ? activeColor : inactiveColor || activeColor,
+    backgroundColor: isCurrentPage ? activeColor : inactiveColor || 'transparent'
   };
 }
 
