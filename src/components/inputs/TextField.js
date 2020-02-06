@@ -204,7 +204,7 @@ export default class TextField extends BaseInput {
   }
 
   getAccessibilityInfo() {
-    const {floatingPlaceholder, placeholder} = this.props;
+    const {floatingPlaceholder, placeholder} = this.getThemeProps();
 
     let accessibilityLabel = floatingPlaceholder ? placeholder : undefined;
     if (this.isRequiredField()) {
@@ -342,8 +342,7 @@ export default class TextField extends BaseInput {
   /** Renders */
   renderPlaceholder() {
     const {floatingPlaceholderState} = this.state;
-    const {expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} 
-    = this.getThemeProps();
+    const {expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} = this.getThemeProps();
     const typography = this.getTypography();
     const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_PLACEHOLDER_COLOR_BY_STATE.default);
 
@@ -366,7 +365,10 @@ export default class TextField extends BaseInput {
               }),
               color: floatingPlaceholderState.interpolate({
                 inputRange: [0, 1],
-                outputRange: [placeholderColor, this.getStateColor(floatingPlaceholderColor || DEFAULT_PLACEHOLDER_COLOR_BY_STATE)]
+                outputRange: [
+                  placeholderColor,
+                  this.getStateColor(floatingPlaceholderColor || DEFAULT_PLACEHOLDER_COLOR_BY_STATE)
+                ]
               }),
               lineHeight: this.shouldFloatPlaceholder() ? LABEL_TYPOGRAPHY.lineHeight : typography.lineHeight
             }
@@ -419,7 +421,10 @@ export default class TextField extends BaseInput {
 
     if (visible && enableErrors) {
       return (
-        <Text style={[this.styles.errorMessage, this.styles.label, positionStyle]} accessible={!_.isEmpty(error)}>
+        <Text
+          style={[this.styles.errorMessage, this.styles.label, positionStyle]}
+          accessible={!_.isEmpty(error) && !useTopErrors}
+        >
           {error}
         </Text>
       );
@@ -595,6 +600,14 @@ export default class TextField extends BaseInput {
           {expandable && this.renderExpandableModal()}
         </View>
 
+        {!_.isUndefined(this.getErrorMessage()) && useTopErrors && (
+          <View
+            style={this.styles.accessibilityDummyErrorMessage}
+            accessible
+            accessibilityLabel={this.getErrorMessage()}
+          />
+        )}
+
         <View row>
           <View flex>{this.renderError(!useTopErrors)}</View>
           {this.renderCharCounter()}
@@ -716,6 +729,13 @@ function createStyles({centered, multiline, expandable}) {
     rightButtonImage: {
       width: ICON_SIZE,
       height: ICON_SIZE
+    },
+    accessibilityDummyErrorMessage: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      width: 1,
+      height: 1
     }
   });
 }
