@@ -174,7 +174,7 @@ export default class PageControl extends PureComponent {
   renderDifferentSizeIndicators() {
     const {numOfPagesShown, pagesOffset} = this.state;
 
-    return _.map([...new Array(numOfPagesShown)], (item, index) => {
+    return _.map(_.times(numOfPagesShown), index => {
       const adjustedIndex = index + pagesOffset;
       const adjustedSize = this.getSize(adjustedIndex);
       if (adjustedSize) {
@@ -188,7 +188,7 @@ export default class PageControl extends PureComponent {
   renderSameSizeIndicators() {
     const {numOfPages, size, enlargeActive} = this.props;
 
-    return _.map([...new Array(numOfPages)], (item, index) => this.renderIndicator(index, size, enlargeActive));
+    return _.map(_.times(numOfPages), index => this.renderIndicator(index, size, enlargeActive));
   }
 
   render() {
