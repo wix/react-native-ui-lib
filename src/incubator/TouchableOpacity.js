@@ -1,7 +1,7 @@
 // TODO: support hitSlop
 // TODO: fix issue where passing backgroundColor thru style doesn't work
 // TODO: fix issue with the default value of feedbackColor 'transparent'
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {processColor} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -14,21 +14,21 @@ const {
   Code,
   cond,
   and,
-  not,
   eq,
+  neq,
+  interpolate,
+  Extrapolate,
   Value,
   call,
   block,
   event,
   timing,
-  debug,
-  clockRunning,
   set,
   startClock,
   stopClock
 } = Reanimated;
 
-class TouchableOpacity extends Component {
+class TouchableOpacity extends PureComponent {
   static propTypes = {
     backgroundColor: PropTypes.string,
     feedbackColor: PropTypes.string,
@@ -48,13 +48,12 @@ class TouchableOpacity extends Component {
     pressState: new Value(-1)
   };
 
+  _prevPressState = new Value(-1);
   isAnimating = new Value(0);
   clock = new Clock();
-  _scale = new Value(1);
-  // _color = new Value(1);
 
-  _opacity = block([cond(eq(this.pressState, State.BEGAN), this.props.activeOpacity, 1)]);
-
+  _scale = runTiming(this.clock, this.pressState, this.props.activeScale, 1);
+  _opacity = runTiming(this.clock, this.pressState, this.props.activeOpacity, 1);
   _color = cond(eq(this.pressState, State.BEGAN),
     processColor(this.props.feedbackColor || this.backgroundColor),
     processColor(this.backgroundColor));
@@ -91,16 +90,11 @@ class TouchableOpacity extends Component {
   {useNativeDriver: true});
 
   render() {
-    const {modifiers, style, activeScale, onPress, forwardedRef, ...others} = this.props;
+    const {modifiers, style, onPress, forwardedRef, ...others} = this.props;
     const {borderRadius, paddings, margins, alignments, flexStyle, backgroundColor} = modifiers;
 
     return (
-      <TapGestureHandler
-        onHandlerStateChange={this.onStateChange}
-        shouldCancelWhenOutside
-        ref={forwardedRef}
-        maxDurationMs={500}
-      >
+      <TapGestureHandler onHandlerStateChange={this.onStateChange} shouldCancelWhenOutside ref={forwardedRef}>
         <Reanimated.View
           {...others}
           style={[
@@ -112,28 +106,19 @@ class TouchableOpacity extends Component {
             backgroundColor && {backgroundColor},
             style,
             this.animatedStyle
-            // {backgroundColor: this._color, opacity: this._opacity, transform: [{scale: this._scale}]}
           ]}
         >
           {this.props.children}
 
           <Code>
-            {() =>
-              block([
-                // trigger onPress callback on END state once
-                cond(and(eq(this.isAnimating, 0), eq(this.pressState, State.END)), [
-                  set(this.isAnimating, 1),
-
+            {() => {
+              return block([
+                cond(and(eq(this.pressState, State.END), eq(this._prevPressState, State.BEGAN)), [
                   call([], () => onPress(this.props))
                 ]),
-                // Active state - scale animation
-                cond(eq(this.pressState, State.BEGAN), block([runTiming(this.clock, this._scale, 1, activeScale)])),
-                // End state - scale animation
-                cond(eq(this.pressState, State.END), block([runTiming(this.clock, this._scale, activeScale, 1)])),
-                // Reset isAnimating flag
-                cond(and(eq(this.pressState, State.END), not(clockRunning(this.clock))), set(this.isAnimating, 0))
-              ])
-            }
+                set(this._prevPressState, this.pressState)
+              ]);
+            }}
           </Code>
         </Reanimated.View>
       </TapGestureHandler>
@@ -141,10 +126,10 @@ class TouchableOpacity extends Component {
   }
 }
 
-function runTiming(clock, position, value, dest) {
+function runTiming(clock, gestureState, initialValue, endValue) {
   const state = {
     finished: new Value(0),
-    position,
+    position: new Value(0),
     time: new Value(0),
     frameTime: new Value(0)
   };
@@ -156,26 +141,27 @@ function runTiming(clock, position, value, dest) {
   };
 
   return block([
-    cond(clockRunning(clock),
-      [
-        // if the clock is already running we update the toValue, in case a new dest has been passed in
-        set(config.toValue, dest)
-      ],
-      [
-        // if the clock isn't running we reset all the animation params and start the clock
-        set(state.finished, 0),
-        set(state.time, 0),
-        set(state.position, value),
-        set(state.frameTime, 0),
-        set(config.toValue, dest),
-        startClock(clock)
-      ]),
-    // we run the step here that is going to update position
+    cond(and(eq(gestureState, State.BEGAN), neq(config.toValue, 1)), [
+      set(state.finished, 0),
+      set(state.time, 0),
+      set(state.frameTime, 0),
+      set(config.toValue, 1),
+      startClock(clock)
+    ]),
+    cond(and(eq(gestureState, State.END), neq(config.toValue, 0)), [
+      set(state.finished, 0),
+      set(state.time, 0),
+      set(state.frameTime, 0),
+      set(config.toValue, 0),
+      startClock(clock)
+    ]),
     timing(clock, state, config),
-    // if the animation is over we stop the clock
-    cond(state.finished, debug('stop clock', stopClock(clock))),
-    // we made the block return the updated position
-    state.position
+    cond(state.finished, stopClock(clock)),
+    interpolate(state.position, {
+      inputRange: [0, 1],
+      outputRange: [endValue, initialValue],
+      extrapolate: Extrapolate.CLAMP
+    })
   ]);
 }
 
