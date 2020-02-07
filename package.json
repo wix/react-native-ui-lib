@@ -83,8 +83,8 @@
     "react-native-keyboard-aware-scrollview": "^2.0.0",
     "react-native-keyboard-tracking-view": "^5.6.1",
     "react-native-navigation": "^3.4.0",
-    "react-native-gesture-handler": "1.5.3",
-    "react-native-reanimated": "1.7.0",
+    "react-native-gesture-handler": "1.5.6",
+    "react-native-reanimated": "1.4.0",
     "shell-utils": "^1.0.10",
     "typescript": "^2.9.2"
   },
