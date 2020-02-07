@@ -231,7 +231,7 @@ PODS:
     - React
   - RNGestureHandler (1.5.6):
     - React
-  - RNReanimated (1.4.0):
+  - RNReanimated (1.7.0):
     - React
   - RNTextSize (4.0.0-rc.1):
     - React
@@ -383,7 +383,7 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 8539fc80a0075fcc9c8e2dff84cd22dc5bf1dacf
   RNDateTimePicker: 1e20e91177ab5e885aa645666c5490ad99e9a839
   RNGestureHandler: 911d3b110a7a233a34c4f800e7188a84b75319c6
-  RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
+  RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
   RNTextSize: 91955a6ea2adda9dc7802ce472b7a4dc717686f6
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
