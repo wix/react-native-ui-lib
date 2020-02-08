@@ -17,6 +17,7 @@ import {Constants} from '../../helpers';
 import {LogService} from '../../services';
 
 const DEFAULT_HEIGHT = 48;
+const INDICATOR_INSET = Spacings.s4;
 const {
   Code,
   Clock,
@@ -117,12 +118,12 @@ class TabBar extends PureComponent {
     // this._indicatorOffset = new ReanimatedObject({duration: 300, easing: Easing.bezier(0.23, 1, 0.32, 1)});
     // this._indicatorWidth = new ReanimatedObject({duration: 300, easing: Easing.bezier(0.23, 1, 0.32, 1)});
 
-    this._offset = new Value(0);
-    this._width = new Value(0);
+    this._indicatorOffset = new Value(0);
+    this._indicatorWidth = new Value(0);
 
     this._indicatorTransitionStyle = {
-      width: this._width,
-      left: this._offset
+      width: this._indicatorWidth,
+      left: this._indicatorOffset
     };
 
     this.state = {
@@ -182,18 +183,18 @@ class TabBar extends PureComponent {
     if (!_.includes(this._itemsWidths, null)) {
       const {selectedIndex} = this.context;
       const itemsOffsets = _.map(this._itemsWidths,
-        (w, index) => Spacings.s4 + _.sum(_.take(this._itemsWidths, index)));
-      const itemsWidths = _.map(this._itemsWidths, width => width - Spacings.s4 * 2);
+        (w, index) => INDICATOR_INSET + _.sum(_.take(this._itemsWidths, index)));
+      const itemsWidths = _.map(this._itemsWidths, width => width - INDICATOR_INSET * 2);
 
       this.setState({itemsWidths, itemsOffsets});
       this.tabBar.current.scrollTo({x: itemsOffsets[selectedIndex], animated: false});
 
       if (!asCarousel) {
-        this._offset = runIndicatorTimer(new Clock(), this.context.currentPage, itemsOffsets);
-        this._width = runIndicatorTimer(new Clock(), this.context.currentPage, itemsWidths);
+        this._indicatorOffset = runIndicatorTimer(new Clock(), this.context.currentPage, itemsOffsets);
+        this._indicatorWidth = runIndicatorTimer(new Clock(), this.context.currentPage, itemsWidths);
 
-        this._indicatorTransitionStyle.left = this._offset;
-        this._indicatorTransitionStyle.width = this._width;
+        this._indicatorTransitionStyle.left = this._indicatorOffset;
+        this._indicatorTransitionStyle.width = this._indicatorWidth;
       }
     }
   };
@@ -298,12 +299,12 @@ class TabBar extends PureComponent {
           {() => {
             if (asCarousel && _.size(itemsWidths) > 1) {
               return block([
-                set(this._offset,
+                set(this._indicatorOffset,
                   Reanimated.interpolate(carouselOffset, {
                     inputRange: itemsOffsets.map((offset, index) => index * Constants.screenWidth),
                     outputRange: itemsOffsets
                   })),
-                set(this._width,
+                set(this._indicatorWidth,
                   Reanimated.interpolate(carouselOffset, {
                     inputRange: itemsWidths.map((width, index) => index * Constants.screenWidth),
                     outputRange: itemsWidths
