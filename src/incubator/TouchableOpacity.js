@@ -1,12 +1,10 @@
 // TODO: support hitSlop
-// TODO: fix issue where passing backgroundColor thru style doesn't work
-// TODO: fix issue with the default value of feedbackColor 'transparent'
 import React, {PureComponent} from 'react';
-import {processColor} from 'react-native';
+import {processColor, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Reanimated, {Easing} from 'react-native-reanimated';
-import {TapGestureHandler, State} from 'react-native-gesture-handler';
+import {TapGestureHandler, LongPressGestureHandler, State} from 'react-native-gesture-handler';
 import {asBaseComponent, forwardRef} from '../commons';
 
 const {
@@ -14,6 +12,7 @@ const {
   Code,
   cond,
   and,
+  or,
   eq,
   neq,
   interpolate,
@@ -28,13 +27,42 @@ const {
   stopClock
 } = Reanimated;
 
+/**
+ * @description: a Better, enhanced TouchableOpacity component
+ * @modifiers: flex, margin, padding, background
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TouchableOpacityScreen.js
+ */
 class TouchableOpacity extends PureComponent {
+  static displayName = 'Incubator.TouchableOpacity';
+
   static propTypes = {
+    /**
+     * Background color
+     */
     backgroundColor: PropTypes.string,
+    /**
+     * Background color when actively pressing the touchable
+     */
     feedbackColor: PropTypes.string,
+    /**
+     * Opacity value when actively pressing the touchable
+     */
     activeOpacity: PropTypes.number,
+    /**
+     * Scale value when actively pressing the touchable
+     */
     activeScale: PropTypes.number,
+    /**
+     * Callback for when tapping the touchable
+     */
     onPress: PropTypes.func,
+    /**
+     * Callback for when long pressing the touchable
+     */
+    onLongPress: PropTypes.func,
+    /**
+     * Pass controlled pressState to track gesture state changes
+     */
     pressState: PropTypes.object
   };
 
@@ -89,8 +117,14 @@ class TouchableOpacity extends PureComponent {
   ],
   {useNativeDriver: true});
 
+  onLongPress = ({nativeEvent}) => {
+    if (nativeEvent.state === State.ACTIVE) {
+      _.invoke(this.props, 'onLongPress', this.props);
+    }
+  };
+
   render() {
-    const {modifiers, style, onPress, forwardedRef, ...others} = this.props;
+    const {modifiers, style, onPress, onLongPress, forwardedRef, ...others} = this.props;
     const {borderRadius, paddings, margins, alignments, flexStyle, backgroundColor} = modifiers;
 
     return (
@@ -120,6 +154,9 @@ class TouchableOpacity extends PureComponent {
               ]);
             }}
           </Code>
+          {onLongPress && <LongPressGestureHandler onHandlerStateChange={this.onLongPress}>
+            <Reanimated.View style={StyleSheet.absoluteFillObject}/>
+          </LongPressGestureHandler>}
         </Reanimated.View>
       </TapGestureHandler>
     );
@@ -148,7 +185,7 @@ function runTiming(clock, gestureState, initialValue, endValue) {
       set(config.toValue, 1),
       startClock(clock)
     ]),
-    cond(and(eq(gestureState, State.END), neq(config.toValue, 0)), [
+    cond(and(or(eq(gestureState, State.END), eq(gestureState, State.FAILED)), neq(config.toValue, 0)), [
       set(state.finished, 0),
       set(state.time, 0),
       set(state.frameTime, 0),
