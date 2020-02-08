@@ -115,9 +115,6 @@ class TabBar extends PureComponent {
     this.tabBar = React.createRef();
 
     this._itemsWidths = _.times(itemsCount, () => null);
-    // this._indicatorOffset = new ReanimatedObject({duration: 300, easing: Easing.bezier(0.23, 1, 0.32, 1)});
-    // this._indicatorWidth = new ReanimatedObject({duration: 300, easing: Easing.bezier(0.23, 1, 0.32, 1)});
-
     this._indicatorOffset = new Value(0);
     this._indicatorWidth = new Value(0);
 
@@ -178,7 +175,6 @@ class TabBar extends PureComponent {
   }
 
   onItemLayout = (itemWidth, itemIndex) => {
-    const {asCarousel} = this.context;
     this._itemsWidths[itemIndex] = itemWidth;
     if (!_.includes(this._itemsWidths, null)) {
       const {selectedIndex} = this.context;
@@ -188,14 +184,6 @@ class TabBar extends PureComponent {
 
       this.setState({itemsWidths, itemsOffsets});
       this.tabBar.current.scrollTo({x: itemsOffsets[selectedIndex], animated: false});
-
-      if (!asCarousel) {
-        this._indicatorOffset = runIndicatorTimer(new Clock(), this.context.currentPage, itemsOffsets);
-        this._indicatorWidth = runIndicatorTimer(new Clock(), this.context.currentPage, itemsWidths);
-
-        this._indicatorTransitionStyle.left = this._indicatorOffset;
-        this._indicatorTransitionStyle.width = this._indicatorWidth;
-      }
     }
   };
 
@@ -275,10 +263,35 @@ class TabBar extends PureComponent {
     }
   }
 
-  render() {
+  renderCodeBlock = () => {
     const {carouselOffset, asCarousel} = this.context;
+    const {itemsWidths, itemsOffsets} = this.state;
+    const nodes = [];
+
+    if (asCarousel) {
+      nodes.push(set(this._indicatorOffset,
+        interpolate(carouselOffset, {
+          inputRange: itemsOffsets.map((value, index) => index * Constants.screenWidth),
+          outputRange: itemsOffsets,
+          extrapolate: Extrapolate.CLAMP
+        })),
+      set(this._indicatorWidth,
+        interpolate(carouselOffset, {
+          inputRange: itemsWidths.map((value, index) => index * Constants.screenWidth),
+          outputRange: itemsWidths,
+          extrapolate: Extrapolate.CLAMP
+        })));
+    } else {
+      nodes.push(set(this._indicatorOffset, runIndicatorTimer(new Clock(), this.context.currentPage, itemsOffsets)),
+        set(this._indicatorWidth, runIndicatorTimer(new Clock(), this.context.currentPage, itemsWidths)));
+    }
+
+    return block(nodes);
+  };
+
+  render() {
     const {height, enableShadow, containerStyle} = this.props;
-    const {itemsWidths, itemsOffsets, scrollEnabled} = this.state;
+    const {itemsWidths, scrollEnabled} = this.state;
     return (
       <View
         style={[styles.container, enableShadow && styles.containerShadow, {width: this.containerWidth}, containerStyle]}
@@ -295,26 +308,7 @@ class TabBar extends PureComponent {
           <View style={[styles.tabBar, height && {height}]}>{this.renderTabBarItems()}</View>
           {this.renderSelectedIndicator()}
         </ScrollView>
-        <Code>
-          {() => {
-            if (asCarousel && _.size(itemsWidths) > 1) {
-              return block([
-                set(this._indicatorOffset,
-                  Reanimated.interpolate(carouselOffset, {
-                    inputRange: itemsOffsets.map((offset, index) => index * Constants.screenWidth),
-                    outputRange: itemsOffsets
-                  })),
-                set(this._indicatorWidth,
-                  Reanimated.interpolate(carouselOffset, {
-                    inputRange: itemsWidths.map((width, index) => index * Constants.screenWidth),
-                    outputRange: itemsWidths
-                  }))
-              ]);
-            }
-
-            return block([]);
-          }}
-        </Code>
+        {_.size(itemsWidths) > 1 && <Code>{this.renderCodeBlock}</Code>}
       </View>
     );
   }
