@@ -14,16 +14,26 @@ export function renderBooleanOption(title, key) {
   );
 }
 
-export function renderRadioGroup(title, key, options) {
+export function renderRadioGroup(title, key, options, {isRow} = {}) {
   const value = this.state[key];
   return (
     <View marginB-s2>
       <Text text70M marginB-s2>
         {title}
       </Text>
-      <RadioGroup initialValue={value} onValueChange={value => this.setState({[key]: value})}>
+      <RadioGroup row={isRow} initialValue={value} onValueChange={value => this.setState({[key]: value})}>
         {_.map(options, (value, key) => {
-          return <RadioButton useCustomTheme testID={key} key={key} marginB-s2 label={value} value={options[key]}/>;
+          return (
+            <RadioButton
+              useCustomTheme
+              testID={key}
+              key={key}
+              marginB-s2
+              marginR-s2={isRow}
+              label={value}
+              value={options[key]}
+            />
+          );
         })}
       </RadioGroup>
     </View>
