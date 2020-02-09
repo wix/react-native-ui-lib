@@ -90,7 +90,7 @@ export default class Text extends PureBaseComponent {
         return _.map(textParts, (text, index) => {
           const shouldHighlight = _.lowerCase(text) === _.lowerCase(highlightString);
           return (
-            <Text key={index} style={shouldHighlight && [this.styles.highlight, highlightStyle]}>
+            <Text key={index} color={null} style={shouldHighlight && [this.styles.highlight, highlightStyle]}>
               {text}
             </Text>
           );
