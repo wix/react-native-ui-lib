@@ -76,9 +76,8 @@ export default class Text extends PureBaseComponent {
 
   renderText(children) {
     const {highlightString, highlightStyle} = this.props;
-    
+
     if (!_.isEmpty(highlightString)) {
-      
       if (_.isArray(children)) {
         return _.map(children, child => {
           return this.renderText(child);
@@ -90,7 +89,10 @@ export default class Text extends PureBaseComponent {
         return _.map(textParts, (text, index) => {
           const shouldHighlight = _.lowerCase(text) === _.lowerCase(highlightString);
           return (
-            <Text key={index} color={null} style={shouldHighlight && [this.styles.highlight, highlightStyle]}>
+            <Text
+              key={index}
+              style={shouldHighlight ? [this.styles.highlight, highlightStyle] : this.styles.notHighlight}
+            >
               {text}
             </Text>
           );
@@ -144,6 +146,9 @@ function createStyles() {
     },
     highlight: {
       color: Colors.grey30
+    },
+    notHighlight: {
+      color: undefined
     }
   });
 }
