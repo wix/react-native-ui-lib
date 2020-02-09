@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, AccessibilityInfo} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -105,10 +105,17 @@ class Dialog extends BaseComponent {
 
   componentDidMount() {
     Constants.addDimensionsEventListener(this.onOrientationChange);
+    AccessibilityInfo.addEventListener('screenReaderChanged', this.handleScreenReaderChanged);
+    AccessibilityInfo.fetch().then(isAccessibilityOn => {
+      this.setState({
+        isAccessibilityOn
+      });
+    });
   }
 
   componentWillUnmount() {
     Constants.removeDimensionsEventListener(this.onOrientationChange);
+    AccessibilityInfo.removeEventListener('screenReaderChanged', this.handleScreenReaderChanged);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -121,6 +128,10 @@ class Dialog extends BaseComponent {
       this.hideDialogView();
     }
   }
+
+  handleScreenReaderChanged = isAccessibilityOn => {
+    this.setState({isAccessibilityOn});
+  };
 
   onOrientationChange = () => {
     const orientationKey = Constants.orientation;
@@ -190,6 +201,7 @@ class Dialog extends BaseComponent {
 
   // TODO: renderOverlay {_.invoke(this.props, 'renderOverlay')}
   renderDialogContainer = () => {
+    const {isAccessibilityOn} = this.state;
     const {useSafeArea, bottom} = this.props;
     const addBottomSafeArea = Constants.isIphoneX && (useSafeArea && bottom);
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8; // TODO: should this be here or in the input style?
@@ -197,8 +209,9 @@ class Dialog extends BaseComponent {
     return (
       <View
         useSafeArea={useSafeArea}
-        style={[this.styles.centerHorizontal, this.styles.alignments, this.styles.container]}
+        style={[this.styles.centerHorizontal, this.styles.alignments]}
         pointerEvents="box-none"
+        flex={!isAccessibilityOn}
       >
         {this.renderDialogView()}
         {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>}
@@ -245,9 +258,6 @@ function createStyles(props) {
   return StyleSheet.create({
     dialogViewSize: {width, height},
     flexType,
-    container: {
-      flex: 1
-    },
     centerHorizontal: {
       alignItems: 'center'
     },
