@@ -40,7 +40,7 @@ export default class TagsInput extends BaseComponent {
     /**
      * callback for custom rendering tag item
      */
-    renderTag: PropTypes.func,
+    renderTag: PropTypes.elementType,
     /**
      * callback for onChangeTags event
      */
