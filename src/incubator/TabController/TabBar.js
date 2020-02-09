@@ -183,7 +183,11 @@ class TabBar extends PureComponent {
       const itemsWidths = _.map(this._itemsWidths, width => width - INDICATOR_INSET * 2);
 
       this.setState({itemsWidths, itemsOffsets});
-      this.tabBar.current.scrollTo({x: itemsOffsets[selectedIndex], animated: false});
+      const selectedItemOffset = itemsOffsets[selectedIndex] - INDICATOR_INSET;
+      
+      if (selectedItemOffset + this._itemsWidths[selectedIndex] > Constants.screenWidth) {  
+        this.tabBar.current.scrollTo({x: selectedItemOffset, animated: true});
+      }
     }
   };
 
