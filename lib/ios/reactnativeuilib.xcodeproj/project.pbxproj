@@ -254,6 +254,8 @@
 				10823FB123AFB14700429E9A /* ObservingInputAccessoryView.m in Sources */,
 				10823FAF23AFB12900429E9A /* KeyboardTrackingViewManager.m in Sources */,
 				10823FC223B0BE9100429E9A /* LNInterpolable.m in Sources */,
+				10823FB123AFB14700429E9A /* ObservingInputAccessoryView.m in Sources */,
+				10823FAF23AFB12900429E9A /* KeyboardTrackingViewManager.m in Sources */,
 				D8D93E7620161B1F00A39331 /* HighlighterViewManager.m in Sources */,
 				D8E5A538204C4F170000DA01 /* SafeAreaManager.m in Sources */,
 				10823FB323AFB15D00429E9A /* UIResponder+FirstResponder.m in Sources */,
