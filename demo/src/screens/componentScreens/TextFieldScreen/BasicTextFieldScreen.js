@@ -91,7 +91,8 @@ export default class BasicTextFieldScreen extends Component {
               min: 30,
               max: 100,
               step: 10,
-              initial: 70
+              initial: 70,
+              sliderText: 'text'
             })}
             {renderBooleanOption.call(this, 'Multiline', 'multiline')}
             {renderBooleanOption.call(this, 'Disabled', 'disabled')}

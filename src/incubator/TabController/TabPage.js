@@ -33,7 +33,7 @@ export default class TabPage extends PureComponent {
     /**
      * Render a custom loading page when lazy loading
      */
-    renderLoading: PropTypes.func
+    renderLoading: PropTypes.elementType
   };
 
   static defaultProps = {
@@ -63,9 +63,19 @@ export default class TabPage extends PureComponent {
     }, this.props.lazyLoadTime); // tab bar indicator transition time
   };
 
-  render() {
+  renderCodeBlock = () => {
     const {currentPage} = this.context;
-    const {index, lazy, renderLoading, testID} = this.props;
+    const {index, lazy} = this.props;
+    return block([
+      cond(and(eq(currentPage, index), lazy, eq(this._loaded, 0)), [set(this._loaded, 1), call([], this.lazyLoad)]),
+      cond(eq(currentPage, index),
+        [set(this._opacity, 1), set(this._zIndex, 1)],
+        [set(this._opacity, 0), set(this._zIndex, 0)])
+    ]);
+  };
+
+  render() {
+    const {renderLoading, testID} = this.props;
     const {loaded} = this.state;
 
     return (
@@ -73,17 +83,7 @@ export default class TabPage extends PureComponent {
         {!loaded && renderLoading()}
         {loaded && this.props.children}
         <Code>
-          {() => {
-            return block([
-              cond(and(eq(currentPage, index), lazy, eq(this._loaded, 0)), [
-                set(this._loaded, 1),
-                call([], this.lazyLoad)
-              ]),
-              cond(eq(currentPage, index),
-                [set(this._opacity, 1), set(this._zIndex, 1)],
-                [set(this._opacity, 0), set(this._zIndex, 0)])
-            ]);
-          }}
+          {this.renderCodeBlock}
         </Code>
       </Reanimated.View>
     );

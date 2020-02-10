@@ -98,13 +98,13 @@ export default class TextField extends BaseInput {
     /**
      * Render custom expandable input (requires expandable to be true)
      */
-    renderExpandableInput: PropTypes.func,
+    renderExpandableInput: PropTypes.elementType,
     /**
      * allow custom rendering of expandable content when clicking on the input (useful for pickers)
      * accept props and state as params, ex. (props, state) => {...}
      * use toggleExpandableModal(false) method to toggle off the expandable content
      */
-    renderExpandable: PropTypes.func,
+    renderExpandable: PropTypes.elementType,
     /**
      * Callback for the modal toggle. Pass with renderExpandable to control the modal toggle
      */

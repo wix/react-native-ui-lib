@@ -47,7 +47,7 @@ export default class Slider extends PureBaseComponent {
     /**
      * Custom render instead of rendering the track
      */
-    renderTrack: PropTypes.func,
+    renderTrack: PropTypes.elementType,
     /**
      * Thumb color
      */

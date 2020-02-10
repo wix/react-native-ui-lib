@@ -30,7 +30,7 @@ class ScrollBar extends BaseComponent {
     /**
      * The element to use as a container, instead of a View
      */
-    containerView: PropTypes.oneOfType([PropTypes.element, PropTypes.object, PropTypes.func]),
+    containerView: PropTypes.oneOfType([PropTypes.element, PropTypes.elementType]),
     /**
      * The props to pass the container
      */

@@ -67,7 +67,7 @@ class Dialog extends BaseComponent {
      * this allows for scrollable content (the children of the dialog)
      * props are transferred to the renderPannableHeader
      */
-    renderPannableHeader: PropTypes.func,
+    renderPannableHeader: PropTypes.elementType,
     /**
      * The props that will be passed to the pannable header
      */

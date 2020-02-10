@@ -47,7 +47,7 @@ class PickerItem extends BaseComponent {
     /**
      * Render custom item
      */
-    renderItem: PropTypes.func,
+    renderItem: PropTypes.elementType,
     /**
      * Callback for onPress action
      */
