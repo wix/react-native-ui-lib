@@ -1,4 +1,4 @@
-import {Platform, Dimensions, NativeModules, I18nManager} from 'react-native';
+import {Platform, Dimensions, NativeModules, I18nManager, AccessibilityInfo} from 'react-native';
 
 const dimensionsScope = {
   WINDOW: 'window',
@@ -99,5 +99,14 @@ constants.addDimensionsEventListener = (callback) => {
 constants.removeDimensionsEventListener = (callback) => {
   Dimensions.removeEventListener('change', callback);
 };
+
+constants.accessibility = {};
+function setAccessibility() {
+  AccessibilityInfo.fetch().then(isScreenReaderEnabled => {
+    constants.accessibility.isScreenReaderEnabled = isScreenReaderEnabled;
+  });
+}
+
+setAccessibility();
 
 export default constants;
