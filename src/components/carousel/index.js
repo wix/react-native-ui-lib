@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet, AccessibilityInfo} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -75,7 +75,11 @@ export default class Carousel extends BaseComponent {
     /**
      * will block multiple pages scroll (will not work with 'pageWidth' prop)
      */
-    pagingEnabled: PropTypes.bool
+    pagingEnabled: PropTypes.bool,
+    /**
+     * Whether to layout Carousel for accessibility
+     */
+    allowAccessibleLayout: PropTypes.bool
   };
 
   static defaultProps = {
@@ -98,8 +102,13 @@ export default class Carousel extends BaseComponent {
       currentPage: this.shouldUsePageWidth() ? this.getCalcIndex(props.initialPage) : props.initialPage,
       currentStandingPage: props.initialPage,
       pageWidth: defaultPageWidth,
-      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage, pageWidth: defaultPageWidth})}
+      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage, pageWidth: defaultPageWidth})},
+      screenReaderEnabled: false
     };
+
+    AccessibilityInfo.isScreenReaderEnabled().then((screenReaderEnabled) => {
+      this.setState({screenReaderEnabled});
+    });
   }
 
   componentDidMount() {
@@ -190,6 +199,10 @@ export default class Carousel extends BaseComponent {
     this.setState(update);
   };
 
+  shouldAllowAccessibilityLayout() {
+    return this.props.allowAccessibleLayout && this.state.screenReaderEnabled;
+  }
+
   onContentSizeChange = () => {
     // this is to handle initial scroll position (content offset)
     if (Constants.isAndroid) {
@@ -236,9 +249,16 @@ export default class Carousel extends BaseComponent {
   renderChild = (child, key) => {
     if (child) {
       const paddingLeft = this.shouldUsePageWidth() ? this.props.itemSpacings : undefined;
-  
+      const index = Number(key);
+      const length = presenter.getChildrenLength(this.props);
+
       return (
         <View style={{width: this.state.pageWidth, paddingLeft}} key={key} collapsable={false}>
+          {this.shouldAllowAccessibilityLayout() && !Number.isNaN(index) &&
+            <View style={{position: 'absolute', width: 1}}>
+              <Text>{`page ${index + 1} out of ${length}`}</Text>
+            </View>
+          }
           {child}
         </View>
       );
@@ -302,7 +322,28 @@ export default class Carousel extends BaseComponent {
     }
   }
 
-  render() {
+  renderAccessibleLayout() {
+    const {containerStyle, children} = this.props;
+
+    return (
+      <View style={containerStyle} onLayout={this.onContainerLayout}>
+        <ScrollView
+          ref={this.carousel}
+          showsVerticalScrollIndicator={false}
+          pagingEnabled
+          onContentSizeChange={this.onContentSizeChange}
+          onScroll={this.onScroll}
+          onMomentumScrollEnd={this.onMomentumScrollEnd}
+        >
+          {React.Children.map(children, (child, index) => {
+            return this.renderChild(child, `${index}`);
+          })}
+        </ScrollView>
+      </View>
+    );
+  }
+
+  renderCarousel() {
     const {containerStyle, itemSpacings, ...others} = this.props;
     const {initialOffset} = this.state;
     const scrollContainerStyle = this.shouldUsePageWidth() ? {paddingRight: itemSpacings} : undefined;
@@ -331,6 +372,10 @@ export default class Carousel extends BaseComponent {
         {this.renderCounter()}
       </View>
     );
+  }
+
+  render() {
+    return this.shouldAllowAccessibilityLayout() ? this.renderAccessibleLayout() : this.renderCarousel();
   }
 }
 

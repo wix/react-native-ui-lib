@@ -43,27 +43,28 @@ class CarouselScreen extends Component {
           pageControlPosition={'under'}
           pageControlProps={{onPagePress: this.onPagePress}}
           // showCounter
+          allowAccessibleLayout
         >
           <Page bg-red50>
-            <Text margin-15>PAGE 0</Text>
+            <Text margin-15>CARD 0</Text>
           </Page>
           <Page bg-yellow20>
-            <Text margin-15>PAGE 1</Text>
+            <Text margin-15>CARD 1</Text>
           </Page>
           <Page bg-purple50>
-            <Text margin-15>PAGE 2</Text>
+            <Text margin-15>CARD 2</Text>
           </Page>
           <Page bg-green50>
-            <Text margin-15>PAGE 3</Text>
+            <Text margin-15>CARD 3</Text>
           </Page>
           <Page bg-cyan50>
-            <Text margin-15>PAGE 4</Text>
+            <Text margin-15>CARD 4</Text>
           </Page>
           <Page bg-purple20>
-            <Text margin-15>PAGE 5</Text>
+            <Text margin-15>CARD 5</Text>
           </Page>
           <Page bg-blue60>
-            <Text margin-15>PAGE 6</Text>
+            <Text margin-15>CARD 6</Text>
           </Page>
         </Carousel>
 
@@ -72,7 +73,7 @@ class CarouselScreen extends Component {
         </View>
 
         <View padding-20>
-          <Carousel containerStyle={{height: 160}} initialPage={INITIAL_PAGE} loop>
+          <Carousel containerStyle={{height: 160}} initialPage={INITIAL_PAGE} loop allowAccessibleLayout>
             {_.map(IMAGES, (image, index) => {
               return (
                 <View key={index} flex padding-10 bottom>
