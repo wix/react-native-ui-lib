@@ -56,7 +56,7 @@ export function renderColorOption(title,
   );
 }
 
-export function renderSliderOption(title, key, {min = 0, max = 10, step = 1, initial = 0}) {
+export function renderSliderOption(title, key, {min = 0, max = 10, step = 1, initial = 0, sliderText = ''}) {
   const value = this.state[key];
   return (
     <View marginV-s2>
@@ -74,7 +74,7 @@ export function renderSliderOption(title, key, {min = 0, max = 10, step = 1, ini
           onValueChange={value => this.setState({[key]: value})}
         />
         <Text marginL-s4 text70>
-          text{value}
+          {sliderText}{value}
         </Text>
       </View>
     </View>
