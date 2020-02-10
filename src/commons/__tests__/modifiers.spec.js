@@ -101,7 +101,7 @@ describe('Modifiers', () => {
     });
 
     it('should support Spacing preset for padding', () => {
-      expect(uut.extractPaddingValues({'padding-s3': true})).toEqual({padding: 9});
+      expect(uut.extractPaddingValues({'padding-s3': true})).toEqual({padding: 12});
     });
   });
 
@@ -135,7 +135,7 @@ describe('Modifiers', () => {
     });
 
     it('should support Spacing preset for margin', () => {
-      expect(uut.extractMarginValues({'marginL-s4': true})).toEqual({marginLeft: 12});
+      expect(uut.extractMarginValues({'marginL-s4': true})).toEqual({marginLeft: 16});
     });
   });
 

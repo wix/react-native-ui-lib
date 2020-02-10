@@ -1,20 +1,20 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import View from '../view';
-import Text from '../text';
-import Image from '../image';
-import TouchableOpacity from '../touchableOpacity';
-import {Colors, Typography, Spacings} from '../../style';
-import {BaseComponent} from '../../commons';
-import {Constants} from '../../helpers';
+import {StyleSheet, Animated, Easing} from 'react-native';
+import {Colors, Typography, PureBaseComponent, View, TouchableOpacity, Text, Image, Badge} from '../../../src';
+
+const INDICATOR_BG_COLOR = Colors.blue30;
+const INDICATOR_HEIGHT = 2;
+const INDICATOR_SPACINGS = 16;
 
 /**
  * @description: TabBar.Item, inner component of TabBar for configuring the tabs
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabBarScreen.js
+ * @extends: TouchableOpacity
+ * @extendsLink: https://facebook.github.io/react-native/docs/touchableopacity
  */
-export default class TabBarItem extends BaseComponent {
+export default class TabBarItem extends PureBaseComponent {
   static displayName = 'TabBar.Item';
 
   static propTypes = {
@@ -39,6 +39,10 @@ export default class TabBarItem extends BaseComponent {
      */
     labelStyle: Text.propTypes.style,
     /**
+     * Badge component props to display next the item label
+     */
+    badge: PropTypes.shape(Badge.propTypes),
+    /**
      * maximun number of lines the label can break
      */
     maxLines: PropTypes.number,
@@ -51,10 +55,6 @@ export default class TabBarItem extends BaseComponent {
      */
     selected: PropTypes.bool,
     /**
-     * callback for when pressing a tab
-     */
-    onPress: PropTypes.func,
-    /**
      * whether the tab will have a divider on its right
      */
     showDivider: PropTypes.bool,
@@ -63,12 +63,25 @@ export default class TabBarItem extends BaseComponent {
      */
     width: PropTypes.number,
     /**
-     * A callback to invoke for onLayout event
+     * ignore of the tab
      */
-    onLayout: PropTypes.func
+    ignore: PropTypes.bool,
+    /**
+     * callback for when pressing a tab
+     */
+    onPress: PropTypes.func,
+    /**
+     * whether to change the text to uppercase
+     */
+    uppercase: PropTypes.bool,
+    /**
+     * Apply background color on press for TouchableOpacity
+     */
+    activeBackgroundColor: PropTypes.string
   };
 
   static defaultProps = {
+    test: true, // this will enable by the new tab bar design
     maxLines: 1
   };
 
@@ -76,60 +89,74 @@ export default class TabBarItem extends BaseComponent {
     super(props);
 
     this.state = {
-      // HACK: for indicator width in TabBar
-      fontStyle: this.getFontStyle(this.getThemeProps())
+      indicatorOpacity: props.selected ? new Animated.Value(1) : new Animated.Value(0)
     };
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (!_.isEqual(nextProps.label, this.props.label) && !_.isEqual(nextProps.width, this.props.width)) {
-      /** dynamic item's label */
-      this.setState({fontStyle: this.getFontStyle(this.getThemeProps())});
+    if (this.props.selected !== nextProps.selected) {
+      this.animate(nextProps.selected);
     }
   }
 
-  // HACK: for indicator width in TabBar
-  getFontStyle(props) {
-    return props.selectedLabelStyle || this.styles.labelSelected;
+  animate(newValue) {
+    Animated.timing(this.state.indicatorOpacity, {
+      toValue: newValue ? 1 : 0,
+      easing: Easing.ease,
+      duration: 150,
+      useNativeDriver: true
+    }).start();
   }
 
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
   }
 
-  onLayout = event => {
-    // HACK: for indicator width in TabBar
-    const {width} = event.nativeEvent.layout;
-    if (this.state.fontStyle !== undefined) {
-      _.invoke(this.props, 'onLayout', width);
-
-      this.setState({fontStyle: undefined});
-    }
-  };
-
-  getColorFromStyle(style) {
-    const flatten = StyleSheet.flatten(style);
-    if (flatten) {
-      const color = flatten.color;
-      return color;
-    }
-    return undefined;
+  getFlattenStyle(style) {
+    return StyleSheet.flatten(style);
   }
 
+  getStylePropValue(flattenStyle, propName) {
+    let prop;
+    if (flattenStyle) {
+      const propObject = _.pick(flattenStyle, [propName]);
+      prop = propObject[propName];
+    }
+    return prop;
+  }
+
+  getColorFromStyle(style) {
+    const flattenStyle = this.getFlattenStyle(style);
+    return this.getStylePropValue(flattenStyle, 'color');
+  }
+
+  getLayout() {
+    return this.layout;
+  }
+
+  onLayout = event => {
+    this.layout = event.nativeEvent.layout;
+  };
+
   render() {
+    const {indicatorOpacity} = this.state;
     const {
       children,
+      indicatorStyle,
       icon,
       iconColor,
       iconSelectedColor,
       label,
       labelStyle,
+      badge,
+      uppercase,
       maxLines,
       selected,
       selectedLabelStyle,
       showDivider,
       width,
       onPress,
+      activeBackgroundColor,
       testID
     } = this.getThemeProps();
 
@@ -137,36 +164,47 @@ export default class TabBarItem extends BaseComponent {
     const iconSelectedTint =
       iconSelectedColor ||
       this.getColorFromStyle(selectedLabelStyle) ||
-      this.getColorFromStyle(this.styles.labelSelected);
+      this.getColorFromStyle(this.styles.selectedLabel);
 
     return (
       <TouchableOpacity
         activeOpacity={1}
         onPress={onPress}
-        style={width ? {width} : this.styles.container}
+        style={width ? {width} : {flex: 1}}
         testID={testID}
+        activeBackgroundColor={activeBackgroundColor}
         onLayout={this.onLayout}
+        accessibilityStates={selected ? ['selected'] : undefined}
       >
-        <View row flex center style={[showDivider && this.styles.divider, {paddingHorizontal: Spacings.s4}]}>
+        <View row flex center style={[showDivider && this.styles.divider, {paddingHorizontal: 16}]}>
           {icon && (
-            <View paddingR-6={!_.isEmpty(label)}>
-              <Image source={icon} tintColor={selected ? iconSelectedTint : iconTint}/>
-            </View>
+            <Image
+              style={!_.isEmpty(label) && {marginRight: 6}}
+              source={icon}
+              tintColor={selected ? iconSelectedTint : iconTint}
+            />
           )}
           {!_.isEmpty(label) && (
             <Text
               numberOfLines={maxLines}
-              style={[
-                labelStyle || this.styles.label,
-                selected && (selectedLabelStyle || this.styles.labelSelected),
-                this.state.fontStyle // HACK: for indicator width in TabBar
-              ]}
+              uppercase={uppercase}
+              style={[labelStyle || this.styles.label, selected && (selectedLabelStyle || this.styles.selectedLabel)]}
+              accessibilityLabel={`${label} tab`}
             >
               {label}
             </Text>
           )}
           {children}
+          {badge && (
+            <Badge
+              backgroundColor={Colors.red30}
+              size={'small'}
+              {...badge}
+              containerStyle={[this.styles.badge, badge.containerStyle]}
+            />
+          )}
         </View>
+        <Animated.View style={[{opacity: indicatorOpacity}, this.styles.indicator, indicatorStyle]}/>
       </TouchableOpacity>
     );
   }
@@ -174,21 +212,27 @@ export default class TabBarItem extends BaseComponent {
 
 function createStyles() {
   return StyleSheet.create({
-    container: {
-      flex: 1
-    },
     label: {
-      color: Colors.dark10,
-      ...Typography.text90
+      color: Colors.dark30,
+      ...Typography.text80
     },
-    labelSelected: {
+    selectedLabel: {
       color: Colors.blue30,
-      fontWeight: Constants.isIOS ? '600' : '700'
+      ...Typography.text80,
+      fontWeight: 'bold'
     },
     divider: {
       borderRightWidth: 1,
       borderRightColor: Colors.dark70,
-      marginVertical: 14 // NOTE: will not cut long text at the top and bottom in iOS if TabBar not height enough
+      marginVertical: 14 // NOTE: will not cut long text at the top and bottom in iOS if TabBar not high enough
+    },
+    indicator: {
+      backgroundColor: INDICATOR_BG_COLOR,
+      height: INDICATOR_HEIGHT,
+      marginHorizontal: INDICATOR_SPACINGS
+    },
+    badge: {
+      marginLeft: 4
     }
   });
 }

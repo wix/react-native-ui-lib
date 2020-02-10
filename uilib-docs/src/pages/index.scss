@@ -1,19 +1,126 @@
 @import "src/styles/constants";
 
 .main-page {
-  height: 100%;
+  // height: 100%;
   display: flex;
-  background: $primary;
+  flex-direction: column;
+  padding-bottom: 20px;
+
+  .main-section {
+    background: $primary;
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .description {
+      font-size: $text10;
+      color: $white;
+    }
+  }
+
+  .platforms-section {
+    background: $dark80;
+    color: $dark10;
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    padding: 40px 0;
+
+    > div:first-child {
+      display: flex;
+      flex: 1;
+      height: 100%;
+      background: $dark80;
+      padding: 20px 10px;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+
+    > div:nth-child(2) {
+      width: 40%;
+      border-right: 1px solid $white;
+      padding: 40px;
+    }
+  }
+
+  .toolset-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    background: $violet20;
+    color: $white;
+
+    .code-examples {
+      display: flex;
+      align-items: flex-start;
+
+      code {
+        display: inline-block;
+        white-space: pre;
+        text-align: left;
+        background: $dark10;
+        padding: 10px;
+        margin-right: 10px;
+        font-size: $text40;
+        line-height: 1.4;
+      }
+    }
+  }
+
+  .components-section {
+    padding: 40px;
+    text-align: center;
+    background-color: $dark80;
+    margin-top: 20px;
+    
+    > .image-examples {
+      display: flex;
+      justify-content: space-evenly;
+      
+      img {
+        height: 500px;
+      }
+    }
+  }
+  
+  .support-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: $blue10;
+    color: $white;
+    // width: 60vw;
+    // margin: 0 auto;
+    margin-top: 20px;
+    padding: 40px;
+
+    > div:first-child {
+      // width: 25%;
+    }
+    
+    > div:nth-child(2) {
+
+      img {
+        margin-right: 20px;
+      }
+    }
+  }
 
   .logo-box {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    // position: absolute;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
     text-align: center;
 
     .logo {

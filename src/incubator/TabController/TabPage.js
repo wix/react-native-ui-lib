@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import {StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import Reanimated from 'react-native-reanimated';
+import _ from 'lodash';
 import TabBarContext from './TabBarContext';
 import {Constants} from '../../helpers';
 
@@ -24,11 +25,21 @@ export default class TabPage extends PureComponent {
     /**
      * Whether this page should be loaded lazily
      */
-    lazy: PropTypes.bool
+    lazy: PropTypes.bool,
+    /**
+     * How long to wait till lazy load complete (good for showing loader screens)
+     */
+    lazyLoadTime: PropTypes.number,
+    /**
+     * Render a custom loading page when lazy loading
+     */
+    renderLoading: PropTypes.elementType
   };
 
   static defaultProps = {
-    activeOpacity: 0.6
+    activeOpacity: 0.6,
+    lazyLoadTime: 300,
+    renderLoading: _.noop
   };
 
   state = {
@@ -49,29 +60,30 @@ export default class TabPage extends PureComponent {
       this.setState({
         loaded: true
       });
-    }, 300); // tab bar indicator transition time
+    }, this.props.lazyLoadTime); // tab bar indicator transition time
+  };
+
+  renderCodeBlock = () => {
+    const {currentPage} = this.context;
+    const {index, lazy} = this.props;
+    return block([
+      cond(and(eq(currentPage, index), lazy, eq(this._loaded, 0)), [set(this._loaded, 1), call([], this.lazyLoad)]),
+      cond(eq(currentPage, index),
+        [set(this._opacity, 1), set(this._zIndex, 1)],
+        [set(this._opacity, 0), set(this._zIndex, 0)])
+    ]);
   };
 
   render() {
-    const {currentPage} = this.context;
-    const {index, lazy, testID} = this.props;
+    const {renderLoading, testID} = this.props;
     const {loaded} = this.state;
 
     return (
       <Reanimated.View style={this._pageStyle} testID={testID}>
+        {!loaded && renderLoading()}
         {loaded && this.props.children}
         <Code>
-          {() => {
-            return block([
-              cond(and(eq(currentPage, index), lazy, eq(this._loaded, 0)), [
-                set(this._loaded, 1),
-                call([], this.lazyLoad)
-              ]),
-              cond(eq(currentPage, index),
-                [set(this._opacity, 1), set(this._zIndex, 1)],
-                [set(this._opacity, 0), set(this._zIndex, 0)])
-            ]);
-          }}
+          {this.renderCodeBlock}
         </Code>
       </Reanimated.View>
     );

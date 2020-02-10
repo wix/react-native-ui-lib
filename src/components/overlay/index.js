@@ -12,6 +12,7 @@ const OVERLY_TYPES = {
   BOTTOM: 'bottom',
   SOLID: 'solid'
 };
+
 const gradientImage = require('./assets/GradientOverlay.png');
 
 /**
@@ -26,45 +27,67 @@ export default class Overlay extends PureBaseComponent {
     /**
      * The type of overlay to set on top of the image
      */
-    type: PropTypes.oneOf(_.values(OVERLY_TYPES))
+    type: PropTypes.oneOf(_.values(OVERLY_TYPES)),
+    /**
+     * The overlay color
+     */
+    color: PropTypes.string,
+    /**
+     * Custom overlay content to be rendered on top of the image
+     */
+    customContent: PropTypes.element
   };
 
   static overlayTypes = OVERLY_TYPES;
 
-  getStyleByType() {
-    switch (this.props.type) {
+  getStyleByType(type = this.props.type) {
+    const {color} = this.props;
+
+    switch (type) {
       case OVERLY_TYPES.TOP:
-        return styles.top;
+        return [styles.top, color && {tintColor: color}];
       case OVERLY_TYPES.BOTTOM:
-        return styles.bottom;
+        return [styles.bottom, color && {tintColor: color}];
       case OVERLY_TYPES.SOLID:
-        return styles.solid;
+        return [styles.solid, color && {backgroundColor: color}];
       default:
         break;
     }
   }
 
-  renderImage(typeStyle) {
-    const {type} = this.props;
-    const image = type !== OVERLY_TYPES.SOLID ? gradientImage : undefined;
+  renderCustomContent = () => {
+    const {customContent} = this.props;
+    return (
+      <View pointerEvents="box-none" style={styles.customContent}>
+        {customContent}
+      </View>
+    );
+  };
 
-    return <Image style={[styles.container, typeStyle]} resizeMode={'stretch'} source={image}/>;
-  }
+  renderImage = (style, source) => {
+    return <Image style={[styles.container, style]} resizeMode={'stretch'} source={source}/>;
+  };
 
   render() {
-    const {type} = this.props;
+    const {type, customContent} = this.props;
+    const image = type !== OVERLY_TYPES.SOLID ? gradientImage : undefined;
 
     if (type === OVERLY_TYPES.VERTICAL) {
-
       return (
-        <View style={[styles.container]}>
-          {this.renderImage(styles.top)}
-          {this.renderImage(styles.bottom)}
-        </View>
+        <>
+          {this.renderImage(this.getStyleByType(OVERLY_TYPES.TOP), image)}
+          {this.renderImage(this.getStyleByType(OVERLY_TYPES.BOTTOM), image)}
+          {customContent && this.renderCustomContent()}
+        </>
       );
     }
 
-    return this.renderImage(this.getStyleByType());
+    return (
+      <>
+        {type && this.renderImage(this.getStyleByType(), image)}
+        {customContent && this.renderCustomContent()}
+      </>
+    );
   }
 }
 
@@ -86,5 +109,8 @@ const styles = StyleSheet.create({
   },
   solid: {
     backgroundColor: Colors.rgba(Colors.dark10, 0.4)
+  },
+  customContent: {
+    ...StyleSheet.absoluteFillObject
   }
 });

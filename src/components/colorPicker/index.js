@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {LayoutAnimation, StyleSheet, Keyboard, TextInput, PixelRatio} from 'react-native';
+import {LayoutAnimation, StyleSheet, Keyboard, TextInput, PixelRatio, I18nManager} from 'react-native';
 import ColorPalette from './ColorPalette';
 import {SWATCH_MARGIN, SWATCH_SIZE} from './ColorSwatch';
 import {Constants} from '../../helpers';
@@ -27,7 +27,6 @@ export default class ColorPicker extends PureBaseComponent {
   static displayName = 'ColorPicker';
 
   static propTypes = {
-    ...Dialog.PropTypes,
     /**
      * Array of colors for the picker's color palette (hex values)
      */
@@ -51,7 +50,11 @@ export default class ColorPicker extends PureBaseComponent {
     /**
      * onSubmit callback for the picker dialog color change
      */
-    onSubmit: PropTypes.func
+    onSubmit: PropTypes.func,
+    /**
+     * Props to pass the Dialog component
+     */
+    dialogProps: PropTypes.object
   };
 
   static defaultProps = {
@@ -275,7 +278,16 @@ export default class ColorPicker extends PureBaseComponent {
       <View style={[this.styles.preview, {backgroundColor: hex}]}>
         <TouchableOpacity center onPress={this.setFocus} activeOpacity={1}>
           <View style={this.styles.inputContainer}>
-            <Text text60 white marginL-13 marginR-5={Constants.isIOS} style={{color: textColor}}>
+            <Text 
+              text60 
+              white 
+              marginL-13 
+              marginR-5={Constants.isIOS} 
+              style={{
+                color: textColor,
+                transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
+              }}
+            >
               #
             </Text>
             <TextInput
@@ -307,6 +319,7 @@ export default class ColorPicker extends PureBaseComponent {
   }
 
   renderDialog() {
+    const {testID, dialogProps} = this.getThemeProps();
     const {show} = this.state;
 
     return (
@@ -320,6 +333,9 @@ export default class ColorPicker extends PureBaseComponent {
         onDismiss={this.onDismiss}
         containerStyle={this.styles.dialog}
         panDirection={PanningProvider.Directions.DOWN}
+        testID={`${testID}.dialog`}
+        supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOS only
+        {...dialogProps}
       >
         {this.renderHeader()}
         {this.renderPreview()}
@@ -329,10 +345,10 @@ export default class ColorPicker extends PureBaseComponent {
   }
 
   render() {
-    const {colors, value} = this.props;
+    const {colors, value, testID} = this.props;
 
     return (
-      <View row>
+      <View row testID={testID}>
         <ColorPalette
           value={value}
           colors={colors}
@@ -340,6 +356,7 @@ export default class ColorPicker extends PureBaseComponent {
           usePagination={false}
           animatedIndex={this.animatedIndex}
           onValueChange={this.onValueChange}
+          testID={`${testID}-palette`}
         />
         <View style={this.styles.buttonContainer}>
           <Button
@@ -350,6 +367,7 @@ export default class ColorPicker extends PureBaseComponent {
             outline
             iconSource={Assets.icons.plusSmall}
             onPress={this.showDialog}
+            testID={`${testID}-button`}
           />
         </View>
         {this.renderDialog()}
@@ -409,11 +427,13 @@ function createStyles(props) {
       alignItems: 'center',
       justifyContent: 'center',
       flexDirection: 'row',
-      marginBottom: Constants.isAndroid ? 5 : 8
+      marginBottom: Constants.isAndroid ? 5 : 8,
+      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
     },
     input: {
       ...Typography.text60,
-      letterSpacing: 3
+      letterSpacing: 3,
+      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
     },
     underline: {
       height: 1.5,

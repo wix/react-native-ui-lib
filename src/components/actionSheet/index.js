@@ -76,12 +76,12 @@ export default class ActionSheet extends BaseComponent {
     /**
      * Render custom title
      */
-    renderTitle: PropTypes.func,
+    renderTitle: PropTypes.elementType,
     /**
      * Render custom action
      * Note: you will need to call onOptionPress so the option's onPress will be called
      */
-    renderAction: PropTypes.func,
+    renderAction: PropTypes.elementType,
     /**
      * Called once the modal has been dissmissed (iOS only, modal only)
      */

@@ -45,6 +45,9 @@ module.exports = {
   get Dialog() {
     return require('./components').Dialog;
   },
+  get Drawer() {
+    return require('./components').Drawer;
+  },
   get FloatingButton() {
     return require('./components').FloatingButton;
   },
@@ -66,17 +69,11 @@ module.exports = {
   get TextField() {
     return require('./components').TextField;
   },
-  get TextInput() {
-    return require('./components').TextInput;
-  },
   get MaskedInput() {
     return require('./components').MaskedInput;
   },
   get ListItem() {
     return require('./components').ListItem;
-  },
-  get Notification() {
-    return require('./components').Notification;
   },
   get PageControl() {
     return require('./components').PageControl;
@@ -99,6 +96,9 @@ module.exports = {
   get Picker() {
     return require('./components').Picker;
   },
+  get DateTimePicker() {
+    return require('./components').DateTimePicker;
+  },
   get ProgressBar() {
     return require('./components').ProgressBar;
   },
@@ -111,7 +111,6 @@ module.exports = {
   get ColorSliderGroup() {
     return require('./components').ColorSliderGroup;
   },
-
   get Stepper() {
     return require('./components').Stepper;
   },
@@ -126,6 +125,9 @@ module.exports = {
   },
   get RadioGroup() {
     return require('./components').RadioGroup;
+  },
+  get ScrollBar() {
+    return require('./components').ScrollBar;
   },
   get SharedTransition() {
     return require('./components').SharedTransition;
@@ -145,11 +147,11 @@ module.exports = {
   get TouchableOpacity() {
     return require('./components').TouchableOpacity;
   },
-  get Tour() {
-    return require('./components').Tour;
-  },
   get View() {
     return require('./components').View;
+  },
+  get Wizard() {
+    return require('./components').Wizard;
   },
   get WheelPickerDialog() {
     return require('./components').WheelPickerDialog;
@@ -223,11 +225,6 @@ module.exports = {
   // get KeyboardTrackingView() {
   //   return require('./nativeComponents').KeyboardTrackingView;
   // },
-
-  // InteractableComponents
-  get Drawer() {
-    return require('./interactableComponents').Drawer;
-  },
 
   // Style
   get Colors() {

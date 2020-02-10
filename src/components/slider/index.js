@@ -47,7 +47,7 @@ export default class Slider extends PureBaseComponent {
     /**
      * Custom render instead of rendering the track
      */
-    renderTrack: PropTypes.func,
+    renderTrack: PropTypes.elementType,
     /**
      * Thumb color
      */
@@ -56,6 +56,14 @@ export default class Slider extends PureBaseComponent {
      * Callback for onValueChange
      */
     onValueChange: PropTypes.func,
+    /**
+     * Callback that notifies about slider seeking is started
+     */
+    onSeekStart: PropTypes.func,
+    /**
+     * Callback that notifies about slider seeking is finished
+     */
+    onSeekEnd: PropTypes.func,
     /**
      * The container style
      */
@@ -161,6 +169,7 @@ export default class Slider extends PureBaseComponent {
   handlePanResponderGrant = (e, gestureState) => {
     this.updateThumbStyle(true);
     this._dx = 0;
+    this.onSeekStart();
   };
   handlePanResponderMove = (e, gestureState) => {
     if (this.props.disabled) {
@@ -173,6 +182,7 @@ export default class Slider extends PureBaseComponent {
   handlePanResponderEnd = (e, gestureState) => {
     this.updateThumbStyle(false);
     this.bounceToStep();
+    this.onSeekEnd();
   };
 
   /* Actions */
@@ -292,6 +302,14 @@ export default class Slider extends PureBaseComponent {
     _.invoke(this.props, 'onValueChange', value);
   };
 
+  onSeekStart() {
+    _.invoke(this.props, 'onSeekStart');
+  }
+
+  onSeekEnd() {
+    _.invoke(this.props, 'onSeekEnd');
+  }
+
   onContainerLayout = ({nativeEvent}) => {
     this.handleMeasure('containerSize', nativeEvent);
   };
@@ -339,7 +357,7 @@ export default class Slider extends PureBaseComponent {
       case 'decrement':
         newValue = value !== minimumValue ? value - step : value;
         break;
-      default: 
+      default:
         break;
     }
 

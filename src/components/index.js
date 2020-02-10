@@ -24,7 +24,7 @@ module.exports = {
     return require('./card').default;
   },
   get Carousel() {
-    return require('./carousel/carousel-Deprecated').default;
+    return require('./carousel').default;
   },
   get Checkbox() {
     return require('./checkbox').default;
@@ -43,6 +43,9 @@ module.exports = {
   },
   get Dialog() {
     return require('./dialog').default;
+  },
+  get Drawer() {
+    return require('./drawer').default;
   },
   get FeatureHighlight() {
     return require('./featureHighlight').default;
@@ -76,9 +79,6 @@ module.exports = {
   get ListItem() {
     return require('./listItem').default;
   },
-  get Notification() {
-    return require('./notification').default;
-  },
   get PageControl() {
     return require('./pageControl').default;
   },
@@ -99,6 +99,9 @@ module.exports = {
   },
   get Picker() {
     return require('./picker').default;
+  },
+  get DateTimePicker() {
+    return require('./dateTimePicker').default;
   },
   get ProgressBar() {
     return require('./progressBar').default;
@@ -126,7 +129,6 @@ module.exports = {
   get StackAggregator() {
     return require('./stackAggregator').default;
   },
-
   get Slider() {
     return require('./slider').default;
   },
@@ -136,7 +138,6 @@ module.exports = {
   get ColorSliderGroup() {
     return require('./slider/ColorSliderGroup').default;
   },
-
   get Switch() {
     return require('./switch').default;
   },
@@ -149,13 +150,16 @@ module.exports = {
   get TouchableOpacity() {
     return require('./touchableOpacity').default;
   },
-  get Tour() {
-    return require('./tour').default;
-  },
   get View() {
     return require('./view').default;
   },
+  get Wizard() {
+    return require('./wizard').default;
+  },
   get WheelPickerDialog() {
     return require('./wheelPickerDialog').default;
+  },
+  get ScrollBar() {
+    return require('./scrollBar').default;
   }
 };
