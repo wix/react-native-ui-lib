@@ -298,7 +298,7 @@ export default class TagsInput extends BaseComponent {
           enableErrors={false}
           hideUnderline
           selectionColor={isLastTagMarked ? 'transparent' : selectionColor}
-          style={inputStyle}
+          style={[inputStyle, {textAlignVertical: 'center'}]}
           containerStyle={{flexGrow: 0}}
           collapsable={false}
           accessibilityHint={
