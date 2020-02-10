@@ -1,6 +1,6 @@
 {
   "name": "react-native-ui-lib",
-  "version": "4.0.0",
+  "version": "4.2.0",
   "main": "index.js",
   "typings": "typings/index.d.ts",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
@@ -14,6 +14,7 @@
     "url": "https://github.com/wix/react-native-ui-lib"
   },
   "scripts": {
+    "postinstall": "ln -s -f lib/ReactNativeUiLib.podspec ./",
     "start": "watchman watch-del-all && export DEV_MODE=true && react-native start",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
@@ -35,7 +36,7 @@
     "release": "node ./scripts/release.js",
     "jenkinsRelease": "node ./scripts/jenkinsRelease.js",
     "build:ts": "rm -rf dist-ts && ./scripts/build-ts.sh",
-    "build:typings": "rm -rf ./typings && ./scripts/build-typings.sh && tsc"
+    "build:typings": "rm -rf ./typings && ./scripts/build-typings.sh && tsc --emitDeclarationOnly"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
@@ -44,6 +45,7 @@
     "hoist-non-react-statics": "^3.0.0",
     "lodash": "^4.0.0",
     "memoize-one": "^5.0.5",
+    "moment": "^2.24.0",
     "prop-types": "^15.5.10",
     "react-native-animatable": "^1.1.0",
     "react-native-color": "0.0.10",
@@ -57,9 +59,11 @@
     "@babel/runtime": "^7.4.2",
     "@react-native-community/async-storage": "^1.6.2",
     "@react-native-community/blur": "^3.4.1",
+    "@react-native-community/datetimepicker": "^2.1.0",
     "@react-native-community/eslint-config": "latest",
     "@types/prop-types": "^15.5.3",
     "@types/react-native": "^0.55.21",
+    "@welldone-software/why-did-you-render": "^3.2.1",
     "babel-jest": "^24.5.0",
     "babel-preset-react-native": "*",
     "eslint": "^5.16.0",
@@ -70,16 +74,15 @@
     "jest": "^24.5.0",
     "metro-react-native-babel-preset": "^0.53.1",
     "mocha": "^5.0.0",
-    "react": "16.9.0",
     "prettier-eslint": "^9.0.0",
+    "react": "16.9.0",
     "react-autobind": "^1.0.6",
     "react-dom": "^15.4.2",
     "react-js-to-ts": "^1.4.0",
-    "react-native": "0.61.4",
+    "react-native": "0.61.5",
+    "react-native-gesture-handler": "1.5.6",
     "react-native-navigation": "^3.4.0",
-    "react-native-gesture-handler": "1.5.2",
-    "react-native-reanimated": "1.4.0",
-    "react-native-interactable": "^2.0.0",
+    "react-native-reanimated": "^1.7.0",
     "shell-utils": "^1.0.10",
     "typescript": "^2.9.2"
   },
@@ -89,7 +92,7 @@
     "react-native-gesture-handler": ">=1.5.0",
     "react-native-reanimated": ">=1.4.0",
     "@react-native-community/blur": ">=3.4.1",
-    "react-native-interactable": ">=2.0.0"
+    "@react-native-community/datetimepicker": "^2.1.0"
   },
   "jest": {
     "preset": "react-native",

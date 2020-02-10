@@ -73,11 +73,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.dark80
   },
   scrollContainer: {
-    paddingHorizontal: 15
+    paddingHorizontal: Spacings.s5
   },
   image: {
     height: 250,
-    marginBottom: 10
+    marginBottom: Spacings.s3
   },
   trackingToolbarContainer: {
     position: Constants.isIOS ? 'absolute' : 'relative',

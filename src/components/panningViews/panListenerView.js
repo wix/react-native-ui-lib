@@ -24,17 +24,17 @@ class PanListenerView extends PureBaseComponent {
     directions: PropTypes.arrayOf(PropTypes.oneOf(Object.values(PanningProvider.Directions))),
     /**
      * This is were you will get notified when a drag occurs
-     * onDrag = ({directions, velocities}) => {...}
+     * onDrag = ({directions, deltas}) => {...}
      * directions - array of directions
-     * velocities - array of velocities (same length and order as directions)
+     * deltas - array of deltas (same length and order as directions)
      * Both arrays will have {x, y} - if no x or y drag has occurred this value will be undefined
      */
     onDrag: PropTypes.func,
     /**
      * This is were you will get notified when a swipe occurs
-     * onSwipe = ({directions, deltas}) => {...}
+     * onSwipe = ({directions, velocities}) => {...}
      * directions - array of directions
-     * deltas - array of deltas (same length and order as directions)
+     * velocities - array of velocities (same length and order as directions)
      * Both arrays will have {x, y} - if no x or y swipe has occurred this value will be undefined
      */
     onSwipe: PropTypes.func,
@@ -62,7 +62,12 @@ class PanListenerView extends PureBaseComponent {
      * The sensitivity beyond which a pan is no longer considered a drag, but a swipe (default is 1.8)
      * Note: a pan would have to occur (i.e. the panSensitivity has already been surpassed)
      */
-    swipeVelocitySensitivity: PropTypes.number
+    swipeVelocitySensitivity: PropTypes.number,
+    /**
+     * Is there a view that is clickable (has onPress etc.) in the PanListenerView.
+     * This can affect the panability of this component.
+     */
+    isClickable: PropTypes.bool
   };
 
   static defaultProps = {
@@ -81,8 +86,9 @@ class PanListenerView extends PureBaseComponent {
 
     this.state = {};
 
+    const {isClickable} = props;
     this.panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: this.yes,
+      onStartShouldSetPanResponder: isClickable ? this.shouldPan : this.yes,
       onMoveShouldSetPanResponder: this.shouldPan,
       onStartShouldSetPanResponderCapture: this.no,
       onMoveShouldSetPanResponderCapture: this.no,

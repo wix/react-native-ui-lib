@@ -60,15 +60,15 @@ class Picker extends BaseComponent {
      * Example:
      * renderPicker = (selectedItem) => {...}
      */
-    renderPicker: PropTypes.func,
+    renderPicker: PropTypes.elementType,
     /**
      * Render custom picker item
      */
-    renderItem: PropTypes.func,
+    renderItem: PropTypes.elementType,
     /**
      * Render custom picker modal (e.g ({visible, children, toggleModal}) => {...})
      */
-    renderCustomModal: PropTypes.func,
+    renderCustomModal: PropTypes.elementType,
     /**
      * Custom picker props (when using renderPicker, will apply on the button wrapper)
      */
@@ -112,7 +112,7 @@ class Picker extends BaseComponent {
     /**
      * Render custom search input (only when passing showSearch)
      */
-    renderCustomSearch: PropTypes.func,
+    renderCustomSearch: PropTypes.elementType,
     /**
      * Allow to use the native picker solution (different style for iOS and Android)
      */
@@ -120,7 +120,7 @@ class Picker extends BaseComponent {
     /**
      * Callback for rendering a custom native picker inside the dialog (relevant to native picker only)
      */
-    renderNativePicker: PropTypes.func,
+    renderNativePicker: PropTypes.elementType,
     /**
      * Pass props to the list component that wraps the picker options (allows to control FlatList behavior)
      */
@@ -166,7 +166,7 @@ class Picker extends BaseComponent {
   getAccessibilityInfo() {
     const {placeholder} = this.props;
     return {
-      accessibilityLabel: this.getLabel() ? `${placeholder}. selected value = ${this.getLabel()}` : `Select ${placeholder}`,
+      accessibilityLabel: this.getLabel() ? `${placeholder}. selected. ${this.getLabel()}` : `Select ${placeholder}`,
       accessibilityHint: this.getLabel()
         ? 'Double tap to edit'
         : `Goes to ${placeholder}. Suggestions will be provided`,
@@ -196,7 +196,7 @@ class Picker extends BaseComponent {
     }
 
     if (_.isPlainObject(value)) {
-      return _.get(value, 'label'); 
+      return _.get(value, 'label');
     }
 
     // otherwise, extract from picker items
@@ -259,12 +259,14 @@ class Picker extends BaseComponent {
 
       if (!showSearch || _.isEmpty(searchValue) || _.includes(_.lowerCase(childLabel), _.lowerCase(searchValue))) {
         const selectedValue = PickerPresenter.getItemValue({value, getItemValue});
+        const isSelected = PickerPresenter.isItemSelected(childValue, selectedValue);
         return React.cloneElement(child, {
-          isSelected: PickerPresenter.isItemSelected(childValue, selectedValue),
+          isSelected,
           onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
           getItemValue: child.props.getItemValue || getItemValue,
           onSelectedLayout: this.onSelectedItemLayout,
           renderItem: child.props.renderItem || renderItem,
+          accessibilityState: isSelected ? {selected: true} : undefined,
           accessibilityHint: 'Double click to select this suggestion'
         });
       }

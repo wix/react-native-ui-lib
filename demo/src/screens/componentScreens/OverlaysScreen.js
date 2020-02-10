@@ -1,21 +1,36 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {View, Text, Image, Card, Constants} from 'react-native-ui-lib'; // eslint-disable-line
+import {View, Text, Image, Card, Constants, Colors} from 'react-native-ui-lib'; // eslint-disable-line
 
 const image = require('../../assets/images/card-example.jpg');
+const customOverlayImage = require('../../assets/icons/star.png');
+const customOverlayImage2 = require('../../assets/icons/cameraSelected.png');
+
 const uri = {
   uri: 'https://images.pexels.com/photos/140234/pexels-photo-140234.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260'
 };
 
 export default class OverlaysScreen extends Component {
-  getImageWithOverlay = type => {
+  getImageWithOverlay = (type, text, customOverylay) => {
     return (
       <View centerH>
-        <Text dark10>{type}</Text>
-        <Image style={styles.image} source={image} overlayType={type}/>
+        <Text dark10>{text}</Text>
+        <Image /* overlayColor={Colors.rgba(Colors.red40, 0.4)} */ style={styles.image} source={image} overlayType={type} customOverlayContent={customOverylay}/>
       </View>
     );
   };
+
+  renderCustomOverlay() {
+    return <Image style={styles.customOverylay} source={customOverlayImage}/>;
+  }
+
+  renderCustomOverlay2() {
+    return (
+      <View flex center>
+        <Image style={styles.customOverylay2} source={customOverlayImage2}/>
+      </View>
+    );
+  }
 
   render() {
     return (
@@ -25,12 +40,12 @@ export default class OverlaysScreen extends Component {
             Image Overlays
           </Text>
           <View row centerH>
-            {this.getImageWithOverlay(Image.overlayTypes.VERTICAL)}
-            {this.getImageWithOverlay(Image.overlayTypes.SOLID)}
+            {this.getImageWithOverlay(Image.overlayTypes.VERTICAL, 'vertical')}
+            {this.getImageWithOverlay(Image.overlayTypes.SOLID, 'solid')}
           </View>
           <View row centerH>
-            {this.getImageWithOverlay(Image.overlayTypes.TOP)}
-            {this.getImageWithOverlay(Image.overlayTypes.BOTTOM)}
+            {this.getImageWithOverlay(Image.overlayTypes.TOP, 'top')}
+            {this.getImageWithOverlay(Image.overlayTypes.BOTTOM, 'bottom')}
           </View>
 
           <Text text60BO marginB-10 marginT-20>
@@ -48,6 +63,18 @@ export default class OverlaysScreen extends Component {
           </View>
 
           <Text text60BO marginB-10 marginT-20>
+            Custom Overlay
+          </Text>
+          <View row center>
+            {this.getImageWithOverlay(undefined, 'cutom overlay only', this.renderCustomOverlay())}
+            {this.getImageWithOverlay(Image.overlayTypes.SOLID, 'solid + custom', this.renderCustomOverlay2())}
+          </View>
+          <View row center>
+            {this.getImageWithOverlay(Image.overlayTypes.VERTICAL, 'vertical + custom', this.renderCustomOverlay2())}
+            {this.getImageWithOverlay(Image.overlayTypes.BOTTOM, 'bottom + custom', this.renderCustomOverlay())}
+          </View>
+
+          <Text text60BO marginB-10 marginT-20>
             Card.Image Overlay
           </Text>
           <Card marginB-s4 padding-s2 borderRadius={4} row height={106}>
@@ -60,17 +87,22 @@ export default class OverlaysScreen extends Component {
         </View>
 
         <Text text60BO margin-10>
-          Image Overlay (cover, remote)
+          Image Overlay (cover, remote, custom overlay)
         </Text>
-        <Image cover source={uri} overlayType={Image.overlayTypes.VERTICAL}/>
+        <Image
+          cover
+          source={uri}
+          overlayType={Image.overlayTypes.VERTICAL}
+          customOverlayContent={this.renderCustomOverlay2()}
+        />
 
         <Text text60BO margin-10>
-        Image Overlay (cover, asset)
+          Image Overlay (cover, asset)
         </Text>
         <Image cover source={image} overlayType={Image.overlayTypes.VERTICAL}/>
 
         <Text text60BO margin-10>
-        Image Overlay (fill, specific height)
+          Image Overlay (fill, specific height)
         </Text>
         <Image source={image} overlayType={Image.overlayTypes.VERTICAL} style={styles.imageFillContainer}/>
       </ScrollView>
@@ -86,20 +118,20 @@ const styles = StyleSheet.create({
   },
   overlayImageAbsoluteContainer: {
     width: Constants.screenWidth,
-    height: 400,
+    height: 380,
     marginLeft: -20
   },
   overlayImageAbsoluteVertical: {
     position: 'absolute',
-    top: 10,
-    left: 0,
+    top: 30,
+    left: 10,
     width: 150,
     height: 150,
     margin: 5
   },
   overlayImageAbsoluteSolid: {
     position: 'absolute',
-    top: 0,
+    top: 30,
     right: 10,
     width: 150,
     height: 150,
@@ -107,7 +139,7 @@ const styles = StyleSheet.create({
   },
   overlayImageAbsoluteTop: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 20,
     left: 10,
     width: 150,
     height: 150,
@@ -115,8 +147,8 @@ const styles = StyleSheet.create({
   },
   overlayImageAbsoluteBottom: {
     position: 'absolute',
-    bottom: 10,
-    right: 0,
+    bottom: 20,
+    right: 10,
     width: 150,
     height: 150,
     margin: 5
@@ -127,5 +159,22 @@ const styles = StyleSheet.create({
   },
   imageFillContainer: {
     height: 100
+  },
+  customOverylay: {
+    position: 'absolute',
+    left: 137,
+    top: 134,
+    width: 25,
+    height: 25,
+    tintColor: Colors.yellow20,
+    borderWidth: 1,
+    borderColor: Colors.yellow20,
+    borderRadius: 100,
+    backgroundColor: Colors.rgba(Colors.yellow20, 0.2)
+  },
+  customOverylay2: {
+    width: 40,
+    height: 40,
+    tintColor: Colors.white
   }
 });

@@ -5,7 +5,6 @@ import TextField from '../inputs/TextField';
 import {WheelPicker} from '../../nativeComponents';
 import PickerDialog from './PickerDialog';
 import TouchableOpacity from '../touchableOpacity';
-import View from '../view';
 import {Colors} from '../../style';
 
 class NativePicker extends BaseComponent {
@@ -80,12 +79,12 @@ class NativePicker extends BaseComponent {
     if (_.isFunction(renderPicker)) {
       const {selectedValue} = this.state;
       return (
-        <View left>
+        <>
           <TouchableOpacity {...customPickerProps} link onPress={() => this.toggleDialog(true)} testID={testID}>
             {renderPicker(selectedValue)}
           </TouchableOpacity>
           {this.renderPickerDialog()}
-        </View>
+        </>
       );
     }
 

@@ -18,6 +18,10 @@ import {
 } from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 
+
+const settingsIcon = require('../assets/icons/settings.png');
+const chevronIcon = require('../assets/icons/chevronRight.png');
+
 export default class MainScreen extends Component {
   static propTypes = {
     containerStyle: ViewPropTypes.style,
@@ -46,7 +50,7 @@ export default class MainScreen extends Component {
       id: 'uilib.settingsButton',
       testID: 'uilib.settingsButton',
       enabled: true,
-      icon: Assets.icons.settings
+      icon: settingsIcon
     });
     Navigation.mergeOptions(props.componentId, navigationStyle);
   }
@@ -234,7 +238,7 @@ export default class MainScreen extends Component {
 
     return (
       <View centerV row paddingL-20 marginB-10>
-        <Image source={Assets.icons.chevronRight} style={{tintColor: Colors.dark10}} supportRTL/>
+        <Image source={chevronIcon} style={{tintColor: Colors.dark10}} supportRTL/>
         <Text
           style={[item.deprecate && styles.entryTextDeprecated]}
           dark10
@@ -306,7 +310,6 @@ export default class MainScreen extends Component {
 
     return (
       <Carousel
-        migrate 
         ref={carousel => (this.carousel = carousel)}
         containerStyle={{flex: 1}}
         onChangePage={this.onChangePage} 
@@ -326,7 +329,7 @@ export default class MainScreen extends Component {
                 <FlatList
                   showsVerticalScrollIndicator={false}
                   data={section.screens}
-                  keyExtractor={item => item.title}
+                  keyExtractor={item => item.screen ? item.title : `header_${item.title}`}
                   renderItem={this.renderItem}
                 />
               </View>

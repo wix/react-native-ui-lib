@@ -2,30 +2,27 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import memoize from 'memoize-one';
 import React from 'react';
-import {StyleSheet, ScrollView, Animated, Easing, UIManager, findNodeHandle} from 'react-native';
+import {StyleSheet, UIManager, findNodeHandle} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {PureBaseComponent} from '../../commons';
 import View from '../view';
 import Carousel from '../carousel';
 import PageControl from '../pageControl';
-import Image from '../image';
 import ColorSwatch, {SWATCH_SIZE} from './ColorSwatch';
+import ScrollBar from '../scrollBar';
 
 
 const VERTICAL_PADDING = 16;
 const HORIZONTAL_PADDING = 20;
 const MINIMUM_MARGIN = 16;
 const SCROLLABLE_HEIGHT = 92;
-const GRADIENT_WIDTH = 27;
 const DEFAULT_NUMBER_OF_ROWS = 3;
-const gradientImage = () => require('./assets/gradient.png');
 
 /**
  * @description: A color palette component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.js
  * @notes: This is a screen width component
- * @extends: ScrollView
  */
 export default class ColorPalette extends PureBaseComponent {
   static displayName = 'ColorPalette';
@@ -39,6 +36,10 @@ export default class ColorPalette extends PureBaseComponent {
      * Style to pass the palette container
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
+     * The container margins
+     */
+    containerWidth: PropTypes.number,
     /**
      * Whether to use pagination when number of colors exceeds the number of rows
      */
@@ -80,12 +81,11 @@ export default class ColorPalette extends PureBaseComponent {
 
     this.state = {
       currentPage: 0,
-      scrollable: false,
-      gradientOpacity: new Animated.Value(0)
+      scrollable: false
     };
 
     this.carousel = React.createRef();
-    this.scrollView = React.createRef();
+    this.scrollBar = React.createRef();
     this.initLocalVariables();
   }
 
@@ -99,7 +99,7 @@ export default class ColorPalette extends PureBaseComponent {
 
   onOrientationChanged = () => {
     this.initLocalVariables();
-    this.setState({gradientOpacity: new Animated.Value(0)}); // only to trigger render
+    this.setState({orientation: Constants.orientation}); // only to trigger render
   }
 
   initLocalVariables() {
@@ -127,6 +127,11 @@ export default class ColorPalette extends PureBaseComponent {
     return this.getUniqueColors(this.props.colors);
   }
 
+  get containerWidth() {
+    const {containerWidth} = this.getThemeProps();
+    return containerWidth || Constants.screenWidth;
+  }
+
   getUniqueColors = memoize(
     (colors) => {
       const c = _.map(colors, color => {
@@ -143,9 +148,7 @@ export default class ColorPalette extends PureBaseComponent {
     const {numberOfRows} = this.props;
 
     if (!_.inRange(numberOfRows, 2, 6)) {
-      console.warn(
-        `${numberOfRows} is not within valid range of color rows (2 to 5); defaulting to ${DEFAULT_NUMBER_OF_ROWS}.`
-      );
+      console.warn(`${numberOfRows} is not within valid range of color rows (2 to 5); defaulting to ${DEFAULT_NUMBER_OF_ROWS}.`);
       return DEFAULT_NUMBER_OF_ROWS;
     }
     return numberOfRows;
@@ -158,7 +161,7 @@ export default class ColorPalette extends PureBaseComponent {
     // additional items have the minimum width of the margin between them and the previous item's width
     const additionalItemMinimumWidth = SWATCH_SIZE + MINIMUM_MARGIN;
     // floor(space left / size of additional items)
-    itemsPerRow += Math.floor((Constants.screenWidth - firstItemWidth) / additionalItemMinimumWidth);
+    itemsPerRow += Math.floor((this.containerWidth - firstItemWidth) / additionalItemMinimumWidth);
 
     return itemsPerRow;
   }
@@ -174,25 +177,13 @@ export default class ColorPalette extends PureBaseComponent {
     }
 
     // Now that we have the itemsPerRow set, we can calculate the actual innerMargin
-    const remainingSpace = Constants.screenWidth - this.itemsPerRow * SWATCH_SIZE - 2 * HORIZONTAL_PADDING;
+    const remainingSpace = this.containerWidth - this.itemsPerRow * SWATCH_SIZE - 2 * HORIZONTAL_PADDING;
     // With pagination - there's 1 less space than the number of items
     const numberOfMargins = this.itemsPerRow - 1;
     const margin = remainingSpace / numberOfMargins;
     // We have to subtract something since otherwise some Android devices will overflow into the next line
     return (margin - 0.001) / 2;
   }
-
-  animateGradientOpacity = (offsetX, contentWidth) => {
-    const overflow = contentWidth - Constants.screenWidth;
-    const newValue = offsetX > 0 && offsetX >= overflow - 1 ? 0 : 1;
-
-    Animated.timing(this.state.gradientOpacity, {
-      toValue: newValue,
-      easing: Easing.inOut(Easing.linear),
-      duration: 300,
-      useNativeDriver: true
-    }).start();
-  };
 
   scrollToSelected() {
     const {scrollable, currentPage} = this.state;
@@ -203,21 +194,19 @@ export default class ColorPalette extends PureBaseComponent {
       if (childRef) {
         const handle = findNodeHandle(childRef);
         if (handle) {
-          UIManager.measureLayoutRelativeToParent(
-            handle,
+          UIManager.measureLayoutRelativeToParent(handle,
             e => {
               console.warn(e);
             },
             (x, y, w, h) => {
-              if (x + w > Constants.screenWidth) {
-                this.scrollView.current.scrollTo({
-                  x: x + w + HORIZONTAL_PADDING - Constants.screenWidth,
+              if (x + w > this.containerWidth) {
+                this.scrollBar.current.scrollTo({
+                  x: x + w + HORIZONTAL_PADDING - this.containerWidth,
                   y: 0,
                   animated: false
                 });
               }
-            }
-          );
+            });
         }
       }
     } else if (this.usePagination) {
@@ -226,16 +215,7 @@ export default class ColorPalette extends PureBaseComponent {
   }
 
   onContentSizeChange = contentWidth => {
-    if (contentWidth > Constants.screenWidth) {
-      this.setState({scrollable: true, gradientOpacity: new Animated.Value(1)});
-    }
-  };
-
-  onScroll = event => {
-    const {contentOffset, contentSize} = event.nativeEvent;
-    const offsetX = contentOffset.x;
-    const contentWidth = contentSize.width;
-    this.animateGradientOpacity(offsetX, contentWidth);
+    this.setState({scrollable: contentWidth > this.containerWidth, contentWidth});
   };
 
   onChangePage = index => {
@@ -251,25 +231,6 @@ export default class ColorPalette extends PureBaseComponent {
       this.scrollToSelected();
     }, 0);
   };
-
-  renderGradient() {
-    return (
-      <Animated.View
-        pointerEvents="none"
-        style={{
-          position: 'absolute',
-          right: 0,
-          opacity: this.state.gradientOpacity
-        }}
-      >
-        <Image
-          source={gradientImage()}
-          resizeMode={'stretch'}
-          style={{width: GRADIENT_WIDTH, height: SCROLLABLE_HEIGHT - 12, tintColor: Colors.white}}
-        />
-      </Animated.View>
-    );
-  }
 
   getHorizontalMargins = (index) => {
     const isFirst = index === 0;
@@ -307,7 +268,7 @@ export default class ColorPalette extends PureBaseComponent {
   };
 
   renderColorSwatch(color, index) {
-    const {animatedIndex} = this.props;
+    const {animatedIndex, testID} = this.props;
 
     return (
       <ColorSwatch
@@ -320,6 +281,7 @@ export default class ColorPalette extends PureBaseComponent {
         animated={index === animatedIndex}
         onPress={this.onValueChange}
         ref={r => (this.itemsRefs[index] = r)}
+        testID={`${testID}-${color}`}
       />
     );
   }
@@ -341,37 +303,23 @@ export default class ColorPalette extends PureBaseComponent {
     );
   }
 
-  renderScroll() {
+  renderScrollableContent() {
     const {containerStyle, ...others} = this.props;
-    const {scrollable} = this.state;
+    const {scrollable, contentWidth} = this.state;
 
     return (
-      <ScrollView
-        ref={this.scrollView}
-        horizontal
-        showsHorizontalScrollIndicator={false}
+      <ScrollBar
+        ref={this.scrollBar}
         style={[containerStyle, styles.scrollContainer]}
         scrollEnabled={scrollable}
         onContentSizeChange={this.onContentSizeChange}
-        onScroll={this.onScroll}
+        height={SCROLLABLE_HEIGHT}
+        containerProps={{width: !scrollable ? contentWidth : undefined}}
+        gradientHeight={SCROLLABLE_HEIGHT - 12}
       >
         {this.renderPalette(others, styles.scrollContent, this.colors)}
-      </ScrollView>
+      </ScrollBar>
     );
-  }
-
-  renderScrollableContent() {
-    const {scrollable} = this.state;
-
-    if (scrollable) {
-      return (
-        <View row>
-          {this.renderScroll()}
-          {this.renderGradient()}
-        </View>
-      );
-    }
-    return this.renderScroll();
   }
 
   renderPaginationContent() {
@@ -381,9 +329,9 @@ export default class ColorPalette extends PureBaseComponent {
 
     return (
       <View center style={[containerStyle, styles.paginationContainer]}>
-        <Carousel loop={loop} onChangePage={this.onChangePage} ref={this.carousel}>
+        <Carousel migrate loop={loop} onChangePage={this.onChangePage} ref={this.carousel}>
           {_.map(colorGroups, (colorsPerPage, index) => {
-            return this.renderPalette(others, {...styles.page, width: Constants.screenWidth}, colorsPerPage, index);
+            return this.renderPalette(others, {...styles.page, width: this.containerWidth}, colorsPerPage, index);
           })}
         </Carousel>
         <PageControl
@@ -406,7 +354,7 @@ export default class ColorPalette extends PureBaseComponent {
 const styles = StyleSheet.create({
   paletteContainer: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     paddingLeft: HORIZONTAL_PADDING,
     paddingVertical: VERTICAL_PADDING
   },

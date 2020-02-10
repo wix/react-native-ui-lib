@@ -1,72 +1,33 @@
-declare class Typography {
-    text10: {
-        fontSize: number;
-        fontWeight: string;
-        lineHeight: number;
-        fontFamily: string;
-    };
-    text20: {
-        fontSize: number;
-        fontWeight: string;
-        lineHeight: number;
-        fontFamily: string;
-    };
-    text30: {
-        fontSize: number;
-        fontWeight: string;
-        lineHeight: number;
-        fontFamily: string;
-    };
-    text40: {
-        fontSize: number;
-        fontWeight: string;
-        lineHeight: number;
-        fontFamily: string;
-    };
-    text50: {
-        fontSize: number;
-        fontWeight: string;
-        lineHeight: number;
-        fontFamily: string;
-    };
-    text60: {
-        fontSize: number;
-        fontWeight: string;
-        lineHeight: number;
-        fontFamily: string;
-    };
-    text70: {
-        fontSize: number;
-        fontWeight: string;
-        lineHeight: number;
-        fontFamily: string;
-    };
-    text80: {
-        fontSize: number;
-        fontWeight: string;
-        lineHeight: number;
-        fontFamily: string;
-    };
-    text90: {
-        fontSize: number;
-        fontWeight: string;
-        lineHeight: number;
-        fontFamily: string;
-    };
-    text100: {
-        fontSize: number;
-        fontWeight: string;
-        lineHeight: number;
-        fontFamily: string;
-    };
-    /**
-     * Load custom set of typographies
-     * arguments:
-     * typographies - map of keys and typography values
-     * e.g {text15: {fontSize: 58, fontWeight: '100', lineHeight: Math.floor(58 * 1.4)}}
-     */
-    loadTypographies(typographies: any): void;
-    getKeysPattern(): RegExp;
+export interface TypographyDescription {
+  fontSize: number;
+  fontWeight: string;
+  lineHeight: number;
+  fontFamily: string;
 }
-declare const _default: Typography;
-export default _default;
+
+export type TypographyName =
+  | 'text10'
+  | 'text20'
+  | 'text30'
+  | 'text40'
+  | 'text50'
+  | 'text60'
+  | 'text70'
+  | 'text80'
+  | 'text90'
+  | 'text100';
+
+export declare class TypographyClass {
+  measureWidth(
+    text: string,
+    typography?: TypographyDescription,
+    containerWidth?: number
+  ): Promise<number>;
+  measureTextSize(
+    text: string,
+    typography?: TypographyDescription,
+    containerWidth?: number
+  ): Promise<{heigth: number, width: number}>;
+}
+
+export const Typography: TypographyClass & Readonly<Record<TypographyName, TypographyDescription>>;

@@ -1,22 +1,19 @@
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, ActivityIndicator} from 'react-native';
-import {View as AnimatableView} from 'react-native-animatable';
 import {Colors, Typography, ThemeManager} from '../../style';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
-import Text from '../../components/text';
 import View from '../../components/view';
+import Text from '../../components/text';
 
 /**
  * @description: Component that shows a full screen with an activity indicator
- * @extends: Animatable.View
- * @gif: https://media.giphy.com/media/3o75212iau1oK8hznG/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreenScreens/LoadingScreen.js
  */
 export default class LoaderScreen extends BaseComponent {
   static displayName = 'LoaderScreen';
+
   static propTypes = {
     ...ActivityIndicator.propTypes,
     /**
@@ -47,18 +44,8 @@ export default class LoaderScreen extends BaseComponent {
   render() {
     const {message, messageStyle, loaderColor, overlay, backgroundColor, containerStyle, ...others} = this.props;
 
-    const animationProps = this.extractAnimationProps();
-    const Container = !_.isEmpty(animationProps) ? AnimatableView : View;
-    if (!_.isEmpty(animationProps)) {
-      console.warn('LoaderScreen component will soon stop supporting animationProps.' +
-          'Please wrap your LoaderScreen component with your own animation component, such as Animatable.View',);
-    }
-
     return (
-      <Container
-        style={[overlay ? [styles.overlayContainer, {backgroundColor}] : styles.container, containerStyle]}
-        {...animationProps}
-      >
+      <View style={[overlay ? [styles.overlayContainer, {backgroundColor}] : styles.container, containerStyle]}>
         <View flex center>
           <ActivityIndicator
             size={'large'}
@@ -68,7 +55,7 @@ export default class LoaderScreen extends BaseComponent {
           />
           {!overlay && message && <Text style={[styles.message, messageStyle]}>{message}</Text>}
         </View>
-      </Container>
+      </View>
     );
   }
 }

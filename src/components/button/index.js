@@ -6,7 +6,6 @@ import {Constants} from '../../helpers';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 import {PureBaseComponent} from '../../commons';
 import TouchableOpacity from '../touchableOpacity';
-import View from '../view';
 import Text from '../text';
 
 const PADDINGS = {
@@ -162,12 +161,10 @@ export default class Button extends PureBaseComponent {
     right: 'right'
   };
 
+  // This redundant constructor for some reason fix tests :/
+  // eslint-disable-next-line
   constructor(props) {
     super(props);
-
-    if (!_.isUndefined(props.containerStyle)) {
-      console.error('Button "containerStyle" prop will be deprecated soon, please use "style" instead');
-    }
   }
 
   componentDidUpdate(prevProps) {
@@ -224,14 +221,6 @@ export default class Button extends PureBaseComponent {
     return iconSource && !label;
   }
 
-  getAccessibilityInfo() {
-    if (this.isIconButton) {
-      return {
-        accessibilityRole: 'imagebutton'
-      };
-    }
-  }
-
   getBackgroundColor() {
     const {backgroundColor: themeBackgroundColor} = this.getThemeProps();
     const {disabled, outline, link, backgroundColor: propsBackgroundColor} = this.props;
@@ -263,7 +252,7 @@ export default class Button extends PureBaseComponent {
     } else if (outline) {
       color = outlineColor || Colors.blue30;
     } else if (this.isIconButton) {
-      color = Colors.dark10;
+      color = undefined; // Colors.dark10;
     }
 
     if (disabled && (link || outline)) {
@@ -465,7 +454,7 @@ export default class Button extends PureBaseComponent {
   }
 
   render() {
-    const {onPress, disabled, link, style, containerStyle, testID, animateLayout, ...others} = this.getThemeProps();
+    const {onPress, disabled, link, style, testID, animateLayout, ...others} = this.getThemeProps();
     const shadowStyle = this.getShadowStyle();
     const {margins} = this.state;
     const backgroundColor = this.getBackgroundColor();
@@ -475,6 +464,8 @@ export default class Button extends PureBaseComponent {
 
     return (
       <TouchableOpacity
+        row
+        centerV
         style={[
           this.styles.container,
           animateLayout && this.getAnimationDirectionStyle(),
@@ -482,7 +473,6 @@ export default class Button extends PureBaseComponent {
           link && this.styles.innerContainerLink,
           shadowStyle,
           margins,
-          containerStyle,
           backgroundColor && {backgroundColor},
           borderRadiusStyle,
           outlineStyle,
@@ -494,15 +484,12 @@ export default class Button extends PureBaseComponent {
         onPress={onPress}
         disabled={disabled}
         testID={testID}
-        {...this.getAccessibilityInfo()}
         {...others}
         ref={this.setRef}
       >
-        <View row centerV>
-          {this.props.children}
-          {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
-          {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
-        </View>
+        {this.props.children}
+        {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
+        {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
       </TouchableOpacity>
     );
   }
@@ -536,8 +523,7 @@ function createStyles() {
       backgroundColor: 'transparent',
       flex: 0,
       flexDirection: 'row',
-      ...Typography.text70,
-      fontWeight: '100'
+      ...Typography.text70
     }
   });
 }

@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
-import {Constants, View, Text, Carousel, Image, Card} from 'react-native-ui-lib'; // eslint-disable-line
 import _ from 'lodash';
+import React, {Component} from 'react';
+import {StyleSheet, ScrollView} from 'react-native';
+import {Constants, Spacings, View, Text, Carousel, Image} from 'react-native-ui-lib'; // eslint-disable-line
+
 
 const INITIAL_PAGE = 2;
-const WIDTH = Constants.screenWidth - 120;
-
+const WIDTH = Constants.screenWidth - (Spacings.s5 * 2);
 const IMAGES = [
   'https://images.pexels.com/photos/1212487/pexels-photo-1212487.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
   'https://images.pexels.com/photos/1366630/pexels-photo-1366630.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
@@ -28,17 +28,16 @@ class CarouselScreen extends Component {
 
   render() {
     return (
-      <View flex>
-        <Text text30 margin-20>
-          Carousel
-        </Text>
+      <ScrollView>
+        <Text text30 margin-20>Carousel</Text>
+
         <Carousel
           migrate
           ref={r => (this.carousel = r)}
           // loop
           onChangePage={index => this.onChangePage(index)}
           pageWidth={WIDTH}
-          // itemSpacings={20}
+          // itemSpacings={Spacings.s3}
           initialPage={INITIAL_PAGE}
           containerStyle={{height: 160/* , flex: 1 */}}
           pageControlPosition={'under'}
@@ -73,7 +72,7 @@ class CarouselScreen extends Component {
         </View>
 
         <View padding-20>
-          <Carousel migrate containerStyle={{height: 160}} initialPage={INITIAL_PAGE} loop>
+          <Carousel containerStyle={{height: 160}} initialPage={INITIAL_PAGE} loop>
             {_.map(IMAGES, (image, index) => {
               return (
                 <View key={index} flex padding-10 bottom>
@@ -89,7 +88,7 @@ class CarouselScreen extends Component {
             })}
           </Carousel>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -106,7 +105,7 @@ const styles = StyleSheet.create({
   page: {
     flex: 1,
     borderWidth: 1,
-    borderRadius: 4
+    borderRadius: 8
   }
 });
 

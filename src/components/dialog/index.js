@@ -67,7 +67,7 @@ class Dialog extends BaseComponent {
      * this allows for scrollable content (the children of the dialog)
      * props are transferred to the renderPannableHeader
      */
-    renderPannableHeader: PropTypes.func,
+    renderPannableHeader: PropTypes.elementType,
     /**
      * The props that will be passed to the pannable header
      */
@@ -83,7 +83,7 @@ class Dialog extends BaseComponent {
   };
 
   static defaultProps = {
-    migrate: false,
+    migrate: true,
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
     width: '90%'
   };

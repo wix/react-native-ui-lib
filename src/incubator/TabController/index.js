@@ -13,7 +13,7 @@ import TabBarItem from './TabBarItem';
 import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
 
-const {cond, Code, and, eq, set, Value, block, round} = Reanimated;
+const {cond, Code, and, eq, set, Value, block, round, onChange, call} = Reanimated;
 
 /**
  * @description: A performant solution for a tab controller with lazy load mechanism
@@ -52,16 +52,17 @@ class TabController extends Component {
   };
 
   state = {
+    selectedIndex: this.props.selectedIndex,
     itemStates: []
   };
 
   _targetPage = new Value(-1);
   _currentPage = new Value(this.props.selectedIndex);
-  _carouselOffset = new Value(0);
+  _carouselOffset = new Value(this.props.selectedIndex * Math.round(Constants.screenWidth));
 
   getProviderContextValue = () => {
-    const {itemStates} = this.state;
-    const {onChangeIndex, selectedIndex, asCarousel} = this.props;
+    const {itemStates, selectedIndex} = this.state;
+    const {onChangeIndex, asCarousel} = this.props;
     return {
       selectedIndex,
       currentPage: this._currentPage,
@@ -76,6 +77,10 @@ class TabController extends Component {
   registerTabItems = (tabItemsCount, ignoredItems) => {
     const itemStates = _.times(tabItemsCount, () => new Value(-1));
     this.setState({itemStates, ignoredItems});
+  };
+
+  onPageChange = ([index]) => {
+    _.invoke(this.props, 'onChangeIndex', index);
   };
 
   getCarouselPageChangeCode() {
@@ -96,32 +101,32 @@ class TabController extends Component {
     return [];
   }
 
-  render() {
+  renderCodeBlock = () => {
     const {itemStates, ignoredItems} = this.state;
+    return block([
+      // Carousel Page change
+      ...this.getCarouselPageChangeCode(),
+      // TabBar Page change
+      ..._.map(itemStates, (state, index) => {
+        return [
+          cond(and(eq(state, State.BEGAN), !_.includes(ignoredItems, index)), set(this._targetPage, index)),
+          cond(and(eq(this._targetPage, index), eq(state, State.END), !_.includes(ignoredItems, index)), [
+            set(this._currentPage, index),
+            set(this._targetPage, -1)
+          ])
+        ];
+      }),
+      onChange(this._currentPage, call([this._currentPage], this.onPageChange))
+    ]);
+  };
+
+  render() {
+    const {itemStates} = this.state;
 
     return (
       <TabBarContext.Provider value={this.getProviderContextValue()}>
         {this.props.children}
-        {!_.isEmpty(itemStates) && (
-          <Code>
-            {() =>
-              block([
-                // Carousel Page change
-                ...this.getCarouselPageChangeCode(),
-                // TabBar Page change
-                ..._.map(itemStates, (state, index) => {
-                  return [
-                    cond(and(eq(state, State.BEGAN), !_.includes(ignoredItems, index)), set(this._targetPage, index)),
-                    cond(and(eq(this._targetPage, index), eq(state, State.END), !_.includes(ignoredItems, index)), [
-                      set(this._currentPage, index),
-                      set(this._targetPage, -1)
-                    ])
-                  ];
-                })
-              ])
-            }
-          </Code>
-        )}
+        {!_.isEmpty(itemStates) && <Code>{this.renderCodeBlock}</Code>}
       </TabBarContext.Provider>
     );
   }

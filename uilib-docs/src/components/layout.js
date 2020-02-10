@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import _ from 'lodash';
 
 import Header from './header';
+import Navbar from '../components/navbar';
 import './layout.scss';
 
-const Layout = ({children, navbar, data, location}) => {
-  const showSidebar = _.includes(location.href, 'docs');
+const Layout = ({children, showSidebar}) => {
   return (
     <div className="layout">
       <Helmet
@@ -18,9 +17,9 @@ const Layout = ({children, navbar, data, location}) => {
         ]}
       />
       <Header/>
-      <div className="main">
-        {showSidebar && <div className="sidebar">{navbar}</div>}
-        <div className="content">{children}</div>
+      <div className={`main ${!showSidebar ? 'fill' : ''}`}>
+        {showSidebar && <Navbar/>}
+        <div>{children}</div>
       </div>
     </div>
   );
