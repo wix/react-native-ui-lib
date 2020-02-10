@@ -215,16 +215,10 @@ PODS:
     - DoubleConversion
     - Folly (= 2018.10.22.00)
     - glog
-    - React-Core (= 0.61.4)
-    - React-cxxreact (= 0.61.4)
-    - React-jsi (= 0.61.4)
-    - ReactCommon/jscallinvoker (= 0.61.4)
     - React-Core (= 0.61.5)
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
-  - ReactNativeKeyboardTrackingView (5.6.1):
-    - React
   - ReactNativeNavigation (3.7.0):
     - React
   - ReactNativeUiLib (2.0.1):
@@ -368,16 +362,6 @@ SPEC CHECKSUMS:
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
-  React-RCTActionSheet: 7369b7c85f99b6299491333affd9f01f5a130c22
-  React-RCTAnimation: d07be15b2bd1d06d89417eb0343f98ffd2b099a7
-  React-RCTBlob: 8e0b23d95c9baa98f6b0e127e07666aaafd96c34
-  React-RCTImage: 443050d14a66e8c2332e9c055f45689d23e15cc7
-  React-RCTLinking: ce9a90ba155aec41be49e75ec721bbae2d48a47e
-  React-RCTNetwork: 41fe54bacc67dd00e6e4c4d30dd98a13e4beabc8
-  React-RCTSettings: 45e3e0a6470310b2dab2ccc6d1d73121ba3ea936
-  React-RCTText: 21934e0a51d522abcd0a275407e80af45d6fd9ec
-  React-RCTVibration: 0f76400ee3cec6edb9c125da49fed279340d145a
-  ReactCommon: a6a294e7028ed67b926d29551aa9394fd989c24c
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
   React-RCTBlob: d89293cc0236d9cb0933d85e430b0bbe81ad1d72
@@ -388,7 +372,6 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  ReactNativeKeyboardTrackingView: a240a6a0dba852bb107109a7ec7e98b884055977
   ReactNativeNavigation: bed6f504aa1a4dadd151503bf99d0ef96d06847f
   ReactNativeUiLib: 217f90ec42d9cfcd136a442f6963cd9c744e0bc1
   RNCAsyncStorage: 8539fc80a0075fcc9c8e2dff84cd22dc5bf1dacf
