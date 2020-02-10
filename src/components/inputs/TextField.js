@@ -44,7 +44,7 @@ const ICON_LEFT_PADDING = 6;
  * @description: A wrapper for TextInput component with extra functionality like floating placeholder
  * @modifiers: Typography
  * @extends: TextInput
- * @extendslink: https://facebook.github.io/react-native/docs/textinput.html
+ * @extendslink: https://facebook.github.io/react-native/docs/textinput
  * @gif: https://media.giphy.com/media/xULW8su8Cs5Z9Fq4PS/giphy.gif, https://media.giphy.com/media/3ohc1dhDcLS9FvWLJu/giphy.gif, https://media.giphy.com/media/oNUSOxnHdMP5ZnKYsh/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/InputsScreen.js
  */
@@ -98,13 +98,13 @@ export default class TextField extends BaseInput {
     /**
      * Render custom expandable input (requires expandable to be true)
      */
-    renderExpandableInput: PropTypes.func,
+    renderExpandableInput: PropTypes.elementType,
     /**
      * allow custom rendering of expandable content when clicking on the input (useful for pickers)
      * accept props and state as params, ex. (props, state) => {...}
      * use toggleExpandableModal(false) method to toggle off the expandable content
      */
-    renderExpandable: PropTypes.func,
+    renderExpandable: PropTypes.elementType,
     /**
      * Callback for the modal toggle. Pass with renderExpandable to control the modal toggle
      */

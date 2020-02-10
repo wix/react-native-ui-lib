@@ -12,7 +12,7 @@ class SharedArea extends Component {
     /**
      * render details screen
      */
-    renderDetails: PropTypes.func
+    renderDetails: PropTypes.elementType
   };
 
   static defaultProps = {

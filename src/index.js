@@ -219,6 +219,12 @@ module.exports = {
   get SafeAreaInsetsManager() {
     return require('./nativeComponents').SafeAreaInsetsManager;
   },
+  get KeyboardAwareInsetsView() {
+    return require('./nativeComponents').KeyboardAwareInsetsView;
+  },
+  // get KeyboardTrackingView() {
+  //   return require('./nativeComponents').KeyboardTrackingView;
+  // },
 
   // Style
   get Colors() {

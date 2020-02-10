@@ -14,16 +14,26 @@ export function renderBooleanOption(title, key) {
   );
 }
 
-export function renderRadioGroup(title, key, options) {
+export function renderRadioGroup(title, key, options, {isRow} = {}) {
   const value = this.state[key];
   return (
     <View marginB-s2>
       <Text text70M marginB-s2>
         {title}
       </Text>
-      <RadioGroup initialValue={value} onValueChange={value => this.setState({[key]: value})}>
+      <RadioGroup row={isRow} initialValue={value} onValueChange={value => this.setState({[key]: value})}>
         {_.map(options, (value, key) => {
-          return <RadioButton useCustomTheme testID={key} key={key} marginB-s2 label={value} value={options[key]}/>;
+          return (
+            <RadioButton
+              useCustomTheme
+              testID={key}
+              key={key}
+              marginB-s2
+              marginR-s2={isRow}
+              label={value}
+              value={options[key]}
+            />
+          );
         })}
       </RadioGroup>
     </View>
@@ -46,7 +56,7 @@ export function renderColorOption(title,
   );
 }
 
-export function renderSliderOption(title, key, {min = 0, max = 10, step = 1, initial = 0}) {
+export function renderSliderOption(title, key, {min = 0, max = 10, step = 1, initial = 0, sliderText = ''}) {
   const value = this.state[key];
   return (
     <View marginV-s2>
@@ -64,7 +74,7 @@ export function renderSliderOption(title, key, {min = 0, max = 10, step = 1, ini
           onValueChange={value => this.setState({[key]: value})}
         />
         <Text marginL-s4 text70>
-          text{value}
+          {sliderText}{value}
         </Text>
       </View>
     </View>
