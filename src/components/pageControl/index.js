@@ -2,6 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 import {StyleSheet} from 'react-native';
+import {asBaseComponent, forwardRef} from '../../commons';
 import {Colors} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
@@ -28,7 +29,7 @@ function getSizeStyle(size, enlargeActive, index, currentPage) {
  * @image: https://user-images.githubusercontent.com/33805983/34663655-76698110-f460-11e7-854b-243d27f66fec.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PageControlScreen.js
  */
-export default class PageControl extends PureComponent {
+class PageControl extends PureComponent {
   static displayName = 'PageControl';
   static propTypes = {
     /**
@@ -79,9 +80,10 @@ export default class PageControl extends PureComponent {
     spacing: PropTypes.number
   };
 
+  static DEFAULT_SIZE = 10;
+  static DEFAULT_SPACING = 4;
+
   static defaultProps = {
-    size: 10,
-    spacing: 4,
     enlargeActive: false
   };
 
@@ -135,7 +137,7 @@ export default class PageControl extends PureComponent {
     const {numOfPages} = this.props;
     let mediumSize,
       smallSize,
-      {size} = this.props;
+      {size = PageControl.DEFAULT_SIZE} = this.props;
     if (Array.isArray(size)) {
       smallSize = size[0];
       mediumSize = size[1];
@@ -161,7 +163,7 @@ export default class PageControl extends PureComponent {
   }
 
   renderIndicator(index, size, enlargeActive) {
-    const {currentPage, color, inactiveColor, onPagePress, spacing} = this.props;
+    const {currentPage, color, inactiveColor, onPagePress, spacing = PageControl.DEFAULT_SPACING} = this.props;
     return (
       <TouchableOpacity
         index={index}
@@ -192,7 +194,7 @@ export default class PageControl extends PureComponent {
   }
 
   renderSameSizeIndicators() {
-    const {numOfPages, size: sizeFromProps, enlargeActive} = this.props;
+    const {numOfPages, size: sizeFromProps = PageControl.DEFAULT_SIZE, enlargeActive} = this.props;
     const size = Array.isArray(sizeFromProps) ? sizeFromProps[2] : sizeFromProps;
 
     return _.map(_.times(numOfPages), index => this.renderIndicator(index, size, enlargeActive));
@@ -212,6 +214,8 @@ export default class PageControl extends PureComponent {
     );
   }
 }
+
+export default asBaseComponent(forwardRef(PageControl));
 
 const styles = StyleSheet.create({
   container: {
