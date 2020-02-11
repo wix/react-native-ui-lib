@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import {Animated, ScrollView, FlatList} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
@@ -8,7 +8,6 @@ import {BaseComponent, forwardRef} from '../../commons';
 import View from '../view';
 import Image from '../image';
 
-const CONTAINER_HEIGHT = 48;
 const GRADIENT_WIDTH = 76;
 const defaultImage = () => require('./assets/gradientOverlay.png');
 
@@ -67,7 +66,6 @@ class ScrollBar extends BaseComponent {
   };
 
   static defaultProps = {
-    height: CONTAINER_HEIGHT,
     gradientWidth: GRADIENT_WIDTH,
     gradientMargins: 0,
     gradientColor: Colors.white,
@@ -88,12 +86,16 @@ class ScrollBar extends BaseComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.itemsLayouts[this.props.focusIndex]) {
-      const {x, width} = this.itemsLayouts[this.props.focusIndex];
-      if (x < this.contentOffset) {
-        this.scrollbar.scrollTo({x: x - 30});
-      } else if (x + width > this.contentOffset + this.containerWidth) {
-        this.scrollbar.scrollTo({x: Math.max(0, this.contentOffset + width + 10)});
+    const {focusIndex} = this.props;
+    if (focusIndex && prevProps.focusIndex !== focusIndex) {
+      const focusedItemLayout = this.itemsLayouts[focusIndex];
+      if (focusedItemLayout) {
+        const {x, width} = focusedItemLayout;
+        if (x < this.contentOffset) {
+          this.scrollbar.scrollTo({x: x - width});
+        } else if (x + width > this.contentOffset + this.containerWidth) {
+          this.scrollbar.scrollTo({x: this.contentOffset + width});
+        }
       }
     }
   }
@@ -164,7 +166,11 @@ class ScrollBar extends BaseComponent {
         {...this.getThemeProps()}
         ref={r => {
           this.scrollbar = r;
-          forwardedRef(r);
+          if (_.isFunction(forwardedRef)) {
+            forwardedRef(r);
+          } else if (_.isObject(forwardedRef)) {
+            forwardedRef.current = r;
+          }
         }}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -187,14 +193,14 @@ class ScrollBar extends BaseComponent {
     const {gradientOpacity, gradientOpacityLeft} = this.state;
     const {gradientWidth, gradientHeight, gradientMargins, height, gradientColor, gradientImage} = this.getThemeProps();
     const imageTransform = Constants.isRTL ? (left ? undefined : [{scaleX: -1}]) : left ? [{scaleX: -1}] : undefined;
-
+    const heightToUse = gradientHeight || height || '100%';
     return (
       <Animated.View
         pointerEvents="none"
         style={{
           opacity: left ? gradientOpacityLeft : gradientOpacity,
           width: gradientWidth,
-          height: gradientHeight || height,
+          height: heightToUse,
           position: 'absolute',
           right: !left ? gradientMargins : undefined,
           left: left ? gradientMargins : undefined
@@ -204,7 +210,7 @@ class ScrollBar extends BaseComponent {
           source={gradientImage || defaultImage()}
           style={{
             width: gradientWidth,
-            height: gradientHeight || height,
+            height: heightToUse,
             tintColor: gradientColor,
             transform: imageTransform
           }}
@@ -229,13 +235,12 @@ class ScrollBar extends BaseComponent {
 }
 
 const Item = ({children, index, onLayout}) => {
-  // const [layout, setLayout] = useState();
 
   const onItemLayout = useCallback(({nativeEvent: {layout}}) => {
     onLayout({layout, index});
   });
 
-  return <View onLayout={onItemLayout}>{children}</View>;
+  return <View flexG onLayout={onItemLayout}>{children}</View>;
 };
 
 ScrollBar.Item = Item;
