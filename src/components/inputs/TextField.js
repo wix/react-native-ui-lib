@@ -18,21 +18,25 @@ import Image from '../image';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
 
-const DEFAULT_COLOR_BY_STATE = {
+
+const COLOR_BY_STATE = {
   default: Colors.grey10,
   focus: Colors.grey10,
   error: Colors.grey10,
   disabled: Colors.grey50
 };
-const DEFAULT_UNDERLINE_COLOR_BY_STATE = {
+const UNDERLINE_COLOR_BY_STATE = {
   default: Colors.grey50,
   focus: Colors.blue30,
   error: Colors.red30
 };
-
-const DEFAULT_PLACEHOLDER_COLOR_BY_STATE = {
+const PLACEHOLDER_COLOR_BY_STATE = {
   default: Colors.grey30,
   focus: Colors.blue30
+};
+const CHAR_COUNTER_COLOR_BY_STATE = {
+  default: Colors.grey30,
+  error: Colors.red30
 };
 
 const LABEL_TYPOGRAPHY = Typography.text80;
@@ -254,7 +258,7 @@ export default class TextField extends BaseInput {
     if (_.isString(colorProp)) {
       return colorProp || Colors.dark10;
     } else if (_.isPlainObject(colorProp)) {
-      const mergedColorState = {...DEFAULT_COLOR_BY_STATE, ...colorProp};
+      const mergedColorState = {...COLOR_BY_STATE, ...colorProp};
 
       if (this.isDisabled()) {
         return disabledColor || mergedColorState.disabled;
@@ -344,7 +348,7 @@ export default class TextField extends BaseInput {
     const {floatingPlaceholderState} = this.state;
     const {expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} = this.getThemeProps();
     const typography = this.getTypography();
-    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_PLACEHOLDER_COLOR_BY_STATE.default);
+    const placeholderColor = this.getStateColor(placeholderTextColor || PLACEHOLDER_COLOR_BY_STATE.default);
 
     if (this.shouldFakePlaceholder()) {
       return (
@@ -367,7 +371,7 @@ export default class TextField extends BaseInput {
                 inputRange: [0, 1],
                 outputRange: [
                   placeholderColor,
-                  this.getStateColor(floatingPlaceholderColor || DEFAULT_PLACEHOLDER_COLOR_BY_STATE)
+                  this.getStateColor(floatingPlaceholderColor || PLACEHOLDER_COLOR_BY_STATE)
                 ]
               }),
               lineHeight: this.shouldFloatPlaceholder() ? LABEL_TYPOGRAPHY.lineHeight : typography.lineHeight
@@ -386,7 +390,7 @@ export default class TextField extends BaseInput {
 
   renderTitle() {
     const {floatingPlaceholder, title, titleColor, titleStyle} = this.getThemeProps();
-    const color = this.getStateColor(titleColor || DEFAULT_PLACEHOLDER_COLOR_BY_STATE);
+    const color = this.getStateColor(titleColor || PLACEHOLDER_COLOR_BY_STATE);
 
     if (!floatingPlaceholder && title) {
       return <Text style={[{color}, this.styles.topLabel, this.styles.label, titleStyle]}>{title}</Text>;
@@ -400,7 +404,7 @@ export default class TextField extends BaseInput {
     if (maxLength && showCharacterCounter) {
       const counter = this.getCharCount();
       const textColor =
-        this.isCounterLimit() && focused ? DEFAULT_COLOR_BY_STATE.error : DEFAULT_COLOR_BY_STATE.default;
+        this.isCounterLimit() && focused ? CHAR_COUNTER_COLOR_BY_STATE.error : CHAR_COUNTER_COLOR_BY_STATE.default;
       const color = this.isDisabled() && disabledColor ? disabledColor : textColor;
 
       return (
@@ -519,7 +523,7 @@ export default class TextField extends BaseInput {
     ];
     
     const placeholderText = this.getPlaceholderText();
-    const placeholderColor = this.getStateColor(placeholderTextColor || DEFAULT_PLACEHOLDER_COLOR_BY_STATE.default);
+    const placeholderColor = this.getStateColor(placeholderTextColor || PLACEHOLDER_COLOR_BY_STATE.default);
     const isEditable = !this.isDisabled() && !expandable;
 
     return (
@@ -579,7 +583,7 @@ export default class TextField extends BaseInput {
 
   render() {
     const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
-    const underlineStateColor = this.getStateColor(underlineColor || DEFAULT_UNDERLINE_COLOR_BY_STATE);
+    const underlineStateColor = this.getStateColor(underlineColor || UNDERLINE_COLOR_BY_STATE);
 
     return (
       <View style={[this.styles.container, containerStyle]} collapsable={false}>
