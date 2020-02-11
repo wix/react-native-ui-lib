@@ -677,9 +677,9 @@ function createStyles({centered, multiline, expandable}) {
       backgroundColor: 'transparent',
       marginBottom: Constants.isIOS ? 10 : 5,
       padding: 0, // for Android
-      textAlignVertical: 'top', // for Android (not working)
-      borderColor: 'transparent', // borderColor+borderWidth is a fix for collapsing issue on Android
-      borderWidth: 1
+      textAlignVertical: 'top', // for Android
+      borderColor: 'transparent', // borderColor & borderWidth is a fix for collapsing issue on Android
+      borderWidth: 1 // for Android
     },
     expandableInput: {
       flexGrow: 1,
