@@ -7,11 +7,11 @@ import Tab1 from './tab1';
 import Tab2 from './tab2';
 import Tab3 from './tab3';
 
-const USE_CAROUSEL = true;
 const TABS = ['Home', 'Me', 'Dashboard', 'account', 'groups', 'blog'];
 
 class TabControllerScreen extends Component {
   state = {
+    asCarousel: true,
     selectedIndex: 0,
     items: [
       ..._.map(TABS, tab => ({label: tab, key: tab})),
@@ -72,6 +72,17 @@ class TabControllerScreen extends Component {
   //   ];
   // }
 
+  toggleCarouselMode = () => {
+    this.setState({
+      asCarousel: !this.state.asCarousel,
+      key: this.state.asCarousel ? 'asCarousel' : 'staticPages'
+    });
+  };
+
+  onChangeIndex = selectedIndex => {
+    this.setState({selectedIndex});
+  };
+
   renderLoadingPage() {
     return (
       <View flex center>
@@ -84,8 +95,9 @@ class TabControllerScreen extends Component {
   }
 
   renderTabPages() {
-    const Container = USE_CAROUSEL ? Incubator.TabController.PageCarousel : View;
-    const containerProps = USE_CAROUSEL ? {} : {flex: true};
+    const {asCarousel} = this.state;
+    const Container = asCarousel ? Incubator.TabController.PageCarousel : View;
+    const containerProps = asCarousel ? {} : {flex: true};
     return (
       <Container {...containerProps}>
         <Incubator.TabController.TabPage index={0}>
@@ -111,33 +123,38 @@ class TabControllerScreen extends Component {
   }
 
   render() {
-    const {key, selectedIndex} = this.state;
+    const {key, selectedIndex, asCarousel} = this.state;
     return (
-      <View flex bg-dark80>
-        <View flex>
-          <Incubator.TabController
-            key={key}
-            asCarousel={USE_CAROUSEL}
-            selectedIndex={selectedIndex}
-            onChangeIndex={index => console.warn('tab index is', index)}
+      <View flex bg-grey70>
+        <Incubator.TabController
+          key={key}
+          asCarousel={asCarousel}
+          selectedIndex={selectedIndex}
+          onChangeIndex={this.onChangeIndex}
+        >
+          <Incubator.TabController.TabBar
+            items={this.getItems()}
+            // key={key}
+            // uppercase
+            // indicatorStyle={{backgroundColor: 'green', height: 3}}
+            // labelColor={'green'}
+            // selectedLabelColor={'red'}
+            // labelStyle={{fontSize: 20}}
+            // iconColor={'green'}
+            // selectedIconColor={'blue'}
+            activeBackgroundColor={Colors.blue60}
           >
-            <Incubator.TabController.TabBar
-              items={this.getItems()}
-              // key={key}
-              // uppercase
-              // indicatorStyle={{backgroundColor: 'green', height: 3}}
-              // labelColor={'green'}
-              // selectedLabelColor={'red'}
-              // labelStyle={{fontSize: 20}}
-              // iconColor={'green'}
-              // selectedIconColor={'blue'}
-              activeBackgroundColor={Colors.blue60}
-            >
-              {/* {this.renderTabItems()} */}
-            </Incubator.TabController.TabBar>
-            {this.renderTabPages()}
-          </Incubator.TabController>
-        </View>
+            {/* {this.renderTabItems()} */}
+          </Incubator.TabController.TabBar>
+          {this.renderTabPages()}
+        </Incubator.TabController>
+        <Button
+          bg-grey20={!asCarousel}
+          bg-green30={asCarousel}
+          label={`Carousel:${asCarousel ? 'ON' : 'OFF'}`}
+          style={{position: 'absolute', bottom: 100, right: 20}}
+          onPress={this.toggleCarouselMode}
+        />
       </View>
     );
   }
