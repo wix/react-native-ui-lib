@@ -105,6 +105,7 @@ class DateTimePicker extends BaseComponent {
   }
 
   handleChange = (event = {}, date) => {
+    // NOTE: will be called on Android even when there was no actual change
     if (event.type !== 'dismissed' && date !== undefined) {
       this.chosenDate = date;
 
@@ -124,6 +125,11 @@ class DateTimePicker extends BaseComponent {
 
   onDonePressed = () =>
     this.toggleExpandableOverlay(() => {
+      if (Constants.isIOS && !this.chosenDate) {
+        // since handleChange() is not called on iOS when there is no actual change
+        this.chosenDate = new Date();
+      }
+      
       _.invoke(this.props, 'onChange', this.chosenDate);
       this.setState({value: this.chosenDate});
     });
@@ -181,7 +187,12 @@ class DateTimePicker extends BaseComponent {
           iconStyle={{tintColor: Colors.dark10}}
           onPress={this.toggleExpandableOverlay}
         />
-        <Button useCustomTheme={useCustomTheme} link iconSource={Assets.icons.check} onPress={this.onDonePressed}/>
+        <Button 
+          link 
+          iconSource={Assets.icons.check} 
+          useCustomTheme={useCustomTheme} 
+          onPress={this.onDonePressed}
+        />
       </View>
     );
   }
