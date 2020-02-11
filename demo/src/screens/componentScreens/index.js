@@ -23,6 +23,7 @@ Navigation.registerComponent('unicorn.components.PanListenerScreen', () => requi
 Navigation.registerComponent('unicorn.components.PanResponderScreen', () => require('./PanResponderScreen').default);
 Navigation.registerComponent('unicorn.components.PickerScreen', () => require('./PickerScreen').default);
 Navigation.registerComponent('unicorn.components.RadioButtonScreen', () => require('./RadioButtonScreen').default);
+Navigation.registerComponent('unicorn.components.ScrollBarScreen', () => require('./ScrollBarScreen').default);
 Navigation.registerComponent('unicorn.components.SharedTransitionScreen', () => require('./SharedTransitionScreen').default);
 Navigation.registerComponent('unicorn.components.StepperScreen', () => require('./StepperScreen').default);
 Navigation.registerComponent('unicorn.components.SwitchScreen', () => require('./SwitchScreen').default);

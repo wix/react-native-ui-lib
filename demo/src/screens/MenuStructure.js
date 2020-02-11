@@ -39,6 +39,7 @@ export const navigationData = {
       {title: 'Pan Dismissible', tags: 'pan swipe drag dismiss', screen: 'unicorn.components.PanDismissibleScreen'},
       {title: 'Pan Listener', tags: 'pan swipe drag listener', screen: 'unicorn.components.PanListenerScreen'},
       {title: 'Pan Responder', tags: 'pan swipe drag responder', screen: 'unicorn.components.PanResponderScreen'},
+      {title: 'ScrollBar', tags: 'scroll bar gradient', screen: 'unicorn.components.ScrollBarScreen'},
       {title: 'Shared Transition', tags: 'shared transition element', screen: 'unicorn.components.SharedTransitionScreen'},
       {title: 'Stack Aggregator', tags: 'stack aggregator', screen: 'unicorn.components.StackAggregatorScreen'},
       {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
