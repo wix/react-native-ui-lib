@@ -1,10 +1,12 @@
 import _ from 'lodash';
+import {StyleSheet} from 'react-native';
 import {Typography, Colors, BorderRadiuses, Spacings, ThemeManager} from '../style';
 
 export const FLEX_KEY_PATTERN = /^flex(G|S)?(-\d*)?$/;
 export const PADDING_KEY_PATTERN = new RegExp(`padding[LTRBHV]?-([0-9]*|${Spacings.getKeysPattern()})`);
 export const MARGIN_KEY_PATTERN = new RegExp(`margin[LTRBHV]?-([0-9]*|${Spacings.getKeysPattern()})`);
 export const ALIGNMENT_KEY_PATTERN = /(left|top|right|bottom|center|centerV|centerH|spread)/;
+export const POSITION_KEY_PATTERN = /^abs([F|L|R|T|B|V|H])?$/;
 
 export function extractColorValue(props) {
   // const props = this.getThemeProps();
@@ -147,6 +149,29 @@ export function extractAlignmentsValues(props) {
   return alignments;
 }
 
+export function extractPositionStyle(props) {
+  const POSITION_CONVERSIONS = {
+    F: 'Fill',
+    T: 'Top',
+    B: 'Bottom',
+    L: 'Left',
+    R: 'Right',
+    H: 'Horizontal',
+    V: 'Vertical'
+  };
+
+  const keys = Object.keys(props);
+  const positionProp = _.findLast(keys, prop => POSITION_KEY_PATTERN.test(prop) && !!props[prop]);
+  if (positionProp) {
+    const positionVariationKey = _.split(positionProp, 'abs')[1];
+    if (positionVariationKey) {
+      const positionVariation = POSITION_CONVERSIONS[positionVariationKey];
+      return styles[`absolute${positionVariation}`];
+    }
+    return styles.absolute;
+  }
+}
+
 export function extractFlexStyle(props) {
   const STYLE_KEY_CONVERTERS = {
     flex: 'flex',
@@ -226,9 +251,10 @@ export function generateModifiersStyle(options = {
   paddings: true,
   margins: true,
   alignments: true,
-  flex: true
+  flex: true, 
+  position: true
 },
-props = this.props,) {
+props = this.props) {
   const style = {};
 
   if (options.backgroundColor) {
@@ -249,13 +275,17 @@ props = this.props,) {
   if (options.flex) {
     style.flexStyle = this.extractFlexStyle(props);
   }
+  
+  if (options.position) {
+    style.positionStyle = this.extractPositionStyle(props);
+  }
 
   return style;
 }
 
 export function getAlteredModifiersOptions(currentProps, nextProps) {
   const ignoredKeys = ['children', 'forwardedRef', 'style', 'testID'];
-  const allKeys = _.union([..._.keys(currentProps), ..._.keys(nextProps)]).filter((key) => !ignoredKeys.includes(key));
+  const allKeys = _.union([..._.keys(currentProps), ..._.keys(nextProps)]).filter(key => !ignoredKeys.includes(key));
   const changedKeys = _.filter(allKeys, key => !_.isEqual(currentProps[key], nextProps[key]));
 
   const options = {};
@@ -278,6 +308,21 @@ export function getAlteredModifiersOptions(currentProps, nextProps) {
   if (_.find(changedKeys, key => Colors.getBackgroundKeysPattern().test(key))) {
     options.backgroundColor = true;
   }
+  
+  if (_.find(changedKeys, key => POSITION_KEY_PATTERN.test(key))) {
+    options.position = true;
+  }
 
   return options;
 }
+
+const styles = StyleSheet.create({
+  absolute: {position: 'absolute'},
+  absoluteFill: StyleSheet.absoluteFillObject,
+  absoluteTop: {position: 'absolute', top: 0},
+  absoluteBottom: {position: 'absolute', bottom: 0},
+  absoluteLeft: {position: 'absolute', left: 0},
+  absoluteRight: {position: 'absolute', right: 0},
+  absoluteVertical: {position: 'absolute', top: 0, bottom: 0},
+  absoluteHorizontal: {position: 'absolute', left: 0, right: 0}
+});
