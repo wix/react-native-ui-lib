@@ -255,7 +255,7 @@ export default class Carousel extends BaseComponent {
       return (
         <View style={{width: this.state.pageWidth, paddingLeft}} key={key} collapsable={false}>
           {this.shouldAllowAccessibilityLayout() && !Number.isNaN(index) &&
-            <View style={{position: 'absolute', width: 1}}>
+            <View style={this.styles.hiddenText}>
               <Text>{`page ${index + 1} out of ${length}`}</Text>
             </View>
           }
@@ -397,6 +397,10 @@ function createStyles() {
     },
     pageControlContainerStyleUnder: {
       marginVertical: 16
+    },
+    hiddenText: {
+      position: 'absolute', 
+      width: 1
     }
   });
 }
