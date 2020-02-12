@@ -30,8 +30,8 @@ export function renderRadioGroup(title, key, options, {isRow} = {}) {
               key={key}
               marginB-s2
               marginR-s2={isRow}
-              label={value}
-              value={options[key]}
+              label={key}
+              value={value}
             />
           );
         })}
