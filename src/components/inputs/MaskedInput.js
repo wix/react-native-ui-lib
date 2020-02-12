@@ -21,7 +21,7 @@ export default class MaskedInput extends BaseInput {
     /**
      * callback for rendering the custom input out of the value returns from the actual input
      */
-    renderMaskedText: PropTypes.func.isRequired,
+    renderMaskedText: PropTypes.elementType.isRequired,
     /**
      * container style for the masked input container
      */

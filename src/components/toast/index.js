@@ -87,7 +87,7 @@ export default class Toast extends PureBaseComponent {
      * render a custom view that will appear permanently above or below a Toast,
      * depends on the Toast's position, and animate with it when the Toast is made visible or dismissed
      */
-    renderAttachment: PropTypes.func,
+    renderAttachment: PropTypes.elementType,
     /**
      * render a custom loader component instead of the default when passing showLoader
      */
