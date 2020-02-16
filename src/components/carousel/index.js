@@ -102,13 +102,8 @@ export default class Carousel extends BaseComponent {
       currentPage: this.shouldUsePageWidth() ? this.getCalcIndex(props.initialPage) : props.initialPage,
       currentStandingPage: props.initialPage,
       pageWidth: defaultPageWidth,
-      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage, pageWidth: defaultPageWidth})},
-      screenReaderEnabled: false
+      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage, pageWidth: defaultPageWidth})}
     };
-
-    AccessibilityInfo.isScreenReaderEnabled().then((screenReaderEnabled) => {
-      this.setState({screenReaderEnabled});
-    });
   }
 
   componentDidMount() {
@@ -200,7 +195,7 @@ export default class Carousel extends BaseComponent {
   };
 
   shouldAllowAccessibilityLayout() {
-    return this.props.allowAccessibleLayout && this.state.screenReaderEnabled;
+    return this.props.allowAccessibleLayout && Constants.accessibility.isScreenReaderEnabled;
   }
 
   onContentSizeChange = () => {
