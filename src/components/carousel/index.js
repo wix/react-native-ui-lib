@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ScrollView, StyleSheet, AccessibilityInfo} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
