@@ -60,6 +60,12 @@ module.exports = {
   get Image() {
     return require('./components').Image;
   },
+  get KeyboardAwareScrollView() {
+    return require('./components').KeyboardAwareScrollView;
+  },
+  get KeyboardAwareListView() {
+    return require('./components').KeyboardAwareListView;
+  },
   get BaseInput() {
     return require('./components').BaseInput;
   },
