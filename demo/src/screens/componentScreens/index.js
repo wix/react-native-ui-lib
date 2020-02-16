@@ -39,4 +39,5 @@ Navigation.registerComponent('unicorn.components.ColorPickerScreen', () => requi
 Navigation.registerComponent('unicorn.components.ColorSwatchScreen', () => require('./ColorSwatchScreen').default);
 Navigation.registerComponent('unicorn.components.StackAggregatorScreen', () => require('./StackAggregatorScreen').default);
 Navigation.registerComponent('unicorn.components.DateTimePickerScreen', () => require('./DateTimePickerScreen').default);
+Navigation.registerComponent('unicorn.components.ViewScreen', () => require('./ViewScreen').default);
 Navigation.registerComponent('unicorn.components.WizardScreen', () => require('./WizardScreen').default);
