@@ -1,29 +1,16 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {View, Colors, Text, Stepper, Typography, Avatar, Assets, TagsInput} from 'react-native-ui-lib'; //eslint-disable-line
-import contacts from '../../data/conversations';
+import {View, Colors, Text, Typography, TagsInput} from 'react-native-ui-lib'; // eslint-disable-line
 
-const filters = [
-  {label: 'All', value: 0},
-  {label: 'Draft', value: 1},
-  {label: 'Published', value: 2},
-  {label: 'Scheduled', value: 3},
-];
 
 export default class TagsInputScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      itemsCount: 1,
-      // language: {value: 'java', label: 'Java'},
-      language: undefined,
-      languages: [],
-      filter: filters[0],
-      contact: contacts[0],
       tags: [{label: 'Amit'}, {label: 'Ethan'}],
       tags2: ['Tags', 'Input'],
-      tags3: ['Non', 'Removable', 'Tags'],
+      tags3: ['Non', 'Removable', 'Tags']
     };
   }
 
@@ -47,11 +34,11 @@ export default class TagsInputScreen extends Component {
             TagsInput
           </Text>
 
-          <TagsInput containerStyle={{marginBottom: 25}} placeholder="Enter Tags" tags={this.state.tags2} />
+          <TagsInput containerStyle={{marginBottom: 25}} placeholder="Enter Tags" tags={this.state.tags2}/>
 
           <TagsInput
             containerStyle={{marginBottom: 25}}
-            placeholder="with disableTagAdding disableTagRemoval"
+            placeholder="Editing disabled"
             tags={this.state.tags3}
             disableTagRemoval
             disableTagAdding
@@ -76,7 +63,7 @@ export default class TagsInputScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
+    padding: 15
   },
   customTag: {
     backgroundColor: Colors.purple30,
@@ -84,6 +71,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     borderRadius: 3,
     marginRight: 10,
-    marginBottom: 10,
-  },
+    marginBottom: 10
+  }
 });

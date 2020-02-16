@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
-import {View as RNView, ViewPropTypes, SafeAreaView, Animated} from 'react-native';
+import {View as RNView, SafeAreaView, Animated} from 'react-native';
 import {asBaseComponent, forwardRef} from '../../commons';
 import {Constants} from '../../helpers';
 
@@ -14,7 +14,7 @@ class View extends PureComponent {
   static displayName = 'View';
 
   static propTypes = {
-    ...ViewPropTypes,
+    ...RNView.propTypes,
     // ...BaseComponent.propTypes,
     /**
      * If true, will render as SafeAreaView
@@ -23,7 +23,11 @@ class View extends PureComponent {
     /**
      * Use Animate.View as a container
      */
-    animated: PropTypes.bool
+    animated: PropTypes.bool,
+    /**
+     * Turn off accessibility for this view and its nested children
+     */
+    inaccessible: PropTypes.bool
   };
 
   constructor(props) {
@@ -43,17 +47,20 @@ class View extends PureComponent {
   render() {
     // (!) extract left, top, bottom... props to avoid passing them on Android
     // eslint-disable-next-line
-    const {modifiers, style, left, top, right, bottom, flex: propsFlex, forwardedRef, ...others} = this.props;
-    const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
+    const {modifiers, style, left, top, right, bottom, flex: propsFlex, forwardedRef, inaccessible, ...others} = this.props;
+    const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle, positionStyle} = modifiers;
     const Element = this.Container;
 
     return (
       <Element
+        accessibilityElementsHidden={inaccessible}
+        importantForAccessibility={inaccessible ? 'no-hide-descendants' : undefined}
         {...others}
         style={[
           backgroundColor && {backgroundColor},
           borderRadius && {borderRadius},
           flexStyle,
+          positionStyle,
           paddings,
           margins,
           alignments,

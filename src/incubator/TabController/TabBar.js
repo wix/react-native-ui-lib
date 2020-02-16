@@ -8,7 +8,7 @@ import _ from 'lodash';
 
 import TabBarContext from './TabBarContext';
 import TabBarItem from './TabBarItem';
-import ReanimatedObject from './ReanimatedObject';
+// import ReanimatedObject from './ReanimatedObject';
 import {asBaseComponent, forwardRef} from '../../commons';
 import View from '../../components/view';
 import Text from '../../components/text';
@@ -17,7 +17,23 @@ import {Constants} from '../../helpers';
 import {LogService} from '../../services';
 
 const DEFAULT_HEIGHT = 48;
-const {Code, Clock, Value, add, sub, cond, eq, stopClock, startClock, clockRunning, timing, block, set} = Reanimated;
+const INDICATOR_INSET = Spacings.s4;
+const {
+  Code,
+  Clock,
+  Value,
+  and,
+  eq,
+  neq,
+  cond,
+  stopClock,
+  startClock,
+  interpolate,
+  Extrapolate,
+  timing,
+  block,
+  set
+} = Reanimated;
 
 /**
  * @description: TabController's TabBar component
@@ -99,11 +115,12 @@ class TabBar extends PureComponent {
     this.tabBar = React.createRef();
 
     this._itemsWidths = _.times(itemsCount, () => null);
-    this._indicatorOffset = new ReanimatedObject({duration: 300, easing: Easing.bezier(0.23, 1, 0.32, 1)});
-    this._indicatorWidth = new ReanimatedObject({duration: 300, easing: Easing.bezier(0.23, 1, 0.32, 1)});
+    this._indicatorOffset = new Value(0);
+    this._indicatorWidth = new Value(0);
+
     this._indicatorTransitionStyle = {
-      width: this._indicatorWidth.value,
-      left: this._indicatorOffset.value
+      width: this._indicatorWidth,
+      left: this._indicatorOffset
     };
 
     this.state = {
@@ -161,9 +178,16 @@ class TabBar extends PureComponent {
     this._itemsWidths[itemIndex] = itemWidth;
     if (!_.includes(this._itemsWidths, null)) {
       const {selectedIndex} = this.context;
-      const itemsOffsets = _.map(this._itemsWidths, (w, index) => _.sum(_.take(this._itemsWidths, index)));
-      this.setState({itemsWidths: this._itemsWidths, itemsOffsets});
-      this.tabBar.current.scrollTo({x: itemsOffsets[selectedIndex], animated: false});
+      const itemsOffsets = _.map(this._itemsWidths,
+        (w, index) => INDICATOR_INSET + _.sum(_.take(this._itemsWidths, index)));
+      const itemsWidths = _.map(this._itemsWidths, width => width - INDICATOR_INSET * 2);
+
+      this.setState({itemsWidths, itemsOffsets});
+      const selectedItemOffset = itemsOffsets[selectedIndex] - INDICATOR_INSET;
+      
+      if (selectedItemOffset + this._itemsWidths[selectedIndex] > Constants.screenWidth) {  
+        this.tabBar.current.scrollTo({x: selectedItemOffset, animated: true});
+      }
     }
   };
 
@@ -172,35 +196,6 @@ class TabBar extends PureComponent {
       this.setState({scrollEnabled: true});
     }
   };
-
-  runTiming(targetValue, prevValue, duration) {
-    const clock = new Clock();
-    const state = {
-      finished: new Value(0),
-      position: prevValue,
-      time: new Value(0),
-      frameTime: new Value(0)
-    };
-
-    const config = {
-      duration,
-      toValue: targetValue,
-      easing: Easing.bezier(0.23, 1, 0.32, 1)
-    };
-
-    return block([
-      cond(clockRunning(clock), [], [startClock(clock)]),
-      timing(clock, state, config),
-      cond(state.finished, [
-        stopClock(clock),
-        set(state.finished, 0),
-        set(state.time, 0),
-        set(state.frameTime, 0),
-        set(prevValue, state.position)
-      ]),
-      state.position
-    ]);
-  }
 
   renderSelectedIndicator() {
     const {itemsWidths} = this.state;
@@ -248,7 +243,6 @@ class TabBar extends PureComponent {
       });
     } else {
       // TODO: Remove once props.children is deprecated
-
       if (this.tabBarItems) {
         return this.tabBarItems;
       }
@@ -273,10 +267,35 @@ class TabBar extends PureComponent {
     }
   }
 
+  renderCodeBlock = () => {
+    const {carouselOffset, asCarousel} = this.context;
+    const {itemsWidths, itemsOffsets} = this.state;
+    const nodes = [];
+
+    if (asCarousel) {
+      nodes.push(set(this._indicatorOffset,
+        interpolate(carouselOffset, {
+          inputRange: itemsOffsets.map((value, index) => index * Constants.screenWidth),
+          outputRange: itemsOffsets,
+          extrapolate: Extrapolate.CLAMP
+        })),
+      set(this._indicatorWidth,
+        interpolate(carouselOffset, {
+          inputRange: itemsWidths.map((value, index) => index * Constants.screenWidth),
+          outputRange: itemsWidths,
+          extrapolate: Extrapolate.CLAMP
+        })));
+    } else {
+      nodes.push(set(this._indicatorOffset, runIndicatorTimer(new Clock(), this.context.currentPage, itemsOffsets)),
+        set(this._indicatorWidth, runIndicatorTimer(new Clock(), this.context.currentPage, itemsWidths)));
+    }
+
+    return block(nodes);
+  };
+
   render() {
-    const {currentPage, carouselOffset, asCarousel} = this.context;
     const {height, enableShadow, containerStyle} = this.props;
-    const {itemsWidths, itemsOffsets, scrollEnabled} = this.state;
+    const {itemsWidths, scrollEnabled} = this.state;
     return (
       <View
         style={[styles.container, enableShadow && styles.containerShadow, {width: this.containerWidth}, containerStyle]}
@@ -293,48 +312,7 @@ class TabBar extends PureComponent {
           <View style={[styles.tabBar, height && {height}]}>{this.renderTabBarItems()}</View>
           {this.renderSelectedIndicator()}
         </ScrollView>
-        {!_.isUndefined(itemsWidths) && (
-          <Code>
-            {() => {
-              const indicatorInset = Spacings.s4;
-
-              return block(asCarousel
-                /* Transition for carousel pages */
-                ? [
-                  set(this._indicatorOffset.value,
-                    Reanimated.interpolate(carouselOffset, {
-                      inputRange: itemsOffsets.map((offset, index) => index * Constants.screenWidth),
-                      outputRange: itemsOffsets.map(offset => offset + indicatorInset)
-                    })),
-                  set(this._indicatorWidth.value,
-                    Reanimated.interpolate(carouselOffset, {
-                      inputRange: itemsWidths.map((width, index) => index * Constants.screenWidth),
-                      outputRange: itemsWidths.map((width, index) => width - 2 * indicatorInset)
-                    }))
-                ]
-                /* Default transition */
-                : [
-                  // calc indicator current width
-                  ..._.map(itemsWidths, (width, index) => {
-                    return cond(eq(currentPage, index), [
-                      set(this._indicatorWidth.nextValue, sub(itemsWidths[index], indicatorInset * 2))
-                    ]);
-                  }),
-                  // calc indicator current position
-                  ..._.map(itemsOffsets, (offset, index) => {
-                    return cond(eq(currentPage, index), [
-                      set(this._indicatorOffset.nextValue, add(itemsOffsets[index], indicatorInset))
-                    ]);
-                  }),
-
-                  // Offset transition
-                  this._indicatorOffset.getTransitionBlock(),
-                  // Width transition
-                  this._indicatorWidth.getTransitionBlock()
-                ]);
-            }}
-          </Code>
-        )}
+        {_.size(itemsWidths) > 1 && <Code>{this.renderCodeBlock}</Code>}
       </View>
     );
   }
@@ -385,5 +363,39 @@ const styles = StyleSheet.create({
     })
   }
 });
+
+function runIndicatorTimer(clock, currentPage, values) {
+  const state = {
+    finished: new Value(0),
+    position: new Value(0),
+    time: new Value(0),
+    frameTime: new Value(0)
+  };
+
+  const config = {
+    duration: 300,
+    toValue: new Value(100),
+    easing: Easing.inOut(Easing.ease)
+  };
+
+  return block([
+    ..._.map(values, (value, index) => {
+      return cond(and(eq(currentPage, index), neq(config.toValue, index)), [
+        set(state.finished, 0),
+        set(state.time, 0),
+        set(state.frameTime, 0),
+        set(config.toValue, index),
+        startClock(clock)
+      ]);
+    }),
+    timing(clock, state, config),
+    cond(state.finished, stopClock(clock)),
+    interpolate(state.position, {
+      inputRange: _.times(values.length),
+      outputRange: values,
+      extrapolate: Extrapolate.CLAMP
+    })
+  ]);
+}
 
 export default asBaseComponent(forwardRef(TabBar));

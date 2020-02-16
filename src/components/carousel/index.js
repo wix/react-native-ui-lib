@@ -80,7 +80,7 @@ export default class Carousel extends BaseComponent {
 
   static defaultProps = {
     initialPage: 0,
-    itemSpacings: 12,
+    itemSpacings: 16,
     pagingEnabled: true
   };
 
@@ -234,13 +234,15 @@ export default class Carousel extends BaseComponent {
   };
 
   renderChild = (child, key) => {
-    const paddingLeft = this.shouldUsePageWidth() ? this.props.itemSpacings : undefined;
-
-    return (
-      <View style={{width: this.state.pageWidth, paddingLeft}} key={key} collapsable={false}>
-        {child}
-      </View>
-    );
+    if (child) {
+      const paddingLeft = this.shouldUsePageWidth() ? this.props.itemSpacings : undefined;
+  
+      return (
+        <View style={{width: this.state.pageWidth, paddingLeft}} key={key} collapsable={false}>
+          {child}
+        </View>
+      );
+    }
   };
 
   renderChildren() {
@@ -260,19 +262,29 @@ export default class Carousel extends BaseComponent {
   }
 
   renderPageControl() {
-    const {pageControlPosition, pageControlProps} = this.props;
+    const {
+      pageControlPosition,
+      pageControlProps,
+      size = 6,
+      spacing = 8,
+      color = Colors.dark20,
+      inactiveColor = Colors.dark60
+    } = this.getThemeProps();
 
     if (pageControlPosition) {
       const pagesCount = presenter.getChildrenLength(this.props);
-      const containerStyle = pageControlPosition === PAGE_CONTROL_POSITIONS.UNDER ? 
-        {marginVertical: 16} : {position: 'absolute', bottom: 16, alignSelf: 'center'};
+      const containerStyle =
+        pageControlPosition === PAGE_CONTROL_POSITIONS.UNDER
+          ? this.styles.pageControlContainerStyleUnder
+          : this.styles.pageControlContainerStyle;
 
       return (
         <PageControl
-          size={6}
+          size={size}
+          spacing={spacing}
           containerStyle={containerStyle}
-          inactiveColor={Colors.dark60}
-          color={Colors.dark20}
+          inactiveColor={inactiveColor}
+          color={color}
           {...pageControlProps}
           numOfPages={pagesCount}
           currentPage={this.getCalcIndex(this.state.currentPage)}
@@ -339,6 +351,14 @@ function createStyles() {
       position: 'absolute',
       top: 12,
       right: 12
+    },
+    pageControlContainerStyle: {
+      position: 'absolute',
+      bottom: 16,
+      alignSelf: 'center'
+    },
+    pageControlContainerStyleUnder: {
+      marginVertical: 16
     }
   });
 }

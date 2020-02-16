@@ -37,7 +37,7 @@ class ListItem extends BaseComponent {
     /**
      * The container element to wrap the ListItem
      */
-    containerElement: PropTypes.func
+    containerElement: PropTypes.elementType
   };
 
   static defaultProps = {

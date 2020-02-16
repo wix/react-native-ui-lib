@@ -2,10 +2,9 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Link from 'gatsby-link';
+import Layout from '../components/layout';
 
 import './components.scss';
-import Layout from '../components/layout';
-import Navbar from '../components/navbar';
 
 const IMAGE_TYPES = {
   GIF: 'GIF',
@@ -14,22 +13,23 @@ const IMAGE_TYPES = {
 
 export default class ComponentTemplate extends Component {
   static propTypes = {
-    pathContext: PropTypes.object
+    pageContext: PropTypes.object
   }
 
   extractComponentsInfo(component) {
-    const statementPattern = /@\w*\:/ //eslint-disable-line
+    const splitPattern = /([\s\S]*?):([\s\S]*)/ //eslint-disable-line
 
     const info = {
       description: _.get(component, 'description.text')
     };
 
     if (component.docblock) {
-      const infoRaw = _.split(component.docblock, '\n');
+      const infoRaw = _.split(component.docblock, '@');
       _.forEach(infoRaw, statement => {
-        if (statement && statementPattern.test(statement)) {
-          const key = statement.match(statementPattern)[0].slice(1, -1);
-          info[key] = statement.split(statementPattern)[1].trim();
+        const match = splitPattern.exec(statement);
+        if (statement && match) {
+          const key = match[1];
+          info[key] = match[2];
         }
       });
     }
@@ -38,8 +38,8 @@ export default class ComponentTemplate extends Component {
   }
 
   renderLink(componentInfo) {
-    const {pathContext} = this.props;
-    const allComponents = pathContext.components;
+    const {pageContext} = this.props;
+    const allComponents = pageContext.components;
 
     const extendedComponents = _.chain(componentInfo.extends)
       .replace(/ /g, '')
@@ -49,7 +49,7 @@ export default class ComponentTemplate extends Component {
     return _.map(extendedComponents, (component, index) => {
       const isLast = index === _.size(extendedComponents) - 1;
       const text = <b>{`${component}${!isLast ? ', ' : ''}`}</b>;
-      const extendedComponent = _.find(allComponents, c => c.node.displayName === component);
+      const extendedComponent = _.find(allComponents, c => c.node.displayName.trim() === component.trim());
       const path = !extendedComponent && componentInfo.extendsLink ? componentInfo.extendsLink : `/docs/${component}`;
 
       return (
@@ -111,10 +111,10 @@ export default class ComponentTemplate extends Component {
   }
 
   renderComponentPage() {
-    const {pathContext} = this.props;
-    const selectedComponent = pathContext.componentNode;
+    const {pageContext} = this.props;
+    const selectedComponent = pageContext.componentNode;
     const componentInfo = this.extractComponentsInfo(selectedComponent);
-    const componentProps = _.get(selectedComponent, 'props');
+    const componentProps = _.orderBy(_.get(selectedComponent, 'props'), prop => prop.name.toLowerCase());
     const gifs = componentInfo.gif ? componentInfo.gif.split(',') : undefined;
     const imgs = componentInfo.image ? componentInfo.image.split(',') : undefined;
     const notes = componentInfo.notes ? componentInfo.notes.split(';') : undefined;
@@ -126,7 +126,7 @@ export default class ComponentTemplate extends Component {
           {componentInfo.example && (
             <span className="code-example">
               (
-              <a className="inline" target="_blank" href={componentInfo.example}>
+              <a className="inline" target="_blank" rel="noopener noreferrer" href={componentInfo.example}>
                 code example
               </a>
               )
@@ -145,7 +145,11 @@ export default class ComponentTemplate extends Component {
               <p>
                 Supported modifiers: <b>{componentInfo.modifiers}</b>. <br/>
                 Read more about modifiers{' '}
-                <a target="_blank" href={'https://github.com/wix/react-native-ui-lib/wiki/MODIFIERS'}>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={'https://github.com/wix/react-native-ui-lib/wiki/MODIFIERS'}
+                >
                   {' '}
                   here
                 </a>
@@ -191,9 +195,20 @@ export default class ComponentTemplate extends Component {
   }
 
   render() {
+    const isIntro = !_.get(this.props, 'pageContext.componentNode');
     return (
-      <Layout {...this.props} navbar={<Navbar/>}>
-        {this.renderComponentPage()}
+      <Layout {...this.props} showSidebar>
+        <div>
+          {isIntro && (
+            <div className="docs-page">
+              <div className="docs-page__content">
+                <div>Select a component from the left sidebar</div>
+              </div>
+            </div>
+          )}
+
+          {!isIntro && this.renderComponentPage()}
+        </div>
       </Layout>
     );
   }

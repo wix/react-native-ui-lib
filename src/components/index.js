@@ -163,5 +163,8 @@ module.exports = {
   },
   get WheelPickerDialog() {
     return require('./wheelPickerDialog').default;
+  },
+  get ScrollBar() {
+    return require('./scrollBar').default;
   }
 };

@@ -132,6 +132,9 @@ module.exports = {
   get RadioGroup() {
     return require('./components').RadioGroup;
   },
+  get ScrollBar() {
+    return require('./components').ScrollBar;
+  },
   get SharedTransition() {
     return require('./components').SharedTransition;
   },
@@ -222,6 +225,27 @@ module.exports = {
   get SafeAreaInsetsManager() {
     return require('./nativeComponents').SafeAreaInsetsManager;
   },
+  get KeyboardAwareInsetsView() {
+    return require('./nativeComponents').KeyboardAwareInsetsView;
+  },
+  // get KeyboardTrackingView() {
+  //   return require('./nativeComponents').KeyboardTrackingView;
+  // },
+  // get TextInputKeyboardMangerIOS() {
+  //   return require('./nativeComponents').TextInputKeyboardMangerIOS;
+  // },
+  // get CustomKeyboardView() {
+  //   return require('./nativeComponents').CustomKeyboardView;
+  // },
+  // get KeyboardRegistry() {
+  //   return require('./nativeComponents').KeyboardRegistry;
+  // },
+  // get KeyboardAccessoryView() {
+  //   return require('./nativeComponents').KeyboardAccessoryView;
+  // },
+  // get KeyboardUtils() {
+  //   return require('./nativeComponents').KeyboardUtils;
+  // },
 
   // Style
   get Colors() {

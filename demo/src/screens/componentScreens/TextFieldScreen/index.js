@@ -2,14 +2,16 @@ import React, {Component} from 'react';
 import {Colors, TouchableOpacity, Typography, View, Text} from 'react-native-ui-lib'; //eslint-disable-line
 import {pushScreen} from '../../../navigation';
 
-import './InputsScreen';
+import './BasicTextFieldScreen';
 import './InputValidationsScreen';
 import './CustomInputsScreen';
+import './InputsScreen';
 
 const SCREENS = [
-  {title: 'Inputs', name: 'unicorn.components.InputsScreen'},
+  {title: 'TextField Kitchen-Sink', name: 'unicorn.components.BasicTextFieldScreen'},
   {title: 'Custom Inputs', name: 'unicorn.components.CustomInputsScreen'},
-  {title: 'Validations', name: 'unicorn.components.InputValidationsScreen'}
+  {title: 'Validations', name: 'unicorn.components.InputValidationsScreen'},
+  {title: 'Inputs Variations', name: 'unicorn.components.InputsScreen'}
 ];
 
 class TextFieldScreen extends Component {

@@ -42,6 +42,15 @@ exports.createPages = ({graphql, boundActionCreators}) => {
         }
       }
     `).then(result => {
+      // create docs intro page
+      createPage({
+        path: `/docs`,
+        component: path.resolve('./src/templates/component.js'),
+        context: {
+          // Data passed to context is available in page queries as GraphQL variables.
+        }
+      });
+      
       result.data.allComponentMetadata.edges.map(({node}) => {
         createPage({
           path: `/docs/${node.isPublic ? 'public/' : ''}${node.displayName}`,

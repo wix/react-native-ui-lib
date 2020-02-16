@@ -51,6 +51,10 @@ class Image extends PureBaseComponent {
      */
     overlayType: Overlay.propTypes.type,
     /**
+     * Pass a custom color for the overlay
+     */
+    overlayColor: PropTypes.string,
+    /**
      * Render an overlay with custom content
      */
     customOverlayContent: PropTypes.element
@@ -110,6 +114,7 @@ class Image extends PureBaseComponent {
       cover,
       aspectRatio,
       overlayType,
+      overlayColor,
       customOverlayContent,
       ...others
     } = this.getThemeProps();
@@ -132,7 +137,7 @@ class Image extends PureBaseComponent {
         source={source}
       >
         {(overlayType || customOverlayContent) && (
-          <Overlay style={style} type={overlayType} customContent={customOverlayContent}/>
+          <Overlay style={style} type={overlayType} color={overlayColor} customContent={customOverlayContent}/>
         )}
       </ImageView>
     );
