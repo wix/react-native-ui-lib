@@ -4,4 +4,4 @@ Navigation.registerComponent('unicorn.nativeComponents.HighlightOverlayViewScree
 Navigation.registerComponent('unicorn.nativeComponents.SafeAreaSpacerViewScreen', () => require('./SafeAreaSpacerViewScreen').default);
 Navigation.registerComponent('unicorn.nativeComponents.WheelPickerViewScreen', () => require('./WheelPickerViewScreen').default);
 Navigation.registerComponent('unicorn.nativeComponents.KeyboardTrackingViewScreen', () => require('./KeyboardTrackingViewScreen').default);
-
+Navigation.registerComponent('unicorn.nativeComponents.KeyboardInputViewScreen', () => require('./keyboardInput/KeyboardInputViewScreen').default);

@@ -1,22 +1,18 @@
 package com.rnuilib;
 
-import android.app.Application;
-import android.content.Context;
-
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-
-import java.util.List;
-import java.util.Arrays;
-
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
-
 import com.wix.reactnativeuilib.highlighterview.HighlighterViewPackage;
+import com.wix.reactnativeuilib.keyboardinput.KeyboardInputPackage;
 import com.wix.reactnativeuilib.textinput.TextInputDelKeyHandlerPackage;
 import com.wix.reactnativeuilib.wheelpicker.WheelPickerPackage;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 public class MainApplication extends NavigationApplication {
@@ -52,6 +48,7 @@ public class MainApplication extends NavigationApplication {
         packages.add(new HighlighterViewPackage());
         packages.add(new WheelPickerPackage());
         packages.add(new TextInputDelKeyHandlerPackage());
+        packages.add(new KeyboardInputPackage(this));
         return packages;
     }
 }
