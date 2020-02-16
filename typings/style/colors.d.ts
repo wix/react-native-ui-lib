@@ -85,6 +85,7 @@ export interface HSLValue {
 }
 
 export declare class ColorsClass {
+  loadColors(colors: object): void;
   rgba(p1: string | number, p2: number, p3: number, p4: number): ColorValue;
   isEmpty(color: ColorValue): boolean;
   getColorTint(color: ColorValue, tintKey: number): any;
