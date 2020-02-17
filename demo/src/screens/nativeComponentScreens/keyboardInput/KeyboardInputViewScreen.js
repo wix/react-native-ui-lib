@@ -1,12 +1,10 @@
 import React, {PureComponent} from 'react';
 import {ScrollView, StyleSheet, TextInput} from 'react-native';
 import {
-  KeyboardAccessoryView,
-  KeyboardUtils,
+  Keyboard,
   TouchableOpacity,
   Text,
   View,
-  KeyboardTrackingView,
   TextField,
   Image,
   Colors,
@@ -16,6 +14,8 @@ import {
   Typography,
   Button
 } from 'react-native-ui-lib';
+const KeyboardAccessoryView = Keyboard.KeyboardAccessoryView;
+const KeyboardUtils = Keyboard.KeyboardUtils;
 
 // import './demoKeyboards';
 

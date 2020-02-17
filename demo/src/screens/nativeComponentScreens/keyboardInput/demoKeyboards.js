@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {ScrollView, StyleSheet} from 'react-native';
-import {KeyboardRegistry, Text, TouchableOpacity} from 'react-native-ui-lib';
+import {Keyboard, Text, TouchableOpacity} from 'react-native-ui-lib';
+const KeyboardRegistry = Keyboard.KeyboardRegistry;
 
 class KeyboardView extends Component {
   static propTypes = {

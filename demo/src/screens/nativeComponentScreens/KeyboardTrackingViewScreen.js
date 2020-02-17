@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {
+  Keyboard,
   Text,
   View,
-  KeyboardTrackingView,
   TextField,
   Image,
   Colors,
@@ -11,6 +11,7 @@ import {
   Switch,
   Constants
 } from 'react-native-ui-lib';
+const KeyboardTrackingView = Keyboard.KeyboardTrackingView;
 
 const URIs = [
   {

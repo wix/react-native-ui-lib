@@ -225,21 +225,9 @@ module.exports = {
   get SafeAreaInsetsManager() {
     return require('./nativeComponents').SafeAreaInsetsManager;
   },
-  get KeyboardAwareInsetsView() {
-    return require('./nativeComponents').KeyboardAwareInsetsView;
+  get Keyboard() {
+    return require('./nativeComponents').Keyboard;
   },
-  // get KeyboardTrackingView() {
-  //   return require('./nativeComponents').KeyboardTrackingView;
-  // },
-  // get KeyboardRegistry() {
-  //   return require('./nativeComponents').KeyboardRegistry;
-  // },
-  // get KeyboardAccessoryView() {
-  //   return require('./nativeComponents').KeyboardAccessoryView;
-  // },
-  // get KeyboardUtils() {
-  //   return require('./nativeComponents').KeyboardUtils;
-  // },
 
   // Style
   get Colors() {
