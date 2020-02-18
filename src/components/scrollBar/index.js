@@ -81,24 +81,29 @@ class ScrollBar extends BaseComponent {
     };
 
     this.scrollContentWidth = undefined;
-    this.itemsLayouts = [];
+    this.itemsLayouts = {};
     this.contentOffset = 0;
   }
 
   componentDidUpdate(prevProps, prevState) {
     const {focusIndex} = this.props;
     if (focusIndex && prevProps.focusIndex !== focusIndex) {
-      const focusedItemLayout = this.itemsLayouts[focusIndex];
-      if (focusedItemLayout) {
-        const {x, width} = focusedItemLayout;
-        if (x < this.contentOffset) {
-          this.scrollbar.scrollTo({x: x - width});
-        } else if (x + width > this.contentOffset + this.containerWidth) {
-          this.scrollbar.scrollTo({x: this.contentOffset + width});
-        }
-      }
+      this.focusIndex(focusIndex);
     }
   }
+
+  focusIndex = index => {
+    const focusedItemLayout = this.itemsLayouts[index];
+    if (focusedItemLayout) {
+      const {x, width} = focusedItemLayout;
+      if (x < this.contentOffset) {
+        this.scrollbar.scrollTo({x: x - width});
+      } else if (x + width > this.contentOffset + this.containerWidth) {
+        const offsetChange = Math.max(0, x - (this.contentOffset + this.containerWidth));
+        this.scrollbar.scrollTo({x: this.contentOffset + offsetChange + width});
+      }
+    }
+  };
 
   animateGradientOpacity = (offsetX, contentWidth, containerWidth) => {
     const overflow = contentWidth - containerWidth;
@@ -154,6 +159,9 @@ class ScrollBar extends BaseComponent {
 
   onItemLayout = ({layout, index}) => {
     this.itemsLayouts[index] = layout;
+    if (_.keys(this.itemsLayouts).length === this.props.children.length) {
+      this.focusIndex(this.props.focusIndex);
+    }
   };
 
   renderScrollable() {
@@ -235,12 +243,15 @@ class ScrollBar extends BaseComponent {
 }
 
 const Item = ({children, index, onLayout}) => {
-
   const onItemLayout = useCallback(({nativeEvent: {layout}}) => {
     onLayout({layout, index});
   });
 
-  return <View flexG onLayout={onItemLayout}>{children}</View>;
+  return (
+    <View flexG onLayout={onItemLayout}>
+      {children}
+    </View>
+  );
 };
 
 ScrollBar.Item = Item;
