@@ -204,12 +204,7 @@ class PageControl extends PureComponent {
     const {containerStyle} = this.props;
 
     return (
-      <View
-        style={[styles.container, containerStyle]}
-        accessible={false}
-        accessibilityElementsHidden
-        importantForAccessibility="no-hide-descendants"
-      >
+      <View style={[styles.container, containerStyle]} inaccessible>
         {this.showLimitedVersion(this.props) ? this.renderDifferentSizeIndicators() : this.renderSameSizeIndicators()}
       </View>
     );
