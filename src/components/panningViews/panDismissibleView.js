@@ -41,6 +41,10 @@ class PanDismissibleView extends PureComponent {
       duration: PropTypes.number
     }),
     /**
+     * Override the default threshold (height/2 and width/2) with different values.
+     */
+    threshold: PropTypes.shape({x: PropTypes.number, y: PropTypes.number}),
+    /**
      * Allow diagonal dismiss, this is false by default,
      * since it looks better and most cases.
      */
@@ -112,10 +116,11 @@ class PanDismissibleView extends PureComponent {
   onLayout = event => {
     if (_.isUndefined(this.height)) {
       const layout = event.nativeEvent.layout;
+      const {threshold} = this.props;
       this.height = layout.height;
-      this.thresholdY = layout.height / 2;
+      this.thresholdY = threshold && threshold.y ? threshold.y : layout.height / 2;
       this.width = layout.width;
-      this.thresholdX = layout.width / 2;
+      this.thresholdX = threshold && threshold.x ? threshold.x : layout.width / 2;
       this.initPositions();
     }
   };
