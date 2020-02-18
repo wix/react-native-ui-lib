@@ -34,6 +34,7 @@ export const navigationData = {
       {title: 'Feature Highlight', tags: 'feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
       {title: 'Hint', tags: 'hints tooltip', screen: 'unicorn.components.HintsScreen'},
       {title: 'Image', tags: 'image cover overlay', screen: 'unicorn.components.ImageScreen'},
+      {title: 'KeyboardAwareScrollView', tags: 'KeyboardAwareScrollView', screen: 'unicorn.components.KeyboardAwareScrollViewScreen'},
       {title: 'Overlays', tags: 'overlay image', screen: 'unicorn.components.OverlaysScreen'},
       {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
       {title: 'Pan Dismissible', tags: 'pan swipe drag dismiss', screen: 'unicorn.components.PanDismissibleScreen'},
@@ -77,6 +78,7 @@ export const navigationData = {
       {title: 'Wheel Picker', tags: 'wheel picker', screen: 'unicorn.nativeComponents.WheelPickerViewScreen'},
       {title: 'SafeArea Spacer', tags: 'native safe area', screen: 'unicorn.nativeComponents.SafeAreaSpacerViewScreen'}
       // {title: 'KeyboardTracking (iOS)', tags: 'KeyboardTracking', screen: 'unicorn.nativeComponents.KeyboardTrackingViewScreen'},
+      // {title: 'KeyboardInput', tags: 'KeyboardInput', screen: 'unicorn.nativeComponents.KeyboardInputViewScreen'},
     ]
   },
   Screens: {
