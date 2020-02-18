@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {View, Text, Checkbox, RadioGroup, RadioButton, ColorPalette, Colors, Slider} from 'react-native-ui-lib';
+import {Checkbox, ColorPalette, Colors, RadioButton, RadioGroup, Slider, Text, View} from 'react-native-ui-lib';
 
-export function renderBooleanOption(title, key, stateCallback) {
+export function renderBooleanOption(title, key) {
   const value = this.state[key];
   return (
     <View row centerV spread marginB-s4 key={key}>
@@ -15,8 +15,38 @@ export function renderBooleanOption(title, key, stateCallback) {
         key={key}
         textID={key}
         value={value}
-        onValueChange={value => this.setState({[key]: value}, stateCallback)}
+        onValueChange={value => this.setState({[key]: value})}
       />
+    </View>
+  );
+}
+
+export function renderBooleanGroup(title, options) {
+  return (
+    <View marginB-s2>
+      <Text text70M marginB-s2>
+        {title}
+      </Text>
+      <View row style={styles.rowWrap}>
+        {_.map(options, key => {
+          const value = this.state[key];
+          return (
+            <View spread centerH row key={key}>
+              <Checkbox
+                marginR-s2
+                useCustomTheme
+                key={key}
+                textID={key}
+                value={value}
+                onValueChange={value => this.setState({[key]: value})}
+              />
+              <Text text70 marginR-s3 marginB-s2>
+                {key}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
     </View>
   );
 }
