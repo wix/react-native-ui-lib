@@ -60,6 +60,12 @@ module.exports = {
   get Image() {
     return require('./components').Image;
   },
+  get KeyboardAwareScrollView() {
+    return require('./components').KeyboardAwareScrollView;
+  },
+  get KeyboardAwareListView() {
+    return require('./components').KeyboardAwareListView;
+  },
   get BaseInput() {
     return require('./components').BaseInput;
   },
@@ -219,6 +225,27 @@ module.exports = {
   get SafeAreaInsetsManager() {
     return require('./nativeComponents').SafeAreaInsetsManager;
   },
+  get KeyboardAwareInsetsView() {
+    return require('./nativeComponents').KeyboardAwareInsetsView;
+  },
+  // get KeyboardTrackingView() {
+  //   return require('./nativeComponents').KeyboardTrackingView;
+  // },
+  // get TextInputKeyboardMangerIOS() {
+  //   return require('./nativeComponents').TextInputKeyboardMangerIOS;
+  // },
+  // get CustomKeyboardView() {
+  //   return require('./nativeComponents').CustomKeyboardView;
+  // },
+  // get KeyboardRegistry() {
+  //   return require('./nativeComponents').KeyboardRegistry;
+  // },
+  // get KeyboardAccessoryView() {
+  //   return require('./nativeComponents').KeyboardAccessoryView;
+  // },
+  // get KeyboardUtils() {
+  //   return require('./nativeComponents').KeyboardUtils;
+  // },
 
   // Style
   get Colors() {

@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {BorderRadiuses, View, Text, Typography, Colors} from 'react-native-ui-lib'; //eslint-disable-line
 
-export default class ColorsScreen extends Component {
+export default class BorderRadiusesScreen extends Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
