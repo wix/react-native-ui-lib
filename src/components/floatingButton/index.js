@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {Constants, Colors, Spacings, BaseComponent, View, Image, Button} from 'react-native-ui-lib';
 
@@ -137,19 +137,23 @@ class FloatingButton extends BaseComponent {
     }
 
     return (
-      <Container
-        pointerEvents="box-none"
-        style={[styles.animatedContainer, Constants.isAndroid && {zIndex: 99}]}
-        animation={!isVisible ? 'fadeOutDown' : 'fadeInUp'}
-        duration={SHOW_ANIMATION_DURATION}
-        delay={!isVisible ? HIDE_ANIMATION_DURATION : SHOW_ANIMATION_DELAY}
-        easing={'ease-out'}
-        onAnimationEnd={this.onAnimationEnd}
-      >
-        {this.renderOverlay()}
-        {this.renderButton()}
-        {secondaryButton && this.renderSecondaryButton()}
-      </Container>
+      <SafeAreaView>
+        <View>
+          <Container
+            pointerEvents="box-none"
+            style={[styles.animatedContainer, Constants.isAndroid && {zIndex: 99}]}
+            animation={!isVisible ? 'fadeOutDown' : 'fadeInUp'}
+            duration={SHOW_ANIMATION_DURATION}
+            delay={!isVisible ? HIDE_ANIMATION_DURATION : SHOW_ANIMATION_DELAY}
+            easing={'ease-out'}
+            onAnimationEnd={this.onAnimationEnd}
+          >
+            {this.renderOverlay()}
+            {this.renderButton()}
+            {secondaryButton && this.renderSecondaryButton()}
+          </Container>
+        </View>
+      </SafeAreaView>
     );
   }
 }
