@@ -75,7 +75,11 @@ export default class Carousel extends BaseComponent {
     /**
      * will block multiple pages scroll (will not work with 'pageWidth' prop)
      */
-    pagingEnabled: PropTypes.bool
+    pagingEnabled: PropTypes.bool,
+    /**
+     * Whether to layout Carousel for accessibility
+     */
+    allowAccessibleLayout: PropTypes.bool
   };
 
   static defaultProps = {
@@ -190,6 +194,10 @@ export default class Carousel extends BaseComponent {
     this.setState(update);
   };
 
+  shouldAllowAccessibilityLayout() {
+    return this.props.allowAccessibleLayout && Constants.accessibility.isScreenReaderEnabled;
+  }
+
   onContentSizeChange = () => {
     // this is to handle initial scroll position (content offset)
     if (Constants.isAndroid) {
@@ -236,9 +244,16 @@ export default class Carousel extends BaseComponent {
   renderChild = (child, key) => {
     if (child) {
       const paddingLeft = this.shouldUsePageWidth() ? this.props.itemSpacings : undefined;
-  
+      const index = Number(key);
+      const length = presenter.getChildrenLength(this.props);
+
       return (
         <View style={{width: this.state.pageWidth, paddingLeft}} key={key} collapsable={false}>
+          {this.shouldAllowAccessibilityLayout() && !Number.isNaN(index) &&
+            <View style={this.styles.hiddenText}>
+              <Text>{`page ${index + 1} out of ${length}`}</Text>
+            </View>
+          }
           {child}
         </View>
       );
@@ -309,7 +324,28 @@ export default class Carousel extends BaseComponent {
     }
   }
 
-  render() {
+  renderAccessibleLayout() {
+    const {containerStyle, children} = this.props;
+
+    return (
+      <View style={containerStyle} onLayout={this.onContainerLayout}>
+        <ScrollView
+          ref={this.carousel}
+          showsVerticalScrollIndicator={false}
+          pagingEnabled
+          onContentSizeChange={this.onContentSizeChange}
+          onScroll={this.onScroll}
+          onMomentumScrollEnd={this.onMomentumScrollEnd}
+        >
+          {React.Children.map(children, (child, index) => {
+            return this.renderChild(child, `${index}`);
+          })}
+        </ScrollView>
+      </View>
+    );
+  }
+
+  renderCarousel() {
     const {containerStyle, itemSpacings, ...others} = this.props;
     const {initialOffset} = this.state;
     const scrollContainerStyle = this.shouldUsePageWidth() ? {paddingRight: itemSpacings} : undefined;
@@ -339,6 +375,10 @@ export default class Carousel extends BaseComponent {
       </View>
     );
   }
+
+  render() {
+    return this.shouldAllowAccessibilityLayout() ? this.renderAccessibleLayout() : this.renderCarousel();
+  }
 }
 
 function createStyles() {
@@ -359,6 +399,10 @@ function createStyles() {
     },
     pageControlContainerStyleUnder: {
       marginVertical: 16
+    },
+    hiddenText: {
+      position: 'absolute', 
+      width: 1
     }
   });
 }
