@@ -137,28 +137,33 @@ class FloatingButton extends BaseComponent {
     }
 
     return (
-      <SafeAreaView>
-        <View>
-          <Container
-            pointerEvents="box-none"
-            style={[styles.animatedContainer, Constants.isAndroid && {zIndex: 99}]}
-            animation={!isVisible ? 'fadeOutDown' : 'fadeInUp'}
-            duration={SHOW_ANIMATION_DURATION}
-            delay={!isVisible ? HIDE_ANIMATION_DURATION : SHOW_ANIMATION_DELAY}
-            easing={'ease-out'}
-            onAnimationEnd={this.onAnimationEnd}
-          >
-            {this.renderOverlay()}
-            {this.renderButton()}
-            {secondaryButton && this.renderSecondaryButton()}
-          </Container>
-        </View>
+      <SafeAreaView style={styles.safeArea}>
+        <Container
+          pointerEvents="box-none"
+          style={[styles.animatedContainer, Constants.isAndroid && {zIndex: 99}]}
+          animation={!isVisible ? 'fadeOutDown' : 'fadeInUp'}
+          duration={SHOW_ANIMATION_DURATION}
+          delay={!isVisible ? HIDE_ANIMATION_DURATION : SHOW_ANIMATION_DELAY}
+          easing={'ease-out'}
+          onAnimationEnd={this.onAnimationEnd}
+        >
+          {this.renderOverlay()}
+          {this.renderButton()}
+          {secondaryButton && this.renderSecondaryButton()}
+        </Container>
       </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0
+  },
   animatedContainer: {
     position: 'absolute',
     left: 0,
