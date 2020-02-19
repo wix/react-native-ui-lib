@@ -277,16 +277,10 @@ export default class Carousel extends BaseComponent {
   }
 
   renderPageControl() {
-    const {
-      pageControlPosition,
-      pageControlProps,
-      size = 6,
-      spacing = 8,
-      color = Colors.dark20,
-      inactiveColor = Colors.dark60
-    } = this.getThemeProps();
-
+    const {pageControlPosition, pageControlProps = {}} = this.getThemeProps();
+    
     if (pageControlPosition) {
+      const {size = 6, spacing = 8, color = Colors.dark20, inactiveColor = Colors.dark60, ...others} = pageControlProps;
       const pagesCount = presenter.getChildrenLength(this.props);
       const containerStyle =
         pageControlPosition === PAGE_CONTROL_POSITIONS.UNDER
@@ -300,7 +294,7 @@ export default class Carousel extends BaseComponent {
           containerStyle={containerStyle}
           inactiveColor={inactiveColor}
           color={color}
-          {...pageControlProps}
+          {...others}
           numOfPages={pagesCount}
           currentPage={this.getCalcIndex(this.state.currentPage)}
         />
