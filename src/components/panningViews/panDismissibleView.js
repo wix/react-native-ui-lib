@@ -118,7 +118,7 @@ class PanDismissibleView extends PureComponent {
       const layout = event.nativeEvent.layout;
       const {threshold} = this.props;
       this.height = layout.height;
-      this.thresholdY = threshold && threshold.y ? threshold.y : layout.height / 2;
+      this.thresholdY = _.get(threshold, 'y', layout.height / 2);
       this.width = layout.width;
       this.thresholdX = threshold && threshold.x ? threshold.x : layout.width / 2;
       this.initPositions();
