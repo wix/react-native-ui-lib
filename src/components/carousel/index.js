@@ -43,7 +43,7 @@ export default class Carousel extends BaseComponent {
     /**
      * Horizontal margin for the container
      */
-    containerHorizontalMargin: PropTypes.number,
+    containerMarginHorizontal: PropTypes.number,
     /**
      * if true, will have infinite scroll
      */
@@ -135,9 +135,9 @@ export default class Carousel extends BaseComponent {
     return itemSpacings;
   }
 
-  getContainerHorizontalMargin = () => {
-    const {containerHorizontalMargin = 0} = this.getThemeProps();
-    return containerHorizontalMargin;
+  getContainerMarginHorizontal = () => {
+    const {containerMarginHorizontal = 0} = this.getThemeProps();
+    return containerMarginHorizontal;
   }
 
   updateOffset = (animated = false) => {
@@ -181,7 +181,7 @@ export default class Carousel extends BaseComponent {
       const spacings = pageWidth === containerWidth ? 0 : this.getItemSpacings(this.getThemeProps());
       const initialBreak = pageWidth - (containerWidth - pageWidth - spacings) / 2;
       const snapToOffsets = _.times(presenter.getChildrenLength(this.props),
-        index => initialBreak + index * pageWidth + this.getContainerHorizontalMargin());
+        index => initialBreak + index * pageWidth + this.getContainerMarginHorizontal());
       return snapToOffsets;
     }
   };
@@ -262,9 +262,9 @@ export default class Carousel extends BaseComponent {
       const paddingLeft = this.shouldUsePageWidth() ? this.getItemSpacings(this.getThemeProps()) : undefined;
       const index = Number(key);
       const length = presenter.getChildrenLength(this.props);
-      const containerHorizontalMargin = this.getContainerHorizontalMargin();
-      const marginLeft = index === 0 ? containerHorizontalMargin : 0;
-      const marginRight = index === length - 1 ? containerHorizontalMargin : 0;
+      const containerMarginHorizontal = this.getContainerMarginHorizontal();
+      const marginLeft = index === 0 ? containerMarginHorizontal : 0;
+      const marginRight = index === length - 1 ? containerMarginHorizontal : 0;
 
       return (
         <View style={{width: this.state.pageWidth, paddingLeft, marginLeft, marginRight}} key={key} collapsable={false}>
