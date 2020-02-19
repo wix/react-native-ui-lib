@@ -1,15 +1,52 @@
-import React from 'react';
-import {View, Text, Checkbox, RadioGroup, RadioButton, ColorPalette, Colors, Slider} from 'react-native-ui-lib';
 import _ from 'lodash';
+import React from 'react';
+import {StyleSheet} from 'react-native';
+import {Checkbox, ColorPalette, Colors, RadioButton, RadioGroup, Slider, Text, View} from 'react-native-ui-lib';
 
 export function renderBooleanOption(title, key) {
   const value = this.state[key];
   return (
-    <View row centerV spread marginB-s4>
-      <Text text70M style={{flex: 1}}>
+    <View row centerV spread marginB-s4 key={key}>
+      <Text text70 style={{flex: 1}}>
         {title}
       </Text>
-      <Checkbox useCustomTheme textID={key} value={value} onValueChange={value => this.setState({[key]: value})}/>
+      <Checkbox
+        useCustomTheme
+        key={key}
+        textID={key}
+        value={value}
+        onValueChange={value => this.setState({[key]: value})}
+      />
+    </View>
+  );
+}
+
+export function renderBooleanGroup(title, options) {
+  return (
+    <View marginB-s2>
+      <Text text70M marginB-s2>
+        {title}
+      </Text>
+      <View row style={styles.rowWrap}>
+        {_.map(options, key => {
+          const value = this.state[key];
+          return (
+            <View spread centerH row key={key}>
+              <Checkbox
+                marginR-s2
+                useCustomTheme
+                key={key}
+                textID={key}
+                value={value}
+                onValueChange={value => this.setState({[key]: value})}
+              />
+              <Text text70 marginR-s3 marginB-s2>
+                {key}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
     </View>
   );
 }
@@ -21,7 +58,12 @@ export function renderRadioGroup(title, key, options, {isRow} = {}) {
       <Text text70M marginB-s2>
         {title}
       </Text>
-      <RadioGroup row={isRow} initialValue={value} onValueChange={value => this.setState({[key]: value})}>
+      <RadioGroup
+        row={isRow}
+        style={isRow && styles.rowWrap}
+        initialValue={value}
+        onValueChange={value => this.setState({[key]: value})}
+      >
         {_.map(options, (value, key) => {
           return (
             <RadioButton
@@ -74,9 +116,16 @@ export function renderSliderOption(title, key, {min = 0, max = 10, step = 1, ini
           onValueChange={value => this.setState({[key]: value})}
         />
         <Text marginL-s4 text70>
-          {sliderText}{value}
+          {sliderText}
+          {value}
         </Text>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  rowWrap: {
+    flexWrap: 'wrap'
+  }
+});
