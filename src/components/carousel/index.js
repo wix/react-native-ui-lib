@@ -131,6 +131,11 @@ export default class Carousel extends BaseComponent {
     return itemSpacings;
   }
 
+  getSideSpacing = () => {
+    const {sideSpacing = 0} = this.getThemeProps();
+    return sideSpacing;
+  }
+
   updateOffset = (animated = false) => {
     const centerOffset = Constants.isIOS && this.shouldUsePageWidth() ? 
       (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
@@ -171,7 +176,8 @@ export default class Carousel extends BaseComponent {
     if (containerWidth) {
       const spacings = pageWidth === containerWidth ? 0 : this.getItemSpacings(this.getThemeProps());
       const initialBreak = pageWidth - (containerWidth - pageWidth - spacings) / 2;
-      const snapToOffsets = _.times(presenter.getChildrenLength(this.props), index => initialBreak + index * pageWidth);
+      const snapToOffsets = _.times(presenter.getChildrenLength(this.props),
+        index => initialBreak + index * pageWidth + this.getSideSpacing());
       return snapToOffsets;
     }
   };
@@ -252,9 +258,12 @@ export default class Carousel extends BaseComponent {
       const paddingLeft = this.shouldUsePageWidth() ? this.getItemSpacings(this.getThemeProps()) : undefined;
       const index = Number(key);
       const length = presenter.getChildrenLength(this.props);
+      const sideSpacing = this.getSideSpacing();
+      const marginLeft = index === 0 ? sideSpacing : 0;
+      const marginRight = index === length - 1 ? sideSpacing : 0;
 
       return (
-        <View style={{width: this.state.pageWidth, paddingLeft}} key={key} collapsable={false}>
+        <View style={{width: this.state.pageWidth, paddingLeft, marginLeft, marginRight}} key={key} collapsable={false}>
           {this.shouldAllowAccessibilityLayout() && !Number.isNaN(index) &&
             <View style={this.styles.hiddenText}>
               <Text>{`page ${index + 1} out of ${length}`}</Text>
