@@ -18,6 +18,7 @@ export type TypographyName =
   | 'text100';
 
 export declare class TypographyClass {
+  loadTypographies(typographies: object): void;
   measureWidth(
     text: string,
     typography?: TypographyDescription,
@@ -27,7 +28,7 @@ export declare class TypographyClass {
     text: string,
     typography?: TypographyDescription,
     containerWidth?: number
-  ): Promise<{heigth: number, width: number}>;
+  ): Promise<{height: number, width: number}>;
 }
 
 export const Typography: TypographyClass & Readonly<Record<TypographyName, TypographyDescription>>;

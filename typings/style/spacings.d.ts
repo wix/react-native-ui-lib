@@ -11,4 +11,8 @@ type SpacingName =
   | 's9'
   | 's10';
 
-export const Spacings: Readonly<Record<SpacingName, number>>;
+export declare class SpacingsClass {
+  loadSpacings(spacings: object): void;
+}
+  
+export const Spacings: SpacingsClass & Readonly<Record<SpacingName, number>>;
