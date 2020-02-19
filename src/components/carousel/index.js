@@ -84,7 +84,6 @@ export default class Carousel extends BaseComponent {
 
   static defaultProps = {
     initialPage: 0,
-    itemSpacings: 16,
     pagingEnabled: true
   };
 
@@ -95,7 +94,7 @@ export default class Carousel extends BaseComponent {
 
     this.carousel = React.createRef();
     const defaultPageWidth = props.loop ? 
-      Constants.screenWidth : props.pageWidth + props.itemSpacings || Constants.screenWidth;
+      Constants.screenWidth : props.pageWidth + this.getItemSpacings(props) || Constants.screenWidth;
     
     this.state = {
       containerWidth: undefined,
@@ -115,7 +114,8 @@ export default class Carousel extends BaseComponent {
   }
 
   onOrientationChanged = () => {
-    if (!this.props.pageWidth || this.props.loop) {
+    const {pageWidth, loop} = this.getThemeProps();
+    if (!pageWidth || loop) {
       this.orientationChange = true;
       // HACK: setting to containerWidth for Android's call when view disappear
       this.setState({pageWidth: this.state.containerWidth || Constants.screenWidth});
@@ -123,13 +123,18 @@ export default class Carousel extends BaseComponent {
   };
 
   generateStyles() {
-    this.styles = createStyles(this.props);
+    this.styles = createStyles(this.getThemeProps());
+  }
+
+  getItemSpacings(props) {
+    const {itemSpacings = 16} = props;
+    return itemSpacings;
   }
 
   updateOffset = (animated = false) => {
     const centerOffset = Constants.isIOS && this.shouldUsePageWidth() ? 
       (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
-    const x = presenter.calcOffset(this.props, this.state) - centerOffset;
+    const x = presenter.calcOffset(this.getThemeProps(), this.state) - centerOffset;
 
     if (this.carousel) {
       this.carousel.current.scrollTo({x, animated});
@@ -157,7 +162,6 @@ export default class Carousel extends BaseComponent {
   }
 
   getSnapToOffsets = () => {
-    const {itemSpacings} = this.props;
     const {containerWidth, pageWidth} = this.state;
 
     if (this.shouldEnablePagination()) {
@@ -165,7 +169,7 @@ export default class Carousel extends BaseComponent {
     }
 
     if (containerWidth) {
-      const spacings = pageWidth === containerWidth ? 0 : itemSpacings;
+      const spacings = pageWidth === containerWidth ? 0 : this.getItemSpacings(this.getThemeProps());
       const initialBreak = pageWidth - (containerWidth - pageWidth - spacings) / 2;
       const snapToOffsets = _.times(presenter.getChildrenLength(this.props), index => initialBreak + index * pageWidth);
       return snapToOffsets;
@@ -173,29 +177,31 @@ export default class Carousel extends BaseComponent {
   };
 
   shouldUsePageWidth() {
-    const {loop, pageWidth} = this.props;
+    const {loop, pageWidth} = this.getThemeProps();
     return !loop && pageWidth;
   }
 
   shouldEnablePagination() {
-    const {pagingEnabled} = this.props;
+    const {pagingEnabled} = this.getThemeProps();
     return pagingEnabled && !this.shouldUsePageWidth();
   }
 
   onContainerLayout = ({nativeEvent: {layout: {width: containerWidth}}}) => {
     const update = {containerWidth};
+    const {pageWidth} = this.getThemeProps();
 
-    if (!this.props.pageWidth) {
+    if (!pageWidth) {
       update.pageWidth = containerWidth;
       update.initialOffset = {
-        x: presenter.calcOffset(this.props, {currentPage: this.state.currentPage, pageWidth: containerWidth})
+        x: presenter.calcOffset(this.getThemeProps(), {currentPage: this.state.currentPage, pageWidth: containerWidth})
       };
     }
     this.setState(update);
   };
 
   shouldAllowAccessibilityLayout() {
-    return this.props.allowAccessibleLayout && Constants.accessibility.isScreenReaderEnabled;
+    const {allowAccessibleLayout} = this.getThemeProps();
+    return allowAccessibleLayout && Constants.accessibility.isScreenReaderEnabled;
   }
 
   onContentSizeChange = () => {
@@ -222,13 +228,13 @@ export default class Carousel extends BaseComponent {
       return;
     }
 
-    const {loop} = this.props;
+    const {loop} = this.getThemeProps();
     const {pageWidth} = this.state;
     const offsetX = event.nativeEvent.contentOffset.x;
 
     if (offsetX >= 0) {
       if (!this.orientationChange) { // Avoid new calculation on orientation change
-        const newPage = presenter.calcPageIndex(offsetX, this.props, pageWidth);
+        const newPage = presenter.calcPageIndex(offsetX, this.getThemeProps(), pageWidth);
         this.setState({currentPage: newPage});
       }
       this.orientationChange = false;
@@ -243,7 +249,7 @@ export default class Carousel extends BaseComponent {
 
   renderChild = (child, key) => {
     if (child) {
-      const paddingLeft = this.shouldUsePageWidth() ? this.props.itemSpacings : undefined;
+      const paddingLeft = this.shouldUsePageWidth() ? this.getItemSpacings(this.getThemeProps()) : undefined;
       const index = Number(key);
       const length = presenter.getChildrenLength(this.props);
 
@@ -261,7 +267,7 @@ export default class Carousel extends BaseComponent {
   };
 
   renderChildren() {
-    const {children, loop} = this.props;
+    const {children, loop} = this.getThemeProps();
     const length = presenter.getChildrenLength(this.props);
 
     const childrenArray = React.Children.map(children, (child, index) => {
@@ -303,7 +309,7 @@ export default class Carousel extends BaseComponent {
   }
 
   renderCounter() {
-    const {pageWidth, showCounter, counterTextStyle} = this.props;
+    const {pageWidth, showCounter, counterTextStyle} = this.getThemeProps();
     const {currentPage} = this.state;
     const pagesCount = presenter.getChildrenLength(this.props);
 
@@ -319,7 +325,7 @@ export default class Carousel extends BaseComponent {
   }
 
   renderAccessibleLayout() {
-    const {containerStyle, children} = this.props;
+    const {containerStyle, children} = this.getThemeProps();
 
     return (
       <View style={containerStyle} onLayout={this.onContainerLayout}>
@@ -340,9 +346,9 @@ export default class Carousel extends BaseComponent {
   }
 
   renderCarousel() {
-    const {containerStyle, itemSpacings, ...others} = this.props;
+    const {containerStyle, ...others} = this.getThemeProps();
     const {initialOffset} = this.state;
-    const scrollContainerStyle = this.shouldUsePageWidth() ? {paddingRight: itemSpacings} : undefined;
+    const scrollContainerStyle = this.shouldUsePageWidth() ? {paddingRight: this.getItemSpacings(this.getThemeProps())} : undefined;
     const snapToOffsets = this.getSnapToOffsets();
 
     return (
