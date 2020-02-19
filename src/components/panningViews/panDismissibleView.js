@@ -120,7 +120,7 @@ class PanDismissibleView extends PureComponent {
       this.height = layout.height;
       this.thresholdY = _.get(threshold, 'y', layout.height / 2);
       this.width = layout.width;
-      this.thresholdX = threshold && threshold.x ? threshold.x : layout.width / 2;
+      this.thresholdX = _.get(threshold, 'x', layout.width / 2);
       this.initPositions();
     }
   };
