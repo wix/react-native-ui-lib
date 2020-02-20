@@ -10,7 +10,6 @@ import Text from '../text';
 import PageControl from '../pageControl';
 import * as presenter from './CarouselPresenter';
 
-
 const PAGE_CONTROL_POSITIONS = {
   OVER: 'over',
   UNDER: 'under'
@@ -44,6 +43,11 @@ export default class Carousel extends BaseComponent {
      * Horizontal margin for the container
      */
     containerMarginHorizontal: PropTypes.number,
+    /**
+     * Vertical padding for the container.
+     * Sometimes needed when there are overflows that are cut in Android.
+     */
+    containerPaddingVertical: PropTypes.number,
     /**
      * if true, will have infinite scroll
      */
@@ -259,15 +263,21 @@ export default class Carousel extends BaseComponent {
 
   renderChild = (child, key) => {
     if (child) {
+      const {containerPaddingVertical} = this.getThemeProps();
       const paddingLeft = this.shouldUsePageWidth() ? this.getItemSpacings(this.getThemeProps()) : undefined;
       const index = Number(key);
       const length = presenter.getChildrenLength(this.props);
       const containerMarginHorizontal = this.getContainerMarginHorizontal();
       const marginLeft = index === 0 ? containerMarginHorizontal : 0;
       const marginRight = index === length - 1 ? containerMarginHorizontal : 0;
+      const paddingVertical = containerPaddingVertical;
 
       return (
-        <View style={{width: this.state.pageWidth, paddingLeft, marginLeft, marginRight}} key={key} collapsable={false}>
+        <View
+          style={{width: this.state.pageWidth, paddingLeft, marginLeft, marginRight, paddingVertical}}
+          key={key}
+          collapsable={false}
+        >
           {this.shouldAllowAccessibilityLayout() && !Number.isNaN(index) &&
             <View style={this.styles.hiddenText}>
               <Text>{`page ${index + 1} out of ${length}`}</Text>
@@ -380,6 +390,7 @@ export default class Carousel extends BaseComponent {
           onContentSizeChange={this.onContentSizeChange}
           onScroll={this.onScroll}
           onMomentumScrollEnd={this.onMomentumScrollEnd}
+          overflow={'visible'}
         >
           {this.renderChildren()}
         </ScrollView>
@@ -394,7 +405,7 @@ export default class Carousel extends BaseComponent {
   }
 }
 
-function createStyles() {
+function createStyles({containerPaddingVertical = 0}) {
   return StyleSheet.create({
     counter: {
       paddingHorizontal: 8,
@@ -411,7 +422,7 @@ function createStyles() {
       alignSelf: 'center'
     },
     pageControlContainerStyleUnder: {
-      marginVertical: 16
+      marginVertical: 16 - containerPaddingVertical
     },
     hiddenText: {
       position: 'absolute', 
