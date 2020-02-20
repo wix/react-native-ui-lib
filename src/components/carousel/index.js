@@ -144,6 +144,11 @@ export default class Carousel extends BaseComponent {
     return containerMarginHorizontal;
   }
 
+  getContainerPaddingVertical = () => {
+    const {containerPaddingVertical = 0} = this.getThemeProps();
+    return containerPaddingVertical;
+  }
+
   updateOffset = (animated = false) => {
     const centerOffset = Constants.isIOS && this.shouldUsePageWidth() ? 
       (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
@@ -263,14 +268,13 @@ export default class Carousel extends BaseComponent {
 
   renderChild = (child, key) => {
     if (child) {
-      const {containerPaddingVertical} = this.getThemeProps();
       const paddingLeft = this.shouldUsePageWidth() ? this.getItemSpacings(this.getThemeProps()) : undefined;
       const index = Number(key);
       const length = presenter.getChildrenLength(this.props);
       const containerMarginHorizontal = this.getContainerMarginHorizontal();
       const marginLeft = index === 0 ? containerMarginHorizontal : 0;
       const marginRight = index === length - 1 ? containerMarginHorizontal : 0;
-      const paddingVertical = containerPaddingVertical;
+      const paddingVertical = this.getContainerPaddingVertical();
 
       return (
         <View
@@ -373,9 +377,10 @@ export default class Carousel extends BaseComponent {
     const {initialOffset} = this.state;
     const scrollContainerStyle = this.shouldUsePageWidth() ? {paddingRight: this.getItemSpacings(this.getThemeProps())} : undefined;
     const snapToOffsets = this.getSnapToOffsets();
+    const marginBottom = Math.max(0, this.getContainerPaddingVertical() - 16);
 
     return (
-      <View style={containerStyle} onLayout={this.onContainerLayout}>
+      <View style={[containerStyle, {marginBottom}]} onLayout={this.onContainerLayout}>
         <ScrollView
           {...others}
           ref={this.carousel}
