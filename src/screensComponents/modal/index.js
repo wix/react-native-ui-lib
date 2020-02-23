@@ -39,28 +39,22 @@ export default class Modal extends BaseComponent {
   renderTouchableOverlay() {
     const {overlayBackgroundColor, onBackgroundPress, accessibilityLabel = 'Dismiss'} = this.props;
     if (_.isFunction(onBackgroundPress) || !!overlayBackgroundColor) {
-      if (Constants.accessibility.isScreenReaderEnabled) {
-        return (
-          <SafeAreaView>
-            <TouchableWithoutFeedback
-              accessible
-              accessibilityLabel={accessibilityLabel}
-              accessibilityRole="button"
-              onPress={onBackgroundPress}
-            >
-              <View height={50} width={'100%'}/>
-            </TouchableWithoutFeedback>
-          </SafeAreaView>
-        );
-      } else {
-        return (
-          <View style={[styles.touchableOverlay, {backgroundColor: overlayBackgroundColor}]}>
-            <TouchableWithoutFeedback onPress={onBackgroundPress}>
-              <View flex/>
-            </TouchableWithoutFeedback>
-          </View>
-        );
-      }
+      const isScreenReaderEnabled = Constants.accessibility.isScreenReaderEnabled;
+      const Container = isScreenReaderEnabled ? SafeAreaView : View;
+      const containerStyle = isScreenReaderEnabled
+        ? undefined
+        : [styles.touchableOverlay, {backgroundColor: overlayBackgroundColor}];
+      const accessibilityProps = isScreenReaderEnabled
+        ? {accessible: true, accessibilityLabel, accessibilityRole: 'button'}
+        : undefined;
+
+      return (
+        <Container style={containerStyle}>
+          <TouchableWithoutFeedback {...accessibilityProps} onPress={onBackgroundPress}>
+            <View style={isScreenReaderEnabled ? styles.accessibleOverlayView : styles.overlayView}/>
+          </TouchableWithoutFeedback>
+        </Container>
+      );
     }
   }
 
@@ -83,6 +77,13 @@ export default class Modal extends BaseComponent {
 const styles = StyleSheet.create({
   touchableOverlay: {
     ...StyleSheet.absoluteFillObject
+  },
+  overlayView: {
+    flex: 1
+  },
+  accessibleOverlayView: {
+    height: 50,
+    width: '100%'
   }
 });
 
