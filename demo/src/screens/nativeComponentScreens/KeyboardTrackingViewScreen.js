@@ -8,7 +8,8 @@ import {
   Image,
   Colors,
   Switch,
-  Constants
+  Constants,
+  Spacings
 } from 'react-native-ui-lib';
 const KeyboardTrackingView = Keyboard.KeyboardTrackingView;
 
