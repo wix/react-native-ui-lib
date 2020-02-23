@@ -11,7 +11,7 @@ import accessibility from '../images/examples/accessibility.gif';
 
 const IndexPage = props => {
   return (
-    <Layout {...props}>
+    <Layout {...props} showSidebar={false}>
       <div className="main-page">
         <div className="main-section">
           <div className="logo-box">

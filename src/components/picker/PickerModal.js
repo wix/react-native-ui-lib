@@ -25,7 +25,7 @@ class PickerModal extends BaseComponent {
     }),
     searchPlaceholder: PropTypes.string,
     onSearchChange: PropTypes.func,
-    renderCustomSearch: PropTypes.func,
+    renderCustomSearch: PropTypes.elementType,
     listProps: PropTypes.object
   };
 

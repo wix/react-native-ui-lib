@@ -12,8 +12,13 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'private',
         path: `${__dirname}/../src/components/`
+      }
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/../src/incubator/`
       }
     },
     {

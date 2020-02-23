@@ -1,8 +1,18 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Alert} from 'react-native';
-import {Colors, Typography, View, Text, TextField, TextArea, Modal, Button} from 'react-native-ui-lib'; //eslint-disable-line
-import {KeyboardAwareInsetsView} from 'react-native-keyboard-tracking-view';
 import {Navigation} from 'react-native-navigation';
+import {
+  Colors,
+  Typography,
+  View,
+  Text,
+  TextField,
+  TextArea,
+  Modal,
+  Button,
+  Keyboard
+} from 'react-native-ui-lib'; //eslint-disable-line
+const KeyboardAwareInsetsView = Keyboard.KeyboardAwareInsetsView;
 
 const richText = require('../../../assets/icons/richText.png');
 const dropDown = require('../../../assets/icons/chevronDown.png');

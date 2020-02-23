@@ -16,8 +16,7 @@ import {States, StatesConfig} from './WizardStates';
  * @description: WizardStep Component: a wizard presents a series of steps in  prescribed order
  * that the user needs to complete in order to accomplish a goal (e.g. purchase a product).
  *
- * @example: https://github.com/wix-private/wix-react-native-ui-lib/blob/master/example/screens/components/WizardScreen.js
- * @guidelines: https://zpl.io/aXmAkdg
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WizardScreen.js
  * @notes: Use Wizard with nested Wizard.Step(s) to achieve the desired result.
  */
 export default class WizardStep extends PureBaseComponent {
@@ -49,6 +48,10 @@ export default class WizardStep extends PureBaseComponent {
      */
     circleColor: PropTypes.string,
     /**
+     * The step's circle size (diameter)
+     */
+    circleSize: PropTypes.number,
+    /**
      * Icon to replace the (default) index
      */
     icon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
@@ -59,7 +62,11 @@ export default class WizardStep extends PureBaseComponent {
     /**
      * Whether the step should be enabled
      */
-    enabled: PropTypes.bool
+    enabled: PropTypes.bool,
+    /**
+     * Extra text to be read in accessibility mode
+     */
+    accessibilityInfo: PropTypes.string
   };
 
   getProps() {
@@ -70,17 +77,36 @@ export default class WizardStep extends PureBaseComponent {
     return {...config, ...props, ...activeConfig};
   }
 
+  getAccessibilityLabel() {
+    const {index, label, state} = this.props;
+    const config = StatesConfig[state];
+    const extraInfo = config.accessibilityInfo || '';
+    return `Step ${index + 1}, ${label}, ${extraInfo}`;
+  }
+
   renderCircle(props) {
-    const {testID, index, activeIndex, onPress, indexLabelStyle, color, circleColor = color, icon, enabled} = props;
+    const {
+      testID,
+      index,
+      activeIndex,
+      onPress,
+      indexLabelStyle,
+      circleSize,
+      color,
+      circleColor = color,
+      icon,
+      enabled
+    } = props;
     const hitSlopSize = Spacings.s2;
 
     return (
       <TouchableOpacity
         testID={`${testID}.circle`}
-        style={[styles.circle, {borderColor: circleColor}]}
+        style={[styles.circle, circleSize && {width: circleSize, height: circleSize}, {borderColor: circleColor}]}
         onPress={enabled ? onPress : undefined}
         hitSlop={{top: hitSlopSize, bottom: hitSlopSize, left: hitSlopSize, right: hitSlopSize}}
         disabled={!enabled}
+        accessibilityLabel={this.getAccessibilityLabel()}
       >
         {index === activeIndex || _.isUndefined(icon) ? (
           <Text text80 testID={`${testID}.index`} style={[{color}, indexLabelStyle]}>
@@ -102,7 +128,13 @@ export default class WizardStep extends PureBaseComponent {
         {index > activeIndex && <View flex style={[styles.connector, connectorStyle]}/>}
         {this.renderCircle(props)}
         {index === activeIndex && (
-          <Text text80 testID={`${testID}.label`} numberOfLines={1} style={[styles.label, {maxWidth}, labelStyle]}>
+          <Text
+            text80
+            testID={`${testID}.label`}
+            numberOfLines={1}
+            style={[styles.label, {maxWidth}, labelStyle]}
+            accessible={false}
+          >
             {label}
           </Text>
         )}
@@ -114,7 +146,7 @@ export default class WizardStep extends PureBaseComponent {
 
 const styles = StyleSheet.create({
   connector: {
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: Colors.dark60
   },
   circle: {
