@@ -1,4 +1,4 @@
-#import "UIResponder+FirstResponder.h"
+#import "UIResponder+FirstResponderTemp.h"
 
 static __weak id currentFirstResponder;
 
