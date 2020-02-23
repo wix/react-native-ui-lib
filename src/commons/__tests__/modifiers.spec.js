@@ -200,6 +200,40 @@ describe('Modifiers', () => {
     });
   });
 
+  describe('extractPositionStyle', () => {
+    it('should return undefined when modifier prop is invalid/irrelevant', () => {
+      expect(uut.extractPositionStyle({abs: false})).toEqual(undefined);
+      expect(uut.extractPositionStyle({absK: true})).toEqual(undefined);
+      expect(uut.extractPositionStyle({absolute: true})).toEqual(undefined);
+    });
+
+    it('should return absolute style', () => {
+      expect(uut.extractPositionStyle({abs: true})).toEqual({position: 'absolute'});
+    });
+    it('should return absolute fill object style', () => {
+      expect(uut.extractPositionStyle({absF: true})).toEqual({position: 'absolute', top: 0, left: 0, right: 0, bottom: 0});
+    });
+    it('should return absolute with top value', () => {
+      expect(uut.extractPositionStyle({absT: true})).toEqual({position: 'absolute', top: 0});
+    });
+    it('should return absolute with bottom value', () => {
+      expect(uut.extractPositionStyle({absB: true})).toEqual({position: 'absolute', bottom: 0});
+    });
+    it('should return absolute with left value', () => {
+      expect(uut.extractPositionStyle({absL: true})).toEqual({position: 'absolute', left: 0});
+    });
+    it('should return absolute with right value', () => {
+      expect(uut.extractPositionStyle({absR: true})).toEqual({position: 'absolute', right: 0});
+    });
+    it('should return absolute with vertical values', () => {
+      expect(uut.extractPositionStyle({absV: true})).toEqual({position: 'absolute', top: 0, bottom: 0});
+    });
+    it('should return absolute with horizontal values', () => {
+      expect(uut.extractPositionStyle({absH: true})).toEqual({position: 'absolute', left: 0, right: 0});
+    });
+
+  });
+
   describe('extractFlexStyle - flex modifier', () => {
     it('should return flex style according to flex-? prop', () => {
       expect(uut.extractFlexStyle({'flex-2': true})).toEqual({flex: 2});

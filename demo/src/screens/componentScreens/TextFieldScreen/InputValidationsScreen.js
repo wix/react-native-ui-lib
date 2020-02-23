@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {View, Text, TextField, Button, Spacings, KeyboardAwareInsetsView} from 'react-native-ui-lib';
+import {View, Text, TextField, Button, Spacings, Keyboard} from 'react-native-ui-lib';
 import {Navigation} from 'react-native-navigation';
+
+const KeyboardAwareInsetsView = Keyboard.KeyboardAwareInsetsView;
 
 class InputValidationsScreen extends Component {
   state = {

@@ -60,6 +60,12 @@ module.exports = {
   get Image() {
     return require('./components').Image;
   },
+  get KeyboardAwareScrollView() {
+    return require('./components').KeyboardAwareScrollView;
+  },
+  get KeyboardAwareListView() {
+    return require('./components').KeyboardAwareListView;
+  },
   get BaseInput() {
     return require('./components').BaseInput;
   },
@@ -219,12 +225,9 @@ module.exports = {
   get SafeAreaInsetsManager() {
     return require('./nativeComponents').SafeAreaInsetsManager;
   },
-  get KeyboardAwareInsetsView() {
-    return require('./nativeComponents').KeyboardAwareInsetsView;
+  get Keyboard() {
+    return require('./nativeComponents').Keyboard;
   },
-  // get KeyboardTrackingView() {
-  //   return require('./nativeComponents').KeyboardTrackingView;
-  // },
 
   // Style
   get Colors() {

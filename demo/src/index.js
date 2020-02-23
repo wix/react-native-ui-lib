@@ -6,75 +6,201 @@ I18nManager.allowRTL(true);
 module.exports = {
   name: 'unicorn demo app',
   // componentScreens
-  ActionSheetScreen: require('./screens/componentScreens/ActionSheetScreen'),
-  ActionBarScreen: require('./screens/componentScreens/ActionBarScreen'),
-  AvatarsScreen: require('./screens/componentScreens/AvatarsScreen'),
-  AnimatedImageScreen: require('./screens/componentScreens/AnimatedImageScreen'),
-  ButtonsScreen: require('./screens/componentScreens/ButtonsScreen'),
-  BadgesScreen: require('./screens/componentScreens/BadgesScreen'),
-  CardsScreen: require('./screens/componentScreens/CardsScreen'),
-  CarouselScreen: require('./screens/componentScreens/CarouselScreen'),
-  CheckboxScreen: require('./screens/componentScreens/CheckboxScreen'),
-  ConnectionStatusBarScreen: require('./screens/componentScreens/ConnectionStatusBarScreen'),
-  DialogScreen: require('./screens/componentScreens/DialogScreen'),
-  DrawerScreen: require('./screens/componentScreens/DrawerScreen'),
-  TagsInputScreen: require('./screens/componentScreens/TagsInputScreen'),
-  HintsScreen: require('./screens/componentScreens/HintsScreen'),
-  ImageScreen: require('./screens/componentScreens/ImageScreen'),
-  MaskedInputScreen: require('./screens/componentScreens/MaskedInputScreen'),
-  OverlaysScreen: require('./screens/componentScreens/OverlaysScreen'),
-  PageControlScreen: require('./screens/componentScreens/PageControlScreen'),
-  PanDismissibleScreen: require('./screens/componentScreens/PanDismissibleScreen'),
-  PanListenerScreen: require('./screens/componentScreens/PanListenerScreen'),
-  PanResponderScreen: require('./screens/componentScreens/PanResponderScreen'),
-  PickerScreen: require('./screens/componentScreens/PickerScreen'),
-  RadioButtonScreen: require('./screens/componentScreens/RadioButtonScreen'),
-  SharedTransitionScreen: require('./screens/componentScreens/SharedTransitionScreen'),
-  StepperScreen: require('./screens/componentScreens/StepperScreen'),
-  SwitchScreen: require('./screens/componentScreens/SwitchScreen'),
-  ToastsScreen: require('./screens/componentScreens/ToastsScreen'),
-  TabBarScreen: require('./screens/componentScreens/TabBarScreen'),
-  TextScreen: require('./screens/componentScreens/TextScreen'),
-  TextFieldScreen: require('./screens/componentScreens/TextFieldScreen'),
-  TourScreen: require('./screens/componentScreens/TourScreen'),
-  FeatureHighlightScreen: require('./screens/componentScreens/FeatureHighlightScreen'),
-  WheelPickerDialogScreen: require('./screens/componentScreens/WheelPickerDialogScreen'),
-  SliderScreen: require('./screens/componentScreens/SliderScreen'),
-  FloatingButtonScreen: require('./screens/componentScreens/FloatingButtonScreen'),
-  ColorPickerScreen: require('./screens/componentScreens/ColorPickerScreen'),
-  ColorSwatchScreen: require('./screens/componentScreens/ColorSwatchScreen'),
-  StackAggregatorScreen: require('./screens/componentScreens/StackAggregatorScreen'),
-  DateTimePickerScreen: require('./screens/componentScreens/DateTimePickerScreen'),
-  WizardScreen: require('./screens/componentScreens/WizardScreen'),
+  get ActionSheetScreen() {
+    return require('./screens/componentScreens/ActionSheetScreen').default;
+  },
+  get ActionBarScreen() {
+    return require('./screens/componentScreens/ActionBarScreen').default;
+  },
+  get AvatarsScreen() {
+    return require('./screens/componentScreens/AvatarsScreen').default;
+  },
+  get AnimatedImageScreen() {
+    return require('./screens/componentScreens/AnimatedImageScreen').default;
+  },
+  get ButtonsScreen() {
+    return require('./screens/componentScreens/ButtonsScreen').default;
+  },
+  get BadgesScreen() {
+    return require('./screens/componentScreens/BadgesScreen').default;
+  },
+  get CardsScreen() {
+    return require('./screens/componentScreens/CardsScreen').default;
+  },
+  get CarouselScreen() {
+    return require('./screens/componentScreens/CarouselScreen').default;
+  },
+  get CheckboxScreen() {
+    return require('./screens/componentScreens/CheckboxScreen').default;
+  },
+  get ConnectionStatusBarScreen() {
+    return require('./screens/componentScreens/ConnectionStatusBarScreen').default;
+  },
+  get DialogScreen() {
+    return require('./screens/componentScreens/DialogScreen').default;
+  },
+  get DrawerScreen() {
+    return require('./screens/componentScreens/DrawerScreen').default;
+  },
+  get TagsInputScreen() {
+    return require('./screens/componentScreens/TagsInputScreen').default;
+  },
+  get HintsScreen() {
+    return require('./screens/componentScreens/HintsScreen').default;
+  },
+  get ImageScreen() {
+    return require('./screens/componentScreens/ImageScreen').default;
+  },
+  get MaskedInputScreen() {
+    return require('./screens/componentScreens/MaskedInputScreen').default;
+  },
+  get OverlaysScreen() {
+    return require('./screens/componentScreens/OverlaysScreen').default;
+  },
+  get PageControlScreen() {
+    return require('./screens/componentScreens/PageControlScreen').default;
+  },
+  get PanDismissibleScreen() {
+    return require('./screens/componentScreens/PanDismissibleScreen').default;
+  },
+  get PanListenerScreen() {
+    return require('./screens/componentScreens/PanListenerScreen').default;
+  },
+  get PanResponderScreen() {
+    return require('./screens/componentScreens/PanResponderScreen').default;
+  },
+  get PickerScreen() {
+    return require('./screens/componentScreens/PickerScreen').default;
+  },
+  get RadioButtonScreen() {
+    return require('./screens/componentScreens/RadioButtonScreen').default;
+  },
+  get SharedTransitionScreen() {
+    return require('./screens/componentScreens/SharedTransitionScreen').default;
+  },
+  get StepperScreen() {
+    return require('./screens/componentScreens/StepperScreen').default;
+  },
+  get SwitchScreen() {
+    return require('./screens/componentScreens/SwitchScreen').default;
+  },
+  get ToastsScreen() {
+    return require('./screens/componentScreens/ToastsScreen').default;
+  },
+  get TabBarScreen() {
+    return require('./screens/componentScreens/TabBarScreen').default;
+  },
+  get TextScreen() {
+    return require('./screens/componentScreens/TextScreen').default;
+  },
+  get TextFieldScreen() {
+    return require('./screens/componentScreens/TextFieldScreen').default;
+  },
+  get TourScreen() {
+    return require('./screens/componentScreens/TourScreen').default;
+  },
+  get FeatureHighlightScreen() {
+    return require('./screens/componentScreens/FeatureHighlightScreen').default;
+  },
+  get WheelPickerDialogScreen() {
+    return require('./screens/componentScreens/WheelPickerDialogScreen').default;
+  },
+  get SliderScreen() {
+    return require('./screens/componentScreens/SliderScreen').default;
+  },
+  get FloatingButtonScreen() {
+    return require('./screens/componentScreens/FloatingButtonScreen').default;
+  },
+  get ColorPickerScreen() {
+    return require('./screens/componentScreens/ColorPickerScreen').default;
+  },
+  get ColorSwatchScreen() {
+    return require('./screens/componentScreens/ColorSwatchScreen').default;
+  },
+  get StackAggregatorScreen() {
+    return require('./screens/componentScreens/StackAggregatorScreen').default;
+  },
+  get DateTimePickerScreen() {
+    return require('./screens/componentScreens/DateTimePickerScreen').default;
+  },
+  get WizardScreen() {
+    return require('./screens/componentScreens/WizardScreen').default;
+  },
   // nativeComponentScreens
-  HighlightOverlayViewScreen: require('./screens/nativeComponentScreens/HighlightOverlayViewScreen'),
-  SafeAreaSpacerViewScreen: require('./screens/nativeComponentScreens/SafeAreaSpacerViewScreen'),
-  WheelPickerViewScreen: require('./screens/nativeComponentScreens/WheelPickerViewScreen'),
+  get HighlightOverlayViewScreen() {
+    return require('./screens/nativeComponentScreens/HighlightOverlayViewScreen').default;
+  },
+  get SafeAreaSpacerViewScreen() {
+    return require('./screens/nativeComponentScreens/SafeAreaSpacerViewScreen').default;
+  },
+  get WheelPickerViewScreen() {
+    return require('./screens/nativeComponentScreens/WheelPickerViewScreen').default;
+  },
   // componentScreenScreens
-  EmptyStateScreen: require('./screens/componentScreenScreens/EmptyStateScreen'),
-  LoadingScreen: require('./screens/componentScreenScreens/LoadingScreen'),
-  ModalScreen: require('./screens/componentScreenScreens/ModalScreen'),
+  get EmptyStateScreen() {
+    return require('./screens/componentScreenScreens/EmptyStateScreen').default;
+  },
+  get LoadingScreen() {
+    return require('./screens/componentScreenScreens/LoadingScreen').default;
+  },
+  get ModalScreen() {
+    return require('./screens/componentScreenScreens/ModalScreen').default;
+  },
   // listScreens
-  BasicListScreen: require('./screens/listScreens/BasicListScreen'),
-  ContactsListScreen: require('./screens/listScreens/ContactsListScreen'),
-  ConversationListScreen: require('./screens/listScreens/ConversationListScreen'),
+  get BasicListScreen() {
+    return require('./screens/listScreens/BasicListScreen').default;
+  },
+  get ContactsListScreen() {
+    return require('./screens/listScreens/ContactsListScreen').default;
+  },
+  get ConversationListScreen() {
+    return require('./screens/listScreens/ConversationListScreen').default;
+  },
   // styleScreens
-  BorderRadiusesScreen: require('./screens/styleScreens/BorderRadiusesScreen'),
-  ColorsScreen: require('./screens/styleScreens/ColorsScreen'),
-  TypographyScreen: require('./screens/styleScreens/TypographyScreen'),
-  ShadowsScreen: require('./screens/styleScreens/ShadowsScreen'),
-  SpacingsScreen: require('./screens/styleScreens/SpacingsScreen'),
+  get BorderRadiusesScreen() {
+    return require('./screens/styleScreens/BorderRadiusesScreen').default;
+  },
+  get ColorsScreen() {
+    return require('./screens/styleScreens/ColorsScreen').default;
+  },
+  get TypographyScreen() {
+    return require('./screens/styleScreens/TypographyScreen').default;
+  },
+  get ShadowsScreen() {
+    return require('./screens/styleScreens/ShadowsScreen').default;
+  },
+  get SpacingsScreen() {
+    return require('./screens/styleScreens/SpacingsScreen').default;
+  },
   // animationScreens
-  CardScannerScreen: require('./screens/animationScreens/CardScannerScreen'),
-  CardAnimationsScreen: require('./screens/animationScreens/CardAnimationsScreen'),
-  ListAnimationsScreen: require('./screens/animationScreens/ListAnimationsScreen'),
-  ProgressBarScreen: require('./screens/animationScreens/ProgressBarScreen'),
+  get CardScannerScreen() {
+    return require('./screens/animationScreens/CardScannerScreen').default;
+  },
+  get CardAnimationsScreen() {
+    return require('./screens/animationScreens/CardAnimationsScreen').default;
+  },
+  get ListAnimationsScreen() {
+    return require('./screens/animationScreens/ListAnimationsScreen').default;
+  },
+  get ProgressBarScreen() {
+    return require('./screens/animationScreens/ProgressBarScreen').default;
+  },
   // realExamples
-  AppleMusic: require('./screens/realExamples/AppleMusic'),
-  Pinterest: require('./screens/realExamples/Pinterest'),
-  ListActionsScreen: require('./screens/realExamples/ListActions/ListActionsScreen'),
+  get AppleMusic() {
+    return require('./screens/realExamples/AppleMusic').default;
+  },
+  get Pinterest() {
+    return require('./screens/realExamples/Pinterest').default;
+  },
+  get ListActionsScreen() {
+    return require('./screens/realExamples/ListActions/ListActionsScreen').default;
+  },
   // wrapperScreens
-  TouchableOpacityScreen: require('./screens/wrapperScreens/TouchableOpacityScreen'),
+  get TouchableOpacityScreen() {
+    return require('./screens/wrapperScreens/TouchableOpacityScreen').default;
+  },
   // General
-  ExampleScreenPresenter: require('./screens/ExampleScreenPresenter')
+  get ExampleScreenPresenter() {
+    return require('./screens/ExampleScreenPresenter');
+  }
 };

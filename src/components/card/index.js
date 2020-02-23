@@ -216,9 +216,9 @@ class Card extends PureBaseComponent {
   }
 
   render() {
-    const {onPress, style, selected, containerStyle, enableBlur, ...others} = this.getThemeProps();
+    const {onPress, onLongPress, style, selected, containerStyle, enableBlur, ...others} = this.getThemeProps();
     const blurOptions = this.getBlurOptions();
-    const Container = onPress ? TouchableOpacity : View;
+    const Container = (onPress || onLongPress) ? TouchableOpacity : View;
     const brRadius = this.borderRadius;
 
     return (
@@ -233,6 +233,7 @@ class Card extends PureBaseComponent {
           style
         ]}
         onPress={onPress}
+        onLongPress={onLongPress}
         delayPressIn={10}
         activeOpacity={0.6}
         accessibilityState={{selected}}

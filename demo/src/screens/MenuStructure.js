@@ -34,16 +34,19 @@ export const navigationData = {
       {title: 'Feature Highlight', tags: 'feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
       {title: 'Hint', tags: 'hints tooltip', screen: 'unicorn.components.HintsScreen'},
       {title: 'Image', tags: 'image cover overlay', screen: 'unicorn.components.ImageScreen'},
+      {title: 'KeyboardAwareScrollView', tags: 'KeyboardAwareScrollView', screen: 'unicorn.components.KeyboardAwareScrollViewScreen'},
       {title: 'Overlays', tags: 'overlay image', screen: 'unicorn.components.OverlaysScreen'},
       {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
       {title: 'Pan Dismissible', tags: 'pan swipe drag dismiss', screen: 'unicorn.components.PanDismissibleScreen'},
       {title: 'Pan Listener', tags: 'pan swipe drag listener', screen: 'unicorn.components.PanListenerScreen'},
       {title: 'Pan Responder', tags: 'pan swipe drag responder', screen: 'unicorn.components.PanResponderScreen'},
+      {title: 'ScrollBar', tags: 'scroll bar gradient', screen: 'unicorn.components.ScrollBarScreen'},
       {title: 'Shared Transition', tags: 'shared transition element', screen: 'unicorn.components.SharedTransitionScreen'},
       {title: 'Stack Aggregator', tags: 'stack aggregator', screen: 'unicorn.components.StackAggregatorScreen'},
       {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
       {title: 'Text', tags: 'text', screen: 'unicorn.components.TextScreen'},
       {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'},
+      {title: 'View', tags: 'view modifiers', screen: 'unicorn.components.ViewScreen'},
       {title: 'Wheel Picker Dialog', tags: 'wheel picker dialog', screen: 'unicorn.components.WheelPickerDialogScreen'},
       {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'}
     ]
@@ -74,8 +77,9 @@ export const navigationData = {
         screen: 'unicorn.nativeComponents.HighlightOverlayViewScreen'
       },
       {title: 'Wheel Picker', tags: 'wheel picker', screen: 'unicorn.nativeComponents.WheelPickerViewScreen'},
-      {title: 'SafeArea Spacer', tags: 'native safe area', screen: 'unicorn.nativeComponents.SafeAreaSpacerViewScreen'}
-      // {title: 'KeyboardTracking (iOS)', tags: 'KeyboardTracking', screen: 'unicorn.nativeComponents.KeyboardTrackingViewScreen'},
+      {title: 'SafeArea Spacer', tags: 'native safe area', screen: 'unicorn.nativeComponents.SafeAreaSpacerViewScreen'},
+      {title: 'KeyboardTracking (iOS)', tags: 'KeyboardTracking', screen: 'unicorn.nativeComponents.KeyboardTrackingViewScreen'},
+      {title: 'KeyboardInput', tags: 'KeyboardInput', screen: 'unicorn.nativeComponents.KeyboardInputViewScreen'}
     ]
   },
   Screens: {

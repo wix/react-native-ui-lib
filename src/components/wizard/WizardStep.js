@@ -16,8 +16,7 @@ import {States, StatesConfig} from './WizardStates';
  * @description: WizardStep Component: a wizard presents a series of steps in  prescribed order
  * that the user needs to complete in order to accomplish a goal (e.g. purchase a product).
  *
- * @example: https://github.com/wix-private/wix-react-native-ui-lib/blob/master/example/screens/components/WizardScreen.js
- * @guidelines: https://zpl.io/aXmAkdg
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WizardScreen.js
  * @notes: Use Wizard with nested Wizard.Step(s) to achieve the desired result.
  */
 export default class WizardStep extends PureBaseComponent {
