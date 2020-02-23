@@ -43,9 +43,63 @@ Then configure the rules you want to use under the rules section.
 
 ## Supported Rules
 
-* Fill in provided rules here
+#### uilib/no-hard-coded-color
+```js
+// Your app valid colors 
+const validColors = {
+  blue: '#459FED',
+  red: '#F2564D',
+  green: '#00CD8B',
+  yellow: '#FFB600',
+}
 
+// Lint will catch all hard coded color values in the code and replace with valid colors if exist
+// `#459FED` will turn to `Colors.blue`
+{
+    "rules": {
+        "uilib/no-hard-coded-color": ['error', {validColors}]
+    }
+}
+```
 
+### uilib/component-deprecation_warn, uilib/component-deprecation_error
+```js
 
+// deprecation message to warn you consumers about
+const deprecationWarnings = [
+  {
+      "component": "ActivityIndicator",
+      "source": "react-native",
+      "message": "Please avoid using react-native ActivityIndicator, use the 'Loader' component instead"
+   },
+   {
+      "component": "OldComponent",
+      "source": "react-native-ui-lib",
+      "message": "Please use the 'NewComponent' instead. Auto fix available.",
+      "fix": { "componentName": "NewComponent" }
+    },
+];
 
+const deprecationErrors = [
+  {
+      "component": "Button", /// The component 
+      "source": "react-native-ui-lib", // The source you import the component from
+      "message": "",
+      "props": [
+        {
+          "prop": "title", // the prop to depreciate
+          "message": "Please use `label` prop instead of `title` prop", // custom message to the user
+          "fix": { "propName": "label" } // provice auto fix
+        }
+      ]
+    },
+];
 
+// Two phases: warn & error to allow phasing your migration process
+{
+    "rules": {
+      'uilib/component-deprecation_warn': ['warn', {deprecations: deprecationWarnings, dueDate: 'Thursday 31 January'}],
+      'uilib/component-deprecation_error': ['error', {deprecations: deprecationErrors , dueDate: 'Thursday 31 January' 
+    }
+}
+```
