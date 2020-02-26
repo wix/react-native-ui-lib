@@ -80,7 +80,7 @@ export default class WizardStep extends PureBaseComponent {
   getAccessibilityLabel() {
     const {index, label, state} = this.props;
     const config = StatesConfig[state];
-    const extraInfo = config.accessibilityInfo || '';
+    const extraInfo = config && config.accessibilityInfo || '';
     return `Step ${index + 1}, ${label}, ${extraInfo}`;
   }
 
