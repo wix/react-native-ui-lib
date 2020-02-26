@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Modal as RNModal, TouchableWithoutFeedback, SafeAreaView} from 'react-native';
+import {StyleSheet, Modal as RNModal, TouchableWithoutFeedback} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
@@ -40,20 +40,19 @@ export default class Modal extends BaseComponent {
     const {overlayBackgroundColor, onBackgroundPress, accessibilityLabel = 'Dismiss'} = this.props;
     if (_.isFunction(onBackgroundPress) || !!overlayBackgroundColor) {
       const isScreenReaderEnabled = Constants.accessibility.isScreenReaderEnabled;
-      const Container = isScreenReaderEnabled ? SafeAreaView : View;
-      const containerStyle = isScreenReaderEnabled
-        ? undefined
-        : [styles.touchableOverlay, {backgroundColor: overlayBackgroundColor}];
       const accessibilityProps = isScreenReaderEnabled
         ? {accessible: true, accessibilityLabel, accessibilityRole: 'button'}
         : undefined;
 
       return (
-        <Container style={containerStyle}>
+        <View
+          useSafeArea={isScreenReaderEnabled}
+          style={!isScreenReaderEnabled && [styles.touchableOverlay, {backgroundColor: overlayBackgroundColor}]}
+        >
           <TouchableWithoutFeedback {...accessibilityProps} onPress={onBackgroundPress}>
             <View style={isScreenReaderEnabled ? styles.accessibleOverlayView : styles.overlayView}/>
           </TouchableWithoutFeedback>
-        </Container>
+        </View>
       );
     }
   }
