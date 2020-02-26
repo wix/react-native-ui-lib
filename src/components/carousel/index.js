@@ -380,7 +380,7 @@ export default class Carousel extends BaseComponent {
     const marginBottom = Math.max(0, this.getContainerPaddingVertical() - 16);
 
     return (
-      <View style={[containerStyle, {marginBottom}]} onLayout={this.onContainerLayout}>
+      <View style={[{marginBottom}, containerStyle]} onLayout={this.onContainerLayout}>
         <ScrollView
           {...others}
           ref={this.carousel}
