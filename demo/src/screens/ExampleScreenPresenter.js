@@ -3,6 +3,14 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Checkbox, ColorPalette, Colors, RadioButton, RadioGroup, Slider, Text, View} from 'react-native-ui-lib';
 
+export function renderHeader(title, others) {
+  return (
+    <Text text30 grey10 {...others}>
+      {title}
+    </Text>
+  );
+}
+
 export function renderBooleanOption(title, key) {
   const value = this.state[key];
   return (
