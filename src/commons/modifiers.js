@@ -200,7 +200,7 @@ export function extractBorderRadiusValue(props) {
   let borderRadius;
 
   const keys = Object.keys(props);
-  const radiusProp = keys.find(prop => BorderRadiuses.getKeysPattern().test(prop));
+  const radiusProp = keys.find(prop => BorderRadiuses.getKeysPattern().test(prop) && props[prop]);
   if (radiusProp) {
     borderRadius = BorderRadiuses[radiusProp];
   }
