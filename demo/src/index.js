@@ -97,9 +97,10 @@ module.exports = {
       get TextScreen() {
         return require('./screens/componentScreens/TextScreen').default;
       },
-      get TextFieldScreen() {
-        return require('./screens/componentScreens/TextFieldScreen').default;
-      },
+      // TODO: fix Expo issues (navigation) before un-commenting 
+      // get TextFieldScreen() {
+      //   return require('./screens/componentScreens/TextFieldScreen').default;
+      // },
       get TourScreen() {
         return require('./screens/componentScreens/TourScreen').default;
       },
@@ -147,9 +148,10 @@ module.exports = {
       get LoadingScreen() {
         return require('./screens/componentScreenScreens/LoadingScreen').default;
       },
-      get ModalScreen() {
-        return require('./screens/componentScreenScreens/ModalScreen').default;
-      },
+      // TODO: fix Expo issues (navigation) before un-commenting 
+      // get ModalScreen() {
+      //   return require('./screens/componentScreenScreens/ModalScreen').default;
+      // },
       // listScreens
       get BasicListScreen() {
         return require('./screens/listScreens/BasicListScreen').default;
