@@ -316,6 +316,7 @@ export default class Avatar extends PureBaseComponent {
     return (
       <Container
         style={[this.getContainerStyle(), containerStyle]}
+        ref={this.props.onContainerRef}
         testID={testID}
         onPress={onPress}
         accessible={!_.isUndefined(onPress)}
