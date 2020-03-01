@@ -100,7 +100,8 @@
     "testPathIgnorePatterns": [
       "/e2e/",
       "/node_modules/",
-      "/typings/"
+      "/typings/",
+      "/expoDemo/"
     ],
     "setupFiles": [
       "./jest-setup.js"
