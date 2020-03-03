@@ -364,4 +364,4 @@ function createStyles({labelColor}) {
   return styles;
 }
 
-export default forwardRef(Avatar)
+export default forwardRef(Avatar);
