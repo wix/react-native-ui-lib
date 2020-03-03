@@ -208,11 +208,14 @@ export default class TextField extends BaseInput {
   }
 
   getAccessibilityInfo() {
-    const {floatingPlaceholder, placeholder} = this.getThemeProps();
+    const {floatingPlaceholder, placeholder, expandable, value} = this.getThemeProps();
 
     let accessibilityLabel = floatingPlaceholder ? placeholder : undefined;
     if (this.isRequiredField()) {
       accessibilityLabel = `${accessibilityLabel || ''}. Mandatory`;
+    }
+    if (expandable) {
+      accessibilityLabel = `${accessibilityLabel || ''}. ${value || ''}`;
     }
 
     return {
@@ -482,7 +485,8 @@ export default class TextField extends BaseInput {
         activeOpacity={1}
         onPress={() => !this.isDisabled() && this.toggleExpandableModal(true)}
         testID={`${testID}.expandable`}
-        {...this.extractAccessibilityProps()}
+        // {...this.extractAccessibilityProps()}
+        {...this.getAccessibilityInfo()}
       >
         {this.renderTextInput()}
       </TouchableOpacity>
