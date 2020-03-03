@@ -9,6 +9,7 @@ import View from '../view';
 import Text from '../text';
 import Image from '../image';
 import AnimatedImage from '../animatedImage';
+import forwardRef from '../../commons/forwardRef';
 
 const deprecatedProps = [
   {old: 'isOnline', new: 'badgeProps.backgroundColor'},
@@ -41,7 +42,7 @@ const DEFAULT_BADGE_POSITION = BADGE_POSITIONS.TOP_RIGHT;
  * @image: https://user-images.githubusercontent.com/33805983/34480603-197d7f64-efb6-11e7-9feb-db8ba756f055.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.js
  */
-export default class Avatar extends PureBaseComponent {
+class Avatar extends PureBaseComponent {
   constructor(props) {
     super(props);
 
@@ -306,7 +307,8 @@ export default class Avatar extends PureBaseComponent {
       containerStyle,
       children,
       size,
-      testID
+      testID,
+      forwardedRef
     } = this.props;
     const Container = onPress ? TouchableOpacity : View;
     const hasImage = !_.isUndefined(imageSource) || !_.isUndefined(source);
@@ -316,7 +318,7 @@ export default class Avatar extends PureBaseComponent {
     return (
       <Container
         style={[this.getContainerStyle(), containerStyle]}
-        ref={this.props.onContainerRef}
+        ref={forwardedRef}
         testID={testID}
         onPress={onPress}
         accessible={!_.isUndefined(onPress)}
@@ -361,3 +363,5 @@ function createStyles({labelColor}) {
 
   return styles;
 }
+
+export default forwardRef(Avatar)
