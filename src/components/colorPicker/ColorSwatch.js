@@ -7,7 +7,7 @@ import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import {PureBaseComponent} from '../../commons';
-import {Colors} from '../../style';
+import {Colors, ColorName} from '../../style';
 import {Constants} from '../../helpers';
 
 
@@ -143,6 +143,7 @@ export default class ColorSwatch extends PureBaseComponent {
         onPress={this.onPress}
         style={[this.styles.container, style]}
         onLayout={this.onLayout}
+        accessibilityLabel={ColorName.name(color)[1]}
       >
         {Colors.isTransparent(color) && (
           <Image source={transparentImage} style={this.styles.transparentImage} resizeMode={'cover'}/>
