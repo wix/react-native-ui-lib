@@ -1,4 +1,4 @@
-let colorNameMap = [
+const colorNameMap = [
   ['000000', 'Black'],
   ['000080', 'Navy Blue'],
   ['0000C8', 'Dark Blue'],
@@ -1567,20 +1567,19 @@ let colorNameMap = [
   ['FFFFFF', 'White']
 ];
 
-const systemColorsMap = getSystemColorsMap();
+// function getSystemColorsMap() {
+//   const colors = require('./colorsPalette').colorsPalette;
+//   const keys = Object.keys(colors);
+//   const map = [];
 
-function getSystemColorsMap() {
-  const colors = require('./colorsPalette').colorsPalette;
-  const keys = Object.keys(colors);
-  const map = [];
-
-  keys.forEach(key => {
-    const pair = [colors[key].substr(1), key];
-    map.push(pair);
-  });
+//   keys.forEach(key => {
+//     const pair = [colors[key].substr(1), key];
+//     map.push(pair);
+//   });
   
-  return map;
-}
+//   return map;
+// }
+// const systemColorsMap = getSystemColorsMap();
+// colorNameMap = colorNameMap.concat(systemColorsMap);
 
-colorNameMap = colorNameMap.concat(systemColorsMap);
 export {colorNameMap};
