@@ -47,7 +47,7 @@ class TabBar extends PureComponent {
     /**
      * The list of tab bar items
      */
-    items: PropTypes.arrayOf(PropTypes.shape(TabBarItem)),
+    items: PropTypes.arrayOf(PropTypes.shape(TabBarItem.propTypes)),
     /**
      * Tab Bar height
      */

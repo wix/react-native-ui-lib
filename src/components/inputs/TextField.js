@@ -50,7 +50,7 @@ const ICON_LEFT_PADDING = 6;
  * @extends: TextInput
  * @extendslink: https://facebook.github.io/react-native/docs/textinput
  * @gif: https://media.giphy.com/media/xULW8su8Cs5Z9Fq4PS/giphy.gif, https://media.giphy.com/media/3ohc1dhDcLS9FvWLJu/giphy.gif, https://media.giphy.com/media/oNUSOxnHdMP5ZnKYsh/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/InputsScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextFieldScreen/BasicTextFieldScreen.js
  */
 export default class TextField extends BaseInput {
   static displayName = 'TextField';
@@ -208,11 +208,14 @@ export default class TextField extends BaseInput {
   }
 
   getAccessibilityInfo() {
-    const {floatingPlaceholder, placeholder} = this.getThemeProps();
+    const {floatingPlaceholder, placeholder, expandable, value} = this.getThemeProps();
 
     let accessibilityLabel = floatingPlaceholder ? placeholder : undefined;
     if (this.isRequiredField()) {
       accessibilityLabel = `${accessibilityLabel || ''}. Mandatory`;
+    }
+    if (expandable) {
+      accessibilityLabel = `${accessibilityLabel || ''}. ${value || ''}`;
     }
 
     return {
@@ -482,7 +485,8 @@ export default class TextField extends BaseInput {
         activeOpacity={1}
         onPress={() => !this.isDisabled() && this.toggleExpandableModal(true)}
         testID={`${testID}.expandable`}
-        {...this.extractAccessibilityProps()}
+        // {...this.extractAccessibilityProps()}
+        {...this.getAccessibilityInfo()}
       >
         {this.renderTextInput()}
       </TouchableOpacity>
