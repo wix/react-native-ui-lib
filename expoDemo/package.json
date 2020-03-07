@@ -24,7 +24,7 @@
     "react-native-ui-lib": "^5.3.1",
     "react-native-unimodules": "~0.7.0",
     "react-native-web": "~0.11.7",
-    "unicorn-demo-app": "^5.3.1-snapshot.722"
+    "unicorn-demo-app": "snapshot"
   },
   "devDependencies": {
     "@babel/core": "~7.6.0",
