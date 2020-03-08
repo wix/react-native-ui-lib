@@ -1,4 +1,4 @@
-import Avatar from '../index';
+import {Avatar} from '../index';
 import {Colors} from '../../../style';
 
 describe('Avatar Badge', () => {

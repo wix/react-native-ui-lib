@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import PropTypes from 'prop-types';
 import autobind from 'react-autobind';
 import {StyleSheet, FlatList, ViewPropTypes} from 'react-native';
@@ -160,6 +161,10 @@ export default class MainScreen extends Component {
     this.input.blur();
   }
 
+  setDefaultScreen = (item) => {
+    AsyncStorage.setItem('uilib.defaultScreen', item.screen);
+  }
+
   openScreen(row) {
     this.closeSearchBox();
 
@@ -245,6 +250,7 @@ export default class MainScreen extends Component {
           marginL-10
           text50
           onPress={() => this.openScreen(item)}
+          onLongPress={() => this.setDefaultScreen(item)}
         >
           {item.title}
         </Text>
