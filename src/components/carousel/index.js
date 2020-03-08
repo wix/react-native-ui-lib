@@ -395,7 +395,6 @@ export default class Carousel extends BaseComponent {
           onContentSizeChange={this.onContentSizeChange}
           onScroll={this.onScroll}
           onMomentumScrollEnd={this.onMomentumScrollEnd}
-          overflow={'visible'}
         >
           {this.renderChildren()}
         </ScrollView>
