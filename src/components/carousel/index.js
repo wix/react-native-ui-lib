@@ -144,6 +144,8 @@ export default class Carousel extends BaseComponent {
     return containerMarginHorizontal;
   }
 
+  // TODO: RN 61.5 - try to remove this from the children and move to the ScrollView's contentContainerStyle
+  // style={{overflow: 'visible'}} does not work in ScrollView on Android, maybe it will be fixed in the future
   getContainerPaddingVertical = () => {
     const {containerPaddingVertical = 0} = this.getThemeProps();
     return containerPaddingVertical;
