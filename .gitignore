@@ -63,3 +63,4 @@ package-lock.json
 
 # CocoaPods
 /ios/Pods/
+expoDemo/ios/Pods

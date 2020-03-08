@@ -1,0 +1,16 @@
+{
+  "name": "expoDemo",
+  "displayName": "expoDemo",
+  "expo": {
+    "name": "expoDemo",
+    "slug": "expoDemo",
+    "privacy": "unlisted",
+    "sdkVersion": "36.0.0",
+    "version": "1.0.0",
+    "entryPoint": "index.js",
+    "packagerOpts": {
+      "projectRoot": "."
+    },
+    "platforms": ["ios", "android", "web"]
+  }
+}

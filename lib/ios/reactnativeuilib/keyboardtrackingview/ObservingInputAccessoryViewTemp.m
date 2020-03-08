@@ -1,25 +1,25 @@
 //
-//  ObservingInputAccessoryView.m
+//  ObservingInputAccessoryViewTemp.m
 //  ReactNativeChat
 //
 //  Created by Artal Druk on 11/04/2016.
 //  Copyright © 2016 Wix.com All rights reserved.
 //
 
-#import "ObservingInputAccessoryView.h"
+#import "ObservingInputAccessoryViewTemp.h"
 
-@implementation ObservingInputAccessoryViewManager
+@implementation ObservingInputAccessoryViewTempManager
 
-+(ObservingInputAccessoryViewManager*)sharedInstance
++(ObservingInputAccessoryViewTempManager*)sharedInstance
 {
-    static ObservingInputAccessoryViewManager *instance = nil;
-    static dispatch_once_t observingInputAccessoryViewManagerOnceToken = 0;
+    static ObservingInputAccessoryViewTempManager *instance = nil;
+    static dispatch_once_t ObservingInputAccessoryViewTempManagerOnceToken = 0;
     
-    dispatch_once(&observingInputAccessoryViewManagerOnceToken,^
+    dispatch_once(&ObservingInputAccessoryViewTempManagerOnceToken,^
     {
         if (instance == nil)
         {
-            instance = [ObservingInputAccessoryViewManager new];
+            instance = [ObservingInputAccessoryViewTempManager new];
         }
     });
     
@@ -28,7 +28,7 @@
 
 @end
 
-@implementation ObservingInputAccessoryView
+@implementation ObservingInputAccessoryViewTemp
 {
     CGFloat _previousKeyboardHeight;
 }
@@ -90,7 +90,7 @@
         _previousKeyboardHeight = _keyboardHeight;
         _keyboardHeight = MAX(0, self.window.bounds.size.height - (centerY - boundsH / 2) - self.intrinsicContentSize.height);
         
-        [_delegate observingInputAccessoryViewDidChangeFrame:self];
+        [_delegate ObservingInputAccessoryViewTempDidChangeFrame:self];
     }
 }
 
@@ -119,9 +119,9 @@
     
     [self invalidateIntrinsicContentSize];
     
-    if([_delegate respondsToSelector:@selector(observingInputAccessoryViewKeyboardWillAppear:keyboardDelta:)])
+    if([_delegate respondsToSelector:@selector(ObservingInputAccessoryViewTempKeyboardWillAppear:keyboardDelta:)])
     {
-        [_delegate observingInputAccessoryViewKeyboardWillAppear:self keyboardDelta:_keyboardHeight - _previousKeyboardHeight];
+        [_delegate ObservingInputAccessoryViewTempKeyboardWillAppear:self keyboardDelta:_keyboardHeight - _previousKeyboardHeight];
     }
 }
 
@@ -138,9 +138,9 @@
     
     [self invalidateIntrinsicContentSize];
     
-    if([_delegate respondsToSelector:@selector(observingInputAccessoryViewKeyboardWillDisappear:)])
+    if([_delegate respondsToSelector:@selector(ObservingInputAccessoryViewTempKeyboardWillDisappear:)])
     {
-        [_delegate observingInputAccessoryViewKeyboardWillDisappear:self];
+        [_delegate ObservingInputAccessoryViewTempKeyboardWillDisappear:self];
     }
 }
 
@@ -161,7 +161,7 @@
     CGRect endFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     _keyboardHeight = [UIScreen mainScreen].bounds.size.height - endFrame.origin.y;
     
-    [_delegate observingInputAccessoryViewDidChangeFrame:self];
+    [_delegate ObservingInputAccessoryViewTempDidChangeFrame:self];
     
     [self invalidateIntrinsicContentSize];
 }
