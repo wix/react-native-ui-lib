@@ -233,6 +233,9 @@ module.exports = {
   get Colors() {
     return require('./style').Colors;
   },
+  get ColorName() {
+    return require('./style').ColorName;
+  },
   get BorderRadiuses() {
     return require('./style').BorderRadiuses;
   },
