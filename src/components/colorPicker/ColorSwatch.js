@@ -7,7 +7,7 @@ import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import {PureBaseComponent} from '../../commons';
-import {Colors, ColorName} from '../../style';
+import {Colors} from '../../style';
 import {Constants} from '../../helpers';
 
 
