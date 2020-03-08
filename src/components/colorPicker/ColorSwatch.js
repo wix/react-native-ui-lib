@@ -143,7 +143,7 @@ export default class ColorSwatch extends PureBaseComponent {
         onPress={this.onPress}
         style={[this.styles.container, style]}
         onLayout={this.onLayout}
-        accessibilityLabel={ColorName.name(color)[1]}
+        accessibilityLabel={Colors.getColorName(color)}
       >
         {Colors.isTransparent(color) && (
           <Image source={transparentImage} style={this.styles.transparentImage} resizeMode={'cover'}/>

@@ -1,3 +1,6 @@
+// adopted from: ntc js (Name that Color JavaScript)
+// http://chir.ag/projects/ntc
+
 const colorNameMap = [
   ['000000', 'Black'],
   ['000080', 'Navy Blue'],
