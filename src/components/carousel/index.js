@@ -10,7 +10,6 @@ import Text from '../text';
 import PageControl from '../pageControl';
 import * as presenter from './CarouselPresenter';
 
-
 const PAGE_CONTROL_POSITIONS = {
   OVER: 'over',
   UNDER: 'under'
@@ -40,6 +39,15 @@ export default class Carousel extends BaseComponent {
      * the spacing between the items
      */
     itemSpacings: PropTypes.number,
+    /**
+     * Horizontal margin for the container
+     */
+    containerMarginHorizontal: PropTypes.number,
+    /**
+     * Vertical padding for the container.
+     * Sometimes needed when there are overflows that are cut in Android.
+     */
+    containerPaddingVertical: PropTypes.number,
     /**
      * if true, will have infinite scroll
      */
@@ -84,7 +92,6 @@ export default class Carousel extends BaseComponent {
 
   static defaultProps = {
     initialPage: 0,
-    itemSpacings: 16,
     pagingEnabled: true
   };
 
@@ -95,7 +102,7 @@ export default class Carousel extends BaseComponent {
 
     this.carousel = React.createRef();
     const defaultPageWidth = props.loop ? 
-      Constants.screenWidth : props.pageWidth + props.itemSpacings || Constants.screenWidth;
+      Constants.screenWidth : props.pageWidth + this.getItemSpacings(props) || Constants.screenWidth;
     
     this.state = {
       containerWidth: undefined,
@@ -115,7 +122,8 @@ export default class Carousel extends BaseComponent {
   }
 
   onOrientationChanged = () => {
-    if (!this.props.pageWidth || this.props.loop) {
+    const {pageWidth, loop} = this.getThemeProps();
+    if (!pageWidth || loop) {
       this.orientationChange = true;
       // HACK: setting to containerWidth for Android's call when view disappear
       this.setState({pageWidth: this.state.containerWidth || Constants.screenWidth});
@@ -123,13 +131,30 @@ export default class Carousel extends BaseComponent {
   };
 
   generateStyles() {
-    this.styles = createStyles(this.props);
+    this.styles = createStyles(this.getThemeProps());
+  }
+
+  getItemSpacings(props) {
+    const {itemSpacings = 16} = props;
+    return itemSpacings;
+  }
+
+  getContainerMarginHorizontal = () => {
+    const {containerMarginHorizontal = 0} = this.getThemeProps();
+    return containerMarginHorizontal;
+  }
+
+  // TODO: RN 61.5 - try to remove this from the children and move to the ScrollView's contentContainerStyle
+  // style={{overflow: 'visible'}} does not work in ScrollView on Android, maybe it will be fixed in the future
+  getContainerPaddingVertical = () => {
+    const {containerPaddingVertical = 0} = this.getThemeProps();
+    return containerPaddingVertical;
   }
 
   updateOffset = (animated = false) => {
     const centerOffset = Constants.isIOS && this.shouldUsePageWidth() ? 
       (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
-    const x = presenter.calcOffset(this.props, this.state) - centerOffset;
+    const x = presenter.calcOffset(this.getThemeProps(), this.state) - centerOffset;
 
     if (this.carousel) {
       this.carousel.current.scrollTo({x, animated});
@@ -157,7 +182,6 @@ export default class Carousel extends BaseComponent {
   }
 
   getSnapToOffsets = () => {
-    const {itemSpacings} = this.props;
     const {containerWidth, pageWidth} = this.state;
 
     if (this.shouldEnablePagination()) {
@@ -165,37 +189,40 @@ export default class Carousel extends BaseComponent {
     }
 
     if (containerWidth) {
-      const spacings = pageWidth === containerWidth ? 0 : itemSpacings;
+      const spacings = pageWidth === containerWidth ? 0 : this.getItemSpacings(this.getThemeProps());
       const initialBreak = pageWidth - (containerWidth - pageWidth - spacings) / 2;
-      const snapToOffsets = _.times(presenter.getChildrenLength(this.props), index => initialBreak + index * pageWidth);
+      const snapToOffsets = _.times(presenter.getChildrenLength(this.props),
+        index => initialBreak + index * pageWidth + this.getContainerMarginHorizontal());
       return snapToOffsets;
     }
   };
 
   shouldUsePageWidth() {
-    const {loop, pageWidth} = this.props;
+    const {loop, pageWidth} = this.getThemeProps();
     return !loop && pageWidth;
   }
 
   shouldEnablePagination() {
-    const {pagingEnabled} = this.props;
+    const {pagingEnabled} = this.getThemeProps();
     return pagingEnabled && !this.shouldUsePageWidth();
   }
 
   onContainerLayout = ({nativeEvent: {layout: {width: containerWidth}}}) => {
     const update = {containerWidth};
+    const {pageWidth} = this.getThemeProps();
 
-    if (!this.props.pageWidth) {
+    if (!pageWidth) {
       update.pageWidth = containerWidth;
       update.initialOffset = {
-        x: presenter.calcOffset(this.props, {currentPage: this.state.currentPage, pageWidth: containerWidth})
+        x: presenter.calcOffset(this.getThemeProps(), {currentPage: this.state.currentPage, pageWidth: containerWidth})
       };
     }
     this.setState(update);
   };
 
   shouldAllowAccessibilityLayout() {
-    return this.props.allowAccessibleLayout && Constants.accessibility.isScreenReaderEnabled;
+    const {allowAccessibleLayout} = this.getThemeProps();
+    return allowAccessibleLayout && Constants.accessibility.isScreenReaderEnabled;
   }
 
   onContentSizeChange = () => {
@@ -222,13 +249,13 @@ export default class Carousel extends BaseComponent {
       return;
     }
 
-    const {loop} = this.props;
+    const {loop} = this.getThemeProps();
     const {pageWidth} = this.state;
     const offsetX = event.nativeEvent.contentOffset.x;
 
     if (offsetX >= 0) {
       if (!this.orientationChange) { // Avoid new calculation on orientation change
-        const newPage = presenter.calcPageIndex(offsetX, this.props, pageWidth);
+        const newPage = presenter.calcPageIndex(offsetX, this.getThemeProps(), pageWidth);
         this.setState({currentPage: newPage});
       }
       this.orientationChange = false;
@@ -243,12 +270,20 @@ export default class Carousel extends BaseComponent {
 
   renderChild = (child, key) => {
     if (child) {
-      const paddingLeft = this.shouldUsePageWidth() ? this.props.itemSpacings : undefined;
+      const paddingLeft = this.shouldUsePageWidth() ? this.getItemSpacings(this.getThemeProps()) : undefined;
       const index = Number(key);
       const length = presenter.getChildrenLength(this.props);
+      const containerMarginHorizontal = this.getContainerMarginHorizontal();
+      const marginLeft = index === 0 ? containerMarginHorizontal : 0;
+      const marginRight = index === length - 1 ? containerMarginHorizontal : 0;
+      const paddingVertical = this.getContainerPaddingVertical();
 
       return (
-        <View style={{width: this.state.pageWidth, paddingLeft}} key={key} collapsable={false}>
+        <View
+          style={{width: this.state.pageWidth, paddingLeft, marginLeft, marginRight, paddingVertical}}
+          key={key}
+          collapsable={false}
+        >
           {this.shouldAllowAccessibilityLayout() && !Number.isNaN(index) &&
             <View style={this.styles.hiddenText}>
               <Text>{`page ${index + 1} out of ${length}`}</Text>
@@ -261,7 +296,7 @@ export default class Carousel extends BaseComponent {
   };
 
   renderChildren() {
-    const {children, loop} = this.props;
+    const {children, loop} = this.getThemeProps();
     const length = presenter.getChildrenLength(this.props);
 
     const childrenArray = React.Children.map(children, (child, index) => {
@@ -277,16 +312,10 @@ export default class Carousel extends BaseComponent {
   }
 
   renderPageControl() {
-    const {
-      pageControlPosition,
-      pageControlProps,
-      size = 6,
-      spacing = 8,
-      color = Colors.dark20,
-      inactiveColor = Colors.dark60
-    } = this.getThemeProps();
-
+    const {pageControlPosition, pageControlProps = {}} = this.getThemeProps();
+    
     if (pageControlPosition) {
+      const {size = 6, spacing = 8, color = Colors.dark20, inactiveColor = Colors.dark60, ...others} = pageControlProps;
       const pagesCount = presenter.getChildrenLength(this.props);
       const containerStyle =
         pageControlPosition === PAGE_CONTROL_POSITIONS.UNDER
@@ -300,7 +329,7 @@ export default class Carousel extends BaseComponent {
           containerStyle={containerStyle}
           inactiveColor={inactiveColor}
           color={color}
-          {...pageControlProps}
+          {...others}
           numOfPages={pagesCount}
           currentPage={this.getCalcIndex(this.state.currentPage)}
         />
@@ -309,7 +338,7 @@ export default class Carousel extends BaseComponent {
   }
 
   renderCounter() {
-    const {pageWidth, showCounter, counterTextStyle} = this.props;
+    const {pageWidth, showCounter, counterTextStyle} = this.getThemeProps();
     const {currentPage} = this.state;
     const pagesCount = presenter.getChildrenLength(this.props);
 
@@ -325,7 +354,7 @@ export default class Carousel extends BaseComponent {
   }
 
   renderAccessibleLayout() {
-    const {containerStyle, children} = this.props;
+    const {containerStyle, children} = this.getThemeProps();
 
     return (
       <View style={containerStyle} onLayout={this.onContainerLayout}>
@@ -346,13 +375,14 @@ export default class Carousel extends BaseComponent {
   }
 
   renderCarousel() {
-    const {containerStyle, itemSpacings, ...others} = this.props;
+    const {containerStyle, ...others} = this.getThemeProps();
     const {initialOffset} = this.state;
-    const scrollContainerStyle = this.shouldUsePageWidth() ? {paddingRight: itemSpacings} : undefined;
+    const scrollContainerStyle = this.shouldUsePageWidth() ? {paddingRight: this.getItemSpacings(this.getThemeProps())} : undefined;
     const snapToOffsets = this.getSnapToOffsets();
+    const marginBottom = Math.max(0, this.getContainerPaddingVertical() - 16);
 
     return (
-      <View style={containerStyle} onLayout={this.onContainerLayout}>
+      <View style={[{marginBottom}, containerStyle]} onLayout={this.onContainerLayout}>
         <ScrollView
           {...others}
           ref={this.carousel}
@@ -381,7 +411,7 @@ export default class Carousel extends BaseComponent {
   }
 }
 
-function createStyles() {
+function createStyles({containerPaddingVertical = 0}) {
   return StyleSheet.create({
     counter: {
       paddingHorizontal: 8,
@@ -398,7 +428,7 @@ function createStyles() {
       alignSelf: 'center'
     },
     pageControlContainerStyleUnder: {
-      marginVertical: 16
+      marginVertical: 16 - containerPaddingVertical
     },
     hiddenText: {
       position: 'absolute', 
