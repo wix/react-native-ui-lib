@@ -41,14 +41,6 @@ class CarouselScreen extends Component {
     this.carousel.goToPage(index, true);
   };
 
-  toggleLimitShownPages = limitShownPages => {
-    this.setState({limitShownPages});
-  };
-
-  setNumberOfPagesShown = ({value: numberOfPagesShown}) => {
-    this.setState({numberOfPagesShown, currentPage: INITIAL_PAGE});
-  };
-
   render() {
     const {limitShownPages, numberOfPagesShown} = this.state;
 

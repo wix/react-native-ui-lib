@@ -17,12 +17,13 @@ const ALIGNMENTS = {
 };
 
 const POSITIONS = {
-  absolute: 'abs',
-  'absolute Fill': 'absF',
-  'absolute Left': 'absL',
-  'absolute Right': 'absR',
-  'absolute Vertical': 'absV',
-  'absolute Horizontal': 'absH',
+  abs: 'abs',
+  absF: 'absF',
+  absL: 'absL',
+  absR: 'absR',
+  absB: 'absB',
+  abV: 'absV',
+  absH: 'absH',
   none: null
 };
 
@@ -71,8 +72,8 @@ class ViewScreen extends Component {
             {renderSliderOption.call(this, 'BorderRadius(brXX)', 'borderRadius', {step: 10, min: 0, max: 60})}
             {renderSliderOption.call(this, 'Padding(padding-XX)', 'padding', {step: 4, min: 0, max: 40})}
             {renderSliderOption.call(this, 'Margin(margin-XX)', 'margin', {step: 4, min: 0, max: 40})}
-            {renderRadioGroup.call(this, 'Alignment (parent)', 'alignment', ALIGNMENTS)}
-            {renderRadioGroup.call(this, 'Position (child)', 'position', POSITIONS)}
+            {renderRadioGroup.call(this, 'Alignment (parent)', 'alignment', ALIGNMENTS, {isRow: true})}
+            {renderRadioGroup.call(this, 'Position (child)', 'position', POSITIONS, {isRow: true})}
           </View>
         </ScrollView>
       </View>

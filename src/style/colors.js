@@ -2,6 +2,7 @@ import _ from 'lodash';
 import Color from 'color';
 import tinycolor from 'tinycolor2';
 import {colorsPalette} from './colorsPalette';
+import ColorName from './colorName';
 
 class Colors {
   /**
@@ -89,6 +90,10 @@ class Colors {
       return requiredColor;
     }
     return this.getTintedColorForDynamicHex(color, tintKey);
+  }
+
+  getColorName(color) {
+    return ColorName.name(color)[1];
   }
 
   getTintedColorForDynamicHex(color, tintKey) {
