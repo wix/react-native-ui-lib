@@ -50,6 +50,19 @@ class Colors {
     return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
   }
 
+  _getOpaqueColor(c, opacity, factor) {
+    return Math.min(Math.max(Number(255 - opacity * (255 - c)) * factor, 0), 255);
+  }
+
+  getOpaqueColor(color, factor = 1) {
+    const colorObject = tinycolor(color).toRgb();
+    const r = this._getOpaqueColor(colorObject.r, colorObject.a, factor);
+    const g = this._getOpaqueColor(colorObject.g, colorObject.a, factor);
+    const b = this._getOpaqueColor(colorObject.b, colorObject.a, factor);
+
+    return this.rgba(r, g, b, 1);
+  }
+
   getBackgroundKeysPattern() {
     return /^(bg-|background-)/;
   }
