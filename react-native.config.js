@@ -7,13 +7,11 @@ module.exports = {
       android: {
         sourceDir: './lib/android/',
         packageImportPath: `import com.wix.reactnativeuilib.highlighterview.HighlighterViewPackage;
-import com.wix.reactnativeuilib.keyboardinput.KeyboardInputPackage;
 import com.wix.reactnativeuilib.textinput.TextInputDelKeyHandlerPackage;
 import com.wix.reactnativeuilib.wheelpicker.WheelPickerPackage;`,
         packageInstance: `new HighlighterViewPackage(),
       new WheelPickerPackage(),
-      new TextInputDelKeyHandlerPackage(),
-      new KeyboardInputPackage(application)`
+      new TextInputDelKeyHandlerPackage()`
       }
     }
   }
