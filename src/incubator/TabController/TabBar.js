@@ -113,6 +113,7 @@ class TabBar extends PureComponent {
     const itemsCount = this.itemsCount;
 
     this.tabBar = React.createRef();
+    this.tabBarScrollOffset = 0;
 
     this._itemsWidths = _.times(itemsCount, () => null);
     this._indicatorOffset = new Value(0);
@@ -174,6 +175,21 @@ class TabBar extends PureComponent {
     registerTabItems(itemsCount, ignoredItems);
   }
 
+  // TODO: move this logic into a ScrollPresenter or something
+  focusSelected = ([index]) => {
+    const {itemsOffsets, itemsWidths} = this.state;
+    const itemOffset = itemsOffsets[index];
+    const itemWidth = itemsWidths[index];
+    if (itemOffset && itemWidth) {
+      if (itemOffset < this.tabBarScrollOffset) {
+        this.tabBar.current.scrollTo({x: itemOffset - itemWidth});
+      } else if (itemOffset + itemWidth > this.tabBarScrollOffset + this.containerWidth) {
+        const offsetChange = Math.max(0, itemOffset - (this.tabBarScrollOffset + this.containerWidth));
+        this.tabBar.current.scrollTo({x: this.tabBarScrollOffset + offsetChange + itemWidth});
+      }
+    }
+  }
+
   onItemLayout = (itemWidth, itemIndex) => {
     this._itemsWidths[itemIndex] = itemWidth;
     if (!_.includes(this._itemsWidths, null)) {
@@ -190,6 +206,10 @@ class TabBar extends PureComponent {
       }
     }
   };
+
+  onScroll = ({nativeEvent: {contentOffset}}) => {
+    this.tabBarScrollOffset = contentOffset.x;
+  }
 
   onContentSizeChange = width => {
     if (width > this.containerWidth) {
@@ -268,7 +288,7 @@ class TabBar extends PureComponent {
   }
 
   renderCodeBlock = () => {
-    const {carouselOffset, asCarousel} = this.context;
+    const {carouselOffset, asCarousel, currentPage} = this.context;
     const {itemsWidths, itemsOffsets} = this.state;
     const nodes = [];
 
@@ -286,9 +306,11 @@ class TabBar extends PureComponent {
           extrapolate: Extrapolate.CLAMP
         })));
     } else {
-      nodes.push(set(this._indicatorOffset, runIndicatorTimer(new Clock(), this.context.currentPage, itemsOffsets)),
-        set(this._indicatorWidth, runIndicatorTimer(new Clock(), this.context.currentPage, itemsWidths)));
+      nodes.push(set(this._indicatorOffset, runIndicatorTimer(new Clock(), currentPage, itemsOffsets)),
+        set(this._indicatorWidth, runIndicatorTimer(new Clock(), currentPage, itemsWidths)));
     }
+
+    nodes.push(Reanimated.onChange(currentPage, Reanimated.call([currentPage], this.focusSelected)));
 
     return block(nodes);
   };
@@ -308,6 +330,8 @@ class TabBar extends PureComponent {
           contentContainerStyle={{minWidth: this.containerWidth}}
           scrollEnabled={scrollEnabled}
           onContentSizeChange={this.onContentSizeChange}
+          onScroll={this.onScroll}
+          scrollEventThrottle={100}
         >
           <View style={[styles.tabBar, height && {height}]}>{this.renderTabBarItems()}</View>
           {this.renderSelectedIndicator()}

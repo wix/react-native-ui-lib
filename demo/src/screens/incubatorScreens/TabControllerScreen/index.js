@@ -7,18 +7,15 @@ import Tab1 from './tab1';
 import Tab2 from './tab2';
 import Tab3 from './tab3';
 
-const TABS = ['Home', 'Me', 'Dashboard', 'account', 'groups', 'blog'];
+const TABS = ['Home', 'Posts', 'Reviews', 'Videos', 'Photos', 'Events', 'About', 'Community', 'Groups', 'Offers'];
 
 class TabControllerScreen extends Component {
   state = {
     asCarousel: true,
     selectedIndex: 0,
-    items: [
-      ..._.map(TABS, tab => ({label: tab, key: tab})),
-      {key: 'addTabs', icon: Assets.icons.settings, ignore: true, onPress: this.addTab}
-    ],
-
-    tabsCount: 3,
+    items: _.chain(TABS)
+      .map(tab => ({label: tab, key: tab}))
+      .value(),
     key: Date.now()
   };
 
@@ -44,33 +41,8 @@ class TabControllerScreen extends Component {
     }
   };
 
-  getItems = () => {
-    const {tabsCount} = this.state;
-    const items = _.chain(TABS)
-      .take(tabsCount)
-      .map(tab => ({label: tab, key: tab}))
-      .value();
-    items.push({key: 'addTabs', icon: Assets.icons.settings, ignore: true, onPress: this.addTab});
+  
 
-    return items;
-  };
-
-  // renderTabItems() {
-  //   const {tabsCount} = this.state;
-  //   const tabs = [
-  //     <Incubator.TabController.TabBarItem key="tab1" label="tab1" onPress={() => console.warn('press tab1')} />,
-  //     <Incubator.TabController.TabBarItem key="tab2" label="tab2" />,
-  //     <Incubator.TabController.TabBarItem key="tab3" label="tab3" />,
-  //     <Incubator.TabController.TabBarItem key="account" label="account" badge={{label: '9'}} />,
-  //     <Incubator.TabController.TabBarItem key="groups" label="groups" />,
-  //     <Incubator.TabController.TabBarItem key="blog" label="blog" />,
-  //   ];
-
-  //   return [
-  //     ..._.take(tabs, tabsCount),
-  //     <Incubator.TabController.TabBarItem key="addTabs" icon={Assets.icons.settings} ignore onPress={this.addTab} />,
-  //   ];
-  // }
 
   toggleCarouselMode = () => {
     this.setState({
@@ -109,21 +81,22 @@ class TabControllerScreen extends Component {
         <Incubator.TabController.TabPage index={2} lazy lazyLoadTime={1500} renderLoading={this.renderLoadingPage}>
           <Tab3/>
         </Incubator.TabController.TabPage>
-        {/* <Incubator.TabController.TabPage index={3}>
-          <Text text40>ACCOUNT</Text>
-        </Incubator.TabController.TabPage>
-        <Incubator.TabController.TabPage index={4}>
-          <Text text40>GROUPS</Text>
-        </Incubator.TabController.TabPage>
-        <Incubator.TabController.TabPage index={5}>
-          <Text text40>BLOG</Text>
-        </Incubator.TabController.TabPage> */}
+
+        {_.map(_.takeRight(TABS, TABS.length - 3), (title, index) => {
+          return (
+            <Incubator.TabController.TabPage key={title} index={index + 3}>
+              <View padding-s5>
+                <Text text40>{title}</Text>
+              </View>
+            </Incubator.TabController.TabPage>
+          );
+        })}
       </Container>
     );
   }
 
   render() {
-    const {key, selectedIndex, asCarousel} = this.state;
+    const {key, selectedIndex, asCarousel, items} = this.state;
     return (
       <View flex bg-grey70>
         <Incubator.TabController
@@ -133,7 +106,7 @@ class TabControllerScreen extends Component {
           onChangeIndex={this.onChangeIndex}
         >
           <Incubator.TabController.TabBar
-            items={this.getItems()}
+            items={items}
             // key={key}
             // uppercase
             // indicatorStyle={{backgroundColor: 'green', height: 3}}
