@@ -158,6 +158,6 @@ async function getDefaultScreenAndStartApp() {
 }
 
 Navigation.events().registerAppLaunchedListener(() => {
-  registerScreens();
+  registerScreens(Navigation.registerComponent.bind(Navigation));
   getDefaultScreenAndStartApp();
 });
