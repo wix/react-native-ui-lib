@@ -128,6 +128,9 @@ module.exports = {
       get DateTimePickerScreen() {
         return require('./screens/componentScreens/DateTimePickerScreen').default;
       },
+      get ViewScreen() {
+        return require('./screens/componentScreens/ViewScreen').default;
+      },
       get WizardScreen() {
         return require('./screens/componentScreens/WizardScreen').default;
       },
