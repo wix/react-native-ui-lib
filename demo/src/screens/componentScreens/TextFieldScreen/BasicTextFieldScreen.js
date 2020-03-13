@@ -58,10 +58,7 @@ export default class BasicTextFieldScreen extends Component {
 
     return (
       <View flex>
-        <View padding-20>
-          <Text marginB-20 text40>
-            TextField
-          </Text>
+        <View paddingH-20 paddingT-40>
           <TextField
             key={centered ? 'centered' : 'not-centered'}
             {...{[`text${typography}`]: true}}

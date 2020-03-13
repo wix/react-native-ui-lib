@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {View, Text, TextField, Colors, Spacings} from 'react-native-ui-lib';
+import {View, TextField, Colors, Spacings} from 'react-native-ui-lib';
 import {Navigation} from 'react-native-navigation';
 
 class CustomInputsScreen extends Component {
@@ -9,9 +9,6 @@ class CustomInputsScreen extends Component {
     return (
       <ScrollView>
         <View padding-s5>
-          <Text text40 marginB-s5>
-            Custom Inputs
-          </Text>
           <TextField title="Default" placeholder="Enter Text" enableErrors={false} containerStyle={styles.input}/>
           <TextField
             title="Square"
