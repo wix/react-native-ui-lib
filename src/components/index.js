@@ -114,6 +114,9 @@ module.exports = {
   get Stepper() {
     return require('./stepper').default;
   },
+  get TabController() {
+    return require('./tabController').default;
+  },
   get TabBar() {
     return require('./tabBar').default;
   },

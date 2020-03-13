@@ -32,6 +32,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.StepperScreen', () => require('./StepperScreen').default);
   registrar('unicorn.components.SwitchScreen', () => require('./SwitchScreen').default);
   registrar('unicorn.components.ToastsScreen', () => require('./ToastsScreen').default);
+  registrar('unicorn.components.TabControllerScreen', () => require('./TabControllerScreen').default);
   registrar('unicorn.components.TabBarScreen', () => require('./TabBarScreen').default);
   registrar('unicorn.components.TextScreen', () => require('./TextScreen').default);
   registrar('unicorn.components.TextFieldScreen', () => require('./TextFieldScreen').default);

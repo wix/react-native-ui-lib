@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Colors, TouchableOpacity, Typography, View, Text, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, TouchableOpacity, Typography, View, Text, TabController} from 'react-native-ui-lib'; //eslint-disable-line
 import _ from 'lodash';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 
@@ -7,8 +7,6 @@ import BasicTextFieldScreen from './BasicTextFieldScreen';
 import InputValidationsScreen from './InputValidationsScreen';
 import CustomInputsScreen from './CustomInputsScreen';
 import InputsScreen from './InputsScreen';
-
-const {TabController} = Incubator;
 
 const SCREENS = [
   {title: 'KitchenSink', screen: BasicTextFieldScreen},

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {ActivityIndicator} from 'react-native';
-import {Incubator, Colors, View, Text, Image, Assets, Button} from 'react-native-ui-lib'; //eslint-disable-line
+import {TabController, Colors, View, Text, Image, Assets, Button} from 'react-native-ui-lib'; //eslint-disable-line
+import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import _ from 'lodash';
 
 import Tab1 from './tab1';
@@ -68,27 +69,27 @@ class TabControllerScreen extends Component {
 
   renderTabPages() {
     const {asCarousel} = this.state;
-    const Container = asCarousel ? Incubator.TabController.PageCarousel : View;
+    const Container = asCarousel ? TabController.PageCarousel : View;
     const containerProps = asCarousel ? {} : {flex: true};
     return (
       <Container {...containerProps}>
-        <Incubator.TabController.TabPage index={0}>
+        <TabController.TabPage index={0}>
           <Tab1/>
-        </Incubator.TabController.TabPage>
-        <Incubator.TabController.TabPage index={1}>
+        </TabController.TabPage>
+        <TabController.TabPage index={1}>
           <Tab2/>
-        </Incubator.TabController.TabPage>
-        <Incubator.TabController.TabPage index={2} lazy lazyLoadTime={1500} renderLoading={this.renderLoadingPage}>
+        </TabController.TabPage>
+        <TabController.TabPage index={2} lazy lazyLoadTime={1500} renderLoading={this.renderLoadingPage}>
           <Tab3/>
-        </Incubator.TabController.TabPage>
+        </TabController.TabPage>
 
         {_.map(_.takeRight(TABS, TABS.length - 3), (title, index) => {
           return (
-            <Incubator.TabController.TabPage key={title} index={index + 3}>
+            <TabController.TabPage key={title} index={index + 3}>
               <View padding-s5>
                 <Text text40>{title}</Text>
               </View>
-            </Incubator.TabController.TabPage>
+            </TabController.TabPage>
           );
         })}
       </Container>
@@ -99,13 +100,13 @@ class TabControllerScreen extends Component {
     const {key, selectedIndex, asCarousel, items} = this.state;
     return (
       <View flex bg-grey70>
-        <Incubator.TabController
+        <TabController
           key={key}
           asCarousel={asCarousel}
           selectedIndex={selectedIndex}
           onChangeIndex={this.onChangeIndex}
         >
-          <Incubator.TabController.TabBar
+          <TabController.TabBar
             items={items}
             // key={key}
             // uppercase
@@ -118,9 +119,9 @@ class TabControllerScreen extends Component {
             activeBackgroundColor={Colors.blue60}
           >
             {/* {this.renderTabItems()} */}
-          </Incubator.TabController.TabBar>
+          </TabController.TabBar>
           {this.renderTabPages()}
-        </Incubator.TabController>
+        </TabController>
         <Button
           bg-grey20={!asCarousel}
           bg-green30={asCarousel}
@@ -133,4 +134,4 @@ class TabControllerScreen extends Component {
   }
 }
 
-export default TabControllerScreen;
+export default gestureHandlerRootHOC(TabControllerScreen);
