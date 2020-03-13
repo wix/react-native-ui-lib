@@ -253,6 +253,7 @@ class TabBar extends PureComponent {
             iconColor={iconColor}
             selectedIconColor={selectedIconColor}
             activeBackgroundColor={activeBackgroundColor}
+            key={item.label}
             {...item}
             {...this.context}
             index={index}
@@ -397,7 +398,7 @@ function runIndicatorTimer(clock, currentPage, values) {
   };
 
   const config = {
-    duration: 300,
+    duration: 200,
     toValue: new Value(100),
     easing: Easing.inOut(Easing.ease)
   };
