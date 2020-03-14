@@ -15,7 +15,6 @@ class MainScreen extends Component {
   static propTypes = {
     containerStyle: ViewPropTypes.style,
     renderItem: PropTypes.func,
-    renderSectionTitle: PropTypes.func,
     pageStyle: ViewPropTypes.style
   };
 
@@ -195,13 +194,14 @@ class MainScreen extends Component {
   }
 
   renderPages(data) {
+    const {pageStyle} = this.props;
     let index = 0;
     return (
       <TabController.PageCarousel>
         {_.map(data, (section, key) => {
           return (
             <TabController.TabPage key={key} index={index++}>
-              <View padding-s5 flex>
+              <View padding-s5 flex style={pageStyle}>
                 <FlatList
                   showsVerticalScrollIndicator={false}
                   data={section.screens}
