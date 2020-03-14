@@ -18,7 +18,9 @@ const DEFAULT_SELECTION_PROPS = {
   borderWidth: 2,
   color: Colors.blue30,
   indicatorSize: 20,
-  icon: Assets.icons.checkSmall
+  icon: Assets.icons.checkSmall,
+  iconColor: Colors.white,
+  hideIndicator: false
 };
 
 /**
@@ -83,9 +85,11 @@ class Card extends PureBaseComponent {
      */
     selectionOptions: PropTypes.shape({
       icon: PropTypes.number,
+      iconColor: PropTypes.string,
       color: PropTypes.string,
       borderWidth: PropTypes.number,
-      indicatorSize: PropTypes.number
+      indicatorSize: PropTypes.number,
+      hideIndicator: PropTypes.bool
     })
   };
 
@@ -176,7 +180,7 @@ class Card extends PureBaseComponent {
   }
 
   renderSelection() {
-    const {selectionOptions, selected} = this.getThemeProps();
+    const {selectionOptions = {}, selected} = this.getThemeProps();
     const {animatedSelected} = this.state;
     const selectionColor = _.get(selectionOptions, 'color', DEFAULT_SELECTION_PROPS.color);
 
@@ -194,9 +198,9 @@ class Card extends PureBaseComponent {
         ]}
         pointerEvents="none"
       >
-        <View style={[this.styles.selectedIndicator, {backgroundColor: selectionColor}]}>
-          <Image source={_.get(selectionOptions, 'icon', DEFAULT_SELECTION_PROPS.icon)}/>
-        </View>
+        {!selectionOptions.hideIndicator && <View style={[this.styles.selectedIndicator, {backgroundColor: selectionColor}]}>
+          <Image style={this.styles.selectedIcon} source={_.get(selectionOptions, 'icon', DEFAULT_SELECTION_PROPS.icon)}/>
+        </View>}
       </Animated.View>
     );
   }
@@ -252,7 +256,7 @@ class Card extends PureBaseComponent {
 }
 
 function createStyles({width, height, borderRadius, selectionOptions}) {
-  const selectionOptionsWithDefaults = _.merge(DEFAULT_SELECTION_PROPS, selectionOptions);
+  const selectionOptionsWithDefaults = {...DEFAULT_SELECTION_PROPS, ...selectionOptions};
   const brRadius = borderRadius === undefined ? DEFAULT_BORDER_RADIUS : borderRadius;
 
   return StyleSheet.create({
@@ -289,6 +293,9 @@ function createStyles({width, height, borderRadius, selectionOptions}) {
       backgroundColor: selectionOptionsWithDefaults.color,
       alignItems: 'center',
       justifyContent: 'center'
+    },
+    selectedIcon: {
+      tintColor: selectionOptionsWithDefaults.iconColor
     }
   });
 }
