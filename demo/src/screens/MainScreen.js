@@ -224,8 +224,6 @@ class MainScreen extends Component {
     const showCarousel = !filterText;
     const data = this.getMenuData();
 
-    const sections = Object.keys(data);
-
     return (
       <View testID="demo_main_screen" flex style={containerStyle}>
         {this.renderSearch()}
@@ -234,7 +232,7 @@ class MainScreen extends Component {
 
         {showCarousel && (
           <TabController asCarousel>
-            <TabController.TabBar items={sections.map(label => ({label}))}/>
+            <TabController.TabBar items={_.map(data, section => ({label: section.title}))}/>
             {this.renderPages(data)}
           </TabController>
         )}
