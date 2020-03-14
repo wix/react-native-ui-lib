@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import {View, TextField, Button, Spacings, Keyboard} from 'react-native-ui-lib';
-import {Navigation} from 'react-native-navigation';
 
 const KeyboardAwareInsetsView = Keyboard.KeyboardAwareInsetsView;
 
@@ -94,12 +93,10 @@ class InputValidationsScreen extends Component {
   }
 }
 
-export default InputValidationsScreen;
-
-Navigation.registerComponent('unicorn.components.InputValidationsScreen', () => InputValidationsScreen);
-
 const styles = StyleSheet.create({
   input: {
     marginBottom: Spacings.s2
   }
 });
+
+export default InputValidationsScreen;

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import {View, TextField, Colors, Spacings} from 'react-native-ui-lib';
-import {Navigation} from 'react-native-navigation';
 
 class CustomInputsScreen extends Component {
   state = {};
@@ -40,12 +39,10 @@ class CustomInputsScreen extends Component {
   }
 }
 
-export default CustomInputsScreen;
-
-Navigation.registerComponent('unicorn.components.CustomInputsScreen', () => CustomInputsScreen);
-
 const styles = StyleSheet.create({
   input: {
     marginBottom: Spacings.s4
   }
 });
+
+export default CustomInputsScreen;

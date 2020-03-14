@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
 import {Colors, View, Text, TextField, Slider, ColorPalette} from 'react-native-ui-lib'; //eslint-disable-line
-import {Navigation} from 'react-native-navigation';
 
 import {
   renderBooleanOption,
@@ -107,4 +106,3 @@ export default class BasicTextFieldScreen extends Component {
   }
 }
 
-Navigation.registerComponent('unicorn.components.BasicTextFieldScreen', () => BasicTextFieldScreen);
