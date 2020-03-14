@@ -91,6 +91,9 @@ module.exports = {
       get ToastsScreen() {
         return require('./screens/componentScreens/ToastsScreen').default;
       },
+      get TabControllerScreen() {
+        return require('./screens/componentScreens/TabControllerScreen').default;
+      },
       get TabBarScreen() {
         return require('./screens/componentScreens/TabBarScreen').default;
       },
