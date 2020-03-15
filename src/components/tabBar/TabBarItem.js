@@ -174,7 +174,7 @@ export default class TabBarItem extends PureBaseComponent {
         testID={testID}
         activeBackgroundColor={activeBackgroundColor}
         onLayout={this.onLayout}
-        accessibilityStates={selected ? ['selected'] : undefined}
+        accessibilityStates={selected ? ['selected'] : []}
       >
         <View row flex center style={[showDivider && this.styles.divider, {paddingHorizontal: 16}]}>
           {icon && (

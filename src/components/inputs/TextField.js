@@ -228,7 +228,7 @@ export default class TextField extends BaseInput {
 
     return {
       accessibilityLabel,
-      accessibilityStates: this.isDisabled() ? ['disabled'] : undefined
+      accessibilityStates: this.isDisabled() ? ['disabled'] : []
     };
   }
 
