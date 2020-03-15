@@ -227,6 +227,7 @@ class Picker extends BaseComponent {
       value: this.props.value
     });
     this.toggleExpandableModal(false);
+    _.invoke(this.props, 'topBarProps.onCancel');
   };
 
   onDoneSelecting = item => {
