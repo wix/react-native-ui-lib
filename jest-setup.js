@@ -5,3 +5,4 @@ jest.spyOn(AccessibilityInfo, 'fetch').mockImplementation(() => new Promise.reso
 
 // mock native modules
 jest.mock('@react-native-community/blur', () => {});
+jest.mock('@react-native-community/netinfo', () => {});

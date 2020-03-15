@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import {StyleSheet, Text, NetInfo} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
 import {Constants} from '../../helpers';
 import {PureBaseComponent} from '../../commons';
 import {Colors, Typography} from '../../style';
@@ -66,12 +67,12 @@ export default class ConnectionStatusBar extends PureBaseComponent {
   }
 
   componentDidMount() {
-    this.netInfoListener = NetInfo.addEventListener('connectionChange', this.onConnectionChange);
+    this.unsubscribe = NetInfo.addEventListener(this.onConnectionChange);
   }
 
   componentWillUnmount() {
-    if (this.netInfoListener) {
-      this.netInfoListener.remove();
+    if (this.unsubscribe) {
+      this.unsubscribe();
     }
   }
 
@@ -99,8 +100,8 @@ export default class ConnectionStatusBar extends PureBaseComponent {
   }
 
   async getInitialConnectionState() {
-    const state = await NetInfo.getConnectionInfo();
-    const isConnected = this.isStateConnected(state);
+    const isConnected = (await NetInfo.fetch()).isConnected;
+
     this.setState({isConnected});
     if (this.props.onConnectionChange) {
       this.props.onConnectionChange(isConnected, true);
