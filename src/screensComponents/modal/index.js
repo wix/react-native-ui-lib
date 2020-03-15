@@ -7,7 +7,7 @@ import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import TopBar from './TopBar';
 import View from '../../components/view';
-import Colors from '../../style/colors';
+import {Colors} from '../../style';
 
 /**
  * @description: Component that present content on top of the invoking screen
