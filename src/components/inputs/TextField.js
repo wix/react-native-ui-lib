@@ -680,9 +680,10 @@ function createStyles({centered, multiline, expandable}) {
   const inputTextAlign = Constants.isRTL ? 'right' : 'left';
 
   return StyleSheet.create({
-    container: {},
+    container: {
+    },
     innerContainer: {
-      flexGrow: 1, // create bugs with lineHeight
+      // flexGrow: 1, // create bugs with lineHeight
       flexDirection: 'row',
       justifyContent: centered ? 'center' : undefined,
       borderBottomWidth: 1,
