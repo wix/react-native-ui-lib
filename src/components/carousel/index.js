@@ -87,12 +87,22 @@ export default class Carousel extends BaseComponent {
     /**
      * Whether to layout Carousel for accessibility
      */
-    allowAccessibleLayout: PropTypes.bool
+    allowAccessibleLayout: PropTypes.bool,
+    /**
+     * Whether to switch automatically between the pages
+     */
+    autoplay: PropTypes.bool,
+    /**
+     * the amount of time to wait before switching to the next page, in case autoplay is on
+     */
+    autoplayInterval: PropTypes.number
   };
 
   static defaultProps = {
     initialPage: 0,
-    pagingEnabled: true
+    pagingEnabled: true,
+    autoplay: false,
+    autoplayInterval: 4000
   };
 
   static pageControlPositions = PAGE_CONTROL_POSITIONS;
@@ -115,10 +125,15 @@ export default class Carousel extends BaseComponent {
 
   componentDidMount() {
     Constants.addDimensionsEventListener(this.onOrientationChanged);
+
+    if (this.props.autoplay) {
+      this.startAutoPlay();
+    }
   }
 
   componentWillUnmount() {
     Constants.removeDimensionsEventListener(this.onOrientationChanged);
+    clearInterval(this.autoplayTimer);
   }
 
   onOrientationChanged = () => {
@@ -167,6 +182,30 @@ export default class Carousel extends BaseComponent {
       }
     }
   };
+
+  
+
+  startAutoPlay() {    
+    this.autoplayTimer = setInterval(() => {      
+      this.goToNextPage();
+    }, this.props.autoplayInterval);
+  }
+
+  goToNextPage() {
+    const {currentPage} = this.state;
+    const pagesCount = presenter.getChildrenLength(this.getThemeProps());
+    const {loop} = this.getThemeProps();
+
+    let nextPageIndex;
+    if (loop) {
+      nextPageIndex = (currentPage + 1) % pagesCount;
+    } else {
+      nextPageIndex = Math.min(pagesCount - 1, currentPage + 1);
+    }
+    
+    this.goToPage(nextPageIndex);
+
+  }
 
   goToPage(pageIndex, animated = true) {
     this.setState({currentPage: this.getCalcIndex(pageIndex)}, () => this.updateOffset(animated));
