@@ -202,23 +202,7 @@ export default class Carousel extends BaseComponent {
 
   stopAutoPlay() {
     clearInterval(this.autoplayTimer);
-  }
-
-  goToNextPage() {
-    const {currentPage} = this.state;
-    const pagesCount = presenter.getChildrenLength(this.getThemeProps());
-    const {loop} = this.getThemeProps();
-
-    let nextPageIndex;
-    if (loop) {
-      nextPageIndex = (currentPage + 1) % pagesCount;
-    } else {
-      nextPageIndex = Math.min(pagesCount - 1, currentPage + 1);
-    }
-    
-    this.goToPage(nextPageIndex);
-
-  }
+  }  
 
   goToPage(pageIndex, animated = true) {
     this.setState({currentPage: this.getCalcIndex(pageIndex)}, () => this.updateOffset(animated));
@@ -294,6 +278,27 @@ export default class Carousel extends BaseComponent {
       _.invoke(this.props, 'onChangePage', index, currentStandingPage);
     }
   };
+
+  goToNextPage() {
+    const {currentPage} = this.state;
+    const pagesCount = presenter.getChildrenLength(this.getThemeProps());
+    const {loop} = this.getThemeProps();        
+
+    let nextPageIndex;
+    if (loop) {
+      nextPageIndex = currentPage + 1;
+    } else {
+      nextPageIndex = Math.min(pagesCount - 1, currentPage + 1);
+    }
+
+    this.goToPage(nextPageIndex, true);
+
+    // in case of a loop, after we advanced right to the cloned first page, 
+    // we return silently to the real first page
+    if (loop && currentPage === pagesCount) {
+      this.goToPage(0, false);
+    }  
+  }
 
   onScroll = event => {
     if (!this.skippedInitialScroll) {
