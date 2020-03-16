@@ -24,6 +24,7 @@ declare class Colors {
     getBackgroundKeysPattern(): RegExp;
     isEmpty(color: string): boolean;
     getColorTint(color: string, tintKey: string | number): any;
+    getColorName(color: string): any;
     getTintedColorForDynamicHex(color: string, tintKey: string | number): string;
     generateColorPalette: ((color: any) => string[]) & _.MemoizedFunction;
     isDark(color: string): boolean;

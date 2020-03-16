@@ -3,6 +3,8 @@ import _ from 'lodash';
 import Color from 'color';
 import tinycolor from 'tinycolor2';
 import {colorsPalette} from './colorsPalette';
+//@ts-ignore
+import ColorName from './colorName';
 import {ExtendTypeWith} from '../../typings/commons';
 
 class Colors {
@@ -98,6 +100,10 @@ class Colors {
       return requiredColor;
     }
     return this.getTintedColorForDynamicHex(color, tintKey);
+  }
+
+  getColorName(color: string) {
+    return ColorName.name(color)[1];
   }
 
   getTintedColorForDynamicHex(color: string, tintKey: string | number) {
