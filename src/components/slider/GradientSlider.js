@@ -147,7 +147,7 @@ class GradientSlider extends BaseComponent {
   };
 
   render() {
-    const {type, containerStyle, disabled} = this.props;
+    const {type, containerStyle, disabled, accessible} = this.props;
     const color = this.getColor();
     const thumbTintColor = Colors.getHexString(color);
     let step = 0.01;
@@ -188,6 +188,7 @@ class GradientSlider extends BaseComponent {
         onValueChange={onValueChange}
         containerStyle={containerStyle}
         disabled={disabled}
+        accessible={accessible}
       />
     );
   }

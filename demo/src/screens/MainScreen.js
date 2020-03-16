@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {StyleSheet, FlatList, ViewPropTypes} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
-import {Assets, Colors, View, Text, TextField, Image, TabController} from 'react-native-ui-lib'; //eslint-disable-line
+import {Assets, Colors, View, Text, TouchableOpacity, TextField, Image, TabController} from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 
 const settingsIcon = require('../assets/icons/settings.png');
@@ -51,7 +51,7 @@ class MainScreen extends Component {
   onSearchBoxBlur = () => {
     this.closeSearchBox();
     this.filterExplorerScreens('');
-  }
+  };
 
   getMenuData = () => {
     return this.props.navigationData || navigationData;
@@ -153,7 +153,7 @@ class MainScreen extends Component {
         rightButtonProps={{iconSource: Assets.icons.search, style: {marginRight: 12}}}
       />
     );
-  }
+  };
 
   renderItem = ({item}) => {
     const {renderItem} = this.props;
@@ -162,21 +162,32 @@ class MainScreen extends Component {
       return renderItem({item}, this.openScreen);
     }
 
-    return (
-      <View centerV row marginB-10>
-        <Image source={chevronIcon} style={{tintColor: Colors.dark10}} supportRTL/>
-        <Text
-          style={[item.deprecate && styles.entryTextDeprecated]}
-          dark10
-          marginL-10
-          text50
+    if (item.screen) {
+      return (
+        <TouchableOpacity
+          centerV
+          row
+          spread
+          paddingH-s5
+          paddingV-s2
           onPress={() => this.openScreen(item)}
           onLongPress={() => this.setDefaultScreen(item)}
+          activeBackgroundColor={Colors.blue40}
+          activeOpacity={1}
         >
-          {item.title}
-        </Text>
-      </View>
-    );
+          <Text style={[item.deprecate && styles.entryTextDeprecated]} dark10 text50>
+            {item.title}
+          </Text>
+          <Image source={chevronIcon} style={{tintColor: Colors.dark10}} supportRTL/>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <View paddingH-s5 marginV-s1 height={20} bg-grey80>
+          <Text text80M>{item.title}</Text>
+        </View>
+      );
+    }
   };
 
   renderSearchResults(data) {
@@ -185,8 +196,8 @@ class MainScreen extends Component {
     return (
       <FlatList
         keyboardShouldPersistTaps="always"
-        contentContainerStyle={{padding: 20}}
         data={flatData}
+        contentContainerStyle={{paddingTop: 20}}
         keyExtractor={(item, index) => index.toString()}
         renderItem={this.renderItem}
       />
@@ -201,7 +212,7 @@ class MainScreen extends Component {
         {_.map(data, (section, key) => {
           return (
             <TabController.TabPage key={key} index={index++}>
-              <View padding-s5 flex style={pageStyle}>
+              <View paddingT-20 flex style={pageStyle}>
                 <FlatList
                   showsVerticalScrollIndicator={false}
                   data={section.screens}

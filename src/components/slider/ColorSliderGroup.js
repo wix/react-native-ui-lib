@@ -62,17 +62,17 @@ export default class ColorSliderGroup extends PureBaseComponent {
   }
 
   render() {
-    const {containerStyle, sliderContainerStyle, showLabels, labelsStyle} = this.props;
+    const {containerStyle, sliderContainerStyle, showLabels, labelsStyle, accessible} = this.props;
     const {initialColor} = this.state;
 
     return (
       <SliderGroup style={containerStyle} color={initialColor} onValueChange={this.onValueChange}>
-        {showLabels && <Text dark30 text80 style={labelsStyle}>Hue</Text>}
-        <GradientSlider type={GradientSlider.types.HUE} containerStyle={sliderContainerStyle}/>
-        {showLabels && <Text dark30 text80 style={labelsStyle}>Lightness</Text>}
-        <GradientSlider type={GradientSlider.types.LIGHTNESS} containerStyle={sliderContainerStyle}/>
-        {showLabels && <Text dark30 text80 style={labelsStyle}>Saturation</Text>}
-        <GradientSlider type={GradientSlider.types.SATURATION} containerStyle={sliderContainerStyle}/>
+        {showLabels && <Text dark30 text80 style={labelsStyle} accessible={accessible}>Hue</Text>}
+        <GradientSlider type={GradientSlider.types.HUE} containerStyle={sliderContainerStyle} accessible={accessible}/>
+        {showLabels && <Text dark30 text80 style={labelsStyle} accessible={accessible}>Lightness</Text>}
+        <GradientSlider type={GradientSlider.types.LIGHTNESS} containerStyle={sliderContainerStyle} accessible={accessible}/>
+        {showLabels && <Text dark30 text80 style={labelsStyle} accessible={accessible}>Saturation</Text>}
+        <GradientSlider type={GradientSlider.types.SATURATION} containerStyle={sliderContainerStyle} accessible={accessible}/>
       </SliderGroup>
     );
   }
