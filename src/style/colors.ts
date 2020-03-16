@@ -1,16 +1,24 @@
 import _ from 'lodash';
+//@ts-ignore
 import Color from 'color';
 import tinycolor from 'tinycolor2';
 import {colorsPalette} from './colorsPalette';
+//@ts-ignore
 import ColorName from './colorName';
+import {ExtendTypeWith} from '../../typings/commons';
 
 class Colors {
+  [key: string]: any;
+
+  constructor() {
+    Object.assign(this, colorsPalette);
+  }
   /**
    * Load custom set of colors
    * arguments:
    * colors - map of keys and colors values e.g {dark10: '#20303C', dark20: '#43515C'}
    */
-  loadColors(colors) {
+  loadColors(colors: {[key: string]: string}) {
     _.forEach(colors, (value, key) => {
       this[key] = value;
     });
@@ -24,14 +32,16 @@ class Colors {
    * p3 - B part of RGB
    * p4 - opacity
    */
-  rgba(p1, p2, p3, p4) {
+  rgba(p1: string, p2: number): string;
+  rgba(p1: number, p2: number, p3: number, p4: number): string;
+  rgba(p1: number | string, p2: number, p3?: number, p4?: number): string {
     let hex;
     let opacity;
     let red;
     let green;
     let blue;
 
-    if (arguments.length === 2) {
+    if (arguments.length === 2 && typeof p1 === 'string') {
       hex = p1;
       opacity = p2;
 
@@ -39,10 +49,10 @@ class Colors {
       red = parseInt(hex.substring(0, 2), 16);
       green = parseInt(hex.substring(2, 4), 16);
       blue = parseInt(hex.substring(4, 6), 16);
-    } else if (arguments.length === 4) {
+    } else if (arguments.length === 4 && typeof p1 === 'number') {
       red = validateRGB(p1);
       green = validateRGB(p2);
-      blue = validateRGB(p3);
+      blue = validateRGB(p3!);
       opacity = p4;
     } else {
       throw new Error('rgba can work with either 2 or 4 arguments');
@@ -54,7 +64,7 @@ class Colors {
     return /^(bg-|background-)/;
   }
 
-  isEmpty(color) {
+  isEmpty(color: string) {
     if (_.isNil(color) || color === 'transparent') {
       return true;
     }
@@ -68,8 +78,8 @@ class Colors {
     }
   }
 
-  getColorTint(color, tintKey) {
-    if (_.isUndefined(tintKey) || isNaN(tintKey) || _.isUndefined(color)) {
+  getColorTint(color: string, tintKey: string | number) {
+    if (_.isUndefined(tintKey) || isNaN(tintKey as number) || _.isUndefined(color)) {
       // console.error('"Colors.getColorTint" must accept a color and tintKey params');
       return color;
     }
@@ -78,7 +88,7 @@ class Colors {
       return color;
     }
 
-    const colorKey = _.findKey(this, (value, key) => this[key] === color);
+    const colorKey = _.findKey(this, (_value, key) => this[key] === color);
 
     if (colorKey) {
       const requiredColorKey = `${colorKey.slice(0, -2)}${tintKey}`;
@@ -92,11 +102,11 @@ class Colors {
     return this.getTintedColorForDynamicHex(color, tintKey);
   }
 
-  getColorName(color) {
+  getColorName(color: string) {
     return ColorName.name(color)[1];
   }
 
-  getTintedColorForDynamicHex(color, tintKey) {
+  getTintedColorForDynamicHex(color: string, tintKey: string | number) {
     // Handles dynamic colors (non uilib colors)
     let tintLevel = Math.floor(Number(tintKey) / 10);
     tintLevel = Math.max(1, tintLevel);
@@ -123,7 +133,7 @@ class Colors {
       l += 10;
     }
 
-    const tints = [];
+    const tints: string[] = [];
     _.forEach(ls, e => {
       const tint = generateColorTint(color, e);
       tints.push(tint);
@@ -134,28 +144,28 @@ class Colors {
     return adjusted || sliced;
   });
 
-  isDark(color) {
+  isDark(color: string) {
     const lum = tinycolor(color).getLuminance();
     return lum < 0.55;
   }
-  isValidHex(string) {
+  isValidHex(string: string) {
     return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(string);
   }
-  getHexString(color) {
+  getHexString(color: string) {
     return tinycolor(color).toHexString();
   }
-  getHSL(color) {
+  getHSL(color: string) {
     return tinycolor(color).toHsl();
   }
-  isTransparent(color) {
+  isTransparent(color: string) {
     return _.toUpper(color) === _.toUpper('transparent');
   }
-  areEqual(colorA, colorB) {
+  areEqual(colorA: string, colorB: string) {
     return _.toLower(colorA) === _.toLower(colorB);
   }
 }
 
-function adjustSaturation(colors, color) {
+function adjustSaturation(colors: string[], color: string) {
   let array;
   const lightnessLevel = 80;
   const saturationLevel = 60;
@@ -171,33 +181,33 @@ function adjustSaturation(colors, color) {
   return array;
 }
 
-function addSaturation(color, saturation) {
+function addSaturation(color: string, saturation: number): string {
   const hsl = Color(color).hsl();
   hsl.color[1] = saturation;
   return hsl.hex();
 }
 
-function generateColorTint(color, tintLevel) {
+function generateColorTint(color: string, tintLevel: number): string {
   const hsl = Color(color).hsl();
   hsl.color[2] = tintLevel;
   return hsl.hex();
 }
 
-function validateRGB(value) {
+function validateRGB(value: number) {
   if (isNaN(value) || value > 255 || value < 0) {
     throw new Error(`${value} is invalid rgb code, please use number between 0-255`);
   }
   return value;
 }
 
-function validateHex(value) {
+function validateHex(value: string) {
   if (!/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value)) {
     throw new Error(`${value} is invalid hex color`);
   }
   return value.replace('#', '');
 }
 
-const colorObject = new Colors();
+const TypedColors = Colors as ExtendTypeWith<typeof Colors, typeof colorsPalette>
+const colorObject = new TypedColors();
 colorObject.loadColors(colorsPalette);
-
 export default colorObject;

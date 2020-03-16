@@ -42,3 +42,7 @@ export type BaseComponentModifiers =
 
 export class BaseComponent<P = {}, S = {}, SS = any> extends React.Component<P & BaseComponentModifiers, S, SS> {}
 export class PureBaseComponent<P = {}, S = {}, SS = any> extends React.PureComponent<P & BaseComponentModifiers, S, SS> {}
+
+type Constructor<T, TA = unknown> = new(...args: TA[]) => T
+export type ExtendTypeWith<T extends Constructor<any>, OtherObject extends object> =
+  Constructor<InstanceType<T> & OtherObject, ConstructorParameters<T>>

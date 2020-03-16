@@ -24,7 +24,7 @@
     "lint:fix": "eslint src -c .eslintrc.js --fix",
     "lint:test": "mocha --compilers js:babel-core/register eslint-rules/tests/lib/rules",
     "xcode": "open ./ios/uilib.xcodeproj",
-    "build": "mkdir -p dist && cp -r src/assets dist/ && babel src --out-dir dist",
+    "build": "tsc",
     "log": "react-native log-ios | grep 'ethan -'",
     "docs:install": "(cd ./uilib-docs && rm -rf node_modules && rm -rf package-lock.json && npm install)",
     "docs:deploy": "(cd ./uilib-docs && gatsby build --prefix-paths && gh-pages -d public --branch gh-pages)",
@@ -61,8 +61,10 @@
     "@react-native-community/datetimepicker": "^2.1.0",
     "@react-native-community/eslint-config": "latest",
     "@react-native-community/netinfo": "^5.6.2",
+    "@types/lodash": "^4.0.0",
     "@types/prop-types": "^15.5.3",
     "@types/react-native": "^0.55.21",
+    "@types/tinycolor2": "^1.4.2",
     "@welldone-software/why-did-you-render": "^3.2.1",
     "babel-jest": "^24.5.0",
     "babel-preset-react-native": "*",
@@ -85,7 +87,7 @@
     "react-native-navigation": "^3.4.0",
     "react-native-reanimated": "^1.7.0",
     "shell-utils": "^1.0.10",
-    "typescript": "^2.9.2"
+    "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": ">=16.0.0",
