@@ -61,8 +61,7 @@
     "@react-native-community/datetimepicker": "^2.1.0",
     "@react-native-community/eslint-config": "latest",
     "@react-native-community/netinfo": "^5.6.2",
-    "@types/color": "^3.0.1",
-    "@types/lodash": "^4.14.149",
+    "@types/lodash": "^4.0.0",
     "@types/prop-types": "^15.5.3",
     "@types/react-native": "^0.55.21",
     "@types/tinycolor2": "^1.4.2",
@@ -88,7 +87,7 @@
     "react-native-navigation": "^3.4.0",
     "react-native-reanimated": "^1.7.0",
     "shell-utils": "^1.0.10",
-    "typescript": "^3.8.2"
+    "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": ">=16.0.0",

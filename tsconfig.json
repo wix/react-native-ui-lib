@@ -16,7 +16,7 @@
     "emitDeclarationOnly": true,
     // "noImplicitAny": false
     "declaration": true,
-    "declarationDir": "typings",
+    "declarationDir": "typings/generatedTypes",
   },
   "include": [
     // "src/**/*"

@@ -1,13 +1,16 @@
-//@ts-nocheck
 import _ from 'lodash';
+//@ts-ignore
 import Color from 'color';
 import tinycolor from 'tinycolor2';
 import {colorsPalette} from './colorsPalette';
+import {ExtendTypeWith} from '../../typings/commons';
 
-interface ColorsObject {[key: string]: string};
+class Colors {
+  [key: string]: any;
 
-class Colors extends ColorsObject {
-// class Colors {
+  constructor() {
+    Object.assign(this, colorsPalette);
+  }
   /**
    * Load custom set of colors
    * arguments:
@@ -27,14 +30,14 @@ class Colors extends ColorsObject {
    * p3 - B part of RGB
    * p4 - opacity
    */
-  rgba(p1: string | number, p2: string | number, p3: string | number, p4: number) {
+  rgba(p1: string | number, p2: number, p3: number, p4: number) {
     let hex;
     let opacity;
     let red;
     let green;
     let blue;
 
-    if (arguments.length === 2) {
+    if (arguments.length === 2 && typeof p1 === 'string') {
       hex = p1;
       opacity = p2;
 
@@ -42,7 +45,7 @@ class Colors extends ColorsObject {
       red = parseInt(hex.substring(0, 2), 16);
       green = parseInt(hex.substring(2, 4), 16);
       blue = parseInt(hex.substring(4, 6), 16);
-    } else if (arguments.length === 4) {
+    } else if (arguments.length === 4 && typeof p1 === 'number') {
       red = validateRGB(p1);
       green = validateRGB(p2);
       blue = validateRGB(p3);
@@ -122,7 +125,7 @@ class Colors extends ColorsObject {
       l += 10;
     }
 
-    const tints = [];
+    const tints: string[] = [];
     _.forEach(ls, e => {
       const tint = generateColorTint(color, e);
       tints.push(tint);
@@ -196,7 +199,8 @@ function validateHex(value: string) {
   return value.replace('#', '');
 }
 
-const colorObject = new Colors();
+const TypedColors = Colors as ExtendTypeWith<typeof Colors, typeof colorsPalette>
+const colorObject = new TypedColors();
 colorObject.loadColors(colorsPalette);
 
 export default colorObject;
