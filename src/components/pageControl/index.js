@@ -160,7 +160,7 @@ class PageControl extends PureComponent {
 
   onPagePress = ({index}) => {
     _.invoke(this.props, 'onPagePress', index);
-  }
+  };
 
   renderIndicator(index, size, enlargeActive) {
     const {currentPage, color, inactiveColor, onPagePress, spacing = PageControl.DEFAULT_SPACING} = this.props;
@@ -204,11 +204,7 @@ class PageControl extends PureComponent {
     const {containerStyle} = this.props;
 
     return (
-      <View
-        style={[styles.container, containerStyle]}
-        accessible
-        accessibilityLabel={`page control page ${this.props.currentPage + 1}`}
-      >
+      <View style={[styles.container, containerStyle]} inaccessible>
         {this.showLimitedVersion(this.props) ? this.renderDifferentSizeIndicators() : this.renderSameSizeIndicators()}
       </View>
     );

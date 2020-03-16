@@ -1,16 +1,17 @@
 import React, {PureComponent} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {
+  Keyboard,
   Text,
   View,
-  KeyboardTrackingView,
   TextField,
   Image,
   Colors,
-  Spacings,
   Switch,
-  Constants
+  Constants,
+  Spacings
 } from 'react-native-ui-lib';
+const KeyboardTrackingView = Keyboard.KeyboardTrackingView;
 
 const URIs = [
   {
@@ -41,7 +42,7 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
     const {trackInteractive} = this.state;
 
     return (
-      <View style={styles.container}>
+      <View flex bg-dark80>
         <ScrollView
           contentContainerStyle={styles.scrollContainer}
           keyboardDismissMode={trackInteractive ? 'interactive' : 'none'}
@@ -58,7 +59,7 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
           ))}
         </ScrollView>
         <KeyboardTrackingView style={styles.trackingToolbarContainer} trackInteractive={trackInteractive}>
-          <View centerV style={styles.inputContainer}>
+          <View centerV bg-white paddingH-s5 paddingV-s2>
             <TextField text70 placeholder={'Message'} floatingPlaceholder floatOnFocus/>
           </View>
         </KeyboardTrackingView>
@@ -68,10 +69,6 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.dark80
-  },
   scrollContainer: {
     paddingHorizontal: Spacings.s5
   },
@@ -85,10 +82,5 @@ const styles = StyleSheet.create({
     width: '100%',
     borderWidth: 1,
     borderColor: Colors.dark60
-  },
-  inputContainer: {
-    paddingHorizontal: Spacings.s5,
-    paddingVertical: Spacings.s2,
-    backgroundColor: Colors.white
   }
 });

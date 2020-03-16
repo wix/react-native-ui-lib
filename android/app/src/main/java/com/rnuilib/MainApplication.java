@@ -6,10 +6,7 @@ import com.facebook.react.ReactPackage;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
-import com.wix.reactnativeuilib.highlighterview.HighlighterViewPackage;
-import com.wix.reactnativeuilib.keyboardinput.KeyboardInputPackage;
-import com.wix.reactnativeuilib.textinput.TextInputDelKeyHandlerPackage;
-import com.wix.reactnativeuilib.wheelpicker.WheelPickerPackage;
+import com.wix.reactnativeuilib.UiLibPackageList;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,10 +42,7 @@ public class MainApplication extends NavigationApplication {
     public List<ReactPackage> createAdditionalReactPackages() {
         @SuppressWarnings("UnnecessaryLocalVariable")
         List<ReactPackage> packages = new PackageList(this).getPackages();
-        packages.add(new HighlighterViewPackage());
-        packages.add(new WheelPickerPackage());
-        packages.add(new TextInputDelKeyHandlerPackage());
-        packages.add(new KeyboardInputPackage(this));
+        packages.addAll(new UiLibPackageList(this).getPackageList());
         return packages;
     }
 }

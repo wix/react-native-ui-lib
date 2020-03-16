@@ -10,12 +10,10 @@ import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.wix.reactnativeuilib.keyboardinput.utils.Logger;
 
 import java.lang.ref.WeakReference;
 
 import static com.wix.reactnativeuilib.keyboardinput.AppContextHolder.getCurrentActivity;
-import static com.wix.reactnativeuilib.keyboardinput.GlobalDefs.TAG;
 import static com.wix.reactnativeuilib.keyboardinput.utils.RuntimeUtils.dispatchUIUpdates;
 import static com.wix.reactnativeuilib.keyboardinput.utils.RuntimeUtils.runOnUIThread;
 import static com.wix.reactnativeuilib.keyboardinput.utils.ViewUtils.getWindow;
@@ -58,7 +56,6 @@ public class CustomKeyboardLayout implements ReactSoftKeyboardMonitor.Listener, 
     }
 
     public void setShadowNode(CustomKeyboardRootViewShadow node) {
-        Logger.v(TAG, "New shadow node: " + node);
         mShadowNode = new WeakReference<>(node);
     }
 
@@ -177,7 +174,6 @@ public class CustomKeyboardLayout implements ReactSoftKeyboardMonitor.Listener, 
     }
 
     private void sendCustomKeyboardResignedEvent() {
-        Logger.v(TAG, "Notifying the custom-keyboard-resigned event to JS");
         if (ReactContextHolder.getContext().hasActiveCatalystInstance()) {
             ReactContextHolder.getContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("kbdResigned", null);
         }

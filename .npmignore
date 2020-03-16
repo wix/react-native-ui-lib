@@ -230,6 +230,7 @@ test/
 ios/
 android/
 demo/
+expoDemo/
 uilib-docs/
 .babelrc
 # typings/

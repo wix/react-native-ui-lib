@@ -1,18 +1,7 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Alert} from 'react-native';
-import {Navigation} from 'react-native-navigation';
-import {
-  Colors,
-  Typography,
-  View,
-  Text,
-  TextField,
-  TextArea,
-  Modal,
-  Button,
-  KeyboardAwareInsetsView
-} from 'react-native-ui-lib'; //eslint-disable-line
-
+import {Colors, Typography, View, Text, TextField, TextArea, Modal, Button, Keyboard} from 'react-native-ui-lib'; //eslint-disable-line
+const KeyboardAwareInsetsView = Keyboard.KeyboardAwareInsetsView;
 
 const richText = require('../../../assets/icons/richText.png');
 const dropDown = require('../../../assets/icons/chevronDown.png');
@@ -84,10 +73,6 @@ export default class InputsScreen extends Component {
           keyboardShouldPersistTaps="always"
           getTextInputRefs={() => [this.noUnderline, this.hugeText]}
         >
-          <Text style={{marginBottom: 20, marginRight: 20}} text40>
-            Inputs
-          </Text>
-
           <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
@@ -325,5 +310,3 @@ const styles = StyleSheet.create({
     marginVertical: 20
   }
 });
-
-Navigation.registerComponent('unicorn.components.InputsScreen', () => InputsScreen);

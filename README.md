@@ -24,10 +24,13 @@ UI Toolset & Components Library for React Native
 [![NPM Downloads](https://img.shields.io/npm/dm/react-native-ui-lib.svg?style=flat)](https://www.npmjs.com/package/react-native-ui-lib)
 
 
-
 Read more in our [Wiki](https://github.com/wix/react-native-ui-lib/wiki). <br>
 Check out our [Docs](https://wix.github.io/react-native-ui-lib/). <br>
 Our [Discord Channel](https://discord.gg/2eW4g6Z)
+
+Download our Expo demo app <br>
+<img height="120" src="https://user-images.githubusercontent.com/1780255/76164023-f2171400-6153-11ea-962d-d57b64a08a80.png"> <br>
+(You will need the Expo App)
 
 
 ## Installing

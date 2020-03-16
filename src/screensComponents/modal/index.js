@@ -39,15 +39,18 @@ export default class Modal extends BaseComponent {
   renderTouchableOverlay() {
     const {overlayBackgroundColor, onBackgroundPress, accessibilityLabel = 'Dismiss'} = this.props;
     if (_.isFunction(onBackgroundPress) || !!overlayBackgroundColor) {
+      const isScreenReaderEnabled = Constants.accessibility.isScreenReaderEnabled;
+      const accessibilityProps = isScreenReaderEnabled
+        ? {accessible: true, accessibilityLabel, accessibilityRole: 'button'}
+        : undefined;
+
       return (
         <View
-          accessible
-          accessibilityLabel={accessibilityLabel}
-          accessibilityRole="button"
-          style={[styles.touchableOverlay, {backgroundColor: overlayBackgroundColor}]}
+          useSafeArea={isScreenReaderEnabled}
+          style={!isScreenReaderEnabled && [styles.touchableOverlay, {backgroundColor: overlayBackgroundColor}]}
         >
-          <TouchableWithoutFeedback onPress={onBackgroundPress}>
-            <View flex/>
+          <TouchableWithoutFeedback {...accessibilityProps} onPress={onBackgroundPress}>
+            <View style={isScreenReaderEnabled ? styles.accessibleOverlayView : styles.overlayView}/>
           </TouchableWithoutFeedback>
         </View>
       );
@@ -73,6 +76,13 @@ export default class Modal extends BaseComponent {
 const styles = StyleSheet.create({
   touchableOverlay: {
     ...StyleSheet.absoluteFillObject
+  },
+  overlayView: {
+    flex: 1
+  },
+  accessibleOverlayView: {
+    height: 50,
+    width: '100%'
   }
 });
 

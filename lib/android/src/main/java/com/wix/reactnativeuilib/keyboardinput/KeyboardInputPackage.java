@@ -7,7 +7,6 @@ import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
-import com.wix.reactnativeuilib.keyboardinput.utils.Logger;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,13 +18,6 @@ public class KeyboardInputPackage implements ReactPackage {
 
     public KeyboardInputPackage(Application application) {
         AppContextHolder.setApplication(application);
-    }
-
-    public KeyboardInputPackage(Application application, boolean enableLogging) {
-        this(application);
-        if (enableLogging) {
-            Logger.enable();
-        }
     }
 
     @Override

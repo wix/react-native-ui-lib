@@ -1,4 +1,5 @@
 module.exports = {
+  // TODO: move to components, remove this
   get TabController() {
     return require('./TabController').default;
   },

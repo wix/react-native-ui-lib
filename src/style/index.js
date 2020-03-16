@@ -25,5 +25,8 @@ module.exports = {
   },
   get AnimatableManager() {
     return require('./animatableManager').default;
+  },
+  get ColorName() {
+    return require('./colorName').default;
   }
 };

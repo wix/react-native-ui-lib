@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
 import {Colors, View, Text, TextField, Slider, ColorPalette} from 'react-native-ui-lib'; //eslint-disable-line
-import {Navigation} from 'react-native-navigation';
 
 import {
   renderBooleanOption,
@@ -58,10 +57,7 @@ export default class BasicTextFieldScreen extends Component {
 
     return (
       <View flex>
-        <View padding-20>
-          <Text marginB-20 text40>
-            TextField
-          </Text>
+        <View paddingH-20 paddingT-40>
           <TextField
             key={centered ? 'centered' : 'not-centered'}
             {...{[`text${typography}`]: true}}
@@ -110,4 +106,3 @@ export default class BasicTextFieldScreen extends Component {
   }
 }
 
-Navigation.registerComponent('unicorn.components.BasicTextFieldScreen', () => BasicTextFieldScreen);

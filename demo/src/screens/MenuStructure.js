@@ -40,8 +40,10 @@ export const navigationData = {
       {title: 'Pan Dismissible', tags: 'pan swipe drag dismiss', screen: 'unicorn.components.PanDismissibleScreen'},
       {title: 'Pan Listener', tags: 'pan swipe drag listener', screen: 'unicorn.components.PanListenerScreen'},
       {title: 'Pan Responder', tags: 'pan swipe drag responder', screen: 'unicorn.components.PanResponderScreen'},
+      {title: 'ScrollBar', tags: 'scroll bar gradient', screen: 'unicorn.components.ScrollBarScreen'},
       {title: 'Shared Transition', tags: 'shared transition element', screen: 'unicorn.components.SharedTransitionScreen'},
       {title: 'Stack Aggregator', tags: 'stack aggregator', screen: 'unicorn.components.StackAggregatorScreen'},
+      {title: 'TabController', tags: 'tabbar controller native', screen: 'unicorn.components.TabControllerScreen'},
       {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
       {title: 'Text', tags: 'text', screen: 'unicorn.components.TextScreen'},
       {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'},
@@ -76,9 +78,9 @@ export const navigationData = {
         screen: 'unicorn.nativeComponents.HighlightOverlayViewScreen'
       },
       {title: 'Wheel Picker', tags: 'wheel picker', screen: 'unicorn.nativeComponents.WheelPickerViewScreen'},
-      {title: 'SafeArea Spacer', tags: 'native safe area', screen: 'unicorn.nativeComponents.SafeAreaSpacerViewScreen'}
-      // {title: 'KeyboardTracking (iOS)', tags: 'KeyboardTracking', screen: 'unicorn.nativeComponents.KeyboardTrackingViewScreen'},
-      // {title: 'KeyboardInput', tags: 'KeyboardInput', screen: 'unicorn.nativeComponents.KeyboardInputViewScreen'},
+      {title: 'SafeArea Spacer', tags: 'native safe area', screen: 'unicorn.nativeComponents.SafeAreaSpacerViewScreen'},
+      {title: 'KeyboardTracking (iOS)', tags: 'KeyboardTracking', screen: 'unicorn.nativeComponents.KeyboardTrackingViewScreen'},
+      {title: 'KeyboardInput', tags: 'KeyboardInput', screen: 'unicorn.nativeComponents.KeyboardInputViewScreen'}
     ]
   },
   Screens: {
@@ -110,7 +112,6 @@ export const navigationData = {
   Incubator: {
     title: 'Incubator',
     screens: [
-      {title: 'TabController', tags: 'tabbar controller native', screen: 'unicorn.incubator.TabControllerScreen'},
       {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'}
     ]
   },

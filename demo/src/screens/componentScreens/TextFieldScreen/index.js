@@ -1,42 +1,49 @@
 import React, {Component} from 'react';
-import {Colors, TouchableOpacity, Typography, View, Text} from 'react-native-ui-lib'; //eslint-disable-line
-import {pushScreen} from '../../../navigation';
+import {Colors, TouchableOpacity, Typography, View, Text, TabController} from 'react-native-ui-lib'; //eslint-disable-line
+import _ from 'lodash';
+import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 
-import './BasicTextFieldScreen';
-import './InputValidationsScreen';
-import './CustomInputsScreen';
-import './InputsScreen';
+import BasicTextFieldScreen from './BasicTextFieldScreen';
+import InputValidationsScreen from './InputValidationsScreen';
+import CustomInputsScreen from './CustomInputsScreen';
+import InputsScreen from './InputsScreen';
 
 const SCREENS = [
-  {title: 'TextField Kitchen-Sink', name: 'unicorn.components.BasicTextFieldScreen'},
-  {title: 'Custom Inputs', name: 'unicorn.components.CustomInputsScreen'},
-  {title: 'Validations', name: 'unicorn.components.InputValidationsScreen'},
-  {title: 'Inputs Variations', name: 'unicorn.components.InputsScreen'}
+  {title: 'KitchenSink', screen: BasicTextFieldScreen},
+  {title: 'Validations', screen: InputValidationsScreen},
+  {title: 'Custom Inputs', screen: CustomInputsScreen},
+  {title: 'Examples', screen: InputsScreen}
 ];
 
 class TextFieldScreen extends Component {
   state = {};
-  render() {
+
+  renderPages() {
     return (
-      <View flex>
-        {SCREENS.map(({title, name}) => {
+      <TabController.PageCarousel>
+        {_.map(SCREENS, (item, index) => {
+          const Screen = item.screen;
           return (
-            <TouchableOpacity
-              key={title}
-              paddingH-20
-              paddingV-s4
-              style={{borderWidth: 1, borderColor: Colors.grey60}}
-              onPress={() => {
-                pushScreen({componentId: this.props.componentId, title, name});
-              }}
-            >
-              <Text text60>{title}</Text>
-            </TouchableOpacity>
+            <TabController.TabPage key={`${item.title}_page`} index={index}>
+              <Screen/>
+            </TabController.TabPage>
           );
         })}
-      </View>
+      </TabController.PageCarousel>
+    );
+  }
+
+  render() {
+    return (
+      <TabController asCarousel>
+        <TabController.TabBar
+          items={SCREENS.map(item => ({label: item.title}))}
+          activeBackgroundColor={Colors.blue70}
+        />
+        {this.renderPages()}
+      </TabController>
     );
   }
 }
 
-export default TextFieldScreen;
+export default gestureHandlerRootHOC(TextFieldScreen);

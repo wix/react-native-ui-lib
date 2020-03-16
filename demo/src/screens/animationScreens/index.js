@@ -1,6 +1,6 @@
-import {Navigation} from 'react-native-navigation';
-
-Navigation.registerComponent('unicorn.animations.CardScannerScreen', () => require('./CardScannerScreen').default);
-Navigation.registerComponent('unicorn.animations.CardAnimationsScreen', () => require('./CardAnimationsScreen').default);
-Navigation.registerComponent('unicorn.animations.ListAnimationsScreen', () => require('./ListAnimationsScreen').default);
-Navigation.registerComponent('unicorn.animations.ProgressBarScreen', () => require('./ProgressBarScreen').default);
+export function registerScreens(registrar) {
+  registrar('unicorn.animations.CardAnimationsScreen',
+    () => require('./CardAnimationsScreen').default);
+  registrar('unicorn.animations.ListAnimationsScreen',
+    () => require('./ListAnimationsScreen').default);
+}

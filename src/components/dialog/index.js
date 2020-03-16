@@ -10,7 +10,6 @@ import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
 import DialogDismissibleView from './DialogDismissibleView';
 import PanningProvider from '../panningViews/panningProvider';
-import DialogDeprecated from './dialogDeprecated';
 
 // TODO: KNOWN ISSUES
 // 1. iOS pressing on the background while enter animation is happening will not call onDismiss
@@ -74,17 +73,12 @@ class Dialog extends BaseComponent {
      */
     pannableHeaderProps: PropTypes.any,
     /**
-     * Migration flag, send true to use the new (and improved) Dialog, default is false
-     */
-    migrate: PropTypes.bool,
-    /**
      * The Dialog`s container style
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
   };
 
   static defaultProps = {
-    migrate: true,
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6)
   };
 
@@ -98,9 +92,7 @@ class Dialog extends BaseComponent {
       dialogVisibility: props.visible
     };
 
-    if (props.migrate) {
-      this.setAlignment();
-    }
+    this.setAlignment();
   }
 
   componentDidMount() {
@@ -130,10 +122,7 @@ class Dialog extends BaseComponent {
   };
 
   generateStyles() {
-    const props = this.getThemeProps();
-    if (props.migrate) {
-      this.styles = createStyles(props);
-    }
+    this.styles = createStyles(this.getThemeProps());
   }
 
   setAlignment() {
@@ -208,7 +197,7 @@ class Dialog extends BaseComponent {
     );
   };
 
-  renderModal = () => {
+  render = () => {
     const {orientationKey, modalVisibility} = this.state;
     const {overlayBackgroundColor, onModalDismissed, supportedOrientations, accessibilityLabel} = this.getThemeProps();
 
@@ -229,16 +218,6 @@ class Dialog extends BaseComponent {
       </Modal>
     );
   };
-
-  render() {
-    const {migrate, ...others} = this.getThemeProps();
-
-    if (migrate) {
-      return this.renderModal();
-    } else {
-      return <DialogDeprecated {...others}/>;
-    }
-  }
 }
 
 function createStyles(props) {

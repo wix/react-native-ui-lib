@@ -7,6 +7,7 @@
   padding-bottom: 20px;
 
   .main-section {
+    position: relative;
     background: $primary;
     width: 100%;
     height: 70vh;
@@ -17,6 +18,37 @@
     .description {
       font-size: $text10;
       color: $white;
+    }
+
+    .qr {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+
+      img {
+        border-radius: 4px;
+      }
+
+      &:after {
+        content: "Try our new Expo App!";
+        position: absolute;
+        top: 20px;
+        right: calc(100% + 10px);
+        background-color: $white;
+        min-width: 120px;
+        padding: 3px;
+        border-radius: 2px;
+        box-shadow: -1px 1px 2px $dark60;
+      }
+
+      &:before {
+        content: "";
+        position: absolute;
+        right: 100%;
+        top: 30px;
+        border: 5px solid transparent;
+        border-left-color: $dark80;
+      }
     }
   }
 
@@ -77,17 +109,17 @@
     text-align: center;
     background-color: $dark80;
     margin-top: 20px;
-    
+
     > .image-examples {
       display: flex;
       justify-content: space-evenly;
-      
+
       img {
         height: 500px;
       }
     }
   }
-  
+
   .support-section {
     display: flex;
     flex-direction: column;
@@ -103,9 +135,8 @@
     > div:first-child {
       // width: 25%;
     }
-    
-    > div:nth-child(2) {
 
+    > div:nth-child(2) {
       img {
         margin-right: 20px;
       }

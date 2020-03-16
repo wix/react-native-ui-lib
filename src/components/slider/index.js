@@ -380,7 +380,7 @@ export default class Slider extends PureBaseComponent {
         accessibilityLabel={'Slider'}
         {...this.extractAccessibilityProps()}
         accessibilityRole={'adjustable'}
-        accessibilityStates={disabled ? ['disabled'] : undefined}
+        accessibilityStates={disabled ? ['disabled'] : []}
         // accessibilityActions={['increment', 'decrement']}
         accessibilityActions={[{name: 'increment', label: 'increment'}, {name: 'decrement', label: 'decrement'}]}
         onAccessibilityAction={this.onAccessibilityAction}

@@ -58,7 +58,7 @@ class TouchableOpacity extends PureComponent {
     const {disabled} = this.props;
     return {
       accessibilityRole: 'button',
-      accessibilityStates: disabled ? ['disabled'] : undefined
+      accessibilityStates: disabled ? ['disabled'] : []
     };
   }
 

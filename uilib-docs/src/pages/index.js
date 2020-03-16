@@ -22,6 +22,10 @@ const IndexPage = props => {
             </Link>
 
             <p className="description">UI Toolset & Components Library for React Native</p>
+
+            <div className="qr">
+              <img src={'https://user-images.githubusercontent.com/1780255/76164023-f2171400-6153-11ea-962d-d57b64a08a80.png'} />
+            </div>
           </div>
         </div>
         <PlatformSection/>

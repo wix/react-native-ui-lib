@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     transform: [{scaleX: -1}]
   },
   coverImage: {
-    width: Constants.screenWidth,
+    width: '100%',
     aspectRatio: 16 / 8
   },
   gifImage: {

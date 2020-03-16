@@ -18,7 +18,6 @@ import Image from '../image';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
 
-
 const COLOR_BY_STATE = {
   default: Colors.grey10,
   focus: Colors.grey10,
@@ -43,6 +42,7 @@ const LABEL_TYPOGRAPHY = Typography.text80;
 const ICON_SIZE = 24;
 const ICON_RIGHT_PADDING = 3;
 const ICON_LEFT_PADDING = 6;
+const FLOATING_PLACEHOLDER_SCALE = 0.875;
 
 /**
  * @description: A wrapper for TextInput component with extra functionality like floating placeholder
@@ -50,7 +50,7 @@ const ICON_LEFT_PADDING = 6;
  * @extends: TextInput
  * @extendslink: https://facebook.github.io/react-native/docs/textinput
  * @gif: https://media.giphy.com/media/xULW8su8Cs5Z9Fq4PS/giphy.gif, https://media.giphy.com/media/3ohc1dhDcLS9FvWLJu/giphy.gif, https://media.giphy.com/media/oNUSOxnHdMP5ZnKYsh/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/InputsScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextFieldScreen/BasicTextFieldScreen.js
  */
 export default class TextField extends BaseInput {
   static displayName = 'TextField';
@@ -168,9 +168,6 @@ export default class TextField extends BaseInput {
   constructor(props) {
     super(props);
 
-    this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(this);
-    this.toggleExpandableModal = this.toggleExpandableModal.bind(this);
-
     this.state = {
       ...this.state,
       value: props.value, // for floatingPlaceholder functionality
@@ -179,6 +176,7 @@ export default class TextField extends BaseInput {
     };
 
     this.generatePropsWarnings(props);
+    this.calcPlaceholderLayout();
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -188,10 +186,20 @@ export default class TextField extends BaseInput {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.value !== this.state.value || prevProps.focused !== this.state.focused) {
+    if (_.isEmpty(prevState.value) !== _.isEmpty(this.state.value) || prevState.focused !== this.state.focused) {
       this.updateFloatingPlaceholderState();
     }
   }
+
+  calcPlaceholderLayout = async () => {
+    if (this.shouldFakePlaceholder()) {
+      const {placeholder} = this.props;
+      const typography = this.getTypography();
+      const {width} = await Typography.measureTextSize(placeholder, typography);
+      const translate = width / 2 - (width * FLOATING_PLACEHOLDER_SCALE) / 2;
+      this.setState({floatingPlaceholderTranslate: translate / FLOATING_PLACEHOLDER_SCALE});
+    }
+  };
 
   /** Actions */
   generatePropsWarnings(props) {
@@ -208,34 +216,38 @@ export default class TextField extends BaseInput {
   }
 
   getAccessibilityInfo() {
-    const {floatingPlaceholder, placeholder} = this.getThemeProps();
+    const {floatingPlaceholder, placeholder, expandable, value} = this.getThemeProps();
 
     let accessibilityLabel = floatingPlaceholder ? placeholder : undefined;
     if (this.isRequiredField()) {
       accessibilityLabel = `${accessibilityLabel || ''}. Mandatory`;
     }
+    if (expandable) {
+      accessibilityLabel = `${accessibilityLabel || ''}. ${value || ''}`;
+    }
 
     return {
       accessibilityLabel,
-      accessibilityStates: this.isDisabled() ? ['disabled'] : undefined
+      accessibilityStates: this.isDisabled() ? ['disabled'] : []
     };
   }
 
-  toggleExpandableModal(value) {
+  toggleExpandableModal = (value) => {
     this.setState({showExpandableModal: value});
     _.invoke(this.props, 'onToggleExpandableModal', value);
   }
 
-  updateFloatingPlaceholderState(withoutAnimation) {
+  updateFloatingPlaceholderState = withoutAnimation => {
     if (withoutAnimation) {
       this.state.floatingPlaceholderState.setValue(this.shouldFloatPlaceholder() ? 1 : 0);
     } else {
       Animated.spring(this.state.floatingPlaceholderState, {
         toValue: this.shouldFloatPlaceholder() ? 1 : 0,
-        duration: 150
+        duration: 150,
+        useNativeDriver: true
       }).start();
     }
-  }
+  };
 
   getPlaceholderText() {
     // HACK: passing whitespace instead of undefined. Issue fixed in RN56
@@ -345,45 +357,52 @@ export default class TextField extends BaseInput {
 
   /** Renders */
   renderPlaceholder() {
-    const {floatingPlaceholderState} = this.state;
-    const {expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} = this.getThemeProps();
+    const {floatingPlaceholderState, floatingPlaceholderTranslate} = this.state;
+    const {placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} = this.getThemeProps();
     const typography = this.getTypography();
     const placeholderColor = this.getStateColor(placeholderTextColor || PLACEHOLDER_COLOR_BY_STATE.default);
 
-    if (this.shouldFakePlaceholder()) {
+    if (this.shouldFakePlaceholder() && floatingPlaceholderTranslate) {
       return (
-        <Animated.Text
-          pointerEvents="none"
-          style={[
-            this.styles.floatingPlaceholder,
-            this.styles.placeholder,
-            typography,
-            {
-              top: floatingPlaceholderState.interpolate({
-                inputRange: [0, 1],
-                outputRange: multiline && Constants.isIOS ? [30, 5] : [25, 0]
-              }),
-              fontSize: floatingPlaceholderState.interpolate({
-                inputRange: [0, 1],
-                outputRange: [typography.fontSize, LABEL_TYPOGRAPHY.fontSize]
-              }),
-              color: floatingPlaceholderState.interpolate({
-                inputRange: [0, 1],
-                outputRange: [
-                  placeholderColor,
-                  this.getStateColor(floatingPlaceholderColor || PLACEHOLDER_COLOR_BY_STATE)
-                ]
-              }),
-              lineHeight: this.shouldFloatPlaceholder() ? LABEL_TYPOGRAPHY.lineHeight : typography.lineHeight
-            }
-          ]}
-          numberOfLines={1}
-          onPress={() => expandable && this.toggleExpandableModal(true)}
-          suppressHighlighting
-          accessible={false}
-        >
-          {this.getRequiredPlaceholder(placeholder)}
-        </Animated.Text>
+        <View absF left>
+          <Animated.Text
+            pointerEvents="none"
+            numberOfLines={1}
+            suppressHighlighting
+            accessible={false}
+            style={[
+              this.styles.placeholder,
+              typography,
+              {
+                transform: [
+                  {
+                    scale: floatingPlaceholderState.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [1, FLOATING_PLACEHOLDER_SCALE]
+                    })
+                  },
+                  {
+                    translateY: floatingPlaceholderState.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: multiline && Constants.isIOS ? [30, 5] : [25, 0]
+                    })
+                  },
+                  {
+                    translateX: floatingPlaceholderState.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, -floatingPlaceholderTranslate]
+                    })
+                  }
+                ],
+                color: this.shouldFloatPlaceholder()
+                  ? this.getStateColor(floatingPlaceholderColor || PLACEHOLDER_COLOR_BY_STATE)
+                  : placeholderColor
+              }
+            ]}
+          >
+            {this.getRequiredPlaceholder(placeholder)}
+          </Animated.Text>
+        </View>
       );
     }
   }
@@ -482,7 +501,8 @@ export default class TextField extends BaseInput {
         activeOpacity={1}
         onPress={() => !this.isDisabled() && this.toggleExpandableModal(true)}
         testID={`${testID}.expandable`}
-        {...this.extractAccessibilityProps()}
+        // {...this.extractAccessibilityProps()}
+        {...this.getAccessibilityInfo()}
       >
         {this.renderTextInput()}
       </TouchableOpacity>
@@ -492,7 +512,7 @@ export default class TextField extends BaseInput {
   renderTextInput() {
     const {value} = this.state; // value set on state for floatingPlaceholder functionality
     const {
-      style,  
+      style,
       placeholderTextColor,
       multiline,
       hideUnderline,
@@ -521,7 +541,7 @@ export default class TextField extends BaseInput {
       {color: textColor},
       style
     ];
-    
+
     const placeholderText = this.getPlaceholderText();
     const placeholderColor = this.getStateColor(placeholderTextColor || PLACEHOLDER_COLOR_BY_STATE.default);
     const isEditable = !this.isDisabled() && !expandable;
@@ -660,9 +680,10 @@ function createStyles({centered, multiline, expandable}) {
   const inputTextAlign = Constants.isRTL ? 'right' : 'left';
 
   return StyleSheet.create({
-    container: {},
+    container: {
+    },
     innerContainer: {
-      flexGrow: 1, // create bugs with lineHeight
+      // flexGrow: 1, // create bugs with lineHeight
       flexDirection: 'row',
       justifyContent: centered ? 'center' : undefined,
       borderBottomWidth: 1,
@@ -693,11 +714,6 @@ function createStyles({centered, multiline, expandable}) {
       flex: 1,
       paddingTop: 15,
       paddingHorizontal: 20
-    },
-    floatingPlaceholder: {
-      position: 'absolute',
-      width: '100%',
-      backgroundColor: 'transparent'
     },
     placeholder: {
       textAlign: 'left'

@@ -120,6 +120,9 @@ module.exports = {
   get Stepper() {
     return require('./components').Stepper;
   },
+  get TabController() {
+    return require('./components').TabController;
+  },
   get TabBar() {
     return require('./components').TabBar;
   },
@@ -225,31 +228,16 @@ module.exports = {
   get SafeAreaInsetsManager() {
     return require('./nativeComponents').SafeAreaInsetsManager;
   },
-  get KeyboardAwareInsetsView() {
-    return require('./nativeComponents').KeyboardAwareInsetsView;
+  get Keyboard() {
+    return require('./nativeComponents').Keyboard;
   },
-  // get KeyboardTrackingView() {
-  //   return require('./nativeComponents').KeyboardTrackingView;
-  // },
-  // get TextInputKeyboardMangerIOS() {
-  //   return require('./nativeComponents').TextInputKeyboardMangerIOS;
-  // },
-  // get CustomKeyboardView() {
-  //   return require('./nativeComponents').CustomKeyboardView;
-  // },
-  // get KeyboardRegistry() {
-  //   return require('./nativeComponents').KeyboardRegistry;
-  // },
-  // get KeyboardAccessoryView() {
-  //   return require('./nativeComponents').KeyboardAccessoryView;
-  // },
-  // get KeyboardUtils() {
-  //   return require('./nativeComponents').KeyboardUtils;
-  // },
 
   // Style
   get Colors() {
     return require('./style').Colors;
+  },
+  get ColorName() {
+    return require('./style').ColorName;
   },
   get BorderRadiuses() {
     return require('./style').BorderRadiuses;
