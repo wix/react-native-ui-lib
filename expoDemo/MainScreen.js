@@ -5,15 +5,15 @@ import {menuStructure} from 'unicorn-demo-app';
 import _ from 'lodash';
 
 export default function MainScreen({navigation}) {
-  const [value, onChangeText] = React.useState('');
+  const [searchText, setSearchText] = React.useState('');
 
   return (
     <View>
       <TextInput
         style={{padding: 10, marginBottom:0, fontSize: 18}}
         placeholder= 'Search for your component...'
-        onChangeText={text => onChangeText(text)}
-        value={value}
+        onChangeText={text => setSearchText(text)}
+        value={searchText}
       />
       <ScrollView>
         <View bg-white>
@@ -48,7 +48,7 @@ export default function MainScreen({navigation}) {
                       </Text>
                     </TouchableOpacity>
                   );
-                }).filter(item => item.key.toLowerCase().indexOf(value.toLowerCase()) !== -1)}
+                }).filter(item => item.key.toLowerCase().indexOf(searchText.toLowerCase()) !== -1)}
               </View>
             );
           })}
