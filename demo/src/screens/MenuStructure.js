@@ -1,6 +1,6 @@
 export const navigationData = {
-  Presets: {
-    title: 'Presets',
+  Foundation: {
+    title: 'Foundation',
     screens: [
       {title: 'Border Radius', tags: 'corener border radius circle', screen: 'unicorn.style.BorderRadiusesScreen'},
       {title: 'Colors', tags: 'palette rgb hex', screen: 'unicorn.style.ColorsScreen'},
@@ -20,36 +20,27 @@ export const navigationData = {
   Components: {
     title: 'Components',
     screens: [
+      {title: 'Text', tags: 'text', screen: 'unicorn.components.TextScreen'},
+      {title: 'View', tags: 'view modifiers', screen: 'unicorn.components.ViewScreen'},
+      {title: 'Image', tags: 'image cover overlay', screen: 'unicorn.components.ImageScreen'},
+      {title: 'Button', tags: 'button cta', screen: 'unicorn.components.ButtonsScreen'},
+      {title: ''},
       {title: 'Action Bar', tags: 'action bar floating bottom', screen: 'unicorn.components.ActionBarScreen'},
-      {title: 'Action Sheet', tags: 'action sheet cross-platform', screen: 'unicorn.components.ActionSheetScreen'},
       {title: 'Avatars', tags: 'avatar contact', screen: 'unicorn.components.AvatarsScreen'},
       {title: 'Badges', tags: 'badge', screen: 'unicorn.components.BadgesScreen'},
-      {title: 'Buttons', tags: 'button cta', screen: 'unicorn.components.ButtonsScreen'},
       {title: 'Cards', tags: 'cards feed', screen: 'unicorn.components.CardsScreen'},
-      {title: 'Carousel', tags: 'carousel', screen: 'unicorn.components.CarouselScreen'},
       {title: 'Connection Status Bar', tags: 'connection status bar', screen: 'unicorn.components.ConnectionStatusBar'},
-      {title: 'Dialog', tags: 'dialog modal popup alert', screen: 'unicorn.components.DialogScreen'},
-      {title: 'Drawer', tags: 'drawer', screen: 'unicorn.components.DrawerScreen'},
-      {title: 'Floating Button', tags: 'floating button', screen: 'unicorn.components.FloatingButtonScreen'},
-      {title: 'Feature Highlight', tags: 'feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
-      {title: 'Hint', tags: 'hints tooltip', screen: 'unicorn.components.HintsScreen'},
-      {title: 'Image', tags: 'image cover overlay', screen: 'unicorn.components.ImageScreen'},
-      {title: 'KeyboardAwareScrollView', tags: 'KeyboardAwareScrollView', screen: 'unicorn.components.KeyboardAwareScrollViewScreen'},
-      {title: 'Overlays', tags: 'overlay image', screen: 'unicorn.components.OverlaysScreen'},
+      // {title: 'Overlays', tags: 'overlay image', screen: 'unicorn.components.OverlaysScreen'},
       {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
-      {title: 'Pan Dismissible', tags: 'pan swipe drag dismiss', screen: 'unicorn.components.PanDismissibleScreen'},
-      {title: 'Pan Listener', tags: 'pan swipe drag listener', screen: 'unicorn.components.PanListenerScreen'},
-      {title: 'Pan Responder', tags: 'pan swipe drag responder', screen: 'unicorn.components.PanResponderScreen'},
+      {title: 'ProgressBar', tags: 'progress bar animated', screen: 'unicorn.animations.ProgressBarScreen'},
       {title: 'ScrollBar', tags: 'scroll bar gradient', screen: 'unicorn.components.ScrollBarScreen'},
-      {title: 'Shared Transition', tags: 'shared transition element', screen: 'unicorn.components.SharedTransitionScreen'},
+      {
+        title: 'Shared Transition',
+        tags: 'shared transition element',
+        screen: 'unicorn.components.SharedTransitionScreen'
+      },
       {title: 'Stack Aggregator', tags: 'stack aggregator', screen: 'unicorn.components.StackAggregatorScreen'},
-      {title: 'TabController', tags: 'tabbar controller native', screen: 'unicorn.components.TabControllerScreen'},
-      {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
-      {title: 'Text', tags: 'text', screen: 'unicorn.components.TextScreen'},
-      {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'},
-      {title: 'View', tags: 'view modifiers', screen: 'unicorn.components.ViewScreen'},
-      {title: 'Wheel Picker Dialog', tags: 'wheel picker dialog', screen: 'unicorn.components.WheelPickerDialogScreen'},
-      {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'}
+      {title: 'Wheel Picker Dialog', tags: 'wheel picker dialog', screen: 'unicorn.components.WheelPickerDialogScreen'}
     ]
   },
   Form: {
@@ -69,26 +60,15 @@ export const navigationData = {
       {title: 'Masked Inputs', tags: 'text input form mask', screen: 'unicorn.components.MaskedInputScreen'}
     ]
   },
-  Native: {
-    title: 'Native',
+  Overlays: {
+    title: 'Overlays',
     screens: [
-      {
-        title: 'Highlight Overlay',
-        tags: 'native overlay',
-        screen: 'unicorn.nativeComponents.HighlightOverlayViewScreen'
-      },
-      {title: 'Wheel Picker', tags: 'wheel picker', screen: 'unicorn.nativeComponents.WheelPickerViewScreen'},
-      {title: 'SafeArea Spacer', tags: 'native safe area', screen: 'unicorn.nativeComponents.SafeAreaSpacerViewScreen'},
-      {title: 'KeyboardTracking (iOS)', tags: 'KeyboardTracking', screen: 'unicorn.nativeComponents.KeyboardTrackingViewScreen'},
-      {title: 'KeyboardInput', tags: 'KeyboardInput', screen: 'unicorn.nativeComponents.KeyboardInputViewScreen'}
-    ]
-  },
-  Screens: {
-    title: 'Screens',
-    screens: [
-      {title: 'Loading Screen', tags: 'loading screen', screen: 'unicorn.screens.LoadingScreen'},
-      {title: 'Modal Screen', tags: 'modal topbar screen', screen: 'unicorn.screens.ModalScreen'},
-      {title: 'State Screen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'}
+      {title: 'Action Sheet', tags: 'action sheet cross-platform', screen: 'unicorn.components.ActionSheetScreen'},
+      {title: 'Dialog', tags: 'dialog modal popup alert', screen: 'unicorn.components.DialogScreen'},
+      {title: 'Feature Highlight', tags: 'feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
+      {title: 'Floating Button', tags: 'floating button', screen: 'unicorn.components.FloatingButtonScreen'},
+      {title: 'Hint', tags: 'hints tooltip', screen: 'unicorn.components.HintsScreen'},
+      {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'}
     ]
   },
   Lists: {
@@ -96,21 +76,59 @@ export const navigationData = {
     screens: [
       {title: 'Basic List', tags: 'basic list', screen: 'unicorn.lists.BasicListScreen'},
       {title: 'Contacts List', tags: 'list contacts', screen: 'unicorn.lists.ContactsListScreen'},
-      {title: 'Conversation List', tags: 'list conversation', screen: 'unicorn.lists.ConversationListScreen'}
+      {title: 'Conversation List', tags: 'list conversation', screen: 'unicorn.lists.ConversationListScreen'},
+      {title: 'Drawer', tags: 'drawer', screen: 'unicorn.components.DrawerScreen'}
     ]
   },
-  Animations: {
-    title: 'Animations',
+  LayoutsAndTemplates: {
+    title: 'Layouts & Templates',
+    screens: [
+      {title: 'Carousel', tags: 'carousel', screen: 'unicorn.components.CarouselScreen'},
+      {title: 'Loading Screen', tags: 'loading screen', screen: 'unicorn.screens.LoadingScreen'},
+      {title: 'Modal Screen', tags: 'modal topbar screen', screen: 'unicorn.screens.ModalScreen'},
+      {title: 'State Screen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
+      {title: 'TabController', tags: 'tabbar controller native', screen: 'unicorn.components.TabControllerScreen'},
+      {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
+      {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'}
+    ]
+  },
+  Native: {
+    title: 'Native',
+    screens: [
+      {
+        title: 'KeyboardAwareScrollView',
+        tags: 'KeyboardAwareScrollView',
+        screen: 'unicorn.components.KeyboardAwareScrollViewScreen'
+      },
+      {
+        title: 'Highlight Overlay',
+        tags: 'native overlay',
+        screen: 'unicorn.nativeComponents.HighlightOverlayViewScreen'
+      },
+      {title: 'Wheel Picker', tags: 'wheel picker', screen: 'unicorn.nativeComponents.WheelPickerViewScreen'},
+      {title: 'SafeArea Spacer', tags: 'native safe area', screen: 'unicorn.nativeComponents.SafeAreaSpacerViewScreen'},
+      {
+        title: 'KeyboardTracking (iOS)',
+        tags: 'KeyboardTracking',
+        screen: 'unicorn.nativeComponents.KeyboardTrackingViewScreen'
+      },
+      {title: 'KeyboardInput', tags: 'KeyboardInput', screen: 'unicorn.nativeComponents.KeyboardInputViewScreen'}
+    ]
+  },
+  AnimationsAndGestures: {
+    title: 'Animations & Gestures',
     screens: [
       {title: 'Animated Image', tags: 'animated image', screen: 'unicorn.components.AnimatedImageScreen'},
       {title: 'List Animations', tags: 'animated card', screen: 'unicorn.animations.ListAnimationsScreen'},
       {title: 'Card Animations', tags: 'animated card', screen: 'unicorn.animations.CardAnimationsScreen'},
       {title: 'Card Scanner', tags: 'card scanner process', screen: 'unicorn.animations.CardScannerScreen'},
-      {title: 'ProgressBar', tags: 'progress bar animated', screen: 'unicorn.animations.ProgressBarScreen'}
+      {title: 'Pan Dismissible', tags: 'pan swipe drag dismiss', screen: 'unicorn.components.PanDismissibleScreen'},
+      {title: 'Pan Listener', tags: 'pan swipe drag listener', screen: 'unicorn.components.PanListenerScreen'},
+      {title: 'Pan Responder', tags: 'pan swipe drag responder', screen: 'unicorn.components.PanResponderScreen'}
     ]
   },
   Incubator: {
-    title: 'Incubator',
+    title: 'Incubator (Experimental)',
     screens: [
       {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'}
     ]
