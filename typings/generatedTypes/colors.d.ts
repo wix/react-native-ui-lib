@@ -19,10 +19,11 @@ declare class Colors {
      * p3 - B part of RGB
      * p4 - opacity
      */
-    rgba(p1: string | number, p2: number, p3: number, p4: number): string;
+    rgba(p1: string, p2: number): string;
+    rgba(p1: number, p2: number, p3: number, p4: number): string;
     getBackgroundKeysPattern(): RegExp;
     isEmpty(color: string): boolean;
-    getColorTint(color: string, tintKey: any): any;
+    getColorTint(color: string, tintKey: string | number): any;
     getTintedColorForDynamicHex(color: string, tintKey: string | number): string;
     generateColorPalette: ((color: any) => string[]) & _.MemoizedFunction;
     isDark(color: string): boolean;

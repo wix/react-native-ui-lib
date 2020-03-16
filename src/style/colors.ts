@@ -30,7 +30,9 @@ class Colors {
    * p3 - B part of RGB
    * p4 - opacity
    */
-  rgba(p1: string | number, p2: number, p3: number, p4: number) {
+  rgba(p1: string, p2: number): string;
+  rgba(p1: number, p2: number, p3: number, p4: number): string;
+  rgba(p1: number | string, p2: number, p3?: number, p4?: number): string {
     let hex;
     let opacity;
     let red;
@@ -48,7 +50,7 @@ class Colors {
     } else if (arguments.length === 4 && typeof p1 === 'number') {
       red = validateRGB(p1);
       green = validateRGB(p2);
-      blue = validateRGB(p3);
+      blue = validateRGB(p3!);
       opacity = p4;
     } else {
       throw new Error('rgba can work with either 2 or 4 arguments');
@@ -74,8 +76,8 @@ class Colors {
     }
   }
 
-  getColorTint(color: string, tintKey: any) {
-    if (_.isUndefined(tintKey) || isNaN(tintKey) || _.isUndefined(color)) {
+  getColorTint(color: string, tintKey: string | number) {
+    if (_.isUndefined(tintKey) || isNaN(tintKey as number) || _.isUndefined(color)) {
       // console.error('"Colors.getColorTint" must accept a color and tintKey params');
       return color;
     }
@@ -202,5 +204,4 @@ function validateHex(value: string) {
 const TypedColors = Colors as ExtendTypeWith<typeof Colors, typeof colorsPalette>
 const colorObject = new TypedColors();
 colorObject.loadColors(colorsPalette);
-
 export default colorObject;
