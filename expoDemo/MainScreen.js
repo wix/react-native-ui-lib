@@ -9,12 +9,12 @@ export default function MainScreen({navigation}) {
 
   return (
     <View>
-        <TextInput
+      <TextInput
         style={{padding: 10, marginBottom:0, fontSize: 18}}
         placeholder= 'Search for your component...'
         onChangeText={text => onChangeText(text)}
         value={value}
-        />
+      />
       <ScrollView>
         <View bg-white>
           {_.map(menuStructure, section => {
