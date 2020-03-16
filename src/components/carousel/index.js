@@ -93,7 +93,7 @@ export default class Carousel extends BaseComponent {
      */
     autoplay: PropTypes.bool,
     /**
-     * the amount of time to wait before switching to the next page, in case autoplay is on
+     * the amount of ms to wait before switching to the next page, in case autoplay is on
      */
     autoplayInterval: PropTypes.number
   };
@@ -134,6 +134,15 @@ export default class Carousel extends BaseComponent {
   componentWillUnmount() {
     Constants.removeDimensionsEventListener(this.onOrientationChanged);
     clearInterval(this.autoplayTimer);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const {autoplay} = this.props;
+    if (autoplay && !prevProps.autoplay) {
+      this.startAutoPlay();
+    } else if (!autoplay && prevProps.autoplay) {
+      this.stopAutoPlay();
+    }
   }
 
   onOrientationChanged = () => {
@@ -189,6 +198,10 @@ export default class Carousel extends BaseComponent {
     this.autoplayTimer = setInterval(() => {      
       this.goToNextPage();
     }, this.props.autoplayInterval);
+  }
+
+  stopAutoPlay() {
+    clearInterval(this.autoplayTimer);
   }
 
   goToNextPage() {
