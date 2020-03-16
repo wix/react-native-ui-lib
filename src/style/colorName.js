@@ -18,7 +18,7 @@ class ColorName {
     }
   }
 
-  name(color) {
+  name(color = '') {
     color = color.toUpperCase();
     if (color.length < 3 || color.length > 7) {
       return ['#000000', 'Invalid Color: ' + color, false];
