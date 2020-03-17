@@ -226,9 +226,11 @@ export default class TextField extends BaseInput {
       accessibilityLabel = `${accessibilityLabel || ''}. ${value || ''}`;
     }
 
+    const accessibilityStates = this.isDisabled() ? ['disabled'] : [];
     return {
       accessibilityLabel,
-      accessibilityStates: this.isDisabled() ? ['disabled'] : []
+      // on Android accessibilityStates cause issues with expandable input
+      accessibilityStates: Constants.isIOS ? accessibilityStates : undefined
     };
   }
 
