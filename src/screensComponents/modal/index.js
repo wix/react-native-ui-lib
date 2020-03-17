@@ -1,13 +1,12 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, Modal as RNModal, TouchableWithoutFeedback, StatusBar} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import {Constants} from '../../helpers';
-import {BaseComponent} from '../../commons';
 import TopBar from './TopBar';
 import View from '../../components/view';
-import {Colors} from '../../style';
+import {Colors, ThemeManager} from '../../style';
 
 /**
  * @description: Component that present content on top of the invoking screen
@@ -16,7 +15,7 @@ import {Colors} from '../../style';
  * @gif: https://media.giphy.com/media/3oFzmfSX8KgvctI4Ks/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.js
  */
-export default class Modal extends BaseComponent {
+export default class Modal extends Component {
   static displayName = 'Modal';
   static propTypes = {
     /**
@@ -36,6 +35,24 @@ export default class Modal extends BaseComponent {
      */
     overlayBackgroundColor: PropTypes.string
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: props.visible
+    };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const {visible, overlayBackgroundColor} = nextProps;
+    if (Constants.isAndroid && !!overlayBackgroundColor && prevState.visible !== visible) {
+      const statusBarColor = visible ? Colors.getOpaqueColor(overlayBackgroundColor, 0.8) : ThemeManager.primaryColor;
+      StatusBar.setBackgroundColor(statusBarColor, true);
+      return {visible};
+    }
+
+    return null;
+  }
 
   renderTouchableOverlay() {
     const {overlayBackgroundColor, onBackgroundPress, accessibilityLabel = 'Dismiss'} = this.props;
@@ -59,22 +76,17 @@ export default class Modal extends BaseComponent {
   }
 
   render() {
-    const {blurView, enableModalBlur, visible, overlayBackgroundColor, ...others} = this.props;
+    const {blurView, enableModalBlur, visible, ...others} = this.props;
     const defaultContainer = enableModalBlur && Constants.isIOS ? BlurView : View;
     const Container = blurView ? blurView : defaultContainer;
 
     return (
-      <View>
-        {Constants.isAndroid && Boolean(visible) && !!overlayBackgroundColor && (
-          <StatusBar animated backgroundColor={Colors.getOpaqueColor(overlayBackgroundColor, 0.8)}/>
-        )}
-        <RNModal visible={Boolean(visible)} {...others}>
-          <Container style={{flex: 1}} blurType="light">
-            {this.renderTouchableOverlay()}
-            {this.props.children}
-          </Container>
-        </RNModal>
-      </View>
+      <RNModal visible={Boolean(visible)} {...others}>
+        <Container style={{flex: 1}} blurType="light">
+          {this.renderTouchableOverlay()}
+          {this.props.children}
+        </Container>
+      </RNModal>
     );
   }
 }
