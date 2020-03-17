@@ -172,11 +172,11 @@ export default class TextField extends BaseInput {
       ...this.state,
       value: props.value, // for floatingPlaceholder functionality
       floatingPlaceholderState: new Animated.Value(this.shouldFloatPlaceholder(props.value) ? 1 : 0),
-      showExpandableModal: false
+      showExpandableModal: false,
+      floatingPlaceholderTranslate: 0
     };
 
     this.generatePropsWarnings(props);
-    this.calcPlaceholderLayout();
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -191,14 +191,10 @@ export default class TextField extends BaseInput {
     }
   }
 
-  calcPlaceholderLayout = async () => {
-    if (this.shouldFakePlaceholder()) {
-      const {placeholder} = this.props;
-      const typography = this.getTypography();
-      const {width} = await Typography.measureTextSize(placeholder, typography);
-      const translate = width / 2 - (width * FLOATING_PLACEHOLDER_SCALE) / 2;
-      this.setState({floatingPlaceholderTranslate: translate / FLOATING_PLACEHOLDER_SCALE});
-    }
+  onPlaceholderLayout = (event) => {
+    const {width} = event.nativeEvent.layout;              
+    const translate = width / 2 - (width * FLOATING_PLACEHOLDER_SCALE) / 2;
+    this.setState({floatingPlaceholderTranslate: translate / FLOATING_PLACEHOLDER_SCALE});
   };
 
   /** Actions */
@@ -364,7 +360,7 @@ export default class TextField extends BaseInput {
     const typography = this.getTypography();
     const placeholderColor = this.getStateColor(placeholderTextColor || PLACEHOLDER_COLOR_BY_STATE.default);
 
-    if (this.shouldFakePlaceholder() && floatingPlaceholderTranslate) {
+    if (this.shouldFakePlaceholder()) {
       return (
         <View absF left>
           <Animated.Text
@@ -372,6 +368,7 @@ export default class TextField extends BaseInput {
             numberOfLines={1}
             suppressHighlighting
             accessible={false}
+            onLayout={this.onPlaceholderLayout}
             style={[
               this.styles.placeholder,
               typography,
