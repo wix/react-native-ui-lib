@@ -120,6 +120,9 @@ module.exports = {
   get Stepper() {
     return require('./components').Stepper;
   },
+  get TabController() {
+    return require('./components').TabController;
+  },
   get TabBar() {
     return require('./components').TabBar;
   },

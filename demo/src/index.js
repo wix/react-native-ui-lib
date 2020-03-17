@@ -91,6 +91,9 @@ module.exports = {
       get ToastsScreen() {
         return require('./screens/componentScreens/ToastsScreen').default;
       },
+      get TabControllerScreen() {
+        return require('./screens/componentScreens/TabControllerScreen').default;
+      },
       get TabBarScreen() {
         return require('./screens/componentScreens/TabBarScreen').default;
       },
@@ -128,6 +131,9 @@ module.exports = {
       get DateTimePickerScreen() {
         return require('./screens/componentScreens/DateTimePickerScreen').default;
       },
+      get ViewScreen() {
+        return require('./screens/componentScreens/ViewScreen').default;
+      },
       get WizardScreen() {
         return require('./screens/componentScreens/WizardScreen').default;
       },
@@ -141,46 +147,46 @@ module.exports = {
       get WheelPickerViewScreen() {
         return require('./screens/nativeComponentScreens/WheelPickerViewScreen').default;
       },
-      // componentScreenScreens
+      // Full Screen components
       get EmptyStateScreen() {
-        return require('./screens/componentScreenScreens/EmptyStateScreen').default;
+        return require('./screens/componentScreens/EmptyStateScreen').default;
       },
       get LoadingScreen() {
-        return require('./screens/componentScreenScreens/LoadingScreen').default;
+        return require('./screens/componentScreens/LoadingScreen').default;
       },
       // TODO: fix Expo issues (navigation) before un-commenting 
       // get ModalScreen() {
-      //   return require('./screens/componentScreenScreens/ModalScreen').default;
+      //   return require('./screens/componentScreens/ModalScreen').default;
       // },
       // listScreens
       get BasicListScreen() {
-        return require('./screens/listScreens/BasicListScreen').default;
+        return require('./screens/componentScreens/BasicListScreen').default;
       },
       get ContactsListScreen() {
-        return require('./screens/listScreens/ContactsListScreen').default;
+        return require('./screens/componentScreens/ContactsListScreen').default;
       },
       get ConversationListScreen() {
-        return require('./screens/listScreens/ConversationListScreen').default;
+        return require('./screens/componentScreens/ConversationListScreen').default;
       },
       // styleScreens
       get BorderRadiusesScreen() {
-        return require('./screens/styleScreens/BorderRadiusesScreen').default;
+        return require('./screens/foundationScreens/BorderRadiusesScreen').default;
       },
       get ColorsScreen() {
-        return require('./screens/styleScreens/ColorsScreen').default;
+        return require('./screens/foundationScreens/ColorsScreen').default;
       },
       get TypographyScreen() {
-        return require('./screens/styleScreens/TypographyScreen').default;
+        return require('./screens/foundationScreens/TypographyScreen').default;
       },
       get ShadowsScreen() {
-        return require('./screens/styleScreens/ShadowsScreen').default;
+        return require('./screens/foundationScreens/ShadowsScreen').default;
       },
       get SpacingsScreen() {
-        return require('./screens/styleScreens/SpacingsScreen').default;
+        return require('./screens/foundationScreens/SpacingsScreen').default;
       },
       // animationScreens
       get CardScannerScreen() {
-        return require('./screens/animationScreens/CardScannerScreen').default;
+        return require('./screens/componentScreens/CardScannerScreen').default;
       },
       get CardAnimationsScreen() {
         return require('./screens/animationScreens/CardAnimationsScreen').default;
@@ -189,7 +195,7 @@ module.exports = {
         return require('./screens/animationScreens/ListAnimationsScreen').default;
       },
       get ProgressBarScreen() {
-        return require('./screens/animationScreens/ProgressBarScreen').default;
+        return require('./screens/componentScreens/ProgressBarScreen').default;
       },
       // realExamples
       get AppleMusic() {
@@ -203,7 +209,7 @@ module.exports = {
       },
       // wrapperScreens
       get TouchableOpacityScreen() {
-        return require('./screens/wrapperScreens/TouchableOpacityScreen').default;
+        return require('./screens/componentScreens/TouchableOpacityScreen').default;
       }
     };
   },

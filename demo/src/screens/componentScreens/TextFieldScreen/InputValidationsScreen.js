@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {View, Text, TextField, Button, Spacings, Keyboard} from 'react-native-ui-lib';
-import {Navigation} from 'react-native-navigation';
+import {View, TextField, Button, Spacings, Keyboard} from 'react-native-ui-lib';
 
 const KeyboardAwareInsetsView = Keyboard.KeyboardAwareInsetsView;
 
@@ -18,13 +17,9 @@ class InputValidationsScreen extends Component {
     const {useTopErrors} = this.state;
     return (
       <View flex>
-        <View paddingH-s5 paddingT-s5 left/>
         <ScrollView>
-          <View padding-s5>
-            <View row centerV spread marginB-s5>
-              <Text text40 >
-                Validations
-              </Text>
+          <View padding-s5 paddingT-60>
+            <View absR margin-s5>
               <Button
                 size="small"
                 label={`TopError : ${useTopErrors ? 'ON' : 'OFF'}`}
@@ -98,12 +93,10 @@ class InputValidationsScreen extends Component {
   }
 }
 
-export default InputValidationsScreen;
-
-Navigation.registerComponent('unicorn.components.InputValidationsScreen', () => InputValidationsScreen);
-
 const styles = StyleSheet.create({
   input: {
     marginBottom: Spacings.s2
   }
 });
+
+export default InputValidationsScreen;
