@@ -5,9 +5,8 @@ import tinycolor from 'tinycolor2';
 import {colorsPalette} from './colorsPalette';
 //@ts-ignore
 import ColorName from './colorName';
-import {ExtendTypeWith} from '../../typings/commons';
 
-class Colors {
+export class Colors {
   [key: string]: any;
 
   constructor() {

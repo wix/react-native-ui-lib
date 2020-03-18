@@ -2,8 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, Easing} from 'react-native';
-import {Colors, Typography, PureBaseComponent, View, TouchableOpacity, Text, Image, Badge} from '../../../src';
-
+import {Colors, Typography, PureBaseComponent, View, TouchableOpacity, Text, Image, Badge} from '../../../index';
 const INDICATOR_BG_COLOR = Colors.blue30;
 const INDICATOR_HEIGHT = 2;
 const INDICATOR_SPACINGS = 16;
