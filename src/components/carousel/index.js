@@ -87,12 +87,22 @@ export default class Carousel extends BaseComponent {
     /**
      * Whether to layout Carousel for accessibility
      */
-    allowAccessibleLayout: PropTypes.bool
+    allowAccessibleLayout: PropTypes.bool,
+    /**
+     * Whether to switch automatically between the pages
+     */
+    autoplay: PropTypes.bool,
+    /**
+     * the amount of ms to wait before switching to the next page, in case autoplay is on
+     */
+    autoplayInterval: PropTypes.number
   };
 
   static defaultProps = {
     initialPage: 0,
-    pagingEnabled: true
+    pagingEnabled: true,
+    autoplay: false,
+    autoplayInterval: 4000
   };
 
   static pageControlPositions = PAGE_CONTROL_POSITIONS;
@@ -115,10 +125,24 @@ export default class Carousel extends BaseComponent {
 
   componentDidMount() {
     Constants.addDimensionsEventListener(this.onOrientationChanged);
+
+    if (this.props.autoplay) {
+      this.startAutoPlay();
+    }
   }
 
   componentWillUnmount() {
     Constants.removeDimensionsEventListener(this.onOrientationChanged);
+    clearInterval(this.autoplayTimer);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const {autoplay} = this.props;
+    if (autoplay && !prevProps.autoplay) {
+      this.startAutoPlay();
+    } else if (!autoplay && prevProps.autoplay) {
+      this.stopAutoPlay();
+    }
   }
 
   onOrientationChanged = () => {
@@ -167,6 +191,23 @@ export default class Carousel extends BaseComponent {
       }
     }
   };
+
+  
+
+  startAutoPlay() {    
+    this.autoplayTimer = setInterval(() => {      
+      this.goToNextPage();
+    }, this.props.autoplayInterval);
+  }
+
+  stopAutoPlay() {
+    clearInterval(this.autoplayTimer);
+  }  
+
+  resetAutoPlay() {
+    this.stopAutoPlay();
+    this.startAutoPlay();
+  }
 
   goToPage(pageIndex, animated = true) {
     this.setState({currentPage: this.getCalcIndex(pageIndex)}, () => this.updateOffset(animated));
@@ -243,13 +284,34 @@ export default class Carousel extends BaseComponent {
     }
   };
 
+  goToNextPage() {
+    const {currentPage} = this.state;
+    const pagesCount = presenter.getChildrenLength(this.getThemeProps());
+    const {loop} = this.getThemeProps();        
+
+    let nextPageIndex;
+    if (loop) {
+      nextPageIndex = currentPage + 1;
+    } else {
+      nextPageIndex = Math.min(pagesCount - 1, currentPage + 1);
+    }
+
+    this.goToPage(nextPageIndex, true);
+
+    // in case of a loop, after we advanced right to the cloned first page, 
+    // we return silently to the real first page
+    if (loop && currentPage === pagesCount) {
+      this.goToPage(0, false);
+    }  
+  }
+
   onScroll = event => {
     if (!this.skippedInitialScroll) {
       this.skippedInitialScroll = true;
       return;
     }
 
-    const {loop} = this.getThemeProps();
+    const {loop, autoplay} = this.getThemeProps();
     const {pageWidth} = this.state;
     const offsetX = event.nativeEvent.contentOffset.x;
 
@@ -263,6 +325,10 @@ export default class Carousel extends BaseComponent {
 
     if (loop && presenter.isOutOfBounds(offsetX, this.props, pageWidth)) {
       this.updateOffset();
+    }
+
+    if (autoplay) { // reset the timer to avoid auto scroll immediately after manual one
+      this.resetAutoPlay();
     }
 
     _.invoke(this.props, 'onScroll', event);
