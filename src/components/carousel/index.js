@@ -204,6 +204,11 @@ export default class Carousel extends BaseComponent {
     clearInterval(this.autoplayTimer);
   }  
 
+  resetAutoPlay() {
+    this.stopAutoPlay();
+    this.startAutoPlay();
+  }
+
   goToPage(pageIndex, animated = true) {
     this.setState({currentPage: this.getCalcIndex(pageIndex)}, () => this.updateOffset(animated));
   }
@@ -306,7 +311,7 @@ export default class Carousel extends BaseComponent {
       return;
     }
 
-    const {loop} = this.getThemeProps();
+    const {loop, autoplay} = this.getThemeProps();
     const {pageWidth} = this.state;
     const offsetX = event.nativeEvent.contentOffset.x;
 
@@ -320,6 +325,10 @@ export default class Carousel extends BaseComponent {
 
     if (loop && presenter.isOutOfBounds(offsetX, this.props, pageWidth)) {
       this.updateOffset();
+    }
+
+    if (autoplay) { // reset the timer to avoid auto scroll immediately after manual one
+      this.resetAutoPlay();
     }
 
     _.invoke(this.props, 'onScroll', event);
