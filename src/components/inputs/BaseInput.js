@@ -58,6 +58,10 @@ export default class BaseInput extends BaseComponent {
      */
     validateOnBlur: PropTypes.bool,
     /**
+     * whether to run the validation on `value` prop change
+     */
+    validateOnValueChange: PropTypes.bool,
+    /**
      * callback for validity change
      */
     onChangeValidity: PropTypes.func

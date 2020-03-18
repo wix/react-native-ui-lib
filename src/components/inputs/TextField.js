@@ -181,7 +181,12 @@ export default class TextField extends BaseInput {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
-      this.setState({value: nextProps.value}, this.updateFloatingPlaceholderState);
+      this.setState({value: nextProps.value}, () => {
+        this.updateFloatingPlaceholderState();
+        if (nextProps.validateOnValueChange) {
+          this.validate();
+        }
+      });
     }
   }
 
@@ -192,7 +197,7 @@ export default class TextField extends BaseInput {
   }
 
   onPlaceholderLayout = (event) => {
-    const {width} = event.nativeEvent.layout;              
+    const {width} = event.nativeEvent.layout;
     const translate = width / 2 - (width * FLOATING_PLACEHOLDER_SCALE) / 2;
     this.setState({floatingPlaceholderTranslate: translate / FLOATING_PLACEHOLDER_SCALE});
   };
