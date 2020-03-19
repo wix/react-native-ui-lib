@@ -159,15 +159,730 @@ declare const _default: {
         white: string;
         black: string;
     };
-    readonly ColorName: any;
-    readonly BorderRadiuses: any;
-    readonly Shadows: any;
-    readonly Spacings: any;
-    readonly Components: any;
-    readonly ComponentsColors: any;
-    readonly ThemeManager: any;
-    readonly Typography: import("../typings").TypographyClass & Readonly<Record<import("../typings").TypographyName, import("../typings").TypographyDescription>>;
-    readonly AnimatableManager: import("../typings").AnimatableManagerClass;
+    Spacings: import("./style/spacings").Spacings & {
+        s1: number;
+        s2: number;
+        s3: number;
+        s4: number;
+        s5: number;
+        s6: number;
+        s7: number;
+        s8: number;
+        s9: number;
+        s10: number;
+    };
+    Shadows: {
+        white10: {
+            top: {
+                shadowColor: string;
+                shadowOpacity: number;
+                shadowRadius: number;
+            };
+            bottom: {
+                shadowColor: string;
+                shadowOpacity: number;
+                shadowRadius: number;
+                shadowOffset: {
+                    height: number;
+                    width: number;
+                };
+            };
+        };
+        white20: {
+            top: {
+                shadowColor: string;
+                shadowOpacity: number;
+                shadowRadius: number;
+            };
+            bottom: {
+                shadowColor: string;
+                shadowOpacity: number;
+                shadowRadius: number;
+                shadowOffset: {
+                    height: number;
+                    width: number;
+                };
+            };
+        };
+        white30: {
+            top: {
+                shadowColor: string;
+                shadowOpacity: number;
+                shadowRadius: number;
+            };
+            bottom: {
+                shadowColor: string;
+                shadowOpacity: number;
+                shadowRadius: number;
+                shadowOffset: {
+                    height: number;
+                    width: number;
+                };
+            };
+        };
+        white40: {
+            top: {
+                shadowColor: string;
+                shadowOpacity: number;
+                shadowRadius: number;
+            };
+            bottom: {
+                shadowColor: string;
+                shadowOpacity: number;
+                shadowRadius: number;
+                shadowOffset: {
+                    height: number;
+                    width: number;
+                };
+            };
+        };
+        dark10: {
+            top: {
+                shadowColor: string;
+                shadowOpacity: number;
+                shadowRadius: number;
+            };
+            bottom: {
+                shadowColor: string;
+                shadowOpacity: number;
+                shadowRadius: number;
+                shadowOffset: {
+                    height: number;
+                    width: number;
+                };
+            };
+        };
+        dark20: {
+            top: {
+                shadowColor: string;
+                shadowOpacity: number;
+                shadowRadius: number;
+            };
+            bottom: {
+                shadowColor: string;
+                shadowOpacity: number;
+                shadowRadius: number;
+                shadowOffset: {
+                    height: number;
+                    width: number;
+                };
+            };
+        };
+        dark30: {
+            top: {
+                shadowColor: string;
+                shadowOpacity: number;
+                shadowRadius: number;
+                shadowOffset: {
+                    height: number;
+                    width: number;
+                };
+            };
+            bottom: {
+                shadowColor: string;
+                shadowOpacity: number;
+                shadowRadius: number;
+                shadowOffset: {
+                    height: number;
+                    width: number;
+                };
+            };
+        };
+        dark40: {
+            top: {
+                shadowColor: string;
+                shadowOpacity: number;
+                shadowRadius: number;
+                shadowOffset: {
+                    height: number;
+                    width: number;
+                };
+            };
+            bottom: {
+                shadowColor: string;
+                shadowOpacity: number;
+                shadowRadius: number;
+                shadowOffset: {
+                    height: number;
+                    width: number;
+                };
+            };
+        };
+        loadShadows(shadows: Dictionary<string>): void;
+    };
+    ThemeManager: import("./style/themeManager").ThemeManager;
+    AnimatableManager: import("./style/animatableManager").AnimatableManager;
+    ColorName: import("./style/colorName").ColorName;
+    Components: {
+        accessoryIndicator: import("react-native").RegisteredStyle<{
+            width: number;
+            height: number;
+            marginLeft: number;
+            backgroundColor: string;
+            borderTopWidth: number;
+            borderRightWidth: number;
+            borderColor: string;
+            transform: {
+                rotate: string;
+            }[];
+        }>;
+    };
+    ComponentsColors: {
+        CTA: string;
+        disabledText: string;
+    };
+    BorderRadiuses: import("./style/borderRadiuses").BorderRadiuses & {
+        br0: number;
+        br10: number;
+        br20: number;
+        br30: number;
+        br40: number;
+        br50: number;
+        br60: number;
+        br100: number;
+    };
+    Typography: import("./style/typography").Typography & {
+        text10: {
+            fontSize: number;
+            fontWeight: string | undefined;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text10T: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text10L: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text10R: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text10M: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text10BO: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text10H: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text10BL: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text20: {
+            fontSize: number;
+            fontWeight: string | undefined;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text20T: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text20L: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text20R: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text20M: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text20BO: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text20H: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text20BL: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text20B: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text30: {
+            fontSize: number;
+            fontWeight: string | undefined;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text30T: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text30L: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text30R: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text30M: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text30BO: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text30H: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text30BL: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text40: {
+            fontSize: number;
+            fontWeight: string | undefined;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text40T: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text40L: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text40R: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text40M: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text40BO: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text40H: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text40BL: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text50: {
+            fontSize: number;
+            fontWeight: string | undefined;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text50T: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text50L: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text50R: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text50M: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text50BO: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text50H: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text50BL: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text60: {
+            fontSize: number;
+            fontWeight: string | undefined;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text60T: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text60L: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text60R: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text60M: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text60BO: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text60H: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text60BL: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text60B: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text65: {
+            fontSize: number;
+            fontWeight: string | undefined;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text65T: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text65L: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text65R: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text65M: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text65BO: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text65H: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text65BL: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text70: {
+            fontSize: number;
+            fontWeight: string | undefined;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text70T: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text70L: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text70R: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text70M: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text70BO: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text70H: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text70BL: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text80: {
+            fontSize: number;
+            fontWeight: string | undefined;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text80T: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text80L: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text80R: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text80M: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text80BO: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text80H: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text80BL: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text90: {
+            fontSize: number;
+            fontWeight: string | undefined;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text90T: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text90L: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text90R: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text90M: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text90BO: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text90H: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text90BL: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text100: {
+            fontSize: number;
+            fontWeight: string | undefined;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text100T: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text100L: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text100R: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text100M: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text100BO: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text100H: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+        text100BL: {
+            fontWeight: string | undefined;
+            fontSize: number;
+            lineHeight: number;
+            fontFamily: string;
+        };
+    };
     readonly Incubator: typeof Incubator;
 };
 export default _default;

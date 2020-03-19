@@ -1,6 +1,9 @@
 import _ from 'lodash';
 import {StyleSheet} from 'react-native';
 import {Typography, Colors, BorderRadiuses, Spacings, ThemeManager} from '../style';
+import {BorderRadiusesLiterals} from '../style/borderRadiuses';
+import TypographyPresets from '../style/typographyPresets';
+import {SpacingLiterals} from '../style/spacings';
 
 export const FLEX_KEY_PATTERN = /^flex(G|S)?(-\d*)?$/;
 export const PADDING_KEY_PATTERN = new RegExp(`padding[LTRBHV]?-([0-9]*|${Spacings.getKeysPattern()})`);
@@ -48,7 +51,7 @@ const MARGIN_VARIATIONS = {
   marginB: 'marginBottom',
   marginH: 'marginHorizontal',
   marginV: 'marginVertical'
-} as const ;
+} as const;
 export type MarginModifierKeyType = keyof typeof MARGIN_VARIATIONS;
 export type NativeMarginModifierKeyType = typeof MARGIN_VARIATIONS[MarginModifierKeyType];
 
@@ -61,7 +64,7 @@ const STYLE_KEY_CONVERTERS = {
 export type FlexModifierKeyType = keyof typeof STYLE_KEY_CONVERTERS;
 export type NativeFlexModifierKeyType = typeof STYLE_KEY_CONVERTERS[FlexModifierKeyType];
 
-export function extractColorValue(props: Dictionary<any>) {6
+export function extractColorValue(props: Dictionary<any>) {
   // const props = this.getThemeProps();
   const allColorsKeys: Array<keyof typeof Colors> = _.keys(Colors);
   const colorPropsKeys = _.chain(props)
@@ -88,7 +91,7 @@ export function extractTypographyValue(props: Dictionary<any>) {
   const typographyPropsKeys = _.chain(props)
     .keys()
     .filter(key => Typography.getKeysPattern().test(key))
-    .value();
+    .value() as unknown as Array<keyof typeof TypographyPresets>;
   let typography;
   _.forEach(typographyPropsKeys, key => {
     if (props[key] === true) {
@@ -113,7 +116,7 @@ export function extractPaddingValues(props: Dictionary<any>) {
       if (!isNaN(Number(paddingValue))) {
         paddings[paddingVariation] = Number(paddingValue);
       } else if (Spacings.getKeysPattern().test(paddingValue)) {
-        paddings[paddingVariation] = Spacings[paddingValue];
+        paddings[paddingVariation] = Spacings[paddingValue as keyof typeof SpacingLiterals];
       }
     }
   });
@@ -135,7 +138,7 @@ export function extractMarginValues(props: Dictionary<any>) {
       if (!isNaN(Number(marginValue))) {
         margins[paddingVariation] = Number(marginValue);
       } else if (Spacings.getKeysPattern().test(marginValue)) {
-        margins[paddingVariation] = Spacings[marginValue];
+        margins[paddingVariation] = Spacings[marginValue as keyof typeof SpacingLiterals];
       }
     }
   });
@@ -198,7 +201,7 @@ export function extractPositionStyle(props: Dictionary<any>) {
     const positionVariationKey = _.split(positionProp, 'abs')[1] as keyof typeof POSITION_CONVERSIONS;
     if (positionVariationKey) {
       const positionVariation = POSITION_CONVERSIONS[positionVariationKey];
-      const styleKey = `absolute${positionVariation}` as keyof typeof styles ;
+      const styleKey = `absolute${positionVariation}` as keyof typeof styles;
       return styles[styleKey];
     }
     return styles.absolute;
@@ -224,11 +227,11 @@ export function extractAccessibilityProps(props: any = this.props) {
   });
 }
 
-export function extractBorderRadiusValue(props:  Dictionary<any>) {
+export function extractBorderRadiusValue(props: Dictionary<any>) {
   let borderRadius;
 
   const keys = Object.keys(props);
-  const radiusProp = keys.find(prop => BorderRadiuses.getKeysPattern().test(prop) && props[prop]);
+  const radiusProp = keys.find(prop => BorderRadiuses.getKeysPattern().test(prop) && props[prop]) as keyof typeof BorderRadiusesLiterals;
   if (radiusProp) {
     borderRadius = BorderRadiuses[radiusProp];
   }
@@ -236,7 +239,7 @@ export function extractBorderRadiusValue(props:  Dictionary<any>) {
   return borderRadius;
 }
 
-export function extractModifierProps(props:  Dictionary<any>) {
+export function extractModifierProps(props: Dictionary<any>) {
   const patterns = [
     FLEX_KEY_PATTERN,
     PADDING_KEY_PATTERN,
@@ -282,11 +285,11 @@ export function generateModifiersStyle(options = {
   paddings: true,
   margins: true,
   alignments: true,
-  flex: true, 
+  flex: true,
   position: true
 },
-props: Dictionary<any>) {
-  
+  props: Dictionary<any>) {
+
   //@ts-ignore
   let boundProps = props || this.props;
   const style: ExtractedStyle = {};
@@ -309,7 +312,7 @@ props: Dictionary<any>) {
   if (options.flex) {
     style.flexStyle = extractFlexStyle(boundProps);
   }
-  
+
   if (options.position) {
     style.positionStyle = extractPositionStyle(boundProps);
   }
@@ -342,7 +345,7 @@ export function getAlteredModifiersOptions(currentProps: any, nextProps: any) {
   if (_.find(changedKeys, key => Colors.getBackgroundKeysPattern().test(key))) {
     options.backgroundColor = true;
   }
-  
+
   if (_.find(changedKeys, key => POSITION_KEY_PATTERN.test(key))) {
     options.position = true;
   }

@@ -1,7 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
 import hoistStatics from 'hoist-non-react-statics';
-//@ts-ignore
 import * as Modifiers from './modifiers';
 import forwardRef from './forwardRef';
 import UIComponent from './UIComponent';

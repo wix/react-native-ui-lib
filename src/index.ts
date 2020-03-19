@@ -1,15 +1,15 @@
-import {Colors} from './style';
+
+import * as Style from './style';
 import {
   ActionBar, ActionSheet, Avatar, Badge, Button, Card, Carousel, ConnectionStatusBar, Dialog, Drawer, FloatingButton,
   FeatureHighlight, Hint, Image, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl, PanningProvider,
   PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, ProgressBar, Slider, GradientSlider,
   ColorSliderGroup, Stepper, TabBar, TagsInput, RadioButton, RadioGroup, SharedTransition, StackAggregator, Text, Toast,
   View, WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper, Constants,
-  DocsGenerator, LogService, LoaderScreen, Modal, StateScreen, WheelPicker, Typography, Incubator
+  DocsGenerator, LogService, LoaderScreen, Modal, StateScreen, WheelPicker, Incubator
 } from '../typings';
 import ColorPicker from '../typings/components/ColorPicker';
 import TouchableOpacity from '../typings/components/TouchableOpacity';
-import {AnimatableManager} from '../typings/style/animatableManager';
 
 export default {
   // Components
@@ -245,35 +245,16 @@ export default {
     return require('./nativeComponents').Keyboard;
   },
   // Style
-  Colors,
-  get ColorName(): any {
-    return require('./style').ColorName;
-  },
-  get BorderRadiuses(): any {
-    return require('./style').BorderRadiuses;
-  },
-  get Shadows(): any {
-    return require('./style').Shadows;
-  },
-  get Spacings(): any {
-    return require('./style').Spacings;
-  },
-  get Components(): any {
-    return require('./style').Components;
-  },
-  get ComponentsColors(): any {
-    return require('./style').ComponentsColors;
-  },
-  get ThemeManager(): any {
-    return require('./style').ThemeManager;
-  },
-  get Typography(): typeof Typography {
-    return require('./style').Typography;
-  },
-  get AnimatableManager(): typeof AnimatableManager {
-    return require('./style').AnimatableManager;
-  },
-
+  Colors: Style.Colors,
+  Spacings: Style.Spacings,
+  Shadows: Style.Shadows,
+  ThemeManager: Style.ThemeManager,
+  AnimatableManager: Style.AnimatableManager,
+  ColorName: Style.ColorName,
+  Components: Style.Components,
+  ComponentsColors: Style.ComponentsColors,
+  BorderRadiuses: Style.BorderRadiuses,
+  Typography: Style.Typography,
   // Incubator
   get Incubator(): typeof Incubator {
     return require('./incubator');

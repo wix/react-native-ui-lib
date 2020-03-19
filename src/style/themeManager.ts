@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import Colors from './colors';
 
-class ThemeManager {
+export class ThemeManager {
   theme = {
     primaryColor: Colors.blue30,
     CTA: {
@@ -17,10 +17,10 @@ class ThemeManager {
         throttleTime: 0,
         throttleOptions: {leading: true, trailing: false}
       }
-    }
+    } as Extendable
   };
 
-  setTheme(overrides) {
+  setTheme(overrides: Dictionary<string>) {
     this.theme = _.merge(this.theme, overrides);
   }
 
@@ -28,7 +28,7 @@ class ThemeManager {
     return this.theme;
   }
 
-  setItem(key, value) {
+  setItem(key: string, value: string) {
     if (key === 'components') {
       throw new Error('Overriding the "components" key is not possible.');
     }
@@ -36,12 +36,12 @@ class ThemeManager {
     _.set(this.theme, key, value);
   }
 
-  getItem(key) {
+  getItem(key: string) {
     // return this.theme[key];
     return _.get(this.theme, key);
   }
 
-  setComponentTheme(componentName, overrides) {
+  setComponentTheme(componentName: string, overrides: Dictionary<string> | Function) {
     if (_.isFunction(overrides)) {
       this.theme.components[componentName] = overrides;
     } else {

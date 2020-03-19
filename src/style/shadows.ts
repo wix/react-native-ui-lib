@@ -45,8 +45,9 @@ const Shadows = {
    *   bottom: {shadowColor: Colors.dark20, shadowOpacity: 0.04, shadowRadius: 9, shadowOffset: {height: 10, width: 0}},
    * }
    */
-  loadShadows(shadows) {
+  loadShadows(shadows: Dictionary<string>) {
     _.forEach(shadows, (value, key) => {
+      //@ts-ignore
       this[key] = value;
     });
   }

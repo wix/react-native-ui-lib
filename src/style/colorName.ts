@@ -4,7 +4,7 @@
 const names = require('./colorNameMap').colorNameMap;
 
 // ColorName.name(hex_color) will return array for nearest color: ['hex color', 'color name', isMapped]
-class ColorName {
+export class ColorName {
   _init() {
     let color;
     let rgb;
@@ -67,7 +67,7 @@ class ColorName {
 
   // adopted from: Farbtastic 1.2
   // http://acko.net/dev/farbtastic
-  _hsl(color) {
+  _hsl(color: string) {
     const rgb = [
       parseInt('0x' + color.substring(1, 3)) / 255, 
       parseInt('0x' + color.substring(3, 5)) / 255, 
@@ -102,15 +102,18 @@ class ColorName {
     }
 
     return [
+      //@ts-ignore
       parseInt(h * 255), 
-      parseInt(s * 255), 
+      //@ts-ignore
+      parseInt(s * 255),
+      //@ts-ignore
       parseInt(l * 255)
     ];
   }
 
   // adopted from: Farbtastic 1.2
   // http://acko.net/dev/farbtastic
-  _rgb(color) {
+  _rgb(color: string) {
     return [
       parseInt('0x' + color.substring(1, 3)), 
       parseInt('0x' + color.substring(3, 5)), 
