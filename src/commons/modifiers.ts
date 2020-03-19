@@ -61,7 +61,7 @@ const STYLE_KEY_CONVERTERS = {
 export type FlexModifierKeyType = keyof typeof STYLE_KEY_CONVERTERS;
 export type NativeFlexModifierKeyType = typeof STYLE_KEY_CONVERTERS[FlexModifierKeyType];
 
-export function extractColorValue(props: Dictionary<any>) {6
+export function extractColorValue(props: Dictionary<any>) {
   // const props = this.getThemeProps();
   const allColorsKeys: Array<keyof typeof Colors> = _.keys(Colors);
   const colorPropsKeys = _.chain(props)
