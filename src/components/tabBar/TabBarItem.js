@@ -7,7 +7,7 @@ import Text from '../text';
 import Image from '../image';
 import TouchableOpacity from '../touchableOpacity';
 import Badge from '../badge';
-import {PureBaseComponent} from '../../commons'
+import {PureBaseComponent} from '../../commons';
 import {Colors, Typography} from '../../style';
 const INDICATOR_BG_COLOR = Colors.blue30;
 const INDICATOR_HEIGHT = 2;
