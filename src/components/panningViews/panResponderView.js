@@ -11,7 +11,7 @@ import asPanViewConsumer from './asPanViewConsumer';
  *         The PanListenerView is the one that sends the drag\swipe events.
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PanResponderScreen.js
  */
-class panResponderView extends PureComponent {
+class PanResponderView extends PureComponent {
   static displayName = 'PanResponderView';
   static propTypes = {
     /**
@@ -99,4 +99,4 @@ class panResponderView extends PureComponent {
   }
 }
 
-export default asPanViewConsumer(panResponderView);
+export default asPanViewConsumer(PanResponderView);
