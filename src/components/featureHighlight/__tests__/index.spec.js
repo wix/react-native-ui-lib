@@ -1,4 +1,4 @@
-import {Constants} from '../../../helpers';
+import {updateConstants} from '../../../helpers/Constants';
 
 describe('FeatureHighlight', () => {
   let FeatureHighlight;
@@ -95,6 +95,9 @@ describe('FeatureHighlight', () => {
 
 function mockScreenDimentions() {
   // iPhone 8
-  Constants.screenWidth = 375;
-  Constants.screenHeight = 667;
+  const dimensions = {
+    screen: {height: 667, width: 375},
+    window: {height: 1000, width: 1000}
+  };
+  updateConstants(dimensions);
 }

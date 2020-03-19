@@ -36,7 +36,7 @@ function getOrientation(height: number, width: number) {
 }
 
 
-function updateConstants(dimensions: any) {
+export function updateConstants(dimensions: any) {
   screenHeight = dimensions.screen.height;
   screenWidth = dimensions.screen.width;
   windowWidth = dimensions.window.width;
