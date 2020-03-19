@@ -6,7 +6,7 @@ import * as Modifiers from './modifiers';
 import forwardRef from './forwardRef';
 import UIComponent from './UIComponent';
 
-function asBaseComponent(WrappedComponent: React.ClassType<any, any,any>) {
+function asBaseComponent(WrappedComponent: React.ClassType<any, any, any>) {
   class BaseComponent extends UIComponent {
     state = Modifiers.generateModifiersStyle(undefined, this.props);
     static displayName: string;
