@@ -69,7 +69,7 @@ const constants = {
   orientations,
   isAndroid,
   isIOS,
-  get getAndroidVersion() {
+  getAndroidVersion: () => {
     return isAndroid ? parseInt(Platform.Version as string, 10) : undefined;
   },
   /* Navigation */
