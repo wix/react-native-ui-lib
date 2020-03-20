@@ -109,7 +109,8 @@ const constants = {
        //@ts-ignore
     return Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
   },
-  get getSafeAreaInsets() {
+  getSafeAreaInsets: () => {
+    const orientation = getOrientation(screenHeight, screenWidth)
     return orientation === orientations.LANDSCAPE
       ? {left: 44, right: 44, bottom: 24, top: 0}
       : {left: 0, right: 0, bottom: 34, top: 44};
