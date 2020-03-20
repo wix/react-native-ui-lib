@@ -183,9 +183,7 @@ export default class TextField extends BaseInput {
     if (nextProps.value !== this.props.value) {
       this.setState({value: nextProps.value}, () => {
         this.updateFloatingPlaceholderState();
-        if (nextProps.validateOnChange) {
-          this.validate();
-        }
+        this.validate();
       });
     }
   }
