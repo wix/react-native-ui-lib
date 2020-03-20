@@ -10,3 +10,4 @@ export * from './screensComponents';
 export * from './services';
 export * from './style';
 export * from './generatedTypes';
+export * from './globalTypes';

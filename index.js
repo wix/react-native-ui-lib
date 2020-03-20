@@ -1,4 +1,4 @@
 // import * as UILIB from './src/index';
 // module.exports = {...UILIB};
 
-module.exports = require('./src/index');
+module.exports = require('./src/index').default;

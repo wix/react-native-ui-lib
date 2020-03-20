@@ -1,8 +1,8 @@
 import React from 'react';
 import hoistStatics from 'hoist-non-react-statics';
 
-export default WrappedComponent => {
-  function forwardRef(props, ref) {
+export default <PROPS extends {}>(WrappedComponent: React.ClassType<PROPS, any, any>) => {
+  function forwardRef(props: PROPS, ref: any) {
     return <WrappedComponent {...props} forwardedRef={ref}/>;
   }
 

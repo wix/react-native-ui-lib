@@ -8,23 +8,75 @@ export const MARGIN_KEY_PATTERN = new RegExp(`margin[LTRBHV]?-([0-9]*|${Spacings
 export const ALIGNMENT_KEY_PATTERN = /(left|top|right|bottom|center|centerV|centerH|spread)/;
 export const POSITION_KEY_PATTERN = /^abs([F|L|R|T|B|V|H])?$/;
 
-export function extractColorValue(props) {
+export interface AlteredOptions {
+  flex?: boolean;
+  alignments?: boolean;
+  paddings?: boolean;
+  margins?: boolean;
+  backgroundColor?: boolean;
+  position?: boolean;
+}
+
+export interface ExtractedStyle {
+  backgroundColor?: ReturnType<typeof extractBackgroundColorValue>;
+  borderRadius?: ReturnType<typeof extractBorderRadiusValue>;
+  paddings?: ReturnType<typeof extractPaddingValues>;
+  margins?: ReturnType<typeof extractMarginValues>;
+  alignments?: ReturnType<typeof extractAlignmentsValues>;
+  flexStyle?: ReturnType<typeof extractFlexStyle>;
+  positionStyle?: ReturnType<typeof extractPositionStyle>;
+}
+
+const PADDING_VARIATIONS = {
+  padding: 'padding',
+  paddingL: 'paddingLeft',
+  paddingT: 'paddingTop',
+  paddingR: 'paddingRight',
+  paddingB: 'paddingBottom',
+  paddingH: 'paddingHorizontal',
+  paddingV: 'paddingVertical'
+} as const;
+
+export type PaddingModifierKeyType = keyof typeof PADDING_VARIATIONS;
+export type NativePaddingKeyType = typeof PADDING_VARIATIONS[PaddingModifierKeyType];
+
+const MARGIN_VARIATIONS = {
+  margin: 'margin',
+  marginL: 'marginLeft',
+  marginT: 'marginTop',
+  marginR: 'marginRight',
+  marginB: 'marginBottom',
+  marginH: 'marginHorizontal',
+  marginV: 'marginVertical'
+} as const ;
+export type MarginModifierKeyType = keyof typeof MARGIN_VARIATIONS;
+export type NativeMarginModifierKeyType = typeof MARGIN_VARIATIONS[MarginModifierKeyType];
+
+const STYLE_KEY_CONVERTERS = {
+  flex: 'flex',
+  flexG: 'flexGrow',
+  flexS: 'flexShrink'
+} as const;
+
+export type FlexModifierKeyType = keyof typeof STYLE_KEY_CONVERTERS;
+export type NativeFlexModifierKeyType = typeof STYLE_KEY_CONVERTERS[FlexModifierKeyType];
+
+export function extractColorValue(props: Dictionary<any>) {
   // const props = this.getThemeProps();
-  const allColorsKeys = _.keys(Colors);
+  const allColorsKeys: Array<keyof typeof Colors> = _.keys(Colors);
   const colorPropsKeys = _.chain(props)
     .keys()
     .filter(key => _.includes(allColorsKeys, key))
     .value();
-
-  const color = _.findLast(colorPropsKeys, colorKey => props[colorKey] === true);
+  const color = _.findLast(colorPropsKeys, colorKey => props[colorKey] === true)!;
   return Colors[color];
 }
 
-export function extractBackgroundColorValue(props) {
+export function extractBackgroundColorValue(props: Dictionary<any>) {
   let backgroundColor;
 
   const keys = Object.keys(props);
-  const bgProp = _.findLast(keys, prop => Colors.getBackgroundKeysPattern().test(prop) && !!props[prop]);
+  const bgProp = _.findLast(keys, prop => Colors.getBackgroundKeysPattern().test(prop) && !!props[prop])!;
   if (props[bgProp]) {
     const key = bgProp.replace(Colors.getBackgroundKeysPattern(), '');
     backgroundColor = Colors[key];
@@ -32,10 +84,9 @@ export function extractBackgroundColorValue(props) {
 
   return backgroundColor;
 }
-
-export function extractTypographyValue(props) {
+export function extractTypographyValue(props: Dictionary<any>) {
   const typographyPropsKeys = _.chain(props)
-    .keys(props)
+    .keys()
     .filter(key => Typography.getKeysPattern().test(key))
     .value();
   let typography;
@@ -48,17 +99,8 @@ export function extractTypographyValue(props) {
   return typography;
 }
 
-export function extractPaddingValues(props) {
-  const PADDING_VARIATIONS = {
-    padding: 'padding',
-    paddingL: 'paddingLeft',
-    paddingT: 'paddingTop',
-    paddingR: 'paddingRight',
-    paddingB: 'paddingBottom',
-    paddingH: 'paddingHorizontal',
-    paddingV: 'paddingVertical'
-  };
-  const paddings = {};
+export function extractPaddingValues(props: Dictionary<any>) {
+  const paddings: Partial<Record<NativePaddingKeyType, number>> = {};
   const paddingPropsKeys = _.chain(props)
     .keys()
     .filter(key => PADDING_KEY_PATTERN.test(key))
@@ -66,9 +108,9 @@ export function extractPaddingValues(props) {
 
   _.forEach(paddingPropsKeys, key => {
     if (props[key] === true) {
-      const [paddingKey, paddingValue] = key.split('-');
+      const [paddingKey, paddingValue] = key.split('-') as [keyof typeof PADDING_VARIATIONS, string];
       const paddingVariation = PADDING_VARIATIONS[paddingKey];
-      if (!isNaN(paddingValue)) {
+      if (!isNaN(Number(paddingValue))) {
         paddings[paddingVariation] = Number(paddingValue);
       } else if (Spacings.getKeysPattern().test(paddingValue)) {
         paddings[paddingVariation] = Spacings[paddingValue];
@@ -79,18 +121,8 @@ export function extractPaddingValues(props) {
   return paddings;
 }
 
-export function extractMarginValues(props) {
-  const MARGIN_VARIATIONS = {
-    margin: 'margin',
-    marginL: 'marginLeft',
-    marginT: 'marginTop',
-    marginR: 'marginRight',
-    marginB: 'marginBottom',
-    marginH: 'marginHorizontal',
-    marginV: 'marginVertical'
-  };
-
-  const margins = {};
+export function extractMarginValues(props: Dictionary<any>) {
+  const margins: Partial<Record<NativeMarginModifierKeyType, number>> = {};
   const marginPropsKeys = _.chain(props)
     .keys()
     .filter(key => MARGIN_KEY_PATTERN.test(key))
@@ -98,9 +130,9 @@ export function extractMarginValues(props) {
 
   _.forEach(marginPropsKeys, key => {
     if (props[key] === true) {
-      const [marginKey, marginValue] = key.split('-');
+      const [marginKey, marginValue] = key.split('-') as [keyof typeof MARGIN_VARIATIONS, string];
       const paddingVariation = MARGIN_VARIATIONS[marginKey];
-      if (!isNaN(marginValue)) {
+      if (!isNaN(Number(marginValue))) {
         margins[paddingVariation] = Number(marginValue);
       } else if (Spacings.getKeysPattern().test(marginValue)) {
         margins[paddingVariation] = Spacings[marginValue];
@@ -111,11 +143,11 @@ export function extractMarginValues(props) {
   return margins;
 }
 
-export function extractAlignmentsValues(props) {
+export function extractAlignmentsValues(props: Dictionary<any>) {
   const {row, center} = props;
-  const alignments = {};
+  const alignments: any = {};
 
-  const alignmentRules = {};
+  const alignmentRules: any = {};
   if (row) {
     alignments.flexDirection = 'row';
     alignmentRules.justifyContent = ['left', 'right', 'centerH', 'spread'];
@@ -149,7 +181,7 @@ export function extractAlignmentsValues(props) {
   return alignments;
 }
 
-export function extractPositionStyle(props) {
+export function extractPositionStyle(props: Dictionary<any>) {
   const POSITION_CONVERSIONS = {
     F: 'Fill',
     T: 'Top',
@@ -158,45 +190,41 @@ export function extractPositionStyle(props) {
     R: 'Right',
     H: 'Horizontal',
     V: 'Vertical'
-  };
+  } as const;
 
   const keys = Object.keys(props);
   const positionProp = _.findLast(keys, prop => POSITION_KEY_PATTERN.test(prop) && !!props[prop]);
   if (positionProp) {
-    const positionVariationKey = _.split(positionProp, 'abs')[1];
+    const positionVariationKey = _.split(positionProp, 'abs')[1] as keyof typeof POSITION_CONVERSIONS;
     if (positionVariationKey) {
       const positionVariation = POSITION_CONVERSIONS[positionVariationKey];
-      return styles[`absolute${positionVariation}`];
+      const styleKey = `absolute${positionVariation}` as keyof typeof styles ;
+      return styles[styleKey];
     }
     return styles.absolute;
   }
 }
 
-export function extractFlexStyle(props) {
-  const STYLE_KEY_CONVERTERS = {
-    flex: 'flex',
-    flexG: 'flexGrow',
-    flexS: 'flexShrink'
-  };
-
+export function extractFlexStyle(props: Dictionary<any>): Partial<Record<NativeFlexModifierKeyType, number>> | undefined {
   const keys = Object.keys(props);
   const flexProp = keys.find(item => FLEX_KEY_PATTERN.test(item));
   if (flexProp && props[flexProp] === true) {
-    let [flexKey, flexValue] = flexProp.split('-');
-    flexKey = STYLE_KEY_CONVERTERS[flexKey];
-    flexValue = _.isEmpty(flexValue) ? 1 : Number(flexValue);
+    let [flexKey, flexValue] = flexProp.split('-') as [keyof typeof STYLE_KEY_CONVERTERS, string];
+    const convertedFlexKey = STYLE_KEY_CONVERTERS[flexKey];
+    const flexValueAsNumber = _.isEmpty(flexValue) ? 1 : Number(flexValue);
 
-    return {[flexKey]: flexValue};
+    return {[convertedFlexKey]: flexValueAsNumber};
   }
 }
 
-export function extractAccessibilityProps(props = this.props) {
-  return _.pickBy(props, (value, key) => {
+//@ts-ignore
+export function extractAccessibilityProps(props: any = this.props) {
+  return _.pickBy(props, (_value, key) => {
     return /.*access.*/.test(key);
   });
 }
 
-export function extractBorderRadiusValue(props) {
+export function extractBorderRadiusValue(props:  Dictionary<any>) {
   let borderRadius;
 
   const keys = Object.keys(props);
@@ -208,7 +236,7 @@ export function extractBorderRadiusValue(props) {
   return borderRadius;
 }
 
-export function extractModifierProps(props) {
+export function extractModifierProps(props:  Dictionary<any>) {
   const patterns = [
     FLEX_KEY_PATTERN,
     PADDING_KEY_PATTERN,
@@ -216,7 +244,7 @@ export function extractModifierProps(props) {
     ALIGNMENT_KEY_PATTERN,
     Colors.getBackgroundKeysPattern()
   ];
-  const modifierProps = _.pickBy(props, (value, key) => {
+  const modifierProps = _.pickBy(props, (_value, key) => {
     const isModifier = _.find(patterns, pattern => pattern.test(key));
     return !!isModifier;
   });
@@ -224,17 +252,20 @@ export function extractModifierProps(props) {
   return modifierProps;
 }
 
-export function extractOwnProps(props, ignoreProps) {
+export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
+  //@ts-ignore
   const ownPropTypes = this.propTypes;
   const ownProps = _.chain(props)
-    .pickBy((value, key) => _.includes(Object.keys(ownPropTypes), key))
+    .pickBy((_value, key) => _.includes(Object.keys(ownPropTypes), key))
     .omit(ignoreProps)
     .value();
 
   return ownProps;
 }
 
+//@ts-ignore
 export function getThemeProps(props = this.props, context = this.context) {
+  //@ts-ignore
   const componentName = this.displayName || this.constructor.displayName || this.constructor.name;
   let themeProps;
   if (_.isFunction(ThemeManager.components[componentName])) {
@@ -254,41 +285,44 @@ export function generateModifiersStyle(options = {
   flex: true, 
   position: true
 },
-props = this.props) {
-  const style = {};
+props: Dictionary<any>) {
+  
+  //@ts-ignore
+  let boundProps = props || this.props;
+  const style: ExtractedStyle = {};
 
   if (options.backgroundColor) {
-    style.backgroundColor = this.extractBackgroundColorValue(props);
+    style.backgroundColor = extractBackgroundColorValue(boundProps);
   }
   if (options.borderRadius) {
-    style.borderRadius = this.extractBorderRadiusValue(props);
+    style.borderRadius = extractBorderRadiusValue(boundProps);
   }
   if (options.paddings) {
-    style.paddings = this.extractPaddingValues(props);
+    style.paddings = extractPaddingValues(boundProps);
   }
   if (options.margins) {
-    style.margins = this.extractMarginValues(props);
+    style.margins = extractMarginValues(boundProps);
   }
   if (options.alignments) {
-    style.alignments = this.extractAlignmentsValues(props);
+    style.alignments = extractAlignmentsValues(boundProps);
   }
   if (options.flex) {
-    style.flexStyle = this.extractFlexStyle(props);
+    style.flexStyle = extractFlexStyle(boundProps);
   }
   
   if (options.position) {
-    style.positionStyle = this.extractPositionStyle(props);
+    style.positionStyle = extractPositionStyle(boundProps);
   }
 
   return style;
 }
 
-export function getAlteredModifiersOptions(currentProps, nextProps) {
+export function getAlteredModifiersOptions(currentProps: any, nextProps: any) {
   const ignoredKeys = ['children', 'forwardedRef', 'style', 'testID'];
   const allKeys = _.union([..._.keys(currentProps), ..._.keys(nextProps)]).filter(key => !ignoredKeys.includes(key));
   const changedKeys = _.filter(allKeys, key => !_.isEqual(currentProps[key], nextProps[key]));
 
-  const options = {};
+  const options: AlteredOptions = {};
   if (_.find(changedKeys, key => FLEX_KEY_PATTERN.test(key))) {
     options.flex = true;
   }

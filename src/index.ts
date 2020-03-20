@@ -1,271 +1,281 @@
-module.exports = {
+import {Colors} from './style';
+import {
+  ActionBar, ActionSheet, Avatar, Badge, Button, Card, Carousel, ConnectionStatusBar, Dialog, Drawer, FloatingButton,
+  FeatureHighlight, Hint, Image, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl, PanningProvider,
+  PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, ProgressBar, Slider, GradientSlider,
+  ColorSliderGroup, Stepper, TabBar, TagsInput, RadioButton, RadioGroup, SharedTransition, StackAggregator, Text, Toast,
+  View, WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper, Constants,
+  DocsGenerator, LogService, LoaderScreen, Modal, StateScreen, WheelPicker, Typography, Incubator
+} from '../typings';
+import ColorPicker from '../typings/components/ColorPicker';
+import TouchableOpacity from '../typings/components/TouchableOpacity';
+import {AnimatableManager} from '../typings/style/animatableManager';
+
+export default {
   // Components
-  get ActionBar() {
+  get ActionBar(): ActionBar {
     return require('./components').ActionBar;
   },
-  get ActionSheet() {
+  get ActionSheet(): ActionSheet {
     return require('./components').ActionSheet;
   },
-  get AnimatedImage() {
+  get AnimatedImage(): any {
     return require('./components').AnimatedImage;
   },
-  get AnimatedScanner() {
+  get AnimatedScanner(): any {
     return require('./components').AnimatedScanner;
   },
-  get Avatar() {
+  get Avatar(): Avatar {
     return require('./components').Avatar;
   },
-  get Badge() {
+  get Badge(): Badge {
     return require('./components').Badge;
   },
-  get Button() {
+  get Button(): Button {
     return require('./components').Button;
   },
-  get Card() {
+  get Card(): Card {
     return require('./components').Card;
   },
-  get Carousel() {
+  get Carousel(): Carousel {
     return require('./components').Carousel;
   },
-  get Checkbox() {
+  get Checkbox(): any {
     return require('./components').Checkbox;
   },
-  get ColorPalette() {
+  get ColorPalette(): any {
     return require('./components').ColorPalette;
   },
-  get ColorPicker() {
+  get ColorPicker(): ColorPicker {
     return require('./components').ColorPicker;
   },
-  get ColorSwatch() {
+  get ColorSwatch(): any {
     return require('./components').ColorSwatch;
   },
-  get ConnectionStatusBar() {
+  get ConnectionStatusBar(): ConnectionStatusBar {
     return require('./components').ConnectionStatusBar;
   },
-  get Dialog() {
+  get Dialog(): Dialog {
     return require('./components').Dialog;
   },
-  get Drawer() {
+  get Drawer(): Drawer {
     return require('./components').Drawer;
   },
-  get FloatingButton() {
+  get FloatingButton(): FloatingButton {
     return require('./components').FloatingButton;
   },
-  get FeatureHighlight() {
+  get FeatureHighlight(): FeatureHighlight {
     return require('./components').FeatureHighlight;
   },
-  get Hint() {
+  get Hint(): Hint {
     return require('./components').Hint;
   },
-  get Image() {
+  get Image(): Image {
     return require('./components').Image;
   },
-  get KeyboardAwareScrollView() {
+  get KeyboardAwareScrollView(): any {
     return require('./components').KeyboardAwareScrollView;
   },
-  get KeyboardAwareListView() {
+  get KeyboardAwareListView(): any {
     return require('./components').KeyboardAwareListView;
   },
-  get BaseInput() {
+  get BaseInput(): BaseInput {
     return require('./components').BaseInput;
   },
-  get TextArea() {
+  get TextArea(): TextArea {
     return require('./components').TextArea;
   },
-  get TextField() {
+  get TextField(): TextField {
     return require('./components').TextField;
   },
-  get MaskedInput() {
+  get MaskedInput(): MaskedInput {
     return require('./components').MaskedInput;
   },
-  get ListItem() {
+  get ListItem(): ListItem {
     return require('./components').ListItem;
   },
-  get PageControl() {
+  get PageControl(): PageControl {
     return require('./components').PageControl;
   },
-  get PanningProvider() {
+  get PanningProvider(): PanningProvider {
     return require('./components').PanningProvider;
   },
-  get PanGestureView() {
+  get PanGestureView(): PanGestureView {
     return require('./components').PanGestureView;
   },
-  get PanListenerView() {
+  get PanListenerView(): PanListenerView {
     return require('./components').PanListenerView;
   },
-  get PanDismissibleView() {
+  get PanDismissibleView(): PanDismissibleView {
     return require('./components').PanDismissibleView;
   },
-  get PanResponderView() {
+  get PanResponderView(): PanResponderView {
     return require('./components').PanResponderView;
   },
-  get Picker() {
+  get Picker(): Picker {
     return require('./components').Picker;
   },
-  get DateTimePicker() {
+  get DateTimePicker(): any {
     return require('./components').DateTimePicker;
   },
-  get ProgressBar() {
+  get ProgressBar(): ProgressBar {
     return require('./components').ProgressBar;
   },
-  get Slider() {
+  get Slider(): Slider {
     return require('./components').Slider;
   },
-  get GradientSlider() {
+  get GradientSlider(): GradientSlider {
     return require('./components').GradientSlider;
   },
-  get ColorSliderGroup() {
+  get ColorSliderGroup(): ColorSliderGroup {
     return require('./components').ColorSliderGroup;
   },
-  get Stepper() {
+  get Stepper(): Stepper {
     return require('./components').Stepper;
   },
-  get TabController() {
+  get TabController(): any {
     return require('./components').TabController;
   },
-  get TabBar() {
+  get TabBar(): TabBar {
     return require('./components').TabBar;
   },
-  get TagsInput() {
+  get TagsInput(): TagsInput {
     return require('./components').TagsInput;
   },
-  get RadioButton() {
+  get RadioButton(): RadioButton {
     return require('./components').RadioButton;
   },
-  get RadioGroup() {
+  get RadioGroup(): RadioGroup {
     return require('./components').RadioGroup;
   },
-  get ScrollBar() {
+  get ScrollBar(): any {
     return require('./components').ScrollBar;
   },
-  get SharedTransition() {
+  get SharedTransition(): typeof SharedTransition {
     return require('./components').SharedTransition;
   },
-  get StackAggregator() {
+  get StackAggregator(): StackAggregator {
     return require('./components').StackAggregator;
   },
-  get Switch() {
+  get Switch(): any {
     return require('./components').Switch;
   },
-  get Text() {
+  get Text(): Text {
     return require('./components').Text;
   },
-  get Toast() {
+  get Toast(): Toast {
     return require('./components').Toast;
   },
-  get TouchableOpacity() {
+  get TouchableOpacity(): TouchableOpacity {
     return require('./components').TouchableOpacity;
   },
-  get View() {
+  get View(): View {
     return require('./components').View;
   },
-  get Wizard() {
+  get Wizard(): any {
     return require('./components').Wizard;
   },
-  get WheelPickerDialog() {
+  get WheelPickerDialog(): WheelPickerDialog {
     return require('./components').WheelPickerDialog;
   },
 
   // Assets
-  get Assets() {
+  get Assets(): typeof Assets {
     return require('./assets').default;
   },
 
   // Commons
-  get BaseComponent() {
+  get BaseComponent(): BaseComponent {
     return require('./commons').BaseComponent;
   },
-  get PureBaseComponent() {
+  get PureBaseComponent(): PureBaseComponent {
     return require('./commons').PureBaseComponent;
   },
-  get SelectableComponent() {
+  get SelectableComponent(): any {
     return require('./commons').SelectableComponent;
   },
-  get UIComponent() {
+  get UIComponent(): UIComponent {
     return require('./commons').UIComponent;
   },
-  get forwardRef() {
+  get forwardRef(): typeof forwardRef {
     return require('./commons').forwardRef;
   },
 
   // Helpers
-  get AvatarHelper() {
+  get AvatarHelper(): typeof AvatarHelper {
     return require('./helpers').AvatarHelper;
   },
-  get Constants() {
+  get Constants(): typeof Constants {
     return require('./helpers').Constants;
   },
-  get DocsGenerator() {
+  get DocsGenerator(): typeof DocsGenerator {
     return require('./helpers').DocsGenerator;
   },
 
   // Services
-  get LogService() {
+  get LogService(): typeof LogService {
     return require('./services').LogService;
   },
 
   // ScreenComponents
-  get LoaderScreen() {
+  get LoaderScreen(): LoaderScreen {
     return require('./screensComponents').LoaderScreen;
   },
-  get Modal() {
+  get Modal(): Modal {
     return require('./screensComponents').Modal;
   },
-  get StateScreen() {
+  get StateScreen(): StateScreen {
     return require('./screensComponents').StateScreen;
   },
 
   // NativeComponents
-  get HighlighterOverlayView() {
+  get HighlighterOverlayView(): any {
     return require('./nativeComponents').HighlighterOverlayView;
   },
-  get SafeAreaSpacerView() {
+  get SafeAreaSpacerView(): any {
     return require('./nativeComponents').SafeAreaSpacerView;
   },
-  get WheelPicker() {
+  get WheelPicker(): WheelPicker {
     return require('./nativeComponents').WheelPicker;
   },
-  get SafeAreaInsetsManager() {
+  get SafeAreaInsetsManager(): any {
     return require('./nativeComponents').SafeAreaInsetsManager;
   },
-  get Keyboard() {
+  get Keyboard(): any {
     return require('./nativeComponents').Keyboard;
   },
-
   // Style
-  get Colors() {
-    return require('./style').Colors;
-  },
-  get ColorName() {
+  Colors,
+  get ColorName(): any {
     return require('./style').ColorName;
   },
-  get BorderRadiuses() {
+  get BorderRadiuses(): any {
     return require('./style').BorderRadiuses;
   },
-  get Shadows() {
+  get Shadows(): any {
     return require('./style').Shadows;
   },
-  get Spacings() {
+  get Spacings(): any {
     return require('./style').Spacings;
   },
-  get Components() {
+  get Components(): any {
     return require('./style').Components;
   },
-  get ComponentsColors() {
+  get ComponentsColors(): any {
     return require('./style').ComponentsColors;
   },
-  get ThemeManager() {
+  get ThemeManager(): any {
     return require('./style').ThemeManager;
   },
-  get Typography() {
+  get Typography(): typeof Typography {
     return require('./style').Typography;
   },
-  get AnimatableManager() {
+  get AnimatableManager(): typeof AnimatableManager {
     return require('./style').AnimatableManager;
   },
 
   // Incubator
-  get Incubator() {
+  get Incubator(): typeof Incubator {
     return require('./incubator');
   }
 };
