@@ -131,7 +131,7 @@ class NewDrawer extends PureBaseComponent {
     const {rightItems, leftItem} = this.props;
     const actions = [];
 
-    if (leftItem && leftItem.onPress && leftItem.text) {
+    if (leftItem?.onPress && leftItem.text) {
       const action = {name: leftItem.text, label: leftItem.text};
       if (withOnPress) {
         action.onPress = leftItem.onPress;

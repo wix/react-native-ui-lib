@@ -66,6 +66,8 @@
     "@types/react-native": "^0.55.21",
     "@types/tinycolor2": "^1.4.2",
     "@welldone-software/why-did-you-render": "^3.2.1",
+    "@typescript-eslint/eslint-plugin": "^2.13.0",
+    "@typescript-eslint/parser": "^2.13.0",
     "babel-jest": "^24.5.0",
     "babel-preset-react-native": "*",
     "eslint": "^5.16.0",
