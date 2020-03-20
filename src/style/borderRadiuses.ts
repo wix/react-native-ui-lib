@@ -25,5 +25,6 @@ export class BorderRadiuses {
 }
 const TypedBorderRadiuses = BorderRadiuses as ExtendTypeWith<typeof BorderRadiuses, typeof BorderRadiusesLiterals>
 const borderRadiusesInstance = new TypedBorderRadiuses();
+borderRadiusesInstance.loadBorders(BorderRadiusesLiterals);
 
 export default borderRadiusesInstance;
