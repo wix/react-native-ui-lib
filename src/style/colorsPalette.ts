@@ -90,7 +90,7 @@ const colorsPalette = {
   violet70: '#E3E0FF',
   violet80: '#F0EEFF',
   // WHITE,
-  white: '#ffffff',
+  white: '#FFFFFF',
   black: '#000000'
 };
 
