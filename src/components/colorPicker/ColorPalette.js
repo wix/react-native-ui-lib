@@ -132,17 +132,15 @@ export default class ColorPalette extends PureBaseComponent {
     return containerWidth || Constants.screenWidth;
   }
 
-  getUniqueColors = memoize(
-    (colors) => {
-      const c = _.map(colors, color => {
-        if (Colors.isTransparent(color)) {
-          return color;
-        }
-        return _.toUpper(color);
-      });
-      return _.uniq(c);
-    }
-  );
+  getUniqueColors = memoize((colors) => {
+    const c = _.map(colors, color => {
+      if (Colors.isTransparent(color)) {
+        return color;
+      }
+      return _.toUpper(color);
+    });
+    return _.uniq(c);
+  });
 
   getNumberOfRows() {
     const {numberOfRows} = this.props;

@@ -21,7 +21,7 @@ const definitions = {
   }
 };
 
-const presets = {
+const PRESETS = {
   slideInUp: {
     animation: 'slideInUp',
     easing: 'ease-out-quint',
@@ -58,20 +58,21 @@ const presets = {
  * 'Animatable.initializeRegistryWithDefinitions(AnimatableManager.loadAnimationDefinitions(<OPTIONAL_CUSTOM_ANIMATION>));'
  * in your app entry point
  */
-class AnimatableManager {
+export class AnimatableManager {
+  presets = PRESETS;
+  animations: any;
   constructor() {
     this.loadAnimationDefinitions(definitions);
-    this.presets = presets;
   }
 
-  loadAnimationPresets(animationPresets) {
+  loadAnimationPresets(animationPresets: Dictionary<any>) {
     if (animationPresets) {
-      this.presets = Object.assign(presets, animationPresets);
+      this.presets = Object.assign(PRESETS, animationPresets);
     }
   }
 
   // NOTE: to load globally send as a parameter to Animatable.initializeRegistryWithDefinitions() call
-  loadAnimationDefinitions(animationDefinitions) {
+  loadAnimationDefinitions(animationDefinitions: any) {
     if (animationDefinitions) {
       Animatable.initializeRegistryWithDefinitions(animationDefinitions); // Make available globally in uilib
       Object.assign(definitions, animationDefinitions);
@@ -81,8 +82,8 @@ class AnimatableManager {
   }
 
   // NOTE: to load globally send as a parameter to Animatable.initializeRegistryWithDefinitions() call
-  loadSlideByHeightDefinitions(height, suffix) {
-    const definition = {};
+  loadSlideByHeightDefinitions(height: number, suffix: string) {
+    const definition: Dictionary<any> = {};
     // bottom
     definition[`slideInUp_${suffix}`] = {
       from: {translateY: height},
@@ -115,7 +116,7 @@ class AnimatableManager {
   }
 
   /** Tools */
-  getRandomDelay(delays = [20, 120, 220], options) {
+  getRandomDelay(delays = [20, 120, 220], options: any) {
     return {
       animation: 'fadeInLeft',
       easing: 'ease-out-expo',
@@ -126,7 +127,7 @@ class AnimatableManager {
     };
   }
 
-  getEntranceByIndex = (index = 0, options) => {
+  getEntranceByIndex = (index = 0, options: any) => {
     return {
       animation: 'itemEntrance',
       easing: 'ease-out-quint',
@@ -137,7 +138,7 @@ class AnimatableManager {
     };
   };
 
-  getZoomInSlideDown(index = 0, options, zoomIndex = 0) {
+  getZoomInSlideDown(index = 0, options: any, zoomIndex = 0) {
     const {onAnimationEnd, ...others} = options;
     if (index === zoomIndex) {
       return {
@@ -159,7 +160,7 @@ class AnimatableManager {
     }
   }
 
-  getSlideInSlideDown(index = 0, options, zoomIndex = 0) {
+  getSlideInSlideDown(index = 0, options: any, zoomIndex = 0) {
     const {onAnimationEnd, ...others} = options;
     if (index === zoomIndex) {
       return {
@@ -183,8 +184,8 @@ class AnimatableManager {
   }
 }
 
-function getObjectMap(object) {
-  const map = {};
+function getObjectMap(object: any) {
+  const map: Dictionary<string> = {};
   _.forEach(Object.keys(object), key => {
     map[key] = `${key}`;
   });

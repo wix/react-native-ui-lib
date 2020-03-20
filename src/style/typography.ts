@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import {Platform, PixelRatio} from 'react-native';
-import {Constants} from '../helpers';
+import {Platform} from 'react-native';
+import Constants from '../helpers/Constants';
 
 import TypographyPresets from './typographyPresets';
 
@@ -8,13 +8,13 @@ export const WEIGHT_TYPES = {
   THIN: '200',
   LIGHT: '300',
   REGULAR: '400',
-  MEDIUM: parseFloat(Platform.Version) >= 11.2 ? '600' : '500',
+  MEDIUM: parseFloat(Platform.Version as string) >= 11.2 ? '600' : '500',
   BOLD: '700',
   HEAVY: '800',
   BLACK: '900'
 };
 
-class Typography {
+export class Typography {
   keysPattern = this.generateKeysPattern();
 
   /**
@@ -23,8 +23,9 @@ class Typography {
    * typographies - map of keys and typography values
    * e.g {text15: {fontSize: 58, fontWeight: '100', lineHeight: Math.floor(58 * 1.4)}}
    */
-  loadTypographies(typographies) {
+  loadTypographies(typographies: Dictionary<any>) {
     _.forEach(typographies, (value, key) => {
+      //@ts-ignore
       this[key] = value;
     });
     this.keysPattern = this.generateKeysPattern();
@@ -44,14 +45,14 @@ class Typography {
   }
 
   // TODO: deprecate
-  async measureWidth(text, typography = Typography.text70, containerWidth = Constants.screenWidth) {
+  async measureWidth(text: string, typography = TypographyPresets.text70, containerWidth = Constants.screenWidth) {
     const size = await this.measureTextSize(text, typography, containerWidth);
     if (size) {
       return size.width;
     }
   }
 
-  async measureTextSize(text, typography = Typography.text70, containerWidth = Constants.screenWidth) {
+  async measureTextSize(text:string, typography = TypographyPresets.text70, containerWidth = Constants.screenWidth) {
     const rnTextSize = require('react-native-text-size').default;
     if (text) {
       const size = await rnTextSize.measure({
@@ -63,8 +64,8 @@ class Typography {
     }
   }
 }
-
-const typography = new Typography();
+const TypedTypography = Typography as ExtendTypeWith<typeof Typography, typeof TypographyPresets>
+const typography = new TypedTypography();
 typography.loadTypographies(TypographyPresets);
 
 export default typography;
