@@ -1,4 +1,4 @@
-import {Platform, Dimensions, NativeModules, I18nManager, AccessibilityInfo} from 'react-native';
+import {Platform, Dimensions, NativeModules, I18nManager, AccessibilityInfo, AccessibilityEvent} from 'react-native';
 
 
 const orientations = {
@@ -26,8 +26,8 @@ function setStatusBarHeight() {
 
 function getAspectRatio() {
   return screenWidth < screenHeight
-      ? screenHeight / screenWidth
-      : screenWidth / screenHeight;
+    ? screenHeight / screenWidth
+    : screenWidth / screenHeight;
 }
 
 
@@ -49,12 +49,11 @@ export function updateConstants(dimensions: any) {
 
 
 const accessibility = {
-  isScreenReaderEnabled: false 
+  isScreenReaderEnabled: false
 };
-function handleScreenReaderChanged(isScreenReaderEnabled: boolean) {
-  accessibility.isScreenReaderEnabled = isScreenReaderEnabled;
+function handleScreenReaderChanged(isScreenReaderEnabled: AccessibilityEvent) {
+  accessibility.isScreenReaderEnabled = isScreenReaderEnabled as boolean;
 }
-//@ts-ignore
 AccessibilityInfo.addEventListener('screenReaderChanged', handleScreenReaderChanged);
 function setAccessibility() {
   AccessibilityInfo.fetch().then(isScreenReaderEnabled => {
@@ -97,7 +96,7 @@ const constants = {
     return windowHeight;
   },
   get isSmallScreen() {
-    return screenWidth <= 340
+    return screenWidth <= 340;
   },
   get isShortScreen() {
     return screenHeight <= 600;
@@ -105,8 +104,8 @@ const constants = {
   get screenAspectRatio() {
     return getAspectRatio();
   },
-  get isTablet(){
-       //@ts-ignore
+  get isTablet() {
+    //@ts-ignore
     return Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
   },
   getSafeAreaInsets: () => {
@@ -116,26 +115,26 @@ const constants = {
       : {left: 0, right: 0, bottom: 34, top: 44};
   },
   /* Devices */
- get isIphoneX(){
-   return   isIOS &&
-   //@ts-ignore
-   !Platform.isPad &&
+  get isIphoneX() {
+    return isIOS &&
       //@ts-ignore
-   !Platform.isTVOS &&
-   (screenHeight >= 812 || screenWidth >= 812);
- },
- /* Orientation */
- addDimensionsEventListener: (callback: any) => {
-  Dimensions.addEventListener('change', callback);
-},
+      !Platform.isPad &&
+      //@ts-ignore
+      !Platform.isTVOS &&
+      (screenHeight >= 812 || screenWidth >= 812);
+  },
+  /* Orientation */
+  addDimensionsEventListener: (callback: any) => {
+    Dimensions.addEventListener('change', callback);
+  },
 
-removeDimensionsEventListener: (callback: any) => {
-  Dimensions.removeEventListener('change', callback);
-},
-// Accessibility
-get accessibility() {
-  return accessibility;
-}
+  removeDimensionsEventListener: (callback: any) => {
+    Dimensions.removeEventListener('change', callback);
+  },
+  // Accessibility
+  get accessibility() {
+    return accessibility;
+  }
 };
 
 

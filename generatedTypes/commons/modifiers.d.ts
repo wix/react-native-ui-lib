@@ -56,9 +56,9 @@ export declare function extractTypographyValue(props: Dictionary<any>): undefine
 export declare function extractPaddingValues(props: Dictionary<any>): Partial<Record<"padding" | "paddingLeft" | "paddingTop" | "paddingRight" | "paddingBottom" | "paddingHorizontal" | "paddingVertical", number>>;
 export declare function extractMarginValues(props: Dictionary<any>): Partial<Record<"margin" | "marginLeft" | "marginTop" | "marginRight" | "marginBottom" | "marginHorizontal" | "marginVertical", number>>;
 export declare function extractAlignmentsValues(props: Dictionary<any>): any;
-export declare function extractPositionStyle(props: Dictionary<any>): import("react-native").RegisteredStyle<{
+export declare function extractPositionStyle(props: Dictionary<any>): {
     position: "absolute";
-}> | undefined;
+} | undefined;
 export declare function extractFlexStyle(props: Dictionary<any>): Partial<Record<NativeFlexModifierKeyType, number>> | undefined;
 export declare function extractAccessibilityProps(props?: any): Partial<any>;
 export declare function extractBorderRadiusValue(props: Dictionary<any>): number | undefined;

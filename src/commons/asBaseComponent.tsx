@@ -6,10 +6,14 @@ import * as Modifiers from './modifiers';
 import forwardRef from './forwardRef';
 import UIComponent from './UIComponent';
 
-function asBaseComponent(WrappedComponent: React.ClassType<any, any,any>) {
+export interface BaseComponentInjectedProps {
+  modifiers: ReturnType<typeof Modifiers.generateModifiersStyle>;
+}
+
+function asBaseComponent<PROPS>(WrappedComponent: React.ComponentType<PROPS>): React.ComponentType<Omit<PROPS, keyof BaseComponentInjectedProps>> {
   class BaseComponent extends UIComponent {
     state = Modifiers.generateModifiersStyle(undefined, this.props);
-    static displayName: string;
+    static displayName: string | undefined;
     static propTypes: any;
     static defaultProps: any;
 
@@ -19,7 +23,7 @@ function asBaseComponent(WrappedComponent: React.ClassType<any, any,any>) {
         return newModifiers;
       }
 
-      return null;  
+      return null;
     }
 
     render() {
@@ -35,7 +39,7 @@ function asBaseComponent(WrappedComponent: React.ClassType<any, any,any>) {
   BaseComponent.propTypes = WrappedComponent.propTypes;
   BaseComponent.defaultProps = WrappedComponent.defaultProps;
 
-  return forwardRef(BaseComponent);
+  return forwardRef(BaseComponent) as any;
 }
 
 export default asBaseComponent;

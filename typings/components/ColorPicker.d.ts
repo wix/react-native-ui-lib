@@ -11,4 +11,4 @@ export interface ColorPickerProps extends DialogProps {
   onSubmit?: (selectedColor: ColorValue, textColor: ColorValue) => void;
 }
 
-export default class ColorPicker extends PureBaseComponent<ColorPickerProps> {}
+export class ColorPicker extends PureBaseComponent<ColorPickerProps> {}

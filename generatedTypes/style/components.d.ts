@@ -1,5 +1,5 @@
 declare const Components: {
-    accessoryIndicator: import("react-native").RegisteredStyle<{
+    accessoryIndicator: {
         width: number;
         height: number;
         marginLeft: number;
@@ -10,6 +10,6 @@ declare const Components: {
         transform: {
             rotate: string;
         }[];
-    }>;
+    };
 };
 export default Components;

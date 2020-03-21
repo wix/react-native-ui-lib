@@ -4,7 +4,7 @@ import Constants from '../helpers/Constants';
 
 import TypographyPresets from './typographyPresets';
 
-export const WEIGHT_TYPES = {
+export const WEIGHT_TYPES = { //do we need this? we have a duplicate object inside the presets
   THIN: '200',
   LIGHT: '300',
   REGULAR: '400',
@@ -37,11 +37,11 @@ export class Typography {
 
   generateKeysPattern() {
     return new RegExp(_.chain(this)
-        .keys()
-        .map(key => [`${key}`])
-        .flatten()
-        .join('|')
-        .value());
+      .keys()
+      .map(key => [`${key}`])
+      .flatten()
+      .join('|')
+      .value());
   }
 
   // TODO: deprecate
@@ -52,7 +52,7 @@ export class Typography {
     }
   }
 
-  async measureTextSize(text:string, typography = TypographyPresets.text70, containerWidth = Constants.screenWidth) {
+  async measureTextSize(text: string, typography = TypographyPresets.text70, containerWidth = Constants.screenWidth) {
     const rnTextSize = require('react-native-text-size').default;
     if (text) {
       const size = await rnTextSize.measure({

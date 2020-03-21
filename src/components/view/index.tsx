@@ -1,36 +1,29 @@
-import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
-import {View as RNView, SafeAreaView, Animated} from 'react-native';
-import {asBaseComponent, forwardRef} from '../../commons';
-import {Constants} from '../../helpers';
-
+import {View as RNView, SafeAreaView, Animated, ViewProps} from 'react-native';
+import asBaseComponent, {BaseComponentInjectedProps} from '../../commons/asBaseComponent';
+import forwardRef, {ForwardRefInjectedProps} from '../../commons/forwardRef';
+import Constants from '../../helpers/Constants';
+import {ContainerModifiers} from '../../../typings/modifiers';
 /**
  * @description: Wrapper component for React Native View component
  * @extends: View
  * @extendslink: https://facebook.github.io/react-native/docs/view.html
  * @modifiers: margins, paddings, alignments, background, borderRadius
  */
-class View extends PureComponent {
+
+interface ViewPropTypes extends ViewProps {
+  /**
+   * If true, will render as SafeAreaView
+   */
+  useSafeArea?: boolean;
+  animated?: boolean;
+  inaccessible?: boolean;
+}
+type PropsTypes = BaseComponentInjectedProps & ViewPropTypes & ForwardRefInjectedProps & ContainerModifiers;
+class View extends PureComponent<PropsTypes> {
   static displayName = 'View';
-
-  static propTypes = {
-    ...RNView.propTypes,
-    // ...BaseComponent.propTypes,
-    /**
-     * If true, will render as SafeAreaView
-     */
-    useSafeArea: PropTypes.bool,
-    /**
-     * Use Animate.View as a container
-     */
-    animated: PropTypes.bool,
-    /**
-     * Turn off accessibility for this view and its nested children
-     */
-    inaccessible: PropTypes.bool
-  };
-
-  constructor(props) {
+  private Container: React.ClassType<any, any, any>;
+  constructor(props: PropsTypes) {
     super(props);
 
     this.Container = props.useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
@@ -40,7 +33,8 @@ class View extends PureComponent {
   }
 
   // TODO: do we need this?
-  setNativeProps(nativeProps) {
+  setNativeProps(nativeProps: any) {
+    //@ts-ignore
     this._root.setNativeProps(nativeProps); // eslint-disable-line
   }
 
@@ -50,7 +44,6 @@ class View extends PureComponent {
     const {modifiers, style, left, top, right, bottom, flex: propsFlex, forwardedRef, inaccessible, ...others} = this.props;
     const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle, positionStyle} = modifiers;
     const Element = this.Container;
-
     return (
       <Element
         accessibilityElementsHidden={inaccessible}

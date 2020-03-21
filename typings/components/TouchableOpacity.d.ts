@@ -15,4 +15,4 @@ export interface TouchableOpacityProps extends RNTouchableOpacityProps {
   activeBackgroundColor?: ColorValue;
 }
 
-export default class TouchableOpacity extends PureBaseComponent<TouchableOpacityProps> {}
+export class TouchableOpacity extends PureBaseComponent<TouchableOpacityProps> {}
