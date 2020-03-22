@@ -16,7 +16,13 @@ interface ViewPropTypes extends ViewProps {
    * If true, will render as SafeAreaView
    */
   useSafeArea?: boolean;
+  /**
+   * Use Animate.View as a container
+   */
   animated?: boolean;
+  /**
+   * Turn off accessibility for this view and its nested children
+   */
   inaccessible?: boolean;
 }
 type PropsTypes = BaseComponentInjectedProps & ViewPropTypes & ForwardRefInjectedProps & ContainerModifiers;
