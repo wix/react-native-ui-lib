@@ -1,18 +1,7 @@
 import _ from 'lodash';
-import {Platform} from 'react-native';
 import Constants from '../helpers/Constants';
 
 import TypographyPresets from './typographyPresets';
-
-export const WEIGHT_TYPES = { //do we need this? we have a duplicate object inside the presets
-  THIN: '200',
-  LIGHT: '300',
-  REGULAR: '400',
-  MEDIUM: parseFloat(Platform.Version as string) >= 11.2 ? '600' : '500',
-  BOLD: '700',
-  HEAVY: '800',
-  BLACK: '900'
-};
 
 export class Typography {
   keysPattern = this.generateKeysPattern();

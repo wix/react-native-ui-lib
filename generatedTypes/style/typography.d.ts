@@ -1,12 +1,3 @@
-export declare const WEIGHT_TYPES: {
-    THIN: string;
-    LIGHT: string;
-    REGULAR: string;
-    MEDIUM: string;
-    BOLD: string;
-    HEAVY: string;
-    BLACK: string;
-};
 export declare class Typography {
     keysPattern: RegExp;
     /**
