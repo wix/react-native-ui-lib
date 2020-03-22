@@ -31,7 +31,7 @@ export default {
     return require('./components/carousel').default;
   },
   get Checkbox() {
-    return require('./components/checkbox').Checkbox;
+    return require('./components/checkbox').default;
   },
   get ColorPalette() {
     return require('./components/colorPicker/ColorPalette').default;
