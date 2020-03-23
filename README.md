@@ -41,7 +41,7 @@ See setup instructions [here](https://github.com/wix/react-native-ui-lib/wiki/SE
 See [breaking changes](https://github.com/wix/react-native-ui-lib/wiki/V5-%5BBreaking-Change%5D)
 
 #### For React Native >= 0.60.0
-please use `react-native-ui-lib@^4.0.0`
+please use `react-native-ui-lib`
 
 #### For React Native < 0.60.0
 please use `react-native-ui-lib@^3.0.0`
