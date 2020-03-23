@@ -6,13 +6,14 @@
 
 export * from './style';
 export {default as View} from './components/view';
+export {default as Text} from './components/text';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
   ActionBar, ActionSheet, Avatar, Badge, Button, Card, Carousel, ConnectionStatusBar, Dialog, Drawer, FloatingButton,
   FeatureHighlight, Hint, Image, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl, PanningProvider,
   PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, ProgressBar, Slider, GradientSlider,
-  ColorSliderGroup, Stepper, TabBar, TagsInput, RadioButton, RadioGroup, SharedTransition, StackAggregator, Text, Toast,
+  ColorSliderGroup, Stepper, TabBar, TagsInput, RadioButton, RadioGroup, SharedTransition, StackAggregator, Toast,
   WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper, Constants,
   DocsGenerator, LogService, LoaderScreen, Modal, StateScreen, WheelPicker, Incubator, ColorPicker, TouchableOpacity
 } from '../typings';
