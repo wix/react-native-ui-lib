@@ -1,7 +1,6 @@
 import React, {PureComponent} from 'react';
 import {View as RNView, SafeAreaView, Animated, ViewProps} from 'react-native';
-import asBaseComponent, {BaseComponentInjectedProps} from '../../commons/asBaseComponent';
-import forwardRef, {ForwardRefInjectedProps} from '../../commons/forwardRef';
+import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import Constants from '../../helpers/Constants';
 import {ContainerModifiers} from '../../../typings/modifiers';
 
@@ -48,7 +47,18 @@ class View extends PureComponent<PropsTypes> {
   render() {
     // (!) extract left, top, bottom... props to avoid passing them on Android
     // eslint-disable-next-line
-    const {modifiers, style, left, top, right, bottom, flex: propsFlex, forwardedRef, inaccessible, ...others} = this.props;
+    const {
+      modifiers,
+      style,
+      left,
+      top,
+      right,
+      bottom,
+      flex: propsFlex,
+      forwardedRef,
+      inaccessible,
+      ...others
+    } = this.props;
     const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle, positionStyle} = modifiers;
     const Element = this.Container;
     return (

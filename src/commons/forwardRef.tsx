@@ -1,9 +1,11 @@
 import React from 'react';
+//@ts-ignore
 import hoistStatics from 'hoist-non-react-statics';
 
 export interface ForwardRefInjectedProps {
   forwardedRef: any;
 }
+
 export default function forwardRef<P>(WrappedComponent: React.ComponentType<P>): React.ComponentType<Omit<P, keyof ForwardRefInjectedProps>> {
   function forwardRef(props: P, ref: any) {
     return <WrappedComponent {...props} forwardedRef={ref}/>;

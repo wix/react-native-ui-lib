@@ -1,20 +1,19 @@
 import React from 'react';
 import { ViewProps } from 'react-native';
-import { BaseComponentInjectedProps } from '../../commons/asBaseComponent';
-import { ForwardRefInjectedProps } from '../../commons/forwardRef';
+import { BaseComponentInjectedProps, ForwardRefInjectedProps } from '../../commons/new';
 import { ContainerModifiers } from '../../../typings/modifiers';
-/**
- * @description: Wrapper component for React Native View component
- * @extends: View
- * @extendslink: https://facebook.github.io/react-native/docs/view.html
- * @modifiers: margins, paddings, alignments, background, borderRadius
- */
 interface ViewPropTypes extends ViewProps {
     /**
      * If true, will render as SafeAreaView
      */
     useSafeArea?: boolean;
+    /**
+     * Use Animate.View as a container
+     */
     animated?: boolean;
+    /**
+     * Turn off accessibility for this view and its nested children
+     */
     inaccessible?: boolean;
 }
 declare type PropsTypes = BaseComponentInjectedProps & ViewPropTypes & ForwardRefInjectedProps & ContainerModifiers;
