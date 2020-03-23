@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+//@ts-ignore
 import hoistStatics from 'hoist-non-react-statics';
 //@ts-ignore
 import * as Modifiers from './modifiers';
