@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Animated, Easing} from 'react-native';
+import {StyleSheet, Animated, Easing, Text as RNText} from 'react-native';
 import View from '../view';
 import Text from '../text';
 import Image from '../image';
@@ -42,7 +42,7 @@ export default class TabBarItem extends PureBaseComponent {
     /**
      * custom label style
      */
-    labelStyle: Text.propTypes.style,
+    labelStyle: RNText.propTypes.style,
     /**
      * Badge component props to display next the item label
      */
@@ -54,7 +54,7 @@ export default class TabBarItem extends PureBaseComponent {
     /**
      * custom selected tab label style
      */
-    selectedLabelStyle: Text.propTypes.style,
+    selectedLabelStyle: RNText.propTypes.style,
     /**
      * whether the tab is selected or not
      */

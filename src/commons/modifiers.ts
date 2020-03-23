@@ -21,6 +21,8 @@ export interface AlteredOptions {
 }
 
 export interface ExtractedStyle {
+  color?: ReturnType<typeof extractColorValue>;
+  typography?: ReturnType<typeof extractTypographyValue>;
   backgroundColor?: ReturnType<typeof extractBackgroundColorValue>;
   borderRadius?: ReturnType<typeof extractBorderRadiusValue>;
   paddings?: ReturnType<typeof extractPaddingValues>;
@@ -280,6 +282,8 @@ export function getThemeProps(props = this.props, context = this.context) {
 }
 
 export function generateModifiersStyle(options = {
+  color: true,
+  typography: true,
   backgroundColor: true,
   borderRadius: true,
   paddings: true,
@@ -287,13 +291,18 @@ export function generateModifiersStyle(options = {
   alignments: true,
   flex: true,
   position: true
-},
-  props: Dictionary<any>) {
+}, props: Dictionary<any>) {
 
   //@ts-ignore
-  let boundProps = props || this.props;
+  const boundProps = props || this.props;
   const style: ExtractedStyle = {};
 
+  if (options.color) {
+    style.color = extractColorValue(boundProps);
+  }
+  if (options.typography) {
+    style.typography = extractTypographyValue(boundProps);
+  }
   if (options.backgroundColor) {
     style.backgroundColor = extractBackgroundColorValue(boundProps);
   }

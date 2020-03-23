@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text as RNText} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -24,11 +24,11 @@ class PickerDialog extends BaseComponent {
     /**
      * select label style
      */
-    selectLabelStyle: Text.propTypes.style,
+    selectLabelStyle: RNText.propTypes.style,
     /**
      * cancel label style
      */
-    cancelLabelStyle: Text.propTypes.style
+    cancelLabelStyle: RNText.propTypes.style
   };
 
   state = {};

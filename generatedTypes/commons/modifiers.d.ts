@@ -13,6 +13,8 @@ export interface AlteredOptions {
     position?: boolean;
 }
 export interface ExtractedStyle {
+    color?: ReturnType<typeof extractColorValue>;
+    typography?: ReturnType<typeof extractTypographyValue>;
     backgroundColor?: ReturnType<typeof extractBackgroundColorValue>;
     borderRadius?: ReturnType<typeof extractBorderRadiusValue>;
     paddings?: ReturnType<typeof extractPaddingValues>;
@@ -66,6 +68,8 @@ export declare function extractModifierProps(props: Dictionary<any>): _.Dictiona
 export declare function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]): Pick<Partial<Dictionary<any>>, number>;
 export declare function getThemeProps(props?: any, context?: any): any;
 export declare function generateModifiersStyle(options: {
+    color: boolean;
+    typography: boolean;
     backgroundColor: boolean;
     borderRadius: boolean;
     paddings: boolean;

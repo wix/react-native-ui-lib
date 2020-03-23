@@ -1,7 +1,7 @@
 // TODO: support commented props
 // TODO: disable scroll when content width is shorter than screen width
 import React, {PureComponent} from 'react';
-import {StyleSheet, ScrollView, ViewPropTypes, Platform} from 'react-native';
+import {StyleSheet, ScrollView, ViewPropTypes, Platform, Text as RNText} from 'react-native';
 import Reanimated, {Easing} from 'react-native-reanimated';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -67,7 +67,7 @@ class TabBar extends PureComponent {
     /**
      * custom label style
      */
-    labelStyle: Text.propTypes.style,
+    labelStyle: RNText.propTypes.style,
     /**
      * the default label color
      */
