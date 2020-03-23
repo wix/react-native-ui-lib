@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, LayoutAnimation} from 'react-native';
 import {asBaseComponent, forwardRef} from '../../commons';
 import {Colors} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
@@ -117,9 +117,11 @@ class PageControl extends PureComponent {
     if (currentPage !== prevPage) {
       newState.prevPage = currentPage;
       if (currentPage >= prevLargeIndicatorsOffset + NUM_LARGE_INDICATORS) {
+        PageControl.animate(nextProps);
         newState.pagesOffset = Math.max(0, currentPage - NUM_LARGE_INDICATORS - 1);
         newState.largeIndicatorsOffset = currentPage - NUM_LARGE_INDICATORS + 1;
       } else if (currentPage < prevLargeIndicatorsOffset) {
+        PageControl.animate(nextProps);
         newState.pagesOffset = Math.max(0, currentPage - 2);
         newState.largeIndicatorsOffset = currentPage;
       }
@@ -128,7 +130,13 @@ class PageControl extends PureComponent {
     return _.isEmpty(newState) ? null : newState;
   }
 
-  showLimitedVersion({limitShownPages, numOfPages}) {
+  static animate(props) {
+    if (PageControl.showLimitedVersion(props)) {
+      LayoutAnimation.configureNext({...LayoutAnimation.Presets.linear, duration: 100});
+    }
+  }
+
+  static showLimitedVersion({limitShownPages, numOfPages}) {
     return limitShownPages && numOfPages > 5;
   }
 
@@ -159,6 +167,7 @@ class PageControl extends PureComponent {
   }
 
   onPagePress = ({index}) => {
+    PageControl.animate(this.props);
     _.invoke(this.props, 'onPagePress', index);
   };
 
@@ -205,7 +214,7 @@ class PageControl extends PureComponent {
 
     return (
       <View style={[styles.container, containerStyle]} inaccessible>
-        {this.showLimitedVersion(this.props) ? this.renderDifferentSizeIndicators() : this.renderSameSizeIndicators()}
+        {PageControl.showLimitedVersion(this.props) ? this.renderDifferentSizeIndicators() : this.renderSameSizeIndicators()}
       </View>
     );
   }
