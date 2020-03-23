@@ -14,7 +14,7 @@
     "gatsby-plugin-sass": "^2.0.11",
     "gatsby-plugin-sharp": "^2.0.29",
     "gatsby-source-filesystem": "^2.0.27",
-    "gatsby-transformer-react-docgen": "^3.0.7",
+    "gatsby-transformer-react-docgen": "^5.0.0",
     "gatsby-transformer-sharp": "^2.1.17",
     "lodash": "^4.17.11",
     "node-sass": "^4.11.0",
