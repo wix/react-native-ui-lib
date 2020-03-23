@@ -53,7 +53,7 @@ export default function baseComponent(usePure) {
     extractColorValue = () => Modifiers.extractColorValue(this.getThemeProps());
 
     extractAnimationProps() {
-      return _.pick(this.props, [
+      return _.pick(this.getThemeProps(), [
         'animation',
         'duration',
         'delay',
