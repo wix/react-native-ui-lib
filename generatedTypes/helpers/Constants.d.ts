@@ -1,3 +1,4 @@
+export declare function updateConstants(dimensions: any): void;
 declare const constants: {
     orientations: {
         PORTRAIT: string;
@@ -5,7 +6,7 @@ declare const constants: {
     };
     isAndroid: boolean;
     isIOS: boolean;
-    readonly getAndroidVersion: number | undefined;
+    getAndroidVersion: () => number | undefined;
     readonly statusBarHeight: number;
     isRTL: boolean;
     readonly orientation: string;
@@ -18,7 +19,7 @@ declare const constants: {
     readonly isShortScreen: boolean;
     readonly screenAspectRatio: number;
     readonly isTablet: any;
-    readonly getSafeAreaInsets: {
+    getSafeAreaInsets: () => {
         left: number;
         right: number;
         bottom: number;

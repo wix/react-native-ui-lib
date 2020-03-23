@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   get ActionBar() {
     return require('./actionBar').default;
   },

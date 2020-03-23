@@ -1,3 +1,5 @@
 import React from 'react';
-declare const _default: <PROPS extends {}>(WrappedComponent: any) => React.ForwardRefExoticComponent<React.PropsWithoutRef<PROPS> & React.RefAttributes<unknown>>;
-export default _default;
+export interface ForwardRefInjectedProps {
+    forwardedRef: any;
+}
+export default function forwardRef<P>(WrappedComponent: React.ComponentType<P>): React.ComponentType<Omit<P, keyof ForwardRefInjectedProps>>;

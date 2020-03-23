@@ -1,18 +1,7 @@
 import _ from 'lodash';
-import {Platform} from 'react-native';
 import Constants from '../helpers/Constants';
 
 import TypographyPresets from './typographyPresets';
-
-export const WEIGHT_TYPES = {
-  THIN: '200',
-  LIGHT: '300',
-  REGULAR: '400',
-  MEDIUM: parseFloat(Platform.Version as string) >= 11.2 ? '600' : '500',
-  BOLD: '700',
-  HEAVY: '800',
-  BLACK: '900'
-};
 
 export class Typography {
   keysPattern = this.generateKeysPattern();
@@ -37,11 +26,11 @@ export class Typography {
 
   generateKeysPattern() {
     return new RegExp(_.chain(this)
-        .keys()
-        .map(key => [`${key}`])
-        .flatten()
-        .join('|')
-        .value());
+      .keys()
+      .map(key => [`${key}`])
+      .flatten()
+      .join('|')
+      .value());
   }
 
   // TODO: deprecate
@@ -52,7 +41,7 @@ export class Typography {
     }
   }
 
-  async measureTextSize(text:string, typography = TypographyPresets.text70, containerWidth = Constants.screenWidth) {
+  async measureTextSize(text: string, typography = TypographyPresets.text70, containerWidth = Constants.screenWidth) {
     const rnTextSize = require('react-native-text-size').default;
     if (text) {
       const size = await rnTextSize.measure({
