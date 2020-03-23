@@ -4,12 +4,6 @@ import asBaseComponent, {BaseComponentInjectedProps} from '../../commons/asBaseC
 import forwardRef, {ForwardRefInjectedProps} from '../../commons/forwardRef';
 import Constants from '../../helpers/Constants';
 import {ContainerModifiers} from '../../../typings/modifiers';
-/**
- * @description: Wrapper component for React Native View component
- * @extends: View
- * @extendslink: https://facebook.github.io/react-native/docs/view.html
- * @modifiers: margins, paddings, alignments, background, borderRadius
- */
 
 interface ViewPropTypes extends ViewProps {
   /**
@@ -26,6 +20,13 @@ interface ViewPropTypes extends ViewProps {
   inaccessible?: boolean;
 }
 type PropsTypes = BaseComponentInjectedProps & ViewPropTypes & ForwardRefInjectedProps & ContainerModifiers;
+
+/**
+ * @description: An enhanced View component
+ * @extends: View
+ * @extendslink: https://facebook.github.io/react-native/docs/view.html
+ * @modifiers: margins, paddings, alignments, background, borderRadius
+ */
 class View extends PureComponent<PropsTypes> {
   static displayName = 'View';
   private Container: React.ClassType<any, any, any>;
