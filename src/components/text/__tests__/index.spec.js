@@ -1,4 +1,4 @@
-import Text from '../index';
+import {Text} from '../index';
 
 describe('Text', () => {
   describe('getTextPartsByHighlight', () => {

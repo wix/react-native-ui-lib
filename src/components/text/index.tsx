@@ -133,4 +133,6 @@ const styles = StyleSheet.create({
   }
 });
 
+export {Text}; // For tests
+
 export default asBaseComponent(forwardRef(Text));
