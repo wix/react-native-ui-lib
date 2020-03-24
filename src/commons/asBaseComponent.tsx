@@ -13,13 +13,14 @@ export interface BaseComponentInjectedProps {
 
 function asBaseComponent<PROPS>(WrappedComponent: React.ComponentType<PROPS>): React.ComponentType<Omit<PROPS, keyof BaseComponentInjectedProps>> {
   class BaseComponent extends UIComponent {
-    state = Modifiers.generateModifiersStyle(undefined, this.props);
+    state = Modifiers.generateModifiersStyle(undefined, BaseComponent.getThemeProps(this.props, this.context));
     static displayName: string | undefined;
     static propTypes: any;
     static defaultProps: any;
 
     static getDerivedStateFromProps(nextProps: any, prevState: any) {
-      const newModifiers = Modifiers.generateModifiersStyle(undefined, nextProps);
+      const themeProps = BaseComponent.getThemeProps(nextProps, undefined);
+      const newModifiers = Modifiers.generateModifiersStyle(undefined, themeProps);
       if (!_.isEqual(newModifiers, prevState)) {
         return newModifiers;
       }
@@ -27,8 +28,12 @@ function asBaseComponent<PROPS>(WrappedComponent: React.ComponentType<PROPS>): R
       return null;
     }
 
+    static getThemeProps = (props: any, context: any) => {
+      return Modifiers.getThemeProps.call(WrappedComponent, props, context);
+    }
+
     render() {
-      const themeProps = Modifiers.getThemeProps.call(WrappedComponent, this.props, this.context);
+      const themeProps = BaseComponent.getThemeProps(this.props, this.context);
       const {forwardedRef, ...others} = themeProps;
       return <WrappedComponent /* {...this.props} */ {...others} modifiers={this.state} ref={forwardedRef}/>;
     }
