@@ -6,7 +6,6 @@ import _ from 'lodash';
 import Reanimated from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
 import {Colors, Typography, Spacings} from '../../style';
-import Text from '../../components/text';
 import Badge from '../../components/badge';
 import TouchableOpacity from '../TouchableOpacity';
 

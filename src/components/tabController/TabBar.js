@@ -11,7 +11,6 @@ import TabBarItem from './TabBarItem';
 // import ReanimatedObject from './ReanimatedObject';
 import {asBaseComponent, forwardRef} from '../../commons';
 import View from '../../components/view';
-import Text from '../../components/text';
 import {Colors, Spacings} from '../../style';
 import {Constants} from '../../helpers';
 import {LogService} from '../../services';
