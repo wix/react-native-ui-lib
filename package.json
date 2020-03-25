@@ -2,7 +2,7 @@
   "name": "react-native-ui-lib",
   "version": "4.2.0",
   "main": "index.js",
-  "typings": "index.d.ts",
+  "types": "index.d.ts",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "homepage": "https://github.com/wix/react-native-ui-lib",
   "license": "MIT",
