@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet, Animated} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -60,6 +60,10 @@ export default class Carousel extends BaseComponent {
      * callback for onScroll event of the internal ScrollView
      */
     onScroll: PropTypes.func,
+    /**
+     * Should the container be animated (send the animation style via containerStyle)
+     */
+    animate: PropTypes.bool,
     /**
      * the carousel style
      */
@@ -441,14 +445,15 @@ export default class Carousel extends BaseComponent {
   }
 
   renderCarousel() {
-    const {containerStyle, ...others} = this.getThemeProps();
+    const {containerStyle, animate, ...others} = this.getThemeProps();
     const {initialOffset} = this.state;
     const scrollContainerStyle = this.shouldUsePageWidth() ? {paddingRight: this.getItemSpacings(this.getThemeProps())} : undefined;
     const snapToOffsets = this.getSnapToOffsets();
     const marginBottom = Math.max(0, this.getContainerPaddingVertical() - 16);
+    const Container = animate ? Animated.View : View;
 
     return (
-      <View style={[{marginBottom}, containerStyle]} onLayout={this.onContainerLayout}>
+      <Container style={[{marginBottom}, containerStyle]} onLayout={this.onContainerLayout}>
         <ScrollView
           {...others}
           ref={this.carousel}
@@ -468,7 +473,7 @@ export default class Carousel extends BaseComponent {
         </ScrollView>
         {this.renderPageControl()}
         {this.renderCounter()}
-      </View>
+      </Container>
     );
   }
 
