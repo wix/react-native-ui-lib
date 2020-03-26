@@ -15,6 +15,7 @@
   },
   "scripts": {
     "start": "watchman watch-del-all && export DEV_MODE=true && react-native start",
+    "start-ios": "node ./scripts/cliStuff.js",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
     "pretest": "npm run lint",
