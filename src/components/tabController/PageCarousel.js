@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import _ from 'lodash';
 import TabBarContext from './TabBarContext';
 import Animated from 'react-native-reanimated';
 import {Constants} from '../../helpers';
@@ -26,8 +27,10 @@ class PageCarousel extends PureComponent {
   };
 
   scrollToPage = (pageIndex, animated) => {
-    const node = this.carousel.current.getNode();
-    node.scrollTo({x: pageIndex * Constants.screenWidth, animated});
+    const node = _.invoke(this.carousel, 'current.getNode');
+    if (node) {
+      node.scrollTo({x: pageIndex * Constants.screenWidth, animated});
+    }
   };
 
   renderCodeBlock = () => {
