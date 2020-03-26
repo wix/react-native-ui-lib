@@ -211,7 +211,7 @@ class MainScreen extends Component {
       <TabController.PageCarousel>
         {_.map(data, (section, key) => {
           return (
-            <TabController.TabPage key={key} index={index++}>
+            <TabController.TabPage key={key} lazy={index !== 0} index={index++}>
               <View paddingT-20 flex style={pageStyle}>
                 <FlatList
                   showsVerticalScrollIndicator={false}
