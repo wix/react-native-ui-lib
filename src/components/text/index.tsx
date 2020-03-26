@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Text as RNText, StyleSheet, TextProps, TextStyle} from 'react-native';
+import {Text as RNText, StyleSheet, TextProps, TextStyle, Animated} from 'react-native';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import {Colors} from '../../style';
 import _ from 'lodash';
@@ -26,6 +26,10 @@ interface TextPropTypes extends TextProps {
    * Custom highlight style for highlight string
    */
   highlightStyle?: TextStyle;
+  /**
+   * Use Animated.Text as a container
+   */
+  animated?: boolean;
 }
 
 type PropsTypes = BaseComponentInjectedProps & TextPropTypes & ForwardRefInjectedProps & MarginModifiers;
@@ -38,6 +42,9 @@ type PropsTypes = BaseComponentInjectedProps & TextPropTypes & ForwardRefInjecte
  */
 class Text extends PureComponent<PropsTypes> {
   static displayName = 'Text';
+  private TextContainer: React.ClassType<any, any, any> = this.props.animated
+    ? Animated.createAnimatedComponent(RNText)
+    : RNText;
 
   // setNativeProps(nativeProps) {
   //   this._root.setNativeProps(nativeProps); // eslint-disable-line
@@ -95,21 +102,25 @@ class Text extends PureComponent<PropsTypes> {
   render() {
     const {modifiers, style, center, uppercase, children, forwardedRef, ...others} = this.props;
     const color = this.props.color || modifiers.color;
-    const {margins, typography} = modifiers;
+    const {margins, typography, backgroundColor, flexStyle} = modifiers;
     const textStyle = [
       styles.container,
       typography,
       color && {color},
+      backgroundColor && {backgroundColor},
+      flexStyle,
       margins,
       center && styles.centered,
       uppercase && styles.uppercase,
       style
     ];
 
+    const TextContainer = this.TextContainer;
+
     return (
-      <RNText {...others} style={textStyle} ref={forwardedRef}>
+      <TextContainer {...others} style={textStyle} ref={forwardedRef}>
         {this.renderText(children)}
-      </RNText>
+      </TextContainer>
     );
   }
 }
