@@ -212,6 +212,7 @@ export default class Badge extends PureBaseComponent {
       borderWidth,
       backgroundColor,
       containerStyle,
+      hitSlop,
       icon,
       onPress,
       testId,
@@ -237,6 +238,7 @@ export default class Badge extends PureBaseComponent {
           style={[sizeStyle, this.styles.badge, borderStyle, backgroundStyle]}
           onPress={onPress}
           activeOpacity={activeOpacity}
+          hitSlop={hitSlop}
           {...animationProps}
         >
           {icon ? this.renderIcon() : this.renderLabel()}
