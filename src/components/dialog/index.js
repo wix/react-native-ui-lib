@@ -5,7 +5,7 @@ import {StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
-import Modal from '../../screensComponents/modal';
+import Modal from '../modal';
 import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
 import DialogDismissibleView from './DialogDismissibleView';

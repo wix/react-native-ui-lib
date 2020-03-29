@@ -10,7 +10,7 @@ import {BaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
 import Image from '../image';
-import Modal from '../../screensComponents/modal';
+import Modal from '../modal';
 
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');

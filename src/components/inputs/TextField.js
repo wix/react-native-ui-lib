@@ -11,7 +11,7 @@ import {StyleSheet, Animated, TextInput as RNTextInput, Image as RNImage} from '
 import {Constants} from '../../helpers';
 import {Colors, Typography} from '../../style';
 import BaseInput from './BaseInput';
-import {Modal} from '../../screensComponents';
+import Modal from '../modal';
 import TextArea from './TextArea';
 import View from '../view';
 import Image from '../image';

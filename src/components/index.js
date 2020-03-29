@@ -80,9 +80,14 @@ export default {
   get MaskedInput() {
     return require('./inputs').MaskedInput;
   },
-
+  get Modal() {
+    return require('./modal').default;
+  },
   get ListItem() {
     return require('./listItem').default;
+  },
+  get LoaderScreen() {
+    return require('./loaderScreen').default;
   },
   get PageControl() {
     return require('./pageControl').default;
@@ -110,6 +115,9 @@ export default {
   },
   get ProgressBar() {
     return require('./progressBar').default;
+  },
+  get StateScreen() {
+    return require('./stateScreen').default;
   },
   get Stepper() {
     return require('./stepper').default;

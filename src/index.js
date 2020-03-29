@@ -81,8 +81,14 @@ export default {
   get MaskedInput() {
     return require('./components/inputs/MaskedInput').default;
   },
+  get Modal() {
+    return require('./components/modal').default;
+  },
   get ListItem() {
     return require('./components/listItem').default;
+  },
+  get LoaderScreen() {
+    return require('./components/loaderScreen').default;
   },
   get PageControl() {
     return require('./components/pageControl').default;
@@ -113,6 +119,9 @@ export default {
   },
   get Slider() {
     return require('./components/slider').default;
+  },
+  get StateScreen() {
+    return require('./components/stateScreen').default;
   },
   get GradientSlider() {
     return require('./components/slider/GradientSlider').default;
@@ -205,17 +214,6 @@ export default {
   // Services
   get LogService() {
     return require('./services').LogService;
-  },
-
-  // ScreenComponents
-  get LoaderScreen() {
-    return require('./screensComponents').LoaderScreen;
-  },
-  get Modal() {
-    return require('./screensComponents').Modal;
-  },
-  get StateScreen() {
-    return require('./screensComponents').StateScreen;
   },
 
   // NativeComponents
