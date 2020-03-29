@@ -1,9 +1,14 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Animated, Easing} from 'react-native';
-import {Colors, Typography, PureBaseComponent, View, TouchableOpacity, Text, Image, Badge} from '../../../src';
-
+import {StyleSheet, Animated, Easing, Text as RNText} from 'react-native';
+import View from '../view';
+import Text from '../text';
+import Image from '../image';
+import TouchableOpacity from '../touchableOpacity';
+import Badge from '../badge';
+import {PureBaseComponent} from '../../commons';
+import {Colors, Typography} from '../../style';
 const INDICATOR_BG_COLOR = Colors.blue30;
 const INDICATOR_HEIGHT = 2;
 const INDICATOR_SPACINGS = 16;
@@ -37,7 +42,7 @@ export default class TabBarItem extends PureBaseComponent {
     /**
      * custom label style
      */
-    labelStyle: Text.propTypes.style,
+    labelStyle: RNText.propTypes.style,
     /**
      * Badge component props to display next the item label
      */
@@ -49,7 +54,7 @@ export default class TabBarItem extends PureBaseComponent {
     /**
      * custom selected tab label style
      */
-    selectedLabelStyle: Text.propTypes.style,
+    selectedLabelStyle: RNText.propTypes.style,
     /**
      * whether the tab is selected or not
      */
@@ -174,7 +179,7 @@ export default class TabBarItem extends PureBaseComponent {
         testID={testID}
         activeBackgroundColor={activeBackgroundColor}
         onLayout={this.onLayout}
-        accessibilityStates={selected ? ['selected'] : undefined}
+        accessibilityStates={selected ? ['selected'] : []}
       >
         <View row flex center style={[showDivider && this.styles.divider, {paddingHorizontal: 16}]}>
           {icon && (

@@ -67,7 +67,7 @@ export default class KeyboardAwareBase extends Component {
   }
 
   _updateKeyboardAwareViewContentSize() {
-    if (ScrollViewManager && ScrollViewManager.getContentSize) {
+    if (ScrollViewManager?.getContentSize) {
       ScrollViewManager.getContentSize(ReactNative.findNodeHandle(this._keyboardAwareView), res => {
         if (this._keyboardAwareView) {
           this._keyboardAwareView.contentSize = res;

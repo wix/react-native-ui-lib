@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, ViewPropTypes, TouchableOpacity} from 'react-native';
+import {StyleSheet, ViewPropTypes, TouchableOpacity, Text as RNText} from 'react-native';
 import {Colors} from '../../style';
 import {PureBaseComponent} from '../../commons';
 import Badge, {BADGE_SIZES} from '../badge';
@@ -124,7 +124,7 @@ export class Avatar extends PureBaseComponent {
     /**
      * ribbon label custom style
      */
-    ribbonLabelStyle: Text.propTypes.style,
+    ribbonLabelStyle: RNText.propTypes.style,
     /**
      * Custom ribbon
      */

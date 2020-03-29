@@ -12,6 +12,7 @@ import TabBar from './TabBar';
 import TabBarItem from './TabBarItem';
 import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
+import {LogService} from '../../services';
 
 const {cond, Code, and, eq, set, Value, block, round, onChange, call} = Reanimated;
 
@@ -50,6 +51,14 @@ class TabController extends Component {
     selectedIndex: 0,
     activeOpacity: 0.2
   };
+
+  constructor(props) {
+    super(props);
+
+    LogService.warn(`The 'TabController' component in not in the experimental 
+phase anymore and can be imported directly. Instead of 
+using 'Incubator.TabController' just use 'TabController'`);
+  }
 
   state = {
     selectedIndex: this.props.selectedIndex,

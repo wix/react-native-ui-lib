@@ -5,7 +5,7 @@ import {StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
-import Modal from '../../screensComponents/modal';
+import Modal from '../modal';
 import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
 import DialogDismissibleView from './DialogDismissibleView';
@@ -49,8 +49,9 @@ class Dialog extends BaseComponent {
      */
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
-     * The direction of the allowed pan (default is DOWN)
-     * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###)
+     * The direction of the allowed pan (default is DOWN).
+     * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###).
+     * Pass null to remove pan.
      */
     panDirection: PropTypes.oneOf(Object.values(PanningProvider.Directions)),
     /**
@@ -78,8 +79,7 @@ class Dialog extends BaseComponent {
   };
 
   static defaultProps = {
-    overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6),
-    width: '90%'
+    overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6)
   };
 
   constructor(props) {
@@ -122,7 +122,7 @@ class Dialog extends BaseComponent {
   };
 
   generateStyles() {
-    this.styles = createStyles(this.props);
+    this.styles = createStyles(this.getThemeProps());
   }
 
   setAlignment() {
@@ -136,8 +136,9 @@ class Dialog extends BaseComponent {
 
   onDismiss = () => {
     this.setState({modalVisibility: false}, () => {
-      if (this.props.visible) {
-        _.invoke(this.props, 'onDismiss', this.props);
+      const props = this.getThemeProps();
+      if (props.visible) {
+        _.invoke(props, 'onDismiss', props);
       }
     });
   };
@@ -147,14 +148,14 @@ class Dialog extends BaseComponent {
   };
 
   renderPannableHeader = directions => {
-    const {renderPannableHeader, pannableHeaderProps} = this.props;
+    const {renderPannableHeader, pannableHeaderProps} = this.getThemeProps();
     if (renderPannableHeader) {
       return <PanListenerView directions={directions}>{renderPannableHeader(pannableHeaderProps)}</PanListenerView>;
     }
   };
 
   renderDialogView = () => {
-    const {children, renderPannableHeader, panDirection, containerStyle, testID} = this.props;
+    const {children, renderPannableHeader, panDirection = PanningProvider.Directions.DOWN, containerStyle, testID} = this.getThemeProps();
     const {dialogVisibility} = this.state;
     const Container = renderPannableHeader ? View : PanListenerView;
 
@@ -178,9 +179,9 @@ class Dialog extends BaseComponent {
     );
   };
 
-  // TODO: renderOverlay {_.invoke(this.props, 'renderOverlay')}
+  // TODO: renderOverlay {_.invoke(this.getThemeProps(), 'renderOverlay')}
   renderDialogContainer = () => {
-    const {useSafeArea, bottom} = this.props;
+    const {useSafeArea, bottom} = this.getThemeProps();
     const addBottomSafeArea = Constants.isIphoneX && (useSafeArea && bottom);
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8; // TODO: should this be here or in the input style?
 
@@ -220,7 +221,7 @@ class Dialog extends BaseComponent {
 }
 
 function createStyles(props) {
-  const {width, height} = props;
+  const {width = '90%', height} = props;
   const flexType = height ? {flex: 1} : {flex: 0};
   return StyleSheet.create({
     dialogViewSize: {width, height},

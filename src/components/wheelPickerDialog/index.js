@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity, Text as RNText} from 'react-native';
 import Colors from '../../style/colors';
 import Typography from '../../style/typography';
 import View from '../view';
@@ -76,11 +76,11 @@ WheelPickerDialog.propTypes = {
   /**
    * select label style
    */
-  selectLabelStyle: Text.propTypes.style,
+  selectLabelStyle: RNText.propTypes.style,
   /**
    * cancel label style
    */
-  cancelLabelStyle: Text.propTypes.style,
+  cancelLabelStyle: RNText.propTypes.style,
   items: PropTypes.array,
   selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   title: PropTypes.string,

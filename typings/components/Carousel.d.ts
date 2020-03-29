@@ -15,6 +15,8 @@ export interface CarouselProps {
   initialPage?: number;
   pageWidth?: number;
   itemSpacings?: number;
+  containerMarginHorizontal?: number;
+  containerPaddingVertical?: number;
   loop?: boolean;
   onChangePage?: (page: number, prevPage: number) => void;
   onScroll?: (event?: NativeSyntheticEvent<NativeScrollEvent>) => void;
@@ -23,6 +25,10 @@ export interface CarouselProps {
   pageControlPosition?: CarouselPageControlPosition;
   showCounter?: boolean;
   counterTextStyle?: StyleProp<TextStyle>;
+  pagingEnabled?: boolean;
+  allowAccessibleLayout?: boolean;
+  autoplay?: boolean;
+  autoplayInterval?: number;
 }
 
 export class Carousel extends BaseComponent<CarouselProps> {}

@@ -30,7 +30,7 @@ export default function baseComponent(usePure) {
 
     // TODO: remove this after migrating all components to use asBaseComponent HOC
     UNSAFE_componentWillReceiveProps(nextProps) {
-      this.updateModifiers(this.props, nextProps);
+      this.updateModifiers(this.getThemeProps(), nextProps);
     }
 
     // TODO: stop using this and remove it
@@ -53,7 +53,7 @@ export default function baseComponent(usePure) {
     extractColorValue = () => Modifiers.extractColorValue(this.getThemeProps());
 
     extractAnimationProps() {
-      return _.pick(this.props, [
+      return _.pick(this.getThemeProps(), [
         'animation',
         'duration',
         'delay',
@@ -68,7 +68,7 @@ export default function baseComponent(usePure) {
     }
 
     extractModifierProps() {
-      return Modifiers.extractModifierProps(this.props);
+      return Modifiers.extractModifierProps(this.getThemeProps());
     }
 
     // TODO: stop using this and remove it
@@ -124,7 +124,7 @@ export default function baseComponent(usePure) {
       alignments: true,
       flex: true
     },
-    props = this.props,) {
+    props = this.getThemeProps(),) {
       const style = {};
 
       if (options.backgroundColor) {

@@ -1,6 +1,6 @@
 module.exports = {
-  extends: 'wix/react-native',
-  parser: 'babel-eslint',
+  extends: ['plugin:@typescript-eslint/recommended', 'wix/react-native'],
+  parser: '@typescript-eslint/parser',
   rules: {
     'arrow-parens': 'off',
     // TODO: remove after migration of legacy lifecycle methods
@@ -20,8 +20,23 @@ module.exports = {
     ],
     'function-paren-newline': ['warn', 'never'],
     'new-cap': ['off'], // TODO: fix this in colors.js and remove this
-    'default-case': ['off']
+    'default-case': ['off'],
+    "@typescript-eslint/no-use-before-define": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/member-delimiter-style": 0,
+    // "@typescript-eslint/no-unused-vars": [2, {"args": "all", "argsIgnorePattern": "^_"}],
+    "@typescript-eslint/no-unused-vars": 0, //todo: uncomment this line and use the the better unused rule above ^
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "@typescript-eslint/explicit-member-accessibility": 0,
+    "@typescript-eslint/prefer-optional-chain": "error",
+    "@typescript-eslint/ban-ts-ignore": 0,
+    "@typescript-eslint/no-empty-function": 0,
+    "@typescript-eslint/camelcase": 0,
+    "@typescript-eslint/indent": 0
   },
+  plugins: ['@typescript-eslint'],
 };
 
 // OLD ESlint configuration

@@ -11,13 +11,12 @@ import {StyleSheet, Animated, TextInput as RNTextInput, Image as RNImage} from '
 import {Constants} from '../../helpers';
 import {Colors, Typography} from '../../style';
 import BaseInput from './BaseInput';
-import {Modal} from '../../screensComponents';
+import Modal from '../modal';
 import TextArea from './TextArea';
 import View from '../view';
 import Image from '../image';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
-
 
 const COLOR_BY_STATE = {
   default: Colors.grey10,
@@ -43,6 +42,7 @@ const LABEL_TYPOGRAPHY = Typography.text80;
 const ICON_SIZE = 24;
 const ICON_RIGHT_PADDING = 3;
 const ICON_LEFT_PADDING = 6;
+const FLOATING_PLACEHOLDER_SCALE = 0.875;
 
 /**
  * @description: A wrapper for TextInput component with extra functionality like floating placeholder
@@ -168,14 +168,12 @@ export default class TextField extends BaseInput {
   constructor(props) {
     super(props);
 
-    this.updateFloatingPlaceholderState = this.updateFloatingPlaceholderState.bind(this);
-    this.toggleExpandableModal = this.toggleExpandableModal.bind(this);
-
     this.state = {
       ...this.state,
       value: props.value, // for floatingPlaceholder functionality
       floatingPlaceholderState: new Animated.Value(this.shouldFloatPlaceholder(props.value) ? 1 : 0),
-      showExpandableModal: false
+      showExpandableModal: false,
+      floatingPlaceholderTranslate: 0
     };
 
     this.generatePropsWarnings(props);
@@ -183,15 +181,26 @@ export default class TextField extends BaseInput {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
-      this.setState({value: nextProps.value}, this.updateFloatingPlaceholderState);
+      this.setState({value: nextProps.value}, () => {
+        this.updateFloatingPlaceholderState();
+        if (nextProps.validateOnChange) {
+          this.validate();
+        }
+      });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.value !== this.state.value || prevProps.focused !== this.state.focused) {
+    if (_.isEmpty(prevState.value) !== _.isEmpty(this.state.value) || prevState.focused !== this.state.focused) {
       this.updateFloatingPlaceholderState();
     }
   }
+
+  onPlaceholderLayout = (event) => {
+    const {width} = event.nativeEvent.layout;
+    const translate = width / 2 - (width * FLOATING_PLACEHOLDER_SCALE) / 2;
+    this.setState({floatingPlaceholderTranslate: translate / FLOATING_PLACEHOLDER_SCALE});
+  };
 
   /** Actions */
   generatePropsWarnings(props) {
@@ -218,27 +227,30 @@ export default class TextField extends BaseInput {
       accessibilityLabel = `${accessibilityLabel || ''}. ${value || ''}`;
     }
 
+    const accessibilityStates = this.isDisabled() ? ['disabled'] : [];
     return {
       accessibilityLabel,
-      accessibilityStates: this.isDisabled() ? ['disabled'] : undefined
+      // on Android accessibilityStates cause issues with expandable input
+      accessibilityStates: Constants.isIOS ? accessibilityStates : undefined
     };
   }
 
-  toggleExpandableModal(value) {
+  toggleExpandableModal = (value) => {
     this.setState({showExpandableModal: value});
     _.invoke(this.props, 'onToggleExpandableModal', value);
   }
 
-  updateFloatingPlaceholderState(withoutAnimation) {
+  updateFloatingPlaceholderState = withoutAnimation => {
     if (withoutAnimation) {
       this.state.floatingPlaceholderState.setValue(this.shouldFloatPlaceholder() ? 1 : 0);
     } else {
       Animated.spring(this.state.floatingPlaceholderState, {
         toValue: this.shouldFloatPlaceholder() ? 1 : 0,
-        duration: 150
+        duration: 150,
+        useNativeDriver: true
       }).start();
     }
-  }
+  };
 
   getPlaceholderText() {
     // HACK: passing whitespace instead of undefined. Issue fixed in RN56
@@ -348,45 +360,53 @@ export default class TextField extends BaseInput {
 
   /** Renders */
   renderPlaceholder() {
-    const {floatingPlaceholderState} = this.state;
-    const {expandable, placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} = this.getThemeProps();
+    const {floatingPlaceholderState, floatingPlaceholderTranslate} = this.state;
+    const {placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} = this.getThemeProps();
     const typography = this.getTypography();
     const placeholderColor = this.getStateColor(placeholderTextColor || PLACEHOLDER_COLOR_BY_STATE.default);
 
     if (this.shouldFakePlaceholder()) {
       return (
-        <Animated.Text
-          pointerEvents="none"
-          style={[
-            this.styles.floatingPlaceholder,
-            this.styles.placeholder,
-            typography,
-            {
-              top: floatingPlaceholderState.interpolate({
-                inputRange: [0, 1],
-                outputRange: multiline && Constants.isIOS ? [30, 5] : [25, 0]
-              }),
-              fontSize: floatingPlaceholderState.interpolate({
-                inputRange: [0, 1],
-                outputRange: [typography.fontSize, LABEL_TYPOGRAPHY.fontSize]
-              }),
-              color: floatingPlaceholderState.interpolate({
-                inputRange: [0, 1],
-                outputRange: [
-                  placeholderColor,
-                  this.getStateColor(floatingPlaceholderColor || PLACEHOLDER_COLOR_BY_STATE)
-                ]
-              }),
-              lineHeight: this.shouldFloatPlaceholder() ? LABEL_TYPOGRAPHY.lineHeight : typography.lineHeight
-            }
-          ]}
-          numberOfLines={1}
-          onPress={() => expandable && this.toggleExpandableModal(true)}
-          suppressHighlighting
-          accessible={false}
-        >
-          {this.getRequiredPlaceholder(placeholder)}
-        </Animated.Text>
+        <View absF left>
+          <Animated.Text
+            pointerEvents="none"
+            numberOfLines={1}
+            suppressHighlighting
+            accessible={false}
+            onLayout={this.onPlaceholderLayout}
+            style={[
+              this.styles.placeholder,
+              typography,
+              {
+                transform: [
+                  {
+                    scale: floatingPlaceholderState.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [1, FLOATING_PLACEHOLDER_SCALE]
+                    })
+                  },
+                  {
+                    translateY: floatingPlaceholderState.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: multiline && Constants.isIOS ? [30, 5] : [25, 0]
+                    })
+                  },
+                  {
+                    translateX: floatingPlaceholderState.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, -floatingPlaceholderTranslate]
+                    })
+                  }
+                ],
+                color: this.shouldFloatPlaceholder()
+                  ? this.getStateColor(floatingPlaceholderColor || PLACEHOLDER_COLOR_BY_STATE)
+                  : placeholderColor
+              }
+            ]}
+          >
+            {this.getRequiredPlaceholder(placeholder)}
+          </Animated.Text>
+        </View>
       );
     }
   }
@@ -496,7 +516,7 @@ export default class TextField extends BaseInput {
   renderTextInput() {
     const {value} = this.state; // value set on state for floatingPlaceholder functionality
     const {
-      style,  
+      style,
       placeholderTextColor,
       multiline,
       hideUnderline,
@@ -525,7 +545,7 @@ export default class TextField extends BaseInput {
       {color: textColor},
       style
     ];
-    
+
     const placeholderText = this.getPlaceholderText();
     const placeholderColor = this.getStateColor(placeholderTextColor || PLACEHOLDER_COLOR_BY_STATE.default);
     const isEditable = !this.isDisabled() && !expandable;
@@ -664,9 +684,10 @@ function createStyles({centered, multiline, expandable}) {
   const inputTextAlign = Constants.isRTL ? 'right' : 'left';
 
   return StyleSheet.create({
-    container: {},
+    container: {
+    },
     innerContainer: {
-      flexGrow: 1, // create bugs with lineHeight
+      // flexGrow: 1, // create bugs with lineHeight
       flexDirection: 'row',
       justifyContent: centered ? 'center' : undefined,
       borderBottomWidth: 1,
@@ -697,11 +718,6 @@ function createStyles({centered, multiline, expandable}) {
       flex: 1,
       paddingTop: 15,
       paddingHorizontal: 20
-    },
-    floatingPlaceholder: {
-      position: 'absolute',
-      width: '100%',
-      backgroundColor: 'transparent'
     },
     placeholder: {
       textAlign: 'left'

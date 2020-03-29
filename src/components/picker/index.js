@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
-import Modal from '../../screensComponents/modal';
+import Modal from '../modal';
 import Button from '../../components/button';
 import {TextField} from '../inputs';
 import * as PickerPresenter from './PickerPresenter';
@@ -227,6 +227,7 @@ class Picker extends BaseComponent {
       value: this.props.value
     });
     this.toggleExpandableModal(false);
+    _.invoke(this.props, 'topBarProps.onCancel');
   };
 
   onDoneSelecting = item => {

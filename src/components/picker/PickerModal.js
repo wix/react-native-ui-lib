@@ -6,7 +6,7 @@ import {Constants} from '../../helpers';
 import {Typography, Colors} from '../../style';
 import Assets from '../../assets';
 import {BaseComponent} from '../../commons';
-import {Modal} from '../../screensComponents';
+import Modal from '../modal';
 import View from '../view';
 import Image from '../image';
 

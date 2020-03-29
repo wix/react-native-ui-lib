@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   get ActionBar() {
     return require('./actionBar').default;
   },
@@ -80,9 +80,14 @@ module.exports = {
   get MaskedInput() {
     return require('./inputs').MaskedInput;
   },
-
+  get Modal() {
+    return require('./modal').default;
+  },
   get ListItem() {
     return require('./listItem').default;
+  },
+  get LoaderScreen() {
+    return require('./loaderScreen').default;
   },
   get PageControl() {
     return require('./pageControl').default;
@@ -111,8 +116,14 @@ module.exports = {
   get ProgressBar() {
     return require('./progressBar').default;
   },
+  get StateScreen() {
+    return require('./stateScreen').default;
+  },
   get Stepper() {
     return require('./stepper').default;
+  },
+  get TabController() {
+    return require('./tabController').default;
   },
   get TabBar() {
     return require('./tabBar').default;

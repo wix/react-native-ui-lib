@@ -16,6 +16,13 @@ import Button from '../button';
 import ColorSliderGroup from '../slider/ColorSliderGroup';
 import PanningProvider from '../panningViews/panningProvider';
 
+
+const ACCESSIBILITY_LABELS = {
+  addButton: 'add custom color using hex code',
+  dismissButton: 'dismiss',
+  doneButton: 'done',
+  input: 'custom hex color code'
+};
 const KEYBOARD_HEIGHT = 216;
 
 /**
@@ -54,11 +61,21 @@ export default class ColorPicker extends PureBaseComponent {
     /**
      * Props to pass the Dialog component
      */
-    dialogProps: PropTypes.object
+    dialogProps: PropTypes.object,
+    /**
+     * Accessibility labels as an object of strings, ex. {addButton: 'add custom color using hex code', dismissButton: 'dismiss', doneButton: 'done', input: 'custom hex color code'}
+     */
+    accessibilityLabels: PropTypes.shape({
+      addButton: PropTypes.string,
+      dismissButton: PropTypes.string,
+      doneButton: PropTypes.string,
+      input: PropTypes.string
+    })
   };
 
   static defaultProps = {
-    initialColor: Colors.dark80
+    initialColor: Colors.dark80,
+    accessibilityLabels: ACCESSIBILITY_LABELS
   };
 
   constructor(props) {
@@ -229,7 +246,7 @@ export default class ColorPicker extends PureBaseComponent {
   };
 
   renderHeader() {
-    const {useCustomTheme} = this.props;
+    const {useCustomTheme, accessibilityLabels} = this.getThemeProps();
     const {valid} = this.state;
 
     return (
@@ -239,6 +256,7 @@ export default class ColorPicker extends PureBaseComponent {
           iconSource={Assets.icons.x}
           iconStyle={{tintColor: Colors.dark10}}
           onPress={this.onDismiss}
+          accessibilityLabel={accessibilityLabels.dismissButton}
         />
         <Button
           useCustomTheme={useCustomTheme}
@@ -246,6 +264,7 @@ export default class ColorPicker extends PureBaseComponent {
           link
           iconSource={Assets.icons.check}
           onPress={this.onDonePressed}
+          accessibilityLabel={accessibilityLabels.doneButton}
         />
       </View>
     );
@@ -263,11 +282,13 @@ export default class ColorPicker extends PureBaseComponent {
         showLabels
         labelsStyle={this.styles.label}
         onValueChange={this.onSliderValueChange}
+        accessible={false}
       />
     );
   }
 
   renderPreview() {
+    const {accessibilityLabels} = this.getThemeProps();
     const {color, text} = this.state;
     const hex = this.getHexString(color);
     const textColor = this.getTextColor(hex);
@@ -276,7 +297,7 @@ export default class ColorPicker extends PureBaseComponent {
 
     return (
       <View style={[this.styles.preview, {backgroundColor: hex}]}>
-        <TouchableOpacity center onPress={this.setFocus} activeOpacity={1}>
+        <TouchableOpacity center onPress={this.setFocus} activeOpacity={1} accessible={false}>
           <View style={this.styles.inputContainer}>
             <Text 
               text60 
@@ -287,6 +308,7 @@ export default class ColorPicker extends PureBaseComponent {
                 color: textColor,
                 transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
               }}
+              accessible={false}
             >
               #
             </Text>
@@ -310,6 +332,7 @@ export default class ColorPicker extends PureBaseComponent {
               returnKeyType={'done'}
               enablesReturnKeyAutomatically
               onFocus={this.onFocus}
+              accessibilityLabel={accessibilityLabels.input}
             />
           </View>
           <View style={[{backgroundColor: textColor}, this.styles.underline]}/>
@@ -345,7 +368,7 @@ export default class ColorPicker extends PureBaseComponent {
   }
 
   render() {
-    const {colors, value, testID} = this.props;
+    const {colors, value, testID, accessibilityLabels} = this.getThemeProps();
 
     return (
       <View row testID={testID}>
@@ -368,6 +391,7 @@ export default class ColorPicker extends PureBaseComponent {
             iconSource={Assets.icons.plusSmall}
             onPress={this.showDialog}
             testID={`${testID}-button`}
+            accessibilityLabel={accessibilityLabels.addButton}
           />
         </View>
         {this.renderDialog()}

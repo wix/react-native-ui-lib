@@ -1,12 +1,11 @@
 // TODO: support commented props
 import React, {PureComponent} from 'react';
-import {StyleSheet, processColor} from 'react-native';
+import {StyleSheet, processColor, Text as RNText} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Reanimated from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
 import {Colors, Typography, Spacings} from '../../style';
-import Text from '../../components/text';
 import Badge from '../../components/badge';
 import TouchableOpacity from '../TouchableOpacity';
 
@@ -31,7 +30,7 @@ export default class TabBarItem extends PureComponent {
     /**
      * custom label style
      */
-    labelStyle: Text.propTypes.style,
+    labelStyle: RNText.propTypes.style,
     /**
      * the default label color
      */
