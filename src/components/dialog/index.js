@@ -59,7 +59,7 @@ class Dialog extends BaseComponent {
      */
     useSafeArea: PropTypes.bool,
     /**
-     * Called once the modal has been dissmissed (iOS only, modal only)
+     * Called once the modal has been dissmissed (iOS only)
      */
     onModalDismissed: PropTypes.func,
     /**
