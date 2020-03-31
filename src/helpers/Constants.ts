@@ -8,11 +8,15 @@ const orientations = {
 
 const isAndroid = Platform.OS === 'android';
 const isIOS = Platform.OS === 'ios';
+let isTablet: boolean;
 let statusBarHeight: number;
 let screenHeight = Dimensions.get('screen').height;
 let screenWidth = Dimensions.get('screen').width;
 let windowHeight = Dimensions.get('window').height;
 let windowWidth = Dimensions.get('window').width;
+
+//@ts-ignore
+isTablet = Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
 
 function setStatusBarHeight() {
   const {StatusBarManager} = NativeModules;
@@ -105,8 +109,10 @@ const constants = {
     return getAspectRatio();
   },
   get isTablet() {
-    //@ts-ignore
-    return Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
+    return isTablet;
+  },
+  set isTablet(value: boolean) {
+    isTablet = value;
   },
   getSafeAreaInsets: () => {
     const orientation = getOrientation(screenHeight, screenWidth)
