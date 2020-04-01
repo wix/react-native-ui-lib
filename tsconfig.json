@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "commonjs",
+    "target": "ESNext",
+    "module": "ESNext",
+    // "outDir": "dist",
     "esModuleInterop": true,
     "moduleResolution": "node",
     "jsx": "react-native",
