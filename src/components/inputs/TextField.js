@@ -218,7 +218,9 @@ export default class TextField extends BaseInput {
 
   getAccessibilityInfo() {
     const {floatingPlaceholder, placeholder, expandable} = this.getThemeProps();
+    const accessibilityState = this.isDisabled() ? {disabled: true} : undefined;
     let accessibilityLabel = floatingPlaceholder ? this.props.accessibilityLabel || placeholder : '';
+
     if (this.isRequiredField()) {
       accessibilityLabel = `${accessibilityLabel}. Mandatory`;
     }
@@ -226,7 +228,6 @@ export default class TextField extends BaseInput {
       accessibilityLabel = `${accessibilityLabel}`;
     }
 
-    const accessibilityState = this.isDisabled() ? {disabled: true} : undefined;
     return {
       accessibilityLabel,
       // on Android accessibilityStates cause issues with expandable input
