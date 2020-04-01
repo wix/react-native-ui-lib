@@ -52,8 +52,7 @@
     "react-native-color": "0.0.10",
     "react-native-text-size": "4.0.0-rc.1",
     "semver": "^5.5.0",
-    "url-parse": "^1.2.0",
-    "@types/tinycolor2": "^1.4.2"
+    "url-parse": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
@@ -67,6 +66,7 @@
     "@types/lodash": "^4.0.0",
     "@types/prop-types": "^15.5.3",
     "@types/react-native": ">=0.61.5",
+    "@types/tinycolor2": "^1.4.2",
     "@welldone-software/why-did-you-render": "^3.2.1",
     "@typescript-eslint/eslint-plugin": "^2.13.0",
     "@typescript-eslint/parser": "^2.13.0",
