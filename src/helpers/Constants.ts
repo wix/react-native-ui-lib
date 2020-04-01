@@ -58,6 +58,7 @@ const accessibility = {
 function handleScreenReaderChanged(isScreenReaderEnabled: AccessibilityEvent) {
   accessibility.isScreenReaderEnabled = isScreenReaderEnabled as boolean;
 }
+//@ts-ignore
 AccessibilityInfo.addEventListener('screenReaderChanged', handleScreenReaderChanged);
 function setAccessibility() {
   AccessibilityInfo.fetch().then(isScreenReaderEnabled => {
@@ -115,7 +116,7 @@ const constants = {
     isTablet = value;
   },
   getSafeAreaInsets: () => {
-    const orientation = getOrientation(screenHeight, screenWidth)
+    const orientation = getOrientation(screenHeight, screenWidth);
     return orientation === orientations.LANDSCAPE
       ? {left: 44, right: 44, bottom: 24, top: 0}
       : {left: 0, right: 0, bottom: 34, top: 44};
