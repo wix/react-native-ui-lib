@@ -25,7 +25,8 @@
     "lint:fix": "eslint src -c .eslintrc.js --fix",
     "lint:test": "mocha --compilers js:babel-core/register eslint-rules/tests/lib/rules",
     "xcode": "open ./ios/uilib.xcodeproj",
-    "build": "tsc",
+    "build": ":",
+    "build:dist": "tsc --emitDeclarationOnly false",
     "log": "react-native log-ios | grep 'ethan -'",
     "docs:install": "(cd ./uilib-docs && rm -rf node_modules && rm -rf package-lock.json && npm install)",
     "docs:deploy": "(cd ./uilib-docs && gatsby build --prefix-paths && gh-pages -d public --branch gh-pages)",
@@ -51,7 +52,8 @@
     "react-native-color": "0.0.10",
     "react-native-text-size": "4.0.0-rc.1",
     "semver": "^5.5.0",
-    "url-parse": "^1.2.0"
+    "url-parse": "^1.2.0",
+    "@types/tinycolor2": "^1.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
@@ -65,7 +67,6 @@
     "@types/lodash": "^4.0.0",
     "@types/prop-types": "^15.5.3",
     "@types/react-native": ">=0.61.5",
-    "@types/tinycolor2": "^1.4.2",
     "@welldone-software/why-did-you-render": "^3.2.1",
     "@typescript-eslint/eslint-plugin": "^2.13.0",
     "@typescript-eslint/parser": "^2.13.0",

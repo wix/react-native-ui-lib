@@ -23,6 +23,10 @@ interface TextPropTypes extends TextProps {
      * Custom highlight style for highlight string
      */
     highlightStyle?: TextStyle;
+    /**
+     * Use Animated.Text as a container
+     */
+    animated?: boolean;
 }
 declare type PropsTypes = BaseComponentInjectedProps & TextPropTypes & ForwardRefInjectedProps & MarginModifiers;
 /**
@@ -33,10 +37,11 @@ declare type PropsTypes = BaseComponentInjectedProps & TextPropTypes & ForwardRe
  */
 declare class Text extends PureComponent<PropsTypes> {
     static displayName: string;
+    private TextContainer;
     getTextPartsByHighlight(targetString?: string, highlightString?: string): string[];
     renderText(children: any): any;
     render(): JSX.Element;
 }
 export { Text };
-declare const _default: React.ComponentType<Pick<Pick<PropsTypes, "margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV" | "center" | "style" | "testID" | "modifiers" | "onLayout" | "nativeID" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "highlightString" | "color" | "uppercase" | "highlightStyle" | "allowFontScaling" | "ellipsizeMode" | "lineBreakMode" | "numberOfLines" | "onPress" | "onLongPress" | "maxFontSizeMultiplier" | "adjustsFontSizeToFit" | "minimumFontScale" | "suppressHighlighting" | "selectable" | "selectionColor" | "textBreakStrategy">, "margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV" | "center" | "style" | "testID" | "onLayout" | "nativeID" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "highlightString" | "color" | "uppercase" | "highlightStyle" | "allowFontScaling" | "ellipsizeMode" | "lineBreakMode" | "numberOfLines" | "onPress" | "onLongPress" | "maxFontSizeMultiplier" | "adjustsFontSizeToFit" | "minimumFontScale" | "suppressHighlighting" | "selectable" | "selectionColor" | "textBreakStrategy">>;
+declare const _default: React.ComponentType<Pick<Pick<PropsTypes, "margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV" | "center" | "style" | "testID" | "modifiers" | "animated" | "onLayout" | "nativeID" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "accessibilityValue" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "color" | "uppercase" | "highlightString" | "highlightStyle" | "allowFontScaling" | "ellipsizeMode" | "lineBreakMode" | "numberOfLines" | "onPress" | "onLongPress" | "maxFontSizeMultiplier" | "adjustsFontSizeToFit" | "minimumFontScale" | "suppressHighlighting" | "selectable" | "selectionColor" | "textBreakStrategy">, "margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV" | "center" | "style" | "testID" | "animated" | "onLayout" | "nativeID" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "accessibilityValue" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "color" | "uppercase" | "highlightString" | "highlightStyle" | "allowFontScaling" | "ellipsizeMode" | "lineBreakMode" | "numberOfLines" | "onPress" | "onLongPress" | "maxFontSizeMultiplier" | "adjustsFontSizeToFit" | "minimumFontScale" | "suppressHighlighting" | "selectable" | "selectionColor" | "textBreakStrategy">>;
 export default _default;
