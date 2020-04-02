@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import tinycolor from 'tinycolor2';
 export declare class Colors {
     [key: string]: any;
     constructor();
@@ -28,8 +29,8 @@ export declare class Colors {
     generateColorPalette: ((color: any) => string[]) & _.MemoizedFunction;
     isDark(color: string): boolean;
     isValidHex(string: string): boolean;
-    getHexString(color: string): any;
-    getHSL(color: string): any;
+    getHexString(color: string): string;
+    getHSL(color: string): tinycolor.ColorFormats.HSLA;
     isTransparent(color: string): boolean;
     areEqual(colorA: string, colorB: string): boolean;
 }
