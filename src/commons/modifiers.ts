@@ -208,8 +208,6 @@ export function extractPositionStyle(props: Dictionary<any>) {
     }
     return styles.absolute;
   }
-
-  return undefined;
 }
 
 export function extractFlexStyle(props: Dictionary<any>): Partial<Record<NativeFlexModifierKeyType, number>> | undefined {
@@ -222,7 +220,6 @@ export function extractFlexStyle(props: Dictionary<any>): Partial<Record<NativeF
 
     return {[convertedFlexKey]: flexValueAsNumber};
   }
-  return undefined;
 }
 
 //@ts-ignore
