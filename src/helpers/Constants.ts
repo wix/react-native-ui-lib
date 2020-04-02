@@ -58,7 +58,7 @@ const accessibility = {
 function handleScreenReaderChanged(isScreenReaderEnabled: AccessibilityEvent) {
   accessibility.isScreenReaderEnabled = isScreenReaderEnabled as boolean;
 }
-//@ts-ignore
+
 AccessibilityInfo.addEventListener('screenReaderChanged', handleScreenReaderChanged);
 function setAccessibility() {
   AccessibilityInfo.fetch().then(isScreenReaderEnabled => {
