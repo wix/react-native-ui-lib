@@ -345,7 +345,7 @@ class Picker extends BaseComponent {
       );
     }
 
-    const textInputProps = TextField.extractOwnProps(this.props);
+    const textInputProps = TextField.extractOwnProps(this.getThemeProps());
     const label = this.getLabel();
     return (
       <TextField
