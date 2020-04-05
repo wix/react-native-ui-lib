@@ -11,7 +11,7 @@ import {StyleSheet, Animated, TextInput as RNTextInput, Image as RNImage} from '
 import {Constants} from '../../helpers';
 import {Colors, Typography} from '../../style';
 import BaseInput from './BaseInput';
-import {Modal} from '../../screensComponents';
+import Modal from '../modal';
 import TextArea from './TextArea';
 import View from '../view';
 import Image from '../image';
@@ -66,6 +66,10 @@ export default class TextField extends BaseInput {
      * floating placeholder color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disabled: 'grey'}
      */
     floatingPlaceholderColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    /**
+     * Custom style for floating placeholder
+     */
+    floatingPlaceholderStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * This text will appear as a placeholder when the textInput becomes focused, only when passing floatingPlaceholder
      * as well (NOT for expandable textInputs)
@@ -361,7 +365,7 @@ export default class TextField extends BaseInput {
   /** Renders */
   renderPlaceholder() {
     const {floatingPlaceholderState, floatingPlaceholderTranslate} = this.state;
-    const {placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} = this.getThemeProps();
+    const {placeholder, placeholderTextColor, floatingPlaceholderColor, floatingPlaceholderStyle, multiline} = this.getThemeProps();
     const typography = this.getTypography();
     const placeholderColor = this.getStateColor(placeholderTextColor || PLACEHOLDER_COLOR_BY_STATE.default);
 
@@ -401,7 +405,8 @@ export default class TextField extends BaseInput {
                 color: this.shouldFloatPlaceholder()
                   ? this.getStateColor(floatingPlaceholderColor || PLACEHOLDER_COLOR_BY_STATE)
                   : placeholderColor
-              }
+              },
+              floatingPlaceholderStyle
             ]}
           >
             {this.getRequiredPlaceholder(placeholder)}

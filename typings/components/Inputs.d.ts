@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {BaseComponent} from '../commons';
 import {ColorValue} from '../style/colors';
-import {TopBarProps} from '../screensComponents/Modal';
+import {TopBarProps} from './Modal';
 
 export type BaseInputDefaultValidator = 'required' | 'email' | 'url' | 'number' | 'price';
 export type BaseInputCustomValidator = (value?: string) => boolean;

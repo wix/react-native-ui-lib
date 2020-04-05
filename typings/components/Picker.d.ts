@@ -2,7 +2,7 @@ import {ReactElement} from 'react';
 import {FlatListProps, GestureResponderEvent, LayoutChangeEvent} from 'react-native';
 import {BaseComponent} from '../commons';
 import {TextFieldProps} from './Inputs';
-import {TopBarProps} from '../screensComponents/Modal';
+import {TopBarProps} from './Modal';
 
 export type PickerItemLabeledValue = { value?: any, label?: string };
 export type PickerItemValue =

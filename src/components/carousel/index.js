@@ -61,6 +61,10 @@ export default class Carousel extends BaseComponent {
      */
     onScroll: PropTypes.func,
     /**
+     * Should the container be animated (send the animation style via containerStyle)
+     */
+    animated: PropTypes.bool,
+    /**
      * the carousel style
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
@@ -441,14 +445,14 @@ export default class Carousel extends BaseComponent {
   }
 
   renderCarousel() {
-    const {containerStyle, ...others} = this.getThemeProps();
+    const {containerStyle, animated, ...others} = this.getThemeProps();
     const {initialOffset} = this.state;
     const scrollContainerStyle = this.shouldUsePageWidth() ? {paddingRight: this.getItemSpacings(this.getThemeProps())} : undefined;
     const snapToOffsets = this.getSnapToOffsets();
     const marginBottom = Math.max(0, this.getContainerPaddingVertical() - 16);
 
     return (
-      <View style={[{marginBottom}, containerStyle]} onLayout={this.onContainerLayout}>
+      <View animated={animated} style={[{marginBottom}, containerStyle]} onLayout={this.onContainerLayout}>
         <ScrollView
           {...others}
           ref={this.carousel}
