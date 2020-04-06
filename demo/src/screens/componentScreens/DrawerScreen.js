@@ -35,6 +35,7 @@ class DrawerScreen extends Component {
 
   onWillFullSwipeLeft = () => {
     
+    // TODO: consider including this functionality as part of the drawer component
     setTimeout(() => {
       LayoutAnimation.configureNext({
         update: {
@@ -109,10 +110,10 @@ class DrawerScreen extends Component {
           <View padding-20>
             {renderBooleanOption.call(this, 'rightItems', 'showRightItems')}
             {renderBooleanOption.call(this, 'leftItem', 'showLeftItem')}
+            {showLeftItem && renderBooleanOption.call(this, 'fullSwipeLeft', 'fullSwipeLeft')}
             {renderColorOption.call(this, 'icon+text color', 'itemsTintColor')}
             {renderSliderOption.call(this, 'bounciness', 'bounciness', {min: 5, max: 15, step: 1, initial: 5})}
             {renderSliderOption.call(this, 'iconSize', 'itemsIconSize', {min: 15, max: 25, step: 1, initial: 20})}
-            {showLeftItem && renderBooleanOption.call(this, 'fullSwipeLeft', 'fullSwipeLeft')}
           </View>
         </ScrollView>
       </View>
