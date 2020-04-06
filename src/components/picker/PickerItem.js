@@ -1,13 +1,14 @@
 // TODO: deprecate passing an an object as a value, use label and value props separately
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Image, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {Colors, Typography, ThemeManager} from '../../style';
 import {BaseComponent} from '../../commons';
 import Assets from '../../assets';
 import View from '../view';
 import Text from '../text';
+import Image from '../image';
 import TouchableOpacity from '../touchableOpacity';
 
 /**
@@ -40,6 +41,14 @@ class PickerItem extends BaseComponent {
      * Is the item selected
      */
     isSelected: PropTypes.bool,
+    /**
+     * Pass to change the selected icon
+     */
+    selectedIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * Pass to change the selected icon color
+     */
+    selectedIconColor: PropTypes.string,
     /**
      * Is the item disabled
      */
@@ -85,11 +94,14 @@ class PickerItem extends BaseComponent {
   }
 
   renderSelectedIndicator() {
-    const {isSelected, disabled} = this.props;
+    const {
+      isSelected,
+      disabled,
+      selectedIcon = Assets.icons.check,
+      selectedIconColor = ThemeManager.primaryColor
+    } = this.props;
     if (isSelected) {
-      return (
-        <Image style={[this.styles.checkIcon, disabled && this.styles.checkIconDisabled]} source={Assets.icons.check}/>
-      );
+      return <Image source={selectedIcon} tintColor={disabled ? Colors.dark60 : selectedIconColor}/>;
     }
   }
 
@@ -149,12 +161,6 @@ function createStyles() {
     },
     labelTextDisabled: {
       color: Colors.dark60
-    },
-    checkIcon: {
-      tintColor: ThemeManager.primaryColor
-    },
-    checkIconDisabled: {
-      tintColor: Colors.dark60
     }
   });
 }
