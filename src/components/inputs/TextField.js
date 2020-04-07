@@ -217,15 +217,12 @@ export default class TextField extends BaseInput {
   }
 
   getAccessibilityInfo() {
-    const {floatingPlaceholder, placeholder, expandable} = this.getThemeProps();
+    const {floatingPlaceholder, placeholder} = this.getThemeProps();
     const accessibilityState = this.isDisabled() ? {disabled: true} : undefined;
     let accessibilityLabel = floatingPlaceholder ? this.props.accessibilityLabel || placeholder : '';
 
     if (this.isRequiredField()) {
       accessibilityLabel = `${accessibilityLabel}. Mandatory`;
-    }
-    if (expandable) {
-      accessibilityLabel = `${accessibilityLabel}`;
     }
 
     return {
