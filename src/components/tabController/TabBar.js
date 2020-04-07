@@ -316,7 +316,7 @@ class TabBar extends PureComponent {
   };
 
   render() {
-    const {height, enableShadow, containerStyle} = this.props;
+    const {height, enableShadow, containerStyle, testID} = this.props;
     const {itemsWidths, scrollEnabled} = this.state;
     return (
       <View
@@ -332,6 +332,7 @@ class TabBar extends PureComponent {
           onContentSizeChange={this.onContentSizeChange}
           onScroll={this.onScroll}
           scrollEventThrottle={100}
+          testID={testID}
         >
           <View style={[styles.tabBar, height && {height}]}>{this.renderTabBarItems()}</View>
           {this.renderSelectedIndicator()}
