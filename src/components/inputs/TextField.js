@@ -225,21 +225,18 @@ export default class TextField extends BaseInput {
   }
 
   getAccessibilityInfo() {
-    const {floatingPlaceholder, placeholder, expandable, value} = this.getThemeProps();
+    const {floatingPlaceholder, placeholder} = this.getThemeProps();
+    const accessibilityState = this.isDisabled() ? {disabled: true} : undefined;
+    let accessibilityLabel = floatingPlaceholder ? this.props.accessibilityLabel || placeholder : '';
 
-    let accessibilityLabel = floatingPlaceholder ? placeholder : undefined;
     if (this.isRequiredField()) {
-      accessibilityLabel = `${accessibilityLabel || ''}. Mandatory`;
-    }
-    if (expandable) {
-      accessibilityLabel = `${accessibilityLabel || ''}. ${value || ''}`;
+      accessibilityLabel = `${accessibilityLabel}. Mandatory`;
     }
 
-    const accessibilityStates = this.isDisabled() ? ['disabled'] : [];
     return {
       accessibilityLabel,
       // on Android accessibilityStates cause issues with expandable input
-      accessibilityStates: Constants.isIOS ? accessibilityStates : undefined
+      accessibilityState: Constants.isIOS ? accessibilityState : undefined
     };
   }
 
