@@ -61,7 +61,8 @@ class SettingsScreen extends Component {
   };
 
   render() {
-    const {defaultScreen, showRefreshMessage, isRTL} = this.state;
+    const {defaultScreen, showRefreshMessage, isRTL, screens} = this.state;
+    const filteredScreens = _.filter(screens, screen => !_.isUndefined(screen.value));
 
     return (
       <View flex padding-25 bg-grey80>
@@ -77,7 +78,7 @@ class SettingsScreen extends Component {
             value={defaultScreen}
             onChange={this.setDefaultScreen}
           >
-            {_.map(this.state.screens, screen => (
+            {_.map(filteredScreens, screen => (
               <Picker.Item key={screen.value} value={screen}/>
             ))}
           </Picker>

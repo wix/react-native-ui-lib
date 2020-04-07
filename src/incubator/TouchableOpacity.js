@@ -63,7 +63,11 @@ class TouchableOpacity extends PureComponent {
     /**
      * Pass controlled pressState to track gesture state changes
      */
-    pressState: PropTypes.object
+    pressState: PropTypes.object,
+    /**
+     * If true, disable all interactions for this component.
+     */
+    disabled: PropTypes.bool
   };
 
   static defaultProps = {
@@ -124,11 +128,16 @@ class TouchableOpacity extends PureComponent {
   };
 
   render() {
-    const {modifiers, style, onPress, onLongPress, forwardedRef, ...others} = this.props;
+    const {modifiers, style, onPress, onLongPress, disabled, forwardedRef, ...others} = this.props;
     const {borderRadius, paddings, margins, alignments, flexStyle, backgroundColor} = modifiers;
 
     return (
-      <TapGestureHandler onHandlerStateChange={this.onStateChange} shouldCancelWhenOutside ref={forwardedRef}>
+      <TapGestureHandler
+        onHandlerStateChange={this.onStateChange}
+        shouldCancelWhenOutside
+        ref={forwardedRef}
+        enabled={!disabled}
+      >
         <Reanimated.View
           {...others}
           style={[
@@ -154,9 +163,11 @@ class TouchableOpacity extends PureComponent {
               ]);
             }}
           </Code>
-          {onLongPress && <LongPressGestureHandler onHandlerStateChange={this.onLongPress}>
-            <Reanimated.View style={StyleSheet.absoluteFillObject}/>
-          </LongPressGestureHandler>}
+          {onLongPress && (
+            <LongPressGestureHandler onHandlerStateChange={this.onLongPress} enabled={!disabled}>
+              <Reanimated.View style={StyleSheet.absoluteFillObject}/>
+            </LongPressGestureHandler>
+          )}
         </Reanimated.View>
       </TapGestureHandler>
     );
