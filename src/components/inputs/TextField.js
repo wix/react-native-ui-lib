@@ -154,6 +154,10 @@ export default class TextField extends BaseInput {
      */
     rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
+     * Pass to style the right icon source
+     */
+    rightIconStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
      * Props for the right button {iconSource, onPress, style}
      */
     rightButtonProps: PropTypes.shape({
@@ -599,12 +603,12 @@ export default class TextField extends BaseInput {
   }
 
   renderRightIcon() {
-    const {rightIconSource} = this.getThemeProps();
+    const {rightIconSource, rightIconStyle} = this.getThemeProps();
 
     if (rightIconSource) {
       return (
         <View style={this.styles.rightIcon} pointerEvents="none">
-          <Image source={rightIconSource} resizeMode={'center'} style={this.styles.rightButtonImage}/>
+          <Image source={rightIconSource} resizeMode={'center'} style={[this.styles.rightButtonImage, rightIconStyle]}/>
         </View>
       );
     }
