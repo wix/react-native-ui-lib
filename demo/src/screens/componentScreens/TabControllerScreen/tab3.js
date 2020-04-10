@@ -45,7 +45,7 @@ class Tab2 extends Component {
           )}
 
           {!loading &&
-            _.times(100, index => {
+            _.times(20, index => {
               return (
                 <Card row centerV margin-20 padding-20 key={index} onPress={_.noop}>
                   <Avatar
