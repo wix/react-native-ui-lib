@@ -19,8 +19,11 @@ export type ImageName =
 
 export type ImagesList = Record<ImageName, ImageRequireSource> & { readonly [key: string]: ImageRequireSource };
 
-export namespace Assets {
-  const icons: Readonly<IconsList>;
-  const emojis: Readonly<EmojisList>;
-  const images: Readonly<ImagesList>;
-}
+export const Assets: {
+  icons: {
+    [k: string]: Readonly<IconsList>
+  };
+  emojis: Readonly<EmojisList>;
+  images: Readonly<ImagesList>;
+  loadAssetsGroup: (name: string, assets: any) => void;
+} & Record<keyof any, any>;

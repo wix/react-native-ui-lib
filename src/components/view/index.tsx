@@ -17,6 +17,18 @@ interface ViewPropTypes extends ViewProps {
    * Turn off accessibility for this view and its nested children
    */
   inaccessible?: boolean;
+  /**
+   * TODO: probobly isn't needed
+   */
+  useCustomTheme?: boolean;
+  /**
+   * TODO: probobly isn't needed
+   */
+  width?: string | number;
+  /**
+   * TODO: probobly isn't needed
+   */
+  height?: string | number;
 }
 type PropsTypes = BaseComponentInjectedProps & ViewPropTypes & ForwardRefInjectedProps & ContainerModifiers;
 
@@ -32,7 +44,7 @@ class View extends PureComponent<PropsTypes> {
   constructor(props: PropsTypes) {
     super(props);
 
-    this.Container = props.useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
+    this.Container = props.right && Constants.isIOS ? SafeAreaView : RNView;
     if (props.animated) {
       this.Container = Animated.createAnimatedComponent(this.Container);
     }

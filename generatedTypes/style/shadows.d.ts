@@ -1,4 +1,9 @@
-declare const Shadows: {
+import { ShadowStyleIOS } from 'react-native';
+declare type Shadow = {
+    top?: {};
+    bottom?: {};
+} & ShadowStyleIOS;
+declare const _default: {
     white10: {
         top: {
             shadowColor: string;
@@ -145,6 +150,6 @@ declare const Shadows: {
      *   bottom: {shadowColor: Colors.dark20, shadowOpacity: 0.04, shadowRadius: 9, shadowOffset: {height: 10, width: 0}},
      * }
      */
-    loadShadows(shadows: Dictionary<string>): void;
-};
-export default Shadows;
+    loadShadows(shadows: Dictionary<Shadow>): void;
+} & Record<string, Shadow>;
+export default _default;

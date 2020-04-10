@@ -28,7 +28,9 @@ export interface BaseInputProps extends RNTextInputProps {
   onChangeValidity?: (isValid: boolean) => void;
 }
 
-export class BaseInput<Props extends BaseInputProps = BaseInputProps, State = {}> extends BaseComponent<Props, State> {}
+export class BaseInput<Props extends BaseInputProps = BaseInputProps, State = {}> extends BaseComponent<Props, State> {
+  onBlur(): void;
+}
 
 export interface TextAreaProps extends BaseInputProps {}
 
@@ -70,6 +72,7 @@ export interface TextFieldProps extends BaseInputProps, TextBaseInputProps {
   onToggleExpandableModal?: (value?: string) => void;
   topBarProps?: TopBarProps;
   rightButtonProps?: TextFieldRightButtonProps;
+  useCustomTheme?: boolean;
 }
 
 export type TextFieldState = any;

@@ -29,6 +29,8 @@ export interface CarouselProps {
   allowAccessibleLayout?: boolean;
   autoplay?: boolean;
   autoplayInterval?: number;
+  style?: StyleProp<ViewStyle>;
+  children?: React.Node;
 }
 
 export class Carousel extends BaseComponent<CarouselProps> {}
