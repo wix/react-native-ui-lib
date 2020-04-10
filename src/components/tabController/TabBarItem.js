@@ -115,14 +115,14 @@ export default class TabBarItem extends PureComponent {
 
   onLayout = ({
     nativeEvent: {
-      layout: {width}
+      layout: {width, x}
     }
   }) => {
     const {index, onLayout} = this.props;
     const {itemWidth} = this.state;
     if (!itemWidth) {
       this.setState({itemWidth: width});
-      onLayout(width, index);
+      onLayout({width, x}, index);
     }
   };
 

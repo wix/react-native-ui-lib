@@ -117,6 +117,7 @@ class TabControllerScreen extends Component {
             // iconColor={'green'}
             // selectedIconColor={'blue'}
             activeBackgroundColor={Colors.blue60}
+            centerSelected
           >
             {/* {this.renderTabItems()} */}
           </TabController.TabBar>

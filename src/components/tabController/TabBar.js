@@ -80,7 +80,11 @@ class TabBar extends PureComponent {
     /**
      * The TabBar container width
      */
-    containerWidth: PropTypes.number
+    containerWidth: PropTypes.number,
+    /**
+     * Pass to center selected item
+     */
+    centerSelected: PropTypes.bool
   };
 
   static defaultProps = {
@@ -100,6 +104,7 @@ class TabBar extends PureComponent {
     this.tabBarScrollOffset = 0;
 
     this._itemsWidths = _.times(itemsCount, () => null);
+    this._itemsOffsets = _.times(itemsCount, () => null);
     this._indicatorOffset = new Value(0);
     this._indicatorWidth = new Value(0);
 
@@ -133,6 +138,11 @@ class TabBar extends PureComponent {
     }
   }
 
+  get centerOffset() {
+    const {centerSelected} = this.props;
+    return centerSelected ? Constants.screenWidth / 2 : 0;
+  }
+
   registerTabItems() {
     const {registerTabItems} = this.context;
     const {items} = this.props;
@@ -161,11 +171,14 @@ class TabBar extends PureComponent {
 
   // TODO: move this logic into a ScrollPresenter or something
   focusSelected = ([index]) => {
-    const {itemsOffsets, itemsWidths} = this.state;
-    const itemOffset = itemsOffsets[index];
-    const itemWidth = itemsWidths[index];
+    const {centerSelected} = this.props;
+    const itemOffset = this._itemsOffsets[index];
+    const itemWidth = this._itemsWidths[index];
+
     if (itemOffset && itemWidth) {
-      if (itemOffset < this.tabBarScrollOffset) {
+      if (centerSelected) {
+        this.tabBar.current.scrollTo({x: itemOffset - this.centerOffset + itemWidth / 2});
+      } else if (itemOffset < this.tabBarScrollOffset) {
         this.tabBar.current.scrollTo({x: itemOffset - itemWidth});
       } else if (itemOffset + itemWidth > this.tabBarScrollOffset + this.containerWidth) {
         const offsetChange = Math.max(0, itemOffset - (this.tabBarScrollOffset + this.containerWidth));
@@ -174,12 +187,12 @@ class TabBar extends PureComponent {
     }
   };
 
-  onItemLayout = (itemWidth, itemIndex) => {
-    this._itemsWidths[itemIndex] = itemWidth;
+  onItemLayout = ({width, x}, itemIndex) => {
+    this._itemsWidths[itemIndex] = width;
+    this._itemsOffsets[itemIndex] = x;
     if (!_.includes(this._itemsWidths, null)) {
       const {selectedIndex} = this.context;
-      const itemsOffsets = _.map(this._itemsWidths,
-        (w, index) => INDICATOR_INSET + _.sum(_.take(this._itemsWidths, index)));
+      const itemsOffsets = _.map(this._itemsOffsets, offset => offset + INDICATOR_INSET);
       const itemsWidths = _.map(this._itemsWidths, (width) => width - INDICATOR_INSET * 2);
 
       this.setState({itemsWidths, itemsOffsets});
@@ -273,16 +286,19 @@ class TabBar extends PureComponent {
   }
 
   renderCodeBlock = () => {
-    const {currentPage} = this.context;
+    const {currentPage, targetPage} = this.context;
     const {itemsWidths, itemsOffsets} = this.state;
     const nodes = [];
 
     nodes.push(set(this._indicatorOffset,
-      interpolate(currentPage, {inputRange: itemsOffsets.map((v, i) => i), outputRange: itemsOffsets})));
+      interpolate(currentPage, {
+        inputRange: itemsOffsets.map((v, i) => i),
+        outputRange: itemsOffsets
+      })));
     nodes.push(set(this._indicatorWidth,
       interpolate(currentPage, {inputRange: itemsWidths.map((v, i) => i), outputRange: itemsWidths})));
 
-    nodes.push(Reanimated.onChange(currentPage, Reanimated.call([currentPage], this.focusSelected)));
+    nodes.push(Reanimated.onChange(targetPage, Reanimated.call([targetPage], this.focusSelected)));
 
     return block(nodes);
   };
@@ -298,7 +314,7 @@ class TabBar extends PureComponent {
           ref={this.tabBar}
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={styles.tabBarScroll}
+          style={[styles.tabBarScroll]}
           contentContainerStyle={{minWidth: this.containerWidth}}
           scrollEnabled={scrollEnabled}
           onContentSizeChange={this.onContentSizeChange}
@@ -306,7 +322,9 @@ class TabBar extends PureComponent {
           scrollEventThrottle={100}
           testID={testID}
         >
-          <View style={[styles.tabBar, height && {height}]}>{this.renderTabBarItems()}</View>
+          <View style={[styles.tabBar, height && {height}, {paddingHorizontal: this.centerOffset}]}>
+            {this.renderTabBarItems()}
+          </View>
           {this.renderSelectedIndicator()}
         </ScrollView>
         {_.size(itemsWidths) > 1 && <Code>{this.renderCodeBlock}</Code>}
