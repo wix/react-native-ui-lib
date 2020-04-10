@@ -2,7 +2,7 @@
 // TODO: disable scroll when content width is shorter than screen width
 import React, {PureComponent} from 'react';
 import {StyleSheet, ScrollView, ViewPropTypes, Platform, Text as RNText} from 'react-native';
-import Reanimated, {Easing} from 'react-native-reanimated';
+import Reanimated from 'react-native-reanimated';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -17,22 +17,7 @@ import {LogService} from '../../services';
 
 const DEFAULT_HEIGHT = 48;
 const INDICATOR_INSET = Spacings.s4;
-const {
-  Code,
-  Clock,
-  Value,
-  and,
-  eq,
-  neq,
-  cond,
-  stopClock,
-  startClock,
-  interpolate,
-  Extrapolate,
-  timing,
-  block,
-  set
-} = Reanimated;
+const {Code, Value, interpolate, block, set} = Reanimated;
 
 /**
  * @description: TabController's TabBar component
@@ -136,7 +121,7 @@ class TabBar extends PureComponent {
   }
 
   get children() {
-    return _.filter(this.props.children, child => !!child);
+    return _.filter(this.props.children, (child) => !!child);
   }
 
   get itemsCount() {
@@ -187,7 +172,7 @@ class TabBar extends PureComponent {
         this.tabBar.current.scrollTo({x: this.tabBarScrollOffset + offsetChange + itemWidth});
       }
     }
-  }
+  };
 
   onItemLayout = (itemWidth, itemIndex) => {
     this._itemsWidths[itemIndex] = itemWidth;
@@ -195,12 +180,12 @@ class TabBar extends PureComponent {
       const {selectedIndex} = this.context;
       const itemsOffsets = _.map(this._itemsWidths,
         (w, index) => INDICATOR_INSET + _.sum(_.take(this._itemsWidths, index)));
-      const itemsWidths = _.map(this._itemsWidths, width => width - INDICATOR_INSET * 2);
+      const itemsWidths = _.map(this._itemsWidths, (width) => width - INDICATOR_INSET * 2);
 
       this.setState({itemsWidths, itemsOffsets});
       const selectedItemOffset = itemsOffsets[selectedIndex] - INDICATOR_INSET;
-      
-      if (selectedItemOffset + this._itemsWidths[selectedIndex] > Constants.screenWidth) {  
+
+      if (selectedItemOffset + this._itemsWidths[selectedIndex] > Constants.screenWidth) {
         this.tabBar.current.scrollTo({x: selectedItemOffset, animated: true});
       }
     }
@@ -208,9 +193,9 @@ class TabBar extends PureComponent {
 
   onScroll = ({nativeEvent: {contentOffset}}) => {
     this.tabBarScrollOffset = contentOffset.x;
-  }
+  };
 
-  onContentSizeChange = width => {
+  onContentSizeChange = (width) => {
     if (width > this.containerWidth) {
       this.setState({scrollEnabled: true});
     }
@@ -288,27 +273,14 @@ class TabBar extends PureComponent {
   }
 
   renderCodeBlock = () => {
-    const {carouselOffset, asCarousel, currentPage} = this.context;
+    const {currentPage} = this.context;
     const {itemsWidths, itemsOffsets} = this.state;
     const nodes = [];
 
-    if (asCarousel) {
-      nodes.push(set(this._indicatorOffset,
-        interpolate(carouselOffset, {
-          inputRange: itemsOffsets.map((value, index) => index * Constants.screenWidth),
-          outputRange: itemsOffsets,
-          extrapolate: Extrapolate.CLAMP
-        })),
-      set(this._indicatorWidth,
-        interpolate(carouselOffset, {
-          inputRange: itemsWidths.map((value, index) => index * Constants.screenWidth),
-          outputRange: itemsWidths,
-          extrapolate: Extrapolate.CLAMP
-        })));
-    } else {
-      nodes.push(set(this._indicatorOffset, runIndicatorTimer(new Clock(), currentPage, itemsOffsets)),
-        set(this._indicatorWidth, runIndicatorTimer(new Clock(), currentPage, itemsWidths)));
-    }
+    nodes.push(set(this._indicatorOffset,
+      interpolate(currentPage, {inputRange: itemsOffsets.map((v, i) => i), outputRange: itemsOffsets})));
+    nodes.push(set(this._indicatorWidth,
+      interpolate(currentPage, {inputRange: itemsWidths.map((v, i) => i), outputRange: itemsWidths})));
 
     nodes.push(Reanimated.onChange(currentPage, Reanimated.call([currentPage], this.focusSelected)));
 
@@ -388,39 +360,5 @@ const styles = StyleSheet.create({
     })
   }
 });
-
-function runIndicatorTimer(clock, currentPage, values) {
-  const state = {
-    finished: new Value(0),
-    position: new Value(0),
-    time: new Value(0),
-    frameTime: new Value(0)
-  };
-
-  const config = {
-    duration: 200,
-    toValue: new Value(100),
-    easing: Easing.inOut(Easing.ease)
-  };
-
-  return block([
-    ..._.map(values, (value, index) => {
-      return cond(and(eq(currentPage, index), neq(config.toValue, index)), [
-        set(state.finished, 0),
-        set(state.time, 0),
-        set(state.frameTime, 0),
-        set(config.toValue, index),
-        startClock(clock)
-      ]);
-    }),
-    timing(clock, state, config),
-    cond(state.finished, stopClock(clock)),
-    interpolate(state.position, {
-      inputRange: _.times(values.length),
-      outputRange: values,
-      extrapolate: Extrapolate.CLAMP
-    })
-  ]);
-}
 
 export default asBaseComponent(forwardRef(TabBar));

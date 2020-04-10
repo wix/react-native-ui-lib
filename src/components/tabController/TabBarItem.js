@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Reanimated from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
+// import {interpolateColor} from 'react-native-redash';
 import {Colors, Typography, Spacings} from '../../style';
 import Badge from '../../components/badge';
 import {TouchableOpacity} from '../../incubator';
@@ -157,9 +158,16 @@ export default class TabBarItem extends PureComponent {
     const fontWeight = cond(and(eq(currentPage, index), defined(itemWidth)), '700', '400');
     const activeColor = selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
     const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
+    
     const color = cond(eq(currentPage, index),
       processColor(activeColor),
       processColor(ignore ? activeColor : inactiveColor),);
+
+    // Animated color
+    /* const color = interpolateColor(currentPage, {
+      inputRange: [index - 1, index, index + 1],
+      outputRange: [inactiveColor, activeColor, inactiveColor]
+    }); */
 
     return [
       {

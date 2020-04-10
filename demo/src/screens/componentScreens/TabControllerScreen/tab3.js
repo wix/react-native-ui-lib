@@ -36,7 +36,7 @@ class Tab2 extends Component {
     return (
       <ScrollView>
         <View flex padding-20>
-          <Text text40>TAB 3</Text>
+          <Text text40>Reviews</Text>
 
           {loading && (
             <Text marginT-20 text60>
