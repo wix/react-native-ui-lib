@@ -5,5 +5,8 @@ module.exports = {
   },
   get TouchableOpacity() {
     return require('./TouchableOpacity').default;
+  },
+  get WheelPicker() {
+    return require('./WheelPicker').default;
   }
 };
