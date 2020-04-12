@@ -18,7 +18,7 @@ const CLOSE_REASON = {
    */
   CLOSED: 'closed',
   /**
-   * Closed by the user - background was pressed (iOS, Android), back button was pressed (Android) etc.
+   * Canceled by the user - background was pressed (iOS, Android), back button was pressed (Android) etc.
    */
   CANCELED: 'canceled'
 };
@@ -50,7 +50,7 @@ class Dialog extends BaseComponent {
     onDismiss: PropTypes.func,
     /**
      * Will be called once the dialog is closed (after the animation has ended)
-     * Usage: `onClose(Dialog.closeReason.CLOSED, props) {...}`
+     * Usage: `onClose(closeReason, props) {...}`
      */
     onClose: PropTypes.func,
     /**
@@ -164,24 +164,31 @@ class Dialog extends BaseComponent {
     }
   }
 
+  getCloseReason = () => {
+    const {dialogWasCanceled} = this.state;
+    return dialogWasCanceled ? Dialog.closeReason.CANCELED : Dialog.closeReason.CLOSED;
+  }
+
   onModalDismissed = () => {
     const props = this.getThemeProps();
     _.invoke(props, 'onModalDismissed', props);
-    const closeReason = this.state.dialogWasCanceled ? Dialog.closeReason.CANCELED : Dialog.closeReason.CLOSED;
-    _.invoke(props, 'onClose', closeReason, props);
+    _.invoke(props, 'onClose', this.getCloseReason(), props);
+    this.setState({dialogWasCanceled: false});
   }
 
   onDismiss = () => {
     const props = this.getThemeProps();
     if (!props.visible && Constants.isAndroid) {
-      _.invoke(props, 'onClose', Dialog.closeReason.CLOSED, props);
+      _.invoke(props, 'onClose', this.getCloseReason(), props);
+      this.setState({dialogWasCanceled: false});
     }
 
     this.setState({modalVisibility: false}, () => {
       if (props.visible) {
         _.invoke(props, 'onDismiss', props);
         if (Constants.isAndroid) {
-          _.invoke(props, 'onClose', Dialog.closeReason.CANCELED, props);
+          _.invoke(props, 'onClose', this.getCloseReason(), props);
+          this.setState({dialogWasCanceled: false});
         }
       }
     });
