@@ -44,7 +44,7 @@ class View extends PureComponent<PropsTypes> {
   constructor(props: PropsTypes) {
     super(props);
 
-    this.Container = props.right && Constants.isIOS ? SafeAreaView : RNView;
+    this.Container = props.useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
     if (props.animated) {
       this.Container = Animated.createAnimatedComponent(this.Container);
     }
