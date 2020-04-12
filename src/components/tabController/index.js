@@ -109,9 +109,10 @@ class TabController extends Component {
 
   renderCodeBlock = () => {
     const {itemStates, ignoredItems} = this.state;
+    const {selectedIndex} = this.props;
     const clock = new Clock();
-    const fromPage = new Value(0);
-    const toPage = new Value(0);
+    const fromPage = new Value(selectedIndex);
+    const toPage = new Value(selectedIndex);
 
     return block([
       /* Page change by TabBar */
