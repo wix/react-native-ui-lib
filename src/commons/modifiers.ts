@@ -272,13 +272,21 @@ export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
 export function getThemeProps(props = this.props, context = this.context) {
   //@ts-ignore
   const componentName = this.displayName || this.constructor.displayName || this.constructor.name;
+
   let themeProps;
   if (_.isFunction(ThemeManager.components[componentName])) {
     themeProps = ThemeManager.components[componentName](props, context);
   } else {
     themeProps = ThemeManager.components[componentName];
   }
-  return {...themeProps, ...props};
+
+  let forcedThemeProps;
+  if (_.isFunction(ThemeManager.forcedThemeComponents[componentName])) {
+    forcedThemeProps = ThemeManager.forcedThemeComponents[componentName](props, context);
+  } else {
+    forcedThemeProps = ThemeManager.forcedThemeComponents[componentName];
+  }
+  return {...themeProps, ...props, ...forcedThemeProps};
 }
 
 export function generateModifiersStyle(options = {

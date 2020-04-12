@@ -329,6 +329,11 @@ describe('Modifiers', () => {
   });
 
   describe('getThemeProps', () => {
+    beforeEach(() => {
+      ThemeManager.setComponentTheme('SampleComponent', undefined);
+      ThemeManager.setComponentForcedTheme('SampleComponent', undefined);
+    });
+
     it('should return props values from the Theme Manager if were defined', () => {
       ThemeManager.setComponentTheme('SampleComponent', {prop1: 'themeValue'});
       expect(uut.getThemeProps.call(SampleComponent, {})).toEqual({prop1: 'themeValue'});
@@ -348,6 +353,11 @@ describe('Modifiers', () => {
       ThemeManager.setComponentTheme('SampleComponent', props => ({prop1: props.test ? 'yes' : 'no'}));
       expect(uut.getThemeProps.call(SampleComponent, {test: true})).toEqual({prop1: 'yes', test: true});
       expect(uut.getThemeProps.call(SampleComponent, {test: false})).toEqual({prop1: 'no', test: false});
+    });
+    
+    it('should prioritize forced theme props over user props', () => {
+      ThemeManager.setComponentForcedTheme('SampleComponent', props => ({foo: 'forced'}));
+      expect(uut.getThemeProps.call(SampleComponent, {foo: 'user-value', other: 'other'})).toEqual({foo: 'forced', other: 'other'});
     });
   });
 });
