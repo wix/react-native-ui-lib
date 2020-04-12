@@ -10,6 +10,18 @@ import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
 import DialogDismissibleView from './DialogDismissibleView';
 import PanningProvider from '../panningViews/panningProvider';
+import {LogService} from '../../services';
+
+const CLOSE_REASON = {
+  /**
+   * Closed by the developer - visible prop was changed from true to false 
+   */
+  CLOSED: 'closed',
+  /**
+   * Closed by the user - background was pressed (iOS, Android), back button was pressed (Android) etc.
+   */
+  CANCELED: 'canceled'
+};
 
 // TODO: KNOWN ISSUES
 // 1. iOS pressing on the background while enter animation is happening will not call onDismiss
@@ -37,6 +49,11 @@ class Dialog extends BaseComponent {
      */
     onDismiss: PropTypes.func,
     /**
+     * Will be called once the dialog is closed (after the animation has ended)
+     * Usage: `onClose(Dialog.closeReason.CLOSED, props) {...}`
+     */
+    onClose: PropTypes.func,
+    /**
      * The color of the overlay background
      */
     overlayBackgroundColor: PropTypes.string,
@@ -59,8 +76,14 @@ class Dialog extends BaseComponent {
      */
     useSafeArea: PropTypes.bool,
     /**
-     * Called once the modal has been dissmissed (iOS only)
+     * Called once the modal has been dismissed (iOS only) (deprecated, please use onClose which supports both iOS and Android)
      */
+    // TODO: once we've removed onModalDismissed we will move onClose to be onDismiss
+    //  (so there is one function is called onDismiss that is called after the modal is truly dismissed)
+    // Note for the next deprecation:
+    // "Note that onDismiss will now be called when visible is changed from true to false and not only on user cancel
+    // you can know which it was by checking the dismissReason"
+    // (Change closeReason --> dismissReason)
     onModalDismissed: PropTypes.func,
     /**
      * If this is added only the header will be pannable;
@@ -82,10 +105,17 @@ class Dialog extends BaseComponent {
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6)
   };
 
+  static closeReason = CLOSE_REASON;
+
   constructor(props) {
     super(props);
 
+    if (props.onModalDismissed) {
+      LogService.deprecationWarn({component: 'Dialog', oldProp: 'onModalDismissed', newProp: 'onClose'});
+    }
+
     this.state = {
+      dialogWasCanceled: false,
       alignments: this.state.alignments,
       orientationKey: Constants.orientation,
       modalVisibility: props.visible,
@@ -134,17 +164,38 @@ class Dialog extends BaseComponent {
     }
   }
 
+  onModalDismissed = () => {
+    const props = this.getThemeProps();
+    _.invoke(props, 'onModalDismissed', props);
+    const closeReason = this.state.dialogWasCanceled ? Dialog.closeReason.CANCELED : Dialog.closeReason.CLOSED;
+    _.invoke(props, 'onClose', closeReason, props);
+  }
+
   onDismiss = () => {
+    const props = this.getThemeProps();
+    if (!props.visible && Constants.isAndroid) {
+      _.invoke(props, 'onClose', Dialog.closeReason.CLOSED, props);
+    }
+
     this.setState({modalVisibility: false}, () => {
-      const props = this.getThemeProps();
       if (props.visible) {
         _.invoke(props, 'onDismiss', props);
+        if (Constants.isAndroid) {
+          _.invoke(props, 'onClose', Dialog.closeReason.CANCELED, props);
+        }
       }
     });
   };
 
-  hideDialogView = () => {
-    this.setState({dialogVisibility: false});
+  // if coming from onBackgroundPress\onRequestClose this will be an object,
+  // but we do not want to override the true state when coming from UNSAFE_componentWillReceiveProps
+  hideDialogView = (isCancelObject) => {
+    const dialogWasCanceled = !_.isUndefined(isCancelObject);
+    if (dialogWasCanceled) {
+      this.setState({dialogVisibility: false, dialogWasCanceled});
+    } else {
+      this.setState({dialogVisibility: false});
+    }
   };
 
   renderPannableHeader = directions => {
@@ -199,7 +250,7 @@ class Dialog extends BaseComponent {
 
   render = () => {
     const {orientationKey, modalVisibility} = this.state;
-    const {overlayBackgroundColor, onModalDismissed, supportedOrientations, accessibilityLabel} = this.getThemeProps();
+    const {overlayBackgroundColor, supportedOrientations, accessibilityLabel} = this.getThemeProps();
 
     return (
       <Modal
@@ -210,7 +261,7 @@ class Dialog extends BaseComponent {
         onBackgroundPress={this.hideDialogView}
         onRequestClose={this.hideDialogView}
         overlayBackgroundColor={overlayBackgroundColor}
-        onDismiss={onModalDismissed}
+        onDismiss={this.onModalDismissed}
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}
       >
