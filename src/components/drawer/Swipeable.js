@@ -26,6 +26,8 @@ export type PropType = {
   friction: number,
   leftThreshold?: number,
   rightThreshold?: number,
+  fullLeftThreshold?: number,
+  fullSwipeLeft?: boolean,
   overshootLeft?: boolean,
   overshootRight?: boolean,
   overshootFriction?: number,
@@ -37,6 +39,8 @@ export type PropType = {
   onSwipeableRightWillOpen?: Function,
   onSwipeableWillOpen?: Function,
   onSwipeableWillClose?: Function,
+  onFullSwipeLeft?: Function,
+  onWillFullSwipeLeft?: Function,
   onDragStart?: Function,
   renderLeftActions?: (progressAnimatedValue: any, dragAnimatedValue: any) => any,
   renderRightActions?: (progressAnimatedValue: any, dragAnimatedValue: any) => any,
@@ -59,7 +63,8 @@ export default class Swipeable extends Component<PropType, StateType> {
   static defaultProps = {
     friction: 1,
     overshootFriction: 1,
-    useNativeAnimations: false // issue in iPhone5
+    useNativeAnimations: false, // issue in iPhone5
+    fullLeftThreshold: 0.45
   };
 
   _onGestureEvent: ?Animated.Event;
@@ -73,6 +78,9 @@ export default class Swipeable extends Component<PropType, StateType> {
     super(props);
 
     const dragX = new Animated.Value(0);
+    // 0 -> open from either left/right, 
+    // 1 -> closing to the left
+    // -1 -> closing to the right
     this.rowState = 0;
 
     this.state = {
@@ -91,6 +99,7 @@ export default class Swipeable extends Component<PropType, StateType> {
     });
   }
 
+  // TODO: change to componentDidUpdate
   UNSAFE_componentWillUpdate(props: PropType, state: StateType) {
     if (
       this.props.friction !== props.friction ||
@@ -182,14 +191,16 @@ export default class Swipeable extends Component<PropType, StateType> {
     const {leftWidth = 0, rowWidth = 0} = this.state;
     const {rightOffset = rowWidth} = this.state;
     const rightWidth = rowWidth - rightOffset;
-    const {friction, leftThreshold = leftWidth / 2, rightThreshold = rightWidth / 2} = this.props;
+    const {fullSwipeLeft, friction, leftThreshold = leftWidth / 2, rightThreshold = rightWidth / 2, fullLeftThreshold} = this.props;
 
     const startOffsetX = this._currentOffset() + dragX / friction;
     const translationX = (dragX + DRAG_TOSS * velocityX) / friction;
 
     let toValue = 0;
     if (this.rowState === 0) {
-      if (translationX > leftThreshold) {
+      if (fullSwipeLeft && translationX > rowWidth * fullLeftThreshold) {
+        toValue = rowWidth;
+      } else if (translationX > leftThreshold) {
         toValue = leftWidth;
       } else if (translationX < -rightThreshold) {
         toValue = -rightWidth;
@@ -210,7 +221,7 @@ export default class Swipeable extends Component<PropType, StateType> {
   };
 
   _animateRow = (fromValue, toValue, velocityX) => {
-    const {dragX, rowTranslation} = this.state;
+    const {dragX, rowTranslation, rowWidth} = this.state;
     const {
       useNativeAnimations,
       animationOptions,
@@ -221,7 +232,9 @@ export default class Swipeable extends Component<PropType, StateType> {
       onSwipeableLeftWillOpen,
       onSwipeableRightWillOpen,
       onSwipeableWillClose,
-      onSwipeableWillOpen
+      onSwipeableWillOpen,
+      onFullSwipeLeft,
+      onWillFullSwipeLeft
     } = this.props;
 
     dragX.setValue(0);
@@ -238,7 +251,9 @@ export default class Swipeable extends Component<PropType, StateType> {
       ...animationOptions
     }).start(({finished}) => {
       if (finished) {
-        if (toValue > 0 && onSwipeableLeftOpen) {
+        if (toValue === rowWidth && onFullSwipeLeft) {
+          onFullSwipeLeft();
+        } else if (toValue > 0 && onSwipeableLeftOpen) {
           onSwipeableLeftOpen();
         } else if (toValue < 0 && onSwipeableRightOpen) {
           onSwipeableRightOpen();
@@ -252,7 +267,9 @@ export default class Swipeable extends Component<PropType, StateType> {
       }
     });
 
-    if (toValue > 0 && onSwipeableLeftWillOpen) {
+    if (toValue === rowWidth && onWillFullSwipeLeft) {
+      onWillFullSwipeLeft()
+    } else if (toValue > 0 && onSwipeableLeftWillOpen) {
       onSwipeableLeftWillOpen();
     } else if (toValue < 0 && onSwipeableRightWillOpen) {
       onSwipeableRightWillOpen();

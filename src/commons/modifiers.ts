@@ -4,7 +4,7 @@ import {Typography, Colors, BorderRadiuses, Spacings, ThemeManager} from '../sty
 import {BorderRadiusesLiterals} from '../style/borderRadiuses';
 import TypographyPresets from '../style/typographyPresets';
 import {SpacingLiterals} from '../style/spacings';
-
+import {colorsPalette} from '../style/colorsPalette';
 export const FLEX_KEY_PATTERN = /^flex(G|S)?(-\d*)?$/;
 export const PADDING_KEY_PATTERN = new RegExp(`padding[LTRBHV]?-([0-9]*|${Spacings.getKeysPattern()})`);
 export const MARGIN_KEY_PATTERN = new RegExp(`margin[LTRBHV]?-([0-9]*|${Spacings.getKeysPattern()})`);
@@ -42,9 +42,6 @@ const PADDING_VARIATIONS = {
   paddingV: 'paddingVertical'
 } as const;
 
-export type PaddingModifierKeyType = keyof typeof PADDING_VARIATIONS;
-export type NativePaddingKeyType = typeof PADDING_VARIATIONS[PaddingModifierKeyType];
-
 const MARGIN_VARIATIONS = {
   margin: 'margin',
   marginL: 'marginLeft',
@@ -54,8 +51,6 @@ const MARGIN_VARIATIONS = {
   marginH: 'marginHorizontal',
   marginV: 'marginVertical'
 } as const;
-export type MarginModifierKeyType = keyof typeof MARGIN_VARIATIONS;
-export type NativeMarginModifierKeyType = typeof MARGIN_VARIATIONS[MarginModifierKeyType];
 
 const STYLE_KEY_CONVERTERS = {
   flex: 'flex',
@@ -63,8 +58,39 @@ const STYLE_KEY_CONVERTERS = {
   flexS: 'flexShrink'
 } as const;
 
-export type FlexModifierKeyType = keyof typeof STYLE_KEY_CONVERTERS;
-export type NativeFlexModifierKeyType = typeof STYLE_KEY_CONVERTERS[FlexModifierKeyType];
+
+export type PaddingLiterals = keyof typeof PADDING_VARIATIONS;
+export type NativePaddingKeyType = typeof PADDING_VARIATIONS[PaddingLiterals];
+export type MarginLiterals = keyof typeof MARGIN_VARIATIONS;
+export type NativeMarginModifierKeyType = typeof MARGIN_VARIATIONS[MarginLiterals];
+export type FlexLiterals = keyof typeof STYLE_KEY_CONVERTERS;
+export type NativeFlexModifierKeyType = typeof STYLE_KEY_CONVERTERS[FlexLiterals];
+export type ColorLiterals = keyof typeof colorsPalette;
+export type TypographyLiterals = keyof typeof TypographyPresets;
+export type BorderRadiusLiterals = keyof typeof BorderRadiusesLiterals;
+export type AlignmentLiterals =
+| 'row' | 'spread'
+| 'center' | 'centerH' | 'centerV'
+| 'left' | 'right' | 'top' | 'bottom';
+
+export type Modifier<T extends string> = Partial<Record<T, boolean>>
+
+export type TypographyModifiers = Modifier<TypographyLiterals>;
+export type ColorsModifiers = Modifier<ColorLiterals>;
+export type AlignmentModifiers = Modifier<AlignmentLiterals>;
+export type PaddingModifiers = Modifier<PaddingLiterals>;
+export type MarginModifiers = Modifier<MarginLiterals>;
+export type FlexModifiers = Modifier<FlexLiterals>;
+export type BorderRadiusModifiers = Modifier<BorderRadiusLiterals>;
+
+export type ContainerModifiers =
+  AlignmentModifiers &
+  PaddingModifiers &
+  MarginModifiers &
+  FlexModifiers &
+  BorderRadiusModifiers;
+
+
 
 export function extractColorValue(props: Dictionary<any>) {
   // const props = this.getThemeProps();
@@ -233,7 +259,7 @@ export function extractBorderRadiusValue(props: Dictionary<any>) {
   let borderRadius;
 
   const keys = Object.keys(props);
-  const radiusProp = keys.find(prop => BorderRadiuses.getKeysPattern().test(prop) && props[prop]) as keyof typeof BorderRadiusesLiterals;
+  const radiusProp = keys.find(prop => BorderRadiuses.getKeysPattern().test(prop) && props[prop]) as BorderRadiusLiterals;
   if (radiusProp) {
     borderRadius = BorderRadiuses[radiusProp];
   }
@@ -272,13 +298,21 @@ export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
 export function getThemeProps(props = this.props, context = this.context) {
   //@ts-ignore
   const componentName = this.displayName || this.constructor.displayName || this.constructor.name;
+
   let themeProps;
   if (_.isFunction(ThemeManager.components[componentName])) {
     themeProps = ThemeManager.components[componentName](props, context);
   } else {
     themeProps = ThemeManager.components[componentName];
   }
-  return {...themeProps, ...props};
+
+  let forcedThemeProps;
+  if (_.isFunction(ThemeManager.forcedThemeComponents[componentName])) {
+    forcedThemeProps = ThemeManager.forcedThemeComponents[componentName](props, context);
+  } else {
+    forcedThemeProps = ThemeManager.forcedThemeComponents[componentName];
+  }
+  return {...themeProps, ...props, ...forcedThemeProps};
 }
 
 export function generateModifiersStyle(options = {
