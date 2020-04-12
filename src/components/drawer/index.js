@@ -32,7 +32,6 @@ class NewDrawer extends PureBaseComponent {
   static displayName = 'Drawer';
 
   static propTypes = {
-    ...Swipeable.PropTypes,
     /**
      * The drawer animation bounciness
      */
