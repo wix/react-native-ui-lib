@@ -314,7 +314,7 @@ class TabBar extends PureComponent {
           ref={this.tabBar}
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={[styles.tabBarScroll]}
+          style={styles.tabBarScroll}
           contentContainerStyle={{minWidth: this.containerWidth}}
           scrollEnabled={scrollEnabled}
           onContentSizeChange={this.onContentSizeChange}
