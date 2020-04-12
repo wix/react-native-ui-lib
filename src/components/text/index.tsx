@@ -32,7 +32,6 @@ interface TextPropTypes extends TextProps {
   animated?: boolean;
 
   ref?: any;
-  useCustomTheme?: boolean;
   textAlign?: string;
 }
 

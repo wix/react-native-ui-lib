@@ -2,7 +2,7 @@ import {ShadowStyleIOS} from 'react-native';
 import _ from 'lodash';
 import Colors from './colors';
 
-type Shadow = {top?: {}, bottom?: {}} & ShadowStyleIOS;
+type Shadow = {top?: ShadowStyleIOS, bottom?: ShadowStyleIOS} & ShadowStyleIOS;
 
 const Shadows = {
   white10: {

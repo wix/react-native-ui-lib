@@ -42,6 +42,4 @@ export namespace Constants {
     callback: (event: { window: ScaledSize, screen: ScaledSize }) => void
   ): void;
 
-  export function getTabletMargins(): number; // TODO: remove
-
 }

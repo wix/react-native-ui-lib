@@ -20,10 +20,6 @@ interface ViewPropTypes extends ViewProps {
   /**
    * TODO: probobly isn't needed
    */
-  useCustomTheme?: boolean;
-  /**
-   * TODO: probobly isn't needed
-   */
   width?: string | number;
   /**
    * TODO: probobly isn't needed

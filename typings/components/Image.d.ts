@@ -15,7 +15,6 @@ export interface ImageProps extends Omit<RNImageProps, 'tintColor' | 'source'> {
   overlayType?: OverlayType;
   source?: RNImageProps['source'];
   imageId?: string;
-  useCustomTheme?: boolean;
   overlayColor?: string;
   customOverlayContent?: any;
   size?: number;

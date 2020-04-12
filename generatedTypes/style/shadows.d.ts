@@ -1,7 +1,7 @@
 import { ShadowStyleIOS } from 'react-native';
 declare type Shadow = {
-    top?: {};
-    bottom?: {};
+    top?: ShadowStyleIOS;
+    bottom?: ShadowStyleIOS;
 } & ShadowStyleIOS;
 declare const _default: {
     white10: {

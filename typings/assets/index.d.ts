@@ -20,9 +20,7 @@ export type ImageName =
 export type ImagesList = Record<ImageName, ImageRequireSource> & { readonly [key: string]: ImageRequireSource };
 
 export const Assets: {
-  icons: {
-    [k: string]: Readonly<IconsList>
-  };
+  icons: Readonly<IconsList> & {[k: string]: Readonly<IconsList>};
   emojis: Readonly<EmojisList>;
   images: Readonly<ImagesList>;
   loadAssetsGroup: (name: string, assets: any) => void;

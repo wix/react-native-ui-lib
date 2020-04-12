@@ -48,7 +48,6 @@ export interface ButtonProps extends TextProps {
   animateTo?: ButtonAnimateTo;
   style?: StyleProp<TextStyle>;
   testID?: string;
-  useCustomTheme?: boolean;
   throttleTime?: number;
   ref?: any;
   hitSlop?: any;

@@ -72,7 +72,6 @@ export interface TextFieldProps extends BaseInputProps, TextBaseInputProps {
   onToggleExpandableModal?: (value?: string) => void;
   topBarProps?: TopBarProps;
   rightButtonProps?: TextFieldRightButtonProps;
-  useCustomTheme?: boolean;
 }
 
 export type TextFieldState = any;
