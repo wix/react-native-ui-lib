@@ -32,7 +32,6 @@ class NewDrawer extends PureBaseComponent {
   static displayName = 'Drawer';
 
   static propTypes = {
-    ...Swipeable.PropTypes,
     /**
      * The drawer animation bounciness
      */
@@ -68,7 +67,23 @@ class NewDrawer extends PureBaseComponent {
     /**
      * Perform the animation in natively
      */
-    useNativeAnimations: PropTypes.bool
+    useNativeAnimations: PropTypes.bool,
+    /**
+     * Whether to allow a full left swipe
+     */
+    fullSwipeLeft: PropTypes.bool,
+    /**
+     * Threshold for a left full swipe (0-1)
+     */
+    fullLeftThreshold: PropTypes.number,
+    /**
+     * Callback for left item full swipe
+     */
+    onFullSwipeLeft: PropTypes.func,
+    /**
+     * Callback for just before left item full swipe
+     */
+    onWillFullSwipeLeft: PropTypes.func
   };
 
   static defaultProps = {
@@ -124,7 +139,7 @@ class NewDrawer extends PureBaseComponent {
   onSwipeableWillClose = () => {
     _.invoke(this.props, 'onSwipeableWillClose', this.props);
   };
-
+  
   /** Accessability */
 
   getAccessibilityActions(withOnPress = false) {
