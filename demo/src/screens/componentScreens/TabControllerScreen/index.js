@@ -13,9 +13,10 @@ const TABS = ['Home', 'Posts', 'Reviews', 'Videos', 'Photos', 'Events', 'About',
 class TabControllerScreen extends Component {
   state = {
     asCarousel: true,
+    centerSelected: false,
     selectedIndex: 0,
     items: _.chain(TABS)
-      .map(tab => ({label: tab, key: tab}))
+      .map((tab) => ({label: tab, key: tab}))
       .value(),
     key: Date.now()
   };
@@ -42,9 +43,6 @@ class TabControllerScreen extends Component {
     }
   };
 
-  
-
-
   toggleCarouselMode = () => {
     this.setState({
       asCarousel: !this.state.asCarousel,
@@ -52,7 +50,14 @@ class TabControllerScreen extends Component {
     });
   };
 
-  onChangeIndex = selectedIndex => {
+  toggleCenterSelected = () => {
+    this.setState({
+      centerSelected: !this.state.centerSelected,
+      key: Date.now()
+    });
+  };
+
+  onChangeIndex = (selectedIndex) => {
     this.setState({selectedIndex});
   };
 
@@ -97,7 +102,7 @@ class TabControllerScreen extends Component {
   }
 
   render() {
-    const {key, selectedIndex, asCarousel, items} = this.state;
+    const {key, selectedIndex, asCarousel, centerSelected, items} = this.state;
     return (
       <View flex bg-grey70>
         <TabController
@@ -117,18 +122,29 @@ class TabControllerScreen extends Component {
             // iconColor={'green'}
             // selectedIconColor={'blue'}
             activeBackgroundColor={Colors.blue60}
+            centerSelected={centerSelected}
           >
             {/* {this.renderTabItems()} */}
           </TabController.TabBar>
           {this.renderTabPages()}
         </TabController>
-        <Button
-          bg-grey20={!asCarousel}
-          bg-green30={asCarousel}
-          label={`Carousel:${asCarousel ? 'ON' : 'OFF'}`}
-          style={{position: 'absolute', bottom: 100, right: 20}}
-          onPress={this.toggleCarouselMode}
-        />
+        <View absB left margin-20 marginB-100>
+          <Button
+            bg-grey20={!asCarousel}
+            bg-green30={asCarousel}
+            label={`Carousel : ${asCarousel ? 'ON' : 'OFF'}`}
+            marginB-12
+            size="small"
+            onPress={this.toggleCarouselMode}
+          />
+          <Button
+            bg-grey20={!centerSelected}
+            bg-green30={centerSelected}
+            label={`centerSelected : ${centerSelected ? 'ON' : 'OFF'}`}
+            size="small"
+            onPress={this.toggleCenterSelected}
+          />
+        </View>
       </View>
     );
   }
