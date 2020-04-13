@@ -114,23 +114,24 @@ export default class Carousel extends BaseComponent {
   constructor(props) {
     super(props);
 
+    const themeProps = this.getThemeProps();
     this.carousel = React.createRef();
-    const defaultPageWidth = props.loop ? 
-      Constants.screenWidth : props.pageWidth + this.getItemSpacings(props) || Constants.screenWidth;
+    const defaultPageWidth = themeProps.loop ?
+      Constants.screenWidth : themeProps.pageWidth + this.getItemSpacings(themeProps) || Constants.screenWidth;
     
     this.state = {
       containerWidth: undefined,
-      currentPage: this.shouldUsePageWidth() ? this.getCalcIndex(props.initialPage) : props.initialPage,
-      currentStandingPage: props.initialPage,
+      currentPage: this.shouldUsePageWidth() ? this.getCalcIndex(themeProps.initialPage) : themeProps.initialPage,
+      currentStandingPage: themeProps.initialPage,
       pageWidth: defaultPageWidth,
-      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage, pageWidth: defaultPageWidth})}
+      initialOffset: {x: presenter.calcOffset(themeProps, {currentPage: themeProps.initialPage, pageWidth: defaultPageWidth})}
     };
   }
 
   componentDidMount() {
     Constants.addDimensionsEventListener(this.onOrientationChanged);
 
-    if (this.props.autoplay) {
+    if (this.getThemeProps().autoplay) {
       this.startAutoPlay();
     }
   }
@@ -141,7 +142,7 @@ export default class Carousel extends BaseComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {autoplay} = this.props;
+    const {autoplay} = this.getThemeProps();
     if (autoplay && !prevProps.autoplay) {
       this.startAutoPlay();
     } else if (!autoplay && prevProps.autoplay) {
@@ -151,7 +152,10 @@ export default class Carousel extends BaseComponent {
 
   onOrientationChanged = () => {
     const {pageWidth, loop} = this.getThemeProps();
-    if (!pageWidth || loop) {
+    if (pageWidth) {
+      this.orientationChange = true;
+      this.setState({pageWidth});
+    } else if (!pageWidth || loop) {
       this.orientationChange = true;
       // HACK: setting to containerWidth for Android's call when view disappear
       this.setState({pageWidth: this.state.containerWidth || Constants.screenWidth});
@@ -201,7 +205,7 @@ export default class Carousel extends BaseComponent {
   startAutoPlay() {    
     this.autoplayTimer = setInterval(() => {      
       this.goToNextPage();
-    }, this.props.autoplayInterval);
+    }, this.getThemeProps().autoplayInterval);
   }
 
   stopAutoPlay() {
@@ -261,7 +265,13 @@ export default class Carousel extends BaseComponent {
       update.initialOffset = {
         x: presenter.calcOffset(this.getThemeProps(), {currentPage: this.state.currentPage, pageWidth: containerWidth})
       };
+    } else {
+      update.pageWidth = pageWidth;
+      update.initialOffset = {
+        x: presenter.calcOffset(this.getThemeProps(), {currentPage: this.state.currentPage, pageWidth})
+      };
     }
+
     this.setState(update);
   };
 
@@ -284,7 +294,7 @@ export default class Carousel extends BaseComponent {
     
     this.setState({currentStandingPage: index});
     if (currentStandingPage !== index) {
-      _.invoke(this.props, 'onChangePage', index, currentStandingPage);
+      _.invoke(this.getThemeProps(), 'onChangePage', index, currentStandingPage);
     }
   };
 
@@ -327,7 +337,7 @@ export default class Carousel extends BaseComponent {
       this.orientationChange = false;
     }
 
-    if (loop && presenter.isOutOfBounds(offsetX, this.props, pageWidth)) {
+    if (loop && presenter.isOutOfBounds(offsetX, this.getThemeProps(), pageWidth)) {
       this.updateOffset();
     }
 
@@ -335,7 +345,7 @@ export default class Carousel extends BaseComponent {
       this.resetAutoPlay();
     }
 
-    _.invoke(this.props, 'onScroll', event);
+    _.invoke(this.getThemeProps(), 'onScroll', event);
   };
 
   renderChild = (child, key) => {
