@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { TextProps, TextStyle } from 'react-native';
 import { BaseComponentInjectedProps, ForwardRefInjectedProps } from '../../commons/new';
-import { MarginModifiers } from '../../../typings/modifiers';
+import { MarginModifiers } from '../../commons/modifiers';
 interface TextPropTypes extends TextProps {
     /**
      * color of the text
@@ -23,6 +23,10 @@ interface TextPropTypes extends TextProps {
      * Custom highlight style for highlight string
      */
     highlightStyle?: TextStyle;
+    /**
+     * Use Animated.Text as a container
+     */
+    animated?: boolean;
 }
 declare type PropsTypes = BaseComponentInjectedProps & TextPropTypes & ForwardRefInjectedProps & MarginModifiers;
 /**
@@ -33,10 +37,11 @@ declare type PropsTypes = BaseComponentInjectedProps & TextPropTypes & ForwardRe
  */
 declare class Text extends PureComponent<PropsTypes> {
     static displayName: string;
+    private TextContainer;
     getTextPartsByHighlight(targetString?: string, highlightString?: string): string[];
     renderText(children: any): any;
     render(): JSX.Element;
 }
 export { Text };
-declare const _default: React.ComponentType<Pick<Pick<PropsTypes, "margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV" | "center" | "style" | "testID" | "modifiers" | "onLayout" | "nativeID" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "highlightString" | "color" | "uppercase" | "highlightStyle" | "allowFontScaling" | "ellipsizeMode" | "lineBreakMode" | "numberOfLines" | "onPress" | "onLongPress" | "maxFontSizeMultiplier" | "adjustsFontSizeToFit" | "minimumFontScale" | "suppressHighlighting" | "selectable" | "selectionColor" | "textBreakStrategy">, "margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV" | "center" | "style" | "testID" | "onLayout" | "nativeID" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "highlightString" | "color" | "uppercase" | "highlightStyle" | "allowFontScaling" | "ellipsizeMode" | "lineBreakMode" | "numberOfLines" | "onPress" | "onLongPress" | "maxFontSizeMultiplier" | "adjustsFontSizeToFit" | "minimumFontScale" | "suppressHighlighting" | "selectable" | "selectionColor" | "textBreakStrategy">>;
+declare const _default: React.ComponentType<Pick<Pick<PropsTypes, "margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV" | "center" | "style" | "testID" | "modifiers" | "color" | "uppercase" | "highlightString" | "highlightStyle" | "animated" | "allowFontScaling" | "ellipsizeMode" | "lineBreakMode" | "numberOfLines" | "onLayout" | "onPress" | "onLongPress" | "nativeID" | "maxFontSizeMultiplier" | "adjustsFontSizeToFit" | "minimumFontScale" | "suppressHighlighting" | "selectable" | "selectionColor" | "textBreakStrategy" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors">, "margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV" | "center" | "style" | "testID" | "color" | "uppercase" | "highlightString" | "highlightStyle" | "animated" | "allowFontScaling" | "ellipsizeMode" | "lineBreakMode" | "numberOfLines" | "onLayout" | "onPress" | "onLongPress" | "nativeID" | "maxFontSizeMultiplier" | "adjustsFontSizeToFit" | "minimumFontScale" | "suppressHighlighting" | "selectable" | "selectionColor" | "textBreakStrategy" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors">>;
 export default _default;

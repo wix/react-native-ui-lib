@@ -6,18 +6,21 @@ class Tab1 extends Component {
   state = {};
   render() {
     return (
-      <View flex padding-20 spread center>
+      <View flex padding-20>
         <Image
           style={StyleSheet.absoluteFillObject}
+          overlayType="top"
           source={{
             uri:
               'https://images.unsplash.com/photo-1553969923-bbf0cac2666b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80'
           }}
         />
         <Text text40 white>
-          TAB 1
+          Home
         </Text>
-        <Button marginT-20 label="Show Me"/>
+        <View absR marginR-20>
+          <Button marginT-20 round style={{width: 50}} size="small" iconSource={Assets.icons.search} white/>
+        </View>
       </View>
     );
   }

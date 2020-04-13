@@ -4,8 +4,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import Reanimated from 'react-native-reanimated';
+import Reanimated, {Easing} from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
+import {timing, fract} from 'react-native-redash';
 import {Constants} from '../../helpers';
 import TabBarContext from './TabBarContext';
 import TabBar from './TabBar';
@@ -13,7 +14,23 @@ import TabBarItem from './TabBarItem';
 import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
 
-const {cond, Code, and, eq, set, Value, block, round, onChange, call} = Reanimated;
+const {
+  and,
+  cond,
+  call,
+  Code,
+  Clock,
+  clockRunning,
+  eq,
+  neq,
+  not,
+  set,
+  Value,
+  block,
+  onChange,
+  interpolate,
+  round
+} = Reanimated;
 
 /**
  * @description: A performant solution for a tab controller with lazy load mechanism
@@ -28,8 +45,7 @@ class TabController extends Component {
 
   static propTypes = {
     /**
-     * TODO: change to initial index
-     * current selected tab index
+     * Initial selected index
      */
     selectedIndex: PropTypes.number,
     /**
@@ -56,9 +72,16 @@ class TabController extends Component {
     itemStates: []
   };
 
-  _targetPage = new Value(-1);
+  _targetPage = new Value(this.props.selectedIndex);
   _currentPage = new Value(this.props.selectedIndex);
   _carouselOffset = new Value(this.props.selectedIndex * Math.round(Constants.screenWidth));
+
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.selectedIndex !== this.props.selectedIndex) {
+      return false;
+    }
+    return true;
+  }
 
   getProviderContextValue = () => {
     const {itemStates, selectedIndex} = this.state;
@@ -66,6 +89,7 @@ class TabController extends Component {
     return {
       selectedIndex,
       currentPage: this._currentPage,
+      targetPage: this._targetPage,
       carouselOffset: this._carouselOffset,
       itemStates,
       registerTabItems: this.registerTabItems,
@@ -75,7 +99,7 @@ class TabController extends Component {
   };
 
   registerTabItems = (tabItemsCount, ignoredItems) => {
-    const itemStates = _.times(tabItemsCount, () => new Value(-1));
+    const itemStates = _.times(tabItemsCount, () => new Value(State.UNDETERMINED));
     this.setState({itemStates, ignoredItems});
   };
 
@@ -83,40 +107,46 @@ class TabController extends Component {
     _.invoke(this.props, 'onChangeIndex', index);
   };
 
-  getCarouselPageChangeCode() {
-    const {asCarousel} = this.props;
-    const {itemStates} = this.state;
-
-    if (asCarousel) {
-      // Rounding on Android, cause it cause issues when comparing values
-      const screenWidth = Constants.isAndroid ? Math.round(Constants.screenWidth) : Constants.screenWidth;
-
-      return _.times(itemStates.length, index => {
-        return cond(eq(Constants.isAndroid ? round(this._carouselOffset) : this._carouselOffset, index * screenWidth), [
-          set(this._currentPage, index)
-        ]);
-      });
-    }
-
-    return [];
-  }
-
   renderCodeBlock = () => {
     const {itemStates, ignoredItems} = this.state;
+    const {selectedIndex} = this.props;
+    const clock = new Clock();
+    const fromPage = new Value(selectedIndex);
+    const toPage = new Value(selectedIndex);
+
     return block([
-      // Carousel Page change
-      ...this.getCarouselPageChangeCode(),
-      // TabBar Page change
+      /* Page change by TabBar */
       ..._.map(itemStates, (state, index) => {
+        const ignoredItem = _.includes(ignoredItems, index);
         return [
-          cond(and(eq(state, State.BEGAN), !_.includes(ignoredItems, index)), set(this._targetPage, index)),
-          cond(and(eq(this._targetPage, index), eq(state, State.END), !_.includes(ignoredItems, index)), [
-            set(this._currentPage, index),
-            set(this._targetPage, -1)
-          ])
+          onChange(state,
+            cond(and(eq(state, State.END), !ignoredItem), [
+              set(fromPage, toPage),
+              set(toPage, index),
+              set(this._targetPage, index)
+            ]))
         ];
       }),
-      onChange(this._currentPage, call([this._currentPage], this.onPageChange))
+
+      cond(neq(this._currentPage, toPage),
+        set(this._currentPage,
+          timing({clock, from: fromPage, to: toPage, duration: 300, easing: Easing.bezier(0.34, 1.56, 0.64, 1)}))),
+
+      /* Page change by Carousel */
+      onChange(this._carouselOffset, [
+        cond(not(clockRunning(clock)), [
+          set(this._currentPage,
+            interpolate(round(this._carouselOffset), {
+              inputRange: itemStates.map((v, i) => Math.round(i * Constants.screenWidth)),
+              outputRange: itemStates.map((v, i) => i)
+            })),
+          set(toPage, this._currentPage),
+          cond(eq(fract(this._currentPage), 0), set(this._targetPage, this._currentPage))
+        ])
+      ]),
+
+      /* Invoke index change */
+      onChange(toPage, call([toPage], this.onPageChange))
     ]);
   };
 
