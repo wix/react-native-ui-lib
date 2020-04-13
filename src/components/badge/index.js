@@ -45,6 +45,15 @@ export default class Badge extends PureBaseComponent {
      */
     size: PropTypes.oneOfType([PropTypes.oneOf(Object.keys(BADGE_SIZES)), PropTypes.number]),
     /**
+     * Defines how far a touch event can start away from the badge.
+     */
+    hitSlop: PropTypes.shape({
+      top: PropTypes.number,
+      bottom: PropTypes.number,
+      left: PropTypes.number,
+      right: PropTypes.number
+    }),
+    /**
      * width of border around the badge
      */
     borderWidth: PropTypes.number,
@@ -227,7 +236,7 @@ export default class Badge extends PureBaseComponent {
     const Container = !_.isEmpty(animationProps) ? AnimatableView : onPress ? TouchableOpacity : View;
     if (!_.isEmpty(animationProps)) {
       console.warn('Badge component will soon stop supporting animationProps.' +
-          'Please wrap your Badge component with your own animation component, such as Animatable.View',);
+          'Please wrap your Badge component with your own animation component, such as Animatable.View');
     }
     return (
       // The extra View wrapper is to break badge's flex-ness
