@@ -215,7 +215,6 @@ export default class ActionSheet extends BaseComponent {
 
     return (
       <Dialog
-        migrate
         useSafeArea={useSafeArea}
         testID={testID}
         bottom

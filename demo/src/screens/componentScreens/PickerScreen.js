@@ -62,7 +62,6 @@ export default class PickerScreen extends Component {
 
     return (
       <Dialog
-        migrate
         visible={visible}
         onDismiss={() => toggleModal(false)}
         width="100%"

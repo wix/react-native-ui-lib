@@ -228,7 +228,6 @@ Scroll: ${scroll}`;
 
     return (
       <Dialog
-        migrate
         useSafeArea
         key={this.getDialogKey(height)}
         top={position === 'top'}

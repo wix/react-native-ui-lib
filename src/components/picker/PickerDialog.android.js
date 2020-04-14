@@ -81,7 +81,7 @@ class PickerDialog extends BaseComponent {
   render() {
     const dialogProps = Dialog.extractOwnProps(this.props);
     return (
-      <Dialog {...dialogProps} migrate height="50%" width="77%">
+      <Dialog {...dialogProps} height="50%" width="77%">
         <View style={styles.dialog}>
           {this.renderHeader()}
           <View flex center paddingH-24>
