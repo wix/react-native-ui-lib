@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {View as RNView, SafeAreaView, Animated, ViewProps} from 'react-native';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import Constants from '../../helpers/Constants';
-import {ContainerModifiers} from '../../../typings/modifiers';
+import {ContainerModifiers} from '../../commons/modifiers';
 
 interface ViewPropTypes extends ViewProps {
   /**

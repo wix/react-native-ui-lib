@@ -61,7 +61,7 @@ function handleScreenReaderChanged(isScreenReaderEnabled: AccessibilityEvent) {
 
 AccessibilityInfo.addEventListener('screenReaderChanged', handleScreenReaderChanged);
 function setAccessibility() {
-  AccessibilityInfo.fetch().then(isScreenReaderEnabled => {
+  AccessibilityInfo.isScreenReaderEnabled().then(isScreenReaderEnabled => {
     accessibility.isScreenReaderEnabled = isScreenReaderEnabled;
   });
 }

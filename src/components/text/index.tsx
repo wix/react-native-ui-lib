@@ -3,7 +3,7 @@ import {Text as RNText, StyleSheet, TextProps, TextStyle, Animated} from 'react-
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import {Colors} from '../../style';
 import _ from 'lodash';
-import {MarginModifiers} from '../../../typings/modifiers';
+import {MarginModifiers} from '../../commons/modifiers';
 
 interface TextPropTypes extends TextProps {
   /**

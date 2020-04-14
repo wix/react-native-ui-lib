@@ -26,12 +26,12 @@ export default class FloatingButtonScreen extends Component {
 
   notNow = () => {
     Alert.alert('Not Now!');
-    this._hideButton();
+    this.hideButton();
   }
 
   close = () => {
     Alert.alert('Closed.');
-    this._hideButton();
+    this.hideButton();
   }
 
   render() {

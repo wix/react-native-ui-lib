@@ -29,13 +29,13 @@ class PageCarousel extends PureComponent {
   scrollToPage = (pageIndex, animated) => {
     const node = _.invoke(this.carousel, 'current.getNode');
     if (node) {
-      node.scrollTo({x: pageIndex * Constants.screenWidth, animated});
+      node.scrollTo({x: pageIndex * Constants.screenWidth, animated: false});
     }
   };
 
   renderCodeBlock = () => {
-    const {currentPage} = this.context;
-    return block([Animated.onChange(currentPage, call([currentPage], this.onTabChange))]);
+    const {targetPage} = this.context;
+    return block([Animated.onChange(targetPage, [call([targetPage], this.onTabChange)])]);
   };
 
   render() {

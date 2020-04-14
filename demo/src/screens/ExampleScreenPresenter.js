@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {Checkbox, ColorPalette, Colors, RadioButton, RadioGroup, Slider, Text, View} from 'react-native-ui-lib';
+import {Checkbox, Switch, ColorPalette, Colors, RadioButton, RadioGroup, Slider, Text, View} from 'react-native-ui-lib';
 
 export function renderHeader(title, others) {
   return (
@@ -18,7 +18,7 @@ export function renderBooleanOption(title, key) {
       <Text text70 style={{flex: 1}}>
         {title}
       </Text>
-      <Checkbox
+      <Switch
         useCustomTheme
         key={key}
         textID={key}

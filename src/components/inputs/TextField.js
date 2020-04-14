@@ -67,6 +67,10 @@ export default class TextField extends BaseInput {
      */
     floatingPlaceholderColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     /**
+     * Custom style for floating placeholder
+     */
+    floatingPlaceholderStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
      * This text will appear as a placeholder when the textInput becomes focused, only when passing floatingPlaceholder
      * as well (NOT for expandable textInputs)
      */
@@ -150,6 +154,10 @@ export default class TextField extends BaseInput {
      */
     rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
+     * Pass to style the right icon source
+     */
+    rightIconStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
      * Props for the right button {iconSource, onPress, style}
      */
     rightButtonProps: PropTypes.shape({
@@ -217,21 +225,18 @@ export default class TextField extends BaseInput {
   }
 
   getAccessibilityInfo() {
-    const {floatingPlaceholder, placeholder, expandable, value} = this.getThemeProps();
+    const {floatingPlaceholder, placeholder} = this.getThemeProps();
+    const accessibilityState = this.isDisabled() ? {disabled: true} : undefined;
+    let accessibilityLabel = floatingPlaceholder ? this.props.accessibilityLabel || placeholder : '';
 
-    let accessibilityLabel = floatingPlaceholder ? placeholder : undefined;
     if (this.isRequiredField()) {
-      accessibilityLabel = `${accessibilityLabel || ''}. Mandatory`;
-    }
-    if (expandable) {
-      accessibilityLabel = `${accessibilityLabel || ''}. ${value || ''}`;
+      accessibilityLabel = `${accessibilityLabel}. Mandatory`;
     }
 
-    const accessibilityStates = this.isDisabled() ? ['disabled'] : [];
     return {
       accessibilityLabel,
       // on Android accessibilityStates cause issues with expandable input
-      accessibilityStates: Constants.isIOS ? accessibilityStates : undefined
+      accessibilityState: Constants.isIOS ? accessibilityState : undefined
     };
   }
 
@@ -361,7 +366,7 @@ export default class TextField extends BaseInput {
   /** Renders */
   renderPlaceholder() {
     const {floatingPlaceholderState, floatingPlaceholderTranslate} = this.state;
-    const {placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} = this.getThemeProps();
+    const {placeholder, placeholderTextColor, floatingPlaceholderColor, floatingPlaceholderStyle, multiline} = this.getThemeProps();
     const typography = this.getTypography();
     const placeholderColor = this.getStateColor(placeholderTextColor || PLACEHOLDER_COLOR_BY_STATE.default);
 
@@ -401,7 +406,8 @@ export default class TextField extends BaseInput {
                 color: this.shouldFloatPlaceholder()
                   ? this.getStateColor(floatingPlaceholderColor || PLACEHOLDER_COLOR_BY_STATE)
                   : placeholderColor
-              }
+              },
+              floatingPlaceholderStyle
             ]}
           >
             {this.getRequiredPlaceholder(placeholder)}
@@ -594,12 +600,12 @@ export default class TextField extends BaseInput {
   }
 
   renderRightIcon() {
-    const {rightIconSource} = this.getThemeProps();
+    const {rightIconSource, rightIconStyle} = this.getThemeProps();
 
     if (rightIconSource) {
       return (
         <View style={this.styles.rightIcon} pointerEvents="none">
-          <Image source={rightIconSource} resizeMode={'center'} style={this.styles.rightButtonImage}/>
+          <Image source={rightIconSource} resizeMode={'center'} style={[this.styles.rightButtonImage, rightIconStyle]}/>
         </View>
       );
     }
