@@ -10,7 +10,17 @@ import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
 import DialogDismissibleView from './DialogDismissibleView';
 import PanningProvider from '../panningViews/panningProvider';
-import DialogNew from './DialogNew';
+
+const CLOSE_REASON = {
+  /**
+   * Closed by the developer - visible prop was changed from true to false 
+   */
+  CLOSED: 'closed',
+  /**
+   * Canceled by the user - background was pressed (iOS, Android), back button was pressed (Android) etc.
+   */
+  CANCELED: 'canceled'
+};
 
 // TODO: KNOWN ISSUES
 // 1. iOS pressing on the background while enter animation is happening will not call onDismiss
@@ -27,14 +37,16 @@ import DialogNew from './DialogNew';
  * @gif: https://media.giphy.com/media/9S58XdLCoUiLzAc1b1/giphy.gif
  */
 class Dialog extends BaseComponent {
-  static displayName = 'Dialog';
+  // TODO: change after migrate is removed
+  static displayName = 'Dialog (new)';
   static propTypes = {
     /**
      * Control visibility of the dialog
      */
     visible: PropTypes.bool,
     /**
-     * Dismiss callback for when clicking on the background
+     * Will be called once the dialog is closed (after the animation has ended)
+     * Usage: `onDismiss(closeReason, props) {...}`
      */
     onDismiss: PropTypes.func,
     /**
@@ -60,10 +72,6 @@ class Dialog extends BaseComponent {
      */
     useSafeArea: PropTypes.bool,
     /**
-     * Called once the modal has been dissmissed (iOS only)
-     */
-    onModalDismissed: PropTypes.func,
-    /**
      * If this is added only the header will be pannable;
      * this allows for scrollable content (the children of the dialog)
      * props are transferred to the renderPannableHeader
@@ -76,55 +84,45 @@ class Dialog extends BaseComponent {
     /**
      * The Dialog`s container style
      */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * Migration flag, send true to use the new (and improved) Dialog, default is false
-     */
-    migrate: PropTypes.bool
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
   };
 
   static defaultProps = {
-    migrate: false,
     overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6)
   };
+
+  static closeReason = CLOSE_REASON;
 
   constructor(props) {
     super(props);
 
     this.state = {
+      dialogWasCanceled: false,
       alignments: this.state.alignments,
       orientationKey: Constants.orientation,
       modalVisibility: props.visible,
       dialogVisibility: props.visible
     };
 
-    if (!props.migrate) {
-      this.setAlignment();
-    }
+    this.setAlignment();
   }
 
   componentDidMount() {
-    if (!this.getThemeProps().migrate) {
-      Constants.addDimensionsEventListener(this.onOrientationChange);
-    }
+    Constants.addDimensionsEventListener(this.onOrientationChange);
   }
 
   componentWillUnmount() {
-    if (!this.getThemeProps().migrate) {
-      Constants.removeDimensionsEventListener(this.onOrientationChange);
-    }
+    Constants.removeDimensionsEventListener(this.onOrientationChange);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (!this.getThemeProps().migrate) {
-      const {visible: nexVisible} = nextProps;
-      const {visible} = this.props;
+    const {visible: nexVisible} = nextProps;
+    const {visible} = this.props;
 
-      if (nexVisible && !visible) {
-        this.setState({modalVisibility: true, dialogVisibility: true});
-      } else if (visible && !nexVisible) {
-        this.hideDialogView();
-      }
+    if (nexVisible && !visible) {
+      this.setState({modalVisibility: true, dialogVisibility: true});
+    } else if (visible && !nexVisible) {
+      this.hideDialogView();
     }
   }
 
@@ -136,9 +134,7 @@ class Dialog extends BaseComponent {
   };
 
   generateStyles() {
-    if (!this.getThemeProps().migrate) {
-      this.styles = createStyles(this.getThemeProps());
-    }
+    this.styles = createStyles(this.getThemeProps());
   }
 
   setAlignment() {
@@ -150,17 +146,40 @@ class Dialog extends BaseComponent {
     }
   }
 
+  onIosModalDismissed = () => {
+    const props = this.getThemeProps();
+    const {dialogWasCanceled} = this.state;
+    const closeReason = dialogWasCanceled ? Dialog.closeReason.CANCELED : Dialog.closeReason.CLOSED;
+    _.invoke(props, 'onDismiss', closeReason, props);
+    this.setState({dialogWasCanceled: false}); // modalVisibility will be set to false in onDismiss
+  }
+
   onDismiss = () => {
-    this.setState({modalVisibility: false}, () => {
+    if (Constants.isAndroid) {
       const props = this.getThemeProps();
-      if (props.visible) {
-        _.invoke(props, 'onDismiss', props);
+      if (!props.visible) {
+        _.invoke(props, 'onDismiss', Dialog.closeReason.CLOSED, props);
+        this.setState({modalVisibility: false}); // dialogWasCanceled already false
+      } else {
+        this.setState({modalVisibility: false}, () => {
+          _.invoke(props, 'onDismiss', Dialog.closeReason.CANCELED, props);
+          this.setState({dialogWasCanceled: false}); // modalVisibility already false
+        });
       }
-    });
+    } else {
+      this.setState({modalVisibility: false}); // dialogWasCanceled already false
+    }
   };
 
-  hideDialogView = () => {
-    this.setState({dialogVisibility: false});
+  // if coming from onBackgroundPress\onRequestClose this will be an object,
+  // but we do not want to override the true state when coming from UNSAFE_componentWillReceiveProps
+  hideDialogView = (isCancelObject) => {
+    const dialogWasCanceled = !_.isUndefined(isCancelObject);
+    if (dialogWasCanceled) {
+      this.setState({dialogVisibility: false, dialogWasCanceled});
+    } else {
+      this.setState({dialogVisibility: false});
+    }
   };
 
   renderPannableHeader = directions => {
@@ -213,9 +232,9 @@ class Dialog extends BaseComponent {
     );
   };
 
-  renderModal = () => {
+  render = () => {
     const {orientationKey, modalVisibility} = this.state;
-    const {overlayBackgroundColor, onModalDismissed, supportedOrientations, accessibilityLabel} = this.getThemeProps();
+    const {overlayBackgroundColor, supportedOrientations, accessibilityLabel} = this.getThemeProps();
 
     return (
       <Modal
@@ -226,7 +245,7 @@ class Dialog extends BaseComponent {
         onBackgroundPress={this.hideDialogView}
         onRequestClose={this.hideDialogView}
         overlayBackgroundColor={overlayBackgroundColor}
-        onDismiss={onModalDismissed}
+        onDismiss={this.onIosModalDismissed}
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}
       >
@@ -234,16 +253,6 @@ class Dialog extends BaseComponent {
       </Modal>
     );
   };
-
-  render() {
-    const {migrate, ...others} = this.getThemeProps();
-
-    if (!migrate) {
-      return this.renderModal();
-    } else {
-      return <DialogNew {...others}/>;
-    }
-  }
 }
 
 function createStyles(props) {
@@ -266,7 +275,5 @@ function createStyles(props) {
     }
   });
 }
-
-Dialog.closeReason = DialogNew.closeReason;
 
 export default Dialog;
