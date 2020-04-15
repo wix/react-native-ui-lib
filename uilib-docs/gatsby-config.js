@@ -15,12 +15,12 @@ module.exports = {
         path: `${__dirname}/../src/components/`
       }
     },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        path: `${__dirname}/../src/incubator/`
-      }
-    },
+    // {
+    //   resolve: 'gatsby-source-filesystem',
+    //   options: {
+    //     path: `${__dirname}/../src/incubator/`
+    //   }
+    // },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
