@@ -6,7 +6,12 @@ import {Constants} from '../../helpers';
 
 const {Code, block, call} = Animated;
 
+/**
+ * @description: TabController's Page Carousel
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
+ */
 class PageCarousel extends PureComponent {
+  static displayName = 'TabController.PageCarousel';
   static contextType = TabBarContext;
   carousel = React.createRef();
 
@@ -29,13 +34,13 @@ class PageCarousel extends PureComponent {
   scrollToPage = (pageIndex, animated) => {
     const node = _.invoke(this.carousel, 'current.getNode');
     if (node) {
-      node.scrollTo({x: pageIndex * Constants.screenWidth, animated});
+      node.scrollTo({x: pageIndex * Constants.screenWidth, animated: false});
     }
   };
 
   renderCodeBlock = () => {
-    const {currentPage} = this.context;
-    return block([Animated.onChange(currentPage, call([currentPage], this.onTabChange))]);
+    const {targetPage} = this.context;
+    return block([Animated.onChange(targetPage, [call([targetPage], this.onTabChange)])]);
   };
 
   render() {

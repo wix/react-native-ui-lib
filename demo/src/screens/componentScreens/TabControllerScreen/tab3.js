@@ -36,7 +36,7 @@ class Tab2 extends Component {
     return (
       <ScrollView>
         <View flex padding-20>
-          <Text text40>TAB 3</Text>
+          <Text text40>Reviews</Text>
 
           {loading && (
             <Text marginT-20 text60>
@@ -45,7 +45,7 @@ class Tab2 extends Component {
           )}
 
           {!loading &&
-            _.times(100, index => {
+            _.times(20, index => {
               return (
                 <Card row centerV margin-20 padding-20 key={index} onPress={_.noop}>
                   <Avatar

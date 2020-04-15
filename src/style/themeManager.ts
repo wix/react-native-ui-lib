@@ -20,6 +20,10 @@ export class ThemeManager {
     } as Extendable
   };
 
+  forcedTheme = {
+    components: {} as Extendable
+  }
+
   setTheme(overrides: Dictionary<string>) {
     this.theme = _.merge(this.theme, overrides);
   }
@@ -49,8 +53,20 @@ export class ThemeManager {
     }
   }
 
+  setComponentForcedTheme(componentName: string, overrides: Dictionary<string> | Function) {
+    if (_.isFunction(overrides)) {
+      this.forcedTheme.components[componentName] = overrides;
+    } else {
+      this.forcedTheme.components[componentName] = _.cloneDeep(overrides);
+    }
+  }
+
   get components() {
     return this.theme.components;
+  }
+
+  get forcedThemeComponents() {
+    return this.forcedTheme.components;
   }
 
   get primaryColor() {

@@ -49,6 +49,7 @@
     "prop-types": "^15.5.10",
     "react-native-animatable": "^1.1.0",
     "react-native-color": "0.0.10",
+    "react-native-redash": "^12.0.3",
     "react-native-text-size": "4.0.0-rc.1",
     "semver": "^5.5.0",
     "url-parse": "^1.2.0"
