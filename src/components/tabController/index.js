@@ -38,7 +38,7 @@ const {
 
 /**
  * @description: A performant solution for a tab controller with lazy load mechanism
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TabControllerScreen/index.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
  * @notes: This component is based on react-native-gesture-handler
  * @important: On Android, if using react-native-navigation, make sure to wrap your screen with gestureHandlerRootHOC
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation

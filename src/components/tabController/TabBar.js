@@ -21,7 +21,7 @@ const {Code, Value, interpolate, block, set} = Reanimated;
 
 /**
  * @description: TabController's TabBar component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TabControllerScreen/index.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
  */
 class TabBar extends PureComponent {
   static displayName = 'TabController.TabBar';
