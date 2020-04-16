@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Colors, Image, ProgressiveImage, ActivityIndicator} from 'react-native-ui-lib';
-import {renderBooleanOption, renderRadioGroup} from '../ExampleScreenPresenter';
-
-import cameraIcon from '../../assets/icons/cameraSelected.png';
-import AnimatedImage from '../../../../src/components/animatedImage';
+import {View, Text, ProgressiveImage} from 'react-native-ui-lib';
 
 const IMAGE_URL = 'https://images.pexels.com/photos/3222421/pexels-photo-3222421.jpeg';
 const THUMB_URL = 'https://images.pexels.com/photos/3222421/pexels-photo-3222421.jpeg?w=50';
