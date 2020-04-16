@@ -62,12 +62,13 @@ export declare type AlignmentLiterals = 'row' | 'spread' | 'center' | 'centerH' 
 export declare type Modifier<T extends string> = Partial<Record<T, boolean>>;
 export declare type TypographyModifiers = Modifier<TypographyLiterals>;
 export declare type ColorsModifiers = Modifier<ColorLiterals>;
+export declare type BackgroundColorModifier = Modifier<'bg'>;
 export declare type AlignmentModifiers = Modifier<AlignmentLiterals>;
 export declare type PaddingModifiers = Modifier<PaddingLiterals>;
 export declare type MarginModifiers = Modifier<MarginLiterals>;
 export declare type FlexModifiers = Modifier<FlexLiterals>;
 export declare type BorderRadiusModifiers = Modifier<BorderRadiusLiterals>;
-export declare type ContainerModifiers = AlignmentModifiers & PaddingModifiers & MarginModifiers & FlexModifiers & BorderRadiusModifiers;
+export declare type ContainerModifiers = AlignmentModifiers & PaddingModifiers & MarginModifiers & FlexModifiers & BorderRadiusModifiers & BackgroundColorModifier;
 export declare function extractColorValue(props: Dictionary<any>): any;
 export declare function extractBackgroundColorValue(props: Dictionary<any>): any;
 export declare function extractTypographyValue(props: Dictionary<any>): undefined;

@@ -77,6 +77,7 @@ export type Modifier<T extends string> = Partial<Record<T, boolean>>
 
 export type TypographyModifiers = Modifier<TypographyLiterals>;
 export type ColorsModifiers = Modifier<ColorLiterals>;
+export type BackgroundColorModifier = Modifier<'bg'>;
 export type AlignmentModifiers = Modifier<AlignmentLiterals>;
 export type PaddingModifiers = Modifier<PaddingLiterals>;
 export type MarginModifiers = Modifier<MarginLiterals>;
@@ -88,8 +89,8 @@ export type ContainerModifiers =
   PaddingModifiers &
   MarginModifiers &
   FlexModifiers &
-  BorderRadiusModifiers;
-
+  BorderRadiusModifiers & 
+  BackgroundColorModifier;
 
 
 export function extractColorValue(props: Dictionary<any>) {
