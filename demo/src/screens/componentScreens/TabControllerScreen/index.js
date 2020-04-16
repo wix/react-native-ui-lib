@@ -128,7 +128,7 @@ class TabControllerScreen extends Component {
           </TabController.TabBar>
           {this.renderTabPages()}
         </TabController>
-        <View absB left margin-20 marginB-100>
+        <View absB left margin-20 marginB-100 style={{zIndex: 1}}>
           <Button
             bg-grey20={!asCarousel}
             bg-green30={asCarousel}

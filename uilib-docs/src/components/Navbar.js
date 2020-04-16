@@ -55,9 +55,7 @@ class Navbar extends Component {
               <li key={index}>
                 <Link
                   key={component.node.displayName}
-                  to={`/docs/${component.node.isPublic ? 'public/' : ''}${
-                    component.node.displayName
-                  }/`}
+                  to={`/docs/${component.node.displayName}/`}
                 >
                   {component.node.displayName}
                   {component.node.isPublic && <span className="public">public</span>}
@@ -79,7 +77,6 @@ class Navbar extends Component {
               edges {
                 node {
                   displayName
-                  isPublic
                 }
               }
             }

@@ -6,7 +6,12 @@ import {Constants} from '../../helpers';
 
 const {Code, block, call} = Animated;
 
+/**
+ * @description: TabController's Page Carousel
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
+ */
 class PageCarousel extends PureComponent {
+  static displayName = 'TabController.PageCarousel';
   static contextType = TabBarContext;
   carousel = React.createRef();
 
