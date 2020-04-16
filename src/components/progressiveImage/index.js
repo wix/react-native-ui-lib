@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Animated} from 'react-native';
-import {AnimatedImage, Colors} from 'react-native-ui-lib'; //eslint-disable-line
+import {AnimatedImage} from 'react-native-ui-lib'; //eslint-disable-line
 
 /**
  * @description: Image component that loads first a small thumbnail of the images, 
