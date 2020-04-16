@@ -3,7 +3,7 @@ import {Text as RNText, StyleSheet, TextProps, TextStyle, Animated} from 'react-
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import {Colors} from '../../style';
 import _ from 'lodash';
-import {MarginModifiers} from '../../commons/modifiers';
+import {MarginModifiers, TypographyModifiers, ColorsModifiers} from '../../commons/modifiers';
 
 interface TextPropTypes extends TextProps {
   /**
@@ -30,9 +30,18 @@ interface TextPropTypes extends TextProps {
    * Use Animated.Text as a container
    */
   animated?: boolean;
+
+  ref?: any;
+  textAlign?: string;
 }
 
-type PropsTypes = BaseComponentInjectedProps & TextPropTypes & ForwardRefInjectedProps & MarginModifiers;
+type PropsTypes =
+  & BaseComponentInjectedProps
+  & TextPropTypes
+  & ForwardRefInjectedProps
+  & MarginModifiers
+  & TypographyModifiers
+  & ColorsModifiers;
 
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support

@@ -18,6 +18,8 @@ export interface CardImageProps {
   height?: number | string;
   position?: CardImagePositionOption | CardImagePositionOption[];
   borderRadius?: number;
+  style?: StyleProp<ViewStyle>;
+  overlayType?: string;
 }
 
 export interface CardSelectionOptions {
