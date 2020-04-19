@@ -59,7 +59,11 @@ class TabController extends Component {
     /**
      * When using TabController.PageCarousel this should be turned on
      */
-    asCarousel: PropTypes.bool
+    asCarousel: PropTypes.bool,
+    /**
+     * Pass for custom carousel page width
+     */
+    carouselPageWidth: PropTypes.number
   };
 
   static defaultProps = {
@@ -74,14 +78,19 @@ class TabController extends Component {
       selectedIndex: this.props.selectedIndex,
       asCarousel: this.props.asCarousel,
       itemStates: [],
+      pageWidth: this.pageWidth,
       // animated values
       targetPage: new Value(this.props.selectedIndex),
       currentPage: new Value(this.props.selectedIndex),
-      carouselOffset: new Value(this.props.selectedIndex * Math.round(Constants.screenWidth)),
+      carouselOffset: new Value(this.props.selectedIndex * Math.round(this.pageWidth)),
       // // callbacks
       registerTabItems: this.registerTabItems,
       onChangeIndex: this.props.onChangeIndex
     };
+  }
+
+  get pageWidth() {
+    return this.props.carouselPageWidth || Constants.screenWidth;
   }
 
   registerTabItems = (tabItemsCount, ignoredItems) => {
@@ -127,11 +136,11 @@ class TabController extends Component {
 
       /* Page change by Carousel scroll */
       onChange(carouselOffset, [
-        set(isScrolling, lessThan(round(abs(diff(carouselOffset))), round(Constants.screenWidth))),
+        set(isScrolling, lessThan(round(abs(diff(carouselOffset))), round(this.pageWidth))),
         cond(and(not(isAnimating)), [
           set(currentPage,
             interpolate(round(carouselOffset), {
-              inputRange: itemStates.map((v, i) => Math.round(i * Constants.screenWidth)),
+              inputRange: itemStates.map((v, i) => Math.round(i * this.pageWidth)),
               outputRange: itemStates.map((v, i) => i)
             })),
           set(toPage, currentPage)

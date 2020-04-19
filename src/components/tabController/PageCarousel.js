@@ -32,9 +32,10 @@ class PageCarousel extends PureComponent {
   };
 
   scrollToPage = (pageIndex, animated) => {
+    const {pageWidth} = this.context;
     const node = _.invoke(this.carousel, 'current.getNode');
     if (node) {
-      node.scrollTo({x: pageIndex * Constants.screenWidth, animated: false});
+      node.scrollTo({x: pageIndex * pageWidth, animated: false});
     }
   };
 
@@ -44,7 +45,7 @@ class PageCarousel extends PureComponent {
   };
 
   render() {
-    const {selectedIndex} = this.context;
+    const {selectedIndex, pageWidth} = this.context;
     return (
       <>
         <Animated.ScrollView
@@ -55,7 +56,7 @@ class PageCarousel extends PureComponent {
           showsHorizontalScrollIndicator={false}
           onScroll={this.onScroll}
           scrollEventThrottle={16}
-          contentOffset={{x: selectedIndex * Constants.screenWidth}} // iOS only
+          contentOffset={{x: selectedIndex * pageWidth}} // iOS only
         />
 
         <Code>{this.renderCodeBlock}</Code>

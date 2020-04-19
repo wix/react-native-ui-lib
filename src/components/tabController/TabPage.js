@@ -52,6 +52,7 @@ export default class TabPage extends PureComponent {
   _pageStyle = [
     {opacity: this._opacity},
     this.context.asCarousel ? styles.carouselPage : styles.page,
+    this.context.asCarousel ? {width: this.context.pageWidth} : undefined,
     {zIndex: this._zIndex}
   ];
 
