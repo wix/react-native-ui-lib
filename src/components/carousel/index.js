@@ -116,8 +116,7 @@ export default class Carousel extends BaseComponent {
 
     const themeProps = this.getThemeProps();
     this.carousel = React.createRef();
-    const defaultPageWidth = themeProps.loop ?
-      Constants.screenWidth : themeProps.pageWidth + this.getItemSpacings(themeProps) || Constants.screenWidth;
+    const defaultPageWidth = (themeProps.loop || !themeProps.pageWidth) ? Constants.screenWidth : themeProps.pageWidth;
     
     this.state = {
       containerWidth: undefined,
