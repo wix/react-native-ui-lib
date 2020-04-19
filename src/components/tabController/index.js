@@ -1,5 +1,3 @@
-// TODO: support carousel mode
-// TODO: support auto scroll to selected index
 // TODO: support commented props
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
@@ -8,6 +6,7 @@ import Reanimated, {Easing} from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
 import {timing, fract, between} from 'react-native-redash';
 import {Constants} from '../../helpers';
+import {asBaseComponent} from '../../commons';
 import TabBarContext from './TabBarContext';
 import TabBar from './TabBar';
 import TabBarItem from './TabBarItem';
@@ -173,4 +172,4 @@ TabController.TabBar = TabBar;
 TabController.TabBarItem = TabBarItem;
 TabController.TabPage = TabPage;
 TabController.PageCarousel = PageCarousel;
-export default TabController;
+export default asBaseComponent(TabController);
