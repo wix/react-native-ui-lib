@@ -135,6 +135,7 @@ export default class Carousel extends BaseComponent {
     }
   }
 
+  // TODO: change to getDerivedStateFromProps (requires changing from BaseComponent to asBaseComponent)
   UNSAFE_componentWillReceiveProps(nextProps) {
     const {currentPage} = this.state;
     const {pageWidth: nexPageWidth} = nextProps;
