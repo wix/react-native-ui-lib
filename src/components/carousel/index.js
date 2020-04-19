@@ -135,6 +135,20 @@ export default class Carousel extends BaseComponent {
     }
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const {currentPage} = this.state;
+    const {pageWidth: nexPageWidth} = nextProps;
+    const {pageWidth} = this.getThemeProps();
+
+    if (pageWidth !== nexPageWidth) {
+      const pageWidth = nexPageWidth;
+      this.setState({
+        pageWidth,
+        initialOffset: {x: presenter.calcOffset(this.getThemeProps(), {currentPage, pageWidth})}
+      });
+    }
+  }
+
   componentWillUnmount() {
     Constants.removeDimensionsEventListener(this.onOrientationChanged);
     clearInterval(this.autoplayTimer);
@@ -254,19 +268,12 @@ export default class Carousel extends BaseComponent {
 
   onContainerLayout = ({nativeEvent: {layout: {width: containerWidth}}}) => {
     const update = {containerWidth};
-    const {pageWidth} = this.getThemeProps();
+    const {pageWidth = containerWidth} = this.getThemeProps();
 
-    if (!pageWidth) {
-      update.pageWidth = containerWidth;
-      update.initialOffset = {
-        x: presenter.calcOffset(this.getThemeProps(), {currentPage: this.state.currentPage, pageWidth: containerWidth})
-      };
-    } else {
-      update.pageWidth = pageWidth;
-      update.initialOffset = {
-        x: presenter.calcOffset(this.getThemeProps(), {currentPage: this.state.currentPage, pageWidth})
-      };
-    }
+    update.pageWidth = pageWidth;
+    update.initialOffset = {
+      x: presenter.calcOffset(this.getThemeProps(), {currentPage: this.state.currentPage, pageWidth})
+    };
 
     this.setState(update);
   };
