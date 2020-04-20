@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet, Animated} from 'react-native';
 import AnimatedImage from '../animatedImage';
-import {Colors} from '../../style/colors';
+import {Colors} from '../../style';
 
 /**
  * @description: Image component that loads first a small thumbnail of the images, 
