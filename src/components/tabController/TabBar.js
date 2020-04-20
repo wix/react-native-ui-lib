@@ -53,6 +53,10 @@ class TabBar extends PureComponent {
      */
     labelStyle: RNText.propTypes.style,
     /**
+     * custom selected label style
+     */
+    selectedLabelStyle: RNText.propTypes.style,
+    /**
      * the default label color
      */
     labelColor: PropTypes.string,
@@ -229,6 +233,7 @@ class TabBar extends PureComponent {
       labelColor,
       selectedLabelColor,
       labelStyle,
+      selectedLabelStyle,
       uppercase,
       iconColor,
       selectedIconColor,
@@ -246,6 +251,7 @@ class TabBar extends PureComponent {
             labelColor={labelColor}
             selectedLabelColor={selectedLabelColor}
             labelStyle={labelStyle}
+            selectedLabelStyle={selectedLabelStyle}
             uppercase={uppercase}
             iconColor={iconColor}
             selectedIconColor={selectedIconColor}
@@ -270,6 +276,7 @@ class TabBar extends PureComponent {
           labelColor,
           selectedLabelColor,
           labelStyle,
+          selectedLabelStyle,
           uppercase,
           iconColor,
           selectedIconColor,
