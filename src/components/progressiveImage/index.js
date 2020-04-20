@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {View, StyleSheet, Animated} from 'react-native';
-import {AnimatedImage} from 'react-native-ui-lib'; //eslint-disable-line
+import AnimatedImage from '../animatedImage';
+import {Colors} from '../../style/colors';
 
 /**
  * @description: Image component that loads first a small thumbnail of the images, 
@@ -9,6 +11,14 @@ import {AnimatedImage} from 'react-native-ui-lib'; //eslint-disable-line
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ProgressiveImageScreen.js
  */
 class ProgressiveImage extends React.Component {
+  static displayName = 'ProgressiveImage';
+  static propTypes = {
+    /**
+     * small thumbnail source to display while the full-size image is loading
+     */
+    thumbnailSource: PropTypes.object
+  };
+
   thumbnailAnimated = new Animated.Value(0);
   imageAnimated = new Animated.Value(0);
 
@@ -35,15 +45,8 @@ class ProgressiveImage extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  imageOverlay: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    top: 0
-  },
   container: {
-    backgroundColor: '#e1e4e8'
+    backgroundColor: Colors.grey60
   }
 });
 
