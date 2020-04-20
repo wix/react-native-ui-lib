@@ -103,7 +103,7 @@ export default class TagsInput extends BaseComponent {
       value: props.value,
       tags: _.cloneDeep(props.tags) || [],
       tagIndexToRemove: undefined,
-      isTagNotValidate: false,
+      isTagNotValidate: false
     };
   }
 
@@ -208,9 +208,11 @@ export default class TagsInput extends BaseComponent {
   }
 
   updateInvalidTags(tags) {
-    _.filter(tags, (tag) => {return tag.invalid}).length > 0 ?
-    this.setState({isTagNotValidate: true}) :
-    this.setState({isTagNotValidate: false});
+    return tags.filter((tag) => {
+      return tag.invalid;
+    }).length > 0 ?
+      this.setState({isTagNotValidate: true}) :
+      this.setState({isTagNotValidate: false});
   }
 
   onKeyPress(event) {
@@ -261,13 +263,18 @@ export default class TagsInput extends BaseComponent {
 
     return (
       <View row centerV>
-        {shouldMarkTag &&
-             (<Image style={[isTagNotValidate ? styles.inValidTagRemoveIcon : styles.removeIcon]} source={Assets.icons.x}/>)}
-          <Text
-            style={[isTagNotValidate ? (shouldMarkTag ? styles.inValidMarkedTagLabel : styles.inValidTagLabel)
-             : styles.tagLabel, typography]} accessibilityLabel={`${label} tag`}>
-            {isTagNotValidate ? label : (shouldMarkTag ? 'Remove' : label)}
-          </Text>
+        {shouldMarkTag && (
+          <Image
+            style={[isTagNotValidate ? styles.inValidTagRemoveIcon : styles.removeIcon]}
+            source={Assets.icons.x}
+          />)
+        }
+        <Text
+          style={[isTagNotValidate ? (shouldMarkTag ? styles.inValidMarkedTagLabel : styles.inValidTagLabel)
+            : styles.tagLabel, typography]} accessibilityLabel={`${label} tag`}
+        >
+          {isTagNotValidate ? label : (shouldMarkTag ? 'Remove' : label)}
+        </Text>
       </View>
     );
   }
@@ -280,8 +287,10 @@ export default class TagsInput extends BaseComponent {
 
     if (isTagNotValidate) {
       return (
-        <View key={index}
-          style={[styles.inValidTag, tagStyle, shouldMarkTag && styles.inValidMarkedTag]}>
+        <View
+          key={index}
+          style={[styles.inValidTag, tagStyle, shouldMarkTag && styles.inValidMarkedTag]}
+        >
           {this.renderLabel(tag, shouldMarkTag, isTagNotValidate)}
         </View>
       );
@@ -379,13 +388,13 @@ const basicTagStyle = {
   paddingHorizontal: 12,
   marginRight: GUTTER_SPACING,
   marginVertical: GUTTER_SPACING / 2
-}
+};
 
 const basicIconStyle = {
   width: 10,
   height: 10,
   marginRight: 6
-}
+};
 
 const styles = StyleSheet.create({
   withUnderline: {
