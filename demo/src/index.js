@@ -55,6 +55,9 @@ module.exports = {
       get ImageScreen() {
         return require('./screens/componentScreens/ImageScreen').default;
       },
+      get ProgressiveImageScreen() {
+        return require('./screens/componentScreens/ProgressiveImageScreen').default;
+      },
       get MaskedInputScreen() {
         return require('./screens/componentScreens/MaskedInputScreen').default;
       },
