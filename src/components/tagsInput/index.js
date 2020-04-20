@@ -30,9 +30,9 @@ export default class TagsInput extends BaseComponent {
 
   static propTypes = {
     /**
-     * list of tags. can be string or custom object when implementing getLabel
+     * list of tags. can be string boolean or custom object when implementing getLabel
      */
-    tags: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])),
+    tags: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.bool])),
     /**
      * callback for extracting the label out of the tag item
      */
@@ -53,6 +53,10 @@ export default class TagsInput extends BaseComponent {
      * callback for when pressing a tag in the following format (tagIndex, markedTagIndex) => {...}
      */
     onTagPress: PropTypes.func,
+    /**
+     * validation message error appears when tag isn't validate
+     */
+    onTagNotValidate: PropTypes.string,
     /**
      * if true, tags *removal* Ux won't be available
      */
@@ -98,11 +102,14 @@ export default class TagsInput extends BaseComponent {
     this.state = {
       value: props.value,
       tags: _.cloneDeep(props.tags) || [],
-      tagIndexToRemove: undefined
+      tagIndexToRemove: undefined,
+      isTagNotValidate: false,
     };
   }
 
   componentDidMount() {
+    const {tags} = this.state;
+    this.updateInvalidTags(tags);
     if (Constants.isAndroid) {
       const textInputHandle = ReactNative.findNodeHandle(this.input);
       if (textInputHandle && NativeModules.TextInputDelKeyHandler) {
@@ -140,6 +147,7 @@ export default class TagsInput extends BaseComponent {
     const newTag = _.isFunction(onCreateTag) ? onCreateTag(value) : value;
     const newTags = [...tags, newTag];
 
+    this.updateInvalidTags(newTags);
     this.setState({
       value: '',
       tags: newTags
@@ -155,6 +163,7 @@ export default class TagsInput extends BaseComponent {
       const removedTag = tags[tagIndexToRemove];
 
       tags.splice(tagIndexToRemove, 1);
+      this.updateInvalidTags(tags);
       this.setState({
         tags,
         tagIndexToRemove: undefined
@@ -198,6 +207,12 @@ export default class TagsInput extends BaseComponent {
     return isLastTagMarked;
   }
 
+  updateInvalidTags(tags) {
+    _.filter(tags, (tag) => {return tag.invalid}).length > 0 ?
+    this.setState({isTagNotValidate: true}) :
+    this.setState({isTagNotValidate: false});
+  }
+
   onKeyPress(event) {
     _.invoke(this.props, 'onKeyPress', event);
 
@@ -236,24 +251,41 @@ export default class TagsInput extends BaseComponent {
     return _.get(item, 'label');
   }
 
-  renderLabel(tag, shouldMarkTag) {
+  onTagNotValidate(tag, onTagNotValidate) {
+    return onTagNotValidate ? tag.invalid : false;
+  }
+
+  renderLabel(tag, shouldMarkTag, isTagNotValidate) {
     const typography = this.extractTypographyValue();
     const label = this.getLabel(tag);
 
     return (
       <View row centerV>
-        {shouldMarkTag && <Image style={styles.removeIcon} source={Assets.icons.x}/>}
-        <Text style={[styles.tagLabel, typography]} accessibilityLabel={`${label} tag`}>
-          {shouldMarkTag ? 'Remove' : label}
-        </Text>
+        {shouldMarkTag &&
+             (<Image style={[isTagNotValidate ? styles.inValidTagRemoveIcon : styles.removeIcon]} source={Assets.icons.x}/>)}
+          <Text
+            style={[isTagNotValidate ? (shouldMarkTag ? styles.inValidMarkedTagLabel : styles.inValidTagLabel)
+             : styles.tagLabel, typography]} accessibilityLabel={`${label} tag`}>
+            {isTagNotValidate ? label : (shouldMarkTag ? 'Remove' : label)}
+          </Text>
       </View>
     );
   }
 
   renderTag(tag, index) {
-    const {tagStyle, renderTag} = this.getThemeProps();
+    const {tagStyle, renderTag, onTagNotValidate} = this.getThemeProps();
     const {tagIndexToRemove} = this.state;
     const shouldMarkTag = tagIndexToRemove === index;
+    const isTagNotValidate = this.onTagNotValidate(tag, onTagNotValidate);
+
+    if (isTagNotValidate) {
+      return (
+        <View key={index}
+          style={[styles.inValidTag, tagStyle, shouldMarkTag && styles.inValidMarkedTag]}>
+          {this.renderLabel(tag, shouldMarkTag, isTagNotValidate)}
+        </View>
+      );
+    }
 
     if (_.isFunction(renderTag)) {
       return renderTag(tag, index, shouldMarkTag, this.getLabel(tag));
@@ -310,15 +342,20 @@ export default class TagsInput extends BaseComponent {
   }
 
   render() {
-    const {disableTagRemoval, containerStyle, hideUnderline} = this.getThemeProps();
+    const {disableTagRemoval, containerStyle, hideUnderline, onTagNotValidate} = this.getThemeProps();
     const tagRenderFn = disableTagRemoval ? this.renderTag : this.renderTagWrapper;
-    const {tags} = this.state;
+    const {tags, isTagNotValidate, tagIndexToRemove} = this.state;
 
     return (
       <View style={[!hideUnderline && styles.withUnderline, containerStyle]}>
         <View style={styles.tagsList}>
           {_.map(tags, tagRenderFn)}
           {this.renderTextInput()}
+        </View>
+        <View>
+          <Text style={[isTagNotValidate && tagIndexToRemove ? styles.inValidMarkedTagLabel : styles.inValidTagLabel]}>
+            {isTagNotValidate ? onTagNotValidate : null}
+          </Text>
         </View>
       </View>
     );
@@ -335,6 +372,19 @@ export default class TagsInput extends BaseComponent {
   clear() {
     this.input.clear();
   }
+}
+const basicTagStyle = {
+  borderRadius: BorderRadiuses.br100,
+  paddingVertical: 4.5,
+  paddingHorizontal: 12,
+  marginRight: GUTTER_SPACING,
+  marginVertical: GUTTER_SPACING / 2
+}
+
+const basicIconStyle = {
+  width: 10,
+  height: 10,
+  marginRight: 6
 }
 
 const styles = StyleSheet.create({
@@ -353,23 +403,39 @@ const styles = StyleSheet.create({
   },
   tag: {
     backgroundColor: Colors.blue30,
-    borderRadius: BorderRadiuses.br100,
-    paddingVertical: 4.5,
-    paddingHorizontal: 12,
-    marginRight: GUTTER_SPACING,
-    marginVertical: GUTTER_SPACING / 2
+    ...basicTagStyle
+  },
+  inValidTag: {
+    borderWidth: 1,
+    borderColor: Colors.red30,
+    ...basicTagStyle
+  },
+  inValidMarkedTag: {
+    borderWidth: 1,
+    borderColor: Colors.red10,
+    ...basicTagStyle
   },
   tagMarked: {
     backgroundColor: Colors.dark10
   },
   removeIcon: {
     tintColor: Colors.white,
-    width: 10,
-    height: 10,
-    marginRight: 6
+    ...basicIconStyle
+  },
+  inValidTagRemoveIcon: {
+    tintColor: Colors.red10,
+    ...basicIconStyle
   },
   tagLabel: {
     ...Typography.text80,
     color: Colors.white
+  },
+  inValidTagLabel: {
+    ...Typography.text80,
+    color: Colors.red30
+  },
+  inValidMarkedTagLabel: {
+    ...Typography.text80,
+    color: Colors.red10
   }
 });
