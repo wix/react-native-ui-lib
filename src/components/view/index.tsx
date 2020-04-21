@@ -1,10 +1,9 @@
 import React, {PureComponent} from 'react';
 import {View as RNView, SafeAreaView, Animated, ViewProps} from 'react-native';
-import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
+import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps, ContainerModifiers} from '../../commons/new';
 import Constants from '../../helpers/Constants';
-import {ContainerModifiers} from '../../commons/modifiers';
 
-interface ViewPropTypes extends ViewProps {
+interface ViewPropTypes extends ViewProps, ContainerModifiers {
   /**
    * If true, will render as SafeAreaView
    */
@@ -26,7 +25,7 @@ interface ViewPropTypes extends ViewProps {
    */
   height?: string | number;
 }
-type PropsTypes = BaseComponentInjectedProps & ViewPropTypes & ForwardRefInjectedProps & ContainerModifiers;
+type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & ViewPropTypes;
 
 /**
  * @description: An enhanced View component
@@ -92,4 +91,4 @@ class View extends PureComponent<PropsTypes> {
   }
 }
 
-export default asBaseComponent(forwardRef(View));
+export default asBaseComponent<ViewPropTypes>(forwardRef(View));

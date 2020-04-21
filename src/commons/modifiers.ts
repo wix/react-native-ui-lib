@@ -74,9 +74,10 @@ export type AlignmentLiterals =
 | 'left' | 'right' | 'top' | 'bottom';
 
 export type Modifier<T extends string> = Partial<Record<T, boolean>>
+export type CustomModifier = {[key: string]: any};
 
-export type TypographyModifiers = Modifier<TypographyLiterals>;
-export type ColorsModifiers = Modifier<ColorLiterals>;
+export type TypographyModifiers = Modifier<TypographyLiterals> & CustomModifier;
+export type ColorsModifiers = Modifier<ColorLiterals> & CustomModifier;
 export type BackgroundColorModifier = Modifier<'bg'>;
 export type AlignmentModifiers = Modifier<AlignmentLiterals>;
 export type PaddingModifiers = Modifier<PaddingLiterals>;

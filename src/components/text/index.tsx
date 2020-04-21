@@ -1,11 +1,19 @@
 import React, {PureComponent} from 'react';
 import {Text as RNText, StyleSheet, TextProps, TextStyle, Animated} from 'react-native';
-import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
+import {
+  asBaseComponent,
+  forwardRef,
+  BaseComponentInjectedProps,
+  ForwardRefInjectedProps,
+  MarginModifiers,
+  TypographyModifiers,
+  ColorsModifiers
+} from '../../commons/new';
 import {Colors} from '../../style';
 import _ from 'lodash';
-import {MarginModifiers, TypographyModifiers, ColorsModifiers} from '../../commons/modifiers';
 
-interface TextPropTypes extends TextProps {
+
+interface TextPropTypes extends TextProps, TypographyModifiers, ColorsModifiers, MarginModifiers {
   /**
    * color of the text
    */
@@ -35,13 +43,7 @@ interface TextPropTypes extends TextProps {
   textAlign?: string;
 }
 
-type PropsTypes =
-  & BaseComponentInjectedProps
-  & TextPropTypes
-  & ForwardRefInjectedProps
-  & MarginModifiers
-  & TypographyModifiers
-  & ColorsModifiers;
+type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPropTypes;
 
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
@@ -88,7 +90,7 @@ class Text extends PureComponent<PropsTypes> {
 
     if (!_.isEmpty(highlightString)) {
       if (_.isArray(children)) {
-        return _.map(children, child => {
+        return _.map(children, (child) => {
           return this.renderText(child);
         });
       }
@@ -155,4 +157,4 @@ const styles = StyleSheet.create({
 
 export {Text}; // For tests
 
-export default asBaseComponent(forwardRef(Text));
+export default asBaseComponent<TextPropTypes>(forwardRef(Text));
