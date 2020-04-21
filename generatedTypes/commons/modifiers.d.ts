@@ -60,8 +60,11 @@ export declare type TypographyLiterals = keyof typeof TypographyPresets;
 export declare type BorderRadiusLiterals = keyof typeof BorderRadiusesLiterals;
 export declare type AlignmentLiterals = 'row' | 'spread' | 'center' | 'centerH' | 'centerV' | 'left' | 'right' | 'top' | 'bottom';
 export declare type Modifier<T extends string> = Partial<Record<T, boolean>>;
-export declare type TypographyModifiers = Modifier<TypographyLiterals>;
-export declare type ColorsModifiers = Modifier<ColorLiterals>;
+export declare type CustomModifier = {
+    [key: string]: any;
+};
+export declare type TypographyModifiers = Modifier<TypographyLiterals> & CustomModifier;
+export declare type ColorsModifiers = Modifier<ColorLiterals> & CustomModifier;
 export declare type BackgroundColorModifier = Modifier<'bg'>;
 export declare type AlignmentModifiers = Modifier<AlignmentLiterals>;
 export declare type PaddingModifiers = Modifier<PaddingLiterals>;
