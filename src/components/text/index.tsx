@@ -13,7 +13,7 @@ import {Colors} from '../../style';
 import _ from 'lodash';
 
 
-interface TextPropTypes extends TextProps, TypographyModifiers, ColorsModifiers, MarginModifiers {
+type TextPropTypes = TextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
   /**
    * color of the text
    */
