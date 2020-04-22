@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {PanResponder} from 'react-native';
 import {PureBaseComponent} from '../../commons';
-import {View} from 'react-native-ui-lib'; //eslint-disable-line
 import asPanViewConsumer from './asPanViewConsumer';
 import PanningProvider from './panningProvider';
+import View from '../view';
 
 const DEFAULT_PAN_SENSITIVITY = 5;
 const DEFAULT_SWIPE_VELOCITY = 1.8;

@@ -2,7 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
-import {Constants, Colors, Spacings, BaseComponent, View, Image, Button} from 'react-native-ui-lib';
+import {Constants} from '../../helpers';
+import {BaseComponent} from '../../commons';
+import {Colors, Spacings} from '../../style';
+import View from '../view';
+import Button from '../button';
+import Image from '../image';
 
 
 const SHOW_ANIMATION_DELAY = 350;

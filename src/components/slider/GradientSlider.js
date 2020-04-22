@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import tinycolor from 'tinycolor2';
 import React from 'react';
 import {HueGradient, LightnessGradient, SaturationGradient, Gradient} from 'react-native-color';
-import {Colors, BaseComponent} from 'react-native-ui-lib';
+import {Colors} from '../../style';
+import {BaseComponent} from '../../commons';
 import Slider from './index';
 import asSliderGroupChild from './context/asSliderGroupChild';
 
