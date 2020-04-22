@@ -43,7 +43,7 @@ type TextPropTypes = TextProps & TypographyModifiers & ColorsModifiers & MarginM
   textAlign?: string;
 }
 
-type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPropTypes & { [key: string]: boolean };
+type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPropTypes;
 
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
