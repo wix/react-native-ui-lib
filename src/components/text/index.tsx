@@ -13,7 +13,7 @@ import {Colors} from '../../style';
 import _ from 'lodash';
 
 
-interface TextPropTypes extends TextProps, TypographyModifiers, ColorsModifiers, MarginModifiers {
+type TextPropTypes = TextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
   /**
    * color of the text
    */
@@ -43,7 +43,7 @@ interface TextPropTypes extends TextProps, TypographyModifiers, ColorsModifiers,
   textAlign?: string;
 }
 
-type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPropTypes;
+type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPropTypes & { [key: string]: boolean };
 
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
