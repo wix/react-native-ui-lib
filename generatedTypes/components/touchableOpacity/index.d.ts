@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacityProps } from 'react-native';
-declare type IProps = TouchableOpacityProps & {
+import { ContainerModifiers } from '../../commons/new';
+declare type IProps = TouchableOpacityProps & ContainerModifiers & {
     /**
      * background color for TouchableOpacity
      */

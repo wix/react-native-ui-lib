@@ -1,11 +1,11 @@
 import React, {PureComponent} from 'react';
 import {TouchableOpacity as RNTouchableOpacity, TouchableOpacityProps} from 'react-native';
 import _ from 'lodash';
-import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
+import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps, ContainerModifiers} from '../../commons/new';
 // @ts-ignore
 import Incubator from '../../incubator';
 
-type IProps = TouchableOpacityProps & {
+type IProps = TouchableOpacityProps & ContainerModifiers & {
   /**
    * background color for TouchableOpacity
    */
