@@ -1,9 +1,34 @@
 import React, {PureComponent} from 'react';
-import {TouchableOpacity as RNTouchableOpacity} from 'react-native';
-import PropTypes from 'prop-types';
+import {TouchableOpacity as RNTouchableOpacity, TouchableOpacityProps} from 'react-native';
 import _ from 'lodash';
-import {asBaseComponent, forwardRef} from '../../commons';
+import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
+// @ts-ignore
 import Incubator from '../../incubator';
+
+type IProps = TouchableOpacityProps & {
+  /**
+   * background color for TouchableOpacity
+   */
+  backgroundColor?: string;
+  /**
+   * throttle time in MS for onPress callback
+   */
+  throttleTime?: number;
+  /**
+   * throttle options {leading, trailing}
+   */
+  throttleOptions?: {leading: boolean, trailing: boolean};
+  /**
+   * Apply background color on TouchableOpacity when active (press is on)
+   */
+  activeBackgroundColor?: string;
+  /**
+   * Should use a more native touchable opacity component
+   */
+  useNative?: boolean;
+};
+
+type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & IProps;
 
 /**
  * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
@@ -13,33 +38,10 @@ import Incubator from '../../incubator';
  * @gif: https://media.giphy.com/media/xULW8AMIgw7l31zjm8/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.js
  */
-class TouchableOpacity extends PureComponent {
+class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   static displayName = 'TouchableOpacity';
 
-  static propTypes = {
-    /**
-     * background color for TouchableOpacity
-     */
-    backgroundColor: PropTypes.string,
-    /**
-     * throttle time in MS for onPress callback
-     */
-    throttleTime: PropTypes.number,
-    /**
-     * throttle options
-     */
-    throttleOptions: PropTypes.shape({leading: PropTypes.bool, trailing: PropTypes.bool}),
-    /**
-     * Apply background color on TouchableOpacity when active (press is on)
-     */
-    activeBackgroundColor: PropTypes.string,
-    /**
-     * Should use a more native touchable opacity component
-     */
-    useNative: PropTypes.bool
-  };
-
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     const {throttleTime, throttleOptions} = this.props;
@@ -50,7 +52,6 @@ class TouchableOpacity extends PureComponent {
   }
 
   state = {
-    ...this.state,
     active: false
   };
 
@@ -62,14 +63,14 @@ class TouchableOpacity extends PureComponent {
     };
   }
 
-  onPressIn(...args) {
+  onPressIn(...args: any) {
     this.setState({
       active: true
     });
     _.invoke(this.props, 'onPressIn', ...args);
   }
 
-  onPressOut(...args) {
+  onPressOut(...args: any) {
     this.setState({
       active: false
     });
@@ -103,6 +104,7 @@ class TouchableOpacity extends PureComponent {
     }
 
     return (
+      // @ts-ignore
       <RNTouchableOpacity
         {...this.getAccessibilityInfo()}
         {...others}
@@ -129,4 +131,4 @@ class TouchableOpacity extends PureComponent {
   }
 }
 
-export default asBaseComponent(forwardRef(TouchableOpacity));
+export default asBaseComponent<IProps>(forwardRef(TouchableOpacity));

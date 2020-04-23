@@ -7,6 +7,7 @@
 export * from './style';
 export {default as View} from './components/view';
 export {default as Text} from './components/text';
+export {default as TouchableOpacity} from './components/touchableOpacity';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
@@ -15,5 +16,5 @@ export {
   PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, ProgressBar, Slider, GradientSlider,
   ColorSliderGroup, Stepper, TabBar, TagsInput, RadioButton, RadioGroup, SharedTransition, StackAggregator, Toast,
   WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper, Constants,
-  DocsGenerator, LogService, LoaderScreen, Modal, StateScreen, WheelPicker, Incubator, ColorPicker, TouchableOpacity
+  DocsGenerator, LogService, LoaderScreen, Modal, StateScreen, WheelPicker, Incubator, ColorPicker
 } from '../typings';

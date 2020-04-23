@@ -6,6 +6,7 @@
 export * from './style';
 export {default as View} from './components/view';
 export {default as Text} from './components/text';
+export {default as TouchableOpacity} from './components/touchableOpacity';
 
 /* All components with manual typings */
 export {
@@ -60,8 +61,7 @@ export {
   StateScreen,
   WheelPicker,
   Incubator,
-  ColorPicker,
-  TouchableOpacity
+  ColorPicker
 } from '../typings';
 
 /* All components that are missing either manual or auto generated typings */
