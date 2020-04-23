@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { TextProps, TextStyle } from 'react-native';
 import { BaseComponentInjectedProps, ForwardRefInjectedProps, MarginModifiers, TypographyModifiers, ColorsModifiers } from '../../commons/new';
-interface TextPropTypes extends TextProps, TypographyModifiers, ColorsModifiers, MarginModifiers {
+declare type TextPropTypes = TextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
     /**
      * color of the text
      */
@@ -28,7 +28,7 @@ interface TextPropTypes extends TextProps, TypographyModifiers, ColorsModifiers,
     animated?: boolean;
     ref?: any;
     textAlign?: string;
-}
+};
 declare type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPropTypes;
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
