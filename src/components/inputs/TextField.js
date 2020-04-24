@@ -612,7 +612,7 @@ export default class TextField extends BaseInput {
   }
 
   render() {
-    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
+    const {expandable, containerStyle, innerContainerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
     const underlineStateColor = this.getStateColor(underlineColor || UNDERLINE_COLOR_BY_STATE);
 
     return (
@@ -624,7 +624,8 @@ export default class TextField extends BaseInput {
             this.styles.innerContainer,
             hideUnderline && this.styles.innerContainerWithoutUnderline,
             {borderColor: underlineStateColor},
-            {paddingTop: this.getTopPaddings()}
+            {paddingTop: this.getTopPaddings()},
+            innerContainerStyle
           ]}
         >
           {this.renderPlaceholder()}
