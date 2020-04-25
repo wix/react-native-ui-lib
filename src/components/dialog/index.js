@@ -137,7 +137,9 @@ class Dialog extends BaseComponent {
   onDismiss = () => {
     this.setState({modalVisibility: false}, () => {
       const props = this.getThemeProps();
-      _.invoke(props, 'onDismiss', props);
+      if (props.visible) {
+        _.invoke(props, 'onDismiss', props);
+      }
     });
   };
 
