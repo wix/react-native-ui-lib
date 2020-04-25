@@ -140,6 +140,10 @@ class Dialog extends BaseComponent {
       if (props.visible) {
         _.invoke(props, 'onDismiss', props);
       }
+      // Parity with iOS Modal's onDismiss
+      if (Constants.isAndroid) {
+        _.invoke(props, 'onModalDismissed', props);
+      }
     });
   };
 
