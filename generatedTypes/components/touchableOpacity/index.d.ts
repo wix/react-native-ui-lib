@@ -25,6 +25,7 @@ declare type IProps = TouchableOpacityProps & ContainerModifiers & {
      * Should use a more native touchable opacity component
      */
     useNative?: boolean;
+    ref?: any;
 };
 declare const _default: React.ComponentType<IProps>;
 export default _default;

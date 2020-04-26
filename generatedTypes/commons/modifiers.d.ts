@@ -74,7 +74,7 @@ export declare type BorderRadiusModifiers = Modifier<BorderRadiusLiterals>;
 export declare type ContainerModifiers = AlignmentModifiers & PaddingModifiers & MarginModifiers & FlexModifiers & BorderRadiusModifiers & BackgroundColorModifier;
 export declare function extractColorValue(props: Dictionary<any>): any;
 export declare function extractBackgroundColorValue(props: Dictionary<any>): any;
-export declare function extractTypographyValue(props: Dictionary<any>): undefined;
+export declare function extractTypographyValue(props: Dictionary<any>): object | undefined;
 export declare function extractPaddingValues(props: Dictionary<any>): Partial<Record<"padding" | "paddingLeft" | "paddingTop" | "paddingRight" | "paddingBottom" | "paddingHorizontal" | "paddingVertical", number>>;
 export declare function extractMarginValues(props: Dictionary<any>): Partial<Record<"margin" | "marginLeft" | "marginTop" | "marginRight" | "marginBottom" | "marginHorizontal" | "marginVertical", number>>;
 export declare function extractAlignmentsValues(props: Dictionary<any>): any;

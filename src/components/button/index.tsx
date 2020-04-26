@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
+import {Platform, StyleSheet, LayoutAnimation, Image, ImageStyle, LayoutChangeEvent} from 'react-native';
 import _ from 'lodash';
-import {Platform, StyleSheet, LayoutAnimation, Image, ImageStyle} from 'react-native';
+//@ts-ignore
 import {Constants} from '../../helpers';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
@@ -92,7 +93,7 @@ class Button extends PureComponent<Props, ButtonState> {
   };
 
   // This method will be called more than once in case of layout change!
-  onLayout = (event) => {
+  onLayout = (event: LayoutChangeEvent) => {
     const height = event.nativeEvent.layout.height;
     if (this.props.round) {
       const width = event.nativeEvent.layout.width;
