@@ -7,6 +7,7 @@ export * from './style';
 export {default as View} from './components/view';
 export {default as Text} from './components/text';
 export {default as TouchableOpacity} from './components/touchableOpacity';
+export {default as Button} from './components/button';
 
 /* All components with manual typings */
 export {
@@ -14,7 +15,6 @@ export {
   ActionSheet,
   Avatar,
   Badge,
-  Button,
   Card,
   Carousel,
   ConnectionStatusBar,

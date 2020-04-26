@@ -117,7 +117,7 @@ export function extractBackgroundColorValue(props: Dictionary<any>) {
 
   return backgroundColor;
 }
-export function extractTypographyValue(props: Dictionary<any>) {
+export function extractTypographyValue(props: Dictionary<any>): object | undefined {
   const typographyPropsKeys = _.chain(props)
     .keys()
     .filter(key => Typography.getKeysPattern().test(key))
