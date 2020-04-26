@@ -5,6 +5,7 @@ import {StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
+import {LogService} from '../../services';
 import Modal from '../modal';
 import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
@@ -97,6 +98,8 @@ class Dialog extends BaseComponent {
     };
 
     this.setAlignment();
+
+    LogService.deprecationWarn({component: 'Dialog', oldProp: 'onModalDismissed', newProp: 'onDialogDismissed'});
   }
 
   componentDidMount() {
