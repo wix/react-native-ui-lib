@@ -178,7 +178,7 @@ declare class Button extends PureComponent<Props, ButtonState> {
     onLayout: (event: LayoutChangeEvent) => void;
     get isOutline(): boolean;
     get isFilled(): boolean;
-    get isIconButton(): boolean | 0;
+    get isIconButton(): boolean | 0 | undefined;
     getBackgroundColor(): any;
     getActiveBackgroundColor(): any;
     getLabelColor(): string | undefined;
@@ -203,7 +203,7 @@ declare class Button extends PureComponent<Props, ButtonState> {
     } | {
         shadowColor: any;
     })[] | undefined;
-    getIconStyle(): ImageStyle[];
+    getIconStyle(): (ImageStyle | undefined)[];
     getAnimationDirectionStyle(): {
         alignSelf: string;
     } | undefined;
