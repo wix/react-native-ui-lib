@@ -26,6 +26,7 @@ type IProps = TouchableOpacityProps & ContainerModifiers & {
    * Should use a more native touchable opacity component
    */
   useNative?: boolean;
+  ref?: any;
 };
 
 type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & IProps;

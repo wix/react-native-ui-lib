@@ -13,7 +13,7 @@ import {Colors} from '../../style';
 import _ from 'lodash';
 
 
-type TextPropTypes = TextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
+export type TextPropTypes = TextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
   /**
    * color of the text
    */
