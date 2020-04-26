@@ -99,7 +99,9 @@ class Dialog extends BaseComponent {
 
     this.setAlignment();
 
-    LogService.deprecationWarn({component: 'Dialog', oldProp: 'onModalDismissed', newProp: 'onDialogDismissed'});
+    if (!_.isUndefined(props.onModalDismissed)) {
+      LogService.deprecationWarn({component: 'Dialog', oldProp: 'onModalDismissed', newProp: 'onDialogDismissed'});
+    }
   }
 
   componentDidMount() {
