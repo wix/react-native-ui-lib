@@ -168,7 +168,7 @@ class TabBar extends PureComponent {
   get centerOffset() {
     const {centerSelected} = this.props;
     const guesstimateCenterValue = 60;
-    return centerSelected ? Constants.screenWidth / 2 - guesstimateCenterValue : 0;
+    return centerSelected ? this.containerWidth / 2 - guesstimateCenterValue : 0;
   }
 
   measureItems = async () => {
@@ -223,7 +223,7 @@ class TabBar extends PureComponent {
     const {centerSelected} = this.props;
     const itemOffset = this._itemsOffsets[index];
     const itemWidth = this._itemsWidths[index];
-    const screenCenter = Constants.screenWidth / 2;
+    const screenCenter = this.containerWidth / 2;
 
     if (itemOffset && itemWidth) {
       if (centerSelected) {
