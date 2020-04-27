@@ -15,18 +15,6 @@ const {cond, eq, call, block, event, and, defined} = Reanimated;
 const DEFAULT_LABEL_COLOR = Colors.black;
 const DEFAULT_SELECTED_LABEL_COLOR = Colors.blue30;
 
-const DEFAULT_LABEL_STYLE = {
-  ...Typography.text80,
-  fontWeight: '400',
-  letterSpacing: 0
-};
-
-const DEFAULT_SELECTED_LABEL_STYLE = {
-  ...Typography.text80,
-  fontWeight: '700',
-  letterSpacing: 0
-};
-
 /**
  * @description: TabController's TabBarItem
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
@@ -137,8 +125,10 @@ export default class TabBarItem extends PureComponent {
     const {index, onLayout} = this.props;
     const {itemWidth} = this.state;
     if (!itemWidth) {
-      this.setState({itemWidth: width});
-      onLayout({width, x}, index);
+      if (onLayout) {
+        this.setState({itemWidth: width});
+        onLayout({width, x}, index);
+      }
     }
   };
 
@@ -179,15 +169,15 @@ export default class TabBarItem extends PureComponent {
       ignore
     } = this.props;
 
-    const labelStyle = {...DEFAULT_LABEL_STYLE, ...this.props.labelStyle};
-    const selectedLabelStyle = {...DEFAULT_SELECTED_LABEL_STYLE, ...this.props.selectedLabelStyle};
+    const labelStyle = this.props.labelStyle;
+    const selectedLabelStyle = this.props.selectedLabelStyle;
 
     const fontWeight = cond(and(eq(targetPage, index), defined(itemWidth)),
-      selectedLabelStyle.fontWeight,
-      labelStyle.fontWeight);
+      selectedLabelStyle.fontWeight || 'normal',
+      labelStyle.fontWeight || 'normal');
     const letterSpacing = cond(and(eq(targetPage, index), defined(itemWidth)),
-      selectedLabelStyle.letterSpacing,
-      labelStyle.letterSpacing);
+      selectedLabelStyle.letterSpacing || 0,
+      labelStyle.letterSpacing || 0);
   
     const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
     const activeColor = !ignore ? selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR : inactiveColor;
