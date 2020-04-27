@@ -128,7 +128,7 @@ class TabController extends Component {
       cond(neq(currentPage, toPage), [
         set(isAnimating, 1),
         set(currentPage,
-          timing({clock, from: fromPage, to: toPage, duration: 300, easing: Easing.bezier(0.34, 1.3, 0.64, 1)}))
+          timing({clock, from: fromPage, to: toPage, duration: 280, easing: Easing.bezier(0.34, 1.3, 0.64, 1)}))
       ]),
       // Set isAnimating flag off
       cond(and(eq(isAnimating, 1), not(clockRunning(clock))), set(isAnimating, 0)),
