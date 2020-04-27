@@ -40,8 +40,11 @@ class PageCarousel extends PureComponent {
   };
 
   renderCodeBlock = () => {
-    const {targetPage} = this.context;
-    return block([Animated.onChange(targetPage, [call([targetPage], this.onTabChange)])]);
+    const {targetPage, containerWidth} = this.context;
+    return block([
+      Animated.onChange(targetPage, [call([targetPage], this.onTabChange)]),
+      Animated.onChange(containerWidth, [call([targetPage], this.onTabChange)])
+    ]);
   };
 
   render() {

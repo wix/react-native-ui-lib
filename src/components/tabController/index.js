@@ -32,7 +32,8 @@ const {
   block,
   onChange,
   interpolate,
-  round
+  round,
+  multiply
 } = Reanimated;
 
 /**
@@ -82,10 +83,26 @@ class TabController extends Component {
       targetPage: new Value(this.props.selectedIndex),
       currentPage: new Value(this.props.selectedIndex),
       carouselOffset: new Value(this.props.selectedIndex * Math.round(this.pageWidth)),
+      containerWidth: new Value(this.pageWidth),
       // // callbacks
       registerTabItems: this.registerTabItems,
       onChangeIndex: this.props.onChangeIndex
     };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (!_.isUndefined(nextProps.carouselPageWidth) && nextProps.carouselPageWidth !== prevState.pageWidth) {
+      return {
+        pageWidth: nextProps.carouselPageWidth
+      };
+    }
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.pageWidth !== this.state.pageWidth) {
+      this.state.containerWidth.setValue(this.state.pageWidth);
+    }
   }
 
   get pageWidth() {
@@ -102,7 +119,7 @@ class TabController extends Component {
   };
 
   renderCodeBlock = () => {
-    const {itemStates, ignoredItems, currentPage, targetPage, carouselOffset} = this.state;
+    const {itemStates, ignoredItems, currentPage, targetPage, carouselOffset, containerWidth} = this.state;
     const {selectedIndex} = this.props;
     const clock = new Clock();
     const fromPage = new Value(selectedIndex);
@@ -135,11 +152,11 @@ class TabController extends Component {
 
       /* Page change by Carousel scroll */
       onChange(carouselOffset, [
-        set(isScrolling, lessThan(round(abs(diff(carouselOffset))), round(this.pageWidth))),
+        set(isScrolling, lessThan(round(abs(diff(carouselOffset))), round(containerWidth))),
         cond(and(not(isAnimating)), [
           set(currentPage,
             interpolate(round(carouselOffset), {
-              inputRange: itemStates.map((v, i) => Math.round(i * this.pageWidth)),
+              inputRange: itemStates.map((v, i) => round(multiply(i, containerWidth))),
               outputRange: itemStates.map((v, i) => i)
             })),
           set(toPage, currentPage)
