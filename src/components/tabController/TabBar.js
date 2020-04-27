@@ -162,7 +162,8 @@ class TabBar extends PureComponent {
 
   get centerOffset() {
     const {centerSelected} = this.props;
-    return centerSelected ? Constants.screenWidth / 2 : 0;
+    const guesstimateCenterValue = 60;
+    return centerSelected ? Constants.screenWidth / 2 - guesstimateCenterValue : 0;
   }
 
   measureItems = async () => {
@@ -175,7 +176,7 @@ class TabBar extends PureComponent {
     const offsets = [];
     _.forEach(widths, (width, index) => {
       if (index === 0) {
-        offsets[index] = 0;
+        offsets[index] = this.centerOffset;
       } else {
         offsets[index] = widths[index - 1] + offsets[index - 1];
       }
@@ -217,10 +218,11 @@ class TabBar extends PureComponent {
     const {centerSelected} = this.props;
     const itemOffset = this._itemsOffsets[index];
     const itemWidth = this._itemsWidths[index];
+    const screenCenter = Constants.screenWidth / 2;
 
     if (itemOffset && itemWidth) {
       if (centerSelected) {
-        this.tabBar.current.scrollTo({x: itemOffset - this.centerOffset + itemWidth / 2, animated});
+        this.tabBar.current.scrollTo({x: itemOffset - screenCenter + itemWidth / 2, animated});
       } else if (itemOffset < this.tabBarScrollOffset) {
         this.tabBar.current.scrollTo({x: itemOffset - itemWidth, animated});
       } else if (itemOffset + itemWidth > this.tabBarScrollOffset + this.containerWidth) {
