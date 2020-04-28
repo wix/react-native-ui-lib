@@ -20,7 +20,6 @@ exports.createPages = ({graphql, boundActionCreators}) => {
           edges {
             node {
               displayName
-              isPublic
               docblock
               description {
                 text
@@ -53,7 +52,7 @@ exports.createPages = ({graphql, boundActionCreators}) => {
       
       result.data.allComponentMetadata.edges.map(({node}) => {
         createPage({
-          path: `/docs/${node.isPublic ? 'public/' : ''}${node.displayName}`,
+          path: `/docs/${node.displayName}`,
           component: path.resolve('./src/templates/component.js'),
           context: {
             // Data passed to context is available in page queries as GraphQL variables.
@@ -67,26 +66,27 @@ exports.createPages = ({graphql, boundActionCreators}) => {
   });
 };
 
-exports.setFieldsOnGraphQLNodeType = ({type}) => {
-  if (type.name === 'ComponentMetadata') {
-    const componentsByGroups = _.groupBy(type.nodes, 'displayName');
-    _.forEach(componentsByGroups, group => {
-      // has public origin
-      if (group.length === 2) {
-        publicComponentsIds.push(_.last(group).id);
-      }
-    });
+// We don't need this in public docs
+// exports.setFieldsOnGraphQLNodeType = ({type}) => {
+//   if (type.name === 'ComponentMetadata') {
+//     const componentsByGroups = _.groupBy(type.nodes, 'displayName');
+//     _.forEach(componentsByGroups, group => {
+//       // has public origin
+//       if (group.length === 2) {
+//         publicComponentsIds.push(_.last(group).id);
+//       }
+//     });
 
-    return {
-      isPublic: {
-        type: GraphQLBoolean,
+//     return {
+//       isPublic: {
+//         type: GraphQLBoolean,
 
-        resolve: source => {
-          return _.includes(publicComponentsIds, source.id);
-        },
-      },
-    };
-  }
+//         resolve: source => {
+//           return _.includes(publicComponentsIds, source.id);
+//         },
+//       },
+//     };
+//   }
 
-  return {};
-};
+//   return {};
+// };

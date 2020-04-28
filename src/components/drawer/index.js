@@ -125,11 +125,11 @@ class NewDrawer extends PureBaseComponent {
 
   /** Events */
 
-  onActionPress(item) {
+  onActionPress = (item) => {
     if (!item.keepOpen) {
       this.closeDrawer();
     }
-    _.invoke(item, 'onPress');
+    _.invoke(item, 'onPress', this.props);
   }
 
   onSwipeableWillOpen = () => {

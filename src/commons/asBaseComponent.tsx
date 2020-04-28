@@ -8,10 +8,13 @@ import forwardRef from './forwardRef';
 import UIComponent from './UIComponent';
 
 export interface BaseComponentInjectedProps {
+  /**
+   * All generated styles from the modifiers props
+   */
   modifiers: ReturnType<typeof Modifiers.generateModifiersStyle>;
 }
 
-function asBaseComponent<PROPS>(WrappedComponent: React.ComponentType<PROPS>): React.ComponentType<Omit<PROPS, keyof BaseComponentInjectedProps>> {
+function asBaseComponent<PROPS>(WrappedComponent: React.ComponentType<any>): React.ComponentType<PROPS> {
   class BaseComponent extends UIComponent {
     state = Modifiers.generateModifiersStyle(undefined, BaseComponent.getThemeProps(this.props, this.context));
     static displayName: string | undefined;
@@ -34,6 +37,8 @@ function asBaseComponent<PROPS>(WrappedComponent: React.ComponentType<PROPS>): R
 
     render() {
       const themeProps = BaseComponent.getThemeProps(this.props, this.context);
+      // TODO: omit original modifiers props (left, right, flex, etc..)
+      // Because they throws an error when being passed to RNView on Android
       const {forwardedRef, ...others} = themeProps;
       return <WrappedComponent /* {...this.props} */ {...others} modifiers={this.state} ref={forwardedRef}/>;
     }

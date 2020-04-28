@@ -6,7 +6,12 @@ import {Constants} from '../../helpers';
 
 const {Code, block, call} = Animated;
 
+/**
+ * @description: TabController's Page Carousel
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
+ */
 class PageCarousel extends PureComponent {
+  static displayName = 'TabController.PageCarousel';
   static contextType = TabBarContext;
   carousel = React.createRef();
 
@@ -27,19 +32,23 @@ class PageCarousel extends PureComponent {
   };
 
   scrollToPage = (pageIndex, animated) => {
+    const {pageWidth} = this.context;
     const node = _.invoke(this.carousel, 'current.getNode');
     if (node) {
-      node.scrollTo({x: pageIndex * Constants.screenWidth, animated: false});
+      node.scrollTo({x: pageIndex * pageWidth, animated: false});
     }
   };
 
   renderCodeBlock = () => {
-    const {targetPage} = this.context;
-    return block([Animated.onChange(targetPage, [call([targetPage], this.onTabChange)])]);
+    const {targetPage, containerWidth} = this.context;
+    return block([
+      Animated.onChange(targetPage, [call([targetPage], this.onTabChange)]),
+      Animated.onChange(containerWidth, [call([targetPage], this.onTabChange)])
+    ]);
   };
 
   render() {
-    const {selectedIndex} = this.context;
+    const {selectedIndex, pageWidth} = this.context;
     return (
       <>
         <Animated.ScrollView
@@ -50,7 +59,7 @@ class PageCarousel extends PureComponent {
           showsHorizontalScrollIndicator={false}
           onScroll={this.onScroll}
           scrollEventThrottle={16}
-          contentOffset={{x: selectedIndex * Constants.screenWidth}} // iOS only
+          contentOffset={{x: selectedIndex * pageWidth}} // iOS only
         />
 
         <Code>{this.renderCodeBlock}</Code>

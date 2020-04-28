@@ -1,5 +1,3 @@
-// TODO: support carousel mode
-// TODO: support auto scroll to selected index
 // TODO: support commented props
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
@@ -8,6 +6,7 @@ import Reanimated, {Easing} from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
 import {timing, fract, between} from 'react-native-redash';
 import {Constants} from '../../helpers';
+import {asBaseComponent} from '../../commons';
 import TabBarContext from './TabBarContext';
 import TabBar from './TabBar';
 import TabBarItem from './TabBarItem';
@@ -33,12 +32,13 @@ const {
   block,
   onChange,
   interpolate,
-  round
+  round,
+  multiply
 } = Reanimated;
 
 /**
  * @description: A performant solution for a tab controller with lazy load mechanism
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TabControllerScreen/index.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
  * @notes: This component is based on react-native-gesture-handler
  * @important: On Android, if using react-native-navigation, make sure to wrap your screen with gestureHandlerRootHOC
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
@@ -59,7 +59,11 @@ class TabController extends Component {
     /**
      * When using TabController.PageCarousel this should be turned on
      */
-    asCarousel: PropTypes.bool
+    asCarousel: PropTypes.bool,
+    /**
+     * Pass for custom carousel page width
+     */
+    carouselPageWidth: PropTypes.number
   };
 
   static defaultProps = {
@@ -74,14 +78,35 @@ class TabController extends Component {
       selectedIndex: this.props.selectedIndex,
       asCarousel: this.props.asCarousel,
       itemStates: [],
+      pageWidth: this.pageWidth,
       // animated values
       targetPage: new Value(this.props.selectedIndex),
       currentPage: new Value(this.props.selectedIndex),
-      carouselOffset: new Value(this.props.selectedIndex * Math.round(Constants.screenWidth)),
+      carouselOffset: new Value(this.props.selectedIndex * Math.round(this.pageWidth)),
+      containerWidth: new Value(this.pageWidth),
       // // callbacks
       registerTabItems: this.registerTabItems,
       onChangeIndex: this.props.onChangeIndex
     };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (!_.isUndefined(nextProps.carouselPageWidth) && nextProps.carouselPageWidth !== prevState.pageWidth) {
+      return {
+        pageWidth: nextProps.carouselPageWidth
+      };
+    }
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.pageWidth !== this.state.pageWidth) {
+      this.state.containerWidth.setValue(this.state.pageWidth);
+    }
+  }
+
+  get pageWidth() {
+    return this.props.carouselPageWidth || Constants.screenWidth;
   }
 
   registerTabItems = (tabItemsCount, ignoredItems) => {
@@ -94,7 +119,7 @@ class TabController extends Component {
   };
 
   renderCodeBlock = () => {
-    const {itemStates, ignoredItems, currentPage, targetPage, carouselOffset} = this.state;
+    const {itemStates, ignoredItems, currentPage, targetPage, carouselOffset, containerWidth} = this.state;
     const {selectedIndex} = this.props;
     const clock = new Clock();
     const fromPage = new Value(selectedIndex);
@@ -120,18 +145,18 @@ class TabController extends Component {
       cond(neq(currentPage, toPage), [
         set(isAnimating, 1),
         set(currentPage,
-          timing({clock, from: fromPage, to: toPage, duration: 300, easing: Easing.bezier(0.34, 1.56, 0.64, 1)}))
+          timing({clock, from: fromPage, to: toPage, duration: 280, easing: Easing.bezier(0.34, 1.3, 0.64, 1)}))
       ]),
       // Set isAnimating flag off
       cond(and(eq(isAnimating, 1), not(clockRunning(clock))), set(isAnimating, 0)),
 
       /* Page change by Carousel scroll */
       onChange(carouselOffset, [
-        set(isScrolling, lessThan(round(abs(diff(carouselOffset))), round(Constants.screenWidth))),
+        set(isScrolling, lessThan(round(abs(diff(carouselOffset))), round(containerWidth))),
         cond(and(not(isAnimating)), [
           set(currentPage,
             interpolate(round(carouselOffset), {
-              inputRange: itemStates.map((v, i) => Math.round(i * Constants.screenWidth)),
+              inputRange: itemStates.map((v, i) => round(multiply(i, containerWidth))),
               outputRange: itemStates.map((v, i) => i)
             })),
           set(toPage, currentPage)
@@ -164,4 +189,4 @@ TabController.TabBar = TabBar;
 TabController.TabBarItem = TabBarItem;
 TabController.TabPage = TabPage;
 TabController.PageCarousel = PageCarousel;
-export default TabController;
+export default asBaseComponent(TabController);

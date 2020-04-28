@@ -8,9 +8,10 @@ export function getChildrenLength(props) {
 
 export function calcOffset(props, state) {
   const {currentPage, pageWidth} = state;
-  const {loop} = props;
+  const {loop, containerMarginHorizontal = 0} = props;
   const actualCurrentPage = loop ? currentPage + 1 : currentPage;
-  const offset = pageWidth * actualCurrentPage;
+  const nonLoopAdjustment = !loop && currentPage > 0 ? containerMarginHorizontal : 0;
+  const offset = pageWidth * actualCurrentPage - nonLoopAdjustment;
 
   return offset;
 }

@@ -1,11 +1,11 @@
 // TODO: support commented props
 import React, {PureComponent} from 'react';
-import {StyleSheet, processColor, Text as RNText} from 'react-native';
+import {StyleSheet, /* processColor, */ Text as RNText} from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Reanimated from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
-// import {interpolateColor} from 'react-native-redash';
+import {interpolateColor} from 'react-native-redash';
 import {Colors, Typography, Spacings} from '../../style';
 import Badge from '../../components/badge';
 import {TouchableOpacity} from '../../incubator';
@@ -17,7 +17,7 @@ const DEFAULT_SELECTED_LABEL_COLOR = Colors.blue30;
 
 /**
  * @description: TabController's TabBarItem
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TabControllerScreen/index.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
  * @notes: Must be rendered as a direct child of TabController.TabBar.
  */
 export default class TabBarItem extends PureComponent {
@@ -32,6 +32,10 @@ export default class TabBarItem extends PureComponent {
      * custom label style
      */
     labelStyle: RNText.propTypes.style,
+    /**
+     * custom selected label style
+     */
+    selectedLabelStyle: RNText.propTypes.style,
     /**
      * the default label color
      */
@@ -111,7 +115,7 @@ export default class TabBarItem extends PureComponent {
       nativeEvent: {state: this.props.state}
     }
   ],
-  {useNativeDriver: true},);
+  {useNativeDriver: true});
 
   onLayout = ({
     nativeEvent: {
@@ -121,8 +125,10 @@ export default class TabBarItem extends PureComponent {
     const {index, onLayout} = this.props;
     const {itemWidth} = this.state;
     if (!itemWidth) {
-      this.setState({itemWidth: width});
-      onLayout({width, x}, index);
+      if (onLayout) {
+        this.setState({itemWidth: width});
+        onLayout({width, x}, index);
+      }
     }
   };
 
@@ -154,27 +160,45 @@ export default class TabBarItem extends PureComponent {
 
   getLabelStyle() {
     const {itemWidth} = this.state;
-    const {index, currentPage, labelColor, selectedLabelColor, labelStyle, ignore} = this.props;
-    const fontWeight = cond(and(eq(currentPage, index), defined(itemWidth)), '700', '400');
-    const activeColor = selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
+    const {
+      index,
+      currentPage,
+      targetPage,
+      labelColor,
+      selectedLabelColor,
+      ignore
+    } = this.props;
+
+    const labelStyle = this.props.labelStyle;
+    const selectedLabelStyle = this.props.selectedLabelStyle;
+
+    const fontWeight = cond(and(eq(targetPage, index), defined(itemWidth)),
+      selectedLabelStyle.fontWeight || 'normal',
+      labelStyle.fontWeight || 'normal');
+    const letterSpacing = cond(and(eq(targetPage, index), defined(itemWidth)),
+      selectedLabelStyle.letterSpacing || 0,
+      labelStyle.letterSpacing || 0);
+  
     const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
-    
-    const color = cond(eq(currentPage, index),
-      processColor(activeColor),
-      processColor(ignore ? activeColor : inactiveColor),);
+    const activeColor = !ignore ? selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR : inactiveColor;
+
+    // const color = cond(eq(currentPage, index),
+    //   processColor(activeColor),
+    //   processColor(ignore ? activeColor : inactiveColor),);
 
     // Animated color
-    /* const color = interpolateColor(currentPage, {
+    const color = interpolateColor(currentPage, {
       inputRange: [index - 1, index, index + 1],
       outputRange: [inactiveColor, activeColor, inactiveColor]
-    }); */
+    });
 
     return [
+      labelStyle,
       {
         fontWeight,
+        letterSpacing,
         color
-      },
-      labelStyle
+      }
     ];
   }
 
@@ -188,7 +212,7 @@ export default class TabBarItem extends PureComponent {
       // TODO: using processColor here broke functionality,
       // not using it seem to not be very performant
       activeColor,
-      ignore ? activeColor : inactiveColor,);
+      ignore ? activeColor : inactiveColor);
 
     return {
       tintColor

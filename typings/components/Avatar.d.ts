@@ -8,7 +8,8 @@ import {
   NativeSyntheticEvent,
   StyleProp,
   TextStyle,
-  ViewStyle
+  ViewStyle,
+  ImageSourcePropType
 } from 'react-native';
 import {PureBaseComponent} from '../commons';
 import {ColorValue} from '../style/colors';
@@ -37,6 +38,9 @@ export interface AvatarProps {
   customRibbon?: ReactElement;
   size?: number;
   onPress?: (event: GestureResponderEvent) => void;
+  source?: ImageSourcePropType;
 }
 
-export class Avatar extends PureBaseComponent<AvatarProps> {}
+export class Avatar extends PureBaseComponent<AvatarProps> {
+  static badgePosition: Record<AvatarBadgePosition, AvatarBadgePosition>;
+}

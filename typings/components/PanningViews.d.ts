@@ -13,6 +13,7 @@ export interface PanDismissibleViewProps {
   directions?: PanningProviderDirection[];
   onDismiss?: () => void;
   animationOptions?: PanDismissibleViewAnimationOptions;
+  threshold?: {x: number, y: number};
 }
 
 export class PanDismissibleView extends PureComponent<PanDismissibleViewProps> {}
@@ -38,13 +39,14 @@ export interface PanSwipeDelta {
 
 export interface PanListenerViewProps {
   directions?: PanningProviderDirection[];
-  onDrag?: (directions: PanningProviderDirection[], velocities: PanDragVelocity[]) => void;
-  onSwipe?: (directions: PanningProviderDirection[], deltas: PanSwipeDelta[]) => void;
+  onDrag?: (params: {directions: PanningProviderDirection[], deltas: PanDragVelocity[]}) => void;
+  onSwipe?: (params: {directions: PanningProviderDirection[], velocities: PanSwipeDelta[]}) => void;
   onPanStart?: () => void;
   onPanRelease?: () => void;
   onPanTerminated?: () => void;
   panSensitivity?: number;
   swipeVelocitySensitivity?: number
+  isClickable?: boolean;
 }
 
 export class PanListenerView extends PureBaseComponent<PanListenerViewProps> {}
@@ -64,4 +66,11 @@ export interface PanResponderViewProps {
 
 export class PanResponderView extends PureComponent<PanResponderViewProps> {}
 
-export class PanningProvider extends Component {}
+export class PanningProvider extends Component {
+  static Directions: {
+    UP: 'up',
+    DOWN: 'down',
+    LEFT: 'left',
+    RIGHT: 'right',
+  };
+}

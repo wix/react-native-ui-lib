@@ -101,24 +101,28 @@ class RadioButton extends BaseComponent {
       Animated.parallel([
         Animated.timing(opacityAnimationValue, {
           toValue: 1,
-          duration: animationTime
+          duration: animationTime,
+          useNativeDriver: true
         }),
         Animated.timing(scaleAnimationValue, {
           toValue: 1,
           delay: animationDelay,
           duration: animationTime,
-          easing: Easing.bezier(0.165, 0.84, 0.44, 1)
+          easing: Easing.bezier(0.165, 0.84, 0.44, 1),
+          useNativeDriver: true
         })
       ]).start();
     } else {
       Animated.parallel([
         Animated.timing(scaleAnimationValue, {
           toValue: 0.8,
-          duration: animationTime
+          duration: animationTime,
+          useNativeDriver: true
         }),
         Animated.timing(opacityAnimationValue, {
           toValue: 0,
-          duration: animationTime
+          duration: animationTime,
+          useNativeDriver: true
         })
       ]).start();
     }

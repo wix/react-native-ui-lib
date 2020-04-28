@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {PureBaseComponent, Text} from 'react-native-ui-lib';
 import GradientSlider from './GradientSlider';
 import SliderGroup from './context/SliderGroup';
+import Text from '../text';
+import {PureBaseComponent} from '../../commons';
 
 
 /**
