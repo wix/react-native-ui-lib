@@ -37,7 +37,7 @@ export default class TagsInputScreen extends Component {
           <TagsInput containerStyle={{marginBottom: 25}} placeholder="Enter Tags" tags={this.state.tags2}/>
 
           <TagsInput containerStyle={{marginBottom: 25}} placeholder="Enter Tags" tags={this.state.tags}
-                     onTagNotValidate="error validation message" />
+                     validationErrorMessage="error validation message" />
 
           <TagsInput
             containerStyle={{marginBottom: 25}}

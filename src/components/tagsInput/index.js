@@ -32,7 +32,7 @@ export default class TagsInput extends BaseComponent {
     /**
      * list of tags. can be string boolean or custom object when implementing getLabel
      */
-    tags: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.bool])),
+    tags: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])),
     /**
      * callback for extracting the label out of the tag item
      */
@@ -56,7 +56,7 @@ export default class TagsInput extends BaseComponent {
     /**
      * validation message error appears when tag isn't validate
      */
-    onTagNotValidate: PropTypes.string,
+    validationErrorMessage: PropTypes.string,
     /**
      * if true, tags *removal* Ux won't be available
      */
@@ -253,8 +253,8 @@ export default class TagsInput extends BaseComponent {
     return _.get(item, 'label');
   }
 
-  onTagNotValidate(tag, onTagNotValidate) {
-    return onTagNotValidate ? tag.invalid : false;
+  checkTagValidate(tag, validationErrorMessage) {
+    return validationErrorMessage ? tag.invalid : false;
   }
 
   renderLabel(tag, shouldMarkTag, isTagNotValidate) {
@@ -280,10 +280,10 @@ export default class TagsInput extends BaseComponent {
   }
 
   renderTag(tag, index) {
-    const {tagStyle, renderTag, onTagNotValidate} = this.getThemeProps();
+    const {tagStyle, renderTag, validationErrorMessage} = this.getThemeProps();
     const {tagIndexToRemove} = this.state;
     const shouldMarkTag = tagIndexToRemove === index;
-    const isTagNotValidate = this.onTagNotValidate(tag, onTagNotValidate);
+    const isTagNotValidate = this.checkTagValidate(tag, validationErrorMessage);
 
     if (isTagNotValidate) {
       return (
@@ -351,7 +351,7 @@ export default class TagsInput extends BaseComponent {
   }
 
   render() {
-    const {disableTagRemoval, containerStyle, hideUnderline, onTagNotValidate} = this.getThemeProps();
+    const {disableTagRemoval, containerStyle, hideUnderline, validationErrorMessage} = this.getThemeProps();
     const tagRenderFn = disableTagRemoval ? this.renderTag : this.renderTagWrapper;
     const {tags, isTagNotValidate, tagIndexToRemove} = this.state;
 
@@ -363,7 +363,7 @@ export default class TagsInput extends BaseComponent {
         </View>
         <View>
           <Text style={[isTagNotValidate && tagIndexToRemove ? styles.inValidMarkedTagLabel : styles.inValidTagLabel]}>
-            {isTagNotValidate ? onTagNotValidate : null}
+            {isTagNotValidate ? validationErrorMessage : null}
           </Text>
         </View>
       </View>
