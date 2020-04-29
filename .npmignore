@@ -232,6 +232,7 @@ android/
 demo/
 expoDemo/
 uilib-docs/
+markdowns/
 .babelrc
 # typings/
 # eslint-rules/
