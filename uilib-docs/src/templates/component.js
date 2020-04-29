@@ -14,10 +14,10 @@ const IMAGE_TYPES = {
 export default class ComponentTemplate extends Component {
   static propTypes = {
     pageContext: PropTypes.object
-  }
+  };
 
   extractComponentsInfo(component) {
-    const splitPattern = /([\s\S]*?):([\s\S]*)/ //eslint-disable-line
+    const splitPattern = /([\s\S]*?):([\s\S]*)/; //eslint-disable-line
 
     const info = {
       description: _.get(component, 'description.text')
