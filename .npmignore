@@ -232,6 +232,7 @@ android/
 demo/
 expoDemo/
 uilib-docs/
+markdowns/
 .babelrc
 # typings/
 # eslint-rules/
@@ -239,3 +240,10 @@ scripts/
 demo-app.component.js
 index.android.js
 index.ios.js
+
+# Typescript
+# ignore the .ts files
+*.ts
+*.tsx
+# include the .d.ts files
+!*.d.ts 

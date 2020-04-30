@@ -1,5 +1,7 @@
+import React from 'react';
+import renderer from 'react-test-renderer';
 import Button from '../index';
-import {Colors, BorderRadiuses, Typography, ThemeManager} from '../../../style';
+import {Colors, ThemeManager} from '../../../style';
 import {Constants} from '../../../helpers';
 
 describe('Button', () => {
@@ -8,350 +10,241 @@ describe('Button', () => {
     mockIOS();
   });
 
-  describe('isOutline', () => {
-    it('should return false when outline or outlineColor props were not sent', () => {
-      const uut = new Button({});
-      expect(uut.isOutline).toBe(false);
+  it('should render default button', () => {
+    const tree = renderer.create(<Button label="Button"/>).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  describe('outline', () => {
+    it('should render button with an outline', () => {
+      const tree = renderer.create(<Button label="Button" outline/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
 
-    it('should return true if either outline or outlineColor props were sent', () => {
-      expect(new Button({outline: true}).isOutline).toBe(true);
-      expect(new Button({outlineColor: 'blue'}).isOutline).toBe(true);
-      expect(new Button({outline: true, outlineColor: 'blue'}).isOutline).toBe(true);
+    it('should render button with an outlineColor', () => {
+      const tree = renderer.create(<Button label="Button" outlineColor={'blue'}/>).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('should render button with outline and outlineColor', () => {
+      const tree = renderer.create(<Button label="Button" outline outlineColor={'blue'}/>).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
+    ///
+
+    it('should return undefined when link is true, even when outline is true', () => {
+      const tree = renderer.create(<Button label="Button" outline link/>).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('should return disabled color for outline if button is disabled', () => {
+      const tree = renderer.create(<Button label="Button" outline disabled/>).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('should return custom borderWidth according to outlineWidth passed', () => {
+      const tree = renderer.create(<Button label="Button" outline outlineWidth={3}/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
   });
 
-  describe('isFilled', () => {
-    it('should return true if button is not a link or outline', () => {
-      expect(new Button({}).isFilled).toBe(true);
-    });
-
-    it('should return false if button is an outline button', () => {
-      expect(new Button({outline: true}).isFilled).toBe(false);
-      expect(new Button({outlineColor: 'blue'}).isFilled).toBe(false);
-    });
-
-    it('should return false if button is a link', () => {
-      expect(new Button({link: true}).isFilled).toBe(false);
+  describe('link', () => {
+    it('should render button as a link', () => {
+      const tree = renderer.create(<Button label="Button" link/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
   });
 
-  describe('getBackgroundColor', () => {
-    it('should return by default blue30 color', () => {
-      const uut = new Button({});
-      expect(uut.getBackgroundColor()).toEqual(Colors.blue30);
-    });
-
+  describe('backgroundColor', () => {
     it('should return defined theme backgroundColor', () => {
       ThemeManager.setComponentTheme('Button', {
         backgroundColor: Colors.purple40
       });
-      const uut = new Button({});
-      expect(uut.getBackgroundColor()).toEqual(Colors.purple40);
+      const tree = renderer.create(<Button label="Button"/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
 
-    it('should return backgroundColor according to official prop', () => {
-      const uut = new Button({backgroundColor: 'red'});
-      expect(uut.getBackgroundColor()).toEqual('red');
+    it('should return backgroundColor according to prop value', () => {
+      const tree = renderer.create(<Button label="Button" backgroundColor={'red'}/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
 
     it('should return backgroundColor according to modifier', () => {
-      const uut = new Button({'bg-orange30': true});
-      expect(uut.getBackgroundColor()).toEqual(Colors.orange30);
+      const tree = renderer.create(<Button label="Button" bg-orange30/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
 
     it('should return undefined if this button is outline', () => {
-      const uut = new Button({backgroundColor: 'blue', outline: true});
-      expect(uut.getBackgroundColor()).toEqual('transparent');
+      const tree = renderer.create(<Button label="Button" backgroundColor="blue" outline/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
 
     it('should return undefined if this button is link', () => {
-      const uut = new Button({'bg-orange30': true, link: true});
-      expect(uut.getBackgroundColor()).toEqual('transparent');
+      const tree = renderer.create(<Button label="Button" bg-orange30 link/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
 
     it('should return theme disabled color if button is disabled', () => {
-      const uut = new Button({'bg-orange30': true, disabled: true});
-      expect(uut.getBackgroundColor()).toEqual(ThemeManager.CTADisabledColor);
+      const tree = renderer.create(<Button label="Button" bg-orange30 disabled/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
   });
 
-  describe('getActiveBackgroundColor', () => {
-    it('should return undefined by default', () => {
-      const uut = new Button({});
-      expect(uut.getActiveBackgroundColor()).toBe(undefined);
-    });
+  // describe('activeBackgroundColor', () => {
+  //   it('should return undefined by default', () => {
+  //     const uut = new Button({});
+  //     expect(uut.getActiveBackgroundColor()).toBe(undefined);
+  //   });
 
-    it('should return value according to getActiveBackgroundColor callback prop', () => {
-      const getActiveBackgroundColor = () => 'red';
-      const uut = new Button({getActiveBackgroundColor});
-      expect(uut.getActiveBackgroundColor()).toBe('red');
-    });
-  });
+  //   it('should return value according to getActiveBackgroundColor callback prop', () => {
+  //     const getActiveBackgroundColor = () => 'red';
+  //     const uut = new Button({getActiveBackgroundColor});
+  //     expect(uut.getActiveBackgroundColor()).toBe('red');
+  //   });
+  // });
 
-  describe('getLabelColor', () => {
-    it('should return white color by default', () => {
-      const uut = new Button({});
-      expect(uut.getLabelColor()).toEqual(Colors.white);
-    });
-
-    it('should return blue30 color for link', () => {
-      const uut = new Button({link: true});
-      expect(uut.getLabelColor()).toEqual(Colors.blue30);
-    });
-
+  describe('labelColor', () => {
     it('should return Theme linkColor color for link', () => {
       ThemeManager.setComponentTheme('Button', {
         linkColor: Colors.yellow40
       });
-      const uut = new Button({link: true});
-      expect(uut.getLabelColor()).toEqual(Colors.yellow40);
+      const tree = renderer.create(<Button label="Button" link/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
 
     it('should return linkColor color for link', () => {
-      const uut = new Button({link: true, linkColor: Colors.orange50});
-      expect(uut.getLabelColor()).toEqual(Colors.orange50);
-    });
-
-    it('should return blue30 color for outline by default or the outlineColor passed', () => {
-      let uut = new Button({outline: true});
-      expect(uut.getLabelColor()).toEqual(Colors.blue30);
-      uut = new Button({outline: true, outlineColor: 'red'});
-      expect(uut.getLabelColor()).toEqual('red');
+      const tree = renderer.create(<Button label="Button" link linkColor={Colors.orange50}/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
 
     it('should return color according to color modifier', () => {
-      const uut = new Button({red10: true});
-      expect(uut.getLabelColor()).toEqual(Colors.red10);
+      const tree = renderer.create(<Button label="Button" red10/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
 
     it('should return color according to color prop', () => {
-      const uut = new Button({red10: true, color: 'green'});
-      expect(uut.getLabelColor()).toEqual('green');
+      const tree = renderer.create(<Button label="Button" red30 color="green"/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
 
     it('should return disabled text color according to theme for link/outline button', () => {
-      const uut = new Button({red10: true, color: 'green', link: true, disabled: true});
-      expect(uut.getLabelColor()).toEqual(ThemeManager.CTADisabledColor);
+      const tree = renderer.create(<Button label="Button" color="green" link disabled/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
 
     it('should return undefined color if this is an icon button (without label)', () => {
-      const uut = new Button({iconSource: 12});
-      expect(uut.getLabelColor()).toEqual(undefined);
+      const tree = renderer.create(<Button iconSource={12}/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
   });
 
-  describe('getLabelSizeStyle', () => {
+  describe('label size', () => {
     it('should return style for large button', () => {
-      const uut = new Button({size: 'large'});
-      expect(uut.getLabelSizeStyle()).toEqual({});
+      const tree = renderer.create(<Button label="Button" size={'large'}/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
 
     it('should return style for medium button', () => {
-      const uut = new Button({size: 'medium'});
-      expect(uut.getLabelSizeStyle()).toEqual({...Typography.text80});
+      const tree = renderer.create(<Button label="Button" size={'medium'}/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
 
     it('should return style for small button', () => {
-      const uut = new Button({size: 'small'});
-      expect(uut.getLabelSizeStyle()).toEqual({...Typography.text80});
+      const tree = renderer.create(<Button label="Button" size={'small'}/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
 
     it('should return style for xSmall button', () => {
-      const uut = new Button({size: Button.sizes.xSmall});
-      expect(uut.getLabelSizeStyle()).toEqual({...Typography.text80});
+      const tree = renderer.create(<Button label="Button" size={'xSmall'}/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
   });
 
-  describe('getOutlineStyle', () => {
-    it('should return undefined when outline is false', () => {
-      const uut = new Button({outline: false});
-      expect(uut.getOutlineStyle()).toEqual(undefined);
-    });
-
-    it('should return borderWidth style with default borderColor when outline is true', () => {
-      const uut = new Button({outline: true});
-      expect(uut.getOutlineStyle()).toEqual({borderWidth: 1, borderColor: Colors.blue30});
-    });
-
-    it('should return undefined when link is true, even when outline is true', () => {
-      const uut = new Button({outline: true, link: true});
-      expect(uut.getOutlineStyle()).toEqual(undefined);
-    });
-
-    it('should return outlineColor according to prop', () => {
-      const uut = new Button({outline: true, outlineColor: 'red'});
-      expect(uut.getOutlineStyle()).toEqual({borderWidth: 1, borderColor: 'red'});
-    });
-
-    it('should return outline even if only got outlineColor prop', () => {
-      const uut = new Button({outlineColor: 'yellow'});
-      expect(uut.getOutlineStyle()).toEqual({borderWidth: 1, borderColor: 'yellow'});
-    });
-
-    it('should return disabled color for outline if button is disabled', () => {
-      const uut = new Button({disabled: true, outline: true});
-      expect(uut.getOutlineStyle()).toEqual({borderWidth: 1, borderColor: Colors.dark70});
-    });
-
-    it('should return custom borderWidth according to outlineWidth passed', () => {
-      const uut = new Button({outline: true, outlineWidth: 3});
-      expect(uut.getOutlineStyle()).toEqual({borderWidth: 3, borderColor: Colors.blue30});
-    });
-  });
-
-  describe('getBorderRadiusStyle', () => {
-    it('should return default border radius - br100 when no border radius sent', () => {
-      const uut = new Button({});
-      expect(uut.getBorderRadiusStyle()).toEqual({borderRadius: BorderRadiuses.br100});
-    });
-
+  describe('border radius', () => {
     it('should return given border radius when use plain number', () => {
-      const uut = new Button({borderRadius: 12});
-      expect(uut.getBorderRadiusStyle()).toEqual({borderRadius: 12});
-    });
-
-    it('should return 0 border radius when button is a link', () => {
-      const uut = new Button({link: true});
-      expect(uut.getBorderRadiusStyle()).toEqual({borderRadius: 0});
-    });
-
-    it('should return 0 border radius when button is full width', () => {
-      const uut = new Button({fullWidth: true});
-      expect(uut.getBorderRadiusStyle()).toEqual({borderRadius: 0});
+      const tree = renderer.create(<Button label="Button" borderRadius={12}/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
 
     it('should return 0 border radius when border radius prop is 0', () => {
-      const uut = new Button({borderRadius: 0});
-      expect(uut.getBorderRadiusStyle()).toEqual({borderRadius: 0});
+      const tree = renderer.create(<Button label="Button" borderRadius={0}/>).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('should return 0 border radius when button is full width', () => {
+      const tree = renderer.create(<Button label="Button" fullWidth/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
   });
 
-  describe('getContainerSizeStyle', () => {
+  describe('container size', () => {
     it('should return style for large button', () => {
-      const uut = new Button({size: 'large'});
-      const uut2 = new Button({size: 'large', outline: true});
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 9.5, paddingHorizontal: 20, minWidth: 90});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 8.5, paddingHorizontal: 19, minWidth: 90});
+      expect(renderer.create(<Button label="Button" size="large"/>).toJSON()).toMatchSnapshot();
+      expect(renderer.create(<Button label="Button" size="large" outline/>).toJSON()).toMatchSnapshot();
     });
 
     it('should return style for medium button', () => {
-      const uut = new Button({size: 'medium'});
-      const uut2 = new Button({size: 'medium', outline: true});
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 6.5, paddingHorizontal: 16, minWidth: 77});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 5.5, paddingHorizontal: 15, minWidth: 77});
+      expect(renderer.create(<Button label="Button" size="medium"/>).toJSON()).toMatchSnapshot();
+      expect(renderer.create(<Button label="Button" size="medium" outline/>).toJSON()).toMatchSnapshot();
     });
 
     it('should return style for small button', () => {
-      const uut = new Button({size: 'small'});
-      const uut2 = new Button({size: 'small', outline: true});
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 4.5, paddingHorizontal: 14, minWidth: 70});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 3.5, paddingHorizontal: 13, minWidth: 70});
+      expect(renderer.create(<Button label="Button" size="small"/>).toJSON()).toMatchSnapshot();
+      expect(renderer.create(<Button label="Button" size="small" outline/>).toJSON()).toMatchSnapshot();
     });
 
     it('should return style for xSmall button', () => {
-      const uut = new Button({size: Button.sizes.xSmall});
-      const uut2 = new Button({size: Button.sizes.xSmall, outline: true});
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 3, paddingHorizontal: 11, minWidth: 66});
-      expect(uut2.getContainerSizeStyle()).toEqual({paddingVertical: 2, paddingHorizontal: 10, minWidth: 66});
+      expect(renderer.create(<Button label="Button" size="xSmall"/>).toJSON()).toMatchSnapshot();
+      expect(renderer.create(<Button label="Button" size="xSmall" outline/>).toJSON()).toMatchSnapshot();
     });
 
     it('should reduce padding by outlineWidth in case of outline button', () => {
-      const uut = new Button({size: Button.sizes.large, outline: true, outlineWidth: 2});
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 7.5, paddingHorizontal: 18, minWidth: 90});
+      expect(renderer.create(<Button label="Button" size="large" outline outlineWidth={2}/>).toJSON()).toMatchSnapshot();
     });
 
     it('should avoid minWidth limitation if avoidMinWidth was sent', () => {
-      const uut = new Button({size: Button.sizes.medium, avoidMinWidth: true});
-      expect(uut.getContainerSizeStyle()).toEqual({paddingVertical: 6.5, paddingHorizontal: 16});
+      expect(renderer.create(<Button label="Button" size="medium" avoidMinWidth/>).toJSON()).toMatchSnapshot();
     });
 
     it('should have no padding of button is a link nor min width', () => {
-      const uut = new Button({size: 'medium', link: true});
-      expect(uut.getContainerSizeStyle()).toEqual({});
+      expect(renderer.create(<Button label="Button" size="medium" link/>).toJSON()).toMatchSnapshot();
     });
 
     it('should have no padding of button is an icon button', () => {
-      const uut = new Button({size: 'medium', iconSource: 14});
-      expect(uut.getContainerSizeStyle()).toEqual({});
+      expect(renderer.create(<Button label="Button" size="medium" iconSource={14}/>).toJSON()).toMatchSnapshot();
     });
 
     it('should have no padding if avoidInnerPadding prop was sent', () => {
-      const uut = new Button({size: 'medium', avoidInnerPadding: true});
-      expect(uut.getContainerSizeStyle()).toEqual({minWidth: 77});
+      expect(renderer.create(<Button label="Button" size="medium" avoidInnerPadding/>).toJSON()).toMatchSnapshot();
     });
 
     it('should return style for round button', () => {
-      const uut = new Button({size: 'xSmall', round: true});
-      const uut1 = new Button({size: 'small', round: true});
-      const uut2 = new Button({size: 'medium', round: true});
-      const uut3 = new Button({size: 'large', round: true});
-      uut.state = {
-        size: 30
-      };
-      uut1.state = {
-        size: 40
-      };
-      uut2.state = {
-        size: 50
-      };
-      uut3.state = {
-        size: 60
-      };
-      expect(uut.getContainerSizeStyle()).toEqual({height: 30, width: 30, padding: 3});
-      expect(uut1.getContainerSizeStyle()).toEqual({height: 40, width: 40, padding: 4.5});
-      expect(uut2.getContainerSizeStyle()).toEqual({height: 50, width: 50, padding: 6.5});
-      expect(uut3.getContainerSizeStyle()).toEqual({height: 60, width: 60, padding: 9.5});
+      expect(renderer.create(<Button label="Button" round/>).toJSON()).toMatchSnapshot();
     });
   });
 
-  describe('getIconStyle', () => {
-    it('should return the right spacing according to button size when label exists', () => {
-      let uut = new Button({size: Button.sizes.large});
-      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginRight: 8}, undefined]);
-      uut = new Button({size: Button.sizes.medium});
-      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginRight: 8}, undefined]);
-      uut = new Button({size: Button.sizes.small});
-      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginRight: 4}, undefined]);
-      uut = new Button({size: Button.sizes.xSmall});
-      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginRight: 4}, undefined]);
-    });
-
+  describe('icon', () => {
     it('should return the right spacing according to button size when label exists and icon on the right', () => {
-      let uut = new Button({size: Button.sizes.large, iconOnRight: true});
-      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginLeft: 8}, undefined]);
-      uut = new Button({size: Button.sizes.medium, iconOnRight: true});
-      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginLeft: 8}, undefined]);
-      uut = new Button({size: Button.sizes.small, iconOnRight: true});
-      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginLeft: 4}, undefined]);
-      uut = new Button({size: Button.sizes.xSmall, iconOnRight: true});
-      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginLeft: 4}, undefined]);
+      expect(renderer.create(<Button label="Button" size="large" iconOnRight/>).toJSON()).toMatchSnapshot();
+      expect(renderer.create(<Button label="Button" size="medium" iconOnRight/>).toJSON()).toMatchSnapshot();
+      expect(renderer.create(<Button label="Button" size="small" iconOnRight/>).toJSON()).toMatchSnapshot();
+      expect(renderer.create(<Button label="Button" size="xSmall" iconOnRight/>).toJSON()).toMatchSnapshot();
     });
 
-    it('should return icon style according to button size when label exists', () => {
-      let uut = new Button({size: Button.sizes.large, disabled: true, outline: true});
-      expect(uut.getIconStyle()).toEqual([{marginRight: 8, tintColor: Colors.dark60}, undefined]);
-      uut = new Button({size: Button.sizes.large, disabled: true, link: true});
-      expect(uut.getIconStyle()).toEqual([{marginRight: 8, tintColor: Colors.dark60}, undefined]);
-      uut = new Button({size: Button.sizes.large, disabled: true});
-      expect(uut.getIconStyle()).toEqual([{tintColor: Colors.white, marginRight: 8}, undefined]);
+    it('should apply color on icon', () => {
+      expect(renderer.create(<Button iconSource={12} color={'green'}/>).toJSON()).toMatchSnapshot();
+      expect(renderer.create(<Button iconSource={12} red30/>).toJSON()).toMatchSnapshot();
     });
 
-    it('should set tintColor according to getLabelColor logic', () => {
-      const uut = new Button({size: Button.sizes.large});
-      jest.spyOn(uut, 'getLabelColor');
-      uut.getLabelColor.mockReturnValue('red');
-      expect(uut.getIconStyle()).toEqual([{marginRight: 8, tintColor: 'red'}, undefined]);
+    it('should return icon style according to different variations', () => {
+      expect(renderer.create(<Button iconSource={12} outline/>).toJSON()).toMatchSnapshot();
+      expect(renderer.create(<Button iconSource={12} link/>).toJSON()).toMatchSnapshot();
+      expect(renderer.create(<Button iconSource={12} disabled/>).toJSON()).toMatchSnapshot();
     });
 
     it('should include custom iconStyle provided as a prop', () => {
-      let uut = new Button({size: Button.sizes.large, iconStyle: {marginRight: 9, tintColor: 'red'}});
-      expect(uut.getIconStyle()).toEqual([
-        {marginRight: 8, tintColor: Colors.white},
-        {marginRight: 9, tintColor: 'red'}
-      ]);
-      uut = new Button({size: Button.sizes.large, iconStyle: 123}); // style can be StyleSheet id
-      expect(uut.getIconStyle()).toEqual([{marginRight: 8, tintColor: Colors.white}, 123]);
+      expect(renderer.create(<Button iconSource={12} iconStyle={{marginRight: 9, tintColor: 'red'}}/>).toJSON()).toMatchSnapshot();
     });
   });
 });
@@ -360,8 +253,3 @@ function mockIOS() {
   Constants.isIOS = true;
   Constants.isAndroid = false;
 }
-
-// function mockAndroid() {
-//   Constants.isIOS = false;
-//   Constants.isAndroid = true;
-// }

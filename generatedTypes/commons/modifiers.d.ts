@@ -1,4 +1,7 @@
 import _ from 'lodash';
+import { BorderRadiusesLiterals } from '../style/borderRadiuses';
+import TypographyPresets from '../style/typographyPresets';
+import { colorsPalette } from '../style/colorsPalette';
 export declare const FLEX_KEY_PATTERN: RegExp;
 export declare const PADDING_KEY_PATTERN: RegExp;
 export declare const MARGIN_KEY_PATTERN: RegExp;
@@ -32,8 +35,6 @@ declare const PADDING_VARIATIONS: {
     readonly paddingH: "paddingHorizontal";
     readonly paddingV: "paddingVertical";
 };
-export declare type PaddingModifierKeyType = keyof typeof PADDING_VARIATIONS;
-export declare type NativePaddingKeyType = typeof PADDING_VARIATIONS[PaddingModifierKeyType];
 declare const MARGIN_VARIATIONS: {
     readonly margin: "margin";
     readonly marginL: "marginLeft";
@@ -43,18 +44,37 @@ declare const MARGIN_VARIATIONS: {
     readonly marginH: "marginHorizontal";
     readonly marginV: "marginVertical";
 };
-export declare type MarginModifierKeyType = keyof typeof MARGIN_VARIATIONS;
-export declare type NativeMarginModifierKeyType = typeof MARGIN_VARIATIONS[MarginModifierKeyType];
 declare const STYLE_KEY_CONVERTERS: {
     readonly flex: "flex";
     readonly flexG: "flexGrow";
     readonly flexS: "flexShrink";
 };
-export declare type FlexModifierKeyType = keyof typeof STYLE_KEY_CONVERTERS;
-export declare type NativeFlexModifierKeyType = typeof STYLE_KEY_CONVERTERS[FlexModifierKeyType];
+export declare type PaddingLiterals = keyof typeof PADDING_VARIATIONS;
+export declare type NativePaddingKeyType = typeof PADDING_VARIATIONS[PaddingLiterals];
+export declare type MarginLiterals = keyof typeof MARGIN_VARIATIONS;
+export declare type NativeMarginModifierKeyType = typeof MARGIN_VARIATIONS[MarginLiterals];
+export declare type FlexLiterals = keyof typeof STYLE_KEY_CONVERTERS;
+export declare type NativeFlexModifierKeyType = typeof STYLE_KEY_CONVERTERS[FlexLiterals];
+export declare type ColorLiterals = keyof typeof colorsPalette;
+export declare type TypographyLiterals = keyof typeof TypographyPresets;
+export declare type BorderRadiusLiterals = keyof typeof BorderRadiusesLiterals;
+export declare type AlignmentLiterals = 'row' | 'spread' | 'center' | 'centerH' | 'centerV' | 'left' | 'right' | 'top' | 'bottom';
+export declare type Modifier<T extends string> = Partial<Record<T, boolean>>;
+export declare type CustomModifier = {
+    [key: string]: boolean;
+};
+export declare type TypographyModifiers = Modifier<TypographyLiterals> | CustomModifier;
+export declare type ColorsModifiers = Modifier<ColorLiterals> | CustomModifier;
+export declare type BackgroundColorModifier = Modifier<'bg'>;
+export declare type AlignmentModifiers = Modifier<AlignmentLiterals>;
+export declare type PaddingModifiers = Modifier<PaddingLiterals>;
+export declare type MarginModifiers = Modifier<MarginLiterals>;
+export declare type FlexModifiers = Modifier<FlexLiterals>;
+export declare type BorderRadiusModifiers = Modifier<BorderRadiusLiterals>;
+export declare type ContainerModifiers = AlignmentModifiers & PaddingModifiers & MarginModifiers & FlexModifiers & BorderRadiusModifiers & BackgroundColorModifier;
 export declare function extractColorValue(props: Dictionary<any>): any;
 export declare function extractBackgroundColorValue(props: Dictionary<any>): any;
-export declare function extractTypographyValue(props: Dictionary<any>): undefined;
+export declare function extractTypographyValue(props: Dictionary<any>): object | undefined;
 export declare function extractPaddingValues(props: Dictionary<any>): Partial<Record<"padding" | "paddingLeft" | "paddingTop" | "paddingRight" | "paddingBottom" | "paddingHorizontal" | "paddingVertical", number>>;
 export declare function extractMarginValues(props: Dictionary<any>): Partial<Record<"margin" | "marginLeft" | "marginTop" | "marginRight" | "marginBottom" | "marginHorizontal" | "marginVertical", number>>;
 export declare function extractAlignmentsValues(props: Dictionary<any>): any;

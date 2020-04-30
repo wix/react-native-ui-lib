@@ -25,6 +25,9 @@ export interface ModalProps {
   blurView?: ComponentType;
   onBackgroundPress?: (event: GestureResponderEvent) => void;
   overlayBackgroundColor?: ColorValue;
+  animationType?: string;
+  visible?: boolean;
+  onRequestClose?: () => void;
 }
 
 export class Modal extends BaseComponent<ModalProps> {}

@@ -98,8 +98,10 @@ export default class ColorPalette extends PureBaseComponent {
   }
 
   onOrientationChanged = () => {
-    this.initLocalVariables();
-    this.setState({orientation: Constants.orientation}); // only to trigger render
+    if (this.state.orientation !== Constants.orientation) {
+      this.initLocalVariables();
+      this.setState({orientation: Constants.orientation}); // only to trigger render
+    }
   }
 
   initLocalVariables() {

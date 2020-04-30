@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {Checkbox, ColorPalette, Colors, RadioButton, RadioGroup, Slider, Text, View} from 'react-native-ui-lib';
+import {Checkbox, Switch, ColorPalette, Colors, RadioButton, RadioGroup, Slider, Text, View} from 'react-native-ui-lib';
 
 export function renderHeader(title, others) {
   return (
@@ -18,7 +18,7 @@ export function renderBooleanOption(title, key) {
       <Text text70 style={{flex: 1}}>
         {title}
       </Text>
-      <Checkbox
+      <Switch
         useCustomTheme
         key={key}
         textID={key}
@@ -59,7 +59,7 @@ export function renderBooleanGroup(title, options) {
   );
 }
 
-export function renderRadioGroup(title, key, options, {isRow} = {}) {
+export function renderRadioGroup(title, key, options, {isRow, afterValueChanged} = {}) {
   const value = this.state[key];
   return (
     <View marginB-s2>
@@ -70,7 +70,7 @@ export function renderRadioGroup(title, key, options, {isRow} = {}) {
         row={isRow}
         style={isRow && styles.rowWrap}
         initialValue={value}
-        onValueChange={value => this.setState({[key]: value})}
+        onValueChange={value => this.setState({[key]: value}, afterValueChanged)}
       >
         {_.map(options, (value, key) => {
           return (

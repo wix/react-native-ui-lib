@@ -16,15 +16,16 @@ class Tab2 extends Component {
   render() {
     const {loading} = this.state;
     return (
-      <View flex padding-20 center>
+      <View flex padding-20>
         <Image
           style={StyleSheet.absoluteFillObject}
+          overlayType="top"
           source={{
             uri:
               'https://images.unsplash.com/photo-1551376347-075b0121a65b?ixlib=rb-1.2.1&auto=format&fit=crop&w=2468&q=80'
           }}
         />
-        <Text text40>{loading ? 'Loading...' : ' TAB 2'}</Text>
+        <Text text40 white>{loading ? 'Loading...' : ' Posts'}</Text>
       </View>
     );
   }

@@ -6,7 +6,6 @@ import {renderBooleanOption, renderSliderOption} from '../ExampleScreenPresenter
 
 
 const INITIAL_PAGE = 2;
-const WIDTH = Constants.screenWidth - Spacings.s5 * 2;
 const IMAGES = [
   'https://images.pexels.com/photos/1212487/pexels-photo-1212487.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
   'https://images.pexels.com/photos/1366630/pexels-photo-1366630.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
@@ -27,12 +26,36 @@ const BACKGROUND_COLORS = [
 ];
 
 class CarouselScreen extends Component {
-  state = {
-    limitShownPages: false,
-    numberOfPagesShown: 7,
-    currentPage: INITIAL_PAGE,
-    autoplay: false
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      orientation: Constants.orientation,
+      width: this.getWidth(),
+      limitShownPages: false,
+      numberOfPagesShown: 7,
+      currentPage: INITIAL_PAGE,
+      autoplay: false
+    };
+  }
+
+  componentDidMount() {
+    Constants.addDimensionsEventListener(this.onOrientationChange);
+  }
+
+  componentWillUnmount() {
+    Constants.removeDimensionsEventListener(this.onOrientationChange);
+  }
+
+  onOrientationChange = () => {
+    if (this.state.orientation !== Constants.orientation) {
+      this.setState({orientation: Constants.orientation, width: this.getWidth()});
+    }
   };
+
+  getWidth = () => {
+    return Constants.windowWidth - Spacings.s5 * 2;
+  }
 
   onChangePage = currentPage => {
     this.setState({currentPage});
@@ -43,7 +66,7 @@ class CarouselScreen extends Component {
   };
 
   render() {
-    const {limitShownPages, numberOfPagesShown, autoplay} = this.state;
+    const {limitShownPages, numberOfPagesShown, autoplay, width} = this.state;
 
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -67,8 +90,9 @@ class CarouselScreen extends Component {
           //loop
           autoplay={autoplay}          
           onChangePage={this.onChangePage}
-          pageWidth={WIDTH}
-          // itemSpacings={Spacings.s3}
+          pageWidth={width}
+          itemSpacings={Spacings.s3}
+          containerMarginHorizontal={Spacings.s2}
           initialPage={INITIAL_PAGE}
           containerStyle={{height: 160}}
           pageControlPosition={'under'}

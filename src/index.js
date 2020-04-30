@@ -63,6 +63,9 @@ export default {
   get Image() {
     return require('./components/image').default;
   },
+  get ProgressiveImage() {
+    return require('./components/progressiveImage').default;
+  },
   get KeyboardAwareScrollView() {
     return require('./components/KeyboardAwareScrollView').KeyboardAwareScrollView;
   },

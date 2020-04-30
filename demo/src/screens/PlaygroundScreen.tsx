@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {View, Text, Card} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, Card,} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class PlaygroundScreen extends Component {
   render() {

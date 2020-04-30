@@ -2,7 +2,10 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, PanResponder, ViewPropTypes, AccessibilityInfo} from 'react-native';
-import {Constants, Colors, PureBaseComponent, View} from 'react-native-ui-lib';
+import {Constants} from '../../helpers';
+import {PureBaseComponent} from '../../commons';
+import {Colors} from '../../style';
+import View from '../view';
 
 const TRACK_SIZE = 6;
 const THUMB_SIZE = 24;

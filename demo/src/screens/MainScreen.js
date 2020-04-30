@@ -50,7 +50,7 @@ class MainScreen extends Component {
 
   onSearchBoxBlur = () => {
     this.closeSearchBox();
-    this.filterExplorerScreens('');
+    // this.filterExplorerScreens('');
   };
 
   getMenuData = () => {
@@ -97,7 +97,7 @@ class MainScreen extends Component {
     this.closeSearchBox();
 
     setTimeout(() => {
-      this.filterExplorerScreens('');
+      // this.filterExplorerScreens('');
       this.pushScreen(row);
     }, 0);
   };
@@ -243,7 +243,7 @@ class MainScreen extends Component {
 
         {showCarousel && (
           <TabController asCarousel>
-            <TabController.TabBar items={_.map(data, section => ({label: section.title}))}/>
+            <TabController.TabBar testID={'mainScreenTabBar'} items={_.map(data, section => ({label: section.title, testID: `section.${section.title}`}))}/>
             {this.renderPages(data)}
           </TabController>
         )}

@@ -46,7 +46,6 @@
 
 .docs-page {
   @include component-props();
-  padding-left: $navbarWidth;
 
   div {
     display: block;

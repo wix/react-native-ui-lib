@@ -7,7 +7,7 @@ export interface DrawerItem {
   background?: ColorValue;
   text?: string;
   icon?: ImageRequireSource;
-  onPress?: () => void;
+  onPress?: Function;
   keepOpen?: boolean;
   style?: StyleProp<ViewStyle>;
   testID?: string;
