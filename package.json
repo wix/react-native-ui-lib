@@ -25,6 +25,7 @@
     "lint:fix": "eslint src -c .eslintrc.js --fix",
     "lint:test": "mocha --compilers js:babel-core/register eslint-rules/tests/lib/rules",
     "xcode": "open ./ios/uilib.xcodeproj",
+    "build:dev": "tsc --p tsconfig.dev.json",
     "build": "tsc --p tsconfig.build.json",
     "log": "react-native log-ios | grep 'ethan -'",
     "docs:install": "(cd ./uilib-docs && rm -rf node_modules && rm -rf package-lock.json && npm install)",
