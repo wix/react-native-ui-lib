@@ -17,7 +17,7 @@ const IndexPage = props => {
           <div className="logo-box">
             <img className="logo" src={mainLogo} alt="main-logo"/>
 
-            <Link className="docs-button" to="/docs/">
+            <Link className="docs-button" to="/getting-started/setup">
               Enter Docs
             </Link>
 
