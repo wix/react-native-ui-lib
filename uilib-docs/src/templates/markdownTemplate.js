@@ -12,8 +12,10 @@ export default function Template({data}) {
   return (
     <Layout showSidebar>
       <div className="markdown">
-        <h1 className="title">{title}</h1>
-        <div dangerouslySetInnerHTML={{__html: html}}/>
+        <div className="markdown-content">
+          <h1 className="title">{title}</h1>
+          <div dangerouslySetInnerHTML={{__html: html}}/>
+        </div>
       </div>
     </Layout>
   );
