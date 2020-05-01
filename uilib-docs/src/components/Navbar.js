@@ -29,7 +29,11 @@ class Navbar extends Component {
 
   getMarkdownPages(data) {
     const markdownPages = data.allFile.edges;
-    const pages = markdownPages.map(({node}) => node.childMarkdownRemark.frontmatter);
+    const pages = _.chain(markdownPages)
+      .map(({node}) => node.childMarkdownRemark.frontmatter)
+      .sortBy('index')
+      .value();
+
     return pages;
   }
 
@@ -97,6 +101,7 @@ class Navbar extends Component {
                 node {
                   childMarkdownRemark {
                     frontmatter {
+                      index
                       title
                       path
                     }
