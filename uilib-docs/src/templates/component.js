@@ -144,16 +144,7 @@ export default class ComponentTemplate extends Component {
             <div>
               <p>
                 Supported modifiers: <b>{componentInfo.modifiers}</b>. <br/>
-                Read more about modifiers{' '}
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={'https://github.com/wix/react-native-ui-lib/wiki/MODIFIERS'}
-                >
-                  {' '}
-                  here
-                </a>
-                .
+                Read more about modifiers <Link to="/foundation/modifiers">here</Link>.
               </p>
             </div>
           )}
