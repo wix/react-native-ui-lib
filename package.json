@@ -110,7 +110,8 @@
       "/e2e/",
       "/node_modules/",
       "/typings/",
-      "/expoDemo/"
+      "/expoDemo/",
+      "/uilib-docs/"
     ],
     "setupFiles": [
       "./jest-setup.js"
