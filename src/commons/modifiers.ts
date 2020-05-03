@@ -72,6 +72,7 @@ export type AlignmentLiterals =
 | 'row' | 'spread'
 | 'center' | 'centerH' | 'centerV'
 | 'left' | 'right' | 'top' | 'bottom';
+export type PositionLiterals = 'absF' | 'absL' | 'absR' | 'absT' | 'absB' | 'absV' | 'absH';
 
 export type Modifier<T extends string> = Partial<Record<T, boolean>>
 export type CustomModifier = {[key: string]: boolean};
@@ -80,6 +81,7 @@ export type TypographyModifiers = Modifier<TypographyLiterals> | CustomModifier;
 export type ColorsModifiers = Modifier<ColorLiterals> | CustomModifier;
 export type BackgroundColorModifier = Modifier<'bg'>;
 export type AlignmentModifiers = Modifier<AlignmentLiterals>;
+export type PositionModifiers = Modifier<PositionLiterals>;
 export type PaddingModifiers = Modifier<PaddingLiterals>;
 export type MarginModifiers = Modifier<MarginLiterals>;
 export type FlexModifiers = Modifier<FlexLiterals>;
@@ -87,6 +89,7 @@ export type BorderRadiusModifiers = Modifier<BorderRadiusLiterals>;
 
 export type ContainerModifiers =
   AlignmentModifiers &
+  PositionModifiers &
   PaddingModifiers &
   MarginModifiers &
   FlexModifiers &
