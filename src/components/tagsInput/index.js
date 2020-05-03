@@ -102,14 +102,11 @@ export default class TagsInput extends BaseComponent {
     this.state = {
       value: props.value,
       tags: _.cloneDeep(props.tags) || [],
-      tagIndexToRemove: undefined,
-      isTagNotValidate: false
+      tagIndexToRemove: undefined
     };
   }
 
   componentDidMount() {
-    const {tags} = this.state;
-    this.updateInvalidTags(tags);
     if (Constants.isAndroid) {
       const textInputHandle = ReactNative.findNodeHandle(this.input);
       if (textInputHandle && NativeModules.TextInputDelKeyHandler) {
@@ -146,8 +143,6 @@ export default class TagsInput extends BaseComponent {
 
     const newTag = _.isFunction(onCreateTag) ? onCreateTag(value) : value;
     const newTags = [...tags, newTag];
-
-    this.updateInvalidTags(newTags);
     this.setState({
       value: '',
       tags: newTags
@@ -163,7 +158,6 @@ export default class TagsInput extends BaseComponent {
       const removedTag = tags[tagIndexToRemove];
 
       tags.splice(tagIndexToRemove, 1);
-      this.updateInvalidTags(tags);
       this.setState({
         tags,
         tagIndexToRemove: undefined
@@ -205,14 +199,6 @@ export default class TagsInput extends BaseComponent {
     const isLastTagMarked = tagIndexToRemove === tagsCount - 1;
 
     return isLastTagMarked;
-  }
-
-  updateInvalidTags(tags) {
-    return tags.filter((tag) => {
-      return tag.invalid;
-    }).length > 0 ?
-      this.setState({isTagNotValidate: true}) :
-      this.setState({isTagNotValidate: false});
   }
 
   onKeyPress(event) {
@@ -353,7 +339,7 @@ export default class TagsInput extends BaseComponent {
   render() {
     const {disableTagRemoval, containerStyle, hideUnderline, validationErrorMessage} = this.getThemeProps();
     const tagRenderFn = disableTagRemoval ? this.renderTag : this.renderTagWrapper;
-    const {tags, isTagNotValidate, tagIndexToRemove} = this.state;
+    const {tags, tagIndexToRemove} = this.state;
 
     return (
       <View style={[!hideUnderline && styles.withUnderline, containerStyle]}>
@@ -362,8 +348,8 @@ export default class TagsInput extends BaseComponent {
           {this.renderTextInput()}
         </View>
         <View>
-          <Text style={[isTagNotValidate && tagIndexToRemove ? styles.inValidMarkedTagLabel : styles.inValidTagLabel]}>
-            {isTagNotValidate ? validationErrorMessage : null}
+          <Text style={[validationErrorMessage && tagIndexToRemove ? styles.inValidMarkedTagLabel : styles.inValidTagLabel]}>
+            {validationErrorMessage}
           </Text>
         </View>
       </View>
