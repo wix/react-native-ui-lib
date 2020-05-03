@@ -34,6 +34,6 @@ Our demo app is located [here](https://github.com/wix/react-native-ui-lib/tree/m
 To run it:
 
 - install dependencies: `npm install`
-- (for iOS) `cd ios && pod install`
+- (for iOS) `cd ios && pod install && cd ..`
 - start the packager: `npm start`
 - run: `react-native run-ios` or `react-native run-android` (or within Xcode or Android Studio)
