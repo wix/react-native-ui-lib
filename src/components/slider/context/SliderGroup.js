@@ -1,8 +1,9 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {Colors, View} from 'react-native-ui-lib';
 import SliderContext from './SliderContext';
+import {Colors} from '../../../style';
+import View from '../../view';
 
 
 export default class SliderGroup extends Component {

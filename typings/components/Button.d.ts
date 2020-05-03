@@ -5,10 +5,11 @@ import {
   ImageStyle,
   ImageURISource,
   StyleProp,
+  TextProps,
   TextStyle
 } from 'react-native';
 import {PureBaseComponent} from '../commons';
-import {TextProps} from './Text';
+import {ColorsModifiers, TypographyModifiers} from '../modifiers';
 import {ColorValue} from '../style/colors';
 
 export type ButtonSize = "xSmall" | "small" | "medium" | "large";
@@ -28,7 +29,7 @@ export interface ButtonProps extends TextProps {
   backgroundColor?: ColorValue;
   size?: ButtonSize;
   borderRadius?: number;
-  onPress?: (event: GestureResponderEvent) => void;
+  onPress?: (event: GestureResponderEvent | any) => void;
   disabled?: boolean;
   outline?: boolean;
   outlineColor?: ColorValue;
@@ -45,7 +46,14 @@ export interface ButtonProps extends TextProps {
   getActiveBackgroundColor?: (backgroundColor: ColorValue, themeProps: object) => ColorValue;
   animateLayout?: boolean;
   animateTo?: ButtonAnimateTo;
+  style?: StyleProp<TextStyle>;
+  testID?: string;
+  throttleTime?: number;
+  ref?: any;
+  hitSlop?: any;
 }
 
 
-export class Button extends PureBaseComponent<ButtonProps> {}
+export class Button extends PureBaseComponent<ButtonProps & ColorsModifiers & TypographyModifiers> {
+  static sizes: Record<ButtonSize, ButtonSize>
+}

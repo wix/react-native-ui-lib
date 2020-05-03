@@ -10,8 +10,8 @@ import searchIcon from '../images/search.svg';
 
 class Navbar extends Component {
   static propTypes = {
-    components: PropTypes.array,
-  }
+    components: PropTypes.array
+  };
 
   constructor(props) {
     super(props);
@@ -20,11 +20,17 @@ class Navbar extends Component {
   }
 
   state = {
-    filter: '',
-  }
+    filter: ''
+  };
 
   setFilter({target: {value}}) {
     this.setState({filter: value});
+  }
+
+  getMarkdownPages(data) {
+    const markdownPages = data.allFile.edges;
+    const pages = markdownPages.map(({node}) => node.childMarkdownRemark.frontmatter);
+    return pages;
   }
 
   getNavbarComponents(data) {
@@ -39,10 +45,11 @@ class Navbar extends Component {
 
   renderNavbar = data => {
     const {filter} = this.state;
+    const markdowns = this.getMarkdownPages(data);
     const components = this.getNavbarComponents(data);
+
     const filteredComponents = _.filter(components, component =>
-      _.includes(_.lowerCase(component.node.displayName), _.lowerCase(filter))
-    );
+      _.includes(_.lowerCase(component.node.displayName), _.lowerCase(filter)));
     return (
       <div className="navbar">
         <div className="search">
@@ -50,17 +57,20 @@ class Navbar extends Component {
           <input placeholder="Search..." onChange={this.setFilter}/>
         </div>
         <ul>
+          {_.map(markdowns, page => {
+            return (
+              <li>
+                <Link to={page.path}>{page.title}</Link>
+              </li>
+            );
+          })}
+          <li className="separator"/>
           {_.map(filteredComponents, (component, index) => {
             return (
               <li key={index}>
-                <Link
-                  key={component.node.displayName}
-                  to={`/docs/${component.node.isPublic ? 'public/' : ''}${
-                    component.node.displayName
-                  }/`}
-                >
+                <Link key={component.node.displayName} to={`/docs/${component.node.displayName}/`}>
                   {component.node.displayName}
-                  {component.node.isPublic && <span className="public">public</span>}
+                  {/* {component.node.isPublic && <span className="public">public</span>} */}
                 </Link>
               </li>
             );
@@ -68,7 +78,7 @@ class Navbar extends Component {
         </ul>
       </div>
     );
-  }
+  };
 
   render() {
     return (
@@ -79,7 +89,18 @@ class Navbar extends Component {
               edges {
                 node {
                   displayName
-                  isPublic
+                }
+              }
+            }
+            allFile(filter: {sourceInstanceName: {eq: "markdown-pages"}}) {
+              edges {
+                node {
+                  childMarkdownRemark {
+                    frontmatter {
+                      title
+                      path
+                    }
+                  }
                 }
               }
             }

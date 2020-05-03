@@ -1,6 +1,8 @@
 import {ScaledSize} from 'react-native';
 
 export namespace Constants {
+  export var topBarHeight: number | undefined;
+
   export const orientations: {
     PORTRAIT: string;
     LANDSCAPE: string;
@@ -21,6 +23,7 @@ export namespace Constants {
   export let isShortScreen: boolean;
   export const screenAspectRatio: number;
   export const isTablet: boolean;
+  export const accessibility: {isScreenReaderEnabled: boolean};
 
   export interface SafeAreaInsets {
     left: number;
@@ -38,4 +41,5 @@ export namespace Constants {
   export function removeDimensionsEventListener(
     callback: (event: { window: ScaledSize, screen: ScaledSize }) => void
   ): void;
+
 }

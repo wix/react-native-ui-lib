@@ -1,11 +1,10 @@
 // TODO: support hitSlop
 import React, {PureComponent} from 'react';
-import {processColor, StyleSheet} from 'react-native';
-import PropTypes from 'prop-types';
+import {processColor, StyleSheet, ViewStyle} from 'react-native';
 import _ from 'lodash';
 import Reanimated, {Easing} from 'react-native-reanimated';
-import {TapGestureHandler, LongPressGestureHandler, State} from 'react-native-gesture-handler';
-import {asBaseComponent, forwardRef} from '../commons';
+import {TapGestureHandler, LongPressGestureHandler, State, LongPressGestureHandlerGestureEvent} from 'react-native-gesture-handler';
+import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../commons/new';
 
 const {
   Clock,
@@ -27,48 +26,51 @@ const {
   stopClock
 } = Reanimated;
 
+type TouchableOpacityPropTypes = {
+  /**
+   * Background color
+   */
+  backgroundColor: string;
+  /**
+   * Background color when actively pressing the touchable
+   */
+  feedbackColor: string;
+  /**
+   * Opacity value when actively pressing the touchable
+   */
+  activeOpacity: number;
+  /**
+   * Scale value when actively pressing the touchable
+   */
+  activeScale: number;
+  /**
+   * Callback for when tapping the touchable
+   */
+  onPress: Function;
+  /**
+   * Callback for when long pressing the touchable
+   */
+  onLongPress: Function;
+  /**
+   * Pass controlled pressState to track gesture state changes
+   */
+  pressState: object;
+  /**
+   * If true, disable all interactions for this component.
+   */
+  disabled: boolean;
+
+  style: ViewStyle;
+};
+
+
 /**
  * @description: a Better, enhanced TouchableOpacity component
  * @modifiers: flex, margin, padding, background
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TouchableOpacityScreen.js
  */
-class TouchableOpacity extends PureComponent {
+class TouchableOpacity extends PureComponent<TouchableOpacityPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps> {
   static displayName = 'Incubator.TouchableOpacity';
-
-  static propTypes = {
-    /**
-     * Background color
-     */
-    backgroundColor: PropTypes.string,
-    /**
-     * Background color when actively pressing the touchable
-     */
-    feedbackColor: PropTypes.string,
-    /**
-     * Opacity value when actively pressing the touchable
-     */
-    activeOpacity: PropTypes.number,
-    /**
-     * Scale value when actively pressing the touchable
-     */
-    activeScale: PropTypes.number,
-    /**
-     * Callback for when tapping the touchable
-     */
-    onPress: PropTypes.func,
-    /**
-     * Callback for when long pressing the touchable
-     */
-    onLongPress: PropTypes.func,
-    /**
-     * Pass controlled pressState to track gesture state changes
-     */
-    pressState: PropTypes.object,
-    /**
-     * If true, disable all interactions for this component.
-     */
-    disabled: PropTypes.bool
-  };
 
   static defaultProps = {
     activeOpacity: 0.2,
@@ -90,7 +92,7 @@ class TouchableOpacity extends PureComponent {
     processColor(this.props.feedbackColor || this.backgroundColor),
     processColor(this.backgroundColor));
 
-  get pressState() {
+  get pressState(): any {
     return this.props.pressState || this.state.pressState;
   }
 
@@ -105,7 +107,7 @@ class TouchableOpacity extends PureComponent {
     const style = {
       opacity: this._opacity,
       transform: [{scale: this._scale}]
-    };
+    } as any;
 
     if (feedbackColor) {
       style.backgroundColor = this._color;
@@ -121,8 +123,8 @@ class TouchableOpacity extends PureComponent {
   ],
   {useNativeDriver: true});
 
-  onLongPress = ({nativeEvent}) => {
-    if (nativeEvent.state === State.ACTIVE) {
+  onLongPress = (event: LongPressGestureHandlerGestureEvent) => {
+    if (event.nativeEvent.state === State.ACTIVE) {
       _.invoke(this.props, 'onLongPress', this.props);
     }
   };
@@ -174,7 +176,7 @@ class TouchableOpacity extends PureComponent {
   }
 }
 
-function runTiming(clock, gestureState, initialValue, endValue) {
+function runTiming(clock: any, gestureState: any, initialValue: number, endValue: number) {
   const state = {
     finished: new Value(0),
     position: new Value(0),
@@ -213,4 +215,4 @@ function runTiming(clock, gestureState, initialValue, endValue) {
   ]);
 }
 
-export default asBaseComponent(forwardRef(TouchableOpacity));
+export default asBaseComponent<TouchableOpacityPropTypes>(forwardRef(TouchableOpacity));

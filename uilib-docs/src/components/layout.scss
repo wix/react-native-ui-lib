@@ -20,4 +20,11 @@
   .fill {
     background: $primary;
   }
+
+  .content {
+    width: 100%;
+    &.with-navbar {
+      padding-left: $navbarWidth;
+    }
+  }
 }
