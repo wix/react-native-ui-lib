@@ -1,11 +1,11 @@
 //
-//  RCTCustomInputController.m
+//  RCTCustomInputControllerTemp.m
 //
 //  Created by Leo Natan (Wix) on 13/12/2016.
 //  Copyright © 2016 Leo Natan. All rights reserved.
 //
 
-#import "RCTCustomInputController.h"
+#import "RCTCustomInputControllerTemp.h"
 #import "RCTCustomKeyboardViewController.h"
 
 #import <React/RCTUIManager.h>
@@ -58,7 +58,7 @@ NSString *const RCTCustomInputControllerKeyboardResigendEvent = @"kbdResigned";
 @end
 
 
-@interface RCTCustomInputController () <_WXInputHelperViewDelegate> {
+@interface RCTCustomInputControllerTemp () <_WXInputHelperViewDelegate> {
     UIWindow *_fullScreenWindow;
     BOOL _performingExpandTransition;
 }
@@ -67,7 +67,7 @@ NSString *const RCTCustomInputControllerKeyboardResigendEvent = @"kbdResigned";
 
 @end
 
-@implementation RCTCustomInputController
+@implementation RCTCustomInputControllerTemp
 
 + (BOOL)requiresMainQueueSetup
 {
@@ -84,7 +84,7 @@ NSString *const RCTCustomInputControllerKeyboardResigendEvent = @"kbdResigned";
     return @[RCTCustomInputControllerKeyboardResigendEvent];
 }
 
-RCT_EXPORT_MODULE(CustomInputController)
+RCT_EXPORT_MODULE(CustomInputControllerTemp)
 
 - (instancetype)init
 {
