@@ -30,7 +30,7 @@ export default class TagsInput extends BaseComponent {
 
   static propTypes = {
     /**
-     * list of tags. can be string or custom object when implementing getLabel
+     * list of tags. can be string boolean or custom object when implementing getLabel
      */
     tags: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])),
     /**
@@ -53,6 +53,10 @@ export default class TagsInput extends BaseComponent {
      * callback for when pressing a tag in the following format (tagIndex, markedTagIndex) => {...}
      */
     onTagPress: PropTypes.func,
+    /**
+     * validation message error appears when tag isn't validate
+     */
+    validationErrorMessage: PropTypes.string,
     /**
      * if true, tags *removal* Ux won't be available
      */
@@ -139,7 +143,6 @@ export default class TagsInput extends BaseComponent {
 
     const newTag = _.isFunction(onCreateTag) ? onCreateTag(value) : value;
     const newTags = [...tags, newTag];
-
     this.setState({
       value: '',
       tags: newTags
@@ -242,9 +245,17 @@ export default class TagsInput extends BaseComponent {
 
     return (
       <View row centerV>
-        {shouldMarkTag && <Image style={styles.removeIcon} source={Assets.icons.x}/>}
-        <Text style={[styles.tagLabel, typography]} accessibilityLabel={`${label} tag`}>
-          {shouldMarkTag ? 'Remove' : label}
+        {shouldMarkTag && (
+          <Image
+            style={[styles.removeIcon, tag.invalid && styles.inValidTagRemoveIcon]}
+            source={Assets.icons.x}
+          />)
+        }
+        <Text
+          style={[tag.invalid ? (shouldMarkTag ? styles.errorMessageWhileMarked : styles.errorMessage)
+            : styles.tagLabel, typography]} accessibilityLabel={`${label} tag`}
+        >
+          {!tag.invalid && shouldMarkTag ? 'Remove' : label}
         </Text>
       </View>
     );
@@ -254,6 +265,17 @@ export default class TagsInput extends BaseComponent {
     const {tagStyle, renderTag} = this.getThemeProps();
     const {tagIndexToRemove} = this.state;
     const shouldMarkTag = tagIndexToRemove === index;
+
+    if (tag.invalid) {
+      return (
+        <View
+          key={index}
+          style={[styles.inValidTag, tagStyle, shouldMarkTag && styles.inValidMarkedTag]}
+        >
+          {this.renderLabel(tag, shouldMarkTag)}
+        </View>
+      );
+    }
 
     if (_.isFunction(renderTag)) {
       return renderTag(tag, index, shouldMarkTag, this.getLabel(tag));
@@ -310,9 +332,9 @@ export default class TagsInput extends BaseComponent {
   }
 
   render() {
-    const {disableTagRemoval, containerStyle, hideUnderline} = this.getThemeProps();
+    const {disableTagRemoval, containerStyle, hideUnderline, validationErrorMessage} = this.getThemeProps();
     const tagRenderFn = disableTagRemoval ? this.renderTag : this.renderTagWrapper;
-    const {tags} = this.state;
+    const {tags, tagIndexToRemove} = this.state;
 
     return (
       <View style={[!hideUnderline && styles.withUnderline, containerStyle]}>
@@ -320,6 +342,14 @@ export default class TagsInput extends BaseComponent {
           {_.map(tags, tagRenderFn)}
           {this.renderTextInput()}
         </View>
+        {validationErrorMessage ?
+          (
+            <View>
+              <Text style={[styles.errorMessage, tagIndexToRemove && styles.errorMessageWhileMarked]}>
+                {validationErrorMessage}
+              </Text>
+            </View>
+          ) : null}
       </View>
     );
   }
@@ -336,6 +366,19 @@ export default class TagsInput extends BaseComponent {
     this.input.clear();
   }
 }
+const basicTagStyle = {
+  borderRadius: BorderRadiuses.br100,
+  paddingVertical: 4.5,
+  paddingHorizontal: 12,
+  marginRight: GUTTER_SPACING,
+  marginVertical: GUTTER_SPACING / 2
+};
+
+const basicIconStyle = {
+  width: 10,
+  height: 10,
+  marginRight: 6
+};
 
 const styles = StyleSheet.create({
   withUnderline: {
@@ -353,23 +396,35 @@ const styles = StyleSheet.create({
   },
   tag: {
     backgroundColor: Colors.blue30,
-    borderRadius: BorderRadiuses.br100,
-    paddingVertical: 4.5,
-    paddingHorizontal: 12,
-    marginRight: GUTTER_SPACING,
-    marginVertical: GUTTER_SPACING / 2
+    ...basicTagStyle
+  },
+  inValidTag: {
+    borderWidth: 1,
+    borderColor: Colors.red30,
+    ...basicTagStyle
+  },
+  inValidMarkedTag: {
+    borderColor: Colors.red10
   },
   tagMarked: {
     backgroundColor: Colors.dark10
   },
   removeIcon: {
     tintColor: Colors.white,
-    width: 10,
-    height: 10,
-    marginRight: 6
+    ...basicIconStyle
+  },
+  inValidTagRemoveIcon: {
+    tintColor: Colors.red10
   },
   tagLabel: {
     ...Typography.text80,
     color: Colors.white
+  },
+  errorMessage: {
+    ...Typography.text80,
+    color: Colors.red30
+  },
+  errorMessageWhileMarked: {
+    color: Colors.red10
   }
 });
