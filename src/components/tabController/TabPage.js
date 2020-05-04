@@ -65,11 +65,11 @@ export default class TabPage extends PureComponent {
   };
 
   renderCodeBlock = () => {
-    const {currentPage} = this.context;
+    const {targetPage} = this.context;
     const {index, lazy} = this.props;
     return block([
-      cond(and(eq(currentPage, index), lazy, eq(this._loaded, 0)), [set(this._loaded, 1), call([], this.lazyLoad)]),
-      cond(eq(currentPage, index),
+      cond(and(eq(targetPage, index), lazy, eq(this._loaded, 0)), [set(this._loaded, 1), call([], this.lazyLoad)]),
+      cond(eq(targetPage, index),
         [set(this._opacity, 1), set(this._zIndex, 1)],
         [set(this._opacity, 0), set(this._zIndex, 0)])
     ]);
