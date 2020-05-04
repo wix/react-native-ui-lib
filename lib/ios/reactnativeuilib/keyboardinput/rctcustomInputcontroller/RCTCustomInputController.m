@@ -11,7 +11,7 @@
 #import <React/RCTUIManager.h>
 #import <objc/runtime.h>
 
-#import "LNAnimator.h"
+#import "LNAnimatorTemp.h"
 
 #define kHlperViewTag 0x1f1f1f
 
@@ -312,7 +312,7 @@ RCT_EXPORT_METHOD(expandFullScreenForInput:(nonnull NSNumber*)inputFieldTag)
                 [_fullScreenWindow layoutIfNeeded];
             }];
 
-            [[LNAnimator animatorWithDuration:0.5
+            [[LNAnimatorTemp animatorWithDuration:0.5
                                    animations:@[[LNViewAnimation animationWithView:_fullScreenWindow keyPath:@"frame" toValue:[NSValue valueWithCGRect:[UIScreen mainScreen].bounds]]]
                             completionHandler:^(BOOL completed)
             {
@@ -360,7 +360,7 @@ RCT_EXPORT_METHOD(resetSizeForInput:(nonnull NSNumber*)inputFieldTag)
             [_fullScreenWindow layoutIfNeeded];
             [_fullScreenWindow endEditing:YES];
             
-            [[LNAnimator animatorWithDuration:0.5
+            [[LNAnimatorTemp animatorWithDuration:0.5
                                    animations:@[[LNViewAnimation animationWithView:_fullScreenWindow keyPath:@"frame" toValue:[NSValue valueWithCGRect:keyboardTargetFrame]]]
                             completionHandler:^(BOOL completed)
             {
