@@ -10,6 +10,7 @@
 #import "ObservingInputAccessoryViewTemp.h"
 #import "UIResponder+FirstResponderTemp.h"
 
+#import <WebKit/WebKit.h>
 #import <React/RCTScrollView.h>
 #import <React/RCTBridge.h>
 #import <React/RCTUIManager.h>
@@ -128,7 +129,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     return subview;
 }
 
--(void)_swizzleWebViewInputAccessory:(UIWebView*)webview
+-(void)_swizzleWebViewInputAccessory:(WKWebView*)webview
 {
     UIView* subview;
     for (UIView* view in webview.scrollView.subviews)
@@ -235,9 +236,9 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
         {
             [self setupTextView:(UITextView*)subview];
         }
-        else if ([subview isKindOfClass:[UIWebView class]])
+        else if ([subview isKindOfClass:[WKWebView class]])
         {
-            [self _swizzleWebViewInputAccessory:(UIWebView*)subview];
+            [self _swizzleWebViewInputAccessory:(WKWebView*)subview];
         }
     }
     
