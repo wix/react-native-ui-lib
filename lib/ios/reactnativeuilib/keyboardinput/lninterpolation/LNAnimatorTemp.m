@@ -6,7 +6,7 @@
 //  Copyright © 2017 Wix. All rights reserved.
 //
 
-#import "LNAnimator.h"
+#import "LNAnimatorTemp.h"
 
 #import "LNInterpolation.h"
 
@@ -52,7 +52,7 @@
 
 @end
 
-@implementation LNAnimator
+@implementation LNAnimatorTemp
 {
     void (^_completionHandler)(BOOL);
     CADisplayLink* _displayLink;
@@ -73,7 +73,7 @@
 
 + (instancetype)animatorWithDuration:(NSTimeInterval)duration animations:(NSArray<id<LNAnimation>>*)animations completionHandler:(void(^)(BOOL completed))completionHandler
 {
-    LNAnimator* rv = [[LNAnimator alloc] _init];
+    LNAnimatorTemp* rv = [[LNAnimatorTemp alloc] _init];
     if(rv)
     {
         rv->_duration = duration;

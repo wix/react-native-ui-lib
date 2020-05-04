@@ -1,17 +1,17 @@
 //
-//  RCTCustomInputController.m
+//  RCTCustomInputControllerTemp.m
 //
 //  Created by Leo Natan (Wix) on 13/12/2016.
 //  Copyright © 2016 Leo Natan. All rights reserved.
 //
 
-#import "RCTCustomInputController.h"
+#import "RCTCustomInputControllerTemp.h"
 #import "RCTCustomKeyboardViewController.h"
 
 #import <React/RCTUIManager.h>
 #import <objc/runtime.h>
 
-#import "LNAnimator.h"
+#import "LNAnimatorTemp.h"
 
 #define kHlperViewTag 0x1f1f1f
 
@@ -58,7 +58,7 @@ NSString *const RCTCustomInputControllerKeyboardResigendEvent = @"kbdResigned";
 @end
 
 
-@interface RCTCustomInputController () <_WXInputHelperViewDelegate> {
+@interface RCTCustomInputControllerTemp () <_WXInputHelperViewDelegate> {
     UIWindow *_fullScreenWindow;
     BOOL _performingExpandTransition;
 }
@@ -67,7 +67,7 @@ NSString *const RCTCustomInputControllerKeyboardResigendEvent = @"kbdResigned";
 
 @end
 
-@implementation RCTCustomInputController
+@implementation RCTCustomInputControllerTemp
 
 + (BOOL)requiresMainQueueSetup
 {
@@ -84,7 +84,7 @@ NSString *const RCTCustomInputControllerKeyboardResigendEvent = @"kbdResigned";
     return @[RCTCustomInputControllerKeyboardResigendEvent];
 }
 
-RCT_EXPORT_MODULE(CustomInputController)
+RCT_EXPORT_MODULE(CustomInputControllerTemp)
 
 - (instancetype)init
 {
@@ -312,7 +312,7 @@ RCT_EXPORT_METHOD(expandFullScreenForInput:(nonnull NSNumber*)inputFieldTag)
                 [_fullScreenWindow layoutIfNeeded];
             }];
 
-            [[LNAnimator animatorWithDuration:0.5
+            [[LNAnimatorTemp animatorWithDuration:0.5
                                    animations:@[[LNViewAnimation animationWithView:_fullScreenWindow keyPath:@"frame" toValue:[NSValue valueWithCGRect:[UIScreen mainScreen].bounds]]]
                             completionHandler:^(BOOL completed)
             {
@@ -360,7 +360,7 @@ RCT_EXPORT_METHOD(resetSizeForInput:(nonnull NSNumber*)inputFieldTag)
             [_fullScreenWindow layoutIfNeeded];
             [_fullScreenWindow endEditing:YES];
             
-            [[LNAnimator animatorWithDuration:0.5
+            [[LNAnimatorTemp animatorWithDuration:0.5
                                    animations:@[[LNViewAnimation animationWithView:_fullScreenWindow keyPath:@"frame" toValue:[NSValue valueWithCGRect:keyboardTargetFrame]]]
                             completionHandler:^(BOOL completed)
             {
