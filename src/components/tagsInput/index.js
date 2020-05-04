@@ -239,11 +239,7 @@ export default class TagsInput extends BaseComponent {
     return _.get(item, 'label');
   }
 
-  checkTagValidate(tag, validationErrorMessage) {
-    return validationErrorMessage ? tag.invalid : false;
-  }
-
-  renderLabel(tag, shouldMarkTag, isTagNotValidate) {
+  renderLabel(tag, shouldMarkTag) {
     const typography = this.extractTypographyValue();
     const label = this.getLabel(tag);
 
@@ -251,33 +247,32 @@ export default class TagsInput extends BaseComponent {
       <View row centerV>
         {shouldMarkTag && (
           <Image
-            style={[isTagNotValidate ? styles.inValidTagRemoveIcon : styles.removeIcon]}
+            style={[styles.removeIcon, tag.invalid && styles.inValidTagRemoveIcon]}
             source={Assets.icons.x}
           />)
         }
         <Text
-          style={[isTagNotValidate ? (shouldMarkTag ? styles.inValidMarkedTagLabel : styles.inValidTagLabel)
+          style={[tag.invalid ? (shouldMarkTag ? styles.errorMessageWhileMarked : styles.errorMessage)
             : styles.tagLabel, typography]} accessibilityLabel={`${label} tag`}
         >
-          {isTagNotValidate ? label : (shouldMarkTag ? 'Remove' : label)}
+          {!tag.invalid && shouldMarkTag ? 'Remove' : label}
         </Text>
       </View>
     );
   }
 
   renderTag(tag, index) {
-    const {tagStyle, renderTag, validationErrorMessage} = this.getThemeProps();
+    const {tagStyle, renderTag} = this.getThemeProps();
     const {tagIndexToRemove} = this.state;
     const shouldMarkTag = tagIndexToRemove === index;
-    const isTagNotValidate = this.checkTagValidate(tag, validationErrorMessage);
 
-    if (isTagNotValidate) {
+    if (tag.invalid) {
       return (
         <View
           key={index}
           style={[styles.inValidTag, tagStyle, shouldMarkTag && styles.inValidMarkedTag]}
         >
-          {this.renderLabel(tag, shouldMarkTag, isTagNotValidate)}
+          {this.renderLabel(tag, shouldMarkTag)}
         </View>
       );
     }
@@ -347,11 +342,14 @@ export default class TagsInput extends BaseComponent {
           {_.map(tags, tagRenderFn)}
           {this.renderTextInput()}
         </View>
-        <View>
-          <Text style={[validationErrorMessage && tagIndexToRemove ? styles.inValidMarkedTagLabel : styles.inValidTagLabel]}>
-            {validationErrorMessage}
-          </Text>
-        </View>
+        {validationErrorMessage ?
+          (
+            <View>
+              <Text style={[styles.errorMessage, tagIndexToRemove && styles.errorMessageWhileMarked]}>
+                {validationErrorMessage}
+              </Text>
+            </View>
+          ) : null}
       </View>
     );
   }
@@ -406,9 +404,7 @@ const styles = StyleSheet.create({
     ...basicTagStyle
   },
   inValidMarkedTag: {
-    borderWidth: 1,
-    borderColor: Colors.red10,
-    ...basicTagStyle
+    borderColor: Colors.red10
   },
   tagMarked: {
     backgroundColor: Colors.dark10
@@ -418,19 +414,17 @@ const styles = StyleSheet.create({
     ...basicIconStyle
   },
   inValidTagRemoveIcon: {
-    tintColor: Colors.red10,
-    ...basicIconStyle
+    tintColor: Colors.red10
   },
   tagLabel: {
     ...Typography.text80,
     color: Colors.white
   },
-  inValidTagLabel: {
+  errorMessage: {
     ...Typography.text80,
     color: Colors.red30
   },
-  inValidMarkedTagLabel: {
-    ...Typography.text80,
+  errorMessageWhileMarked: {
     color: Colors.red10
   }
 });
