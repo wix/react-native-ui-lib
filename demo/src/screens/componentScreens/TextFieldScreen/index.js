@@ -20,7 +20,7 @@ class TextFieldScreen extends Component {
 
   renderPages() {
     return (
-      <TabController.PageCarousel>
+      <View flex>
         {_.map(SCREENS, (item, index) => {
           const Screen = item.screen;
           return (
@@ -29,13 +29,13 @@ class TextFieldScreen extends Component {
             </TabController.TabPage>
           );
         })}
-      </TabController.PageCarousel>
+      </View>
     );
   }
 
   render() {
     return (
-      <TabController asCarousel>
+      <TabController>
         <TabController.TabBar
           items={SCREENS.map(item => ({label: item.title}))}
           activeBackgroundColor={Colors.blue70}
