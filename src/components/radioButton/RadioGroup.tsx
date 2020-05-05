@@ -1,29 +1,23 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {BaseComponent} from '../../commons';
+import React, {PureComponent} from 'react';
+import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import View from '../view';
+import {RadioGroupPropTypes, RadioGroupState, RadioGroupContextPropTypes} from './types';
 
-export const RadioGroupContext = React.createContext({value: undefined, onValueChange: undefined});
+export const RadioGroupContext = React.createContext<RadioGroupContextPropTypes>({
+  value: undefined,
+  onValueChange: undefined
+});
+
+type Props = RadioGroupPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
 
 /**
  * Wrap a group of Radio Buttons to automatically control their selection
  */
-class RadioGroup extends BaseComponent {
+class RadioGroup extends PureComponent<Props, RadioGroupState> {
   static displayName = 'RadioGroup';
 
-  static propTypes = {
-    /**
-     * The initial value of the selected radio button
-     */
-    initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    /**
-     * Invoked once when value changes, by selecting one of the radio buttons in the group
-     */
-    onValueChange: PropTypes.func
-  };
-
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -31,7 +25,7 @@ class RadioGroup extends BaseComponent {
     };
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: RadioGroupPropTypes) {
     if (this.props.initialValue !== nextProps.initialValue) {
       this.setState({value: nextProps.initialValue});
     }
@@ -42,7 +36,7 @@ class RadioGroup extends BaseComponent {
     return {value, onValueChange: this.onValueChange};
   }
 
-  onValueChange = value => {
+  onValueChange = (value: RadioGroupPropTypes['initialValue']) => {
     this.setState({value});
     _.invoke(this.props, 'onValueChange', value);
   };
@@ -58,4 +52,4 @@ class RadioGroup extends BaseComponent {
   }
 }
 
-export default RadioGroup;
+export default asBaseComponent<RadioGroupPropTypes>(forwardRef(RadioGroup));

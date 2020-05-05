@@ -1,20 +1,9 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {RadioGroupContext} from './RadioGroup';
+import {RadioGroupChildPropTypes} from './types';
 
-export default function asRadioGroupChild(WrappedComponent) {
-  class RadioGroupChild extends Component {
-    static propTypes = {
-      /**
-       * The identifier value of the radio button. must be different than other RadioButtons in the same group
-       */
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-      /**
-       * When using RadioButton without a RadioGroup, use this prop to toggle selection
-       */
-      selected: PropTypes.bool
-    };
-
+export default function asRadioGroupChild(WrappedComponent: React.ComponentType<any>) {
+  class RadioGroupChild extends Component<RadioGroupChildPropTypes> {
     render() {
       const {value: buttonValue, selected} = this.props;
       return (
@@ -32,5 +21,5 @@ export default function asRadioGroupChild(WrappedComponent) {
     }
   }
 
-  return RadioGroupChild;
+  return RadioGroupChild as any;
 }
