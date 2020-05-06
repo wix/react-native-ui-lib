@@ -38,7 +38,7 @@ type Props = ButtonPropTypes & BaseComponentInjectedProps & ForwardRefInjectedPr
  * @extendslink: docs/TouchableOpacity
  * @modifiers: margin, background
  * @gif: https://media.giphy.com/media/xULW8j5WzsuPytqklq/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.tsx
  */
 class Button extends PureComponent<Props, ButtonState> {
   static displayName = 'Button';
