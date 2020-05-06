@@ -7,6 +7,5 @@
 const {createMarkdownPages, createComponentPages} = require('./configurations/pageCreators');
 
 exports.createPages = ({graphql, boundActionCreators}) => {
-  createMarkdownPages({graphql, boundActionCreators});
-  createComponentPages({graphql, boundActionCreators});
+  return Promise.all([createMarkdownPages({graphql, boundActionCreators}), createComponentPages({graphql, boundActionCreators})]);
 };
