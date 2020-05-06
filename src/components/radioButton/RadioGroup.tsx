@@ -2,12 +2,22 @@ import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import View from '../view';
-import {RadioGroupPropTypes, RadioGroupState, RadioGroupContextPropTypes} from './types';
+import RadioGroupContext from './RadioGroupContext';
 
-export const RadioGroupContext = React.createContext<RadioGroupContextPropTypes>({
-  value: undefined,
-  onValueChange: undefined
-});
+interface RadioGroupPropTypes {
+  /**
+   * The initial value of the selected radio button
+   */
+  initialValue?: string | boolean;
+  /**
+   * Invoked once when value changes, by selecting one of the radio buttons in the group
+   */
+  onValueChange?: Function;
+}
+
+interface RadioGroupState {
+  value?: string | boolean;
+}
 
 type Props = RadioGroupPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
 
