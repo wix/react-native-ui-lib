@@ -76,7 +76,7 @@
     "eslint": "^5.16.0",
     "eslint-config-wix": "^1.1.28",
     "eslint-plugin-uilib": "file:./eslint-rules",
-    "gatsby": "^1.9.128",
+    "gatsby": "^2.21.21",
     "gh-pages": "^1.1.0",
     "jest": "^25.2.4",
     "metro-react-native-babel-preset": "^0.53.1",
