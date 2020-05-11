@@ -44,16 +44,7 @@ module.exports = {
     let localImportSpecifier;
 
     function setLocalImportSpecifier(node) {
-      const importSource = node.source.value;
-      if (source === importSource) {
-        const specifiers = node.specifiers;
-        if (specifiers) {
-          localImportSpecifier = _.find(specifiers, specifier => specifier.imported.name === defaultImportName);
-          if (localImportSpecifier) {
-            localImportSpecifier = localImportSpecifier.local.name;
-          }
-        }
-      }
+      localImportSpecifier = utils.getLocalImportSpecifier(node, source, defaultImportName);
     }
 
     function getAssetString(node, pathString = '') {
@@ -81,7 +72,7 @@ module.exports = {
     }
 
     function testMemberDeprecation(node) {
-      let assetString = getAssetString(node);
+      const assetString = getAssetString(node);
       if (assetString) {
         findAndReportDeprecation(node, assetString);
       }
