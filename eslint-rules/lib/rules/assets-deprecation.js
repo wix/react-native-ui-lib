@@ -1,5 +1,4 @@
 const _ = require('lodash');
-const utils = require('../utils');
 
 const MAP_SCHEMA = {
   type: 'object',
@@ -48,10 +47,14 @@ module.exports = {
       if (source === importSource) {
         const specifiers = node.specifiers;
         if (specifiers) {
-          localImportSpecifier = _.find(specifiers, specifier => specifier.imported.name === defaultImportName);
+          localImportSpecifier = _.find(specifiers, specifier => specifier.imported && specifier.imported.name === defaultImportName);
           if (localImportSpecifier) {
             localImportSpecifier = localImportSpecifier.local.name;
           }
+        }
+
+        if (!localImportSpecifier) { // someone is importing everything (*)
+          localImportSpecifier = defaultImportName;
         }
       }
     }
@@ -81,7 +84,7 @@ module.exports = {
     }
 
     function testMemberDeprecation(node) {
-      let assetString = getAssetString(node);
+      const assetString = getAssetString(node);
       if (assetString) {
         findAndReportDeprecation(node, assetString);
       }

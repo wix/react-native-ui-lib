@@ -47,10 +47,14 @@ module.exports = {
       if (source === importSource) {
         const specifiers = node.specifiers;
         if (specifiers) {
-          localImportSpecifier = _.find(specifiers, specifier => specifier.imported.name === defaultImportName);
+          localImportSpecifier = _.find(specifiers, specifier => specifier.imported && specifier.imported.name === defaultImportName);
           if (localImportSpecifier) {
             localImportSpecifier = localImportSpecifier.local.name;
           }
+        }
+
+        if (!localImportSpecifier) { // someone is importing everything (*)
+          localImportSpecifier = defaultImportName;
         }
       }
     }
