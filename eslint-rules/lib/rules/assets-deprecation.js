@@ -79,7 +79,7 @@ module.exports = {
     }
 
     return {
-      ImportDeclaration: node => setLocalImportSpecifier(node),
+      ImportDeclaration: node => !localImportSpecifier && setLocalImportSpecifier(node),
       MemberExpression: node => localImportSpecifier && testMemberDeprecation(node),
 
 

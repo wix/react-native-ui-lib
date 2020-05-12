@@ -12,6 +12,7 @@ const ruleTester = new RuleTester();
 
 const ourSource = 'our-source';
 const notOurSource = 'another-source';
+const notOurSource2 = 'another-source-2';
 
 const options = [{deprecations: deprecationsJson, source: ourSource}];
 const optionsWithDate = [{deprecations: deprecationsJson, source: ourSource, dueDate: '2 November, Friday'}];
@@ -116,7 +117,9 @@ class Example extends Component {
 }`;
 
 const fullClassTest1 = `
+import {Something} from '${notOurSource}';
 ${ourImport}
+import {SomethingElse} from '${notOurSource2}';
   
 const validIcon = (icon) => (typeof icon === 'number' ? icon : undefined);
 
