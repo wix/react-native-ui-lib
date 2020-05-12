@@ -93,7 +93,7 @@ export type ContainerModifiers =
   PaddingModifiers &
   MarginModifiers &
   FlexModifiers &
-  BorderRadiusModifiers & 
+  BorderRadiusModifiers &
   BackgroundColorModifier;
 
 
@@ -256,7 +256,7 @@ export function extractFlexStyle(props: Dictionary<any>): Partial<Record<NativeF
 //@ts-ignore
 export function extractAccessibilityProps(props: any = this.props) {
   return _.pickBy(props, (_value, key) => {
-    return /.*access.*/.test(key);
+    return /.*ccessib.*/.test(key);
   });
 }
 
