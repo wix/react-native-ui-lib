@@ -167,4 +167,5 @@ const styles = StyleSheet.create({
 });
 
 hoistNonReactStatic(Image, RNImage);
+export {Image};
 export default asBaseComponent<ImageProps>(forwardRef(Image));
