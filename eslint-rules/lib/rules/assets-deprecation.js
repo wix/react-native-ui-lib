@@ -39,56 +39,76 @@ module.exports = {
       }
     }
 
-    const defaultImportName = 'Assets';
-    const {deprecations, source} = context.options[0];
-    let localImportSpecifier;
+    // Path
+    let pathString = '';
 
-    function setLocalImportSpecifier(node) {
-      localImportSpecifier = utils.getLocalImportSpecifier(node, source, defaultImportName);
+    function deprecationCheck(node) {
+      if (node) {
+        const check = isAssetsObject(node);
+        if (check && pathString !== '') {
+          const deprecatedObject = getDeprecatedObject(pathString);
+          if (deprecatedObject) {
+            const {path, message, fix} = deprecatedObject;
+            reportDeprecatedAssets(node, {path, message, fix});
+          }
+        }
+      }
     }
 
-    function getAssetString(node, pathString = '') {
+    function isAssetsObject(node) {
       if (node) {
         if (node.object) {
           if (node.property && node.property.name) {
             pathString = (pathString === '') ? `${node.property.name}` : `${node.property.name}.${pathString}`;
-            return getAssetString(node.object, pathString);
+            return isAssetsObject(node.object);
           }
-        } else if (node.name === localImportSpecifier) {
+        } else if (node.name === assetsName) {
           pathString = `${node.name}.${pathString}`;
-          return pathString;
+          return true;
         }
       }
-
-      return undefined;
+      pathString = '';
+      return false;
     }
 
-    function findAndReportDeprecation(node, possibleDeprecation) {
-      possibleDeprecation = possibleDeprecation.replace(localImportSpecifier, defaultImportName);
-      const deprecatedObject = _.find(deprecations, {path: possibleDeprecation});
-      if (deprecatedObject) {
-        reportDeprecatedAssets(node, deprecatedObject);
+    const {deprecations} = context.options[0];
+
+    function getDeprecatedObject(path) {
+      return _.find(deprecations, {path});
+    }
+
+    function checkSpreadAttribute(node) {
+      const spreadSource = utils.findValueNodeOfIdentifier(node.argument.name, context.getScope());
+      if (spreadSource && spreadSource.properties) {
+        _.forEach(spreadSource.properties, (property) => {
+          deprecationCheck(property);
+        });
       }
     }
 
-    function testMemberDeprecation(node) {
-      const assetString = getAssetString(node);
-      if (assetString) {
-        findAndReportDeprecation(node, assetString);
+    // Import    
+    const {source} = context.options[0];
+    const assetsName = 'Assets';
+    let shouldCheckDeprecation = false;
+
+    function checkAssetsImport(node) {
+      const importSource = node.source.value;
+      
+      if (source === importSource) {
+        const specifiers = node.specifiers;
+        if (specifiers) {
+          shouldCheckDeprecation = _.find(specifiers, e => e.local.name === assetsName);
+        }
       }
     }
 
     return {
-      ImportDeclaration: node => !localImportSpecifier && setLocalImportSpecifier(node),
-      MemberExpression: node => localImportSpecifier && testMemberDeprecation(node),
-
-
-      // VariableDeclarator: node => testVariableDeclarator(node),
-      // JSXAttribute: node => testJSXAttribute(node),
-      // JSXOpeningElement: node => testJSXOpeningElement(node),
-      // JSXSpreadAttribute: node => testJSXSpreadAttribute(node),
-      // ObjectExpression: node => testObjectExpression(node),
-      // Property: node => testProperty(node),
+      ImportDeclaration: node => checkAssetsImport(node),
+      // MemberExpression: node => shouldCheckDeprecation && deprecationCheck(node),
+      VariableDeclarator: node => shouldCheckDeprecation && deprecationCheck(node.init),
+      Property: node => shouldCheckDeprecation && deprecationCheck(node.value),
+      JSXAttribute: node => shouldCheckDeprecation && node.value && deprecationCheck(node.value.expression),
+      JSXSpreadAttribute: node => shouldCheckDeprecation && checkSpreadAttribute(node),
     };
   },
 };
