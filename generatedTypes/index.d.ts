@@ -8,6 +8,7 @@ export {default as View} from './components/view';
 export {default as Text} from './components/text';
 export {default as TouchableOpacity} from './components/touchableOpacity';
 export {default as Button} from './components/button';
+export {default as Image} from './components/image';
 
 /* All components with manual typings */
 export {
@@ -23,7 +24,6 @@ export {
   FloatingButton,
   FeatureHighlight,
   Hint,
-  Image,
   BaseInput,
   TextArea,
   MaskedInput,
