@@ -360,6 +360,68 @@ ruleTester.run('assets-deprecation', rule, {
       options: options,
       code: `${fullClassTest2}`,
       errors: [{message: error}]
-    }
+    },
+    {
+      options: options,
+      code: `
+function createImages() {
+  const IDs1 = require('my-ids-1');
+  const {Assets} = require('${ourSource}');
+  const IDs2 = require('my-ids-2');
+
+  const images = {};
+  images[IDs1.ID1] = Assets.icons.valid;
+  images[IDs1.ID2] = Assets.icons.deprecated;
+  images[IDs1.ID3] = Assets.icons.general.valid;
+  images[IDs1.ID4] = require('../../images/image1.png');
+  images[IDs2.ID5] = require('../../images/image2.png');
+  images[IDs2.ID6] = Assets.icons.general.valid2;
+  images[IDs2.ID7] = Assets.icons.valid2;
+  return images;
+}`,
+      errors: [{message: error}]
+    },
+    {
+      options: options,
+      code: `
+${ourImport}
+
+const props = {
+  title: 'title',
+  subtitle: 'subtitle',
+  icon: Assets.icons.deprecated
+};`,
+      errors: [{message: error}]
+    },
+    {
+      options: options,
+      code: `
+${ourImport}
+
+const props = {
+  title: 'title',
+  subtitle: 'subtitle',
+  icon: Assets.icons['deprecated']
+};`,
+      errors: [{message: error}]
+    },
+// TODO: ¯\_(ツ)_/¯
+//     {
+//       options: options,
+//       code: `
+// ${ourImport}
+
+// function getAsset() {
+//   const result = 'deprecated';
+//   return result;
+// }
+
+// const props = {
+//   title: 'title',
+//   subtitle: 'subtitle',
+//   icon: Assets.icons[getAsset()]
+// };`,
+//       errors: [{message: error}]
+//     }
   ],
 });
