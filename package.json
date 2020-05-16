@@ -93,7 +93,7 @@
     "react-native-reanimated": "^1.7.0",
     "react-test-renderer": "^16.13.1",
     "shell-utils": "^1.0.10",
-    "typescript": "^3.8.3"
+    "typescript": "3.8.3"
   },
   "peerDependencies": {
     "react": ">=16.0.0",
