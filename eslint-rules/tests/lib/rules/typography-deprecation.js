@@ -12,6 +12,7 @@ const ruleTester = new RuleTester();
 
 const ourSource = 'our-source';
 const notOurSource = 'another-source';
+const notOurSource2 = 'another-source-2';
 
 const options = [{deprecations: deprecationsJson, source: ourSource}];
 const optionsWithDate = [{deprecations: deprecationsJson, source: ourSource, dueDate: '2 November, Friday'}];
@@ -122,6 +123,94 @@ class Example extends Component {
     );
   }
 }`;
+
+const fullClassTest1 = `
+import {Something} from '${notOurSource}';
+${ourImport}
+import {SomethingElse} from '${notOurSource2}';
+  
+const validTypography = (typography) => (myLogic(typography) ? typography : undefined);
+
+class Example extends React.Component {
+  renderComponent1() {
+    return this.props.list.map((item) => (
+      <Component1
+        prop1={item.data1}
+        prop2={item.data2}
+        prop3={item.data3}
+        prop4={item.data4}
+      />
+    ));
+  }
+
+  render() {
+    return (
+      <Component2 prop5={this.props.prop5}>
+        <ScrollView contentContainerStyle={{paddingBottom: 10}}>
+          {this.renderComponent1()}
+          <List.Item
+            prop6={this.props.prop6}
+            prop7={this.props.prop7}
+            prop8={this.props.prop8}
+            prop9={this.props.prop9}
+            labelStyle={validTypography(Typography.deprecated)}
+          />
+        </ScrollView>
+        <Component3
+          prop10={this.props.prop10}
+          prop11={this.props.prop11}
+          prop12={this.props.prop12}
+        />
+      </Component2>
+    );
+  }
+}
+
+export default Example;`;
+
+const fullClassTest2 = `
+import * as LetsImportEverything from '${ourSource}';
+
+const {Typography}: typeof LetsImportEverything = require('${ourSource}');
+
+const validTypography = (typography) => (myLogic(typography) ? typography : undefined);
+
+class Example extends React.Component {
+  renderComponent1() {
+    return this.props.list.map((item) => (
+      <Component1
+        prop1={item.data1}
+        prop2={item.data2}
+        prop3={item.data3}
+        prop4={item.data4}
+      />
+    ));
+  }
+
+  render() {
+    return (
+      <Component2 prop5={this.props.prop5}>
+        <ScrollView contentContainerStyle={{paddingBottom: 10}}>
+          {this.renderComponent1()}
+          <List.Item
+            prop6={this.props.prop6}
+            prop7={this.props.prop7}
+            prop8={this.props.prop8}
+            prop9={this.props.prop9}
+            labelStyle={validTypography(Typography.deprecated)}
+          />
+        </ScrollView>
+        <Component3
+          prop10={this.props.prop10}
+          prop11={this.props.prop11}
+          prop12={this.props.prop12}
+        />
+      </Component2>
+    );
+  }
+}
+
+export default Example;`;
 
 const error = "'Typography.deprecated' is deprecated. Please use 'Typography.valid' instead (fix is available).";
 const errorDate = ' Please fix this issue by 2 November, Friday!';
@@ -340,6 +429,16 @@ ruleTester.run('typography-deprecation', rule, {
       options: options,
       code: `${fullClassDeprecatedRenamed}`,
       errors: [{message: error}, {message: error}, {message: error}, {message: error}]
+    },
+    {
+      options: options,
+      code: `${fullClassTest1}`,
+      errors: [{message: error}]
+    },
+    {
+      options: options,
+      code: `${fullClassTest2}`,
+      errors: [{message: error}]
     }
   ],
 });
