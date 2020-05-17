@@ -164,6 +164,19 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
     }
   };
 
+  getAccessibilityProps = () => {
+    const {label = '', selected, disabled} = this.props;
+    const selectedAccessibilityText = selected ? 'selected' : 'unselected';
+    const accessibilityLabel = `${selectedAccessibilityText}. ${label}`;
+
+    return {
+      accessible: true,
+      accessibilityStates: disabled ? ['disabled'] : undefined,
+      accessibilityRole: 'button', // 'radio', TODO: uncomment when switching to RN60
+      accessibilityLabel
+    };
+  };
+
   getRadioButtonOutlineStyle() {
     const {color, size, borderRadius, style: propsStyle, disabled} = this.props;
     const style = [this.styles.radioButtonOutline];
@@ -213,24 +226,13 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
     return iconSource && <Image style={style} source={iconSource}/>;
   }
 
-  getSomeAccessibilityProps = () => {
-    const {label = '', selected} = this.props;
-    const selectedAccessibilityText = selected ? 'selected' : 'unselected';
-    const accessibilityLabel = `${selectedAccessibilityText}. ${label}`;
-
-    return {
-      accessible: true,
-      accessibilityLabel
-    };
-  };
-
   render() {
     const {onPress, onValueChange, ...others} = this.props;
     const {opacityAnimationValue, scaleAnimationValue} = this.state;
     const Container = onPress || onValueChange ? TouchableOpacity : View;
-    const {disabled} = this.props;
 
     return (
+      // @ts-ignore
       <Container
         row
         centerV
@@ -238,9 +240,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
         {...others}
         style={undefined}
         onPress={this.onPress}
-        accessibilityStates={disabled ? ['disabled'] : undefined}
-        accessibilityRole={'button'} // 'radio', TODO: uncomment when switching to RN60
-        {...this.getSomeAccessibilityProps()}
+        {...this.getAccessibilityProps()}
       >
         <View style={this.getRadioButtonOutlineStyle()}>
           <Animated.View
