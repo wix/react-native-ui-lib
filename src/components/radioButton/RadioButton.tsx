@@ -6,6 +6,7 @@ import {
   Easing,
   TextStyle,
   StyleProp,
+  ImageSourcePropType,
   ImageStyle,
   ViewStyle,
   ViewProps
@@ -62,7 +63,7 @@ interface RadioButtonPropTypes {
   /**
    * Icon image source
    */
-  iconSource?: object | number;
+  iconSource?: ImageSourcePropType;
   /**
    * Icon image style
    */
