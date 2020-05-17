@@ -1,0 +1,43 @@
+@import "src/styles/constants";
+
+.markdown {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+
+  .markdown-content {
+    padding: 0 72px;
+    width: $minScreenWidth;
+  }
+
+  p {
+    width: 70%;
+    word-break: break-word;
+    line-height: 1.4;
+  }
+
+  pre {
+    background-color: $dark80;
+    border-radius: 4px;
+    padding: 16px;
+    max-width: 60vw;
+
+    code {
+      background: transparent;
+      color: $dark10;
+    }
+  }
+
+  code {
+    font-size: 16px;
+    display: inline;
+    word-break: break-word;
+    width: 100%;
+    background: $dark70;
+    color: $primary;
+  }
+
+  li {
+    line-height: 1.4;
+  }
+}

@@ -9,18 +9,18 @@ const MAP_SCHEMA = {
 module.exports = {
   meta: {
     docs: {
-      description: 'asset is deprecated',
+      description: 'typography is deprecated',
       category: 'Best Practices',
       recommended: true,
     },
     messages: {
-      uiLib: 'This asset is deprecated.',
+      uiLib: 'This typography is deprecated.',
     },
     fixable: 'code',
     schema: [MAP_SCHEMA],
   },
   create(context) {
-    function reportDeprecatedAssets(node, options) {
+    function reportDeprecatedTypography(node, options) {
       try {
         const {dueDate} = context.options[0];
         const dueDateNotice = dueDate ? ` Please fix this issue by ${dueDate}!` : '';
@@ -39,7 +39,7 @@ module.exports = {
       }
     }
 
-    const defaultImportName = 'Assets';
+    const defaultImportName = 'Typography';
     const {deprecations, source} = context.options[0];
     let localImportSpecifier;
 
@@ -47,48 +47,37 @@ module.exports = {
       localImportSpecifier = utils.getLocalImportSpecifier(node, source, defaultImportName);
     }
 
-    function getAssetString(node, pathString = '') {
-      if (node) {
-        if (node.object) {
-          if (node.property && node.property.name) {
-            pathString = (pathString === '') ? `${node.property.name}` : `${node.property.name}.${pathString}`;
-            return getAssetString(node.object, pathString);
-          }
-        } else if (node.name === localImportSpecifier) {
-          pathString = `${node.name}.${pathString}`;
-          return pathString;
-        }
-      }
-
-      return undefined;
-    }
-
     function findAndReportDeprecation(node, possibleDeprecation) {
-      possibleDeprecation = possibleDeprecation.replace(localImportSpecifier, defaultImportName);
-      const deprecatedObject = _.find(deprecations, {path: possibleDeprecation});
-      if (deprecatedObject) {
-        reportDeprecatedAssets(node, deprecatedObject);
+      const path = `${defaultImportName}.${possibleDeprecation}`;
+      const foundDeprecation = _.find(deprecations, {path});
+      if (foundDeprecation) {
+        reportDeprecatedTypography(node, foundDeprecation);
       }
     }
 
     function testMemberDeprecation(node) {
-      const assetString = getAssetString(node);
-      if (assetString) {
-        findAndReportDeprecation(node, assetString);
+      if (node && node.object && node.property && node.object.name === localImportSpecifier) {
+        findAndReportDeprecation(node, node.property.name);
+      }
+    }
+
+    function testJSXAttribute(node) {
+      if (node && node.name) {
+        findAndReportDeprecation(node, node.name.name);
       }
     }
 
     return {
       ImportDeclaration: node => !localImportSpecifier && setLocalImportSpecifier(node),
       MemberExpression: node => localImportSpecifier && testMemberDeprecation(node),
+      JSXAttribute: node => testJSXAttribute(node),
 
 
-      // VariableDeclarator: node => testVariableDeclarator(node),
-      // JSXAttribute: node => testJSXAttribute(node),
       // JSXOpeningElement: node => testJSXOpeningElement(node),
-      // JSXSpreadAttribute: node => testJSXSpreadAttribute(node),
       // ObjectExpression: node => testObjectExpression(node),
+      // VariableDeclarator: node => testVariableDeclarator(node),
       // Property: node => testProperty(node),
+      // JSXSpreadAttribute: node => testJSXSpreadAttribute(node)
     };
   },
 };

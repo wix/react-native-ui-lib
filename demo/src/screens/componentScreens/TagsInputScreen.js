@@ -8,7 +8,7 @@ export default class TagsInputScreen extends Component {
     super(props);
 
     this.state = {
-      tags: [{label: 'Amit'}, {label: 'Ethan'}],
+      tags: [{label: 'Amit'}, {label: 'Ethan', invalid: true}],
       tags2: ['Tags', 'Input'],
       tags3: ['Non', 'Removable', 'Tags']
     };
@@ -35,6 +35,9 @@ export default class TagsInputScreen extends Component {
           </Text>
 
           <TagsInput containerStyle={{marginBottom: 25}} placeholder="Enter Tags" tags={this.state.tags2}/>
+
+          <TagsInput containerStyle={{marginBottom: 25}} placeholder="Enter Tags" tags={this.state.tags}
+                     validationErrorMessage="error validation message" />
 
           <TagsInput
             containerStyle={{marginBottom: 25}}

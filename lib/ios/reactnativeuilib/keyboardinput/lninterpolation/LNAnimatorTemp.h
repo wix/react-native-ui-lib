@@ -24,7 +24,7 @@
 
 @end
 
-@interface LNAnimator : NSObject
+@interface LNAnimatorTemp : NSObject
 
 @property (nonatomic, readonly) NSTimeInterval duration;
 @property (nonatomic, strong, readonly) NSArray<id<LNAnimation>>* animations;

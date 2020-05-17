@@ -25,6 +25,7 @@
     "lint:fix": "eslint src -c .eslintrc.js --fix",
     "lint:test": "mocha --compilers js:babel-core/register eslint-rules/tests/lib/rules",
     "xcode": "open ./ios/uilib.xcodeproj",
+    "build:dev": "tsc --p tsconfig.dev.json",
     "build": "tsc --p tsconfig.build.json",
     "log": "react-native log-ios | grep 'ethan -'",
     "docs:install": "(cd ./uilib-docs && rm -rf node_modules && rm -rf package-lock.json && npm install)",
@@ -65,7 +66,7 @@
     "@react-native-community/netinfo": "^5.6.2",
     "@types/lodash": "^4.0.0",
     "@types/prop-types": "^15.5.3",
-    "@types/react-native": ">=0.61.5",
+    "@types/react-native": "0.61.5",
     "@types/tinycolor2": "^1.4.2",
     "@typescript-eslint/eslint-plugin": "^2.13.0",
     "@typescript-eslint/parser": "^2.13.0",
@@ -75,7 +76,7 @@
     "eslint": "^5.16.0",
     "eslint-config-wix": "^1.1.28",
     "eslint-plugin-uilib": "file:./eslint-rules",
-    "gatsby": "^1.9.128",
+    "gatsby": "^2.21.21",
     "gh-pages": "^1.1.0",
     "jest": "^25.2.4",
     "metro-react-native-babel-preset": "^0.53.1",
@@ -92,7 +93,7 @@
     "react-native-reanimated": "^1.7.0",
     "react-test-renderer": "^16.13.1",
     "shell-utils": "^1.0.10",
-    "typescript": "^3.8.3"
+    "typescript": "3.8.3"
   },
   "peerDependencies": {
     "react": ">=16.0.0",
@@ -109,7 +110,8 @@
       "/e2e/",
       "/node_modules/",
       "/typings/",
-      "/expoDemo/"
+      "/expoDemo/",
+      "/uilib-docs/"
     ],
     "setupFiles": [
       "./jest-setup.js"

@@ -1,6 +1,6 @@
 const RuleTester = require('eslint').RuleTester;
-const rule = require('../../../lib/rules/assets-deprecation');
-const deprecationsJson = require('../../assets_deprecation.json');
+const rule = require('../../../lib/rules/typography-deprecation');
+const deprecationsJson = require('../../typography_deprecation.json');
 
 
 RuleTester.setDefaultConfig({
@@ -17,52 +17,60 @@ const notOurSource2 = 'another-source-2';
 const options = [{deprecations: deprecationsJson, source: ourSource}];
 const optionsWithDate = [{deprecations: deprecationsJson, source: ourSource, dueDate: '2 November, Friday'}];
 
-const ourImport = `import {Assets} from '${ourSource}';`
-const ourImportRenamed = `import {Assets as UIAssets} from '${ourSource}';`
-const notOurImport = `import {Assets} from '${notOurSource}';`
+const ourImport = `import {Typography} from '${ourSource}';`
+const ourImportRenamed = `import {Typography as UITypography} from '${ourSource}';`
+const notOurImport = `import {Typography} from '${notOurSource}';`
 
-const constValid1 = 'const assets = Assets.icons.general.valid;';
-const constValidRenamed1 = 'const assets = UIAssets.icons.general.valid;';
-const constDeprecated1 = 'const assets = Assets.icons.deprecated;';
-const constDeprecatedRenamed1 = 'const assets = UIAssets.icons.deprecated;';
+const constValid1 = 'const typography = Typography.valid;';
+const constValidRenamed1 = 'const typography = UITypography.valid;';
+const constDeprecated1 = 'const typography = Typography.deprecated;';
+const constDeprecatedRenamed1 = 'const typography = UITypography.deprecated;';
 
-const constValid2 = 'const assets = <Button iconSource={Assets.icons.general.valid}/>;';
-const constValidRenamed2 = 'const assets = <Button iconSource={UIAssets.icons.general.valid}/>;';
-const constDeprecated2 = 'const assets = <Button iconSource={Assets.icons.deprecated}/>;';
-const constDeprecatedRenamed2 = 'const assets = <Button iconSource={UIAssets.icons.deprecated}/>;';
+const constValid2 = 'const typography = <Text style={Typography.valid}>Title</Text>;';
+const constValidRenamed2 = 'const typography = <Text style={UITypography.valid}>Title</Text>;';
+const constDeprecated2 = 'const typography = <Text style={Typography.deprecated}>Title</Text>;';
+const constDeprecatedRenamed2 = 'const typography = <Text style={UITypography.deprecated}>Title</Text>;';
 
-const jsx1 = '<Button {...others}/>';
-const jsxValid1 = 'const others = {iconSource: Assets.icons.general.valid};';
-const jsxValidRenamed1 = 'const others = {iconSource: UIAssets.icons.general.valid};';
-const jsxDeprecated1 = 'const others = {iconSource: Assets.icons.deprecated};';
-const jsxDeprecatedRenamed1 = 'const others = {iconSource: UIAssets.icons.deprecated};';
+const constValid3 = 'const typography = <Text valid>Title</Text>;';
+const constDeprecated3 = 'const typography = <Text deprecated>Title</Text>;';
 
-const jsxValid2 = '<Button iconSource={Assets.icons.general.valid}/>';
-const jsxValidRenamed2 = '<Button iconSource={UIAssets.icons.general.valid}/>';
-const jsxDeprecated2 = '<Button iconSource={Assets.icons.deprecated}/>';
-const jsxDeprecatedRenamed2 = '<Button iconSource={UIAssets.icons.deprecated}/>';
+const styleSheetValid1 = `const styles = StyleSheet.create({text: {...Typography.valid}});`;
+const styleSheetValidRenamed1 = `const styles = StyleSheet.create({text: {...UITypography.valid}});`;
+const styleSheetDeprecated1 = `const styles = StyleSheet.create({text: {...Typography.deprecated}});`;
+const styleSheetDeprecatedRenamed1 = `const styles = StyleSheet.create({text: {...UITypography.deprecated}});`;
 
-const jsxValid3 = '<View><Button iconSource={Assets.icons.general.valid}/></View>';
-const jsxValidRenamed3 = '<View><Button iconSource={UIAssets.icons.general.valid}/></View>';
-const jsxDeprecated3 = '<View><Button iconSource={Assets.icons.deprecated}/></View>';
-const jsxDeprecatedRenamed3 = '<View><Button iconSource={UIAssets.icons.deprecated}/></View>';
+const styleSheetValid2 = `const styles = StyleSheet.create({text: Typography.valid});`;
+const styleSheetValidRenamed2 = `const styles = StyleSheet.create({text: UITypography.valid});`;
+const styleSheetDeprecated2 = `const styles = StyleSheet.create({text: Typography.deprecated});`;
+const styleSheetDeprecatedRenamed2 = `const styles = StyleSheet.create({text: UITypography.deprecated});`;
 
-const jsxValid4 = 'const others = {iconSource: Assets.icons.general.valid}; const test = <Button {...others}/>';
-const jsxValidRenamed4 = 'const others = {iconSource: UIAssets.icons.general.valid}; const test = <Button {...others}/>';
-const jsxDeprecated4 = 'const others = {iconSource: Assets.icons.deprecated}; const test = <Button {...others}/>';
-const jsxDeprecatedRenamed4 = 'const others = {iconSource: UIAssets.icons.deprecated}; const test = <Button {...others}/>';
+const jsxValid1 = '<Text style={Typography.valid}>Title</Text>';
+const jsxValidRenamed1 = '<Text style={UITypography.valid}>Title</Text>';
+const jsxDeprecated1 = '<Text style={Typography.deprecated}>Title</Text>';
+const jsxDeprecatedRenamed1 = '<Text style={UITypography.deprecated}>Title</Text>';
+
+const jsxValid2 = '<Text valid>Title</Text>';
+const jsxDeprecated2 = '<Text deprecated>Title</Text>';
+
+const jsxValid3 = '<View><Text style={Typography.valid}>Title</Text></View>';
+const jsxValidRenamed3 = '<View><Text style={UITypography.valid}>Title</Text></View>';
+const jsxDeprecated3 = '<View><Text style={Typography.deprecated}>Title</Text></View>';
+const jsxDeprecatedRenamed3 = '<View><Text style={UITypography.deprecated}>Title</Text></View>';
+
+const jsxValid4 = '<View><Text valid>Title</Text></View>';
+const jsxDeprecated4 = '<View><Text deprecated>Title</Text></View>';
 
 const fullClassValid = `
 ${ourImport}
-${jsxValid1}
 class Example extends Component {
 
   render() {
     return (
       <View flex center>
-        ${jsx1}
+        ${jsxValid1}
         ${jsxValid2}
         ${jsxValid3}
+        ${jsxValid4}
       </View>
     );
   }
@@ -70,15 +78,15 @@ class Example extends Component {
 
 const fullClassValidRenamed = `
 ${ourImportRenamed}
-${jsxValidRenamed1}
 class Example extends Component {
 
   render() {
     return (
       <View flex center>
-        ${jsx1}
-        ${jsxValidRenamed2}
+        ${jsxValidRenamed1}
+        ${jsxValid2}
         ${jsxValidRenamed3}
+        ${jsxValid4}
       </View>
     );
   }
@@ -86,15 +94,15 @@ class Example extends Component {
 
 const fullClassDeprecated = `
 ${ourImport}
-${jsxDeprecated1}
 class Example extends Component {
 
   render() {
     return (
       <View flex center>
-        ${jsx1}
+        ${jsxDeprecated1}
         ${jsxDeprecated2}
         ${jsxDeprecated3}
+        ${jsxDeprecated4}
       </View>
     );
   }
@@ -102,15 +110,15 @@ class Example extends Component {
 
 const fullClassDeprecatedRenamed = `
 ${ourImportRenamed}
-${jsxDeprecatedRenamed1}
 class Example extends Component {
 
   render() {
     return (
       <View flex center>
-        ${jsx1}
-        ${jsxDeprecatedRenamed2}
+        ${jsxDeprecatedRenamed1}
+        ${jsxDeprecated2}
         ${jsxDeprecatedRenamed3}
+        ${jsxDeprecated4}
       </View>
     );
   }
@@ -121,7 +129,7 @@ import {Something} from '${notOurSource}';
 ${ourImport}
 import {SomethingElse} from '${notOurSource2}';
   
-const validIcon = (icon) => (typeof icon === 'number' ? icon : undefined);
+const validTypography = (typography) => (myLogic(typography) ? typography : undefined);
 
 class Example extends React.Component {
   renderComponent1() {
@@ -145,7 +153,7 @@ class Example extends React.Component {
             prop7={this.props.prop7}
             prop8={this.props.prop8}
             prop9={this.props.prop9}
-            icon={validIcon(Assets.icons.deprecated)}
+            labelStyle={validTypography(Typography.deprecated)}
           />
         </ScrollView>
         <Component3
@@ -163,9 +171,9 @@ export default Example;`;
 const fullClassTest2 = `
 import * as LetsImportEverything from '${ourSource}';
 
-const {Assets}: typeof LetsImportEverything = require('${ourSource}');
+const {Typography}: typeof LetsImportEverything = require('${ourSource}');
 
-const validIcon = (icon) => (typeof icon === 'number' ? icon : undefined);
+const validTypography = (typography) => (myLogic(typography) ? typography : undefined);
 
 class Example extends React.Component {
   renderComponent1() {
@@ -189,7 +197,7 @@ class Example extends React.Component {
             prop7={this.props.prop7}
             prop8={this.props.prop8}
             prop9={this.props.prop9}
-            icon={validIcon(Assets.icons.deprecated)}
+            labelStyle={validTypography(Typography.deprecated)}
           />
         </ScrollView>
         <Component3
@@ -204,10 +212,10 @@ class Example extends React.Component {
 
 export default Example;`;
 
-const error = "'Assets.icons.deprecated' is deprecated. Please use 'Assets.icons.general.valid' instead (fix is available).";
+const error = "'Typography.deprecated' is deprecated. Please use 'Typography.valid' instead (fix is available).";
 const errorDate = ' Please fix this issue by 2 November, Friday!';
 
-ruleTester.run('assets-deprecation', rule, {
+ruleTester.run('typography-deprecation', rule, {
   valid: [
     {
       options: options,
@@ -223,7 +231,19 @@ ruleTester.run('assets-deprecation', rule, {
     },
     {
       options: options,
-      code: `${ourImport} ${jsxValid1} ${jsx1}`,
+      code: `${ourImport} ${constValid3}`,
+    },
+    {
+      options: options,
+      code: `${ourImport} ${styleSheetValid1}`,
+    },
+    {
+      options: options,
+      code: `${ourImport} ${styleSheetValid2}`,
+    },
+    {
+      options: options,
+      code: `${ourImport} ${jsxValid1}`,
     },
     {
       options: options,
@@ -231,7 +251,15 @@ ruleTester.run('assets-deprecation', rule, {
     },
     {
       options: options,
+      code: `${jsxValid2}`,
+    },
+    {
+      options: options,
       code: `${ourImport} ${jsxValid3}`,
+    },
+    {
+      options: options,
+      code: `${ourImport} ${jsxValid4}`,
     },
     {
       options: options,
@@ -251,11 +279,23 @@ ruleTester.run('assets-deprecation', rule, {
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${jsxValidRenamed1} ${jsx1}`,
+      code: `${ourImportRenamed} ${constValid3}`,
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${jsxValidRenamed2}`,
+      code: `${ourImportRenamed} ${styleSheetValidRenamed1}`,
+    },
+    {
+      options: options,
+      code: `${ourImportRenamed} ${styleSheetValidRenamed2}`,
+    },
+    {
+      options: options,
+      code: `${ourImportRenamed} ${jsxValidRenamed1}`,
+    },
+    {
+      options: options,
+      code: `${ourImportRenamed} ${jsxValid2}`,
     },
     {
       options: options,
@@ -263,7 +303,11 @@ ruleTester.run('assets-deprecation', rule, {
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${jsxValidRenamed4}`,
+      code: `${ourImportRenamed} ${jsxValid4}`,
+    },
+    {
+      options: options,
+      code: `${ourImportRenamed} ${jsxValid4}`,
     },
     {
       options: options,
@@ -287,13 +331,33 @@ ruleTester.run('assets-deprecation', rule, {
       errors: [{message: error + errorDate}]
     },
     {
+      options: optionsWithDate,
+      code: `${ourImport} ${constDeprecated3}`,
+      errors: [{message: error + errorDate}]
+    },
+    {
       options: options,
-      code: `${ourImport} ${jsxDeprecated1} ${jsx1}`,
+      code: `${ourImport} ${styleSheetDeprecated1}`,
+      errors: [{message: error}]
+    },
+    {
+      options: options,
+      code: `${ourImport} ${styleSheetDeprecated2}`,
+      errors: [{message: error}]
+    },
+    {
+      options: options,
+      code: `${ourImport} ${jsxDeprecated1}`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImport} ${jsxDeprecated2}`,
+      errors: [{message: error}]
+    },
+    {
+      options: options,
+      code: `${jsxDeprecated2}`,
       errors: [{message: error}]
     },
     {
@@ -309,7 +373,7 @@ ruleTester.run('assets-deprecation', rule, {
     {
       options: options,
       code: `${fullClassDeprecated}`,
-      errors: [{message: error}, {message: error}, {message: error}]
+      errors: [{message: error}, {message: error}, {message: error}, {message: error}]
     },
     {
       options: options,
@@ -327,13 +391,28 @@ ruleTester.run('assets-deprecation', rule, {
       errors: [{message: error + errorDate}]
     },
     {
+      options: optionsWithDate,
+      code: `${ourImportRenamed} ${constDeprecated3}`,
+      errors: [{message: error + errorDate}]
+    },
+    {
       options: options,
-      code: `${ourImportRenamed} ${jsxDeprecatedRenamed1} ${jsx1}`,
+      code: `${ourImportRenamed} ${styleSheetDeprecatedRenamed1}`,
       errors: [{message: error}]
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${jsxDeprecatedRenamed2}`,
+      code: `${ourImportRenamed} ${styleSheetDeprecatedRenamed2}`,
+      errors: [{message: error}]
+    },
+    {
+      options: options,
+      code: `${ourImportRenamed} ${jsxDeprecatedRenamed1}`,
+      errors: [{message: error}]
+    },
+    {
+      options: options,
+      code: `${ourImportRenamed} ${jsxDeprecated2}`,
       errors: [{message: error}]
     },
     {
@@ -343,13 +422,13 @@ ruleTester.run('assets-deprecation', rule, {
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${jsxDeprecatedRenamed4}`,
+      code: `${ourImportRenamed} ${jsxDeprecated4}`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${fullClassDeprecatedRenamed}`,
-      errors: [{message: error}, {message: error}, {message: error}]
+      errors: [{message: error}, {message: error}, {message: error}, {message: error}]
     },
     {
       options: options,

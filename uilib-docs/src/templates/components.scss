@@ -46,7 +46,6 @@
 
 .docs-page {
   @include component-props();
-  padding-left: $navbarWidth;
 
   div {
     display: block;
@@ -55,11 +54,13 @@
   display: flex;
   flex-direction: row;
   flex: 1;
+  justify-content: center;
 
   .docs-page__content {
-    padding: 24px 72px;
+    padding: 0 72px;
     flex: 1;
     overflow-y: auto;
+    max-width: $minScreenWidth;
   }
 
   .title {

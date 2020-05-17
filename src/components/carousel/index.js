@@ -195,9 +195,7 @@ export default class Carousel extends BaseComponent {
   }
 
   updateOffset = (animated = false) => {
-    const centerOffset = Constants.isIOS && this.shouldUsePageWidth() ? 
-      (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
-    const x = presenter.calcOffset(this.getThemeProps(), this.state) - centerOffset;
+    const x = presenter.calcOffset(this.getThemeProps(), this.state);
 
     if (this.carousel) {
       this.carousel.current.scrollTo({x, animated});

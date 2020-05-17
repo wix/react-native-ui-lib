@@ -24,8 +24,10 @@
       position: absolute;
       top: 20px;
       right: 20px;
+      text-align: center;
 
       img {
+        display: block;
         border-radius: 4px;
       }
 
@@ -40,7 +42,7 @@
         border-radius: 2px;
         box-shadow: -1px 1px 2px $dark60;
       }
-
+      
       &:before {
         content: "";
         position: absolute;
@@ -48,6 +50,21 @@
         top: 30px;
         border: 5px solid transparent;
         border-left-color: $dark80;
+      }
+      
+      > a {
+        display: inline-block;
+        background-color: $white;
+        text-decoration: none;
+        font-size: large;
+        margin-top: 12px;
+        width: 170px;
+        padding: 4px 8px;
+        border-radius: 2px;
+        box-shadow: -1px 1px 2px $dark60;
+        &:hover {
+          background-color: $violet70;
+        }
       }
     }
   }
