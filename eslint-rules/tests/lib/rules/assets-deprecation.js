@@ -411,6 +411,19 @@ const props = {
 //       code: `
 // ${ourImport}
 
+// const data = 'deprecated';
+// const props = {
+//   title: 'title',
+//   subtitle: 'subtitle',
+//   icon: Assets.icons[data]
+// };`,
+//       errors: [{message: error}]
+//     },
+//     {
+//       options: options,
+//       code: `
+// ${ourImport}
+
 // function getAsset() {
 //   const result = 'deprecated';
 //   return result;
