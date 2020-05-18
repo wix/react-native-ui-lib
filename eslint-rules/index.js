@@ -5,6 +5,7 @@ module.exports = {
     'component-deprecation': require('./lib/rules/component-deprecation'),
     'assets-deprecation': require('./lib/rules/assets-deprecation'),
     'typography-deprecation': require('./lib/rules/typography-deprecation'),
+    'function-deprecation': require('./lib/rules/function-deprecation'),
     // for duplicate rules usage
     'component-deprecation_warn': require('./lib/rules/component-deprecation'),
     'assets-deprecation_warn': require('./lib/rules/assets-deprecation'),
@@ -12,5 +13,6 @@ module.exports = {
     'component-deprecation_error': require('./lib/rules/component-deprecation'),
     'assets-deprecation_error': require('./lib/rules/assets-deprecation'),
     'typography-deprecation_error': require('./lib/rules/typography-deprecation'),
+    'function-deprecation_error': require('./lib/rules/function-deprecation'),
   },
 };
