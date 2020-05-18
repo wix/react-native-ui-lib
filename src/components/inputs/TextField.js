@@ -401,7 +401,7 @@ export default class TextField extends BaseInput {
                   {
                     translateY: floatingPlaceholderState.interpolate({
                       inputRange: [0, 1],
-                      outputRange: multiline && Constants.isIOS ? [30, 5] : [25, 0]
+                      outputRange: [25, 0]
                     })
                   },
                   {
@@ -714,7 +714,7 @@ function createStyles({centered, multiline, expandable}) {
       flexDirection: 'row',
       justifyContent: centered ? 'center' : undefined,
       borderBottomWidth: 1,
-      borderColor: Colors.dark70, 
+      borderColor: Colors.dark70,
       paddingBottom: Constants.isIOS ? 10 : 5
     },
     innerContainerWithoutUnderline: {
