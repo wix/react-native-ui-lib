@@ -103,7 +103,7 @@ class TabBar extends PureComponent {
      */
     centerSelected: PropTypes.bool,
     /**
-     * (Experimental) Pass to optimize loading time by measuring tab bar items text 
+     * (Experimental) Pass to optimize loading time by measuring tab bar items text
      * instead of waiting for onLayout
      */
     optimize: PropTypes.bool
@@ -171,13 +171,27 @@ class TabBar extends PureComponent {
     return centerSelected ? this.containerWidth / 2 - guesstimateCenterValue : 0;
   }
 
+  getSnapBreakpoints() {
+    const {centerSelected} = this.props;
+    const {itemsWidths, itemsOffsets} = this.state;
+
+    if (itemsWidths && centerSelected) {
+      return _.times(itemsWidths.length, (index) => {
+        const screenCenter = this.containerWidth / 2;
+        const itemOffset = itemsOffsets[index];
+        const itemWidth = itemsWidths[index];
+        return itemOffset - screenCenter + itemWidth / 2;
+      });
+    }
+  }
+
   measureItems = async () => {
     const {labelStyle} = this.props;
     const measuring = _.map(this.props.items, (item) => {
       return Typography.measureTextSize(item.label, labelStyle);
     });
     const results = await Promise.all(measuring);
-    const widths = _.map(results, item => item.width + Spacings.s4 * 2);
+    const widths = _.map(results, (item) => item.width + Spacings.s4 * 2);
     const offsets = [];
     _.forEach(widths, (width, index) => {
       if (index === 0) {
@@ -190,7 +204,7 @@ class TabBar extends PureComponent {
     this._itemsOffsets = offsets;
     // TODO: consider saving this setState and ride registerTabItems setState
     this.setItemsLayouts();
-  }
+  };
 
   registerTabItems() {
     const {registerTabItems} = this.context;
@@ -248,12 +262,12 @@ class TabBar extends PureComponent {
 
   setItemsLayouts = () => {
     const {selectedIndex} = this.context;
-    const itemsOffsets = _.map(this._itemsOffsets, offset => offset + INDICATOR_INSET);
+    const itemsOffsets = _.map(this._itemsOffsets, (offset) => offset + INDICATOR_INSET);
     const itemsWidths = _.map(this._itemsWidths, (width) => width - INDICATOR_INSET * 2);
 
     this.setState({itemsWidths, itemsOffsets});
     this.focusSelected([selectedIndex], false);
-  }
+  };
 
   onScroll = ({nativeEvent: {contentOffset}}) => {
     this.tabBarScrollOffset = contentOffset.x;
@@ -375,8 +389,10 @@ class TabBar extends PureComponent {
           scrollEnabled={scrollEnabled}
           onContentSizeChange={this.onContentSizeChange}
           onScroll={this.onScroll}
-          scrollEventThrottle={100}
+          scrollEventThrottle={16}
           testID={testID}
+          snapToOffsets={this.getSnapBreakpoints()}
+          decelerationRate={'fast'}
         >
           <View style={[styles.tabBar, height && {height}, {paddingHorizontal: this.centerOffset}]}>
             {this.renderTabBarItems()}
