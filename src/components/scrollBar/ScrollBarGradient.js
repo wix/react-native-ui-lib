@@ -17,7 +17,7 @@ const ScrollBarGradient = ({
   gradientMargins = 0,
   height,
   gradientColor = Colors.white,
-  gradientImage = require('./assets/gradientOverlay.png'),
+  gradientImage = require('./assets/gradientOverlay.png')
 }) => {
   const gradientOpacity = useRef(new Animated.Value(0)).current;
 
@@ -32,7 +32,7 @@ const ScrollBarGradient = ({
   const imageTransform = useMemo(() => {
     return Constants.isRTL ? (left ? undefined : [{scaleX: -1}]) : left ? [{scaleX: -1}] : undefined;
   }, [left]);
-  
+
   const heightToUse = gradientHeight || height || '100%';
   return (
     <View
