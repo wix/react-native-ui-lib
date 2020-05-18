@@ -374,7 +374,7 @@ export default class TextField extends BaseInput {
   /** Renders */
   renderPlaceholder() {
     const {floatingPlaceholderState, floatingPlaceholderTranslate} = this.state;
-    const {placeholder, placeholderTextColor, floatingPlaceholderColor, floatingPlaceholderStyle, multiline} = this.getThemeProps();
+    const {placeholder, placeholderTextColor, floatingPlaceholderColor, floatingPlaceholderStyle} = this.getThemeProps();
     const typography = this.getTypography();
     const placeholderColor = this.getStateColor(placeholderTextColor || PLACEHOLDER_COLOR_BY_STATE.default);
 
