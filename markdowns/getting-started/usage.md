@@ -10,7 +10,7 @@ For detailed information please go over the other sections: Style, Modifiers, Co
 
 ```jsx
 import React, {Component} from 'react';
-import {View, TextInput, Text, Button} from 'react-native-ui-lib';
+import {View, TextField, Text, Button} from 'react-native-ui-lib';
 
 export default class Example extends Component {
 
@@ -18,8 +18,8 @@ export default class Example extends Component {
     return (
       <View flex paddingH-25 paddingT-120>
         <Text blue50 text20>Welcome</Text>
-        <TextInput text50 placeholder="username" dark10/>
-        <TextInput text50 placeholder="password" secureTextEntry dark10/>
+        <TextField text50 placeholder="username" dark10/>
+        <TextField text50 placeholder="password" secureTextEntry dark10/>
         <View marginT-100 center>
           <Button text70 white background-orange30 label="Login"/>
           <Button link text70 orange30 label="Sign Up" marginT-20/>
