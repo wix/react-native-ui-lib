@@ -11,6 +11,7 @@ import TabBarItem from './TabBarItem';
 // import ReanimatedObject from './ReanimatedObject';
 import {asBaseComponent, forwardRef} from '../../commons';
 import View from '../../components/view';
+import ScrollBarGradient from '../scrollBar/ScrollBarGradient';
 import {Colors, Spacings, Typography} from '../../style';
 import {Constants} from '../../helpers';
 import {LogService} from '../../services';
@@ -270,11 +271,32 @@ class TabBar extends PureComponent {
   };
 
   onScroll = ({nativeEvent: {contentOffset}}) => {
+    const {fadeLeft, fadeRight} = this.state;
     this.tabBarScrollOffset = contentOffset.x;
+    const stateUpdate = {};
+    // TODO: extract this logic to scrollbar presenter or something
+    const leftThreshold = 50;
+    if (this.tabBarScrollOffset > leftThreshold && !fadeLeft) {
+      stateUpdate.fadeLeft = true;
+    } else if (this.tabBarScrollOffset <= leftThreshold && fadeLeft) {
+      stateUpdate.fadeLeft = false;
+    }
+    
+    const rightThreshold = (this.contentWidth - this.containerWidth);
+    if (this.tabBarScrollOffset < rightThreshold && !fadeRight) {
+      stateUpdate.fadeRight = true;
+    } else if (this.tabBarScrollOffset >= rightThreshold && fadeRight) {
+      stateUpdate.fadeRight = false;
+    }
+
+    if (!_.isEmpty(stateUpdate)) {
+      this.setState(stateUpdate);
+    }
   };
 
   onContentSizeChange = (width) => {
-    if (width > this.containerWidth) {
+    if (width > this.containerWidth && !this.contentWidth) {
+      this.contentWidth = width;
       this.setState({scrollEnabled: true});
     }
   };
@@ -375,7 +397,7 @@ class TabBar extends PureComponent {
 
   render() {
     const {height, enableShadow, containerStyle, testID} = this.props;
-    const {itemsWidths, scrollEnabled} = this.state;
+    const {itemsWidths, scrollEnabled, fadeLeft, fadeRight} = this.state;
     return (
       <View
         style={[styles.container, enableShadow && styles.containerShadow, {width: this.containerWidth}, containerStyle]}
@@ -400,6 +422,8 @@ class TabBar extends PureComponent {
           {this.renderSelectedIndicator()}
         </ScrollView>
         {_.size(itemsWidths) > 1 && <Code>{this.renderCodeBlock}</Code>}
+        <ScrollBarGradient left visible={fadeLeft}/>
+        <ScrollBarGradient visible={fadeRight}/>
       </View>
     );
   }
