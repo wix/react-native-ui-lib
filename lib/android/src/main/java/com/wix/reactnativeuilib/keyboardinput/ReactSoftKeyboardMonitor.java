@@ -1,4 +1,4 @@
-package com.wix.reactnativekeyboardinput;
+package com.wix.reactnativeuilib.keyboardinput;
 
 import android.graphics.Rect;
 import android.view.ViewTreeObserver;
@@ -7,11 +7,9 @@ import android.view.Window;
 import androidx.annotation.Nullable;
 
 import com.facebook.react.ReactRootView;
-import com.wix.reactnativekeyboardinput.utils.Logger;
-import com.wix.reactnativekeyboardinput.utils.RuntimeUtils;
+import com.wix.reactnativeuilib.keyboardinput.utils.RuntimeUtils;
 
-import static com.wix.reactnativekeyboardinput.GlobalDefs.TAG;
-import static com.wix.reactnativekeyboardinput.utils.ViewUtils.getWindow;
+import static com.wix.reactnativeuilib.keyboardinput.utils.ViewUtils.getWindow;
 
 public class ReactSoftKeyboardMonitor implements ReactScreenMonitor.Listener {
 
@@ -31,16 +29,13 @@ public class ReactSoftKeyboardMonitor implements ReactScreenMonitor.Listener {
             mLastViewportVisibleHeight = viewportVisibleHeight;
             if (mMaxViewportVisibleHeight == null) {
                 mMaxViewportVisibleHeight = viewportVisibleHeight;
-                Logger.d(TAG, "mMaxViewportVisibleHeight WAS NULL, now is: " + mMaxViewportVisibleHeight);
             } else if (viewportVisibleHeight < mMaxViewportVisibleHeight) {
                 mExternalListener.onSoftKeyboardVisible(!mSoftKeyboardUp);
                 refreshKeyboardHeight();
                 mSoftKeyboardUp = true;
-                Logger.d(TAG, "Keyboard SHOWING!");
             } else {
                 mSoftKeyboardUp = false;
                 mExternalListener.onSoftKeyboardHidden();
-                Logger.d(TAG, "Keyboard GONE!");
             }
         }
     };
@@ -96,7 +91,6 @@ public class ReactSoftKeyboardMonitor implements ReactScreenMonitor.Listener {
             return (int) (.5f * mLocallyVisibleHeight);
         }
 
-        Logger.d(TAG, "getKeyboardHeight, no keyboard height");
         return null;
     }
 
@@ -115,12 +109,10 @@ public class ReactSoftKeyboardMonitor implements ReactScreenMonitor.Listener {
     private void initViewportVisibleHeight() {
         mMaxViewportVisibleHeight = getViewportVisibleHeight();
         mLastViewportVisibleHeight = null;
-        Logger.d(TAG, "Measured new max view-port height: "+mMaxViewportVisibleHeight);
     }
 
     private void initLocallyVisibleHeight() {
         mLocallyVisibleHeight = getLocallyVisibleHeight();
-        Logger.d(TAG, "Measured locally visible height: "+mLocallyVisibleHeight);
         mKeyboardHeight = null; // Reset so the keyboard would be measured in the next opportunity.
     }
 
@@ -141,12 +133,10 @@ public class ReactSoftKeyboardMonitor implements ReactScreenMonitor.Listener {
                 if (mLocallyVisibleHeight == null) {
                     mLocallyVisibleHeight = locallyVisibleHeight;
                     mKeyboardHeight = mLocallyVisibleHeight;
-                    Logger.d(TAG, "mLocallyVisibleHeight WAS NULL, now is: " + mLocallyVisibleHeight);
                 } else if (mLocallyVisibleHeight > locallyVisibleHeight) {
                     mKeyboardHeight = mLocallyVisibleHeight - locallyVisibleHeight;
                 } else {
                     mKeyboardHeight = locallyVisibleHeight;
-                    Logger.d(TAG, "mKeyboardHeight = " + mKeyboardHeight + " mLocallyVisibleHeight = " + mLocallyVisibleHeight + " locallyVisibleHeight = " + locallyVisibleHeight);
                 }
             }
         });
