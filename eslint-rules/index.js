@@ -10,6 +10,7 @@ module.exports = {
     'component-deprecation_warn': require('./lib/rules/component-deprecation'),
     'assets-deprecation_warn': require('./lib/rules/assets-deprecation'),
     'typography-deprecation_warn': require('./lib/rules/typography-deprecation'),
+    'function-deprecation_warn': require('./lib/rules/function-deprecation'),
     'component-deprecation_error': require('./lib/rules/component-deprecation'),
     'assets-deprecation_error': require('./lib/rules/assets-deprecation'),
     'typography-deprecation_error': require('./lib/rules/typography-deprecation'),
