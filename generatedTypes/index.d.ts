@@ -9,6 +9,9 @@ export {default as Text} from './components/text';
 export {default as TouchableOpacity} from './components/touchableOpacity';
 export {default as Button} from './components/button';
 export {default as Image} from './components/image';
+export {default as Overlay} from './components/overlay';
+export {default as RadioButton} from './components/radioButton/RadioButton';
+export {default as RadioGroup} from './components/radioButton/RadioGroup';
 
 /* All components with manual typings */
 export {
@@ -41,8 +44,6 @@ export {
   Stepper,
   TabBar,
   TagsInput,
-  RadioButton,
-  RadioGroup,
   SharedTransition,
   StackAggregator,
   Toast,

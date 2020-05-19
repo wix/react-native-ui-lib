@@ -1,0 +1,25 @@
+[
+  {
+    "function": "deprecatedFunction",
+    "source": "our-source",
+    "message": "Please use the 'validFunction' function instead (fix is available).",
+    "fix": {"functionName": "validFunction"}
+  },
+  {
+    "function": "validFunction",
+    "source": "our-source",
+    "message": "",
+    "arguments": [
+      {},
+      {
+        "props": [
+          {
+            "prop": "deprecatedProp",
+            "message": "Please use the 'validProp' prop instead (fix is available).",
+            "fix": {"propName": "validProp"}
+          }
+        ]
+      }
+    ]
+  }
+]

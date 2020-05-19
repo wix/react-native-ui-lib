@@ -83,14 +83,12 @@ export default class FloatingButtonScreen extends Component {
           visible={this.state.showButton}
           button={{
             label: 'Approve', 
-            onPress: this.close, 
-            labelStyle: {fontWeight: '400'}
+            onPress: this.close
           }}
           secondaryButton={{
             label: 'Not now', 
             onPress: this.notNow, 
-            color: Colors.red30, 
-            labelStyle: {fontWeight: '400'}
+            color: Colors.red30
           }}
           // bottomMargin={80}
           // hideBackgroundOverlay

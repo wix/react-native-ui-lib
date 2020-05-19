@@ -1,81 +1,109 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {StyleSheet, Animated, Easing} from 'react-native';
+import React, {PureComponent} from 'react';
+import {
+  StyleSheet,
+  Animated,
+  Easing,
+  TextStyle,
+  StyleProp,
+  ImageSourcePropType,
+  ImageStyle,
+  ViewStyle,
+  ViewProps
+} from 'react-native';
 import {Colors} from '../../style';
-import {BaseComponent} from '../../commons';
+import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 import Text from '../text';
-import Image from '../image';
+const Image = require('../image').default; // TODO: change this once Image is written in typescript
 import asRadioGroupChild from './asRadioGroupChild';
+import {RadioGroupContextPropTypes} from './RadioGroupContext';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
 
+interface RadioButtonPropTypes {
+  /**
+   * The identifier value of the radio button. must be different than other RadioButtons in the same group
+   */
+  value?: string | boolean;
+  /**
+   * When using RadioButton without a RadioGroup, use this prop to toggle selection
+   */
+  selected?: boolean;
+  /**
+   * Invoked when pressing the button
+   */
+  onPress?: Function;
+  /**
+   * Whether the radio button should be disabled
+   */
+  disabled?: boolean;
+  /**
+   * The color of the radio button
+   */
+  color?: string;
+  /**
+   * The size of the radio button, affect both width & height
+   */
+  size?: number;
+  /**
+   * The radio button border radius
+   */
+  borderRadius?: number;
+  /**
+   * A label for the radio button description
+   */
+  label?: string;
+  /**
+   * Label style
+   */
+  labelStyle?: TextStyle;
+  /**
+   * Icon image source
+   */
+  iconSource?: ImageSourcePropType;
+  /**
+   * Icon image style
+   */
+  iconStyle?: ImageStyle;
+  /**
+   * Should the icon be on the right side of the label
+   */
+  iconOnRight?: boolean;
+}
+
+interface RadioButtonState {
+  opacityAnimationValue: Animated.Value;
+  scaleAnimationValue: Animated.Value;
+}
+
+type Props = RadioButtonPropTypes &
+  RadioGroupContextPropTypes &
+  BaseComponentInjectedProps &
+  ForwardRefInjectedProps &
+  ViewProps;
+
 /**
  * A Radio Button component, should be wrapped inside a RadioGroup
  */
-class RadioButton extends BaseComponent {
+class RadioButton extends PureComponent<Props, RadioButtonState> {
   static displayName = 'RadioButton';
-
-  static propTypes = {
-    /**
-     * The identifier value of the radio button. must be different than other RadioButtons in the same group
-     */
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    /**
-     * When using RadioButton without a RadioGroup, use this prop to toggle selection
-     */
-    selected: PropTypes.bool,
-    /**
-     * Invoked when pressing the button
-     */
-    onPress: PropTypes.func,
-    /**
-     * Whether the radio button should be disabled
-     */
-    disabled: PropTypes.bool,
-    /**
-     * The color of the radio button
-     */
-    color: PropTypes.string,
-    /**
-     * The size of the radio button, affect both width & height
-     */
-    size: PropTypes.number,
-    /**
-     * The radio button border radius
-     */
-    borderRadius: PropTypes.number,
-    /**
-     * A label for the radio button description
-     */
-    label: PropTypes.string,
-    /**
-     * Label style
-     */
-    labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * Icon image source
-     */
-    iconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * Icon image style
-     */
-    iconStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * Should the icon be on the right side of the label
-     */
-    iconOnRight: PropTypes.bool
-  };
 
   static defaultProps = {
     iconOnRight: false
   };
 
-  constructor(props) {
+  styles: {
+    radioButtonOutline: StyleProp<ViewStyle>;
+    radioButtonInner: StyleProp<ViewStyle>;
+    image: StyleProp<ImageStyle>;
+  };
+
+  constructor(props: Props) {
     super(props);
+    this.styles = createStyles(props);
     this.state = {
       opacityAnimationValue: new Animated.Value(0),
       scaleAnimationValue: new Animated.Value(0.8)
@@ -86,7 +114,7 @@ class RadioButton extends BaseComponent {
     this.animate();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     if (prevProps.selected !== this.props.selected) {
       this.animate();
     }
@@ -128,10 +156,6 @@ class RadioButton extends BaseComponent {
     }
   }
 
-  generateStyles() {
-    this.styles = createStyles(this.getThemeProps());
-  }
-
   onPress = () => {
     const {disabled, value, selected} = this.props;
     if (!disabled) {
@@ -141,7 +165,7 @@ class RadioButton extends BaseComponent {
   };
 
   getAccessibilityProps = () => {
-    const {label = '', selected, disabled} = this.getThemeProps();
+    const {label = '', selected, disabled} = this.props;
     const selectedAccessibilityText = selected ? 'selected' : 'unselected';
     const accessibilityLabel = `${selectedAccessibilityText}. ${label}`;
 
@@ -154,7 +178,7 @@ class RadioButton extends BaseComponent {
   };
 
   getRadioButtonOutlineStyle() {
-    const {color, size, borderRadius, style: propsStyle, disabled} = this.getThemeProps();
+    const {color, size, borderRadius, style: propsStyle, disabled} = this.props;
     const style = [this.styles.radioButtonOutline];
 
     if (size) {
@@ -172,7 +196,7 @@ class RadioButton extends BaseComponent {
   }
 
   getRadioButtonInnerStyle() {
-    const {color, borderRadius, disabled} = this.getThemeProps();
+    const {color, borderRadius, disabled} = this.props;
     const style = [this.styles.radioButtonInner];
 
     if (borderRadius) {
@@ -197,18 +221,18 @@ class RadioButton extends BaseComponent {
   }
 
   renderIcon() {
-    const {iconSource} = this.props;
-    const {iconStyle} = this.getThemeProps();
+    const {iconSource, iconStyle} = this.props;
     const style = [this.styles.image, iconStyle];
     return iconSource && <Image style={style} source={iconSource}/>;
   }
 
   render() {
-    const {onPress, onValueChange, ...others} = this.getThemeProps();
+    const {onPress, onValueChange, ...others} = this.props;
     const {opacityAnimationValue, scaleAnimationValue} = this.state;
     const Container = onPress || onValueChange ? TouchableOpacity : View;
 
     return (
+      // @ts-ignore
       <Container
         row
         centerV
@@ -234,7 +258,8 @@ class RadioButton extends BaseComponent {
   }
 }
 
-function createStyles({size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, color = DEFAULT_COLOR, disabled}) {
+function createStyles(props: Props) {
+  const {size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, color = DEFAULT_COLOR, disabled} = props;
   return StyleSheet.create({
     radioButtonOutline: {
       borderWidth: 2,
@@ -255,4 +280,4 @@ function createStyles({size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, col
   });
 }
 
-export default asRadioGroupChild(RadioButton);
+export default asRadioGroupChild(asBaseComponent<RadioButtonPropTypes>(forwardRef(RadioButton)));
