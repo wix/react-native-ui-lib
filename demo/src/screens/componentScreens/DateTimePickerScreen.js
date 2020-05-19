@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import {DateTimePicker, View, Text} from 'react-native-ui-lib'; // eslint-disable-line
 
-
 export default class DateTimePickerScreen extends Component {
-
   render() {
     return (
       <View flex padding-page>
@@ -23,7 +21,9 @@ export default class DateTimePickerScreen extends Component {
           // value={new Date('2015-03-25T12:00:00-06:30')}
         />
 
-        <Text text60R marginT-40>Disabled</Text>
+        <Text text60R marginT-40>
+          Disabled
+        </Text>
         <DateTimePicker
           containerStyle={{marginBottom: 20}}
           editable={false}
