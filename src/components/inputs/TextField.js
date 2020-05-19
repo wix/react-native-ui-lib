@@ -40,7 +40,6 @@ const CHAR_COUNTER_COLOR_BY_STATE = {
 
 const LABEL_TYPOGRAPHY = Typography.text80;
 const ICON_SIZE = 24;
-const ICON_RIGHT_PADDING = 3;
 const ICON_LEFT_PADDING = 6;
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
 
@@ -766,17 +765,17 @@ function createStyles({centered, multiline, expandable}) {
       height: LABEL_TYPOGRAPHY.lineHeight
     },
     rightElement: {
-      paddingRight: ICON_SIZE + ICON_RIGHT_PADDING + ICON_LEFT_PADDING
+      paddingRight: ICON_SIZE + ICON_LEFT_PADDING
     },
     rightIcon: {
       position: 'absolute',
-      right: ICON_RIGHT_PADDING,
+      right: 0,
       alignSelf: 'flex-end',
       paddingBottom: 8
     },
     rightButton: {
       position: 'absolute',
-      right: ICON_RIGHT_PADDING,
+      right: 0,
       alignSelf: 'center'
     },
     rightButtonImage: {
