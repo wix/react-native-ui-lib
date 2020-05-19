@@ -9,6 +9,7 @@ export default class DateTimePickerScreen extends Component {
       <View flex padding-page>
         <Text text40>Date Time Picker</Text>
         <DateTimePicker
+          containerStyle={{marginVertical: 20}}
           title={'Date'}
           placeholder={'Select a date'}
           // dateFormat={'MMM D, YYYY'}
