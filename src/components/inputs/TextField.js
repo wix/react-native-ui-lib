@@ -702,7 +702,7 @@ export default class TextField extends BaseInput {
   };
 }
 
-function createStyles({centered, multiline, expandable}) {
+function createStyles({centered, multiline, hideUnderline}) {
   const inputTextAlign = Constants.isRTL ? 'right' : 'left';
 
   return StyleSheet.create({
@@ -771,7 +771,7 @@ function createStyles({centered, multiline, expandable}) {
       position: 'absolute',
       right: 0,
       alignSelf: 'flex-end',
-      paddingBottom: 8
+      paddingBottom: hideUnderline ? undefined : 8
     },
     rightButton: {
       position: 'absolute',
