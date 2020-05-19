@@ -772,7 +772,7 @@ function createStyles({centered, multiline, expandable}) {
       position: 'absolute',
       right: ICON_RIGHT_PADDING,
       alignSelf: 'flex-end',
-      paddingBottom: expandable ? 14 : 8
+      paddingBottom: 8
     },
     rightButton: {
       position: 'absolute',
