@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { ImageProps as RNImageProps } from 'react-native';
+import { ForwardRefInjectedProps } from '../../commons/new';
 import { OverlayTypeType } from '../overlay';
 declare type ImageProps = RNImageProps & {
     /**
@@ -44,5 +45,30 @@ declare type ImageProps = RNImageProps & {
      */
     customOverlayContent?: JSX.Element;
 };
+declare type Props = ImageProps & ForwardRefInjectedProps;
+/**
+ * @description: Image wrapper with extra functionality like source transform and assets support
+ * @extends: Image
+ * @extendslink: https://facebook.github.io/react-native/docs/image.html
+ */
+declare class Image extends PureComponent<Props> {
+    static displayName: string;
+    static defaultProps: {
+        assetGroup: string;
+    };
+    static overlayTypes: {
+        VERTICAL: string;
+        TOP: string;
+        BOTTOM: string;
+        SOLID: string;
+    };
+    sourceTransformer?: Function;
+    constructor(props: Props);
+    isGif(): boolean | undefined;
+    shouldUseImageBackground(): boolean;
+    getImageSource(): any;
+    render(): JSX.Element;
+}
+export { Image };
 declare const _default: React.ComponentType<ImageProps>;
 export default _default;
