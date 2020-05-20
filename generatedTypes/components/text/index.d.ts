@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import { TextProps, TextStyle } from 'react-native';
-import { BaseComponentInjectedProps, ForwardRefInjectedProps } from '../../commons/new';
-import { MarginModifiers } from '../../commons/modifiers';
-interface TextPropTypes extends TextProps {
+import { BaseComponentInjectedProps, ForwardRefInjectedProps, MarginModifiers, TypographyModifiers, ColorsModifiers } from '../../commons/new';
+export declare type TextPropTypes = TextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
     /**
      * color of the text
      */
@@ -27,8 +26,10 @@ interface TextPropTypes extends TextProps {
      * Use Animated.Text as a container
      */
     animated?: boolean;
-}
-declare type PropsTypes = BaseComponentInjectedProps & TextPropTypes & ForwardRefInjectedProps & MarginModifiers;
+    ref?: any;
+    textAlign?: string;
+};
+declare type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPropTypes;
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
  * @extends: Text
@@ -43,5 +44,5 @@ declare class Text extends PureComponent<PropsTypes> {
     render(): JSX.Element;
 }
 export { Text };
-declare const _default: React.ComponentType<Pick<Pick<PropsTypes, "margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV" | "center" | "style" | "testID" | "modifiers" | "color" | "uppercase" | "highlightString" | "highlightStyle" | "animated" | "allowFontScaling" | "ellipsizeMode" | "lineBreakMode" | "numberOfLines" | "onLayout" | "onPress" | "onLongPress" | "nativeID" | "maxFontSizeMultiplier" | "adjustsFontSizeToFit" | "minimumFontScale" | "suppressHighlighting" | "selectable" | "selectionColor" | "textBreakStrategy" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors">, "margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV" | "center" | "style" | "testID" | "color" | "uppercase" | "highlightString" | "highlightStyle" | "animated" | "allowFontScaling" | "ellipsizeMode" | "lineBreakMode" | "numberOfLines" | "onLayout" | "onPress" | "onLongPress" | "nativeID" | "maxFontSizeMultiplier" | "adjustsFontSizeToFit" | "minimumFontScale" | "suppressHighlighting" | "selectable" | "selectionColor" | "textBreakStrategy" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors">>;
+declare const _default: React.ComponentType<TextPropTypes>;
 export default _default;

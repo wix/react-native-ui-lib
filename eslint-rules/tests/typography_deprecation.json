@@ -1,0 +1,7 @@
+[
+  {
+    "path": "Typography.deprecated",
+    "message": "Please use 'Typography.valid' instead (fix is available).",
+    "fix": "Typography.valid"
+  }
+]

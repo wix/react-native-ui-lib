@@ -50,7 +50,7 @@ class MainScreen extends Component {
 
   onSearchBoxBlur = () => {
     this.closeSearchBox();
-    this.filterExplorerScreens('');
+    // this.filterExplorerScreens('');
   };
 
   getMenuData = () => {
@@ -97,7 +97,7 @@ class MainScreen extends Component {
     this.closeSearchBox();
 
     setTimeout(() => {
-      this.filterExplorerScreens('');
+      // this.filterExplorerScreens('');
       this.pushScreen(row);
     }, 0);
   };

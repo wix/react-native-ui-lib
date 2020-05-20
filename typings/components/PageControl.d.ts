@@ -13,6 +13,7 @@ export interface PageControlProps {
   size?: number;
   enlargeActive?: boolean;
   spacing?: number;
+  testID?: string;
 }
 
 export class PageControl extends BaseComponent<PageControlProps> {}

@@ -3,6 +3,7 @@ import {FlatListProps, GestureResponderEvent, LayoutChangeEvent} from 'react-nat
 import {BaseComponent} from '../commons';
 import {TextFieldProps} from './Inputs';
 import {TopBarProps} from './Modal';
+import {ColorsModifiers} from '../modifiers';
 
 export type PickerItemLabeledValue = { value?: any, label?: string };
 export type PickerItemValue =
@@ -62,7 +63,7 @@ export interface PickerProps extends Omit<TextFieldProps, 'value'> {
   listProps?: PickerListProps;
 }
 
-export class Picker extends BaseComponent<PickerProps> {}
+export class Picker extends BaseComponent<PickerProps & ColorsModifiers> {}
 
 export namespace Picker {
   export class Item extends BaseComponent<PickerItemProps> {}
