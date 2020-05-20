@@ -280,4 +280,4 @@ function createStyles(props: Props) {
   });
 }
 
-export default asRadioGroupChild(asBaseComponent<RadioButtonPropTypes>(forwardRef(RadioButton)));
+export default asBaseComponent<RadioButtonPropTypes>(forwardRef(asRadioGroupChild(RadioButton)));
