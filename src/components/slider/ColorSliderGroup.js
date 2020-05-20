@@ -37,13 +37,17 @@ export default class ColorSliderGroup extends PureBaseComponent {
     showLabels: PropTypes.bool,
     /**
      * In case you would like to change the default labels (translations etc.), you can provide
-     * a function that received the type (one of GradientSlider.types without DEFAULT) and returns a string.
+     * this prop with a map to the relevant labels ({hue: ..., lightness: ..., saturation: ...}).
      */
-    getLabel: PropTypes.func,
+    labels: PropTypes.object,
     /**
      * The labels style
      */
     labelsStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
+  }
+
+  static defaultProps = {
+    labels: {hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation'}
   }
 
   state = {
@@ -67,22 +71,13 @@ export default class ColorSliderGroup extends PureBaseComponent {
     _.invoke(this.props, 'onValueChange', value);
   }
 
-  getSliderLabel = type => {
-    const {getLabel} = this.getThemeProps();
-    if (getLabel) {
-      return getLabel(type);
-    } else {
-      return type.charAt(0).toUpperCase() + type.substr(1);
-    }
-  }
-
   getSlider = (type) => {
-    const {sliderContainerStyle, showLabels, labelsStyle, accessible} = this.props;
+    const {sliderContainerStyle, showLabels, labelsStyle, accessible, labels} = this.getThemeProps();
     return (
       <>
         {showLabels && (
           <Text dark30 text80 style={labelsStyle} accessible={accessible}>
-            {this.getSliderLabel(type)}
+            {labels[type]}
           </Text>
         )}
         <GradientSlider type={type} containerStyle={sliderContainerStyle} accessible={accessible}/>
