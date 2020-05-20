@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextStyle, ImageStyle } from 'react-native';
+import { TextStyle, ImageSourcePropType, ImageStyle } from 'react-native';
 interface RadioButtonPropTypes {
     /**
      * The identifier value of the radio button. must be different than other RadioButtons in the same group
@@ -40,7 +40,7 @@ interface RadioButtonPropTypes {
     /**
      * Icon image source
      */
-    iconSource?: object | number;
+    iconSource?: ImageSourcePropType;
     /**
      * Icon image style
      */

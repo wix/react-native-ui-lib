@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+// @ts-ignore
+import hoistStatics from 'hoist-non-react-statics';
 import RadioGroupContext from './RadioGroupContext';
 
 interface RadioGroupChildPropTypes {
@@ -16,6 +18,8 @@ type PropTypes = RadioGroupChildPropTypes;
 
 export default function asRadioGroupChild(WrappedComponent: React.ComponentType<any>) {
   class RadioGroupChild extends Component<PropTypes> {
+    static displayName: string | undefined;
+    
     render() {
       const {value: buttonValue, selected} = this.props;
       return (
@@ -32,6 +36,9 @@ export default function asRadioGroupChild(WrappedComponent: React.ComponentType<
       );
     }
   }
+
+  hoistStatics(RadioGroupChild, WrappedComponent);
+  RadioGroupChild.displayName = WrappedComponent.displayName;
 
   return RadioGroupChild as any;
 }
