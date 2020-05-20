@@ -4,7 +4,7 @@ import {DateTimePicker, View, Text} from 'react-native-ui-lib'; // eslint-disabl
 export default class DateTimePickerScreen extends Component {
   render() {
     return (
-      <View flex padding-page>
+      <View flex padding-s5>
         <Text text40>Date Time Picker</Text>
         <DateTimePicker
           containerStyle={{marginVertical: 20}}
