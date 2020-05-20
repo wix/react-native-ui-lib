@@ -202,7 +202,7 @@ export default class Toast extends PureBaseComponent {
   };
 
   renderMessage() {
-    const {message, centerMessage, color} = this.props;
+    const {message, centerMessage, color} = this.getThemeProps();
     const textColor = color || COLOR;
     const textAlign = centerMessage ? 'center' : 'left';
 

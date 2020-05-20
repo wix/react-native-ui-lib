@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 // no-hard-coded-color
 const colorProps = [
   'color', 'backgroundColor', 'borderColor', 'borderRightColor',
@@ -57,6 +59,39 @@ function findValueNodeOfIdentifier(identifierName, scope) {
   return valueNode;
 }
 
+function getLocalImportSpecifier(node, source, defaultImportName) {
+  let localImportSpecifier;
+  const importSource = node.source.value;
+  if (source === importSource) {
+    const specifiers = node.specifiers;
+    if (specifiers) {
+      localImportSpecifier = _.find(specifiers, specifier => specifier.imported && specifier.imported.name === defaultImportName);
+      if (localImportSpecifier) {
+        localImportSpecifier = localImportSpecifier.local.name;
+      }
+    }
+
+    if (!localImportSpecifier) { // someone is importing everything (*)
+      localImportSpecifier = defaultImportName;
+    }
+  }
+
+  return localImportSpecifier;
+}
+
+function getSpecifierIndex(node, name) {
+  let matchIndex;
+  if (node && node.specifiers) {
+    _.forEach(node.specifiers, (s, index) => {
+      const x = _.get(s, 'imported.name');
+      if (x === name) {
+        matchIndex = index;
+      }
+    });
+  }
+  return matchIndex;
+}
+
 module.exports = {
   isPropFont,
   findAndReportHardCodedValues,
@@ -64,4 +99,6 @@ module.exports = {
   isColorException,
   isLiteral,
   findValueNodeOfIdentifier,
+  getLocalImportSpecifier,
+  getSpecifierIndex,
 };
