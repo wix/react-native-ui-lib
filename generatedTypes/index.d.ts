@@ -8,6 +8,7 @@ export {default as View} from './components/view';
 export {default as Text} from './components/text';
 export {default as TouchableOpacity} from './components/touchableOpacity';
 export {default as Button} from './components/button';
+export {default as Checkbox} from './components/checkbox';
 export {default as RadioButton} from './components/radioButton/RadioButton';
 export {default as RadioGroup} from './components/radioButton/RadioGroup';
 
@@ -67,7 +68,6 @@ export {
 /* All components that are missing either manual or auto generated typings */
 export const AnimatedImage;
 export const AnimatedScanner;
-export const Checkbox;
 export const ColorPalette;
 export const ColorSwatch;
 export const DateTimePicker;
