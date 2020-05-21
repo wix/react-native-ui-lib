@@ -3,7 +3,7 @@ interface RadioGroupPropTypes {
     /**
      * The initial value of the selected radio button
      */
-    initialValue?: string | boolean;
+    initialValue?: string | number | boolean;
     /**
      * Invoked once when value changes, by selecting one of the radio buttons in the group
      */
