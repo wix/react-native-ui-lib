@@ -1,10 +1,10 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {Animated, Easing, StyleSheet} from 'react-native';
+import React, {Component} from 'react';
+import {Animated, Easing, StyleSheet, StyleProp, TouchableOpacityProps, ViewStyle} from 'react-native';
 import {Colors} from '../../style';
+//@ts-ignore
 import Assets from '../../assets';
-import {BaseComponent} from '../../commons';
+import {asBaseComponent, BaseComponentInjectedProps, forwardRef} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 
 const DEFAULT_SIZE = 24;
@@ -12,52 +12,86 @@ const DEFAULT_COLOR = Colors.blue30;
 const DEFAULT_ICON_COLOR = Colors.white;
 const DEFAULT_DISABLED_COLOR = Colors.dark70;
 
+interface CheckboxProps {
+  /**
+   * The value of the Checkbox. If true the switch will be turned on. Default value is false.
+   */
+  value?: boolean;
+  /**
+   * Invoked with the new value when the value changes.
+   */
+  onValueChange?: Function;
+  /**
+   * Whether the checkbox should be disabled
+   */
+  disabled?: boolean;
+  /**
+   * The Checkbox color
+   */
+  color?: string;
+  /**
+   * The size of the checkbox. affect both width and height
+   */
+  size?: number;
+  /**
+   * The Checkbox border radius
+   */
+  borderRadius?: number;
+  /**
+   * The icon asset to use for the selected indication (accept only local assets)
+   */
+  selectedIcon?: number;
+  /**
+   * The selected icon color
+   */
+  iconColor?: string;
+  /**
+   * Additional styling
+   */
+  style?: StyleProp<ViewStyle>
+}
+
+type CheckboxState = {
+  isChecked: Animated.Value;
+};
+
+type Props = CheckboxProps & BaseComponentInjectedProps & TouchableOpacityProps;
+
 /**
- * Checkbox component for toggling boolean value related to some context
+ * @description: Checkbox component for toggling boolean value related to some context
+ * @extends: TouchableOpacity
+ * @extendslink: docs/TouchableOpacity
+ * @gif: https://media.giphy.com/media/xULW8j5WzsuPytqklq/giphy.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CheckboxScreen.tsx
  */
-class Checkbox extends BaseComponent {
+class Checkbox extends Component<Props, CheckboxState> {
   static displayName = 'Checkbox';
-  static propTypes = {
-    /**
-     * The value of the Checkbox. If true the switch will be turned on. Default value is false.
-     */
-    value: PropTypes.bool,
-    /**
-     * Invoked with the new value when the value changes.
-     */
-    onValueChange: PropTypes.func,
-    /**
-     * Whether the checkbox should be disabled
-     */
-    disabled: PropTypes.bool,
-    /**
-     * The Checkbox color
-     */
-    color: PropTypes.string,
-    /**
-     * The size of the checkbox. affect both width and height
-     */
-    size: PropTypes.number,
-    /**
-     * The Checkbox border radius
-     */
-    borderRadius: PropTypes.number,
-    /**
-     * The icon asset to use for the selected indication (accept only local assets)
-     */
-    selectedIcon: PropTypes.number,
-    /**
-     * The selected icon color
-     */
-    iconColor: PropTypes.string
+
+  styles: {
+    container: StyleProp<ViewStyle>;
+    selectedIcon: StyleProp<ViewStyle>;
   };
 
-  constructor(props) {
+  animationStyle: {
+    opacity: CheckboxState['isChecked'];
+    transform: [
+      {
+        scaleX: CheckboxState['isChecked'];
+      },
+      {
+        scaleY: CheckboxState['isChecked'];
+      }
+    ];
+  };
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {
       isChecked: new Animated.Value(this.props.value ? 1 : 0)
     };
+
+    this.styles = createStyles(props);
 
     this.animationStyle = {
       opacity: this.state.isChecked,
@@ -72,15 +106,15 @@ class Checkbox extends BaseComponent {
     };
   }
 
-  componentDidUpdate(prevProps) {
-    const {value} = this.getThemeProps();
+  componentDidUpdate(prevProps: Props) {
+    const {value} = this.props;
     if (prevProps.value !== value) {
       this.animateCheckbox(value);
     }
   }
 
   getAccessibilityProps() {
-    const {accessibilityLabel, disabled, value} = this.getThemeProps();
+    const {accessibilityLabel, disabled, value} = this.props;
     const checkedState = value ? 'checked' : 'unchecked';
 
     return {
@@ -91,11 +125,7 @@ class Checkbox extends BaseComponent {
     };
   }
 
-  generateStyles() {
-    this.styles = createStyles(this.getThemeProps());
-  }
-
-  animateCheckbox(value) {
+  animateCheckbox(value: CheckboxProps['value']) {
     const {isChecked} = this.state;
 
     Animated.timing(isChecked, {
@@ -107,7 +137,7 @@ class Checkbox extends BaseComponent {
   }
 
   onPress = () => {
-    const {disabled} = this.getThemeProps();
+    const {disabled} = this.props;
 
     if (!disabled) {
       _.invoke(this.props, 'onValueChange', !this.props.value);
@@ -115,27 +145,27 @@ class Checkbox extends BaseComponent {
   };
 
   getColor() {
-    const {color, disabled} = this.getThemeProps();
+    const {color, disabled} = this.props;
     return disabled ? DEFAULT_DISABLED_COLOR : color || DEFAULT_COLOR;
   }
 
   getBorderStyle() {
-    const {style: propsStyle} = this.getThemeProps();
     const borderColor = {borderColor: this.getColor()};
-    const style = [this.styles.container, {borderWidth: 2}, borderColor, propsStyle];
+    const borderStyle = [this.styles.container, {borderWidth: 2}, borderColor];
 
-    return style;
+    return borderStyle;
   }
 
   render() {
-    const {selectedIcon, color, iconColor, disabled, testID, ...others} = this.getThemeProps();
+    const {selectedIcon, color, iconColor, disabled, testID, style, ...others} = this.props;
     return (
+      // @ts-ignore
       <TouchableOpacity
         {...this.getAccessibilityProps()}
         activeOpacity={1}
         testID={testID}
         {...others}
-        style={this.getBorderStyle()}
+        style={[this.getBorderStyle(), style]}
         onPress={this.onPress}
       >
         {
@@ -159,7 +189,9 @@ class Checkbox extends BaseComponent {
   }
 }
 
-function createStyles({color = DEFAULT_COLOR, iconColor = DEFAULT_ICON_COLOR, size = DEFAULT_SIZE, borderRadius}) {
+function createStyles(props: Props) {
+  const {color = DEFAULT_COLOR, iconColor = DEFAULT_ICON_COLOR, size = DEFAULT_SIZE, borderRadius} = props;
+
   return StyleSheet.create({
     container: {
       width: size,
@@ -177,4 +209,4 @@ function createStyles({color = DEFAULT_COLOR, iconColor = DEFAULT_ICON_COLOR, si
   });
 }
 
-export default Checkbox;
+export default asBaseComponent<CheckboxProps>(forwardRef(Checkbox));
