@@ -4,7 +4,7 @@ import {Animated, Easing, StyleSheet, StyleProp, TouchableOpacityProps, ViewStyl
 import {Colors} from '../../style';
 //@ts-ignore
 import Assets from '../../assets';
-import {asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
+import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 
 const DEFAULT_SIZE = 24;
@@ -55,7 +55,7 @@ type CheckboxState = {
   isChecked: Animated.Value;
 };
 
-type Props = CheckboxProps & BaseComponentInjectedProps & TouchableOpacityProps;
+type Props = CheckboxProps & TouchableOpacityProps;
 
 /**
  * @description: Checkbox component for toggling boolean value related to some context
