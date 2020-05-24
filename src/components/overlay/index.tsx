@@ -1,10 +1,9 @@
-import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {StyleSheet, Image} from 'react-native';
+import React, {PureComponent} from 'react';
+import {StyleSheet, Image, ImageSourcePropType} from 'react-native';
 import {Colors} from '../../style';
-import {PureBaseComponent} from '../../commons';
 import View from '../view';
+
+const gradientImage = require('./assets/GradientOverlay.png');
 
 const OVERLY_TYPES = {
   VERTICAL: 'vertical',
@@ -13,31 +12,30 @@ const OVERLY_TYPES = {
   SOLID: 'solid'
 };
 
-const gradientImage = require('./assets/GradientOverlay.png');
+export type OverlayTypeType = typeof OVERLY_TYPES[keyof typeof OVERLY_TYPES];
+
+export type OverlayTypes = {
+  /**
+   * The type of overlay to set on top of the image
+   */
+  type?: OverlayTypeType;
+  /**
+   * The overlay color
+   */
+  color?: string;
+  /**
+   * Custom overlay content to be rendered on top of the image
+   */
+  customContent?: JSX.Element;
+};
 
 /**
  * @description: Overlay view with types (default, top, bottom, solid)
  * @extends: Image
  * @extendsLink: https://facebook.github.io/react-native/docs/image
  */
-export default class Overlay extends PureBaseComponent {
+class Overlay extends PureComponent<OverlayTypes> {
   static displayName = 'Overlay';
-
-  static propTypes = {
-    /**
-     * The type of overlay to set on top of the image
-     */
-    type: PropTypes.oneOf(_.values(OVERLY_TYPES)),
-    /**
-     * The overlay color
-     */
-    color: PropTypes.string,
-    /**
-     * Custom overlay content to be rendered on top of the image
-     */
-    customContent: PropTypes.element
-  };
-
   static overlayTypes = OVERLY_TYPES;
 
   getStyleByType(type = this.props.type) {
@@ -64,7 +62,7 @@ export default class Overlay extends PureBaseComponent {
     );
   };
 
-  renderImage = (style, source) => {
+  renderImage = (style: any, source: ImageSourcePropType) => {
     return <Image style={[styles.container, style]} resizeMode={'stretch'} source={source}/>;
   };
 
@@ -114,3 +112,5 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject
   }
 });
+
+export default Overlay;
