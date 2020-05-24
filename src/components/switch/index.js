@@ -86,7 +86,8 @@ class Switch extends BaseComponent {
     return {
       accessible: true,
       accessibilityRole: 'switch',
-      accessibilityStates: disabled ? ['disabled'] : value ? ['checked'] : ['unchecked']
+      accessibilityStates: {disabled, checked: value},
+      accessibilityValue: {text: value ? '1' : '0'}
     };
   }
 
