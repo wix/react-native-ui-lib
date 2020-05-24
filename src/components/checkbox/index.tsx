@@ -4,7 +4,7 @@ import {Animated, Easing, StyleSheet, StyleProp, TouchableOpacityProps, ViewStyl
 import {Colors} from '../../style';
 //@ts-ignore
 import Assets from '../../assets';
-import {asBaseComponent, BaseComponentInjectedProps, forwardRef} from '../../commons/new';
+import {asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 
 const DEFAULT_SIZE = 24;
@@ -209,4 +209,4 @@ function createStyles(props: Props) {
   });
 }
 
-export default asBaseComponent<CheckboxProps>(forwardRef(Checkbox));
+export default asBaseComponent<Props>(Checkbox);
