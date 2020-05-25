@@ -3,7 +3,7 @@ export interface RadioGroupContextPropTypes {
     /**
      * The identifier value of the radio button. must be different than other RadioButtons in the same group
      */
-    value?: string | boolean;
+    value?: string | number | boolean;
     /**
      * Invoked once when value changes, by selecting one of the radio buttons in the group
      */
