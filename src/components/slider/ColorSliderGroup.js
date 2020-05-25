@@ -71,7 +71,7 @@ export default class ColorSliderGroup extends PureBaseComponent {
     _.invoke(this.props, 'onValueChange', value);
   }
 
-  getSlider = (type) => {
+  renderSlider = (type) => {
     const {sliderContainerStyle, showLabels, labelsStyle, accessible, labels} = this.getThemeProps();
     return (
       <>
@@ -91,9 +91,9 @@ export default class ColorSliderGroup extends PureBaseComponent {
 
     return (
       <SliderGroup style={containerStyle} color={initialColor} onValueChange={this.onValueChange}>
-        {this.getSlider(GradientSlider.types.HUE)}
-        {this.getSlider(GradientSlider.types.LIGHTNESS)}
-        {this.getSlider(GradientSlider.types.SATURATION)}
+        {this.renderSlider(GradientSlider.types.HUE)}
+        {this.renderSlider(GradientSlider.types.LIGHTNESS)}
+        {this.renderSlider(GradientSlider.types.SATURATION)}
       </SliderGroup>
     );
   }
