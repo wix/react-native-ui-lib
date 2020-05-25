@@ -8,7 +8,7 @@ interface RadioGroupPropTypes {
   /**
    * The initial value of the selected radio button
    */
-  initialValue?: string | boolean;
+  initialValue?: string | number | boolean;
   /**
    * Invoked once when value changes, by selecting one of the radio buttons in the group
    */
@@ -16,7 +16,7 @@ interface RadioGroupPropTypes {
 }
 
 interface RadioGroupState {
-  value?: string | boolean;
+  value?: RadioGroupPropTypes['initialValue'];
 }
 
 type Props = RadioGroupPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;

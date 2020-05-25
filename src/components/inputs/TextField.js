@@ -559,7 +559,7 @@ export default class TextField extends BaseInput {
       this.styles.input,
       // hideUnderline && this.styles.inputWithoutUnderline,
       {...typographyStyle},
-      Constants.isAndroid && {lineHeight},
+      // Constants.isAndroid && {lineHeight},
       expandable && {maxHeight: lineHeight * (Constants.isAndroid ? 3 : 3.3)},
       Constants.isRTL && {minHeight: lineHeight + 3},
       Constants.isIOS && shouldUseMultiline && {paddingTop: 0}, // fix for iOS topPadding in multiline TextInput
