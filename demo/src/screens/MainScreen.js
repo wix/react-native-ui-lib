@@ -137,6 +137,7 @@ class MainScreen extends Component {
       <TextField
         ref={r => (this.input = r)}
         value={this.state.filterText}
+        testID="uilib.search_for_component"
         placeholder="Search for your component..."
         onChangeText={this.filterExplorerScreens}
         onBlur={this.onSearchBoxBlur}
