@@ -20,6 +20,5 @@ export {
   FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl, PanningProvider,
   PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, ProgressBar, Slider, GradientSlider,
   ColorSliderGroup, Stepper, TabBar, TagsInput, SharedTransition, StackAggregator, Toast,
-  WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper, Constants,
-  DocsGenerator, LogService, LoaderScreen, Modal, StateScreen, WheelPicker, Incubator, ColorPicker
+  WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper, Constants, LogService, LoaderScreen, Modal, StateScreen, WheelPicker, Incubator, ColorPicker
 } from '../typings';

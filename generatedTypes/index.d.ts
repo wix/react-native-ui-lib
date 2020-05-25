@@ -55,7 +55,6 @@ export {
   forwardRef,
   AvatarHelper,
   Constants,
-  DocsGenerator,
   LogService,
   LoaderScreen,
   Modal,
