@@ -199,6 +199,9 @@ export default {
   get UIComponent() {
     return require('./commons').UIComponent;
   },
+  get asScrollableContent() {
+    return require('./commons').asScrollableContent;
+  },
   get forwardRef() {
     return require('./commons').forwardRef;
   },

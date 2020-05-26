@@ -16,6 +16,9 @@ module.exports = {
   get UIComponent() {
     return require('./UIComponent').default;
   },
+  get asScrollableContent() {
+    return require('./asScrollableContent').default;
+  },
   get asBaseComponent() {
     return require('./asBaseComponent').default;
   },
