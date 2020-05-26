@@ -10,15 +10,16 @@ export {default as Text} from './components/text';
 export {default as TouchableOpacity} from './components/touchableOpacity';
 export {default as Button} from './components/button';
 export {default as Checkbox} from './components/checkbox';
+export {default as Image} from './components/image';
+export {default as Overlay} from './components/overlay';
 export {default as RadioButton} from './components/radioButton/RadioButton';
 export {default as RadioGroup} from './components/radioButton/RadioGroup';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
   ActionBar, ActionSheet, Avatar, Badge, Card, Carousel, ConnectionStatusBar, Dialog, Drawer, FloatingButton,
-  FeatureHighlight, Hint, Image, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl, PanningProvider,
+  FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl, PanningProvider,
   PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, ProgressBar, Slider, GradientSlider,
   ColorSliderGroup, Stepper, TabBar, TagsInput, SharedTransition, StackAggregator, Toast,
-  WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper, Constants,
-  DocsGenerator, LogService, LoaderScreen, Modal, StateScreen, WheelPicker, Incubator, ColorPicker
+  WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper, Constants, LogService, LoaderScreen, Modal, StateScreen, WheelPicker, Incubator, ColorPicker
 } from '../typings';

@@ -9,6 +9,8 @@ export {default as Text} from './components/text';
 export {default as TouchableOpacity} from './components/touchableOpacity';
 export {default as Button} from './components/button';
 export {default as Checkbox} from './components/checkbox';
+export {default as Image} from './components/image';
+export {default as Overlay} from './components/overlay';
 export {default as RadioButton} from './components/radioButton/RadioButton';
 export {default as RadioGroup} from './components/radioButton/RadioGroup';
 
@@ -26,7 +28,6 @@ export {
   FloatingButton,
   FeatureHighlight,
   Hint,
-  Image,
   BaseInput,
   TextArea,
   MaskedInput,
@@ -55,7 +56,6 @@ export {
   forwardRef,
   AvatarHelper,
   Constants,
-  DocsGenerator,
   LogService,
   LoaderScreen,
   Modal,

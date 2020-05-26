@@ -27,7 +27,7 @@ interface RadioButtonPropTypes {
   /**
    * The identifier value of the radio button. must be different than other RadioButtons in the same group
    */
-  value?: string | boolean;
+  value?: string | number | boolean;
   /**
    * When using RadioButton without a RadioGroup, use this prop to toggle selection
    */
