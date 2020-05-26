@@ -365,7 +365,7 @@ export function generateModifiersStyle(options = {
     style.positionStyle = extractPositionStyle(boundProps);
   }
 
-  return style;
+  return _.omitBy(style, _.isEmpty); // clean empty objects and undefined
 }
 
 export function getAlteredModifiersOptions(currentProps: any, nextProps: any) {
