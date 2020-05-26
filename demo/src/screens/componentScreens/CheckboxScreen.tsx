@@ -10,7 +10,7 @@ class CheckboxScreen extends Component {
     value4: true,
     value5: false
   };
-  
+
   render() {
     return (
       <View useSafeArea flex>
