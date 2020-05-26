@@ -11,7 +11,7 @@ interface ScrollableContentProps {
 
 interface ScrollableContentState {
   maximumContentSize?: number;
-  contentHeight?: number;
+  contentSize?: number;
   scrollEnabled: boolean;
 }
 
@@ -25,13 +25,13 @@ export default function asScrollableContent(WrappedComponent: React.ComponentTyp
       super(props);
       this.state = {
         maximumContentSize: props.maximumContentSize,
-        contentHeight: undefined,
+        contentSize: undefined,
         scrollEnabled: false
       };
     }
 
-    static isScrollEnabled = (contentHeight?: number, maximumContentSize?: number) => {
-      return !_.isUndefined(contentHeight) && !_.isUndefined(maximumContentSize) && contentHeight > maximumContentSize;
+    static isScrollEnabled = (contentSize?: number, maximumContentSize?: number) => {
+      return !_.isUndefined(contentSize) && !_.isUndefined(maximumContentSize) && contentSize > maximumContentSize;
     };
 
     static getDerivedStateFromProps(nextProps: any, prevState: any) {
@@ -39,7 +39,7 @@ export default function asScrollableContent(WrappedComponent: React.ComponentTyp
         const maximumContentSize = nextProps.maximumContentSize;
         return {
           maximumContentSize,
-          scrollEnabled: ScrollableContent.isScrollEnabled(prevState.contentHeight, maximumContentSize)
+          scrollEnabled: ScrollableContent.isScrollEnabled(prevState.contentSize, maximumContentSize)
         };
       }
 
@@ -48,10 +48,12 @@ export default function asScrollableContent(WrappedComponent: React.ComponentTyp
 
     onContentSizeChange = (contentWidth: number, contentHeight: number) => {
       const {maximumContentSize} = this.state;
+      const {scrollableContentProps = {}} = this.props;
       _.invoke(this.props, 'scrollableContentProps.onContentSizeChange', [contentWidth, contentHeight]);
+      const contentSize = scrollableContentProps.horizontal ? contentWidth : contentHeight;
       this.setState({
-        contentHeight,
-        scrollEnabled: ScrollableContent.isScrollEnabled(contentHeight, maximumContentSize)
+        contentSize,
+        scrollEnabled: ScrollableContent.isScrollEnabled(contentSize, maximumContentSize)
       });
     };
 
