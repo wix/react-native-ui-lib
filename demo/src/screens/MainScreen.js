@@ -113,7 +113,7 @@ class MainScreen extends Component {
         const filteredMenuSection = _.filter(menuSection.screens, menuItem => {
           const {title, description, tags} = menuItem;
           return (
-            _.includes(_.lowerCase(title), _.toLower(filterText)) ||
+            _.includes(_.toLower(title), _.toLower(filterText)) ||
             _.includes(_.toLower(description), _.toLower(filterText)) ||
             _.includes(_.toLower(tags), _.toLower(filterText))
           );
