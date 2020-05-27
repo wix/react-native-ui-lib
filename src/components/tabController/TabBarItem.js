@@ -171,20 +171,28 @@ export default class TabBarItem extends PureComponent {
 
     const labelStyle = this.props.labelStyle;
     const selectedLabelStyle = this.props.selectedLabelStyle;
+    let fontWeight, letterSpacing, fontFamily;
 
-    const fontWeight = cond(and(eq(targetPage, index), defined(itemWidth)),
-      selectedLabelStyle.fontWeight || 'normal',
-      labelStyle.fontWeight || 'normal');
-    const letterSpacing = cond(and(eq(targetPage, index), defined(itemWidth)),
-      selectedLabelStyle.letterSpacing || 0,
-      labelStyle.letterSpacing || 0);
-  
+    if (labelStyle.fontWeight || selectedLabelStyle.fontWeight) {
+      fontWeight = cond(and(eq(targetPage, index), defined(itemWidth)),
+        selectedLabelStyle.fontWeight || 'normal',
+        labelStyle.fontWeight || 'normal');
+    }
+
+    if (labelStyle.letterSpacing || selectedLabelStyle.letterSpacing) {
+      letterSpacing = cond(and(eq(targetPage, index), defined(itemWidth)),
+        selectedLabelStyle.letterSpacing || 0,
+        labelStyle.letterSpacing || 0);
+    }
+
+    if (labelStyle.fontFamily || selectedLabelStyle.fontFamily) {
+      fontFamily = cond(and(eq(targetPage, index), defined(itemWidth)),
+        selectedLabelStyle.fontFamily,
+        labelStyle.fontFamily);
+    }
+
     const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
     const activeColor = !ignore ? selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR : inactiveColor;
-
-    // const color = cond(eq(currentPage, index),
-    //   processColor(activeColor),
-    //   processColor(ignore ? activeColor : inactiveColor),);
 
     // Animated color
     const color = interpolateColor(currentPage, {
@@ -194,11 +202,12 @@ export default class TabBarItem extends PureComponent {
 
     return [
       labelStyle,
-      {
+      _.omitBy({
+        fontFamily,
         fontWeight,
         letterSpacing,
         color
-      }
+      }, _.isUndefined)
     ];
   }
 
