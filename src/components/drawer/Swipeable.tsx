@@ -1,3 +1,4 @@
+// @ts-nocheck
 // @flow
 // Similarly to the DrawerLayout component this deserves to be put in a
 // separate repo. Although, keeping it here for the time being will allow us
@@ -67,12 +68,12 @@ export default class Swipeable extends Component<PropType, StateType> {
     fullLeftThreshold: 0.45
   };
 
-  _onGestureEvent: ?Animated.Event;
-  _transX: ?Animated.Interpolation;
-  _showLeftAction: ?Animated.Interpolation | ?Animated.Value;
-  _leftActionTranslate: ?Animated.Interpolation;
-  _showRightAction: ?Animated.Interpolation | ?Animated.Value;
-  _rightActionTranslate: ?Animated.Interpolation;
+  // _onGestureEvent: ?Animated.Event;
+  // _transX: ?Animated.Interpolation;
+  // _showLeftAction: ?Animated.Interpolation | ?Animated.Value;
+  // _leftActionTranslate: ?Animated.Interpolation;
+  // _showRightAction: ?Animated.Interpolation | ?Animated.Value;
+  // _rightActionTranslate: ?Animated.Interpolation;
 
   constructor(props: PropType) {
     super(props);
