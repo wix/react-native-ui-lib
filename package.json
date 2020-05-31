@@ -76,7 +76,6 @@
     "@welldone-software/why-did-you-render": "^3.2.1",
     "babel-jest": "^25.2.4",
     "babel-plugin-typescript-to-proptypes": "^1.3.2",
-    "babel-preset-latest": "^6.24.1",
     "babel-preset-react-native": "*",
     "eslint": "^5.16.0",
     "eslint-config-wix": "^1.1.28",
