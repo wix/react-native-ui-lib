@@ -27,6 +27,7 @@
     "xcode": "open ./ios/uilib.xcodeproj",
     "build:dev": "tsc --p tsconfig.dev.json",
     "build": "tsc --p tsconfig.build.json",
+    "build:exports": "./node_modules/.bin/babel src --out-dir src --config-file ./src/.babelrc.json --extensions '.ts,.tsx'",
     "log": "react-native log-ios | grep 'ethan -'",
     "docs:install": "(cd ./uilib-docs && rm -rf node_modules && rm -rf package-lock.json && npm install)",
     "docs:deploy": "(cd ./uilib-docs && gatsby build --prefix-paths && gh-pages -d public --branch gh-pages)",
@@ -56,8 +57,10 @@
     "url-parse": "^1.2.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.1",
     "@babel/core": "^7.4.0",
     "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.10.1",
     "@babel/runtime": "^7.4.2",
     "@react-native-community/async-storage": "^1.6.2",
     "@react-native-community/blur": "^3.4.1",
@@ -72,6 +75,8 @@
     "@typescript-eslint/parser": "^2.13.0",
     "@welldone-software/why-did-you-render": "^3.2.1",
     "babel-jest": "^25.2.4",
+    "babel-plugin-typescript-to-proptypes": "^1.3.2",
+    "babel-preset-latest": "^6.24.1",
     "babel-preset-react-native": "*",
     "eslint": "^5.16.0",
     "eslint-config-wix": "^1.1.28",
