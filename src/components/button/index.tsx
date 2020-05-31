@@ -58,7 +58,7 @@ export type ButtonPropTypes = TextPropTypes &
     /**
      * Actions handler
      */
-    onPress?: Function;
+    onPress?: (props: any) => void;
     /**
      * Disable interactions for the component
      */
@@ -115,7 +115,7 @@ export type ButtonPropTypes = TextPropTypes &
      * callback for getting activeBackgroundColor (e.g. (calculatedBackgroundColor, prop) => {...})
      * better set using ThemeManager
      */
-    getActiveBackgroundColor?: Function;
+    getActiveBackgroundColor?: (backgroundColor: string, props: any) => string;
     /**
      * should animate layout change
      * Note?: For Android you must set 'setLayoutAnimationEnabledExperimental(true)' via RN's 'UIManager'

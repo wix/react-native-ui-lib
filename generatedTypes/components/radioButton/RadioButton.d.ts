@@ -12,7 +12,7 @@ interface RadioButtonPropTypes {
     /**
      * Invoked when pressing the button
      */
-    onPress?: Function;
+    onPress?: (selected: boolean) => void;
     /**
      * Whether the radio button should be disabled
      */

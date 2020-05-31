@@ -20,7 +20,7 @@ interface CheckboxProps {
   /**
    * Invoked with the new value when the value changes.
    */
-  onValueChange?: Function;
+  onValueChange?: (value: boolean) => void;
   /**
    * Whether the checkbox should be disabled
    */

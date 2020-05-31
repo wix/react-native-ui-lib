@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
-import { ImageProps as RNImageProps } from 'react-native';
+import { ImageProps as RNImageProps, ImageSourcePropType } from 'react-native';
 import { ForwardRefInjectedProps } from '../../commons/new';
 import { OverlayTypeType } from '../overlay';
 declare type ImageProps = RNImageProps & {
     /**
      * custom source transform handler for manipulating the image source (great for size control)
      */
-    sourceTransformer?: Function;
+    sourceTransformer?: (props: any) => ImageSourcePropType;
     /**
      * if provided image source will be driven from asset name
      */
@@ -62,7 +62,7 @@ declare class Image extends PureComponent<Props> {
         BOTTOM: string;
         SOLID: string;
     };
-    sourceTransformer?: Function;
+    sourceTransformer?: (props: any) => ImageSourcePropType;
     constructor(props: Props);
     isGif(): boolean | undefined;
     shouldUseImageBackground(): boolean;

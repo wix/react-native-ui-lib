@@ -46,11 +46,11 @@ type TouchableOpacityPropTypes = {
   /**
    * Callback for when tapping the touchable
    */
-  onPress: Function;
+  onPress: (props: any) => void;
   /**
    * Callback for when long pressing the touchable
    */
-  onLongPress: Function;
+  onLongPress: (props: any) => void;
   /**
    * Pass controlled pressState to track gesture state changes
    */

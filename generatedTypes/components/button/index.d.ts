@@ -38,7 +38,7 @@ export declare type ButtonPropTypes = TextPropTypes & TypographyModifiers & Colo
     /**
      * Actions handler
      */
-    onPress?: Function;
+    onPress?: (props: any) => void;
     /**
      * Disable interactions for the component
      */
@@ -95,7 +95,7 @@ export declare type ButtonPropTypes = TextPropTypes & TypographyModifiers & Colo
      * callback for getting activeBackgroundColor (e.g. (calculatedBackgroundColor, prop) => {...})
      * better set using ThemeManager
      */
-    getActiveBackgroundColor?: Function;
+    getActiveBackgroundColor?: (backgroundColor: string, props: any) => string;
     /**
      * should animate layout change
      * Note?: For Android you must set 'setLayoutAnimationEnabledExperimental(true)' via RN's 'UIManager'
@@ -289,7 +289,7 @@ declare class Button extends PureComponent<Props, ButtonState> {
     get isFilled(): boolean;
     get isIconButton(): boolean | 0 | undefined;
     getBackgroundColor(): any;
-    getActiveBackgroundColor(): any;
+    getActiveBackgroundColor(): string | undefined;
     getLabelColor(): string | undefined;
     getLabelSizeStyle(): object;
     getContainerSizeStyle(): any;

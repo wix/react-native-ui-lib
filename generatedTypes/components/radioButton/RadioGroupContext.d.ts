@@ -7,7 +7,7 @@ export interface RadioGroupContextPropTypes {
     /**
      * Invoked once when value changes, by selecting one of the radio buttons in the group
      */
-    onValueChange?: Function;
+    onValueChange?: (value: string | number | boolean) => void;
 }
 declare const _default: React.Context<RadioGroupContextPropTypes>;
 export default _default;

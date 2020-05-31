@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, {PureComponent} from 'react';
 //@ts-ignore
 import hoistNonReactStatic from 'hoist-non-react-statics';
-import {Image as RNImage, ImageProps as RNImageProps, StyleSheet, ImageBackground} from 'react-native';
+import {Image as RNImage, ImageProps as RNImageProps, StyleSheet, ImageBackground, ImageSourcePropType} from 'react-native';
 import Constants from '../../helpers/Constants';
 import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 // @ts-ignore
@@ -13,7 +13,7 @@ type ImageProps = RNImageProps & {
   /**
    * custom source transform handler for manipulating the image source (great for size control)
    */
-  sourceTransformer?: Function;
+  sourceTransformer?: (props: any) => ImageSourcePropType;
   /**
    * if provided image source will be driven from asset name
    */
@@ -69,7 +69,7 @@ class Image extends PureComponent<Props> {
 
   public static overlayTypes = Overlay.overlayTypes;
 
-  sourceTransformer?: Function;
+  sourceTransformer?: (props: any) => ImageSourcePropType;
 
   constructor(props: Props) {
     super(props);
