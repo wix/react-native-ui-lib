@@ -85,6 +85,14 @@ class NewDrawer extends PureBaseComponent {
      */
     onWillFullSwipeLeft: PropTypes.func,
     /**
+     * Whether to allow a full right swipe
+     */
+    fullSwipeRight: PropTypes.bool,
+    /**
+     * Threshold for a right full swipe (0-1)
+     */
+    fullRightThreshold: PropTypes.number,
+    /**
      * Callback for right item full swipe
      */
     onFullSwipeRight: PropTypes.func,

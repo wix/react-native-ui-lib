@@ -29,6 +29,8 @@ export type PropType = {
   rightThreshold?: number,
   fullLeftThreshold?: number,
   fullSwipeLeft?: boolean,
+  fullRightThreshold?: number,
+  fullSwipeRight?: boolean,
   overshootLeft?: boolean,
   overshootRight?: boolean,
   overshootFriction?: number,
@@ -67,7 +69,8 @@ export default class Swipeable extends Component<PropType, StateType> {
     friction: 1,
     overshootFriction: 1,
     useNativeAnimations: false, // issue in iPhone5
-    fullLeftThreshold: 0.45
+    fullLeftThreshold: 0.45,
+    fullRightThreshold: 0.45
   };
 
   // _onGestureEvent: ?Animated.Event;
@@ -194,7 +197,7 @@ export default class Swipeable extends Component<PropType, StateType> {
     const {leftWidth = 0, rowWidth = 0} = this.state;
     const {rightOffset = rowWidth} = this.state;
     const rightWidth = rowWidth - rightOffset;
-    const {fullSwipeLeft, friction, leftThreshold = leftWidth / 2, rightThreshold = rightWidth / 2, fullLeftThreshold} = this.props;
+    const {fullSwipeLeft, fullSwipeRight, friction, leftThreshold = leftWidth / 2, rightThreshold = rightWidth / 2, fullLeftThreshold, fullRightThreshold} = this.props;
 
     const startOffsetX = this._currentOffset() + dragX / friction;
     const translationX = (dragX + DRAG_TOSS * velocityX) / friction;
@@ -203,6 +206,8 @@ export default class Swipeable extends Component<PropType, StateType> {
     if (this.rowState === 0) {
       if (fullSwipeLeft && translationX > rowWidth * fullLeftThreshold) {
         toValue = rowWidth;
+      } else if (fullSwipeRight && translationX < -rowWidth * fullRightThreshold) {
+        toValue = -rowWidth;
       } else if (translationX > leftThreshold) {
         toValue = leftWidth;
       } else if (translationX < -rightThreshold) {
