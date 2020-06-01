@@ -4,35 +4,38 @@ declare type TouchableOpacityPropTypes = {
     /**
      * Background color
      */
-    backgroundColor: string;
+    backgroundColor?: string;
     /**
      * Background color when actively pressing the touchable
      */
-    feedbackColor: string;
+    feedbackColor?: string;
     /**
      * Opacity value when actively pressing the touchable
      */
-    activeOpacity: number;
+    activeOpacity?: number;
     /**
      * Scale value when actively pressing the touchable
      */
-    activeScale: number;
+    activeScale?: number;
     /**
      * Callback for when tapping the touchable
      */
-    onPress: (props: any) => void;
+    onPress?: (props: any) => void;
     /**
      * Callback for when long pressing the touchable
      */
-    onLongPress: (props: any) => void;
+    onLongPress?: (props: any) => void;
     /**
      * Pass controlled pressState to track gesture state changes
      */
-    pressState: object;
+    pressState?: object;
     /**
      * If true, disable all interactions for this component.
      */
-    disabled: boolean;
+    disabled?: boolean;
+    /**
+     * Pass custom style
+     */
     style: ViewStyle;
 };
 declare const _default: React.ComponentType<TouchableOpacityPropTypes>;
