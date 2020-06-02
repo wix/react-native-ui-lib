@@ -6,7 +6,6 @@ import {Colors, Typography} from '../../style';
 import {BaseComponent} from '../../commons';
 import Validators from './Validators';
 
-
 const VALIDATORS = {
   REQUIRED: 'required',
   EMAIL: 'email',
@@ -90,7 +89,7 @@ export default class BaseInput extends BaseComponent {
   onFocus = (...args) => {
     _.invoke(this.props, 'onFocus', ...args);
     this.setState({focused: true});
-  }
+  };
 
   onBlur = (...args) => {
     _.invoke(this.props, 'onBlur', ...args);
@@ -100,11 +99,11 @@ export default class BaseInput extends BaseComponent {
     if (validateOnBlur) {
       this.validate();
     }
-  }
+  };
 
   onChange = (event) => {
     _.invoke(this.props, 'onChange', event);
-  }
+  };
 
   onChangeText = (text) => {
     _.invoke(this.props, 'onChangeText', text);
@@ -114,7 +113,7 @@ export default class BaseInput extends BaseComponent {
     if (validateOnChange) {
       setImmediate(this.validate);
     }
-  }
+  };
 
   /** Actions */
   getTypography() {
@@ -142,16 +141,17 @@ export default class BaseInput extends BaseComponent {
     this.input.clear();
   }
 
-  validate = (value = _.get(this, 'state.value'), dryRun) => { // 'input.state.value'
+  validate = (value = _.get(this, 'state.value'), dryRun) => {
+    // 'input.state.value'
     const {validate} = this.props;
     const inputValidators = _.isArray(validate) ? validate : [validate];
 
-    if(_.uniq(validate).length === 1){
-      if(validate[0]){
+    if (_.uniq(validate).length === 1) {
+      if (validate[0]) {
         return;
       }
     }
-      
+
     let isValid = true;
     let failingValidatorIndex;
     // get validators
