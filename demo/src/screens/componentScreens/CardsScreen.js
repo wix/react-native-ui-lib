@@ -37,7 +37,7 @@ export default class CardsScreen extends Component {
               contentContainerStyle={{padding: 5}}
               showsHorizontalScrollIndicator={false}
             >
-              {_.times(4, i => {
+              {_.times(4, (i) => {
                 return (
                   <Card key={i} width={100} style={{marginRight: 20}}>
                     <View padding-15>
@@ -148,17 +148,18 @@ export default class CardsScreen extends Component {
               activeOpacity={1}
               activeScale={1.04}
             >
-              <View padding-20 flex>
-                <Text text70 dark10>
-                  You’re Invited!
-                </Text>
-                <Text text80 dark10>
-                  Join Old The Town Barbershop Official Store. Download the Wix app to...
-                </Text>
-                <Text text90 dark50>
-                  wix.to/A465c
-                </Text>
-              </View>
+              <Card.Section
+                padding-20
+                flex
+                content={[
+                  {text: 'You’re Invited!', props: {text70: true, dark10: true}},
+                  {
+                    text: 'Join Old The Town Barbershop Official Store. Download the Wix app to...',
+                    props: {text80: true, dark10: true}
+                  },
+                  {text: 'wix.to/A465c', props: {text90: true, dark50: true}}
+                ]}
+              />
               <Card.Image width={115} imageSource={cardImage}/>
             </Card>
 

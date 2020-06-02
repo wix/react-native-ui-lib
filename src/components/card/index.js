@@ -10,6 +10,7 @@ import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import CardImage from './CardImage';
+import CardSection from './CardSection';
 import Assets from '../../assets';
 import CardContext from './CardContext';
 import * as CardPresenter from './CardPresenter';
@@ -302,5 +303,6 @@ function createStyles({width, height, borderRadius, selectionOptions}) {
 }
 
 Card.Image = CardImage;
+Card.Section = CardSection;
 
 export default Card;
