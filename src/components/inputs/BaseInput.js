@@ -198,7 +198,7 @@ export default class BaseInput extends BaseComponent {
   isRequiredField() {
     const {validate} = this.props;
     if (_.isArray(validate)) {
-      return validate.indexOf[VALIDATORS.REQUIRED] !== -1;
+      return validate.indexOf(VALIDATORS.REQUIRED) !== -1;
     }
     return validate === VALIDATORS.REQUIRED;
   }
