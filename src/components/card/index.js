@@ -11,6 +11,8 @@ import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import CardImage from './CardImage';
 import Assets from '../../assets';
+import CardContext from './CardContext';
+import * as CardPresenter from './CardPresenter';
 
 
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
@@ -205,16 +207,15 @@ class Card extends PureBaseComponent {
     );
   }
 
-  renderChildren() {
+  renderChildren = () => {
     const children = React.Children.map(this.props.children, (child, index) => {
-      if (_.get(child, 'type.displayName') === CardImage.displayName) {
-        const position = this.calcImagePosition(index);
-        return React.cloneElement(child, {
-          position,
-          borderRadius: this.borderRadius
-        });
-      }
-      return child;
+      const position = this.calcImagePosition(index);
+      const borderStyle = CardPresenter.generateBorderRadiusStyle({position, borderRadius: this.borderRadius});
+      return (
+        <CardContext.Provider value={{position, borderStyle}}>
+          {child}
+        </CardContext.Provider>
+      );
     });
     return children;
   }
