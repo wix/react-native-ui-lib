@@ -726,7 +726,7 @@ function createStyles({centered, multiline, hideUnderline}) {
       backgroundColor: 'transparent',
       // marginBottom: Constants.isIOS ? 10 : 5,
       padding: 0, // for Android
-      textAlignVertical: 'top', // for Android
+      // textAlignVertical: 'top', // for Android
       borderColor: 'transparent', // borderColor & borderWidth is a fix for collapsing issue on Android
       borderWidth: Constants.isAndroid ? 1 : undefined // for Android
     },
