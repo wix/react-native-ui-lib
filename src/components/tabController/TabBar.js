@@ -147,7 +147,7 @@ class TabBar extends PureComponent {
       this.registerTabItems();
     }
 
-    if (props.items && props.optimize) {
+    if (this.items && props.optimize) {
       this.measureItems();
     }
   }
@@ -347,7 +347,7 @@ class TabBar extends PureComponent {
             selectedIconColor={selectedIconColor}
             activeBackgroundColor={activeBackgroundColor}
             key={item.label}
-            width={this._itemsWidths[index]}
+            // width={this._itemsWidths[index]}
             {...item}
             {...this.context}
             index={index}
