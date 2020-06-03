@@ -276,8 +276,10 @@ class TabBar extends PureComponent {
     const {selectedIndex} = this.context;
     const itemsOffsets = _.map(this._itemsOffsets, (offset) => offset + INDICATOR_INSET);
     const itemsWidths = _.map(this._itemsWidths, (width) => width - INDICATOR_INSET * 2);
+    this.contentWidth = _.sum(this._itemsWidths);
+    const scrollEnabled = this.contentWidth > this.containerWidth;
 
-    this.setState({itemsWidths, itemsOffsets});
+    this.setState({itemsWidths, itemsOffsets, scrollEnabled});
     this.focusSelected([selectedIndex], false);
   };
 
@@ -305,12 +307,6 @@ class TabBar extends PureComponent {
     }
   };
 
-  onContentSizeChange = (width) => {
-    if (width > this.containerWidth && !this.contentWidth) {
-      this.contentWidth = width;
-      this.setState({scrollEnabled: true});
-    }
-  };
 
   renderSelectedIndicator() {
     const {itemsWidths} = this.state;
@@ -419,7 +415,6 @@ class TabBar extends PureComponent {
           style={styles.tabBarScroll}
           contentContainerStyle={{minWidth: this.containerWidth}}
           scrollEnabled={scrollEnabled}
-          onContentSizeChange={this.onContentSizeChange}
           onScroll={this.onScroll}
           scrollEventThrottle={16}
           testID={testID}
