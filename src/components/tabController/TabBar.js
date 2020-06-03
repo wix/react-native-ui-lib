@@ -143,7 +143,7 @@ class TabBar extends PureComponent {
       itemsWidths: undefined
     };
 
-    if (props.items && !context.items) {
+    if ((props.items || this.children) && !context.items) {
       this.registerTabItems();
     }
 
