@@ -144,15 +144,13 @@ export default class BaseInput extends BaseComponent {
   validate = (value = _.get(this, 'state.value'), dryRun) => {
     // 'input.state.value'
     const {validate} = this.props;
-    const inputValidators = _.isArray(validate) ? validate : [validate];
-
-    if (_.uniq(validate).length === 1) {
-      if (validate[0]) {
-        return;
-      }
+    if (!validate) {
+      return;
     }
-
+    
+    
     let isValid = true;
+    const inputValidators = _.isArray(validate) ? validate : [validate];
     let failingValidatorIndex;
     // get validators
     for (let index = 0; index < inputValidators.length; index++) {
@@ -165,7 +163,7 @@ export default class BaseInput extends BaseComponent {
       }
 
       // validate
-      if (!validatorFunction(value)) {
+      if (validatorFunction && !validatorFunction(value)) {
         isValid = false;
         failingValidatorIndex = index;
         break;
