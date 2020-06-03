@@ -49,6 +49,10 @@ class TabController extends Component {
 
   static propTypes = {
     /**
+     * The list of tab bar items
+     */
+    items: PropTypes.arrayOf(PropTypes.shape(TabBarItem.propTypes)),
+    /**
      * Initial selected index
      */
     selectedIndex: PropTypes.number,
