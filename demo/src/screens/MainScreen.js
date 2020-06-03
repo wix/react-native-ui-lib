@@ -243,8 +243,8 @@ class MainScreen extends Component {
         {showResults && this.renderSearchResults(filteredNavigationData)}
 
         {showCarousel && (
-          <TabController asCarousel>
-            <TabController.TabBar testID={'mainScreenTabBar'} items={_.map(data, section => ({label: section.title, testID: `section.${section.title}`}))}/>
+          <TabController asCarousel items={_.map(data, section => ({label: section.title, testID: `section.${section.title}`}))}>
+            <TabController.TabBar testID={'mainScreenTabBar'}/>
             {this.renderPages(data)}
           </TabController>
         )}
