@@ -10,7 +10,7 @@ import {Colors, Typography, Spacings} from '../../style';
 import Badge from '../../components/badge';
 import {TouchableOpacity} from '../../incubator';
 
-const {cond, eq, call, block, event, and, defined} = Reanimated;
+const {cond, eq, call, block, event, and} = Reanimated;
 
 const DEFAULT_LABEL_COLOR = Colors.black;
 const DEFAULT_SELECTED_LABEL_COLOR = Colors.blue30;
@@ -106,9 +106,9 @@ export default class TabBarItem extends PureComponent {
     onPress: _.noop
   };
 
-  state = {
-    itemWidth: undefined
-  };
+  state = {};
+  itemWidth = this.props.width;
+  itemRef = React.createRef();
 
   onStateChange = event([
     {
@@ -123,10 +123,10 @@ export default class TabBarItem extends PureComponent {
     }
   }) => {
     const {index, onLayout} = this.props;
-    const {itemWidth} = this.state;
-    if (!itemWidth) {
+    if (!this.itemWidth) {
+      this.itemWidth = width;
+      this.itemRef.current.setNativeProps({style: {width, paddingHorizontal: null, flex: null}});
       if (onLayout) {
-        this.setState({itemWidth: width});
         onLayout({width, x}, index);
       }
     }
@@ -138,8 +138,7 @@ export default class TabBarItem extends PureComponent {
   };
 
   getItemStyle() {
-    const {state, width} = this.props;
-    const {itemWidth} = this.state;
+    const {state} = this.props;
     const opacity = block([
       cond(eq(state, State.END), call([], this.onPress)),
       cond(eq(state, State.BEGAN), this.props.activeOpacity, 1)
@@ -149,44 +148,36 @@ export default class TabBarItem extends PureComponent {
       opacity
     };
 
-    if (width || itemWidth) {
-      style.flex = undefined;
-      style.width = width || itemWidth;
-      style.paddingHorizontal = undefined;
-    }
+    // if (this.itemWidth) {
+    //   style.flex = undefined;
+    //   style.width = this.itemWidth;
+    //   style.paddingHorizontal = undefined;
+    // }
 
     return style;
   }
 
   getLabelStyle() {
-    const {itemWidth} = this.state;
-    const {
-      index,
-      currentPage,
-      targetPage,
-      labelColor,
-      selectedLabelColor,
-      ignore
-    } = this.props;
+    const {index, currentPage, targetPage, labelColor, selectedLabelColor, ignore} = this.props;
 
     const labelStyle = this.props.labelStyle;
     const selectedLabelStyle = this.props.selectedLabelStyle;
     let fontWeight, letterSpacing, fontFamily;
 
     if (labelStyle.fontWeight || selectedLabelStyle.fontWeight) {
-      fontWeight = cond(and(eq(targetPage, index), defined(itemWidth)),
+      fontWeight = cond(and(eq(targetPage, index) /* , defined(itemWidth) */),
         selectedLabelStyle.fontWeight || 'normal',
         labelStyle.fontWeight || 'normal');
     }
 
     if (labelStyle.letterSpacing || selectedLabelStyle.letterSpacing) {
-      letterSpacing = cond(and(eq(targetPage, index), defined(itemWidth)),
+      letterSpacing = cond(and(eq(targetPage, index) /* , defined(itemWidth) */),
         selectedLabelStyle.letterSpacing || 0,
         labelStyle.letterSpacing || 0);
     }
 
     if (labelStyle.fontFamily || selectedLabelStyle.fontFamily) {
-      fontFamily = cond(and(eq(targetPage, index), defined(itemWidth)),
+      fontFamily = cond(and(eq(targetPage, index) /* , defined(itemWidth) */),
         selectedLabelStyle.fontFamily,
         labelStyle.fontFamily);
     }
@@ -207,7 +198,8 @@ export default class TabBarItem extends PureComponent {
         fontWeight,
         letterSpacing,
         color
-      }, _.isUndefined)
+      },
+      _.isUndefined)
     ];
   }
 
@@ -233,6 +225,7 @@ export default class TabBarItem extends PureComponent {
 
     return (
       <TouchableOpacity
+        ref={this.itemRef}
         pressState={state}
         style={[styles.tabItem, this.getItemStyle()]}
         onLayout={this.onLayout}

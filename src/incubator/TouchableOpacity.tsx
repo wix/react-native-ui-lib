@@ -139,11 +139,11 @@ class TouchableOpacity extends PureComponent<TouchableOpacityPropTypes & BaseCom
       <TapGestureHandler
         onHandlerStateChange={this.onStateChange}
         shouldCancelWhenOutside
-        ref={forwardedRef}
         enabled={!disabled}
       >
         <Reanimated.View
           {...others}
+          ref={forwardedRef}
           style={[
             borderRadius && {borderRadius},
             flexStyle,

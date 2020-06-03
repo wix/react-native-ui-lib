@@ -123,7 +123,7 @@ class TabBar extends PureComponent {
       LogService.warn('uilib: Please pass the "items" prop to TabController.TabBar instead of children');
     }
 
-    const itemsCount = this.itemsCount;
+    const itemsCount = this.getItemsCount();
 
     this.tabBar = React.createRef();
     this.tabBarScrollOffset = 0;
@@ -143,8 +143,11 @@ class TabBar extends PureComponent {
       itemsWidths: undefined
     };
 
-    this.registerTabItems();
-    if (props.items && props.optimize) {
+    if ((props.items || this.children) && !context.items) {
+      this.registerTabItems();
+    }
+
+    if (this.items && props.optimize) {
       this.measureItems();
     }
   }
@@ -157,19 +160,25 @@ class TabBar extends PureComponent {
     return _.filter(this.props.children, (child) => !!child);
   }
 
-  get itemsCount() {
-    const {items} = this.props;
-    if (items) {
-      return _.size(items);
-    } else {
-      return React.Children.count(this.children);
-    }
-  }
 
   get centerOffset() {
     const {centerSelected} = this.props;
     const guesstimateCenterValue = 60;
     return centerSelected ? this.containerWidth / 2 - guesstimateCenterValue : 0;
+  }
+
+  get items() {
+    const {items: contextItems} = this.context;
+    const {items: propsItems} = this.props;
+    return contextItems || propsItems;
+  }
+
+  getItemsCount() {
+    if (this.items) {
+      return _.size(this.items);
+    } else {
+      return React.Children.count(this.children);
+    }
   }
 
   getSnapBreakpoints() {
@@ -187,8 +196,10 @@ class TabBar extends PureComponent {
   }
 
   measureItems = async () => {
-    const {labelStyle} = this.props;
-    const measuring = _.map(this.props.items, (item) => {
+    const {items: contextItems} = this.context;
+    const {labelStyle, items: propsItems} = this.props;
+    const items = contextItems || propsItems;
+    const measuring = _.map(items, (item) => {
       return Typography.measureTextSize(item.label, labelStyle);
     });
     const results = await Promise.all(measuring);
@@ -265,8 +276,10 @@ class TabBar extends PureComponent {
     const {selectedIndex} = this.context;
     const itemsOffsets = _.map(this._itemsOffsets, (offset) => offset + INDICATOR_INSET);
     const itemsWidths = _.map(this._itemsWidths, (width) => width - INDICATOR_INSET * 2);
+    this.contentWidth = _.sum(this._itemsWidths);
+    const scrollEnabled = this.contentWidth > this.containerWidth;
 
-    this.setState({itemsWidths, itemsOffsets});
+    this.setState({itemsWidths, itemsOffsets, scrollEnabled});
     this.focusSelected([selectedIndex], false);
   };
 
@@ -281,7 +294,7 @@ class TabBar extends PureComponent {
     } else if (this.tabBarScrollOffset <= leftThreshold && fadeLeft) {
       stateUpdate.fadeLeft = false;
     }
-    
+
     const rightThreshold = (this.contentWidth - this.containerWidth);
     if (this.tabBarScrollOffset < rightThreshold && !fadeRight) {
       stateUpdate.fadeRight = true;
@@ -294,12 +307,6 @@ class TabBar extends PureComponent {
     }
   };
 
-  onContentSizeChange = (width) => {
-    if (width > this.containerWidth && !this.contentWidth) {
-      this.contentWidth = width;
-      this.setState({scrollEnabled: true});
-    }
-  };
 
   renderSelectedIndicator() {
     const {itemsWidths} = this.state;
@@ -313,7 +320,6 @@ class TabBar extends PureComponent {
     const {itemStates} = this.context;
     const {
       optimize,
-      items,
       labelColor,
       selectedLabelColor,
       labelStyle,
@@ -328,8 +334,8 @@ class TabBar extends PureComponent {
       return;
     }
 
-    if (items) {
-      return _.map(items, (item, index) => {
+    if (this.items) {
+      return _.map(this.items, (item, index) => {
         return (
           <TabBarItem
             labelColor={labelColor}
@@ -341,7 +347,7 @@ class TabBar extends PureComponent {
             selectedIconColor={selectedIconColor}
             activeBackgroundColor={activeBackgroundColor}
             key={item.label}
-            width={this._itemsWidths[index]}
+            // width={this._itemsWidths[index]}
             {...item}
             {...this.context}
             index={index}
@@ -409,7 +415,6 @@ class TabBar extends PureComponent {
           style={styles.tabBarScroll}
           contentContainerStyle={{minWidth: this.containerWidth}}
           scrollEnabled={scrollEnabled}
-          onContentSizeChange={this.onContentSizeChange}
           onScroll={this.onScroll}
           scrollEventThrottle={16}
           testID={testID}

@@ -109,10 +109,11 @@ class TabControllerScreen extends Component {
           key={key}
           asCarousel={asCarousel}
           selectedIndex={selectedIndex}
-          onChangeIndex={this.onChangeIndex}
+          onChangeIndex={this.onChangeIndex}  
+          items={items}
         >
           <TabController.TabBar
-            items={items}
+            // items={items}
             // key={key}
             // uppercase
             // indicatorStyle={{backgroundColor: 'green', height: 3}}
