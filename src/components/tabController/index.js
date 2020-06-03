@@ -74,17 +74,28 @@ class TabController extends Component {
   constructor(props) {
     super(props);
 
+    let itemStates = [];
+    let ignoredItems = [];
+    if (props.items) {
+      const itemsCount = _.chain(props.items).filter(item => !item.ignore).size().value();
+      itemStates = _.times(itemsCount, () => new Value(State.UNDETERMINED));
+      ignoredItems = _.filter(props.items, item => item.ignore);
+    }
+
     this.state = {
       selectedIndex: this.props.selectedIndex,
       asCarousel: this.props.asCarousel,
-      itemStates: [],
       pageWidth: this.pageWidth,
+      // items
+      items: props.items,
+      itemStates,
+      ignoredItems,
       // animated values
       targetPage: new Value(this.props.selectedIndex),
       currentPage: new Value(this.props.selectedIndex),
       carouselOffset: new Value(this.props.selectedIndex * Math.round(this.pageWidth)),
       containerWidth: new Value(this.pageWidth),
-      // // callbacks
+      // callbacks
       registerTabItems: this.registerTabItems,
       onChangeIndex: this.props.onChangeIndex
     };
