@@ -20,6 +20,7 @@ class DrawerScreen extends Component {
     this.state = {
       hideItem: false,
       showRightItems: true,
+      fullSwipeRight: true,
       showLeftItem: true,
       fullSwipeLeft: true
     };
@@ -33,8 +34,28 @@ class DrawerScreen extends Component {
     }
   }
 
+  onFullSwipeRight = () => {
+
+    setTimeout(() => {
+      LayoutAnimation.configureNext({
+        update: {
+          type: LayoutAnimation.Types.easeInEaseOut,
+          property: LayoutAnimation.Properties.scaleY
+        },
+        delete: {
+          type: LayoutAnimation.Types.easeInEaseOut,
+          property: LayoutAnimation.Properties.scaleY,
+          duration: 2000
+        },
+        duration: 120
+      });
+      this.setState({hideItem: true});
+    }, 200);
+  };
+
+
   onWillFullSwipeLeft = () => {
-    
+
     // TODO: consider including this functionality as part of the drawer component
     setTimeout(() => {
       LayoutAnimation.configureNext({
@@ -53,6 +74,78 @@ class DrawerScreen extends Component {
     }, 200);
   };
 
+  showItem = () => {
+    this.setState({hideItem: false});
+  };
+
+  openLeftDrawer = () => {
+    if (this.ref) {
+      this.ref.openLeft();
+    }
+  };
+  openLeftDrawerFull = () => {
+    if (this.ref) {
+      this.ref.openLeftFull();
+    }
+  };
+  openRightDrawer = () => {
+    if (this.ref) {
+      this.ref.openRight();
+    }
+  };
+  openRightDrawerFull = () => {
+    if (this.ref) {
+      this.ref.openRightFull();
+    }
+  };
+  closeDrawer = () => {
+    if (this.ref) {
+      this.ref.closeDrawer();
+    }
+  };
+
+  renderActions() {
+    return (
+      <View center>
+        <Text style={{fontSize: 20}}>Actions</Text>
+        <View row>
+          <Button
+            onPress={this.openLeftDrawer}
+            label="Open left"
+            style={{margin: 3}}
+            size={'xSmall'}
+          />
+          <Button
+            onPress={this.closeDrawer}
+            label="Close"
+            style={{margin: 3}}
+            size={'xSmall'}
+          />
+          <Button
+            onPress={this.openRightDrawer}
+            label="Open right"
+            style={{margin: 3}}
+            size={'xSmall'}
+          />
+        </View>
+        <View row>
+          <Button
+            onPress={this.openLeftDrawerFull}
+            label="Open left full"
+            style={{margin: 3}}
+            size={'xSmall'}
+          />
+          <Button
+            onPress={this.openRightDrawerFull}
+            label="Open right full"
+            style={{margin: 3}}
+            size={'xSmall'}
+          />
+        </View>
+      </View>
+    );
+  }
+
   renderListItem() {
     return (
       <View bg-grey80 paddingH-20 paddingV-10 row centerV style={{borderBottomWidth: 1, borderColor: Colors.grey60}}>
@@ -70,6 +163,7 @@ class DrawerScreen extends Component {
   render() {
     const {
       showRightItems,
+      fullSwipeRight,
       showLeftItem,
       fullSwipeLeft,
       itemsTintColor,
@@ -82,6 +176,9 @@ class DrawerScreen extends Component {
       itemsTintColor,
       itemsIconSize,
       bounciness,
+      ref: (component) => (this.ref = component),
+      fullSwipeRight,
+      onFullSwipeRight: this.onFullSwipeRight,
       fullSwipeLeft,
       onWillFullSwipeLeft: this.onWillFullSwipeLeft
     };
@@ -101,14 +198,28 @@ class DrawerScreen extends Component {
           </Text>
         </View>
         {!hideItem && (
-          <Drawer key={Date.now()} {...drawerProps}>
-            {this.renderListItem()}
-          </Drawer>
+          <>
+            <Drawer key={Date.now()} {...drawerProps}>
+              {this.renderListItem()}
+            </Drawer>
+            {this.renderActions()}
+          </>
+        )}
+        {hideItem && (
+          <View center>
+            <Button
+              round
+              onPress={this.showItem}
+              backgroundColor="#eeeeee"
+              iconSource={require('../../assets/icons/plus.png')}
+            />
+          </View>
         )}
 
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View padding-20>
             {renderBooleanOption.call(this, 'rightItems', 'showRightItems')}
+            {showRightItems && renderBooleanOption.call(this, 'fullSwipeRight', 'fullSwipeRight')}
             {renderBooleanOption.call(this, 'leftItem', 'showLeftItem')}
             {showLeftItem && renderBooleanOption.call(this, 'fullSwipeLeft', 'fullSwipeLeft')}
             {renderColorOption.call(this, 'icon+text color', 'itemsTintColor')}
