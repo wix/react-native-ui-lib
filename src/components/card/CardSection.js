@@ -38,8 +38,8 @@ class CardSection extends BaseComponent {
     return (
       <View style={[{...borderStyle}, style]} {...others}>
         {leadingIcon && <Image {...leadingIcon}/>}
-        {_.map(content, ({text, props}, index) => {
-          return <Text key={index} {...props}>{text}</Text>;
+        {_.map(content, ({text, props} = {}, index) => {
+          return !_.isUndefined(text) && <Text key={index} {...props}>{text}</Text>;
         })}
         {trailingIcon && <Image {...trailingIcon}/>}
       </View>
