@@ -9,6 +9,8 @@ import {
 import {BlurViewProperties} from '@react-native-community/blur';
 import {BaseComponent, PureBaseComponent} from '../commons';
 import {ColorValue} from '../style/colors';
+import {TextPropTypes} from '../../src/components/text';
+import {ImageProps} from './Image';
 
 type CardImagePositionOption = 'top' | 'bottom' | 'left' | 'right';
 
@@ -20,6 +22,17 @@ export interface CardImageProps {
   borderRadius?: number;
   style?: StyleProp<ViewStyle>;
   overlayType?: string;
+}
+
+export interface CardSectionContentProps {
+  text: string;
+  props?: TextPropTypes;
+}
+
+export interface CardSectionProps {
+  content?: CardSectionContentProps;
+  leadingIcon?: ImageProps;
+  trailingIcon?: ImageProps;
 }
 
 export interface CardSelectionOptions {
