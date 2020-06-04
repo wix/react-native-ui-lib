@@ -79,6 +79,19 @@ function getLocalImportSpecifier(node, source, defaultImportName) {
   return localImportSpecifier;
 }
 
+function getSpecifierIndex(node, name) {
+  let matchIndex;
+  if (node && node.specifiers) {
+    _.forEach(node.specifiers, (s, index) => {
+      const x = _.get(s, 'imported.name');
+      if (x === name) {
+        matchIndex = index;
+      }
+    });
+  }
+  return matchIndex;
+}
+
 module.exports = {
   isPropFont,
   findAndReportHardCodedValues,
@@ -87,4 +100,5 @@ module.exports = {
   isLiteral,
   findValueNodeOfIdentifier,
   getLocalImportSpecifier,
+  getSpecifierIndex,
 };

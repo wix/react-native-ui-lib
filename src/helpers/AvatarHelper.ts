@@ -1,8 +1,9 @@
 import _ from 'lodash';
+// @ts-ignore
 import URL from 'url-parse';
 import Colors from '../style/colors';
 
-function hashStringToNumber(str) {
+function hashStringToNumber(str: string) {
   let hash = 5381;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
@@ -16,7 +17,7 @@ export function getAvatarColors() {
     Colors.orange20, Colors.red20, Colors.purple20, Colors.violet20];
 }
 
-export function getColorById(id, avatarColors = getAvatarColors()) {
+export function getColorById(id: string, avatarColors = getAvatarColors()) {
   if (!id) {
     return avatarColors[0];
   }
@@ -26,7 +27,7 @@ export function getColorById(id, avatarColors = getAvatarColors()) {
   return avatarColors[colorIndex];
 }
 
-export function getInitials(name) {
+export function getInitials(name: string) {
   let initials = '';
   if (name && _.isString(name)) {
     const nameSplitted = _.chain(name)
@@ -42,16 +43,16 @@ export function getInitials(name) {
   return _.toUpper(initials);
 }
 
-export function isGravatarUrl(url) {
+export function isGravatarUrl(url: string) {
   const {hostname, pathname} = new URL(url);
   return _.split(hostname, '.').includes('gravatar') && pathname.startsWith('/avatar/');
 }
 
-export function isBlankGravatarUrl(url) {
+export function isBlankGravatarUrl(url: string) {
   return isGravatarUrl(url) && _.endsWith(url, '?d=blank');
 }
 
-export function patchGravatarUrl(gravatarUrl) {
+export function patchGravatarUrl(gravatarUrl: string) {
   const url = new URL(gravatarUrl, true);
   const {query} = url;
   query.d = '404';

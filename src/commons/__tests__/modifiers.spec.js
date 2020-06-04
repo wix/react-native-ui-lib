@@ -356,8 +356,40 @@ describe('Modifiers', () => {
     });
     
     it('should prioritize forced theme props over user props', () => {
-      ThemeManager.setComponentForcedTheme('SampleComponent', props => ({foo: 'forced'}));
-      expect(uut.getThemeProps.call(SampleComponent, {foo: 'user-value', other: 'other'})).toEqual({foo: 'forced', other: 'other'});
+      ThemeManager.setComponentForcedTheme('SampleComponent', (props) => ({foo: 'forced'}));
+      expect(uut.getThemeProps.call(SampleComponent, {foo: 'user-value', other: 'other'})).toEqual({
+        foo: 'forced',
+        other: 'other'
+      });
+    });
+  });
+
+  describe('generateModifiersStyle', () => {
+    it('should generate modifiers object out of props', () => {
+      const modifiers = uut.generateModifiersStyle(undefined, {
+        'bg-red40': true,
+        'padding-20': true,
+        'margin-20': true,
+        flex: true,
+        bottom: true,
+        br100: true
+      });
+      expect(modifiers.backgroundColor).toBe(Colors.red40);
+      expect(modifiers.paddings).toEqual({padding: 20});
+      expect(modifiers.margins).toEqual({margin: 20});
+      expect(modifiers.flexStyle).toEqual({flex: 1});
+      expect(modifiers.alignments).toEqual({justifyContent: 'flex-end'});
+      expect(modifiers.borderRadius).toEqual(BorderRadiuses.br100);
+    });
+
+    it('should not include empty modifiers values', () => {
+      const modifiers = uut.generateModifiersStyle(undefined, {'bg-red40': true});
+      expect(modifiers.backgroundColor).toBe(Colors.red40);
+      expect(modifiers.paddings).toBeUndefined();
+      expect(modifiers.margins).toBeUndefined();
+      expect(modifiers.flexStyle).toBeUndefined();
+      expect(modifiers.alignments).toBeUndefined();
+      expect(modifiers.borderRadius).toBeUndefined();
     });
   });
 });

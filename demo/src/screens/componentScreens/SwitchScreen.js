@@ -15,7 +15,7 @@ class SwitchScreen extends Component {
     return (
       <View flex bottom padding-20>
         <View flex center>
-          <Switch value={this.state.value1} onValueChange={value1 => this.setState({value1})} style={{marginBottom: 20}}/>
+          <Switch testID="switch" value={this.state.value1} onValueChange={value1 => this.setState({value1})} style={{marginBottom: 20}}/>
           <Switch
             onColor={Colors.purple30}
             offColor={Colors.purple60}
