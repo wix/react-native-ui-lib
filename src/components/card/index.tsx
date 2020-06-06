@@ -1,17 +1,22 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {StyleSheet, ViewPropTypes, Animated} from 'react-native';
+import React, {PureComponent} from 'react';
+import {StyleSheet, Animated, ViewStyle} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
-import {PureBaseComponent} from '../../commons';
-import View from '../view';
-import TouchableOpacity from '../touchableOpacity';
+// import {PureBaseComponent} from '../../commons';
+import {
+  asBaseComponent,
+  forwardRef,
+  BaseComponentInjectedProps,
+  ForwardRefInjectedProps,
+} from '../../commons/new';
+import View, {ViewPropTypes} from '../view';
+import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Image from '../image';
 import CardImage from './CardImage';
+// @ts-ignore
 import Assets from '../../assets';
-
 
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 const DEFAULT_SELECTION_PROPS = {
@@ -20,7 +25,73 @@ const DEFAULT_SELECTION_PROPS = {
   indicatorSize: 20,
   icon: Assets.icons.checkSmall,
   iconColor: Colors.white,
-  hideIndicator: false
+  hideIndicator: false,
+};
+
+export type CardPropTypes = ViewPropTypes & TouchableOpacityProps & {
+  /**
+   * card custom width
+   */
+  width?: number | string;
+  /**
+   * card custom height
+   */
+  height?: number | string;
+  /**
+   * should inner card flow direction be horizontal
+   */
+  row?: boolean;
+  /**
+   * card border radius (will be passed to inner Card.Image component)
+   */
+  borderRadius?: number;
+  /**
+   * action for when pressing the card
+   */
+  onPress?: () => void;
+  /**
+   * whether the card should have shadow or not
+   */
+  enableShadow?: boolean;
+  /**
+   * elevation value (Android only)
+   */
+  elevation?: number;
+  /**
+   * enable blur effect (iOS only)
+   */
+  enableBlur?: boolean;
+  /**
+   * blur option for blur effect according to @react-native-community/blur lib (make sure enableBlur is on)
+   */
+  blurOptions?: object;
+  /**
+   * Additional styles for the top container
+   */
+  containerStyle?: ViewStyle;
+  /**
+   * Adds visual indication that the card is selected
+   */
+  selected?: boolean;
+  /**
+   * Custom options for styling the selection indication
+   */
+  selectionOptions?: {
+    icon?: number;
+    iconColor?: string;
+    color?: string;
+    borderWidth?: number;
+    indicatorSize?: number;
+    hideIndicator?: boolean;
+  };
+};
+
+type PropTypes = BaseComponentInjectedProps &
+  ForwardRefInjectedProps &
+  CardPropTypes;
+
+type State = {
+  animatedSelected: Animated.Value;
 };
 
 /**
@@ -32,76 +103,24 @@ const DEFAULT_SELECTION_PROPS = {
  * @gif: https://media.giphy.com/media/l0HU9SKWmv0VTOYMM/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
  */
-class Card extends PureBaseComponent {
+class Card extends PureComponent<PropTypes, State> {
   static displayName = 'Card';
-
-  static propTypes = {
-    /**
-     * card custom width
-     */
-    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    /**
-     * card custom height
-     */
-    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    /**
-     * should inner card flow direction be horizontal
-     */
-    row: PropTypes.bool,
-    /**
-     * card border radius (will be passed to inner Card.Image component)
-     */
-    borderRadius: PropTypes.number,
-    /**
-     * action for when pressing the card
-     */
-    onPress: PropTypes.func,
-    /**
-     * whether the card should have shadow or not
-     */
-    enableShadow: PropTypes.bool,
-    /**
-     * elevation value (Android only)
-     */
-    elevation: PropTypes.number,
-    /**
-     * enable blur effect (iOS only)
-     */
-    enableBlur: PropTypes.bool,
-    /**
-     * blur option for blur effect according to @react-native-community/blur lib (make sure enableBlur is on)
-     */
-    blurOptions: PropTypes.object,
-    /**
-     * Additional styles for the top container
-     */
-    containerStyle: ViewPropTypes.style,
-    /**
-     * Adds visual indication that the card is selected
-     */
-    selected: PropTypes.bool,
-    /**
-     * Custom options for styling the selection indication
-     */
-    selectionOptions: PropTypes.shape({
-      icon: PropTypes.number,
-      iconColor: PropTypes.string,
-      color: PropTypes.string,
-      borderWidth: PropTypes.number,
-      indicatorSize: PropTypes.number,
-      hideIndicator: PropTypes.bool
-    })
-  };
-
   static defaultProps = {
-    enableShadow: true
+    enableShadow: true,
   };
+  static Image: typeof CardImage;
 
-  state = {
-    animatedSelected: new Animated.Value(Number(this.props.selected))
-  };
+  styles: any;
 
-  componentDidUpdate(prevProps) {
+  constructor(props: PropTypes) {
+    super(props);
+    this.state = {
+      animatedSelected: new Animated.Value(Number(this.props.selected)),
+    };
+    this.styles = createStyles(this.props);
+  }
+
+  componentDidUpdate(prevProps: PropTypes) {
     if (prevProps.selected !== this.props.selected) {
       this.animateSelection();
     }
@@ -113,25 +132,21 @@ class Card extends PureBaseComponent {
     Animated.timing(animatedSelected, {
       toValue: Number(selected),
       duration: 120,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start();
   }
 
-  generateStyles() {
-    this.styles = createStyles(this.getThemeProps());
-  }
-
   getBlurOptions() {
-    const {blurOptions} = this.getThemeProps();
+    const {blurOptions} = this.props;
     return {
       blurType: 'light',
       blurAmount: 5,
-      ...blurOptions
+      ...blurOptions,
     };
   }
 
   // todo: add unit test
-  calcImagePosition(childIndex) {
+  calcImagePosition(childIndex: number) {
     const {row, children} = this.props;
     const childrenCount = React.Children.count(children);
     const position = [];
@@ -148,24 +163,24 @@ class Card extends PureBaseComponent {
   }
 
   get elevationStyle() {
-    const {elevation, enableShadow} = this.getThemeProps();
-    
+    const {elevation, enableShadow} = this.props;
+
     if (enableShadow) {
       return {elevation: elevation || 2};
     }
   }
 
   get shadowStyle() {
-    const {enableShadow} = this.getThemeProps();
-    
+    const {enableShadow} = this.props;
+
     if (enableShadow) {
       return this.styles.containerShadow;
     }
   }
 
   get blurBgStyle() {
-    const {enableBlur} = this.getThemeProps();
-    
+    const {enableBlur} = this.props;
+
     if (Constants.isIOS && enableBlur) {
       return {backgroundColor: Colors.rgba(Colors.white, 0.85)};
     } else {
@@ -174,15 +189,19 @@ class Card extends PureBaseComponent {
   }
 
   get borderRadius() {
-    const {borderRadius} = this.getThemeProps();
-    
+    const {borderRadius} = this.props;
+
     return borderRadius === undefined ? DEFAULT_BORDER_RADIUS : borderRadius;
   }
 
   renderSelection() {
-    const {selectionOptions = {}, selected} = this.getThemeProps();
+    const {selectionOptions = {}, selected} = this.props;
     const {animatedSelected} = this.state;
-    const selectionColor = _.get(selectionOptions, 'color', DEFAULT_SELECTION_PROPS.color);
+    const selectionColor = _.get(
+      selectionOptions,
+      'color',
+      DEFAULT_SELECTION_PROPS.color
+    );
 
     if (_.isUndefined(selected)) {
       return null;
@@ -194,13 +213,27 @@ class Card extends PureBaseComponent {
           this.styles.selectedBorder,
           {borderColor: selectionColor},
           {borderRadius: this.borderRadius},
-          {opacity: animatedSelected}
+          {opacity: animatedSelected},
         ]}
         pointerEvents="none"
       >
-        {!selectionOptions.hideIndicator && <View style={[this.styles.selectedIndicator, {backgroundColor: selectionColor}]}>
-          <Image style={this.styles.selectedIcon} source={_.get(selectionOptions, 'icon', DEFAULT_SELECTION_PROPS.icon)}/>
-        </View>}
+        {!selectionOptions.hideIndicator && (
+          <View
+            style={[
+              this.styles.selectedIndicator,
+              {backgroundColor: selectionColor},
+            ]}
+          >
+            <Image
+              style={this.styles.selectedIcon}
+              source={_.get(
+                selectionOptions,
+                'icon',
+                DEFAULT_SELECTION_PROPS.icon
+              )}
+            />
+          </View>
+        )}
       </Animated.View>
     );
   }
@@ -209,9 +242,10 @@ class Card extends PureBaseComponent {
     const children = React.Children.map(this.props.children, (child, index) => {
       if (_.get(child, 'type.displayName') === CardImage.displayName) {
         const position = this.calcImagePosition(index);
+        // @ts-ignore
         return React.cloneElement(child, {
           position,
-          borderRadius: this.borderRadius
+          borderRadius: this.borderRadius,
         });
       }
       return child;
@@ -220,9 +254,18 @@ class Card extends PureBaseComponent {
   }
 
   render() {
-    const {onPress, onLongPress, style, selected, containerStyle, enableBlur, ...others} = this.getThemeProps();
+    const {
+      onPress,
+      onLongPress,
+      style,
+      selected,
+      containerStyle,
+      enableBlur,
+      forwardedRef,
+      ...others
+    } = this.props;
     const blurOptions = this.getBlurOptions();
-    const Container = (onPress || onLongPress) ? TouchableOpacity : View;
+    const Container = onPress || onLongPress ? TouchableOpacity : View;
     const brRadius = this.borderRadius;
 
     return (
@@ -234,7 +277,7 @@ class Card extends PureBaseComponent {
           this.shadowStyle,
           this.blurBgStyle,
           containerStyle,
-          style
+          style,
         ]}
         onPress={onPress}
         onLongPress={onLongPress}
@@ -242,10 +285,14 @@ class Card extends PureBaseComponent {
         activeOpacity={0.6}
         accessibilityState={{selected}}
         {...others}
-        ref={this.setRef}
+        ref={forwardedRef}
       >
         {Constants.isIOS && enableBlur && (
-          <BlurView style={[this.styles.blurView, {borderRadius: brRadius}]} {...blurOptions}/>
+          // @ts-ignore
+          <BlurView
+            style={[this.styles.blurView, {borderRadius: brRadius}]}
+            {...blurOptions}
+          />
         )}
 
         {this.renderChildren()}
@@ -255,33 +302,42 @@ class Card extends PureBaseComponent {
   }
 }
 
-function createStyles({width, height, borderRadius, selectionOptions}) {
-  const selectionOptionsWithDefaults = {...DEFAULT_SELECTION_PROPS, ...selectionOptions};
-  const brRadius = borderRadius === undefined ? DEFAULT_BORDER_RADIUS : borderRadius;
+function createStyles({
+  width,
+  height,
+  borderRadius,
+  selectionOptions,
+}: CardPropTypes) {
+  const selectionOptionsWithDefaults = {
+    ...DEFAULT_SELECTION_PROPS,
+    ...selectionOptions,
+  };
+  const brRadius =
+    borderRadius === undefined ? DEFAULT_BORDER_RADIUS : borderRadius;
 
   return StyleSheet.create({
     container: {
       width,
       height,
       overflow: 'visible',
-      borderRadius: brRadius
+      borderRadius: brRadius,
     },
     containerShadow: {
       // sh30 bottom
       shadowColor: Colors.dark40,
       shadowOpacity: 0.25,
       shadowRadius: 12,
-      shadowOffset: {height: 5, width: 0}
+      shadowOffset: {height: 5, width: 0},
     },
     blurView: {
       ...StyleSheet.absoluteFillObject,
-      borderRadius: brRadius
+      borderRadius: brRadius,
     },
     selectedBorder: {
       ...StyleSheet.absoluteFillObject,
       borderRadius: DEFAULT_BORDER_RADIUS,
       borderWidth: selectionOptionsWithDefaults.borderWidth,
-      borderColor: selectionOptionsWithDefaults.color
+      borderColor: selectionOptionsWithDefaults.color,
     },
     selectedIndicator: {
       borderRadius: BorderRadiuses.br100,
@@ -292,14 +348,14 @@ function createStyles({width, height, borderRadius, selectionOptions}) {
       height: selectionOptionsWithDefaults.indicatorSize,
       backgroundColor: selectionOptionsWithDefaults.color,
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
     selectedIcon: {
-      tintColor: selectionOptionsWithDefaults.iconColor
-    }
+      tintColor: selectionOptionsWithDefaults.iconColor,
+    },
   });
 }
 
 Card.Image = CardImage;
 
-export default Card;
+export default asBaseComponent<CardPropTypes>(forwardRef(Card));

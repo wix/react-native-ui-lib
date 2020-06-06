@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { ImageProps as RNImageProps, ImageSourcePropType } from 'react-native';
 import { ForwardRefInjectedProps } from '../../commons/new';
 import { OverlayTypeType } from '../overlay';
-declare type ImageProps = RNImageProps & {
+export declare type ImageProps = RNImageProps & {
     /**
      * custom source transform handler for manipulating the image source (great for size control)
      */
