@@ -100,6 +100,8 @@ class Card extends PureBaseComponent {
     enableShadow: true
   };
 
+  nullChildrenIndices = [];
+
   state = {
     animatedSelected: new Animated.Value(Number(this.props.selected))
   };
@@ -139,11 +141,13 @@ class Card extends PureBaseComponent {
     const childrenCount = React.Children.count(children);
     const position = [];
 
-    if (childIndex === 0) {
+    const numberOfNullChildren = this.nullChildrenIndices.length;
+    const childLocation = childIndex - numberOfNullChildren;
+    if (childLocation === 0) {
       position.push(row ? 'left' : 'top');
     }
 
-    if (childIndex === childrenCount - 1) {
+    if (childLocation === childrenCount - numberOfNullChildren - 1) {
       position.push(row ? 'right' : 'bottom');
     }
 
@@ -210,6 +214,11 @@ class Card extends PureBaseComponent {
 
   renderChildren = () => {
     const children = React.Children.map(this.props.children, (child, index) => {
+      if (child === null && !this.nullChildrenIndices.includes(index)) {
+        this.nullChildrenIndices.push(index);
+        return null;
+      }
+
       const position = this.calcChildPosition(index);
       const borderStyle = CardPresenter.generateBorderRadiusStyle({position, borderRadius: this.borderRadius});
       return (
