@@ -53,14 +53,14 @@ class CardImage extends BaseComponent {
   }
 
   render() {
-    const {imageSource, style, testID, overlayType, context: {borderStyle}} = this.props;
+    const {imageSource, style, testID, overlayType, context: {borderStyle}, imageStyle} = this.props;
     if (imageSource) {
       return (
         <View style={[this.styles.container, borderStyle, style]}>
           <Image
             testID={testID}
             source={imageSource}
-            style={[this.styles.image/* , borderStyle */]}
+            style={[this.styles.image, imageStyle]}
             overlayType={overlayType}
           />
         </View>
