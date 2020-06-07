@@ -1,16 +1,41 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView, LayoutAnimation} from 'react-native';
-import {Colors, Typography, View, Drawer, Text, Button, ListItem, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
+import {
+  Assets,
+  Colors,
+  Typography,
+  View,
+  Drawer,
+  Text,
+  Button,
+  Avatar,
+} from 'react-native-ui-lib'; //eslint-disable-line
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import conversations from '../../data/conversations';
 
-import {renderBooleanOption, renderSliderOption, renderColorOption} from '../ExampleScreenPresenter';
+import {
+  renderBooleanOption,
+  renderSliderOption,
+  renderColorOption,
+} from '../ExampleScreenPresenter';
 
 const ITEMS = {
-  read: {icon: require('../../assets/icons/mail.png'), text: 'Read', background: Colors.green30},
-  archive: {icon: require('../../assets/icons/archive.png'), text: 'Archive', background: Colors.blue30},
-  delete: {icon: require('../../assets/icons/delete.png'), text: 'Delete', background: Colors.red30}
+  read: {
+    icon: require('../../assets/icons/mail.png'),
+    text: 'Read',
+    background: Colors.green30,
+  },
+  archive: {
+    icon: require('../../assets/icons/archive.png'),
+    text: 'Archive',
+    background: Colors.blue30,
+  },
+  delete: {
+    icon: require('../../assets/icons/delete.png'),
+    text: 'Delete',
+    background: Colors.red30,
+  },
 };
 
 class DrawerScreen extends Component {
@@ -22,53 +47,30 @@ class DrawerScreen extends Component {
       showRightItems: true,
       fullSwipeRight: true,
       showLeftItem: true,
-      fullSwipeLeft: true
+      fullSwipeLeft: true,
     };
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.hideItem && prevState.hideItem) {
-      this.setState({
-        hideItem: false
-      });
+      this.showItem();
     }
   }
 
-  onFullSwipeRight = () => {
-
-    setTimeout(() => {
-      LayoutAnimation.configureNext({
-        update: {
-          type: LayoutAnimation.Types.easeInEaseOut,
-          property: LayoutAnimation.Properties.scaleY
-        },
-        delete: {
-          type: LayoutAnimation.Types.easeInEaseOut,
-          property: LayoutAnimation.Properties.scaleY,
-          duration: 2000
-        },
-        duration: 120
-      });
-      this.setState({hideItem: true});
-    }, 200);
-  };
-
-
-  onWillFullSwipeLeft = () => {
-
+  onFullSwipe = () => {
     // TODO: consider including this functionality as part of the drawer component
     setTimeout(() => {
       LayoutAnimation.configureNext({
         update: {
           type: LayoutAnimation.Types.easeInEaseOut,
-          property: LayoutAnimation.Properties.scaleY
+          property: LayoutAnimation.Properties.scaleY,
         },
         delete: {
           type: LayoutAnimation.Types.easeInEaseOut,
           property: LayoutAnimation.Properties.scaleY,
-          duration: 2000
+          duration: 2000,
         },
-        duration: 120
+        duration: 120,
       });
       this.setState({hideItem: true});
     }, 200);
@@ -106,8 +108,8 @@ class DrawerScreen extends Component {
 
   renderActions() {
     return (
-      <View center>
-        <Text style={{fontSize: 20}}>Actions</Text>
+      <View center marginB-s4>
+        <Text text70>Actions</Text>
         <View row>
           <Button
             onPress={this.openLeftDrawer}
@@ -148,8 +150,15 @@ class DrawerScreen extends Component {
 
   renderListItem() {
     return (
-      <View bg-grey80 paddingH-20 paddingV-10 row centerV style={{borderBottomWidth: 1, borderColor: Colors.grey60}}>
-        <Avatar source={{uri: conversations[0].thumbnail}}/>
+      <View
+        bg-grey80
+        paddingH-20
+        paddingV-10
+        row
+        centerV
+        style={{borderBottomWidth: 1, borderColor: Colors.grey60}}
+      >
+        <Avatar source={{uri: conversations[0].thumbnail}} />
         <View marginL-20>
           <Text text70R>{conversations[0].name}</Text>
           <Text text80 marginT-2>
@@ -169,7 +178,7 @@ class DrawerScreen extends Component {
       itemsTintColor,
       bounciness,
       itemsIconSize,
-      hideItem
+      hideItem,
     } = this.state;
 
     const drawerProps = {
@@ -178,9 +187,9 @@ class DrawerScreen extends Component {
       bounciness,
       ref: (component) => (this.ref = component),
       fullSwipeRight,
-      onFullSwipeRight: this.onFullSwipeRight,
+      onFullSwipeRight: this.onFullSwipe,
       fullSwipeLeft,
-      onWillFullSwipeLeft: this.onWillFullSwipeLeft
+      onWillFullSwipeLeft: this.onFullSwipe,
     };
     if (showRightItems) {
       drawerProps.rightItems = [ITEMS.read, ITEMS.archive];
@@ -192,39 +201,55 @@ class DrawerScreen extends Component {
 
     return (
       <View flex>
-        <View padding-20 paddingB-0>
-          <Text text40 marginB-20>
-            Drawer
-          </Text>
+        <View row padding-20 paddingB-0 marginB-20 centerV>
+          <Text text40>Drawer</Text>
+          <Button
+            link
+            grey10
+            marginL-s1
+            marginT-2
+            iconSource={Assets.icons.demo.refresh}
+            onPress={this.showItem}
+            disabled={!hideItem}
+          />
         </View>
         {!hideItem && (
           <>
             <Drawer key={Date.now()} {...drawerProps}>
               {this.renderListItem()}
             </Drawer>
-            {this.renderActions()}
           </>
         )}
-        {hideItem && (
-          <View center>
-            <Button
-              round
-              onPress={this.showItem}
-              backgroundColor="#eeeeee"
-              iconSource={require('../../assets/icons/plus.png')}
-            />
-          </View>
-        )}
 
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+        >
           <View padding-20>
+            {this.renderActions()}
             {renderBooleanOption.call(this, 'rightItems', 'showRightItems')}
-            {showRightItems && renderBooleanOption.call(this, 'fullSwipeRight', 'fullSwipeRight')}
+            {showRightItems &&
+              renderBooleanOption.call(
+                this,
+                'fullSwipeRight',
+                'fullSwipeRight'
+              )}
             {renderBooleanOption.call(this, 'leftItem', 'showLeftItem')}
-            {showLeftItem && renderBooleanOption.call(this, 'fullSwipeLeft', 'fullSwipeLeft')}
+            {showLeftItem &&
+              renderBooleanOption.call(this, 'fullSwipeLeft', 'fullSwipeLeft')}
             {renderColorOption.call(this, 'icon+text color', 'itemsTintColor')}
-            {renderSliderOption.call(this, 'bounciness', 'bounciness', {min: 5, max: 15, step: 1, initial: 5})}
-            {renderSliderOption.call(this, 'iconSize', 'itemsIconSize', {min: 15, max: 25, step: 1, initial: 20})}
+            {renderSliderOption.call(this, 'bounciness', 'bounciness', {
+              min: 5,
+              max: 15,
+              step: 1,
+              initial: 5,
+            })}
+            {renderSliderOption.call(this, 'iconSize', 'itemsIconSize', {
+              min: 15,
+              max: 25,
+              step: 1,
+              initial: 20,
+            })}
           </View>
         </ScrollView>
       </View>
@@ -234,43 +259,43 @@ class DrawerScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.white
+    backgroundColor: Colors.white,
   },
   contentContainer: {
-    paddingBottom: 50
+    paddingBottom: 50,
   },
   drawer: {
-    marginTop: 20
+    marginTop: 20,
   },
   listContent: {
-    backgroundColor: Colors.dark80
+    backgroundColor: Colors.dark80,
   },
   rowContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.dark80
+    backgroundColor: Colors.dark80,
   },
   rowIcon: {
     width: 38,
     height: 38,
     borderRadius: 19,
     backgroundColor: Colors.violet40,
-    margin: 20
+    margin: 20,
   },
   rowTitle: {
     ...Typography.text70,
     fontWeight: 'bold',
-    color: Colors.dark20
+    color: Colors.dark20,
   },
   rowSubtitle: {
     ...Typography.text80,
-    color: Colors.dark30
+    color: Colors.dark30,
   },
   rowButtonContainer: {
     flex: 1,
     alignItems: 'flex-end',
-    padding: 10
-  }
+    padding: 10,
+  },
 });
 
 export default gestureHandlerRootHOC(DrawerScreen);

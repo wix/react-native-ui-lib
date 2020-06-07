@@ -4,6 +4,11 @@ import * as Animatable from 'react-native-animatable';
 import {AnimatableManager, ThemeManager, Constants, Assets, Colors, Typography} from 'react-native-ui-lib'; // eslint-disable-line
 import {registerScreens} from './screens';
 
+
+Assets.loadAssetsGroup('icons.demo', {
+  refresh: require('./assets/icons/refresh.png')
+});
+
 /** Examples - uncomment when needed */
 // Typography.loadTypographies({
 //   h1: {fontSize: 58, fontWeight: '300', lineHeight: 80},
@@ -36,9 +41,6 @@ import {registerScreens} from './screens';
 //   }
 // });
 
-// Assets.loadAssetsGroup('icons.general', {
-//   camera: require('./assets/icons/cameraSelected.png'),
-// });
 
 // AnimatableManager.loadAnimationPresets({
 //   preset1: {
