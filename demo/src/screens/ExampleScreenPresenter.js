@@ -67,13 +67,13 @@ export function renderBooleanGroup(title, options) {
   );
 }
 
-export function renderRadioGroup(title, key, options, {isRow, afterValueChanged} = {}) {
+export function renderRadioGroup(title, key, options, {isRow, afterValueChanged, useValueAsLabel} = {}) {
   const value = this.state[key];
   return (
     <View marginB-s2>
-      <Text text70M marginB-s2>
+      {!_.isUndefined(title) && <Text text70M marginB-s2>
         {title}
-      </Text>
+      </Text>}
       <RadioGroup
         row={isRow}
         style={isRow && styles.rowWrap}
@@ -88,7 +88,7 @@ export function renderRadioGroup(title, key, options, {isRow, afterValueChanged}
               key={key}
               marginB-s2
               marginR-s2={isRow}
-              label={key}
+              label={useValueAsLabel ? value : key}
               value={value}
             />
           );
