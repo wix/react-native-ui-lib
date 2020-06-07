@@ -29,6 +29,8 @@ export type PropType = {
   rightThreshold?: number,
   fullLeftThreshold?: number,
   fullSwipeLeft?: boolean,
+  fullRightThreshold?: number,
+  fullSwipeRight?: boolean,
   overshootLeft?: boolean,
   overshootRight?: boolean,
   overshootFriction?: number,
@@ -42,6 +44,8 @@ export type PropType = {
   onSwipeableWillClose?: Function,
   onFullSwipeLeft?: Function,
   onWillFullSwipeLeft?: Function,
+  onFullSwipeRight?: Function,
+  onWillFullSwipeRight?: Function,
   onDragStart?: Function,
   renderLeftActions?: (progressAnimatedValue: any, dragAnimatedValue: any) => any,
   renderRightActions?: (progressAnimatedValue: any, dragAnimatedValue: any) => any,
@@ -65,7 +69,8 @@ export default class Swipeable extends Component<PropType, StateType> {
     friction: 1,
     overshootFriction: 1,
     useNativeAnimations: false, // issue in iPhone5
-    fullLeftThreshold: 0.45
+    fullLeftThreshold: 0.45,
+    fullRightThreshold: 0.45
   };
 
   // _onGestureEvent: ?Animated.Event;
@@ -79,7 +84,7 @@ export default class Swipeable extends Component<PropType, StateType> {
     super(props);
 
     const dragX = new Animated.Value(0);
-    // 0 -> open from either left/right, 
+    // 0 -> open from either left/right,
     // 1 -> closing to the left
     // -1 -> closing to the right
     this.rowState = 0;
@@ -192,7 +197,7 @@ export default class Swipeable extends Component<PropType, StateType> {
     const {leftWidth = 0, rowWidth = 0} = this.state;
     const {rightOffset = rowWidth} = this.state;
     const rightWidth = rowWidth - rightOffset;
-    const {fullSwipeLeft, friction, leftThreshold = leftWidth / 2, rightThreshold = rightWidth / 2, fullLeftThreshold} = this.props;
+    const {fullSwipeLeft, fullSwipeRight, friction, leftThreshold = leftWidth / 2, rightThreshold = rightWidth / 2, fullLeftThreshold, fullRightThreshold} = this.props;
 
     const startOffsetX = this._currentOffset() + dragX / friction;
     const translationX = (dragX + DRAG_TOSS * velocityX) / friction;
@@ -201,6 +206,8 @@ export default class Swipeable extends Component<PropType, StateType> {
     if (this.rowState === 0) {
       if (fullSwipeLeft && translationX > rowWidth * fullLeftThreshold) {
         toValue = rowWidth;
+      } else if (fullSwipeRight && translationX < -rowWidth * fullRightThreshold) {
+        toValue = -rowWidth;
       } else if (translationX > leftThreshold) {
         toValue = leftWidth;
       } else if (translationX < -rightThreshold) {
@@ -235,7 +242,9 @@ export default class Swipeable extends Component<PropType, StateType> {
       onSwipeableWillClose,
       onSwipeableWillOpen,
       onFullSwipeLeft,
-      onWillFullSwipeLeft
+      onWillFullSwipeLeft,
+      onFullSwipeRight,
+      onWillFullSwipeRight
     } = this.props;
 
     dragX.setValue(0);
@@ -254,6 +263,8 @@ export default class Swipeable extends Component<PropType, StateType> {
       if (finished) {
         if (toValue === rowWidth && onFullSwipeLeft) {
           onFullSwipeLeft();
+        } else if (toValue === -rowWidth && onFullSwipeRight) {
+          onFullSwipeRight();
         } else if (toValue > 0 && onSwipeableLeftOpen) {
           onSwipeableLeftOpen();
         } else if (toValue < 0 && onSwipeableRightOpen) {
@@ -270,6 +281,8 @@ export default class Swipeable extends Component<PropType, StateType> {
 
     if (toValue === rowWidth && onWillFullSwipeLeft) {
       onWillFullSwipeLeft()
+    } else if (toValue === -rowWidth && onWillFullSwipeRight) {
+      onWillFullSwipeRight()
     } else if (toValue > 0 && onSwipeableLeftWillOpen) {
       onSwipeableLeftWillOpen();
     } else if (toValue < 0 && onSwipeableRightWillOpen) {
@@ -305,11 +318,21 @@ export default class Swipeable extends Component<PropType, StateType> {
     this._animateRow(this._currentOffset(), leftWidth);
   };
 
+  openLeftFull = () => {
+    const {rowWidth} = this.state;
+    this._animateRow(this._currentOffset(), rowWidth);
+  };
+
   openRight = () => {
     const {rowWidth = 0} = this.state;
     const {rightOffset = rowWidth} = this.state;
     const rightWidth = rowWidth - rightOffset;
     this._animateRow(this._currentOffset(), -rightWidth);
+  };
+
+  openRightFull = () => {
+    const {rowWidth} = this.state;
+    this._animateRow(this._currentOffset(), -rowWidth);
   };
 
   _onRowLayout = ({nativeEvent}) => this.handleMeasure('rowWidth', nativeEvent);
