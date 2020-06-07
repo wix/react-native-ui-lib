@@ -292,7 +292,7 @@ export default class ColorPicker extends PureBaseComponent {
   }
 
   renderPreview() {
-    const {accessibilityLabels, previewTextStyle} = this.getThemeProps();
+    const {accessibilityLabels, previewInputStyle} = this.getThemeProps();
     const {color, text} = this.state;
     const hex = this.getHexString(color);
     const textColor = this.getTextColor(hex);
@@ -324,8 +324,9 @@ export default class ColorPicker extends PureBaseComponent {
               onChangeText={this.onChangeText}
               style={[
                 this.styles.input,
-                {color: textColor, width: (value.length + 1) * 16.5 * fontScale, ...previewTextStyle},
-                Constants.isAndroid && {padding: 0}
+                {color: textColor, width: (value.length + 1) * 16.5 * fontScale},
+                Constants.isAndroid && {padding: 0},
+                previewInputStyle
               ]}
               selectionColor={textColor}
               underlineColorAndroid="transparent"
