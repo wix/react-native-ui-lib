@@ -65,7 +65,7 @@ export default class ColorPicker extends PureBaseComponent {
     /**
      * Additional styling for the color preview text.
      */
-    previewTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    previewInputStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * Accessibility labels as an object of strings, ex. {addButton: 'add custom color using hex code', dismissButton: 'dismiss', doneButton: 'done', input: 'custom hex color code'}
      */
