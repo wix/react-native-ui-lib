@@ -24,6 +24,10 @@ class CardSection extends BaseComponent {
       props: Text.propTypes
     })),
     /**
+     * Style for the content
+     */
+    contentStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
      * Image props for a leading icon to render before the text
      */
     leadingIcon: PropTypes.shape(Image.propTypes),
@@ -34,13 +38,29 @@ class CardSection extends BaseComponent {
   };
 
   render() {
-    const {content, leadingIcon, trailingIcon, context: {borderStyle}, style, ...others} = this.getThemeProps();
+    const {
+      content,
+      leadingIcon,
+      trailingIcon,
+      context: {borderStyle},
+      contentStyle,
+      style,
+      ...others
+    } = this.getThemeProps();
     return (
       <View style={[{...borderStyle}, style]} {...others}>
         {leadingIcon && <Image {...leadingIcon}/>}
-        {_.map(content, ({text, props} = {}, index) => {
-          return !_.isUndefined(text) && <Text key={index} {...props}>{text}</Text>;
-        })}
+        <View style={contentStyle}>
+          {_.map(content, ({text, props} = {}, index) => {
+            return (
+              !_.isUndefined(text) && (
+                <Text key={index} {...props}>
+                  {text}
+                </Text>
+              )
+            );
+          })}
+        </View>
         {trailingIcon && <Image {...trailingIcon}/>}
       </View>
     );
