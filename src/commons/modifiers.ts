@@ -364,8 +364,10 @@ export function generateModifiersStyle(options = {
     style.positionStyle = extractPositionStyle(boundProps);
   }
 
+  return style;
   // clean empty objects and undefined
-  return _.omitBy(style, value => _.isUndefined(value) || (_.isPlainObject(value) && _.isEmpty(value))); 
+  // (!) This change is currently breaking UI layout for some reason - worth investigating
+  // return _.omitBy(style, value => _.isUndefined(value) || (_.isPlainObject(value) && _.isEmpty(value))); 
 }
 
 export function getAlteredModifiersOptions(currentProps: any, nextProps: any) {
