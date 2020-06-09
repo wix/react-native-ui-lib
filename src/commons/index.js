@@ -21,5 +21,8 @@ module.exports = {
   },
   get forwardRef() {
     return require('./forwardRef').default;
+  },
+  get asScrollEnabled() {
+    return require('./asScrollEnabled').default;
   }
 };
