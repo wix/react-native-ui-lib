@@ -11,14 +11,6 @@ export function renderHeader(title, others) {
   );
 }
 
-export function renderSubHeader(text, others) {
-  return (
-    <Text text60 grey30 {...others}>
-      {text}
-    </Text>
-  );
-}
-
 export function renderBooleanOption(title, key) {
   const value = this.state[key];
   return (
