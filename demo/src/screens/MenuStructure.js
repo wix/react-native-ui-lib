@@ -83,17 +83,17 @@ export const navigationData = {
   LayoutsAndTemplates: {
     title: 'Layouts & Templates',
     screens: [
-      {
-        title: 'asScrollEnabled',
-        tags: 'scroll enabled asScrollEnabled',
-        screen: 'unicorn.common.AsScrollEnabledScreen'
-      },
       {title: 'Carousel', tags: 'carousel', screen: 'unicorn.components.CarouselScreen'},
       {title: 'LoadingScreen', tags: 'loading screen', screen: 'unicorn.screens.LoadingScreen'},
       {title: 'Modal', tags: 'modal topbar screen', screen: 'unicorn.screens.ModalScreen'},
       {title: 'StateScreen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
       {title: 'TabController', tags: 'tabbar controller native', screen: 'unicorn.components.TabControllerScreen'},
       {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
+      {
+        title: 'withScrollEnabler',
+        tags: 'scroll enabled withScrollEnabler',
+        screen: 'unicorn.common.WithScrollEnablerScreen'
+      },
       {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'}
     ]
   },

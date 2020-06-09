@@ -5,8 +5,8 @@ import {FlatListProps} from 'react-native';
 import {Constants} from 'react-native-ui-lib';
 import forwardRef from './forwardRef';
 
-function asScrollEnabled<PROPS extends FlatListProps<any>>(WrappedComponent: React.ComponentType<FlatListProps<any>>): React.ComponentType<PROPS> {
-  const ScrollEnabled = (props: FlatListProps<any>) => {
+function withScrollEnabler<PROPS extends FlatListProps<any>>(WrappedComponent: React.ComponentType<FlatListProps<any>>): React.ComponentType<PROPS> {
+  const ScrollEnabler = (props: FlatListProps<any>) => {
     const [scrollEnabled, setScrollEnabled] = useState(true);
     const [contentSize, setContentSize] = useState(0);
     const [layoutSize, setLayoutSize] = useState(0);
@@ -72,7 +72,7 @@ function asScrollEnabled<PROPS extends FlatListProps<any>>(WrappedComponent: Rea
     );
   };
 
-  return forwardRef(ScrollEnabled) as any;
+  return forwardRef(ScrollEnabler) as any;
 }
 
-export default asScrollEnabled;
+export default withScrollEnabler;

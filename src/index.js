@@ -202,8 +202,8 @@ export default {
   get forwardRef() {
     return require('./commons').forwardRef;
   },
-  get asScrollEnabled() {
-    return require('./commons').asScrollEnabled;
+  get withScrollEnabler() {
+    return require('./commons').withScrollEnabler;
   },
 
   // Helpers

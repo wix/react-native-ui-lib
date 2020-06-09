@@ -3,14 +3,14 @@ import React, {Component} from 'react';
 // eslint-disable-next-line no-unused-vars
 import {FlatList, ScrollView, StyleSheet, LayoutChangeEvent} from 'react-native';
 import memoize from 'memoize-one';
-import {asScrollEnabled, Colors, Text, View} from 'react-native-ui-lib'; //eslint-disable-line
+import {withScrollEnabler, Colors, Text, View} from 'react-native-ui-lib'; //eslint-disable-line
 // @ts-ignore
 import {renderHeader, renderBooleanOption, renderSliderOption} from '../ExampleScreenPresenter';
 
-const LockedFlatList = asScrollEnabled(FlatList);
-const LockedScrollView = asScrollEnabled(ScrollView);
+const LockedFlatList = withScrollEnabler(FlatList);
+const LockedScrollView = withScrollEnabler(ScrollView);
 
-class AsScrollEnabledScreen extends Component {
+class WithScrollEnablerScreen extends Component {
   state = {
     isListView: false,
     isHorizontal: false,
@@ -130,7 +130,7 @@ class AsScrollEnabledScreen extends Component {
   render() {
     return (
       <View margin-10>
-        {renderHeader('asScrollEnabled', {'marginB-10': true})}
+        {renderHeader('withScrollEnabler', {'marginB-10': true})}
         {this.renderOptions()}
         {this.renderData()}
         {this.renderList()}
@@ -139,7 +139,7 @@ class AsScrollEnabledScreen extends Component {
   }
 }
 
-export default AsScrollEnabledScreen;
+export default WithScrollEnablerScreen;
 
 const styles = StyleSheet.create({
   scrollView: {

@@ -4,7 +4,7 @@
  * Please use this file for declaring all the exports, so they could be picked up by typescript's complier
  */
 export * from './style';
-export {asScrollEnabled} from './commons/new';
+export {withScrollEnabler} from './commons/new';
 export {default as View} from './components/view';
 export {default as Text} from './components/text';
 export {default as TouchableOpacity} from './components/touchableOpacity';

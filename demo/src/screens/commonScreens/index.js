@@ -1,6 +1,6 @@
 
 export function registerScreens(registrar) {
 
-  registrar('unicorn.common.AsScrollEnabledScreen', () => require('./AsScrollEnabledScreen').default);
+  registrar('unicorn.common.WithScrollEnablerScreen', () => require('./WithScrollEnablerScreen').default);
 }
 
