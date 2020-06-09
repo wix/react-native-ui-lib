@@ -15,6 +15,29 @@ export default class CardsScreen extends Component {
     selected2: true
   };
 
+  renderCoupon = (options) => {
+    return (
+      <Card {...options} flex height={160} onPress={() => {}} useNative activeOpacity={1} activeScale={0.96}>
+        <Card.Section
+          backgroundColor={Colors.red30}
+          padding-20
+          flex-3
+          content={[
+            {text: 'Special sale!', props: {text70: true, white: true}},
+            {text: '10%', props: {text60: true, white: true}}
+          ]}
+          contentStyle={{alignItems: 'center'}}
+        />
+        <Card.Section
+          padding-20
+          flex
+          content={[{text: 'All site', props: {text70: true, dark10: true, flex: 1, textAlign: 'center'}}]}
+          contentStyle={{alignItems: 'center'}}
+        />
+      </Card>
+    );
+  };
+
   render() {
     const {selected1, selected2} = this.state;
 
@@ -148,18 +171,17 @@ export default class CardsScreen extends Component {
               activeOpacity={1}
               activeScale={1.04}
             >
-              <Card.Section
-                padding-20
-                flex
-                content={[
-                  {text: 'You’re Invited!', props: {text70: true, dark10: true}},
-                  {
-                    text: 'Join Old The Town Barbershop Official Store. Download the Wix app to...',
-                    props: {text80: true, dark10: true}
-                  },
-                  {text: 'wix.to/A465c', props: {text90: true, dark50: true}}
-                ]}
-              />
+              <View padding-20 flex>
+                <Text text70 dark10>
+                  You’re Invited!
+                </Text>
+                <Text text80 dark10>
+                  Join Old The Town Barbershop Official Store. Download the Wix app to...
+                </Text>
+                <Text text90 dark50>
+                  wix.to/A465c
+                </Text>
+              </View>
               <Card.Image width={115} imageSource={cardImage}/>
             </Card>
 
@@ -210,6 +232,10 @@ export default class CardsScreen extends Component {
                 </Card>
               );
             })}
+            <View row spread>
+              {this.renderCoupon({'marginR-10': true})}
+              {this.renderCoupon({'marginL-10': true})}
+            </View>
           </View>
         </ScrollView>
       </View>
