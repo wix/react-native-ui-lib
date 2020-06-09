@@ -102,12 +102,7 @@ class TabBar extends PureComponent {
     /**
      * Pass to center selected item
      */
-    centerSelected: PropTypes.bool,
-    /**
-     * (Experimental) Pass to optimize loading time by measuring tab bar items text
-     * instead of waiting for onLayout
-     */
-    optimize: PropTypes.bool
+    centerSelected: PropTypes.bool
   };
 
   static defaultProps = {
@@ -147,7 +142,7 @@ class TabBar extends PureComponent {
       this.registerTabItems();
     }
 
-    if (this.items && props.optimize) {
+    if (this.items) {
       this.measureItems();
     }
   }
@@ -263,7 +258,6 @@ class TabBar extends PureComponent {
     }
   };
 
-  // TODO: replace with measureItems logic
   onItemLayout = ({width, x}, itemIndex) => {
     this._itemsWidths[itemIndex] = width;
     this._itemsOffsets[itemIndex] = x;
@@ -319,7 +313,6 @@ class TabBar extends PureComponent {
   renderTabBarItems() {
     const {itemStates} = this.context;
     const {
-      optimize,
       labelColor,
       selectedLabelColor,
       labelStyle,
@@ -352,7 +345,7 @@ class TabBar extends PureComponent {
             {...this.context}
             index={index}
             state={itemStates[index]}
-            onLayout={optimize ? undefined : this.onItemLayout}
+            onLayout={this.onItemLayout}
           />
         );
       });
