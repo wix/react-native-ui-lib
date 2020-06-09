@@ -1,17 +1,18 @@
 import _ from 'lodash';
 import React, {useState, useEffect, useCallback, useRef} from 'react';
 // eslint-disable-next-line no-unused-vars
-import {FlatListProps} from 'react-native';
+import {FlatListProps, ScrollViewProps} from 'react-native';
 import {Constants} from 'react-native-ui-lib';
 import forwardRef from './forwardRef';
 
-function withScrollEnabler<PROPS extends FlatListProps<any>>(WrappedComponent: React.ComponentType<FlatListProps<any>>): React.ComponentType<PROPS> {
-  const ScrollEnabler = (props: FlatListProps<any>) => {
+export type WithScrollEnablerProps = FlatListProps<any> | ScrollViewProps;
+function withScrollEnabler<PROPS extends WithScrollEnablerProps>(WrappedComponent: React.ComponentType<WithScrollEnablerProps>): React.ComponentType<PROPS> {
+  const ScrollEnabler = (props: WithScrollEnablerProps) => {
     const [scrollEnabled, setScrollEnabled] = useState(true);
     const [contentSize, setContentSize] = useState(0);
     const [layoutSize, setLayoutSize] = useState(0);
 
-    const scrollViewRef = useRef<FlatListProps<any>>(null);
+    const scrollViewRef = useRef<WithScrollEnablerProps>(null);
 
     useEffect(() => {
       const {forwardedRef} = props;
