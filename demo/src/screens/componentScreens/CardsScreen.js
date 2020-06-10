@@ -23,15 +23,15 @@ export default class CardsScreen extends Component {
           padding-20
           flex-3
           content={[
-            {text: 'Special sale!', props: {text70: true, white: true}},
-            {text: '10%', props: {text60: true, white: true}}
+            {text: 'Special sale!', text70: true, white: true},
+            {text: '10%', text60: true, white: true}
           ]}
           contentStyle={{alignItems: 'center'}}
         />
         <Card.Section
           padding-20
           flex
-          content={[{text: 'All site', props: {text70: true, dark10: true, flex: 1, textAlign: 'center'}}]}
+          content={[{text: 'All site', text70: true, dark10: true, flex: 1, textAlign: 'center'}]}
           contentStyle={{alignItems: 'center'}}
         />
       </Card>

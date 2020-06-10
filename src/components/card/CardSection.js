@@ -17,11 +17,11 @@ class CardSection extends BaseComponent {
   static propTypes = {
     /**
      * Text content for the CardSection.
-     * Example: content={[{text: 'You’re Invited!', props: {text70: true, dark10: true}}]}
+     * Example: content={[{text: 'You’re Invited!', text70: true, dark10: true}]}
      */
     content: PropTypes.arrayOf(PropTypes.shape({
       text: PropTypes.string,
-      props: Text.propTypes
+      ...Text.propTypes
     })),
     /**
      * Style for the content
@@ -51,10 +51,10 @@ class CardSection extends BaseComponent {
       <View style={[{...borderStyle}, style]} {...others}>
         {leadingIcon && <Image {...leadingIcon}/>}
         <View style={contentStyle}>
-          {_.map(content, ({text, props} = {}, index) => {
+          {_.map(content, ({text, ...others} = {}, index) => {
             return (
               !_.isUndefined(text) && (
-                <Text key={index} {...props}>
+                <Text key={index} {...others}>
                   {text}
                 </Text>
               )

@@ -24,9 +24,8 @@ export interface CardImageProps {
   overlayType?: string;
 }
 
-export interface CardSectionContentProps {
+export interface CardSectionContentProps extends TextPropTypes {
   text: string;
-  props?: TextPropTypes;
 }
 
 export interface CardSectionProps {
