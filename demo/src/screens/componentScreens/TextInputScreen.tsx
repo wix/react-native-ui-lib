@@ -5,7 +5,7 @@ export default function TextInputScreen() {
   return (
     <View flex padding-page>
       <Text h1>TextInput</Text>
-      <TextInput placeholder="TextInput" />
+      <TextInput placeholder="Enter Text" />
     </View>
   );
 }
