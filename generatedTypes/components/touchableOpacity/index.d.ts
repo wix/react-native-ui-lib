@@ -1,7 +1,7 @@
 import React from 'react';
-import { TouchableOpacityProps } from 'react-native';
+import { TouchableOpacityProps as RNTouchableOpacityProps } from 'react-native';
 import { ContainerModifiers } from '../../commons/new';
-declare type IProps = TouchableOpacityProps & ContainerModifiers & {
+export declare type TouchableOpacityProps = RNTouchableOpacityProps & ContainerModifiers & {
     /**
      * background color for TouchableOpacity
      */
@@ -27,5 +27,5 @@ declare type IProps = TouchableOpacityProps & ContainerModifiers & {
     useNative?: boolean;
     ref?: any;
 };
-declare const _default: React.ComponentType<IProps>;
+declare const _default: React.ComponentType<TouchableOpacityProps>;
 export default _default;

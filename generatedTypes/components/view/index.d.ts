@@ -1,7 +1,7 @@
 import React from 'react';
 import { ViewProps } from 'react-native';
 import { ContainerModifiers } from '../../commons/new';
-interface ViewPropTypes extends ViewProps, ContainerModifiers {
+export interface ViewPropTypes extends ViewProps, ContainerModifiers {
     /**
      * If true, will render as SafeAreaView
      */

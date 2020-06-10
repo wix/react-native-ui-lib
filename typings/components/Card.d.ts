@@ -10,6 +10,7 @@ import {BlurViewProperties} from '@react-native-community/blur';
 import {BaseComponent, PureBaseComponent} from '../commons';
 import {ColorValue} from '../style/colors';
 import {TextPropTypes} from '../../src/components/text';
+import {TouchableOpacityProps} from './TouchableOpacity';
 import {ImageProps} from './Image';
 
 type CardImagePositionOption = 'top' | 'bottom' | 'left' | 'right';
@@ -41,7 +42,7 @@ export interface CardSelectionOptions {
   indicatorSize?: number;
 }
 
-export interface CardProps {
+export interface CardProps extends TouchableOpacityProps {
   width?: number | string;
   height?: number | string;
   row?: boolean;
