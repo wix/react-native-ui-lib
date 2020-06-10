@@ -4,6 +4,7 @@
  * Please use this file for declaring all the exports, so they could be picked up by typescript's complier
  */
 export * from './style';
+export {default as Card} from './components/card';
 export {default as View, ViewPropTypes} from './components/view';
 export {default as Text} from './components/text';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';
@@ -21,10 +22,10 @@ export {
   Avatar,
   Badge,
   Card,
-  CardProps,
-  CardImageProps,
-  CardSectionProps,
-  CardSectionContentProps,
+  // CardProps,
+  // CardImageProps,
+  // CardSectionProps,
+  // CardSectionContentProps,
   Carousel,
   ConnectionStatusBar,
   Dialog,
