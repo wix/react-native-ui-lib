@@ -9,14 +9,17 @@ import {
   asBaseComponent,
   forwardRef,
   BaseComponentInjectedProps,
-  ForwardRefInjectedProps,
+  ForwardRefInjectedProps
 } from '../../commons/new';
 import View, {ViewPropTypes} from '../view';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Image from '../image';
 import CardImage from './CardImage';
+import CardSection from './CardSection';
 // @ts-ignore
 import Assets from '../../assets';
+import CardContext from './CardContext';
+import * as CardPresenter from './CardPresenter';
 
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 const DEFAULT_SELECTION_PROPS = {
@@ -25,66 +28,67 @@ const DEFAULT_SELECTION_PROPS = {
   indicatorSize: 20,
   icon: Assets.icons.checkSmall,
   iconColor: Colors.white,
-  hideIndicator: false,
+  hideIndicator: false
 };
 
-export type CardPropTypes = ViewPropTypes & TouchableOpacityProps & {
-  /**
-   * card custom width
-   */
-  width?: number | string;
-  /**
-   * card custom height
-   */
-  height?: number | string;
-  /**
-   * should inner card flow direction be horizontal
-   */
-  row?: boolean;
-  /**
-   * card border radius (will be passed to inner Card.Image component)
-   */
-  borderRadius?: number;
-  /**
-   * action for when pressing the card
-   */
-  onPress?: () => void;
-  /**
-   * whether the card should have shadow or not
-   */
-  enableShadow?: boolean;
-  /**
-   * elevation value (Android only)
-   */
-  elevation?: number;
-  /**
-   * enable blur effect (iOS only)
-   */
-  enableBlur?: boolean;
-  /**
-   * blur option for blur effect according to @react-native-community/blur lib (make sure enableBlur is on)
-   */
-  blurOptions?: object;
-  /**
-   * Additional styles for the top container
-   */
-  containerStyle?: ViewStyle;
-  /**
-   * Adds visual indication that the card is selected
-   */
-  selected?: boolean;
-  /**
-   * Custom options for styling the selection indication
-   */
-  selectionOptions?: {
-    icon?: number;
-    iconColor?: string;
-    color?: string;
-    borderWidth?: number;
-    indicatorSize?: number;
-    hideIndicator?: boolean;
+export type CardPropTypes = ViewPropTypes &
+  TouchableOpacityProps & {
+    /**
+     * card custom width
+     */
+    width?: number | string;
+    /**
+     * card custom height
+     */
+    height?: number | string;
+    /**
+     * should inner card flow direction be horizontal
+     */
+    row?: boolean;
+    /**
+     * card border radius (will be passed to inner Card.Image component)
+     */
+    borderRadius?: number;
+    /**
+     * action for when pressing the card
+     */
+    onPress?: () => void;
+    /**
+     * whether the card should have shadow or not
+     */
+    enableShadow?: boolean;
+    /**
+     * elevation value (Android only)
+     */
+    elevation?: number;
+    /**
+     * enable blur effect (iOS only)
+     */
+    enableBlur?: boolean;
+    /**
+     * blur option for blur effect according to @react-native-community/blur lib (make sure enableBlur is on)
+     */
+    blurOptions?: object;
+    /**
+     * Additional styles for the top container
+     */
+    containerStyle?: ViewStyle;
+    /**
+     * Adds visual indication that the card is selected
+     */
+    selected?: boolean;
+    /**
+     * Custom options for styling the selection indication
+     */
+    selectionOptions?: {
+      icon?: number;
+      iconColor?: string;
+      color?: string;
+      borderWidth?: number;
+      indicatorSize?: number;
+      hideIndicator?: boolean;
+    };
   };
-};
 
 type PropTypes = BaseComponentInjectedProps &
   ForwardRefInjectedProps &
@@ -106,16 +110,17 @@ type State = {
 class Card extends PureComponent<PropTypes, State> {
   static displayName = 'Card';
   static defaultProps = {
-    enableShadow: true,
+    enableShadow: true
   };
   static Image: typeof CardImage;
+  static Section: typeof CardSection;
 
   styles: any;
 
   constructor(props: PropTypes) {
     super(props);
     this.state = {
-      animatedSelected: new Animated.Value(Number(this.props.selected)),
+      animatedSelected: new Animated.Value(Number(this.props.selected))
     };
     this.styles = createStyles(this.props);
   }
@@ -132,7 +137,7 @@ class Card extends PureComponent<PropTypes, State> {
     Animated.timing(animatedSelected, {
       toValue: Number(selected),
       duration: 120,
-      useNativeDriver: true,
+      useNativeDriver: true
     }).start();
   }
 
@@ -141,21 +146,22 @@ class Card extends PureComponent<PropTypes, State> {
     return {
       blurType: 'light',
       blurAmount: 5,
-      ...blurOptions,
+      ...blurOptions
     };
   }
 
   // todo: add unit test
-  calcImagePosition(childIndex: number) {
+  calcChildPosition(childIndex: number) {
     const {row, children} = this.props;
     const childrenCount = React.Children.count(children);
     const position = [];
 
-    if (childIndex === 0) {
+    const childLocation = childIndex;
+    if (childLocation === 0) {
       position.push(row ? 'left' : 'top');
     }
 
-    if (childIndex === childrenCount - 1) {
+    if (childLocation === childrenCount - 1) {
       position.push(row ? 'right' : 'bottom');
     }
 
@@ -213,7 +219,7 @@ class Card extends PureComponent<PropTypes, State> {
           this.styles.selectedBorder,
           {borderColor: selectionColor},
           {borderRadius: this.borderRadius},
-          {opacity: animatedSelected},
+          {opacity: animatedSelected}
         ]}
         pointerEvents="none"
       >
@@ -221,7 +227,7 @@ class Card extends PureComponent<PropTypes, State> {
           <View
             style={[
               this.styles.selectedIndicator,
-              {backgroundColor: selectionColor},
+              {backgroundColor: selectionColor}
             ]}
           >
             <Image
@@ -238,20 +244,24 @@ class Card extends PureComponent<PropTypes, State> {
     );
   }
 
-  renderChildren() {
-    const children = React.Children.map(this.props.children, (child, index) => {
-      if (_.get(child, 'type.displayName') === CardImage.displayName) {
-        const position = this.calcImagePosition(index);
-        // @ts-ignore
-        return React.cloneElement(child, {
+  renderChildren = () => {
+    return React.Children.toArray(this.props.children)
+      .filter((child) => {
+        return !_.isNull(child);
+      })
+      .map((child, index) => {
+        const position = this.calcChildPosition(index);
+        const borderStyle = CardPresenter.generateBorderRadiusStyle({
           position,
-          borderRadius: this.borderRadius,
+          borderRadius: this.borderRadius
         });
-      }
-      return child;
-    });
-    return children;
-  }
+        return (
+          <CardContext.Provider key={index} value={{position, borderStyle}}>
+            {child}
+          </CardContext.Provider>
+        );
+      });
+  };
 
   render() {
     const {
@@ -277,7 +287,7 @@ class Card extends PureComponent<PropTypes, State> {
           this.shadowStyle,
           this.blurBgStyle,
           containerStyle,
-          style,
+          style
         ]}
         onPress={onPress}
         onLongPress={onLongPress}
@@ -306,11 +316,11 @@ function createStyles({
   width,
   height,
   borderRadius,
-  selectionOptions,
+  selectionOptions
 }: CardPropTypes) {
   const selectionOptionsWithDefaults = {
     ...DEFAULT_SELECTION_PROPS,
-    ...selectionOptions,
+    ...selectionOptions
   };
   const brRadius =
     borderRadius === undefined ? DEFAULT_BORDER_RADIUS : borderRadius;
@@ -320,24 +330,24 @@ function createStyles({
       width,
       height,
       overflow: 'visible',
-      borderRadius: brRadius,
+      borderRadius: brRadius
     },
     containerShadow: {
       // sh30 bottom
       shadowColor: Colors.dark40,
       shadowOpacity: 0.25,
       shadowRadius: 12,
-      shadowOffset: {height: 5, width: 0},
+      shadowOffset: {height: 5, width: 0}
     },
     blurView: {
       ...StyleSheet.absoluteFillObject,
-      borderRadius: brRadius,
+      borderRadius: brRadius
     },
     selectedBorder: {
       ...StyleSheet.absoluteFillObject,
       borderRadius: DEFAULT_BORDER_RADIUS,
       borderWidth: selectionOptionsWithDefaults.borderWidth,
-      borderColor: selectionOptionsWithDefaults.color,
+      borderColor: selectionOptionsWithDefaults.color
     },
     selectedIndicator: {
       borderRadius: BorderRadiuses.br100,
@@ -348,14 +358,15 @@ function createStyles({
       height: selectionOptionsWithDefaults.indicatorSize,
       backgroundColor: selectionOptionsWithDefaults.color,
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
     selectedIcon: {
-      tintColor: selectionOptionsWithDefaults.iconColor,
-    },
+      tintColor: selectionOptionsWithDefaults.iconColor
+    }
   });
 }
 
 Card.Image = CardImage;
+Card.Section = CardSection;
 
 export default asBaseComponent<CardPropTypes>(forwardRef(Card));

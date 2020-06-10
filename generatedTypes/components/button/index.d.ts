@@ -298,7 +298,7 @@ declare class Button extends PureComponent<Props, ButtonState> {
         borderColor: string;
     } | undefined;
     getBorderRadiusStyle(): {
-        borderRadius: any;
+        borderRadius: number;
     };
     getShadowStyle(): ({
         shadowColor: string;
