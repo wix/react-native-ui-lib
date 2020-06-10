@@ -100,8 +100,6 @@ class Card extends PureBaseComponent {
     enableShadow: true
   };
 
-  nullChildrenIndices = [];
-
   state = {
     animatedSelected: new Animated.Value(Number(this.props.selected))
   };
@@ -141,13 +139,12 @@ class Card extends PureBaseComponent {
     const childrenCount = React.Children.count(children);
     const position = [];
 
-    const numberOfNullChildren = this.nullChildrenIndices.length;
-    const childLocation = childIndex - numberOfNullChildren;
+    const childLocation = childIndex;
     if (childLocation === 0) {
       position.push(row ? 'left' : 'top');
     }
 
-    if (childLocation === childrenCount - numberOfNullChildren - 1) {
+    if (childLocation === childrenCount - 1) {
       position.push(row ? 'right' : 'bottom');
     }
 
@@ -213,22 +210,16 @@ class Card extends PureBaseComponent {
   }
 
   renderChildren = () => {
-    const children = React.Children.map(this.props.children, (child, index) => {
-      if (child === null && !this.nullChildrenIndices.includes(index)) {
-        this.nullChildrenIndices.push(index);
-        return null;
-      }
-
-      const position = this.calcChildPosition(index);
-      const borderStyle = CardPresenter.generateBorderRadiusStyle({position, borderRadius: this.borderRadius});
-      return (
-        <CardContext.Provider value={{position, borderStyle}}>
-          {child}
-        </CardContext.Provider>
-      );
-    });
-    return children;
-  }
+    return React.Children.toArray(this.props.children)
+      .filter((child) => {
+        return !_.isNull(child);
+      })
+      .map((child, index) => {
+        const position = this.calcChildPosition(index);
+        const borderStyle = CardPresenter.generateBorderRadiusStyle({position, borderRadius: this.borderRadius});
+        return <CardContext.Provider key={index} value={{position, borderStyle}}>{child}</CardContext.Provider>;
+      });
+  };
 
   render() {
     const {onPress, onLongPress, style, selected, containerStyle, enableBlur, ...others} = this.getThemeProps();
