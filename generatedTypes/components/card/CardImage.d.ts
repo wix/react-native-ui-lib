@@ -1,7 +1,7 @@
-import { PureComponent } from 'react';
-import { ImageSourcePropType, ViewProps } from 'react-native';
+import React from 'react';
+import { ImageSourcePropType } from 'react-native';
 import { ImageProps } from '../image';
-export declare type CardImagePropTypes = ViewProps & ImageProps & {
+export declare type CardImageProps = ImageProps & {
     /**
      * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
      */
@@ -21,21 +21,9 @@ export declare type CardImagePropTypes = ViewProps & ImageProps & {
      */
     position?: string[];
     /**
-     * border radius, basically for Android since overflow doesn't work well
+     * border radius, basically for Android since overflow doesn't work well (deprecated)
      */
     borderRadius?: number;
 };
-/**
- * @description: Card.Image, part of the Card component belongs inside a Card (better be a direct child)
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
- */
-declare class CardImage extends PureComponent<CardImagePropTypes> {
-    styles: any;
-    static displayName: string;
-    static defaultProps: {
-        borderRadius: number;
-    };
-    constructor(props: CardImagePropTypes);
-    render(): JSX.Element | null;
-}
-export default CardImage;
+declare const _default: React.ComponentType<CardImageProps>;
+export default _default;

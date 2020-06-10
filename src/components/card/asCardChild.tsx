@@ -1,7 +1,9 @@
 import React from 'react';
 import CardContext from './CardContext';
 
-function asCardChild(WrappedComponent: React.ComponentType) {
+function asCardChild<T>(
+  WrappedComponent: React.ComponentType<any>
+): React.ComponentType<T> {
   const cardChild = (props: any) => {
     return (
       <CardContext.Consumer>

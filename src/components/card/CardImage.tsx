@@ -97,4 +97,4 @@ function createStyles({width, height, context: {position}}: Props) {
   });
 }
 
-export default asCardChild(CardImage);
+export default asCardChild<CardImageProps>(CardImage);
