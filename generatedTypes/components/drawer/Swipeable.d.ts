@@ -7,6 +7,8 @@ export declare type PropType = {
     rightThreshold?: number;
     fullLeftThreshold?: number;
     fullSwipeLeft?: boolean;
+    fullRightThreshold?: number;
+    fullSwipeRight?: boolean;
     overshootLeft?: boolean;
     overshootRight?: boolean;
     overshootFriction?: number;
@@ -20,6 +22,8 @@ export declare type PropType = {
     onSwipeableWillClose?: Function;
     onFullSwipeLeft?: Function;
     onWillFullSwipeLeft?: Function;
+    onFullSwipeRight?: Function;
+    onWillFullSwipeRight?: Function;
     onDragStart?: Function;
     renderLeftActions?: (progressAnimatedValue: any, dragAnimatedValue: any) => any;
     renderRightActions?: (progressAnimatedValue: any, dragAnimatedValue: any) => any;
@@ -43,6 +47,7 @@ export default class Swipeable extends Component<PropType, StateType> {
         overshootFriction: number;
         useNativeAnimations: boolean;
         fullLeftThreshold: number;
+        fullRightThreshold: number;
     };
     constructor(props: PropType);
     UNSAFE_componentWillUpdate(props: PropType, state: StateType): void;
@@ -58,7 +63,9 @@ export default class Swipeable extends Component<PropType, StateType> {
     _currentOffset: () => number;
     close: () => void;
     openLeft: () => void;
+    openLeftFull: () => void;
     openRight: () => void;
+    openRightFull: () => void;
     _onRowLayout: ({ nativeEvent }: {
         nativeEvent: any;
     }) => void;
