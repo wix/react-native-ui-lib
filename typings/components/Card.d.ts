@@ -61,4 +61,5 @@ export class Card extends PureBaseComponent<CardProps> {}
 
 export namespace Card {
   export class Image extends BaseComponent<CardImageProps> {}
+  export class Section extends BaseComponent<CardSectionProps> {}
 }
