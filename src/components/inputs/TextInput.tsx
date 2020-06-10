@@ -10,12 +10,14 @@ import {
   ForwardRefInjectedProps,
   MarginModifiers,
   TypographyModifiers,
-  ColorsModifiers
+  ColorsModifiers,
+  BackgroundColorModifier
 } from '../../commons/new';
 
 type TextInputProps = RNTextInputProps &
   MarginModifiers &
   TypographyModifiers &
+  BackgroundColorModifier &
   ColorsModifiers;
 
 type Props = TextInputProps &
@@ -23,12 +25,19 @@ type Props = TextInputProps &
   ForwardRefInjectedProps;
 
 const TextInput = ({forwardedRef, modifiers, style, ...props}: Props) => {
-  const {paddings, margins, typography, color} = modifiers;
+  const {paddings, margins, typography, backgroundColor, color} = modifiers;
   return (
     <RNTextInput
       {...props}
       ref={forwardedRef}
-      style={[color && {color}, paddings, margins, typography, style]}
+      style={[
+        backgroundColor && {backgroundColor},
+        color && {color},
+        paddings,
+        margins,
+        typography,
+        style
+      ]}
     />
   );
 };
