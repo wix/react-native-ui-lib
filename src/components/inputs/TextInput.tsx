@@ -13,20 +13,16 @@ import {
   ColorsModifiers
 } from '../../commons/new';
 
-interface TextInputProps
-  extends RNTextInputProps,
-    BaseComponentInjectedProps,
-    ForwardRefInjectedProps,
-    MarginModifiers,
-    TypographyModifiers,
-    ColorsModifiers {}
+type TextInputProps = RNTextInputProps &
+  MarginModifiers &
+  TypographyModifiers &
+  ColorsModifiers;
 
-const TextInput = ({
-  forwardedRef,
-  modifiers,
-  style,
-  ...props
-}: TextInputProps) => {
+type Props = TextInputProps &
+  BaseComponentInjectedProps &
+  ForwardRefInjectedProps;
+
+const TextInput = ({forwardedRef, modifiers, style, ...props}: Props) => {
   const {paddings, margins, typography, color} = modifiers;
   return (
     <RNTextInput
