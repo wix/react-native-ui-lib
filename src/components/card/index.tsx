@@ -14,8 +14,8 @@ import {
 import View, {ViewPropTypes} from '../view';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Image from '../image';
-import CardImage from './CardImage';
-import CardSection from './CardSection';
+import CardImage, {CardImageProps} from './CardImage';
+import CardSection, {CardSectionProps} from './CardSection';
 // @ts-ignore
 import Assets from '../../assets';
 import CardContext from './CardContext';
@@ -112,8 +112,8 @@ class Card extends PureComponent<PropTypes, State> {
   static defaultProps = {
     enableShadow: true
   };
-  static Image: typeof CardImage;
-  static Section: typeof CardSection;
+  static Image: React.ComponentType<CardImageProps>;
+  static Section: React.ComponentType<CardSectionProps>;
 
   styles: any;
 

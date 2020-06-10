@@ -1,48 +1,49 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {BaseComponent} from '../../commons';
-import Image from '../image';
+import React, {PureComponent} from 'react';
+import {View, StyleSheet, ImageSourcePropType} from 'react-native';
+// import {BaseComponent} from '../../commons';
+import Image, {ImageProps} from '../image';
 import * as CardPresenter from './CardPresenter';
-import asCardChild from './asCardChild';
+import asCardChild, {asCardChildProps} from './asCardChild';
+// @ts-ignore
 import {LogService} from '../../services';
+
+export type CardImageProps = ImageProps & {
+  /**
+   * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
+   */
+  imageSource?: ImageSourcePropType;
+  /**
+   * Image width
+   */
+  width?: number | string;
+  /**
+   * Image height
+   */
+  height?: number | string;
+  /**
+   * The Image position which determines the appropriate flex-ness of the image and border radius (for Android)
+   * this prop derived automatically from Card parent component if it rendered as a direct child of the
+   * Card component
+   */
+  position?: string[];
+  /**
+   * border radius, basically for Android since overflow doesn't work well (deprecated)
+   */
+  borderRadius?: number;
+};
+
+type Props = CardImageProps & asCardChildProps;
 
 /**
  * @description: Card.Image, part of the Card component belongs inside a Card (better be a direct child)
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
  */
-class CardImage extends BaseComponent {
+class CardImage extends PureComponent<Props> {
   static displayName = 'Card.Image';
 
-  static propTypes = {
-    /**
-     * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
-     */
-    imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * Image width
-     */
-    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    /**
-     * Image height
-     */
-    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    /**
-     * The Image position which determines the appropriate flex-ness of the image and border radius (for Android)
-     * this prop derived automatically from Card parent component if it rendered as a direct child of the
-     * Card component
-     */
-    position: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
-    ]),
-    /**
-     * border radius, basically for Android since overflow doesn't work well (deprecated)
-     */
-    borderRadius: PropTypes.number
-  };
+  styles: any;
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     if (props.borderRadius) {
@@ -50,10 +51,7 @@ class CardImage extends BaseComponent {
         'uilib: Please stop passing borderRadius to Card.Image, it will get the borderRadius from the Card'
       );
     }
-  }
-
-  generateStyles() {
-    this.styles = createStyles(this.props);
+    this.styles = createStyles(props);
   }
 
   render() {
@@ -62,8 +60,7 @@ class CardImage extends BaseComponent {
       style,
       testID,
       overlayType,
-      context: {borderStyle},
-      imageStyle
+      context: {borderStyle}
     } = this.props;
     if (imageSource) {
       return (
@@ -71,7 +68,7 @@ class CardImage extends BaseComponent {
           <Image
             testID={testID}
             source={imageSource}
-            style={[this.styles.image, imageStyle]}
+            style={[this.styles.image]}
             overlayType={overlayType}
           />
         </View>
@@ -81,7 +78,7 @@ class CardImage extends BaseComponent {
   }
 }
 
-function createStyles({width, height, context: {position}}) {
+function createStyles({width, height, context: {position}}: Props) {
   const {top, left, right, bottom} = CardPresenter.extractPositionValues(
     position
   );
@@ -92,8 +89,8 @@ function createStyles({width, height, context: {position}}) {
       overflow: 'hidden'
     },
     image: {
-      width: null,
-      height: null,
+      width: undefined,
+      height: undefined,
       flex: 1,
       resizeMode: 'cover'
     }

@@ -1,10 +1,12 @@
 import React from 'react';
 import CardContext from './CardContext';
 
-function asCardChild(WrappedComponent) {
-  const cardChild = (props) => {
+function asCardChild(WrappedComponent: React.ComponentType) {
+  const cardChild = (props: any) => {
     return (
-      <CardContext.Consumer>{(context) => <WrappedComponent context={context} {...props}/>}</CardContext.Consumer>
+      <CardContext.Consumer>
+        {(context) => <WrappedComponent context={context} {...props} />}
+      </CardContext.Consumer>
     );
   };
 
@@ -12,3 +14,4 @@ function asCardChild(WrappedComponent) {
 }
 
 export default asCardChild;
+export type asCardChildProps = {context?: any};
