@@ -1,20 +1,14 @@
-import React, {Component} from 'react';
+import React from 'react';
 import CardContext from './CardContext';
 
 function asCardChild(WrappedComponent) {
-  class CardChild extends Component {
-    render() {
-      return (
-        <CardContext.Consumer>
-          {(context) => (
-            <WrappedComponent context={context} {...this.props}/>
-          )}
-        </CardContext.Consumer>
-      );
-    }
-  }
+  const cardChild = (props) => {
+    return (
+      <CardContext.Consumer>{(context) => <WrappedComponent context={context} {...props}/>}</CardContext.Consumer>
+    );
+  };
 
-  return CardChild;
+  return cardChild;
 }
 
 export default asCardChild;
