@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {BorderRadiuses} from '../../style';
 import {BaseComponent} from '../../commons';
 import Image from '../image';
 import * as CardPresenter from './CardPresenter';
-
+import asCardChild from './asCardChild';
+import {LogService} from '../../services';
 
 /**
  * @description: Card.Image, part of the Card component belongs inside a Card (better be a direct child)
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
  */
-export default class CardImage extends BaseComponent {
+class CardImage extends BaseComponent {
 
   static displayName = 'Card.Image';
 
@@ -35,29 +35,32 @@ export default class CardImage extends BaseComponent {
      */
     position: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
     /**
-     * border radius, basically for Android since overflow doesn't work well
+     * border radius, basically for Android since overflow doesn't work well (deprecated)
      */
     borderRadius: PropTypes.number
   };
 
-  static defaultProps = {
-    borderRadius: BorderRadiuses.br40
-  };
+  constructor(props) {
+    super(props);
+
+    if (props.borderRadius) {
+      LogService.warn('uilib: Please stop passing borderRadius to Card.Image, it will get the borderRadius from the Card');
+    }
+  }
 
   generateStyles() {
     this.styles = createStyles(this.props);
   }
 
   render() {
-    const {imageSource, style, position, borderRadius, testID, overlayType} = this.props;
-    const borderStyle = CardPresenter.generateBorderRadiusStyle({position, borderRadius});
+    const {imageSource, style, testID, overlayType, context: {borderStyle}, imageStyle} = this.props;
     if (imageSource) {
       return (
         <View style={[this.styles.container, borderStyle, style]}>
           <Image
             testID={testID}
             source={imageSource}
-            style={[this.styles.image/* , borderStyle */]}
+            style={[this.styles.image, imageStyle]}
             overlayType={overlayType}
           />
         </View>
@@ -67,7 +70,7 @@ export default class CardImage extends BaseComponent {
   }
 }
 
-function createStyles({width, height, position}) {
+function createStyles({width, height, context: {position}}) {
   const {top, left, right, bottom} = CardPresenter.extractPositionValues(position);
   return StyleSheet.create({
     container: {
@@ -83,3 +86,5 @@ function createStyles({width, height, position}) {
     }
   });
 }
+
+export default asCardChild(CardImage);

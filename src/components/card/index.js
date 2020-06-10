@@ -10,7 +10,10 @@ import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import CardImage from './CardImage';
+import CardSection from './CardSection';
 import Assets from '../../assets';
+import CardContext from './CardContext';
+import * as CardPresenter from './CardPresenter';
 
 
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
@@ -131,16 +134,17 @@ class Card extends PureBaseComponent {
   }
 
   // todo: add unit test
-  calcImagePosition(childIndex) {
+  calcChildPosition(childIndex) {
     const {row, children} = this.props;
     const childrenCount = React.Children.count(children);
     const position = [];
 
-    if (childIndex === 0) {
+    const childLocation = childIndex;
+    if (childLocation === 0) {
       position.push(row ? 'left' : 'top');
     }
 
-    if (childIndex === childrenCount - 1) {
+    if (childLocation === childrenCount - 1) {
       position.push(row ? 'right' : 'bottom');
     }
 
@@ -205,19 +209,17 @@ class Card extends PureBaseComponent {
     );
   }
 
-  renderChildren() {
-    const children = React.Children.map(this.props.children, (child, index) => {
-      if (_.get(child, 'type.displayName') === CardImage.displayName) {
-        const position = this.calcImagePosition(index);
-        return React.cloneElement(child, {
-          position,
-          borderRadius: this.borderRadius
-        });
-      }
-      return child;
-    });
-    return children;
-  }
+  renderChildren = () => {
+    return React.Children.toArray(this.props.children)
+      .filter((child) => {
+        return !_.isNull(child);
+      })
+      .map((child, index) => {
+        const position = this.calcChildPosition(index);
+        const borderStyle = CardPresenter.generateBorderRadiusStyle({position, borderRadius: this.borderRadius});
+        return <CardContext.Provider key={index} value={{position, borderStyle}}>{child}</CardContext.Provider>;
+      });
+  };
 
   render() {
     const {onPress, onLongPress, style, selected, containerStyle, enableBlur, ...others} = this.getThemeProps();
@@ -301,5 +303,6 @@ function createStyles({width, height, borderRadius, selectionOptions}) {
 }
 
 Card.Image = CardImage;
+Card.Section = CardSection;
 
 export default Card;

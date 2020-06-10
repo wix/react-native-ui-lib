@@ -15,6 +15,29 @@ export default class CardsScreen extends Component {
     selected2: true
   };
 
+  renderCoupon = (options) => {
+    return (
+      <Card {...options} flex height={160} onPress={() => {}} useNative activeOpacity={1} activeScale={0.96}>
+        <Card.Section
+          backgroundColor={Colors.red30}
+          padding-20
+          flex-3
+          content={[
+            {text: 'Special sale!', text70: true, white: true},
+            {text: '10%', text60: true, white: true}
+          ]}
+          contentStyle={{alignItems: 'center'}}
+        />
+        <Card.Section
+          padding-20
+          flex
+          content={[{text: 'All site', text70: true, dark10: true, flex: 1, textAlign: 'center'}]}
+          contentStyle={{alignItems: 'center'}}
+        />
+      </Card>
+    );
+  };
+
   render() {
     const {selected1, selected2} = this.state;
 
@@ -37,7 +60,7 @@ export default class CardsScreen extends Component {
               contentContainerStyle={{padding: 5}}
               showsHorizontalScrollIndicator={false}
             >
-              {_.times(4, i => {
+              {_.times(4, (i) => {
                 return (
                   <Card key={i} width={100} style={{marginRight: 20}}>
                     <View padding-15>
@@ -209,6 +232,10 @@ export default class CardsScreen extends Component {
                 </Card>
               );
             })}
+            <View row spread>
+              {this.renderCoupon({'marginR-10': true})}
+              {this.renderCoupon({'marginL-10': true})}
+            </View>
           </View>
         </ScrollView>
       </View>

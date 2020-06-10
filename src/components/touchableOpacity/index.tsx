@@ -1,11 +1,11 @@
 import React, {PureComponent} from 'react';
-import {TouchableOpacity as RNTouchableOpacity, TouchableOpacityProps} from 'react-native';
+import {TouchableOpacity as RNTouchableOpacity, TouchableOpacityProps as RNTouchableOpacityProps} from 'react-native';
 import _ from 'lodash';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps, ContainerModifiers} from '../../commons/new';
 // @ts-ignore
 import Incubator from '../../incubator';
 
-type IProps = TouchableOpacityProps & ContainerModifiers & {
+export type TouchableOpacityProps = RNTouchableOpacityProps & ContainerModifiers & {
   /**
    * background color for TouchableOpacity
    */
@@ -29,7 +29,7 @@ type IProps = TouchableOpacityProps & ContainerModifiers & {
   ref?: any;
 };
 
-type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & IProps;
+type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & TouchableOpacityProps;
 
 /**
  * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
@@ -132,4 +132,4 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   }
 }
 
-export default asBaseComponent<IProps>(forwardRef(TouchableOpacity));
+export default asBaseComponent<TouchableOpacityProps>(forwardRef(TouchableOpacity));
