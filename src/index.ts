@@ -14,6 +14,7 @@ export {default as Image} from './components/image';
 export {default as Overlay} from './components/overlay';
 export {default as RadioButton} from './components/radioButton/RadioButton';
 export {default as RadioGroup} from './components/radioButton/RadioGroup';
+export {default as TextInput} from './components/TextInput';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {

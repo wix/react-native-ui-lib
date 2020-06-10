@@ -81,6 +81,9 @@ export default {
   get TextField() {
     return require('./components/inputs/TextField').default;
   },
+  get TextInput() {
+    return require('./components/inputs/TextInput').default;
+  },
   get MaskedInput() {
     return require('./components/inputs/MaskedInput').default;
   },

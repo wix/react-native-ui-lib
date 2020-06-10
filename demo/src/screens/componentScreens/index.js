@@ -37,6 +37,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.TabBarScreen', () => require('./TabBarScreen').default);
   registrar('unicorn.components.TextScreen', () => require('./TextScreen').default);
   registrar('unicorn.components.TextFieldScreen', () => require('./TextFieldScreen').default);
+  registrar('unicorn.components.TextInputScreen', () => require('./TextInputScree').default);
   registrar('unicorn.wrappers.TouchableOpacityScreen', () => require('./TouchableOpacityScreen').default);
   registrar('unicorn.components.TourScreen', () => require('./TourScreen').default);
   registrar('unicorn.components.FeatureHighlightScreen', () => require('./FeatureHighlightScreen').default);
