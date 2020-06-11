@@ -25,5 +25,5 @@ export declare type CardSectionProps = ViewPropTypes & {
      */
     trailingIcon?: ImageProps;
 };
-declare const _default: React.ComponentType<CardSectionProps>;
+declare const _default: React.ComponentClass<CardSectionProps, any> | React.FunctionComponent<CardSectionProps>;
 export default _default;

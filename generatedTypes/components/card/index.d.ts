@@ -59,5 +59,11 @@ export declare type CardPropTypes = ViewPropTypes & TouchableOpacityProps & {
         hideIndicator?: boolean;
     };
 };
-declare const _default: React.ComponentType<CardPropTypes>;
+declare const _default: (React.ComponentClass<CardPropTypes, any> & {
+    Image: React.ComponentType<import("./CardImage").CardImageProps>;
+    Section: React.ComponentClass<import("./CardSection").CardSectionProps, any> | React.FunctionComponent<import("./CardSection").CardSectionProps>;
+}) | (React.FunctionComponent<CardPropTypes> & {
+    Image: React.ComponentType<import("./CardImage").CardImageProps>;
+    Section: React.ComponentClass<import("./CardSection").CardSectionProps, any> | React.FunctionComponent<import("./CardSection").CardSectionProps>;
+});
 export default _default;

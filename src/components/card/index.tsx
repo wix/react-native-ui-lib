@@ -369,4 +369,10 @@ function createStyles({
 Card.Image = CardImage;
 Card.Section = CardSection;
 
-export default asBaseComponent<CardPropTypes>(forwardRef(Card));
+export default asBaseComponent<
+  CardPropTypes,
+  {
+    Image: typeof CardImage;
+    Section: typeof CardSection;
+  }
+>(forwardRef(Card));

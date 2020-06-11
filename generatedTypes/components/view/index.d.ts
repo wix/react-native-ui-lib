@@ -23,5 +23,5 @@ export interface ViewPropTypes extends ViewProps, ContainerModifiers {
      */
     height?: string | number;
 }
-declare const _default: React.ComponentType<ViewPropTypes>;
+declare const _default: React.ComponentClass<ViewPropTypes, any> | React.FunctionComponent<ViewPropTypes>;
 export default _default;

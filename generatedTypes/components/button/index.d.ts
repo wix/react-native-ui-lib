@@ -321,5 +321,5 @@ declare class Button extends PureComponent<Props, ButtonState> {
     render(): JSX.Element;
 }
 export { Button };
-declare const _default: React.ComponentType<ButtonPropTypes>;
+declare const _default: React.ComponentClass<ButtonPropTypes, any> | React.FunctionComponent<ButtonPropTypes>;
 export default _default;

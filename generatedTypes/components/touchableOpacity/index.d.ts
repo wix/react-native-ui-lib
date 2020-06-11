@@ -27,5 +27,5 @@ export declare type TouchableOpacityProps = RNTouchableOpacityProps & ContainerM
     useNative?: boolean;
     ref?: any;
 };
-declare const _default: React.ComponentType<TouchableOpacityProps>;
+declare const _default: React.ComponentClass<TouchableOpacityProps, any> | React.FunctionComponent<TouchableOpacityProps>;
 export default _default;
