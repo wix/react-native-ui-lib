@@ -1,8 +1,7 @@
 import _ from 'lodash';
-import React, {useState, useEffect, useCallback, useRef} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 // eslint-disable-next-line no-unused-vars
 import {FlatListProps, ScrollViewProps} from 'react-native';
-import {Constants} from 'react-native-ui-lib';
 import forwardRef from './forwardRef';
 
 export type WithScrollEnablerProps = FlatListProps<any> | ScrollViewProps;
@@ -12,30 +11,10 @@ function withScrollEnabler<PROPS extends WithScrollEnablerProps>(WrappedComponen
     const [contentSize, setContentSize] = useState(0);
     const [layoutSize, setLayoutSize] = useState(0);
 
-    const scrollViewRef = useRef<WithScrollEnablerProps>(null);
-
-    useEffect(() => {
-      const {forwardedRef} = props;
-      if (_.isFunction(forwardedRef)) {
-        forwardedRef(scrollViewRef);
-      } else if (_.isObject(forwardedRef)) {
-        forwardedRef.current = scrollViewRef;
-      }
-    }, [scrollViewRef]);
-
     useEffect(() => {
       const isScrollEnabled = contentSize > layoutSize;
       if (isScrollEnabled !== scrollEnabled) {
         setScrollEnabled(isScrollEnabled);
-        if (Constants.isAndroid && scrollViewRef.current && scrollViewRef.current) {
-          if (_.isFunction(scrollViewRef.current.scrollTo)) {
-            // ListView
-            scrollViewRef.current.scrollTo({x: 0, y: 0, animated: false});
-          } else if (_.isFunction(scrollViewRef.current.scrollToIndex)) {
-            // FlatList
-            scrollViewRef.current.scrollToIndex({index: 0, animated: false});
-          }
-        }
       }
     }, [contentSize, layoutSize]);
 
@@ -68,7 +47,7 @@ function withScrollEnabler<PROPS extends WithScrollEnablerProps>(WrappedComponen
         onContentSizeChange={onContentSizeChange}
         onLayout={onLayout}
         scrollEnabled={scrollEnabled}
-        ref={scrollViewRef}
+        ref={props.forwardedRef}
       />
     );
   };
