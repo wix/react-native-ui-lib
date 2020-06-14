@@ -1,8 +1,9 @@
 import React from 'react';
-import { ViewStyle } from 'react-native';
+import { ViewStyle, ImageSourcePropType } from 'react-native';
 import { ViewPropTypes } from '../view';
 import { TextPropTypes } from '../text';
 import { ImageProps } from '../image';
+import { OverlayTypeType } from '../overlay';
 declare type ContentType = TextPropTypes & {
     text?: string;
 };
@@ -24,6 +25,19 @@ export declare type CardSectionProps = ViewPropTypes & {
      * Image props for a trailing icon to render after the text
      */
     trailingIcon?: ImageProps;
+    /**
+     * Will be used for the background when provided
+     */
+    imageSource?: ImageSourcePropType;
+    /**
+     * The type of overly to place on top of the image. Note: the image MUST have proper size, see examples in:
+     * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.js
+     */
+    overlayType?: OverlayTypeType;
+    /**
+     * The style for the background image
+     */
+    imageStyle?: ViewStyle;
 };
 declare const _default: React.ComponentClass<CardSectionProps, any> | React.FunctionComponent<CardSectionProps>;
 export default _default;

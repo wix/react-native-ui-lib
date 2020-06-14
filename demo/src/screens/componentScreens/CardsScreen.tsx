@@ -236,6 +236,39 @@ export default class CardsScreen extends Component {
               {this.renderCoupon({'marginR-10': true})}
               {this.renderCoupon({'marginL-10': true})}
             </View>
+
+            <View row spread height={160}>
+              <Card flex marginV-10 marginR-5 onPress={() => {}} useNative activeOpacity={1} activeScale={0.96}>
+                <Card.Section
+                  flex
+                  imageSource={featureIcon}
+                  imageStyle={{width: 25, height: 25, alignSelf: 'center'}}
+                  style={{justifyContent: 'center', backgroundColor: Colors.blue20}}
+                />
+                <Card.Section
+                  padding-20
+                  content={[{text: 'All site', text70: true, dark10: true, textAlign: 'center'}]}
+                  contentStyle={{alignItems: 'center'}}
+                />
+              </Card>
+
+              <Card flex marginV-10 marginL-5 onPress={() => {}} useNative activeOpacity={1} activeScale={0.96}>
+                <Card.Section
+                  flex
+                  imageSource={cardImage2}
+                  content={[
+                    {text: 'Special sale!', text70: true, blue10: true},
+                    {text: '10%', text60: true, blue10: true}
+                  ]}
+                  contentStyle={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+                />
+                <Card.Section
+                  padding-20
+                  content={[{text: 'All site', text70: true, dark10: true, textAlign: 'center'}]}
+                  contentStyle={{alignItems: 'center'}}
+                />
+              </Card>
+            </View>
           </View>
         </ScrollView>
       </View>
