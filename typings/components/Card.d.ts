@@ -9,6 +9,9 @@ import {
 import {BlurViewProperties} from '@react-native-community/blur';
 import {BaseComponent, PureBaseComponent} from '../commons';
 import {ColorValue} from '../style/colors';
+import {TextPropTypes} from '../../src/components/text';
+import {TouchableOpacityProps} from './TouchableOpacity';
+import {ImageProps} from './Image';
 
 type CardImagePositionOption = 'top' | 'bottom' | 'left' | 'right';
 
@@ -22,6 +25,16 @@ export interface CardImageProps {
   overlayType?: string;
 }
 
+export interface CardSectionContentProps extends TextPropTypes {
+  text: string;
+}
+
+export interface CardSectionProps {
+  content?: CardSectionContentProps;
+  leadingIcon?: ImageProps;
+  trailingIcon?: ImageProps;
+}
+
 export interface CardSelectionOptions {
   icon?: ImageRequireSource;
   color?: ColorValue;
@@ -29,7 +42,7 @@ export interface CardSelectionOptions {
   indicatorSize?: number;
 }
 
-export interface CardProps {
+export interface CardProps extends TouchableOpacityProps {
   width?: number | string;
   height?: number | string;
   row?: boolean;
@@ -48,4 +61,5 @@ export class Card extends PureBaseComponent<CardProps> {}
 
 export namespace Card {
   export class Image extends BaseComponent<CardImageProps> {}
+  export class Section extends BaseComponent<CardSectionProps> {}
 }

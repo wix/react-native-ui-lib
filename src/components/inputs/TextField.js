@@ -44,7 +44,7 @@ const ICON_LEFT_PADDING = 6;
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
 
 /**
- * @description: A wrapper for TextInput component with extra functionality like floating placeholder
+ * @description: A wrapper for TextInput component with extra functionality like floating placeholder and validations (This is an uncontrolled component)
  * @modifiers: Typography
  * @extends: TextInput
  * @extendslink: https://facebook.github.io/react-native/docs/textinput
