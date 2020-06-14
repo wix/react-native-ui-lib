@@ -9,5 +9,5 @@ interface RadioGroupPropTypes {
      */
     onValueChange?: (value: string | number | boolean) => void;
 }
-declare const _default: React.ComponentType<RadioGroupPropTypes>;
+declare const _default: React.ComponentClass<RadioGroupPropTypes, any> | React.FunctionComponent<RadioGroupPropTypes>;
 export default _default;

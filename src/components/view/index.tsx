@@ -3,7 +3,7 @@ import {View as RNView, SafeAreaView, Animated, ViewProps} from 'react-native';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps, ContainerModifiers} from '../../commons/new';
 import Constants from '../../helpers/Constants';
 
-interface ViewPropTypes extends ViewProps, ContainerModifiers {
+export interface ViewPropTypes extends ViewProps, ContainerModifiers {
   /**
    * If true, will render as SafeAreaView
    */

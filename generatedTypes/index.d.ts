@@ -5,9 +5,10 @@
  */
 export * from './style';
 export {withScrollEnabler} from './commons/new';
-export {default as View} from './components/view';
+export {default as Card} from './components/card';
+export {default as View, ViewPropTypes} from './components/view';
 export {default as Text} from './components/text';
-export {default as TouchableOpacity} from './components/touchableOpacity';
+export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';
 export {default as Button} from './components/button';
 export {default as Checkbox} from './components/checkbox';
 export {default as Image} from './components/image';
@@ -22,6 +23,10 @@ export {
   Avatar,
   Badge,
   Card,
+  // CardProps,
+  // CardImageProps,
+  // CardSectionProps,
+  // CardSectionContentProps,
   Carousel,
   ConnectionStatusBar,
   Dialog,
