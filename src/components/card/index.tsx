@@ -200,6 +200,14 @@ class Card extends PureComponent<PropTypes, State> {
     return borderRadius === undefined ? DEFAULT_BORDER_RADIUS : borderRadius;
   }
 
+  get children() {
+    const {children} = this.props;
+
+    return React.Children.toArray(children).filter((child) => {
+      return !_.isNull(child);
+    });
+  }
+
   renderSelection() {
     const {selectionOptions = {}, selected} = this.props;
     const {animatedSelected} = this.state;
@@ -245,22 +253,18 @@ class Card extends PureComponent<PropTypes, State> {
   }
 
   renderChildren = () => {
-    return React.Children.toArray(this.props.children)
-      .filter((child) => {
-        return !_.isNull(child);
-      })
-      .map((child, index) => {
-        const position = this.calcChildPosition(index);
-        const borderStyle = CardPresenter.generateBorderRadiusStyle({
-          position,
-          borderRadius: this.borderRadius
-        });
-        return (
-          <CardContext.Provider key={index} value={{position, borderStyle}}>
-            {child}
-          </CardContext.Provider>
-        );
+    return React.Children.map(this.props.children, (child, index) => {
+      const position = this.calcChildPosition(index);
+      const borderStyle = CardPresenter.generateBorderRadiusStyle({
+        position,
+        borderRadius: this.borderRadius
       });
+      return (
+        <CardContext.Provider key={index} value={{position, borderStyle}}>
+          {child}
+        </CardContext.Provider>
+      );
+    });
   };
 
   render() {
