@@ -92,7 +92,7 @@ export const navigationData = {
       {
         title: 'withScrollEnabler',
         tags: 'scroll enabled withScrollEnabler',
-        screen: 'unicorn.common.WithScrollEnablerScreen'
+        screen: 'unicorn.components.WithScrollEnablerScreen'
       },
       {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'}
     ]

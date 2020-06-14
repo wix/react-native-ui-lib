@@ -2,7 +2,6 @@ import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 
 export function registerScreens(registrar) {
 
-  require('./commonScreens').registerScreens(registrar);
   require('./componentScreens').registerScreens(registrar);
   require('./foundationScreens').registerScreens(registrar);
   require('./nativeComponentScreens').registerScreens(registrar);
