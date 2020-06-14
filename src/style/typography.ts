@@ -44,7 +44,7 @@ export class Typography {
     }
   }
 
-  async measureTextSize(text: string, typography: MeasureTextTypography = TypographyPresets.text70, containerWidth = Constants.screenWidth) {
+  async measureTextSize(text: string, typography: MeasureTextTypography = TypographyPresets.text70!, containerWidth = Constants.screenWidth) {
     const rnTextSize = require('react-native-text-size').default;
     if (text) {
       const size = await rnTextSize.measure({
