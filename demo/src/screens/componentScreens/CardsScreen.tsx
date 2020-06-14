@@ -19,7 +19,7 @@ export default class CardsScreen extends Component {
     return (
       <Card {...options} flex height={160} onPress={() => {}} useNative activeOpacity={1} activeScale={0.96}>
         <Card.Section
-          backgroundColor={Colors.red30}
+          bg-red30
           padding-20
           flex-3
           content={[
@@ -31,8 +31,8 @@ export default class CardsScreen extends Component {
         <Card.Section
           padding-20
           flex
-          content={[{text: 'All site', text70: true, dark10: true, flex: 1, textAlign: 'center'}]}
-          contentStyle={{alignItems: 'center'}}
+          content={[{text: 'All site', text70: true, dark10: true}]}
+          contentStyle={{alignItems: 'center', margin: 0, padding: 0}}
         />
       </Card>
     );
@@ -247,7 +247,7 @@ export default class CardsScreen extends Component {
                 />
                 <Card.Section
                   padding-20
-                  content={[{text: 'All site', text70: true, dark10: true, textAlign: 'center'}]}
+                  content={[{text: 'All site', text70: true, dark10: true}]}
                   contentStyle={{alignItems: 'center'}}
                 />
               </Card>
@@ -264,7 +264,7 @@ export default class CardsScreen extends Component {
                 />
                 <Card.Section
                   padding-20
-                  content={[{text: 'All site', text70: true, dark10: true, textAlign: 'center'}]}
+                  content={[{text: 'All site', text70: true, dark10: true}]}
                   contentStyle={{alignItems: 'center'}}
                 />
               </Card>

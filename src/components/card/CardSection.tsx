@@ -39,7 +39,7 @@ export type CardSectionProps = ViewPropTypes & {
    */
   overlayType?: OverlayTypeType;
   /**
-   * The style for the background image
+   * The style for the background image (default style is for a cover image)
    */
   imageStyle?: ViewStyle;
 };
@@ -149,8 +149,6 @@ function createStyles({width, height, context: {position}}: Props) {
       overflow: 'hidden'
     },
     image: {
-      width: undefined,
-      height: undefined,
       flex: 1,
       resizeMode: 'cover'
     }
