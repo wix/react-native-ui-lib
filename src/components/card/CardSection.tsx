@@ -1,13 +1,11 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, ViewStyle, ImageSourcePropType} from 'react-native';
+import {StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import View, {ViewPropTypes} from '../view';
 import Text, {TextPropTypes} from '../text';
 import Image, {ImageProps} from '../image';
-import {OverlayTypeType} from '../overlay';
 import asCardChild, {asCardChildProps} from './asCardChild';
-import * as CardPresenter from './CardPresenter';
 
 type ContentType = TextPropTypes & {text?: string};
 
@@ -34,14 +32,13 @@ export type CardSectionProps = ViewPropTypes & {
    */
   imageSource?: ImageSourcePropType;
   /**
-   * The type of overly to place on top of the image. Note: the image MUST have proper size, see examples in:
-   * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.js
+   * The style for the background image
    */
-  overlayType?: OverlayTypeType;
+  imageStyle?: ImageStyle;
   /**
-   * The style for the background image (default style is for a cover image)
+   * Other image props that will be passed to the image
    */
-  imageStyle?: ViewStyle;
+  imageProps?: ImageProps;
 };
 
 type Props = CardSectionProps & asCardChildProps;
@@ -52,13 +49,6 @@ type Props = CardSectionProps & asCardChildProps;
  */
 class CardSection extends PureComponent<Props> {
   static displayName = 'Card.Section';
-
-  styles: any;
-
-  constructor(props: Props) {
-    super(props);
-    this.styles = createStyles(props);
-  }
 
   renderContent = () => {
     const {
@@ -100,12 +90,7 @@ class CardSection extends PureComponent<Props> {
   };
 
   renderImage = () => {
-    const {
-      imageSource,
-      overlayType,
-      imageStyle = this.styles.image,
-      testID
-    } = this.props;
+    const {imageSource, imageStyle, imageProps, testID} = this.props;
     // not actually needed, instead of adding ts-ignore
     if (imageSource) {
       return (
@@ -113,8 +98,8 @@ class CardSection extends PureComponent<Props> {
           testID={`${testID}.mainImage`}
           source={imageSource}
           style={imageStyle}
-          overlayType={overlayType}
           customOverlayContent={this.renderContent()}
+          {...imageProps}
         />
       );
     }
@@ -128,7 +113,7 @@ class CardSection extends PureComponent<Props> {
       ...others
     } = this.props;
     return (
-      <View style={[this.styles.container, borderStyle, style]} {...others}>
+      <View style={[styles.container, borderStyle, style]} {...others}>
         {imageSource && this.renderImage()}
         {!imageSource && this.renderContent()}
       </View>
@@ -138,19 +123,8 @@ class CardSection extends PureComponent<Props> {
 
 export default asBaseComponent<CardSectionProps>(asCardChild(CardSection));
 
-function createStyles({width, height, context: {position}}: Props) {
-  const {top, left, right, bottom} = CardPresenter.extractPositionValues(
-    position
-  );
-  return StyleSheet.create({
-    container: {
-      height: left || right ? undefined : height,
-      width: top || bottom ? undefined : width,
-      overflow: 'hidden'
-    },
-    image: {
-      flex: 1,
-      resizeMode: 'cover'
-    }
-  });
-}
+const styles = StyleSheet.create({
+  container: {
+    overflow: 'hidden'
+  }
+});
