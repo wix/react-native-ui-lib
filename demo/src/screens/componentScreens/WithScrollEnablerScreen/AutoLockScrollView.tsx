@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {memo} from 'react';
+import React, {memo, useCallback} from 'react';
 import {
   ScrollView,
   ScrollViewProps,
@@ -22,48 +22,57 @@ const AutoLockScrollView = (props: AutoLockScrollViewProps) => {
   const numberOfItems = props.numberOfItems;
 
   const WithScrollEnabler = withScrollEnabler(
-    (props: WithScrollEnablerProps) => {
-      function renderItem(index: number) {
+    useCallback(
+      (props: WithScrollEnablerProps) => {
+        const renderItem = useCallback((index: number) => {
+          return (
+            <View key={index} style={styles.item}>
+              <Text>{index + 1}</Text>
+            </View>
+          );
+        }, []);
+
+        const onContentSizeChange = useCallback(
+          (contentWidth: number, contentHeight: number) => {
+            _.invoke(props, 'onContentSizeChange', contentWidth, contentHeight);
+            _.invoke(
+              props,
+              'scrollEnablerProps.onContentSizeChange',
+              contentWidth,
+              contentHeight
+            );
+          },
+          [
+            props.onContentSizeChange,
+            props.scrollEnablerProps.onContentSizeChange
+          ]
+        );
+
+        const onLayout = useCallback(
+          (nativeEvent: LayoutChangeEvent) => {
+            _.invoke(props, 'onLayout', nativeEvent);
+            _.invoke(props, 'scrollEnablerProps.onLayout', nativeEvent);
+          },
+          [props.onLayout, props.scrollEnablerProps.onLayout]
+        );
+
         return (
-          <View key={index} style={styles.item}>
-            <Text>{index + 1}</Text>
-          </View>
+          <ScrollView
+            {...props}
+            style={styles.scrollView}
+            contentContainerStyle={styles.scrollViewContainer}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            onContentSizeChange={onContentSizeChange}
+            onLayout={onLayout}
+            scrollEnabled={props.scrollEnablerProps.scrollEnabled}
+          >
+            {_.times(numberOfItems, renderItem)}
+          </ScrollView>
         );
-      }
-
-      function onContentSizeChange(
-        contentWidth: number,
-        contentHeight: number
-      ) {
-        _.invoke(props, 'onContentSizeChange', contentWidth, contentHeight);
-        _.invoke(
-          props,
-          'scrollEnablerProps.onContentSizeChange',
-          contentWidth,
-          contentHeight
-        );
-      }
-
-      function onLayout(nativeEvent: LayoutChangeEvent) {
-        _.invoke(props, 'onLayout', nativeEvent);
-        _.invoke(props, 'scrollEnablerProps.onLayout', nativeEvent);
-      }
-
-      return (
-        <ScrollView
-          {...props}
-          style={styles.scrollView}
-          contentContainerStyle={styles.scrollViewContainer}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          onContentSizeChange={onContentSizeChange}
-          onLayout={onLayout}
-          scrollEnabled={props.scrollEnablerProps.scrollEnabled}
-        >
-          {_.times(numberOfItems, renderItem)}
-        </ScrollView>
-      );
-    }
+      },
+      [numberOfItems]
+    )
   );
 
   return <WithScrollEnabler {...props} />;
