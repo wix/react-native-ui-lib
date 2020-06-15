@@ -152,8 +152,8 @@ class Card extends PureComponent<PropTypes, State> {
 
   // todo: add unit test
   calcChildPosition(childIndex: number) {
-    const {row, children} = this.props;
-    const childrenCount = React.Children.count(children);
+    const {row} = this.props;
+    const childrenCount = React.Children.count(this.children);
     const position = [];
 
     const childLocation = childIndex;
@@ -253,7 +253,7 @@ class Card extends PureComponent<PropTypes, State> {
   }
 
   renderChildren = () => {
-    return React.Children.map(this.props.children, (child, index) => {
+    return React.Children.map(this.children, (child, index) => {
       const position = this.calcChildPosition(index);
       const borderStyle = CardPresenter.generateBorderRadiusStyle({
         position,
