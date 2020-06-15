@@ -1,13 +1,13 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
-import {FlatList, ScrollView, StyleSheet, LayoutChangeEvent} from 'react-native';
-import memoize from 'memoize-one';
-import {Colors, Text, View, withScrollEnabler} from 'react-native-ui-lib';
-// @ts-ignore
-import {renderHeader, renderBooleanOption, renderSliderOption} from '../ExampleScreenPresenter';
-
-const LockedFlatList = withScrollEnabler(FlatList);
-const LockedScrollView = withScrollEnabler(ScrollView);
+import {LayoutChangeEvent} from 'react-native';
+import {Text, View} from 'react-native-ui-lib';
+import {
+  renderHeader,
+  renderBooleanOption,
+  renderSliderOption
+} from '../../ExampleScreenPresenter';
+import AutoLockScrollView from './AutoLockScrollView';
+import AutoLockFlatList from './AutoLockFlatList';
 
 class WithScrollEnablerScreen extends Component {
   state = {
@@ -21,7 +21,16 @@ class WithScrollEnablerScreen extends Component {
   };
 
   onContentSizeChange = (contentWidth: number, contentHeight: number) => {
-    this.setState({contentWidth, contentHeight});
+    const {
+      contentWidth: currentContentWidth,
+      contentHeight: currentContentHeight
+    } = this.state;
+    if (
+      currentContentWidth !== contentWidth ||
+      currentContentHeight !== contentHeight
+    ) {
+      this.setState({contentWidth, contentHeight});
+    }
   };
 
   onLayout = ({
@@ -35,48 +44,19 @@ class WithScrollEnablerScreen extends Component {
     }
   };
 
-  keyExtractor = (item: number) => {
-    return item.toString();
-  };
-
-  renderItem = (data: any) => {
-    const {isListView} = this.state;
-    const index = isListView ? data : data.index;
-
-    return (
-      <View key={index} style={styles.item}>
-        <Text>{index + 1}</Text>
-      </View>
-    );
-  };
-
-  getData = memoize((numberOfItems: number) => {
-    return [...Array(numberOfItems).keys()];
-  });
-
   renderList = () => {
     const {isListView, isHorizontal, numberOfItems} = this.state;
-    const Container = isListView ? LockedScrollView : LockedFlatList;
-    const flatListData = isListView ? undefined : this.getData(numberOfItems);
-    const renderItem = isListView ? undefined : this.renderItem;
-    const keyExtractor = this.keyExtractor;
+    const Container = isListView ? AutoLockScrollView : AutoLockFlatList;
 
     return (
+      // @ts-ignore
       <Container
         key={`${isHorizontal}`}
         horizontal={isHorizontal}
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollViewContainer}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
+        numberOfItems={numberOfItems}
         onContentSizeChange={this.onContentSizeChange}
         onLayout={this.onLayout}
-        data={flatListData}
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
-      >
-        {isListView && _.times(numberOfItems, this.renderItem)}
-      </Container>
+      />
     );
   };
 
@@ -106,12 +86,17 @@ class WithScrollEnablerScreen extends Component {
             {renderBooleanOption.call(this, listTypeText, 'isListView')}
           </View>
         </View>
-        {renderSliderOption.call(this, 'Number of items shown', 'numberOfItems', {
-          min: 1,
-          max: 5,
-          step: 1,
-          initial: 3
-        })}
+        {renderSliderOption.call(
+          this,
+          'Number of items shown',
+          'numberOfItems',
+          {
+            min: 1,
+            max: 5,
+            step: 1,
+            initial: 3
+          }
+        )}
       </>
     );
   };
@@ -129,20 +114,3 @@ class WithScrollEnablerScreen extends Component {
 }
 
 export default WithScrollEnablerScreen;
-
-const styles = StyleSheet.create({
-  scrollView: {
-    height: 240
-  },
-  scrollViewContainer: {
-    alignItems: 'center'
-  },
-  item: {
-    width: 100,
-    height: 100,
-    margin: 9,
-    backgroundColor: Colors.grey40,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});

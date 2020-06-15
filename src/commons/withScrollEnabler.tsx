@@ -1,14 +1,23 @@
 import _ from 'lodash';
 import React, {useState, useEffect, useCallback} from 'react';
 // eslint-disable-next-line no-unused-vars
-import {FlatListProps, ScrollViewProps} from 'react-native';
+import {FlatListProps, ScrollViewProps, LayoutChangeEvent} from 'react-native';
 import forwardRef, {ForwardRefInjectedProps} from './forwardRef';
 
-export type WithScrollEnablerProps = (FlatListProps<any> | ScrollViewProps) & {
+export type ScrollEnablerProps = {
+  onContentSizeChange: (contentWidth: number, contentHeight: number) => void;
+  onLayout: (event: LayoutChangeEvent) => void;
+  scrollEnabled: boolean;
+};
+
+type SupportedViews = FlatListProps<any> | ScrollViewProps;
+
+export type WithScrollEnablerProps = SupportedViews & {
+  scrollEnablerProps: ScrollEnablerProps;
   ref?: any;
 };
-type PropTypes = ForwardRefInjectedProps & WithScrollEnablerProps;
-function withScrollEnabler<PROPS extends WithScrollEnablerProps>(
+type PropTypes = ForwardRefInjectedProps & SupportedViews;
+function withScrollEnabler<PROPS extends SupportedViews>(
   WrappedComponent: React.ComponentType<WithScrollEnablerProps>
 ): React.ComponentType<PROPS> {
   const ScrollEnabler = (props: PropTypes) => {
@@ -29,7 +38,6 @@ function withScrollEnabler<PROPS extends WithScrollEnablerProps>(
         if (size !== contentSize) {
           setContentSize(size);
         }
-        _.invoke(props, 'onContentSizeChange', contentWidth, contentHeight);
       },
       [props]
     );
@@ -45,7 +53,6 @@ function withScrollEnabler<PROPS extends WithScrollEnablerProps>(
         if (size !== layoutSize) {
           setLayoutSize(size);
         }
-        _.invoke(props, 'onLayout', event);
       },
       [props]
     );
@@ -53,9 +60,7 @@ function withScrollEnabler<PROPS extends WithScrollEnablerProps>(
     return (
       <WrappedComponent
         {...props}
-        onContentSizeChange={onContentSizeChange}
-        onLayout={onLayout}
-        scrollEnabled={scrollEnabled}
+        scrollEnablerProps={{onLayout, scrollEnabled, onContentSizeChange}}
         ref={props.forwardedRef}
       />
     );
