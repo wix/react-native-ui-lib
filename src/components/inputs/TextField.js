@@ -172,7 +172,11 @@ export default class TextField extends BaseInput {
       iconColor: PropTypes.string,
       onPress: PropTypes.func,
       style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
-    })
+    }),
+    /**
+     * Pass to render a leading icon to the TextInput value. Accepts Image props
+     */
+    leadingIcon: PropTypes.shape(Image.propTypes)
   };
 
   static defaultProps = {
@@ -216,7 +220,7 @@ export default class TextField extends BaseInput {
     const translate = width / 2 - (width * FLOATING_PLACEHOLDER_SCALE) / 2;
     this.setState({floatingPlaceholderTranslate: translate / FLOATING_PLACEHOLDER_SCALE});
   };
-
+  
   /** Actions */
   generatePropsWarnings(props) {
     if (props.maxLength === 0) {
@@ -389,6 +393,9 @@ export default class TextField extends BaseInput {
             style={[
               this.styles.placeholder,
               typography,
+              // TODO: we need to exclude completely any dependency on line height
+              // in this component since it always breaks alignments
+              {lineHeight: undefined},
               {
                 transform: [
                   {
@@ -400,7 +407,7 @@ export default class TextField extends BaseInput {
                   {
                     translateY: floatingPlaceholderState.interpolate({
                       inputRange: [0, 1],
-                      outputRange: [25, 0]
+                      outputRange: [0, -25]
                     })
                   },
                   {
@@ -627,7 +634,7 @@ export default class TextField extends BaseInput {
   }
 
   render() {
-    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
+    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline, leadingIcon} = this.getThemeProps();
     const underlineStateColor = this.getStateColor(underlineColor || UNDERLINE_COLOR_BY_STATE);
 
     return (
@@ -642,9 +649,12 @@ export default class TextField extends BaseInput {
             {paddingTop: this.getTopPaddings()}
           ]}
         >
+          {leadingIcon && <Image {...leadingIcon} onLayout={this.onLeadingIconLayout}/>}
           {this.renderPrefix()}
-          {this.renderPlaceholder()}
-          {expandable ? this.renderExpandableInput() : this.renderTextInput()}
+          <View row flexG>
+            {this.renderPlaceholder()}
+            {expandable ? this.renderExpandableInput() : this.renderTextInput()}
+          </View>
           {this.renderRightButton()}
           {this.renderRightIcon()}
           {expandable && this.renderExpandableModal()}
