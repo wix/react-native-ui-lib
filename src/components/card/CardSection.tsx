@@ -95,7 +95,7 @@ class CardSection extends PureComponent<Props> {
     if (imageSource) {
       return (
         <Image
-          testID={`${testID}.mainImage`}
+          testID={`${testID}.image`}
           source={imageSource}
           style={imageStyle}
           customOverlayContent={this.renderContent()}
