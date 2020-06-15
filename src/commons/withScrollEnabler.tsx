@@ -39,7 +39,7 @@ function withScrollEnabler<PROPS extends SupportedViews>(
           setContentSize(size);
         }
       },
-      [props]
+      [props.horizontal]
     );
 
     const onLayout = useCallback(
@@ -54,7 +54,7 @@ function withScrollEnabler<PROPS extends SupportedViews>(
           setLayoutSize(size);
         }
       },
-      [props]
+      [props.horizontal]
     );
 
     return (
