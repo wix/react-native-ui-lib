@@ -1,7 +1,116 @@
 import React, { PureComponent } from 'react';
-import { ImageStyle, LayoutChangeEvent } from 'react-native';
-import { BaseComponentInjectedProps, ForwardRefInjectedProps } from '../../commons/new';
-import { ButtonPropTypes, ButtonState } from './type';
+import { LayoutChangeEvent, ImageStyle, TextStyle } from 'react-native';
+import { BaseComponentInjectedProps, ForwardRefInjectedProps, TypographyModifiers, ColorsModifiers, BackgroundColorModifier, MarginModifiers } from '../../commons/new';
+import { TextPropTypes } from '../text';
+export declare type ButtonPropTypes = TextPropTypes & TypographyModifiers & ColorsModifiers & BackgroundColorModifier & MarginModifiers & {
+    /**
+     * Text to show inside the button
+     */
+    label?: string;
+    /**
+     * The Button text color (inherited from Text component)
+     */
+    color?: string;
+    /**
+     * Icon image source
+     */
+    iconSource?: object | number | Function;
+    /**
+     * Icon image style
+     */
+    iconStyle?: ImageStyle;
+    /**
+     * Should the icon be right to the label
+     */
+    iconOnRight?: boolean;
+    /**
+     * Color of the button background
+     */
+    backgroundColor?: string;
+    /**
+     * Size of the button [large, medium, small, xSmall]
+     */
+    size?: 'xSmall' | 'small' | 'medium' | 'large';
+    /**
+     * Custom border radius.
+     */
+    borderRadius?: number;
+    /**
+     * Actions handler
+     */
+    onPress?: (props: any) => void;
+    /**
+     * Disable interactions for the component
+     */
+    disabled?: boolean;
+    /**
+     * Button will have outline style
+     */
+    outline?: boolean;
+    /**
+     * The outline color
+     */
+    outlineColor?: string;
+    /**
+     * The outline width
+     */
+    outlineWidth?: number;
+    /**
+     * Button will look like a link
+     */
+    link?: boolean;
+    /**
+     * label color for when it's displayed as link
+     */
+    linkColor?: string;
+    /**
+     * Additional styles for label text
+     */
+    labelStyle?: TextStyle;
+    /**
+     * Props that will be passed to the button's Text label.
+     */
+    labelProps?: object;
+    /**
+     * should the button act as a coast to coast button (no border radius)
+     */
+    fullWidth?: boolean;
+    /**
+     * should the button be a round button
+     */
+    round?: boolean;
+    /**
+     * Control shadow visibility (iOS-only)
+     */
+    enableShadow?: boolean;
+    /**
+     * avoid inner button padding
+     */
+    avoidInnerPadding?: boolean;
+    /**
+     * avoid minimum width constraints
+     */
+    avoidMinWidth?: boolean;
+    /**
+     * callback for getting activeBackgroundColor (e.g. (calculatedBackgroundColor, prop) => {...})
+     * better set using ThemeManager
+     */
+    getActiveBackgroundColor?: (backgroundColor: string, props: any) => string;
+    /**
+     * should animate layout change
+     * Note?: For Android you must set 'setLayoutAnimationEnabledExperimental(true)' via RN's 'UIManager'
+     */
+    animateLayout?: boolean;
+    /**
+     * the direction of the animation ('left' and 'right' will effect the button's own alignment)
+     */
+    animateTo?: 'center' | 'left' | 'right';
+};
+export declare type ButtonState = {
+    size?: number;
+    borderRadius?: number;
+    isLandscape?: boolean;
+};
 declare type Props = ButtonPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
 /**
  * @description: Basic button component
@@ -9,7 +118,7 @@ declare type Props = ButtonPropTypes & BaseComponentInjectedProps & ForwardRefIn
  * @extendslink: docs/TouchableOpacity
  * @modifiers: margin, background
  * @gif: https://media.giphy.com/media/xULW8j5WzsuPytqklq/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.tsx
  */
 declare class Button extends PureComponent<Props, ButtonState> {
     static displayName: string;
@@ -58,14 +167,18 @@ declare class Button extends PureComponent<Props, ButtonState> {
             elevation: number;
         };
         text: {
+            backgroundColor: string;
+            flex: number;
+            flexDirection: "row";
+        } | {
             color?: string | undefined;
             fontFamily?: string | undefined;
             fontSize?: number | undefined;
             fontStyle?: "normal" | "italic" | undefined;
-            fontWeight?: "200" | "300" | "400" | "600" | "500" | "700" | "800" | "900" | "normal" | "bold" | "100" | undefined;
+            fontWeight?: "normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900" | undefined;
             letterSpacing?: number | undefined;
             lineHeight?: number | undefined;
-            textAlign?: "center" | "left" | "right" | "auto" | "justify" | undefined;
+            textAlign?: "auto" | "left" | "right" | "center" | "justify" | undefined;
             textDecorationLine?: "none" | "underline" | "line-through" | "underline line-through" | undefined;
             textDecorationStyle?: "solid" | "double" | "dotted" | "dashed" | undefined;
             textDecorationColor?: string | undefined;
@@ -75,7 +188,7 @@ declare class Button extends PureComponent<Props, ButtonState> {
                 height: number;
             } | undefined;
             textShadowRadius?: number | undefined;
-            textTransform?: "none" | "uppercase" | "capitalize" | "lowercase" | undefined;
+            textTransform?: "none" | "capitalize" | "uppercase" | "lowercase" | undefined;
             testID?: string | undefined;
             fontVariant?: import("react-native").FontVariant[] | undefined;
             writingDirection?: "auto" | "ltr" | "rtl" | undefined;
@@ -105,14 +218,14 @@ declare class Button extends PureComponent<Props, ButtonState> {
             borderWidth?: number | undefined;
             opacity?: number | undefined;
             elevation?: number | undefined;
-            alignContent?: "center" | "flex-start" | "flex-end" | "space-between" | "space-around" | "stretch" | undefined;
+            alignContent?: "center" | "flex-start" | "flex-end" | "stretch" | "space-between" | "space-around" | undefined;
             alignItems?: "center" | "flex-start" | "flex-end" | "stretch" | "baseline" | undefined;
-            alignSelf?: "center" | "flex-start" | "flex-end" | "auto" | "stretch" | "baseline" | undefined;
+            alignSelf?: "auto" | "center" | "flex-start" | "flex-end" | "stretch" | "baseline" | undefined;
             aspectRatio?: number | undefined;
             borderEndWidth?: string | number | undefined;
             borderStartWidth?: string | number | undefined;
             bottom?: string | number | undefined;
-            display?: "flex" | "none" | undefined;
+            display?: "none" | "flex" | undefined;
             end?: string | number | undefined;
             flex: number;
             flexBasis?: string | number | undefined;
@@ -167,7 +280,7 @@ declare class Button extends PureComponent<Props, ButtonState> {
             scaleY?: number | undefined;
             translateX?: number | undefined;
             translateY?: number | undefined;
-            textAlignVertical?: "center" | "top" | "bottom" | "auto" | undefined;
+            textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
             includeFontPadding?: boolean | undefined;
         };
     };
@@ -180,7 +293,7 @@ declare class Button extends PureComponent<Props, ButtonState> {
     get isFilled(): boolean;
     get isIconButton(): boolean | 0 | undefined;
     getBackgroundColor(): any;
-    getActiveBackgroundColor(): any;
+    getActiveBackgroundColor(): string | undefined;
     getLabelColor(): string | undefined;
     getLabelSizeStyle(): object;
     getContainerSizeStyle(): any;
@@ -212,5 +325,5 @@ declare class Button extends PureComponent<Props, ButtonState> {
     render(): JSX.Element;
 }
 export { Button };
-declare const _default: React.ComponentType<ButtonPropTypes>;
+declare const _default: React.ComponentClass<ButtonPropTypes, any> | React.FunctionComponent<ButtonPropTypes>;
 export default _default;

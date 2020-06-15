@@ -6,7 +6,6 @@ import {Colors, Typography} from '../../style';
 import {BaseComponent} from '../../commons';
 import Validators from './Validators';
 
-
 const VALIDATORS = {
   REQUIRED: 'required',
   EMAIL: 'email',
@@ -90,7 +89,7 @@ export default class BaseInput extends BaseComponent {
   onFocus = (...args) => {
     _.invoke(this.props, 'onFocus', ...args);
     this.setState({focused: true});
-  }
+  };
 
   onBlur = (...args) => {
     _.invoke(this.props, 'onBlur', ...args);
@@ -100,11 +99,11 @@ export default class BaseInput extends BaseComponent {
     if (validateOnBlur) {
       this.validate();
     }
-  }
+  };
 
   onChange = (event) => {
     _.invoke(this.props, 'onChange', event);
-  }
+  };
 
   onChangeText = (text) => {
     _.invoke(this.props, 'onChangeText', text);
@@ -114,7 +113,7 @@ export default class BaseInput extends BaseComponent {
     if (validateOnChange) {
       setImmediate(this.validate);
     }
-  }
+  };
 
   /** Actions */
   getTypography() {
@@ -142,16 +141,17 @@ export default class BaseInput extends BaseComponent {
     this.input.clear();
   }
 
-  validate = (value = _.get(this, 'state.value'), dryRun) => { // 'input.state.value'
+  validate = (value = _.get(this, 'state.value'), dryRun) => {
+    // 'input.state.value'
     const {validate} = this.props;
     if (!validate) {
       return;
     }
-
+    
+    
     let isValid = true;
     const inputValidators = _.isArray(validate) ? validate : [validate];
     let failingValidatorIndex;
-
     // get validators
     for (let index = 0; index < inputValidators.length; index++) {
       const validator = inputValidators[index];
@@ -163,7 +163,7 @@ export default class BaseInput extends BaseComponent {
       }
 
       // validate
-      if (!validatorFunction(value)) {
+      if (validatorFunction && !validatorFunction(value)) {
         isValid = false;
         failingValidatorIndex = index;
         break;
@@ -198,7 +198,7 @@ export default class BaseInput extends BaseComponent {
   isRequiredField() {
     const {validate} = this.props;
     if (_.isArray(validate)) {
-      return validate.indexOf[VALIDATORS.REQUIRED] !== -1;
+      return validate.indexOf(VALIDATORS.REQUIRED) !== -1;
     }
     return validate === VALIDATORS.REQUIRED;
   }

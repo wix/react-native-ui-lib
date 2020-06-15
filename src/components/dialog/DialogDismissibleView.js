@@ -133,6 +133,8 @@ class DialogDismissibleView extends PureComponent {
   getHiddenLocation = (left, top) => {
     const {direction} = this.props;
     const topInset = Constants.isIphoneX ? Constants.getSafeAreaInsets().top : Constants.isIOS ? 20 : 0;
+    const bottomInset = Constants.isIphoneX ? Constants.getSafeAreaInsets().bottom : Constants.isIOS ? 20 : 0;
+    
     const result = {left: 0, top: 0};
     switch (direction) {
       case PanningProvider.Directions.LEFT:
@@ -146,7 +148,7 @@ class DialogDismissibleView extends PureComponent {
         break;
       case PanningProvider.Directions.DOWN:
       default:
-        result.top = Constants.screenHeight - top;
+        result.top = Constants.screenHeight - top + bottomInset;
         break;
     }
 
@@ -157,7 +159,7 @@ class DialogDismissibleView extends PureComponent {
     const animation = Animated.timing(this.animatedValue, {
       toValue,
       duration: 400,
-      easing: Easing.bezier(0.165, 0.84, 0.44, 1),
+      easing: Easing.bezier(0.65, 0, 0.35, 1),
       useNativeDriver: true
     });
 

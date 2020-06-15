@@ -83,7 +83,23 @@ class NewDrawer extends PureBaseComponent {
     /**
      * Callback for just before left item full swipe
      */
-    onWillFullSwipeLeft: PropTypes.func
+    onWillFullSwipeLeft: PropTypes.func,
+    /**
+     * Whether to allow a full right swipe
+     */
+    fullSwipeRight: PropTypes.bool,
+    /**
+     * Threshold for a right full swipe (0-1)
+     */
+    fullRightThreshold: PropTypes.number,
+    /**
+     * Callback for right item full swipe
+     */
+    onFullSwipeRight: PropTypes.func,
+    /**
+     * Callback for just before right item full swipe
+     */
+    onWillFullSwipeRight: PropTypes.func
   };
 
   static defaultProps = {
@@ -123,6 +139,22 @@ class NewDrawer extends PureBaseComponent {
     this._swipeableRow.current.close();
   };
 
+  openLeft = () => {
+    this._swipeableRow.current.openLeft();
+  };
+
+  openLeftFull = () => {
+    this._swipeableRow.current.openLeftFull();
+  };
+
+  openRight = () => {
+    this._swipeableRow.current.openRight();
+  };
+
+  openRightFull = () => {
+    this._swipeableRow.current.openRightFull();
+  };
+
   /** Events */
 
   onActionPress = (item) => {
@@ -139,7 +171,6 @@ class NewDrawer extends PureBaseComponent {
   onSwipeableWillClose = () => {
     _.invoke(this.props, 'onSwipeableWillClose', this.props);
   };
-  
   /** Accessability */
 
   getAccessibilityActions(withOnPress = false) {

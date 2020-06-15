@@ -19,7 +19,7 @@ module.exports = {
       recommended: true,
     },
     messages: {
-      uiLib: 'This component is deprecated or containes deprecated props.',
+      uiLib: 'This component is deprecated or contains deprecated props.',
     },
     fixable: 'code',
     schema: [MAP_SCHEMA],
@@ -48,7 +48,7 @@ module.exports = {
                   return fixer.replaceText(node.name, fix);
                 case FIX_TYPES.COMPONENT_NAME:
                   if (node.type === 'ImportDeclaration') {
-                    const index = getSpecifierIndex(node, options.name);
+                    const index = utils.getSpecifierIndex(node, options.name);
                     return fixer.replaceText(node.specifiers[index], fix);
                   }
                   return fixer.replaceText(node.name, fix);
@@ -61,19 +61,6 @@ module.exports = {
       } catch (err) {
         console.log('Found error in: ', context.getFilename());
       }
-    }
-
-    function getSpecifierIndex(node, name) {
-      let matchIndex;
-      if (node && node.specifiers) {
-        _.forEach(node.specifiers, (s, index) => {
-          const x = _.get(s, 'imported.name');
-          if (x === name) {
-            matchIndex = index;
-          }
-        });
-      }
-      return matchIndex;
     }
 
     function checkPropDeprecation(node, propName, deprecatedPropList, componentName) {

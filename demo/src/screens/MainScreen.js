@@ -113,7 +113,7 @@ class MainScreen extends Component {
         const filteredMenuSection = _.filter(menuSection.screens, menuItem => {
           const {title, description, tags} = menuItem;
           return (
-            _.includes(_.lowerCase(title), _.toLower(filterText)) ||
+            _.includes(_.toLower(title), _.toLower(filterText)) ||
             _.includes(_.toLower(description), _.toLower(filterText)) ||
             _.includes(_.toLower(tags), _.toLower(filterText))
           );
@@ -137,6 +137,7 @@ class MainScreen extends Component {
       <TextField
         ref={r => (this.input = r)}
         value={this.state.filterText}
+        testID="uilib.search_for_component"
         placeholder="Search for your component..."
         onChangeText={this.filterExplorerScreens}
         onBlur={this.onSearchBoxBlur}
@@ -242,8 +243,8 @@ class MainScreen extends Component {
         {showResults && this.renderSearchResults(filteredNavigationData)}
 
         {showCarousel && (
-          <TabController asCarousel>
-            <TabController.TabBar testID={'mainScreenTabBar'} items={_.map(data, section => ({label: section.title, testID: `section.${section.title}`}))}/>
+          <TabController asCarousel items={_.map(data, section => ({label: section.title, testID: `section.${section.title}`}))}>
+            <TabController.TabBar testID={'mainScreenTabBar'}/>
             {this.renderPages(data)}
           </TabController>
         )}

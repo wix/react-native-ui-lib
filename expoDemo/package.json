@@ -4,12 +4,14 @@
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "start": "react-native start --projectRoot='.'",
-    "test": "jest"
+    "test": "jest",
+    "expo": "expo start"
   },
   "dependencies": {
     "@react-native-community/blur": "^3.4.1",
     "@react-native-community/datetimepicker": "^2.2.2",
     "@react-native-community/masked-view": "^0.1.6",
+    "@react-native-community/netinfo": "^4.6.0",
     "@react-navigation/native": "^5.0.8",
     "@react-navigation/stack": "^5.1.0",
     "expo": "~36.0.0",
@@ -21,9 +23,9 @@
     "react-native-reanimated": "~1.4.0",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "2.0.0-alpha.12",
+    "react-native-ui-lib": "snapshot",
     "react-native-unimodules": "~0.7.0",
     "react-native-web": "~0.11.7",
-    "react-native-ui-lib": "snapshot",
     "unicorn-demo-app": "snapshot"
   },
   "devDependencies": {

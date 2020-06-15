@@ -63,7 +63,7 @@ class NativePicker extends BaseComponent {
       <PickerDialog
         {...this.getThemeProps()}
         visible={showDialog}
-        disablePan
+        panDirection={null}
         onDismiss={this.onCancel}
         onValueChange={this.onValueChange}
         selectedValue={selectedValue}

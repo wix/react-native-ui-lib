@@ -1,11 +1,11 @@
 import React, {PureComponent} from 'react';
-import {TouchableOpacity as RNTouchableOpacity, TouchableOpacityProps} from 'react-native';
+import {TouchableOpacity as RNTouchableOpacity, TouchableOpacityProps as RNTouchableOpacityProps} from 'react-native';
 import _ from 'lodash';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps, ContainerModifiers} from '../../commons/new';
 // @ts-ignore
 import Incubator from '../../incubator';
 
-type IProps = TouchableOpacityProps & ContainerModifiers & {
+export type TouchableOpacityProps = RNTouchableOpacityProps & ContainerModifiers & {
   /**
    * background color for TouchableOpacity
    */
@@ -29,7 +29,7 @@ type IProps = TouchableOpacityProps & ContainerModifiers & {
   ref?: any;
 };
 
-type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & IProps;
+type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & TouchableOpacityProps;
 
 /**
  * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
@@ -37,7 +37,7 @@ type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & IProps;
  * @modifiers: margins, paddings, alignments, background, borderRadius
  * @extendslink: https://facebook.github.io/react-native/docs/touchableopacity.html
  * @gif: https://media.giphy.com/media/xULW8AMIgw7l31zjm8/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.tsx
  */
 class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   static displayName = 'TouchableOpacity';
@@ -132,4 +132,4 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   }
 }
 
-export default asBaseComponent<IProps>(forwardRef(TouchableOpacity));
+export default asBaseComponent<TouchableOpacityProps>(forwardRef(TouchableOpacity));

@@ -27,6 +27,7 @@ export default class BasicTextFieldScreen extends Component {
 
     this.state = {
       hideUnderline: false,
+      withPrefix: false,
       underlineColor: undefined,
       guidingText: GUIDING_TEXTS.none,
       disabled: false,
@@ -43,6 +44,7 @@ export default class BasicTextFieldScreen extends Component {
   render() {
     const {
       hideUnderline,
+      withPrefix,
       underlineColor,
       guidingText,
       titleColor,
@@ -64,6 +66,7 @@ export default class BasicTextFieldScreen extends Component {
             placeholder={disabled ? 'Disabled' : 'Placeholder'}
             hideUnderline={hideUnderline}
             underlineColor={underlineColor}
+            prefix={withPrefix ? 'prefix://' : undefined}
             title={guidingText === GUIDING_TEXTS.useTitle ? 'Title' : undefined}
             titleColor={titleColor}
             floatingPlaceholder={guidingText === GUIDING_TEXTS.floatingPlaceholder}
@@ -94,6 +97,7 @@ export default class BasicTextFieldScreen extends Component {
             {renderBooleanOption.call(this, 'Disabled', 'disabled')}
             {renderBooleanOption.call(this, 'Centered', 'centered')}
             {renderBooleanOption.call(this, 'Hide Underline', 'hideUnderline')}
+            {renderBooleanOption.call(this, 'With Prefix', 'withPrefix')}
             {renderColorOption.call(this, 'Underline Color', 'underlineColor')}
             {renderRadioGroup.call(this, 'Guiding Text', 'guidingText', GUIDING_TEXTS)}
             {renderColorOption.call(this, 'Title Color', 'titleColor')}

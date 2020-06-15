@@ -39,76 +39,84 @@ module.exports = {
       }
     }
 
-    // Path
-    let pathString = '';
+    const defaultImportName = 'Assets';
+    const {deprecations, source} = context.options[0];
+    let localImportSpecifier;
 
-    function deprecationCheck(node) {
-      if (node) {
-        const check = isAssetsObject(node);
-        if (check && pathString !== '') {
-          const deprecatedObject = getDeprecatedObject(pathString);
-          if (deprecatedObject) {
-            const {path, message, fix} = deprecatedObject;
-            reportDeprecatedAssets(node, {path, message, fix});
-          }
-        }
+    function setLocalImportSpecifierFromImport(node) {
+      localImportSpecifier = utils.getLocalImportSpecifier(node, source, defaultImportName);
+    }
+
+    function setLocalImportSpecifierFromRequire(node) {    
+      if (node.init && node.init.callee && node.init.callee.name === 'require') {
+        if (node.id && node.id.properties) {
+          _.map(node.id.properties, property => {
+            if (property.key && property.key.name === defaultImportName) {
+              if (property.value && property.value.name) {
+                localImportSpecifier = property.value.name;
+              } else {
+                localImportSpecifier = property.key.name;
+              }
+            }
+          });
+        } 
       }
     }
 
-    function isAssetsObject(node) {
+    function getAssetString(node, pathString = '') {
       if (node) {
         if (node.object) {
-          if (node.property && node.property.name) {
-            pathString = (pathString === '') ? `${node.property.name}` : `${node.property.name}.${pathString}`;
-            return isAssetsObject(node.object);
+          if (node.property) {
+            let name;
+            if (node.property.type === 'Identifier' && node.property.name) {
+              name = node.property.name;
+            } else if (node.property.type === 'Literal' && node.property.value) {
+              name = node.property.value;
+            } else if (node.property.type === 'CallExpression' && node.property.callee && node.property.callee.name) {
+              // TODO: ¯\_(ツ)_/¯
+            }
+
+            if (name) {
+              pathString = (pathString === '') ? `${name}` : `${name}.${pathString}`;
+              return getAssetString(node.object, pathString);
+            }
           }
-        } else if (node.name === assetsName) {
+        } else if (node.name === localImportSpecifier) {
           pathString = `${node.name}.${pathString}`;
-          return true;
+          return pathString;
         }
       }
-      pathString = '';
-      return false;
+
+      return undefined;
     }
 
-    const {deprecations} = context.options[0];
-
-    function getDeprecatedObject(path) {
-      return _.find(deprecations, {path});
-    }
-
-    function checkSpreadAttribute(node) {
-      const spreadSource = utils.findValueNodeOfIdentifier(node.argument.name, context.getScope());
-      if (spreadSource && spreadSource.properties) {
-        _.forEach(spreadSource.properties, (property) => {
-          deprecationCheck(property);
-        });
+    function findAndReportDeprecation(node, possibleDeprecation) {
+      possibleDeprecation = possibleDeprecation.replace(localImportSpecifier, defaultImportName);
+      const deprecatedObject = _.find(deprecations, {path: possibleDeprecation});
+      if (deprecatedObject) {
+        reportDeprecatedAssets(node, deprecatedObject);
       }
     }
 
-    // Import    
-    const {source} = context.options[0];
-    const assetsName = 'Assets';
-    let shouldCheckDeprecation = false;
-
-    function checkAssetsImport(node) {
-      const importSource = node.source.value;
-      
-      if (source === importSource) {
-        const specifiers = node.specifiers;
-        if (specifiers) {
-          shouldCheckDeprecation = _.find(specifiers, e => e.local.name === assetsName);
-        }
+    function testMemberDeprecation(node) {
+      const assetString = getAssetString(node);
+      if (assetString) {
+        findAndReportDeprecation(node, assetString);
       }
     }
 
     return {
-      ImportDeclaration: node => checkAssetsImport(node),
-      // MemberExpression: node => shouldCheckDeprecation && deprecationCheck(node),
-      VariableDeclarator: node => shouldCheckDeprecation && deprecationCheck(node.init),
-      Property: node => shouldCheckDeprecation && deprecationCheck(node.value),
-      JSXAttribute: node => shouldCheckDeprecation && node.value && deprecationCheck(node.value.expression),
-      JSXSpreadAttribute: node => shouldCheckDeprecation && checkSpreadAttribute(node),
+      ImportDeclaration: node => !localImportSpecifier && setLocalImportSpecifierFromImport(node),
+      VariableDeclarator: node => !localImportSpecifier && setLocalImportSpecifierFromRequire(node),
+      MemberExpression: node => localImportSpecifier && testMemberDeprecation(node),
+
+      // ExpressionStatement: node => testExpressionStatement(node),
+      // AssignmentExpression: node => testAssignmentExpression(node),
+      // JSXAttribute: node => testJSXAttribute(node),
+      // JSXOpeningElement: node => testJSXOpeningElement(node),
+      // JSXSpreadAttribute: node => testJSXSpreadAttribute(node),
+      // ObjectExpression: node => testObjectExpression(node),
+      // Property: node => testProperty(node),
     };
   },
 };

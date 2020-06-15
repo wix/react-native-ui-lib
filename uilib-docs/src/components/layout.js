@@ -17,7 +17,8 @@ const Layout = ({children, showSidebar}) => {
         ]}
       />
       <Header/>
-      <div className={`main ${!showSidebar ? 'fill' : ''}`}>
+      {/* <div className={`main ${!showSidebar ? 'fill' : ''}`}> */}
+      <div className={`main`}>
         {showSidebar && <Navbar/>}
         <div className={`content ${showSidebar ? 'with-navbar' : ''}`}>{children}</div>
       </div>

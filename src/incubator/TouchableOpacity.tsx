@@ -30,36 +30,38 @@ type TouchableOpacityPropTypes = {
   /**
    * Background color
    */
-  backgroundColor: string;
+  backgroundColor?: string;
   /**
    * Background color when actively pressing the touchable
    */
-  feedbackColor: string;
+  feedbackColor?: string;
   /**
    * Opacity value when actively pressing the touchable
    */
-  activeOpacity: number;
+  activeOpacity?: number;
   /**
    * Scale value when actively pressing the touchable
    */
-  activeScale: number;
+  activeScale?: number;
   /**
    * Callback for when tapping the touchable
    */
-  onPress: Function;
+  onPress?: (props: any) => void;
   /**
    * Callback for when long pressing the touchable
    */
-  onLongPress: Function;
+  onLongPress?: (props: any) => void;
   /**
    * Pass controlled pressState to track gesture state changes
    */
-  pressState: object;
+  pressState?: object;
   /**
    * If true, disable all interactions for this component.
    */
-  disabled: boolean;
-
+  disabled?: boolean;
+  /**
+   * Pass custom style
+   */
   style: ViewStyle;
 };
 
@@ -86,8 +88,8 @@ class TouchableOpacity extends PureComponent<TouchableOpacityPropTypes & BaseCom
   isAnimating = new Value(0);
   clock = new Clock();
 
-  _scale = runTiming(this.clock, this.pressState, this.props.activeScale, 1);
-  _opacity = runTiming(this.clock, this.pressState, this.props.activeOpacity, 1);
+  _scale = runTiming(this.clock, this.pressState, this.props.activeScale || 1, 1);
+  _opacity = runTiming(this.clock, this.pressState, this.props.activeOpacity || 0.2, 1);
   _color = cond(eq(this.pressState, State.BEGAN),
     processColor(this.props.feedbackColor || this.backgroundColor),
     processColor(this.backgroundColor));
@@ -130,18 +132,18 @@ class TouchableOpacity extends PureComponent<TouchableOpacityPropTypes & BaseCom
   };
 
   render() {
-    const {modifiers, style, onPress, onLongPress, disabled, forwardedRef, ...others} = this.props;
+    const {modifiers, style, onPress = _.noop, onLongPress, disabled, forwardedRef, ...others} = this.props;
     const {borderRadius, paddings, margins, alignments, flexStyle, backgroundColor} = modifiers;
 
     return (
       <TapGestureHandler
         onHandlerStateChange={this.onStateChange}
         shouldCancelWhenOutside
-        ref={forwardedRef}
         enabled={!disabled}
       >
         <Reanimated.View
           {...others}
+          ref={forwardedRef}
           style={[
             borderRadius && {borderRadius},
             flexStyle,

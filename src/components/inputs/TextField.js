@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, TextInput as RNTextInput, Image as RNImage} from 'react-native';
 import {Constants} from '../../helpers';
-import {Colors, Typography} from '../../style';
+import {Colors, Typography, Spacings} from '../../style';
 import BaseInput from './BaseInput';
 import Modal from '../modal';
 import TextArea from './TextArea';
@@ -40,12 +40,11 @@ const CHAR_COUNTER_COLOR_BY_STATE = {
 
 const LABEL_TYPOGRAPHY = Typography.text80;
 const ICON_SIZE = 24;
-const ICON_RIGHT_PADDING = 3;
 const ICON_LEFT_PADDING = 6;
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
 
 /**
- * @description: A wrapper for TextInput component with extra functionality like floating placeholder
+ * @description: A wrapper for TextInput component with extra functionality like floating placeholder and validations (This is an uncontrolled component)
  * @modifiers: Typography
  * @extends: TextInput
  * @extendslink: https://facebook.github.io/react-native/docs/textinput
@@ -125,6 +124,14 @@ export default class TextField extends BaseInput {
      * transform function executed on value and return transformed value
      */
     transformer: PropTypes.func,
+    /**
+     * Pass to render a prefix text as part of the input
+     */
+    prefix: PropTypes.string,
+    /**
+     * The prefix style
+     */
+    prefixStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * Fixed title that will displayed above the input (note: floatingPlaceholder MUST be 'false')
      */
@@ -366,7 +373,7 @@ export default class TextField extends BaseInput {
   /** Renders */
   renderPlaceholder() {
     const {floatingPlaceholderState, floatingPlaceholderTranslate} = this.state;
-    const {placeholder, placeholderTextColor, floatingPlaceholderColor, floatingPlaceholderStyle, multiline} = this.getThemeProps();
+    const {placeholder, placeholderTextColor, floatingPlaceholderColor, floatingPlaceholderStyle} = this.getThemeProps();
     const typography = this.getTypography();
     const placeholderColor = this.getStateColor(placeholderTextColor || PLACEHOLDER_COLOR_BY_STATE.default);
 
@@ -393,7 +400,7 @@ export default class TextField extends BaseInput {
                   {
                     translateY: floatingPlaceholderState.interpolate({
                       inputRange: [0, 1],
-                      outputRange: multiline && Constants.isIOS ? [30, 5] : [25, 0]
+                      outputRange: [25, 0]
                     })
                   },
                   {
@@ -414,6 +421,14 @@ export default class TextField extends BaseInput {
           </Animated.Text>
         </View>
       );
+    }
+  }
+
+  renderPrefix() {
+    const {prefix, prefixStyle} = this.props;
+    if (prefix) {
+      const typography = this.getTypography();
+      return <Text style={[this.styles.prefix, typography, {lineHeight: undefined}, prefixStyle]}>{prefix}</Text>;
     }
   }
 
@@ -525,7 +540,7 @@ export default class TextField extends BaseInput {
       style,
       placeholderTextColor,
       multiline,
-      hideUnderline,
+      // hideUnderline,
       numberOfLines,
       expandable,
       rightIconSource,
@@ -542,9 +557,9 @@ export default class TextField extends BaseInput {
     const inputStyle = [
       hasRightElement && this.styles.rightElement,
       this.styles.input,
-      hideUnderline && this.styles.inputWithoutUnderline,
+      // hideUnderline && this.styles.inputWithoutUnderline,
       {...typographyStyle},
-      Constants.isAndroid && {lineHeight},
+      // Constants.isAndroid && {lineHeight},
       expandable && {maxHeight: lineHeight * (Constants.isAndroid ? 3 : 3.3)},
       Constants.isRTL && {minHeight: lineHeight + 3},
       Constants.isIOS && shouldUseMultiline && {paddingTop: 0}, // fix for iOS topPadding in multiline TextInput
@@ -627,6 +642,7 @@ export default class TextField extends BaseInput {
             {paddingTop: this.getTopPaddings()}
           ]}
         >
+          {this.renderPrefix()}
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
           {this.renderRightButton()}
@@ -686,7 +702,7 @@ export default class TextField extends BaseInput {
   };
 }
 
-function createStyles({centered, multiline, expandable}) {
+function createStyles({centered, multiline, hideUnderline}) {
   const inputTextAlign = Constants.isRTL ? 'right' : 'left';
 
   return StyleSheet.create({
@@ -697,33 +713,39 @@ function createStyles({centered, multiline, expandable}) {
       flexDirection: 'row',
       justifyContent: centered ? 'center' : undefined,
       borderBottomWidth: 1,
-      borderColor: Colors.dark70
+      borderColor: Colors.dark70,
+      paddingBottom: Constants.isIOS ? 10 : 5
     },
     innerContainerWithoutUnderline: {
-      borderBottomWidth: 0
+      borderBottomWidth: 0,
+      paddingBottom: 0
     },
     input: {
       flexGrow: 1,
       textAlign: centered ? 'center' : inputTextAlign,
       backgroundColor: 'transparent',
-      marginBottom: Constants.isIOS ? 10 : 5,
+      // marginBottom: Constants.isIOS ? 10 : 5,
       padding: 0, // for Android
-      textAlignVertical: 'top', // for Android
+      // textAlignVertical: 'top', // for Android
       borderColor: 'transparent', // borderColor & borderWidth is a fix for collapsing issue on Android
-      borderWidth: 1 // for Android
+      borderWidth: Constants.isAndroid ? 1 : undefined // for Android
     },
     expandableInput: {
       flexGrow: 1,
       flexDirection: 'row',
       alignItems: 'center'
     },
-    inputWithoutUnderline: {
-      marginBottom: undefined
-    },
+    // inputWithoutUnderline: {
+    //   marginBottom: undefined
+    // },
     expandableModalContent: {
       flex: 1,
       paddingTop: 15,
       paddingHorizontal: 20
+    },
+    prefix: {
+      color: Colors.grey30,
+      marginRight: Spacings.s1
     },
     placeholder: {
       textAlign: 'left'
@@ -743,17 +765,17 @@ function createStyles({centered, multiline, expandable}) {
       height: LABEL_TYPOGRAPHY.lineHeight
     },
     rightElement: {
-      paddingRight: ICON_SIZE + ICON_RIGHT_PADDING + ICON_LEFT_PADDING
+      paddingRight: ICON_SIZE + ICON_LEFT_PADDING
     },
     rightIcon: {
       position: 'absolute',
-      right: ICON_RIGHT_PADDING,
+      right: 0,
       alignSelf: 'flex-end',
-      paddingBottom: expandable ? 14 : 8
+      paddingBottom: hideUnderline ? undefined : 8
     },
     rightButton: {
       position: 'absolute',
-      right: ICON_RIGHT_PADDING,
+      right: 0,
       alignSelf: 'center'
     },
     rightButtonImage: {
