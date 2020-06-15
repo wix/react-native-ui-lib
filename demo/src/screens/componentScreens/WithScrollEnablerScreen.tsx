@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import React, {Component, RefObject} from 'react';
+import React, {Component} from 'react';
 import {FlatList, ScrollView, StyleSheet, LayoutChangeEvent} from 'react-native';
 import memoize from 'memoize-one';
-import {Colors, Constants, Text, View, withScrollEnabler} from 'react-native-ui-lib';
+import {Colors, Text, View, withScrollEnabler} from 'react-native-ui-lib';
 // @ts-ignore
 import {renderHeader, renderBooleanOption, renderSliderOption} from '../ExampleScreenPresenter';
 
@@ -10,7 +10,6 @@ const LockedFlatList = withScrollEnabler(FlatList);
 const LockedScrollView = withScrollEnabler(ScrollView);
 
 class WithScrollEnablerScreen extends Component {
-  scrollRef: RefObject<FlatList<number> | ScrollView> | undefined;
   state = {
     isListView: false,
     isHorizontal: false,
@@ -18,8 +17,7 @@ class WithScrollEnablerScreen extends Component {
     contentWidth: undefined,
     contentHeight: undefined,
     layoutWidth: undefined,
-    layoutHeight: undefined,
-    hasRef: false
+    layoutHeight: undefined
   };
 
   onContentSizeChange = (contentWidth: number, contentHeight: number) => {
@@ -36,25 +34,6 @@ class WithScrollEnablerScreen extends Component {
       this.setState({layoutWidth: width, layoutHeight: height});
     }
   };
-
-  setRef = (r: RefObject<FlatList<number> | ScrollView>) => {
-    if (r) {
-      this.scrollRef = r;
-      this.setState({hasRef: true});
-    }
-  };
-
-  afterSliderValueChanged = () => {
-    if (Constants.isAndroid && this.scrollRef) {
-      if (_.isFunction(this.scrollRef.scrollTo)) {
-        // ListView
-        this.scrollRef.scrollTo({x: 0, y: 0, animated: false});
-      } else if (_.isFunction(this.scrollRef.scrollToIndex)) {
-        // FlatList
-        this.scrollRef.scrollToIndex({index: 0, animated: false});
-      }
-    }
-  }
 
   keyExtractor = (item: number) => {
     return item.toString();
@@ -84,8 +63,7 @@ class WithScrollEnablerScreen extends Component {
 
     return (
       <Container
-        key={isHorizontal}
-        ref={this.setRef}
+        key={`${isHorizontal}`}
         horizontal={isHorizontal}
         style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContainer}
@@ -103,15 +81,13 @@ class WithScrollEnablerScreen extends Component {
   };
 
   renderData = () => {
-    const {contentWidth, contentHeight, layoutWidth, layoutHeight, hasRef} = this.state;
+    const {contentWidth, contentHeight, layoutWidth, layoutHeight} = this.state;
     const contentText = `Content {width, height}: ${contentWidth}, ${contentHeight}`;
     const layoutText = `Layout {width, height}: ${layoutWidth}, ${layoutHeight}`;
-    const hasRefText = `Ref exists: ${hasRef}`;
     return (
       <>
         <Text text70>{contentText}</Text>
         <Text text70>{layoutText}</Text>
-        <Text text70>{hasRefText}</Text>
       </>
     );
   };
@@ -134,8 +110,7 @@ class WithScrollEnablerScreen extends Component {
           min: 1,
           max: 5,
           step: 1,
-          initial: 3,
-          afterValueChanged: this.afterSliderValueChanged
+          initial: 3
         })}
       </>
     );
