@@ -125,7 +125,7 @@ export default class TextField extends BaseInput {
      */
     transformer: PropTypes.func,
     /**
-     * Pass to render a prefix text as part of the input
+     * Pass to render a prefix text as part of the input (doesn't work with floatingPlaceholder)
      */
     prefix: PropTypes.string,
     /**
@@ -174,7 +174,7 @@ export default class TextField extends BaseInput {
       style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
     }),
     /**
-     * Pass to render a leading icon to the TextInput value. Accepts Image props
+     * Pass to render a leading icon to the TextInput value. Accepts Image props (doesn't work with floatingPlaceholder)
      */
     leadingIcon: PropTypes.shape(Image.propTypes)
   };
@@ -314,8 +314,7 @@ export default class TextField extends BaseInput {
   }
 
   getTopPaddings() {
-    const {floatingPlaceholder} = this.getThemeProps();
-    return floatingPlaceholder ? (this.shouldShowTopError() ? undefined : 25) : undefined;
+    return this.shouldFakePlaceholder() ? (this.shouldShowTopError() ? undefined : 25) : undefined;
   }
 
   isDisabled() {
@@ -349,8 +348,9 @@ export default class TextField extends BaseInput {
   }
 
   shouldFakePlaceholder() {
-    const {floatingPlaceholder, centered} = this.getThemeProps();
-    return Boolean(floatingPlaceholder && !centered && !this.shouldShowTopError());
+    const {floatingPlaceholder, centered, leadingIcon, prefix} = this.getThemeProps();
+
+    return !leadingIcon && !prefix && Boolean(floatingPlaceholder && !centered && !this.shouldShowTopError());
   }
 
   shouldShowError() {
@@ -407,7 +407,7 @@ export default class TextField extends BaseInput {
                   {
                     translateY: floatingPlaceholderState.interpolate({
                       inputRange: [0, 1],
-                      outputRange: [0, -25]
+                      outputRange: [25, 0]
                     })
                   },
                   {
@@ -651,10 +651,8 @@ export default class TextField extends BaseInput {
         >
           {leadingIcon && <Image {...leadingIcon} onLayout={this.onLeadingIconLayout}/>}
           {this.renderPrefix()}
-          <View row flexG>
-            {this.renderPlaceholder()}
-            {expandable ? this.renderExpandableInput() : this.renderTextInput()}
-          </View>
+          {this.renderPlaceholder()}
+          {expandable ? this.renderExpandableInput() : this.renderTextInput()}
           {this.renderRightButton()}
           {this.renderRightIcon()}
           {expandable && this.renderExpandableModal()}
