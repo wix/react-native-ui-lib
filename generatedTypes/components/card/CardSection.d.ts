@@ -1,5 +1,5 @@
 import React from 'react';
-import { ViewStyle } from 'react-native';
+import { ViewStyle, ImageStyle, ImageSourcePropType } from 'react-native';
 import { ViewPropTypes } from '../view';
 import { TextPropTypes } from '../text';
 import { ImageProps } from '../image';
@@ -24,6 +24,18 @@ export declare type CardSectionProps = ViewPropTypes & {
      * Image props for a trailing icon to render after the text
      */
     trailingIcon?: ImageProps;
+    /**
+     * Will be used for the background when provided
+     */
+    imageSource?: ImageSourcePropType;
+    /**
+     * The style for the background image
+     */
+    imageStyle?: ImageStyle;
+    /**
+     * Other image props that will be passed to the image
+     */
+    imageProps?: ImageProps;
 };
 declare const _default: React.ComponentClass<CardSectionProps, any> | React.FunctionComponent<CardSectionProps>;
 export default _default;

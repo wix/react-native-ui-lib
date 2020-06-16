@@ -5,7 +5,7 @@
  */
 export * from './style';
 export {withScrollEnabler} from './commons/new';
-export {default as Card} from './components/card';
+export {default as Card, CardPropTypes} from './components/card';
 export {default as View, ViewPropTypes} from './components/view';
 export {default as Text} from './components/text';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';

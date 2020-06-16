@@ -13,7 +13,8 @@ import {
 import {registerScreens} from './screens';
 
 Assets.loadAssetsGroup('icons.demo', {
-  refresh: require('./assets/icons/refresh.png')
+  refresh: require('./assets/icons/refresh.png'),
+  search: require('./assets/icons/search.png')
 });
 
 Typography.loadTypographies({
