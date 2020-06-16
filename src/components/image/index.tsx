@@ -4,7 +4,7 @@ import React, {PureComponent} from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {Image as RNImage, ImageProps as RNImageProps, StyleSheet, ImageBackground, ImageSourcePropType} from 'react-native';
 import Constants from '../../helpers/Constants';
-import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
+import {asBaseComponent, ForwardRefInjectedProps} from '../../commons/new';
 // @ts-ignore
 import Assets from '../../assets';
 import Overlay, {OverlayTypeType} from '../overlay';
@@ -131,7 +131,6 @@ class Image extends PureComponent<Props> {
     return (
       // @ts-ignore
       <ImageView
-        ref={forwardedRef}
         style={[
           {tintColor},
           shouldFlipRTL && styles.rtlFlipped,
@@ -168,4 +167,4 @@ const styles = StyleSheet.create({
 
 hoistNonReactStatic(Image, RNImage);
 export {Image};
-export default asBaseComponent<ImageProps>(forwardRef(Image));
+export default asBaseComponent<ImageProps>(Image);
