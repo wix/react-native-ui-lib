@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {ViewStyle} from 'react-native';
+import {StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import View, {ViewPropTypes} from '../view';
 import Text, {TextPropTypes} from '../text';
@@ -27,6 +27,18 @@ export type CardSectionProps = ViewPropTypes & {
    * Image props for a trailing icon to render after the text
    */
   trailingIcon?: ImageProps;
+  /**
+   * Will be used for the background when provided
+   */
+  imageSource?: ImageSourcePropType;
+  /**
+   * The style for the background image
+   */
+  imageStyle?: ImageStyle;
+  /**
+   * Other image props that will be passed to the image
+   */
+  imageProps?: ImageProps;
 };
 
 type Props = CardSectionProps & asCardChildProps;
@@ -38,27 +50,31 @@ type Props = CardSectionProps & asCardChildProps;
 class CardSection extends PureComponent<Props> {
   static displayName = 'Card.Section';
 
-  render() {
+  renderContent = () => {
     const {
       content,
       leadingIcon,
       trailingIcon,
-      context: {borderStyle},
       contentStyle,
-      style,
-      ...others
+      testID
     } = this.props;
     return (
-      <View style={[{...borderStyle}, style]} {...others}>
-        {leadingIcon && <Image {...leadingIcon} />}
-        <View style={contentStyle}>
+      <>
+        {leadingIcon && (
+          <Image testID={`${testID}.leadingIcon`} {...leadingIcon} />
+        )}
+        <View testID={`${testID}.contentContainer`} style={contentStyle}>
           {_.map(
             content,
             // @ts-ignore
             ({text, ...others} = {}, index) => {
               return (
                 !_.isUndefined(text) && (
-                  <Text key={index} {...others}>
+                  <Text
+                    testID={`${testID}.text.${index}`}
+                    key={index}
+                    {...others}
+                  >
                     {text}
                   </Text>
                 )
@@ -66,10 +82,49 @@ class CardSection extends PureComponent<Props> {
             }
           )}
         </View>
-        {trailingIcon && <Image {...trailingIcon} />}
+        {trailingIcon && (
+          <Image testID={`${testID}.trailingIcon`} {...trailingIcon} />
+        )}
+      </>
+    );
+  };
+
+  renderImage = () => {
+    const {imageSource, imageStyle, imageProps, testID} = this.props;
+    // not actually needed, instead of adding ts-ignore
+    if (imageSource) {
+      return (
+        <Image
+          testID={`${testID}.image`}
+          source={imageSource}
+          style={imageStyle}
+          customOverlayContent={this.renderContent()}
+          {...imageProps}
+        />
+      );
+    }
+  };
+
+  render() {
+    const {
+      imageSource,
+      context: {borderStyle},
+      style,
+      ...others
+    } = this.props;
+    return (
+      <View style={[styles.container, borderStyle, style]} {...others}>
+        {imageSource && this.renderImage()}
+        {!imageSource && this.renderContent()}
       </View>
     );
   }
 }
 
 export default asBaseComponent<CardSectionProps>(asCardChild(CardSection));
+
+const styles = StyleSheet.create({
+  container: {
+    overflow: 'hidden'
+  }
+});
