@@ -30,7 +30,7 @@ function withScrollEnabler<PROPS extends SupportedViews>(
       if (isScrollEnabled !== scrollEnabled) {
         setScrollEnabled(isScrollEnabled);
       }
-    }, []);
+    }, [scrollEnabled]);
 
     const onContentSizeChange = useCallback(
       (contentWidth: number, contentHeight: number) => {
@@ -42,7 +42,7 @@ function withScrollEnabler<PROPS extends SupportedViews>(
           }
         }
       },
-      [props.horizontal]
+      [props.horizontal, checkScroll]
     );
 
     const onLayout = useCallback(
@@ -60,7 +60,7 @@ function withScrollEnabler<PROPS extends SupportedViews>(
           }
         }
       },
-      [props.horizontal]
+      [props.horizontal, checkScroll]
     );
 
     return (
