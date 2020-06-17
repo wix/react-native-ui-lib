@@ -122,7 +122,6 @@ class Image extends PureComponent<Props> {
       overlayType,
       overlayColor,
       customOverlayContent,
-      forwardedRef,
       ...others
     } = this.props;
     const shouldFlipRTL = supportRTL && Constants.isRTL;
