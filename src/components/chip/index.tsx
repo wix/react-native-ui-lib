@@ -127,6 +127,8 @@ type Props = ChipProps & ViewProps & TouchableOpacityProps;
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipScreen.tsx
  */
 const Chip: React.FC<ChipProps> = (props) => {
+  Chip.displayName = 'Chip';
+
   const {
     avatar,
     backgroundColor,
@@ -150,7 +152,7 @@ const Chip: React.FC<ChipProps> = (props) => {
     dismissContainerStyle,
     onPress,
     resetSpacings,
-    size = 10,
+    size = 24,
     testID,
     useBadge,
     ...others
