@@ -132,11 +132,11 @@ const Chip: React.FC<ChipProps> = ({
   borderRadius = BorderRadiuses.br100,
   badgeProps,
   counterLabel,
-  counterColor = Colors.grey20,
+  counterColor,
   counterStyle,
   containerStyle,
   dismissColor,
-  dismissIcon = Assets.icons.x,
+  dismissIcon,
   dismissIconStyle,
   iconColor,
   iconSource,
@@ -157,6 +157,8 @@ const Chip: React.FC<ChipProps> = ({
   Chip.displayName = 'Chip';
   Chip.defaultProps = {
     borderRadius: BorderRadiuses.br100,
+    counterColor: Colors.grey20,
+    dismissIcon: Assets.icons.x,
     minSize: true,
     size: 24
   };
