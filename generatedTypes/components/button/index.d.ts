@@ -167,14 +167,18 @@ declare class Button extends PureComponent<Props, ButtonState> {
             elevation: number;
         };
         text: {
+            backgroundColor: string;
+            flex: number;
+            flexDirection: "row";
+        } | {
             color?: string | undefined;
             fontFamily?: string | undefined;
             fontSize?: number | undefined;
             fontStyle?: "normal" | "italic" | undefined;
-            fontWeight?: "200" | "300" | "400" | "600" | "500" | "700" | "800" | "900" | "normal" | "bold" | "100" | undefined;
+            fontWeight?: "normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900" | undefined;
             letterSpacing?: number | undefined;
             lineHeight?: number | undefined;
-            textAlign?: "center" | "left" | "right" | "auto" | "justify" | undefined;
+            textAlign?: "auto" | "left" | "right" | "center" | "justify" | undefined;
             textDecorationLine?: "none" | "underline" | "line-through" | "underline line-through" | undefined;
             textDecorationStyle?: "solid" | "double" | "dotted" | "dashed" | undefined;
             textDecorationColor?: string | undefined;
@@ -184,7 +188,7 @@ declare class Button extends PureComponent<Props, ButtonState> {
                 height: number;
             } | undefined;
             textShadowRadius?: number | undefined;
-            textTransform?: "none" | "uppercase" | "capitalize" | "lowercase" | undefined;
+            textTransform?: "none" | "capitalize" | "uppercase" | "lowercase" | undefined;
             testID?: string | undefined;
             fontVariant?: import("react-native").FontVariant[] | undefined;
             writingDirection?: "auto" | "ltr" | "rtl" | undefined;
@@ -214,14 +218,14 @@ declare class Button extends PureComponent<Props, ButtonState> {
             borderWidth?: number | undefined;
             opacity?: number | undefined;
             elevation?: number | undefined;
-            alignContent?: "center" | "flex-start" | "flex-end" | "space-between" | "space-around" | "stretch" | undefined;
+            alignContent?: "center" | "flex-start" | "flex-end" | "stretch" | "space-between" | "space-around" | undefined;
             alignItems?: "center" | "flex-start" | "flex-end" | "stretch" | "baseline" | undefined;
-            alignSelf?: "center" | "flex-start" | "flex-end" | "auto" | "stretch" | "baseline" | undefined;
+            alignSelf?: "auto" | "center" | "flex-start" | "flex-end" | "stretch" | "baseline" | undefined;
             aspectRatio?: number | undefined;
             borderEndWidth?: string | number | undefined;
             borderStartWidth?: string | number | undefined;
             bottom?: string | number | undefined;
-            display?: "flex" | "none" | undefined;
+            display?: "none" | "flex" | undefined;
             end?: string | number | undefined;
             flex: number;
             flexBasis?: string | number | undefined;
@@ -276,7 +280,7 @@ declare class Button extends PureComponent<Props, ButtonState> {
             scaleY?: number | undefined;
             translateX?: number | undefined;
             translateY?: number | undefined;
-            textAlignVertical?: "center" | "top" | "bottom" | "auto" | undefined;
+            textAlignVertical?: "auto" | "center" | "top" | "bottom" | undefined;
             includeFontPadding?: boolean | undefined;
         };
     };
@@ -321,5 +325,5 @@ declare class Button extends PureComponent<Props, ButtonState> {
     render(): JSX.Element;
 }
 export { Button };
-declare const _default: React.ComponentType<ButtonPropTypes>;
+declare const _default: React.ComponentClass<ButtonPropTypes, any> | React.FunctionComponent<ButtonPropTypes>;
 export default _default;

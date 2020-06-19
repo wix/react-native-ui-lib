@@ -50,5 +50,5 @@ interface RadioButtonPropTypes {
      */
     iconOnRight?: boolean;
 }
-declare const _default: React.ComponentType<RadioButtonPropTypes>;
+declare const _default: React.ComponentClass<RadioButtonPropTypes, any> | React.FunctionComponent<RadioButtonPropTypes>;
 export default _default;

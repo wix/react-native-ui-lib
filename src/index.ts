@@ -5,6 +5,7 @@
  */
 
 export * from './style';
+export {default as Card} from './components/card';
 export {default as View} from './components/view';
 export {default as Text} from './components/text';
 export {default as TouchableOpacity} from './components/touchableOpacity';
@@ -18,7 +19,7 @@ export {default as RadioGroup} from './components/radioButton/RadioGroup';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ActionBar, ActionSheet, Avatar, Badge, Card, Carousel, ConnectionStatusBar, Dialog, Drawer, FloatingButton,
+  ActionBar, ActionSheet, Avatar, Badge, Carousel, ConnectionStatusBar, Dialog, Drawer, FloatingButton,
   FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl, PanningProvider,
   PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, ProgressBar, Slider, GradientSlider,
   ColorSliderGroup, Stepper, TabBar, TagsInput, SharedTransition, StackAggregator, Toast,
