@@ -1,27 +1,55 @@
 import React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle, ViewProps, TouchableOpacityProps, ImageStyle, TextStyle, ImageSourcePropType } from 'react-native';
+import { AvatarProps, BadgeProps } from 'typings';
 interface ChipProps {
-    dismiss?: Function;
-    label?: string;
-    icon?: number;
-    onPress?: Function;
-    style?: StyleProp<ViewStyle>;
     /**
-     * ChipItem's Background color.
+     * Chip's size. Number or a width and height object.
+     */
+    size?: number | object;
+    /**
+     * On Chip press callback
+     */
+    onPress?: (props: any) => void;
+    /**
+     * Chip's background color
      */
     backgroundColor?: string;
     /**
-     * Selected ChipItem's background color.
+     * Sets size to use minWidth and minHeight - default is true
      */
-    selectedBackgroundColor?: string;
+    minSize?: boolean;
+    /**
+     * Disables all internal elements default spacings. Helps reach a custom design
+     */
+    resetSpacings?: boolean;
+    /**
+     * The Chip borderRadius
+     */
+    borderRadius?: number;
+    /**
+     * Displays counter as a Badge
+     */
+    useBadge?: boolean;
+    /**
+     * Badge props object.
+     */
+    badgeProps?: BadgeProps;
+    /**
+     * Chip's container style
+     */
+    containerStyle?: StyleProp<ViewStyle>;
+    /**
+     * Main Chip text
+     */
+    label?: string;
     /**
      * Color of the label.
      */
     labelColor?: string;
     /**
-     * Selected chip's label color.
+     * Label's style
      */
-    selectedLabelColor?: string;
+    labelStyle?: StyleProp<TextStyle>;
     /**
      * Text to show to the right of the label or inside the Badge.
      */
@@ -31,31 +59,50 @@ interface ChipProps {
      */
     counterColor?: string;
     /**
-     * Color of the counter label when selected.
+     * Counter's style
      */
-    selectedCounterColor?: string;
+    counterStyle?: StyleProp<TextStyle>;
     /**
-     * Badge props object.
+     * Adds a dismiss button and serves as its callback
      */
-    badge?: any;
+    onDismiss?: (props: any) => void;
     /**
-     * Is the ChipItem selected.
+     * Dismiss (X button) color
      */
-    selected?: string;
-    /**
-     * Outline color.
-     */
-    outlineColor?: string;
-    /**
-     * Selected outline color.
-     */
-    selectedOutlineColor?: string;
-    textStyle?: object;
     dismissColor?: string;
     /**
-     * Avatar object
+     * Dismiss (X button) asset
      */
-    avatar?: any;
+    dismissIcon?: ImageSourcePropType;
+    /**
+     * Dismiss (X button) style
+     */
+    dismissIconStyle?: StyleProp<ImageStyle>;
+    /**
+     * Dismiss (X button) container style
+     */
+    dismissContainerStyle?: StyleProp<ImageStyle>;
+    /**
+     * Avatar props object
+     */
+    avatar?: AvatarProps;
+    /**
+     * Icon's source
+     */
+    iconSource?: ImageSourcePropType;
+    /**
+     * Icon's color
+     */
+    iconColor?: string;
+    /**
+     * Icon style
+     */
+    iconStyle?: StyleProp<ImageStyle>;
+    /**
+     * Used as testing identifier
+     */
+    testID?: string;
 }
-declare const _default: React.ComponentType<ChipProps>;
+declare type Props = ChipProps & ViewProps & TouchableOpacityProps;
+declare const _default: React.ComponentType<Props>;
 export default _default;
