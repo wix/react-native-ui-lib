@@ -101,7 +101,7 @@ export default class ChipScreen extends Component {
             iconColor={Colors.black}
             avatar={{source: avatarImage, size: 28}}
             onDismiss={() => Alert.alert('onDismiss')}
-            dismissIconStyle={{width: 10, height: 10, marginRight: Spacings.s3}}
+            dismissIconStyle={{width: 10, height: 10, marginRight: Spacings.s5}}
             dismissColor={Colors.red20}
             containerStyle={{
               borderColor: Colors.red20,
