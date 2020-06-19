@@ -94,6 +94,7 @@ export default class ChipScreen extends Component {
             containerStyle={{borderColor: Colors.green20, backgroundColor: Colors.green20, marginLeft: Spacings.s3}}
           />
           <Chip
+            borderRadius={22}
             resetSpacings
             label={'Chip'}
             labelStyle={{color: Colors.red20, marginHorizontal: Spacings.s3, ...Typography.text70BO}}
@@ -101,7 +102,7 @@ export default class ChipScreen extends Component {
             iconColor={Colors.black}
             avatar={{source: avatarImage, size: 28}}
             onDismiss={() => Alert.alert('onDismiss')}
-            dismissIconStyle={{width: 10, height: 10, marginRight: Spacings.s5}}
+            dismissIconStyle={{width: 10, height: 10, marginRight: Spacings.s3}}
             dismissColor={Colors.red20}
             containerStyle={{
               borderColor: Colors.red20,
