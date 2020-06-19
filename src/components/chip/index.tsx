@@ -5,7 +5,7 @@ import {AvatarProps, BadgeProps} from 'typings';
 // @ts-ignore
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
-import {Spacings, Colors} from '../../style';
+import {BorderRadiuses, Colors, Spacings} from '../../style';
 // @ts-ignore
 import Avatar from '../avatar';
 // @ts-ignore
@@ -132,7 +132,7 @@ const Chip: React.FC<ChipProps> = (props) => {
   const {
     avatar,
     backgroundColor,
-    borderRadius = 20,
+    borderRadius = BorderRadiuses.br100,
     badgeProps,
     counterLabel,
     counterColor = Colors.grey20,
