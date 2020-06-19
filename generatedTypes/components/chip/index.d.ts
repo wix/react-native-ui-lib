@@ -104,5 +104,5 @@ interface ChipProps {
     testID?: string;
 }
 declare type Props = ChipProps & ViewProps & TouchableOpacityProps;
-declare const _default: React.ComponentType<Props>;
+declare const _default: React.ComponentClass<Props, any> | React.FunctionComponent<Props>;
 export default _default;
