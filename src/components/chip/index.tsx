@@ -1,33 +1,69 @@
+import _ from 'lodash';
 import React from 'react';
-import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import View from '../view';
+import {StyleSheet, StyleProp, ViewStyle, ViewProps, TouchableOpacityProps, ImageStyle, TextStyle, ImageSourcePropType} from 'react-native';
+import {AvatarProps, BadgeProps} from 'typings';
+// @ts-ignore
+import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
+import {Spacings, Colors} from '../../style';
+// @ts-ignore
+import Avatar from '../avatar';
+// @ts-ignore
+import Badge, {BADGE_SIZES} from '../badge';
 import Image from '../image';
-import {Spacings} from '../../style';
-import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
+import TouchableOpacity from '../touchableOpacity';
+import View from '../view';
 
 interface ChipProps {
-  dismiss?: Function;
+  /**
+   * Chip's size. Number or a width and height object.
+   */
+  size?: number | object;
+  /**
+   * On Chip press callback
+   */
+  onPress?: (props: any) => void;
+  /**
+   * Chip's background color
+   */
+  backgroundColor?: string;
+  /**
+   * Sets size to use minWidth and minHeight - default is true
+   */
+  minSize?: boolean;
+  /**
+   * Disables all internal elements default spacings. Helps reach a custom design
+   */
+  resetSpacings?: boolean;
+  /**
+   * The Chip borderRadius
+   */
+  borderRadius?: number;
+  /**
+   * Displays counter as a Badge
+   */
+  useBadge?: boolean;
+  /**
+   * Badge props object.
+   */
+  badgeProps?: BadgeProps;
+  /**
+   * Chip's container style
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Main Chip text
+   */
   label?: string;
-  icon?: number;
-  onPress?: Function;
-  style?: StyleProp<ViewStyle>;
-  /**
-   * ChipItem's Background color.
-   */
-  /**
-   * Selected ChipItem's background color.
-   */
-  selectedBackgroundColor?: string;
   /**
    * Color of the label.
    */
   labelColor?: string;
   /**
-   * Selected chip's label color.
+   * Label's style
    */
-  selectedLabelColor?: string;
+  labelStyle?: StyleProp<TextStyle>;
   /**
    * Text to show to the right of the label or inside the Badge.
    */
@@ -37,81 +73,250 @@ interface ChipProps {
    */
   counterColor?: string;
   /**
-   * Color of the counter label when selected.
+   * Counter's style
    */
-  selectedCounterColor?: string;
+  counterStyle?: StyleProp<TextStyle>;
   /**
-   * Badge props object.
+   * Adds a dismiss button and serves as its callback
    */
-  badge?: any;
+  onDismiss?: (props: any) => void;
   /**
-   * Is the ChipItem selected.
+   * Dismiss (X button) color
    */
-  selected?: string;
-  /**
-   * Outline color.
-   */
-  outlineColor?: string;
-  /**
-   * Selected outline color.
-   */
-  selectedOutlineColor?: string;
-
-  textStyle?: object;
-  /**
-  * Add a dismiss button which when pressed will call this callback
-  */
-  onDismiss?: Function;
-
   dismissColor?: string;
   /**
-   * Avatar object
+   * Dismiss (X button) asset
    */
-  avatar?: any;
+  dismissIcon?: ImageSourcePropType;
+  /**
+   * Dismiss (X button) style
+   */
+  dismissIconStyle?: StyleProp<ImageStyle>;
+  /**
+   * Dismiss (X button) container style
+   */
+  dismissContainerStyle?: StyleProp<ImageStyle>;
+  /**
+   * Avatar props object
+   */
+  avatar?: AvatarProps;
+  /**
+   * Icon's source
+   */
+  iconSource?: ImageSourcePropType;
+  /**
+   * Icon's color
+   */
+  iconColor?: string;
+  /**
+   * Icon style
+   */
+  iconStyle?: StyleProp<ImageStyle>;
+  /**
+   * Used as testing identifier
+   */
+  testID?: string;
 }
 
-const Chip: React.FC<ChipProps> = (props) => {
-  const {avatar, onPress, index} = props;
+type Props = ChipProps & ViewProps & TouchableOpacityProps;
 
-  const Container = onPress ? TouchableOpacity : View;
-  return (
-    <Container
-      index={index}
-      activeOpacity={1}
-      onPress={this.onPress}
-      activeBackgroundColor={this.getActiveBackgroundColor()}
-      backgroundColor={selected ? selectedBackgroundColor : backgroundColor}
-      testID={testID}
-      style={[
-        styles.container,
-        {
-          paddingRight: useBadge ? Spacings.s2 : Spacings.s3,
-          borderColor: selected ? selectedOutlineColor : outlineColor
-        },
-        shouldAnimateOut && styles.hidden
-      ]}
-    >
-      {avatar && (
-        <Avatar containerStyle={this.styles.avatar} {...avatar} size={20} />
-      )}
-      {icon && (
-        <Image
-          source={icon}
-          tintColor={color}
-          style={[this.styles.image, !emptyText && {marginRight: 6}]}
+/**
+ * @description: Chip component
+ * @extends: TouchableOpacity
+ * @extendslink: docs/TouchableOpacity
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipScreen.tsx
+ */
+const Chip: React.FC<ChipProps> = (props) => {
+  const {
+    avatar,
+    backgroundColor,
+    borderRadius = 20,
+    badgeProps,
+    counterLabel,
+    counterColor = Colors.grey20,
+    counterStyle,
+    containerStyle,
+    dismissColor,
+    dismissIcon = Assets.icons.x,
+    dismissIconStyle,
+    iconColor,
+    iconSource,
+    iconStyle,
+    label,
+    labelStyle,
+    labelColor,
+    minSize = true,
+    onDismiss,
+    dismissContainerStyle,
+    onPress,
+    resetSpacings,
+    size = 10,
+    testID,
+    useBadge,
+    ...others
+  } = props;
+
+  const renderIcon = () => {
+    return (
+      <Image
+      // @ts-ignore
+        source={iconSource}
+        tintColor={iconColor}
+        style={[iconStyle, getMargins('iconSource')]}
+        testID={`${testID}.icon`}
+      />
+    );
+  };
+
+  const renderCounter = () => {
+    if (useBadge) {
+      return (
+        <Badge
+          label={counterLabel}
+          backgroundColor={Colors.red30}
+          size={BADGE_SIZES.medium}
+          style={[getMargins('counter')]}
+          labelColor={counterColor}
+          {...badgeProps}
+          {...counterStyle}
+          testID={`${testID}.counter`}
         />
-      )}
+      );
+    }
+    return (
+      <Text
+        text90R
+        color={counterColor}
+        style={[getMargins('counter'), counterStyle]}
+        testID={`${testID}.counter`}
+      >
+        {counterLabel}
+      </Text>
+    );
+  };
+
+  const renderOnDismiss = () => {
+    return (
+      <TouchableOpacity
+        style={[getMargins('dismiss'), dismissContainerStyle]}
+        onPress={onDismiss}
+        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+        testID={`${testID}.dismiss`}
+      >
+        <Image
+          source={dismissIcon}
+          tintColor={dismissColor}
+          style={[dismissIconStyle]}
+          accessibilityLabel="dismiss"
+          testID={`${testID}.dismiss`}
+        />
+      </TouchableOpacity>
+    );
+  };
+
+  const renderAvatar = () => {
+    return (
+      <Avatar
+        size={20}
+        {...avatar}
+        // @ts-ignore
+        containerStyle={[getMargins('avatar'), avatar.containerStyle]}
+        testID={`${testID}.avatar`}
+      />
+    );
+  };
+
+  const renderLabel = () => {
+    return (
       <Text
         text90M
-        color={selected ? selectedLabelColor : labelColor}
-        textAlign={'center'}
+        numberOfLines={1}
+        // @ts-ignore
+        tintColor={labelColor}
+        style={[styles.label, getMargins('label'), labelStyle]}
         testID={`${testID}.label`}
       >
         {label}
       </Text>
-      <View style={styles.counterLabel}>
-        {!_.isNil(counterLabel) && this.renderCounter()}
-      </View>
+    );
+  };
+
+  const getMargins = (element: string): object | undefined => {
+    if (!resetSpacings) {
+      switch (element) {
+        case 'label':
+          if (counterLabel) {
+            return {
+              marginLeft: Spacings.s3,
+              marginRight: Spacings.s1
+            };
+          }
+          if (onDismiss) {
+            return {
+              marginLeft: Spacings.s3,
+              marginRight: Spacings.s2
+            };
+          }
+          if (avatar) {
+            return {
+              marginRight: Spacings.s2,
+              marginLeft: Spacings.s1
+            };
+          }
+          if (iconSource) {
+            return {
+              marginLeft: 2,
+              marginRight: Spacings.s2
+            };
+          } else {
+            return {marginHorizontal: Spacings.s3};
+          }
+        case 'avatar':
+          return {
+            marginLeft: 2
+          };
+        case 'counter':
+          return {
+            marginRight: useBadge ? Spacings.s2 : Spacings.s3
+          };
+        case 'dismiss':
+          return {
+            marginRight: Spacings.s2
+          };
+      }
+    }
+  };
+
+  const getContainerSize = () => {
+    const width = minSize ? 'minWidth' : 'width';
+    const height = minSize ? 'minHeight' : 'height';
+
+    return typeof size === 'object'
+      ? {[width]: _.get(size, 'width'), [height]: _.get(size, 'height')}
+      : {[width]: size, [height]: size};
+  };
+
+  const Container = onPress ? TouchableOpacity : View;
+
+  return (
+    <Container
+      activeOpacity={1}
+      onPress={onPress}
+      style={[
+        styles.container,
+        {backgroundColor},
+        {borderRadius},
+        containerStyle,
+        getContainerSize()
+      ]}
+      testID={testID}
+      {...others}
+    >
+      {avatar && renderAvatar()}
+      {iconSource && renderIcon()}
+      {label && renderLabel()}
+      {counterLabel && renderCounter()}
+      {onDismiss && renderOnDismiss()}
     </Container>
   );
 };
@@ -121,13 +326,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    height: Spacings.s7,
-    minWidth: Spacings.s10,
-    paddingLeft: Spacings.s3,
-    borderWidth: 1,
-    borderRadius: 14,
-    marginHorizontal: Spacings.s1
+    borderWidth: 1
+  },
+  label: {
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 
-export default asBaseComponent<ChipProps>(Chip);
+export default asBaseComponent<Props>(Chip);
