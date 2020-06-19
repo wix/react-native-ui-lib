@@ -126,37 +126,40 @@ type Props = ChipProps & ViewProps & TouchableOpacityProps;
  * @extendslink: docs/TouchableOpacity
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipScreen.tsx
  */
-const Chip: React.FC<ChipProps> = (props) => {
+const Chip: React.FC<ChipProps> = ({
+  avatar,
+  backgroundColor,
+  borderRadius = BorderRadiuses.br100,
+  badgeProps,
+  counterLabel,
+  counterColor = Colors.grey20,
+  counterStyle,
+  containerStyle,
+  dismissColor,
+  dismissIcon = Assets.icons.x,
+  dismissIconStyle,
+  iconColor,
+  iconSource,
+  iconStyle,
+  label,
+  labelStyle,
+  labelColor,
+  minSize,
+  onDismiss,
+  dismissContainerStyle,
+  onPress,
+  resetSpacings,
+  size,
+  testID,
+  useBadge,
+  ...others
+}) => {
   Chip.displayName = 'Chip';
-
-  const {
-    avatar,
-    backgroundColor,
-    borderRadius = BorderRadiuses.br100,
-    badgeProps,
-    counterLabel,
-    counterColor = Colors.grey20,
-    counterStyle,
-    containerStyle,
-    dismissColor,
-    dismissIcon = Assets.icons.x,
-    dismissIconStyle,
-    iconColor,
-    iconSource,
-    iconStyle,
-    label,
-    labelStyle,
-    labelColor,
-    minSize = true,
-    onDismiss,
-    dismissContainerStyle,
-    onPress,
-    resetSpacings,
-    size = 24,
-    testID,
-    useBadge,
-    ...others
-  } = props;
+  Chip.defaultProps = {
+    borderRadius: BorderRadiuses.br100,
+    minSize: true,
+    size: 24
+  };
 
   const renderIcon = () => {
     return (
@@ -328,7 +331,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    borderWidth: 1
+    borderWidth: 1,
+    borderRadius: BorderRadiuses.br100
   },
   label: {
     alignItems: 'center',
