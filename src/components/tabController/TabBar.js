@@ -141,10 +141,6 @@ class TabBar extends PureComponent {
     if ((props.items || this.children) && !context.items) {
       this.registerTabItems();
     }
-
-    if (this.items) {
-      this.measureItems();
-    }
   }
 
   get containerWidth() {
@@ -189,29 +185,6 @@ class TabBar extends PureComponent {
       });
     }
   }
-
-  measureItems = async () => {
-    const {items: contextItems} = this.context;
-    const {labelStyle, items: propsItems} = this.props;
-    const items = contextItems || propsItems;
-    const measuring = _.map(items, (item) => {
-      return Typography.measureTextSize(item.label, labelStyle);
-    });
-    const results = await Promise.all(measuring);
-    const widths = _.map(results, (item) => item.width + Spacings.s4 * 2);
-    const offsets = [];
-    _.forEach(widths, (width, index) => {
-      if (index === 0) {
-        offsets[index] = this.centerOffset;
-      } else {
-        offsets[index] = widths[index - 1] + offsets[index - 1];
-      }
-    });
-    this._itemsWidths = widths;
-    this._itemsOffsets = offsets;
-    // TODO: consider saving this setState and ride registerTabItems setState
-    this.setItemsLayouts();
-  };
 
   registerTabItems() {
     const {registerTabItems} = this.context;
