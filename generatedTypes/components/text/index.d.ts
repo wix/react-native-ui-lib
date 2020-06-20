@@ -26,7 +26,6 @@ export declare type TextPropTypes = TextProps & TypographyModifiers & ColorsModi
      * Use Animated.Text as a container
      */
     animated?: boolean;
-    ref?: any;
     textAlign?: string;
 };
 declare type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPropTypes;
