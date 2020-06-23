@@ -2,6 +2,8 @@ import React from 'react';
 import { ViewStyle } from 'react-native';
 import { ViewPropTypes } from '../view';
 import { TouchableOpacityProps } from '../touchableOpacity';
+import { CardSectionProps } from './CardSection';
+export { CardSectionProps };
 export declare type CardPropTypes = ViewPropTypes & TouchableOpacityProps & {
     /**
      * card custom width
@@ -61,9 +63,9 @@ export declare type CardPropTypes = ViewPropTypes & TouchableOpacityProps & {
 };
 declare const _default: (React.ComponentClass<CardPropTypes, any> & {
     Image: React.ComponentType<import("./CardImage").CardImageProps>;
-    Section: React.ComponentClass<import("./CardSection").CardSectionProps, any> | React.FunctionComponent<import("./CardSection").CardSectionProps>;
+    Section: React.ComponentClass<CardSectionProps, any> | React.FunctionComponent<CardSectionProps>;
 }) | (React.FunctionComponent<CardPropTypes> & {
     Image: React.ComponentType<import("./CardImage").CardImageProps>;
-    Section: React.ComponentClass<import("./CardSection").CardSectionProps, any> | React.FunctionComponent<import("./CardSection").CardSectionProps>;
+    Section: React.ComponentClass<CardSectionProps, any> | React.FunctionComponent<CardSectionProps>;
 });
 export default _default;
