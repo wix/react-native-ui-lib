@@ -14,7 +14,7 @@ public class CustomKeyboardRootViewManager extends ViewGroupManager<CustomKeyboa
 
     @Override
     public String getName() {
-        return "CustomKeyboardViewNative";
+        return "CustomKeyboardViewNativeTemp";
     }
 
     @Override
