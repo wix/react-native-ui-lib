@@ -79,6 +79,7 @@
     "babel-preset-react-native": "*",
     "eslint": "^5.16.0",
     "eslint-config-wix": "^1.1.28",
+    "eslint-plugin-react-hooks": "^4.0.4",
     "eslint-plugin-uilib": "file:./eslint-rules",
     "gatsby": "^2.21.21",
     "gh-pages": "^1.1.0",
