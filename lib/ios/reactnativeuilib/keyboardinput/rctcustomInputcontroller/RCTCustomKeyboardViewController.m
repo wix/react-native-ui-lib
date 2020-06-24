@@ -28,6 +28,7 @@
         
         self.heightConstraint = [self.inputView.heightAnchor constraintEqualToConstant:0];
         self.useSafeArea = useSafeArea;
+        
 #ifdef ObservingInputAccessoryViewTemp_IsAvailable
         ObservingInputAccessoryViewTemp *activeObservingInputAccessoryViewTemp = [ObservingInputAccessoryViewTempManager sharedInstance].activeObservingInputAccessoryViewTemp;
         if (activeObservingInputAccessoryViewTemp != nil)
@@ -72,6 +73,7 @@
     [_rootView.topAnchor constraintEqualToAnchor:self.view.topAnchor].active = YES;
     
     [self updateRootViewConstraints];
+    [self.inputView setNeedsLayout];
 }
 
 - (void)updateRootViewConstraints {
