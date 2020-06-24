@@ -64,8 +64,6 @@ export default class BasicTextFieldScreen extends Component {
       error
     } = this.state;
 
-    
-
     return (
       <View flex>
         <View paddingH-20 paddingT-40>
