@@ -50,15 +50,15 @@ interface ChipProps {
      */
     labelStyle?: StyleProp<TextStyle>;
     /**
-     * Shows a Badge based counter
+     * Label for the Badge based counter
      */
     counterLabel?: string;
     /**
-     * Used to customize the counter label - extends Badge component props
+     * Used to customize the counter label
      */
     counterProps?: BadgeProps;
     /**
-   * Displays counter with simpler Ui preset
+   * Displays the counter with a simple Ui preset
    */
     counterBasicUi?: boolean;
     /**
