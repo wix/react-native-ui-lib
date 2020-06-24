@@ -5,7 +5,10 @@ interface ChipProps {
     /**
      * Chip's size. Number or a width and height object.
      */
-    size?: number | object;
+    size?: number | {
+        width: number;
+        height: number;
+    };
     /**
      * On Chip press callback
      */
@@ -15,29 +18,25 @@ interface ChipProps {
      */
     backgroundColor?: string;
     /**
-     * Sets size to use minWidth and minHeight - default is true
+     * The Chip borderRadius
      */
-    minSize?: boolean;
+    borderRadius?: number;
+    /**
+     * Chip's container style
+     */
+    containerStyle?: StyleProp<ViewStyle>;
+    /**
+     * Uses size as minWidth and minHeight - default is true
+     */
+    useSizeAsMinimum?: boolean;
     /**
      * Disables all internal elements default spacings. Helps reach a custom design
      */
     resetSpacings?: boolean;
     /**
-     * The Chip borderRadius
-     */
-    borderRadius?: number;
-    /**
-     * Displays counter as a Badge
-     */
-    useBadge?: boolean;
-    /**
-     * Badge props object.
-     */
-    badgeProps?: BadgeProps;
-    /**
-     * Chip's container style
-     */
-    containerStyle?: StyleProp<ViewStyle>;
+   * Used as testing identifier
+   */
+    testID?: string;
     /**
      * Main Chip text
      */
@@ -51,37 +50,17 @@ interface ChipProps {
      */
     labelStyle?: StyleProp<TextStyle>;
     /**
-     * Text to show to the right of the label or inside the Badge.
+     * Shows a Badge based counter
      */
     counterLabel?: string;
     /**
-     * Color of the counter label.
+     * Used to customize the counter label - extends Badge component props
      */
-    counterColor?: string;
+    counterProps?: BadgeProps;
     /**
-     * Counter's style
-     */
-    counterStyle?: StyleProp<TextStyle>;
-    /**
-     * Adds a dismiss button and serves as its callback
-     */
-    onDismiss?: (props: any) => void;
-    /**
-     * Dismiss (X button) color
-     */
-    dismissColor?: string;
-    /**
-     * Dismiss (X button) asset
-     */
-    dismissIcon?: ImageSourcePropType;
-    /**
-     * Dismiss (X button) style
-     */
-    dismissIconStyle?: StyleProp<ImageStyle>;
-    /**
-     * Dismiss (X button) container style
-     */
-    dismissContainerStyle?: StyleProp<ImageStyle>;
+   * Displays counter with simpler Ui preset
+   */
+    counterBasicUi?: boolean;
     /**
      * Avatar props object
      */
@@ -99,9 +78,25 @@ interface ChipProps {
      */
     iconStyle?: StyleProp<ImageStyle>;
     /**
-     * Used as testing identifier
+     * Adds a dismiss button and serves as its callback
      */
-    testID?: string;
+    onDismiss?: (props: any) => void;
+    /**
+     * Dismiss color
+     */
+    dismissColor?: string;
+    /**
+     * Dismiss asset
+     */
+    dismissIcon?: ImageSourcePropType;
+    /**
+     * Dismiss style
+     */
+    dismissIconStyle?: StyleProp<ImageStyle>;
+    /**
+     * Dismiss container style
+     */
+    dismissContainerStyle?: StyleProp<ImageStyle>;
 }
 declare type Props = ChipProps & ViewProps & TouchableOpacityProps;
 declare const _default: React.ComponentClass<Props, any> | React.FunctionComponent<Props>;

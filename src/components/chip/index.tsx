@@ -190,6 +190,7 @@ const Chip: React.FC<ChipProps> = ({
         testID={`${testID}.dismiss`}
       >
         <Image
+        // @ts-ignore
           source={dismissIcon}
           tintColor={dismissColor}
           style={[dismissIconStyle]}
