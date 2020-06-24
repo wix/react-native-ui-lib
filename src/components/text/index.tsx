@@ -38,8 +38,6 @@ export type TextPropTypes = TextProps & TypographyModifiers & ColorsModifiers & 
    * Use Animated.Text as a container
    */
   animated?: boolean;
-
-  ref?: any;
   textAlign?: string;
 }
 
