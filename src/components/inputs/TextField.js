@@ -649,7 +649,7 @@ export default class TextField extends BaseInput {
             {paddingTop: this.getTopPaddings()}
           ]}
         >
-          {leadingIcon && <Image {...leadingIcon} onLayout={this.onLeadingIconLayout}/>}
+          {leadingIcon && <Image {...leadingIcon}/>}
           {this.renderPrefix()}
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
