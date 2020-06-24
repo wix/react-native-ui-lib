@@ -11,7 +11,7 @@ export default class ChipScreen extends Component {
   renderExample = (text: string, chip: JSX.Element) => {
     return (
       <View row spread marginB-12>
-        <Text text70> {text} </Text>
+        <Text text70>{text}</Text>
         {chip}
       </View>
     );
@@ -26,7 +26,10 @@ export default class ChipScreen extends Component {
         <Text marginB-10 text70BO>
           Default
         </Text>
-        {this.renderExample('label', <Chip label={'Chip'}/>)}
+        {this.renderExample(
+          'label',
+          <Chip label={'Chip'}/>
+        )}
         {this.renderExample(
           'label with onPress',
           <Chip label={'Chip'} onPress={() => Alert.alert('onPress')}/>
@@ -50,7 +53,10 @@ export default class ChipScreen extends Component {
         )}
         {this.renderExample(
           'label + Avatar',
-          <Chip label={'Chip'} avatar={{source: avatarImage, size: 20}}/>
+          <Chip
+            label={'Chip'}
+            avatar={{source: avatarImage, size: 20}}
+          />
         )}
         {this.renderExample(
           'label + onDismiss (tag)',
@@ -63,22 +69,21 @@ export default class ChipScreen extends Component {
           />
         )}
         {this.renderExample(
-          'label + counter',
-          <Chip label={'Chip'} counterLabel={'4'}/>
+          'label + counter with basic Ui',
+          <Chip label={'Chip'} counterLabel={'4'} counterBasicUi/>
         )}
         {this.renderExample(
-          'label + badge counter',
+          'label + counter (Badge)',
           <Chip
             label={'Chip'}
             counterLabel={'4'}
-            useBadge
           />
         )}
 
         <Text marginT-20 marginB-10 text70BO>
           Custom
         </Text>
-        <View center row >
+        <View center row>
           <Chip
             iconSource={checkmark}
             label={'Chip'}
@@ -94,8 +99,8 @@ export default class ChipScreen extends Component {
             containerStyle={{borderColor: Colors.green20, backgroundColor: Colors.green20, marginLeft: Spacings.s3}}
           />
           <Chip
-            borderRadius={22}
             resetSpacings
+            borderRadius={22}
             label={'Chip'}
             labelStyle={{color: Colors.red20, marginHorizontal: Spacings.s3, ...Typography.text70BO}}
             iconStyle={{width: 16, height: 16}}
@@ -111,11 +116,11 @@ export default class ChipScreen extends Component {
             }}
           />
           <Chip
+            resetSpacings
             label={'Chip'}
+            labelStyle={{marginRight: Spacings.s1}}
             counterLabel={'44'}
-            useBadge
-            badgeProps={{
-              size: 'small',
+            counterProps={{
               backgroundColor: Colors.white,
               borderWidth: 2,
               borderColor: Colors.black,

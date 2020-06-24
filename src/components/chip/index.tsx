@@ -1,11 +1,11 @@
 import _ from 'lodash';
-import React from 'react';
+import React, {useCallback} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, ViewProps, TouchableOpacityProps, ImageStyle, TextStyle, ImageSourcePropType} from 'react-native';
 import {AvatarProps, BadgeProps} from 'typings';
 // @ts-ignore
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
-import {BorderRadiuses, Colors, Spacings} from '../../style';
+import {BorderRadiuses, Colors, Spacings, Typography} from '../../style';
 // @ts-ignore
 import Avatar from '../avatar';
 // @ts-ignore
@@ -16,10 +16,11 @@ import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 
 interface ChipProps {
+  //GENERAL
   /**
    * Chip's size. Number or a width and height object.
    */
-  size?: number | object;
+  size?: number | {width: number, height: number};
   /**
    * On Chip press callback
    */
@@ -29,29 +30,27 @@ interface ChipProps {
    */
   backgroundColor?: string;
   /**
-   * Sets size to use minWidth and minHeight - default is true
-   */
-  minSize?: boolean;
-  /**
-   * Disables all internal elements default spacings. Helps reach a custom design
-   */
-  resetSpacings?: boolean;
-  /**
    * The Chip borderRadius
    */
   borderRadius?: number;
   /**
-   * Displays counter as a Badge
-   */
-  useBadge?: boolean;
-  /**
-   * Badge props object.
-   */
-  badgeProps?: BadgeProps;
-  /**
    * Chip's container style
    */
   containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Uses size as minWidth and minHeight - default is true
+   */
+  useSizeAsMinimum?: boolean;
+  /**
+   * Disables all internal elements default spacings. Helps reach a custom design
+   */
+  resetSpacings?: boolean;
+    /**
+   * Used as testing identifier
+   */
+  testID?: string;
+
+  //LABEL
   /**
    * Main Chip text
    */
@@ -64,42 +63,26 @@ interface ChipProps {
    * Label's style
    */
   labelStyle?: StyleProp<TextStyle>;
+
+  //COUNTER (Badge)
   /**
-   * Text to show to the right of the label or inside the Badge.
+   * Shows a Badge based counter
    */
   counterLabel?: string;
   /**
-   * Color of the counter label.
+   * Used to customize the counter label - extends Badge component props
    */
-  counterColor?: string;
-  /**
-   * Counter's style
+  counterProps?: BadgeProps;
+    /**
+   * Displays counter with simpler Ui preset
    */
-  counterStyle?: StyleProp<TextStyle>;
-  /**
-   * Adds a dismiss button and serves as its callback
-   */
-  onDismiss?: (props: any) => void;
-  /**
-   * Dismiss (X button) color
-   */
-  dismissColor?: string;
-  /**
-   * Dismiss (X button) asset
-   */
-  dismissIcon?: ImageSourcePropType;
-  /**
-   * Dismiss (X button) style
-   */
-  dismissIconStyle?: StyleProp<ImageStyle>;
-  /**
-   * Dismiss (X button) container style
-   */
-  dismissContainerStyle?: StyleProp<ImageStyle>;
+  counterBasicUi?: boolean;
   /**
    * Avatar props object
    */
   avatar?: AvatarProps;
+
+  //ICON
   /**
    * Icon's source
    */
@@ -112,10 +95,28 @@ interface ChipProps {
    * Icon style
    */
   iconStyle?: StyleProp<ImageStyle>;
+
+  //DISMISS ('X' button)
   /**
-   * Used as testing identifier
+   * Adds a dismiss button and serves as its callback
    */
-  testID?: string;
+  onDismiss?: (props: any) => void;
+  /**
+   * Dismiss color
+   */
+  dismissColor?: string;
+  /**
+   * Dismiss asset
+   */
+  dismissIcon?: ImageSourcePropType;
+  /**
+   * Dismiss style
+   */
+  dismissIconStyle?: StyleProp<ImageStyle>;
+  /**
+   * Dismiss container style
+   */
+  dismissContainerStyle?: StyleProp<ImageStyle>;
 }
 
 type Props = ChipProps & ViewProps & TouchableOpacityProps;
@@ -129,11 +130,10 @@ type Props = ChipProps & ViewProps & TouchableOpacityProps;
 const Chip: React.FC<ChipProps> = ({
   avatar,
   backgroundColor,
-  borderRadius = BorderRadiuses.br100,
-  badgeProps,
+  borderRadius,
+  counterBasicUi,
   counterLabel,
-  counterColor,
-  counterStyle,
+  counterProps,
   containerStyle,
   dismissColor,
   dismissIcon,
@@ -144,26 +144,17 @@ const Chip: React.FC<ChipProps> = ({
   label,
   labelStyle,
   labelColor,
-  minSize,
+  useSizeAsMinimum,
   onDismiss,
   dismissContainerStyle,
   onPress,
   resetSpacings,
   size,
   testID,
-  useBadge,
   ...others
 }) => {
-  Chip.displayName = 'Chip';
-  Chip.defaultProps = {
-    borderRadius: BorderRadiuses.br100,
-    counterColor: Colors.grey20,
-    dismissIcon: Assets.icons.x,
-    minSize: true,
-    size: 24
-  };
 
-  const renderIcon = () => {
+  const renderIcon = useCallback(() => {
     return (
       <Image
       // @ts-ignore
@@ -173,36 +164,24 @@ const Chip: React.FC<ChipProps> = ({
         testID={`${testID}.icon`}
       />
     );
-  };
+  }, [iconColor, iconSource, iconStyle]);
 
-  const renderCounter = () => {
-    if (useBadge) {
-      return (
-        <Badge
-          label={counterLabel}
-          backgroundColor={Colors.red30}
-          size={BADGE_SIZES.medium}
-          style={[getMargins('counter')]}
-          labelColor={counterColor}
-          {...badgeProps}
-          {...counterStyle}
-          testID={`${testID}.counter`}
-        />
-      );
-    }
+
+  const renderCounter = useCallback(() => {
     return (
-      <Text
-        text90R
-        color={counterColor}
-        style={[getMargins('counter'), counterStyle]}
+      <Badge
+        label={counterLabel}
+        size={BADGE_SIZES.medium}
+        backgroundColor={counterBasicUi ? 'transparent' : Colors.red30}
+        style={[getMargins('counter')]}
+        labelStyle={counterBasicUi && {color: Colors.grey20, ...Typography.text90R}}
+        {...counterProps}
         testID={`${testID}.counter`}
-      >
-        {counterLabel}
-      </Text>
+      />
     );
-  };
+  }, [counterLabel, counterProps, counterBasicUi]);
 
-  const renderOnDismiss = () => {
+  const renderOnDismiss = useCallback(() => {
     return (
       <TouchableOpacity
         style={[getMargins('dismiss'), dismissContainerStyle]}
@@ -219,9 +198,9 @@ const Chip: React.FC<ChipProps> = ({
         />
       </TouchableOpacity>
     );
-  };
+  }, [dismissContainerStyle, onDismiss, dismissIcon, dismissIconStyle]);
 
-  const renderAvatar = () => {
+  const renderAvatar = useCallback(() => {
     return (
       <Avatar
         size={20}
@@ -231,9 +210,9 @@ const Chip: React.FC<ChipProps> = ({
         testID={`${testID}.avatar`}
       />
     );
-  };
+  }, [avatar]);
 
-  const renderLabel = () => {
+  const renderLabel = useCallback(() => {
     return (
       <Text
         text90M
@@ -246,33 +225,33 @@ const Chip: React.FC<ChipProps> = ({
         {label}
       </Text>
     );
-  };
+  }, [label]);
 
-  const getMargins = (element: string): object | undefined => {
+  const getMargins = useCallback((element: string): object | undefined => {
     if (!resetSpacings) {
       switch (element) {
         case 'label':
-          if (counterLabel) {
-            return {
-              marginLeft: Spacings.s3,
-              marginRight: Spacings.s1
-            };
-          }
-          if (onDismiss) {
-            return {
-              marginLeft: Spacings.s3,
-              marginRight: Spacings.s2
-            };
-          }
           if (avatar) {
             return {
               marginRight: Spacings.s2,
               marginLeft: Spacings.s1
             };
           }
+          if (counterLabel) {
+            return {
+              marginLeft: Spacings.s3,
+              marginRight: counterBasicUi ? undefined : Spacings.s1
+            };
+          }
           if (iconSource) {
             return {
               marginLeft: 2,
+              marginRight: Spacings.s2
+            };
+          }
+          if (onDismiss) {
+            return {
+              marginLeft: Spacings.s3,
               marginRight: Spacings.s2
             };
           } else {
@@ -284,7 +263,7 @@ const Chip: React.FC<ChipProps> = ({
           };
         case 'counter':
           return {
-            marginRight: useBadge ? Spacings.s2 : Spacings.s3
+            marginRight: counterBasicUi ? Spacings.s1 : Spacings.s2
           };
         case 'dismiss':
           return {
@@ -292,16 +271,16 @@ const Chip: React.FC<ChipProps> = ({
           };
       }
     }
-  };
+  }, [avatar, counterLabel, counterBasicUi, iconSource, onDismiss]);
 
-  const getContainerSize = () => {
-    const width = minSize ? 'minWidth' : 'width';
-    const height = minSize ? 'minHeight' : 'height';
+  const getContainerSize = useCallback(() => {
+    const width = useSizeAsMinimum ? 'minWidth' : 'width';
+    const height = useSizeAsMinimum ? 'minHeight' : 'height';
 
     return typeof size === 'object'
       ? {[width]: _.get(size, 'width'), [height]: _.get(size, 'height')}
       : {[width]: size, [height]: size};
-  };
+  }, [size]);
 
   const Container = onPress ? TouchableOpacity : View;
 
@@ -326,6 +305,14 @@ const Chip: React.FC<ChipProps> = ({
       {onDismiss && renderOnDismiss()}
     </Container>
   );
+};
+
+Chip.displayName = 'Chip';
+Chip.defaultProps = {
+  borderRadius: BorderRadiuses.br100,
+  dismissIcon: Assets.icons.x,
+  useSizeAsMinimum: true,
+  size: 26
 };
 
 const styles = StyleSheet.create({
