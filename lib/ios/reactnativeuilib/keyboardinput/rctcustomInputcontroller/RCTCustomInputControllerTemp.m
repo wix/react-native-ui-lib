@@ -114,6 +114,10 @@ RCT_EXPORT_MODULE(CustomInputControllerTemp)
     return nil;
 }
 
+- (BOOL)shouldUseSafeAreaFrom:(NSDictionary *)params {
+    return params[@"useSafeArea"] ? [params[@"useSafeArea"] isEqual:@(1)] : YES;
+}
+
 RCT_EXPORT_METHOD(presentCustomInputComponent:(nonnull NSNumber*)inputFieldTag params:(nonnull NSDictionary*)params)
 {
     RCTBridge* bridge = [self.bridge valueForKey:@"parentBridge"];
@@ -136,7 +140,8 @@ RCT_EXPORT_METHOD(presentCustomInputComponent:(nonnull NSNumber*)inputFieldTag p
     
     self.customInputComponentPresented = NO;
     
-    RCTCustomKeyboardViewController* customKeyboardController = [[RCTCustomKeyboardViewController alloc] init];
+    BOOL useSafeArea = [self shouldUseSafeAreaFrom:initialProps];
+    RCTCustomKeyboardViewController* customKeyboardController = [[RCTCustomKeyboardViewController alloc] initWithUsingSafeArea:useSafeArea];
     customKeyboardController.rootView = rv;
     
     _WXInputHelperView* helperView = [[_WXInputHelperView alloc] initWithFrame:CGRectZero];

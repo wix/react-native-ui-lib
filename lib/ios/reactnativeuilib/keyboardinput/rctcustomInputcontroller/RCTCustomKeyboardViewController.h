@@ -16,6 +16,7 @@
 @interface RCTCustomKeyboardViewController : UIInputViewController
 
 - (void) setAllowsSelfSizing:(BOOL)allowsSelfSizing;
+- (instancetype)initWithUsingSafeArea:(BOOL)useSafeArea;
 
 @property (nonatomic, strong) NSLayoutConstraint *heightConstraint;
 @property (nonatomic, strong) RCTRootView *rootView;
