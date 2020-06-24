@@ -220,7 +220,7 @@ export default class TextField extends BaseInput {
     const translate = width / 2 - (width * FLOATING_PLACEHOLDER_SCALE) / 2;
     this.setState({floatingPlaceholderTranslate: translate / FLOATING_PLACEHOLDER_SCALE});
   };
-  
+
   /** Actions */
   generatePropsWarnings(props) {
     if (props.maxLength === 0) {
