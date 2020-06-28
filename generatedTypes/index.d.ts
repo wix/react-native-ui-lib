@@ -4,9 +4,11 @@
  * Please use this file for declaring all the exports, so they could be picked up by typescript's complier
  */
 export * from './style';
-export {default as View} from './components/view';
+export {withScrollEnabler} from './commons/new';
+export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
+export {default as View, ViewPropTypes} from './components/view';
 export {default as Text} from './components/text';
-export {default as TouchableOpacity} from './components/touchableOpacity';
+export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';
 export {default as Button} from './components/button';
 export {default as Checkbox} from './components/checkbox';
 export {default as Image} from './components/image';

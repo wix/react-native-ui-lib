@@ -26,7 +26,6 @@ export declare type TextPropTypes = TextProps & TypographyModifiers & ColorsModi
      * Use Animated.Text as a container
      */
     animated?: boolean;
-    ref?: any;
     textAlign?: string;
 };
 declare type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPropTypes;
@@ -44,5 +43,5 @@ declare class Text extends PureComponent<PropsTypes> {
     render(): JSX.Element;
 }
 export { Text };
-declare const _default: React.ComponentType<TextPropTypes>;
+declare const _default: React.ComponentClass<TextPropTypes, any> | React.FunctionComponent<TextPropTypes>;
 export default _default;

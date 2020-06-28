@@ -44,7 +44,7 @@ const ICON_LEFT_PADDING = 6;
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
 
 /**
- * @description: A wrapper for TextInput component with extra functionality like floating placeholder
+ * @description: A wrapper for TextInput component with extra functionality like floating placeholder and validations (This is an uncontrolled component)
  * @modifiers: Typography
  * @extends: TextInput
  * @extendslink: https://facebook.github.io/react-native/docs/textinput
@@ -125,7 +125,7 @@ export default class TextField extends BaseInput {
      */
     transformer: PropTypes.func,
     /**
-     * Pass to render a prefix text as part of the input
+     * Pass to render a prefix text as part of the input (doesn't work with floatingPlaceholder)
      */
     prefix: PropTypes.string,
     /**
@@ -172,7 +172,11 @@ export default class TextField extends BaseInput {
       iconColor: PropTypes.string,
       onPress: PropTypes.func,
       style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
-    })
+    }),
+    /**
+     * Pass to render a leading icon to the TextInput value. Accepts Image props (doesn't work with floatingPlaceholder)
+     */
+    leadingIcon: PropTypes.shape(Image.propTypes)
   };
 
   static defaultProps = {
@@ -310,8 +314,7 @@ export default class TextField extends BaseInput {
   }
 
   getTopPaddings() {
-    const {floatingPlaceholder} = this.getThemeProps();
-    return floatingPlaceholder ? (this.shouldShowTopError() ? undefined : 25) : undefined;
+    return this.shouldFakePlaceholder() ? (this.shouldShowTopError() ? undefined : 25) : undefined;
   }
 
   isDisabled() {
@@ -345,8 +348,9 @@ export default class TextField extends BaseInput {
   }
 
   shouldFakePlaceholder() {
-    const {floatingPlaceholder, centered} = this.getThemeProps();
-    return Boolean(floatingPlaceholder && !centered && !this.shouldShowTopError());
+    const {floatingPlaceholder, centered, leadingIcon, prefix} = this.getThemeProps();
+
+    return !leadingIcon && !prefix && Boolean(floatingPlaceholder && !centered && !this.shouldShowTopError());
   }
 
   shouldShowError() {
@@ -389,6 +393,9 @@ export default class TextField extends BaseInput {
             style={[
               this.styles.placeholder,
               typography,
+              // TODO: we need to exclude completely any dependency on line height
+              // in this component since it always breaks alignments
+              {lineHeight: undefined},
               {
                 transform: [
                   {
@@ -627,7 +634,7 @@ export default class TextField extends BaseInput {
   }
 
   render() {
-    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
+    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline, leadingIcon} = this.getThemeProps();
     const underlineStateColor = this.getStateColor(underlineColor || UNDERLINE_COLOR_BY_STATE);
 
     return (
@@ -642,6 +649,7 @@ export default class TextField extends BaseInput {
             {paddingTop: this.getTopPaddings()}
           ]}
         >
+          {leadingIcon && <Image {...leadingIcon}/>}
           {this.renderPrefix()}
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}

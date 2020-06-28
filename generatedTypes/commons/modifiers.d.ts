@@ -99,6 +99,6 @@ export declare function generateModifiersStyle(options: {
     alignments: boolean;
     flex: boolean;
     position: boolean;
-} | undefined, props: Dictionary<any>): _.Dictionary<any>;
+} | undefined, props: Dictionary<any>): ExtractedStyle;
 export declare function getAlteredModifiersOptions(currentProps: any, nextProps: any): AlteredOptions;
 export {};

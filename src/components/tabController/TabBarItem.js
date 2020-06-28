@@ -127,7 +127,7 @@ export default class TabBarItem extends PureComponent {
       this.itemWidth = width;
       this.itemRef.current.setNativeProps({style: {width, paddingHorizontal: null, flex: null}});
       if (onLayout) {
-        onLayout({width, x}, index);
+        onLayout({width}, index);
       }
     }
   };

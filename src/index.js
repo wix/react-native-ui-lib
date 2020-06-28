@@ -202,6 +202,9 @@ export default {
   get forwardRef() {
     return require('./commons').forwardRef;
   },
+  get withScrollEnabler() {
+    return require('./commons').withScrollEnabler;
+  },
 
   // Helpers
   get AvatarHelper() {

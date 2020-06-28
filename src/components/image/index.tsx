@@ -9,7 +9,7 @@ import {asBaseComponent, ForwardRefInjectedProps} from '../../commons/new';
 import Assets from '../../assets';
 import Overlay, {OverlayTypeType} from '../overlay';
 
-type ImageProps = RNImageProps & {
+export type ImageProps = RNImageProps & {
   /**
    * custom source transform handler for manipulating the image source (great for size control)
    */
