@@ -37,7 +37,7 @@ export default class ActionBar extends BaseComponent {
      */
     useSafeArea: PropTypes.bool,
     /**
-     * keep the action bar postion relative instead of it absolute position
+     * keep the action bar position relative instead of it absolute position
      */
     keepRelative: PropTypes.bool,
     /**

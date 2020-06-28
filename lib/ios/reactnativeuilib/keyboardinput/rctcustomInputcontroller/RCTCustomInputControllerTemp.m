@@ -140,7 +140,7 @@ RCT_EXPORT_METHOD(presentCustomInputComponent:(nonnull NSNumber*)inputFieldTag p
     
     self.customInputComponentPresented = NO;
     
-    BOOL useSafeArea = [self shouldUseSafeAreaFrom:initialProps];
+    BOOL useSafeArea = [self shouldUseSafeAreaFrom:params];
     RCTCustomKeyboardViewController* customKeyboardController = [[RCTCustomKeyboardViewController alloc] initWithUsingSafeArea:useSafeArea];
     customKeyboardController.rootView = rv;
     

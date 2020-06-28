@@ -67,17 +67,12 @@
     _rootView = rootView;
     _rootView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.inputView addSubview:_rootView];
-    
-    [_rootView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
-    [_rootView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
-    [_rootView.topAnchor constraintEqualToAnchor:self.view.topAnchor].active = YES;
-    
+        
     [self updateRootViewConstraints];
     [self.inputView setNeedsLayout];
 }
 
 - (void)updateRootViewConstraints {
-    _rootView.translatesAutoresizingMaskIntoConstraints = NO;
     [_rootView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
     [_rootView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
     [_rootView.topAnchor constraintEqualToAnchor:self.view.topAnchor].active = YES;
