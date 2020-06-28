@@ -2,7 +2,6 @@ import _ from 'lodash';
 import React, {memo, useCallback} from 'react';
 import {
   FlatList,
-  FlatListProps,
   StyleSheet,
   NativeSyntheticEvent,
   NativeScrollEvent
