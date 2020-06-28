@@ -42,12 +42,12 @@ function withScrollReached<PROPS extends SupportedViews>(
         const layoutSize = horizontal ? layoutWidth : layoutHeight;
         const offset = horizontal ? offsetX : offsetY;
         const contentSize = horizontal ? contentWidth : contentHeight;
-        const closeToStart = offset <= 0;
+        const closeToStart = offset <= 0; // TODO: consider adding padding (user input)
         if (closeToStart !== isScrollAtStart) {
           setScrollAtStart(closeToStart);
         }
 
-        const closeToEnd = layoutSize + offset >= contentSize - 0;
+        const closeToEnd = layoutSize + offset >= contentSize; // TODO: consider adding padding (user input)
         if (closeToEnd !== isScrollAtEnd) {
           setScrollAtEnd(closeToEnd);
         }
