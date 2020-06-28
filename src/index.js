@@ -205,6 +205,9 @@ export default {
   get withScrollEnabler() {
     return require('./commons').withScrollEnabler;
   },
+  get withScrollReached() {
+    return require('./commons').withScrollReached;
+  },
 
   // Helpers
   get AvatarHelper() {
