@@ -55,7 +55,6 @@ export default class KeyboardInputViewScreen extends PureComponent {
   };
 
   toggleUseSafeArea = () => {
-    this.resetKeyboardView();
     this.setState({
       useSafeArea: !this.state.useSafeArea
     });
@@ -93,7 +92,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
           <Button label="Close" link onPress={KeyboardUtils.dismiss} style={styles.button}/>
         </View>
         <View column>
-          { this.safeAreaSwitchToggleForIOS() }
+          { this.safeAreaSwitchToggle() }
           <View row>
             {this.getToolbarButtons().map((button, index) => (
               <Button label={button.text} link onPress={button.onPress} key={index} style={styles.button}/>
@@ -117,15 +116,12 @@ export default class KeyboardInputViewScreen extends PureComponent {
     });
   };
 
-  safeAreaSwitchToggleForIOS = () => {
-    if (Platform.OS !== 'ios') {
-      return; 
-    } 
+  safeAreaSwitchToggle = () => {
     const {useSafeArea} = this.state;
     return (  
       <View column>
         <View style={styles.separatorLine}/>
-        <View row margin-10>
+        <View centerV row margin-10>
           <Text text80 dark40>Safe Area Enabled:</Text>
           <Switch value={useSafeArea} onValueChange={this.toggleUseSafeArea} marginL-14/>
         </View>
