@@ -20,6 +20,10 @@ export type ScrollReachedProps = {
 
 declare type SupportedViewsProps = FlatListProps<any> | ScrollViewProps;
 
+export type WithScrollReachedOptionsProps = {
+  threshold?: number;
+};
+
 export type WithScrollReachedProps = {
   scrollReachedProps: ScrollReachedProps;
   ref?: any;
@@ -28,7 +32,8 @@ export type WithScrollReachedProps = {
 type PropTypes = ForwardRefInjectedProps & SupportedViewsProps;
 
 function withScrollReached<PROPS>(
-  WrappedComponent: React.ComponentType<PROPS & WithScrollReachedProps>
+  WrappedComponent: React.ComponentType<PROPS & WithScrollReachedProps>,
+  options: WithScrollReachedOptionsProps = {}
 ): React.ComponentType<PROPS> {
   const ScrollReachedDetector = (props: PROPS & PropTypes) => {
     // The scroll starts at the start, from what I've tested this works fine
@@ -45,15 +50,16 @@ function withScrollReached<PROPS>(
         } = event;
 
         const horizontal = props.horizontal;
+        const threshold = options.threshold || 0;
         const layoutSize = horizontal ? layoutWidth : layoutHeight;
         const offset = horizontal ? offsetX : offsetY;
         const contentSize = horizontal ? contentWidth : contentHeight;
-        const closeToStart = offset <= 0; // TODO: consider adding padding (user input)
+        const closeToStart = offset <= threshold;
         if (closeToStart !== isScrollAtStart) {
           setScrollAtStart(closeToStart);
         }
 
-        const closeToEnd = layoutSize + offset >= contentSize; // TODO: consider adding padding (user input)
+        const closeToEnd = layoutSize + offset >= contentSize - threshold;
         if (closeToEnd !== isScrollAtEnd) {
           setScrollAtEnd(closeToEnd);
         }

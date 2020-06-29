@@ -5,9 +5,12 @@ export declare type ScrollReachedProps = {
     isScrollAtStart?: boolean;
     isScrollAtEnd?: boolean;
 };
+export declare type WithScrollReachedOptionsProps = {
+    threshold?: number;
+};
 export declare type WithScrollReachedProps = {
     scrollReachedProps: ScrollReachedProps;
     ref?: any;
 };
-declare function withScrollReached<PROPS>(WrappedComponent: React.ComponentType<PROPS & WithScrollReachedProps>): React.ComponentType<PROPS>;
+declare function withScrollReached<PROPS>(WrappedComponent: React.ComponentType<PROPS & WithScrollReachedProps>, options?: WithScrollReachedOptionsProps): React.ComponentType<PROPS>;
 export default withScrollReached;
