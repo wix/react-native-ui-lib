@@ -24,9 +24,8 @@ export type WithScrollReachedProps = {
   scrollReachedProps: ScrollReachedProps;
   ref?: any;
 };
-type PropTypes = WithScrollReachedProps &
-  ForwardRefInjectedProps &
-  SupportedViewsProps;
+
+type PropTypes = ForwardRefInjectedProps & SupportedViewsProps;
 
 function withScrollReached<PROPS>(
   WrappedComponent: React.ComponentType<PROPS & WithScrollReachedProps>
