@@ -3,7 +3,9 @@ import React, {memo, useCallback} from 'react';
 import {
   FlatList,
   StyleSheet,
+  // eslint-disable-next-line no-unused-vars
   NativeSyntheticEvent,
+  // eslint-disable-next-line no-unused-vars
   NativeScrollEvent
 } from 'react-native';
 import {
@@ -12,12 +14,18 @@ import {
   View,
   Image,
   withScrollReached,
+  // eslint-disable-next-line no-unused-vars
   WithScrollReachedProps
 } from 'react-native-ui-lib';
 
+export type FadedScrollViewProps = WithScrollReachedProps & {
+  onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+  scrollEnabled?: boolean;
+};
+
 const FADE_OUT_HEIGHT = 100;
 const fadeImage = require('../../../assets/images/FadeOut.png');
-const WithScrollReached = (props: WithScrollReachedProps) => {
+const WithScrollReached = (props: FadedScrollViewProps) => {
   const getData = useCallback(() => {
     return [...Array(3).keys()];
   }, []);
@@ -47,19 +55,9 @@ const WithScrollReached = (props: WithScrollReachedProps) => {
       (_.isUndefined(props.scrollEnabled) || props.scrollEnabled) &&
       !props.scrollReachedProps.isScrollAtEnd
     ) {
-      return (
-        <Image
-          style={styles.fadeOutImage}
-          testID={`${props.testID}.fadeOut`}
-          source={fadeImage}
-        />
-      );
+      return <Image style={styles.fadeOutImage} source={fadeImage} />;
     }
-  }, [
-    props.scrollEnabled,
-    props.scrollReachedProps.isScrollAtEnd,
-    props.testID
-  ]);
+  }, [props.scrollEnabled, props.scrollReachedProps.isScrollAtEnd]);
 
   return (
     <View>

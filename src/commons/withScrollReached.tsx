@@ -1,8 +1,12 @@
 import React, {useState, useCallback} from 'react';
 import {
+  // eslint-disable-next-line no-unused-vars
   FlatListProps,
+  // eslint-disable-next-line no-unused-vars
   ScrollViewProps,
+  // eslint-disable-next-line no-unused-vars
   NativeSyntheticEvent,
+  // eslint-disable-next-line no-unused-vars
   NativeScrollEvent
 } from 'react-native';
 // eslint-disable-next-line no-unused-vars
@@ -14,18 +18,21 @@ export type ScrollReachedProps = {
   isScrollAtEnd?: boolean;
 };
 
-type SupportedViews = FlatListProps<any> | ScrollViewProps;
+declare type SupportedViewsProps = FlatListProps<any> | ScrollViewProps;
 
-export type WithScrollReachedProps = SupportedViews & {
+export type WithScrollReachedProps = {
   scrollReachedProps: ScrollReachedProps;
   ref?: any;
 };
-type PropTypes = ForwardRefInjectedProps & SupportedViews;
-function withScrollReached<PROPS extends SupportedViews>(
-  WrappedComponent: React.ComponentType<WithScrollReachedProps>
+type PropTypes = WithScrollReachedProps &
+  ForwardRefInjectedProps &
+  SupportedViewsProps;
+
+function withScrollReached<PROPS>(
+  WrappedComponent: React.ComponentType<PROPS & WithScrollReachedProps>
 ): React.ComponentType<PROPS> {
-  const ScrollReachedDetector = (props: PropTypes) => {
-    // The scroll starts at the start, from what I've tested this works fine 
+  const ScrollReachedDetector = (props: PROPS & PropTypes) => {
+    // The scroll starts at the start, from what I've tested this works fine
     const [isScrollAtStart, setScrollAtStart] = useState(true);
     const [isScrollAtEnd, setScrollAtEnd] = useState(false);
     const onScroll = useCallback(
@@ -64,7 +71,7 @@ function withScrollReached<PROPS extends SupportedViews>(
     );
   };
 
-  return forwardRef(ScrollReachedDetector) as any;
+  return forwardRef(ScrollReachedDetector);
 }
 
 export default withScrollReached;
