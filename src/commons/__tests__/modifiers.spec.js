@@ -41,7 +41,14 @@ describe('Modifiers', () => {
       expect(uut.extractTypographyValue({})).toEqual(undefined);
     });
 
-    it('should return take the last typography modifier prop in case there is more than one', () => {
+    it('should ignore modifiers with false value', () => {
+      expect(uut.extractTypographyValue({
+        text40: true,
+        text70: false
+      }),).toEqual(Typography.text40);
+    });
+
+    it('should prioritize last typography modifier prop in case there is more than one', () => {
       expect(uut.extractTypographyValue({
         text40: true,
         text70: true
@@ -50,10 +57,7 @@ describe('Modifiers', () => {
         text70: true,
         text40: true
       }),).toEqual(Typography.text40);
-      expect(uut.extractTypographyValue({
-        text40: true,
-        text70: false
-      }),).toEqual(Typography.text40);
+      
     });
 
     it('should return value of the custom made typography', () => {
@@ -63,11 +67,17 @@ describe('Modifiers', () => {
       expect(uut.extractTypographyValue({
         text40: true,
         customTypography: true
-      }),).toEqual(customTypography);
+      }),).toEqual({...Typography.text40, ...customTypography});
       expect(uut.extractTypographyValue({
         customTypography: true,
         text40: true
-      }),).toEqual(Typography.text40);
+      }),).toEqual({...customTypography, ...Typography.text40});
+    });
+
+    it('should merge typography modifiers', () => {
+      const bold = {fontWeight: 'bold'};
+      Typography.loadTypographies({bold});
+      expect(uut.extractTypographyValue({text70: true, bold: true})).toEqual({...Typography.text70, fontWeight: 'bold'});
     });
   });
 
