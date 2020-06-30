@@ -12,7 +12,7 @@ const DEFAULT_COLOR = Colors.blue30;
 const DEFAULT_ICON_COLOR = Colors.white;
 const DEFAULT_DISABLED_COLOR = Colors.dark70;
 
-interface CheckboxProps {
+export interface CheckboxPropTypes extends TouchableOpacityProps {
   /**
    * The value of the Checkbox. If true the switch will be turned on. Default value is false.
    */
@@ -51,11 +51,9 @@ interface CheckboxProps {
   style?: StyleProp<ViewStyle>
 }
 
-type CheckboxState = {
+interface CheckboxState {
   isChecked: Animated.Value;
 };
-
-type Props = CheckboxProps & TouchableOpacityProps;
 
 /**
  * @description: Checkbox component for toggling boolean value related to some context
@@ -64,7 +62,7 @@ type Props = CheckboxProps & TouchableOpacityProps;
  * @gif: https://media.giphy.com/media/xULW8j5WzsuPytqklq/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CheckboxScreen.tsx
  */
-class Checkbox extends Component<Props, CheckboxState> {
+class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
   static displayName = 'Checkbox';
 
   styles: {
@@ -84,7 +82,7 @@ class Checkbox extends Component<Props, CheckboxState> {
     ];
   };
 
-  constructor(props: Props) {
+  constructor(props: CheckboxPropTypes) {
     super(props);
 
     this.state = {
@@ -106,7 +104,7 @@ class Checkbox extends Component<Props, CheckboxState> {
     };
   }
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: CheckboxPropTypes) {
     const {value} = this.props;
     if (prevProps.value !== value) {
       this.animateCheckbox(value);
@@ -125,7 +123,7 @@ class Checkbox extends Component<Props, CheckboxState> {
     };
   }
 
-  animateCheckbox(value: CheckboxProps['value']) {
+  animateCheckbox(value: CheckboxPropTypes['value']) {
     const {isChecked} = this.state;
 
     Animated.timing(isChecked, {
@@ -189,7 +187,7 @@ class Checkbox extends Component<Props, CheckboxState> {
   }
 }
 
-function createStyles(props: Props) {
+function createStyles(props: CheckboxPropTypes) {
   const {color = DEFAULT_COLOR, iconColor = DEFAULT_ICON_COLOR, size = DEFAULT_SIZE, borderRadius} = props;
 
   return StyleSheet.create({
@@ -209,4 +207,4 @@ function createStyles(props: Props) {
   });
 }
 
-export default asBaseComponent<Props>(Checkbox);
+export default asBaseComponent<CheckboxPropTypes>(Checkbox);
