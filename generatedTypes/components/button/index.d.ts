@@ -2,6 +2,17 @@ import React, { PureComponent } from 'react';
 import { LayoutChangeEvent, ImageStyle, TextStyle } from 'react-native';
 import { BaseComponentInjectedProps, ForwardRefInjectedProps, TypographyModifiers, ColorsModifiers, BackgroundColorModifier, MarginModifiers } from '../../commons/new';
 import { TextPropTypes } from '../text';
+declare enum ButtonSize {
+    xSmall = "xSmall",
+    small = "small",
+    medium = "medium",
+    large = "large"
+}
+declare enum AnimationDirection {
+    center = "center",
+    left = "left",
+    right = "right"
+}
 export declare type ButtonPropTypes = TextPropTypes & TypographyModifiers & ColorsModifiers & BackgroundColorModifier & MarginModifiers & {
     /**
      * Text to show inside the button
@@ -30,7 +41,7 @@ export declare type ButtonPropTypes = TextPropTypes & TypographyModifiers & Colo
     /**
      * Size of the button [large, medium, small, xSmall]
      */
-    size?: 'xSmall' | 'small' | 'medium' | 'large';
+    size?: ButtonSize;
     /**
      * Custom border radius.
      */
@@ -104,7 +115,7 @@ export declare type ButtonPropTypes = TextPropTypes & TypographyModifiers & Colo
     /**
      * the direction of the animation ('left' and 'right' will effect the button's own alignment)
      */
-    animateTo?: 'center' | 'left' | 'right';
+    animateTo?: AnimationDirection;
 };
 export declare type ButtonState = {
     size?: number;
@@ -125,17 +136,8 @@ declare class Button extends PureComponent<Props, ButtonState> {
     static defaultProps: {
         iconOnRight: boolean;
     };
-    static sizes: {
-        xSmall: string;
-        small: string;
-        medium: string;
-        large: string;
-    };
-    static animationDirection: {
-        center: string;
-        left: string;
-        right: string;
-    };
+    static sizes: typeof ButtonSize;
+    static animationDirection: typeof AnimationDirection;
     constructor(props: Props);
     state: {
         size: undefined;
@@ -325,5 +327,5 @@ declare class Button extends PureComponent<Props, ButtonState> {
     render(): JSX.Element;
 }
 export { Button };
-declare const _default: React.ComponentClass<ButtonPropTypes, any> | React.FunctionComponent<ButtonPropTypes>;
+declare const _default: React.ComponentClass<ButtonPropTypes, any> & typeof Button;
 export default _default;

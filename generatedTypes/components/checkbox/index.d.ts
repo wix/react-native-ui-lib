@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleProp, TouchableOpacityProps, ViewStyle } from 'react-native';
-interface CheckboxProps {
+export interface CheckboxPropTypes extends TouchableOpacityProps {
     /**
      * The value of the Checkbox. If true the switch will be turned on. Default value is false.
      */
@@ -38,6 +38,5 @@ interface CheckboxProps {
      */
     style?: StyleProp<ViewStyle>;
 }
-declare type Props = CheckboxProps & TouchableOpacityProps;
-declare const _default: React.ComponentClass<Props, any> | React.FunctionComponent<Props>;
+declare const _default: React.ComponentClass<CheckboxPropTypes, any>;
 export default _default;
