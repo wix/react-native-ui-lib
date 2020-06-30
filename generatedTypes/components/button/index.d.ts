@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { LayoutChangeEvent, ImageStyle, TextStyle } from 'react-native';
+import { LayoutChangeEvent, ImageStyle, TextStyle, StyleProp } from 'react-native';
 import { BaseComponentInjectedProps, ForwardRefInjectedProps, TypographyModifiers, ColorsModifiers, BackgroundColorModifier, MarginModifiers } from '../../commons/new';
 import { TextPropTypes } from '../text';
 declare enum ButtonSize {
@@ -29,7 +29,7 @@ export declare type ButtonPropTypes = TextPropTypes & TypographyModifiers & Colo
     /**
      * Icon image style
      */
-    iconStyle?: ImageStyle;
+    iconStyle?: StyleProp<ImageStyle>;
     /**
      * Should the icon be right to the label
      */
@@ -318,7 +318,7 @@ declare class Button extends PureComponent<Props, ButtonState> {
     } | {
         shadowColor: any;
     })[] | undefined;
-    getIconStyle(): (ImageStyle | undefined)[];
+    getIconStyle(): StyleProp<ImageStyle>[];
     getAnimationDirectionStyle(): {
         alignSelf: string;
     } | undefined;

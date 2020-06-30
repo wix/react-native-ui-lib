@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Platform, StyleSheet, LayoutAnimation, Image, LayoutChangeEvent, ImageStyle, TextStyle} from 'react-native';
+import {Platform, StyleSheet, LayoutAnimation, Image, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
 import _ from 'lodash';
 import {
   asBaseComponent,
@@ -51,7 +51,7 @@ export type ButtonPropTypes = TextPropTypes &
     /**
      * Icon image style
      */
-    iconStyle?: ImageStyle;
+    iconStyle?: StyleProp<ImageStyle>;
     /**
      * Should the icon be right to the label
      */
