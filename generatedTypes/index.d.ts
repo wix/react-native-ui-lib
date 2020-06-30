@@ -21,6 +21,7 @@ export {
   ActionBar,
   ActionSheet,
   Avatar,
+  AvatarProps,
   Badge,
   Card,
   Carousel,
