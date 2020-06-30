@@ -50,5 +50,9 @@ export type _B = Partial<Record<BaseComponentColorModifierVariations, boolean>>;
 export class PureBaseComponent<P = {}, S = {}, SS = any> extends React.PureComponent<P & _B, S, SS> {
   static propTypes?: any;
   static defaultProps?: Partial<P>;
+
+  // TODO: There's more methods here, need to create more precise types
+  getThemeProps: () => P & ThemeProps;
+  extractAccessibilityProps: () => AccessibilityProps;
 }
 
