@@ -22,6 +22,10 @@ export interface ViewPropTypes extends ViewProps, ContainerModifiers {
      * TODO: probobly isn't needed
      */
     height?: string | number;
+    /**
+     * Experimental: Pass time in ms to delay render
+     */
+    renderDelay?: number;
 }
 declare const _default: React.ComponentClass<ViewPropTypes, any> | React.FunctionComponent<ViewPropTypes>;
 export default _default;
