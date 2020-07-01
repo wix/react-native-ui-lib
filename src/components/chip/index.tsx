@@ -5,7 +5,7 @@ import {AvatarProps, BadgeProps} from 'typings';
 // @ts-ignore
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
-import {BorderRadiuses, Colors, Spacings, Typography} from '../../style';
+import {BorderRadiuses, Spacings} from '../../style';
 // @ts-ignore
 import Avatar from '../avatar';
 // @ts-ignore
@@ -15,7 +15,7 @@ import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 
-interface ChipProps {
+export type ChipPropTypes = ViewProps & TouchableOpacityProps & {
   //GENERAL
   /**
    * Chip's size. Number or a width and height object.
@@ -113,15 +113,13 @@ interface ChipProps {
   dismissContainerStyle?: StyleProp<ImageStyle>;
 }
 
-type Props = ChipProps & ViewProps & TouchableOpacityProps;
-
 /**
  * @description: Chip component
  * @extends: TouchableOpacity
  * @extendslink: docs/TouchableOpacity
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipScreen.tsx
  */
-const Chip: React.FC<ChipProps> = ({
+const Chip: React.FC<ChipPropTypes> = ({
   avatarProps,
   backgroundColor,
   badgeProps,
@@ -320,4 +318,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default asBaseComponent<Props>(Chip);
+export default asBaseComponent<ChipPropTypes>(Chip);
