@@ -7,7 +7,8 @@ import asCardChild, {asCardChildProps} from './asCardChild';
 // @ts-ignore
 import {LogService} from '../../services';
 
-export type CardImageProps = ImageProps & {
+// TODO: Remove omitting source after imageSource deprecation
+export type CardImageProps = Omit<ImageProps, 'source'> & {
   /**
    * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
    */
@@ -30,6 +31,11 @@ export type CardImageProps = ImageProps & {
    * border radius, basically for Android since overflow doesn't work well (deprecated)
    */
   borderRadius?: number;
+  /**
+   * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
+   * TODO: Remove after migration - should take it from Image props
+   */
+  source?: ImageSourcePropType;
 };
 
 type Props = CardImageProps & asCardChildProps;
