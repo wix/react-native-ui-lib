@@ -26,7 +26,7 @@ export declare type CardImageProps = Omit<ImageProps, 'source'> & {
     borderRadius?: number;
     /**
      * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
-     * TODO: Remove after migration - should take it from Image props
+     * TODO: Remove after imageSource deprecation - should take it from Image props
      */
     source?: ImageSourcePropType;
 };

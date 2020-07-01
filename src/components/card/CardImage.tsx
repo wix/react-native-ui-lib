@@ -33,7 +33,7 @@ export type CardImageProps = Omit<ImageProps, 'source'> & {
   borderRadius?: number;
   /**
    * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
-   * TODO: Remove after migration - should take it from Image props
+   * TODO: Remove after imageSource deprecation - should take it from Image props
    */
   source?: ImageSourcePropType;
 };
@@ -63,17 +63,20 @@ class CardImage extends PureComponent<Props> {
   render() {
     const {
       imageSource,
+      source,
       style,
       testID,
       overlayType,
       context: {borderStyle}
     } = this.props;
-    if (imageSource) {
+    const finalSource = source || imageSource;
+
+    if (finalSource) {
       return (
         <View style={[this.styles.container, borderStyle, style]}>
           <Image
             testID={testID}
-            source={imageSource}
+            source={finalSource}
             style={[this.styles.image]}
             overlayType={overlayType}
           />
