@@ -64,25 +64,17 @@ interface ChipProps {
    */
   labelStyle?: StyleProp<TextStyle>;
 
-  //COUNTER (Badge)
+  //BADGE
   /**
-   * Label for the Badge based counter
+   * Badge props object
    */
-  counterLabel?: string;
-  /**
-   * Used to customize the counter label
-   */
-  counterProps?: BadgeProps;
-    /**
-   * Displays the counter with a simple Ui preset
-   */
-  counterBasicUi?: boolean;
+  badgeProps?: BadgeProps;
 
   //AVATAR
   /**
    * Avatar props object
    */
-  avatar?: AvatarProps;
+  avatarProps?: AvatarProps;
 
   //ICON
   /**
@@ -98,7 +90,7 @@ interface ChipProps {
    */
   iconStyle?: StyleProp<ImageStyle>;
 
-  //DISMISS ('X' button)
+  //DISMISS ('x' button)
   /**
    * Adds a dismiss button and serves as its callback
    */
@@ -130,12 +122,10 @@ type Props = ChipProps & ViewProps & TouchableOpacityProps;
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipScreen.tsx
  */
 const Chip: React.FC<ChipProps> = ({
-  avatar,
+  avatarProps,
   backgroundColor,
+  badgeProps,
   borderRadius,
-  counterBasicUi,
-  counterLabel,
-  counterProps,
   containerStyle,
   onDismiss,
   dismissColor,
@@ -169,19 +159,17 @@ const Chip: React.FC<ChipProps> = ({
   }, [iconColor, iconSource, iconStyle]);
 
 
-  const renderCounter = useCallback(() => {
+  const renderBadge = useCallback(() => {
     return (
       <Badge
-        label={counterLabel}
         size={BADGE_SIZES.medium}
-        backgroundColor={counterBasicUi ? 'transparent' : Colors.red30}
-        style={[getMargins('counter')]}
-        labelStyle={counterBasicUi && {color: Colors.grey20, ...Typography.text90R}}
-        {...counterProps}
         testID={`${testID}.counter`}
+        {...badgeProps}
+        // @ts-ignore
+        containerStyle={[getMargins('badge'), badgeProps.containerStyle]}
       />
     );
-  }, [counterLabel, counterProps, counterBasicUi]);
+  }, [badgeProps]);
 
   const renderOnDismiss = useCallback(() => {
     return (
@@ -207,13 +195,13 @@ const Chip: React.FC<ChipProps> = ({
     return (
       <Avatar
         size={20}
-        {...avatar}
-        // @ts-ignore
-        containerStyle={[getMargins('avatar'), avatar.containerStyle]}
         testID={`${testID}.avatar`}
+        {...avatarProps}
+        // @ts-ignore
+        containerStyle={[getMargins('avatar'), avatarProps.containerStyle]}
       />
     );
-  }, [avatar]);
+  }, [avatarProps]);
 
   const renderLabel = useCallback(() => {
     return (
@@ -228,22 +216,22 @@ const Chip: React.FC<ChipProps> = ({
         {label}
       </Text>
     );
-  }, [label]);
+  }, [label, labelColor, labelStyle]);
 
   const getMargins = useCallback((element: string): object | undefined => {
     if (!resetSpacings) {
       switch (element) {
         case 'label':
-          if (avatar) {
+          if (avatarProps) {
             return {
               marginRight: Spacings.s2,
               marginLeft: Spacings.s1
             };
           }
-          if (counterLabel) {
+          if (badgeProps) {
             return {
               marginLeft: Spacings.s3,
-              marginRight: counterBasicUi ? undefined : Spacings.s1
+              marginRight: Spacings.s1
             };
           }
           if (iconSource) {
@@ -264,9 +252,9 @@ const Chip: React.FC<ChipProps> = ({
           return {
             marginLeft: 2
           };
-        case 'counter':
+        case 'badge':
           return {
-            marginRight: counterBasicUi ? Spacings.s1 : Spacings.s2
+            marginRight: Spacings.s1
           };
         case 'dismiss':
           return {
@@ -274,7 +262,7 @@ const Chip: React.FC<ChipProps> = ({
           };
       }
     }
-  }, [avatar, counterLabel, counterBasicUi, iconSource, onDismiss]);
+  }, [avatarProps, badgeProps, iconSource, onDismiss]);
 
   const getContainerSize = useCallback(() => {
     const width = useSizeAsMinimum ? 'minWidth' : 'width';
@@ -301,10 +289,10 @@ const Chip: React.FC<ChipProps> = ({
       testID={testID}
       {...others}
     >
-      {avatar && renderAvatar()}
+      {avatarProps && renderAvatar()}
       {iconSource && renderIcon()}
       {label && renderLabel()}
-      {counterLabel && renderCounter()}
+      {badgeProps && renderBadge()}
       {onDismiss && renderOnDismiss()}
     </Container>
   );
