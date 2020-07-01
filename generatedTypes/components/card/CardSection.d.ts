@@ -37,5 +37,5 @@ export declare type CardSectionProps = ViewPropTypes & {
      */
     imageProps?: ImageProps;
 };
-declare const _default: React.ComponentClass<CardSectionProps, any> | React.FunctionComponent<CardSectionProps>;
+declare const _default: React.ComponentClass<CardSectionProps, any>;
 export default _default;

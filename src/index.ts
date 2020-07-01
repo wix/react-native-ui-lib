@@ -18,7 +18,7 @@ export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButt
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ActionBar, ActionSheet, Avatar, Badge, Carousel, ConnectionStatusBar, Dialog, Drawer, FloatingButton,
+  ActionBar, ActionSheet, Avatar, AvatarProps, Badge, Carousel, ConnectionStatusBar, Dialog, Drawer, FloatingButton,
   FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl, PanningProvider,
   PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, ProgressBar, Slider, GradientSlider,
   ColorSliderGroup, Stepper, TabBar, TagsInput, SharedTransition, StackAggregator, Toast,
