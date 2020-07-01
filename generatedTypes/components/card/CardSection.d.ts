@@ -17,6 +17,10 @@ export declare type CardSectionProps = ViewPropTypes & {
      */
     contentStyle?: ViewStyle;
     /**
+     * Give the section a background color
+     */
+    backgroundColor?: string;
+    /**
      * Image props for a leading icon to render before the text
      */
     leadingIcon?: ImageProps;
