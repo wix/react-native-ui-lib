@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { LayoutChangeEvent, ImageStyle, TextStyle, StyleProp } from 'react-native';
 import { BaseComponentInjectedProps, ForwardRefInjectedProps, TypographyModifiers, ColorsModifiers, BackgroundColorModifier, MarginModifiers } from '../../commons/new';
+import { TouchableOpacityProps } from '../touchableOpacity';
 import { TextPropTypes } from '../text';
 declare enum ButtonSize {
     xSmall = "xSmall",
@@ -13,7 +14,7 @@ declare enum AnimationDirection {
     left = "left",
     right = "right"
 }
-export declare type ButtonPropTypes = TextPropTypes & TypographyModifiers & ColorsModifiers & BackgroundColorModifier & MarginModifiers & {
+export declare type ButtonPropTypes = TouchableOpacityProps & TypographyModifiers & ColorsModifiers & BackgroundColorModifier & MarginModifiers & {
     /**
      * Text to show inside the button
      */
@@ -81,7 +82,7 @@ export declare type ButtonPropTypes = TextPropTypes & TypographyModifiers & Colo
     /**
      * Props that will be passed to the button's Text label.
      */
-    labelProps?: object;
+    labelProps?: TextPropTypes;
     /**
      * should the button act as a coast to coast button (no border radius)
      */

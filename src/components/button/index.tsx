@@ -15,7 +15,7 @@ import {
 import {Constants} from '../../helpers';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 import {extractColorValue, extractTypographyValue} from '../../commons/modifiers';
-import TouchableOpacity from '../touchableOpacity';
+import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Text, {TextPropTypes} from '../text';
 
 enum ButtonSize {
@@ -31,7 +31,7 @@ enum AnimationDirection {
   right = 'right',
 }
 
-export type ButtonPropTypes = TextPropTypes &
+export type ButtonPropTypes = TouchableOpacityProps &
   TypographyModifiers &
   ColorsModifiers &
   BackgroundColorModifier &
@@ -103,7 +103,7 @@ export type ButtonPropTypes = TextPropTypes &
     /**
      * Props that will be passed to the button's Text label.
      */
-    labelProps?: object;
+    labelProps?: TextPropTypes;
     /**
      * should the button act as a coast to coast button (no border radius)
      */
