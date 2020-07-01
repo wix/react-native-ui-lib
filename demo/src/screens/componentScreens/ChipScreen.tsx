@@ -35,6 +35,16 @@ export default class ChipScreen extends Component {
           <Chip label={'Chip'} onPress={() => Alert.alert('onPress')}/>
         )}
         {this.renderExample(
+          'label + onDismiss',
+          <Chip
+            label={'Chip'}
+            iconColor={Colors.black}
+            onDismiss={() => Alert.alert('onDismiss')}
+            onPress={() => Alert.alert('onPress')}
+            dismissIconStyle={{width: 10, height: 10}}
+          />
+        )}
+        {this.renderExample(
           'Icon',
           <Chip
             iconSource={checkmark}
@@ -55,28 +65,34 @@ export default class ChipScreen extends Component {
           'label + Avatar',
           <Chip
             label={'Chip'}
-            avatar={{source: avatarImage, size: 20}}
+            avatarProps={{source: avatarImage, size: 20}}
           />
         )}
         {this.renderExample(
-          'label + onDismiss (tag)',
+          'label + Badge',
           <Chip
             label={'Chip'}
-            iconColor={Colors.black}
-            onDismiss={() => Alert.alert('onDismiss')}
-            onPress={() => Alert.alert('onPress')}
-            dismissIconStyle={{width: 10, height: 10}}
+            labelStyle={{
+              marginRight: undefined
+            }}
+            badgeProps={{
+              label: '4',
+              backgroundColor: 'transparent',
+              labelStyle: {
+                ...Typography.text80R,
+                color: Colors.grey20
+              }
+            }}
           />
         )}
         {this.renderExample(
-          'label + counter with basic Ui',
-          <Chip label={'Chip'} counterLabel={'4'} counterBasicUi/>
-        )}
-        {this.renderExample(
-          'label + counter (Badge)',
+          'label + Badge',
           <Chip
             label={'Chip'}
-            counterLabel={'4'}
+            badgeProps={{
+              label: '4',
+              backgroundColor: 'red'
+            }}
           />
         )}
 
@@ -105,7 +121,7 @@ export default class ChipScreen extends Component {
             labelStyle={{color: Colors.red20, marginHorizontal: Spacings.s3, ...Typography.text70BO}}
             iconStyle={{width: 16, height: 16}}
             iconColor={Colors.black}
-            avatar={{source: avatarImage, size: 28}}
+            avatarProps={{source: avatarImage, size: 28}}
             onDismiss={() => Alert.alert('onDismiss')}
             dismissIconStyle={{width: 10, height: 10, marginRight: Spacings.s3}}
             dismissColor={Colors.red20}
@@ -119,8 +135,8 @@ export default class ChipScreen extends Component {
             resetSpacings
             label={'Chip'}
             labelStyle={{marginRight: Spacings.s1}}
-            counterLabel={'44'}
-            counterProps={{
+            badgeProps={{
+              label: '44',
               backgroundColor: Colors.white,
               borderWidth: 2,
               borderColor: Colors.black,
