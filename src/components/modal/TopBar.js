@@ -101,7 +101,7 @@ export default class TopBar extends BaseComponent {
   }
 
   renderDone() {
-    const {doneButtonProps, doneLabel, doneIcon, onDone} = this.props;
+    const {doneButtonProps, doneLabel, doneIcon, onDone} = this.getThemeProps();
     return this.renderTopBarButton({
       onPress: onDone,
       label: doneLabel,
@@ -112,7 +112,7 @@ export default class TopBar extends BaseComponent {
   }
 
   renderCancel() {
-    const {cancelButtonProps, cancelLabel, cancelIcon, onCancel} = this.props;
+    const {cancelButtonProps, cancelLabel, cancelIcon, onCancel} = this.getThemeProps();
     return this.renderTopBarButton({
       onPress: onCancel,
       label: cancelLabel,
@@ -123,7 +123,7 @@ export default class TopBar extends BaseComponent {
   }
 
   render() {
-    const {title, titleStyle, includeStatusBar} = this.props;
+    const {title, titleStyle, includeStatusBar} = this.getThemeProps();
 
     return (
       <View>

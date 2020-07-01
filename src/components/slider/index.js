@@ -132,10 +132,6 @@ export default class Slider extends PureBaseComponent {
     }
   }
 
-  generateStyles() {
-    this.styles = createStyles(this.getThemeProps());
-  }
-
   UNSAFE_componentWillMount() {
     this._panResponder = PanResponder.create({
       onMoveShouldSetPanResponder: this.handleMoveShouldSetPanResponder,
@@ -243,8 +239,8 @@ export default class Slider extends PureBaseComponent {
   updateThumbStyle(start) {
     if (this.thumb && !this.props.disableActiveStyling) {
       const {thumbStyle, activeThumbStyle} = this.props;
-      const style = thumbStyle || this.styles.thumb;
-      const activeStyle = activeThumbStyle || this.styles.activeThumb;
+      const style = thumbStyle || styles.thumb;
+      const activeStyle = activeThumbStyle || styles.activeThumb;
 
       this._thumbStyles.style = !this.props.disabled && (start ? activeStyle : style);
       this.thumb.setNativeProps(this._thumbStyles);
@@ -373,11 +369,20 @@ export default class Slider extends PureBaseComponent {
   /* Renders */
 
   render() {
-    const {containerStyle, thumbStyle, trackStyle, renderTrack, disabled, thumbTintColor} = this.getThemeProps();
+    const {
+      containerStyle,
+      thumbStyle,
+      trackStyle,
+      renderTrack,
+      disabled,
+      thumbTintColor,
+      minimumTrackTintColor = ACTIVE_COLOR,
+      maximumTrackTintColor = DEFAULT_COLOR
+    } = this.getThemeProps();
 
     return (
       <View
-        style={[this.styles.container, containerStyle]}
+        style={[styles.container, containerStyle]}
         onLayout={this.onContainerLayout}
         accessible
         accessibilityLabel={'Slider'}
@@ -389,22 +394,33 @@ export default class Slider extends PureBaseComponent {
         onAccessibilityAction={this.onAccessibilityAction}
       >
         {_.isFunction(renderTrack) ? (
-          <View style={[this.styles.track, trackStyle]} onLayout={this.onTrackLayout}>
+          <View
+            style={[styles.track, {backgroundColor: maximumTrackTintColor}, trackStyle]}
+            onLayout={this.onTrackLayout}
+          >
             {renderTrack()}
           </View>
         ) : (
           <View>
             <View
-              style={[this.styles.track, trackStyle, disabled && this.styles.trackDisabled]}
+              style={[
+                styles.track,
+                trackStyle,
+                {
+                  backgroundColor: disabled ? INACTIVE_COLOR : maximumTrackTintColor
+                }
+              ]}
               onLayout={this.onTrackLayout}
             />
             <View
               ref={this.setMinTrackRef}
               style={[
-                this.styles.track,
+                styles.track,
                 trackStyle,
-                this.styles.minimumTrack,
-                disabled && {backgroundColor: DEFAULT_COLOR}
+                styles.minimumTrack,
+                {
+                  backgroundColor: disabled ? DEFAULT_COLOR : minimumTrackTintColor
+                }
               ]}
             />
           </View>
@@ -413,60 +429,53 @@ export default class Slider extends PureBaseComponent {
           ref={this.setThumbRef}
           onLayout={this.onThumbLayout}
           style={[
-            this.styles.thumb,
+            styles.thumb,
             thumbStyle,
             {
               backgroundColor: disabled ? DEFAULT_COLOR : thumbTintColor || ACTIVE_COLOR
             }
           ]}
         />
-        <View style={this.styles.touchArea} {...this._panResponder.panHandlers}/>
+        <View style={styles.touchArea} {...this._panResponder.panHandlers}/>
       </View>
     );
   }
 }
 
-function createStyles({minimumTrackTintColor = ACTIVE_COLOR, maximumTrackTintColor = DEFAULT_COLOR}) {
-  return StyleSheet.create({
-    container: {
-      height: THUMB_SIZE + SHADOW_RADIUS,
-      justifyContent: 'center'
-    },
-    track: {
-      height: TRACK_SIZE,
-      borderRadius: TRACK_SIZE / 2,
-      backgroundColor: maximumTrackTintColor,
-      overflow: 'hidden'
-    },
-    trackDisabled: {
-      backgroundColor: INACTIVE_COLOR
-    },
-    minimumTrack: {
-      position: 'absolute',
-      backgroundColor: minimumTrackTintColor
-    },
-    thumb: {
-      position: 'absolute',
-      width: THUMB_SIZE,
-      height: THUMB_SIZE,
-      borderRadius: THUMB_SIZE / 2,
-      borderWidth: BORDER_WIDTH,
-      borderColor: Colors.white,
-      shadowColor: Colors.rgba(Colors.black, 0.3),
-      shadowOffset: {width: 0, height: 0},
-      shadowOpacity: 0.9,
-      shadowRadius: SHADOW_RADIUS,
-      elevation: 2
-    },
-    activeThumb: {
-      width: THUMB_SIZE + 16,
-      height: THUMB_SIZE + 16,
-      borderRadius: (THUMB_SIZE + 16) / 2,
-      borderWidth: BORDER_WIDTH + 6
-    },
-    touchArea: {
-      ...StyleSheet.absoluteFillObject,
-      backgroundColor: 'transparent'
-    }
-  });
-}
+const styles = StyleSheet.create({
+  container: {
+    height: THUMB_SIZE + SHADOW_RADIUS,
+    justifyContent: 'center'
+  },
+  track: {
+    height: TRACK_SIZE,
+    borderRadius: TRACK_SIZE / 2,
+    overflow: 'hidden'
+  },
+  minimumTrack: {
+    position: 'absolute'
+  },
+  thumb: {
+    position: 'absolute',
+    width: THUMB_SIZE,
+    height: THUMB_SIZE,
+    borderRadius: THUMB_SIZE / 2,
+    borderWidth: BORDER_WIDTH,
+    borderColor: Colors.white,
+    shadowColor: Colors.rgba(Colors.black, 0.3),
+    shadowOffset: {width: 0, height: 0},
+    shadowOpacity: 0.9,
+    shadowRadius: SHADOW_RADIUS,
+    elevation: 2
+  },
+  activeThumb: {
+    width: THUMB_SIZE + 16,
+    height: THUMB_SIZE + 16,
+    borderRadius: (THUMB_SIZE + 16) / 2,
+    borderWidth: BORDER_WIDTH + 6
+  },
+  touchArea: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'transparent'
+  }
+});

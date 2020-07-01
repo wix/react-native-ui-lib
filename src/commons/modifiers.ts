@@ -125,10 +125,10 @@ export function extractTypographyValue(props: Dictionary<any>): object | undefin
     .keys()
     .filter(key => Typography.getKeysPattern().test(key))
     .value() as unknown as Array<keyof typeof TypographyPresets>;
-  let typography;
+  let typography: any;
   _.forEach(typographyPropsKeys, key => {
     if (props[key] === true) {
-      typography = Typography[key];
+      typography = {...typography, ...Typography[key]};
     }
   });
 

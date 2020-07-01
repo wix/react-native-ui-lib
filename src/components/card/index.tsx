@@ -15,7 +15,7 @@ import View, {ViewPropTypes} from '../view';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Image from '../image';
 import CardImage from './CardImage';
-import CardSection from './CardSection';
+import CardSection, {CardSectionProps} from './CardSection';
 // @ts-ignore
 import Assets from '../../assets';
 import CardContext from './CardContext';
@@ -31,6 +31,7 @@ const DEFAULT_SELECTION_PROPS = {
   hideIndicator: false
 };
 
+export {CardSectionProps};
 export type CardPropTypes = ViewPropTypes &
   TouchableOpacityProps & {
     /**

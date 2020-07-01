@@ -90,6 +90,11 @@ export const navigationData = {
       {title: 'StateScreen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
       {title: 'TabController', tags: 'tabbar controller native', screen: 'unicorn.components.TabControllerScreen'},
       {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
+      {
+        title: 'withScrollEnabler',
+        tags: 'scroll enabled withScrollEnabler',
+        screen: 'unicorn.components.WithScrollEnablerScreen'
+      },
       {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'}
     ]
   },

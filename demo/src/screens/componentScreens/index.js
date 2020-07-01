@@ -58,5 +58,6 @@ export function registerScreens(registrar) {
   registrar('unicorn.screens.EmptyStateScreen', () => require('./EmptyStateScreen').default);
   registrar('unicorn.screens.LoadingScreen', () => require('./LoadingScreen').default);
   registrar('unicorn.screens.ModalScreen', () => require('./ModalScreen').default);
+  registrar('unicorn.components.WithScrollEnablerScreen', () => require('./WithScrollEnablerScreen').default);
 }
 

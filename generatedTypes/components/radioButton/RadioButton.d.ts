@@ -1,6 +1,8 @@
 import React from 'react';
-import { TextStyle, ImageSourcePropType, ImageStyle } from 'react-native';
-interface RadioButtonPropTypes {
+import { TextStyle, ImageSourcePropType, ImageStyle, ViewProps } from 'react-native';
+import { BaseComponentInjectedProps, ForwardRefInjectedProps } from '../../commons/new';
+import { RadioGroupContextPropTypes } from './RadioGroupContext';
+export declare type RadioButtonPropTypes = RadioGroupContextPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps & ViewProps & {
     /**
      * The identifier value of the radio button. must be different than other RadioButtons in the same group
      */
@@ -49,6 +51,6 @@ interface RadioButtonPropTypes {
      * Should the icon be on the right side of the label
      */
     iconOnRight?: boolean;
-}
-declare const _default: React.ComponentClass<RadioButtonPropTypes, any> | React.FunctionComponent<RadioButtonPropTypes>;
+};
+declare const _default: React.ComponentClass<RadioButtonPropTypes, any>;
 export default _default;
