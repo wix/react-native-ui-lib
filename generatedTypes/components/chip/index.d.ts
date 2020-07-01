@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleProp, ViewStyle, ViewProps, TouchableOpacityProps, ImageStyle, TextStyle, ImageSourcePropType } from 'react-native';
 import { AvatarProps, BadgeProps } from 'typings';
-interface ChipProps {
+export declare type ChipPropTypes = ViewProps & TouchableOpacityProps & {
     /**
      * Chip's size. Number or a width and height object.
      */
@@ -50,21 +50,13 @@ interface ChipProps {
      */
     labelStyle?: StyleProp<TextStyle>;
     /**
-     * Label for the Badge based counter
+     * Badge props object
      */
-    counterLabel?: string;
-    /**
-     * Used to customize the counter label
-     */
-    counterProps?: BadgeProps;
-    /**
-   * Displays the counter with a simple Ui preset
-   */
-    counterBasicUi?: boolean;
+    badgeProps?: BadgeProps;
     /**
      * Avatar props object
      */
-    avatar?: AvatarProps;
+    avatarProps?: AvatarProps;
     /**
      * Icon's source
      */
@@ -97,7 +89,6 @@ interface ChipProps {
      * Dismiss container style
      */
     dismissContainerStyle?: StyleProp<ImageStyle>;
-}
-declare type Props = ChipProps & ViewProps & TouchableOpacityProps;
-declare const _default: React.ComponentClass<Props, any> | React.FunctionComponent<Props>;
+};
+declare const _default: React.ComponentClass<ChipPropTypes, any>;
 export default _default;
