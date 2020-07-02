@@ -1,8 +1,9 @@
 import React, {PureComponent} from 'react';
-import {ScrollView, StyleSheet, TextInput, Platform} from 'react-native';
+import {ScrollView, StyleSheet, TextInput} from 'react-native';
 import {Keyboard, Text, View, Colors, Spacings, Constants, Typography, Button, Switch} from 'react-native-ui-lib';
 const KeyboardAccessoryView = Keyboard.KeyboardAccessoryView;
 const KeyboardUtils = Keyboard.KeyboardUtils;
+import {_} from 'lodash';
 
 import './demoKeyboards';
 const KeyboardRegistry = Keyboard.KeyboardRegistry;
@@ -16,7 +17,8 @@ export default class KeyboardInputViewScreen extends PureComponent {
       initialProps: undefined
     },
     receivedKeyboardData: undefined,
-    useSafeArea: true
+    useSafeArea: true,
+    keyboardOpenState: false
   };
 
   onKeyboardItemSelected = (keyboardId, params) => {
@@ -50,18 +52,44 @@ export default class KeyboardInputViewScreen extends PureComponent {
     return buttons;
   }
 
+  isCustomKeyboardOpen = () => {
+    const {keyboardOpenState, customKeyboard} = this.state;
+    return keyboardOpenState && !_.isEmpty(customKeyboard);
+  }
+
   resetKeyboardView = () => {
     this.setState({customKeyboard: {}});
   };
 
+  dismissKeyboard = () => {
+    KeyboardUtils.dismiss();
+  }
+
   toggleUseSafeArea = () => {
-    this.setState({
-      useSafeArea: !this.state.useSafeArea
-    });
+    const {useSafeArea} = this.state;
+    this.setState({useSafeArea: !useSafeArea});
+
+    if (this.isCustomKeyboardOpen()) {
+      this.dismissKeyboard();
+      this.showLastKeyboard();
+    }
   };
+
+  showLastKeyboard() {
+    const {customKeyboard} = this.state;
+    this.setState({customKeyboard: {}});
+
+    setTimeout(() => {
+      this.setState({
+        keyboardOpenState: true,
+        customKeyboard
+      });
+    }, 500);
+  }
 
   showKeyboardView(component, title) {
     this.setState({
+      keyboardOpenState: true,
       customKeyboard: {
         component,
         initialProps: {title}
@@ -91,14 +119,11 @@ export default class KeyboardInputViewScreen extends PureComponent {
           />
           <Button label="Close" link onPress={KeyboardUtils.dismiss} style={styles.button}/>
         </View>
-        <View column>
-          { this.safeAreaSwitchToggle() }
-          <View row>
-            {this.getToolbarButtons().map((button, index) => (
-              <Button label={button.text} link onPress={button.onPress} key={index} style={styles.button}/>
-            ))}
-          </View>
-        </View> 
+        <View row>
+          {this.getToolbarButtons().map((button, index) => (
+            <Button label={button.text} link onPress={button.onPress} key={index} style={styles.button}/>
+          ))}
+        </View>
       </View>
     );
   };
@@ -117,9 +142,12 @@ export default class KeyboardInputViewScreen extends PureComponent {
   };
 
   safeAreaSwitchToggle = () => {
+    if (!Constants.isIOS) { 
+      return;
+    }
     const {useSafeArea} = this.state;
     return (  
-      <View column>
+      <View column center>
         <View style={styles.separatorLine}/>
         <View centerV row margin-10>
           <Text text80 dark40>Safe Area Enabled:</Text>
@@ -144,6 +172,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
           </Text>
           <Text testID={'demo-message'}>{receivedKeyboardData}</Text>
           <Button label={'Open keyboard #1'} link onPress={this.requestShowKeyboard} style={styles.button}/>
+          { this.safeAreaSwitchToggle() }
         </ScrollView>
 
         <KeyboardAccessoryView
