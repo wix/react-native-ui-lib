@@ -45,6 +45,9 @@ export default {
   get ConnectionStatusBar() {
     return require('./components/connectionStatusBar').default;
   },
+  get Chip() {
+    return require('./components/chip').default;
+  },
   get Dialog() {
     return require('./components/dialog').default;
   },
