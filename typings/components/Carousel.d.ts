@@ -34,4 +34,6 @@ export interface CarouselProps {
   animated?: boolean;
 }
 
-export class Carousel extends BaseComponent<CarouselProps> {}
+export class Carousel extends BaseComponent<CarouselProps> {
+  goToPage: (pageIndex: number) => void;
+}
