@@ -12,6 +12,8 @@ function asCardChild<T>(
     );
   };
 
+  cardChild.displayName = WrappedComponent.displayName;
+
   return cardChild;
 }
 

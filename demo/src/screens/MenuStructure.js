@@ -30,6 +30,7 @@ export const navigationData = {
       {title: 'Badges', tags: 'badge', screen: 'unicorn.components.BadgesScreen'},
       {title: 'Cards', tags: 'cards feed', screen: 'unicorn.components.CardsScreen'},
       {title: 'Connection Status Bar', tags: 'connection status bar', screen: 'unicorn.components.ConnectionStatusBar'},
+      {title: 'Chip', tags: 'chip', screen: 'unicorn.components.ChipScreen'},
       // {title: 'Overlays', tags: 'overlay image', screen: 'unicorn.components.OverlaysScreen'},
       {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
       {title: 'ProgressBar', tags: 'progress bar animated', screen: 'unicorn.animations.ProgressBarScreen'},
@@ -89,6 +90,11 @@ export const navigationData = {
       {title: 'StateScreen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
       {title: 'TabController', tags: 'tabbar controller native', screen: 'unicorn.components.TabControllerScreen'},
       {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
+      {
+        title: 'withScrollEnabler',
+        tags: 'scroll enabled withScrollEnabler',
+        screen: 'unicorn.components.WithScrollEnablerScreen'
+      },
       {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'}
     ]
   },
