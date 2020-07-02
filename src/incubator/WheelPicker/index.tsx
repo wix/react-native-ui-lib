@@ -25,22 +25,23 @@ const WheelPicker = ({
   itemTextStyle
 }: WheelPickerProps) => {
   const height = itemHeight * 4;
-  const scrollview = useRef();
+  const scrollview = useRef<Animated.ScrollView>();
   const [offset] = useValues([0], []);
   const onScroll = onScrollEvent({y: offset});
 
   const selectItem = useCallback(
     (index) => {
-      scrollview.current
-        .getNode()
-        .scrollTo({y: index * itemHeight, animated: true});
+      if (scrollview.current) {
+        scrollview.current
+          .getNode()
+          .scrollTo({y: index * itemHeight, animated: true});
+      }
     },
     [itemHeight]
   );
 
   const onChange = useCallback(() => {
-    // TODO: need to implement on change event that calc the current selected index 
-
+    // TODO: need to implement on change event that calc the current selected index
   }, [itemHeight]);
 
   return (
@@ -51,6 +52,7 @@ const WheelPicker = ({
           onScroll={onScroll}
           onMomentumScrollEnd={onChange}
           showsVerticalScrollIndicator={false}
+          // @ts-ignore
           ref={scrollview}
           contentContainerStyle={{
             paddingVertical: height / 2 - itemHeight / 2
@@ -64,10 +66,10 @@ const WheelPicker = ({
                 key={item.value}
                 index={index}
                 itemHeight={itemHeight}
-                onSelect={selectItem}
                 offset={offset}
                 textStyle={itemTextStyle}
                 {...item}
+                onSelect={selectItem}
               />
             );
           })}

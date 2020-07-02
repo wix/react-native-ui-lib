@@ -13,7 +13,6 @@ const AnimatedText = Animated.createAnimatedComponent(Text);
 export interface ItemProps {
   text: string;
   value: string | number;
-  onSelect: (index: number) => void;
 }
 
 interface InternalProps extends ItemProps {
@@ -21,13 +20,14 @@ interface InternalProps extends ItemProps {
   offset: any;
   itemHeight: number;
   textStyle?: TextStyle;
+  onSelect: (index: number) => void;
 }
 
 export default ({
   index,
   text,
   textStyle,
-  value,
+  // value,
   itemHeight,
   onSelect,
   offset
@@ -70,6 +70,7 @@ export default ({
       style={{
         height: itemHeight,
         opacity,
+        // @ts-ignore
         transform: transformOrigin({x: 125, y: 24}, {rotateX})
       }}
       key={index}
