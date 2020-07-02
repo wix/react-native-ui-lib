@@ -26,6 +26,10 @@ export interface ViewPropTypes extends ViewProps, ContainerModifiers {
      * Experimental: Pass time in ms to delay render
      */
     renderDelay?: number;
+    /**
+     * Set background color
+     */
+    backgroundColor?: string;
 }
 declare const _default: React.ComponentClass<ViewPropTypes, any>;
 export default _default;
