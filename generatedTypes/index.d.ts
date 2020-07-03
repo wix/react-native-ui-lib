@@ -23,6 +23,7 @@ export {
   Avatar,
   AvatarProps,
   Badge,
+  BadgeProps,
   Card,
   Carousel,
   ConnectionStatusBar,
@@ -64,8 +65,11 @@ export {
   Modal,
   StateScreen,
   WheelPicker,
+  WheelPickerProps,
   Incubator,
-  ColorPicker
+  ColorPicker,
+  Picker,
+  PickerProps
 } from '../typings';
 
 /* All components that are missing either manual or auto generated typings */
@@ -78,7 +82,6 @@ export const HighlighterOverlayView;
 export const Keyboard;
 export const KeyboardAwareListView;
 export const KeyboardAwareScrollView;
-export const Picker;
 export const SafeAreaInsetsManager;
 export const SafeAreaSpacerView;
 export const ScrollBar;
