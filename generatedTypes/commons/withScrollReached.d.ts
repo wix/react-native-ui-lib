@@ -13,6 +13,10 @@ export declare type ScrollReachedProps = {
 };
 export declare type WithScrollReachedOptionsProps = {
     /**
+     * Whether the scroll is horizontal.
+     */
+    horizontal?: boolean;
+    /**
      * Allows to b notified prior to actually reaching the start \ end of the scroll (by the threshold).
      * Should be a positive value.
      */

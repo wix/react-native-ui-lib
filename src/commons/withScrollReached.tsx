@@ -28,6 +28,10 @@ declare type SupportedViewsProps = FlatListProps<any> | ScrollViewProps;
 
 export type WithScrollReachedOptionsProps = {
   /**
+   * Whether the scroll is horizontal.
+   */
+  horizontal?: boolean;
+  /**
    * Allows to b notified prior to actually reaching the start \ end of the scroll (by the threshold).
    * Should be a positive value.
    */
@@ -59,7 +63,7 @@ function withScrollReached<PROPS>(
           }
         } = event;
 
-        const horizontal = props.horizontal;
+        const horizontal = options.horizontal;
         const threshold = options.threshold || 0;
         const layoutSize = horizontal ? layoutWidth : layoutHeight;
         const offset = horizontal ? offsetX : offsetY;
@@ -74,7 +78,7 @@ function withScrollReached<PROPS>(
           setScrollAtEnd(closeToEnd);
         }
       },
-      [props.horizontal, isScrollAtStart, isScrollAtEnd]
+      [isScrollAtStart, isScrollAtEnd]
     );
 
     return (
