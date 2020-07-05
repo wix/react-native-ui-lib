@@ -1,6 +1,14 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Animated, ScrollView, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
+import {
+  Platform, 
+  StyleSheet, 
+  Animated, 
+  ScrollView, 
+  NativeSyntheticEvent, 
+  NativeScrollEvent, 
+  ViewStyle
+} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
@@ -33,12 +41,14 @@ export type TabBarProps = BaseComponentInjectedProps & ViewPropTypes & {
     /**
      * custom style for the selected indicator
      */
-    indicatorStyle?: ViewPropTypes['style'],
+    indicatorStyle?: ViewStyle,
     /**
      * Tab Bar height
      */
     height?: number,
-    // children: React.ReactNode<TabBarItem>
+    children: React.ReactNode,
+    style?: ViewStyle,
+    testID?: string
 }
 
 export type State = {
@@ -69,6 +79,8 @@ class TabBar extends Component<TabBarProps, State> {
   static defaultProps = {
     selectedIndex: 0
   };
+
+  static Item: typeof TabBarItem;
 
   constructor(props: TabBarProps) {
     super(props);

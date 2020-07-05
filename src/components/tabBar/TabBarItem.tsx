@@ -1,17 +1,17 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, Animated, Easing, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, Animated, Easing, LayoutChangeEvent, ViewStyle, TextStyle} from 'react-native';
 import {Colors, Typography} from '../../style';
-import {BaseComponent} from '../../commons';
 import {asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
 import Image from '../image';
 import TouchableOpacity from '../touchableOpacity';
-import View, {ViewPropTypes} from '../view';
-import Text, {TextPropTypes} from '../text';
+import View from '../view';
+import Text from '../text';
+// @ts-ignore
 import Badge, {BadgeProps} from '../badge';
 
 
-export type TabBarItemProps = BaseComponentInjectedProps & ViewPropTypes & {
+export type TabBarItemProps = BaseComponentInjectedProps & {
   /**
    * icon of the tab
    */
@@ -31,7 +31,7 @@ export type TabBarItemProps = BaseComponentInjectedProps & ViewPropTypes & {
   /**
    * custom label style
    */
-  labelStyle: TextPropTypes['style'],
+  labelStyle: TextStyle,
   /**
    * Badge component props to display next the item label
    */
@@ -43,7 +43,7 @@ export type TabBarItemProps = BaseComponentInjectedProps & ViewPropTypes & {
   /**
    * custom selected tab label style
    */
-  selectedLabelStyle: TextPropTypes['style'],
+  selectedLabelStyle: TextStyle,
   /**
    * whether the tab is selected or not
    */
@@ -71,7 +71,10 @@ export type TabBarItemProps = BaseComponentInjectedProps & ViewPropTypes & {
   /**
    * Apply background color on press for TouchableOpacity
    */
-  activeBackgroundColor?: string
+  activeBackgroundColor?: string,
+  indicatorStyle?: ViewStyle, // for inner use
+  style?: ViewStyle,
+  testID?: string
 };
 
 export type State = {

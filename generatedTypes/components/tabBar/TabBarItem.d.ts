@@ -1,10 +1,8 @@
 import React from 'react';
-import { Animated } from 'react-native';
+import { Animated, ViewStyle, TextStyle } from 'react-native';
 import { BaseComponentInjectedProps } from '../../commons/new';
-import { ViewPropTypes } from '../view';
-import { TextPropTypes } from '../text';
 import { BadgeProps } from '../badge';
-export declare type TabBarItemProps = BaseComponentInjectedProps & ViewPropTypes & {
+export declare type TabBarItemProps = BaseComponentInjectedProps & {
     /**
      * icon of the tab
      */
@@ -24,7 +22,7 @@ export declare type TabBarItemProps = BaseComponentInjectedProps & ViewPropTypes
     /**
      * custom label style
      */
-    labelStyle: TextPropTypes['style'];
+    labelStyle: TextStyle;
     /**
      * Badge component props to display next the item label
      */
@@ -36,7 +34,7 @@ export declare type TabBarItemProps = BaseComponentInjectedProps & ViewPropTypes
     /**
      * custom selected tab label style
      */
-    selectedLabelStyle: TextPropTypes['style'];
+    selectedLabelStyle: TextStyle;
     /**
      * whether the tab is selected or not
      */
@@ -65,6 +63,9 @@ export declare type TabBarItemProps = BaseComponentInjectedProps & ViewPropTypes
      * Apply background color on press for TouchableOpacity
      */
     activeBackgroundColor?: string;
+    indicatorStyle?: ViewStyle;
+    style: ViewStyle;
+    testID: string;
 };
 export declare type State = {
     indicatorOpacity?: Animated.Value;
