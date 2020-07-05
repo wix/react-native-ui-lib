@@ -1,13 +1,52 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {Platform, StyleSheet, ViewPropTypes, Animated, ScrollView} from 'react-native';
+import React, {Component} from 'react';
+import {Platform, StyleSheet, Animated, ScrollView, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
-import {BaseComponent} from '../../commons';
-import View from '../view';
+import {asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
+import View, {ViewPropTypes} from '../view';
 import Image from '../image';
-import TabBarItem from './TabBarItem';
+import TabBarItem, {TabBarItemProps} from './TabBarItem';
+
+
+export type TabBarProps = BaseComponentInjectedProps & ViewPropTypes & {
+    /**
+     * Show Tab Bar bottom shadow
+     */
+    enableShadow?: boolean,
+    /**
+     * The minimum number of tabs to render
+     */
+    minTabsForScroll?: number,
+    /**
+     * current selected tab index
+     */
+    selectedIndex?: number,
+    /**
+     * callback for when index has change (will not be called on ignored items)
+     */
+    onChangeIndex?: (props: any) => void,
+    /**
+     * callback for when tab selected
+     */
+    onTabSelected?: (props: any) => void,
+    /**
+     * custom style for the selected indicator
+     */
+    indicatorStyle?: ViewPropTypes['style'],
+    /**
+     * Tab Bar height
+     */
+    height?: number,
+    // children: React.ReactNode<TabBarItem>
+}
+
+export type State = {
+  gradientOpacity: Animated.Value,
+  scrollEnabled?: boolean,
+  currentIndex?: number
+};
+
 
 const MIN_TABS_FOR_SCROLL = 1;
 const DEFAULT_BACKGROUND_COLOR = Colors.white;
@@ -24,46 +63,14 @@ const gradientImage = () => require('./assets/gradient.png');
  * @extendsLink: https://facebook.github.io/react-native/docs/scrollview
  * @notes: This is screen width component.
  */
-export default class TabBar extends BaseComponent {
+class TabBar extends Component<TabBarProps, State> {
   static displayName = 'TabBar';
-
-  static propTypes = {
-    ...ViewPropTypes.height,
-    /**
-     * Show Tab Bar bottom shadow
-     */
-    enableShadow: PropTypes.bool,
-    /**
-     * The minimum number of tabs to render
-     */
-    minTabsForScroll: PropTypes.number,
-    /**
-     * current selected tab index
-     */
-    selectedIndex: PropTypes.number,
-    /**
-     * callback for when index has change (will not be called on ignored items)
-     */
-    onChangeIndex: PropTypes.func,
-    /**
-     * callback for when tab selected
-     */
-    onTabSelected: PropTypes.func,
-    /**
-     * custom style for the selected indicator
-     */
-    indicatorStyle: ViewPropTypes.style,
-    /**
-     * Tab Bar height
-     */
-    height: PropTypes.number
-  };
 
   static defaultProps = {
     selectedIndex: 0
   };
 
-  constructor(props) {
+  constructor(props: TabBarProps) {
     super(props);
 
     this.state = {
@@ -71,13 +78,16 @@ export default class TabBar extends BaseComponent {
       scrollEnabled: false,
       currentIndex: props.selectedIndex
     };
-
-    this.scrollContainerWidth = Constants.screenWidth;
-    this.scrollContentWidth = undefined;
-    this.contentOffset = {x: 0, y: 0};
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  styles = createStyles();
+  scrollContainerWidth: number = Constants.screenWidth;
+  scrollContentWidth = 0;
+  contentOffset: any = {x: 0, y: 0};
+  itemsRefs: any[] = [];
+  scrollView?: any = undefined;
+
+  UNSAFE_componentWillReceiveProps(nextProps: TabBarProps) {
     // TODO: since we're implementing an uncontrolled component here, we should verify the selectedIndex has changed
     // between this.props and nextProps (basically the meaning of selectedIndex should be initialIndex)
     const isIndexManuallyChanged =
@@ -87,7 +97,7 @@ export default class TabBar extends BaseComponent {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: TabBarProps) {
     const prevChildrenCount = React.Children.count(prevProps.children);
     if (this.childrenCount < prevChildrenCount) {
       this.updateIndicator(0);
@@ -98,45 +108,45 @@ export default class TabBar extends BaseComponent {
     return React.Children.count(this.props.children);
   }
 
-  generateStyles() {
-    this.styles = createStyles(this.getThemeProps());
-  }
-
-  isIgnored(index) {
+  isIgnored(index: number) {
     const child = React.Children.toArray(this.props.children)[index];
     return _.get(child, 'props.ignore');
   }
 
-  updateIndicator(index) {
-    if (!this.isIgnored(index)) {
-      this.setState({currentIndex: index}, () => {
-        this.scrollToSelected();
-      });
-    }
-  }
-
-  scrollToSelected(animated = true) {
-    const childRef = this.itemsRefs[this.state.currentIndex];
-    const childLayout = childRef.getLayout();
-
-    if (childLayout && this.hasOverflow()) {
-      if (childLayout.x + childLayout.width - this.contentOffset.x > this.scrollContainerWidth) {
-        this.scrollView.scrollTo({x: childLayout.x - this.scrollContainerWidth + childLayout.width, y: 0, animated});
-      } else if (childLayout.x - this.contentOffset.x < 0) {
-        this.scrollView.scrollTo({x: childLayout.x, y: 0, animated});
+  updateIndicator(index?: number) {
+    if (index) {
+      if (!this.isIgnored(index)) {
+        this.setState({currentIndex: index}, () => {
+          this.scrollToSelected();
+        });
       }
     }
   }
 
-  onChangeIndex(index) {
+  scrollToSelected(animated = true) {
+    if (this.itemsRefs && this.state.currentIndex) {
+      const childRef = this.itemsRefs[this.state.currentIndex];
+      const childLayout = childRef.getLayout();
+  
+      if (childLayout && this.hasOverflow()) {
+        if (childLayout.x + childLayout.width - this.contentOffset.x > this.scrollContainerWidth) {
+          this.scrollView.scrollTo({x: childLayout.x - this.scrollContainerWidth + childLayout.width, y: 0, animated});
+        } else if (childLayout.x - this.contentOffset.x < 0) {
+          this.scrollView.scrollTo({x: childLayout.x, y: 0, animated});
+        }
+      }
+    }
+  }
+
+  onChangeIndex(index: number) {
     _.invoke(this.props, 'onChangeIndex', index);
   }
 
-  onTabSelected(index) {
+  onTabSelected(index: number) {
     _.invoke(this.props, 'onTabSelected', index);
   }
 
-  onItemPress = (index, props) => {
+  onItemPress = (index: number, props: TabBarItemProps) => {
     this.updateIndicator(index);
 
     setTimeout(() => {
@@ -148,16 +158,16 @@ export default class TabBar extends BaseComponent {
     }, 0);
   };
 
-  getStylePropValue(flattenStyle, propName) {
+  getStylePropValue(flattenStyle: object, propName: string) {
     let prop;
     if (flattenStyle) {
-      const propObject = _.pick(flattenStyle, [propName]);
+      const propObject: any = _.pick(flattenStyle, [propName]);
       prop = propObject[propName];
     }
     return prop;
   }
 
-  animateGradientOpacity = (x, contentWidth, containerWidth) => {
+  animateGradientOpacity = (x: number, contentWidth: number, containerWidth: number) => {
     const overflow = contentWidth - containerWidth;
     const newValue = x > 0 && x >= overflow - 1 ? 0 : 1;
 
@@ -168,7 +178,7 @@ export default class TabBar extends BaseComponent {
     }).start();
   };
 
-  onScroll = event => {
+  onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const {layoutMeasurement, contentOffset, contentSize} = event.nativeEvent;
     this.contentOffset = contentOffset;
     const x = contentOffset.x;
@@ -178,9 +188,9 @@ export default class TabBar extends BaseComponent {
     this.animateGradientOpacity(x, contentWidth, containerWidth);
   };
 
-  onContentSizeChange = width => {
+  onContentSizeChange = (width: number) => {
     if (this.scrollContentWidth !== width) {
-      const {minTabsForScroll} = this.getThemeProps();
+      const {minTabsForScroll} = this.props;
       const minChildrenCount = minTabsForScroll || MIN_TABS_FOR_SCROLL;
 
       this.scrollContentWidth = width;
@@ -200,7 +210,7 @@ export default class TabBar extends BaseComponent {
     return false;
   }
 
-  renderGradient(height, tintColor) {
+  renderGradient(height: number, tintColor: string) {
     const width = GRADIENT_WIDTH;
 
     if (this.hasOverflow()) {
@@ -227,7 +237,7 @@ export default class TabBar extends BaseComponent {
   }
 
   renderTabBar() {
-    const {height} = this.getThemeProps();
+    const {height} = this.props;
     const {scrollEnabled} = this.state;
     const containerHeight = height || DEFAULT_HEIGHT;
 
@@ -253,31 +263,33 @@ export default class TabBar extends BaseComponent {
     );
   }
 
-  shouldBeMarked = index => {
+  shouldBeMarked = (index: number) => {
     return this.state.currentIndex === index && !this.isIgnored(index) && this.childrenCount > 1;
   };
 
   renderChildren() {
     this.itemsRefs = [];
-    const {indicatorStyle} = this.getThemeProps();
+    const {indicatorStyle} = this.props;
 
     const children = React.Children.map(this.props.children, (child, index) => {
-      return React.cloneElement(child, {
-        indicatorStyle,
-        selected: this.shouldBeMarked(index),
-        onPress: () => {
-          this.onItemPress(index, child.props);
-        },
-        ref: r => {
-          this.itemsRefs[index] = r;
-        }
-      });
+      if (React.isValidElement(child)) {
+        return React.cloneElement(child, {
+          indicatorStyle,
+          selected: this.shouldBeMarked(index),
+          onPress: () => {
+            this.onItemPress(index, child.props);
+          },
+          ref: (r: any) => {
+            this.itemsRefs[index] = r;
+          }
+        });
+      }
     });
     return children;
   }
 
   render() {
-    const {enableShadow, style} = this.getThemeProps();
+    const {enableShadow, style} = this.props;
 
     return (
       <View
@@ -290,7 +302,7 @@ export default class TabBar extends BaseComponent {
   }
 }
 
-function createStyles(props) {
+function createStyles() {
   return StyleSheet.create({
     container: {
       zIndex: 100
@@ -321,3 +333,5 @@ function createStyles(props) {
 }
 
 TabBar.Item = TabBarItem;
+
+export default asBaseComponent<TabBarProps, {Item: typeof TabBarItem}>(TabBar);
