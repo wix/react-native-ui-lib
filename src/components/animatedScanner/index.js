@@ -83,7 +83,8 @@ export default class AnimatedScanner extends BaseComponent {
     const {animatedProgress} = this.state;
     Animated.timing(animatedProgress, {
       toValue,
-      duration
+      duration,
+      useNativeDriver: false
     }).start(({finished}) => {
       if (finished) {
         const isDone = toValue >= 100;
