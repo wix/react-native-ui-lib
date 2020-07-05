@@ -46,13 +46,10 @@ const WithScrollReached = (props: FadedScrollViewProps) => {
   );
 
   const renderFade = useCallback(() => {
-    if (
-      (_.isUndefined(props.scrollEnabled) || props.scrollEnabled) &&
-      !props.scrollReachedProps.isScrollAtEnd
-    ) {
+    if (!props.scrollReachedProps.isScrollAtEnd) {
       return <Image style={styles.fadeOutImage} source={fadeImage} />;
     }
-  }, [props.scrollEnabled, props.scrollReachedProps.isScrollAtEnd]);
+  }, [props.scrollReachedProps.isScrollAtEnd]);
 
   return (
     <View>
