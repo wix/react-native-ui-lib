@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import React, {memo, useCallback} from 'react';
+import React, {Component, useCallback, memo} from 'react';
 import {
-  FlatList,
   StyleSheet,
+  ScrollView,
   // eslint-disable-next-line no-unused-vars
   NativeSyntheticEvent,
   // eslint-disable-next-line no-unused-vars
@@ -13,28 +13,23 @@ import {
   Text,
   View,
   Image,
+  // eslint-disable-next-line no-unused-vars
   withScrollReached,
   // eslint-disable-next-line no-unused-vars
   WithScrollReachedProps
 } from 'react-native-ui-lib';
+// @ts-ignore
+import {renderHeader} from '../ExampleScreenPresenter';
 
-export type FadedScrollViewProps = WithScrollReachedProps & {
+type FadedScrollViewProps = WithScrollReachedProps & {
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   scrollEnabled?: boolean;
 };
 
 const FADE_OUT_HEIGHT = 100;
-const fadeImage = require('../../../assets/images/FadeOut.png');
+const fadeImage = require('../../assets/images/FadeOut.png');
 const WithScrollReached = (props: FadedScrollViewProps) => {
-  const getData = useCallback(() => {
-    return [...Array(3).keys()];
-  }, []);
-
-  const keyExtractor = useCallback((item: number) => {
-    return item.toString();
-  }, []);
-
-  const renderItem = useCallback(({index}: {index: number}) => {
+  const renderItem = useCallback((index: number) => {
     return (
       <View key={index} style={styles.item}>
         <Text>{index + 1}</Text>
@@ -61,28 +56,66 @@ const WithScrollReached = (props: FadedScrollViewProps) => {
 
   return (
     <View>
-      <FlatList
+      <ScrollView
         {...props}
-        style={styles.flatList}
-        contentContainerStyle={styles.flatListContainer}
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollViewContainer}
         showsVerticalScrollIndicator={false}
-        data={getData()}
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
         onScroll={onScroll}
-      />
+        scrollEventThrottle={16}
+      >
+        {_.times(3, renderItem)}
+      </ScrollView>
       {renderFade()}
     </View>
   );
 };
 
-export default memo(withScrollReached(WithScrollReached));
+const FadedScrollView = memo(withScrollReached(WithScrollReached));
+
+class WithScrollReachedScreen extends Component {
+  state = {
+    contentOffsetX: undefined,
+    contentOffsetY: undefined
+  };
+
+  onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const {
+      nativeEvent: {
+        contentOffset: {x, y}
+      }
+    } = event;
+
+    const {contentOffsetX, contentOffsetY} = this.state;
+    if (contentOffsetX !== x || contentOffsetY !== y) {
+      this.setState({contentOffsetX: x, contentOffsetY: y});
+    }
+  };
+
+  renderData = () => {
+    const {contentOffsetX, contentOffsetY} = this.state;
+    const contentText = `Content {x, y}: ${contentOffsetX}, ${contentOffsetY}`;
+    return <Text text70>{contentText}</Text>;
+  };
+
+  render() {
+    return (
+      <View margin-10>
+        {renderHeader('withScrollReached', {'marginB-10': true})}
+        {this.renderData()}
+        <FadedScrollView onScroll={this.onScroll} />
+      </View>
+    );
+  }
+}
+
+export default WithScrollReachedScreen;
 
 const styles = StyleSheet.create({
-  flatList: {
+  scrollView: {
     height: 240
   },
-  flatListContainer: {
+  scrollViewContainer: {
     alignItems: 'center'
   },
   item: {
