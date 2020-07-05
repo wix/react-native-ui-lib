@@ -1,2 +1,2 @@
 # specific for windows script files
-2	*.bat text eol=crlf
+*.bat text eol=crlf
