@@ -2,8 +2,5 @@ rootProject.name = 'rnuilib'
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
 
-include ':react-native-navigation'
-project(':react-native-navigation').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-navigation/lib/android/app/')
-
 include ':react-native-ui-lib'
 project(':react-native-ui-lib').projectDir = new File(rootProject.projectDir, '../lib/android')
