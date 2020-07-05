@@ -3,47 +3,40 @@ package com.rnuilib;
 import android.content.Context;
 
 import com.facebook.react.PackageList;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.facebook.react.ReactInstanceManager;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
-import com.reactnativenavigation.react.ReactGateway;
 import com.wix.reactnativeuilib.UiLibPackageList;
-
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
 import java.util.List;
 
 
 public class MainApplication extends NavigationApplication {
-    private final ReactNativeHost mReactNativeHost =
 
-            new NavigationReactNativeHost(this) {
-                @Override
-                public boolean getUseDeveloperSupport() {
-                    return BuildConfig.DEBUG;
-                }
+    private final ReactNativeHost reactNativeHost = new NavigationReactNativeHost(this) {
+        @Override
+        protected String getJSMainModuleName() {
+            return "demo";
+        }
 
-                @Override
-                protected List<ReactPackage> getPackages() {
-                    @SuppressWarnings("UnnecessaryLocalVariable")
-                    List<ReactPackage> packages = new PackageList(this).getPackages();
-                    // Packages that cannot be autolinked yet can be added manually here, for example:
-                    // packages.add(new MyReactNativePackage());
-                    // packages.addAll(new UiLibPackageList(this).getPackageList());
-                    return packages;
-                }
+        @Override
+        public boolean getUseDeveloperSupport() {
+            return BuildConfig.DEBUG;
+        }
 
-                @Override
-                protected String getJSMainModuleName() {
-                    return "demo";
-                }
-            };
+        @Override
+        protected List<ReactPackage> getPackages() {
+            List<ReactPackage> packages = new PackageList(this).getPackages();
+            packages.addAll(new UiLibPackageList(MainApplication.this).getPackageList());
+            return packages;
+        }
+    };
 
     @Override
     public ReactNativeHost getReactNativeHost() {
-        return mReactNativeHost;
+        return reactNativeHost;
     }
 
     @Override
@@ -63,11 +56,11 @@ public class MainApplication extends NavigationApplication {
             Context context, ReactInstanceManager reactInstanceManager) {
         if (BuildConfig.DEBUG) {
             try {
-      /*
-       We use reflection here to pick up the class that initializes Flipper,
-      since Flipper library is not available in release mode
-      */
-                Class<?> aClass = Class.forName("com.traveller.ReactNativeFlipper");
+        /*
+         We use reflection here to pick up the class that initializes Flipper,
+        since Flipper library is not available in release mode
+        */
+                Class<?> aClass = Class.forName("com.rndiffapp.ReactNativeFlipper");
                 aClass
                         .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
                         .invoke(null, context, reactInstanceManager);
@@ -83,40 +76,3 @@ public class MainApplication extends NavigationApplication {
         }
     }
 }
-
-
-// public class MainApplication extends NavigationApplication {
-
-//     @Override
-//     protected ReactGateway createReactGateway() {
-//         ReactNativeHost host = new NavigationReactNativeHost(this, isDebug(), createAdditionalReactPackages()) {
-//             @Override
-//             protected String getJSMainModuleName() {
-//                 return "demo";
-//             }
-//         };
-//         return new ReactGateway(this, isDebug(), host);
-//     }
-
-//     @Override
-//     public boolean isDebug() {
-//         return BuildConfig.DEBUG;
-//     }
-
-//     protected List<ReactPackage> getPackages() {
-//         // Add additional packages you require here
-//         // No need to add RnnPackage and MainReactPackage
-//         return Arrays.<ReactPackage>asList(
-//                 // eg. new VectorIconsPackage()
-//         );
-//     }
-
-//     @Override
-//     public List<ReactPackage> createAdditionalReactPackages() {
-//         @SuppressWarnings("UnnecessaryLocalVariable")
-//         List<ReactPackage> packages = new PackageList(this).getPackages();
-//         packages.addAll(new UiLibPackageList(this).getPackageList());
-//         return packages;
-//     }
-// }
-

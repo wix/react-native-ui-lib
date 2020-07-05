@@ -7,7 +7,6 @@ buildscript {
         compileSdkVersion = 28
         targetSdkVersion = 28
         RNNKotlinVersion = "1.3.61" // Or any version above 1.3.x
-        RNNKotlinStdlib = "kotlin-stdlib-jdk8"
     }
     repositories {
         mavenLocal()
