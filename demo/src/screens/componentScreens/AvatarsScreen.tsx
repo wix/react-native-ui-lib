@@ -104,11 +104,9 @@ const examples = [
 export default class AvatarsScreen extends Component {
   constructor(props) {
     super(props);
-
-    this.onAvatarPress = this.onAvatarPress.bind(this);
   }
 
-  onAvatarPress(item) {
+  onAvatarPress = (item) => {
     const {title, source, label} = item;
     const uri = _.get(source, 'uri');
     const isGravatar = !!uri && AvatarHelper.isGravatarUrl(uri);
