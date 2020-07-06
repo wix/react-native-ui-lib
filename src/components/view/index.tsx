@@ -28,6 +28,10 @@ export interface ViewPropTypes extends ViewProps, ContainerModifiers {
    * Experimental: Pass time in ms to delay render
    */
   renderDelay?: number;
+  /**
+   * Set background color
+   */
+  backgroundColor?: string;
 }
 type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & ViewPropTypes;
 

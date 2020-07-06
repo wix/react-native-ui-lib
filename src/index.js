@@ -190,6 +190,9 @@ export default {
   },
 
   // Commons
+  get asBaseComponent() {
+    return require('./commons').asBaseComponent;
+  },
   get BaseComponent() {
     return require('./commons').BaseComponent;
   },
@@ -207,6 +210,9 @@ export default {
   },
   get withScrollEnabler() {
     return require('./commons').withScrollEnabler;
+  },
+  get withScrollReached() {
+    return require('./commons').withScrollReached;
   },
 
   // Helpers

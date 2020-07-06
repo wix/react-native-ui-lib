@@ -20,9 +20,10 @@ export {default as TabBar} from './components/TabBar';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ActionBar, ActionSheet, Avatar, AvatarProps, Badge, Carousel, ConnectionStatusBar, Dialog, Drawer, FloatingButton,
+  ActionBar, ActionSheet, Avatar, AvatarProps, Badge, BadgeProps, Carousel, ConnectionStatusBar, Dialog, DialogProps, Drawer, FloatingButton,
   FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl, PanningProvider,
-  PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, ProgressBar, Slider, GradientSlider,
-  ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,
-  WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper, Constants, LogService, LoaderScreen, Modal, StateScreen, WheelPicker, Incubator, ColorPicker
+  PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, PickerProps, ProgressBar, Slider,
+  GradientSlider, ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,
+  WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper, Constants,
+  LogService, LoaderScreen, Modal, StateScreen, WheelPicker, WheelPickerProps, Incubator, ColorPicker
 } from '../typings';

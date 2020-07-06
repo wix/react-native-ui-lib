@@ -31,6 +31,9 @@ export interface CarouselProps {
   autoplayInterval?: number;
   style?: StyleProp<ViewStyle>;
   children?: React.Node;
+  animated?: boolean;
 }
 
-export class Carousel extends BaseComponent<CarouselProps> {}
+export class Carousel extends BaseComponent<CarouselProps> {
+  goToPage: (pageIndex: number) => void;
+}

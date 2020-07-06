@@ -95,6 +95,11 @@ export const navigationData = {
         tags: 'scroll enabled withScrollEnabler',
         screen: 'unicorn.components.WithScrollEnablerScreen'
       },
+      {
+        title: 'withScrollReached',
+        tags: 'scroll reach start end',
+        screen: 'unicorn.components.WithScrollReachedScreen'
+      },
       {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'}
     ]
   },

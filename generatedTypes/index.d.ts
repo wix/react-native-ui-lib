@@ -4,7 +4,7 @@
  * Please use this file for declaring all the exports, so they could be picked up by typescript's complier
  */
 export * from './style';
-export {withScrollEnabler} from './commons/new';
+export {asBaseComponent, withScrollEnabler, withScrollReached, WithScrollEnablerProps, WithScrollReachedProps} from './commons/new';
 export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
 export {default as View, ViewPropTypes} from './components/view';
 export {default as Text, TextPropTypes} from './components/text';
@@ -24,6 +24,7 @@ export {
   Avatar,
   AvatarProps,
   Badge,
+  BadgeProps,
   Card,
   Carousel,
   ConnectionStatusBar,
@@ -64,8 +65,11 @@ export {
   Modal,
   StateScreen,
   WheelPicker,
+  WheelPickerProps,
   Incubator,
-  ColorPicker
+  ColorPicker,
+  Picker,
+  PickerProps
 } from '../typings';
 
 /* All components that are missing either manual or auto generated typings */
@@ -78,7 +82,6 @@ export const HighlighterOverlayView;
 export const Keyboard;
 export const KeyboardAwareListView;
 export const KeyboardAwareScrollView;
-export const Picker;
 export const SafeAreaInsetsManager;
 export const SafeAreaSpacerView;
 export const ScrollBar;
