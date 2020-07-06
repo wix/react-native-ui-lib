@@ -64,8 +64,8 @@ export declare type TabBarItemProps = BaseComponentInjectedProps & {
      */
     activeBackgroundColor?: string;
     indicatorStyle?: ViewStyle;
-    style: ViewStyle;
-    testID: string;
+    style?: ViewStyle;
+    testID?: string;
 };
 export declare type State = {
     indicatorOpacity?: Animated.Value;

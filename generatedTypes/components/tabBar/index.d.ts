@@ -33,8 +33,8 @@ export declare type TabBarProps = BaseComponentInjectedProps & ViewPropTypes & {
      */
     height?: number;
     children: React.ReactNode;
-    style: ViewStyle;
-    testID: string;
+    style?: ViewStyle;
+    testID?: string;
 };
 export declare type State = {
     gradientOpacity: Animated.Value;
