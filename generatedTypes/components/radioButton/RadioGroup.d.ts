@@ -1,5 +1,6 @@
 import React from 'react';
-interface RadioGroupPropTypes {
+import { BaseComponentInjectedProps, ForwardRefInjectedProps } from '../../commons/new';
+export declare type RadioGroupPropTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & {
     /**
      * The initial value of the selected radio button
      */
@@ -8,6 +9,6 @@ interface RadioGroupPropTypes {
      * Invoked once when value changes, by selecting one of the radio buttons in the group
      */
     onValueChange?: (value: string | number | boolean) => void;
-}
-declare const _default: React.ComponentClass<RadioGroupPropTypes, any> | React.FunctionComponent<RadioGroupPropTypes>;
+};
+declare const _default: React.ComponentClass<RadioGroupPropTypes, any>;
 export default _default;

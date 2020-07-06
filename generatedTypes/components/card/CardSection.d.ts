@@ -17,6 +17,10 @@ export declare type CardSectionProps = ViewPropTypes & {
      */
     contentStyle?: ViewStyle;
     /**
+     * Give the section a background color
+     */
+    backgroundColor?: string;
+    /**
      * Image props for a leading icon to render before the text
      */
     leadingIcon?: ImageProps;
@@ -37,5 +41,5 @@ export declare type CardSectionProps = ViewPropTypes & {
      */
     imageProps?: ImageProps;
 };
-declare const _default: React.ComponentClass<CardSectionProps, any> | React.FunctionComponent<CardSectionProps>;
+declare const _default: React.ComponentClass<CardSectionProps, any>;
 export default _default;

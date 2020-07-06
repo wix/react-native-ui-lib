@@ -649,7 +649,7 @@ export default class TextField extends BaseInput {
             {paddingTop: this.getTopPaddings()}
           ]}
         >
-          {leadingIcon && <Image {...leadingIcon}/>}
+          {leadingIcon && <Image {...leadingIcon} style={[this.styles.leadingIcon, leadingIcon.style]}/>}
           {this.renderPrefix()}
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
@@ -789,6 +789,9 @@ function createStyles({centered, multiline, hideUnderline}) {
     rightButtonImage: {
       width: ICON_SIZE,
       height: ICON_SIZE
+    },
+    leadingIcon: {
+      alignSelf: 'center'
     },
     accessibilityDummyErrorMessage: {
       position: 'absolute',

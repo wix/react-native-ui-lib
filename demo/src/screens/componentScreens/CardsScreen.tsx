@@ -222,6 +222,7 @@ export default class CardsScreen extends Component<
             {'marginR-5': true},
             <Card.Section
               flex
+              backgroundColor={Colors.blue20}
               imageSource={featureIcon}
               imageStyle={{
                 width: 25,
@@ -230,8 +231,7 @@ export default class CardsScreen extends Component<
                 alignSelf: 'center'
               }}
               style={{
-                justifyContent: 'center',
-                backgroundColor: Colors.blue20
+                justifyContent: 'center'
               }}
             />
           )

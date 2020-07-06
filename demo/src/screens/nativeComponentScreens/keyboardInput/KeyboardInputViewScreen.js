@@ -1,8 +1,9 @@
 import React, {PureComponent} from 'react';
 import {ScrollView, StyleSheet, TextInput} from 'react-native';
-import {Keyboard, Text, View, Colors, Spacings, Constants, Typography, Button} from 'react-native-ui-lib';
+import {Keyboard, Text, View, Colors, Spacings, Constants, Typography, Button, Switch} from 'react-native-ui-lib';
 const KeyboardAccessoryView = Keyboard.KeyboardAccessoryView;
 const KeyboardUtils = Keyboard.KeyboardUtils;
+import {_} from 'lodash';
 
 import './demoKeyboards';
 const KeyboardRegistry = Keyboard.KeyboardRegistry;
@@ -15,7 +16,9 @@ export default class KeyboardInputViewScreen extends PureComponent {
       component: undefined,
       initialProps: undefined
     },
-    receivedKeyboardData: undefined
+    receivedKeyboardData: undefined,
+    useSafeArea: true,
+    keyboardOpenState: false
   };
 
   onKeyboardItemSelected = (keyboardId, params) => {
@@ -49,12 +52,44 @@ export default class KeyboardInputViewScreen extends PureComponent {
     return buttons;
   }
 
+  isCustomKeyboardOpen = () => {
+    const {keyboardOpenState, customKeyboard} = this.state;
+    return keyboardOpenState && !_.isEmpty(customKeyboard);
+  }
+
   resetKeyboardView = () => {
     this.setState({customKeyboard: {}});
   };
 
+  dismissKeyboard = () => {
+    KeyboardUtils.dismiss();
+  }
+
+  toggleUseSafeArea = () => {
+    const {useSafeArea} = this.state;
+    this.setState({useSafeArea: !useSafeArea});
+
+    if (this.isCustomKeyboardOpen()) {
+      this.dismissKeyboard();
+      this.showLastKeyboard();
+    }
+  };
+
+  showLastKeyboard() {
+    const {customKeyboard} = this.state;
+    this.setState({customKeyboard: {}});
+
+    setTimeout(() => {
+      this.setState({
+        keyboardOpenState: true,
+        customKeyboard
+      });
+    }, 500);
+  }
+
   showKeyboardView(component, title) {
     this.setState({
+      keyboardOpenState: true,
       customKeyboard: {
         component,
         initialProps: {title}
@@ -84,7 +119,6 @@ export default class KeyboardInputViewScreen extends PureComponent {
           />
           <Button label="Close" link onPress={KeyboardUtils.dismiss} style={styles.button}/>
         </View>
-
         <View row>
           {this.getToolbarButtons().map((button, index) => (
             <Button label={button.text} link onPress={button.onPress} key={index} style={styles.button}/>
@@ -107,10 +141,26 @@ export default class KeyboardInputViewScreen extends PureComponent {
     });
   };
 
+  safeAreaSwitchToggle = () => {
+    if (!Constants.isIOS) { 
+      return;
+    }
+    const {useSafeArea} = this.state;
+    return (  
+      <View column center>
+        <View style={styles.separatorLine}/>
+        <View centerV row margin-10>
+          <Text text80 dark40>Safe Area Enabled:</Text>
+          <Switch value={useSafeArea} onValueChange={this.toggleUseSafeArea} marginL-14/>
+        </View>
+        <View style={styles.separatorLine}/>
+      </View>
+    );
+  }
+
   render() {
     const {message} = this.props;
-    const {receivedKeyboardData, customKeyboard} = this.state;
-
+    const {receivedKeyboardData, customKeyboard, useSafeArea} = this.state;
     return (
       <View flex bg-dark80>
         <ScrollView
@@ -122,6 +172,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
           </Text>
           <Text testID={'demo-message'}>{receivedKeyboardData}</Text>
           <Button label={'Open keyboard #1'} link onPress={this.requestShowKeyboard} style={styles.button}/>
+          { this.safeAreaSwitchToggle() }
         </ScrollView>
 
         <KeyboardAccessoryView
@@ -135,6 +186,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
           onKeyboardResigned={this.onKeyboardResigned}
           revealKeyboardInteractive
           onRequestShowKeyboard={this.onRequestShowKeyboard}
+          useSafeArea={useSafeArea}
         />
       </View>
     );
@@ -149,7 +201,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-    padding: Spacings.s2,
+    padding: Spacings.s1,
     ...Typography.text70
   },
   button: {
@@ -159,5 +211,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderWidth: 1,
     borderColor: Colors.dark60
+  }, 
+  separatorLine: {
+    flex: 1, 
+    height: 1,
+    backgroundColor: Colors.dark80
   }
 });

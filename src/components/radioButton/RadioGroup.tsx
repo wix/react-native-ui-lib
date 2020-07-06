@@ -4,7 +4,7 @@ import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjec
 import View from '../view';
 import RadioGroupContext from './RadioGroupContext';
 
-interface RadioGroupPropTypes {
+export type RadioGroupPropTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & {
   /**
    * The initial value of the selected radio button
    */
@@ -13,21 +13,19 @@ interface RadioGroupPropTypes {
    * Invoked once when value changes, by selecting one of the radio buttons in the group
    */
   onValueChange?: (value: string | number | boolean) => void;
-}
+};
 
 interface RadioGroupState {
   value?: RadioGroupPropTypes['initialValue'];
 }
 
-type Props = RadioGroupPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
-
 /**
  * Wrap a group of Radio Buttons to automatically control their selection
  */
-class RadioGroup extends PureComponent<Props, RadioGroupState> {
+class RadioGroup extends PureComponent<RadioGroupPropTypes, RadioGroupState> {
   static displayName = 'RadioGroup';
 
-  constructor(props: Props) {
+  constructor(props: RadioGroupPropTypes) {
     super(props);
 
     this.state = {
