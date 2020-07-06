@@ -3,6 +3,7 @@ import React , {PureComponent} from 'react';
 import {StyleSheet, ImageSourcePropType, StyleProp, ViewStyle, TouchableOpacity, ImagePropsBase, ImageStyle, TextStyle} from 'react-native';
 import {Colors} from '../../style';
 import {forwardRef, asBaseComponent} from '../../commons/new';
+import {extractAccessibilityProps} from '../../commons/modifiers';
 //@ts-ignore
 import Badge, {BADGE_SIZES} from '../badge';
 import View from '../view';
@@ -340,8 +341,7 @@ class Avatar extends PureComponent<AvatarPropTypes> {
         accessible={!_.isUndefined(onPress)}
         accessibilityLabel={'Avatar'}
         accessibilityRole={onPress ? 'button' : 'image'}
-        //@ts-ignore
-        {...this.extractAccessibilityProps()}
+        {...extractAccessibilityProps(this.props)}
       >
         <View
           style={[this.getInitialsContainer(), {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
