@@ -5,6 +5,7 @@
  */
 
 export * from './style';
+export {default as Avatar, AvatarPropTypes} from './components/avatar';
 export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
 export {default as View, ViewPropTypes} from './components/view';
 export {default as Text, TextPropTypes} from './components/text';
@@ -19,7 +20,7 @@ export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButt
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ActionBar, ActionSheet, Avatar, AvatarProps, Badge, BadgeProps, Carousel, ConnectionStatusBar, Dialog, DialogProps, Drawer, FloatingButton,
+  ActionBar, ActionSheet, Badge, BadgeProps, Carousel, ConnectionStatusBar, Dialog, DialogProps, Drawer, FloatingButton,
   FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl, PanningProvider,
   PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, PickerProps, ProgressBar, Slider,
   GradientSlider, ColorSliderGroup, Stepper, TabBar, TagsInput, SharedTransition, StackAggregator, Toast,
