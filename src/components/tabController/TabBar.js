@@ -241,7 +241,7 @@ class TabBar extends PureComponent {
   setItemsLayouts = () => {
     const {selectedIndex} = this.context;
     // It's important to calculate itemOffsets for RTL support
-    this._itemsOffsets = _.times(this._itemsWidths.length, (i) => _.chain(this._itemsWidths).take(i).sum().value());
+    this._itemsOffsets = _.times(this._itemsWidths.length, (i) => _.chain(this._itemsWidths).take(i).sum().value() + this.centerOffset);
     const itemsOffsets = _.map(this._itemsOffsets, (offset) => offset + INDICATOR_INSET);
     const itemsWidths = _.map(this._itemsWidths, (width) => width - INDICATOR_INSET * 2);
     this.contentWidth = _.sum(this._itemsWidths);

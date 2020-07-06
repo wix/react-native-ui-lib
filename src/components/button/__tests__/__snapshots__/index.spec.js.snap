@@ -3,10 +3,8 @@
 exports[`Button backgroundColor should return backgroundColor according to modifier 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -72,10 +70,8 @@ exports[`Button backgroundColor should return backgroundColor according to modif
 exports[`Button backgroundColor should return backgroundColor according to prop value 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -141,10 +137,8 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
 exports[`Button backgroundColor should return defined theme backgroundColor 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -210,14 +204,8 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
 exports[`Button backgroundColor should return theme disabled color if button is disabled 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={
-    Array [
-      "disabled",
-    ]
-  }
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -283,10 +271,8 @@ exports[`Button backgroundColor should return theme disabled color if button is 
 exports[`Button backgroundColor should return undefined if this button is link 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -352,10 +338,8 @@ exports[`Button backgroundColor should return undefined if this button is link 1
 exports[`Button backgroundColor should return undefined if this button is outline 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -423,10 +407,8 @@ exports[`Button backgroundColor should return undefined if this button is outlin
 exports[`Button border radius should return 0 border radius when border radius prop is 0 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -492,10 +474,8 @@ exports[`Button border radius should return 0 border radius when border radius p
 exports[`Button border radius should return 0 border radius when button is full width 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -561,10 +541,8 @@ exports[`Button border radius should return 0 border radius when button is full 
 exports[`Button border radius should return given border radius when use plain number 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -630,10 +608,8 @@ exports[`Button border radius should return given border radius when use plain n
 exports[`Button container size should avoid minWidth limitation if avoidMinWidth was sent 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -704,10 +680,8 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
 exports[`Button container size should have no padding if avoidInnerPadding prop was sent 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -778,10 +752,8 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
 exports[`Button container size should have no padding of button is a link nor min width 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -852,10 +824,8 @@ exports[`Button container size should have no padding of button is a link nor mi
 exports[`Button container size should have no padding of button is an icon button 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -938,10 +908,8 @@ exports[`Button container size should have no padding of button is an icon butto
 exports[`Button container size should reduce padding by outlineWidth in case of outline button 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1009,10 +977,8 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
 exports[`Button container size should return style for large button 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1078,10 +1044,8 @@ exports[`Button container size should return style for large button 1`] = `
 exports[`Button container size should return style for large button 2`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1149,10 +1113,8 @@ exports[`Button container size should return style for large button 2`] = `
 exports[`Button container size should return style for medium button 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1223,10 +1185,8 @@ exports[`Button container size should return style for medium button 1`] = `
 exports[`Button container size should return style for medium button 2`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1299,10 +1259,8 @@ exports[`Button container size should return style for medium button 2`] = `
 exports[`Button container size should return style for round button 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1368,10 +1326,8 @@ exports[`Button container size should return style for round button 1`] = `
 exports[`Button container size should return style for small button 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1442,10 +1398,8 @@ exports[`Button container size should return style for small button 1`] = `
 exports[`Button container size should return style for small button 2`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1518,10 +1472,8 @@ exports[`Button container size should return style for small button 2`] = `
 exports[`Button container size should return style for xSmall button 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1592,10 +1544,8 @@ exports[`Button container size should return style for xSmall button 1`] = `
 exports[`Button container size should return style for xSmall button 2`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1668,10 +1618,8 @@ exports[`Button container size should return style for xSmall button 2`] = `
 exports[`Button icon should apply color on icon 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1711,10 +1659,8 @@ exports[`Button icon should apply color on icon 1`] = `
 exports[`Button icon should apply color on icon 2`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1754,10 +1700,8 @@ exports[`Button icon should apply color on icon 2`] = `
 exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1800,10 +1744,8 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
 exports[`Button icon should return icon style according to different variations 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1845,10 +1787,8 @@ exports[`Button icon should return icon style according to different variations 
 exports[`Button icon should return icon style according to different variations 2`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1888,14 +1828,8 @@ exports[`Button icon should return icon style according to different variations 
 exports[`Button icon should return icon style according to different variations 3`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={
-    Array [
-      "disabled",
-    ]
-  }
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1935,10 +1869,8 @@ exports[`Button icon should return icon style according to different variations 
 exports[`Button icon should return the right spacing according to button size when label exists and icon on the right 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2004,10 +1936,8 @@ exports[`Button icon should return the right spacing according to button size wh
 exports[`Button icon should return the right spacing according to button size when label exists and icon on the right 2`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2078,10 +2008,8 @@ exports[`Button icon should return the right spacing according to button size wh
 exports[`Button icon should return the right spacing according to button size when label exists and icon on the right 3`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2152,10 +2080,8 @@ exports[`Button icon should return the right spacing according to button size wh
 exports[`Button icon should return the right spacing according to button size when label exists and icon on the right 4`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2226,10 +2152,8 @@ exports[`Button icon should return the right spacing according to button size wh
 exports[`Button label size should return style for large button 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2295,10 +2219,8 @@ exports[`Button label size should return style for large button 1`] = `
 exports[`Button label size should return style for medium button 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2369,10 +2291,8 @@ exports[`Button label size should return style for medium button 1`] = `
 exports[`Button label size should return style for small button 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2443,10 +2363,8 @@ exports[`Button label size should return style for small button 1`] = `
 exports[`Button label size should return style for xSmall button 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2517,10 +2435,8 @@ exports[`Button label size should return style for xSmall button 1`] = `
 exports[`Button labelColor should return Theme linkColor color for link 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2586,10 +2502,8 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
 exports[`Button labelColor should return color according to color modifier 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2655,10 +2569,8 @@ exports[`Button labelColor should return color according to color modifier 1`] =
 exports[`Button labelColor should return color according to color prop 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2724,14 +2636,8 @@ exports[`Button labelColor should return color according to color prop 1`] = `
 exports[`Button labelColor should return disabled text color according to theme for link/outline button 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={
-    Array [
-      "disabled",
-    ]
-  }
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2797,10 +2703,8 @@ exports[`Button labelColor should return disabled text color according to theme 
 exports[`Button labelColor should return linkColor color for link 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2866,10 +2770,8 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
 exports[`Button labelColor should return undefined color if this is an icon button (without label) 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2909,10 +2811,8 @@ exports[`Button labelColor should return undefined color if this is an icon butt
 exports[`Button link should render button as a link 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2978,10 +2878,8 @@ exports[`Button link should render button as a link 1`] = `
 exports[`Button outline should render button with an outline 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3049,10 +2947,8 @@ exports[`Button outline should render button with an outline 1`] = `
 exports[`Button outline should render button with an outlineColor 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3120,10 +3016,8 @@ exports[`Button outline should render button with an outlineColor 1`] = `
 exports[`Button outline should render button with outline and outlineColor 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3191,10 +3085,8 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
 exports[`Button outline should return custom borderWidth according to outlineWidth passed 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3262,14 +3154,8 @@ exports[`Button outline should return custom borderWidth according to outlineWid
 exports[`Button outline should return disabled color for outline if button is disabled 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={
-    Array [
-      "disabled",
-    ]
-  }
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3337,10 +3223,8 @@ exports[`Button outline should return disabled color for outline if button is di
 exports[`Button outline should return undefined when link is true, even when outline is true 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3406,10 +3290,8 @@ exports[`Button outline should return undefined when link is true, even when out
 exports[`Button should render default button 1`] = `
 <View
   accessibilityRole="button"
-  accessibilityStates={Array []}
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
