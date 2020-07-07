@@ -31,11 +31,11 @@ export type TabBarItemProps = BaseComponentInjectedProps & {
   /**
    * custom label style
    */
-  labelStyle: TextStyle,
+  labelStyle?: TextStyle,
   /**
    * Badge component props to display next the item label
    */
-  badge: BadgeProps,
+  badge?: BadgeProps,
   /**
    * maximum number of lines the label can break
    */
