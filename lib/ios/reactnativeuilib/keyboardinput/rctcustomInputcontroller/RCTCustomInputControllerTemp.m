@@ -6,7 +6,7 @@
 //
 
 #import "RCTCustomInputControllerTemp.h"
-#import "RCTCustomKeyboardViewController.h"
+#import "RCTCustomKeyboardViewControllerTemp.h"
 
 #import <React/RCTUIManager.h>
 #import <objc/runtime.h>
@@ -141,7 +141,7 @@ RCT_EXPORT_METHOD(presentCustomInputComponent:(nonnull NSNumber*)inputFieldTag p
     self.customInputComponentPresented = NO;
     
     BOOL useSafeArea = [self shouldUseSafeAreaFrom:params];
-    RCTCustomKeyboardViewController* customKeyboardController = [[RCTCustomKeyboardViewController alloc] initWithUsingSafeArea:useSafeArea];
+    RCTCustomKeyboardViewControllerTemp* customKeyboardController = [[RCTCustomKeyboardViewControllerTemp alloc] initWithUsingSafeArea:useSafeArea];
     customKeyboardController.rootView = rv;
     
     _WXInputHelperView* helperView = [[_WXInputHelperView alloc] initWithFrame:CGRectZero];
@@ -235,8 +235,8 @@ RCT_EXPORT_METHOD(dismissKeyboard)
         _WXInputHelperView* helperView = [inputField.superview viewWithTag:kHlperViewTag];
         if(helperView != nil)
         {
-            [((RCTCustomKeyboardViewController*)helperView.inputViewController) setAllowsSelfSizing:YES];
-            ((RCTCustomKeyboardViewController*)helperView.inputViewController).heightConstraint.constant = newHeight;
+            [((RCTCustomKeyboardViewControllerTemp*)helperView.inputViewController) setAllowsSelfSizing:YES];
+            ((RCTCustomKeyboardViewControllerTemp*)helperView.inputViewController).heightConstraint.constant = newHeight;
             
             UIInputView *inputView = helperView.inputViewController.inputView;
             [inputView setNeedsUpdateConstraints];
@@ -295,7 +295,7 @@ RCT_EXPORT_METHOD(expandFullScreenForInput:(nonnull NSNumber*)inputFieldTag)
             
             helperView.keepInSuperviewOnResign = YES;
             
-            RCTCustomKeyboardViewController *customKeyboardViewController = (RCTCustomKeyboardViewController*)helperView.inputViewController;
+            RCTCustomKeyboardViewControllerTemp *customKeyboardViewController = (RCTCustomKeyboardViewControllerTemp*)helperView.inputViewController;
             RCTRootView *rv = customKeyboardViewController.rootView;
             UIInputView *inputView = helperView.inputViewController.inputView;
             
@@ -369,7 +369,7 @@ RCT_EXPORT_METHOD(resetSizeForInput:(nonnull NSNumber*)inputFieldTag)
                                    animations:@[[LNViewAnimation animationWithView:_fullScreenWindow keyPath:@"frame" toValue:[NSValue valueWithCGRect:keyboardTargetFrame]]]
                             completionHandler:^(BOOL completed)
             {
-                RCTCustomKeyboardViewController *customKeyboardViewController = (RCTCustomKeyboardViewController*)helperView.inputViewController;
+                RCTCustomKeyboardViewControllerTemp *customKeyboardViewController = (RCTCustomKeyboardViewControllerTemp*)helperView.inputViewController;
                 RCTRootView *rv = (RCTRootView*)_fullScreenWindow.rootViewController.view;
                 
                 [UIView performWithoutAnimation:^{
