@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { ImageSourcePropType, StyleProp, ViewStyle, ImagePropsBase, ImageStyle, TextStyle } from 'react-native';
 import { ImageProps } from '../image';
 export declare const STATUS_MODES: {
@@ -109,5 +109,57 @@ export declare type AvatarPropTypes = {
      */
     testID?: string;
 };
+/**
+ * @description: Avatar component for displaying user profile images
+ * @extends: TouchableOpacity
+ * @extendsnotes: (when passing onPress)
+ * @extendslink: docs/TouchableOpacity
+ * @image: https://user-images.githubusercontent.com/33805983/34480603-197d7f64-efb6-11e7-9feb-db8ba756f055.png
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.js
+ */
+declare class Avatar extends PureComponent<AvatarPropTypes> {
+    styles: {
+        initials: StyleProp<ViewStyle>;
+        initialsContainerWithInset: StyleProp<ViewStyle>;
+        ribbon: StyleProp<ViewStyle>;
+    };
+    constructor(props: AvatarPropTypes);
+    static displayName: string;
+    static modes: {
+        ONLINE: string;
+        OFFLINE: string;
+        AWAY: string;
+        NONE: string;
+    };
+    static badgePosition: {
+        TOP_RIGHT: string;
+        TOP_LEFT: string;
+        BOTTOM_RIGHT: string;
+        BOTTOM_LEFT: string;
+    };
+    static defaultProps: {
+        animate: boolean;
+        backgroundColor: string;
+        size: number;
+        labelColor: string;
+        badgePosition: string;
+    };
+    getContainerStyle(): StyleProp<ViewStyle>;
+    getInitialsContainer(): StyleProp<ViewStyle>;
+    getRibbonStyle(): StyleProp<ViewStyle>;
+    getStatusBadgeColor(status: StatusModes | undefined): string | null;
+    getBadgeBorderWidth: () => any;
+    getBadgeColor(): any;
+    getBadgeSize: () => any;
+    getBadgePosition(): {
+        [x: string]: string | number;
+        position: string;
+    };
+    renderBadge(): JSX.Element | undefined;
+    renderRibbon(): JSX.Element | undefined;
+    renderImage(): JSX.Element | undefined;
+    render(): JSX.Element;
+}
+export { Avatar };
 declare const _default: React.ComponentClass<AvatarPropTypes, any>;
 export default _default;
