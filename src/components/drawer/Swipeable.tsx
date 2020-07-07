@@ -14,6 +14,7 @@ import {Constants} from '../../helpers';
 
 
 const DRAG_TOSS = 0.05;
+const LEFT_TOGGLE_THRESHOLD = 0.6;
 
 // Math.sign polyfill for iOS 8.x
 if (!Math.sign) {
@@ -43,6 +44,7 @@ export type PropType = {
   onSwipeableWillOpen?: Function,
   onSwipeableWillClose?: Function,
   onFullSwipeLeft?: Function,
+  onToggleSwipeLeft?: Function,
   onWillFullSwipeLeft?: Function,
   onFullSwipeRight?: Function,
   onWillFullSwipeRight?: Function,
@@ -197,14 +199,16 @@ export default class Swipeable extends Component<PropType, StateType> {
     const {leftWidth = 0, rowWidth = 0} = this.state;
     const {rightOffset = rowWidth} = this.state;
     const rightWidth = rowWidth - rightOffset;
-    const {fullSwipeLeft, fullSwipeRight, friction, leftThreshold = leftWidth / 2, rightThreshold = rightWidth / 2, fullLeftThreshold, fullRightThreshold} = this.props;
+    const {fullSwipeLeft, fullSwipeRight, friction, leftThreshold = leftWidth / 2, rightThreshold = rightWidth / 2, fullLeftThreshold, fullRightThreshold, onToggleSwipeLeft} = this.props;
 
     const startOffsetX = this._currentOffset() + dragX / friction;
     const translationX = (dragX + DRAG_TOSS * velocityX) / friction;
 
     let toValue = 0;
     if (this.rowState === 0) {
-      if (fullSwipeLeft && translationX > rowWidth * fullLeftThreshold) {
+      if (onToggleSwipeLeft && translationX > leftWidth) {
+        toValue = rowWidth * LEFT_TOGGLE_THRESHOLD;
+      } else if (fullSwipeLeft && translationX > rowWidth * fullLeftThreshold) {
         toValue = rowWidth;
       } else if (fullSwipeRight && translationX < -rowWidth * fullRightThreshold) {
         toValue = -rowWidth;
@@ -229,7 +233,7 @@ export default class Swipeable extends Component<PropType, StateType> {
   };
 
   _animateRow = (fromValue, toValue, velocityX) => {
-    const {dragX, rowTranslation, rowWidth} = this.state;
+    const {dragX, rowTranslation, rowWidth, leftWidth} = this.state;
     const {
       useNativeAnimations,
       animationOptions,
@@ -242,6 +246,8 @@ export default class Swipeable extends Component<PropType, StateType> {
       onSwipeableWillClose,
       onSwipeableWillOpen,
       onFullSwipeLeft,
+      fullSwipeLeft,
+      onToggleSwipeLeft,
       onWillFullSwipeLeft,
       onFullSwipeRight,
       onWillFullSwipeRight
@@ -261,7 +267,9 @@ export default class Swipeable extends Component<PropType, StateType> {
       ...animationOptions
     }).start(({finished}) => {
       if (finished) {
-        if (toValue === rowWidth && onFullSwipeLeft) {
+        if (toValue === rowWidth * LEFT_TOGGLE_THRESHOLD && onToggleSwipeLeft) {
+          onToggleSwipeLeft({rowWidth, leftWidth});
+        } else if (toValue === rowWidth && onFullSwipeLeft) {
           onFullSwipeLeft();
         } else if (toValue === -rowWidth && onFullSwipeRight) {
           onFullSwipeRight();
@@ -321,6 +329,11 @@ export default class Swipeable extends Component<PropType, StateType> {
   openLeftFull = () => {
     const {rowWidth} = this.state;
     this._animateRow(this._currentOffset(), rowWidth);
+  };
+
+  toggleLeft = () => {
+    const {rowWidth} = this.state;
+    this._animateRow(this._currentOffset(), rowWidth * LEFT_TOGGLE_THRESHOLD);
   };
 
   openRight = () => {
