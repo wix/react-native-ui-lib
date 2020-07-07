@@ -103,7 +103,11 @@ class NewDrawer extends PureBaseComponent {
     /**
      * Callback for just before right item full swipe
      */
-    onWillFullSwipeRight: PropTypes.func
+    onWillFullSwipeRight: PropTypes.func,
+    /**
+     * Haptic trigger function to use onToggleSwipeLeft
+     */
+    leftToggleHapticTrigger: PropTypes.func
   };
 
   static defaultProps = {
@@ -190,7 +194,12 @@ class NewDrawer extends PureBaseComponent {
       easing: Easing.linear,
       duration: 100,
       useNativeDriver: true
-    }).start(this.props.onToggleSwipeLeft());
+    }).start(this.toggle());
+  }
+
+  toggle() {
+    _.invoke(this.props, 'leftToggleHapticTrigger');
+    _.invoke(this.props, 'onToggleSwipeLeft');
   }
 
   /** Accessability */

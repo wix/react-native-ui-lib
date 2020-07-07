@@ -85,6 +85,10 @@ class DrawerScreen extends Component {
     }, 300);
   }
 
+  triggerLeftToggleHaptic = () => {
+    // console.warn('haptic trigger here');
+  }
+
   showItem = () => {
     this.setState({hideItem: false});
   };
@@ -211,7 +215,8 @@ class DrawerScreen extends Component {
       onFullSwipeRight: this.deleteItem,
       fullSwipeLeft,
       onWillFullSwipeLeft: this.deleteItem,
-      onToggleSwipeLeft: this.toggleReadState
+      onToggleSwipeLeft: this.toggleReadState,
+      leftToggleHapticTrigger: this.triggerLeftToggleHaptic
     };
     if (showRightItems) {
       drawerProps.rightItems = [{...ITEMS.delete, onPress: this.deleteItem}, ITEMS.archive];
