@@ -308,7 +308,6 @@ class Avatar extends PureComponent<AvatarPropTypes> {
         />
       );
     }
-    return undefined;
   }
 
   render() {
@@ -381,5 +380,7 @@ function createStyles(props: AvatarPropTypes) {
 
   return styles;
 }
+
+export {Avatar}; // For tests
 
 export default asBaseComponent<AvatarPropTypes>(forwardRef(Avatar))
