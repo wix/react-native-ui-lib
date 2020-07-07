@@ -15,6 +15,7 @@ export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as RadioButton, RadioButtonPropTypes} from './components/radioButton/RadioButton';
 export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButton/RadioGroup';
+export {default as TabBar} from './components/TabBar';
 
 /* All components with manual typings */
 export {
@@ -47,7 +48,6 @@ export {
   GradientSlider,
   ColorSliderGroup,
   Stepper,
-  TabBar,
   TagsInput,
   SharedTransition,
   StackAggregator,
