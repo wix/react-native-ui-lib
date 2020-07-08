@@ -118,7 +118,7 @@ export type AvatarPropTypes = {
   /**
    * Custom size for the Avatar
    */
-  size?: number;
+  size: number;
   /**
    * Press handler
    */
@@ -166,7 +166,7 @@ class Avatar extends PureComponent<AvatarPropTypes> {
   };
 
   getContainerStyle(): StyleProp<ViewStyle> {
-    const {size = Avatar.defaultProps.size} = this.props;
+    const {size} = this.props;
 
     return {
       width: size,
@@ -178,7 +178,7 @@ class Avatar extends PureComponent<AvatarPropTypes> {
   }
 
   getInitialsContainer(): StyleProp<ViewStyle> {
-    const {size = Avatar.defaultProps.size} = this.props;
+    const {size} = this.props;
     return {
       ...StyleSheet.absoluteFillObject,
       alignItems: 'center',
@@ -188,7 +188,7 @@ class Avatar extends PureComponent<AvatarPropTypes> {
   }
 
   getRibbonStyle(): StyleProp<ViewStyle> {
-    const {size = Avatar.defaultProps.size} = this.props;
+    const {size} = this.props;
 
     return {
       position: 'absolute',
@@ -225,7 +225,7 @@ class Avatar extends PureComponent<AvatarPropTypes> {
   getBadgeSize = () => _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
 
   getBadgePosition() {
-    const {size = Avatar.defaultProps.size, badgePosition} = this.props;
+    const {size, badgePosition} = this.props;
     const radius = size / 2;
     const x = Math.sqrt(radius ** 2 * 2);
     const y = x - radius;
@@ -313,7 +313,7 @@ class Avatar extends PureComponent<AvatarPropTypes> {
       onPress,
       containerStyle,
       children,
-      size = Avatar.defaultProps.size,
+      size,
       testID,
       //@ts-ignore
       forwardedRef

@@ -97,7 +97,7 @@ export declare type AvatarPropTypes = {
     /**
      * Custom size for the Avatar
      */
-    size?: number;
+    size: number;
     /**
      * Press handler
      */
