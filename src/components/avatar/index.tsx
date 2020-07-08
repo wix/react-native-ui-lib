@@ -1,15 +1,16 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {StyleSheet, ViewPropTypes, TouchableOpacity, Text as RNText} from 'react-native';
+import React , {PureComponent} from 'react';
+import {StyleSheet, ImageSourcePropType, StyleProp, ViewStyle, TouchableOpacity, ImagePropsBase, ImageStyle, TextStyle} from 'react-native';
 import {Colors} from '../../style';
-import {PureBaseComponent} from '../../commons';
+import {forwardRef, asBaseComponent} from '../../commons/new';
+import {extractAccessibilityProps} from '../../commons/modifiers';
+//@ts-ignore
 import Badge, {BADGE_SIZES} from '../badge';
 import View from '../view';
 import Text from '../text';
-import Image from '../image';
+import Image, {ImageProps} from '../image';
+// @ts-ignore
 import AnimatedImage from '../animatedImage';
-import forwardRef from '../../commons/forwardRef';
 
 const deprecatedProps = [
   {old: 'isOnline', new: 'badgeProps.backgroundColor'},
@@ -17,22 +18,116 @@ const deprecatedProps = [
   {old: 'imageSource', new: 'source'}
 ];
 
-export const STATUS_MODES = {
-  ONLINE: 'ONLINE',
-  OFFLINE: 'OFFLINE',
-  AWAY: 'AWAY',
-  NONE: 'NONE'
+export enum StatusModes {
+  ONLINE = 'ONLINE',
+  OFFLINE = 'OFFLINE',
+  AWAY = 'AWAY',
+  NONE = 'NONE'
 };
 
-export const BADGE_POSITIONS = {
-  TOP_RIGHT: 'TOP_RIGHT',
-  TOP_LEFT: 'TOP_LEFT',
-  BOTTOM_RIGHT: 'BOTTOM_RIGHT',
-  BOTTOM_LEFT: 'BOTTOM_LEFT'
+export enum BadgePosition {
+  TOP_RIGHT = 'TOP_RIGHT',
+  TOP_LEFT = 'TOP_LEFT',
+  BOTTOM_RIGHT = 'BOTTOM_RIGHT',
+  BOTTOM_LEFT = 'BOTTOM_LEFT'
 };
 
 const DEFAULT_BADGE_SIZE = 'pimpleBig';
-const DEFAULT_BADGE_POSITION = BADGE_POSITIONS.TOP_RIGHT;
+
+export type AvatarPropTypes = {
+  /**
+   * Adds fade in animation when Avatar image loads
+   */
+  animate?: boolean;
+  /**
+   * Background color for Avatar
+   */
+  backgroundColor?: string;
+  /**
+   * Badge location on Avatar
+   */
+  badgePosition?: BadgePosition,
+  /**
+   * Badge props passed down to Badge component
+   */
+  badgeProps?: object;
+  /**
+   * Additional spacing styles for the container
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * The image source (external or assets)
+   */
+  source?: ImageSourcePropType;
+  /**
+   * Image props object
+   */
+  imageProps?: ImageProps;
+  /**
+   * Image style object used to pass additional style props
+   * by components which render image
+   */
+  imageStyle?: ImageStyle;
+  /**
+   * Listener-callback for when an image's (uri) loading
+   * starts (equiv. to Image.onLoadStart()).
+   */
+  onImageLoadStart?: ImagePropsBase["onLoadStart"];
+  /**
+   * Listener-callback for when an image's (uri) loading
+   * either succeeds or fails (equiv. to Image.onLoadEnd()).
+   */
+  onImageLoadEnd?: ImagePropsBase["onLoadEnd"];
+  /**
+   * Listener-callback for when an image's (uri) loading
+   * fails (equiv. to Image.onError()).
+   */
+  onImageLoadError?: ImagePropsBase["onError"];
+  /**
+   * Label that can represent initials
+   */
+  label?: string;
+  /**
+   * The label color
+   */
+  labelColor?: string;
+  /**
+   * ribbon label to display on the avatar
+   */
+  ribbonLabel?: string;
+  /**
+   * ribbon custom style
+   */
+  ribbonStyle?: StyleProp<ViewStyle>;
+  /**
+   * ribbon label custom style
+   */
+  ribbonLabelStyle?: StyleProp<TextStyle>;
+  /**
+   * Custom ribbon
+   */
+  customRibbon?: JSX.Element;
+  /**
+   * Determine if to show online badge
+   */
+  isOnline?: boolean;
+  /**
+   * AWAY, ONLINE, OFFLINE or NONE mode (if set to a value other then 'NONE' will override isOnline prop)
+   */
+  status?: StatusModes;
+  /**
+   * Custom size for the Avatar
+   */
+  size: number;
+  /**
+   * Press handler
+   */
+  onPress?: (props: any) => void;
+  /**
+   * Used as a testing identifier
+   */
+  testID?: string;
+};
 
 /**
  * @description: Avatar component for displaying user profile images
@@ -42,11 +137,16 @@ const DEFAULT_BADGE_POSITION = BADGE_POSITIONS.TOP_RIGHT;
  * @image: https://user-images.githubusercontent.com/33805983/34480603-197d7f64-efb6-11e7-9feb-db8ba756f055.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.js
  */
-export class Avatar extends PureBaseComponent {
-  constructor(props) {
+class Avatar extends PureComponent<AvatarPropTypes> {
+
+  styles: ReturnType<typeof createStyles>;
+
+  constructor(props: AvatarPropTypes) {
     super(props);
 
+    this.styles = createStyles(props);
     deprecatedProps.forEach(prop => {
+      //@ts-ignore
       if (props[prop.old]) {
         console.warn(`"Avatar's ${prop.old}" property is deprecated, please use "${prop.new}"`);
       }
@@ -54,112 +154,18 @@ export class Avatar extends PureBaseComponent {
   }
 
   static displayName = 'Avatar';
-  static modes = STATUS_MODES;
-  static badgePosition = BADGE_POSITIONS;
-  static propTypes = {
-    /**
-     * Adds fade in animation when Avatar image loads
-     */
-    animate: PropTypes.bool,
-    /**
-     * Background color for Avatar
-     */
-    backgroundColor: PropTypes.string,
-    /**
-     * Badge location on Avatar
-     */
-    badgePosition: PropTypes.oneOf(Object.values(BADGE_POSITIONS)),
-    /**
-     * Badge props passed down to Badge component
-     */
-    badgeProps: PropTypes.object,
-    /**
-     * Additional spacing styles for the container
-     */
-    containerStyle: ViewPropTypes.style,
-    /**
-     * The image source (external or assets)
-     */
-    source: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * Image props object
-     */
-    imageProps: PropTypes.object,
-    /**
-     * Image style object used to pass additional style props
-     * by components which render image
-     */
-    imageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.number]),
-    /**
-     * Listener-callback for when an image's (uri) loading
-     * starts (equiv. to Image.onLoadStart()).
-     */
-    onImageLoadStart: PropTypes.func,
-    /**
-     * Listener-callback for when an image's (uri) loading
-     * either succeeds or fails (equiv. to Image.onLoadEnd()).
-     */
-    onImageLoadEnd: PropTypes.func,
-    /**
-     * Listener-callback for when an image's (uri) loading
-     * fails (equiv. to Image.onError()).
-     */
-    onImageLoadError: PropTypes.func,
-    /**
-     * Label that can represent initials
-     */
-    label: PropTypes.string,
-    /**
-     * The label color
-     */
-    labelColor: PropTypes.string,
-    /**
-     * ribbon label to display on the avatar
-     */
-    ribbonLabel: PropTypes.string,
-    /**
-     * ribbon custom style
-     */
-    ribbonStyle: ViewPropTypes.style,
-    /**
-     * ribbon label custom style
-     */
-    ribbonLabelStyle: RNText.propTypes.style,
-    /**
-     * Custom ribbon
-     */
-    customRibbon: PropTypes.element,
-    /**
-     * Determine if to show online badge
-     */
-    isOnline: PropTypes.bool,
-    /**
-     * AWAY, ONLINE, OFFLINE or NONE mode (if set to a value other then 'NONE' will override isOnline prop)
-     */
-    status: PropTypes.oneOf(Object.keys(STATUS_MODES)),
-    /**
-     * Custom size for the Avatar
-     */
-    size: PropTypes.number,
-    /**
-     * Press handler
-     */
-    onPress: PropTypes.func
-  };
+  static modes = StatusModes;
+  static badgePosition = BadgePosition;
 
   static defaultProps = {
     animate: false,
     backgroundColor: Colors.dark80,
     size: 50,
     labelColor: Colors.dark10,
-    badgePosition: DEFAULT_BADGE_POSITION
+    badgePosition: BadgePosition.TOP_RIGHT
   };
 
-  generateStyles() {
-    this.styles = createStyles(this.props);
-  }
-
-  getContainerStyle() {
+  getContainerStyle(): StyleProp<ViewStyle> {
     const {size} = this.props;
 
     return {
@@ -171,7 +177,7 @@ export class Avatar extends PureBaseComponent {
     };
   }
 
-  getInitialsContainer() {
+  getInitialsContainer(): StyleProp<ViewStyle> {
     const {size} = this.props;
     return {
       ...StyleSheet.absoluteFillObject,
@@ -181,7 +187,7 @@ export class Avatar extends PureBaseComponent {
     };
   }
 
-  getRibbonStyle() {
+  getRibbonStyle(): StyleProp<ViewStyle> {
     const {size} = this.props;
 
     return {
@@ -192,7 +198,7 @@ export class Avatar extends PureBaseComponent {
     };
   }
 
-  getStatusBadgeColor(status) {
+  getStatusBadgeColor(status: StatusModes | undefined): string | null {
     switch (status) {
       case Avatar.modes.AWAY:
         return Colors.yellow30;
@@ -266,6 +272,7 @@ export class Avatar extends PureBaseComponent {
     const {
       animate,
       source,
+      // @ts-ignore
       imageSource,
       onImageLoadStart,
       onImageLoadEnd,
@@ -293,7 +300,6 @@ export class Avatar extends PureBaseComponent {
         />
       );
     }
-    return undefined;
   }
 
   render() {
@@ -301,6 +307,7 @@ export class Avatar extends PureBaseComponent {
       label,
       labelColor: color,
       source,
+      //@ts-ignore
       imageSource,
       backgroundColor,
       onPress,
@@ -308,6 +315,7 @@ export class Avatar extends PureBaseComponent {
       children,
       size,
       testID,
+      //@ts-ignore
       forwardedRef
     } = this.props;
     const Container = onPress ? TouchableOpacity : View;
@@ -324,7 +332,7 @@ export class Avatar extends PureBaseComponent {
         accessible={!_.isUndefined(onPress)}
         accessibilityLabel={'Avatar'}
         accessibilityRole={onPress ? 'button' : 'image'}
-        {...this.extractAccessibilityProps()}
+        {...extractAccessibilityProps(this.props)}
       >
         <View
           style={[this.getInitialsContainer(), {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
@@ -342,7 +350,8 @@ export class Avatar extends PureBaseComponent {
   }
 }
 
-function createStyles({labelColor}) {
+function createStyles(props: AvatarPropTypes) {
+  const {labelColor} = props;
   const styles = StyleSheet.create({
     initialsContainerWithInset: {
       top: 1,
@@ -364,4 +373,6 @@ function createStyles({labelColor}) {
   return styles;
 }
 
-export default forwardRef(Avatar);
+export {Avatar}; // For tests
+
+export default asBaseComponent<AvatarPropTypes>(forwardRef(Avatar))

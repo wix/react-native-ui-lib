@@ -1,13 +1,13 @@
 import _ from 'lodash';
 import React, {useCallback} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, ViewProps, TouchableOpacityProps, ImageStyle, TextStyle, ImageSourcePropType} from 'react-native';
-import {AvatarProps, BadgeProps} from 'typings';
+import {BadgeProps} from 'typings';
 // @ts-ignore
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
 import {BorderRadiuses, Spacings} from '../../style';
 // @ts-ignore
-import Avatar from '../avatar';
+import Avatar, {AvatarPropTypes} from '../avatar';
 // @ts-ignore
 import Badge, {BADGE_SIZES} from '../badge';
 import Image from '../image';
@@ -74,7 +74,7 @@ export type ChipPropTypes = ViewProps & TouchableOpacityProps & {
   /**
    * Avatar props object
    */
-  avatarProps?: AvatarProps;
+  avatarProps?: AvatarPropTypes;
 
   //ICON
   /**
