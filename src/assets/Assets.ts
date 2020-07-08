@@ -1,8 +1,11 @@
 import _ from 'lodash';
 
-function assignProperties(a, b) {
+interface CustomObject {[key: string]: any}
+
+function assignProperties(a: CustomObject, b: {[key: string]: any}) {
   if (a) {
     _(b).keys().forEach((key) => {
+      // @ts-ignore
       Object.defineProperty(a, key, Object.getOwnPropertyDescriptor(b, key));
     });
   }
@@ -10,7 +13,7 @@ function assignProperties(a, b) {
   return a;
 }
 
-function ensurePath(obj, path) {
+function ensurePath(obj: CustomObject, path: string) {
   let pointer = obj;
 
   const pathArray = path.split('.');
@@ -18,10 +21,10 @@ function ensurePath(obj, path) {
 
   for (let i = 0; i < n; i++) {
     const segment = pathArray[i];
-    
+
     if (pointer[segment]) {
       const descriptor = Object.getOwnPropertyDescriptor(pointer, segment);
-      if (descriptor.get) {
+      if (descriptor?.get) {
         Object.defineProperty(pointer, segment, descriptor);
       }
     } else {
@@ -34,7 +37,9 @@ function ensurePath(obj, path) {
 }
 
 export class Assets {
-  loadAssetsGroup(groupName, assets) {
+  [key: string]: any;
+
+  loadAssetsGroup(groupName: string, assets: object) {
     if (!_.isString(groupName)) {
       throw new Error('group name should be a string');
     }
