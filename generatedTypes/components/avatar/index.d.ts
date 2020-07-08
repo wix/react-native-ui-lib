@@ -1,20 +1,18 @@
 import React, { PureComponent } from 'react';
 import { ImageSourcePropType, StyleProp, ViewStyle, ImagePropsBase, ImageStyle, TextStyle } from 'react-native';
 import { ImageProps } from '../image';
-export declare const STATUS_MODES: {
-    ONLINE: string;
-    OFFLINE: string;
-    AWAY: string;
-    NONE: string;
-};
-export declare const BADGE_POSITIONS: {
-    TOP_RIGHT: string;
-    TOP_LEFT: string;
-    BOTTOM_RIGHT: string;
-    BOTTOM_LEFT: string;
-};
-declare type StatusModes = keyof typeof STATUS_MODES;
-declare type BadgePosition = keyof typeof BADGE_POSITIONS;
+export declare enum StatusModes {
+    ONLINE = "ONLINE",
+    OFFLINE = "OFFLINE",
+    AWAY = "AWAY",
+    NONE = "NONE"
+}
+export declare enum BadgePosition {
+    TOP_RIGHT = "TOP_RIGHT",
+    TOP_LEFT = "TOP_LEFT",
+    BOTTOM_RIGHT = "BOTTOM_RIGHT",
+    BOTTOM_LEFT = "BOTTOM_LEFT"
+}
 export declare type AvatarPropTypes = {
     /**
      * Adds fade in animation when Avatar image loads
@@ -118,31 +116,17 @@ export declare type AvatarPropTypes = {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.js
  */
 declare class Avatar extends PureComponent<AvatarPropTypes> {
-    styles: {
-        initials: StyleProp<ViewStyle>;
-        initialsContainerWithInset: StyleProp<ViewStyle>;
-        ribbon: StyleProp<ViewStyle>;
-    };
+    styles: ReturnType<typeof createStyles>;
     constructor(props: AvatarPropTypes);
     static displayName: string;
-    static modes: {
-        ONLINE: string;
-        OFFLINE: string;
-        AWAY: string;
-        NONE: string;
-    };
-    static badgePosition: {
-        TOP_RIGHT: string;
-        TOP_LEFT: string;
-        BOTTOM_RIGHT: string;
-        BOTTOM_LEFT: string;
-    };
+    static modes: typeof StatusModes;
+    static badgePosition: typeof BadgePosition;
     static defaultProps: {
         animate: boolean;
         backgroundColor: string;
         size: number;
         labelColor: string;
-        badgePosition: string;
+        badgePosition: BadgePosition;
     };
     getContainerStyle(): StyleProp<ViewStyle>;
     getInitialsContainer(): StyleProp<ViewStyle>;
@@ -160,6 +144,23 @@ declare class Avatar extends PureComponent<AvatarPropTypes> {
     renderImage(): JSX.Element | undefined;
     render(): JSX.Element;
 }
+declare function createStyles(props: AvatarPropTypes): {
+    initialsContainerWithInset: {
+        top: number;
+        right: number;
+        bottom: number;
+        left: number;
+    };
+    initials: {
+        color: string | undefined;
+        backgroundColor: string;
+    };
+    ribbon: {
+        backgroundColor: string;
+        paddingHorizontal: number;
+        paddingVertical: number;
+    };
+};
 export { Avatar };
 declare const _default: React.ComponentClass<AvatarPropTypes, any>;
 export default _default;

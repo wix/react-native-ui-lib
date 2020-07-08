@@ -18,25 +18,21 @@ const deprecatedProps = [
   {old: 'imageSource', new: 'source'}
 ];
 
-export const STATUS_MODES = {
-  ONLINE: 'ONLINE',
-  OFFLINE: 'OFFLINE',
-  AWAY: 'AWAY',
-  NONE: 'NONE'
+export enum StatusModes {
+  ONLINE = 'ONLINE',
+  OFFLINE = 'OFFLINE',
+  AWAY = 'AWAY',
+  NONE = 'NONE'
 };
 
-export const BADGE_POSITIONS = {
-  TOP_RIGHT: 'TOP_RIGHT',
-  TOP_LEFT: 'TOP_LEFT',
-  BOTTOM_RIGHT: 'BOTTOM_RIGHT',
-  BOTTOM_LEFT: 'BOTTOM_LEFT'
+export enum BadgePosition {
+  TOP_RIGHT = 'TOP_RIGHT',
+  TOP_LEFT = 'TOP_LEFT',
+  BOTTOM_RIGHT = 'BOTTOM_RIGHT',
+  BOTTOM_LEFT = 'BOTTOM_LEFT'
 };
 
 const DEFAULT_BADGE_SIZE = 'pimpleBig';
-const DEFAULT_BADGE_POSITION = BADGE_POSITIONS.TOP_RIGHT;
-
-type StatusModes = keyof typeof STATUS_MODES
-type BadgePosition = keyof typeof BADGE_POSITIONS
 
 export type AvatarPropTypes = {
   /**
@@ -143,11 +139,7 @@ export type AvatarPropTypes = {
  */
 class Avatar extends PureComponent<AvatarPropTypes> {
 
-  styles: {
-    initials: StyleProp<ViewStyle>
-    initialsContainerWithInset: StyleProp<ViewStyle>,
-    ribbon: StyleProp<ViewStyle>
-  }
+  styles: ReturnType<typeof createStyles>;
 
   constructor(props: AvatarPropTypes) {
     super(props);
@@ -162,15 +154,15 @@ class Avatar extends PureComponent<AvatarPropTypes> {
   }
 
   static displayName = 'Avatar';
-  static modes = STATUS_MODES;
-  static badgePosition = BADGE_POSITIONS;
+  static modes = StatusModes;
+  static badgePosition = BadgePosition;
 
   static defaultProps = {
     animate: false,
     backgroundColor: Colors.dark80,
     size: 50,
     labelColor: Colors.dark10,
-    badgePosition: DEFAULT_BADGE_POSITION
+    badgePosition: BadgePosition.TOP_RIGHT
   };
 
   getContainerStyle(): StyleProp<ViewStyle> {
