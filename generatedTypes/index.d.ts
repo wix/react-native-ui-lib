@@ -5,6 +5,7 @@
  */
 export * from './style';
 export {asBaseComponent, withScrollEnabler, withScrollReached, WithScrollEnablerProps, WithScrollReachedProps} from './commons/new';
+export {withScrollFader, WithScrollFaderProps, WithScrollFaderOptionsProps} from './components/withScrollFader';
 export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
 export {default as View, ViewPropTypes} from './components/view';
 export {default as Text, TextPropTypes} from './components/text';

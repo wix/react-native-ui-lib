@@ -177,6 +177,9 @@ export default {
   get View() {
     return require('./components/view').default;
   },
+  get withScrollFader() {
+    return require('./components/withScrollFader').default;
+  },
   get Wizard() {
     return require('./components/wizard').default;
   },
