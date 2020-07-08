@@ -3,13 +3,13 @@ import { LayoutChangeEvent, ImageStyle, TextStyle, StyleProp } from 'react-nativ
 import { BaseComponentInjectedProps, ForwardRefInjectedProps, TypographyModifiers, ColorsModifiers, BackgroundColorModifier, MarginModifiers } from '../../commons/new';
 import { TouchableOpacityProps } from '../touchableOpacity';
 import { TextPropTypes } from '../text';
-declare enum ButtonSize {
+export declare enum ButtonSize {
     xSmall = "xSmall",
     small = "small",
     medium = "medium",
     large = "large"
 }
-declare enum AnimationDirection {
+export declare enum AnimationDirection {
     center = "center",
     left = "left",
     right = "right"

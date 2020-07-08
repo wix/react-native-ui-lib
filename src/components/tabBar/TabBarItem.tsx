@@ -1,14 +1,87 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {StyleSheet, Animated, Easing, Text as RNText} from 'react-native';
-import View from '../view';
-import Text from '../text';
+import React, {PureComponent} from 'react';
+import {StyleSheet, Animated, Easing, LayoutChangeEvent, ViewStyle, TextStyle} from 'react-native';
+import {Colors, Typography} from '../../style';
+import {asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
 import Image from '../image';
 import TouchableOpacity from '../touchableOpacity';
-import Badge from '../badge';
-import {PureBaseComponent} from '../../commons';
-import {Colors, Typography} from '../../style';
+import View from '../view';
+import Text from '../text';
+// @ts-ignore
+import Badge, {BadgeProps} from '../badge';
+
+
+export type TabBarItemProps = BaseComponentInjectedProps & {
+  /**
+   * icon of the tab
+   */
+  icon?: number,
+  /**
+   * icon tint color
+   */
+  iconColor?: string,
+  /**
+   * icon selected tint color
+   */
+  iconSelectedColor?: string,
+  /**
+   * label of the tab
+   */
+  label?: string,
+  /**
+   * custom label style
+   */
+  labelStyle?: TextStyle,
+  /**
+   * Badge component props to display next the item label
+   */
+  badge?: BadgeProps,
+  /**
+   * maximum number of lines the label can break
+   */
+  maxLines?: number,
+  /**
+   * custom selected tab label style
+   */
+  selectedLabelStyle: TextStyle,
+  /**
+   * whether the tab is selected or not
+   */
+  selected?: boolean,
+  /**
+   * whether the tab will have a divider on its right
+   */
+  showDivider?: boolean,
+  /**
+   * A fixed width for the item
+   */
+  width?: number,
+  /**
+   * ignore of the tab
+   */
+  ignore?: boolean,
+  /**
+   * callback for when pressing a tab
+   */
+  onPress?: (props: any) => void,
+  /**
+   * whether to change the text to uppercase
+   */
+  uppercase?: boolean,
+  /**
+   * Apply background color on press for TouchableOpacity
+   */
+  activeBackgroundColor?: string,
+  indicatorStyle?: ViewStyle, // for inner use
+  style?: ViewStyle,
+  testID?: string
+};
+
+export type State = {
+  indicatorOpacity?: Animated.Value
+}
+
+
 const INDICATOR_BG_COLOR = Colors.blue30;
 const INDICATOR_HEIGHT = 2;
 const INDICATOR_SPACINGS = 16;
@@ -19,78 +92,15 @@ const INDICATOR_SPACINGS = 16;
  * @extends: TouchableOpacity
  * @extendsLink: https://facebook.github.io/react-native/docs/touchableopacity
  */
-export default class TabBarItem extends PureBaseComponent {
+class TabBarItem extends PureComponent<TabBarItemProps, State> {
   static displayName = 'TabBar.Item';
-
-  static propTypes = {
-    /**
-     * icon of the tab
-     */
-    icon: PropTypes.number,
-    /**
-     * icon tint color
-     */
-    iconColor: PropTypes.string,
-    /**
-     * icon selected tint color
-     */
-    iconSelectedColor: PropTypes.string,
-    /**
-     * label of the tab
-     */
-    label: PropTypes.string,
-    /**
-     * custom label style
-     */
-    labelStyle: RNText.propTypes.style,
-    /**
-     * Badge component props to display next the item label
-     */
-    badge: PropTypes.shape(Badge.propTypes),
-    /**
-     * maximun number of lines the label can break
-     */
-    maxLines: PropTypes.number,
-    /**
-     * custom selected tab label style
-     */
-    selectedLabelStyle: RNText.propTypes.style,
-    /**
-     * whether the tab is selected or not
-     */
-    selected: PropTypes.bool,
-    /**
-     * whether the tab will have a divider on its right
-     */
-    showDivider: PropTypes.bool,
-    /**
-     * A fixed width for the item
-     */
-    width: PropTypes.number,
-    /**
-     * ignore of the tab
-     */
-    ignore: PropTypes.bool,
-    /**
-     * callback for when pressing a tab
-     */
-    onPress: PropTypes.func,
-    /**
-     * whether to change the text to uppercase
-     */
-    uppercase: PropTypes.bool,
-    /**
-     * Apply background color on press for TouchableOpacity
-     */
-    activeBackgroundColor: PropTypes.string
-  };
 
   static defaultProps = {
     test: true, // this will enable by the new tab bar design
     maxLines: 1
   };
 
-  constructor(props) {
+  constructor(props: TabBarItemProps) {
     super(props);
 
     this.state = {
@@ -98,39 +108,40 @@ export default class TabBarItem extends PureBaseComponent {
     };
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  styles = createStyles();
+  layout: any = undefined;
+
+  UNSAFE_componentWillReceiveProps(nextProps: TabBarItemProps) {
     if (this.props.selected !== nextProps.selected) {
       this.animate(nextProps.selected);
     }
   }
 
-  animate(newValue) {
-    Animated.timing(this.state.indicatorOpacity, {
-      toValue: newValue ? 1 : 0,
-      easing: Easing.ease,
-      duration: 150,
-      useNativeDriver: true
-    }).start();
+  animate(newValue?: boolean) {
+    if (this.state.indicatorOpacity) {
+      Animated.timing(this.state.indicatorOpacity, {
+        toValue: newValue ? 1 : 0,
+        easing: Easing.ease,
+        duration: 150,
+        useNativeDriver: true
+      }).start();
+    }
   }
 
-  generateStyles() {
-    this.styles = createStyles(this.getThemeProps());
-  }
-
-  getFlattenStyle(style) {
+  getFlattenStyle(style: object) {
     return StyleSheet.flatten(style);
   }
 
-  getStylePropValue(flattenStyle, propName) {
+  getStylePropValue(flattenStyle: object, propName: string) {
     let prop;
     if (flattenStyle) {
-      const propObject = _.pick(flattenStyle, [propName]);
+      const propObject: any = _.pick(flattenStyle, [propName]);
       prop = propObject[propName];
     }
     return prop;
   }
 
-  getColorFromStyle(style) {
+  getColorFromStyle(style: any) {
     const flattenStyle = this.getFlattenStyle(style);
     return this.getStylePropValue(flattenStyle, 'color');
   }
@@ -139,7 +150,7 @@ export default class TabBarItem extends PureBaseComponent {
     return this.layout;
   }
 
-  onLayout = event => {
+  onLayout = (event: LayoutChangeEvent) => {
     this.layout = event.nativeEvent.layout;
   };
 
@@ -163,7 +174,7 @@ export default class TabBarItem extends PureBaseComponent {
       onPress,
       activeBackgroundColor,
       testID
-    } = this.getThemeProps();
+    } = this.props;
 
     const iconTint = iconColor || this.getColorFromStyle(labelStyle) || this.getColorFromStyle(this.styles.label);
     const iconSelectedTint =
@@ -241,3 +252,5 @@ function createStyles() {
     }
   });
 }
+
+export default asBaseComponent<TabBarItemProps, State>(TabBarItem);

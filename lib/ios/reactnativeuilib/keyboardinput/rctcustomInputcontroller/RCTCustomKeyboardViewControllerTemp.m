@@ -1,22 +1,22 @@
 //
-//  RCTCustomKeyboardViewController.m
+//  RCTCustomKeyboardViewControllerTemp.m
 //
 //  Created by Leo Natan (Wix) on 12/12/2016.
 //  Copyright © 2016 Leo Natan. All rights reserved.
 //
 
-#import "RCTCustomKeyboardViewController.h"
+#import "RCTCustomKeyboardViewControllerTemp.h"
 
 #if __has_include(<KeyboardTrackingView/ObservingInputAccessoryViewTemp.h>)
 #import <KeyboardTrackingView/ObservingInputAccessoryViewTemp.h>
 #define ObservingInputAccessoryViewTemp_IsAvailable true
 #endif
 
-@interface RCTCustomKeyboardViewController ()
+@interface RCTCustomKeyboardViewControllerTemp ()
 @property (nonatomic, assign, getter=isUsingSafeArea) BOOL useSafeArea;
 @end
 
-@implementation RCTCustomKeyboardViewController
+@implementation RCTCustomKeyboardViewControllerTemp
 
 - (instancetype)initWithUsingSafeArea:(BOOL)useSafeArea
 {

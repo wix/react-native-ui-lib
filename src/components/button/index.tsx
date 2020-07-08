@@ -18,14 +18,14 @@ import {extractColorValue, extractTypographyValue} from '../../commons/modifiers
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Text, {TextPropTypes} from '../text';
 
-enum ButtonSize {
+export enum ButtonSize {
   xSmall = 'xSmall',
   small = 'small',
   medium = 'medium',
   large = 'large',
 }
 
-enum AnimationDirection {
+export enum AnimationDirection {
   center = 'center',
   left = 'left',
   right = 'right',

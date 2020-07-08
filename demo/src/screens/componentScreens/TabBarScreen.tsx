@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Colors, Typography, View, Button, TabBar} from 'react-native-ui-lib';
+import {Colors, View, Button, TabBar} from 'react-native-ui-lib';
 
 
 const labelsArray = [
@@ -16,30 +16,30 @@ const themeColors = [Colors.violet30, Colors.green30, Colors.red30, Colors.blue3
 
 
 export default class TabBarScreen extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    selectedIndex: 1,
+    selectedIndex1: 1,
+    selectedIndex2: 1,
+    labels: labelsArray[0],
+    currentTabs: [],
+    themeColor: themeColors[0]
+  };
 
-    this.state = {
-      selectedIndex: 1,
-      selectedIndex1: 1,
-      labels: labelsArray[0],
-      currentTabs: [],
-      themeColor: themeColors[0]
-    };
-
-    this.counter = 0;
-    this.colorCounter = 0;
-  }
+  counter = 0;
+  colorCounter = 0;
+  tabbar: any = undefined;
 
   /** Index change */
   changeIndex = () => {
     let index;
-    
-    do {
-      index = Math.floor(Math.random() * this.tabbar.props.children.length);
-    } while (index === this.state.selectedIndex);
 
-    this.setState({selectedIndex: index});
+    if (this.tabbar) {
+      do {
+        index = Math.floor(Math.random() * this.tabbar.props.children.length);
+      } while (index === this.state.selectedIndex);
+  
+      this.setState({selectedIndex: index});
+    }
   };
 
   /** Labels change */
@@ -74,8 +74,8 @@ export default class TabBarScreen extends Component {
   addTab = () => {
     const random = Math.floor(Math.random() * 100000);
     const newTabs = this.state.currentTabs;
-    
-    newTabs.push({id: random, displayLabel: `tab #${this.state.currentTabs.length}`});
+    const item = {id: random, displayLabel: `tab #${this.state.currentTabs.length}`};
+    newTabs.push(item);
     this.setState({currentTabs: newTabs});
   };
 
@@ -90,7 +90,7 @@ export default class TabBarScreen extends Component {
   };
 
   /** Actions */
-  getTabs(showAddTab) {
+  getTabs(showAddTab: boolean) {
     const tabs = _.map(this.state.currentTabs, tab => this.renderTabs(tab));
     
     if (showAddTab) {
@@ -104,7 +104,7 @@ export default class TabBarScreen extends Component {
   }
 
   /** Renders */
-  renderTabs(tab) {
+  renderTabs(tab: any) {
     return <TabBar.Item key={tab.id} label={tab.displayLabel} onPress={tab.onPress}/>;
   }
 
@@ -154,8 +154,8 @@ export default class TabBarScreen extends Component {
           </TabBar>
 
           <View center row>
-            <Button size={'small'} margin-20 label={`Add tabs`} onPress={this.addTab}/>
-            <Button size={'small'} margin-20 label={`Remove tabs`} onPress={this.removeTab}/>
+            <Button size={Button.sizes.small} margin-20 label={`Add tabs`} onPress={this.addTab}/>
+            <Button size={Button.sizes.small} margin-20 label={`Remove tabs`} onPress={this.removeTab}/>
           </View>
           <TabBar style={styles.tabbar} selectedIndex={0} enableShadow>
             {this.getTabs(false)}
@@ -170,7 +170,7 @@ export default class TabBarScreen extends Component {
           </TabBar>
 
           <Button
-            size={'small'}
+            size={Button.sizes.small}
             margin-20
             label={`Change index: ${this.state.selectedIndex}`}
             onPress={this.changeIndex}
@@ -188,13 +188,13 @@ export default class TabBarScreen extends Component {
           </TabBar>
 
           <View row>
-            <Button size={'small'} margin-20 label={`Change Labels`} onPress={this.changeLabels}/>
-            <Button size={'small'} margin-20 label={`Change Color`} onPress={this.changeColors}/>
+            <Button size={Button.sizes.small} margin-20 label={`Change Labels`} onPress={this.changeLabels}/>
+            <Button size={Button.sizes.small} margin-20 label={`Change Color`} onPress={this.changeColors}/>
           </View>
           <TabBar
             style={styles.tabbar}
             selectedIndex={this.state.selectedIndex1}
-            onChangeIndex={index => this.setState({selectedIndex1: index})}
+            onChangeIndex={(index: number) => this.setState({selectedIndex1: index})}
             indicatorStyle={{backgroundColor: this.state.themeColor}}
             enableShadow
           >
@@ -205,7 +205,7 @@ export default class TabBarScreen extends Component {
           <TabBar
             style={styles.tabbar}
             selectedIndex={this.state.selectedIndex2}
-            onChangeIndex={index => this.setState({selectedIndex2: index})}
+            onChangeIndex={(index: number) => this.setState({selectedIndex2: index})}
             enableShadow
           >
             <TabBar.Item label={this.state.labels[0]}/>
