@@ -375,4 +375,4 @@ function createStyles(props: AvatarPropTypes) {
 
 export {Avatar}; // For tests
 
-export default asBaseComponent<AvatarPropTypes>(forwardRef(Avatar))
+export default asBaseComponent<AvatarPropTypes, typeof Avatar>(forwardRef(Avatar))

@@ -162,5 +162,5 @@ declare function createStyles(props: AvatarPropTypes): {
     };
 };
 export { Avatar };
-declare const _default: React.ComponentClass<AvatarPropTypes, any>;
+declare const _default: React.ComponentClass<AvatarPropTypes, any> & typeof Avatar;
 export default _default;
