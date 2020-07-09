@@ -17,6 +17,7 @@ const horizontal = false;
 const setToStart = false;
 const itemWidth = 100;
 const itemHeight = 100;
+const tintColor = undefined;
 
 class WithScrollReachedScreen extends Component<WithScrollFaderProps> {
   renderItem = (index: number) => {
@@ -51,7 +52,8 @@ class WithScrollReachedScreen extends Component<WithScrollFaderProps> {
 
 export default withScrollFader(WithScrollReachedScreen, {
   horizontal,
-  setToStart
+  setToStart,
+  tintColor
 });
 
 const styles = StyleSheet.create({

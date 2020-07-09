@@ -13,6 +13,14 @@ export declare type WithScrollFaderOptionsProps = WithScrollReachedOptionsProps 
      * Should the fader be set on the start or the end of the scroll (the image is different), defaults to end
      */
     setToStart?: boolean;
+    /**
+     * Set to change from the default size (50) of the fade view.
+     */
+    size?: number;
+    /**
+     * Change the default (white) tint color of the fade view.
+     */
+    tintColor?: string;
 };
 export declare type WithScrollFaderProps = {
     scrollFaderProps: ScrollFaderProps;

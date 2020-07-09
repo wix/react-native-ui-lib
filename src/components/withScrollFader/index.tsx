@@ -1,10 +1,6 @@
-import React, {useState, useCallback, useRef, useEffect} from 'react';
+import React, {useCallback} from 'react';
 import {
   StyleSheet,
-  // eslint-disable-next-line no-unused-vars
-  ViewStyle,
-  // eslint-disable-next-line no-unused-vars
-  ImageStyle,
   // eslint-disable-next-line no-unused-vars
   FlatListProps,
   // eslint-disable-next-line no-unused-vars
@@ -12,9 +8,7 @@ import {
   // eslint-disable-next-line no-unused-vars
   NativeSyntheticEvent,
   // eslint-disable-next-line no-unused-vars
-  NativeScrollEvent,
-  // eslint-disable-next-line no-unused-vars
-  LayoutChangeEvent
+  NativeScrollEvent
 } from 'react-native';
 // eslint-disable-next-line no-unused-vars
 import forwardRef, {ForwardRefInjectedProps} from '../../commons/forwardRef';
@@ -26,6 +20,7 @@ import withScrollReached, {
 } from '../../commons/withScrollReached';
 import View from '../view';
 import Image from '../image';
+import Assets from '../../assets';
 
 export type ScrollFaderProps = {
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
@@ -61,19 +56,6 @@ type PropTypes = ForwardRefInjectedProps &
   SupportedViewsProps &
   WithScrollReachedProps;
 
-type Styles = {
-  containerStyle?: ViewStyle;
-  imageStyle?: ImageStyle;
-};
-
-enum Location {
-  Top,
-  Bottom,
-  Left,
-  Right
-}
-
-const gradientImage = () => require('../../assets/images/gradient.png');
 const DEFAULT_FADE_SIZE = 50;
 
 /**
@@ -86,108 +68,63 @@ function withScrollFader<PROPS>(
   options: WithScrollFaderOptionsProps = {}
 ): React.ComponentType<PROPS> {
   const ContentFader = (props: PROPS & PropTypes) => {
-    const styles = useRef<Styles>({});
-    const [layoutWidth, setLayoutWidth] = useState(0);
-    const [layoutHeight, setLayoutHeight] = useState(0);
-
-    const getStyles = useCallback(
-      (fadeSize: number) => {
-        let location;
-        if (options.horizontal) {
-          location = options.setToStart ? Location.Left : Location.Right;
-        } else {
-          location = options.setToStart ? Location.Top : Location.Bottom;
-        }
-
-        let containerStyle: ViewStyle;
-        let size = layoutWidth,
-          inverseTranslate = false,
-          rotate,
-          translateY;
-        switch (location) {
-          case Location.Left:
-            containerStyle = {...staticStyles.containerLeft, width: fadeSize};
-            rotate = '180deg';
-            size = layoutHeight;
-            break;
-          case Location.Right:
-            containerStyle = {...staticStyles.containerRight, width: fadeSize};
-            rotate = '0deg';
-            size = layoutHeight;
-            inverseTranslate = true;
-            break;
-          case Location.Top:
-            containerStyle = {...staticStyles.containerTop, height: fadeSize};
-            rotate = '270deg';
-            inverseTranslate = true;
-            break;
-          case Location.Bottom:
-          default:
-            containerStyle = {
-              ...staticStyles.containerBottom,
-              height: fadeSize
-            };
-            rotate = '90deg';
-            break;
-        }
-
-        const scaleY = size / fadeSize;
-        translateY = scaleY ? (fadeSize - size) / (2 * scaleY) : 0;
-        if (inverseTranslate) {
-          translateY = -translateY;
-        }
-
-        return {
-          containerStyle,
-          imageStyle: {
-            width: fadeSize,
-            height: fadeSize,
-            transform: [{rotate}, {scaleY}, {translateY}]
-          }
-        };
-      },
-      [layoutWidth, layoutHeight]
-    );
-
-    useEffect(() => {
+    const getStyles = useCallback(() => {
       const fadeSize = options.size || DEFAULT_FADE_SIZE;
-      styles.current = getStyles(fadeSize);
-    }, [getStyles]);
 
-    const onLayout = useCallback(
-      (event: LayoutChangeEvent) => {
-        setLayoutWidth(event.nativeEvent.layout.width);
-        setLayoutHeight(event.nativeEvent.layout.height);
-      },
-      [setLayoutWidth, setLayoutHeight]
-    );
+      let containerStyle, imageStyle, imageSource;
+      if (options.horizontal) {
+        if (options.setToStart) {
+          // Left
+          containerStyle = {...staticStyles.containerLeft, width: fadeSize};
+          imageStyle = {height: '100%', width: fadeSize};
+          imageSource = Assets.images.gradientLeft;
+        } else {
+          // Right
+          containerStyle = {...staticStyles.containerRight, width: fadeSize};
+          imageStyle = {height: '100%', width: fadeSize};
+          imageSource = Assets.images.gradientRight;
+        }
+      } else if (options.setToStart) {
+        // Top
+        containerStyle = {...staticStyles.containerTop, height: fadeSize};
+        imageStyle = {height: fadeSize, width: '100%'};
+        imageSource = Assets.images.gradientTop;
+      } else {
+        // Bottom
+        containerStyle = {
+          ...staticStyles.containerBottom,
+          height: fadeSize
+        };
+        imageStyle = {height: fadeSize, width: '100%'};
+        imageSource = Assets.images.gradientBottom;
+      }
+
+      return {
+        containerStyle,
+        imageStyle,
+        imageSource
+      };
+    }, []);
 
     const renderFader = useCallback(() => {
-      const showImage =
-        (layoutWidth > 0 || layoutHeight > 0) &&
-        (options.setToStart
-          ? !props.scrollReachedProps.isScrollAtStart
-          : !props.scrollReachedProps.isScrollAtEnd);
+      const styles = getStyles();
+      const showImage = options.setToStart
+        ? !props.scrollReachedProps.isScrollAtStart
+        : !props.scrollReachedProps.isScrollAtEnd;
       return (
-        <View
-          pointerEvents={'none'}
-          style={styles.current.containerStyle}
-          onLayout={onLayout}
-        >
+        <View pointerEvents={'none'} style={styles.containerStyle}>
           {showImage && (
             <Image
-              source={gradientImage()}
+              source={styles.imageSource}
               tintColor={options.tintColor}
-              style={styles.current.imageStyle}
+              style={styles.imageStyle}
               resizeMode={'stretch'}
             />
           )}
         </View>
       );
     }, [
-      layoutWidth,
-      layoutHeight,
-      onLayout,
+      getStyles,
       props.scrollReachedProps.isScrollAtStart,
       props.scrollReachedProps.isScrollAtEnd
     ]);

@@ -15,7 +15,7 @@ export type IconName =
 export type IconsList = Record<IconName, ImageRequireSource> & { readonly [key: string]: ImageRequireSource };
 
 export type ImageName =
-  | 'gradient';
+  | 'gradient' | 'gradientLeft' | 'gradientRight' | 'gradientTop' | 'gradientBottom';
 
 export type ImagesList = Record<ImageName, ImageRequireSource> & { readonly [key: string]: ImageRequireSource };
 
