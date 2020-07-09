@@ -5,6 +5,7 @@
  */
 export * from './style';
 export {asBaseComponent, withScrollEnabler, withScrollReached, WithScrollEnablerProps, WithScrollReachedProps} from './commons/new';
+export {default as Avatar, AvatarPropTypes} from './components/avatar';
 export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
 export {default as View, ViewPropTypes} from './components/view';
 export {default as Text, TextPropTypes} from './components/text';
@@ -21,8 +22,6 @@ export {default as TabBar} from './components/TabBar';
 export {
   ActionBar,
   ActionSheet,
-  Avatar,
-  AvatarProps,
   Badge,
   BadgeProps,
   Card,
