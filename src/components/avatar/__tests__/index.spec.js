@@ -1,5 +1,6 @@
 import {Avatar} from '../index';
 import {Colors} from '../../../style';
+import {BADGE_SIZES} from '../../badge';
 
 describe('Avatar Badge', () => {
   describe('getStatusBadgeColor', () => {
@@ -56,6 +57,42 @@ describe('Avatar Badge', () => {
     it('should return undefined when either isOnline nor status is passed', () => {
       const uut = new Avatar({});
       expect(uut.renderBadge()).toEqual(undefined);
+    });
+  });
+
+  describe('badgeProps.size, supports enum or number', () => {
+    it('should return 10 as the size number given', () => {
+      const uut = new Avatar({badgeProps: {size: 10}});
+      expect(uut.getBadgeSize()).toEqual(10);
+    });
+
+    it('should return 876 as the size number given', () => {
+      const uut = new Avatar({badgeProps: {size: 876}});
+      expect(uut.getBadgeSize()).toEqual(876);
+    });
+
+    it('should return 0 as the given size number', () => {
+      const uut = new Avatar({badgeProps: {size: 0}});
+      expect(uut.getBadgeSize()).toEqual(0);
+    });
+
+    it('should return the first badge size mapped by given key', () => {
+      const firstSizeKey = Object.keys(BADGE_SIZES)[1];
+      const uut = new Avatar({badgeProps: {size: firstSizeKey}});
+      expect(uut.getBadgeSize()).toEqual(BADGE_SIZES[firstSizeKey]);
+    });
+
+    it('should return the last badge size mapped by given key', () => {
+      const keys = Object.keys(BADGE_SIZES);
+      const lastSizeKey = keys[keys.length - 1];
+      const uut = new Avatar({badgeProps: {size: lastSizeKey}});
+      expect(uut.getBadgeSize()).toEqual(BADGE_SIZES[lastSizeKey]);
+    });
+
+    it('should return undefined for a non-exist size type', () => {
+      const sizeKey = '!NOT_A_VALID_ENUM$';
+      const uut = new Avatar({badgeProps: {size: sizeKey}});
+      expect(uut.getBadgeSize()).toBeUndefined();
     });
   });
 });
