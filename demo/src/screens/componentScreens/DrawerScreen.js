@@ -78,11 +78,7 @@ class DrawerScreen extends Component {
   };
 
   toggleReadState = () => {
-    // TODO: consider including this functionality as part of the drawer component
-    setTimeout(() => {
-      this.setState({unread: !this.state.unread});
-      this.closeDrawer();
-    }, 300);
+    this.setState({unread: !this.state.unread}); // setState will close the Drawer
   }
 
   triggerLeftToggleHaptic = () => {
@@ -129,44 +125,50 @@ class DrawerScreen extends Component {
       <View center marginB-s4>
         <Text text70>Actions</Text>
         <View row>
-          <Button
-            onPress={this.openLeftDrawer}
-            label="Open left"
-            style={{margin: 3}}
-            size={'xSmall'}
-          />
-          <Button
-            onPress={this.closeDrawer}
-            label="Close"
-            style={{margin: 3}}
-            size={'xSmall'}
-          />
-          <Button
-            onPress={this.openRightDrawer}
-            label="Open right"
-            style={{margin: 3}}
-            size={'xSmall'}
-          />
-        </View>
-        <View row>
-          <Button
-            onPress={this.openLeftDrawerFull}
-            label="Open left full"
-            style={{margin: 3}}
-            size={'xSmall'}
-          />
-          <Button
-            onPress={this.toggleLeftDrawer}
-            label="Toggle left"
-            style={{margin: 3}}
-            size={'xSmall'}
-          />
-          <Button
-            onPress={this.openRightDrawerFull}
-            label="Open right full"
-            style={{margin: 3}}
-            size={'xSmall'}
-          />
+          <View>
+            <Button
+              onPress={this.openLeftDrawer}
+              label="Open left"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+            <Button
+              onPress={this.openLeftDrawerFull}
+              label="Open left full"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+            <Button
+              onPress={this.toggleLeftDrawer}
+              label="Toggle left"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+          </View>
+
+          <View marginH-20>
+            <Button
+              onPress={this.closeDrawer}
+              label="Close"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+          </View>
+
+          <View>
+            <Button
+              onPress={this.openRightDrawer}
+              label="Open right"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+            <Button
+              onPress={this.openRightDrawerFull}
+              label="Open right full"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+          </View>
         </View>
       </View>
     );
@@ -185,7 +187,7 @@ class DrawerScreen extends Component {
         {this.state.unread && <Badge size={'pimpleBig'} backgroundColor={Colors.purple30} containerStyle={{marginRight: 8}}/>}
         <Avatar source={{uri: conversations[0].thumbnail}}/>
         <View marginL-20>
-          <Text text70R>{conversations[0].name}</Text>
+          <Text text70R={!this.state.unread} text70BO={this.state.unread}>{conversations[0].name}</Text>
           <Text text80 marginT-2>
             {conversations[0].text}
           </Text>

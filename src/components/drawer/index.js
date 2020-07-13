@@ -193,13 +193,16 @@ class NewDrawer extends PureBaseComponent {
       toValue: rowWidth * 0.6 - leftWidth,
       easing: Easing.linear,
       duration: 100,
+      delay: 100,
       useNativeDriver: true
     }).start(this.toggle());
   }
 
   toggle() {
     _.invoke(this.props, 'leftToggleHapticTrigger');
-    _.invoke(this.props, 'onToggleSwipeLeft');
+    setTimeout(() => {
+      _.invoke(this.props, 'onToggleSwipeLeft');
+    }, 400);
   }
 
   /** Accessability */

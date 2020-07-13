@@ -266,10 +266,8 @@ export default class Swipeable extends Component<PropType, StateType> {
       useNativeDriver: useNativeAnimations,
       ...animationOptions
     }).start(({finished}) => {
-      if (finished) {
-        if (toValue === rowWidth * LEFT_TOGGLE_THRESHOLD && onToggleSwipeLeft) {
-          onToggleSwipeLeft({rowWidth, leftWidth});
-        } else if (toValue === rowWidth && onFullSwipeLeft) {
+      if (finished) { 
+        if (toValue === rowWidth && onFullSwipeLeft) {
           onFullSwipeLeft();
         } else if (toValue === -rowWidth && onFullSwipeRight) {
           onFullSwipeRight();
@@ -287,7 +285,9 @@ export default class Swipeable extends Component<PropType, StateType> {
       }
     });
 
-    if (toValue === rowWidth && onWillFullSwipeLeft) {
+    if (toValue === rowWidth * LEFT_TOGGLE_THRESHOLD && onToggleSwipeLeft) {
+      onToggleSwipeLeft({rowWidth, leftWidth});
+    } else if (toValue === rowWidth && onWillFullSwipeLeft) {
       onWillFullSwipeLeft()
     } else if (toValue === -rowWidth && onWillFullSwipeRight) {
       onWillFullSwipeRight()
