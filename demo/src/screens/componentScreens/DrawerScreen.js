@@ -134,13 +134,13 @@ class DrawerScreen extends Component {
             />
             <Button
               onPress={this.openLeftDrawerFull}
-              label="Open left full"
+              label="Full left swipe"
               style={{margin: 3}}
               size={'xSmall'}
             />
             <Button
               onPress={this.toggleLeftDrawer}
-              label="Toggle left"
+              label="Left toggle"
               style={{margin: 3}}
               size={'xSmall'}
             />
@@ -164,7 +164,7 @@ class DrawerScreen extends Component {
             />
             <Button
               onPress={this.openRightDrawerFull}
-              label="Open right full"
+              label="Full right swipe"
               style={{margin: 3}}
               size={'xSmall'}
             />
