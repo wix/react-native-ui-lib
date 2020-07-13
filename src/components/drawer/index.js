@@ -256,7 +256,7 @@ class NewDrawer extends PureBaseComponent {
   renderActions(items, progress, dragX) {
     if (items) {
       return (
-        <Animated.View style={{justifyContent: 'center', transform: [{translateX: this.state.leftX}]}}>
+        <Animated.View style={{flexDirection: 'row', justifyContent: 'center', transform: [{translateX: this.state.leftX}]}}>
           {_.map(items, (item, index) => {
             return this.renderAction({
               item,
