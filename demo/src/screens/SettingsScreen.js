@@ -5,19 +5,21 @@ import {StyleSheet, I18nManager} from 'react-native';
 import {Colors, View, Text, Picker, Toast, Switch} from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 
-
 const none = {label: '[None]', value: ''};
 const playgroundScreen = {label: 'Playground', value: 'unicorn.PlaygroundScreen'};
 
 class SettingsScreen extends Component {
+
   constructor(props) {
     super(props);
 
     const data = props.navigationData || navigationData;
     const playground = props.playground || playgroundScreen;
-    
+    const extraSettingsUI = props.extraSettingsUI;
+
     this.state = {
       showRefreshMessage: false,
+      extraSettingsUI,
       screens: [
         none,
         playground,
@@ -60,17 +62,25 @@ class SettingsScreen extends Component {
     }, 1000);
   };
 
+  renderTitle(title, subtitle) {
+    return (
+      <View marginT-20>
+        <Text text60>{title}</Text>
+        <Text text70>
+          {subtitle}
+        </Text>
+      </View>
+    );
+  }
+
   render() {
-    const {defaultScreen, showRefreshMessage, isRTL, screens} = this.state;
+    const {defaultScreen, showRefreshMessage, isRTL, screens, extraSettingsUI} = this.state;
     const filteredScreens = _.filter(screens, screen => !_.isUndefined(screen.value));
 
     return (
       <View flex padding-25 bg-grey80>
         <View flex>
-          <Text text60>Default Screen</Text>
-          <Text text70 marginB-20>
-            Set default screen to open on app startup
-          </Text>
+          {this.renderTitle('Default Screen', 'Set default screen to open on app startup')}
           <Picker
             testID={'uilib.defaultScreenPicker'}
             placeholder="Pick default screen..."
@@ -82,6 +92,8 @@ class SettingsScreen extends Component {
               <Picker.Item key={screen.value} value={screen}/>
             ))}
           </Picker>
+
+          {extraSettingsUI?.()}
 
           <View style={{borderWidth: 1, borderColor: Colors.dark70, marginTop: 40}}>
             <View style={[{padding: 5, borderBottomWidth: 1}, styles.block]}>

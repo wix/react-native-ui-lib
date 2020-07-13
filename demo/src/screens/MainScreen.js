@@ -37,10 +37,12 @@ class MainScreen extends Component {
     super(props);
 
     const data = props.navigationData || navigationData;
-
+    const extraSettingsUI = props.extraSettingsUI;
+    
     this.state = {
       currentPage: 0,
-      filteredNavigationData: data
+      filteredNavigationData: data,
+      extraSettingsUI
     };
 
     this.filterExplorerScreens = _.throttle(this.filterExplorerScreens, 300);
@@ -64,7 +66,7 @@ class MainScreen extends Component {
     if (buttonId === 'uilib.settingsButton') {
       this.pushScreen({
         name: 'unicorn.Settings',
-        passProps: {navigationData: data, playground: this.props.playground}
+        passProps: {navigationData: data, playground: this.props.playground, extraSettingsUI: this.state.extraSettingsUI}
       });
     }
   };
