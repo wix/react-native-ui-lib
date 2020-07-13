@@ -62,13 +62,8 @@ describe('Avatar Badge', () => {
 
   describe('badgeProps.size, supports enum or number', () => {
     it('should return 10 as the size number given', () => {
-      const uut = new Avatar({badgeProps: {size: 10}});
-      expect(uut.getBadgeSize()).toEqual(10);
-    });
-
-    it('should return 876 as the size number given', () => {
-      const uut = new Avatar({badgeProps: {size: 876}});
-      expect(uut.getBadgeSize()).toEqual(876);
+      const uut = new Avatar({badgeProps: {size: 99}});
+      expect(uut.getBadgeSize()).toEqual(99);
     });
 
     it('should return 0 as the given size number', () => {
@@ -89,10 +84,10 @@ describe('Avatar Badge', () => {
       expect(uut.getBadgeSize()).toEqual(BADGE_SIZES[lastSizeKey]);
     });
 
-    it('should return undefined for a non-exist size type', () => {
+    it('should return a default value from Badge for a non-exist size type', () => {
       const sizeKey = '!NOT_A_VALID_ENUM$';
       const uut = new Avatar({badgeProps: {size: sizeKey}});
-      expect(uut.getBadgeSize()).toBeUndefined();
+      expect(typeof uut.getBadgeSize()).toBe('number');
     });
   });
 });

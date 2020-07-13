@@ -224,9 +224,9 @@ class Avatar extends PureComponent<AvatarPropTypes> {
 
   getBadgeSize = () => {
     const badgeSize = _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
-    
+  
     if (_.isString(badgeSize)) {
-      return BADGE_SIZES[badgeSize];
+      return BADGE_SIZES[badgeSize] || BADGE_SIZES[DEFAULT_BADGE_SIZE];
     }
     return badgeSize;
   }
