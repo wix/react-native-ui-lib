@@ -17,7 +17,5 @@ export function getColorByState(color: ColorType, context?: ContextType) {
     }
   }
 
-  console.warn('ethan - finalColor', finalColor);
-
   return finalColor || Colors.green10;
 }
