@@ -1,6 +1,5 @@
 import React from 'react';
-import { BaseComponentInjectedProps, ForwardRefInjectedProps } from '../../commons/new';
-export declare type RadioGroupPropTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & {
+export declare type RadioGroupPropTypes = {
     /**
      * The initial value of the selected radio button
      */
