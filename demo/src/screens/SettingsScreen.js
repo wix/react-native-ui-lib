@@ -62,6 +62,12 @@ class SettingsScreen extends Component {
     }, 1000);
   };
 
+  shouldShowRefreshAppMessage = () => {
+    const {showRefreshMessage} = this.state;
+    const {showRefreshAppMessage} = this.props;
+    return showRefreshMessage || showRefreshAppMessage;
+  }
+
   renderTitle(title, subtitle) {
     return (
       <View marginT-20>
@@ -111,10 +117,13 @@ class SettingsScreen extends Component {
               <Text text80 dark20>Force RTL</Text>
             </View>
           </View>
+          
+          {extraSettingsUI?.()}
+        
         </View>
 
         <Text text30 dark10>Settings</Text>
-        <Toast visible={showRefreshMessage} position="bottom" message="Refresh the app!"/>
+        <Toast visible={this.shouldShowRefreshAppMessage()} position="bottom" message="Refresh the app!"/>
       </View>
     );
   }
