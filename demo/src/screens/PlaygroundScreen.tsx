@@ -1,26 +1,41 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {View, Text, Card, TextField, Button} from 'react-native-ui-lib'; //eslint-disable-line
+import {
+  Assets,
+  Colors,
+  View,
+  Text,
+  Card,
+  TextField,
+  Button,
+  Incubator
+} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class PlaygroundScreen extends Component {
   render() {
     return (
       <View bg-dark80 flex padding-20>
-        <View marginT-20>
-          <TextField placeholder="Placeholder" />
-        </View>
-        <Card height={100} center padding-20>
-          <Text text50>Playground Screen</Text>
-        </Card>
-        <View flex center>
-          <Button marginV-20 label="Button"/>
-        </View>
+        <Incubator.TextField
+          label="Email"
+          placeholder="Enter email"
+          leadingIcon={{source: Assets.icons.demo.search}}
+          trailingIcon={{source: Assets.icons.demo.refresh}}
+          validationMessage="Email is invalid"
+          // style={{borderWidth: 2}}
+          fieldStyle={{
+            borderWidth: 1,
+            padding: 4,
+            marginVertical: 4,
+            borderRadius: 4,
+            borderColor: Colors.grey40
+          }}
+        />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {}
 });
