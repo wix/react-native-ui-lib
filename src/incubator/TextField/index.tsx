@@ -7,8 +7,9 @@ import Icon from './Icon';
 import ValidationMessage from './ValidationMessage';
 import Label, {LabelProps} from './Label';
 import FieldContext from './FieldContext';
+import withFieldState, {FieldState} from './withFieldState';
 
-interface TextFieldProps extends TextInputProps, LabelProps {
+interface TextFieldProps extends TextInputProps, LabelProps, FieldState {
   leadingIcon?: ImageProps;
   trailingIcon?: ImageProps;
   validationMessage?: string;
@@ -32,33 +33,17 @@ const TextField = (
     trailingIcon,
     // Validation
     validationMessage,
-    // TextInput
-    onFocus,
-    onBlur,
-    ...others
+    // FieldState
+    isFocused,
+    isValid,
+    // Input
+    ...props
   }: TextFieldProps,
   ref
 ) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const onFieldFocus = useCallback(
-    (...args: any) => {
-      setIsFocused(true);
-      onFocus && onFocus(...args);
-    },
-    [onFocus]
-  );
-
-  const onFieldBlur = useCallback(
-    (...args: any) => {
-      setIsFocused(false);
-      onBlur && onBlur(...args);
-    },
-    [onBlur]
-  );
-
   const context = useMemo(() => {
-    return {isFocused, disabled: others.editable === false};
-  }, [isFocused, others.editable]);
+    return {isFocused, disabled: props.editable === false};
+  }, [isFocused, props.editable]);
 
   return (
     <FieldContext.Provider value={context}>
@@ -73,9 +58,7 @@ const TextField = (
           <View row>
             {leadingIcon && <Icon {...leadingIcon} />}
             <Input
-              {...others}
-              onFocus={onFieldFocus}
-              onBlur={onFieldBlur}
+              {...props}
               ref={ref}
             />
             {trailingIcon && <Icon {...trailingIcon} />}
@@ -87,4 +70,4 @@ const TextField = (
   );
 };
 
-export default React.forwardRef(TextField);
+export default withFieldState(React.forwardRef(TextField));

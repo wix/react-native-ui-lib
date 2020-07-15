@@ -30,6 +30,7 @@ export default class PlaygroundScreen extends Component {
           leadingIcon={{source: Assets.icons.demo.search}}
           trailingIcon={{source: Assets.icons.demo.refresh}}
           validationMessage="Email is invalid"
+          validate={'required'}
           // style={{borderWidth: 2}}
           fieldStyle={{
             borderWidth: 1,
