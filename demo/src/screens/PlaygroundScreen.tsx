@@ -18,6 +18,7 @@ export default class PlaygroundScreen extends Component {
       <View bg-dark80 flex padding-20>
         <Incubator.TextField
           label="Email"
+          labelColor={'blue'}
           placeholder="Enter email"
           leadingIcon={{source: Assets.icons.demo.search}}
           trailingIcon={{source: Assets.icons.demo.refresh}}
@@ -30,6 +31,18 @@ export default class PlaygroundScreen extends Component {
             borderRadius: 4,
             borderColor: Colors.grey40
           }}
+        />
+
+        <Incubator.TextField
+          containerStyle={{marginTop: 30}}
+          placeholder="Placeholder"
+          label="Label"
+          labelColor={{
+            default: 'green',
+            focus: 'blue',
+            disabled: Colors.grey40
+          }}
+          // editable={false}
         />
       </View>
     );

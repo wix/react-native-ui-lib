@@ -1,41 +1,75 @@
-import React from 'react';
+import React, {useCallback, useState, useMemo} from 'react';
 import {TextInputProps, ViewStyle} from 'react-native';
 import View from '../../components/view';
 import {ImageProps} from '../../components/image';
 import Input from './Input';
 import Icon from './Icon';
 import ValidationMessage from './ValidationMessage';
-import Label from './Label';
+import Label, {LabelProps} from './Label';
+import FieldContext from './FieldContext';
 
-interface TextFieldProps extends TextInputProps {
+interface TextFieldProps extends TextInputProps, LabelProps {
   leadingIcon?: ImageProps;
   trailingIcon?: ImageProps;
   validationMessage?: string;
-  label?: string;
+  labelColor?: string;
   fieldStyle?: ViewStyle;
   containerStyle?: ViewStyle;
 }
 
 export default ({
-  leadingIcon,
-  trailingIcon,
-  validationMessage,
-  label,
+  // General
   fieldStyle,
   containerStyle,
+  // Label
+  label,
+  labelColor,
+  labelProps,
+  // Icons
+  leadingIcon,
+  trailingIcon,
+  // Validation
+  validationMessage,
+  // TextInput
+  onFocus,
+  onBlur,
   ...others
 }: TextFieldProps) => {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const onFieldFocus = useCallback(
+    (...args: any) => {
+      setIsFocused(true);
+      onFocus && onFocus(...args);
+    },
+    [onFocus]
+  );
+
+  const onFieldBlur = useCallback(
+    (...args: any) => {
+      setIsFocused(false);
+      onBlur && onBlur(...args);
+    },
+    [onBlur]
+  );
+
+  const context = useMemo(() => {
+    return {isFocused, disabled: others.editable === false};
+  }, [isFocused, others.editable]);
+
   return (
-    <View style={containerStyle}>
-      <Label>{label}</Label>
-      <View style={fieldStyle}>
-        <View row>
-          {leadingIcon && <Icon {...leadingIcon} />}
-          <Input {...others} />
-          {trailingIcon && <Icon {...trailingIcon} />}
+    <FieldContext.Provider value={context}>
+      <View style={containerStyle}>
+        <Label label={label} labelColor={labelColor} labelProps={labelProps} />
+        <View style={fieldStyle}>
+          <View row>
+            {leadingIcon && <Icon {...leadingIcon} />}
+            <Input {...others} onFocus={onFieldFocus} onBlur={onFieldBlur} />
+            {trailingIcon && <Icon {...trailingIcon} />}
+          </View>
         </View>
+        <ValidationMessage>{validationMessage}</ValidationMessage>
       </View>
-      <ValidationMessage>{validationMessage}</ValidationMessage>
-    </View>
+    </FieldContext.Provider>
   );
 };
