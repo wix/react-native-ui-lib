@@ -13,10 +13,17 @@ import {
 } from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class PlaygroundScreen extends Component {
+  input = React.createRef();
+
+  componentDidMount() {
+    this.input.current.focus();
+  }
+
   render() {
     return (
       <View bg-dark80 flex padding-20>
         <Incubator.TextField
+          ref={this.input}
           label="Email"
           labelColor={'blue'}
           placeholder="Enter email"

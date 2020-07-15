@@ -17,26 +17,28 @@ interface TextFieldProps extends TextInputProps, LabelProps {
   containerStyle?: ViewStyle;
 }
 
-export default ({
-  // General
-  fieldStyle,
-  containerStyle,
-  // Label
-  label,
-  labelColor,
-  labelProps,
-  // Icons
-  leadingIcon,
-  trailingIcon,
-  // Validation
-  validationMessage,
-  // TextInput
-  onFocus,
-  onBlur,
-  ...others
-}: TextFieldProps) => {
+const TextField = (
+  {
+    // General
+    fieldStyle,
+    containerStyle,
+    // Label
+    label,
+    labelColor,
+    labelProps,
+    // Icons
+    leadingIcon,
+    trailingIcon,
+    // Validation
+    validationMessage,
+    // TextInput
+    onFocus,
+    onBlur,
+    ...others
+  }: TextFieldProps,
+  ref
+) => {
   const [isFocused, setIsFocused] = useState(false);
-
   const onFieldFocus = useCallback(
     (...args: any) => {
       setIsFocused(true);
@@ -64,7 +66,12 @@ export default ({
         <View style={fieldStyle}>
           <View row>
             {leadingIcon && <Icon {...leadingIcon} />}
-            <Input {...others} onFocus={onFieldFocus} onBlur={onFieldBlur} />
+            <Input
+              {...others}
+              onFocus={onFieldFocus}
+              onBlur={onFieldBlur}
+              ref={ref}
+            />
             {trailingIcon && <Icon {...trailingIcon} />}
           </View>
         </View>
@@ -73,3 +80,5 @@ export default ({
     </FieldContext.Provider>
   );
 };
+
+export default React.forwardRef(TextField);
