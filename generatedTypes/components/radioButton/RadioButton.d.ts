@@ -1,8 +1,7 @@
 import React from 'react';
 import { TextStyle, ImageSourcePropType, ImageStyle, ViewProps } from 'react-native';
-import { BaseComponentInjectedProps, ForwardRefInjectedProps } from '../../commons/new';
 import { RadioGroupContextPropTypes } from './RadioGroupContext';
-export declare type RadioButtonPropTypes = RadioGroupContextPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps & ViewProps & {
+export declare type RadioButtonPropTypes = RadioGroupContextPropTypes & ViewProps & {
     /**
      * The identifier value of the radio button. must be different than other RadioButtons in the same group
      */
