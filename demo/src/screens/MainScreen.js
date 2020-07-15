@@ -15,7 +15,8 @@ class MainScreen extends Component {
   static propTypes = {
     containerStyle: ViewPropTypes.style,
     renderItem: PropTypes.func,
-    pageStyle: ViewPropTypes.style
+    pageStyle: ViewPropTypes.style,
+    showRefreshAppMessage: PropTypes.bool
   };
 
   static options() {
@@ -33,21 +34,30 @@ class MainScreen extends Component {
     };
   }
 
+  settingsScreenName = 'unicorn.Settings';
+
   constructor(props) {
     super(props);
 
     const data = props.navigationData || navigationData;
     const extraSettingsUI = props.extraSettingsUI;
-    
+    const showRefreshAppMessage = props.showRefreshAppMessage;
+
     this.state = {
       currentPage: 0,
       filteredNavigationData: data,
-      extraSettingsUI
+      extraSettingsUI,
+      showRefreshAppMessage
     };
 
     this.filterExplorerScreens = _.throttle(this.filterExplorerScreens, 300);
 
     Navigation.events().bindComponent(this);
+  }
+
+  shouldComponentUpdate = (nextProps, nextState) => {  
+    this.updateShowRefreshAppMessage(nextProps.showRefreshAppMessage);
+    return true;
   }
 
   onSearchBoxBlur = () => {
@@ -65,16 +75,27 @@ class MainScreen extends Component {
 
     if (buttonId === 'uilib.settingsButton') {
       this.pushScreen({
-        name: 'unicorn.Settings',
-        passProps: {navigationData: data, playground: this.props.playground, extraSettingsUI: this.state.extraSettingsUI}
+        name: this.settingsScreenName,
+        passProps: {navigationData: data, 
+          playground: this.props.playground, 
+          extraSettingsUI: this.state.extraSettingsUI,
+          showRefreshAppMessage: false
+        }
       });
     }
   };
+
+  updateShowRefreshAppMessage = (show) => {
+    Navigation.updateProps(MainScreen.settingsScreenName, {
+      showRefreshAppMessage: show
+    });
+  }
 
   pushScreen = options => {
     Navigation.push(this.props.componentId, {
       component: {
         name: options.name || options.screen,
+        id: this.settingsScreenName,
         passProps: options.passProps,
         options: {
           topBar: {
