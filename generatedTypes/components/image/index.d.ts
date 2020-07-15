@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { ImageProps as RNImageProps, ImageSourcePropType } from 'react-native';
-import { ForwardRefInjectedProps } from '../../commons/new';
+import { ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers } from '../../commons/new';
 import { OverlayTypeType } from '../overlay';
-export declare type ImageProps = RNImageProps & {
+export declare type ImageProps = RNImageProps & MarginModifiers & {
     /**
      * custom source transform handler for manipulating the image source (great for size control)
      */
@@ -45,7 +45,7 @@ export declare type ImageProps = RNImageProps & {
      */
     customOverlayContent?: JSX.Element;
 };
-declare type Props = ImageProps & ForwardRefInjectedProps;
+declare type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
  * @extends: Image
