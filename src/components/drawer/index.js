@@ -188,9 +188,9 @@ class NewDrawer extends PureBaseComponent {
     _.invoke(this.props, 'onSwipeableWillClose', this.props);
   };
 
-  onToggleSwipeLeft = ({rowWidth, leftWidth}) => {
+  onToggleSwipeLeft = ({rowWidth, leftWidth, dragX}) => {
     Animated.timing(this.state.leftX, {
-      toValue: rowWidth * 0.6 - leftWidth,
+      toValue: dragX ? dragX - leftWidth : rowWidth * 0.6 - leftWidth,
       easing: Easing.linear,
       duration: 100,
       delay: 100,
@@ -202,7 +202,7 @@ class NewDrawer extends PureBaseComponent {
     _.invoke(this.props, 'leftToggleHapticTrigger');
     setTimeout(() => {
       _.invoke(this.props, 'onToggleSwipeLeft');
-    }, 400);
+    }, 500);
   }
 
   /** Accessability */
