@@ -25,6 +25,7 @@ const TextField = (
     // Label
     label,
     labelColor,
+    labelStyle,
     labelProps,
     // Icons
     leadingIcon,
@@ -62,7 +63,12 @@ const TextField = (
   return (
     <FieldContext.Provider value={context}>
       <View style={containerStyle}>
-        <Label label={label} labelColor={labelColor} labelProps={labelProps} />
+        <Label
+          label={label}
+          labelColor={labelColor}
+          labelStyle={labelStyle}
+          labelProps={labelProps}
+        />
         <View style={fieldStyle}>
           <View row>
             {leadingIcon && <Icon {...leadingIcon} />}
