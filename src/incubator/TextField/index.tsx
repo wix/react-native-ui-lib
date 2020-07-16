@@ -1,6 +1,7 @@
 import React, {useCallback, useState, useMemo} from 'react';
 import {TextInputProps, ViewStyle} from 'react-native';
 import View from '../../components/view';
+import Text from '../../components/text';
 import {ImageProps} from '../../components/image';
 import Input from './Input';
 import Icon from './Icon';
@@ -8,6 +9,7 @@ import ValidationMessage from './ValidationMessage';
 import Label, {LabelProps} from './Label';
 import FieldContext from './FieldContext';
 import withFieldState, {FieldState} from './withFieldState';
+import FloatingPlaceholder from './FloatingPlaceholder';
 
 interface TextFieldProps
   extends TextInputProps,
@@ -15,6 +17,7 @@ interface TextFieldProps
     Omit<FieldState, keyof TextInputProps> {
   leadingIcon?: ImageProps;
   trailingIcon?: ImageProps;
+  floatingPlaceholder?: boolean;
   validationMessage?: string;
   labelColor?: string;
   fieldStyle?: ViewStyle;
@@ -26,6 +29,7 @@ const TextField = (
     // General
     fieldStyle,
     containerStyle,
+    floatingPlaceholder,
     // Label
     label,
     labelColor,
@@ -40,6 +44,7 @@ const TextField = (
     isFocused,
     isValid,
     // Input
+    placeholder,
     ...props
   }: TextFieldProps,
   ref
@@ -58,9 +63,12 @@ const TextField = (
           labelProps={labelProps}
         />
         <View style={fieldStyle}>
-          <View row>
+          <View row centerV>
             {leadingIcon && <Icon {...leadingIcon} />}
-            <Input {...props} ref={ref} />
+            <View flex>
+              {floatingPlaceholder && <FloatingPlaceholder placeholder={placeholder} />}
+              <Input {...props} placeholder={floatingPlaceholder ? undefined : placeholder} ref={ref} />
+            </View>
             {trailingIcon && <Icon {...trailingIcon} />}
           </View>
         </View>

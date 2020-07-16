@@ -23,13 +23,32 @@ export default class PlaygroundScreen extends Component {
     return (
       <View bg-dark80 flex padding-20>
         <Incubator.TextField
-          ref={this.input}
-          // value="value"
           label="Email"
           labelColor={'blue'}
           placeholder="Enter email"
           leadingIcon={{source: Assets.icons.demo.search}}
           trailingIcon={{source: Assets.icons.demo.refresh}}
+        />
+
+        <Incubator.TextField
+          ref={this.input}
+          labelColor={'blue'}
+          placeholder="Enter email"
+          floatingPlaceholder
+          fieldStyle={{
+            borderBottomWidth: 1,
+            borderColor: Colors.grey40,
+            paddingBottom: 4
+          }}
+        />
+
+        <Incubator.TextField
+          // value="value"
+          label="Email"
+          labelColor={'blue'}
+          placeholder="Enter email"
+          // leadingIcon={{source: Assets.icons.demo.search}}
+          // trailingIcon={{source: Assets.icons.demo.refresh}}
           validationMessage="Email is invalid"
           validate={'required'}
           validateOnChange
