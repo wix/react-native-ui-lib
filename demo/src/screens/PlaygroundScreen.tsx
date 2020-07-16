@@ -24,6 +24,7 @@ export default class PlaygroundScreen extends Component {
       <View bg-dark80 flex padding-20>
         <Incubator.TextField
           ref={this.input}
+          // value="value"
           label="Email"
           labelColor={'blue'}
           placeholder="Enter email"
@@ -31,6 +32,9 @@ export default class PlaygroundScreen extends Component {
           trailingIcon={{source: Assets.icons.demo.refresh}}
           validationMessage="Email is invalid"
           validate={'required'}
+          validateOnChange
+          validateOnStart
+          validateOnBlur
           // style={{borderWidth: 2}}
           fieldStyle={{
             borderWidth: 1,

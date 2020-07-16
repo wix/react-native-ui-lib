@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import _ from 'lodash';
 import {TextInputProps} from 'react-native';
 import validators from './validators';
@@ -34,16 +34,25 @@ function withFieldState<PROPS>(WrappedComponent: React.ComponentType) {
     const [isFocused, setIsFocused] = useState(false);
     const [isValid, setIsValid] = useState(true);
 
-    const validateField = useCallback(() => {
-      let _isValid = true;
-      if (_.isFunction(validate)) {
-        _isValid = validate(value);
-      } else if (_.isString(validate)) {
-        _isValid = _.invoke(validators, validate, value);
+    useEffect(() => {
+      if (validateOnStart) {
+        validateField();
       }
+    }, []);
 
-      setIsValid(_isValid);
-    }, [value]);
+    const validateField = useCallback(
+      (valueToValidate = value) => {
+        let _isValid = true;
+        if (_.isFunction(validate)) {
+          _isValid = validate(valueToValidate);
+        } else if (_.isString(validate)) {
+          _isValid = _.invoke(validators, validate, valueToValidate);
+        }
+
+        setIsValid(_isValid);
+      },
+      [value]
+    );
 
     const onFocus = useCallback(
       (...args: any) => {
@@ -68,8 +77,12 @@ function withFieldState<PROPS>(WrappedComponent: React.ComponentType) {
       (text) => {
         setValue(text);
         _.invoke(props, 'onChangeText', text);
+
+        if (validateOnChange) {
+          validateField(text);
+        }
       },
-      [props.onChangeText]
+      [props.onChangeText, validateOnChange]
     );
 
     return (

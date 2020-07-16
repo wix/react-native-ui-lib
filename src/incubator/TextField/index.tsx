@@ -9,7 +9,10 @@ import Label, {LabelProps} from './Label';
 import FieldContext from './FieldContext';
 import withFieldState, {FieldState} from './withFieldState';
 
-interface TextFieldProps extends TextInputProps, LabelProps, FieldState {
+interface TextFieldProps
+  extends TextInputProps,
+    LabelProps,
+    Omit<FieldState, keyof TextInputProps> {
   leadingIcon?: ImageProps;
   trailingIcon?: ImageProps;
   validationMessage?: string;
@@ -57,10 +60,7 @@ const TextField = (
         <View style={fieldStyle}>
           <View row>
             {leadingIcon && <Icon {...leadingIcon} />}
-            <Input
-              {...props}
-              ref={ref}
-            />
+            <Input {...props} ref={ref} />
             {trailingIcon && <Icon {...trailingIcon} />}
           </View>
         </View>
