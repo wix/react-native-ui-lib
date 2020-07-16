@@ -3,7 +3,8 @@ import {GestureResponderEvent, StyleProp, ViewStyle} from 'react-native';
 import {BaseComponent} from '../commons';
 import {ColorValue} from '../style/colors';
 
-export interface PageControlProps {
+export interface PageControlProps extends JSX.IntrinsicAttributes {
+  limitShownPages: boolean;
   containerStyle?: StyleProp<ViewStyle>;
   numOfPages?: number;
   currentPage?: number;
