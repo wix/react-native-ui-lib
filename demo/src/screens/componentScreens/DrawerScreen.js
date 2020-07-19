@@ -8,7 +8,8 @@ import {
   Drawer,
   Text,
   Button,
-  Avatar
+  Avatar,
+  Badge
 } from 'react-native-ui-lib'; //eslint-disable-line
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import conversations from '../../data/conversations';
@@ -46,7 +47,8 @@ class DrawerScreen extends Component {
       showRightItems: true,
       fullSwipeRight: true,
       showLeftItem: true,
-      fullSwipeLeft: true
+      fullSwipeLeft: true,
+      unread: true
     };
   }
 
@@ -56,7 +58,7 @@ class DrawerScreen extends Component {
     }
   }
 
-  onFullSwipe = () => {
+  deleteItem = () => {
     // TODO: consider including this functionality as part of the drawer component
     setTimeout(() => {
       LayoutAnimation.configureNext({
@@ -75,6 +77,14 @@ class DrawerScreen extends Component {
     }, 200);
   };
 
+  toggleReadState = () => {
+    this.setState({unread: !this.state.unread}); // setState will close the Drawer
+  }
+
+  triggerLeftToggleHaptic = () => {
+    // console.warn('haptic trigger here');
+  }
+
   showItem = () => {
     this.setState({hideItem: false});
   };
@@ -87,6 +97,11 @@ class DrawerScreen extends Component {
   openLeftDrawerFull = () => {
     if (this.ref) {
       this.ref.openLeftFull();
+    }
+  };
+  toggleLeftDrawer = () => {
+    if (this.ref) {
+      this.ref.toggleLeft();
     }
   };
   openRightDrawer = () => {
@@ -110,38 +125,50 @@ class DrawerScreen extends Component {
       <View center marginB-s4>
         <Text text70>Actions</Text>
         <View row>
-          <Button
-            onPress={this.openLeftDrawer}
-            label="Open left"
-            style={{margin: 3}}
-            size={'xSmall'}
-          />
-          <Button
-            onPress={this.closeDrawer}
-            label="Close"
-            style={{margin: 3}}
-            size={'xSmall'}
-          />
-          <Button
-            onPress={this.openRightDrawer}
-            label="Open right"
-            style={{margin: 3}}
-            size={'xSmall'}
-          />
-        </View>
-        <View row>
-          <Button
-            onPress={this.openLeftDrawerFull}
-            label="Open left full"
-            style={{margin: 3}}
-            size={'xSmall'}
-          />
-          <Button
-            onPress={this.openRightDrawerFull}
-            label="Open right full"
-            style={{margin: 3}}
-            size={'xSmall'}
-          />
+          <View>
+            <Button
+              onPress={this.openLeftDrawer}
+              label="Open left"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+            <Button
+              onPress={this.openLeftDrawerFull}
+              label="Full left swipe"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+            <Button
+              onPress={this.toggleLeftDrawer}
+              label="Left toggle"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+          </View>
+
+          <View marginH-20>
+            <Button
+              onPress={this.closeDrawer}
+              label="Close"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+          </View>
+
+          <View>
+            <Button
+              onPress={this.openRightDrawer}
+              label="Open right"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+            <Button
+              onPress={this.openRightDrawerFull}
+              label="Full right swipe"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+          </View>
         </View>
       </View>
     );
@@ -157,9 +184,10 @@ class DrawerScreen extends Component {
         centerV
         style={{borderBottomWidth: 1, borderColor: Colors.grey60}}
       >
-        <Avatar source={{uri: conversations[0].thumbnail}} />
+        {this.state.unread && <Badge size={'pimpleBig'} backgroundColor={Colors.purple30} containerStyle={{marginRight: 8}}/>}
+        <Avatar source={{uri: conversations[0].thumbnail}}/>
         <View marginL-20>
-          <Text text70R>{conversations[0].name}</Text>
+          <Text text70R={!this.state.unread} text70BO={this.state.unread}>{conversations[0].name}</Text>
           <Text text80 marginT-2>
             {conversations[0].text}
           </Text>
@@ -186,16 +214,23 @@ class DrawerScreen extends Component {
       bounciness,
       ref: (component) => (this.ref = component),
       fullSwipeRight,
-      onFullSwipeRight: this.onFullSwipe,
+      onFullSwipeRight: this.deleteItem,
       fullSwipeLeft,
-      onWillFullSwipeLeft: this.onFullSwipe
+      onWillFullSwipeLeft: this.deleteItem,
+      onToggleSwipeLeft: this.toggleReadState,
+      leftToggleHapticTrigger: this.triggerLeftToggleHaptic
     };
     if (showRightItems) {
-      drawerProps.rightItems = [ITEMS.read, ITEMS.archive];
+      drawerProps.rightItems = [{...ITEMS.delete, onPress: this.deleteItem}, ITEMS.archive];
     }
 
     if (showLeftItem) {
-      drawerProps.leftItem = ITEMS.delete;
+      drawerProps.leftItem = {
+        icon: require('../../assets/icons/mail.png'),
+        text: this.state.unread ? 'Read' : 'Unread', 
+        background: this.state.unread ? Colors.green30 : Colors.purple30,
+        onPress: this.toggleReadState
+      };
     }
 
     return (
