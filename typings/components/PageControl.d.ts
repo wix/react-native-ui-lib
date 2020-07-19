@@ -4,7 +4,7 @@ import {BaseComponent} from '../commons';
 import {ColorValue} from '../style/colors';
 
 export interface PageControlProps extends JSX.IntrinsicAttributes {
-  limitShownPages: boolean;
+  limitShownPages?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
   numOfPages?: number;
   currentPage?: number;
