@@ -9,5 +9,7 @@ export declare type RadioGroupPropTypes = {
      */
     onValueChange?: (value: string | number | boolean) => void;
 };
-declare const _default: React.ComponentClass<RadioGroupPropTypes, any>;
+declare const _default: React.ComponentClass<RadioGroupPropTypes & {
+    useCustomTheme?: boolean | undefined;
+}, any>;
 export default _default;
