@@ -222,14 +222,21 @@ class Avatar extends PureComponent<AvatarPropTypes> {
     return _.get(this.props, 'badgeProps.backgroundColor') || statusColor || onlineColor;
   }
 
-  getBadgeSize = () => _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
+  getBadgeSize = () => {
+    const badgeSize = _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
+  
+    if (_.isString(badgeSize)) {
+      return BADGE_SIZES[badgeSize] || BADGE_SIZES[DEFAULT_BADGE_SIZE];
+    }
+    return badgeSize;
+  }
 
   getBadgePosition() {
     const {size, badgePosition} = this.props;
     const radius = size / 2;
     const x = Math.sqrt(radius ** 2 * 2);
     const y = x - radius;
-    const shift = Math.sqrt(y ** 2 / 2) - (BADGE_SIZES[this.getBadgeSize()] + this.getBadgeBorderWidth() * 2) / 2;
+    const shift = Math.sqrt(y ** 2 / 2) - (this.getBadgeSize() + this.getBadgeBorderWidth() * 2) / 2;
     const badgeLocation = _.split(_.toLower(badgePosition), '_', 2);
     const badgeAlignment = {position: 'absolute', [badgeLocation[0]]: shift, [badgeLocation[1]]: shift};
 
