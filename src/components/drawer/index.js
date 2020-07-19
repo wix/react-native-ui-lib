@@ -128,9 +128,8 @@ class NewDrawer extends PureBaseComponent {
         : this.renderRightActions
       : undefined;
 
-    this.state = {
-      leftX: new Animated.Value(0)
-    };
+    
+    this.leftActionX = new Animated.Value(0);
   }
 
   /** Actions */
@@ -189,7 +188,7 @@ class NewDrawer extends PureBaseComponent {
   };
 
   onToggleSwipeLeft = ({rowWidth, leftWidth, dragX}) => {
-    Animated.timing(this.state.leftX, {
+    Animated.timing(this.leftActionX, {
       toValue: dragX ? dragX - leftWidth : rowWidth * 0.6 - leftWidth,
       easing: Easing.linear,
       duration: 100,
@@ -259,7 +258,7 @@ class NewDrawer extends PureBaseComponent {
   renderActions(items, progress, dragX) {
     if (items) {
       return (
-        <Animated.View style={[styles.actionsContainer, {transform: [{translateX: this.state.leftX}]}]}>
+        <View animated row style={{transform: [{translateX: this.leftActionX}]}}>
           {_.map(items, (item, index) => {
             return this.renderAction({
               item,
@@ -269,7 +268,7 @@ class NewDrawer extends PureBaseComponent {
               itemsCount: items.length
             });
           })}
-        </Animated.View>
+        </View>
       );
     }
   }
@@ -378,10 +377,6 @@ class NewDrawer extends PureBaseComponent {
 export default NewDrawer;
 
 const styles = StyleSheet.create({
-  actionsContainer: {
-    flexDirection: 'row', 
-    justifyContent: 'center'
-  },
   leftAction: {
     flex: 1,
     justifyContent: 'center',
