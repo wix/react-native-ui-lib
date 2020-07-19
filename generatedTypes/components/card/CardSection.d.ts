@@ -41,5 +41,41 @@ export declare type CardSectionProps = ViewPropTypes & {
      */
     imageProps?: ImageProps;
 };
-declare const _default: React.ComponentClass<CardSectionProps, any>;
+declare const _default: React.ComponentClass<ViewPropTypes & {
+    /**
+     * Text content for the CardSection.
+     * Example: content={[{text: 'You’re Invited!', text70: true, dark10: true}]}
+     */
+    content?: ContentType[] | undefined;
+    /**
+     * Style for the content
+     */
+    contentStyle?: ViewStyle | undefined;
+    /**
+     * Give the section a background color
+     */
+    backgroundColor?: string | undefined;
+    /**
+     * Image props for a leading icon to render before the text
+     */
+    leadingIcon?: ImageProps | undefined;
+    /**
+     * Image props for a trailing icon to render after the text
+     */
+    trailingIcon?: ImageProps | undefined;
+    /**
+     * Will be used for the background when provided
+     */
+    imageSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    /**
+     * The style for the background image
+     */
+    imageStyle?: ImageStyle | undefined;
+    /**
+     * Other image props that will be passed to the image
+     */
+    imageProps?: ImageProps | undefined;
+} & {
+    useCustomTheme?: boolean | undefined;
+}, any>;
 export default _default;

@@ -91,5 +91,95 @@ export declare type ChipPropTypes = ViewProps & TouchableOpacityProps & {
      */
     dismissContainerStyle?: StyleProp<ImageStyle>;
 };
-declare const _default: React.ComponentClass<ChipPropTypes, any>;
+declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps & {
+    /**
+     * Chip's size. Number or a width and height object.
+     */
+    size?: number | {
+        width: number;
+        height: number;
+    } | undefined;
+    /**
+     * On Chip press callback
+     */
+    onPress?: ((props: any) => void) | undefined;
+    /**
+     * Chip's background color
+     */
+    backgroundColor?: string | undefined;
+    /**
+     * The Chip borderRadius
+     */
+    borderRadius?: number | undefined;
+    /**
+     * Chip's container style
+     */
+    containerStyle?: StyleProp<ViewStyle>;
+    /**
+     * Uses size as minWidth and minHeight - default is true
+     */
+    useSizeAsMinimum?: boolean | undefined;
+    /**
+     * Disables all internal elements default spacings. Helps reach a custom design
+     */
+    resetSpacings?: boolean | undefined;
+    /**
+   * Used as testing identifier
+   */
+    testID?: string | undefined;
+    /**
+     * Main Chip text
+     */
+    label?: string | undefined;
+    /**
+     * Color of the label.
+     */
+    labelColor?: string | undefined;
+    /**
+     * Label's style
+     */
+    labelStyle?: StyleProp<TextStyle>;
+    /**
+     * Badge props object
+     */
+    badgeProps?: BadgeProps | undefined;
+    /**
+     * Avatar props object
+     */
+    avatarProps?: AvatarPropTypes | undefined;
+    /**
+     * Icon's source
+     */
+    iconSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    /**
+     * Icon's color
+     */
+    iconColor?: string | undefined;
+    /**
+     * Icon style
+     */
+    iconStyle?: StyleProp<ImageStyle>;
+    /**
+     * Adds a dismiss button and serves as its callback
+     */
+    onDismiss?: ((props: any) => void) | undefined;
+    /**
+     * Dismiss color
+     */
+    dismissColor?: string | undefined;
+    /**
+     * Dismiss asset
+     */
+    dismissIcon?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    /**
+     * Dismiss style
+     */
+    dismissIconStyle?: StyleProp<ImageStyle>;
+    /**
+     * Dismiss container style
+     */
+    dismissContainerStyle?: StyleProp<ImageStyle>;
+} & {
+    useCustomTheme?: boolean | undefined;
+}, any>;
 export default _default;
