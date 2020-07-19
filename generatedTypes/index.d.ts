@@ -12,6 +12,7 @@ export {default as Text, TextPropTypes} from './components/text';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';
 export {default as Button, ButtonPropTypes} from './components/button';
 export {default as Checkbox, CheckboxPropTypes} from './components/checkbox';
+export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
 export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as RadioButton, RadioButtonPropTypes} from './components/radioButton/RadioButton';
@@ -29,7 +30,6 @@ export {
   ConnectionStatusBar,
   Dialog,
   Drawer,
-  FloatingButton,
   FeatureHighlight,
   Hint,
   BaseInput,
