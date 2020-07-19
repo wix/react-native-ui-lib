@@ -4,7 +4,7 @@ import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjec
 import View from '../view';
 import RadioGroupContext from './RadioGroupContext';
 
-interface RadioGroupPropTypes {
+export type RadioGroupPropTypes = {
   /**
    * The initial value of the selected radio button
    */
@@ -13,7 +13,7 @@ interface RadioGroupPropTypes {
    * Invoked once when value changes, by selecting one of the radio buttons in the group
    */
   onValueChange?: (value: string | number | boolean) => void;
-}
+};
 
 interface RadioGroupState {
   value?: RadioGroupPropTypes['initialValue'];
@@ -35,7 +35,7 @@ class RadioGroup extends PureComponent<Props, RadioGroupState> {
     };
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: RadioGroupPropTypes) {
+  UNSAFE_componentWillReceiveProps(nextProps: Props) {
     if (this.props.initialValue !== nextProps.initialValue) {
       this.setState({value: nextProps.initialValue});
     }

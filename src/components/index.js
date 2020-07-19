@@ -26,6 +26,9 @@ export default {
   get Carousel() {
     return require('./carousel').default;
   },
+  get Chip() {
+    return require('./chip').default;
+  },
   get Checkbox() {
     return require('./checkbox').default;
   },

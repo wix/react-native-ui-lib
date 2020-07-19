@@ -5,22 +5,26 @@
  */
 
 export * from './style';
-export {default as Card} from './components/card';
-export {default as View} from './components/view';
-export {default as Text} from './components/text';
-export {default as TouchableOpacity} from './components/touchableOpacity';
-export {default as Button} from './components/button';
-export {default as Checkbox} from './components/checkbox';
-export {default as Image} from './components/image';
-export {default as Overlay} from './components/overlay';
-export {default as RadioButton} from './components/radioButton/RadioButton';
-export {default as RadioGroup} from './components/radioButton/RadioGroup';
+export {default as Avatar, AvatarPropTypes} from './components/avatar';
+export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
+export {default as View, ViewPropTypes} from './components/view';
+export {default as Text, TextPropTypes} from './components/text';
+export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';
+export {default as Button, ButtonPropTypes} from './components/button';
+export {default as Checkbox, CheckboxPropTypes} from './components/checkbox';
+export {default as Chip, ChipPropTypes} from './components/chip';
+export {default as Image, ImageProps} from './components/image';
+export {default as Overlay, OverlayTypes} from './components/overlay';
+export {default as RadioButton, RadioButtonPropTypes} from './components/radioButton/RadioButton';
+export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButton/RadioGroup';
+export {default as TabBar} from './components/TabBar';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ActionBar, ActionSheet, Avatar, Badge, Carousel, ConnectionStatusBar, Dialog, Drawer, FloatingButton,
+  ActionBar, ActionSheet, Badge, BadgeProps, Carousel, ConnectionStatusBar, Dialog, DialogProps, Drawer, FloatingButton,
   FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl, PanningProvider,
-  PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, ProgressBar, Slider, GradientSlider,
-  ColorSliderGroup, Stepper, TabBar, TagsInput, SharedTransition, StackAggregator, Toast,
-  WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper, Constants, LogService, LoaderScreen, Modal, StateScreen, WheelPicker, Incubator, ColorPicker
+  PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, PickerProps, ProgressBar, Slider,
+  GradientSlider, ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,
+  WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper, Constants,
+  LogService, LoaderScreen, Modal, StateScreen, WheelPicker, WheelPickerProps, Incubator, ColorPicker
 } from '../typings';

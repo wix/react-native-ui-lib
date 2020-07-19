@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* rnuilibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* rnuilibTests.m */; };
+		09CB52BEBC05E93E476BA443 /* libPods-rnuilib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C20F378147147B7C7FC63D38 /* libPods-rnuilib.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -16,10 +17,9 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* rnuilibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* rnuilibTests.m */; };
-		5A180DFD9FB357BD4EBFE5D0 /* libPods-rnuilib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 120290A48B95C6783E66AA3E /* libPods-rnuilib.a */; };
-		62998DDE11BEC309A6432060 /* libPods-rnuilib-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FB8B39425141DAA0DBDE520 /* libPods-rnuilib-tvOS.a */; };
-		88D1126D3B3F54507B415E84 /* libPods-rnuilib-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B7EE7E850CFA7B1525E6B45 /* libPods-rnuilib-tvOSTests.a */; };
-		8D365D8868F1DD6B49E2DFA1 /* libPods-rnuilibTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE7869FB055D934C538C5E01 /* libPods-rnuilibTests.a */; };
+		5B5705FA195AFF4C30C2CE32 /* libPods-rnuilib-rnuilibTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16BEC38AED94F7BF5F1FFB55 /* libPods-rnuilib-rnuilibTests.a */; };
+		E7D8A7A581DFBC30183F03EA /* libPods-rnuilib-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF927D26C9FE71C139F22580 /* libPods-rnuilib-tvOS.a */; };
+		F34E31597EBE6DA87B4CEF8D /* libPods-rnuilib-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FA29387321D3AED9DFED496 /* libPods-rnuilib-tvOSTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,7 +44,7 @@
 		00E356EE1AD99517003FC87E /* rnuilibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rnuilibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* rnuilibTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rnuilibTests.m; sourceTree = "<group>"; };
-		120290A48B95C6783E66AA3E /* libPods-rnuilib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilib.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FA29387321D3AED9DFED496 /* libPods-rnuilib-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilib-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* rnuilib.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rnuilib.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = rnuilib/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = rnuilib/AppDelegate.m; sourceTree = "<group>"; };
@@ -52,21 +52,21 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = rnuilib/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = rnuilib/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = rnuilib/main.m; sourceTree = "<group>"; };
-		26F45F51A0D3566F0E5D614C /* Pods-rnuilib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib.release.xcconfig"; path = "Target Support Files/Pods-rnuilib/Pods-rnuilib.release.xcconfig"; sourceTree = "<group>"; };
+		16BEC38AED94F7BF5F1FFB55 /* libPods-rnuilib-rnuilibTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilib-rnuilibTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E47B1E0B4A5D006451C7 /* rnuilib-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "rnuilib-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* rnuilib-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "rnuilib-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		33422DEB800886DA68F7D520 /* Pods-rnuilib-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib-tvOSTests/Pods-rnuilib-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		3FB8B39425141DAA0DBDE520 /* libPods-rnuilib-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilib-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		557F641742AF4DAD1CD1BFA0 /* Pods-rnuilibTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilibTests.release.xcconfig"; path = "Target Support Files/Pods-rnuilibTests/Pods-rnuilibTests.release.xcconfig"; sourceTree = "<group>"; };
-		6EBFF4B84A56000595A78BB7 /* Pods-rnuilib-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-rnuilib-tvOSTests/Pods-rnuilib-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		8479DEEE6974B5CEC9802A2A /* Pods-rnuilib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib/Pods-rnuilib.debug.xcconfig"; sourceTree = "<group>"; };
-		8B7EE7E850CFA7B1525E6B45 /* libPods-rnuilib-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilib-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AF0F96CA1C789F85DDD137B0 /* Pods-rnuilib-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib-tvOS/Pods-rnuilib-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		CCA1819177719434597F0FA0 /* Pods-rnuilibTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilibTests.debug.xcconfig"; path = "Target Support Files/Pods-rnuilibTests/Pods-rnuilibTests.debug.xcconfig"; sourceTree = "<group>"; };
-		CF5630F983185A6481753113 /* Pods-rnuilib-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-tvOS.release.xcconfig"; path = "Target Support Files/Pods-rnuilib-tvOS/Pods-rnuilib-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		DE7869FB055D934C538C5E01 /* libPods-rnuilibTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilibTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		42C372BEE61E171AD9ED7541 /* Pods-rnuilib-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib-tvOSTests/Pods-rnuilib-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		500CAB964F7FF7712CD4BA81 /* Pods-rnuilib-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-rnuilib-tvOSTests/Pods-rnuilib-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		7368723D5A615C0E2EA5A5C1 /* Pods-rnuilib-rnuilibTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-rnuilibTests.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib-rnuilibTests/Pods-rnuilib-rnuilibTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9C0E3238413518042B425A61 /* Pods-rnuilib-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-tvOS.release.xcconfig"; path = "Target Support Files/Pods-rnuilib-tvOS/Pods-rnuilib-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		AF927D26C9FE71C139F22580 /* libPods-rnuilib-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilib-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C20F378147147B7C7FC63D38 /* libPods-rnuilib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilib.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2341993BCB653F2DD4D823C /* Pods-rnuilib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib.release.xcconfig"; path = "Target Support Files/Pods-rnuilib/Pods-rnuilib.release.xcconfig"; sourceTree = "<group>"; };
+		E2AD21EF72B4339AB2E6604B /* Pods-rnuilib-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib-tvOS/Pods-rnuilib-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		EB61515FB8229F5C164A2215 /* Pods-rnuilib-rnuilibTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib-rnuilibTests.release.xcconfig"; path = "Target Support Files/Pods-rnuilib-rnuilibTests/Pods-rnuilib-rnuilibTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		FFDCB3CEA659F113BFC31AFE /* Pods-rnuilib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib/Pods-rnuilib.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D365D8868F1DD6B49E2DFA1 /* libPods-rnuilibTests.a in Frameworks */,
+				5B5705FA195AFF4C30C2CE32 /* libPods-rnuilib-rnuilibTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A180DFD9FB357BD4EBFE5D0 /* libPods-rnuilib.a in Frameworks */,
+				09CB52BEBC05E93E476BA443 /* libPods-rnuilib.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62998DDE11BEC309A6432060 /* libPods-rnuilib-tvOS.a in Frameworks */,
+				E7D8A7A581DFBC30183F03EA /* libPods-rnuilib-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88D1126D3B3F54507B415E84 /* libPods-rnuilib-tvOSTests.a in Frameworks */,
+				F34E31597EBE6DA87B4CEF8D /* libPods-rnuilib-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,10 +141,10 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				120290A48B95C6783E66AA3E /* libPods-rnuilib.a */,
-				3FB8B39425141DAA0DBDE520 /* libPods-rnuilib-tvOS.a */,
-				8B7EE7E850CFA7B1525E6B45 /* libPods-rnuilib-tvOSTests.a */,
-				DE7869FB055D934C538C5E01 /* libPods-rnuilibTests.a */,
+				C20F378147147B7C7FC63D38 /* libPods-rnuilib.a */,
+				16BEC38AED94F7BF5F1FFB55 /* libPods-rnuilib-rnuilibTests.a */,
+				AF927D26C9FE71C139F22580 /* libPods-rnuilib-tvOS.a */,
+				0FA29387321D3AED9DFED496 /* libPods-rnuilib-tvOSTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -164,7 +164,7 @@
 				00E356EF1AD99517003FC87E /* rnuilibTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				A5219FDDDDFBAABBAD9F08DC /* Pods */,
+				D99C980AB24A05601E0007F9 /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -182,18 +182,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A5219FDDDDFBAABBAD9F08DC /* Pods */ = {
+		D99C980AB24A05601E0007F9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				8479DEEE6974B5CEC9802A2A /* Pods-rnuilib.debug.xcconfig */,
-				26F45F51A0D3566F0E5D614C /* Pods-rnuilib.release.xcconfig */,
-				AF0F96CA1C789F85DDD137B0 /* Pods-rnuilib-tvOS.debug.xcconfig */,
-				CF5630F983185A6481753113 /* Pods-rnuilib-tvOS.release.xcconfig */,
-				33422DEB800886DA68F7D520 /* Pods-rnuilib-tvOSTests.debug.xcconfig */,
-				6EBFF4B84A56000595A78BB7 /* Pods-rnuilib-tvOSTests.release.xcconfig */,
-				CCA1819177719434597F0FA0 /* Pods-rnuilibTests.debug.xcconfig */,
-				557F641742AF4DAD1CD1BFA0 /* Pods-rnuilibTests.release.xcconfig */,
+				FFDCB3CEA659F113BFC31AFE /* Pods-rnuilib.debug.xcconfig */,
+				C2341993BCB653F2DD4D823C /* Pods-rnuilib.release.xcconfig */,
+				7368723D5A615C0E2EA5A5C1 /* Pods-rnuilib-rnuilibTests.debug.xcconfig */,
+				EB61515FB8229F5C164A2215 /* Pods-rnuilib-rnuilibTests.release.xcconfig */,
+				E2AD21EF72B4339AB2E6604B /* Pods-rnuilib-tvOS.debug.xcconfig */,
+				9C0E3238413518042B425A61 /* Pods-rnuilib-tvOS.release.xcconfig */,
+				42C372BEE61E171AD9ED7541 /* Pods-rnuilib-tvOSTests.debug.xcconfig */,
+				500CAB964F7FF7712CD4BA81 /* Pods-rnuilib-tvOSTests.release.xcconfig */,
 			);
+			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -204,7 +205,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "rnuilibTests" */;
 			buildPhases = (
-				AB3E01EF72F993FC28ED5074 /* [CP] Check Pods Manifest.lock */,
+				60336E88A9E70BA7E66332AA /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
@@ -223,7 +224,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "rnuilib" */;
 			buildPhases = (
-				CAFD8D120F88085E07110735 /* [CP] Check Pods Manifest.lock */,
+				D8784291AD767A7966155661 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
@@ -243,7 +244,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "rnuilib-tvOS" */;
 			buildPhases = (
-				4862760D67F198405E8F926F /* [CP] Check Pods Manifest.lock */,
+				4A74CE124EBE2935266628F3 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
@@ -263,7 +264,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "rnuilib-tvOSTests" */;
 			buildPhases = (
-				FF9F31FEEDDC44B3D52CDE1A /* [CP] Check Pods Manifest.lock */,
+				53D2FA855ED196E0165B3E70 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -284,25 +285,21 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
-				ORGANIZATIONNAME = Facebook;
+				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = XPHGA2FMQQ;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = XPHGA2FMQQ;
+						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = XPHGA2FMQQ;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = XPHGA2FMQQ;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
@@ -310,10 +307,9 @@
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "rnuilib" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -393,7 +389,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		4862760D67F198405E8F926F /* [CP] Check Pods Manifest.lock */ = {
+		4A74CE124EBE2935266628F3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -415,7 +411,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AB3E01EF72F993FC28ED5074 /* [CP] Check Pods Manifest.lock */ = {
+		53D2FA855ED196E0165B3E70 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -430,14 +426,36 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-rnuilibTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-rnuilib-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CAFD8D120F88085E07110735 /* [CP] Check Pods Manifest.lock */ = {
+		60336E88A9E70BA7E66332AA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-rnuilib-rnuilibTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D8784291AD767A7966155661 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -495,28 +513,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		FF9F31FEEDDC44B3D52CDE1A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-rnuilib-tvOSTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -586,10 +582,9 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CCA1819177719434597F0FA0 /* Pods-rnuilibTests.debug.xcconfig */;
+			baseConfigurationReference = 7368723D5A615C0E2EA5A5C1 /* Pods-rnuilib-rnuilibTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = XPHGA2FMQQ;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -610,11 +605,10 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 557F641742AF4DAD1CD1BFA0 /* Pods-rnuilibTests.release.xcconfig */;
+			baseConfigurationReference = EB61515FB8229F5C164A2215 /* Pods-rnuilib-rnuilibTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = XPHGA2FMQQ;
 				INFOPLIST_FILE = rnuilibTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -631,12 +625,16 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8479DEEE6974B5CEC9802A2A /* Pods-rnuilib.debug.xcconfig */;
+			baseConfigurationReference = FFDCB3CEA659F113BFC31AFE /* Pods-rnuilib.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = XPHGA2FMQQ;
+				ENABLE_BITCODE = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"FB_SONARKIT_ENABLED=1",
+				);
 				INFOPLIST_FILE = rnuilib/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -644,20 +642,21 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = env.wix.uilib;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = rnuilib;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 26F45F51A0D3566F0E5D614C /* Pods-rnuilib.release.xcconfig */;
+			baseConfigurationReference = C2341993BCB653F2DD4D823C /* Pods-rnuilib.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = XPHGA2FMQQ;
 				INFOPLIST_FILE = rnuilib/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -665,16 +664,16 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = env.wix.uilib;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = rnuilib;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AF0F96CA1C789F85DDD137B0 /* Pods-rnuilib-tvOS.debug.xcconfig */;
+			baseConfigurationReference = E2AD21EF72B4339AB2E6604B /* Pods-rnuilib-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -683,7 +682,6 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = XPHGA2FMQQ;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "rnuilib-tvOS/Info.plist";
@@ -693,7 +691,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.rnuilib-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.rnuilib-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -703,7 +701,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CF5630F983185A6481753113 /* Pods-rnuilib-tvOS.release.xcconfig */;
+			baseConfigurationReference = 9C0E3238413518042B425A61 /* Pods-rnuilib-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -713,7 +711,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = XPHGA2FMQQ;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "rnuilib-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -722,7 +719,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.rnuilib-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.rnuilib-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -732,7 +729,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 33422DEB800886DA68F7D520 /* Pods-rnuilib-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = 42C372BEE61E171AD9ED7541 /* Pods-rnuilib-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -740,7 +737,6 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = XPHGA2FMQQ;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "rnuilib-tvOSTests/Info.plist";
@@ -750,7 +746,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.rnuilib-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.rnuilib-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rnuilib-tvOS.app/rnuilib-tvOS";
@@ -760,7 +756,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6EBFF4B84A56000595A78BB7 /* Pods-rnuilib-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 500CAB964F7FF7712CD4BA81 /* Pods-rnuilib-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -769,7 +765,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = XPHGA2FMQQ;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "rnuilib-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -778,7 +773,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.rnuilib-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.rnuilib-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rnuilib-tvOS.app/rnuilib-tvOS";
@@ -790,6 +785,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -833,6 +829,12 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -843,6 +845,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -879,6 +882,12 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

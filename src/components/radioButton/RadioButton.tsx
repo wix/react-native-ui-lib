@@ -16,14 +16,14 @@ import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjec
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 import Text from '../text';
-const Image = require('../image').default; // TODO: change this once Image is written in typescript
+import Image from '../image';
 import asRadioGroupChild from './asRadioGroupChild';
 import {RadioGroupContextPropTypes} from './RadioGroupContext';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
 
-interface RadioButtonPropTypes {
+export type RadioButtonPropTypes = RadioGroupContextPropTypes & ViewProps & {
   /**
    * The identifier value of the radio button. must be different than other RadioButtons in the same group
    */
@@ -79,11 +79,7 @@ interface RadioButtonState {
   scaleAnimationValue: Animated.Value;
 }
 
-type Props = RadioButtonPropTypes &
-  RadioGroupContextPropTypes &
-  BaseComponentInjectedProps &
-  ForwardRefInjectedProps &
-  ViewProps;
+type Props = RadioButtonPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
 
 /**
  * A Radio Button component, should be wrapped inside a RadioGroup
@@ -258,7 +254,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   }
 }
 
-function createStyles(props: Props) {
+function createStyles(props: RadioButtonPropTypes) {
   const {size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, color = DEFAULT_COLOR, disabled} = props;
   return StyleSheet.create({
     radioButtonOutline: {

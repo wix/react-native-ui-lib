@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Platform, StyleSheet, LayoutAnimation, Image, LayoutChangeEvent, ImageStyle, TextStyle} from 'react-native';
+import {Platform, StyleSheet, LayoutAnimation, Image, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
 import _ from 'lodash';
 import {
   asBaseComponent,
@@ -15,10 +15,23 @@ import {
 import {Constants} from '../../helpers';
 import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 import {extractColorValue, extractTypographyValue} from '../../commons/modifiers';
-import TouchableOpacity from '../touchableOpacity';
+import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Text, {TextPropTypes} from '../text';
 
-export type ButtonPropTypes = TextPropTypes &
+export enum ButtonSize {
+  xSmall = 'xSmall',
+  small = 'small',
+  medium = 'medium',
+  large = 'large',
+}
+
+export enum AnimationDirection {
+  center = 'center',
+  left = 'left',
+  right = 'right',
+}
+
+export type ButtonPropTypes = TouchableOpacityProps &
   TypographyModifiers &
   ColorsModifiers &
   BackgroundColorModifier &
@@ -38,7 +51,7 @@ export type ButtonPropTypes = TextPropTypes &
     /**
      * Icon image style
      */
-    iconStyle?: ImageStyle;
+    iconStyle?: StyleProp<ImageStyle>;
     /**
      * Should the icon be right to the label
      */
@@ -50,7 +63,7 @@ export type ButtonPropTypes = TextPropTypes &
     /**
      * Size of the button [large, medium, small, xSmall]
      */
-    size?: 'xSmall' | 'small' | 'medium' | 'large';
+    size?: ButtonSize;
     /**
      * Custom border radius.
      */
@@ -90,7 +103,7 @@ export type ButtonPropTypes = TextPropTypes &
     /**
      * Props that will be passed to the button's Text label.
      */
-    labelProps?: object;
+    labelProps?: TextPropTypes;
     /**
      * should the button act as a coast to coast button (no border radius)
      */
@@ -124,7 +137,7 @@ export type ButtonPropTypes = TextPropTypes &
     /**
      * the direction of the animation ('left' and 'right' will effect the button's own alignment)
      */
-    animateTo?: 'center' | 'left' | 'right';
+    animateTo?: AnimationDirection;
   };
 
 export type ButtonState = {
@@ -151,7 +164,7 @@ const MIN_WIDTH = {
   MEDIUM: 77,
   LARGE: 90
 };
-const DEFAULT_SIZE = 'large';
+const DEFAULT_SIZE = ButtonSize.large;
 
 type Props = ButtonPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
 
@@ -170,18 +183,9 @@ class Button extends PureComponent<Props, ButtonState> {
     iconOnRight: false
   };
 
-  static sizes = {
-    xSmall: 'xSmall',
-    small: 'small',
-    medium: 'medium',
-    large: 'large'
-  };
+  static sizes = ButtonSize;
 
-  static animationDirection = {
-    center: 'center',
-    left: 'left',
-    right: 'right'
-  };
+  static animationDirection = AnimationDirection;
 
   // This redundant constructor for some reason fix tests :/
   // eslint-disable-next-line
@@ -553,4 +557,4 @@ function createStyles() {
 
 export {Button}; // For tests
 
-export default asBaseComponent<ButtonPropTypes>(forwardRef(Button));
+export default asBaseComponent<ButtonPropTypes, typeof Button>(forwardRef(Button));

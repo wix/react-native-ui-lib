@@ -24,8 +24,20 @@ export interface ViewPropTypes extends ViewProps, ContainerModifiers {
    * TODO: probobly isn't needed
    */
   height?: string | number;
+  /**
+   * Experimental: Pass time in ms to delay render
+   */
+  renderDelay?: number;
+  /**
+   * Set background color
+   */
+  backgroundColor?: string;
 }
 type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & ViewPropTypes;
+
+interface ViewState {
+  ready: boolean;
+}
 
 /**
  * @description: An enhanced View component
@@ -33,15 +45,29 @@ type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & ViewPro
  * @extendslink: https://facebook.github.io/react-native/docs/view.html
  * @modifiers: margins, paddings, alignments, background, borderRadius
  */
-class View extends PureComponent<PropsTypes> {
+class View extends PureComponent<PropsTypes, ViewState> {
   static displayName = 'View';
   private Container: React.ClassType<any, any, any>;
+
   constructor(props: PropsTypes) {
     super(props);
 
     this.Container = props.useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
     if (props.animated) {
       this.Container = Animated.createAnimatedComponent(this.Container);
+    }
+
+    this.state = {
+      ready: !props.renderDelay
+    };
+  }
+
+  componentDidMount() {
+    const {renderDelay} = this.props;
+    if (renderDelay) {
+      setTimeout(() => {
+        this.setState({ready: true});
+      }, renderDelay);
     }
   }
 
@@ -52,6 +78,10 @@ class View extends PureComponent<PropsTypes> {
   }
 
   render() {
+    if (!this.state.ready) {
+      return null;
+    }
+
     // (!) extract left, top, bottom... props to avoid passing them on Android
     // eslint-disable-next-line
     const {

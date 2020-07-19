@@ -70,5 +70,5 @@ declare class Image extends PureComponent<Props> {
     render(): JSX.Element;
 }
 export { Image };
-declare const _default: React.ComponentClass<ImageProps, any> | React.FunctionComponent<ImageProps>;
+declare const _default: React.ComponentClass<ImageProps, any>;
 export default _default;
