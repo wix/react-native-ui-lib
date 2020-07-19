@@ -61,7 +61,7 @@ describe('Avatar Badge', () => {
   });
 
   describe('badgeProps.size, supports enum or number', () => {
-    it('should return 10 as the size number given', () => {
+    it('should return 99 as the size number given', () => {
       const uut = new Avatar({badgeProps: {size: 99}});
       expect(uut.getBadgeSize()).toEqual(99);
     });
