@@ -43,6 +43,7 @@ const TextField = (
     // FieldState
     isFocused,
     isValid,
+    hasValue,
     // Input
     placeholder,
     ...props
@@ -50,8 +51,8 @@ const TextField = (
   ref
 ) => {
   const context = useMemo(() => {
-    return {isFocused, disabled: props.editable === false};
-  }, [isFocused, props.editable]);
+    return {isFocused, hasValue, disabled: props.editable === false};
+  }, [isFocused, hasValue, props.editable]);
 
   return (
     <FieldContext.Provider value={context}>

@@ -8,6 +8,7 @@ export type Validator = Function | keyof typeof validators;
 export interface FieldState {
   isFocused: boolean;
   isValid: boolean;
+  hasValue: boolean;
   onFocus: Function;
   onBlur: Function;
 }
@@ -93,6 +94,7 @@ function withFieldState<PROPS>(WrappedComponent: React.ComponentType) {
         onChangeText={onChangeText}
         isFocused={isFocused}
         isValid={isValid}
+        hasValue={!_.isEmpty(value)}
         ref={ref}
       />
     );
