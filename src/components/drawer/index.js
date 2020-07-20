@@ -343,7 +343,7 @@ class NewDrawer extends PureBaseComponent {
   };
 
   render() {
-    const {children, style, leftItem, rightItems, ...others} = this.getThemeProps();
+    const {children, style, leftItem, rightItems, onToggleSwipeLeft, ...others} = this.getThemeProps();
 
     return (
       <Swipeable
@@ -358,7 +358,7 @@ class NewDrawer extends PureBaseComponent {
         leftActionsContainerStyle={this.getLeftActionsContainerStyle(leftItem, rightItems)}
         onSwipeableWillOpen={this.onSwipeableWillOpen}
         onSwipeableWillClose={this.onSwipeableWillClose}
-        onToggleSwipeLeft={this.onToggleSwipeLeft}
+        onToggleSwipeLeft={onToggleSwipeLeft && this.onToggleSwipeLeft}
       >
         <View
           // flex
