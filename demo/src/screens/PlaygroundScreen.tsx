@@ -1,85 +1,26 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {
-  Assets,
-  Colors,
-  View,
-  Text,
-  Card,
-  TextField,
-  Button,
-  Incubator
-} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, Card, TextField, Button} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class PlaygroundScreen extends Component {
-  input = React.createRef();
-
-  componentDidMount() {
-    this.input.current.focus();
-  }
-
   render() {
     return (
       <View bg-dark80 flex padding-20>
-        <Incubator.TextField
-          label="Email"
-          labelColor={'blue'}
-          placeholder="Enter email"
-          leadingIcon={{source: Assets.icons.demo.search}}
-          trailingIcon={{source: Assets.icons.demo.refresh}}
-        />
-
-        <Incubator.TextField
-          ref={this.input}
-          labelColor={'blue'}
-          placeholder="Enter email"
-          floatingPlaceholder
-          fieldStyle={{
-            borderBottomWidth: 1,
-            borderColor: Colors.grey40,
-            paddingBottom: 4
-          }}
-        />
-
-        <Incubator.TextField
-          // value="value"
-          label="Email"
-          labelColor={'blue'}
-          placeholder="Enter email"
-          // leadingIcon={{source: Assets.icons.demo.search}}
-          // trailingIcon={{source: Assets.icons.demo.refresh}}
-          validationMessage="Email is invalid"
-          validate={'required'}
-          validateOnChange
-          validateOnStart
-          validateOnBlur
-          // style={{borderWidth: 2}}
-          fieldStyle={{
-            borderWidth: 1,
-            padding: 4,
-            marginVertical: 4,
-            borderRadius: 4,
-            borderColor: Colors.grey40
-          }}
-        />
-
-        <Incubator.TextField
-          containerStyle={{marginTop: 30}}
-          placeholder="Placeholder"
-          label="Label"
-          labelColor={{
-            default: 'green',
-            focus: 'blue',
-            disabled: Colors.grey40
-          }}
-          // editable={false}
-        />
+        <View marginT-20>
+          <TextField placeholder="Placeholder" />
+        </View>
+        <Card height={100} center padding-20>
+          <Text text50>Playground Screen</Text>
+        </Card>
+        <View flex center>
+          <Button marginV-20 label="Button"/>
+        </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {}
+  container: {},
 });
