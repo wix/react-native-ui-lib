@@ -69,7 +69,7 @@
     "@react-native-community/netinfo": "^5.6.2",
     "@types/lodash": "^4.0.0",
     "@types/prop-types": "^15.5.3",
-    "@types/react-native": "0.61.5",
+    "@types/react-native": "0.62.2",
     "@types/tinycolor2": "^1.4.2",
     "@typescript-eslint/eslint-plugin": "^2.13.0",
     "@typescript-eslint/parser": "^2.13.0",

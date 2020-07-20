@@ -1,14 +1,49 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {StyleSheet} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {Constants} from '../../helpers';
-import {BaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import {Colors, Spacings} from '../../style';
 import View from '../view';
-import Button from '../button';
+import Button, {ButtonPropTypes} from '../button';
 import Image from '../image';
 
+export interface FloatingButtonProps {
+  /**
+   * Whether the button is visible
+   */
+  visible?: boolean;
+  /**
+   * Button element (all Button's component's props)
+   */
+  button?: ButtonPropTypes;
+  /**
+   * Secondary button element (all Button's component's props)
+   */
+  secondaryButton?: ButtonPropTypes;
+  /**
+   * The bottom margin of the button, or secondary button if passed
+   */
+  bottomMargin?: number;
+  /**
+   * The duration of the button's animations (show/hide)
+   */
+  duration?: number;
+  /**
+   * Whether to show/hide the button without animation
+   */
+  withoutAnimation?: boolean;
+  /**
+   * Whether to show background overlay
+   */
+  hideBackgroundOverlay?: boolean;
+}
+
+interface State {
+  shouldAnimateHide?: boolean;
+  isVisible?: boolean;
+  animating?: boolean;
+}
 
 const SHOW_ANIMATION_DELAY = 350;
 const SHOW_ANIMATION_DURATION = 180;
@@ -22,41 +57,10 @@ const gradientImage = () => require('./gradient.png');
  * @extends: Button
  * @extendsLink: https://github.com/wix/react-native-ui-lib/blob/master/src/components/button/index.js
  */
-class FloatingButton extends BaseComponent {
+class FloatingButton extends PureComponent<FloatingButtonProps, State> {
   static displayName = 'FloatingButton';
 
-  static propTypes = {
-    /**
-     * Whether the button is visible
-     */
-    visible: PropTypes.bool,
-    /**
-     * Button element (all Button's component's props)
-     */
-    button: PropTypes.shape(Button.propTypes),
-    /**
-     * Secondary button element (all Button's component's props)
-     */
-    secondaryButton: PropTypes.shape(Button.propTypes),
-    /**
-     * The bottom margin of the button, or secondary button if passed
-     */
-    bottomMargin: PropTypes.number,
-    /**
-     * The duration of the button's animations (show/hide)
-     */
-    duration: PropTypes.number,
-    /**
-     * Whether to show/hide the button without animation
-     */
-    withoutAnimation: PropTypes.bool,
-    /**
-     * Whether to show background overlay
-     */
-    hideBackgroundOverlay: PropTypes.bool
-  };
-
-  constructor(props) {
+  constructor(props: FloatingButtonProps) {
     super(props);
 
     this.state = {
@@ -66,13 +70,14 @@ class FloatingButton extends BaseComponent {
     };
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: FloatingButtonProps) {
     const {withoutAnimation} = this.props;
     const propsVisible = this.props.visible;
     const nextVisible = nextProps.visible;
 
     if (!withoutAnimation) {
-      const shouldStartAnimation = !this.state.isVisible && nextVisible && !this.state.animating;
+      const shouldStartAnimation =
+        !this.state.isVisible && nextVisible && !this.state.animating;
       if (shouldStartAnimation) {
         this.setState({animating: true});
 
@@ -85,7 +90,9 @@ class FloatingButton extends BaseComponent {
     }
 
     this.setState({
-      shouldAnimateHide: withoutAnimation ? false : !nextVisible && propsVisible,
+      shouldAnimateHide: withoutAnimation
+        ? false
+        : !nextVisible && propsVisible,
       isVisible: nextVisible
     });
   }
@@ -95,12 +102,12 @@ class FloatingButton extends BaseComponent {
   };
 
   renderButton() {
-    const {bottomMargin, button, secondaryButton} = this.getThemeProps();
+    const {bottomMargin, button, secondaryButton} = this.props;
     const bottom = secondaryButton ? Spacings.s4 : bottomMargin || Spacings.s8;
-    
+
     return (
       <Button
-        size={'large'}
+        size={Button.sizes.large}
         style={[styles.shadow, {marginTop: 16, marginBottom: bottom}]}
         {...button}
       />
@@ -111,19 +118,23 @@ class FloatingButton extends BaseComponent {
     if (!this.props.hideBackgroundOverlay) {
       return (
         <View pointerEvents={'none'} style={styles.image}>
-          <Image style={styles.image} source={gradientImage()} resizeMode={'stretch'}/>
+          <Image
+            style={styles.image}
+            source={gradientImage()}
+            resizeMode={'stretch'}
+          />
         </View>
       );
     }
-  }
+  };
 
   renderSecondaryButton() {
-    const {secondaryButton, bottomMargin} = this.getThemeProps();
+    const {secondaryButton, bottomMargin} = this.props;
 
     return (
       <Button
         link
-        size={'large'}
+        size={Button.sizes.large}
         {...secondaryButton}
         style={{marginBottom: bottomMargin || Spacings.s7}}
         enableShadow={false}
@@ -181,4 +192,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default FloatingButton;
+export default asBaseComponent<FloatingButtonProps>(FloatingButton);

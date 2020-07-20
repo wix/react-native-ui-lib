@@ -23,7 +23,7 @@ import {RadioGroupContextPropTypes} from './RadioGroupContext';
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
 
-export type RadioButtonPropTypes = RadioGroupContextPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps & ViewProps & {
+export type RadioButtonPropTypes = RadioGroupContextPropTypes & ViewProps & {
   /**
    * The identifier value of the radio button. must be different than other RadioButtons in the same group
    */
@@ -79,10 +79,12 @@ interface RadioButtonState {
   scaleAnimationValue: Animated.Value;
 }
 
+type Props = RadioButtonPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
+
 /**
  * A Radio Button component, should be wrapped inside a RadioGroup
  */
-class RadioButton extends PureComponent<RadioButtonPropTypes, RadioButtonState> {
+class RadioButton extends PureComponent<Props, RadioButtonState> {
   static displayName = 'RadioButton';
 
   static defaultProps = {
@@ -95,7 +97,7 @@ class RadioButton extends PureComponent<RadioButtonPropTypes, RadioButtonState> 
     image: StyleProp<ImageStyle>;
   };
 
-  constructor(props: RadioButtonPropTypes) {
+  constructor(props: Props) {
     super(props);
     this.styles = createStyles(props);
     this.state = {
@@ -108,7 +110,7 @@ class RadioButton extends PureComponent<RadioButtonPropTypes, RadioButtonState> 
     this.animate();
   }
 
-  componentDidUpdate(prevProps: RadioButtonPropTypes) {
+  componentDidUpdate(prevProps: Props) {
     if (prevProps.selected !== this.props.selected) {
       this.animate();
     }
