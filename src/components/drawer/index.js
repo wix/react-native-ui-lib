@@ -190,8 +190,8 @@ class NewDrawer extends PureBaseComponent {
   onToggleSwipeLeft = ({rowWidth, leftWidth, dragX, released}) => {
     Animated.timing(this.leftActionX, {
       toValue: dragX ? dragX - leftWidth : rowWidth * 0.6 - leftWidth,
-      easing: Easing.linear,
-      duration: 100,
+      easing: Easing.bezier(0.25, 1, 0.5, 1),
+      duration: 200,
       delay: 100,
       useNativeDriver: true
     }).start(released && this.toggle());
