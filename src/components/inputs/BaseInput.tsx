@@ -1,72 +1,78 @@
-import _ from 'lodash';
+import React, {PureComponent, Validator, Ref} from 'react';
+import {ViewPropTypes, TextInput as RNTextInput, TextInputProps, ViewStyle, TextInputChangeEventData} from 'react-native';
 import PropTypes from 'prop-types';
-import 'react';
-import {ViewPropTypes, TextInput as RNTextInput} from 'react-native';
+import _ from 'lodash';
 import {Colors, Typography} from '../../style';
-import {BaseComponent} from '../../commons';
-import Validators from './Validators';
+import {asBaseComponent} from '../../commons/new';
+import {extractTypographyValue} from '../../commons/modifiers';
+import Validators, {ValidatorTypes} from './Validators';
 
-const VALIDATORS = {
-  REQUIRED: 'required',
-  EMAIL: 'email',
-  URL: 'url',
-  NUMBER: 'number',
-  PRICE: 'price'
-};
+type ValidatorFunction = (v: string) => boolean;
 
-export default class BaseInput extends BaseComponent {
+interface BaseInputProps extends TextInputProps {
+  /**
+   * text color
+   */
+  color?: string;
+  /**
+   * text input container style
+   */
+  containerStyle?: ViewStyle,
+  /**
+   * validator type or custom validator function
+   */
+  validate?: ValidatorTypes | ValidatorFunction | (ValidatorTypes | ValidatorFunction)[]  
+  /**
+   * Whether to mark required field with an asterisk
+   */
+  markRequired?: boolean;
+  /**
+   * Error string to display regardless of the field state
+   */
+  error?: string;
+  /**
+   * The message to be displayed when the validation fails
+   */
+  errorMessage?: string | string[];
+  /**
+   * whether to run the validation on mount
+   */
+  validateOnStart?: boolean;
+  /**
+   * whether to run the validation on text changed
+   */
+  validateOnChange?: boolean;
+  /**
+   * whether to run the validation on blur
+   */
+  validateOnBlur?: boolean;
+  /**
+   * callback for validity change
+   */
+  onChangeValidity?: (isValid: boolean) => void;
+}
+
+interface State {
+  value?: string;
+  focused: boolean;
+  valid: boolean;
+  error?: string;
+}
+
+class BaseInput extends PureComponent<BaseInputProps, State> {
   static displayName = 'BaseInput';
 
-  static propTypes = {
-    ...RNTextInput.propTypes,
-    // ...BaseComponent.propTypes,
-    /**
-     * text color
-     */
-    color: PropTypes.string,
-    /**
-     * text input container style
-     */
-    containerStyle: ViewPropTypes.style,
-    /**
-     * validator type or custom validator function
-     */
-    validate: PropTypes.oneOfType([
-      PropTypes.oneOf(_.values(VALIDATORS)), // enum
-      PropTypes.func, // custom
-      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.oneOf(_.values(VALIDATORS)), PropTypes.func])) // array of validators
-    ]),
-    /**
-     * Whether to mark required field with an asterisk
-     */
-    markRequired: PropTypes.bool,
-    /**
-     * the message to be displayed when the validation fails
-     */
-    errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-    /**
-     * whether to run the validation on mount
-     */
-    validateOnStart: PropTypes.bool,
-    /**
-     * whether to run the validation on text changed
-     */
-    validateOnChange: PropTypes.bool,
-    /**
-     * whether to run the validation on blur
-     */
-    validateOnBlur: PropTypes.bool,
-    /**
-     * callback for validity change
-     */
-    onChangeValidity: PropTypes.func
-  };
+  // static propTypes = {
+  //   // ...RNTextInput.propTypes,
+  //   // ...BaseComponent.propTypes,
+    
+  // };
 
   static defaultProps = {
     validateOnBlur: true
   };
 
-  constructor(props) {
+  constructor(props: BaseInputProps) {
     super(props);
 
     this.state = {
@@ -86,12 +92,12 @@ export default class BaseInput extends BaseComponent {
   }
 
   /** Events */
-  onFocus = (...args) => {
+  onFocus = (...args: any[]) => {
     _.invoke(this.props, 'onFocus', ...args);
     this.setState({focused: true});
   };
 
-  onBlur = (...args) => {
+  onBlur = (...args: any[]) => {
     _.invoke(this.props, 'onBlur', ...args);
     this.setState({focused: false});
 
@@ -101,11 +107,11 @@ export default class BaseInput extends BaseComponent {
     }
   };
 
-  onChange = (event) => {
+  onChange = (event: TextInputChangeEventData) => {
     _.invoke(this.props, 'onChange', event);
   };
 
-  onChangeText = (text) => {
+  onChangeText = (text: string) => {
     _.invoke(this.props, 'onChangeText', text);
     this.setState({value: text});
 
@@ -117,7 +123,7 @@ export default class BaseInput extends BaseComponent {
 
   /** Actions */
   getTypography() {
-    return this.extractTypographyValue() || Typography.text70;
+    return extractTypographyValue(this.props) || Typography.text70;
   }
 
   hasText() {
@@ -126,22 +132,27 @@ export default class BaseInput extends BaseComponent {
   }
 
   isFocused() {
+    // @ts-ignore
     return this.input.isFocused();
   }
 
   focus() {
+    // @ts-ignore
     this.input.focus();
   }
 
   blur() {
+    // @ts-ignore
     this.input.blur();
   }
 
   clear() {
+    // @ts-ignore
     this.input.clear();
   }
 
-  validate = (value = _.get(this, 'state.value'), dryRun) => {
+  // @ts-ignore
+  validate = (value: string = _.get(this, 'state.value'), dryRun: boolean): boolean | undefined => {
     // 'input.state.value'
     const {validate} = this.props;
     if (!validate) {
@@ -151,7 +162,7 @@ export default class BaseInput extends BaseComponent {
     
     let isValid = true;
     const inputValidators = _.isArray(validate) ? validate : [validate];
-    let failingValidatorIndex;
+    let failingValidatorIndex = -1;
     // get validators
     for (let index = 0; index < inputValidators.length; index++) {
       const validator = inputValidators[index];
@@ -198,13 +209,13 @@ export default class BaseInput extends BaseComponent {
   isRequiredField() {
     const {validate} = this.props;
     if (_.isArray(validate)) {
-      return validate.indexOf(VALIDATORS.REQUIRED) !== -1;
+      return validate.indexOf(ValidatorTypes.REQUIRED) !== -1;
     }
-    return validate === VALIDATORS.REQUIRED;
+    return validate === ValidatorTypes.REQUIRED;
   }
 
-  getRequiredPlaceholder(placeholder) {
-    const {markRequired} = this.getThemeProps();
+  getRequiredPlaceholder(placeholder: string) {
+    const {markRequired} = this.props;
     const shouldDisplayPlaceholderAsRequired = (this.isRequiredField() && markRequired && placeholder);
 
     if (shouldDisplayPlaceholderAsRequired) {
@@ -220,7 +231,7 @@ export default class BaseInput extends BaseComponent {
     return propsError || stateError;
   }
 
-  getColor(value) {
+  getColor(value: string) {
     if (this.state.focused) {
       return Colors.dark10;
     } else {
@@ -228,7 +239,10 @@ export default class BaseInput extends BaseComponent {
     }
   }
 
-  toggleExpandableModal(...args) {
+  toggleExpandableModal(...args: any[]) {
+    // @ts-ignore
     return this.input.toggleExpandableModal(...args);
   }
 }
+
+export default asBaseComponent(BaseInput);
