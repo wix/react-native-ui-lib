@@ -9,7 +9,6 @@ const none = {label: '[None]', value: ''};
 const playgroundScreen = {label: 'Playground', value: 'unicorn.PlaygroundScreen'};
 
 class SettingsScreen extends Component {
-
   constructor(props) {
     super(props);
 
@@ -62,31 +61,18 @@ class SettingsScreen extends Component {
     }, 1000);
   };
 
-  shouldShowRefreshAppMessage = () => {
-    const {showRefreshMessage} = this.state;
-    const {showRefreshAppMessage} = this.props;
-    return showRefreshMessage || showRefreshAppMessage;
-  }
-
-  renderTitle(title, subtitle) {
-    return (
-      <View marginT-20>
-        <Text text60>{title}</Text>
-        <Text text70>
-          {subtitle}
-        </Text>
-      </View>
-    );
-  }
-
   render() {
-    const {defaultScreen, showRefreshMessage, isRTL, screens, extraSettingsUI} = this.state;
+    const {defaultScreen, showRefreshMessage, isRTL, screens} = this.state;
+    const {extraSettingsUI} = this.props;
     const filteredScreens = _.filter(screens, screen => !_.isUndefined(screen.value));
-
+  
     return (
       <View flex padding-25 bg-grey80>
         <View flex>
-          {this.renderTitle('Default Screen', 'Set default screen to open on app startup')}
+          <Text text60>Default Screen</Text>
+          <Text text70 marginB-20>
+            Set default screen to open on app startup
+          </Text>
           <Picker
             testID={'uilib.defaultScreenPicker'}
             placeholder="Pick default screen..."
@@ -98,9 +84,7 @@ class SettingsScreen extends Component {
               <Picker.Item key={screen.value} value={screen}/>
             ))}
           </Picker>
-
-          {extraSettingsUI?.()}
-
+            
           <View style={{borderWidth: 1, borderColor: Colors.dark70, marginTop: 40}}>
             <View style={[{padding: 5, borderBottomWidth: 1}, styles.block]}>
               <Text text80 dark20>Current layout direction</Text>
@@ -117,13 +101,12 @@ class SettingsScreen extends Component {
               <Text text80 dark20>Force RTL</Text>
             </View>
           </View>
-          
+
           {extraSettingsUI?.()}
-        
         </View>
 
         <Text text30 dark10>Settings</Text>
-        <Toast visible={this.shouldShowRefreshAppMessage()} position="bottom" message="Refresh the app!"/>
+        <Toast visible={showRefreshMessage} position="bottom" message="Refresh the app!"/>
       </View>
     );
   }

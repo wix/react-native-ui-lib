@@ -15,9 +15,10 @@ class MainScreen extends Component {
   static propTypes = {
     containerStyle: ViewPropTypes.style,
     renderItem: PropTypes.func,
-    pageStyle: ViewPropTypes.style,
-    showRefreshAppMessage: PropTypes.bool
+    pageStyle: ViewPropTypes.style    
   };
+
+  settingsScreenName = 'unicorn.Settings';
 
   static options() {
     return {
@@ -34,30 +35,19 @@ class MainScreen extends Component {
     };
   }
 
-  settingsScreenName = 'unicorn.Settings';
-
   constructor(props) {
     super(props);
 
     const data = props.navigationData || navigationData;
-    const extraSettingsUI = props.extraSettingsUI;
-    const showRefreshAppMessage = props.showRefreshAppMessage;
 
     this.state = {
       currentPage: 0,
-      filteredNavigationData: data,
-      extraSettingsUI,
-      showRefreshAppMessage
+      filteredNavigationData: data
     };
 
     this.filterExplorerScreens = _.throttle(this.filterExplorerScreens, 300);
 
     Navigation.events().bindComponent(this);
-  }
-
-  shouldComponentUpdate = (nextProps, nextState) => {  
-    this.updateShowRefreshAppMessage(nextProps.showRefreshAppMessage);
-    return true;
   }
 
   onSearchBoxBlur = () => {
@@ -76,20 +66,14 @@ class MainScreen extends Component {
     if (buttonId === 'uilib.settingsButton') {
       this.pushScreen({
         name: this.settingsScreenName,
-        passProps: {navigationData: data, 
+        passProps: {
+          navigationData: data, 
           playground: this.props.playground, 
-          extraSettingsUI: this.state.extraSettingsUI,
-          showRefreshAppMessage: false
+          extraSettingsUI: this.props.extraSettingsUI
         }
       });
     }
   };
-
-  updateShowRefreshAppMessage = (show) => {
-    Navigation.updateProps(MainScreen.settingsScreenName, {
-      showRefreshAppMessage: show
-    });
-  }
 
   pushScreen = options => {
     Navigation.push(this.props.componentId, {
