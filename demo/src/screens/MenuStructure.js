@@ -142,7 +142,8 @@ export const navigationData = {
   Incubator: {
     title: 'Incubator (Experimental)',
     screens: [
-      {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'}
+      {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'},
+      {title: '(New) TextField', tags: 'text field input', screen: 'unicorn.components.IncubatorTextFieldScreen'}
     ]
   },
   Inspirations: {
