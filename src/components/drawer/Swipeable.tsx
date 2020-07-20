@@ -303,8 +303,8 @@ export default class Swipeable extends Component<PropType, StateType> {
       }
     });
 
-    if (toValue === rowWidth * LEFT_TOGGLE_THRESHOLD && onToggleSwipeLeft) {
-      onToggleSwipeLeft({rowWidth, leftWidth});
+    if ((toValue === rowWidth * LEFT_TOGGLE_THRESHOLD || this.dragFired) && onToggleSwipeLeft) {
+      onToggleSwipeLeft({rowWidth, leftWidth, released: true});
     } else if (toValue === rowWidth && onWillFullSwipeLeft) {
       onWillFullSwipeLeft()
     } else if (toValue === -rowWidth && onWillFullSwipeRight) {

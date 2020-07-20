@@ -187,14 +187,14 @@ class NewDrawer extends PureBaseComponent {
     _.invoke(this.props, 'onSwipeableWillClose', this.props);
   };
 
-  onToggleSwipeLeft = ({rowWidth, leftWidth, dragX}) => {
+  onToggleSwipeLeft = ({rowWidth, leftWidth, dragX, released}) => {
     Animated.timing(this.leftActionX, {
       toValue: dragX ? dragX - leftWidth : rowWidth * 0.6 - leftWidth,
       easing: Easing.linear,
       duration: 100,
       delay: 100,
       useNativeDriver: true
-    }).start(this.toggle());
+    }).start(released && this.toggle());
   }
 
   toggle() {
