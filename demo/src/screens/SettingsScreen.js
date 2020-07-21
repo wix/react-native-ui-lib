@@ -5,7 +5,6 @@ import {StyleSheet, I18nManager} from 'react-native';
 import {Colors, View, Text, Picker, Toast, Switch} from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 
-
 const none = {label: '[None]', value: ''};
 const playgroundScreen = {label: 'Playground', value: 'unicorn.PlaygroundScreen'};
 
@@ -15,7 +14,7 @@ class SettingsScreen extends Component {
 
     const data = props.navigationData || navigationData;
     const playground = props.playground || playgroundScreen;
-    
+
     this.state = {
       showRefreshMessage: false,
       screens: [
@@ -62,8 +61,9 @@ class SettingsScreen extends Component {
 
   render() {
     const {defaultScreen, showRefreshMessage, isRTL, screens} = this.state;
+    const {extraSettingsUI} = this.props;
     const filteredScreens = _.filter(screens, screen => !_.isUndefined(screen.value));
-
+  
     return (
       <View flex padding-25 bg-grey80>
         <View flex>
@@ -82,7 +82,7 @@ class SettingsScreen extends Component {
               <Picker.Item key={screen.value} value={screen}/>
             ))}
           </Picker>
-
+            
           <View style={{borderWidth: 1, borderColor: Colors.dark70, marginTop: 40}}>
             <View style={[{padding: 5, borderBottomWidth: 1}, styles.block]}>
               <Text text80 dark20>Current layout direction</Text>
@@ -99,6 +99,8 @@ class SettingsScreen extends Component {
               <Text text80 dark20>Force RTL</Text>
             </View>
           </View>
+
+          {extraSettingsUI?.()}
         </View>
 
         <Text text30 dark10>Settings</Text>
