@@ -226,8 +226,8 @@ class DrawerScreen extends Component {
 
     if (showLeftItem) {
       drawerProps.leftItem = {
-        icon: require('../../assets/icons/mail.png'),
-        text: this.state.unread ? 'Read' : 'Unread', 
+        icon: this.state.unread ? require('../../assets/icons/mail.png') : require('../../assets/icons/refresh.png'),
+        text: this.state.unread ? 'Unread' : 'Read', 
         background: this.state.unread ? Colors.green30 : Colors.orange30,
         onPress: this.toggleReadState
       };
