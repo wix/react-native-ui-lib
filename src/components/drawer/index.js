@@ -187,14 +187,14 @@ class NewDrawer extends PureBaseComponent {
     _.invoke(this.props, 'onSwipeableWillClose', this.props);
   };
 
-  onToggleSwipeLeft = ({rowWidth, leftWidth, dragX}) => {
+  onToggleSwipeLeft = ({rowWidth, leftWidth, dragX, released}) => {
     Animated.timing(this.leftActionX, {
       toValue: dragX ? dragX - leftWidth : rowWidth * 0.6 - leftWidth,
-      easing: Easing.linear,
-      duration: 100,
+      easing: Easing.bezier(0.25, 1, 0.5, 1),
+      duration: 200,
       delay: 100,
       useNativeDriver: true
-    }).start(this.toggle());
+    }).start(released && this.toggle());
   }
 
   toggle() {
@@ -343,7 +343,7 @@ class NewDrawer extends PureBaseComponent {
   };
 
   render() {
-    const {children, style, leftItem, rightItems, ...others} = this.getThemeProps();
+    const {children, style, leftItem, rightItems, onToggleSwipeLeft, ...others} = this.getThemeProps();
 
     return (
       <Swipeable
@@ -358,7 +358,7 @@ class NewDrawer extends PureBaseComponent {
         leftActionsContainerStyle={this.getLeftActionsContainerStyle(leftItem, rightItems)}
         onSwipeableWillOpen={this.onSwipeableWillOpen}
         onSwipeableWillClose={this.onSwipeableWillClose}
-        onToggleSwipeLeft={this.onToggleSwipeLeft}
+        onToggleSwipeLeft={onToggleSwipeLeft && this.onToggleSwipeLeft}
       >
         <View
           // flex

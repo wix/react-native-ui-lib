@@ -90,7 +90,7 @@ export default class Swipeable extends Component<PropType, StateType> {
     // 1 -> closing to the left
     // -1 -> closing to the right
     this.rowState = 0;
-    this.dragFired = false;
+    this.dragThresholdReached = false;
 
     this.state = {
       dragX,
@@ -112,12 +112,12 @@ export default class Swipeable extends Component<PropType, StateType> {
   _handleDrag = (e) => {
     const {onToggleSwipeLeft} = this.props;
     
-    if (onToggleSwipeLeft && !this.dragFired) {
+    if (onToggleSwipeLeft && !this.dragThresholdReached) {
       const {rowWidth, leftWidth} = this.state;
       const x = e.nativeEvent.translationX;
       const threshold = rowWidth * LEFT_TOGGLE_THRESHOLD;
       if (x >= threshold && x < threshold + 10) {
-        this.dragFired = true;
+        this.dragThresholdReached = true;
         onToggleSwipeLeft({rowWidth, leftWidth, dragX: x});
       }
     }
@@ -223,7 +223,7 @@ export default class Swipeable extends Component<PropType, StateType> {
     let toValue = 0;
     if (this.rowState === 0) {
       if (onToggleSwipeLeft && translationX > leftWidth) {
-        if (!this.dragFired) {
+        if (!this.dragThresholdReached) {
           toValue = rowWidth * LEFT_TOGGLE_THRESHOLD;
         }
       } else if (fullSwipeLeft && translationX > rowWidth * fullLeftThreshold) {
@@ -303,8 +303,8 @@ export default class Swipeable extends Component<PropType, StateType> {
       }
     });
 
-    if (toValue === rowWidth * LEFT_TOGGLE_THRESHOLD && onToggleSwipeLeft) {
-      onToggleSwipeLeft({rowWidth, leftWidth});
+    if ((toValue === rowWidth * LEFT_TOGGLE_THRESHOLD || this.dragThresholdReached) && onToggleSwipeLeft) {
+      onToggleSwipeLeft({rowWidth, leftWidth, released: true});
     } else if (toValue === rowWidth && onWillFullSwipeLeft) {
       onWillFullSwipeLeft()
     } else if (toValue === -rowWidth && onWillFullSwipeRight) {

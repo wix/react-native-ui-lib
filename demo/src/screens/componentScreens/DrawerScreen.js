@@ -184,7 +184,7 @@ class DrawerScreen extends Component {
         centerV
         style={{borderBottomWidth: 1, borderColor: Colors.grey60}}
       >
-        {this.state.unread && <Badge size={'pimpleBig'} backgroundColor={Colors.purple30} containerStyle={{marginRight: 8}}/>}
+        {this.state.unread && <Badge size={'pimpleSmall'} backgroundColor={Colors.red30} containerStyle={{marginRight: 8}}/>}
         <Avatar source={{uri: conversations[0].thumbnail}}/>
         <View marginL-20>
           <Text text70R={!this.state.unread} text70BO={this.state.unread}>{conversations[0].name}</Text>
@@ -226,9 +226,9 @@ class DrawerScreen extends Component {
 
     if (showLeftItem) {
       drawerProps.leftItem = {
-        icon: require('../../assets/icons/mail.png'),
-        text: this.state.unread ? 'Read' : 'Unread', 
-        background: this.state.unread ? Colors.green30 : Colors.purple30,
+        icon: this.state.unread ? require('../../assets/icons/mail.png') : require('../../assets/icons/refresh.png'),
+        text: !this.state.unread ? 'Unread' : 'Read', 
+        background: this.state.unread ? Colors.green30 : Colors.orange30,
         onPress: this.toggleReadState
       };
     }
