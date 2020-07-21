@@ -5,7 +5,7 @@ import Text from '../../components/text';
 import {ImageProps} from '../../components/image';
 import Input from './Input';
 import Icon from './Icon';
-import ValidationMessage from './ValidationMessage';
+import ValidationMessage, {ValidationMessageProps} from './ValidationMessage';
 import Label, {LabelProps} from './Label';
 import FieldContext from './FieldContext';
 import withFieldState, {FieldState} from './withFieldState';
@@ -14,11 +14,11 @@ import FloatingPlaceholder from './FloatingPlaceholder';
 interface TextFieldProps
   extends TextInputProps,
     LabelProps,
+    ValidationMessageProps,
     Omit<FieldState, keyof TextInputProps> {
   leadingIcon?: ImageProps;
   trailingIcon?: ImageProps;
   floatingPlaceholder?: boolean;
-  validationMessage?: string;
   labelColor?: string;
   fieldStyle?: ViewStyle;
   containerStyle?: ViewStyle;
@@ -39,6 +39,7 @@ const TextField = (
     leadingIcon,
     trailingIcon,
     // Validation
+    enableErrors,
     validationMessage,
     // FieldState
     isFocused,
@@ -51,8 +52,8 @@ const TextField = (
   ref
 ) => {
   const context = useMemo(() => {
-    return {isFocused, hasValue, disabled: props.editable === false};
-  }, [isFocused, hasValue, props.editable]);
+    return {isFocused, hasValue, isValid, disabled: props.editable === false};
+  }, [isFocused, hasValue, isValid, props.editable]);
 
   return (
     <FieldContext.Provider value={context}>
@@ -73,7 +74,7 @@ const TextField = (
             {trailingIcon && <Icon {...trailingIcon} />}
           </View>
         </View>
-        <ValidationMessage>{validationMessage}</ValidationMessage>
+        <ValidationMessage enableErrors={enableErrors} validationMessage={validationMessage}/>
       </View>
     </FieldContext.Provider>
   );

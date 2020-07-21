@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ScrollView, TextInput} from 'react-native';
 import {
   Assets,
   Colors,
@@ -20,78 +20,88 @@ export default class TextFieldScreen extends Component {
 
   render() {
     return (
-      <View bg-dark80 flex padding-page>
-        <Text h1>TextField</Text>
-        <Text h3 grey30 marginV-s4>
-          Default
-        </Text>
+      <ScrollView>
+        <View flex padding-page>
+          <Text h1>TextField</Text>
+          <Text h3 grey30 marginV-s4>
+            Default
+          </Text>
 
-        <TextField ref={this.input} label="Label" placeholder="Enter text..." />
-
-        <Text h3 grey30 marginV-s4>
-          Static vs Floating Placeholder
-        </Text>
-        <View row>
           <TextField
-            placeholder="Floating placeholder"
-            floatingPlaceholder
-            containerStyle={{flex: 1}}
+            ref={this.input}
+            label="Label"
+            placeholder="Enter text..."
+          />
+
+          <Text h3 grey30 marginV-s4>
+            Static vs Floating Placeholder
+          </Text>
+          <View row>
+            <TextField
+              placeholder="Floating placeholder"
+              floatingPlaceholder
+              containerStyle={{flex: 1}}
+              fieldStyle={styles.withUnderline}
+            />
+            <TextField
+              placeholder="Placeholder"
+              containerStyle={{flex: 1, marginLeft: Spacings.s4}}
+              fieldStyle={styles.withUnderline}
+            />
+          </View>
+          <Text h3 grey30 marginV-s4>
+            Leading/Trailing Icon
+          </Text>
+
+          <TextField
+            label="Label"
+            placeholder="Enter text..."
+            leadingIcon={{source: Assets.icons.demo.search}}
+            trailingIcon={{source: Assets.icons.demo.refresh}}
+          />
+
+          <Text h3 grey30 marginV-s4>
+            Validation
+          </Text>
+
+          <TextField
+            // value="value"
+            label="Email"
+            placeholder="Enter email"
+            enableErrors
+            validationMessage="Email is invalid"
+            validate={'email'}
+            validateOnChange
+            // validateOnStart
+            // validateOnBlur
             fieldStyle={styles.withUnderline}
           />
+
+          <Text h3 grey30 marginV-s4>
+            Colors By State
+          </Text>
+
           <TextField
+            label="Email"
+            labelColor={'blue'}
+            placeholder="Enter email"
+            validationMessage="Email is invalid"
+            validate={'email'}
+            fieldStyle={styles.withFrame}
+          />
+
+          <TextField
+            containerStyle={{marginTop: 30}}
             placeholder="Placeholder"
-            containerStyle={{flex: 1, marginLeft: Spacings.s4}}
-            fieldStyle={styles.withUnderline}
+            label="Label"
+            labelColor={{
+              default: 'green',
+              focus: 'blue',
+              disabled: Colors.grey40
+            }}
           />
         </View>
-        <Text h3 grey30 marginV-s4>
-          Leading/Trailing Icon
-        </Text>
-
-        <TextField
-          label="Label"
-          placeholder="Enter text..."
-          leadingIcon={{source: Assets.icons.demo.search}}
-          trailingIcon={{source: Assets.icons.demo.refresh}}
-        />
-
-        <Text h3 grey30 marginV-s4>
-          Colors By State
-        </Text>
-
-        <TextField
-          // value="value"
-          label="Email"
-          labelColor={'blue'}
-          placeholder="Enter email"
-          // leadingIcon={{source: Assets.icons.demo.search}}
-          // trailingIcon={{source: Assets.icons.demo.refresh}}
-          validationMessage="Email is invalid"
-          validate={'email'}
-          validateOnChange
-          validateOnStart
-          validateOnBlur
-          // style={{borderWidth: 2}}
-          fieldStyle={{
-            borderWidth: 1,
-            padding: 4,
-            marginVertical: 4,
-            borderRadius: 4,
-            borderColor: Colors.grey40
-          }}
-        />
-
-        <TextField
-          containerStyle={{marginTop: 30}}
-          placeholder="Placeholder"
-          label="Label"
-          labelColor={{
-            default: 'green',
-            focus: 'blue',
-            disabled: Colors.grey40
-          }}
-        />
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -102,5 +112,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: Colors.grey40,
     paddingBottom: 4
+  },
+  withFrame: {
+    borderWidth: 1,
+    borderColor: Colors.grey40,
+    padding: 4
   }
 });
