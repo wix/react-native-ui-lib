@@ -14,11 +14,9 @@ class SettingsScreen extends Component {
 
     const data = props.navigationData || navigationData;
     const playground = props.playground || playgroundScreen;
-    const extraSettingsUI = props.extraSettingsUI;
 
     this.state = {
       showRefreshMessage: false,
-      extraSettingsUI,
       screens: [
         none,
         playground,
