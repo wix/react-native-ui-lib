@@ -45,7 +45,7 @@ export class ThemeManager {
     return _.get(this.theme, key);
   }
 
-  setComponentTheme(componentName: string, overrides: Dictionary<string | number> | Function) {
+  setComponentTheme(componentName: string, overrides: Dictionary<any> | Function) {
     if (_.isFunction(overrides)) {
       this.theme.components[componentName] = overrides;
     } else {
@@ -53,7 +53,7 @@ export class ThemeManager {
     }
   }
 
-  setComponentForcedTheme(componentName: string, overrides: Dictionary<string> | Function) {
+  setComponentForcedTheme(componentName: string, overrides: Dictionary<any> | Function) {
     if (_.isFunction(overrides)) {
       this.forcedTheme.components[componentName] = overrides;
     } else {

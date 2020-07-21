@@ -174,6 +174,7 @@ class TabControllerScreen extends Component {
             // labelStyle={{fontSize: 20}}
             // iconColor={'green'}
             // selectedIconColor={'blue'}
+            enableShadow
             activeBackgroundColor={Colors.blue60}
             centerSelected={centerSelected}
           >

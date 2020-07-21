@@ -5,6 +5,7 @@
  */
 
 export * from './style';
+export {default as Avatar, AvatarPropTypes} from './components/avatar';
 export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
 export {default as View, ViewPropTypes} from './components/view';
 export {default as Text, TextPropTypes} from './components/text';
@@ -12,6 +13,7 @@ export {default as TouchableOpacity, TouchableOpacityProps} from './components/t
 export {default as Button, ButtonPropTypes} from './components/button';
 export {default as Checkbox, CheckboxPropTypes} from './components/checkbox';
 export {default as Chip, ChipPropTypes} from './components/chip';
+export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
 export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as RadioButton, RadioButtonPropTypes} from './components/radioButton/RadioButton';
@@ -20,7 +22,7 @@ export {default as TabBar} from './components/TabBar';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ActionBar, ActionSheet, Avatar, AvatarProps, Badge, BadgeProps, Carousel, ConnectionStatusBar, Dialog, DialogProps, Drawer, FloatingButton,
+  ActionBar, ActionSheet, Badge, BadgeProps, Carousel, ConnectionStatusBar, Dialog, DialogProps, Drawer,
   FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl, PanningProvider,
   PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, PickerProps, ProgressBar, Slider,
   GradientSlider, ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,
