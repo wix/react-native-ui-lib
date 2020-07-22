@@ -53,6 +53,8 @@ declare const _default: React.ComponentClass<RNTouchableOpacityProps & Partial<R
     useNative?: boolean | undefined;
     ref?: any;
 } & {
-    useCustomTheme?: boolean | undefined;
+    useCustomTheme?: boolean | undefined; /**
+     * throttle time in MS for onPress callback
+     */
 }, any>;
 export default _default;
