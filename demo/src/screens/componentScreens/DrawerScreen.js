@@ -1,199 +1,292 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, Alert, ScrollView} from 'react-native';
-import {Colors, Typography, View, Drawer, Text, Button, ListItem, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
+import {StyleSheet, ScrollView, LayoutAnimation} from 'react-native';
+import {
+  Assets,
+  Colors,
+  Typography,
+  View,
+  Drawer,
+  Text,
+  Button,
+  Avatar,
+  Badge
+} from 'react-native-ui-lib'; //eslint-disable-line
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import conversations from '../../data/conversations';
 
+import {
+  renderBooleanOption,
+  renderSliderOption,
+  renderColorOption
+} from '../ExampleScreenPresenter';
 
-const collectionsIcon = require('../../assets/icons/collections.png');
-const starIcon = require('../../assets/icons/star.png');
-const shareIcon = require('../../assets/icons/share.png');
-const videoIcon = require('../../assets/icons/video.png');
-const tagsIcon = require('../../assets/icons/tags.png');
+const ITEMS = {
+  read: {
+    icon: require('../../assets/icons/mail.png'),
+    text: 'Read',
+    background: Colors.green30
+  },
+  archive: {
+    icon: require('../../assets/icons/archive.png'),
+    text: 'Archive',
+    background: Colors.blue30
+  },
+  delete: {
+    icon: require('../../assets/icons/delete.png'),
+    text: 'Delete',
+    background: Colors.red30
+  }
+};
 
 class DrawerScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      itemsTintColor: undefined,
-      leftItem: {icon: collectionsIcon, text: 'Archive', onPress: this.onLeftItemPressed},
-      rightItems: [
-        {icon: starIcon, text: 'Accessories', onPress: this.onItemPress, background: Colors.violet10},
-        {icon: shareIcon, text: 'Share', onPress: this.onItemPress, background: Colors.violet30},
-        {icon: videoIcon, text: 'Video', onPress: this.onItemPress, background: Colors.violet40},
-        // {icon: tagsIcon, text: 'Video', background: Colors.red30},
-      ],
+      hideItem: false,
+      showRightItems: true,
+      fullSwipeRight: true,
+      showLeftItem: true,
+      fullSwipeLeft: true,
+      unread: true
     };
   }
 
-  onItemPress = () => {
-    Alert.alert('Right drawer item pressed');
-
-    this.toggleDynamicItem();
-    this.firstDrawer.closeDrawer();
-  };
-  onItemPress2 = () => {
-    const {itemsTintColor} = this.state;
-    const color = itemsTintColor === undefined ? Colors.blue30 : undefined;
-
-    this.setState({itemsTintColor: color});
-  };
-  onLeftItemPressed = () => {
-    Alert.alert('Left drawer item pressed');
-  };
-  onContentPress(id) {
-    Alert.alert(`List item #${id + 1} pressed`);
-  }
-  onButtonPress(id) {
-    Alert.alert(`Button '${id}' pressed`);
-  }
-
-  async setItemWidth(item) {
-    if (item && !item.width && !_.isEmpty(item.text)) {
-      const horizontalPadding = 12;
-      const typography = Typography.text70;
-      const width = await Typography.measureWidth(item.text, typography);
-      const itemCopy = item;
-      itemCopy.width = width + horizontalPadding * 2;
-      return itemCopy;
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.hideItem && prevState.hideItem) {
+      this.showItem();
     }
   }
 
-  toggleDynamicItem() {
-    const {rightItems} = this.state;
-    let newItem;
-    if (rightItems[0].text === 'Accessories') {
-      newItem = {icon: starIcon, text: 'More', onPress: this.onItemPress, background: Colors.violet10};
-    } else {
-      newItem = {
-        icon: starIcon,
-        text: 'Accessories',
-        onPress: this.onItemPress,
-        background: Colors.violet10
-      };
-    }
-    rightItems[0] = newItem;
-    this.setState({rightItems});
+  deleteItem = () => {
+    // TODO: consider including this functionality as part of the drawer component
+    setTimeout(() => {
+      LayoutAnimation.configureNext({
+        update: {
+          type: LayoutAnimation.Types.easeInEaseOut,
+          property: LayoutAnimation.Properties.scaleY
+        },
+        delete: {
+          type: LayoutAnimation.Types.easeInEaseOut,
+          property: LayoutAnimation.Properties.scaleY,
+          duration: 2000
+        },
+        duration: 120
+      });
+      this.setState({hideItem: true});
+    }, 200);
+  };
+
+  toggleReadState = () => {
+    this.setState({unread: !this.state.unread}); // setState will close the Drawer
   }
 
-  renderContent(id, row) {
-    const initials = AvatarHelper.getInitials(row.name);
+  triggerLeftToggleHaptic = () => {
+    // console.warn('haptic trigger here');
+  }
+
+  showItem = () => {
+    this.setState({hideItem: false});
+  };
+
+  openLeftDrawer = () => {
+    if (this.ref) {
+      this.ref.openLeft();
+    }
+  };
+  openLeftDrawerFull = () => {
+    if (this.ref) {
+      this.ref.openLeftFull();
+    }
+  };
+  toggleLeftDrawer = () => {
+    if (this.ref) {
+      this.ref.toggleLeft();
+    }
+  };
+  openRightDrawer = () => {
+    if (this.ref) {
+      this.ref.openRight();
+    }
+  };
+  openRightDrawerFull = () => {
+    if (this.ref) {
+      this.ref.openRightFull();
+    }
+  };
+  closeDrawer = () => {
+    if (this.ref) {
+      this.ref.closeDrawer();
+    }
+  };
+
+  renderActions() {
     return (
-      <ListItem key={id} onPress={() => this.onContentPress(id)} style={styles.listContent}>
-        <ListItem.Part left>
-          <Avatar
-            source={row.thumbnail ? {uri: row.thumbnail} : null}
-            label={initials}
-            badgeProps={{backgroundColor: Number(id) % 3 === 0 ? Colors.green30 : undefined}}
-            containerStyle={{marginHorizontal: 18}}
-            backgroundColor={Colors.white}
-          />
-        </ListItem.Part>
-        <ListItem.Part middle containerStyle={styles.border}>
-          <Text text70>{row.name}</Text>
-        </ListItem.Part>
-      </ListItem>
+      <View center marginB-s4>
+        <Text text70>Actions</Text>
+        <View row>
+          <View>
+            <Button
+              onPress={this.openLeftDrawer}
+              label="Open left"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+            <Button
+              onPress={this.openLeftDrawerFull}
+              label="Full left swipe"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+            <Button
+              onPress={this.toggleLeftDrawer}
+              label="Left toggle"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+          </View>
+
+          <View marginH-20>
+            <Button
+              onPress={this.closeDrawer}
+              label="Close"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+          </View>
+
+          <View>
+            <Button
+              onPress={this.openRightDrawer}
+              label="Open right"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+            <Button
+              onPress={this.openRightDrawerFull}
+              label="Full right swipe"
+              style={{margin: 3}}
+              size={'xSmall'}
+            />
+          </View>
+        </View>
+      </View>
+    );
+  }
+
+  renderListItem() {
+    return (
+      <View
+        bg-grey80
+        paddingH-20
+        paddingV-10
+        row
+        centerV
+        style={{borderBottomWidth: 1, borderColor: Colors.grey60}}
+      >
+        {this.state.unread && <Badge size={'pimpleSmall'} backgroundColor={Colors.red30} containerStyle={{marginRight: 8}}/>}
+        <Avatar source={{uri: conversations[0].thumbnail}}/>
+        <View marginL-20>
+          <Text text70R={!this.state.unread} text70BO={this.state.unread}>{conversations[0].name}</Text>
+          <Text text80 marginT-2>
+            {conversations[0].text}
+          </Text>
+        </View>
+      </View>
     );
   }
 
   render() {
-    const {leftItem, rightItems} = this.state;
+    const {
+      showRightItems,
+      fullSwipeRight,
+      showLeftItem,
+      fullSwipeLeft,
+      itemsTintColor,
+      bounciness,
+      itemsIconSize,
+      hideItem
+    } = this.state;
+
+    const drawerProps = {
+      itemsTintColor,
+      itemsIconSize,
+      bounciness,
+      ref: (component) => (this.ref = component),
+      fullSwipeRight,
+      onFullSwipeRight: this.deleteItem,
+      fullSwipeLeft,
+      onWillFullSwipeLeft: this.deleteItem,
+      onToggleSwipeLeft: this.toggleReadState,
+      leftToggleHapticTrigger: this.triggerLeftToggleHaptic
+    };
+    if (showRightItems) {
+      drawerProps.rightItems = [{...ITEMS.delete, onPress: this.deleteItem}, ITEMS.archive];
+    }
+
+    if (showLeftItem) {
+      drawerProps.leftItem = {
+        icon: this.state.unread ? require('../../assets/icons/mail.png') : require('../../assets/icons/refresh.png'),
+        text: !this.state.unread ? 'Unread' : 'Read', 
+        background: this.state.unread ? Colors.green30 : Colors.orange30,
+        onPress: this.toggleReadState
+      };
+    }
 
     return (
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <Drawer
-          leftItem={leftItem}
-          rightItems={rightItems}
-          style={styles.drawer}
-          itemsIconSize={20}
-          ref={r => this.firstDrawer = r}
-        >
-          {this.renderContent('0', conversations[0])}
-        </Drawer>
-
-        <Drawer
-          leftItem={leftItem}
-          rightItems={[
-            {icon: shareIcon, text: 'Share', onPress: this.onItemPress},
-            {icon: videoIcon, text: 'Video', onPress: this.onItemPress, background: Colors.blue10},
-          ]}
-          style={styles.drawer}
-        >
-          {this.renderContent('1', conversations[1])}
-        </Drawer>
-
-        {/* <Drawer
-          // leftItem={leftItem}
-          rightItems={rightItems}
-          style={styles.drawer}
-          equalWidths
-        >
-          {this.renderContent('1', conversations[1])}
-        </Drawer> */}
-
-        <Drawer
-          leftItem={{text: 'Archive', background: Colors.blue10, width: 100, onPress: this.onLeftItemPressed}}
-          // rightItems={rightItems}
-          style={styles.drawer}
-          itemsTextStyle={{fontSize: 18, fontWeight: 'bold'}}
-        >
-          {this.renderContent('2', conversations[2])}
-        </Drawer>
-
-        <View style={{paddingHorizontal: 50}}>
-          <Drawer
-            leftItem={leftItem}
-            rightItems={[rightItems[1], rightItems[2]]}
-            itemsIconSize={24}
-            style={{marginTop: 20}}
-            onPress={this.onPress}
-          >
-            {this.renderContent('2', conversations[2])}
-          </Drawer>
+      <View flex>
+        <View row padding-20 paddingB-0 marginB-20 centerV>
+          <Text text40>Drawer</Text>
+          <Button
+            link
+            grey10
+            marginL-s1
+            marginT-2
+            iconSource={Assets.icons.demo.refresh}
+            onPress={this.showItem}
+            disabled={!hideItem}
+          />
         </View>
+        {!hideItem && (
+          <>
+            <Drawer key={Date.now()} {...drawerProps}>
+              {this.renderListItem()}
+            </Drawer>
+          </>
+        )}
 
-        <Drawer
-          leftItem={{icon: collectionsIcon, background: Colors.blue10, width: 100}}
-          rightItems={[
-            {icon: starIcon, background: Colors.dark60},
-            {icon: shareIcon, background: Colors.yellow20},
-            {icon: videoIcon, background: Colors.red30, onPress: this.onItemPress2},
-            {icon: tagsIcon, background: Colors.green30},
-          ]}
-          style={styles.drawer}
-          itemsIconSize={30}
-          itemsTintColor={this.state.itemsTintColor}
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
         >
-          {this.renderContent('4', conversations[4])}
-        </Drawer>
-
-        <Drawer
-          leftItem={leftItem}
-          rightItems={rightItems}
-          style={styles.drawer}
-          itemsTextStyle={{fontSize: 12}}
-        >
-          <View style={styles.rowContent}>
-            <View style={styles.rowIcon}/>
-            <View>
-              <Text style={styles.rowTitle}>Row Title</Text>
-              <Text style={styles.rowSubtitle}>Drag the row left and right</Text>
-            </View>
-            <View style={styles.rowButtonContainer}>
-              <Button
-                label={'1'}
-                size={'small'}
-                round
-                backgroundColor={Colors.yellow30}
-                white
-                onPress={() => this.onButtonPress('1')}
-              />
-            </View>
+          <View padding-20>
+            {this.renderActions()}
+            {renderBooleanOption.call(this, 'rightItems', 'showRightItems')}
+            {showRightItems &&
+              renderBooleanOption.call(
+                this,
+                'fullSwipeRight',
+                'fullSwipeRight'
+              )}
+            {renderBooleanOption.call(this, 'leftItem', 'showLeftItem')}
+            {showLeftItem &&
+              renderBooleanOption.call(this, 'fullSwipeLeft', 'fullSwipeLeft')}
+            {renderColorOption.call(this, 'icon+text color', 'itemsTintColor')}
+            {renderSliderOption.call(this, 'bounciness', 'bounciness', {
+              min: 5,
+              max: 15,
+              step: 1,
+              initial: 5
+            })}
+            {renderSliderOption.call(this, 'iconSize', 'itemsIconSize', {
+              min: 15,
+              max: 25,
+              step: 1,
+              initial: 20
+            })}
           </View>
-        </Drawer>
-      </ScrollView>
+        </ScrollView>
+      </View>
     );
   }
 }

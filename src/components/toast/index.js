@@ -2,18 +2,14 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {AccessibilityInfo, findNodeHandle, StyleSheet, Animated, Easing, ActivityIndicator} from 'react-native';
-import {
-  ThemeManager,
-  Assets,
-  Colors,
-  Typography,
-  BorderRadiuses,
-  PureBaseComponent,
-  View,
-  Image,
-  Button,
-  Text
-} from 'react-native-ui-lib';
+import {PureBaseComponent} from '../../commons';
+import View from '../view';
+import Text from '../text';
+import Button from '../button';
+import Image from '../image';
+import {Colors, Typography, BorderRadiuses, ThemeManager} from '../../style';
+import Assets from '../../assets';
+
 
 // Create animated view base on uilib view for the safeArea support
 const AnimatedView = Animated.createAnimatedComponent(View);
@@ -206,7 +202,7 @@ export default class Toast extends PureBaseComponent {
   };
 
   renderMessage() {
-    const {message, centerMessage, color} = this.props;
+    const {message, centerMessage, color} = this.getThemeProps();
     const textColor = color || COLOR;
     const textAlign = centerMessage ? 'center' : 'left';
 

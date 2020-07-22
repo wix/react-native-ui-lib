@@ -10,7 +10,7 @@ const {Code, Value, cond, set, and, call, block, eq} = Reanimated;
 
 /**
  * @description: TabController's TabPage
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TabControllerScreen/index.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
  */
 export default class TabPage extends PureComponent {
   static displayName = 'TabController.TabPage';
@@ -52,6 +52,7 @@ export default class TabPage extends PureComponent {
   _pageStyle = [
     {opacity: this._opacity},
     this.context.asCarousel ? styles.carouselPage : styles.page,
+    this.context.asCarousel ? {width: this.context.containerWidth} : undefined,
     {zIndex: this._zIndex}
   ];
 
@@ -64,11 +65,11 @@ export default class TabPage extends PureComponent {
   };
 
   renderCodeBlock = () => {
-    const {currentPage} = this.context;
+    const {targetPage} = this.context;
     const {index, lazy} = this.props;
     return block([
-      cond(and(eq(currentPage, index), lazy, eq(this._loaded, 0)), [set(this._loaded, 1), call([], this.lazyLoad)]),
-      cond(eq(currentPage, index),
+      cond(and(eq(targetPage, index), lazy, eq(this._loaded, 0)), [set(this._loaded, 1), call([], this.lazyLoad)]),
+      cond(eq(targetPage, index),
         [set(this._opacity, 1), set(this._zIndex, 1)],
         [set(this._opacity, 0), set(this._zIndex, 0)])
     ]);

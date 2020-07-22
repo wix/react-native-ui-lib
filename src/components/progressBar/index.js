@@ -9,7 +9,7 @@ import {Colors} from '../../style';
 /**
  * @description: Animated progress bar
  * @gif:https://media.giphy.com/media/3o752o08oY0oCvOxR6/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/animationScreens/ProgressBarScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ProgressBarScreen.js
  * @extends: AnimatedScanner
  * @extendsLink: https://wix-private.github.io/wix-react-native-ui-lib/docs/public/AnimatedScanner/
  */
@@ -40,13 +40,28 @@ export default class ProgressBar extends BaseComponent {
     progressBackgroundColor: Colors.dark10
   };
 
+  getAccessibilityProps() {
+    const {progress} = this.props;
+
+    return {
+      accessible: true,
+      accessibilityLabel: `progress bar. ${Math.round(progress)}%`,
+      ...this.extractAccessibilityProps()
+    };
+  }
+
   render() {
     const {height, backgroundColor, progressBackgroundColor, containerStyle, style} = this.props;
     const animatedScannerProps = AnimatedScanner.extractOwnProps(this.props);
     const modifiers = this.extractModifierProps();
 
     return (
-      <View height={height} {...modifiers} style={[{backgroundColor}, containerStyle]}>
+      <View
+        height={height}
+        {...modifiers}
+        style={[{backgroundColor}, containerStyle]}
+        {...this.getAccessibilityProps()}
+      >
         <AnimatedScanner
           {...animatedScannerProps}
           backgroundColor={progressBackgroundColor}

@@ -5,7 +5,8 @@ import {StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
-import Modal from '../../screensComponents/modal';
+import {LogService} from '../../services';
+import Modal from '../modal';
 import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
 import DialogDismissibleView from './DialogDismissibleView';
@@ -59,9 +60,13 @@ class Dialog extends BaseComponent {
      */
     useSafeArea: PropTypes.bool,
     /**
-     * Called once the modal has been dissmissed (iOS only, modal only)
+     * Called once the modal has been dismissed (iOS only) - Deprecated, use onDialogDismissed instead
      */
     onModalDismissed: PropTypes.func,
+    /**
+     * Called once the dialog has been dismissed completely
+     */
+    onDialogDismissed: PropTypes.func,
     /**
      * If this is added only the header will be pannable;
      * this allows for scrollable content (the children of the dialog)
@@ -93,6 +98,10 @@ class Dialog extends BaseComponent {
     };
 
     this.setAlignment();
+
+    if (!_.isUndefined(props.onModalDismissed)) {
+      LogService.deprecationWarn({component: 'Dialog', oldProp: 'onModalDismissed', newProp: 'onDialogDismissed'});
+    }
   }
 
   componentDidMount() {
@@ -140,8 +149,17 @@ class Dialog extends BaseComponent {
       if (props.visible) {
         _.invoke(props, 'onDismiss', props);
       }
+      // Parity with iOS Modal's onDismiss
+      if (Constants.isAndroid) {
+        _.invoke(props, 'onDialogDismissed', props);
+      }
     });
   };
+  
+  onModalDismissed = () => {
+    _.invoke(this.props, 'onDialogDismissed', this.props);
+    _.invoke(this.props, 'onModalDismissed', this.props);
+  }
 
   hideDialogView = () => {
     this.setState({dialogVisibility: false});
@@ -199,7 +217,7 @@ class Dialog extends BaseComponent {
 
   render = () => {
     const {orientationKey, modalVisibility} = this.state;
-    const {overlayBackgroundColor, onModalDismissed, supportedOrientations, accessibilityLabel} = this.getThemeProps();
+    const {overlayBackgroundColor, supportedOrientations, accessibilityLabel} = this.getThemeProps();
 
     return (
       <Modal
@@ -210,7 +228,7 @@ class Dialog extends BaseComponent {
         onBackgroundPress={this.hideDialogView}
         onRequestClose={this.hideDialogView}
         overlayBackgroundColor={overlayBackgroundColor}
-        onDismiss={onModalDismissed}
+        onDismiss={this.onModalDismissed}
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}
       >

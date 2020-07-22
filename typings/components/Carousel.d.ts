@@ -1,4 +1,3 @@
-
 import {
   NativeScrollEvent,
   NativeSyntheticEvent,
@@ -9,7 +8,12 @@ import {
 import {BaseComponent} from '../commons';
 import {PageControlProps} from './PageControl';
 
-export type CarouselPageControlPosition = 'over' | 'under';
+type CarouselPageControlPositions = {
+  OVER: 'over';
+  UNDER: 'under';
+}
+
+export type CarouselPageControlPosition = CarouselPageControlPositions[keyof CarouselPageControlPositions];
 
 export interface CarouselProps {
   initialPage?: number;
@@ -29,6 +33,12 @@ export interface CarouselProps {
   allowAccessibleLayout?: boolean;
   autoplay?: boolean;
   autoplayInterval?: number;
+  style?: StyleProp<ViewStyle>;
+  children?: React.Node;
+  animated?: boolean;
 }
 
-export class Carousel extends BaseComponent<CarouselProps> {}
+export class Carousel extends BaseComponent<CarouselProps> {
+  goToPage: (pageIndex: number) => void;
+  static pageControlPositions: CarouselPageControlPositions;
+}

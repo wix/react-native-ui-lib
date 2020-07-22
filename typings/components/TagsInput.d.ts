@@ -1,6 +1,7 @@
 import {ReactElement} from 'react';
-import {StyleProp, TextStyle, ViewStyle} from 'react-native';
+import {StyleProp, TextStyle, ViewStyle, AccessibilityProps} from 'react-native';
 import {BaseComponent} from '../commons';
+import {AccessibilityProps} from '../modifiers';
 
 export type Tag =
   | string
@@ -31,6 +32,16 @@ export interface TagsInputProps {
   tagStyle?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<TextStyle>;
   hideUnderline?: boolean;
+  placeholderTextColor?: string;
+  selectionColor?: string;
+  style?: StyleProp<ViewStyle>;
+  testID?: string;
 }
 
-export class TagsInput extends BaseComponent<TagsInputProps> {}
+export class TagsInput extends BaseComponent<TagsInputProps & AccessibilityProps> {
+  static onChangeTagsActions?: () => void
+
+  blur: () => void;
+  focus: () => void;
+  clear: () => void;
+}

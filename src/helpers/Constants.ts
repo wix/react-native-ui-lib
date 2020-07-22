@@ -8,11 +8,15 @@ const orientations = {
 
 const isAndroid = Platform.OS === 'android';
 const isIOS = Platform.OS === 'ios';
+let isTablet: boolean;
 let statusBarHeight: number;
 let screenHeight = Dimensions.get('screen').height;
 let screenWidth = Dimensions.get('screen').width;
 let windowHeight = Dimensions.get('window').height;
 let windowWidth = Dimensions.get('window').width;
+
+//@ts-ignore
+isTablet = Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
 
 function setStatusBarHeight() {
   const {StatusBarManager} = NativeModules;
@@ -54,9 +58,10 @@ const accessibility = {
 function handleScreenReaderChanged(isScreenReaderEnabled: AccessibilityEvent) {
   accessibility.isScreenReaderEnabled = isScreenReaderEnabled as boolean;
 }
+
 AccessibilityInfo.addEventListener('screenReaderChanged', handleScreenReaderChanged);
 function setAccessibility() {
-  AccessibilityInfo.fetch().then(isScreenReaderEnabled => {
+  AccessibilityInfo.isScreenReaderEnabled().then(isScreenReaderEnabled => {
     accessibility.isScreenReaderEnabled = isScreenReaderEnabled;
   });
 }
@@ -105,11 +110,13 @@ const constants = {
     return getAspectRatio();
   },
   get isTablet() {
-    //@ts-ignore
-    return Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
+    return isTablet;
+  },
+  set isTablet(value: boolean) {
+    isTablet = value;
   },
   getSafeAreaInsets: () => {
-    const orientation = getOrientation(screenHeight, screenWidth)
+    const orientation = getOrientation(screenHeight, screenWidth);
     return orientation === orientations.LANDSCAPE
       ? {left: 44, right: 44, bottom: 24, top: 0}
       : {left: 0, right: 0, bottom: 34, top: 44};

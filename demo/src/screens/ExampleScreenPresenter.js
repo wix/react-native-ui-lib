@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {Checkbox, ColorPalette, Colors, RadioButton, RadioGroup, Slider, Text, View} from 'react-native-ui-lib';
+import {Checkbox, Switch, ColorPalette, Colors, RadioButton, RadioGroup, Slider, Text, View} from 'react-native-ui-lib';
 
 export function renderHeader(title, others) {
   return (
@@ -18,7 +18,7 @@ export function renderBooleanOption(title, key) {
       <Text text70 style={{flex: 1}}>
         {title}
       </Text>
-      <Checkbox
+      <Switch
         useCustomTheme
         key={key}
         textID={key}
@@ -59,18 +59,18 @@ export function renderBooleanGroup(title, options) {
   );
 }
 
-export function renderRadioGroup(title, key, options, {isRow} = {}) {
+export function renderRadioGroup(title, key, options, {isRow, afterValueChanged, useValueAsLabel} = {}) {
   const value = this.state[key];
   return (
     <View marginB-s2>
-      <Text text70M marginB-s2>
+      {!_.isUndefined(title) && <Text text70M marginB-s2>
         {title}
-      </Text>
+      </Text>}
       <RadioGroup
         row={isRow}
         style={isRow && styles.rowWrap}
         initialValue={value}
-        onValueChange={value => this.setState({[key]: value})}
+        onValueChange={value => this.setState({[key]: value}, afterValueChanged)}
       >
         {_.map(options, (value, key) => {
           return (
@@ -80,7 +80,7 @@ export function renderRadioGroup(title, key, options, {isRow} = {}) {
               key={key}
               marginB-s2
               marginR-s2={isRow}
-              label={key}
+              label={useValueAsLabel ? value : key}
               value={value}
             />
           );

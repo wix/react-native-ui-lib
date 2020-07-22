@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "commonjs",
+    "target": "ESNext",
+    "module": "ESNext",
+    // "outDir": "dist",
     "esModuleInterop": true,
     "moduleResolution": "node",
     "jsx": "react-native",
@@ -17,7 +18,11 @@
     // "noImplicitAny": false
     "declaration": true,
     "declarationDir": "./generatedTypes",
+    "baseUrl": ".",
+    "paths": {
+      "react-native-ui-lib": ["index.d.ts"]
+    }
   },
-  "include": ["src/**/*", "typings/**/*"],
-  "exclude": [ "node_modules"]
+  "include": ["src/**/*", "typings/**/*", "demo/**/*"],
+  "exclude": [ "node_modules", "src/index.ts"]
 }

@@ -2,7 +2,8 @@ import {ReactElement} from 'react';
 import {FlatListProps, GestureResponderEvent, LayoutChangeEvent} from 'react-native';
 import {BaseComponent} from '../commons';
 import {TextFieldProps} from './Inputs';
-import {TopBarProps} from '../screensComponents/Modal';
+import {TopBarProps} from './Modal';
+import {ColorsModifiers} from '../modifiers';
 
 export type PickerItemLabeledValue = { value?: any, label?: string };
 export type PickerItemValue =
@@ -27,6 +28,7 @@ export interface PickerItemProps {
   renderItem?: PickerItemRenderItemFunc;
   onPress?: (event: GestureResponderEvent) => void;
   onSelectedLayout?: (event: LayoutChangeEvent) => void;
+  testID?: string;
 }
 
 export type PickerMode = 'SINGLE' | 'MULTI';
@@ -62,7 +64,7 @@ export interface PickerProps extends Omit<TextFieldProps, 'value'> {
   listProps?: PickerListProps;
 }
 
-export class Picker extends BaseComponent<PickerProps> {}
+export class Picker extends BaseComponent<PickerProps & ColorsModifiers> {}
 
 export namespace Picker {
   export class Item extends BaseComponent<PickerItemProps> {}

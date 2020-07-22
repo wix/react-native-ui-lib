@@ -6,14 +6,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
-import Modal from '../../screensComponents/modal';
+import Modal from '../modal';
 import Button from '../../components/button';
 import {TextField} from '../inputs';
 import * as PickerPresenter from './PickerPresenter';
 import NativePicker from './NativePicker';
 import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
-import {Colors} from '../../style';
 
 const PICKER_MODES = {
   SINGLE: 'SINGLE',
@@ -27,7 +26,7 @@ const ItemType = PropTypes.shape({
 /**
  * @description: Picker Component, support single or multiple selection, blurModel and nativePicker
  * @gif: https://media.giphy.com/media/3o751SiuZZiByET2lq/giphy.gif, https://media.giphy.com/media/TgMQnyw5grJIDohzvx/giphy.gif, https://media.giphy.com/media/5hsdmVptBRskZKn787/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FormScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.js
  */
 class Picker extends BaseComponent {
   static displayName = 'Picker';
@@ -345,11 +344,10 @@ class Picker extends BaseComponent {
       );
     }
 
-    const textInputProps = TextField.extractOwnProps(this.props);
+    const textInputProps = TextField.extractOwnProps(this.getThemeProps());
     const label = this.getLabel();
     return (
       <TextField
-        color={Colors.dark10}
         {...textInputProps}
         {...this.getAccessibilityInfo()}
         importantForAccessibility={'no-hide-descendants'}

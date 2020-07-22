@@ -1,7 +1,13 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import {Navigation} from 'react-native-navigation';
 import * as Animatable from 'react-native-animatable';
-import {AnimatableManager, ThemeManager, Constants, Assets, Colors, Typography} from 'react-native-ui-lib'; // eslint-disable-line
+import {
+  AnimatableManager,
+  ThemeManager,
+  Constants,
+  Colors,
+  Typography
+} from 'react-native-ui-lib'; // eslint-disable-line
 import {registerScreens} from './screens';
 
 /** Examples - uncomment when needed */
@@ -36,10 +42,6 @@ import {registerScreens} from './screens';
 //   }
 // });
 
-// Assets.loadAssetsGroup('icons.general', {
-//   camera: require('./assets/icons/cameraSelected.png'),
-// });
-
 // AnimatableManager.loadAnimationPresets({
 //   preset1: {
 //     animation: 'fadeIn',
@@ -66,7 +68,9 @@ import {registerScreens} from './screens';
 //   },
 // };
 // IMPORTANT! Make uilib's animations available globally for the app's use (option to pass adittional animation definitions)
-Animatable.initializeRegistryWithDefinitions(AnimatableManager.loadAnimationDefinitions(/** customAnimationsDefinitions */));
+Animatable.initializeRegistryWithDefinitions(
+  AnimatableManager.loadAnimationDefinitions(/** customAnimationsDefinitions */)
+);
 
 function getDefaultNavigationStyle() {
   return {
@@ -89,13 +93,17 @@ function getDefaultNavigationStyle() {
       title: {
         color: Colors.white,
         fontSize: Typography.text60H.fontSize,
-        fontFamily: Constants.isAndroid ? Typography.text65H.fontFamily : '.SFUIText-Heavy',
+        fontFamily: Constants.isAndroid
+          ? Typography.text65H.fontFamily
+          : '.SFUIText-Heavy',
         fontWeight: 'heavy'
       },
       subtitle: {
         color: Colors.white,
         fontSize: Typography.text80T.fontSize,
-        fontFamily: Constants.isAndroid ? Typography.text80.fontFamily : '.SFUIText-Medium',
+        fontFamily: Constants.isAndroid
+          ? Typography.text80.fontFamily
+          : '.SFUIText-Medium',
         fontWeight: 'medium'
       },
       backButton: {

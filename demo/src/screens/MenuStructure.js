@@ -30,6 +30,7 @@ export const navigationData = {
       {title: 'Badges', tags: 'badge', screen: 'unicorn.components.BadgesScreen'},
       {title: 'Cards', tags: 'cards feed', screen: 'unicorn.components.CardsScreen'},
       {title: 'Connection Status Bar', tags: 'connection status bar', screen: 'unicorn.components.ConnectionStatusBar'},
+      {title: 'Chip', tags: 'chip', screen: 'unicorn.components.ChipScreen'},
       // {title: 'Overlays', tags: 'overlay image', screen: 'unicorn.components.OverlaysScreen'},
       {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
       {title: 'ProgressBar', tags: 'progress bar animated', screen: 'unicorn.animations.ProgressBarScreen'},
@@ -84,11 +85,21 @@ export const navigationData = {
     title: 'Layouts & Templates',
     screens: [
       {title: 'Carousel', tags: 'carousel', screen: 'unicorn.components.CarouselScreen'},
-      {title: 'Loading Screen', tags: 'loading screen', screen: 'unicorn.screens.LoadingScreen'},
-      {title: 'Modal Screen', tags: 'modal topbar screen', screen: 'unicorn.screens.ModalScreen'},
-      {title: 'State Screen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
+      {title: 'LoadingScreen', tags: 'loading screen', screen: 'unicorn.screens.LoadingScreen'},
+      {title: 'Modal', tags: 'modal topbar screen', screen: 'unicorn.screens.ModalScreen'},
+      {title: 'StateScreen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
       {title: 'TabController', tags: 'tabbar controller native', screen: 'unicorn.components.TabControllerScreen'},
       {title: 'TabBar', tags: 'tab bar', screen: 'unicorn.components.TabBarScreen'},
+      {
+        title: 'withScrollEnabler',
+        tags: 'scroll enabled withScrollEnabler',
+        screen: 'unicorn.components.WithScrollEnablerScreen'
+      },
+      {
+        title: 'withScrollReached',
+        tags: 'scroll reach start end',
+        screen: 'unicorn.components.WithScrollReachedScreen'
+      },
       {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'}
     ]
   },
@@ -119,6 +130,7 @@ export const navigationData = {
     title: 'Animations & Gestures',
     screens: [
       {title: 'Animated Image', tags: 'animated image', screen: 'unicorn.components.AnimatedImageScreen'},
+      {title: 'ProgressiveImage', tags: 'progressive image cover overlay', screen: 'unicorn.components.ProgressiveImageScreen'},
       {title: 'List Animations', tags: 'animated card', screen: 'unicorn.animations.ListAnimationsScreen'},
       {title: 'Card Animations', tags: 'animated card', screen: 'unicorn.animations.CardAnimationsScreen'},
       {title: 'Card Scanner', tags: 'card scanner process', screen: 'unicorn.animations.CardScannerScreen'},

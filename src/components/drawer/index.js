@@ -2,7 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import memoize from 'memoize-one';
-import {Animated, StyleSheet, ViewPropTypes} from 'react-native';
+import {Animated, Easing, StyleSheet, ViewPropTypes} from 'react-native';
 import {RectButton} from 'react-native-gesture-handler';
 import {PureBaseComponent} from '../../commons';
 import {Constants} from '../../helpers';
@@ -32,7 +32,6 @@ class NewDrawer extends PureBaseComponent {
   static displayName = 'Drawer';
 
   static propTypes = {
-    ...Swipeable.PropTypes,
     /**
      * The drawer animation bounciness
      */
@@ -68,7 +67,47 @@ class NewDrawer extends PureBaseComponent {
     /**
      * Perform the animation in natively
      */
-    useNativeAnimations: PropTypes.bool
+    useNativeAnimations: PropTypes.bool,
+    /**
+     * Whether to allow a full left swipe
+     */
+    fullSwipeLeft: PropTypes.bool,
+    /**
+     * Threshold for a left full swipe (0-1)
+     */
+    fullLeftThreshold: PropTypes.number,
+    /**
+     * Callback for left item full swipe
+     */
+    onFullSwipeLeft: PropTypes.func,
+    /**
+     * Callback for left item toggle swipe
+     */
+    onToggleSwipeLeft: PropTypes.func,
+    /**
+     * Callback for just before left item full swipe
+     */
+    onWillFullSwipeLeft: PropTypes.func,
+    /**
+     * Whether to allow a full right swipe
+     */
+    fullSwipeRight: PropTypes.bool,
+    /**
+     * Threshold for a right full swipe (0-1)
+     */
+    fullRightThreshold: PropTypes.number,
+    /**
+     * Callback for right item full swipe
+     */
+    onFullSwipeRight: PropTypes.func,
+    /**
+     * Callback for just before right item full swipe
+     */
+    onWillFullSwipeRight: PropTypes.func,
+    /**
+     * Haptic trigger function to use onToggleSwipeLeft
+     */
+    leftToggleHapticTrigger: PropTypes.func
   };
 
   static defaultProps = {
@@ -88,6 +127,9 @@ class NewDrawer extends PureBaseComponent {
         ? this.renderLeftActions
         : this.renderRightActions
       : undefined;
+
+    
+    this.leftActionX = new Animated.Value(0);
   }
 
   /** Actions */
@@ -108,13 +150,33 @@ class NewDrawer extends PureBaseComponent {
     this._swipeableRow.current.close();
   };
 
+  openLeft = () => {
+    this._swipeableRow.current.openLeft();
+  };
+
+  openLeftFull = () => {
+    this._swipeableRow.current.openLeftFull();
+  };
+
+  toggleLeft = () => {
+    this._swipeableRow.current.toggleLeft();
+  };
+
+  openRight = () => {
+    this._swipeableRow.current.openRight();
+  };
+
+  openRightFull = () => {
+    this._swipeableRow.current.openRightFull();
+  };
+
   /** Events */
 
-  onActionPress(item) {
+  onActionPress = (item) => {
     if (!item.keepOpen) {
       this.closeDrawer();
     }
-    _.invoke(item, 'onPress');
+    _.invoke(item, 'onPress', this.props);
   }
 
   onSwipeableWillOpen = () => {
@@ -124,6 +186,23 @@ class NewDrawer extends PureBaseComponent {
   onSwipeableWillClose = () => {
     _.invoke(this.props, 'onSwipeableWillClose', this.props);
   };
+
+  onToggleSwipeLeft = ({rowWidth, leftWidth, dragX, released}) => {
+    Animated.timing(this.leftActionX, {
+      toValue: dragX ? dragX - leftWidth : rowWidth * 0.6 - leftWidth,
+      easing: Easing.bezier(0.25, 1, 0.5, 1),
+      duration: 200,
+      delay: 100,
+      useNativeDriver: true
+    }).start(released && this.toggle());
+  }
+
+  toggle() {
+    _.invoke(this.props, 'leftToggleHapticTrigger');
+    setTimeout(() => {
+      _.invoke(this.props, 'onToggleSwipeLeft');
+    }, 500);
+  }
 
   /** Accessability */
 
@@ -179,13 +258,13 @@ class NewDrawer extends PureBaseComponent {
   renderActions(items, progress, dragX) {
     if (items) {
       return (
-        <View row>
+        <View animated row style={{transform: [{translateX: this.leftActionX}]}}>
           {_.map(items, (item, index) => {
             return this.renderAction({
               item,
               index: items.length - index - 1,
               progress,
-              dragX,
+              // dragX,
               itemsCount: items.length
             });
           })}
@@ -209,7 +288,7 @@ class NewDrawer extends PureBaseComponent {
       inputRange,
       outputRange,
       extrapolate: 'clamp'
-    });
+    });  
 
     return (
       <RectButton
@@ -218,9 +297,11 @@ class NewDrawer extends PureBaseComponent {
         style={[
           styles.action,
           item.style,
-          {backgroundColor: item.background || DEFAULT_BG},
-          {width: item.width},
-          {minWidth: itemsMinWidth}
+          {
+            backgroundColor: item.background || DEFAULT_BG,
+            width: item.width,
+            minWidth: itemsMinWidth
+          }
         ]}
         onPress={() => this.onActionPress(item)}
       >
@@ -262,7 +343,7 @@ class NewDrawer extends PureBaseComponent {
   };
 
   render() {
-    const {children, style, leftItem, rightItems, ...others} = this.getThemeProps();
+    const {children, style, leftItem, rightItems, onToggleSwipeLeft, ...others} = this.getThemeProps();
 
     return (
       <Swipeable
@@ -277,6 +358,7 @@ class NewDrawer extends PureBaseComponent {
         leftActionsContainerStyle={this.getLeftActionsContainerStyle(leftItem, rightItems)}
         onSwipeableWillOpen={this.onSwipeableWillOpen}
         onSwipeableWillClose={this.onSwipeableWillClose}
+        onToggleSwipeLeft={onToggleSwipeLeft && this.onToggleSwipeLeft}
       >
         <View
           // flex

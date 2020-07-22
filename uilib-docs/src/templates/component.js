@@ -14,10 +14,10 @@ const IMAGE_TYPES = {
 export default class ComponentTemplate extends Component {
   static propTypes = {
     pageContext: PropTypes.object
-  }
+  };
 
   extractComponentsInfo(component) {
-    const splitPattern = /([\s\S]*?):([\s\S]*)/ //eslint-disable-line
+    const splitPattern = /([\s\S]*?):([\s\S]*)/; //eslint-disable-line
 
     const info = {
       description: _.get(component, 'description.text')
@@ -144,16 +144,7 @@ export default class ComponentTemplate extends Component {
             <div>
               <p>
                 Supported modifiers: <b>{componentInfo.modifiers}</b>. <br/>
-                Read more about modifiers{' '}
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={'https://github.com/wix/react-native-ui-lib/wiki/MODIFIERS'}
-                >
-                  {' '}
-                  here
-                </a>
-                .
+                Read more about modifiers <Link to="/foundation/modifiers">here</Link>.
               </p>
             </div>
           )}

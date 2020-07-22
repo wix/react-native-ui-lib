@@ -11,12 +11,14 @@ export function registerScreens(registrar) {
   registrar('unicorn.animations.CardScannerScreen', () => require('../componentScreens/CardScannerScreen').default);
   registrar('unicorn.components.CarouselScreen', () => require('./CarouselScreen').default);
   registrar('unicorn.components.CheckboxScreen', () => require('./CheckboxScreen').default);
+  registrar('unicorn.components.ChipScreen', () => require('./ChipScreen').default);
   registrar('unicorn.components.ConnectionStatusBar', () => require('./ConnectionStatusBarScreen').default);
   registrar('unicorn.components.DialogScreen', () => require('./DialogScreen').default);
   registrar('unicorn.components.DrawerScreen', () => require('./DrawerScreen').default);
   registrar('unicorn.components.TagsInputScreen', () => require('./TagsInputScreen').default);
   registrar('unicorn.components.HintsScreen', () => require('./HintsScreen').default);
   registrar('unicorn.components.ImageScreen', () => require('./ImageScreen').default);
+  registrar('unicorn.components.ProgressiveImageScreen', () => require('./ProgressiveImageScreen').default);
   registrar('unicorn.components.KeyboardAwareScrollViewScreen', () => require('./KeyboardAwareScrollViewScreen').default);
   registrar('unicorn.components.MaskedInputScreen', () => require('./MaskedInputScreen').default);
   registrar('unicorn.components.OverlaysScreen', () => require('./OverlaysScreen').default);
@@ -56,5 +58,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.screens.EmptyStateScreen', () => require('./EmptyStateScreen').default);
   registrar('unicorn.screens.LoadingScreen', () => require('./LoadingScreen').default);
   registrar('unicorn.screens.ModalScreen', () => require('./ModalScreen').default);
+  registrar('unicorn.components.WithScrollEnablerScreen', () => require('./WithScrollEnablerScreen').default);
+  registrar('unicorn.components.WithScrollReachedScreen', () => require('./WithScrollReachedScreen').default);
 }
 

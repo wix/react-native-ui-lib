@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {PureBaseComponent, Text} from 'react-native-ui-lib';
 import GradientSlider from './GradientSlider';
 import SliderGroup from './context/SliderGroup';
+import Text from '../text';
+import {PureBaseComponent} from '../../commons';
 
 
 /**
@@ -31,13 +32,22 @@ export default class ColorSliderGroup extends PureBaseComponent {
      */
     sliderContainerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
-     * Show the sliders labels (Hue, Lightness, Saturation)
+     * Show the sliders labels (defaults are: Hue, Lightness, Saturation)
      */
     showLabels: PropTypes.bool,
+    /**
+     * In case you would like to change the default labels (translations etc.), you can provide
+     * this prop with a map to the relevant labels ({hue: ..., lightness: ..., saturation: ...}).
+     */
+    labels: PropTypes.object,
     /**
      * The labels style
      */
     labelsStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
+  }
+
+  static defaultProps = {
+    labels: {hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation'}
   }
 
   state = {
@@ -61,18 +71,29 @@ export default class ColorSliderGroup extends PureBaseComponent {
     _.invoke(this.props, 'onValueChange', value);
   }
 
+  renderSlider = (type) => {
+    const {sliderContainerStyle, showLabels, labelsStyle, accessible, labels} = this.getThemeProps();
+    return (
+      <>
+        {showLabels && (
+          <Text dark30 text80 style={labelsStyle} accessible={accessible}>
+            {labels[type]}
+          </Text>
+        )}
+        <GradientSlider type={type} containerStyle={sliderContainerStyle} accessible={accessible}/>
+      </>
+    );
+  };
+
   render() {
-    const {containerStyle, sliderContainerStyle, showLabels, labelsStyle, accessible} = this.props;
+    const {containerStyle} = this.props;
     const {initialColor} = this.state;
 
     return (
       <SliderGroup style={containerStyle} color={initialColor} onValueChange={this.onValueChange}>
-        {showLabels && <Text dark30 text80 style={labelsStyle} accessible={accessible}>Hue</Text>}
-        <GradientSlider type={GradientSlider.types.HUE} containerStyle={sliderContainerStyle} accessible={accessible}/>
-        {showLabels && <Text dark30 text80 style={labelsStyle} accessible={accessible}>Lightness</Text>}
-        <GradientSlider type={GradientSlider.types.LIGHTNESS} containerStyle={sliderContainerStyle} accessible={accessible}/>
-        {showLabels && <Text dark30 text80 style={labelsStyle} accessible={accessible}>Saturation</Text>}
-        <GradientSlider type={GradientSlider.types.SATURATION} containerStyle={sliderContainerStyle} accessible={accessible}/>
+        {this.renderSlider(GradientSlider.types.HUE)}
+        {this.renderSlider(GradientSlider.types.LIGHTNESS)}
+        {this.renderSlider(GradientSlider.types.SATURATION)}
       </SliderGroup>
     );
   }

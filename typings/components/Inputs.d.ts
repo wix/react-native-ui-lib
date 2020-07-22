@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {BaseComponent} from '../commons';
 import {ColorValue} from '../style/colors';
-import {TopBarProps} from '../screensComponents/Modal';
+import {TopBarProps} from './Modal';
 
 export type BaseInputDefaultValidator = 'required' | 'email' | 'url' | 'number' | 'price';
 export type BaseInputCustomValidator = (value?: string) => boolean;
@@ -28,7 +28,9 @@ export interface BaseInputProps extends RNTextInputProps {
   onChangeValidity?: (isValid: boolean) => void;
 }
 
-export class BaseInput<Props extends BaseInputProps = BaseInputProps, State = {}> extends BaseComponent<Props, State> {}
+export class BaseInput<Props extends BaseInputProps = BaseInputProps, State = {}> extends BaseComponent<Props, State> {
+  onBlur(): void;
+}
 
 export interface TextAreaProps extends BaseInputProps {}
 

@@ -1,13 +1,13 @@
 import * as React from 'react';
-import {ColorName} from '../style/colors';
-import {TypographyName} from '../style/typography';
-import {BorderRadiusName} from '../style/borderRadiuses';
+// import {ColorName} from '../../generatedTypes/style/colors.d';
 import {BaseComponentPaddingModifier, BaseComponentMarginModifier} from './spacings';
 
-export class UIComponent extends React.PureComponent {}
+type TypographyName = 'fixme';
+type ColorName = 'fixme';
+export class UIComponent<P = {}, S = {}, SS = any> extends React.PureComponent<P, S, SS> {}
 export function forwardRef<T, P>(
-  WrappedComponent: React.RefForwardingComponent<T, P>
-): React.RefForwardingComponent<T, P>;
+  WrappedComponent: React.ComponentType<T, P>
+): React.ComponentType<T, P>;
 export function asBaseComponent<P>(WrappedComponent: React.ComponentType<P>): React.ComponentType<P>;
 
 export type BaseComponentColorModifierVariations = ColorName;
@@ -40,5 +40,23 @@ export type BaseComponentModifiers =
   & BaseComponentFlexStyleModifiers
   & BaseComponentBorderRadiusModifiers;
 
-export class BaseComponent<P = {}, S = {}, SS = any> extends React.Component<P & BaseComponentModifiers, S, SS> {}
-export class PureBaseComponent<P = {}, S = {}, SS = any> extends React.PureComponent<P & BaseComponentModifiers, S, SS> {}
+export class BaseComponent<P = {}, S = {}, SS = any> extends React.Component<P & BaseComponentModifiers, S, SS> {
+  static propTypes?: any;
+  static defaultProps?: Partial<P>;
+
+  // TODO: There's more methods here, need to create more precise types
+  getThemeProps: () => P & ThemeProps;
+  extractAccessibilityProps: () => AccessibilityProps;
+}
+
+export type _B = Partial<Record<BaseComponentColorModifierVariations, boolean>>;
+
+export class PureBaseComponent<P = {}, S = {}, SS = any> extends React.PureComponent<P & _B, S, SS> {
+  static propTypes?: any;
+  static defaultProps?: Partial<P>;
+
+  // TODO: There's more methods here, need to create more precise types
+  getThemeProps: () => P & ThemeProps;
+  extractAccessibilityProps: () => AccessibilityProps;
+}
+

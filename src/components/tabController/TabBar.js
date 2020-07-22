@@ -2,7 +2,7 @@
 // TODO: disable scroll when content width is shorter than screen width
 import React, {PureComponent} from 'react';
 import {StyleSheet, ScrollView, ViewPropTypes, Platform, Text as RNText} from 'react-native';
-import Reanimated, {Easing} from 'react-native-reanimated';
+import Reanimated from 'react-native-reanimated';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -11,32 +11,31 @@ import TabBarItem from './TabBarItem';
 // import ReanimatedObject from './ReanimatedObject';
 import {asBaseComponent, forwardRef} from '../../commons';
 import View from '../../components/view';
-import {Colors, Spacings} from '../../style';
+import ScrollBarGradient from '../scrollBar/ScrollBarGradient';
+import {Colors, Spacings, Typography} from '../../style';
 import {Constants} from '../../helpers';
 import {LogService} from '../../services';
 
+const {Code, Value, interpolate, block, set} = Reanimated;
+
 const DEFAULT_HEIGHT = 48;
 const INDICATOR_INSET = Spacings.s4;
-const {
-  Code,
-  Clock,
-  Value,
-  and,
-  eq,
-  neq,
-  cond,
-  stopClock,
-  startClock,
-  interpolate,
-  Extrapolate,
-  timing,
-  block,
-  set
-} = Reanimated;
+
+const DEFAULT_LABEL_STYLE = {
+  ...Typography.text80,
+  fontWeight: '400',
+  letterSpacing: 0
+};
+
+const DEFAULT_SELECTED_LABEL_STYLE = {
+  ...Typography.text80,
+  fontWeight: '700',
+  letterSpacing: 0
+};
 
 /**
  * @description: TabController's TabBar component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TabControllerScreen/index.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
  */
 class TabBar extends PureComponent {
   static displayName = 'TabController.TabBar';
@@ -68,6 +67,10 @@ class TabBar extends PureComponent {
      */
     labelStyle: RNText.propTypes.style,
     /**
+     * custom selected label style
+     */
+    selectedLabelStyle: RNText.propTypes.style,
+    /**
      * the default label color
      */
     labelColor: PropTypes.string,
@@ -95,10 +98,16 @@ class TabBar extends PureComponent {
     /**
      * The TabBar container width
      */
-    containerWidth: PropTypes.number
+    containerWidth: PropTypes.number,
+    /**
+     * Pass to center selected item
+     */
+    centerSelected: PropTypes.bool
   };
 
   static defaultProps = {
+    labelStyle: DEFAULT_LABEL_STYLE,
+    selectedLabelStyle: DEFAULT_SELECTED_LABEL_STYLE
     // containerWidth: Constants.screenWidth
   };
 
@@ -109,12 +118,13 @@ class TabBar extends PureComponent {
       LogService.warn('uilib: Please pass the "items" prop to TabController.TabBar instead of children');
     }
 
-    const itemsCount = this.itemsCount;
+    const itemsCount = this.getItemsCount();
 
     this.tabBar = React.createRef();
     this.tabBarScrollOffset = 0;
 
     this._itemsWidths = _.times(itemsCount, () => null);
+    this._itemsOffsets = _.times(itemsCount, () => null);
     this._indicatorOffset = new Value(0);
     this._indicatorWidth = new Value(0);
 
@@ -128,7 +138,9 @@ class TabBar extends PureComponent {
       itemsWidths: undefined
     };
 
-    this.registerTabItems();
+    if ((props.items || this.children) && !context.items) {
+      this.registerTabItems();
+    }
   }
 
   get containerWidth() {
@@ -136,15 +148,41 @@ class TabBar extends PureComponent {
   }
 
   get children() {
-    return _.filter(this.props.children, child => !!child);
+    return _.filter(this.props.children, (child) => !!child);
   }
 
-  get itemsCount() {
-    const {items} = this.props;
-    if (items) {
-      return _.size(items);
+
+  get centerOffset() {
+    const {centerSelected} = this.props;
+    const guesstimateCenterValue = 60;
+    return centerSelected ? this.containerWidth / 2 - guesstimateCenterValue : 0;
+  }
+
+  get items() {
+    const {items: contextItems} = this.context;
+    const {items: propsItems} = this.props;
+    return contextItems || propsItems;
+  }
+
+  getItemsCount() {
+    if (this.items) {
+      return _.size(this.items);
     } else {
       return React.Children.count(this.children);
+    }
+  }
+
+  getSnapBreakpoints() {
+    const {centerSelected} = this.props;
+    const {itemsWidths, itemsOffsets} = this.state;
+
+    if (itemsWidths && centerSelected) {
+      return _.times(itemsWidths.length, (index) => {
+        const screenCenter = this.containerWidth / 2;
+        const itemOffset = itemsOffsets[index];
+        const itemWidth = itemsWidths[index];
+        return itemOffset - screenCenter + itemWidth / 2;
+      });
     }
   }
 
@@ -175,46 +213,84 @@ class TabBar extends PureComponent {
   }
 
   // TODO: move this logic into a ScrollPresenter or something
-  focusSelected = ([index]) => {
-    const {itemsOffsets, itemsWidths} = this.state;
-    const itemOffset = itemsOffsets[index];
-    const itemWidth = itemsWidths[index];
+  focusSelected = ([index], animated = true) => {
+    const {centerSelected} = this.props;
+    const itemOffset = this._itemsOffsets[index];
+    const itemWidth = this._itemsWidths[index];
+    const screenCenter = this.containerWidth / 2;
+
+    let targetOffset;
+
     if (itemOffset && itemWidth) {
-      if (itemOffset < this.tabBarScrollOffset) {
-        this.tabBar.current.scrollTo({x: itemOffset - itemWidth});
+      if (centerSelected) {
+        targetOffset = itemOffset - screenCenter + itemWidth / 2;
+      } else if (itemOffset < this.tabBarScrollOffset) {
+        targetOffset = itemOffset - itemWidth;
       } else if (itemOffset + itemWidth > this.tabBarScrollOffset + this.containerWidth) {
         const offsetChange = Math.max(0, itemOffset - (this.tabBarScrollOffset + this.containerWidth));
-        this.tabBar.current.scrollTo({x: this.tabBarScrollOffset + offsetChange + itemWidth});
+        targetOffset = this.tabBarScrollOffset + offsetChange + itemWidth;
       }
-    }
-  }
-
-  onItemLayout = (itemWidth, itemIndex) => {
-    this._itemsWidths[itemIndex] = itemWidth;
-    if (!_.includes(this._itemsWidths, null)) {
-      const {selectedIndex} = this.context;
-      const itemsOffsets = _.map(this._itemsWidths,
-        (w, index) => INDICATOR_INSET + _.sum(_.take(this._itemsWidths, index)));
-      const itemsWidths = _.map(this._itemsWidths, width => width - INDICATOR_INSET * 2);
-
-      this.setState({itemsWidths, itemsOffsets});
-      const selectedItemOffset = itemsOffsets[selectedIndex] - INDICATOR_INSET;
       
-      if (selectedItemOffset + this._itemsWidths[selectedIndex] > Constants.screenWidth) {  
-        this.tabBar.current.scrollTo({x: selectedItemOffset, animated: true});
+      if (!_.isUndefined(targetOffset)) {
+
+        if (Constants.isRTL && Constants.isAndroid) {
+          const scrollingWidth = Math.max(0, this.contentWidth - this.containerWidth);
+          targetOffset = scrollingWidth - targetOffset;
+        }
+
+        this.tabBar.current.scrollTo({x: targetOffset, animated});
       }
     }
+  };
+
+  onItemLayout = ({width}, itemIndex) => {
+    this._itemsWidths[itemIndex] = width;
+    if (!_.includes(this._itemsWidths, null)) {
+      this.setItemsLayouts();
+    }
+  };
+
+  setItemsLayouts = () => {
+    const {selectedIndex} = this.context;
+    // It's important to calculate itemOffsets for RTL support
+    this._itemsOffsets = _.times(this._itemsWidths.length, (i) => _.chain(this._itemsWidths).take(i).sum().value() + this.centerOffset);
+    const itemsOffsets = _.map(this._itemsOffsets, (offset) => offset + INDICATOR_INSET);
+    const itemsWidths = _.map(this._itemsWidths, (width) => width - INDICATOR_INSET * 2);
+    this.contentWidth = _.sum(this._itemsWidths);
+    const scrollEnabled = this.contentWidth > this.containerWidth;
+
+    this.setState({itemsWidths, itemsOffsets, scrollEnabled});
+    this.focusSelected([selectedIndex], false);
   };
 
   onScroll = ({nativeEvent: {contentOffset}}) => {
+    const {fadeLeft, fadeRight} = this.state;
     this.tabBarScrollOffset = contentOffset.x;
-  }
+    if (Constants.isRTL && Constants.isAndroid) {
+      const scrollingWidth = Math.max(0, this.contentWidth - this.containerWidth);
+      this.tabBarScrollOffset = scrollingWidth - this.tabBarScrollOffset;
+    }
+    const stateUpdate = {};
+    // TODO: extract this logic to scrollbar presenter or something
+    const leftThreshold = 50;
+    if (this.tabBarScrollOffset > leftThreshold && !fadeLeft) {
+      stateUpdate.fadeLeft = true;
+    } else if (this.tabBarScrollOffset <= leftThreshold && fadeLeft) {
+      stateUpdate.fadeLeft = false;
+    }
 
-  onContentSizeChange = width => {
-    if (width > this.containerWidth) {
-      this.setState({scrollEnabled: true});
+    const rightThreshold = (this.contentWidth - this.containerWidth);
+    if (this.tabBarScrollOffset < rightThreshold && !fadeRight) {
+      stateUpdate.fadeRight = true;
+    } else if (this.tabBarScrollOffset >= rightThreshold && fadeRight) {
+      stateUpdate.fadeRight = false;
+    }
+
+    if (!_.isEmpty(stateUpdate)) {
+      this.setState(stateUpdate);
     }
   };
+
 
   renderSelectedIndicator() {
     const {itemsWidths} = this.state;
@@ -227,10 +303,10 @@ class TabBar extends PureComponent {
   renderTabBarItems() {
     const {itemStates} = this.context;
     const {
-      items,
       labelColor,
       selectedLabelColor,
       labelStyle,
+      selectedLabelStyle,
       uppercase,
       iconColor,
       selectedIconColor,
@@ -241,18 +317,20 @@ class TabBar extends PureComponent {
       return;
     }
 
-    if (items) {
-      return _.map(items, (item, index) => {
+    if (this.items) {
+      return _.map(this.items, (item, index) => {
         return (
           <TabBarItem
             labelColor={labelColor}
             selectedLabelColor={selectedLabelColor}
             labelStyle={labelStyle}
+            selectedLabelStyle={selectedLabelStyle}
             uppercase={uppercase}
             iconColor={iconColor}
             selectedIconColor={selectedIconColor}
             activeBackgroundColor={activeBackgroundColor}
             key={item.label}
+            // width={this._itemsWidths[index]}
             {...item}
             {...this.context}
             index={index}
@@ -272,6 +350,7 @@ class TabBar extends PureComponent {
           labelColor,
           selectedLabelColor,
           labelStyle,
+          selectedLabelStyle,
           uppercase,
           iconColor,
           selectedIconColor,
@@ -288,36 +367,26 @@ class TabBar extends PureComponent {
   }
 
   renderCodeBlock = () => {
-    const {carouselOffset, asCarousel, currentPage} = this.context;
+    const {currentPage, targetPage} = this.context;
     const {itemsWidths, itemsOffsets} = this.state;
     const nodes = [];
 
-    if (asCarousel) {
-      nodes.push(set(this._indicatorOffset,
-        interpolate(carouselOffset, {
-          inputRange: itemsOffsets.map((value, index) => index * Constants.screenWidth),
-          outputRange: itemsOffsets,
-          extrapolate: Extrapolate.CLAMP
-        })),
-      set(this._indicatorWidth,
-        interpolate(carouselOffset, {
-          inputRange: itemsWidths.map((value, index) => index * Constants.screenWidth),
-          outputRange: itemsWidths,
-          extrapolate: Extrapolate.CLAMP
-        })));
-    } else {
-      nodes.push(set(this._indicatorOffset, runIndicatorTimer(new Clock(), currentPage, itemsOffsets)),
-        set(this._indicatorWidth, runIndicatorTimer(new Clock(), currentPage, itemsWidths)));
-    }
+    nodes.push(set(this._indicatorOffset,
+      interpolate(currentPage, {
+        inputRange: itemsOffsets.map((v, i) => i),
+        outputRange: itemsOffsets
+      })));
+    nodes.push(set(this._indicatorWidth,
+      interpolate(currentPage, {inputRange: itemsWidths.map((v, i) => i), outputRange: itemsWidths})));
 
-    nodes.push(Reanimated.onChange(currentPage, Reanimated.call([currentPage], this.focusSelected)));
+    nodes.push(Reanimated.onChange(targetPage, Reanimated.call([targetPage], this.focusSelected)));
 
     return block(nodes);
   };
 
   render() {
-    const {height, enableShadow, containerStyle} = this.props;
-    const {itemsWidths, scrollEnabled} = this.state;
+    const {height, enableShadow, containerStyle, testID} = this.props;
+    const {itemsWidths, scrollEnabled, fadeLeft, fadeRight} = this.state;
     return (
       <View
         style={[styles.container, enableShadow && styles.containerShadow, {width: this.containerWidth}, containerStyle]}
@@ -329,14 +398,20 @@ class TabBar extends PureComponent {
           style={styles.tabBarScroll}
           contentContainerStyle={{minWidth: this.containerWidth}}
           scrollEnabled={scrollEnabled}
-          onContentSizeChange={this.onContentSizeChange}
           onScroll={this.onScroll}
-          scrollEventThrottle={100}
+          scrollEventThrottle={16}
+          testID={testID}
+          snapToOffsets={this.getSnapBreakpoints()}
+          decelerationRate={'fast'}
         >
-          <View style={[styles.tabBar, height && {height}]}>{this.renderTabBarItems()}</View>
+          <View style={[styles.tabBar, height && {height}, {paddingHorizontal: this.centerOffset}]}>
+            {this.renderTabBarItems()}
+          </View>
           {this.renderSelectedIndicator()}
         </ScrollView>
         {_.size(itemsWidths) > 1 && <Code>{this.renderCodeBlock}</Code>}
+        <ScrollBarGradient left visible={fadeLeft}/>
+        <ScrollBarGradient visible={fadeRight}/>
       </View>
     );
   }
@@ -387,39 +462,5 @@ const styles = StyleSheet.create({
     })
   }
 });
-
-function runIndicatorTimer(clock, currentPage, values) {
-  const state = {
-    finished: new Value(0),
-    position: new Value(0),
-    time: new Value(0),
-    frameTime: new Value(0)
-  };
-
-  const config = {
-    duration: 200,
-    toValue: new Value(100),
-    easing: Easing.inOut(Easing.ease)
-  };
-
-  return block([
-    ..._.map(values, (value, index) => {
-      return cond(and(eq(currentPage, index), neq(config.toValue, index)), [
-        set(state.finished, 0),
-        set(state.time, 0),
-        set(state.frameTime, 0),
-        set(config.toValue, index),
-        startClock(clock)
-      ]);
-    }),
-    timing(clock, state, config),
-    cond(state.finished, stopClock(clock)),
-    interpolate(state.position, {
-      inputRange: _.times(values.length),
-      outputRange: values,
-      extrapolate: Extrapolate.CLAMP
-    })
-  ]);
-}
 
 export default asBaseComponent(forwardRef(TabBar));

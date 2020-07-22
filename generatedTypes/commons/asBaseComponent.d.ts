@@ -1,7 +1,13 @@
 import React from 'react';
 import * as Modifiers from './modifiers';
 export interface BaseComponentInjectedProps {
+    /**
+     * All generated styles from the modifiers props
+     */
     modifiers: ReturnType<typeof Modifiers.generateModifiersStyle>;
 }
-declare function asBaseComponent<PROPS>(WrappedComponent: React.ComponentType<PROPS>): React.ComponentType<Omit<PROPS, keyof BaseComponentInjectedProps>>;
+declare type ThemeComponent = {
+    useCustomTheme?: boolean;
+};
+declare function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentType<any>): React.ComponentClass<PROPS & ThemeComponent> & STATICS;
 export default asBaseComponent;

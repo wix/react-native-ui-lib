@@ -9,9 +9,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, TextInput as RNTextInput, Image as RNImage} from 'react-native';
 import {Constants} from '../../helpers';
-import {Colors, Typography} from '../../style';
+import {Colors, Typography, Spacings} from '../../style';
 import BaseInput from './BaseInput';
-import {Modal} from '../../screensComponents';
+import Modal from '../modal';
 import TextArea from './TextArea';
 import View from '../view';
 import Image from '../image';
@@ -40,12 +40,11 @@ const CHAR_COUNTER_COLOR_BY_STATE = {
 
 const LABEL_TYPOGRAPHY = Typography.text80;
 const ICON_SIZE = 24;
-const ICON_RIGHT_PADDING = 3;
 const ICON_LEFT_PADDING = 6;
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
 
 /**
- * @description: A wrapper for TextInput component with extra functionality like floating placeholder
+ * @description: A wrapper for TextInput component with extra functionality like floating placeholder and validations (This is an uncontrolled component)
  * @modifiers: Typography
  * @extends: TextInput
  * @extendslink: https://facebook.github.io/react-native/docs/textinput
@@ -66,6 +65,10 @@ export default class TextField extends BaseInput {
      * floating placeholder color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disabled: 'grey'}
      */
     floatingPlaceholderColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    /**
+     * Custom style for floating placeholder
+     */
+    floatingPlaceholderStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * This text will appear as a placeholder when the textInput becomes focused, only when passing floatingPlaceholder
      * as well (NOT for expandable textInputs)
@@ -122,6 +125,14 @@ export default class TextField extends BaseInput {
      */
     transformer: PropTypes.func,
     /**
+     * Pass to render a prefix text as part of the input (doesn't work with floatingPlaceholder)
+     */
+    prefix: PropTypes.string,
+    /**
+     * The prefix style
+     */
+    prefixStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
      * Fixed title that will displayed above the input (note: floatingPlaceholder MUST be 'false')
      */
     title: PropTypes.string,
@@ -150,6 +161,10 @@ export default class TextField extends BaseInput {
      */
     rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
+     * Pass to style the right icon source
+     */
+    rightIconStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
      * Props for the right button {iconSource, onPress, style}
      */
     rightButtonProps: PropTypes.shape({
@@ -157,7 +172,11 @@ export default class TextField extends BaseInput {
       iconColor: PropTypes.string,
       onPress: PropTypes.func,
       style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
-    })
+    }),
+    /**
+     * Pass to render a leading icon to the TextInput value. Accepts Image props (doesn't work with floatingPlaceholder)
+     */
+    leadingIcon: PropTypes.shape(Image.propTypes)
   };
 
   static defaultProps = {
@@ -217,21 +236,18 @@ export default class TextField extends BaseInput {
   }
 
   getAccessibilityInfo() {
-    const {floatingPlaceholder, placeholder, expandable, value} = this.getThemeProps();
+    const {floatingPlaceholder, placeholder} = this.getThemeProps();
+    const accessibilityState = this.isDisabled() ? {disabled: true} : undefined;
+    let accessibilityLabel = floatingPlaceholder ? this.props.accessibilityLabel || placeholder : '';
 
-    let accessibilityLabel = floatingPlaceholder ? placeholder : undefined;
     if (this.isRequiredField()) {
-      accessibilityLabel = `${accessibilityLabel || ''}. Mandatory`;
-    }
-    if (expandable) {
-      accessibilityLabel = `${accessibilityLabel || ''}. ${value || ''}`;
+      accessibilityLabel = `${accessibilityLabel}. Mandatory`;
     }
 
-    const accessibilityStates = this.isDisabled() ? ['disabled'] : [];
     return {
       accessibilityLabel,
       // on Android accessibilityStates cause issues with expandable input
-      accessibilityStates: Constants.isIOS ? accessibilityStates : undefined
+      accessibilityState: Constants.isIOS ? accessibilityState : undefined
     };
   }
 
@@ -298,8 +314,7 @@ export default class TextField extends BaseInput {
   }
 
   getTopPaddings() {
-    const {floatingPlaceholder} = this.getThemeProps();
-    return floatingPlaceholder ? (this.shouldShowTopError() ? undefined : 25) : undefined;
+    return this.shouldFakePlaceholder() ? (this.shouldShowTopError() ? undefined : 25) : undefined;
   }
 
   isDisabled() {
@@ -333,8 +348,9 @@ export default class TextField extends BaseInput {
   }
 
   shouldFakePlaceholder() {
-    const {floatingPlaceholder, centered} = this.getThemeProps();
-    return Boolean(floatingPlaceholder && !centered && !this.shouldShowTopError());
+    const {floatingPlaceholder, centered, leadingIcon, prefix} = this.getThemeProps();
+
+    return !leadingIcon && !prefix && Boolean(floatingPlaceholder && !centered && !this.shouldShowTopError());
   }
 
   shouldShowError() {
@@ -361,7 +377,7 @@ export default class TextField extends BaseInput {
   /** Renders */
   renderPlaceholder() {
     const {floatingPlaceholderState, floatingPlaceholderTranslate} = this.state;
-    const {placeholder, placeholderTextColor, floatingPlaceholderColor, multiline} = this.getThemeProps();
+    const {placeholder, placeholderTextColor, floatingPlaceholderColor, floatingPlaceholderStyle} = this.getThemeProps();
     const typography = this.getTypography();
     const placeholderColor = this.getStateColor(placeholderTextColor || PLACEHOLDER_COLOR_BY_STATE.default);
 
@@ -377,6 +393,9 @@ export default class TextField extends BaseInput {
             style={[
               this.styles.placeholder,
               typography,
+              // TODO: we need to exclude completely any dependency on line height
+              // in this component since it always breaks alignments
+              {lineHeight: undefined},
               {
                 transform: [
                   {
@@ -388,7 +407,7 @@ export default class TextField extends BaseInput {
                   {
                     translateY: floatingPlaceholderState.interpolate({
                       inputRange: [0, 1],
-                      outputRange: multiline && Constants.isIOS ? [30, 5] : [25, 0]
+                      outputRange: [25, 0]
                     })
                   },
                   {
@@ -401,13 +420,22 @@ export default class TextField extends BaseInput {
                 color: this.shouldFloatPlaceholder()
                   ? this.getStateColor(floatingPlaceholderColor || PLACEHOLDER_COLOR_BY_STATE)
                   : placeholderColor
-              }
+              },
+              floatingPlaceholderStyle
             ]}
           >
             {this.getRequiredPlaceholder(placeholder)}
           </Animated.Text>
         </View>
       );
+    }
+  }
+
+  renderPrefix() {
+    const {prefix, prefixStyle} = this.props;
+    if (prefix) {
+      const typography = this.getTypography();
+      return <Text style={[this.styles.prefix, typography, {lineHeight: undefined}, prefixStyle]}>{prefix}</Text>;
     }
   }
 
@@ -519,7 +547,7 @@ export default class TextField extends BaseInput {
       style,
       placeholderTextColor,
       multiline,
-      hideUnderline,
+      // hideUnderline,
       numberOfLines,
       expandable,
       rightIconSource,
@@ -531,14 +559,14 @@ export default class TextField extends BaseInput {
     const {lineHeight, ...typographyStyle} = typography;
     const textColor = this.getStateColor(color || this.extractColorValue());
     const hasRightElement = this.shouldDisplayRightButton() || rightIconSource;
-    const shouldUseMultiline = multiline || expandable;
+    const shouldUseMultiline = multiline/*  || expandable */;
 
     const inputStyle = [
       hasRightElement && this.styles.rightElement,
       this.styles.input,
-      hideUnderline && this.styles.inputWithoutUnderline,
+      // hideUnderline && this.styles.inputWithoutUnderline,
       {...typographyStyle},
-      Constants.isAndroid && {lineHeight},
+      // Constants.isAndroid && {lineHeight},
       expandable && {maxHeight: lineHeight * (Constants.isAndroid ? 3 : 3.3)},
       Constants.isRTL && {minHeight: lineHeight + 3},
       Constants.isIOS && shouldUseMultiline && {paddingTop: 0}, // fix for iOS topPadding in multiline TextInput
@@ -594,19 +622,19 @@ export default class TextField extends BaseInput {
   }
 
   renderRightIcon() {
-    const {rightIconSource} = this.getThemeProps();
+    const {rightIconSource, rightIconStyle} = this.getThemeProps();
 
     if (rightIconSource) {
       return (
         <View style={this.styles.rightIcon} pointerEvents="none">
-          <Image source={rightIconSource} resizeMode={'center'} style={this.styles.rightButtonImage}/>
+          <Image source={rightIconSource} resizeMode={'center'} style={[this.styles.rightButtonImage, rightIconStyle]}/>
         </View>
       );
     }
   }
 
   render() {
-    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline} = this.getThemeProps();
+    const {expandable, containerStyle, underlineColor, useTopErrors, hideUnderline, leadingIcon} = this.getThemeProps();
     const underlineStateColor = this.getStateColor(underlineColor || UNDERLINE_COLOR_BY_STATE);
 
     return (
@@ -621,6 +649,8 @@ export default class TextField extends BaseInput {
             {paddingTop: this.getTopPaddings()}
           ]}
         >
+          {leadingIcon && <Image {...leadingIcon} style={[this.styles.leadingIcon, leadingIcon.style]}/>}
+          {this.renderPrefix()}
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
           {this.renderRightButton()}
@@ -680,7 +710,7 @@ export default class TextField extends BaseInput {
   };
 }
 
-function createStyles({centered, multiline, expandable}) {
+function createStyles({centered, multiline, hideUnderline}) {
   const inputTextAlign = Constants.isRTL ? 'right' : 'left';
 
   return StyleSheet.create({
@@ -691,33 +721,39 @@ function createStyles({centered, multiline, expandable}) {
       flexDirection: 'row',
       justifyContent: centered ? 'center' : undefined,
       borderBottomWidth: 1,
-      borderColor: Colors.dark70
+      borderColor: Colors.dark70,
+      paddingBottom: Constants.isIOS ? 10 : 5
     },
     innerContainerWithoutUnderline: {
-      borderBottomWidth: 0
+      borderBottomWidth: 0,
+      paddingBottom: 0
     },
     input: {
       flexGrow: 1,
       textAlign: centered ? 'center' : inputTextAlign,
       backgroundColor: 'transparent',
-      marginBottom: Constants.isIOS ? 10 : 5,
+      // marginBottom: Constants.isIOS ? 10 : 5,
       padding: 0, // for Android
-      textAlignVertical: 'top', // for Android
+      // textAlignVertical: 'top', // for Android
       borderColor: 'transparent', // borderColor & borderWidth is a fix for collapsing issue on Android
-      borderWidth: 1 // for Android
+      borderWidth: Constants.isAndroid ? 1 : undefined // for Android
     },
     expandableInput: {
       flexGrow: 1,
       flexDirection: 'row',
       alignItems: 'center'
     },
-    inputWithoutUnderline: {
-      marginBottom: undefined
-    },
+    // inputWithoutUnderline: {
+    //   marginBottom: undefined
+    // },
     expandableModalContent: {
       flex: 1,
       paddingTop: 15,
       paddingHorizontal: 20
+    },
+    prefix: {
+      color: Colors.grey30,
+      marginRight: Spacings.s1
     },
     placeholder: {
       textAlign: 'left'
@@ -737,22 +773,25 @@ function createStyles({centered, multiline, expandable}) {
       height: LABEL_TYPOGRAPHY.lineHeight
     },
     rightElement: {
-      paddingRight: ICON_SIZE + ICON_RIGHT_PADDING + ICON_LEFT_PADDING
+      paddingRight: ICON_SIZE + ICON_LEFT_PADDING
     },
     rightIcon: {
       position: 'absolute',
-      right: ICON_RIGHT_PADDING,
+      right: 0,
       alignSelf: 'flex-end',
-      paddingBottom: expandable ? 14 : 8
+      paddingBottom: hideUnderline ? undefined : 8
     },
     rightButton: {
       position: 'absolute',
-      right: ICON_RIGHT_PADDING,
+      right: 0,
       alignSelf: 'center'
     },
     rightButtonImage: {
       width: ICON_SIZE,
       height: ICON_SIZE
+    },
+    leadingIcon: {
+      alignSelf: 'center'
     },
     accessibilityDummyErrorMessage: {
       position: 'absolute',

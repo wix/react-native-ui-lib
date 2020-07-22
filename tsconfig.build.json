@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "emitDeclarationOnly": true
+  },
+  "include": ["src/**/*", "typings/**/*"],
+  "exclude": [ "node_modules", "src/index.ts"]
+}

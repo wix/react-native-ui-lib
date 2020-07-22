@@ -11,6 +11,9 @@ export declare class ThemeManager {
         dividerColor: string;
         components: Extendable;
     };
+    forcedTheme: {
+        components: Extendable;
+    };
     setTheme(overrides: Dictionary<string>): void;
     getTheme(): {
         primaryColor: string;
@@ -26,8 +29,10 @@ export declare class ThemeManager {
     };
     setItem(key: string, value: string): void;
     getItem(key: string): any;
-    setComponentTheme(componentName: string, overrides: Dictionary<string> | Function): void;
+    setComponentTheme(componentName: string, overrides: Dictionary<any> | Function): void;
+    setComponentForcedTheme(componentName: string, overrides: Dictionary<any> | Function): void;
     get components(): Extendable;
+    get forcedThemeComponents(): Extendable;
     get primaryColor(): string;
     get CTATextColor(): string;
     get CTADisabledColor(): string;

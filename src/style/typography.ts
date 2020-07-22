@@ -1,7 +1,10 @@
+import {TextStyle} from 'react-native';
 import _ from 'lodash';
 import Constants from '../helpers/Constants';
 
 import TypographyPresets from './typographyPresets';
+
+type MeasureTextTypography = TextStyle & {allowFontScaling?: boolean};
 
 export class Typography {
   keysPattern = this.generateKeysPattern();
@@ -41,7 +44,7 @@ export class Typography {
     }
   }
 
-  async measureTextSize(text: string, typography = TypographyPresets.text70, containerWidth = Constants.screenWidth) {
+  async measureTextSize(text: string, typography: MeasureTextTypography = TypographyPresets.text70!, containerWidth = Constants.screenWidth) {
     const rnTextSize = require('react-native-text-size').default;
     if (text) {
       const size = await rnTextSize.measure({
@@ -53,7 +56,8 @@ export class Typography {
     }
   }
 }
-const TypedTypography = Typography as ExtendTypeWith<typeof Typography, typeof TypographyPresets>
+type CustomTypographyPresets = {[custom: string]: TextStyle};
+const TypedTypography = Typography as ExtendTypeWith<ExtendTypeWith<typeof Typography, typeof TypographyPresets>, CustomTypographyPresets>;
 const typography = new TypedTypography();
 typography.loadTypographies(TypographyPresets);
 

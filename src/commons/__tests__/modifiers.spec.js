@@ -41,7 +41,14 @@ describe('Modifiers', () => {
       expect(uut.extractTypographyValue({})).toEqual(undefined);
     });
 
-    it('should return take the last typography modifier prop in case there is more than one', () => {
+    it('should ignore modifiers with false value', () => {
+      expect(uut.extractTypographyValue({
+        text40: true,
+        text70: false
+      }),).toEqual(Typography.text40);
+    });
+
+    it('should prioritize last typography modifier prop in case there is more than one', () => {
       expect(uut.extractTypographyValue({
         text40: true,
         text70: true
@@ -50,10 +57,7 @@ describe('Modifiers', () => {
         text70: true,
         text40: true
       }),).toEqual(Typography.text40);
-      expect(uut.extractTypographyValue({
-        text40: true,
-        text70: false
-      }),).toEqual(Typography.text40);
+      
     });
 
     it('should return value of the custom made typography', () => {
@@ -63,11 +67,17 @@ describe('Modifiers', () => {
       expect(uut.extractTypographyValue({
         text40: true,
         customTypography: true
-      }),).toEqual(customTypography);
+      }),).toEqual({...Typography.text40, ...customTypography});
       expect(uut.extractTypographyValue({
         customTypography: true,
         text40: true
-      }),).toEqual(Typography.text40);
+      }),).toEqual({...customTypography, ...Typography.text40});
+    });
+
+    it('should merge typography modifiers', () => {
+      const bold = {fontWeight: 'bold'};
+      Typography.loadTypographies({bold});
+      expect(uut.extractTypographyValue({text70: true, bold: true})).toEqual({...Typography.text70, fontWeight: 'bold'});
     });
   });
 
@@ -329,6 +339,11 @@ describe('Modifiers', () => {
   });
 
   describe('getThemeProps', () => {
+    beforeEach(() => {
+      ThemeManager.setComponentTheme('SampleComponent', undefined);
+      ThemeManager.setComponentForcedTheme('SampleComponent', undefined);
+    });
+
     it('should return props values from the Theme Manager if were defined', () => {
       ThemeManager.setComponentTheme('SampleComponent', {prop1: 'themeValue'});
       expect(uut.getThemeProps.call(SampleComponent, {})).toEqual({prop1: 'themeValue'});
@@ -348,6 +363,44 @@ describe('Modifiers', () => {
       ThemeManager.setComponentTheme('SampleComponent', props => ({prop1: props.test ? 'yes' : 'no'}));
       expect(uut.getThemeProps.call(SampleComponent, {test: true})).toEqual({prop1: 'yes', test: true});
       expect(uut.getThemeProps.call(SampleComponent, {test: false})).toEqual({prop1: 'no', test: false});
+    });
+    
+    it('should prioritize forced theme props over user props', () => {
+      ThemeManager.setComponentForcedTheme('SampleComponent', (props) => ({foo: 'forced'}));
+      expect(uut.getThemeProps.call(SampleComponent, {foo: 'user-value', other: 'other'})).toEqual({
+        foo: 'forced',
+        other: 'other'
+      });
+    });
+  });
+
+  describe('generateModifiersStyle', () => {
+    it('should generate modifiers object out of props', () => {
+      const modifiers = uut.generateModifiersStyle(undefined, {
+        'bg-red40': true,
+        'padding-20': true,
+        'margin-20': true,
+        flex: true,
+        bottom: true,
+        br100: true
+      });
+      expect(modifiers.backgroundColor).toBe(Colors.red40);
+      expect(modifiers.paddings).toEqual({padding: 20});
+      expect(modifiers.margins).toEqual({margin: 20});
+      expect(modifiers.flexStyle).toEqual({flex: 1});
+      expect(modifiers.alignments).toEqual({justifyContent: 'flex-end'});
+      expect(modifiers.borderRadius).toEqual(BorderRadiuses.br100);
+    });
+
+    // TODO: enable this test once we fixed the issue with omitting empty values out of modifiers
+    it.skip('should not include empty modifiers values', () => {
+      const modifiers = uut.generateModifiersStyle(undefined, {'bg-red40': true});
+      expect(modifiers.backgroundColor).toBe(Colors.red40);
+      expect(modifiers.paddings).toBeUndefined();
+      expect(modifiers.margins).toBeUndefined();
+      expect(modifiers.flexStyle).toBeUndefined();
+      expect(modifiers.alignments).toBeUndefined();
+      expect(modifiers.borderRadius).toBeUndefined();
     });
   });
 });

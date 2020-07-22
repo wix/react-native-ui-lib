@@ -15,8 +15,10 @@ class MainScreen extends Component {
   static propTypes = {
     containerStyle: ViewPropTypes.style,
     renderItem: PropTypes.func,
-    pageStyle: ViewPropTypes.style
+    pageStyle: ViewPropTypes.style    
   };
+
+  settingsScreenName = 'unicorn.Settings';
 
   static options() {
     return {
@@ -50,7 +52,7 @@ class MainScreen extends Component {
 
   onSearchBoxBlur = () => {
     this.closeSearchBox();
-    this.filterExplorerScreens('');
+    // this.filterExplorerScreens('');
   };
 
   getMenuData = () => {
@@ -63,8 +65,12 @@ class MainScreen extends Component {
 
     if (buttonId === 'uilib.settingsButton') {
       this.pushScreen({
-        name: 'unicorn.Settings',
-        passProps: {navigationData: data, playground: this.props.playground}
+        name: this.settingsScreenName,
+        passProps: {
+          navigationData: data, 
+          playground: this.props.playground, 
+          extraSettingsUI: this.props.extraSettingsUI
+        }
       });
     }
   };
@@ -73,6 +79,7 @@ class MainScreen extends Component {
     Navigation.push(this.props.componentId, {
       component: {
         name: options.name || options.screen,
+        id: this.settingsScreenName,
         passProps: options.passProps,
         options: {
           topBar: {
@@ -97,7 +104,7 @@ class MainScreen extends Component {
     this.closeSearchBox();
 
     setTimeout(() => {
-      this.filterExplorerScreens('');
+      // this.filterExplorerScreens('');
       this.pushScreen(row);
     }, 0);
   };
@@ -113,7 +120,7 @@ class MainScreen extends Component {
         const filteredMenuSection = _.filter(menuSection.screens, menuItem => {
           const {title, description, tags} = menuItem;
           return (
-            _.includes(_.lowerCase(title), _.toLower(filterText)) ||
+            _.includes(_.toLower(title), _.toLower(filterText)) ||
             _.includes(_.toLower(description), _.toLower(filterText)) ||
             _.includes(_.toLower(tags), _.toLower(filterText))
           );
@@ -137,6 +144,7 @@ class MainScreen extends Component {
       <TextField
         ref={r => (this.input = r)}
         value={this.state.filterText}
+        testID="uilib.search_for_component"
         placeholder="Search for your component..."
         onChangeText={this.filterExplorerScreens}
         onBlur={this.onSearchBoxBlur}
@@ -242,8 +250,8 @@ class MainScreen extends Component {
         {showResults && this.renderSearchResults(filteredNavigationData)}
 
         {showCarousel && (
-          <TabController asCarousel>
-            <TabController.TabBar items={_.map(data, section => ({label: section.title}))}/>
+          <TabController asCarousel items={_.map(data, section => ({label: section.title, testID: `section.${section.title}`}))}>
+            <TabController.TabBar testID={'mainScreenTabBar'}/>
             {this.renderPages(data)}
           </TabController>
         )}

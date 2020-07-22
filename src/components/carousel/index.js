@@ -61,6 +61,10 @@ export default class Carousel extends BaseComponent {
      */
     onScroll: PropTypes.func,
     /**
+     * Should the container be animated (send the animation style via containerStyle)
+     */
+    animated: PropTypes.bool,
+    /**
      * the carousel style
      */
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
@@ -110,24 +114,39 @@ export default class Carousel extends BaseComponent {
   constructor(props) {
     super(props);
 
+    const themeProps = this.getThemeProps();
     this.carousel = React.createRef();
-    const defaultPageWidth = props.loop ? 
-      Constants.screenWidth : props.pageWidth + this.getItemSpacings(props) || Constants.screenWidth;
+    const defaultPageWidth = (themeProps.loop || !themeProps.pageWidth) ? Constants.screenWidth : themeProps.pageWidth;
     
     this.state = {
       containerWidth: undefined,
-      currentPage: this.shouldUsePageWidth() ? this.getCalcIndex(props.initialPage) : props.initialPage,
-      currentStandingPage: props.initialPage,
+      currentPage: this.shouldUsePageWidth() ? this.getCalcIndex(themeProps.initialPage) : themeProps.initialPage,
+      currentStandingPage: themeProps.initialPage,
       pageWidth: defaultPageWidth,
-      initialOffset: {x: presenter.calcOffset(props, {currentPage: props.initialPage, pageWidth: defaultPageWidth})}
+      initialOffset: {x: presenter.calcOffset(themeProps, {currentPage: themeProps.initialPage, pageWidth: defaultPageWidth})}
     };
   }
 
   componentDidMount() {
     Constants.addDimensionsEventListener(this.onOrientationChanged);
 
-    if (this.props.autoplay) {
+    if (this.getThemeProps().autoplay) {
       this.startAutoPlay();
+    }
+  }
+
+  // TODO: change to getDerivedStateFromProps (requires changing from BaseComponent to asBaseComponent)
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const {currentPage} = this.state;
+    const {pageWidth: nexPageWidth} = nextProps;
+    const {pageWidth} = this.getThemeProps();
+
+    if (pageWidth !== nexPageWidth) {
+      const pageWidth = nexPageWidth;
+      this.setState({
+        pageWidth,
+        initialOffset: {x: presenter.calcOffset(this.getThemeProps(), {currentPage, pageWidth})}
+      });
     }
   }
 
@@ -137,7 +156,7 @@ export default class Carousel extends BaseComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {autoplay} = this.props;
+    const {autoplay} = this.getThemeProps();
     if (autoplay && !prevProps.autoplay) {
       this.startAutoPlay();
     } else if (!autoplay && prevProps.autoplay) {
@@ -176,9 +195,7 @@ export default class Carousel extends BaseComponent {
   }
 
   updateOffset = (animated = false) => {
-    const centerOffset = Constants.isIOS && this.shouldUsePageWidth() ? 
-      (Constants.screenWidth - this.state.pageWidth) / 2 : 0;
-    const x = presenter.calcOffset(this.getThemeProps(), this.state) - centerOffset;
+    const x = presenter.calcOffset(this.getThemeProps(), this.state);
 
     if (this.carousel) {
       this.carousel.current.scrollTo({x, animated});
@@ -197,7 +214,7 @@ export default class Carousel extends BaseComponent {
   startAutoPlay() {    
     this.autoplayTimer = setInterval(() => {      
       this.goToNextPage();
-    }, this.props.autoplayInterval);
+    }, this.getThemeProps().autoplayInterval);
   }
 
   stopAutoPlay() {
@@ -250,14 +267,13 @@ export default class Carousel extends BaseComponent {
 
   onContainerLayout = ({nativeEvent: {layout: {width: containerWidth}}}) => {
     const update = {containerWidth};
-    const {pageWidth} = this.getThemeProps();
+    const {pageWidth = containerWidth} = this.getThemeProps();
 
-    if (!pageWidth) {
-      update.pageWidth = containerWidth;
-      update.initialOffset = {
-        x: presenter.calcOffset(this.getThemeProps(), {currentPage: this.state.currentPage, pageWidth: containerWidth})
-      };
-    }
+    update.pageWidth = pageWidth;
+    update.initialOffset = {
+      x: presenter.calcOffset(this.getThemeProps(), {currentPage: this.state.currentPage, pageWidth})
+    };
+
     this.setState(update);
   };
 
@@ -280,7 +296,7 @@ export default class Carousel extends BaseComponent {
     
     this.setState({currentStandingPage: index});
     if (currentStandingPage !== index) {
-      _.invoke(this.props, 'onChangePage', index, currentStandingPage);
+      _.invoke(this.getThemeProps(), 'onChangePage', index, currentStandingPage);
     }
   };
 
@@ -323,7 +339,7 @@ export default class Carousel extends BaseComponent {
       this.orientationChange = false;
     }
 
-    if (loop && presenter.isOutOfBounds(offsetX, this.props, pageWidth)) {
+    if (loop && presenter.isOutOfBounds(offsetX, this.getThemeProps(), pageWidth)) {
       this.updateOffset();
     }
 
@@ -331,7 +347,7 @@ export default class Carousel extends BaseComponent {
       this.resetAutoPlay();
     }
 
-    _.invoke(this.props, 'onScroll', event);
+    _.invoke(this.getThemeProps(), 'onScroll', event);
   };
 
   renderChild = (child, key) => {
@@ -441,14 +457,14 @@ export default class Carousel extends BaseComponent {
   }
 
   renderCarousel() {
-    const {containerStyle, ...others} = this.getThemeProps();
+    const {containerStyle, animated, ...others} = this.getThemeProps();
     const {initialOffset} = this.state;
     const scrollContainerStyle = this.shouldUsePageWidth() ? {paddingRight: this.getItemSpacings(this.getThemeProps())} : undefined;
     const snapToOffsets = this.getSnapToOffsets();
     const marginBottom = Math.max(0, this.getContainerPaddingVertical() - 16);
 
     return (
-      <View style={[{marginBottom}, containerStyle]} onLayout={this.onContainerLayout}>
+      <View animated={animated} style={[{marginBottom}, containerStyle]} onLayout={this.onContainerLayout}>
         <ScrollView
           {...others}
           ref={this.carousel}

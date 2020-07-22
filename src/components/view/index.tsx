@@ -1,10 +1,9 @@
 import React, {PureComponent} from 'react';
 import {View as RNView, SafeAreaView, Animated, ViewProps} from 'react-native';
-import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
+import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps, ContainerModifiers} from '../../commons/new';
 import Constants from '../../helpers/Constants';
-import {ContainerModifiers} from '../../../typings/modifiers';
 
-interface ViewPropTypes extends ViewProps {
+export interface ViewPropTypes extends ViewProps, ContainerModifiers {
   /**
    * If true, will render as SafeAreaView
    */
@@ -17,8 +16,28 @@ interface ViewPropTypes extends ViewProps {
    * Turn off accessibility for this view and its nested children
    */
   inaccessible?: boolean;
+  /**
+   * TODO: probobly isn't needed
+   */
+  width?: string | number;
+  /**
+   * TODO: probobly isn't needed
+   */
+  height?: string | number;
+  /**
+   * Experimental: Pass time in ms to delay render
+   */
+  renderDelay?: number;
+  /**
+   * Set background color
+   */
+  backgroundColor?: string;
 }
-type PropsTypes = BaseComponentInjectedProps & ViewPropTypes & ForwardRefInjectedProps & ContainerModifiers;
+type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & ViewPropTypes;
+
+interface ViewState {
+  ready: boolean;
+}
 
 /**
  * @description: An enhanced View component
@@ -26,15 +45,29 @@ type PropsTypes = BaseComponentInjectedProps & ViewPropTypes & ForwardRefInjecte
  * @extendslink: https://facebook.github.io/react-native/docs/view.html
  * @modifiers: margins, paddings, alignments, background, borderRadius
  */
-class View extends PureComponent<PropsTypes> {
+class View extends PureComponent<PropsTypes, ViewState> {
   static displayName = 'View';
   private Container: React.ClassType<any, any, any>;
+
   constructor(props: PropsTypes) {
     super(props);
 
     this.Container = props.useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
     if (props.animated) {
       this.Container = Animated.createAnimatedComponent(this.Container);
+    }
+
+    this.state = {
+      ready: !props.renderDelay
+    };
+  }
+
+  componentDidMount() {
+    const {renderDelay} = this.props;
+    if (renderDelay) {
+      setTimeout(() => {
+        this.setState({ready: true});
+      }, renderDelay);
     }
   }
 
@@ -45,6 +78,10 @@ class View extends PureComponent<PropsTypes> {
   }
 
   render() {
+    if (!this.state.ready) {
+      return null;
+    }
+
     // (!) extract left, top, bottom... props to avoid passing them on Android
     // eslint-disable-next-line
     const {
@@ -84,4 +121,4 @@ class View extends PureComponent<PropsTypes> {
   }
 }
 
-export default asBaseComponent(forwardRef(View));
+export default asBaseComponent<ViewPropTypes>(forwardRef(View));
