@@ -21,7 +21,6 @@ interface ItemProps {
   keepOpen?: boolean;
   style?: ViewStyle;
   testID?: string;
-
 }
 
 interface DrawerProps {
@@ -104,7 +103,7 @@ interface DrawerProps {
   /**
    * Style
    */
-  style: ViewStyle;
+  style?: ViewStyle;
 }
 
 /**
@@ -113,7 +112,7 @@ interface DrawerProps {
  * with gestureHandlerRootHOC from 'react-native-gesture-handler'. see
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
-class NewDrawer extends PureComponent<DrawerProps> {
+class Drawer extends PureComponent<DrawerProps> {
   static displayName = 'Drawer';
 
   static defaultProps = {
@@ -378,7 +377,7 @@ class NewDrawer extends PureComponent<DrawerProps> {
   }
 }
 
-export default asBaseComponent<DrawerProps, typeof NewDrawer>(NewDrawer);
+export default asBaseComponent<DrawerProps, typeof Drawer>(Drawer);
 
 const styles = StyleSheet.create({
   leftAction: {
