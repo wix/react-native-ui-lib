@@ -56,10 +56,6 @@ export type ChipPropTypes = ViewProps & TouchableOpacityProps & {
    */
   label?: string;
   /**
-   * Color of the label.
-   */
-  labelColor?: string;
-  /**
    * Label's style
    */
   labelStyle?: StyleProp<TextStyle>;
@@ -135,7 +131,6 @@ const Chip: React.FC<ChipPropTypes> = ({
   iconStyle,
   label,
   labelStyle,
-  labelColor,
   onPress,
   resetSpacings,
   size,
@@ -207,14 +202,13 @@ const Chip: React.FC<ChipPropTypes> = ({
         text90M
         numberOfLines={1}
         // @ts-ignore
-        tintColor={labelColor}
         style={[styles.label, getMargins('label'), labelStyle]}
         testID={`${testID}.label`}
       >
-        {label}
+        {!!label && label}
       </Text>
     );
-  }, [label, labelColor, labelStyle]);
+  }, [label, labelStyle]);
 
   const getMargins = useCallback((element: string): object | undefined => {
     if (!resetSpacings) {
