@@ -43,10 +43,6 @@ export declare type ChipPropTypes = ViewProps & TouchableOpacityProps & {
      */
     label?: string;
     /**
-     * Color of the label.
-     */
-    labelColor?: string;
-    /**
      * Label's style
      */
     labelStyle?: StyleProp<TextStyle>;
@@ -131,10 +127,6 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      * Main Chip text
      */
     label?: string | undefined;
-    /**
-     * Color of the label.
-     */
-    labelColor?: string | undefined;
     /**
      * Label's style
      */
