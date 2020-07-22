@@ -91,7 +91,7 @@ interface DrawerProps {
     /**
      * Style
      */
-    style: ViewStyle;
+    style?: ViewStyle;
 }
 /**
  * @description: Drawer Component
@@ -99,7 +99,7 @@ interface DrawerProps {
  * with gestureHandlerRootHOC from 'react-native-gesture-handler'. see
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
-declare class NewDrawer extends PureComponent<DrawerProps> {
+declare class Drawer extends PureComponent<DrawerProps> {
     static displayName: string;
     static defaultProps: {
         itemsTintColor: string;
@@ -139,5 +139,5 @@ declare class NewDrawer extends PureComponent<DrawerProps> {
 }
 declare const _default: React.ComponentClass<DrawerProps & {
     useCustomTheme?: boolean | undefined;
-}, any> & typeof NewDrawer;
+}, any> & typeof Drawer;
 export default _default;
