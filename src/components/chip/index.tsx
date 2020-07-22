@@ -84,13 +84,13 @@ export type ChipPropTypes = ViewProps & TouchableOpacityProps & {
 
   //LEFT ICON
   /**
-   * Icon's source
+   * Left icon's source
    */
   iconSource?: ImageSourcePropType;
 
   //RIGHT ICON
   /**
-   * Icon's source
+   * Right icon's source
    */
   rightIconSource?: ImageSourcePropType;
 

@@ -63,11 +63,11 @@ export declare type ChipPropTypes = ViewProps & TouchableOpacityProps & {
      */
     iconStyle?: StyleProp<ImageStyle>;
     /**
-     * Icon's source
+     * Left icon's source
      */
     iconSource?: ImageSourcePropType;
     /**
-     * Icon's source
+     * Right icon's source
      */
     rightIconSource?: ImageSourcePropType;
     /**
@@ -152,11 +152,11 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      */
     iconStyle?: StyleProp<ImageStyle>;
     /**
-     * Icon's source
+     * Left icon's source
      */
     iconSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
     /**
-     * Icon's source
+     * Right icon's source
      */
     rightIconSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
     /**
