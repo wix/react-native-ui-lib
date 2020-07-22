@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, ViewStyle, ViewProps, TouchableOpacityProps, ImageStyle, TextStyle, ImageSourcePropType } from 'react-native';
+import { StyleProp, ViewStyle, ViewProps, TouchableOpacityProps, ImageStyle, ImageProps, TextStyle, ImageSourcePropType } from 'react-native';
 import { BadgeProps } from 'typings';
 import { AvatarPropTypes } from '../avatar';
 export declare type ChipPropTypes = ViewProps & TouchableOpacityProps & {
@@ -55,17 +55,21 @@ export declare type ChipPropTypes = ViewProps & TouchableOpacityProps & {
      */
     avatarProps?: AvatarPropTypes;
     /**
-     * Icon's source
+     * Additional icon props
      */
-    iconSource?: ImageSourcePropType;
-    /**
-     * Icon's color
-     */
-    iconColor?: string;
+    iconProps?: ImageProps;
     /**
      * Icon style
      */
     iconStyle?: StyleProp<ImageStyle>;
+    /**
+     * Icon's source
+     */
+    iconSource?: ImageSourcePropType;
+    /**
+     * Icon's source
+     */
+    rightIconSource?: ImageSourcePropType;
     /**
      * Adds a dismiss button and serves as its callback
      */
@@ -140,17 +144,21 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      */
     avatarProps?: AvatarPropTypes | undefined;
     /**
-     * Icon's source
+     * Additional icon props
      */
-    iconSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
-    /**
-     * Icon's color
-     */
-    iconColor?: string | undefined;
+    iconProps?: ImageProps | undefined;
     /**
      * Icon style
      */
     iconStyle?: StyleProp<ImageStyle>;
+    /**
+     * Icon's source
+     */
+    iconSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    /**
+     * Icon's source
+     */
+    rightIconSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
     /**
      * Adds a dismiss button and serves as its callback
      */
