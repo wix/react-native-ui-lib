@@ -261,7 +261,8 @@ class Drawer extends PureComponent<DrawerProps> {
   private renderActions(items: ItemProps[] | undefined, progress: Animated.Value/* , dragX: Animated.Value */) {
     if (items) {
       return (
-        <View animated row style={{transform: [{translateX: this.leftActionX}]} as any as ViewStyle}>
+        // @ts-ignore
+        <View animated row style={{transform: [{translateX: this.leftActionX}]}}>
           {_.map(items, (item, index: number) => {
             return this.renderAction({
               item,
