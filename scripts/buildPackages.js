@@ -12,7 +12,7 @@ const packages = [
   }
 ];
 
-// Write packages
+/* Write custom packages */
 packages.forEach((package) => {
   let content = package.content || '';
 
@@ -31,16 +31,17 @@ packages.forEach((package) => {
   fs.writeFileSync(package.filename, content);
 });
 
-// Write separate components
+/* Write all components as separate packages */
 const path = './src/components';
 fs.readdir(path, (err, files) => {
   if (!err) {
-    files.filter(f => f !== 'index.js').forEach((file) => {
-      fs.writeFileSync(
-        `${file}.js`,
-        `module.exports = require('${path}/${file}').default;\n`
-      );
-    });
+    files
+      .filter((f) => f !== 'index.js')
+      .forEach((file) => {
+        fs.writeFileSync(
+          `${file}.js`,
+          `module.exports = require('${path}/${file}').default;\n`
+        );
+      });
   }
 });
-
