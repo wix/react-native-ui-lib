@@ -1,26 +1,110 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, {PureComponent, RefObject} from 'react';
 import memoize from 'memoize-one';
-import {Animated, Easing, StyleSheet, ViewPropTypes} from 'react-native';
+import {Animated, Easing, StyleSheet, ViewStyle, TextStyle, AccessibilityActionEvent} from 'react-native';
 import {RectButton} from 'react-native-gesture-handler';
-import {PureBaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
+import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
-import View from '../../components/view';
-import Swipeable from './Swipeable';
+import View from '../view';
+import Swipeable, {PropType as SwipeableProps} from './Swipeable';
 
 const DEFAULT_BG = Colors.blue30;
-const ITEM_PROP_TYPES = {
-  width: PropTypes.number,
-  background: PropTypes.string,
-  text: PropTypes.string,
-  icon: PropTypes.number,
-  onPress: PropTypes.func,
-  keepOpen: PropTypes.bool,
-  style: ViewPropTypes.style,
-  testID: PropTypes.string
-};
+
+interface ItemProps {
+  width?: number;
+  background?: string;
+  text?: string;
+  icon?: number;
+  onPress?: Function;
+  keepOpen?: boolean;
+  style?: ViewStyle;
+  testID?: string;
+}
+
+interface DrawerProps {
+  /**
+   * The drawer animation bounciness
+   */
+  bounciness?: number;
+  /**
+   * OnDragStart handler
+   */
+  onDragStart?: Function;
+  /**
+   * The bottom layer's items to appear when opened from the right
+   */
+  rightItems?: ItemProps[];
+  /**
+   * The bottom layer's item to appear when opened from the left (a single item)
+   */
+  leftItem?: ItemProps;
+  /**
+   * Set a different minimum width
+   */
+  itemsMinWidth?: number;
+  /**
+   * The color for the text and icon tint of the items
+   */
+  itemsTintColor?: string;
+  /**
+   * The items' icon size
+   */
+  itemsIconSize?: number;
+  /**
+   * The items' text style
+   */
+  itemsTextStyle?: TextStyle;
+  /**
+   * Perform the animation in natively
+   */
+  useNativeAnimations?: boolean;
+  /**
+   * Whether to allow a full left swipe
+   */
+  fullSwipeLeft?: boolean;
+  /**
+   * Threshold for a left full swipe (0-1)
+   */
+  fullLeftThreshold?: number;
+  /**
+   * Callback for left item full swipe
+   */
+  onFullSwipeLeft?: Function;
+  /**
+   * Callback for left item toggle swipe
+   */
+  onToggleSwipeLeft?: Function;
+  /**
+   * Callback for just before left item full swipe
+   */
+  onWillFullSwipeLeft?: Function;
+  /**
+   * Whether to allow a full right swipe
+   */
+  fullSwipeRight?: boolean;
+  /**
+   * Threshold for a right full swipe (0-1)
+   */
+  fullRightThreshold?: number;
+  /**
+   * Callback for right item full swipe
+   */
+  onFullSwipeRight?: Function;
+  /**
+   * Callback for just before right item full swipe
+   */
+  onWillFullSwipeRight?: Function;
+  /**
+   * Haptic trigger function to use onToggleSwipeLeft
+   */
+  leftToggleHapticTrigger?: Function;
+  /**
+   * Style
+   */
+  style?: ViewStyle;
+}
 
 /**
  * @description: Drawer Component
@@ -28,98 +112,22 @@ const ITEM_PROP_TYPES = {
  * with gestureHandlerRootHOC from 'react-native-gesture-handler'. see
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
-class NewDrawer extends PureBaseComponent {
+class Drawer extends PureComponent<DrawerProps> {
   static displayName = 'Drawer';
-
-  static propTypes = {
-    /**
-     * The drawer animation bounciness
-     */
-    bounciness: PropTypes.number,
-    /**
-     * OnDragStart handler
-     */
-    onDragStart: PropTypes.func,
-    /**
-     * The bottom layer's items to appear when opened from the right
-     */
-    rightItems: PropTypes.arrayOf(PropTypes.shape(ITEM_PROP_TYPES)),
-    /**
-     * The bottom layer's item to appear when opened from the left (a single item)
-     */
-    leftItem: PropTypes.shape(ITEM_PROP_TYPES),
-    /**
-     * Set a different minimum width
-     */
-    itemsMinWidth: PropTypes.number,
-    /**
-     * The color for the text and icon tint of the items
-     */
-    itemsTintColor: PropTypes.string,
-    /**
-     * The items' icon size
-     */
-    itemsIconSize: PropTypes.number,
-    /**
-     * The items' text style
-     */
-    itemsTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * Perform the animation in natively
-     */
-    useNativeAnimations: PropTypes.bool,
-    /**
-     * Whether to allow a full left swipe
-     */
-    fullSwipeLeft: PropTypes.bool,
-    /**
-     * Threshold for a left full swipe (0-1)
-     */
-    fullLeftThreshold: PropTypes.number,
-    /**
-     * Callback for left item full swipe
-     */
-    onFullSwipeLeft: PropTypes.func,
-    /**
-     * Callback for left item toggle swipe
-     */
-    onToggleSwipeLeft: PropTypes.func,
-    /**
-     * Callback for just before left item full swipe
-     */
-    onWillFullSwipeLeft: PropTypes.func,
-    /**
-     * Whether to allow a full right swipe
-     */
-    fullSwipeRight: PropTypes.bool,
-    /**
-     * Threshold for a right full swipe (0-1)
-     */
-    fullRightThreshold: PropTypes.number,
-    /**
-     * Callback for right item full swipe
-     */
-    onFullSwipeRight: PropTypes.func,
-    /**
-     * Callback for just before right item full swipe
-     */
-    onWillFullSwipeRight: PropTypes.func,
-    /**
-     * Haptic trigger function to use onToggleSwipeLeft
-     */
-    leftToggleHapticTrigger: PropTypes.func
-  };
 
   static defaultProps = {
     itemsTintColor: Colors.white,
     itemsIconSize: 24
   };
 
-  constructor(props) {
-    super(props);
+  leftRender: SwipeableProps['renderLeftActions'];
+  rightRender: SwipeableProps['renderLeftActions'];
+  _swipeableRow: RefObject<Swipeable> = React.createRef();
+  animationOptions: SwipeableProps['animationOptions'] = {bounciness: this.props.bounciness || 5};
+  leftActionX: Animated.Value = new Animated.Value(0);
 
-    this._swipeableRow = React.createRef();
-    this.animationOptions = {bounciness: props.bounciness || 5};
+  constructor(props: DrawerProps) {
+    super(props);
 
     this.leftRender = props.leftItem ? (Constants.isRTL ? this.renderRightActions : this.renderLeftActions) : undefined;
     this.rightRender = props.rightItems
@@ -127,91 +135,86 @@ class NewDrawer extends PureBaseComponent {
         ? this.renderLeftActions
         : this.renderRightActions
       : undefined;
+  }
 
-    
-    this.leftActionX = new Animated.Value(0);
+  private getLeftActionsContainerStyle = memoize((leftItem, rightItems) => {
+    return this.getActionsContainerStyle(Constants.isRTL ? rightItems : [leftItem]);
+  })
+
+  private getRightActionsContainerStyle = memoize((rightItems, leftItem) => {
+    return this.getActionsContainerStyle(Constants.isRTL ? [leftItem] : rightItems);
+  })
+
+  private getActionsContainerStyle(items: ItemProps[]) {
+    return {backgroundColor: _.get(_.first(items), 'background', DEFAULT_BG)};
   }
 
   /** Actions */
 
-  getLeftActionsContainerStyle = memoize((leftItem, rightItems) => {
-    return this.getActionsContainerStyle(Constants.isRTL ? rightItems : [leftItem]);
-  })
-
-  getRightActionsContainerStyle = memoize((rightItems, leftItem) => {
-    return this.getActionsContainerStyle(Constants.isRTL ? [leftItem] : rightItems);
-  })
-
-  getActionsContainerStyle(items) {
-    return {backgroundColor: _.get(_.first(items), 'background', DEFAULT_BG)};
-  }
-
   closeDrawer = () => {
-    this._swipeableRow.current.close();
+    this._swipeableRow.current?.close();
   };
 
   openLeft = () => {
-    this._swipeableRow.current.openLeft();
+    this._swipeableRow.current?.openLeft();
   };
 
   openLeftFull = () => {
-    this._swipeableRow.current.openLeftFull();
+    this._swipeableRow.current?.openLeftFull();
   };
 
   toggleLeft = () => {
-    this._swipeableRow.current.toggleLeft();
+    this._swipeableRow.current?.toggleLeft();
   };
 
   openRight = () => {
-    this._swipeableRow.current.openRight();
+    this._swipeableRow.current?.openRight();
   };
 
   openRightFull = () => {
-    this._swipeableRow.current.openRightFull();
+    this._swipeableRow.current?.openRightFull();
   };
 
   /** Events */
 
-  onActionPress = (item) => {
+  private onActionPress = (item: ItemProps) => {
     if (!item.keepOpen) {
       this.closeDrawer();
     }
     _.invoke(item, 'onPress', this.props);
   }
 
-  onSwipeableWillOpen = () => {
+  private onSwipeableWillOpen = () => {
     _.invoke(this.props, 'onSwipeableWillOpen', this.props);
   };
 
-  onSwipeableWillClose = () => {
+  private onSwipeableWillClose = () => {
     _.invoke(this.props, 'onSwipeableWillClose', this.props);
   };
 
-  onToggleSwipeLeft = ({rowWidth, leftWidth, dragX, released}) => {
+  private onToggleSwipeLeft = ({rowWidth, leftWidth, dragX, released}: any) => {
     Animated.timing(this.leftActionX, {
       toValue: dragX ? dragX - leftWidth : rowWidth * 0.6 - leftWidth,
       easing: Easing.bezier(0.25, 1, 0.5, 1),
       duration: 200,
       delay: 100,
       useNativeDriver: true
-    }).start(released && this.toggle());
+    }).start(() => released && this.toggle());
   }
 
-  toggle() {
+  private toggle() {
     _.invoke(this.props, 'leftToggleHapticTrigger');
-    setTimeout(() => {
-      _.invoke(this.props, 'onToggleSwipeLeft');
-    }, 500);
+    _.invoke(this.props, 'onToggleSwipeLeft');
   }
 
   /** Accessability */
 
-  getAccessibilityActions(withOnPress = false) {
+  private getAccessibilityActions(withOnPress = false) {
     const {rightItems, leftItem} = this.props;
     const actions = [];
 
     if (leftItem?.onPress && leftItem.text) {
-      const action = {name: leftItem.text, label: leftItem.text};
+      const action: any = {name: leftItem.text, label: leftItem.text};
       if (withOnPress) {
         action.onPress = leftItem.onPress;
       }
@@ -220,7 +223,7 @@ class NewDrawer extends PureBaseComponent {
     if (rightItems) {
       rightItems.forEach(item => {
         if (item.onPress && item.text) {
-          const action = {name: item.text, label: item.text};
+          const action: any = {name: item.text, label: item.text};
           if (withOnPress) {
             action.onPress = item.onPress;
           }
@@ -232,7 +235,7 @@ class NewDrawer extends PureBaseComponent {
     return actions;
   }
 
-  onAccessibilityAction = event => {
+  private onAccessibilityAction = (event: AccessibilityActionEvent) => {
     const actions = this.getAccessibilityActions(true);
     const action = _.find(actions, (o) => {
       // return o.text === event.nativeEvent.action;
@@ -244,22 +247,23 @@ class NewDrawer extends PureBaseComponent {
   /** Renders */
 
   // TODO: enable support for rendering more than one left item
-  renderLeftActions = (progress, dragX) => {
-    const {leftItem} = this.getThemeProps();
+  private renderLeftActions = (progress: Animated.Value/* , dragX: Animated.Value */) => {
+    const {leftItem} = this.props;
     const leftItems = leftItem ? [leftItem] : undefined;
-    return this.renderActions(leftItems, progress, dragX);
+    return this.renderActions(leftItems, progress/* , dragX */);
   };
 
-  renderRightActions = (progress, dragX) => {
-    const {rightItems} = this.getThemeProps();
-    return this.renderActions(rightItems, progress, dragX);
+  private renderRightActions = (progress: Animated.Value/* , dragX: Animated.Value */) => {
+    const {rightItems} = this.props;
+    return this.renderActions(rightItems, progress/* , dragX */);
   };
 
-  renderActions(items, progress, dragX) {
+  private renderActions(items: ItemProps[] | undefined, progress: Animated.Value/* , dragX: Animated.Value */) {
     if (items) {
       return (
+        // @ts-ignore
         <View animated row style={{transform: [{translateX: this.leftActionX}]}}>
-          {_.map(items, (item, index) => {
+          {_.map(items, (item, index: number) => {
             return this.renderAction({
               item,
               index: items.length - index - 1,
@@ -273,8 +277,8 @@ class NewDrawer extends PureBaseComponent {
     }
   }
 
-  renderAction = ({item, index, progress, itemsCount}) => {
-    const {itemsTintColor, itemsIconSize, itemsTextStyle, itemsMinWidth} = this.getThemeProps();
+  private renderAction = ({item, index, progress, itemsCount}: any) => {
+    const {itemsTintColor, itemsIconSize, itemsTextStyle, itemsMinWidth} = this.props;
     const inputRange = [index / itemsCount, (index + 1) / itemsCount];
     const outputRange = [0.2, 1];
 
@@ -288,7 +292,7 @@ class NewDrawer extends PureBaseComponent {
       inputRange,
       outputRange,
       extrapolate: 'clamp'
-    });  
+    });
 
     return (
       <RectButton
@@ -343,7 +347,7 @@ class NewDrawer extends PureBaseComponent {
   };
 
   render() {
-    const {children, style, leftItem, rightItems, onToggleSwipeLeft, ...others} = this.getThemeProps();
+    const {children, style, leftItem, rightItems, onToggleSwipeLeft, ...others} = this.props;
 
     return (
       <Swipeable
@@ -365,7 +369,7 @@ class NewDrawer extends PureBaseComponent {
           accessible
           accessibilityActions={this.getAccessibilityActions()}
           onAccessibilityAction={this.onAccessibilityAction}
-          {...this.extractAccessibilityProps()}
+          {...extractAccessibilityProps(this.props)}
         >
           {children}
         </View>
@@ -374,7 +378,7 @@ class NewDrawer extends PureBaseComponent {
   }
 }
 
-export default NewDrawer;
+export default asBaseComponent<DrawerProps, typeof Drawer>(Drawer);
 
 const styles = StyleSheet.create({
   leftAction: {
