@@ -231,7 +231,7 @@ export default {
     return require('./services').LogService;
   },
 
-  // NativeComponents
+  // NativeComponents 
   get HighlighterOverlayView() {
     return require('./nativeComponents').HighlighterOverlayView;
   },
