@@ -146,4 +146,48 @@ describe('TagsInput', () => {
       expect(removeTagSpy).toHaveBeenCalledWith();
     });
   });
+
+  describe('controlled input mode', () => {
+    it('should change state.value if prop has been changed', () => {
+      uut = new TagsInput({value: 'init'});
+      uut.setState = jest.fn(state => _.assign(uut.state, state));
+      _.set(uut.state, 'tags', [{}, {}, {}]);
+
+      expect(uut.state.value).toBe('init');
+
+      _.set(uut, 'props.value', 'modified');
+      uut.UNSAFE_componentWillReceiveProps(uut.props);
+
+      expect(uut.state.value).toBe('modified');
+
+      _.set(uut, 'props.value', '');
+      uut.UNSAFE_componentWillReceiveProps(uut.props);
+
+      expect(uut.state.value).toBe('');
+    });
+
+    it('should change state.value even in case, when initial value has not been passed', () => {
+      uut = new TagsInput({value: 'init'});
+      uut.setState = jest.fn(state => _.assign(uut.state, state));
+      _.set(uut.state, 'tags', [{}, {}, {}]);
+  
+      _.set(uut, 'props.value', 'modified');
+      uut.UNSAFE_componentWillReceiveProps(uut.props);
+
+      expect(uut.state.value).toBe('modified');
+    });
+
+    it('should not reset state.value if prop is `undefined`', () => {
+      uut = new TagsInput({value: 'init'});
+      uut.setState = jest.fn(state => _.assign(uut.state, state));
+      _.set(uut.state, 'tags', [{}, {}, {}]);
+
+      expect(uut.state.value).toBe('init');
+
+      _.set(uut, 'props.value', undefined);
+      uut.UNSAFE_componentWillReceiveProps(uut.props);
+
+      expect(uut.state.value).toBe('init');
+    });
+  });
 });

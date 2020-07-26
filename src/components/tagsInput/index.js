@@ -128,6 +128,10 @@ export default class TagsInput extends BaseComponent {
         tags: nextProps.tags
       });
     }
+
+    if (!_.isNil(nextProps.value) && nextProps.value !== this.state.value) {
+      this.setState({value: nextProps.value, tagIndexToRemove: undefined});
+    }
   }
 
   addTag() {
