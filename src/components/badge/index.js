@@ -58,6 +58,10 @@ export default class Badge extends PureBaseComponent {
      */
     borderWidth: PropTypes.number,
     /**
+     * radius of border around the badge
+     */
+    borderRadius: PropTypes.number,
+    /**
      * color of border around the badge
      */
     borderColor: PropTypes.string,
@@ -174,11 +178,16 @@ export default class Badge extends PureBaseComponent {
   }
 
   getBorderStyling() {
-    const {borderWidth, borderColor} = this.props;
-    return {
-      borderWidth,
-      borderColor
-    };
+    const {borderWidth, borderColor, borderRadius} = this.props;
+    const style = {};
+    if (borderWidth) {
+      style.borderWidth = borderWidth;
+      style.borderColor = borderColor;
+    }
+    if (borderRadius) {
+      style.borderRadius = borderRadius;
+    }
+    return style;
   }
 
   renderLabel() {
@@ -218,7 +227,6 @@ export default class Badge extends PureBaseComponent {
     // TODO: remove testId after deprecation
     const {
       activeOpacity,
-      borderWidth,
       backgroundColor,
       containerStyle,
       hitSlop,
@@ -230,7 +238,7 @@ export default class Badge extends PureBaseComponent {
     } = this.props;
     const backgroundStyle = backgroundColor && {backgroundColor};
     const sizeStyle = this.getBadgeSizeStyle();
-    const borderStyle = borderWidth ? this.getBorderStyling() : undefined;
+    const borderStyle = this.getBorderStyling();
 
     const animationProps = this.extractAnimationProps();
     const Container = !_.isEmpty(animationProps) ? AnimatableView : onPress ? TouchableOpacity : View;
@@ -240,7 +248,7 @@ export default class Badge extends PureBaseComponent {
     }
     return (
       // The extra View wrapper is to break badge's flex-ness
-      <View style={containerStyle} {...others} backgroundColor={undefined} {...this.getAccessibilityProps()}>
+      <View style={containerStyle} {...others} backgroundColor={undefined} borderWidth={undefined} {...this.getAccessibilityProps()}>
         <Container
           testID={testID || testId}
           pointerEvents={'none'}
@@ -253,7 +261,7 @@ export default class Badge extends PureBaseComponent {
           {icon ? this.renderIcon() : this.renderLabel()}
         </Container>
       </View>
-    );
+    ); 
   }
 }
 
