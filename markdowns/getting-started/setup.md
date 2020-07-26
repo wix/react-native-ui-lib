@@ -11,7 +11,7 @@ First, run `npm install react-native-ui-lib`
 And then, install **peer dependencies**
 
 ```
-npm i react-native-gesture-handler react-native-reanimated @react-native-community/blur @react-native-community/datetimepicker @react-native-community/netinfo
+npm i react-native-gesture-handler react-native-reanimated @react-native-community/blur @react-native-community/datetimepicker @react-native-community/netinfo @react-native-community/picker
 
 cd ios && pod install
 ```
@@ -25,7 +25,8 @@ Some of the components are using these native dependencies, they are defined as 
 - "@react-native-community/blur": ">=3.4.1",
 - ~~"react-native-interactable": ">=2.0.0"~~ (No Need in >=V5.0.0)
 - "@react-native-community/datetimepicker": "^2.1.0"
-- @react-native-community/netinfo": "^5.6.2
+- "@react-native-community/netinfo": "^5.6.2"
+- "@react-native-community/picker": "^1.6.5"
 
 ## Demo App
 

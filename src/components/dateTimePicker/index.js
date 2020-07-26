@@ -23,8 +23,8 @@ const MODES = {
  * @description: Date and Time Picker Component that wraps RNDateTimePicker for date and time modes.
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DateTimePickerScreen.js
  * @important: DateTimePicker uses a native library. You MUST add and link the native library to both iOS and Android projects.
- * @extends: @react-native-community/datetimepicker
- * @extendslink: https://github.com/react-native-community/react-native-datetimepicker#react-native-datetimepicker
+ * @extends: TextField, react-native-community/datetimepicker
+ * @extendsLink: https://github.com/react-native-community/react-native-datetimepicker#react-native-datetimepicker
  */
 /*eslint-enable*/
 
@@ -42,7 +42,6 @@ class DateTimePicker extends BaseComponent {
     value: PropTypes.instanceOf(Date),
     /**
      * The onChange callback
-     * NOTE: on Android called only after pressing 'Ok' button, on iOS called on every change in wheel picker
      */
     onChange: PropTypes.func,
     /**

@@ -9,7 +9,7 @@ import {Colors} from '../../style';
 /**
  * @description: Animated progress bar
  * @gif:https://media.giphy.com/media/3o752o08oY0oCvOxR6/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/animationScreens/ProgressBarScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ProgressBarScreen.js
  * @extends: AnimatedScanner
  * @extendsLink: https://wix-private.github.io/wix-react-native-ui-lib/docs/public/AnimatedScanner/
  */
