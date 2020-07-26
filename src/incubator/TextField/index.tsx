@@ -43,6 +43,7 @@ const TextField = (
     // Validation
     enableErrors,
     validationMessage,
+    validationMessageStyle,
     // FieldState
     isFocused,
     isValid,
@@ -76,7 +77,11 @@ const TextField = (
             {trailingIcon && <Icon {...trailingIcon}/>}
           </View>
         </View>
-        <ValidationMessage enableErrors={enableErrors} validationMessage={validationMessage}/>
+        <ValidationMessage
+          enableErrors={enableErrors}
+          validationMessage={validationMessage}
+          validationMessageStyle={validationMessageStyle}
+        />
       </View>
     </FieldContext.Provider>
   );
