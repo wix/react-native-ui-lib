@@ -8,14 +8,17 @@ import Icon from './Icon';
 import ValidationMessage, {ValidationMessageProps} from './ValidationMessage';
 import Label, {LabelProps} from './Label';
 import FieldContext from './FieldContext';
-import withFieldState, {FieldState} from './withFieldState';
+import withFieldState, {FieldStateInjectedProps} from './withFieldState';
 import FloatingPlaceholder from './FloatingPlaceholder';
+import CharCounter, {CharCounterProps} from './CharCounter';
+
 
 interface TextFieldProps
   extends TextInputProps,
     LabelProps,
     ValidationMessageProps,
-    Omit<FieldState, keyof TextInputProps> {
+    CharCounterProps,
+    Omit<FieldStateInjectedProps, keyof TextInputProps> {
   leadingIcon?: ImageProps;
   trailingIcon?: ImageProps;
   floatingPlaceholder?: boolean;
@@ -44,6 +47,9 @@ const TextField = (
     enableErrors,
     validationMessage,
     validationMessageStyle,
+    // Char Counter
+    showCharCounter,
+    charCounterStyle,
     // Field State
     fieldState,
     // Input
@@ -75,11 +81,18 @@ const TextField = (
             {trailingIcon && <Icon {...trailingIcon}/>}
           </View>
         </View>
-        <ValidationMessage
-          enableErrors={enableErrors}
-          validationMessage={validationMessage}
-          validationMessageStyle={validationMessageStyle}
-        />
+        <View row spread>
+          <ValidationMessage
+            enableErrors={enableErrors}
+            validationMessage={validationMessage}
+            validationMessageStyle={validationMessageStyle}
+          />
+          <CharCounter
+            showCharCounter={showCharCounter}
+            maxLength={props.maxLength}
+            charCounterStyle={charCounterStyle}
+          />
+        </View>
       </View>
     </FieldContext.Provider>
   );

@@ -1,6 +1,7 @@
 import {createContext} from 'react';
 
 export type ContextType = {
+  value?: string;
   isFocused: boolean;
   hasValue: boolean;
   isValid: boolean;

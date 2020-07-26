@@ -104,6 +104,19 @@ export default class TextFieldScreen extends Component {
               disabled: Colors.grey40
             }}
           />
+
+          <Text h3 grey30 marginV-s4>
+            Char Counter
+          </Text>
+
+          <TextField
+            containerStyle={{marginTop: 30}}
+            placeholder="Placeholder"
+            fieldStyle={styles.withFrame}
+            showCharCounter
+            charCounterStyle={{color: 'blue'}}
+            maxLength={75}
+          />
         </View>
       </ScrollView>
     );
