@@ -1,16 +1,25 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Constants, Spacings, View, Text, Carousel, Image, Colors} from 'react-native-ui-lib';
-import {renderBooleanOption, renderSliderOption} from '../ExampleScreenPresenter';
-
+import {
+  Constants,
+  Spacings,
+  View,
+  Text,
+  Carousel,
+  Image,
+  Colors
+} from 'react-native-ui-lib';
+import {
+  renderBooleanOption,
+  renderSliderOption
+} from '../ExampleScreenPresenter';
 
 const INITIAL_PAGE = 2;
 const IMAGES = [
-  'https://images.pexels.com/photos/1212487/pexels-photo-1212487.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  'https://images.pexels.com/photos/1366630/pexels-photo-1366630.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-  'https://images.pexels.com/photos/1477459/pexels-photo-1477459.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  'https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+  'https://images.pexels.com/photos/2529159/pexels-photo-2529159.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+  'https://images.pexels.com/photos/2529146/pexels-photo-2529146.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+  'https://images.pexels.com/photos/2529158/pexels-photo-2529158.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
 ];
 const BACKGROUND_COLORS = [
   Colors.red50,
@@ -49,19 +58,22 @@ class CarouselScreen extends Component {
 
   onOrientationChange = () => {
     if (this.state.orientation !== Constants.orientation) {
-      this.setState({orientation: Constants.orientation, width: this.getWidth()});
+      this.setState({
+        orientation: Constants.orientation,
+        width: this.getWidth()
+      });
     }
   };
 
   getWidth = () => {
     return Constants.windowWidth - Spacings.s5 * 2;
-  }
+  };
 
-  onChangePage = currentPage => {
+  onChangePage = (currentPage) => {
     this.setState({currentPage});
   };
 
-  onPagePress = index => {
+  onPagePress = (index) => {
     this.carousel.goToPage(index, true);
   };
 
@@ -70,25 +82,36 @@ class CarouselScreen extends Component {
 
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Text text30 margin-20>Carousel</Text>
+        <Text h1 margin-20>
+          Carousel
+        </Text>
 
         <View marginH-20 marginB-20>
-          {renderBooleanOption.call(this, 'Limit number of pages shown in page control', 'limitShownPages')}
-          {renderBooleanOption.call(this, 'autoplay', 'autoplay')}          
-          {renderSliderOption.call(this, 'Number of pages shown', 'numberOfPagesShown', {
-            min: 5,
-            max: 10,
-            step: 1,
-            initial: 7
-          })}
+          {renderBooleanOption.call(
+            this,
+            'Limit number of pages shown in page control',
+            'limitShownPages'
+          )}
+          {renderBooleanOption.call(this, 'autoplay', 'autoplay')}
+          {renderSliderOption.call(
+            this,
+            'Number of pages shown',
+            'numberOfPagesShown',
+            {
+              min: 5,
+              max: 10,
+              step: 1,
+              initial: 7
+            }
+          )}
         </View>
 
         <Carousel
           key={numberOfPagesShown}
           migrate
-          ref={r => (this.carousel = r)}
+          ref={(r) => (this.carousel = r)}
           //loop
-          autoplay={autoplay}          
+          autoplay={autoplay}
           onChangePage={this.onChangePage}
           pageWidth={width}
           itemSpacings={Spacings.s3}
@@ -101,26 +124,44 @@ class CarouselScreen extends Component {
           allowAccessibleLayout
         >
           {_.map([...Array(numberOfPagesShown)], (item, index) => (
-            <Page style={{backgroundColor: BACKGROUND_COLORS[index]}} key={index}>
+            <Page
+              style={{backgroundColor: BACKGROUND_COLORS[index]}}
+              key={index}
+            >
               <Text margin-15>CARD {index}</Text>
             </Page>
           ))}
         </Carousel>
 
-        <View marginB-30 center /*style={{...StyleSheet.absoluteFillObject}} */ pointerEvents="none">
+        <View marginB-30 center pointerEvents="none">
           <Text text10>{this.state.currentPage}</Text>
         </View>
-        
-        <View padding-20>
-          <Carousel containerStyle={{height: 160}} initialPage={INITIAL_PAGE} loop allowAccessibleLayout autoplay={autoplay}>
-            {_.map(IMAGES, (image, index) => {
+
+        <View paddingH-page>
+          <Text h3 marginB-s4>
+            Looping Carousel
+          </Text>
+          <Carousel
+            containerStyle={{
+              height: 200
+            }}
+            loop
+            pageControlProps={{
+              size: 10,
+              containerStyle: styles.loopCarousel
+            }}
+            pageControlPosition={Carousel.pageControlPositions.OVER}
+          >
+            {IMAGES.map((image, i) => {
               return (
-                <View key={index} flex padding-10 bottom>
+                <View flex centerV key={i}>
                   <Image
-                    style={StyleSheet.absoluteFillObject}
-                    source={{uri: image}}
+                    overlayType={Image.overlayTypes.BOTTOM}
+                    style={{flex: 1}}
+                    source={{
+                      uri: image
+                    }}
                   />
-                  <Text white text50>Image {index}</Text>
                 </View>
               );
             })}
@@ -147,6 +188,11 @@ const styles = StyleSheet.create({
     flex: 1,
     borderWidth: 1,
     borderRadius: 8
+  },
+  loopCarousel: {
+    position: 'absolute',
+    bottom: 15,
+    left: 10
   }
 });
 
