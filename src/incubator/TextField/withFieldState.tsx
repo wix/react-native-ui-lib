@@ -1,14 +1,19 @@
-import React, {useCallback, useState, useEffect} from 'react';
+import React, {useCallback, useState, useEffect, useMemo} from 'react';
 import _ from 'lodash';
 import {TextInputProps} from 'react-native';
 import validators from './validators';
 
 export type Validator = Function | keyof typeof validators;
 
-export interface FieldState {
+interface FieldState {
+  value?: string;
   isFocused: boolean;
   isValid: boolean;
   hasValue: boolean;
+}
+
+export interface FieldStateInjectedProps {
+  fieldState: FieldState;
   onFocus: Function;
   onBlur: Function;
 }
@@ -86,15 +91,17 @@ function withFieldState<PROPS>(WrappedComponent: React.ComponentType) {
       [props.onChangeText, validateOnChange]
     );
 
+    const fieldState = useMemo(() => {
+      return {value, hasValue: !_.isEmpty(value), isValid, isFocused};
+    }, [value, isFocused, isValid]);
+
     return (
       <WrappedComponent
         {...props}
         onFocus={onFocus}
         onBlur={onBlur}
         onChangeText={onChangeText}
-        isFocused={isFocused}
-        isValid={isValid}
-        hasValue={!_.isEmpty(value)}
+        fieldState={fieldState}
         ref={ref}
       />
     );

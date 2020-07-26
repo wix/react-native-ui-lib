@@ -44,10 +44,8 @@ const TextField = (
     enableErrors,
     validationMessage,
     validationMessageStyle,
-    // FieldState
-    isFocused,
-    isValid,
-    hasValue,
+    // Field State
+    fieldState,
     // Input
     placeholder,
     ...props
@@ -55,8 +53,8 @@ const TextField = (
   ref
 ) => {
   const context = useMemo(() => {
-    return {isFocused, hasValue, isValid, disabled: props.editable === false};
-  }, [isFocused, hasValue, isValid, props.editable]);
+    return {...fieldState, disabled: props.editable === false};
+  }, [fieldState, props.editable]);
 
   return (
     <FieldContext.Provider value={context}>
