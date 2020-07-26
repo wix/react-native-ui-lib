@@ -1,5 +1,5 @@
 import React, {useCallback, useState, useMemo} from 'react';
-import {TextInputProps, ViewStyle} from 'react-native';
+import {TextInputProps, ViewStyle, TextStyle} from 'react-native';
 import View from '../../components/view';
 import Text from '../../components/text';
 import {ImageProps} from '../../components/image';
@@ -19,6 +19,7 @@ interface TextFieldProps
   leadingIcon?: ImageProps;
   trailingIcon?: ImageProps;
   floatingPlaceholder?: boolean;
+  floatingPlaceholderStyle?: TextStyle;
   labelColor?: string;
   fieldStyle?: ViewStyle;
   containerStyle?: ViewStyle;
@@ -30,6 +31,7 @@ const TextField = (
     fieldStyle,
     containerStyle,
     floatingPlaceholder,
+    floatingPlaceholderStyle,
     // Label
     label,
     labelColor,
@@ -66,12 +68,12 @@ const TextField = (
         />
         <View style={fieldStyle}>
           <View row centerV>
-            {leadingIcon && <Icon {...leadingIcon} />}
+            {leadingIcon && <Icon {...leadingIcon}/>}
             <View flex>
-              {floatingPlaceholder && <FloatingPlaceholder placeholder={placeholder} />}
-              <Input {...props} placeholder={floatingPlaceholder ? undefined : placeholder} ref={ref} />
+              {floatingPlaceholder && <FloatingPlaceholder placeholder={placeholder} style={floatingPlaceholderStyle}/>}
+              <Input {...props} placeholder={floatingPlaceholder ? undefined : placeholder} ref={ref}/>
             </View>
-            {trailingIcon && <Icon {...trailingIcon} />}
+            {trailingIcon && <Icon {...trailingIcon}/>}
           </View>
         </View>
         <ValidationMessage enableErrors={enableErrors} validationMessage={validationMessage}/>

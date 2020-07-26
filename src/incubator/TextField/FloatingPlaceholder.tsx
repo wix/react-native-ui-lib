@@ -6,18 +6,19 @@ import React, {
   useState,
   useMemo
 } from 'react';
-import {Animated, LayoutChangeEvent, StyleSheet, Platform} from 'react-native';
+import {Animated, LayoutChangeEvent, StyleSheet, Platform, TextStyle} from 'react-native';
 import View from '../../components/view';
 import Text from '../../components/text';
 import FieldContext from './FieldContext';
 
 interface FloatingPlaceholderProps {
   placeholder?: string;
+  style?: TextStyle;
 }
 
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
 
-export default ({placeholder}: FloatingPlaceholderProps) => {
+export default ({placeholder, style}: FloatingPlaceholderProps) => {
   const context = useContext(FieldContext);
   const [placeholderOffset, setPlaceholderOffset] = useState({
     top: 0,
@@ -64,7 +65,7 @@ export default ({placeholder}: FloatingPlaceholderProps) => {
       <Text
         animated
         grey40
-        style={[styles.placeholder, animatedStyle]}
+        style={[styles.placeholder, style, animatedStyle]}
         onLayout={onPlaceholderLayout}
       >
         {placeholder}

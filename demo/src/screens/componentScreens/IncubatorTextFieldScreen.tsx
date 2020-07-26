@@ -4,10 +4,11 @@ import {StyleSheet, ScrollView, TextInput} from 'react-native';
 import {
   Assets,
   Colors,
+  Spacings,
+  Typography,
   View,
   Text,
-  Incubator,
-  Spacings
+  Incubator
 } from 'react-native-ui-lib'; //eslint-disable-line
 const {TextField} = Incubator;
 
@@ -36,10 +37,12 @@ export default class TextFieldScreen extends Component {
           <Text h3 grey30 marginV-s4>
             Static vs Floating Placeholder
           </Text>
-          <View row>
+          <View row bottom>
             <TextField
               placeholder="Floating placeholder"
               floatingPlaceholder
+              // floatingPlaceholderStyle={Typography.text60}
+              // style={Typography.text60}
               containerStyle={{flex: 1}}
               fieldStyle={styles.withUnderline}
             />
