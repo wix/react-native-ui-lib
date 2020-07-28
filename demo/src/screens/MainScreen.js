@@ -15,8 +15,10 @@ class MainScreen extends Component {
   static propTypes = {
     containerStyle: ViewPropTypes.style,
     renderItem: PropTypes.func,
-    pageStyle: ViewPropTypes.style
+    pageStyle: ViewPropTypes.style    
   };
+
+  settingsScreenName = 'unicorn.Settings';
 
   static options() {
     return {
@@ -63,8 +65,12 @@ class MainScreen extends Component {
 
     if (buttonId === 'uilib.settingsButton') {
       this.pushScreen({
-        name: 'unicorn.Settings',
-        passProps: {navigationData: data, playground: this.props.playground}
+        name: this.settingsScreenName,
+        passProps: {
+          navigationData: data, 
+          playground: this.props.playground, 
+          extraSettingsUI: this.props.extraSettingsUI
+        }
       });
     }
   };
@@ -73,6 +79,7 @@ class MainScreen extends Component {
     Navigation.push(this.props.componentId, {
       component: {
         name: options.name || options.screen,
+        id: this.settingsScreenName,
         passProps: options.passProps,
         options: {
           topBar: {

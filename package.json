@@ -27,7 +27,8 @@
     "xcode": "open ./ios/uilib.xcodeproj",
     "build:dev": "tsc --p tsconfig.dev.json",
     "build:exports": "./node_modules/.bin/babel src --out-dir src --config-file ./src/.babelrc.json --extensions '.ts,.tsx' --ignore 'src/index.ts'",
-    "build": "tsc --p tsconfig.build.json && npm run build:exports",
+    "build:packages": "node scripts/buildPackages.js",
+    "build": "tsc --p tsconfig.build.json && npm run build:exports && npm run build:packages",
     "log": "react-native log-ios | grep 'ethan -'",
     "docs:install": "(cd ./uilib-docs && rm -rf node_modules && rm -rf package-lock.json && npm install)",
     "docs:deploy": "(cd ./uilib-docs && gatsby build --prefix-paths && gh-pages -d public --branch gh-pages)",
@@ -67,9 +68,10 @@
     "@react-native-community/datetimepicker": "^2.1.0",
     "@react-native-community/eslint-config": "latest",
     "@react-native-community/netinfo": "^5.6.2",
+    "@react-native-community/picker": "^1.6.5",
     "@types/lodash": "^4.0.0",
     "@types/prop-types": "^15.5.3",
-    "@types/react-native": "0.61.5",
+    "@types/react-native": "0.62.2",
     "@types/tinycolor2": "^1.4.2",
     "@typescript-eslint/eslint-plugin": "^2.13.0",
     "@typescript-eslint/parser": "^2.13.0",
@@ -107,7 +109,8 @@
     "react-native-reanimated": ">=1.4.0",
     "@react-native-community/blur": ">=3.4.1",
     "@react-native-community/datetimepicker": "^2.1.0",
-    "@react-native-community/netinfo": "^5.6.2"
+    "@react-native-community/netinfo": "^5.6.2",
+    "@react-native-community/picker": "^1.6.5"
   },
   "jest": {
     "preset": "react-native",

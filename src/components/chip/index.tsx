@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useCallback} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, ViewProps, TouchableOpacityProps, ImageStyle, TextStyle, ImageSourcePropType} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle, ViewProps, TouchableOpacityProps, ImageStyle, ImageProps, TextStyle, ImageSourcePropType} from 'react-native';
 import {BadgeProps} from 'typings';
 // @ts-ignore
 import Assets from '../../assets';
@@ -56,10 +56,6 @@ export type ChipPropTypes = ViewProps & TouchableOpacityProps & {
    */
   label?: string;
   /**
-   * Color of the label.
-   */
-  labelColor?: string;
-  /**
    * Label's style
    */
   labelStyle?: StyleProp<TextStyle>;
@@ -76,19 +72,27 @@ export type ChipPropTypes = ViewProps & TouchableOpacityProps & {
    */
   avatarProps?: AvatarPropTypes;
 
-  //ICON
+  //ICON GENERAL
   /**
-   * Icon's source
+   * Additional icon props
    */
-  iconSource?: ImageSourcePropType;
-  /**
-   * Icon's color
-   */
-  iconColor?: string;
+  iconProps?: ImageProps
   /**
    * Icon style
    */
   iconStyle?: StyleProp<ImageStyle>;
+
+  //LEFT ICON
+  /**
+   * Left icon's source
+   */
+  iconSource?: ImageSourcePropType;
+
+  //RIGHT ICON
+  /**
+   * Right icon's source
+   */
+  rightIconSource?: ImageSourcePropType;
 
   //DISMISS ('x' button)
   /**
@@ -130,12 +134,12 @@ const Chip: React.FC<ChipPropTypes> = ({
   dismissIcon,
   dismissIconStyle,
   dismissContainerStyle,
-  iconColor,
+  iconProps,
   iconSource,
   iconStyle,
+  rightIconSource,
   label,
   labelStyle,
-  labelColor,
   onPress,
   resetSpacings,
   size,
@@ -144,17 +148,19 @@ const Chip: React.FC<ChipPropTypes> = ({
   ...others
 }) => {
 
-  const renderIcon = useCallback(() => {
+  const renderIcon = useCallback((iconPosition) => {
+    const isLeftIcon = iconPosition === 'left'
+
     return (
       <Image
       // @ts-ignore
-        source={iconSource}
-        tintColor={iconColor}
-        style={[iconStyle, getMargins('iconSource')]}
+        source={isLeftIcon ? iconSource : rightIconSource}
         testID={`${testID}.icon`}
+        {...iconProps}
+        style={[getMargins('iconSource'), iconStyle]}
       />
     );
-  }, [iconColor, iconSource, iconStyle]);
+  }, [iconSource, rightIconSource, iconStyle, iconProps]);
 
 
   const renderBadge = useCallback(() => {
@@ -207,14 +213,13 @@ const Chip: React.FC<ChipPropTypes> = ({
         text90M
         numberOfLines={1}
         // @ts-ignore
-        tintColor={labelColor}
         style={[styles.label, getMargins('label'), labelStyle]}
         testID={`${testID}.label`}
       >
-        {label}
+        {!!label && label}
       </Text>
     );
-  }, [label, labelColor, labelStyle]);
+  }, [label, labelStyle]);
 
   const getMargins = useCallback((element: string): object | undefined => {
     if (!resetSpacings) {
@@ -235,7 +240,13 @@ const Chip: React.FC<ChipPropTypes> = ({
           if (iconSource) {
             return {
               marginLeft: 2,
-              marginRight: Spacings.s2
+              marginRight: Spacings.s3
+            };
+          }
+          if (rightIconSource) {
+            return {
+              marginLeft: Spacings.s3,
+              marginRight: 2
             };
           }
           if (onDismiss) {
@@ -260,7 +271,7 @@ const Chip: React.FC<ChipPropTypes> = ({
           };
       }
     }
-  }, [avatarProps, badgeProps, iconSource, onDismiss]);
+  }, [avatarProps, badgeProps, iconSource, rightIconSource, onDismiss]);
 
   const getContainerSize = useCallback(() => {
     const width = useSizeAsMinimum ? 'minWidth' : 'width';
@@ -288,8 +299,9 @@ const Chip: React.FC<ChipPropTypes> = ({
       {...others}
     >
       {avatarProps && renderAvatar()}
-      {iconSource && renderIcon()}
+      {iconSource && renderIcon('left')}
       {label && renderLabel()}
+      {rightIconSource && renderIcon('right')}
       {badgeProps && renderBadge()}
       {onDismiss && renderOnDismiss()}
     </Container>

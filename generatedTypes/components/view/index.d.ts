@@ -31,5 +31,7 @@ export interface ViewPropTypes extends ViewProps, ContainerModifiers {
      */
     backgroundColor?: string;
 }
-declare const _default: React.ComponentClass<ViewPropTypes, any>;
+declare const _default: React.ComponentClass<ViewPropTypes & {
+    useCustomTheme?: boolean | undefined;
+}, any>;
 export default _default;

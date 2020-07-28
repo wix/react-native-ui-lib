@@ -1,7 +1,7 @@
-import _ from 'lodash';
 import React, {useState, useCallback, useRef} from 'react';
 // eslint-disable-next-line no-unused-vars
 import {FlatListProps, ScrollViewProps, LayoutChangeEvent} from 'react-native';
+// eslint-disable-next-line no-unused-vars
 import forwardRef, {ForwardRefInjectedProps} from './forwardRef';
 
 export type ScrollEnablerProps = {
@@ -10,17 +10,19 @@ export type ScrollEnablerProps = {
   scrollEnabled: boolean;
 };
 
-type SupportedViews = FlatListProps<any> | ScrollViewProps;
+declare type SupportedViewsProps = FlatListProps<any> | ScrollViewProps;
 
-export type WithScrollEnablerProps = SupportedViews & {
+export type WithScrollEnablerProps = {
   scrollEnablerProps: ScrollEnablerProps;
   ref?: any;
 };
-type PropTypes = ForwardRefInjectedProps & SupportedViews;
-function withScrollEnabler<PROPS extends SupportedViews>(
-  WrappedComponent: React.ComponentType<WithScrollEnablerProps>
+
+type PropTypes = ForwardRefInjectedProps & SupportedViewsProps;
+
+function withScrollEnabler<PROPS>(
+  WrappedComponent: React.ComponentType<PROPS & WithScrollEnablerProps>
 ): React.ComponentType<PROPS> {
-  const ScrollEnabler = (props: PropTypes) => {
+  const ScrollEnabler = (props: PROPS & PropTypes) => {
     const [scrollEnabled, setScrollEnabled] = useState(true);
     const contentSize = useRef(0);
     const layoutSize = useRef(0);
@@ -46,7 +48,7 @@ function withScrollEnabler<PROPS extends SupportedViews>(
     );
 
     const onLayout = useCallback(
-      (event) => {
+      (event: LayoutChangeEvent) => {
         const {
           nativeEvent: {
             layout: {width, height}
@@ -72,7 +74,7 @@ function withScrollEnabler<PROPS extends SupportedViews>(
     );
   };
 
-  return forwardRef(ScrollEnabler) as any;
+  return forwardRef(ScrollEnabler);
 }
 
 export default withScrollEnabler;

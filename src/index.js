@@ -234,7 +234,7 @@ export default {
     return require('./services').LogService;
   },
 
-  // NativeComponents
+  // NativeComponents 
   get HighlighterOverlayView() {
     return require('./nativeComponents').HighlighterOverlayView;
   },
@@ -248,7 +248,7 @@ export default {
     return require('./nativeComponents').SafeAreaInsetsManager;
   },
   get Keyboard() {
-    return require('./nativeComponents').Keyboard;
+    return require('../lib/components/Keyboard').default;
   },
 
   // Style
