@@ -1,21 +1,14 @@
 import React, {useCallback} from 'react';
 import {
   StyleSheet,
-  // eslint-disable-next-line no-unused-vars
   FlatListProps,
-  // eslint-disable-next-line no-unused-vars
   ScrollViewProps,
-  // eslint-disable-next-line no-unused-vars
   NativeSyntheticEvent,
-  // eslint-disable-next-line no-unused-vars
   NativeScrollEvent
 } from 'react-native';
-// eslint-disable-next-line no-unused-vars
 import forwardRef, {ForwardRefInjectedProps} from '../../commons/forwardRef';
 import withScrollReached, {
-  // eslint-disable-next-line no-unused-vars
   WithScrollReachedProps,
-  // eslint-disable-next-line no-unused-vars
   WithScrollReachedOptionsProps
 } from '../../commons/withScrollReached';
 import View from '../view';
