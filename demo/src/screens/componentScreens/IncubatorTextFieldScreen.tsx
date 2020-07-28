@@ -87,7 +87,7 @@ export default class TextFieldScreen extends Component {
 
           <TextField
             label="Email"
-            labelColor={'blue'}
+            labelColor={Colors.blue30}
             placeholder="Enter email"
             validationMessage="Email is invalid"
             validate={'email'}
@@ -99,8 +99,8 @@ export default class TextFieldScreen extends Component {
             placeholder="Placeholder"
             label="Label"
             labelColor={{
-              default: 'green',
-              focus: 'blue',
+              default: Colors.grey30,
+              focus: Colors.blue20,
               disabled: Colors.grey40
             }}
           />
@@ -110,11 +110,10 @@ export default class TextFieldScreen extends Component {
           </Text>
 
           <TextField
-            containerStyle={{marginTop: 30}}
             placeholder="Placeholder"
             fieldStyle={styles.withFrame}
             showCharCounter
-            charCounterStyle={{color: 'blue'}}
+            charCounterStyle={{color: Colors.blue30}}
             maxLength={75}
           />
         </View>

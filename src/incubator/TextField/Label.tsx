@@ -21,13 +21,17 @@ export default ({
 }: LabelProps) => {
   const context = useContext(FieldContext);
 
-  return (
-    <Text
-      color={getColorByState(labelColor, context)}
-      style={labelStyle}
-      {...labelProps}
-    >
-      {label}
-    </Text>
-  );
+  if (label) {
+    return (
+      <Text
+        color={getColorByState(labelColor, context)}
+        style={labelStyle}
+        {...labelProps}
+      >
+        {label}
+      </Text>
+    );
+  }
+
+  return null;
 };
