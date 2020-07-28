@@ -13,7 +13,6 @@ import withScrollReached, {
 } from '../../commons/withScrollReached';
 import View from '../view';
 import Image from '../image';
-import Assets from '../../assets';
 
 export type ScrollFaderProps = {
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
@@ -70,18 +69,18 @@ function withScrollFader<PROPS>(
           // Left
           containerStyle = {...staticStyles.containerLeft, width: fadeSize};
           imageStyle = {height: '100%', width: fadeSize};
-          imageSource = Assets.images.gradientLeft;
+          imageSource = require('./gradientLeft.png');
         } else {
           // Right
           containerStyle = {...staticStyles.containerRight, width: fadeSize};
           imageStyle = {height: '100%', width: fadeSize};
-          imageSource = Assets.images.gradientRight;
+          imageSource = require('./gradientRight.png');
         }
       } else if (options.setToStart) {
         // Top
         containerStyle = {...staticStyles.containerTop, height: fadeSize};
         imageStyle = {height: fadeSize, width: '100%'};
-        imageSource = Assets.images.gradientTop;
+        imageSource = require('./gradientTop.png');
       } else {
         // Bottom
         containerStyle = {
@@ -89,7 +88,7 @@ function withScrollFader<PROPS>(
           height: fadeSize
         };
         imageStyle = {height: fadeSize, width: '100%'};
-        imageSource = Assets.images.gradientBottom;
+        imageSource = require('./gradientBottom.png');
       }
 
       return {
