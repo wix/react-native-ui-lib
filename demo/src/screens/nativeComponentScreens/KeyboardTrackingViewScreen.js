@@ -6,6 +6,7 @@ import {
   View,
   TextField,
   Image,
+  Button,
   Colors,
   Switch,
   Constants,
@@ -23,7 +24,8 @@ const URIs = [
       'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260'
   },
   {
-    uri: 'https://images.pexels.com/photos/140234/pexels-photo-140234.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260'
+    uri:
+      'https://images.pexels.com/photos/140234/pexels-photo-140234.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260'
   }
 ];
 
@@ -42,25 +44,49 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
     const {trackInteractive} = this.state;
 
     return (
-      <View flex bg-dark80>
+      <View flex bg-dark80 paddingT-page>
         <ScrollView
           contentContainerStyle={styles.scrollContainer}
           keyboardDismissMode={trackInteractive ? 'interactive' : 'none'}
         >
-          <Text text40 dark10 marginV-20>
+          <Text h1 dark10 marginB-s1>
             Keyboard Tracking View
           </Text>
-          <View row marginV-20 centerV>
-            <Text text60>Track interactive:</Text>
-            <Switch value={trackInteractive} onValueChange={this.toggleTrackInteractive} marginL-10/>
+          <Text marginB-s4 grey10>
+            Attach a custom view to that will track the keyboard position
+          </Text>
+          <View row marginV-20 centerV spread>
+            <Text text70>Dismiss Keyboard with Drag</Text>
+            <Switch
+              value={trackInteractive}
+              onValueChange={this.toggleTrackInteractive}
+              marginL-10
+            />
           </View>
           {URIs.map((uri, index) => (
-            <Image style={styles.image} source={uri} key={index}/>
+            <Image style={styles.image} source={uri} key={index} />
           ))}
         </ScrollView>
-        <KeyboardTrackingView style={styles.trackingToolbarContainer} trackInteractive={trackInteractive}>
-          <View centerV bg-white paddingH-s5 paddingV-s2>
-            <TextField text70 placeholder={'Message'} floatingPlaceholder floatOnFocus/>
+        <KeyboardTrackingView
+          style={styles.trackingToolbarContainer}
+          trackInteractive={trackInteractive}
+        >
+          <View bg-white row spread centerV paddingH-s5 paddingV-s3>
+            <TextField
+              containerStyle={{
+                flex: 1,
+                backgroundColor: Colors.grey60,
+                paddingVertical: Spacings.s2,
+                paddingHorizontal: Spacings.s4,
+                borderRadius: 8
+              }}
+              hideUnderline
+              placeholder={'Message'}
+              floatingPlaceholder={false}
+              floatOnFocus
+              enableErrors={false}
+            />
+            <Button label="Send" link marginL-s4 />
           </View>
         </KeyboardTrackingView>
       </View>
