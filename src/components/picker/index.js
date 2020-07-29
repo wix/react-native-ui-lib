@@ -179,8 +179,18 @@ class Picker extends BaseComponent {
     return items;
   }
 
+  isDialogAndMultiSelectInEditing = () => {
+    const {showExpandableModal} = this.state;
+    const {mode} = this.props;
+    return mode === Picker.modes.MULTI && showExpandableModal;
+  }
+
   getLabel() {
     const {value} = this.state;
+
+    if (this.isDialogAndMultiSelectInEditing()) {
+      return undefined;
+    }
 
     if (_.isArray(value)) {
       return _.chain(value)
@@ -288,7 +298,7 @@ class Picker extends BaseComponent {
       listProps,
       testID
     } = this.getThemeProps();
-    const {showExpandableModal, selectedItemPosition} = this.state;
+    const {showExpandableModal, selectedItemPosition, value} = this.state;
     const children = this.appendPropsToChildren(this.props.children);
 
     if (renderCustomModal) {
@@ -296,9 +306,10 @@ class Picker extends BaseComponent {
         visible: showExpandableModal,
         toggleModal: this.toggleExpandableModal,
         onSearchChange: this.onSearchChange,
-        children
+        children,
+        onDone: () => this.onDoneSelecting(value),
+        onCancel: this.cancelSelect
       };
-
       return renderCustomModal(modalProps);
     }
 
