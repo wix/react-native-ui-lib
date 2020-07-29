@@ -129,8 +129,15 @@ export default class BadgesScreen extends Component {
               large(24)
             </Text>
           </View>
+
+          <View style={styles.iconBadgeColumnContainer}>
+            <Badge icon={star} borderRadius={6} iconStyle={{backgroundColor: Colors.red30}}/>
+            <Text text80 style={{marginTop: 10}}>
+              border radius (6)
+            </Text>
+          </View>
         </View>
-        <Text text50 marginB-10 row center marginT-25>
+        {/* <Text text50 marginB-10 row center marginT-25>
           Badges Radius
         </Text>
         <View row spread>
@@ -154,7 +161,7 @@ export default class BadgesScreen extends Component {
               border radius 2
             </Text>
           </View>
-        </View>
+        </View> */}
       </ScrollView>
     );
   }

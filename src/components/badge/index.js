@@ -261,7 +261,7 @@ export default class Badge extends PureBaseComponent {
           {icon ? this.renderIcon() : this.renderLabel()}
         </Container>
       </View>
-    ); 
+    );
   }
 }
 
