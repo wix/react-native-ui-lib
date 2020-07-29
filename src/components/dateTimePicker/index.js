@@ -122,6 +122,11 @@ class DateTimePicker extends BaseComponent {
     });
   };
 
+  onToggleExpandableModal = value => {
+    this.toggleExpandableOverlay();
+    _.invoke(this.props, 'onToggleExpandableModal', value);
+  };
+
   onDonePressed = () =>
     this.toggleExpandableOverlay(() => {
       if (Constants.isIOS && !this.chosenDate) {
@@ -230,7 +235,7 @@ class DateTimePicker extends BaseComponent {
         value={this.getStringValue()}
         expandable
         renderExpandable={this.renderExpandable}
-        onToggleExpandableModal={this.toggleExpandableOverlay}
+        onToggleExpandableModal={this.onToggleExpandableModal}
       />
     );
   }
