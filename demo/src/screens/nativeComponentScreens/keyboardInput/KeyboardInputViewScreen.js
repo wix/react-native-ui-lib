@@ -191,7 +191,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
           keyboardDismissMode={TrackInteractive ? 'interactive' : 'none'}
         >
           <Text text40 dark10 marginV-20 center>
-            {message || 'Keyboards example'}
+            {message || 'KeyboardsRegistry'}
           </Text>
           <Text testID={'demo-message'}>{receivedKeyboardData}</Text>
           <Button

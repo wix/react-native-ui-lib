@@ -20,9 +20,10 @@ function ImagesKeyboard() {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{padding: Spacings.s4}}
       >
-        {_.map(images, (image) => {
+        {_.map(images, (image, i) => {
           return (
             <Image
+              key={i}
               source={{uri: image}}
               style={{height: '100%', width: 200}}
               marginR-s4
