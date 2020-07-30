@@ -15,7 +15,10 @@ const {TextField} = Incubator;
 
 export default class TextFieldScreen extends Component {
   input = React.createRef();
-  state = {errorPosition: 'top'};
+  state = {
+    errorPosition: 'top',
+    value: 'Initial Value'
+  };
 
   componentDidMount() {
     this.input.current.focus();
@@ -35,6 +38,8 @@ export default class TextFieldScreen extends Component {
             ref={this.input}
             label="Name"
             placeholder="Enter first+last name"
+            value={this.state.value}
+            onChangeText={value => this.setState({value})}
           />
 
           <Text h3 blue50 marginV-s4>
