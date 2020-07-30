@@ -192,19 +192,32 @@ class Drawer extends PureComponent<DrawerProps> {
     _.invoke(this.props, 'onSwipeableWillClose', this.props);
   };
 
-  private onToggleSwipeLeft = ({rowWidth, leftWidth, dragX, released}: any) => {
+  private onToggleSwipeLeft = (options?: any) => {
+    if (this.props.onToggleSwipeLeft) {
+      if (options?.triggerHaptic) {
+        _.invoke(this.props, 'leftToggleHapticTrigger');
+      }
+      this.animateItem(options);
+    }
+  }
+
+  private animateItem({rowWidth, leftWidth, dragX, released, resetItemPosition}: any) {
+    const toValue = resetItemPosition ? 0 : dragX ? dragX - leftWidth : rowWidth * 0.6 - leftWidth;
+    
     Animated.timing(this.leftActionX, {
-      toValue: dragX ? dragX - leftWidth : rowWidth * 0.6 - leftWidth,
+      toValue,
       easing: Easing.bezier(0.25, 1, 0.5, 1),
       duration: 200,
       delay: 100,
       useNativeDriver: true
-    }).start(() => released && this.toggle());
-  }
-
-  private toggle() {
-    _.invoke(this.props, 'leftToggleHapticTrigger');
-    _.invoke(this.props, 'onToggleSwipeLeft');
+    }).start(() => {
+      if (released) {
+        _.invoke(this.props, 'onToggleSwipeLeft', this.props);
+        // reset Drawer
+        this.animateItem({released: false, resetItemPosition: true});
+        this.closeDrawer();
+      }
+    });
   }
 
   /** Accessability */
@@ -347,7 +360,7 @@ class Drawer extends PureComponent<DrawerProps> {
   };
 
   render() {
-    const {children, style, leftItem, rightItems, onToggleSwipeLeft, ...others} = this.props;
+    const {children, style, leftItem, rightItems, ...others} = this.props;
 
     return (
       <Swipeable
@@ -362,7 +375,7 @@ class Drawer extends PureComponent<DrawerProps> {
         leftActionsContainerStyle={this.getLeftActionsContainerStyle(leftItem, rightItems)}
         onSwipeableWillOpen={this.onSwipeableWillOpen}
         onSwipeableWillClose={this.onSwipeableWillClose}
-        onToggleSwipeLeft={onToggleSwipeLeft && this.onToggleSwipeLeft}
+        onToggleSwipeLeft={this.onToggleSwipeLeft}
       >
         <View
           // flex
