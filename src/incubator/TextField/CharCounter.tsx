@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {TextInput, TextInputProps, TextStyle, StyleSheet} from 'react-native';
+import {TextStyle, StyleSheet} from 'react-native';
 import _ from 'lodash';
 import Text from '../../components/text';
 import FieldContext from './FieldContext';

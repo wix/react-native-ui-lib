@@ -6,7 +6,7 @@ export interface InputProps extends TextInputProps {
   hint?: string;
 }
 
-const Input = ({style, hint, ...props}: InputProps, ref) => {
+const Input = ({style, hint, ...props}: InputProps, ref: any) => {
   const context = useContext(FieldContext);
   const placeholder = !context.isFocused ? props.placeholder : (hint || props.placeholder);
   return (

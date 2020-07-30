@@ -16,6 +16,7 @@ export interface FieldStateInjectedProps {
   fieldState: FieldState;
   onFocus: Function;
   onBlur: Function;
+  ref?: any;
 }
 
 export interface FieldStateProps extends TextInputProps {
@@ -25,7 +26,8 @@ export interface FieldStateProps extends TextInputProps {
   validate: Validator | Validator[];
 }
 
-function withFieldState<PROPS>(WrappedComponent: React.ComponentType) {
+
+function withFieldState<PROPS>(WrappedComponent: React.ComponentType<FieldStateInjectedProps & TextInputProps>): React.ComponentType<PROPS> {
   const WithFieldState = (
     {
       validate,
@@ -33,8 +35,8 @@ function withFieldState<PROPS>(WrappedComponent: React.ComponentType) {
       validateOnChange,
       validateOnStart,
       ...props
-    }: PROPS & FieldStateProps,
-    ref
+    }: FieldStateProps,
+    ref: any
   ) => {
     const [value, setValue] = useState(props.value);
     const [isFocused, setIsFocused] = useState(false);
@@ -76,7 +78,7 @@ function withFieldState<PROPS>(WrappedComponent: React.ComponentType) {
           validateField();
         }
       },
-      [onBlur, validateOnBlur, validateField]
+      [props.onBlur, validateOnBlur, validateField]
     );
 
     const onChangeText = useCallback(
@@ -107,7 +109,7 @@ function withFieldState<PROPS>(WrappedComponent: React.ComponentType) {
     );
   };
 
-  return React.forwardRef(WithFieldState);
+  return React.forwardRef(WithFieldState) as any;
 }
 
 export default withFieldState;

@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
-import {TextInput, TextInputProps, TextStyle, StyleSheet} from 'react-native';
-import Text, {TextPropTypes} from '../../components/text';
+import {TextStyle, StyleSheet} from 'react-native';
+import Text from '../../components/text';
 import FieldContext from './FieldContext';
 
 export interface ValidationMessageProps {

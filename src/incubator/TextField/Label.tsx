@@ -1,4 +1,4 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useContext} from 'react';
 import {TextStyle} from 'react-native';
 import {Colors} from '../../style';
 import Text, {TextPropTypes} from '../../components/text';

@@ -59,7 +59,7 @@ const TextField = (
     placeholder,
     ...props
   }: TextFieldProps,
-  ref
+  ref: any
 ) => {
   const context = useMemo(() => {
     return {...fieldState, disabled: props.editable === false};
@@ -125,4 +125,4 @@ const TextField = (
 
 TextField.validationMessagePositions = ValidationMessagePosition;
 
-export default withFieldState(React.forwardRef(TextField));
+export default withFieldState<TextFieldProps>(React.forwardRef(TextField) as any);
