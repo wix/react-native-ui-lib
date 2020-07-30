@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {TextStyle} from 'react-native';
 import {Colors} from '../../style';
 import Text, {TextPropTypes} from '../../components/text';
-import {ColorType} from './types';
+import {ColorType, ValidationMessagePosition} from './types';
 import {getColorByState} from './Presenter';
 import FieldContext from './FieldContext';
 
@@ -11,17 +11,23 @@ export interface LabelProps {
   labelColor?: ColorType;
   labelStyle?: TextStyle;
   labelProps?: TextPropTypes;
+  validationMessagePosition?: ValidationMessagePosition;
 }
 
 export default ({
   label,
   labelColor = Colors.grey10,
   labelStyle,
-  labelProps
+  labelProps,
+  validationMessagePosition
 }: LabelProps) => {
   const context = useContext(FieldContext);
 
-  if (label) {
+  const forceHidingLabel =
+    !context.isValid &&
+    validationMessagePosition === ValidationMessagePosition.TOP;
+
+  if (label && !forceHidingLabel) {
     return (
       <Text
         color={getColorByState(labelColor, context)}

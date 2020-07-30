@@ -1,9 +1,9 @@
-import React, {useCallback, useState, useMemo} from 'react';
-import {TextInputProps, ViewStyle, TextStyle} from 'react-native';
+import React, {useMemo} from 'react';
+import {ViewStyle, TextStyle} from 'react-native';
 import View from '../../components/view';
-import Text from '../../components/text';
 import {ImageProps} from '../../components/image';
-import Input from './Input';
+import {ValidationMessagePosition} from './types';
+import Input, {InputProps} from './Input';
 import Icon from './Icon';
 import ValidationMessage, {ValidationMessageProps} from './ValidationMessage';
 import Label, {LabelProps} from './Label';
@@ -14,16 +14,16 @@ import CharCounter, {CharCounterProps} from './CharCounter';
 
 
 interface TextFieldProps
-  extends TextInputProps,
+  extends InputProps,
     LabelProps,
     ValidationMessageProps,
     CharCounterProps,
-    Omit<FieldStateInjectedProps, keyof TextInputProps> {
+    Omit<FieldStateInjectedProps, keyof InputProps> {
   leadingIcon?: ImageProps;
   trailingIcon?: ImageProps;
   floatingPlaceholder?: boolean;
   floatingPlaceholderStyle?: TextStyle;
-  labelColor?: string;
+  validationMessagePosition?: ValidationMessagePosition;
   fieldStyle?: ViewStyle;
   containerStyle?: ViewStyle;
 }
@@ -35,6 +35,7 @@ const TextField = (
     containerStyle,
     floatingPlaceholder,
     floatingPlaceholderStyle,
+    hint,
     // Label
     label,
     labelColor,
@@ -44,9 +45,10 @@ const TextField = (
     leadingIcon,
     trailingIcon,
     // Validation
-    enableErrors,
+    enableErrors, // TODO: rename to enableValidation
     validationMessage,
     validationMessageStyle,
+    validationMessagePosition = ValidationMessagePosition.BOTTOM,
     // Char Counter
     showCharCounter,
     charCounterStyle,
@@ -70,23 +72,44 @@ const TextField = (
           labelColor={labelColor}
           labelStyle={labelStyle}
           labelProps={labelProps}
+          validationMessagePosition={validationMessagePosition}
         />
-        <View style={fieldStyle}>
-          <View row centerV>
-            {leadingIcon && <Icon {...leadingIcon}/>}
-            <View flex>
-              {floatingPlaceholder && <FloatingPlaceholder placeholder={placeholder} style={floatingPlaceholderStyle}/>}
-              <Input {...props} placeholder={floatingPlaceholder ? undefined : placeholder} ref={ref}/>
-            </View>
-            {trailingIcon && <Icon {...trailingIcon}/>}
-          </View>
-        </View>
-        <View row spread>
+        {validationMessagePosition === ValidationMessagePosition.TOP && (
           <ValidationMessage
             enableErrors={enableErrors}
             validationMessage={validationMessage}
             validationMessageStyle={validationMessageStyle}
           />
+        )}
+        <View style={fieldStyle}>
+          <View row centerV>
+            {leadingIcon && <Icon {...leadingIcon} />}
+            <View flex>
+              {floatingPlaceholder && (
+                <FloatingPlaceholder
+                  placeholder={placeholder}
+                  style={floatingPlaceholderStyle}
+                />
+              )}
+              <Input
+                {...props}
+                placeholder={floatingPlaceholder ? undefined : placeholder}
+                hint={hint}
+                ref={ref}
+              />
+            </View>
+            {trailingIcon && <Icon {...trailingIcon} />}
+          </View>
+        </View>
+        <View row spread>
+          {validationMessagePosition === ValidationMessagePosition.BOTTOM && (
+            <ValidationMessage
+              enableErrors={enableErrors}
+              validationMessage={validationMessage}
+              validationMessageStyle={validationMessageStyle}
+              retainSpace
+            />
+          )}
           <CharCounter
             showCharCounter={showCharCounter}
             maxLength={props.maxLength}
@@ -97,5 +120,7 @@ const TextField = (
     </FieldContext.Provider>
   );
 };
+
+TextField.validationMessagePositions = ValidationMessagePosition;
 
 export default withFieldState(React.forwardRef(TextField));

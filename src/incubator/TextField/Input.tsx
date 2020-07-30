@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {TextInput, TextInputProps, StyleSheet, Platform} from 'react-native';
+import FieldContext from './FieldContext';
 
-const Input = ({style, ...props}: TextInputProps, ref) => {
+export interface InputProps extends TextInputProps {
+  hint?: string;
+}
+
+const Input = ({style, hint, ...props}: InputProps, ref) => {
+  const context = useContext(FieldContext);
+  const placeholder = !context.isFocused ? props.placeholder : (hint || props.placeholder);
   return (
     <TextInput
       style={[styles.input, style]}
       {...props}
+      placeholder={placeholder}
       ref={ref}
       underlineColorAndroid="transparent"
     />
@@ -19,11 +27,10 @@ const styles = StyleSheet.create({
     // Setting paddingTop/Bottom separately fix height issues on iOS with multiline
     paddingTop: 0,
     paddingBottom: 0,
-    textAlignVertical: 'center',
     ...Platform.select({
       // This reset android input inner spacing
       android: {
-        // padding: 0,
+        padding: 0,
         textAlignVertical: 'center'
       }
     })

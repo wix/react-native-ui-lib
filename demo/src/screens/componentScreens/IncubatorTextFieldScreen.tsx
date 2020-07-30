@@ -8,18 +8,21 @@ import {
   Typography,
   View,
   Text,
+  Button,
   Incubator
 } from 'react-native-ui-lib'; //eslint-disable-line
 const {TextField} = Incubator;
 
 export default class TextFieldScreen extends Component {
   input = React.createRef();
+  state = {errorPosition: 'top'};
 
   componentDidMount() {
     this.input.current.focus();
   }
 
   render() {
+    const {errorPosition} = this.state;
     return (
       <ScrollView>
         <View flex padding-page>
@@ -63,9 +66,20 @@ export default class TextFieldScreen extends Component {
             fieldStyle={styles.withUnderline}
           />
 
-          <Text h3 blue50 marginV-s4>
-            Validation
-          </Text>
+          <View row marginV-s4 spread>
+            <Text h3 blue50>
+              Validation
+            </Text>
+            <Button
+              size={Button.sizes.xSmall}
+              label={`Error Position: ${_.upperCase(errorPosition)}`}
+              onPress={() =>
+                this.setState({
+                  errorPosition: errorPosition === 'top' ? 'bottom' : 'top'
+                })
+              }
+            />
+          </View>
 
           <TextField
             // value="value"
@@ -74,6 +88,7 @@ export default class TextFieldScreen extends Component {
             enableErrors
             validationMessage="Email is invalid"
             validationMessageStyle={Typography.text90R}
+            validationMessagePosition={errorPosition}
             validate={'email'}
             validateOnChange
             // validateOnStart
@@ -117,6 +132,14 @@ export default class TextFieldScreen extends Component {
             charCounterStyle={{color: Colors.blue30}}
             maxLength={225}
             fieldStyle={styles.withFrame}
+          />
+          <Text h3 blue50 marginV-s4>
+            Hint
+          </Text>
+          <TextField
+            placeholder="Enter password"
+            hint="1-6 chars including numeric chars"
+            fieldStyle={styles.withUnderline}
           />
         </View>
       </ScrollView>

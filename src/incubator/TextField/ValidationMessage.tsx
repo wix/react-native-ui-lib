@@ -7,16 +7,18 @@ export interface ValidationMessageProps {
   enableErrors?: boolean;
   validationMessage?: string;
   validationMessageStyle?: TextStyle;
+  retainSpace?: boolean;
 }
 
 export default ({
   validationMessage,
   enableErrors,
-  validationMessageStyle
+  validationMessageStyle,
+  retainSpace
 }: ValidationMessageProps) => {
   const context = useContext(FieldContext);
 
-  if (!enableErrors) {
+  if (!enableErrors || (!retainSpace && context.isValid)) {
     return null;
   }
 

@@ -6,3 +6,8 @@ export type ColorType =
       error?: string;
       disabled?: string;
     };
+
+    export enum ValidationMessagePosition {
+  TOP = 'top',
+  BOTTOM = 'bottom'
+}
