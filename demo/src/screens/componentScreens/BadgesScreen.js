@@ -137,31 +137,6 @@ export default class BadgesScreen extends Component {
             </Text>
           </View>
         </View>
-        {/* <Text text50 marginB-10 row center marginT-25>
-          Badges Radius
-        </Text>
-        <View row spread>
-          <View flex centerH>
-            <Badge icon={search} backgroundColor={Colors.green20}/>
-            <Text center text80 style={{marginTop: 10}}>
-              default
-            </Text>
-          </View>
-
-          <View flex centerH>
-            <Badge icon={search} borderRadius={6} backgroundColor={Colors.green20}/>
-            <Text center text80 style={{marginTop: 10}}>
-              border radius 6
-            </Text>
-          </View>
-
-          <View flex centerH>
-            <Badge icon={search} borderRadius={2} backgroundColor={Colors.green20}/>
-            <Text center text80 style={{marginTop: 10}}>
-              border radius 2
-            </Text>
-          </View>
-        </View> */}
       </ScrollView>
     );
   }
