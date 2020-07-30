@@ -24,17 +24,17 @@ export default class TextFieldScreen extends Component {
       <ScrollView>
         <View flex padding-page>
           <Text h1>TextField</Text>
-          <Text h3 grey30 marginV-s4>
+          <Text h3 blue50 marginV-s4>
             Default
           </Text>
 
           <TextField
             ref={this.input}
-            label="Label"
-            placeholder="Enter text..."
+            label="Name"
+            placeholder="Enter first+last name"
           />
 
-          <Text h3 grey30 marginV-s4>
+          <Text h3 blue50 marginV-s4>
             Static vs Floating Placeholder
           </Text>
           <View row bottom>
@@ -52,18 +52,18 @@ export default class TextFieldScreen extends Component {
               fieldStyle={styles.withUnderline}
             />
           </View>
-          <Text h3 grey30 marginV-s4>
+          <Text h3 blue50 marginV-s4>
             Leading/Trailing Icon
           </Text>
 
           <TextField
-            label="Label"
             placeholder="Enter text..."
             leadingIcon={{source: Assets.icons.demo.search}}
             trailingIcon={{source: Assets.icons.demo.refresh}}
+            fieldStyle={styles.withUnderline}
           />
 
-          <Text h3 grey30 marginV-s4>
+          <Text h3 blue50 marginV-s4>
             Validation
           </Text>
 
@@ -81,7 +81,7 @@ export default class TextFieldScreen extends Component {
             fieldStyle={styles.withUnderline}
           />
 
-          <Text h3 grey30 marginV-s4>
+          <Text h3 blue50 marginV-s4>
             Colors By State
           </Text>
 
@@ -105,16 +105,18 @@ export default class TextFieldScreen extends Component {
             }}
           />
 
-          <Text h3 grey30 marginV-s4>
+          <Text h3 blue50 marginV-s4>
             Char Counter
           </Text>
 
           <TextField
-            placeholder="Placeholder"
-            fieldStyle={styles.withFrame}
+            label="Description"
+            placeholder="Enter text..."
+            multiline
             showCharCounter
             charCounterStyle={{color: Colors.blue30}}
-            maxLength={75}
+            maxLength={225}
+            fieldStyle={styles.withFrame}
           />
         </View>
       </ScrollView>

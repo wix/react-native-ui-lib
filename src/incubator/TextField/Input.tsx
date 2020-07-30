@@ -16,10 +16,14 @@ export default React.forwardRef(Input);
 
 const styles = StyleSheet.create({
   input: {
+    // Setting paddingTop/Bottom separately fix height issues on iOS with multiline
+    paddingTop: 0,
+    paddingBottom: 0,
+    textAlignVertical: 'center',
     ...Platform.select({
       // This reset android input inner spacing
       android: {
-        padding: 0,
+        // padding: 0,
         textAlignVertical: 'center'
       }
     })
