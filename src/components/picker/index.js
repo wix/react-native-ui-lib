@@ -77,9 +77,13 @@ class Picker extends BaseComponent {
      */
     onPress: PropTypes.func,
     /**
-     * A function that extract the unique value out of the value prop in case value has a custom structure
+     * A function that extract the unique value out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
      */
     getItemValue: PropTypes.func,
+    /**
+     * A function that extract the label out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
+     */
+    getItemLabel: PropTypes.func,
     /**
      * A function that returns the label to show for the selected Picker value
      */
@@ -181,15 +185,15 @@ class Picker extends BaseComponent {
 
   getLabel() {
     const {value} = this.state;
+    const {getLabel, getItemLabel} = this.props;
 
     if (_.isArray(value)) {
       return _.chain(value)
-        .map('label')
+        .map(getItemLabel || 'label')
         .join(', ')
         .value();
     }
 
-    const {getLabel} = this.props;
     if (_.isFunction(getLabel)) {
       return getLabel(value);
     }
@@ -214,8 +218,9 @@ class Picker extends BaseComponent {
   };
 
   toggleItemSelection = item => {
+    const {getItemValue} = this.props;
     const {value} = this.state;
-    const newValue = _.xorBy(value, [item], 'value');
+    const newValue = _.xorBy(value, [item], getItemValue || 'value');
     this.setState({
       value: newValue
     });
@@ -251,7 +256,7 @@ class Picker extends BaseComponent {
   };
 
   appendPropsToChildren = () => {
-    const {children, mode, getItemValue, showSearch, renderItem} = this.props;
+    const {children, mode, getItemValue, getItemLabel, showSearch, renderItem} = this.props;
     const {value, searchValue} = this.state;
     const childrenWithProps = React.Children.map(children, child => {
       const childValue = PickerPresenter.getItemValue({getItemValue, ...child.props});
@@ -264,6 +269,7 @@ class Picker extends BaseComponent {
           isSelected,
           onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
           getItemValue: child.props.getItemValue || getItemValue,
+          getItemLabel: child.props.getItemLabel || getItemLabel,
           onSelectedLayout: this.onSelectedItemLayout,
           renderItem: child.props.renderItem || renderItem,
           accessibilityState: isSelected ? {selected: true} : undefined,

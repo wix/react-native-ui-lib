@@ -8,7 +8,15 @@ const packages = [
   },
   {
     filename: 'core.js',
-    components: ['View', 'Text', 'Image', 'TouchableOpacity', 'Button']
+    components: ['View', 'Text', 'Image', 'TouchableOpacity', 'Button'],
+    styleComponents: [
+      'Colors',
+      'Typography',
+      'Spacings',
+      'BorderRadiuses',
+      'Shadows',
+      'ThemeManager'
+    ]
   }
 ];
 
@@ -16,11 +24,19 @@ const packages = [
 packages.forEach((package) => {
   let content = package.content || '';
 
-  if (package.components) {
+  if (package.components || package.styleComponents) {
     content += 'module.exports = {\n';
-    package.components.forEach((component) => {
+    _.forEach(package.components, (component) => {
       content += `get ${component}() {\n`;
       content += `return require('./src/components/${_.camelCase(
+        component
+      )}').default;`;
+      content += `},\n`;
+    });
+
+    _.forEach(package.styleComponents, (component) => {
+      content += `get ${component}() {\n`;
+      content += `return require('./src/style/${_.camelCase(
         component
       )}').default;`;
       content += `},\n`;
