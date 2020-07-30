@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
   withFrame: {
     borderWidth: 1,
     borderColor: Colors.grey40,
-    padding: 4
+    padding: 4,
+    borderRadius: 2
   }
 });
