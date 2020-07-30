@@ -49,6 +49,7 @@ export default class TextFieldScreen extends Component {
             <TextField
               placeholder="Floating placeholder"
               floatingPlaceholder
+              floatingPlaceholderColor={{focus: Colors.grey10, default: Colors.grey30}}
               // floatingPlaceholderStyle={Typography.text60}
               // style={Typography.text60}
               containerStyle={{flex: 1}}

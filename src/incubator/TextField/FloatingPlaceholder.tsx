@@ -7,18 +7,22 @@ import React, {
   useMemo
 } from 'react';
 import {Animated, LayoutChangeEvent, StyleSheet, Platform, TextStyle} from 'react-native';
+import {ColorType} from './types';
+import {getColorByState} from './Presenter';
+import {Colors} from '../../style';
 import View from '../../components/view';
 import Text from '../../components/text';
 import FieldContext from './FieldContext';
 
-interface FloatingPlaceholderProps {
+export interface FloatingPlaceholderProps {
   placeholder?: string;
-  style?: TextStyle;
+  floatingPlaceholderColor?: ColorType;
+  floatingPlaceholderStyle?: TextStyle;
 }
 
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
 
-export default ({placeholder, style}: FloatingPlaceholderProps) => {
+export default ({placeholder, floatingPlaceholderColor = Colors.grey40, floatingPlaceholderStyle}: FloatingPlaceholderProps) => {
   const context = useContext(FieldContext);
   const [placeholderOffset, setPlaceholderOffset] = useState({
     top: 0,
@@ -64,8 +68,8 @@ export default ({placeholder, style}: FloatingPlaceholderProps) => {
     <View absF>
       <Text
         animated
-        grey40
-        style={[styles.placeholder, style, animatedStyle]}
+        color={getColorByState(floatingPlaceholderColor, context)}
+        style={[styles.placeholder, floatingPlaceholderStyle, animatedStyle]}
         onLayout={onPlaceholderLayout}
       >
         {placeholder}

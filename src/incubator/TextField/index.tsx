@@ -9,13 +9,13 @@ import ValidationMessage, {ValidationMessageProps} from './ValidationMessage';
 import Label, {LabelProps} from './Label';
 import FieldContext from './FieldContext';
 import withFieldState, {FieldStateInjectedProps} from './withFieldState';
-import FloatingPlaceholder from './FloatingPlaceholder';
+import FloatingPlaceholder, {FloatingPlaceholderProps} from './FloatingPlaceholder';
 import CharCounter, {CharCounterProps} from './CharCounter';
-
 
 interface TextFieldProps
   extends InputProps,
     LabelProps,
+    FloatingPlaceholderProps,
     ValidationMessageProps,
     CharCounterProps,
     Omit<FieldStateInjectedProps, keyof InputProps> {
@@ -34,6 +34,7 @@ const TextField = (
     fieldStyle,
     containerStyle,
     floatingPlaceholder,
+    floatingPlaceholderColor,
     floatingPlaceholderStyle,
     hint,
     // Label
@@ -88,7 +89,8 @@ const TextField = (
               {floatingPlaceholder && (
                 <FloatingPlaceholder
                   placeholder={placeholder}
-                  style={floatingPlaceholderStyle}
+                  floatingPlaceholderStyle={floatingPlaceholderStyle}
+                  floatingPlaceholderColor={floatingPlaceholderColor}
                 />
               )}
               <Input
