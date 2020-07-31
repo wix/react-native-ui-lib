@@ -5,6 +5,7 @@
  */
 
 export * from './style';
+export * as Incubator from './incubator';
 export {default as Avatar, AvatarPropTypes} from './components/avatar';
 export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
 export {default as View, ViewPropTypes} from './components/view';
@@ -27,5 +28,5 @@ export {
   PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, PickerProps, ProgressBar, Slider,
   GradientSlider, ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,
   WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper, Constants,
-  LogService, LoaderScreen, Modal, StateScreen, WheelPicker, WheelPickerProps, Incubator, ColorPicker
+  LogService, LoaderScreen, Modal, StateScreen, WheelPicker, WheelPickerProps, ColorPicker
 } from '../typings';

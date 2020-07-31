@@ -36,7 +36,7 @@ declare type TouchableOpacityPropTypes = {
     /**
      * Pass custom style
      */
-    style: ViewStyle;
+    style?: ViewStyle;
 };
 declare const _default: React.ComponentClass<TouchableOpacityPropTypes & {
     useCustomTheme?: boolean | undefined;
