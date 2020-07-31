@@ -7,7 +7,7 @@ export type ColorType =
       disabled?: string;
     };
 
-    export enum ValidationMessagePosition {
+export enum ValidationMessagePosition {
   TOP = 'top',
   BOTTOM = 'bottom'
 }

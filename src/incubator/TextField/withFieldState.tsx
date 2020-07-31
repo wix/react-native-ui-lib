@@ -23,7 +23,7 @@ export interface FieldStateProps extends TextInputProps {
   validateOnStart?: boolean;
   validateOnChange?: boolean;
   validateOnBlur?: boolean;
-  validate: Validator | Validator[];
+  validate?: Validator | Validator[];
 }
 
 

@@ -8,17 +8,22 @@ import Icon from './Icon';
 import ValidationMessage, {ValidationMessageProps} from './ValidationMessage';
 import Label, {LabelProps} from './Label';
 import FieldContext from './FieldContext';
-import withFieldState, {FieldStateInjectedProps} from './withFieldState';
-import FloatingPlaceholder, {FloatingPlaceholderProps} from './FloatingPlaceholder';
+import withFieldState, {
+  FieldStateInjectedProps,
+  FieldStateProps
+} from './withFieldState';
+import FloatingPlaceholder, {
+  FloatingPlaceholderProps
+} from './FloatingPlaceholder';
 import CharCounter, {CharCounterProps} from './CharCounter';
 
 interface TextFieldProps
   extends InputProps,
     LabelProps,
     FloatingPlaceholderProps,
+    FieldStateProps,
     ValidationMessageProps,
-    CharCounterProps,
-    Omit<FieldStateInjectedProps, keyof InputProps> {
+    CharCounterProps {
   leadingIcon?: ImageProps;
   trailingIcon?: ImageProps;
   floatingPlaceholder?: boolean;
@@ -27,6 +32,10 @@ interface TextFieldProps
   fieldStyle?: ViewStyle;
   containerStyle?: ViewStyle;
 }
+
+interface InternalTextFieldProps
+  extends TextFieldProps,
+    Omit<FieldStateInjectedProps, keyof InputProps> {}
 
 const TextField = (
   {
@@ -58,7 +67,7 @@ const TextField = (
     // Input
     placeholder,
     ...props
-  }: TextFieldProps,
+  }: InternalTextFieldProps,
   ref: any
 ) => {
   const context = useMemo(() => {
@@ -84,7 +93,7 @@ const TextField = (
         )}
         <View style={fieldStyle}>
           <View row centerV>
-            {leadingIcon && <Icon {...leadingIcon} />}
+            {leadingIcon && <Icon {...leadingIcon}/>}
             <View flex>
               {floatingPlaceholder && (
                 <FloatingPlaceholder
@@ -100,7 +109,7 @@ const TextField = (
                 ref={ref}
               />
             </View>
-            {trailingIcon && <Icon {...trailingIcon} />}
+            {trailingIcon && <Icon {...trailingIcon}/>}
           </View>
         </View>
         <View row spread>
@@ -125,4 +134,6 @@ const TextField = (
 
 TextField.validationMessagePositions = ValidationMessagePosition;
 
-export default withFieldState<TextFieldProps>(React.forwardRef(TextField) as any);
+export default withFieldState<TextFieldProps>(
+  React.forwardRef(TextField) as any
+);

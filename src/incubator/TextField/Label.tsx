@@ -7,7 +7,7 @@ import {getColorByState} from './Presenter';
 import FieldContext from './FieldContext';
 
 export interface LabelProps {
-  label: string;
+  label?: string;
   labelColor?: ColorType;
   labelStyle?: TextStyle;
   labelProps?: TextPropTypes;

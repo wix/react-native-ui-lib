@@ -5,10 +5,10 @@ import { ValidationMessagePosition } from './types';
 import { InputProps } from './Input';
 import { ValidationMessageProps } from './ValidationMessage';
 import { LabelProps } from './Label';
-import { FieldStateInjectedProps } from './withFieldState';
+import { FieldStateProps } from './withFieldState';
 import { FloatingPlaceholderProps } from './FloatingPlaceholder';
 import { CharCounterProps } from './CharCounter';
-interface TextFieldProps extends InputProps, LabelProps, FloatingPlaceholderProps, ValidationMessageProps, CharCounterProps, Omit<FieldStateInjectedProps, keyof InputProps> {
+interface TextFieldProps extends InputProps, LabelProps, FloatingPlaceholderProps, FieldStateProps, ValidationMessageProps, CharCounterProps {
     leadingIcon?: ImageProps;
     trailingIcon?: ImageProps;
     floatingPlaceholder?: boolean;

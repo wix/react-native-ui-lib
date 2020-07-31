@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import {TextInput, TextInputProps, StyleSheet, Platform} from 'react-native';
 import FieldContext from './FieldContext';
 
-export interface InputProps extends TextInputProps {
+export interface InputProps extends TextInputProps, React.ComponentPropsWithRef<typeof TextInput> {
   hint?: string;
 }
 

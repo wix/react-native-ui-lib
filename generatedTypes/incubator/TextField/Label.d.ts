@@ -3,7 +3,7 @@ import { TextStyle } from 'react-native';
 import { TextPropTypes } from '../../components/text';
 import { ColorType, ValidationMessagePosition } from './types';
 export interface LabelProps {
-    label: string;
+    label?: string;
     labelColor?: ColorType;
     labelStyle?: TextStyle;
     labelProps?: TextPropTypes;
