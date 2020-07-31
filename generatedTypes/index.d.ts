@@ -4,6 +4,7 @@
  * Please use this file for declaring all the exports, so they could be picked up by typescript's complier
  */
 export * from './style';
+export * as Incubator from './incubator';
 export {asBaseComponent, withScrollEnabler, withScrollReached, WithScrollEnablerProps, WithScrollReachedProps} from './commons/new';
 export {default as Avatar, AvatarPropTypes} from './components/avatar';
 export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
@@ -65,7 +66,6 @@ export {
   StateScreen,
   WheelPicker,
   WheelPickerProps,
-  Incubator,
   ColorPicker,
   Picker,
   PickerProps
