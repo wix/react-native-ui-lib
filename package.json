@@ -94,10 +94,10 @@
     "react-dom": "^15.4.2",
     "react-js-to-ts": "^1.4.0",
     "react-native": "0.62.2",
-    "react-native-gesture-handler": "1.5.6",
+    "react-native-gesture-handler": "1.6.1",
     "react-native-keyboard-tracking-view": "^5.6.1",
     "react-native-navigation": "^6.4.0",
-    "react-native-reanimated": "^1.7.0",
+    "react-native-reanimated": "1.9.0",
     "react-test-renderer": "^16.13.1",
     "shell-utils": "^1.0.10",
     "typescript": "3.8.3"
