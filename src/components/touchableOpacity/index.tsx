@@ -3,7 +3,7 @@ import {TouchableOpacity as RNTouchableOpacity, TouchableOpacityProps as RNTouch
 import _ from 'lodash';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps, ContainerModifiers} from '../../commons/new';
 // @ts-ignore
-import Incubator from '../../incubator';
+import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
 
 export type TouchableOpacityProps = RNTouchableOpacityProps & ContainerModifiers & {
   /**
@@ -101,7 +101,8 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
     const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
 
     if (useNative) {
-      return <Incubator.TouchableOpacity {...this.props}/>;
+      // @ts-ignore
+      return <IncubatorTouchableOpacity {...this.props}/>;
     }
 
     return (
