@@ -17,5 +17,10 @@ interface TextFieldProps extends InputProps, LabelProps, FloatingPlaceholderProp
     fieldStyle?: ViewStyle;
     containerStyle?: ViewStyle;
 }
-declare const _default: React.ComponentType<TextFieldProps>;
+interface StaticMembers {
+    validationMessagePositions: typeof ValidationMessagePosition;
+}
+declare const _default: React.ComponentClass<TextFieldProps & {
+    useCustomTheme?: boolean | undefined;
+}, any> & StaticMembers;
 export default _default;

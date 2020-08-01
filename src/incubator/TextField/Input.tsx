@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import {TextInput, TextInputProps, StyleSheet, Platform} from 'react-native';
+import {ForwardRefInjectedProps} from '../../commons/new';
 import FieldContext from './FieldContext';
 
 export interface InputProps extends TextInputProps, React.ComponentPropsWithRef<typeof TextInput> {
   hint?: string;
 }
 
-const Input = ({style, hint, ...props}: InputProps, ref: any) => {
+const Input = ({style, hint, forwardedRef, ...props}: InputProps & ForwardRefInjectedProps) => {
   const context = useContext(FieldContext);
   const placeholder = !context.isFocused ? props.placeholder : (hint || props.placeholder);
   return (
@@ -14,13 +15,13 @@ const Input = ({style, hint, ...props}: InputProps, ref: any) => {
       style={[styles.input, style]}
       {...props}
       placeholder={placeholder}
-      ref={ref}
+      ref={forwardedRef}
       underlineColorAndroid="transparent"
     />
   );
 };
 
-export default React.forwardRef(Input);
+export default Input;
 
 const styles = StyleSheet.create({
   input: {

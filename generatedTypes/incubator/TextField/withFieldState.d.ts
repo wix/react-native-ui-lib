@@ -20,5 +20,5 @@ export interface FieldStateProps extends TextInputProps {
     validateOnBlur?: boolean;
     validate?: Validator | Validator[];
 }
-declare function withFieldState<PROPS>(WrappedComponent: React.ComponentType<FieldStateInjectedProps & TextInputProps>): React.ComponentType<PROPS>;
+declare function withFieldState(WrappedComponent: React.ComponentType<FieldStateInjectedProps & TextInputProps>): ({ validate, validateOnBlur, validateOnChange, validateOnStart, ...props }: FieldStateProps) => JSX.Element;
 export default withFieldState;

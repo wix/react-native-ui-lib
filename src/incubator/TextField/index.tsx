@@ -1,5 +1,10 @@
 import React, {useMemo} from 'react';
 import {ViewStyle, TextStyle} from 'react-native';
+import {
+  asBaseComponent,
+  forwardRef,
+  ForwardRefInjectedProps
+} from '../../commons/new';
 import View from '../../components/view';
 import {ImageProps} from '../../components/image';
 import {ValidationMessagePosition} from './types';
@@ -35,7 +40,12 @@ interface TextFieldProps
 
 interface InternalTextFieldProps
   extends TextFieldProps,
-    Omit<FieldStateInjectedProps, keyof InputProps> {}
+    Omit<FieldStateInjectedProps, keyof InputProps>,
+    ForwardRefInjectedProps {}
+
+interface StaticMembers {
+  validationMessagePositions: typeof ValidationMessagePosition;
+}
 
 const TextField = (
   {
@@ -134,6 +144,6 @@ const TextField = (
 
 TextField.validationMessagePositions = ValidationMessagePosition;
 
-export default withFieldState<TextFieldProps>(
-  React.forwardRef(TextField) as any
+export default asBaseComponent<TextFieldProps, StaticMembers>(
+  forwardRef(withFieldState(TextField as any))
 );

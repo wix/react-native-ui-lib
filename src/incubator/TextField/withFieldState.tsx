@@ -1,5 +1,7 @@
 import React, {useCallback, useState, useEffect, useMemo} from 'react';
 import _ from 'lodash';
+//@ts-ignore
+import hoistStatics from 'hoist-non-react-statics';
 import {TextInputProps} from 'react-native';
 import validators from './validators';
 
@@ -26,18 +28,18 @@ export interface FieldStateProps extends TextInputProps {
   validate?: Validator | Validator[];
 }
 
-
-function withFieldState<PROPS>(WrappedComponent: React.ComponentType<FieldStateInjectedProps & TextInputProps>): React.ComponentType<PROPS> {
-  const WithFieldState = (
-    {
-      validate,
-      validateOnBlur,
-      validateOnChange,
-      validateOnStart,
-      ...props
-    }: FieldStateProps,
-    ref: any
-  ) => {
+function withFieldState(
+  WrappedComponent: React.ComponentType<
+    FieldStateInjectedProps & TextInputProps
+  >
+) {
+  const WithFieldState = ({
+    validate,
+    validateOnBlur,
+    validateOnChange,
+    validateOnStart,
+    ...props
+  }: FieldStateProps) => {
     const [value, setValue] = useState(props.value);
     const [isFocused, setIsFocused] = useState(false);
     const [isValid, setIsValid] = useState(true);
@@ -104,12 +106,12 @@ function withFieldState<PROPS>(WrappedComponent: React.ComponentType<FieldStateI
         onBlur={onBlur}
         onChangeText={onChangeText}
         fieldState={fieldState}
-        ref={ref}
       />
     );
   };
 
-  return React.forwardRef(WithFieldState) as any;
+  hoistStatics(WithFieldState, WrappedComponent);
+  return WithFieldState;
 }
 
 export default withFieldState;

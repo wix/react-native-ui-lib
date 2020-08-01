@@ -16,7 +16,7 @@ const {TextField} = Incubator;
 export default class TextFieldScreen extends Component {
   input = React.createRef<TextInput>();
   state = {
-    errorPosition: 'top',
+    errorPosition: TextField.validationMessagePositions.TOP,
     value: 'Initial Value'
   };
 
@@ -84,7 +84,10 @@ export default class TextFieldScreen extends Component {
               label={`Error Position: ${_.upperCase(errorPosition)}`}
               onPress={() =>
                 this.setState({
-                  errorPosition: errorPosition === 'top' ? 'bottom' : 'top'
+                  errorPosition:
+                    errorPosition === TextField.validationMessagePositions.TOP
+                      ? TextField.validationMessagePositions.BOTTOM
+                      : TextField.validationMessagePositions.TOP
                 })
               }
             />
