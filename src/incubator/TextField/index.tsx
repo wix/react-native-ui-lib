@@ -142,6 +142,7 @@ const TextField = (
   );
 };
 
+TextField.displayName = 'Incubator.TextField';
 TextField.validationMessagePositions = ValidationMessagePosition;
 
 export default asBaseComponent<TextFieldProps, StaticMembers>(

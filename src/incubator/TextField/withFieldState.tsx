@@ -111,6 +111,7 @@ function withFieldState(
   };
 
   hoistStatics(WithFieldState, WrappedComponent);
+  WithFieldState.displayName = WrappedComponent.displayName;
   return WithFieldState;
 }
 
