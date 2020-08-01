@@ -6,3 +6,5 @@ jest.spyOn(AccessibilityInfo, 'isScreenReaderEnabled').mockImplementation(() => 
 // mock native modules
 jest.mock('@react-native-community/blur', () => {});
 jest.mock('@react-native-community/netinfo', () => {});
+jest.mock('react-native-reanimated', () => ({}));
+jest.mock('react-native-gesture-handler', () => {});
