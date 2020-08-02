@@ -171,7 +171,8 @@ export default class TextField extends BaseInput {
       iconSource: RNImage.propTypes.source,
       iconColor: PropTypes.string,
       onPress: PropTypes.func,
-      style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
+      style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+      accessibilityLabel: PropTypes.string
     }),
     /**
      * Pass to render a leading icon to the TextInput value. Accepts Image props (doesn't work with floatingPlaceholder)
@@ -609,7 +610,7 @@ export default class TextField extends BaseInput {
       const {style, iconSource, iconColor} = rightButtonProps;
 
       return (
-        <TouchableOpacity style={[this.styles.rightButton, style]} onPress={this.onPressRightButton}>
+        <TouchableOpacity {...rightButtonProps} style={[this.styles.rightButton, style]} onPress={this.onPressRightButton}>
           <Image
             pointerEvents="none"
             source={iconSource}
