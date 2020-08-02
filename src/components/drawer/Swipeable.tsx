@@ -246,7 +246,9 @@ export default class Swipeable extends Component<PropType, StateType> {
       } else if (fullSwipeRight && translationX < -rowWidth * fullRightThreshold) {
         toValue = -rowWidth;
       } else if (translationX > leftThreshold) {
-        toValue = leftWidth;
+        if (!onToggleSwipeLeft || onToggleSwipeLeft && translationX < rowWidth * LEFT_TOGGLE_THRESHOLD) {
+          toValue = leftWidth;
+        }
       } else if (translationX < -rightThreshold) {
         toValue = -rightWidth;
       }
@@ -288,13 +290,13 @@ export default class Swipeable extends Component<PropType, StateType> {
     dragX.setValue(0);
     rowTranslation.setValue(fromValue);
     this.rowState = Math.sign(toValue);
-
+        
     Animated.spring(rowTranslation, {
+      toValue,
       restSpeedThreshold: 1.7,
       restDisplacementThreshold: 0.4,
       velocity: velocityX,
       bounciness: 0,
-      toValue,
       useNativeDriver: useNativeAnimations,
       ...animationOptions
     }).start(({finished}) => {

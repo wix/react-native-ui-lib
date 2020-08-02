@@ -11,6 +11,7 @@ import View from '../view';
 import Swipeable, {PropType as SwipeableProps} from './Swipeable';
 
 const DEFAULT_BG = Colors.blue30;
+const DEFAULT_BOUNCINESS = 0;
 
 interface ItemProps {
   width?: number;
@@ -123,7 +124,7 @@ class Drawer extends PureComponent<DrawerProps> {
   leftRender: SwipeableProps['renderLeftActions'];
   rightRender: SwipeableProps['renderLeftActions'];
   _swipeableRow: RefObject<Swipeable> = React.createRef();
-  animationOptions: SwipeableProps['animationOptions'] = {bounciness: this.props.bounciness || 5};
+  animationOptions: SwipeableProps['animationOptions'] = {bounciness: this.props.bounciness || DEFAULT_BOUNCINESS};
   leftActionX: Animated.Value = new Animated.Value(0);
 
   constructor(props: DrawerProps) {
@@ -212,10 +213,12 @@ class Drawer extends PureComponent<DrawerProps> {
       useNativeDriver: true
     }).start(() => {
       if (released) {
-        _.invoke(this.props, 'onToggleSwipeLeft', this.props);
         // reset Drawer
         this.animateItem({released: false, resetItemPosition: true});
         this.closeDrawer();
+        setTimeout(() => {
+          _.invoke(this.props, 'onToggleSwipeLeft', this.props);
+        }, 150);
       }
     });
   }
