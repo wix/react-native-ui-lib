@@ -12,15 +12,14 @@ import {
 import {renderHeader} from '../ExampleScreenPresenter';
 
 const numberOfItems = 3;
-const faderLocation = Fader.location.BOTTOM;
+const faderPosition = Fader.position.BOTTOM;
 const itemWidth = 100;
 const itemHeight = 100;
 const tintColor = undefined;
 
 const horizontal =
-  faderLocation === Fader.location.LEFT ||
-  faderLocation === Fader.location.RIGHT;
-// const setToStart = faderLocation === Fader.location.LEFT || Fader.location.TOP;
+  faderPosition === Fader.position.LEFT ||
+  faderPosition === Fader.position.RIGHT;
 
 class FaderScreen extends Component<WithScrollReachedProps> {
   renderItem = (index: number) => {
@@ -34,8 +33,8 @@ class FaderScreen extends Component<WithScrollReachedProps> {
   render() {
     const {scrollReachedProps} = this.props;
     const visible =
-      faderLocation === Fader.location.BOTTOM ||
-      faderLocation === Fader.location.RIGHT
+      faderPosition === Fader.position.BOTTOM ||
+      faderPosition === Fader.position.RIGHT
         ? !scrollReachedProps.isScrollAtEnd
         : !scrollReachedProps.isScrollAtStart;
 
@@ -56,7 +55,7 @@ class FaderScreen extends Component<WithScrollReachedProps> {
             </ScrollView>
             <Fader
               visible={visible}
-              location={faderLocation}
+              position={faderPosition}
               tintColor={tintColor}
             />
           </View>

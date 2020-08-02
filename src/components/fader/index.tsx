@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native';
 import View from '../view';
 import Image from '../image';
 
-export enum FaderLocation {
+export enum FaderPosition {
   LEFT = 'LEFT',
   RIGHT = 'RIGHT',
   TOP = 'TOP',
@@ -17,9 +17,9 @@ export type FaderProps = {
    */
   visible?: boolean;
   /**
-   * The location of the fader (the image is different), defaults to Fader.location.RIGHT
+   * The position of the fader (the image is different), defaults to Fader.position.RIGHT
    */
-  location?: FaderLocation;
+  position?: FaderPosition;
   /**
    * Set to change from the default size (50) of the fade view.
    */
@@ -39,25 +39,25 @@ function Fader(props: FaderProps) {
 
   const fadeSize = getFadeSize();
   const getStyles = useCallback(() => {
-    const location = props.location || FaderLocation.RIGHT;
+    const position = props.position || FaderPosition.RIGHT;
     let containerStyle, imageStyle, imageSource;
-    switch (location) {
-      case FaderLocation.LEFT:
+    switch (position) {
+      case FaderPosition.LEFT:
         containerStyle = {...staticStyles.containerLeft, width: fadeSize};
         imageStyle = {height: '100%', width: fadeSize};
         imageSource = require('./gradientLeft.png');
         break;
-      case FaderLocation.RIGHT:
+      case FaderPosition.RIGHT:
         containerStyle = {...staticStyles.containerRight, width: fadeSize};
         imageStyle = {height: '100%', width: fadeSize};
         imageSource = require('./gradientRight.png');
         break;
-      case FaderLocation.TOP:
+      case FaderPosition.TOP:
         containerStyle = {...staticStyles.containerTop, height: fadeSize};
         imageStyle = {height: fadeSize, width: '100%'};
         imageSource = require('./gradientTop.png');
         break;
-      case FaderLocation.BOTTOM:
+      case FaderPosition.BOTTOM:
         containerStyle = {
           ...staticStyles.containerBottom,
           height: fadeSize
@@ -72,7 +72,7 @@ function Fader(props: FaderProps) {
       imageStyle,
       imageSource
     };
-  }, [fadeSize, props.location]);
+  }, [fadeSize, props.position]);
 
   const styles = getStyles();
 
@@ -91,7 +91,7 @@ function Fader(props: FaderProps) {
 }
 
 Fader.displayName = 'Fader';
-Fader.location = FaderLocation;
+Fader.position = FaderPosition;
 
 export default Fader;
 

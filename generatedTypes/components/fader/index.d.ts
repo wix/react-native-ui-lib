@@ -1,5 +1,5 @@
 /// <reference types="react" />
-export declare enum FaderLocation {
+export declare enum FaderPosition {
     LEFT = "LEFT",
     RIGHT = "RIGHT",
     TOP = "TOP",
@@ -11,9 +11,9 @@ export declare type FaderProps = {
      */
     visible?: boolean;
     /**
-     * The location of the fader (the image is different), defaults to Fader.location.RIGHT
+     * The position of the fader (the image is different), defaults to Fader.position.RIGHT
      */
-    location?: FaderLocation;
+    position?: FaderPosition;
     /**
      * Set to change from the default size (50) of the fade view.
      */
@@ -26,6 +26,6 @@ export declare type FaderProps = {
 declare function Fader(props: FaderProps): JSX.Element;
 declare namespace Fader {
     var displayName: string;
-    var location: typeof FaderLocation;
+    var position: typeof FaderPosition;
 }
 export default Fader;
