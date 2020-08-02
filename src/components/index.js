@@ -50,6 +50,9 @@ export default {
   get Drawer() {
     return require('./drawer').default;
   },
+  get Fader() {
+    return require('./fader').default;
+  },
   get FeatureHighlight() {
     return require('./featureHighlight').default;
   },
