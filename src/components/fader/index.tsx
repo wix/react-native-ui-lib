@@ -74,16 +74,11 @@ function Fader(props: FaderProps) {
     };
   }, [fadeSize, props.location]);
 
-  const isVisible = useCallback(() => {
-    return props.visible || _.isUndefined(props.visible);
-  }, [props.visible]);
-
   const styles = getStyles();
-  const visible = isVisible();
 
   return (
     <View pointerEvents={'none'} style={styles.containerStyle}>
-      {visible && (
+      {(props.visible || _.isUndefined(props.visible)) && (
         <Image
           source={styles.imageSource}
           tintColor={props.tintColor}

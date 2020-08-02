@@ -54,9 +54,11 @@ class FaderScreen extends Component<WithScrollReachedProps> {
             >
               {_.times(numberOfItems, this.renderItem)}
             </ScrollView>
-            {visible && (
-              <Fader location={faderLocation} tintColor={tintColor} />
-            )}
+            <Fader
+              visible={visible}
+              location={faderLocation}
+              tintColor={tintColor}
+            />
           </View>
         </View>
       </View>
