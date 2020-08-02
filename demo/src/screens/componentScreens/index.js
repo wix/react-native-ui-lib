@@ -60,6 +60,6 @@ export function registerScreens(registrar) {
   registrar('unicorn.screens.ModalScreen', () => require('./ModalScreen').default);
   registrar('unicorn.components.WithScrollEnablerScreen', () => require('./WithScrollEnablerScreen').default);
   registrar('unicorn.components.WithScrollReachedScreen', () => require('./WithScrollReachedScreen').default);
-  registrar('unicorn.components.WithScrollFaderScreen', () => require('./WithScrollFaderScreen').default);
+  registrar('unicorn.components.FaderScreen', () => require('./FaderScreen').default);
 }
 

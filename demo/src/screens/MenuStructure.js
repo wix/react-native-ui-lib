@@ -101,9 +101,9 @@ export const navigationData = {
         screen: 'unicorn.components.WithScrollReachedScreen'
       },
       {
-        title: 'withScrollFader',
+        title: 'Fader',
         tags: 'scroll fader',
-        screen: 'unicorn.components.WithScrollFaderScreen'
+        screen: 'unicorn.components.FaderScreen'
       },
       {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'}
     ]

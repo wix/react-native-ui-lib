@@ -22,7 +22,7 @@ const horizontal =
   faderLocation === Fader.location.RIGHT;
 // const setToStart = faderLocation === Fader.location.LEFT || Fader.location.TOP;
 
-class WithScrollFaderScreen extends Component<WithScrollReachedProps> {
+class FaderScreen extends Component<WithScrollReachedProps> {
   renderItem = (index: number) => {
     return (
       <View key={index} style={styles.item}>
@@ -41,7 +41,7 @@ class WithScrollFaderScreen extends Component<WithScrollReachedProps> {
 
     return (
       <View margin-10>
-        {renderHeader('withScrollFader', {'marginB-10': true})}
+        {renderHeader('Fader', {'marginB-10': true})}
         <View center>
           <View style={styles.container}>
             <ScrollView
@@ -64,7 +64,7 @@ class WithScrollFaderScreen extends Component<WithScrollReachedProps> {
   }
 }
 
-export default withScrollReached(WithScrollFaderScreen, {
+export default withScrollReached(FaderScreen, {
   horizontal
 });
 
