@@ -78,7 +78,7 @@ class DrawerScreen extends Component {
   };
 
   toggleReadState = () => {
-    this.setState({unread: !this.state.unread}); // setState will close the Drawer
+    this.setState({unread: !this.state.unread});
   }
 
   triggerLeftToggleHaptic = () => {
