@@ -54,6 +54,9 @@ export default {
   get Drawer() {
     return require('./components/drawer').default;
   },
+  get Fader() {
+    return require('./components/fader').default;
+  },
   get FloatingButton() {
     return require('./components/floatingButton').default;
   },

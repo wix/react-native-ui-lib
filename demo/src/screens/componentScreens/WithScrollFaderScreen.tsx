@@ -5,21 +5,24 @@ import {
   Colors,
   Text,
   View,
-  withScrollFader,
-  // eslint-disable-next-line no-unused-vars
-  WithScrollFaderProps
+  Fader,
+  withScrollReached,
+  WithScrollReachedProps
 } from 'react-native-ui-lib';
-// @ts-ignore
 import {renderHeader} from '../ExampleScreenPresenter';
 
 const numberOfItems = 3;
-const horizontal = false;
-const setToStart = false;
+const faderLocation = Fader.location.BOTTOM;
 const itemWidth = 100;
 const itemHeight = 100;
 const tintColor = undefined;
 
-class WithScrollReachedScreen extends Component<WithScrollFaderProps> {
+const horizontal =
+  faderLocation === Fader.location.LEFT ||
+  faderLocation === Fader.location.RIGHT;
+// const setToStart = faderLocation === Fader.location.LEFT || Fader.location.TOP;
+
+class WithScrollFaderScreen extends Component<WithScrollReachedProps> {
   renderItem = (index: number) => {
     return (
       <View key={index} style={styles.item}>
@@ -29,31 +32,40 @@ class WithScrollReachedScreen extends Component<WithScrollFaderProps> {
   };
 
   render() {
+    const {scrollReachedProps} = this.props;
+    const visible =
+      faderLocation === Fader.location.BOTTOM ||
+      faderLocation === Fader.location.RIGHT
+        ? !scrollReachedProps.isScrollAtEnd
+        : !scrollReachedProps.isScrollAtStart;
+
     return (
-      <View margin-10 center>
+      <View margin-10>
         {renderHeader('withScrollFader', {'marginB-10': true})}
-        <View style={styles.container}>
-          <ScrollView
-            horizontal={horizontal}
-            style={styles.scrollView}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            scrollEventThrottle={16}
-            onScroll={this.props.scrollFaderProps.onScroll}
-          >
-            {_.times(numberOfItems, this.renderItem)}
-          </ScrollView>
-          {this.props.scrollFaderProps.renderFader()}
+        <View center>
+          <View style={styles.container}>
+            <ScrollView
+              horizontal={horizontal}
+              style={styles.scrollView}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              scrollEventThrottle={16}
+              onScroll={scrollReachedProps.onScroll}
+            >
+              {_.times(numberOfItems, this.renderItem)}
+            </ScrollView>
+            {visible && (
+              <Fader location={faderLocation} tintColor={tintColor} />
+            )}
+          </View>
         </View>
       </View>
     );
   }
 }
 
-export default withScrollFader(WithScrollReachedScreen, {
-  horizontal,
-  setToStart,
-  tintColor
+export default withScrollReached(WithScrollFaderScreen, {
+  horizontal
 });
 
 const styles = StyleSheet.create({

@@ -1,6 +1,5 @@
 import React, {useCallback} from 'react';
 import {
-  StyleSheet,
   FlatListProps,
   ScrollViewProps,
   NativeSyntheticEvent,
@@ -11,8 +10,7 @@ import withScrollReached, {
   WithScrollReachedProps,
   WithScrollReachedOptionsProps
 } from '../../commons/withScrollReached';
-import View from '../view';
-import Image from '../image';
+import Fader, {FaderProps} from '../fader';
 
 export type ScrollFaderProps = {
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
@@ -24,20 +22,8 @@ export type ScrollFaderProps = {
 
 declare type SupportedViewsProps = FlatListProps<any> | ScrollViewProps;
 
-export type WithScrollFaderOptionsProps = WithScrollReachedOptionsProps & {
-  /**
-   * Should the fader be set on the start or the end of the scroll (the image is different), defaults to end
-   */
-  setToStart?: boolean;
-  /**
-   * Set to change from the default size (50) of the fade view.
-   */
-  size?: number;
-  /**
-   * Change the default (white) tint color of the fade view.
-   */
-  tintColor?: string;
-};
+export type WithScrollFaderOptionsProps = WithScrollReachedOptionsProps &
+  FaderProps;
 
 export type WithScrollFaderProps = {
   scrollFaderProps: ScrollFaderProps;
@@ -47,8 +33,6 @@ export type WithScrollFaderProps = {
 type PropTypes = ForwardRefInjectedProps &
   SupportedViewsProps &
   WithScrollReachedProps;
-
-const DEFAULT_FADE_SIZE = 50;
 
 /**
  * @description: Creates a fade view over a scroll (when needed)
@@ -60,63 +44,14 @@ function withScrollFader<PROPS>(
   options: WithScrollFaderOptionsProps = {}
 ): React.ComponentType<PROPS> {
   const ContentFader = (props: PROPS & PropTypes) => {
-    const getStyles = useCallback(() => {
-      const fadeSize = options.size || DEFAULT_FADE_SIZE;
-
-      let containerStyle, imageStyle, imageSource;
-      if (options.horizontal) {
-        if (options.setToStart) {
-          // Left
-          containerStyle = {...staticStyles.containerLeft, width: fadeSize};
-          imageStyle = {height: '100%', width: fadeSize};
-          imageSource = require('./gradientLeft.png');
-        } else {
-          // Right
-          containerStyle = {...staticStyles.containerRight, width: fadeSize};
-          imageStyle = {height: '100%', width: fadeSize};
-          imageSource = require('./gradientRight.png');
-        }
-      } else if (options.setToStart) {
-        // Top
-        containerStyle = {...staticStyles.containerTop, height: fadeSize};
-        imageStyle = {height: fadeSize, width: '100%'};
-        imageSource = require('./gradientTop.png');
-      } else {
-        // Bottom
-        containerStyle = {
-          ...staticStyles.containerBottom,
-          height: fadeSize
-        };
-        imageStyle = {height: fadeSize, width: '100%'};
-        imageSource = require('./gradientBottom.png');
-      }
-
-      return {
-        containerStyle,
-        imageStyle,
-        imageSource
-      };
-    }, []);
-
     const renderFader = useCallback(() => {
-      const styles = getStyles();
-      const showImage = options.setToStart
-        ? !props.scrollReachedProps.isScrollAtStart
-        : !props.scrollReachedProps.isScrollAtEnd;
-      return (
-        <View pointerEvents={'none'} style={styles.containerStyle}>
-          {showImage && (
-            <Image
-              source={styles.imageSource}
-              tintColor={options.tintColor}
-              style={styles.imageStyle}
-              resizeMode={'stretch'}
-            />
-          )}
-        </View>
-      );
+      const visible =
+        options.location === Fader.location.LEFT ||
+        options.location === Fader.location.TOP
+          ? !props.scrollReachedProps.isScrollAtStart
+          : !props.scrollReachedProps.isScrollAtEnd;
+      return <Fader visible={visible} location={options.location} />;
     }, [
-      getStyles,
       props.scrollReachedProps.isScrollAtStart,
       props.scrollReachedProps.isScrollAtEnd
     ]);
@@ -140,26 +75,3 @@ function withScrollFader<PROPS>(
 }
 
 export default withScrollFader;
-
-const staticStyles = StyleSheet.create({
-  containerTop: {
-    position: 'absolute',
-    top: 0,
-    width: '100%'
-  },
-  containerBottom: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%'
-  },
-  containerLeft: {
-    position: 'absolute',
-    left: 0,
-    height: '100%'
-  },
-  containerRight: {
-    position: 'absolute',
-    right: 0,
-    height: '100%'
-  }
-});
