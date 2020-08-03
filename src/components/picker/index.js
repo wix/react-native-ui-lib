@@ -183,25 +183,34 @@ class Picker extends BaseComponent {
     return items;
   }
 
-  isDialogAndMultiSelectInEditing = () => {
+  shouldNotChangePickerLabelWhileSelecting = () => {
     const {showExpandableModal} = this.state;
     const {mode} = this.props;
     return mode === Picker.modes.MULTI && showExpandableModal;
-  }
+  };
 
-  getLabel() {
-    const {value} = this.state;
-    const {getLabel, getItemLabel} = this.props;
-
-    if (this.isDialogAndMultiSelectInEditing()) {
-      return undefined;
+  getLabelValueText = () => {
+    const {value} = this.props;
+    if (this.shouldNotChangePickerLabelWhileSelecting()) {
+      console.log(value === undefined);
+      return this.getLabel({value});
     }
+    return this.getLabel();
+  };
+
+  getLabelsFromArray = (value) => {
+    const {getItemLabel} = this.props;
+    return _.chain(value)
+      .map(getItemLabel || 'label')
+      .join(', ')
+      .value();
+  };
+
+  getLabel({value} = this.state) {
+    const {getLabel} = this.props;
 
     if (_.isArray(value)) {
-      return _.chain(value)
-        .map(getItemLabel || 'label')
-        .join(', ')
-        .value();
+      return this.getLabelsFromArray(value);
     }
 
     if (_.isFunction(getLabel)) {
@@ -328,7 +337,10 @@ class Picker extends BaseComponent {
         topBarProps={{
           ...topBarProps,
           onCancel: this.cancelSelect,
-          onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(this.state.value) : undefined
+          onDone:
+            mode === Picker.modes.MULTI
+              ? () => this.onDoneSelecting(this.state.value)
+              : undefined
         }}
         showSearch={showSearch}
         searchStyle={searchStyle}
@@ -362,7 +374,7 @@ class Picker extends BaseComponent {
     }
 
     const textInputProps = TextField.extractOwnProps(this.getThemeProps());
-    const label = this.getLabel();
+    const label = this.getLabelValueText();
     return (
       <TextField
         {...textInputProps}
