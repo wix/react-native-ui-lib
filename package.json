@@ -24,7 +24,7 @@
     "lint": "eslint src -c .eslintrc.js",
     "lint:fix": "eslint src -c .eslintrc.js --fix",
     "lint:test": "mocha --compilers js:babel-core/register eslint-rules/tests/lib/rules",
-    "xcode": "open ./ios/uilib.xcodeproj",
+    "xcode": "xed ios",
     "build:dev": "tsc --p tsconfig.dev.json",
     "build:exports": "./node_modules/.bin/babel src --out-dir src --config-file ./src/.babelrc.json --extensions '.ts,.tsx' --ignore 'src/index.ts'",
     "build:packages": "node scripts/buildPackages.js",
