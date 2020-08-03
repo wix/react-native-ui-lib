@@ -15,6 +15,7 @@ const {TextField} = Incubator;
 
 export default class TextFieldScreen extends Component {
   input = React.createRef<TextInput>();
+  input2 = React.createRef<TextInput>();
   state = {
     errorPosition: TextField.validationMessagePositions.TOP,
     value: 'Initial Value'
@@ -24,10 +25,14 @@ export default class TextFieldScreen extends Component {
     this.input.current?.focus();
   }
 
+  resetFieldValue = () => {
+    this.input2.current?.clear();
+  }
+
   render() {
     const {errorPosition} = this.state;
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="always">
         <View flex padding-page>
           <Text h1>TextField</Text>
           <Text h3 blue50 marginV-s4>
@@ -63,13 +68,14 @@ export default class TextFieldScreen extends Component {
             />
           </View>
           <Text h3 blue50 marginV-s4>
-            Leading/Trailing Icon
+            Leading/Trailing Button
           </Text>
 
           <TextField
+            ref={this.input2}
             placeholder="Enter text..."
-            leadingIcon={{source: Assets.icons.demo.search}}
-            trailingIcon={{source: Assets.icons.demo.refresh}}
+            leadingButton={{iconSource: Assets.icons.demo.search}}
+            trailingButton={{iconSource: Assets.icons.demo.refresh, onPress: this.resetFieldValue}}
             fieldStyle={styles.withUnderline}
           />
 

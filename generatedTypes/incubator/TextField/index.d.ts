@@ -1,6 +1,6 @@
 import React from 'react';
 import { ViewStyle, TextStyle } from 'react-native';
-import { ImageProps } from '../../components/image';
+import { ButtonPropTypes } from '../../components/button';
 import { ValidationMessagePosition } from './types';
 import { InputProps } from './Input';
 import { ValidationMessageProps } from './ValidationMessage';
@@ -9,8 +9,8 @@ import { FieldStateProps } from './withFieldState';
 import { FloatingPlaceholderProps } from './FloatingPlaceholder';
 import { CharCounterProps } from './CharCounter';
 interface TextFieldProps extends InputProps, LabelProps, FloatingPlaceholderProps, FieldStateProps, ValidationMessageProps, CharCounterProps {
-    leadingIcon?: ImageProps;
-    trailingIcon?: ImageProps;
+    leadingButton?: ButtonPropTypes;
+    trailingButton?: ButtonPropTypes;
     floatingPlaceholder?: boolean;
     floatingPlaceholderStyle?: TextStyle;
     validationMessagePosition?: ValidationMessagePosition;

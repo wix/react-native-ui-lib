@@ -6,10 +6,10 @@ import {
   ForwardRefInjectedProps
 } from '../../commons/new';
 import View from '../../components/view';
-import {ImageProps} from '../../components/image';
+import {ButtonPropTypes} from '../../components/button';
 import {ValidationMessagePosition} from './types';
 import Input, {InputProps} from './Input';
-import Icon from './Icon';
+import AccessoryButton from './AccessoryButton';
 import ValidationMessage, {ValidationMessageProps} from './ValidationMessage';
 import Label, {LabelProps} from './Label';
 import FieldContext from './FieldContext';
@@ -29,8 +29,8 @@ interface TextFieldProps
     FieldStateProps,
     ValidationMessageProps,
     CharCounterProps {
-  leadingIcon?: ImageProps;
-  trailingIcon?: ImageProps;
+  leadingButton?: ButtonPropTypes;
+  trailingButton?: ButtonPropTypes;
   floatingPlaceholder?: boolean;
   floatingPlaceholderStyle?: TextStyle;
   validationMessagePosition?: ValidationMessagePosition;
@@ -61,9 +61,9 @@ const TextField = (
     labelColor,
     labelStyle,
     labelProps,
-    // Icons
-    leadingIcon,
-    trailingIcon,
+    // Accessory Buttons
+    leadingButton,
+    trailingButton,
     // Validation
     enableErrors, // TODO: rename to enableValidation
     validationMessage,
@@ -77,8 +77,7 @@ const TextField = (
     // Input
     placeholder,
     ...props
-  }: InternalTextFieldProps,
-  ref: any
+  }: InternalTextFieldProps
 ) => {
   const context = useMemo(() => {
     return {...fieldState, disabled: props.editable === false};
@@ -103,7 +102,7 @@ const TextField = (
         )}
         <View style={fieldStyle}>
           <View row centerV>
-            {leadingIcon && <Icon {...leadingIcon}/>}
+            {leadingButton && <AccessoryButton {...leadingButton}/>}
             <View flex>
               {floatingPlaceholder && (
                 <FloatingPlaceholder
@@ -118,7 +117,7 @@ const TextField = (
                 hint={hint}
               />
             </View>
-            {trailingIcon && <Icon {...trailingIcon}/>}
+            {trailingButton && <AccessoryButton {...trailingButton}/>}
           </View>
         </View>
         <View row spread>
