@@ -116,7 +116,6 @@ const TextField = (
                 {...props}
                 placeholder={floatingPlaceholder ? undefined : placeholder}
                 hint={hint}
-                ref={ref}
               />
             </View>
             {trailingIcon && <Icon {...trailingIcon}/>}
