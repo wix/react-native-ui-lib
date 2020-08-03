@@ -37,9 +37,7 @@ export default class TextFieldScreen extends Component {
           <TextField
             ref={this.input}
             label="Name"
-            placeholder="Enter first+last name"
-            value={this.state.value}
-            onChangeText={(value) => this.setState({value})}
+            placeholder="Enter first and last name"
           />
 
           <Text h3 blue50 marginV-s4>
@@ -94,7 +92,8 @@ export default class TextFieldScreen extends Component {
           </View>
 
           <TextField
-            // value="value"
+            value={this.state.value}
+            onChangeText={(value) => this.setState({value})}
             label="Email"
             placeholder="Enter email"
             enableErrors
