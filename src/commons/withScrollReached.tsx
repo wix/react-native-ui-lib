@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 // eslint-disable-next-line no-unused-vars
 import forwardRef, {ForwardRefInjectedProps} from './forwardRef';
-import Constants from '../helpers/Constants';
+import {Constants} from '../helpers';
 
 export type ScrollReachedProps = {
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
