@@ -607,10 +607,13 @@ export default class TextField extends BaseInput {
   renderRightButton() {
     if (this.shouldDisplayRightButton()) {
       const {rightButtonProps} = this.getThemeProps();
-      const {style, iconSource, iconColor} = rightButtonProps;
+      const {style, iconSource, iconColor, accessibilityLabel, ...others} = rightButtonProps;
 
       return (
-        <TouchableOpacity {...rightButtonProps} style={[this.styles.rightButton, style]} onPress={this.onPressRightButton}>
+        <TouchableOpacity
+          {...others} accessibilityLabel={accessibilityLabel} 
+          style={[this.styles.rightButton, style]} onPress={this.onPressRightButton}
+        >
           <Image
             pointerEvents="none"
             source={iconSource}
