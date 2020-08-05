@@ -398,7 +398,7 @@ class Hint extends BaseComponent {
   }
 
   render() {
-    const {visible, onBackgroundPress} = this.props;
+    const {visible, onBackgroundPress, testID} = this.props;
 
     if (!visible) {
       return this.props.children;
@@ -414,6 +414,7 @@ class Hint extends BaseComponent {
             transparent
             onBackgroundPress={onBackgroundPress}
             onRequestClose={onBackgroundPress}
+            testID={`${testID}.modal`}
           >
             {this.renderHintContainer()}
           </Modal>
