@@ -62,7 +62,7 @@ type TouchableOpacityPropTypes = {
   /**
    * Pass custom style
    */
-  style: ViewStyle;
+  style?: ViewStyle;
 };
 
 

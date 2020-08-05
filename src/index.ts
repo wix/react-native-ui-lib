@@ -5,6 +5,7 @@
  */
 
 export * from './style';
+export * as Incubator from './incubator';
 export {default as Avatar, AvatarPropTypes} from './components/avatar';
 export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
 export {default as View, ViewPropTypes} from './components/view';
@@ -19,6 +20,7 @@ export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as RadioButton, RadioButtonPropTypes} from './components/radioButton/RadioButton';
 export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButton/RadioGroup';
 export {default as TabBar} from './components/TabBar';
+export {default as Fader, FaderProps, FaderLocation} from './components/fader';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
@@ -27,5 +29,5 @@ export {
   PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, PickerProps, ProgressBar, Slider,
   GradientSlider, ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,
   WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper, Constants,
-  LogService, LoaderScreen, Modal, StateScreen, WheelPicker, WheelPickerProps, Incubator, ColorPicker
+  LogService, LoaderScreen, Modal, StateScreen, WheelPicker, WheelPickerProps, ColorPicker
 } from '../typings';

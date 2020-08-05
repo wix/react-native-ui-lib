@@ -778,13 +778,14 @@ function createStyles({centered, multiline, hideUnderline}) {
     rightIcon: {
       position: 'absolute',
       right: 0,
-      alignSelf: 'flex-end',
-      paddingBottom: hideUnderline ? undefined : 8
+      alignSelf: 'flex-start',
+      paddingTop: Constants.isIOS ? 22 : 28
     },
     rightButton: {
       position: 'absolute',
       right: 0,
-      alignSelf: 'center'
+      alignSelf: 'flex-start',
+      paddingTop: Constants.isIOS ? 22 : 28
     },
     rightButtonImage: {
       width: ICON_SIZE,

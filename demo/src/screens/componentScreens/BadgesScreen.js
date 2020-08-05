@@ -5,6 +5,8 @@ const BadgesSpace = 30;
 const plusIcon = require('../../assets/icons/chevronUp.png');
 const minusIcon = require('../../assets/icons/chevronDown.png');
 const star = require('../../assets/icons/star.png');
+const search = require('../../assets/icons/search.png');
+
 
 export default class BadgesScreen extends Component {
   constructor(props) {
@@ -125,6 +127,13 @@ export default class BadgesScreen extends Component {
             <Badge size={'large'} icon={star} iconStyle={{backgroundColor: Colors.red30}}/>
             <Text text80 style={{marginTop: 10}}>
               large(24)
+            </Text>
+          </View>
+
+          <View style={styles.iconBadgeColumnContainer}>
+            <Badge icon={star} borderRadius={6} iconStyle={{backgroundColor: Colors.red30}}/>
+            <Text text80 style={{marginTop: 10}}>
+              border radius (6)
             </Text>
           </View>
         </View>

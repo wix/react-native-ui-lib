@@ -173,12 +173,12 @@ declare const _default: React.ComponentClass<ViewPropTypes & import("react-nativ
         } & {
             text?: string | undefined;
         }))[] | undefined;
-        contentStyle?: ViewStyle | undefined;
+        contentStyle?: import("react-native").StyleProp<ViewStyle>;
         backgroundColor?: string | undefined;
         leadingIcon?: import("../image").ImageProps | undefined;
         trailingIcon?: import("../image").ImageProps | undefined;
         imageSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
-        imageStyle?: import("react-native").ImageStyle | undefined;
+        imageStyle?: import("react-native").StyleProp<import("react-native").ImageStyle>;
         imageProps?: import("../image").ImageProps | undefined;
     } & {
         useCustomTheme?: boolean | undefined;

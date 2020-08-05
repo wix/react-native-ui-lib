@@ -234,6 +234,7 @@ class Picker extends BaseComponent {
 
   toggleExpandableModal = value => {
     this.setState({showExpandableModal: value});
+    this.clearSearchField();
   };
 
   toggleItemSelection = item => {
@@ -254,7 +255,9 @@ class Picker extends BaseComponent {
   };
 
   onDoneSelecting = item => {
-    this.setState({searchValue: '', value: item}); // clean search when done selecting
+    this.clearSearchField();
+    
+    this.setState({value: item});
     this.toggleExpandableModal(false);
     _.invoke(this.props, 'onChange', item);
   };
@@ -273,6 +276,10 @@ class Picker extends BaseComponent {
   }) => {
     this.setState({selectedItemPosition: y});
   };
+
+  clearSearchField = () => {
+    this.setState({searchValue: ''});
+  }
 
   appendPropsToChildren = () => {
     const {children, mode, getItemValue, getItemLabel, showSearch, renderItem} = this.props;

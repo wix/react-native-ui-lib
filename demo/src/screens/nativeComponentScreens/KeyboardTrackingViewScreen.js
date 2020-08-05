@@ -12,21 +12,15 @@ import {
   Constants,
   Spacings
 } from 'react-native-ui-lib';
+import _ from 'lodash';
+
 const KeyboardTrackingView = Keyboard.KeyboardTrackingView;
 
-const URIs = [
-  {
-    uri:
-      'https://static.pexels.com/photos/50721/pencils-crayons-colourful-rainbow-50721.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260'
-  },
-  {
-    uri:
-      'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260'
-  },
-  {
-    uri:
-      'https://images.pexels.com/photos/140234/pexels-photo-140234.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260'
-  }
+const messages = [
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  'integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque sit amet porttitor eget dolor',
+  'turpis cursus in hac habitasse',
+  'neque gravida in fermentum et sollicitudin ac orci phasellus egestas'
 ];
 
 export default class KeyboardTrackingViewScreen extends PureComponent {
@@ -39,6 +33,32 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
       trackInteractive: !this.state.trackInteractive
     });
   };
+
+  renderChatBubbles() {
+    return (
+      <View flex>
+        {_.map(messages, (message, i) => {
+          const isLeftBubble = i % 2 === 0;
+          return (
+            <View right={!isLeftBubble}>
+              <View
+                bg-blue40={isLeftBubble}
+                bg-white={!isLeftBubble}
+                br20
+                marginB-s4
+                padding-s2
+                width={'70%'}
+              >
+                <Text white={isLeftBubble} grey10={!isLeftBubble} text80>
+                  {message}
+                </Text>
+              </View>
+            </View>
+          );
+        })}
+      </View>
+    );
+  }
 
   render() {
     const {trackInteractive} = this.state;
@@ -63,9 +83,7 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
               marginL-10
             />
           </View>
-          {URIs.map((uri, index) => (
-            <Image style={styles.image} source={uri} key={index} />
-          ))}
+          {this.renderChatBubbles()}
         </ScrollView>
         <KeyboardTrackingView
           style={styles.trackingToolbarContainer}

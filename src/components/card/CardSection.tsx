@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType} from 'react-native';
+import {StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType, StyleProp} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import View, {ViewPropTypes} from '../view';
 import Text, {TextPropTypes} from '../text';
@@ -18,7 +18,7 @@ export type CardSectionProps = ViewPropTypes & {
   /**
    * Style for the content
    */
-  contentStyle?: ViewStyle;
+  contentStyle?: StyleProp<ViewStyle>;
   /**
    * Give the section a background color
    */
@@ -38,7 +38,7 @@ export type CardSectionProps = ViewPropTypes & {
   /**
    * The style for the background image
    */
-  imageStyle?: ImageStyle;
+  imageStyle?: StyleProp<ImageStyle>;
   /**
    * Other image props that will be passed to the image
    */
@@ -67,7 +67,7 @@ class CardSection extends PureComponent<Props> {
         {leadingIcon && (
           <Image testID={`${testID}.leadingIcon`} {...leadingIcon} />
         )}
-        <View testID={`${testID}.contentContainer`} style={contentStyle}>
+        <View testID={`${testID}.contentContainer`} style={[contentStyle]}>
           {_.map(
             content,
             // @ts-ignore
