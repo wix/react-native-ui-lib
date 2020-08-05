@@ -358,7 +358,7 @@ class Hint extends BaseComponent {
             this.getHintPadding()
           ]}
           pointerEvents="box-none"
-          testID={`${testID}.animatableView`}
+          testID={testID}
         >
           {this.renderHintTip()}
           <View

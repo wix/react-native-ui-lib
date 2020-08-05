@@ -41,7 +41,7 @@ export default class Modal extends BaseComponent {
   };
 
   renderTouchableOverlay() {
-    const {overlayBackgroundColor, onBackgroundPress, accessibilityLabel = 'Dismiss'} = this.props;
+    const {testID, overlayBackgroundColor, onBackgroundPress, accessibilityLabel = 'Dismiss'} = this.props;
     if (_.isFunction(onBackgroundPress) || !!overlayBackgroundColor) {
       const isScreenReaderEnabled = Constants.accessibility.isScreenReaderEnabled;
       const accessibilityProps = isScreenReaderEnabled
@@ -52,6 +52,7 @@ export default class Modal extends BaseComponent {
         <View
           useSafeArea={isScreenReaderEnabled}
           style={!isScreenReaderEnabled && [styles.touchableOverlay, {backgroundColor: overlayBackgroundColor}]}
+          testID={testID}
         >
           <TouchableWithoutFeedback {...accessibilityProps} onPress={onBackgroundPress}>
             <View style={isScreenReaderEnabled ? styles.accessibleOverlayView : styles.overlayView}/>
