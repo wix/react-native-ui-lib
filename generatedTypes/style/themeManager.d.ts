@@ -27,7 +27,7 @@ export declare class ThemeManager {
         dividerColor: string;
         components: Extendable;
     };
-    setItem(key: string, value: string): void;
+    setItem(key: string, value: any): void;
     getItem(key: string): any;
     setComponentTheme(componentName: string, overrides: Dictionary<any> | Function): void;
     setComponentForcedTheme(componentName: string, overrides: Dictionary<any> | Function): void;
