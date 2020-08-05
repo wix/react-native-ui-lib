@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, TextInput as RNTextInput, StyleSheet} from 'react-native';
-import BaseInput from '../baseInput/BaseInput';
+import BaseInput from '../baseInput';
 
 /**
  * @description: a wrapper for Text Field component to create enclosed text area

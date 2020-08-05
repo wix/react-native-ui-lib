@@ -2,8 +2,8 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, ViewPropTypes, Keyboard} from 'react-native';
-import BaseInput from '../baseInput/BaseInput';
-import TextField from '../textField/TextField';
+import BaseInput from '../baseInput';
+import TextField from '../textField';
 import View from '../view';
 import Text from '../text';
 
