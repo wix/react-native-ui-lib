@@ -79,16 +79,16 @@ export default {
     return require('./components/KeyboardAwareScrollView').KeyboardAwareListView;
   },
   get BaseInput() {
-    return require('./components/inputs/BaseInput').default;
+    return require('./components/baseInput').default;
   },
   get TextArea() {
-    return require('./components/inputs/TextArea').default;
+    return require('./components/textArea').default;
   },
   get TextField() {
-    return require('./components/inputs/TextField').default;
+    return require('./components/textField').default;
   },
   get MaskedInput() {
-    return require('./components/inputs/MaskedInput').default;
+    return require('./components/maskedInput').default;
   },
   get Modal() {
     return require('./components/modal').default;
