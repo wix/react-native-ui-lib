@@ -1,4 +1,5 @@
-import {Platform, Dimensions, NativeModules, I18nManager, AccessibilityInfo, AccessibilityEvent} from 'react-native';
+// @ts-ignore
+import {Platform, Dimensions, NativeModules, I18nManager, AccessibilityInfo, AccessibilityEvent, TurboModuleRegistry} from 'react-native';
 
 
 const orientations = {
@@ -19,7 +20,7 @@ let windowWidth = Dimensions.get('window').width;
 isTablet = Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
 
 function setStatusBarHeight() {
-  const {StatusBarManager} = NativeModules;
+  const StatusBarManager = Platform.OS === 'ios' ? TurboModuleRegistry.getEnforcing('StatusBarManager') : NativeModules.StatusBarManager;
   statusBarHeight = 0; // so there will be a value for any case
   statusBarHeight = isIOS ? 20 : StatusBarManager.HEIGHT;
   if (isIOS) {
