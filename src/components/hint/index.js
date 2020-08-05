@@ -358,7 +358,7 @@ class Hint extends BaseComponent {
             this.getHintPadding()
           ]}
           pointerEvents="box-none"
-          testID={testID}
+          testID={`${testID}.animatableView`}
         >
           {this.renderHintTip()}
           <View
@@ -414,7 +414,7 @@ class Hint extends BaseComponent {
             transparent
             onBackgroundPress={onBackgroundPress}
             onRequestClose={onBackgroundPress}
-            testID={testID}
+            testID={`${testID}.modal`}
           >
             {this.renderHintContainer()}
           </Modal>

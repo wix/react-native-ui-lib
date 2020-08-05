@@ -33,7 +33,11 @@ export default class Modal extends BaseComponent {
     /**
      * the background color of the overlay
      */
-    overlayBackgroundColor: PropTypes.string
+    overlayBackgroundColor: PropTypes.string,
+    /**
+     * The modal's end-to-end test identifier
+     */
+    testID: PropTypes.string
   };
 
   renderTouchableOverlay() {
