@@ -184,19 +184,18 @@ class Picker extends BaseComponent {
   }
 
   shouldNotChangePickerLabelWhileSelecting = () => {
-    const {showExpandableModal} = this.state;
     const {mode} = this.props;
-    return mode === Picker.modes.MULTI && showExpandableModal;
-  };
+    return mode === Picker.modes.MULTI;
+  }
 
   getLabelValueText = () => {
-    const {value} = this.props;
+    const {value: propsValue} = this.props;
+    const {value: stateValue} = this.props;
     if (this.shouldNotChangePickerLabelWhileSelecting()) {
-      console.log(value === undefined);
-      return this.getLabel({value});
+      return this.getLabel(propsValue);
     }
-    return this.getLabel();
-  };
+    return this.getLabel(stateValue);
+  }
 
   getLabelsFromArray = (value) => {
     const {getItemLabel} = this.props;
@@ -206,7 +205,7 @@ class Picker extends BaseComponent {
       .value();
   };
 
-  getLabel({value} = this.state) {
+  getLabel(value) {
     const {getLabel} = this.props;
 
     if (_.isArray(value)) {
@@ -225,7 +224,7 @@ class Picker extends BaseComponent {
     const {items} = this.state;
     const selectedItem = _.find(items, {value});
     return _.get(selectedItem, 'label');
-  }
+  };
 
   handlePickerOnPress = () => {
     this.toggleExpandableModal(true);
@@ -279,7 +278,7 @@ class Picker extends BaseComponent {
 
   clearSearchField = () => {
     this.setState({searchValue: ''});
-  }
+  };
 
   appendPropsToChildren = () => {
     const {children, mode, getItemValue, getItemLabel, showSearch, renderItem} = this.props;
@@ -344,10 +343,7 @@ class Picker extends BaseComponent {
         topBarProps={{
           ...topBarProps,
           onCancel: this.cancelSelect,
-          onDone:
-            mode === Picker.modes.MULTI
-              ? () => this.onDoneSelecting(this.state.value)
-              : undefined
+          onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(value) : undefined
         }}
         showSearch={showSearch}
         searchStyle={searchStyle}
