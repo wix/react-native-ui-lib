@@ -381,7 +381,6 @@ class Drawer extends PureComponent<DrawerProps> {
         onToggleSwipeLeft={onToggleSwipeLeft && this.onToggleSwipeLeft}
       >
         <View
-          // flex
           accessible
           accessibilityActions={this.getAccessibilityActions()}
           onAccessibilityAction={this.onAccessibilityAction}
