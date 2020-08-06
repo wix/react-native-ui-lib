@@ -10,9 +10,9 @@ import React from 'react';
 import {StyleSheet, Animated, TextInput as RNTextInput, Image as RNImage} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, Typography, Spacings} from '../../style';
-import BaseInput from './BaseInput';
+import BaseInput from '../baseInput';
 import Modal from '../modal';
-import TextArea from './TextArea';
+import TextArea from '../textArea';
 import View from '../view';
 import Image from '../image';
 import Text from '../text';
@@ -171,7 +171,8 @@ export default class TextField extends BaseInput {
       iconSource: RNImage.propTypes.source,
       iconColor: PropTypes.string,
       onPress: PropTypes.func,
-      style: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
+      style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+      accessibilityLabel: PropTypes.string
     }),
     /**
      * Pass to render a leading icon to the TextInput value. Accepts Image props (doesn't work with floatingPlaceholder)
@@ -232,7 +233,7 @@ export default class TextField extends BaseInput {
   }
 
   generateStyles() {
-    this.styles = createStyles(this.getThemeProps());
+    this.styles = createStyles(this.getThemeProps(), this.getTopPaddings());
   }
 
   getAccessibilityInfo() {
@@ -358,6 +359,10 @@ export default class TextField extends BaseInput {
     const error = this.getErrorMessage();
 
     return enableErrors && error;
+  }
+
+  getErrorMessage() {
+    return (this.props && this.props.error) ? this.props.error : this.state && this.state.error;
   }
 
   shouldShowTopError() {
@@ -606,10 +611,13 @@ export default class TextField extends BaseInput {
   renderRightButton() {
     if (this.shouldDisplayRightButton()) {
       const {rightButtonProps} = this.getThemeProps();
-      const {style, iconSource, iconColor} = rightButtonProps;
+      const {style, iconSource, iconColor, accessibilityLabel, ...others} = rightButtonProps;
 
       return (
-        <TouchableOpacity style={[this.styles.rightButton, style]} onPress={this.onPressRightButton}>
+        <TouchableOpacity
+          {...others} accessibilityLabel={accessibilityLabel} 
+          style={[this.styles.rightButton, style]} onPress={this.onPressRightButton}
+        >
           <Image
             pointerEvents="none"
             source={iconSource}
@@ -710,8 +718,9 @@ export default class TextField extends BaseInput {
   };
 }
 
-function createStyles({centered, multiline, hideUnderline}) {
+function createStyles({centered, multiline, hideUnderline}, rightItemTopPadding = 0) {
   const inputTextAlign = Constants.isRTL ? 'right' : 'left';
+  const itemTopPadding = Constants.isIOS ? (rightItemTopPadding - 3) : (rightItemTopPadding - 1);
 
   return StyleSheet.create({
     container: {
@@ -753,7 +762,8 @@ function createStyles({centered, multiline, hideUnderline}) {
     },
     prefix: {
       color: Colors.grey30,
-      marginRight: Spacings.s1
+      marginRight: Spacings.s1,
+      textAlignVertical: 'center'
     },
     placeholder: {
       textAlign: 'left'
@@ -779,13 +789,13 @@ function createStyles({centered, multiline, hideUnderline}) {
       position: 'absolute',
       right: 0,
       alignSelf: 'flex-start',
-      paddingTop: Constants.isIOS ? 22 : 28
+      paddingTop: itemTopPadding
     },
     rightButton: {
       position: 'absolute',
       right: 0,
       alignSelf: 'flex-start',
-      paddingTop: Constants.isIOS ? 22 : 28
+      paddingTop: itemTopPadding
     },
     rightButtonImage: {
       width: ICON_SIZE,
