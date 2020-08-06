@@ -32,7 +32,7 @@ export class ThemeManager {
     return this.theme;
   }
 
-  setItem(key: string, value: string) {
+  setItem(key: string, value: any) {
     if (key === 'components') {
       throw new Error('Overriding the "components" key is not possible.');
     }

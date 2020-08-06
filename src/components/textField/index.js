@@ -233,7 +233,7 @@ export default class TextField extends BaseInput {
   }
 
   generateStyles() {
-    this.styles = createStyles(this.getThemeProps());
+    this.styles = createStyles(this.getThemeProps(), this.getTopPaddings());
   }
 
   getAccessibilityInfo() {
@@ -359,6 +359,10 @@ export default class TextField extends BaseInput {
     const error = this.getErrorMessage();
 
     return enableErrors && error;
+  }
+
+  getErrorMessage() {
+    return (this.props && this.props.error) ? this.props.error : this.state && this.state.error;
   }
 
   shouldShowTopError() {
@@ -714,8 +718,9 @@ export default class TextField extends BaseInput {
   };
 }
 
-function createStyles({centered, multiline, hideUnderline}) {
+function createStyles({centered, multiline, hideUnderline}, rightItemTopPadding = 0) {
   const inputTextAlign = Constants.isRTL ? 'right' : 'left';
+  const itemTopPadding = Constants.isIOS ? (rightItemTopPadding - 3) : (rightItemTopPadding - 1);
 
   return StyleSheet.create({
     container: {
@@ -783,13 +788,13 @@ function createStyles({centered, multiline, hideUnderline}) {
       position: 'absolute',
       right: 0,
       alignSelf: 'flex-start',
-      paddingTop: Constants.isIOS ? 22 : 28
+      paddingTop: itemTopPadding
     },
     rightButton: {
       position: 'absolute',
       right: 0,
       alignSelf: 'flex-start',
-      paddingTop: Constants.isIOS ? 22 : 28
+      paddingTop: itemTopPadding
     },
     rightButtonImage: {
       width: ICON_SIZE,
