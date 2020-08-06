@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 // eslint-disable-next-line no-unused-vars
 import forwardRef, {ForwardRefInjectedProps} from './forwardRef';
+//@ts-ignore
+import hoistStatics from 'hoist-non-react-statics';
 import {Constants} from '../helpers';
 
 export type ScrollReachedProps = {
@@ -98,6 +100,7 @@ function withScrollReached<PROPS>(
     );
   };
 
+  hoistStatics(ScrollReachedDetector, WrappedComponent);
   return forwardRef(ScrollReachedDetector);
 }
 

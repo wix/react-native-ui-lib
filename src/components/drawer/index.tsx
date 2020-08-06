@@ -363,7 +363,7 @@ class Drawer extends PureComponent<DrawerProps> {
   };
 
   render() {
-    const {children, style, leftItem, rightItems, ...others} = this.props;
+    const {children, style, leftItem, rightItems, onToggleSwipeLeft, ...others} = this.props;
 
     return (
       <Swipeable
@@ -378,7 +378,7 @@ class Drawer extends PureComponent<DrawerProps> {
         leftActionsContainerStyle={this.getLeftActionsContainerStyle(leftItem, rightItems)}
         onSwipeableWillOpen={this.onSwipeableWillOpen}
         onSwipeableWillClose={this.onSwipeableWillClose}
-        onToggleSwipeLeft={this.onToggleSwipeLeft}
+        onToggleSwipeLeft={onToggleSwipeLeft && this.onToggleSwipeLeft}
       >
         <View
           // flex

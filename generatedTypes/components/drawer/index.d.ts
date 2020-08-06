@@ -126,7 +126,7 @@ declare class Drawer extends PureComponent<DrawerProps> {
     private onSwipeableWillOpen;
     private onSwipeableWillClose;
     private onToggleSwipeLeft;
-    private toggle;
+    private animateItem;
     /** Accessability */
     private getAccessibilityActions;
     private onAccessibilityAction;
