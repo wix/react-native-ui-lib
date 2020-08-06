@@ -205,7 +205,7 @@ class Picker extends BaseComponent {
       .value();
   };
 
-  getLabel(value = this.state.value) {
+  getLabel(value) {
     const {getLabel} = this.props;
 
     if (_.isArray(value)) {
@@ -224,7 +224,7 @@ class Picker extends BaseComponent {
     const {items} = this.state;
     const selectedItem = _.find(items, {value});
     return _.get(selectedItem, 'label');
-  }
+  };
 
   handlePickerOnPress = () => {
     this.toggleExpandableModal(true);
