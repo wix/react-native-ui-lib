@@ -1,4 +1,4 @@
-import TextField from '../TextField';
+import TextField from '..';
 import {Colors} from '../../../style';
 
 describe('TextField', () => {

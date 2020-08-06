@@ -1,14 +1,14 @@
 module.exports = {
   get BaseInput() {
-    return require('./BaseInput').default;
+    return require('../baseInput').default;
   },
   get TextArea() {
-    return require('./TextArea').default;
+    return require('../textArea').default;
   },
   get TextField() {
-    return require('./TextField').default;
+    return require('../textField').default;
   },
   get MaskedInput() {
-    return require('./MaskedInput').default;
+    return require('../maskedInput').default;
   }
 };
