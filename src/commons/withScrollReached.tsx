@@ -50,7 +50,6 @@ type PropTypes = ForwardRefInjectedProps & SupportedViewsProps;
 
 const DEFAULT_THRESHOLD = Constants.isAndroid ? 1 : 0;
 
-
 /**
  * @description: Add scroll reached which notifies on reaching start \ end of ScrollView \ FlatList
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WithScrollReachedScreen.tsx
