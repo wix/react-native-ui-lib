@@ -224,7 +224,7 @@ class Picker extends BaseComponent {
     const {items} = this.state;
     const selectedItem = _.find(items, {value});
     return _.get(selectedItem, 'label');
-  };
+  }
 
   handlePickerOnPress = () => {
     this.toggleExpandableModal(true);
