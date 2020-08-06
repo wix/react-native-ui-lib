@@ -169,8 +169,8 @@ class Picker extends BaseComponent {
   getAccessibilityInfo() {
     const {placeholder} = this.props;
     return {
-      accessibilityLabel: this.getLabel() ? `${placeholder}. selected. ${this.getLabel()}` : `Select ${placeholder}`,
-      accessibilityHint: this.getLabel()
+      accessibilityLabel: this.getLabelValueText() ? `${placeholder}. selected. ${this.getLabelValueText()}` : `Select ${placeholder}`,
+      accessibilityHint: this.getLabelValueText()
         ? 'Double tap to edit'
         : `Goes to ${placeholder}. Suggestions will be provided`,
       ...this.extractAccessibilityProps()
@@ -205,7 +205,7 @@ class Picker extends BaseComponent {
       .value();
   };
 
-  getLabel(value) {
+  getLabel(value = this.state.value) {
     const {getLabel} = this.props;
 
     if (_.isArray(value)) {
@@ -224,7 +224,7 @@ class Picker extends BaseComponent {
     const {items} = this.state;
     const selectedItem = _.find(items, {value});
     return _.get(selectedItem, 'label');
-  };
+  }
 
   handlePickerOnPress = () => {
     this.toggleExpandableModal(true);
