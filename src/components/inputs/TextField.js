@@ -762,7 +762,8 @@ function createStyles({centered, multiline, hideUnderline}, rightItemTopPadding 
     },
     prefix: {
       color: Colors.grey30,
-      marginRight: Spacings.s1
+      marginRight: Spacings.s1,
+      textAlignVertical: 'center'
     },
     placeholder: {
       textAlign: 'left'
