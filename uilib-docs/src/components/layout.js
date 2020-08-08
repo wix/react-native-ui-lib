@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
+import _ from 'lodash';
 
 import Header from './header';
 import Navbar from '../components/navbar';
 import './layout.scss';
 
-const Layout = ({children, showSidebar}) => {
+const pathPrefix = '/react-native-ui-lib';
+
+const Layout = ({children, location}) => {
+  const {pathname} = location;
+  const showSidebar = _.replace(pathname, pathPrefix, '') !== '/';
   return (
     <div className="layout">
       <Helmet>

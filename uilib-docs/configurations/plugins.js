@@ -46,9 +46,19 @@ const imagesPlugin = [
   `gatsby-plugin-sharp`
 ];
 
+const layoutPlugin = [
+  {
+    resolve: `gatsby-plugin-layout`,
+    options: {
+      component: require.resolve(`${__dirname}/../src/components/layout.js`)
+    }
+  }
+];
+
 module.exports = {
   manifestPlugin,
   markdownPagesPlugin,
   componentsDocgenPlugin,
-  imagesPlugin
+  imagesPlugin,
+  layoutPlugin
 };
