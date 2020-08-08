@@ -29,7 +29,6 @@ export default ({id, link, components, currentPage}) => {
 };
 
 const ItemEntry = ({id, link, currentPage}) => {
-  console.warn('ethan - currentPage', currentPage)
   return (
     <li key={id}>
       <Link key={id} to={link || `/docs/${id}/`}>
