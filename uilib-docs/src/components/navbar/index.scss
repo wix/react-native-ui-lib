@@ -61,7 +61,7 @@
     padding: 12px 8px;
     margin-bottom: 2px;
 
-    &:hover .entry {
+    &:hover > a > .entry {
       color: $yellow20;
     }
 
