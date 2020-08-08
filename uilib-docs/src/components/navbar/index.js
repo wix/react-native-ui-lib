@@ -19,12 +19,14 @@ class Navbar extends Component {
   };
 
   getCurrentPage = () => {
-    const path = window.location.href;
-    return _.chain(path)
-      .split('/')
-      .filter(item => !_.isEmpty(item))
-      .last()
-      .value();
+    if (typeof window !== 'undefined') {
+      const path = window.location.href;
+      return _.chain(path)
+        .split('/')
+        .filter(item => !_.isEmpty(item))
+        .last()
+        .value();
+    }
   };
 
   getMarkdownPages(data) {
@@ -74,7 +76,13 @@ class Navbar extends Component {
           })}
           <li className="separator" />
           {_.map(componentsByGroups, (components, key) => {
-            return <Item id={key} components={components} currentPage={currentPage}></Item>;
+            return (
+              <Item
+                id={key}
+                components={components}
+                currentPage={currentPage}
+              ></Item>
+            );
           })}
         </ul>
       </div>
