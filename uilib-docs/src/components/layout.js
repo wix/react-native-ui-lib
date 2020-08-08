@@ -9,18 +9,19 @@ import './layout.scss';
 const Layout = ({children, showSidebar}) => {
   return (
     <div className="layout">
-      <Helmet
-        title="RNUILIB"
-        meta={[
-          {name: 'description', content: 'React Native UI Library'},
-          {name: 'keywords', content: 'react native, uilib'}
-        ]}
-      />
-      <Header/>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>RNUILib</title>
+        <meta name="description" content="React Native UI Toolset and Components Library"></meta>
+        <link rel="canonical" href="https://wix.github.io/react-native-ui-lib/" />
+      </Helmet>
+      <Header />
       {/* <div className={`main ${!showSidebar ? 'fill' : ''}`}> */}
       <div className={`main`}>
-        {showSidebar && <Navbar/>}
-        <div className={`content ${showSidebar ? 'with-navbar' : ''}`}>{children}</div>
+        {showSidebar && <Navbar />}
+        <div className={`content ${showSidebar ? 'with-navbar' : ''}`}>
+          {children}
+        </div>
       </div>
     </div>
   );
