@@ -11,6 +11,9 @@
   border-radius: 2px;
 
   .search {
+    position: sticky;
+    top: 0;
+    left: 0;
     display: flex;
     align-items: center;
     padding: 10px;
@@ -20,6 +23,8 @@
     width: 100%;
     transition: width 0.3s;
     border-radius: 2px;
+    z-index: 10;
+    overflow: hidden;
 
     &:focus-within {
       width: 100%;
@@ -30,9 +35,32 @@
       height: 16px;
     }
 
+    .clear-button {
+      border: 0;
+      padding: 5px;
+      background: transparent;
+      background: $dark60;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &.hidden {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+
+      > img {
+        height: 14px;
+      }
+    }
+
     input {
       background: transparent;
       color: $dark10;
+      width: 100%;
       flex: 1;
       display: inline-block;
       margin-left: 10px;

@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import {StaticQuery, graphql} from 'gatsby';
-
-import PropTypes from 'prop-types';
-import Link from 'gatsby-link';
+import classnames from 'classnames';
 import _ from 'lodash';
 
 import './index.scss';
 import searchIcon from '../../images/search.svg';
+import clearIcon from '../../images/delete.svg';
 import Item from './item';
 
 class Navbar extends Component {
@@ -16,6 +15,10 @@ class Navbar extends Component {
 
   setFilter = ({target: {value}}) => {
     this.setState({filter: value});
+  };
+
+  resetSearch = () => {
+    this.setState({filter: ''});
   };
 
   getCurrentPage = () => {
@@ -49,6 +52,26 @@ class Navbar extends Component {
     return filteredComponents;
   }
 
+  renderSearch = () => {
+    const {filter} = this.state;
+    const clearButtonClassName = classnames('clear-button', {
+      hidden: _.isEmpty(filter)
+    });
+    return (
+      <div className="search">
+        <img src={searchIcon} />
+        <input
+          placeholder="Search..."
+          onChange={this.setFilter}
+          value={filter}
+        />
+        <button className={clearButtonClassName} onClick={this.resetSearch}>
+          <img src={clearIcon} />
+        </button>
+      </div>
+    );
+  };
+
   renderNavbar = data => {
     const currentPage = this.getCurrentPage();
     const {filter} = this.state;
@@ -66,10 +89,7 @@ class Navbar extends Component {
 
     return (
       <div className="navbar">
-        <div className="search">
-          <img src={searchIcon} />
-          <input placeholder="Search..." onChange={this.setFilter} />
-        </div>
+        {this.renderSearch()}
         <ul>
           {_.map(markdowns, page => {
             return <Item id={page.title} link={page.path} />;
