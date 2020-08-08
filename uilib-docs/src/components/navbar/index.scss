@@ -1,4 +1,4 @@
-@import "src/styles/constants";
+@import 'src/styles/constants';
 
 .navbar {
   position: fixed;
@@ -28,7 +28,6 @@
     img {
       display: inline;
       height: 16px;
-      // filter: invert(1); // turn to white
     }
 
     input {
@@ -52,12 +51,6 @@
     list-style-type: none;
     padding: 0;
     margin: 0;
-
-    .list-header {
-      // background-color: $dark40;
-      color: $white;
-      padding: 4px 0;
-    }
   }
 
   li {
@@ -65,31 +58,39 @@
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s;
-    margin: 1px 0;
+    padding: 12px 8px;
+    margin-bottom: 2px;
 
-    &.separator {
-      height: 1px;
-      background-color: $white;
-      width: 100%;
-      margin: 8px 0;
+    &:hover > a > .entry {
+      color: $yellow20;
     }
 
-    a {
+    .entry {
       color: $white;
       font-size: $text50;
-      font-weight: 500;
-      padding: 8px;
+      font-weight: 600;
       line-height: 1.4;
       width: 100%;
       display: inline-block;
       text-decoration: none;
-      margin-bottom: 2px;
+
+      &.selected {
+        color: $yellow20;
+        font-weight: 600;
+      }
     }
 
-    &:hover {
-      a {
-        color: $yellow20;
-      }
+    .nested {
+      border-left: 1px solid $white;
+      margin-top: 10px;
+      padding-left: 10px;
+    }
+
+    &.separator {
+      border-bottom: 1px solid $white;
+      width: 100%;
+      margin: 8px 0;
+      padding: 0;
     }
   }
 }
