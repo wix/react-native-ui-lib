@@ -98,6 +98,7 @@ class MainScreen extends Component {
 
   setDefaultScreen = item => {
     AsyncStorage.setItem('uilib.defaultScreen', item.screen);
+    this.openScreen(item);
   };
 
   openScreen = row => {
@@ -158,7 +159,7 @@ class MainScreen extends Component {
         hideUnderline
         floatingPlaceholder={false}
         text70
-        rightButtonProps={{iconSource: Assets.icons.search, style: {marginRight: 12}}}
+        rightButtonProps={{iconSource: Assets.icons.search, style: {marginRight: 12, alignSelf: 'center'}}}
       />
     );
   };

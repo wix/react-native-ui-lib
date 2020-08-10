@@ -2,7 +2,6 @@ import React from 'react';
 import Link from 'gatsby-link';
 
 import './index.scss';
-import Layout from '../components/layout';
 import mainLogo from '../images/logo_big.png';
 import datePicker from '../images/examples/datepicker.png';
 import actionSheet from '../images/examples/actionSheet.png';
@@ -11,7 +10,6 @@ import accessibility from '../images/examples/accessibility.gif';
 
 const IndexPage = props => {
   return (
-    <Layout {...props} showSidebar={false}>
       <div className="main-page">
         <div className="main-section">
           <div className="logo-box">
@@ -41,7 +39,6 @@ const IndexPage = props => {
         <NativeSection/>
         <OthersSection/>
       </div>
-    </Layout>
   );
 };
 

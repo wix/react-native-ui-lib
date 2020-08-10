@@ -11,6 +11,9 @@ import {
 } from 'react-native';
 // eslint-disable-next-line no-unused-vars
 import forwardRef, {ForwardRefInjectedProps} from './forwardRef';
+//@ts-ignore
+import hoistStatics from 'hoist-non-react-statics';
+import {Constants} from '../helpers';
 
 export type ScrollReachedProps = {
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
@@ -45,6 +48,8 @@ export type WithScrollReachedProps = {
 
 type PropTypes = ForwardRefInjectedProps & SupportedViewsProps;
 
+const DEFAULT_THRESHOLD = Constants.isAndroid ? 1 : 0;
+
 /**
  * @description: Add scroll reached which notifies on reaching start \ end of ScrollView \ FlatList
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WithScrollReachedScreen.tsx
@@ -69,7 +74,7 @@ function withScrollReached<PROPS>(
         } = event;
 
         const horizontal = options.horizontal;
-        const threshold = options.threshold || 0;
+        const threshold = options.threshold || DEFAULT_THRESHOLD;
         const layoutSize = horizontal ? layoutWidth : layoutHeight;
         const offset = horizontal ? offsetX : offsetY;
         const contentSize = horizontal ? contentWidth : contentHeight;
@@ -95,6 +100,7 @@ function withScrollReached<PROPS>(
     );
   };
 
+  hoistStatics(ScrollReachedDetector, WrappedComponent);
   return forwardRef(ScrollReachedDetector);
 }
 

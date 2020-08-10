@@ -216,7 +216,7 @@ export default class InputsScreen extends Component {
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
             placeholder="With right button"
-            rightButtonProps={{iconSource: richText, onPress: this.onPressInfo}}
+            rightButtonProps={{iconSource: richText, onPress: this.onPressInfo, accessibilityLabel: 'TextField Info'}}
           />
 
           <TextField

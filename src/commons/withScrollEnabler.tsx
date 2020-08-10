@@ -3,6 +3,8 @@ import React, {useState, useCallback, useRef} from 'react';
 import {FlatListProps, ScrollViewProps, LayoutChangeEvent} from 'react-native';
 // eslint-disable-next-line no-unused-vars
 import forwardRef, {ForwardRefInjectedProps} from './forwardRef';
+//@ts-ignore
+import hoistStatics from 'hoist-non-react-statics';
 
 export type ScrollEnablerProps = {
   onContentSizeChange: (contentWidth: number, contentHeight: number) => void;
@@ -74,6 +76,7 @@ function withScrollEnabler<PROPS>(
     );
   };
 
+  hoistStatics(ScrollEnabler, WrappedComponent);
   return forwardRef(ScrollEnabler);
 }
 

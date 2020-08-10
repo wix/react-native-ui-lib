@@ -12,14 +12,14 @@ describe('Picker', () => {
   describe('getLabel', () => {
     it('should get label of a simple item', () => {
       let uut = new Picker({value: countries[2]});
-      expect(uut.getLabel()).toEqual(countries[2].label);
+      expect(uut.getLabelValueText()).toEqual(countries[2].label);
       uut = new Picker({value: countries[3]});
-      expect(uut.getLabel()).toEqual(countries[3].label);
+      expect(uut.getLabelValueText()).toEqual(countries[3].label);
     });
 
     it('should get label out of an array of items', () => {
       const uut = new Picker({value: [countries[2], countries[4]]});
-      expect(uut.getLabel()).toEqual(`${countries[2].label}, ${countries[4].label}`);
+      expect(uut.getLabelValueText()).toEqual(`${countries[2].label}, ${countries[4].label}`);
     });
   });
 
