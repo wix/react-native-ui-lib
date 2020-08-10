@@ -10,6 +10,7 @@ import {Animated, LayoutChangeEvent, StyleSheet, Platform, TextStyle} from 'reac
 import {ColorType} from './types';
 import {getColorByState} from './Presenter';
 import {Colors} from '../../style';
+import {Constants} from '../../helpers';
 import View from '../../components/view';
 import Text from '../../components/text';
 import FieldContext from './FieldContext';
@@ -57,7 +58,8 @@ export default ({placeholder, floatingPlaceholderColor = Colors.grey40, floating
 
   const onPlaceholderLayout = useCallback((event: LayoutChangeEvent) => {
     const {width, height} = event.nativeEvent.layout;
-    const translate = width / 2 - (width * FLOATING_PLACEHOLDER_SCALE) / 2;
+    let translate = width / 2 - (width * FLOATING_PLACEHOLDER_SCALE) / 2;
+    translate = Constants.isRTL ? -translate : translate;
     setPlaceholderOffset({
       left: translate / FLOATING_PLACEHOLDER_SCALE,
       top: height
