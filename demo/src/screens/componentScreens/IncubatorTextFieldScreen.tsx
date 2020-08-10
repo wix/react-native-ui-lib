@@ -119,22 +119,12 @@ export default class TextFieldScreen extends Component {
 
           <TextField
             label="Email"
-            labelColor={Colors.blue30}
-            placeholder="Enter email"
+            labelColor={{focus: Colors.blue20, error: Colors.red30}}
+            placeholder="Enter valid email"
             validationMessage="Email is invalid"
             validate={'email'}
+            validateOnChange
             fieldStyle={styles.withFrame}
-          />
-
-          <TextField
-            containerStyle={{marginTop: 30}}
-            placeholder="Placeholder"
-            label="Label"
-            labelColor={{
-              default: Colors.grey30,
-              focus: Colors.blue20,
-              disabled: Colors.grey40
-            }}
           />
 
           <Text h3 blue50 marginV-s4>

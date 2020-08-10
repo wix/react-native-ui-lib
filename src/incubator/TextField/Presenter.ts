@@ -10,6 +10,8 @@ export function getColorByState(color: ColorType, context?: ContextType) {
   } else if (_.isPlainObject(color)) {
     if (context?.disabled) {
       finalColor = color?.disabled;
+    } else if (!context?.isValid) {
+      finalColor = color?.error;
     } else if (context?.isFocused) {
       finalColor = color?.focus;
     } else {
@@ -17,5 +19,5 @@ export function getColorByState(color: ColorType, context?: ContextType) {
     }
   }
 
-  return finalColor || Colors.green10;
+  return finalColor || Colors.grey10;
 }
