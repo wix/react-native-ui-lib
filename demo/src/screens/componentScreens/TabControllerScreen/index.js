@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {ActivityIndicator} from 'react-native';
 import {
+  Assets,
   TabController,
   Colors,
   View,
@@ -28,16 +29,21 @@ const TABS = [
 ];
 
 class TabControllerScreen extends Component {
-  state = {
-    asCarousel: true,
-    centerSelected: false,
-    fewItems: false,
-    selectedIndex: 0,
-    items: _.chain(TABS)
-      .map((tab) => ({label: tab, key: tab}))
-      .value(),
-    key: Date.now()
-  };
+  constructor(props) {
+    super(props);
+
+    
+    this.state = {
+      asCarousel: true,
+      centerSelected: false,
+      fewItems: false,
+      selectedIndex: 0,
+      key: Date.now()
+    };
+    
+    const items = this.generateTabItems();
+    this.state.items = items;
+  }
 
   componentDidMount() {
     // this.slow();
@@ -53,33 +59,25 @@ class TabControllerScreen extends Component {
     }, 10);
   }
 
-  addTab = () => {
-    const {tabsCount} = this.state;
+  onAddItem = () => {
+    console.warn('Add Item');
+  }
 
-    if (tabsCount < 6) {
-      this.setState({
-        tabsCount: tabsCount + 1,
-        key: Date.now(),
-        selectedIndex: tabsCount
-      });
+  generateTabItems = (fewItems = this.state.fewItems, centerSelected = this.state.centerSelected)  => {
+    let items = _.chain(TABS)
+      .take(fewItems ? 3 : TABS.length)
+      .map((tab) => ({label: tab, key: tab}))
+      .value();
+    
+    if (!centerSelected) {
+      items = [...items, {icon: Assets.icons.demo.add, key: 'add', ignore: true, width: 60, onPress: this.onAddItem}];
     }
-  };
+    return items;
+  }
 
   toggleItemsCount = () => {
     const {fewItems} = this.state;
-
-    let items;
-    if (fewItems) {
-      items = _.chain(TABS)
-        .map((tab) => ({label: tab, key: tab}))
-        .value();
-    } else {
-      items = _.chain(TABS)
-        .take(3)
-        .map((tab) => ({label: tab, key: tab}))
-        .value();
-    }
-
+    const items = this.generateTabItems(!fewItems);
     this.setState({fewItems: !fewItems, items, key: Date.now()});
   };
 
@@ -91,8 +89,10 @@ class TabControllerScreen extends Component {
   };
 
   toggleCenterSelected = () => {
+    const {fewItems, centerSelected} = this.state;
     this.setState({
-      centerSelected: !this.state.centerSelected,
+      items: this.generateTabItems(fewItems, !centerSelected),
+      centerSelected: !centerSelected,
       key: Date.now()
     });
   };
