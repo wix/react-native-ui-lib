@@ -98,6 +98,7 @@ class MainScreen extends Component {
 
   setDefaultScreen = item => {
     AsyncStorage.setItem('uilib.defaultScreen', item.screen);
+    this.openScreen(item);
   };
 
   openScreen = row => {
