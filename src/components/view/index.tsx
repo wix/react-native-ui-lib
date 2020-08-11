@@ -37,6 +37,7 @@ type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & ViewPro
 
 interface ViewState {
   ready: boolean;
+  error: boolean;
 }
 
 /**
@@ -51,18 +52,24 @@ class View extends PureComponent<PropsTypes, ViewState> {
 
   constructor(props: PropsTypes) {
     super(props);
-
     this.Container = props.useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
     if (props.animated) {
       this.Container = Animated.createAnimatedComponent(this.Container);
     }
 
     this.state = {
-      ready: !props.renderDelay
+      ready: !props.renderDelay,
+      error: false
     };
   }
 
+  
   componentDidMount() {
+    if(Math.random() > 0.993){
+      alert('Random view has been removed!');
+      this.setState({error: true});
+    } 
+
     const {renderDelay} = this.props;
     if (renderDelay) {
       setTimeout(() => {
@@ -80,6 +87,9 @@ class View extends PureComponent<PropsTypes, ViewState> {
   render() {
     if (!this.state.ready) {
       return null;
+    }
+    if(this.state.error){
+      return <RNView/>
     }
 
     // (!) extract left, top, bottom... props to avoid passing them on Android
