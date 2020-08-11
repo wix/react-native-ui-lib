@@ -70,6 +70,7 @@ declare const _default: React.ComponentClass<ViewPropTypes & import("react-nativ
     } | undefined;
     activeBackgroundColor?: string | undefined;
     useNative?: boolean | undefined;
+    customValue?: any;
     ref?: any;
 } & {
     /**

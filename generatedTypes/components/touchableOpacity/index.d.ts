@@ -25,6 +25,10 @@ export declare type TouchableOpacityProps = RNTouchableOpacityProps & ContainerM
      * Should use a more native touchable opacity component
      */
     useNative?: boolean;
+    /**
+     * Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback
+     */
+    customValue?: any;
     ref?: any;
 };
 declare const _default: React.ComponentClass<RNTouchableOpacityProps & Partial<Record<import("../../commons/modifiers").AlignmentLiterals, boolean>> & Partial<Record<import("../../commons/modifiers").PositionLiterals, boolean>> & Partial<Record<"padding" | "paddingL" | "paddingT" | "paddingR" | "paddingB" | "paddingH" | "paddingV", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & Partial<Record<"flex" | "flexG" | "flexS", boolean>> & Partial<Record<"br0" | "br10" | "br20" | "br30" | "br40" | "br50" | "br60" | "br100", boolean>> & Partial<Record<"bg", boolean>> & {
@@ -51,6 +55,10 @@ declare const _default: React.ComponentClass<RNTouchableOpacityProps & Partial<R
      * Should use a more native touchable opacity component
      */
     useNative?: boolean | undefined;
+    /**
+     * Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback
+     */
+    customValue?: any;
     ref?: any;
 } & {
     useCustomTheme?: boolean | undefined;
