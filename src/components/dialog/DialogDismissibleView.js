@@ -40,10 +40,10 @@ class DialogDismissibleView extends PureComponent {
     super(props);
 
     this.setInitialValues();
+    this.isAnimating = false;
     this.state = {
       visible: props.visible,
-      hide: false,
-      isAnimating: false
+      hide: false
     };
   }
 
@@ -69,7 +69,7 @@ class DialogDismissibleView extends PureComponent {
   componentDidUpdate(prevProps) {
     const {isPanning, dragDeltas, swipeDirections} = this.props.context; // eslint-disable-line
     const {dragDeltas: prevDragDeltas, swipeDirections: prevSwipeDirections} = prevProps.context; // eslint-disable-line
-    const {hide, isAnimating} = this.state;
+    const {hide} = this.state;
 
     if (
       isPanning &&
@@ -87,7 +87,7 @@ class DialogDismissibleView extends PureComponent {
       this.onSwipe(swipeDirections);
     }
 
-    if (hide && !isAnimating) {
+    if (hide && !this.isAnimating) {
       this.hide();
     }
   }
@@ -127,7 +127,7 @@ class DialogDismissibleView extends PureComponent {
   };
 
   onAnimationEnd = () => {
-    this.setState({isAnimating: false});
+    this.isAnimating = false;
   };
 
   getHiddenLocation = (left, top) => {
@@ -156,14 +156,12 @@ class DialogDismissibleView extends PureComponent {
   };
 
   animateTo = (toValue, animationEndCallback) => {
-    const animation = Animated.timing(this.animatedValue, {
+    Animated.timing(this.animatedValue, {
       toValue,
       duration: 400,
       easing: Easing.bezier(0.65, 0, 0.35, 1),
       useNativeDriver: true
-    });
-
-    this.setState({isAnimating: true}, () => animation.start(animationEndCallback));
+    }).start(animationEndCallback);
   };
 
   getAnimationStyle = () => {
@@ -241,7 +239,7 @@ class DialogDismissibleView extends PureComponent {
       <View ref={r => (this.ref = r)} style={containerStyle} onLayout={this.onLayout}>
         <PanResponderView
           // !visible && styles.hidden is done to fix a bug is iOS
-          style={[style, this.animationStyle, !visible && styles.hidden]}
+          style={[style, this.getAnimationStyle(), !visible && styles.hidden]}
           isAnimated
           onPanLocationChanged={this.onPanLocationChanged}
         >
