@@ -26,6 +26,10 @@ export type TouchableOpacityProps = RNTouchableOpacityProps & ContainerModifiers
    * Should use a more native touchable opacity component
    */
   useNative?: boolean;
+  /**
+   * Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback
+   */
+  customValue?: any;
   ref?: any;
 };
 
