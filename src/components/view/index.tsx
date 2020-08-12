@@ -32,7 +32,7 @@ export interface ViewPropTypes extends Omit<ViewProps, 'style'>, ContainerModifi
    * Set background color
    */
   backgroundColor?: string;
-  style?: StyleProp<ViewStyle> | Animated.AnimatedProps<ViewStyle>;
+  style?: StyleProp<ViewStyle> | Animated.AnimatedProps<StyleProp<ViewStyle>>;
 }
 type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & ViewPropTypes;
 
