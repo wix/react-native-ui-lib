@@ -10,6 +10,7 @@ import Modal from '../modal';
 import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
 import DialogDismissibleView from './DialogDismissibleView';
+import OverlayFadingBackground from './OverlayFadingBackground';
 import PanningProvider from '../panningViews/panningProvider';
 
 // TODO: KNOWN ISSUES
@@ -90,8 +91,6 @@ class Dialog extends BaseComponent {
   constructor(props) {
     super(props);
 
-    this.visibilityAnimatedValue = new Animated.Value(Number(props.visible));
-
     this.state = {
       alignments: this.state.alignments,
       orientationKey: Constants.orientation,
@@ -108,24 +107,6 @@ class Dialog extends BaseComponent {
 
   componentDidMount() {
     Constants.addDimensionsEventListener(this.onOrientationChange);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    let nextVisibleValue;
-    if (!prevState.modalVisibility && this.state.modalVisibility) {
-      nextVisibleValue = 1;
-    }
-    if (prevState.dialogVisibility && !this.state.dialogVisibility) {
-      nextVisibleValue = 0;
-    }
-
-    if (!_.isUndefined(nextVisibleValue)) {
-      Animated.timing(this.visibilityAnimatedValue, {
-        toValue: nextVisibleValue,
-        duration: 400,
-        useNativeDriver: true
-      }).start();
-    }
   }
 
   componentWillUnmount() {
@@ -219,6 +200,7 @@ class Dialog extends BaseComponent {
 
   // TODO: renderOverlay {_.invoke(this.getThemeProps(), 'renderOverlay')}
   renderDialogContainer = () => {
+    const {modalVisibility, dialogVisibility} = this.state;
     const {useSafeArea, bottom, overlayBackgroundColor} = this.getThemeProps();
     const addBottomSafeArea = Constants.isIphoneX && (useSafeArea && bottom);
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8; // TODO: should this be here or in the input style?
@@ -229,7 +211,11 @@ class Dialog extends BaseComponent {
         style={[this.styles.centerHorizontal, this.styles.alignments, this.styles.container]}
         pointerEvents="box-none"
       >
-        <View absF animated style={{opacity: this.visibilityAnimatedValue, backgroundColor: overlayBackgroundColor}} pointerEvents="none"/>
+        <OverlayFadingBackground
+          modalVisibility={modalVisibility}
+          dialogVisibility={dialogVisibility}
+          overlayBackgroundColor={overlayBackgroundColor}
+        />
         {this.renderDialogView()}
         {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>}
       </View>
