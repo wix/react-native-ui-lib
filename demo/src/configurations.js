@@ -1,6 +1,7 @@
 import {Assets, Typography, Spacings} from 'react-native-ui-lib'; // eslint-disable-line
 
 Assets.loadAssetsGroup('icons.demo', {
+  add: require('./assets/icons/add.png'),
   close: require('./assets/icons/close.png'),
   dashboard: require('./assets/icons/dashboard.png'),
   image: require('./assets/icons/image.png'),
