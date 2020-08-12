@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
-import {Animated} from 'react-native';
 import View from '../view';
 import asPanViewConsumer from './asPanViewConsumer';
 
@@ -89,12 +88,11 @@ class PanResponderView extends PureComponent {
 
   render() {
     const {isAnimated, ...others} = this.props;
-    const Container = isAnimated ? Animated.View : View;
 
     return (
-      <Container ref={this.ref} pointerEvents={'box-none'} {...others}>
+      <View animated={isAnimated} ref={this.ref} pointerEvents={'box-none'} {...others}>
         {this.props.children}
-      </Container>
+      </View>
     );
   }
 }
