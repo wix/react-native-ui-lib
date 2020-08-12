@@ -158,7 +158,7 @@ class DialogDismissibleView extends PureComponent {
   animateTo = (toValue, animationEndCallback) => {
     Animated.timing(this.animatedValue, {
       toValue,
-      duration: 400,
+      duration: 300,
       easing: Easing.bezier(0.2, 0, 0.35, 1),
       useNativeDriver: true
     }).start(animationEndCallback);

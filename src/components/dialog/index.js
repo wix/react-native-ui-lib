@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Animated} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -90,6 +90,8 @@ class Dialog extends BaseComponent {
   constructor(props) {
     super(props);
 
+    this.visibilityAnimatedValue = new Animated.Value(Number(props.visible));
+
     this.state = {
       alignments: this.state.alignments,
       orientationKey: Constants.orientation,
@@ -106,6 +108,24 @@ class Dialog extends BaseComponent {
 
   componentDidMount() {
     Constants.addDimensionsEventListener(this.onOrientationChange);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    let nextVisibleValue;
+    if (!prevState.modalVisibility && this.state.modalVisibility) {
+      nextVisibleValue = 1;
+    }
+    if (prevState.dialogVisibility && !this.state.dialogVisibility) {
+      nextVisibleValue = 0;
+    }
+
+    if (!_.isUndefined(nextVisibleValue)) {
+      Animated.timing(this.visibilityAnimatedValue, {
+        toValue: nextVisibleValue,
+        duration: 400,
+        useNativeDriver: true
+      }).start();
+    }
   }
 
   componentWillUnmount() {
@@ -155,7 +175,7 @@ class Dialog extends BaseComponent {
       }
     });
   };
-  
+
   onModalDismissed = () => {
     _.invoke(this.props, 'onDialogDismissed', this.props);
     _.invoke(this.props, 'onModalDismissed', this.props);
@@ -199,7 +219,7 @@ class Dialog extends BaseComponent {
 
   // TODO: renderOverlay {_.invoke(this.getThemeProps(), 'renderOverlay')}
   renderDialogContainer = () => {
-    const {useSafeArea, bottom} = this.getThemeProps();
+    const {useSafeArea, bottom, overlayBackgroundColor} = this.getThemeProps();
     const addBottomSafeArea = Constants.isIphoneX && (useSafeArea && bottom);
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8; // TODO: should this be here or in the input style?
 
@@ -209,6 +229,7 @@ class Dialog extends BaseComponent {
         style={[this.styles.centerHorizontal, this.styles.alignments, this.styles.container]}
         pointerEvents="box-none"
       >
+        <View absF animated style={{opacity: this.visibilityAnimatedValue, backgroundColor: overlayBackgroundColor}} pointerEvents="none"/>
         {this.renderDialogView()}
         {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>}
       </View>
@@ -217,17 +238,16 @@ class Dialog extends BaseComponent {
 
   render = () => {
     const {orientationKey, modalVisibility} = this.state;
-    const {overlayBackgroundColor, supportedOrientations, accessibilityLabel} = this.getThemeProps();
+    const {supportedOrientations, accessibilityLabel} = this.getThemeProps();
 
     return (
       <Modal
         key={orientationKey}
         transparent
         visible={modalVisibility}
-        animationType={'fade'}
+        animationType={'none'}
         onBackgroundPress={this.hideDialogView}
         onRequestClose={this.hideDialogView}
-        overlayBackgroundColor={overlayBackgroundColor}
         onDismiss={this.onModalDismissed}
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}
