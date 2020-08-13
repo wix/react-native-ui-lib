@@ -131,6 +131,7 @@ class PickerItem extends BaseComponent {
         onLayout={isSelected ? this.onSelectedLayout : undefined}
         disabled={disabled}
         testID={testID}
+        throttleTime={0}
         {...this.extractAccessibilityProps()}
       >
         {renderItem ? renderItem(value, this.props, this.getLabel()) : this.renderItem()}
