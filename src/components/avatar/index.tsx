@@ -224,7 +224,7 @@ class Avatar extends PureComponent<AvatarPropTypes> {
 
   getBadgeSize = () => {
     const badgeSize = _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
-  
+
     if (_.isString(badgeSize)) {
       return BADGE_SIZES[badgeSize] || BADGE_SIZES[DEFAULT_BADGE_SIZE];
     }
@@ -344,7 +344,7 @@ class Avatar extends PureComponent<AvatarPropTypes> {
         <View
           style={[this.getInitialsContainer(), {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
         >
-          {!_.isUndefined(label) && <Text numberOfLines={1} style={[{fontSize}, this.styles.initials, {color}]}>
+          {!_.isUndefined(label) && <Text numberOfLines={1} style={[{fontSize}, this.styles.initials, {color}]} testID={`${testID}.label`}>
             {label}
           </Text>}
         </View>
