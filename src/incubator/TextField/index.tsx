@@ -1,5 +1,6 @@
 import React, {useMemo} from 'react';
 import {ViewStyle, TextStyle} from 'react-native';
+import _ from 'lodash';
 import {
   asBaseComponent,
   forwardRef,
@@ -28,7 +29,7 @@ interface TextFieldProps
     FloatingPlaceholderProps,
     FieldStateProps,
     ValidationMessageProps,
-    CharCounterProps {
+    Omit<CharCounterProps, 'maxLength'> {
   leadingButton?: ButtonPropTypes;
   trailingButton?: ButtonPropTypes;
   floatingPlaceholder?: boolean;
@@ -129,11 +130,12 @@ const TextField = (
               retainSpace
             />
           )}
-          <CharCounter
-            showCharCounter={showCharCounter}
-            maxLength={props.maxLength}
-            charCounterStyle={charCounterStyle}
-          />
+          {showCharCounter && !_.isUndefined(props.maxLength) && 
+            <CharCounter
+              maxLength={props.maxLength}
+              charCounterStyle={charCounterStyle}
+            />
+          }
         </View>
       </View>
     </FieldContext.Provider>

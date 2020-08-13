@@ -2,8 +2,8 @@
 import { TextStyle } from 'react-native';
 export interface CharCounterProps {
     showCharCounter?: boolean;
-    maxLength?: number;
+    maxLength: number;
     charCounterStyle?: TextStyle;
 }
-declare const _default: ({ showCharCounter, maxLength, charCounterStyle }: CharCounterProps) => JSX.Element | null;
+declare const _default: ({ maxLength, charCounterStyle }: CharCounterProps) => JSX.Element;
 export default _default;

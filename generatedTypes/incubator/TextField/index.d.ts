@@ -8,7 +8,7 @@ import { LabelProps } from './Label';
 import { FieldStateProps } from './withFieldState';
 import { FloatingPlaceholderProps } from './FloatingPlaceholder';
 import { CharCounterProps } from './CharCounter';
-interface TextFieldProps extends InputProps, LabelProps, FloatingPlaceholderProps, FieldStateProps, ValidationMessageProps, CharCounterProps {
+interface TextFieldProps extends InputProps, LabelProps, FloatingPlaceholderProps, FieldStateProps, ValidationMessageProps, Omit<CharCounterProps, 'maxLength'> {
     leadingButton?: ButtonPropTypes;
     trailingButton?: ButtonPropTypes;
     floatingPlaceholder?: boolean;
