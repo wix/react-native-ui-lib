@@ -137,7 +137,7 @@ export default class TextFieldScreen extends Component {
             multiline
             showCharCounter
             charCounterStyle={{color: Colors.blue30}}
-            maxLength={225}
+            maxLength={20}
             fieldStyle={styles.withFrame}
           />
           <Text h3 blue50 marginV-s4>
