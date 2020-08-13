@@ -54,16 +54,6 @@ class DialogDismissibleView extends PureComponent {
     this.width = Constants.screenWidth;
     this.height = Constants.screenHeight;
     this.hiddenLocation = this.getHiddenLocation(0, 0);
-    this.animationStyle = {
-      transform: [
-        {
-          translateX: this.hiddenLocation.left
-        },
-        {
-          translateY: this.hiddenLocation.top
-        }
-      ]
-    };
   }
 
   componentDidUpdate(prevProps) {
@@ -192,7 +182,6 @@ class DialogDismissibleView extends PureComponent {
     this.thresholdY = this.height / 2;
     this.ref.measureInWindow((x, y) => {
       this.hiddenLocation = this.getHiddenLocation(x, y);
-      this.animationStyle = this.getAnimationStyle();
       this.animateTo(1, this.onAnimationEnd);
     });
   };
