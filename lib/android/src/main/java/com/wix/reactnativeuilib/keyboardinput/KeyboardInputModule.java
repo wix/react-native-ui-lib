@@ -7,7 +7,7 @@ import com.facebook.react.bridge.ReactMethod;
 
 public class KeyboardInputModule extends ReactContextBaseJavaModule {
 
-    private static final String REACT_CLASS = "CustomKeyboardInput";
+    private static final String REACT_CLASS = "CustomKeyboardInputTemp";
 
     private final CustomKeyboardLayout mLayout;
 
