@@ -40,7 +40,6 @@ class DialogDismissibleView extends PureComponent {
     super(props);
 
     this.setInitialValues();
-    this.isAnimating = false;
     this.state = {
       visible: props.visible,
       hide: false
@@ -77,7 +76,7 @@ class DialogDismissibleView extends PureComponent {
       this.onSwipe(swipeDirections);
     }
 
-    if (hide && !this.isAnimating) {
+    if (hide) {
       this.hide();
     }
   }
@@ -114,10 +113,6 @@ class DialogDismissibleView extends PureComponent {
 
   onSwipe = swipeDirections => {
     this.swipe = swipeDirections;
-  };
-
-  onAnimationEnd = () => {
-    this.isAnimating = false;
   };
 
   getHiddenLocation = (left, top) => {
@@ -182,7 +177,7 @@ class DialogDismissibleView extends PureComponent {
     this.thresholdY = this.height / 2;
     this.ref.measureInWindow((x, y) => {
       this.hiddenLocation = this.getHiddenLocation(x, y);
-      this.animateTo(1, this.onAnimationEnd);
+      this.animateTo(1);
     });
   };
 
@@ -197,7 +192,7 @@ class DialogDismissibleView extends PureComponent {
       ? 1 + left / this.hiddenLocation.left
       : 1 + top / this.hiddenLocation.top;
 
-    this.animateTo(toValue, this.onAnimationEnd);
+    this.animateTo(toValue);
   };
 
   onPanLocationChanged = ({left, top}) => {
