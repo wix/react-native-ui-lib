@@ -719,7 +719,6 @@ export default class TextField extends BaseInput {
 }
 
 function createStyles({centered, multiline, hideUnderline}, rightItemTopPadding = 0) {
-  const inputTextAlign = Constants.isRTL ? 'right' : 'left';
   const itemTopPadding = Constants.isIOS ? (rightItemTopPadding - 3) : (rightItemTopPadding - 1);
 
   return StyleSheet.create({
@@ -739,7 +738,7 @@ function createStyles({centered, multiline, hideUnderline}, rightItemTopPadding 
     },
     input: {
       flexGrow: 1,
-      textAlign: centered ? 'center' : inputTextAlign,
+      textAlign: centered ? 'center' : undefined,
       backgroundColor: 'transparent',
       // marginBottom: Constants.isIOS ? 10 : 5,
       padding: 0, // for Android
