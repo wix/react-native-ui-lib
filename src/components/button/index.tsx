@@ -57,6 +57,10 @@ export type ButtonPropTypes = TouchableOpacityProps &
      */
     iconOnRight?: boolean;
     /**
+    * whether the icon should flip horizontally on RTL locals
+    */
+    supportRTL?: boolean;
+    /**
      * Color of the button background
      */
     backgroundColor?: string;
@@ -406,10 +410,12 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getIconStyle() {
-    const {disabled, iconStyle: propsIconStyle, iconOnRight} = this.props;
+    const {disabled, iconStyle: propsIconStyle, iconOnRight, supportRTL} = this.props;
     const size = this.props.size || DEFAULT_SIZE;
+    const shouldFlipRTL = supportRTL && Constants.isRTL;
     const iconStyle: ImageStyle = {
-      tintColor: this.getLabelColor()
+      tintColor: this.getLabelColor(),
+      transform: shouldFlipRTL ? [{scaleX: -1}] : undefined
     };
 
     const marginSide = [Button.sizes.large, Button.sizes.medium].includes(size) ? 8 : 4;
