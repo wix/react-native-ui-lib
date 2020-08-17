@@ -855,6 +855,7 @@ exports[`Button container size should have no padding of button is an icon butto
         Object {
           "marginRight": 8,
           "tintColor": "#FFFFFF",
+          "transform": undefined,
         },
         undefined,
       ]
@@ -1648,6 +1649,7 @@ exports[`Button icon should apply color on icon 1`] = `
       Array [
         Object {
           "tintColor": "green",
+          "transform": undefined,
         },
         undefined,
       ]
@@ -1689,6 +1691,7 @@ exports[`Button icon should apply color on icon 2`] = `
       Array [
         Object {
           "tintColor": "#FF563D",
+          "transform": undefined,
         },
         undefined,
       ]
@@ -1730,6 +1733,7 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
       Array [
         Object {
           "tintColor": undefined,
+          "transform": undefined,
         },
         Object {
           "marginRight": 9,
@@ -1776,6 +1780,7 @@ exports[`Button icon should return icon style according to different variations 
       Array [
         Object {
           "tintColor": "#00BBF2",
+          "transform": undefined,
         },
         undefined,
       ]
@@ -1817,6 +1822,7 @@ exports[`Button icon should return icon style according to different variations 
       Array [
         Object {
           "tintColor": "#00BBF2",
+          "transform": undefined,
         },
         undefined,
       ]
@@ -1858,6 +1864,7 @@ exports[`Button icon should return icon style according to different variations 
       Array [
         Object {
           "tintColor": undefined,
+          "transform": undefined,
         },
         undefined,
       ]
@@ -2800,6 +2807,7 @@ exports[`Button labelColor should return undefined color if this is an icon butt
       Array [
         Object {
           "tintColor": undefined,
+          "transform": undefined,
         },
         undefined,
       ]
