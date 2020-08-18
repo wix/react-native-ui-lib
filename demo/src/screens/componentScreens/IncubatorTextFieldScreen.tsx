@@ -18,6 +18,7 @@ export default class TextFieldScreen extends Component {
   input2 = React.createRef<TextInput>();
   state = {
     errorPosition: TextField.validationMessagePositions.TOP,
+    shouldDisable: false,
     value: 'Initial Value'
   };
 
@@ -30,7 +31,7 @@ export default class TextFieldScreen extends Component {
   }
 
   render() {
-    const {errorPosition} = this.state;
+    const {errorPosition, shouldDisable} = this.state;
     return (
       <ScrollView keyboardShouldPersistTaps="always">
         <View flex padding-page>
@@ -38,7 +39,6 @@ export default class TextFieldScreen extends Component {
           <Text h3 blue50 marginV-s4>
             Default
           </Text>
-
           <TextField
             ref={this.input}
             label="Name"
@@ -113,18 +113,26 @@ export default class TextFieldScreen extends Component {
             fieldStyle={styles.withUnderline}
           />
 
-          <Text h3 blue50 marginV-s4>
-            Colors By State
-          </Text>
+          <View row centerV spread>
+            <Text h3 blue50 marginV-s4>
+              Colors By State
+            </Text>
+            <Button
+              label={shouldDisable ? 'Enable' : 'Disable'} 
+              onPress={() => this.setState({shouldDisable: !shouldDisable})} 
+              size={Button.sizes.xSmall}
+            />
+          </View>
 
           <TextField
             label="Email"
-            labelColor={{focus: Colors.blue20, error: Colors.red30}}
+            labelColor={{default: Colors.grey10, focus: Colors.blue20, error: Colors.red30, disabled: Colors.grey40}}
             placeholder="Enter valid email"
             validationMessage="Email is invalid"
             validate={'email'}
             validateOnChange
             fieldStyle={styles.withFrame}
+            editable={!shouldDisable}
           />
 
           <Text h3 blue50 marginV-s4>

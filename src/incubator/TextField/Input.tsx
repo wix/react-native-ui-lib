@@ -18,7 +18,7 @@ const Input = ({style, hint, forwardedRef, ...props}: InputProps & ForwardRefInj
       placeholder={placeholder}
       ref={forwardedRef}
       underlineColorAndroid="transparent"
-      accessibilityState={props.editable === false ? {disabled: true} : undefined}
+      accessibilityState={{disabled: props.editable === false}}
     />
   );
 };
