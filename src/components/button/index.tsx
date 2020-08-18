@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
-import {Platform, StyleSheet, LayoutAnimation, Image, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
+import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
+import {Image} from 'react-native-ui-lib';
 import _ from 'lodash';
 import {
   asBaseComponent,
@@ -414,8 +415,7 @@ class Button extends PureComponent<Props, ButtonState> {
     const size = this.props.size || DEFAULT_SIZE;
     const shouldFlipRTL = supportRTL && Constants.isRTL;
     const iconStyle: ImageStyle = {
-      tintColor: this.getLabelColor(),
-      transform: shouldFlipRTL ? [{scaleX: -1}] : undefined
+      tintColor: this.getLabelColor()
     };
 
     const marginSide = [Button.sizes.large, Button.sizes.medium].includes(size) ? 8 : 4;
@@ -453,14 +453,14 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   renderIcon() {
-    const {iconSource} = this.props;
+    const {iconSource, supportRTL} = this.props;
 
     if (iconSource) {
       const iconStyle = this.getIconStyle();
       if (typeof iconSource === 'function') {
         return iconSource(iconStyle);
       } else {
-        return <Image source={iconSource} style={iconStyle}/>;
+        return <Image source={iconSource} supportRTL={supportRTL} style={[iconStyle]}/>;
       }
     }
     return null;
