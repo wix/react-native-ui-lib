@@ -411,9 +411,8 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getIconStyle() {
-    const {disabled, iconStyle: propsIconStyle, iconOnRight, supportRTL} = this.props;
+    const {disabled, iconStyle: propsIconStyle, iconOnRight} = this.props;
     const size = this.props.size || DEFAULT_SIZE;
-    const shouldFlipRTL = supportRTL && Constants.isRTL;
     const iconStyle: ImageStyle = {
       tintColor: this.getLabelColor()
     };
