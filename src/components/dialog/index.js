@@ -224,11 +224,12 @@ class Dialog extends BaseComponent {
 
   render = () => {
     const {orientationKey, modalVisibility} = this.state;
-    const {supportedOrientations, accessibilityLabel} = this.getThemeProps();
+    const {testID, supportedOrientations, accessibilityLabel} = this.getThemeProps();
 
     return (
       <Modal
         key={orientationKey}
+        testID={`${testID}.modal`}
         transparent
         visible={modalVisibility}
         animationType={'none'}

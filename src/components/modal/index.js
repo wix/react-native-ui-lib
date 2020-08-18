@@ -52,9 +52,8 @@ export default class Modal extends BaseComponent {
         <View
           useSafeArea={isScreenReaderEnabled}
           style={!isScreenReaderEnabled && [styles.touchableOverlay, {backgroundColor: overlayBackgroundColor}]}
-          testID={testID}
         >
-          <TouchableWithoutFeedback {...accessibilityProps} onPress={onBackgroundPress}>
+          <TouchableWithoutFeedback {...accessibilityProps} onPress={onBackgroundPress} testID={testID}>
             <View style={isScreenReaderEnabled ? styles.accessibleOverlayView : styles.overlayView}/>
           </TouchableWithoutFeedback>
         </View>
