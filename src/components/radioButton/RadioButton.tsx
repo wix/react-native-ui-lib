@@ -72,7 +72,11 @@ export type RadioButtonPropTypes = RadioGroupContextPropTypes & ViewProps & {
    * Should the icon be on the right side of the label
    */
   iconOnRight?: boolean;
-}
+   /**
+     * Should the content be rendered right to the button
+     */
+    contentOnRight?: boolean;
+  };
 
 interface RadioButtonState {
   opacityAnimationValue: Animated.Value;
@@ -206,10 +210,10 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   }
 
   renderLabel() {
-    const {label, labelStyle} = this.props;
+    const {label, labelStyle, contentOnRight} = this.props;
     return (
       label && (
-        <Text marginL-10 style={labelStyle}>
+        <Text marginL-10={!contentOnRight} marginR-10={contentOnRight} style={labelStyle}>
           {label}
         </Text>
       )
@@ -222,9 +226,24 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
     return iconSource && <Image style={style} source={iconSource}/>;
   }
 
-  render() {
-    const {onPress, onValueChange, ...others} = this.props;
+  renderButton() {
     const {opacityAnimationValue, scaleAnimationValue} = this.state;
+
+    return (
+      <View style={this.getRadioButtonOutlineStyle()}>
+        <Animated.View
+          style={[
+            this.getRadioButtonInnerStyle(),
+            {opacity: opacityAnimationValue},
+            {transform: [{scale: scaleAnimationValue}]}
+          ]}
+        />
+      </View>
+    );
+  }
+
+  render() {
+    const {onPress, onValueChange, contentOnRight, ...others} = this.props;
     const Container = onPress || onValueChange ? TouchableOpacity : View;
 
     return (
@@ -234,21 +253,13 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
         centerV
         activeOpacity={1}
         {...others}
-        style={undefined}
         onPress={this.onPress}
         {...this.getAccessibilityProps()}
       >
-        <View style={this.getRadioButtonOutlineStyle()}>
-          <Animated.View
-            style={[
-              this.getRadioButtonInnerStyle(),
-              {opacity: opacityAnimationValue},
-              {transform: [{scale: scaleAnimationValue}]}
-            ]}
-          />
-        </View>
+        {!contentOnRight && this.renderButton()}
         {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
         {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
+        {contentOnRight && this.renderButton()}
       </Container>
     );
   }

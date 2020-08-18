@@ -10,6 +10,7 @@ import Modal from '../modal';
 import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
 import DialogDismissibleView from './DialogDismissibleView';
+import OverlayFadingBackground from './OverlayFadingBackground';
 import PanningProvider from '../panningViews/panningProvider';
 
 // TODO: KNOWN ISSUES
@@ -155,7 +156,7 @@ class Dialog extends BaseComponent {
       }
     });
   };
-  
+
   onModalDismissed = () => {
     _.invoke(this.props, 'onDialogDismissed', this.props);
     _.invoke(this.props, 'onModalDismissed', this.props);
@@ -199,7 +200,8 @@ class Dialog extends BaseComponent {
 
   // TODO: renderOverlay {_.invoke(this.getThemeProps(), 'renderOverlay')}
   renderDialogContainer = () => {
-    const {useSafeArea, bottom} = this.getThemeProps();
+    const {modalVisibility, dialogVisibility} = this.state;
+    const {useSafeArea, bottom, overlayBackgroundColor} = this.getThemeProps();
     const addBottomSafeArea = Constants.isIphoneX && (useSafeArea && bottom);
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8; // TODO: should this be here or in the input style?
 
@@ -209,6 +211,11 @@ class Dialog extends BaseComponent {
         style={[this.styles.centerHorizontal, this.styles.alignments, this.styles.container]}
         pointerEvents="box-none"
       >
+        <OverlayFadingBackground
+          modalVisibility={modalVisibility}
+          dialogVisibility={dialogVisibility}
+          overlayBackgroundColor={overlayBackgroundColor}
+        />
         {this.renderDialogView()}
         {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>}
       </View>
@@ -217,7 +224,7 @@ class Dialog extends BaseComponent {
 
   render = () => {
     const {orientationKey, modalVisibility} = this.state;
-    const {testID, overlayBackgroundColor, supportedOrientations, accessibilityLabel} = this.getThemeProps();
+    const {testID, supportedOrientations, accessibilityLabel} = this.getThemeProps();
 
     return (
       <Modal
@@ -225,10 +232,9 @@ class Dialog extends BaseComponent {
         testID={`${testID}.modal`}
         transparent
         visible={modalVisibility}
-        animationType={'fade'}
+        animationType={'none'}
         onBackgroundPress={this.hideDialogView}
         onRequestClose={this.hideDialogView}
-        overlayBackgroundColor={overlayBackgroundColor}
         onDismiss={this.onModalDismissed}
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}

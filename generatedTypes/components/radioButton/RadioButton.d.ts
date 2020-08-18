@@ -50,6 +50,10 @@ export declare type RadioButtonPropTypes = RadioGroupContextPropTypes & ViewProp
      * Should the icon be on the right side of the label
      */
     iconOnRight?: boolean;
+    /**
+      * Should the content be rendered right to the button
+      */
+    contentOnRight?: boolean;
 };
 declare const _default: React.ComponentClass<RadioGroupContextPropTypes & ViewProps & {
     /**
@@ -100,6 +104,10 @@ declare const _default: React.ComponentClass<RadioGroupContextPropTypes & ViewPr
      * Should the icon be on the right side of the label
      */
     iconOnRight?: boolean | undefined;
+    /**
+      * Should the content be rendered right to the button
+      */
+    contentOnRight?: boolean | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any>;
