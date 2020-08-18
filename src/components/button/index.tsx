@@ -259,7 +259,7 @@ class Button extends PureComponent<Props, ButtonState> {
 
     if (!outline && !link) {
       if (disabled) {
-        return disabledBackgroundColor ? disabledBackgroundColor : ThemeManager.CTADisabledColor;
+        return disabledBackgroundColor || ThemeManager.CTADisabledColor;
       }
 
       return propsBackgroundColor || stateBackgroundColor || themeBackgroundColor || Colors.blue30;
