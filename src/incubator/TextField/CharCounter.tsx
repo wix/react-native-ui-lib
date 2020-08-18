@@ -6,12 +6,17 @@ import FieldContext from './FieldContext';
 
 export interface CharCounterProps {
   showCharCounter?: boolean;
-  maxLength: number;
+  maxLength?: number;
   charCounterStyle?: TextStyle;
 }
 
 export default ({maxLength, charCounterStyle}: CharCounterProps) => {
   const {value} = useContext(FieldContext);
+
+  if (_.isUndefined(maxLength)) {
+    return null;
+  }
+
   return (
     <Text grey30 style={[styles.container, charCounterStyle]}>
       {`${_.size(value)}/${maxLength}`}

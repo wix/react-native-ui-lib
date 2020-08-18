@@ -130,7 +130,7 @@ const TextField = (
               retainSpace
             />
           )}
-          {showCharCounter && !_.isUndefined(props.maxLength) && 
+          {showCharCounter && 
             <CharCounter
               maxLength={props.maxLength}
               charCounterStyle={charCounterStyle}
