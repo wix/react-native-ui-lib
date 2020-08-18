@@ -849,15 +849,29 @@ exports[`Button container size should have no padding of button is an icon butto
   }
 >
   <Image
+    accessibilityRole="image"
+    accessible={false}
+    assetGroup="icons"
     source={14}
     style={
       Array [
         Object {
-          "marginRight": 8,
-          "tintColor": "#FFFFFF",
-          "transform": undefined,
+          "tintColor": undefined,
         },
         undefined,
+        undefined,
+        undefined,
+        undefined,
+        Object {},
+        Array [
+          Array [
+            Object {
+              "marginRight": 8,
+              "tintColor": "#FFFFFF",
+            },
+            undefined,
+          ],
+        ],
       ]
     }
   />
@@ -1644,14 +1658,28 @@ exports[`Button icon should apply color on icon 1`] = `
   }
 >
   <Image
+    accessibilityRole="image"
+    accessible={false}
+    assetGroup="icons"
     source={12}
     style={
       Array [
         Object {
-          "tintColor": "green",
-          "transform": undefined,
+          "tintColor": undefined,
         },
         undefined,
+        undefined,
+        undefined,
+        undefined,
+        Object {},
+        Array [
+          Array [
+            Object {
+              "tintColor": "green",
+            },
+            undefined,
+          ],
+        ],
       ]
     }
   />
@@ -1686,14 +1714,28 @@ exports[`Button icon should apply color on icon 2`] = `
   }
 >
   <Image
+    accessibilityRole="image"
+    accessible={false}
+    assetGroup="icons"
     source={12}
     style={
       Array [
         Object {
-          "tintColor": "#FF563D",
-          "transform": undefined,
+          "tintColor": undefined,
         },
         undefined,
+        undefined,
+        undefined,
+        undefined,
+        Object {},
+        Array [
+          Array [
+            Object {
+              "tintColor": "#FF563D",
+            },
+            undefined,
+          ],
+        ],
       ]
     }
   />
@@ -1728,17 +1770,31 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
   }
 >
   <Image
+    accessibilityRole="image"
+    accessible={false}
+    assetGroup="icons"
     source={12}
     style={
       Array [
         Object {
           "tintColor": undefined,
-          "transform": undefined,
         },
-        Object {
-          "marginRight": 9,
-          "tintColor": "red",
-        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        Object {},
+        Array [
+          Array [
+            Object {
+              "tintColor": undefined,
+            },
+            Object {
+              "marginRight": 9,
+              "tintColor": "red",
+            },
+          ],
+        ],
       ]
     }
   />
@@ -1775,14 +1831,28 @@ exports[`Button icon should return icon style according to different variations 
   }
 >
   <Image
+    accessibilityRole="image"
+    accessible={false}
+    assetGroup="icons"
     source={12}
     style={
       Array [
         Object {
-          "tintColor": "#00BBF2",
-          "transform": undefined,
+          "tintColor": undefined,
         },
         undefined,
+        undefined,
+        undefined,
+        undefined,
+        Object {},
+        Array [
+          Array [
+            Object {
+              "tintColor": "#00BBF2",
+            },
+            undefined,
+          ],
+        ],
       ]
     }
   />
@@ -1817,14 +1887,28 @@ exports[`Button icon should return icon style according to different variations 
   }
 >
   <Image
+    accessibilityRole="image"
+    accessible={false}
+    assetGroup="icons"
     source={12}
     style={
       Array [
         Object {
-          "tintColor": "#00BBF2",
-          "transform": undefined,
+          "tintColor": undefined,
         },
         undefined,
+        undefined,
+        undefined,
+        undefined,
+        Object {},
+        Array [
+          Array [
+            Object {
+              "tintColor": "#00BBF2",
+            },
+            undefined,
+          ],
+        ],
       ]
     }
   />
@@ -1859,14 +1943,28 @@ exports[`Button icon should return icon style according to different variations 
   }
 >
   <Image
+    accessibilityRole="image"
+    accessible={false}
+    assetGroup="icons"
     source={12}
     style={
       Array [
         Object {
           "tintColor": undefined,
-          "transform": undefined,
         },
         undefined,
+        undefined,
+        undefined,
+        undefined,
+        Object {},
+        Array [
+          Array [
+            Object {
+              "tintColor": undefined,
+            },
+            undefined,
+          ],
+        ],
       ]
     }
   />
@@ -2802,14 +2900,28 @@ exports[`Button labelColor should return undefined color if this is an icon butt
   }
 >
   <Image
+    accessibilityRole="image"
+    accessible={false}
+    assetGroup="icons"
     source={12}
     style={
       Array [
         Object {
           "tintColor": undefined,
-          "transform": undefined,
         },
         undefined,
+        undefined,
+        undefined,
+        undefined,
+        Object {},
+        Array [
+          Array [
+            Object {
+              "tintColor": undefined,
+            },
+            undefined,
+          ],
+        ],
       ]
     }
   />
