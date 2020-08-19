@@ -184,6 +184,8 @@ class DrawerScreen extends Component {
   }
 
   renderListItem() {
+    const data = conversations[2];
+
     return (
       <View
         bg-grey80
@@ -195,11 +197,11 @@ class DrawerScreen extends Component {
         testID="drawer_item"
       >
         {this.state.unread && <Badge testID="drawer_item_badge" size={'pimpleSmall'} backgroundColor={Colors.red30} containerStyle={{marginRight: 8}}/>}
-        <Avatar source={{uri: conversations[0].thumbnail}}/>
+        <Avatar source={{uri: data.thumbnail}}/>
         <View marginL-20>
-          <Text text70R={!this.state.unread} text70BO={this.state.unread}>{conversations[0].name}</Text>
+          <Text text70R={!this.state.unread} text70BO={this.state.unread}>{data.name}</Text>
           <Text text80 marginT-2>
-            {conversations[0].text}
+            {data.text}
           </Text>
         </View>
       </View>
