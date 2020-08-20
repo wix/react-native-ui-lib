@@ -104,7 +104,7 @@ class TabBar extends Component<TabBarProps, State> {
     // between this.props and nextProps (basically the meaning of selectedIndex should be initialIndex)
     const isIndexManuallyChanged =
       nextProps.selectedIndex !== this.state.currentIndex && this.props.selectedIndex !== nextProps.selectedIndex;
-    if (isIndexManuallyChanged && nextProps.selectedIndex) {
+    if (isIndexManuallyChanged && nextProps.selectedIndex !== undefined) {
       this.updateIndicator(nextProps.selectedIndex);
     }
   }
