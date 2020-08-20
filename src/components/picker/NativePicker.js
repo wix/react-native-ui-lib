@@ -8,6 +8,7 @@ import TouchableOpacity from '../touchableOpacity';
 import {Colors} from '../../style';
 
 class NativePicker extends BaseComponent {
+  static displayName = 'IGNORE';
   state = {
     selectedValue: this.props.value,
     items: this.extractPickerItems(this.props),
