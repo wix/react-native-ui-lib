@@ -772,7 +772,7 @@ function createStyles({centered, multiline, hideUnderline}, rightItemTopPadding 
       textAlign: centered ? 'center' : undefined
     },
     topLabel: {
-      marginBottom: Constants.isIOS ? (multiline ? 1 : 6) : 7
+      marginBottom: Constants.isIOS ? (multiline ? 1 : 5) : 7
     },
     bottomLabel: {
       marginTop: 9
