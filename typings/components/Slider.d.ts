@@ -27,6 +27,8 @@ export interface SliderProps {
   renderTrack?: () => ReactElement | ReactElement[];
   thumbTintColor?: ColorValue;
   onValueChange?: SliderOnValueChange;
+  onSeekStart?: () => void;
+  onSeekEnd?: () => void;
   containerStyle?: StyleProp<ViewStyle>;
   trackStyle?: StyleProp<ViewStyle>;
   thumbStyle?: StyleProp<ViewStyle>;

@@ -173,6 +173,7 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
       width,
       onPress,
       activeBackgroundColor,
+      style,
       testID
     } = this.props;
 
@@ -186,7 +187,7 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
       <TouchableOpacity
         activeOpacity={1}
         onPress={onPress}
-        style={width ? {width} : {flex: 1}}
+        style={[style, width ? {width} : {flex: 1}]}
         testID={testID}
         activeBackgroundColor={activeBackgroundColor}
         onLayout={this.onLayout}

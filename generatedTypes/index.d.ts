@@ -19,6 +19,7 @@ export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as RadioButton, RadioButtonPropTypes} from './components/radioButton/RadioButton';
 export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButton/RadioGroup';
 export {default as TabBar} from './components/TabBar';
+export {default as Fader, FaderProps} from './components/fader';
 
 /* All components with manual typings */
 export {

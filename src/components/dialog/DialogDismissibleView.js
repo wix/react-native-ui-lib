@@ -42,8 +42,7 @@ class DialogDismissibleView extends PureComponent {
     this.setInitialValues();
     this.state = {
       visible: props.visible,
-      hide: false,
-      isAnimating: false
+      hide: false
     };
   }
 
@@ -54,22 +53,12 @@ class DialogDismissibleView extends PureComponent {
     this.width = Constants.screenWidth;
     this.height = Constants.screenHeight;
     this.hiddenLocation = this.getHiddenLocation(0, 0);
-    this.animationStyle = {
-      transform: [
-        {
-          translateX: this.hiddenLocation.left
-        },
-        {
-          translateY: this.hiddenLocation.top
-        }
-      ]
-    };
   }
 
   componentDidUpdate(prevProps) {
     const {isPanning, dragDeltas, swipeDirections} = this.props.context; // eslint-disable-line
     const {dragDeltas: prevDragDeltas, swipeDirections: prevSwipeDirections} = prevProps.context; // eslint-disable-line
-    const {hide, isAnimating} = this.state;
+    const {hide} = this.state;
 
     if (
       isPanning &&
@@ -87,7 +76,7 @@ class DialogDismissibleView extends PureComponent {
       this.onSwipe(swipeDirections);
     }
 
-    if (hide && !isAnimating) {
+    if (hide) {
       this.hide();
     }
   }
@@ -126,10 +115,6 @@ class DialogDismissibleView extends PureComponent {
     this.swipe = swipeDirections;
   };
 
-  onAnimationEnd = () => {
-    this.setState({isAnimating: false});
-  };
-
   getHiddenLocation = (left, top) => {
     const {direction} = this.props;
     const topInset = Constants.isIphoneX ? Constants.getSafeAreaInsets().top : Constants.isIOS ? 20 : 0;
@@ -156,14 +141,12 @@ class DialogDismissibleView extends PureComponent {
   };
 
   animateTo = (toValue, animationEndCallback) => {
-    const animation = Animated.timing(this.animatedValue, {
+    Animated.timing(this.animatedValue, {
       toValue,
-      duration: 400,
-      easing: Easing.bezier(0.65, 0, 0.35, 1),
+      duration: 300,
+      easing: Easing.bezier(0.2, 0, 0.35, 1),
       useNativeDriver: true
-    });
-
-    this.setState({isAnimating: true}, () => animation.start(animationEndCallback));
+    }).start(animationEndCallback);
   };
 
   getAnimationStyle = () => {
@@ -194,8 +177,7 @@ class DialogDismissibleView extends PureComponent {
     this.thresholdY = this.height / 2;
     this.ref.measureInWindow((x, y) => {
       this.hiddenLocation = this.getHiddenLocation(x, y);
-      this.animationStyle = this.getAnimationStyle();
-      this.animateTo(1, this.onAnimationEnd);
+      this.animateTo(1);
     });
   };
 
@@ -210,7 +192,7 @@ class DialogDismissibleView extends PureComponent {
       ? 1 + left / this.hiddenLocation.left
       : 1 + top / this.hiddenLocation.top;
 
-    this.animateTo(toValue, this.onAnimationEnd);
+    this.animateTo(toValue);
   };
 
   onPanLocationChanged = ({left, top}) => {
@@ -241,7 +223,7 @@ class DialogDismissibleView extends PureComponent {
       <View ref={r => (this.ref = r)} style={containerStyle} onLayout={this.onLayout}>
         <PanResponderView
           // !visible && styles.hidden is done to fix a bug is iOS
-          style={[style, this.animationStyle, !visible && styles.hidden]}
+          style={[style, this.getAnimationStyle(), !visible && styles.hidden]}
           isAnimated
           onPanLocationChanged={this.onPanLocationChanged}
         >

@@ -24,17 +24,20 @@ const ITEMS = {
   read: {
     icon: require('../../assets/icons/mail.png'),
     text: 'Read',
-    background: Colors.green30
+    background: Colors.green30,
+    testID: "left_item_read"
   },
   archive: {
     icon: require('../../assets/icons/archive.png'),
     text: 'Archive',
-    background: Colors.blue30
+    background: Colors.blue30,
+    testID: "right_item_archive"
   },
   delete: {
     icon: require('../../assets/icons/delete.png'),
     text: 'Delete',
-    background: Colors.red30
+    background: Colors.red30,
+    testID: "right_item_delete"
   }
 };
 
@@ -131,18 +134,21 @@ class DrawerScreen extends Component {
               label="Open left"
               style={{margin: 3}}
               size={'xSmall'}
+              testID="open_left_btn"
             />
             <Button
               onPress={this.openLeftDrawerFull}
               label="Full left swipe"
               style={{margin: 3}}
               size={'xSmall'}
+              testID="swipe_left_btn"
             />
             <Button
               onPress={this.toggleLeftDrawer}
               label="Left toggle"
               style={{margin: 3}}
               size={'xSmall'}
+              testID="toggle_left_btn"
             />
           </View>
 
@@ -152,6 +158,7 @@ class DrawerScreen extends Component {
               label="Close"
               style={{margin: 3}}
               size={'xSmall'}
+              testID="close_btn"
             />
           </View>
 
@@ -161,12 +168,14 @@ class DrawerScreen extends Component {
               label="Open right"
               style={{margin: 3}}
               size={'xSmall'}
+              testID="open_right_btn"
             />
             <Button
               onPress={this.openRightDrawerFull}
               label="Full right swipe"
               style={{margin: 3}}
               size={'xSmall'}
+              testID="swipe_right_btn"
             />
           </View>
         </View>
@@ -175,6 +184,8 @@ class DrawerScreen extends Component {
   }
 
   renderListItem() {
+    const data = conversations[2];
+
     return (
       <View
         bg-grey80
@@ -183,13 +194,14 @@ class DrawerScreen extends Component {
         row
         centerV
         style={{borderBottomWidth: 1, borderColor: Colors.grey60}}
+        testID="drawer_item"
       >
-        {this.state.unread && <Badge size={'pimpleSmall'} backgroundColor={Colors.red30} containerStyle={{marginRight: 8}}/>}
-        <Avatar source={{uri: conversations[0].thumbnail}}/>
+        {this.state.unread && <Badge testID="drawer_item_badge" size={'pimpleSmall'} backgroundColor={Colors.red30} containerStyle={{marginRight: 8}}/>}
+        <Avatar source={{uri: data.thumbnail}}/>
         <View marginL-20>
-          <Text text70R={!this.state.unread} text70BO={this.state.unread}>{conversations[0].name}</Text>
+          <Text text70R={!this.state.unread} text70BO={this.state.unread}>{data.name}</Text>
           <Text text80 marginT-2>
-            {conversations[0].text}
+            {data.text}
           </Text>
         </View>
       </View>
@@ -218,7 +230,8 @@ class DrawerScreen extends Component {
       fullSwipeLeft,
       onWillFullSwipeLeft: this.deleteItem,
       onToggleSwipeLeft: this.toggleReadState,
-      leftToggleHapticTrigger: this.triggerLeftToggleHaptic
+      leftToggleHapticTrigger: this.triggerLeftToggleHaptic,
+      testID: 'drawer'
     };
     if (showRightItems) {
       drawerProps.rightItems = [{...ITEMS.delete, onPress: this.deleteItem}, ITEMS.archive];
@@ -226,6 +239,7 @@ class DrawerScreen extends Component {
 
     if (showLeftItem) {
       drawerProps.leftItem = {
+        ...ITEMS.read,
         icon: this.state.unread ? require('../../assets/icons/mail.png') : require('../../assets/icons/refresh.png'),
         text: !this.state.unread ? 'Unread' : 'Read', 
         background: this.state.unread ? Colors.green30 : Colors.orange30,
@@ -245,6 +259,7 @@ class DrawerScreen extends Component {
             iconSource={Assets.icons.demo.refresh}
             onPress={this.showItem}
             disabled={!hideItem}
+            testID="refresh_btn"
           />
         </View>
         {!hideItem && (

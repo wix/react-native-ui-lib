@@ -104,7 +104,7 @@ class TabBar extends Component<TabBarProps, State> {
     // between this.props and nextProps (basically the meaning of selectedIndex should be initialIndex)
     const isIndexManuallyChanged =
       nextProps.selectedIndex !== this.state.currentIndex && this.props.selectedIndex !== nextProps.selectedIndex;
-    if (isIndexManuallyChanged) {
+    if (isIndexManuallyChanged && nextProps.selectedIndex !== undefined) {
       this.updateIndicator(nextProps.selectedIndex);
     }
   }
@@ -125,13 +125,11 @@ class TabBar extends Component<TabBarProps, State> {
     return _.get(child, 'props.ignore');
   }
 
-  updateIndicator(index?: number) {
-    if (index) {
-      if (!this.isIgnored(index)) {
-        this.setState({currentIndex: index}, () => {
-          this.scrollToSelected();
-        });
-      }
+  updateIndicator(index: number) {
+    if (!this.isIgnored(index)) {
+      this.setState({currentIndex: index}, () => {
+        this.scrollToSelected();
+      });
     }
   }
 

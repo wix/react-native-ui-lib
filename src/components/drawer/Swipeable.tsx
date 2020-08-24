@@ -426,7 +426,8 @@ export default class Swipeable extends Component<PropType, StateType> {
       leftActionsContainerStyle,
       rightActionsContainerStyle,
       containerStyle,
-      childrenContainerStyle
+      childrenContainerStyle,
+      testID
     } = this.props;
 
     const left = renderLeftActions && (
@@ -468,6 +469,7 @@ export default class Swipeable extends Component<PropType, StateType> {
           {right}
           <TapGestureHandler onHandlerStateChange={this._onTapHandlerStateChange}>
             <Animated.View
+              testID={testID}
               style={[
                 {transform: [{translateX: this._transX}]},
                 childrenContainerStyle

@@ -124,7 +124,7 @@ export default class TabBarScreen extends Component {
   render() {
     return (
       <ScrollView style={{overflow: 'visible'}} showsVerticalScrollIndicator={false}>
-        <View flex bg-dark80>
+        <View bg-dark80>
           <TabBar style={styles.tabbar} selectedIndex={0} enableShadow>
             <TabBar.Item 
               label="single tab" 
@@ -133,9 +133,9 @@ export default class TabBarScreen extends Component {
           </TabBar>
 
           <TabBar style={styles.tabbar} selectedIndex={0} enableShadow>
-            <TabBar.Item label="Fixed" uppercase/>
-            <TabBar.Item label="Tab" badge={{label: '100'}} uppercase/>
-            <TabBar.Item label="Bar" uppercase/>
+            <TabBar.Item label="Fixed" uppercase style={{backgroundColor: Colors.blue80}}/>
+            <TabBar.Item label="Tab" badge={{label: '100'}} uppercase style={{backgroundColor: Colors.blue80}}/>
+            <TabBar.Item label="Bar" uppercase style={{backgroundColor: Colors.blue80}}/>
           </TabBar>
 
           <TabBar style={styles.tabbar} selectedIndex={0} enableShadow>

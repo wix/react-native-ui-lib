@@ -169,8 +169,8 @@ class Picker extends BaseComponent {
   getAccessibilityInfo() {
     const {placeholder} = this.props;
     return {
-      accessibilityLabel: this.getLabel() ? `${placeholder}. selected. ${this.getLabel()}` : `Select ${placeholder}`,
-      accessibilityHint: this.getLabel()
+      accessibilityLabel: this.getLabelValueText() ? `${placeholder}. selected. ${this.getLabelValueText()}` : `Select ${placeholder}`,
+      accessibilityHint: this.getLabelValueText()
         ? 'Double tap to edit'
         : `Goes to ${placeholder}. Suggestions will be provided`,
       ...this.extractAccessibilityProps()
@@ -183,15 +183,33 @@ class Picker extends BaseComponent {
     return items;
   }
 
-  getLabel() {
-    const {value} = this.state;
-    const {getLabel, getItemLabel} = this.props;
+  shouldNotChangePickerLabelWhileSelecting = () => {
+    const {mode} = this.props;
+    return mode === Picker.modes.MULTI;
+  }
+
+  getLabelValueText = () => {
+    const {value: propsValue} = this.props;
+    const {value: stateValue} = this.props;
+    if (this.shouldNotChangePickerLabelWhileSelecting()) {
+      return this.getLabel(propsValue);
+    }
+    return this.getLabel(stateValue);
+  }
+
+  getLabelsFromArray = (value) => {
+    const {getItemLabel} = this.props;
+    return _.chain(value)
+      .map(getItemLabel || 'label')
+      .join(', ')
+      .value();
+  };
+
+  getLabel(value) {
+    const {getLabel} = this.props;
 
     if (_.isArray(value)) {
-      return _.chain(value)
-        .map(getItemLabel || 'label')
-        .join(', ')
-        .value();
+      return this.getLabelsFromArray(value);
     }
 
     if (_.isFunction(getLabel)) {
@@ -215,6 +233,7 @@ class Picker extends BaseComponent {
 
   toggleExpandableModal = value => {
     this.setState({showExpandableModal: value});
+    this.clearSearchField();
   };
 
   toggleItemSelection = item => {
@@ -235,7 +254,9 @@ class Picker extends BaseComponent {
   };
 
   onDoneSelecting = item => {
-    this.setState({searchValue: '', value: item}); // clean search when done selecting
+    this.clearSearchField();
+    
+    this.setState({value: item});
     this.toggleExpandableModal(false);
     _.invoke(this.props, 'onChange', item);
   };
@@ -253,6 +274,10 @@ class Picker extends BaseComponent {
     }
   }) => {
     this.setState({selectedItemPosition: y});
+  };
+
+  clearSearchField = () => {
+    this.setState({searchValue: ''});
   };
 
   appendPropsToChildren = () => {
@@ -294,7 +319,7 @@ class Picker extends BaseComponent {
       listProps,
       testID
     } = this.getThemeProps();
-    const {showExpandableModal, selectedItemPosition} = this.state;
+    const {showExpandableModal, selectedItemPosition, value} = this.state;
     const children = this.appendPropsToChildren(this.props.children);
 
     if (renderCustomModal) {
@@ -302,9 +327,10 @@ class Picker extends BaseComponent {
         visible: showExpandableModal,
         toggleModal: this.toggleExpandableModal,
         onSearchChange: this.onSearchChange,
-        children
+        children,
+        onDone: () => this.onDoneSelecting(value),
+        onCancel: this.cancelSelect
       };
-
       return renderCustomModal(modalProps);
     }
 
@@ -317,7 +343,7 @@ class Picker extends BaseComponent {
         topBarProps={{
           ...topBarProps,
           onCancel: this.cancelSelect,
-          onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(this.state.value) : undefined
+          onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(value) : undefined
         }}
         showSearch={showSearch}
         searchStyle={searchStyle}
@@ -351,7 +377,7 @@ class Picker extends BaseComponent {
     }
 
     const textInputProps = TextField.extractOwnProps(this.getThemeProps());
-    const label = this.getLabel();
+    const label = this.getLabelValueText();
     return (
       <TextField
         {...textInputProps}
