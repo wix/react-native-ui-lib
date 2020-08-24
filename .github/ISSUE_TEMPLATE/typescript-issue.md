@@ -1,5 +1,5 @@
 ---
-name: Typescript issue
+name: Typescript Issue
 about: Let us know there's an issue with a component typings
 title: ''
 labels: typescript
