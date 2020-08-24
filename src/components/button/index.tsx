@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
-import {Platform, StyleSheet, LayoutAnimation, Image, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
+import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
+import {Image} from 'react-native-ui-lib';
 import _ from 'lodash';
 import {
   asBaseComponent,
@@ -56,6 +57,10 @@ export type ButtonPropTypes = TouchableOpacityProps &
      * Should the icon be right to the label
      */
     iconOnRight?: boolean;
+    /**
+    * whether the icon should flip horizontally on RTL locals
+    */
+    supportRTL?: boolean;
     /**
      * Color of the button background
      */
@@ -451,14 +456,14 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   renderIcon() {
-    const {iconSource} = this.props;
+    const {iconSource, supportRTL} = this.props;
 
     if (iconSource) {
       const iconStyle = this.getIconStyle();
       if (typeof iconSource === 'function') {
         return iconSource(iconStyle);
       } else {
-        return <Image source={iconSource} style={iconStyle}/>;
+        return <Image source={iconSource} supportRTL={supportRTL} style={iconStyle}/>;
       }
     }
     return null;
