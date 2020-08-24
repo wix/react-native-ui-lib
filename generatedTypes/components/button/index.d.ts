@@ -36,9 +36,17 @@ export declare type ButtonPropTypes = TouchableOpacityProps & TypographyModifier
      */
     iconOnRight?: boolean;
     /**
+    * whether the icon should flip horizontally on RTL locals
+    */
+    supportRTL?: boolean;
+    /**
      * Color of the button background
      */
     backgroundColor?: string;
+    /**
+     * Color of the disabled button background
+     */
+    disabledBackgroundColor?: string;
     /**
      * Size of the button [large, medium, small, xSmall]
      */
@@ -336,9 +344,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         trailing: boolean;
     } | undefined;
     activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined; /**
-     * Text to show inside the button
-     */
+    useNative?: boolean | undefined;
     customValue?: any;
     ref?: any;
     style?: false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined> | import("react-native").Animated.AnimatedProps<import("react-native").ViewStyle> | import("react-native").Animated.AnimatedProps<import("react-native").RegisteredStyle<import("react-native").ViewStyle>> | import("react-native").Animated.AnimatedProps<import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined>> | null | undefined;
@@ -364,9 +370,17 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
      */
     iconOnRight?: boolean | undefined;
     /**
+    * whether the icon should flip horizontally on RTL locals
+    */
+    supportRTL?: boolean | undefined;
+    /**
      * Color of the button background
      */
     backgroundColor?: string | undefined;
+    /**
+     * Color of the disabled button background
+     */
+    disabledBackgroundColor?: string | undefined;
     /**
      * Size of the button [large, medium, small, xSmall]
      */
@@ -487,9 +501,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         trailing: boolean;
     } | undefined;
     activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined; /**
-     * Text to show inside the button
-     */
+    useNative?: boolean | undefined;
     customValue?: any;
     ref?: any;
     style?: false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined> | import("react-native").Animated.AnimatedProps<import("react-native").ViewStyle> | import("react-native").Animated.AnimatedProps<import("react-native").RegisteredStyle<import("react-native").ViewStyle>> | import("react-native").Animated.AnimatedProps<import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined>> | null | undefined;
@@ -515,9 +527,17 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
      */
     iconOnRight?: boolean | undefined;
     /**
+    * whether the icon should flip horizontally on RTL locals
+    */
+    supportRTL?: boolean | undefined;
+    /**
      * Color of the button background
      */
     backgroundColor?: string | undefined;
+    /**
+     * Color of the disabled button background
+     */
+    disabledBackgroundColor?: string | undefined;
     /**
      * Size of the button [large, medium, small, xSmall]
      */
@@ -638,9 +658,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         trailing: boolean;
     } | undefined;
     activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined; /**
-     * Text to show inside the button
-     */
+    useNative?: boolean | undefined;
     customValue?: any;
     ref?: any;
     style?: false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined> | import("react-native").Animated.AnimatedProps<import("react-native").ViewStyle> | import("react-native").Animated.AnimatedProps<import("react-native").RegisteredStyle<import("react-native").ViewStyle>> | import("react-native").Animated.AnimatedProps<import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined>> | null | undefined;
@@ -666,9 +684,17 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
      */
     iconOnRight?: boolean | undefined;
     /**
+    * whether the icon should flip horizontally on RTL locals
+    */
+    supportRTL?: boolean | undefined;
+    /**
      * Color of the button background
      */
     backgroundColor?: string | undefined;
+    /**
+     * Color of the disabled button background
+     */
+    disabledBackgroundColor?: string | undefined;
     /**
      * Size of the button [large, medium, small, xSmall]
      */
@@ -789,9 +815,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         trailing: boolean;
     } | undefined;
     activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined; /**
-     * Text to show inside the button
-     */
+    useNative?: boolean | undefined;
     customValue?: any;
     ref?: any;
     style?: false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined> | import("react-native").Animated.AnimatedProps<import("react-native").ViewStyle> | import("react-native").Animated.AnimatedProps<import("react-native").RegisteredStyle<import("react-native").ViewStyle>> | import("react-native").Animated.AnimatedProps<import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined>> | null | undefined;
@@ -817,9 +841,17 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
      */
     iconOnRight?: boolean | undefined;
     /**
+    * whether the icon should flip horizontally on RTL locals
+    */
+    supportRTL?: boolean | undefined;
+    /**
      * Color of the button background
      */
     backgroundColor?: string | undefined;
+    /**
+     * Color of the disabled button background
+     */
+    disabledBackgroundColor?: string | undefined;
     /**
      * Size of the button [large, medium, small, xSmall]
      */

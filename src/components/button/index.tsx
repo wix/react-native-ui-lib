@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
-import {Image} from 'react-native-ui-lib';
 import _ from 'lodash';
 import {
   asBaseComponent,
@@ -18,6 +17,8 @@ import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 import {extractColorValue, extractTypographyValue} from '../../commons/modifiers';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Text, {TextPropTypes} from '../text';
+import Image from '../image';
+
 
 export enum ButtonSize {
   xSmall = 'xSmall',
