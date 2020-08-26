@@ -155,7 +155,8 @@ export default class InputsScreen extends Component {
             placeholder="Underline colors & error"
             onChangeText={this.onChangeText}
             error={this.state.error}
-            underlineColor={{focus: Colors.purple50, error: Colors.yellow60}}
+            underlineColor={{focus: Colors.purple50, error: Colors.orange60}}
+            errorColor={Colors.orange60}
           />
 
           <TextField
