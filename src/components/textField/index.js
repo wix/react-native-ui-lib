@@ -99,6 +99,10 @@ export default class TextField extends BaseInput {
      */
     enableErrors: PropTypes.bool,
     /**
+     * input error message's text color
+     */
+    errorColor: PropTypes.string,
+    /**
      * should the input expand to another text area modal
      */
     expandable: PropTypes.bool,
@@ -475,14 +479,15 @@ export default class TextField extends BaseInput {
   }
 
   renderError(visible) {
-    const {enableErrors, useTopErrors} = this.getThemeProps();
+    const {enableErrors, useTopErrors, errorColor} = this.getThemeProps();
+    const textColor = errorColor ? {color: errorColor} : undefined;
     const positionStyle = useTopErrors ? this.styles.topLabel : this.styles.bottomLabel;
     const error = this.getErrorMessage();
 
     if (visible && enableErrors) {
       return (
         <Text
-          style={[this.styles.errorMessage, this.styles.label, positionStyle]}
+          style={[this.styles.errorMessage, this.styles.label, positionStyle, textColor]}
           accessible={!_.isEmpty(error) && !useTopErrors}
         >
           {error}
