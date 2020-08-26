@@ -68,10 +68,10 @@ export default class AnimatedScanner extends BaseComponent {
     this.styles = createStyles(this.props);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const {progress} = this.props;
-    if (nextProps.progress !== progress) {
-      this.animate(nextProps.progress, nextProps.duration);
+  componentDidUpdate(prevProps) {
+    const {progress, duration} = this.props;
+    if (prevProps.progress !== progress) {
+      this.animate(progress, duration);
     }
   }
 
