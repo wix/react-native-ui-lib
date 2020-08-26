@@ -34,6 +34,16 @@ const componentsDocgenPlugin = [
   }
 ];
 
+const nativeComponentsDocgenPlugin = [
+  'gatsby-transformer-react-docgen',
+  {
+    resolve: 'gatsby-source-filesystem',
+    options: {
+      path: `${__dirname}/../../lib/components/`
+    }
+  }
+];
+
 const imagesPlugin = [
   {
     resolve: `gatsby-source-filesystem`,
@@ -59,6 +69,7 @@ module.exports = {
   manifestPlugin,
   markdownPagesPlugin,
   componentsDocgenPlugin,
+  nativeComponentsDocgenPlugin,
   imagesPlugin,
   layoutPlugin
 };

@@ -4,7 +4,7 @@ import {ScrollView} from 'react-native';
 import KeyboardAwareBase from './KeyboardAwareBase';
 
 export default class KeyboardAwareListView extends KeyboardAwareBase {
-  static displayName = 'KeyboardAwareListView';
+  static displayName = 'IGNORE';
 
   static propTypes = {
     onScroll: PropTypes.func

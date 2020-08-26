@@ -123,7 +123,7 @@ export type ChipPropTypes = ViewProps & TouchableOpacityProps & {
  * @extendslink: docs/TouchableOpacity
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipScreen.tsx
  */
-const Chip: React.FC<ChipPropTypes> = ({
+const Chip = ({
   avatarProps,
   backgroundColor,
   badgeProps,
@@ -146,10 +146,10 @@ const Chip: React.FC<ChipPropTypes> = ({
   useSizeAsMinimum,
   testID,
   ...others
-}) => {
+}: ChipPropTypes) => {
 
   const renderIcon = useCallback((iconPosition) => {
-    const isLeftIcon = iconPosition === 'left'
+    const isLeftIcon = iconPosition === 'left';
 
     return (
       <Image

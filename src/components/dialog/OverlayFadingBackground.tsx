@@ -8,7 +8,7 @@ interface Props {
   overlayBackgroundColor: string;
 }
 
-export default ({
+const OverlayFadingBackground = ({
   dialogVisibility,
   modalVisibility,
   overlayBackgroundColor
@@ -44,3 +44,7 @@ export default ({
 
   return <View absF animated style={style} pointerEvents="none"/>;
 };
+
+OverlayFadingBackground.displayName = 'IGNORE';
+
+export default OverlayFadingBackground;
