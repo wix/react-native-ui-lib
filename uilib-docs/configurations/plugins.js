@@ -34,6 +34,16 @@ const componentsDocgenPlugin = [
   }
 ];
 
+const incubatorComponentsDocgenPlugin = [
+  'gatsby-transformer-react-docgen',
+  {
+    resolve: 'gatsby-source-filesystem',
+    options: {
+      path: `${__dirname}/../../src/incubator/`
+    }
+  }
+];
+
 const nativeComponentsDocgenPlugin = [
   'gatsby-transformer-react-docgen',
   {
@@ -69,6 +79,7 @@ module.exports = {
   manifestPlugin,
   markdownPagesPlugin,
   componentsDocgenPlugin,
+  incubatorComponentsDocgenPlugin,
   nativeComponentsDocgenPlugin,
   imagesPlugin,
   layoutPlugin
