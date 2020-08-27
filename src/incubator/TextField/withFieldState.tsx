@@ -25,6 +25,9 @@ export interface FieldStateProps extends TextInputProps {
   validateOnStart?: boolean;
   validateOnChange?: boolean;
   validateOnBlur?: boolean;
+  /**
+   * A single or multiple validator. Can be a string (required, email) or custom function.
+   */
   validate?: Validator | Validator[];
 }
 

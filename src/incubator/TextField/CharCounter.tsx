@@ -5,12 +5,18 @@ import Text from '../../components/text';
 import FieldContext from './FieldContext';
 
 export interface CharCounterProps {
+  /**
+   * Should show a character counter (works only with maxLength)
+   */
   showCharCounter?: boolean;
   maxLength?: number;
+  /**
+   * Pass custom style to character counter text
+   */
   charCounterStyle?: TextStyle;
 }
 
-export default ({maxLength, charCounterStyle}: CharCounterProps) => {
+const CharCounter = ({maxLength, charCounterStyle}: CharCounterProps) => {
   const {value} = useContext(FieldContext);
 
   if (_.isUndefined(maxLength)) {
@@ -30,3 +36,6 @@ const styles = StyleSheet.create({
     textAlign: 'right'
   }
 });
+
+CharCounter.displayName = 'Incubator.TextField';
+export default CharCounter;
