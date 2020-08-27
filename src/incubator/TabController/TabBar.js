@@ -306,13 +306,13 @@ class TabBar extends PureComponent {
           extrapolate: Extrapolate.CLAMP
         })));
     } else {
-      nodes.push(set(this._indicatorOffset, runIndicatorTimer(new Clock(), IGNORE)),
+      nodes.push(set(this._indicatorOffset, runIndicatorTimer(new Clock(), currentPage, itemsOffsets)),
         set(this._indicatorWidth, runIndicatorTimer(new Clock(), currentPage, itemsWidths)));
     }
 
     nodes.push(Reanimated.onChange(currentPage, Reanimated.call([currentPage], this.focusSelected)));
 
-    return IGNORE);
+    return block(nodes);
   };
 
   render() {
@@ -418,6 +418,8 @@ function runIndicatorTimer(clock, currentPage, values) {
       inputRange: _.times(values.length),
       outputRange: values,
       extrapolate: Extrapolate.CLAMP
-    IGNORE}
+    })
+  ]);
+}
 
 export default asBaseComponent(forwardRef(TabBar));
