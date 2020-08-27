@@ -7,6 +7,7 @@ import {Constants} from '../../helpers';
 const {Code, block, call} = Animated;
 
 class PageCarousel extends PureComponent {
+  static displayName = 'IGNORE';
   static contextType = TabBarContext;
   carousel = React.createRef();
 

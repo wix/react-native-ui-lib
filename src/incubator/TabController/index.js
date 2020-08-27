@@ -24,7 +24,7 @@ const {cond, Code, and, eq, set, Value, block, round, onChange, call} = Reanimat
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
 class TabController extends Component {
-  static displayName = 'TabController';
+  static displayName = 'IGNORE';
   static contextType = TabBarContext;
 
   static propTypes = {

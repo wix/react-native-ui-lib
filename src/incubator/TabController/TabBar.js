@@ -39,7 +39,7 @@ const {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TabControllerScreen/index.js
  */
 class TabBar extends PureComponent {
-  static displayName = 'TabController.TabBar';
+  static displayName = 'IGNORE';
   static contextType = TabBarContext;
 
   static propTypes = {
@@ -306,13 +306,13 @@ class TabBar extends PureComponent {
           extrapolate: Extrapolate.CLAMP
         })));
     } else {
-      nodes.push(set(this._indicatorOffset, runIndicatorTimer(new Clock(), currentPage, itemsOffsets)),
+      nodes.push(set(this._indicatorOffset, runIndicatorTimer(new Clock(), IGNORE)),
         set(this._indicatorWidth, runIndicatorTimer(new Clock(), currentPage, itemsWidths)));
     }
 
     nodes.push(Reanimated.onChange(currentPage, Reanimated.call([currentPage], this.focusSelected)));
 
-    return block(nodes);
+    return IGNORE);
   };
 
   render() {
@@ -418,8 +418,6 @@ function runIndicatorTimer(clock, currentPage, values) {
       inputRange: _.times(values.length),
       outputRange: values,
       extrapolate: Extrapolate.CLAMP
-    })
-  ]);
-}
+    IGNORE}
 
 export default asBaseComponent(forwardRef(TabBar));

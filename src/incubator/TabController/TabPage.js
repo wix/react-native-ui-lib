@@ -13,7 +13,7 @@ const {Code, Value, cond, set, and, call, block, eq} = Reanimated;
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TabControllerScreen/index.js
  */
 export default class TabPage extends PureComponent {
-  static displayName = 'TabController.TabPage';
+  static displayName = 'IGNORE';
 
   static contextType = TabBarContext;
 
