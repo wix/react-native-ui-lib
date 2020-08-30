@@ -10,7 +10,7 @@ import TouchableOpacity from '../touchableOpacity';
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
 const DEFAULT_ICON_COLOR = Colors.white;
-const DEFAULT_DISABLED_COLOR = Colors.dark70;
+const DEFAULT_DISABLED_COLOR = Colors.grey50;
 
 export interface CheckboxPropTypes extends TouchableOpacityProps {
   /**
