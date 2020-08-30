@@ -54,13 +54,13 @@ const gradientImage = () => require('./gradient.png');
 class FloatingButton extends PureComponent<FloatingButtonProps> {
   static displayName = 'FloatingButton';
 
-  initialState?: boolean;
+  initialVisibility?: boolean;
   firstLoad: boolean;
   
   constructor(props: FloatingButtonProps) {
     super(props);
 
-    this.initialState = props.visible;
+    this.initialVisibility = props.visible;
     this.firstLoad = true;
   }
 
@@ -118,7 +118,7 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
     const Container = !withoutAnimation ? AnimatableView : View;
 
     // NOTE: On first load, don't show if it should not be visible
-    if (this.firstLoad === true && !this.initialState) {
+    if (this.firstLoad === true && !this.initialVisibility) {
       return false;
     }
 
