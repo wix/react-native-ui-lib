@@ -31,5 +31,5 @@ export declare type WithScrollReachedProps = {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WithScrollReachedScreen.tsx
  * @notes: Send `props.scrollReachedProps.onScroll` to your onScroll and receive via props.scrollReachedProps.isScrollAtStart props.scrollReachedProps.isScrollAtEnd
  */
-declare function withScrollReached<PROPS>(WrappedComponent: React.ComponentType<PROPS & WithScrollReachedProps>, options?: WithScrollReachedOptionsProps): React.ComponentType<PROPS>;
+declare function withScrollReached<PROPS, STATICS = {}>(WrappedComponent: React.ComponentType<PROPS & WithScrollReachedProps>, options?: WithScrollReachedOptionsProps): React.ComponentType<PROPS> & STATICS;
 export default withScrollReached;

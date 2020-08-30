@@ -21,9 +21,9 @@ export type WithScrollEnablerProps = {
 
 type PropTypes = ForwardRefInjectedProps & SupportedViewsProps;
 
-function withScrollEnabler<PROPS>(
+function withScrollEnabler<PROPS, STATICS = {}>(
   WrappedComponent: React.ComponentType<PROPS & WithScrollEnablerProps>
-): React.ComponentType<PROPS> {
+): React.ComponentType<PROPS> & STATICS {
   const ScrollEnabler = (props: PROPS & PropTypes) => {
     const [scrollEnabled, setScrollEnabled] = useState(true);
     const contentSize = useRef(0);
@@ -77,7 +77,7 @@ function withScrollEnabler<PROPS>(
   };
 
   hoistStatics(ScrollEnabler, WrappedComponent);
-  return forwardRef(ScrollEnabler);
+  return forwardRef(ScrollEnabler) as any;
 }
 
 export default withScrollEnabler;
