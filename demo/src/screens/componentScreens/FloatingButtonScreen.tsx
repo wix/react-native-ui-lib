@@ -13,7 +13,7 @@ export default class FloatingButtonScreen extends Component {
     super(props);
 
     this.state = {
-      showButton: false
+      showButton: true
     };
   }
 
@@ -107,6 +107,7 @@ export default class FloatingButtonScreen extends Component {
           }}
           // bottomMargin={80}
           // hideBackgroundOverlay
+          // withoutAnimation
         />
       </View>
     );
