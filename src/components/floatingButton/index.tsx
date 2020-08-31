@@ -121,6 +121,9 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
     if (this.firstLoad === true && !this.initialVisibility) {
       return false;
     }
+    if (!visible && withoutAnimation) {
+      return false;
+    }
 
     return (
       <Container
