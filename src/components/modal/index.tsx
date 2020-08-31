@@ -1,12 +1,40 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {StyleSheet, Modal as RNModal, TouchableWithoutFeedback} from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, Modal as RNModal, ModalProps, TouchableWithoutFeedback, GestureResponderEvent} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import {Constants} from '../../helpers';
-import {BaseComponent} from '../../commons';
-import TopBar from './TopBar';
+import {asBaseComponent} from '../../commons/new';
+import TopBar, {ModalTopBarPropTypes} from './TopBar';
 import View from '../../components/view';
+
+export {ModalTopBarPropTypes};
+export interface ModalPropTypes extends ModalProps {
+    /**
+     * Blurs the modal background when transparent (iOS only)
+     */
+    enableModalBlur?: boolean;
+    /**
+     * A custom view to use as a BlueView instead of the default one
+     */
+    blurView?: JSX.Element;
+    /**
+     * allow dismissing a modal when clicking on its background
+     */
+    onBackgroundPress?: (event: GestureResponderEvent) => void;
+    /**
+     * the background color of the overlay
+     */
+    overlayBackgroundColor?: string;
+    /**
+     * The modal's end-to-end test identifier
+     */
+    testID?: string;
+    /**
+     * Overrides the text that's read by the screen reader when the user interacts with the element. By default, the
+     * label is constructed by traversing all the children and accumulating all the Text nodes separated by space.
+     */
+    accessibilityLabel?: string;
+}
 
 /**
  * @description: Component that present content on top of the invoking screen
@@ -15,30 +43,9 @@ import View from '../../components/view';
  * @gif: https://media.giphy.com/media/3oFzmfSX8KgvctI4Ks/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.js
  */
-export default class Modal extends BaseComponent {
+class Modal extends Component<ModalPropTypes> {
   static displayName = 'Modal';
-  static propTypes = {
-    /**
-     * Blurs the modal background when transparent (iOS only)
-     */
-    enableModalBlur: PropTypes.bool,
-    /**
-     * A custom view to use as a BlueView instead of the default one
-     */
-    blurView: PropTypes.element,
-    /**
-     * allow dismissing a modal when clicking on its background
-     */
-    onBackgroundPress: PropTypes.func,
-    /**
-     * the background color of the overlay
-     */
-    overlayBackgroundColor: PropTypes.string,
-    /**
-     * The modal's end-to-end test identifier
-     */
-    testID: PropTypes.string
-  };
+  static TopBar: typeof TopBar;
 
   renderTouchableOverlay() {
     const {testID, overlayBackgroundColor, onBackgroundPress, accessibilityLabel = 'Dismiss'} = this.props;
@@ -49,10 +56,13 @@ export default class Modal extends BaseComponent {
         : undefined;
 
       return (
+        // @ts-ignore
         <View
           useSafeArea={isScreenReaderEnabled}
           style={!isScreenReaderEnabled && [styles.touchableOverlay, {backgroundColor: overlayBackgroundColor}]}
         >
+          {/*
+            // @ts-ignore */}
           <TouchableWithoutFeedback {...accessibilityProps} onPress={onBackgroundPress} testID={testID}>
             <View style={isScreenReaderEnabled ? styles.accessibleOverlayView : styles.overlayView}/>
           </TouchableWithoutFeedback>
@@ -64,7 +74,7 @@ export default class Modal extends BaseComponent {
   render() {
     const {blurView, enableModalBlur, visible, ...others} = this.props;
     const defaultContainer = enableModalBlur && Constants.isIOS ? BlurView : View;
-    const Container = blurView ? blurView : defaultContainer;
+    const Container: any = blurView ? blurView : defaultContainer;
 
     return (
       <RNModal visible={Boolean(visible)} {...others}>
@@ -91,3 +101,10 @@ const styles = StyleSheet.create({
 });
 
 Modal.TopBar = TopBar;
+
+export default asBaseComponent<
+  ModalPropTypes,
+  {
+    TopBar: typeof TopBar;
+  }
+>(Modal);
