@@ -1,14 +1,67 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {StyleSheet} from 'react-native';
-import {BaseComponent} from '../../commons';
+import React, {Component} from 'react';
+import {StyleSheet, StyleProp, TextStyle, ImageSourcePropType} from 'react-native';
+import {asBaseComponent} from '../../commons/new';
 import {Constants} from '../../helpers';
 import Assets from '../../assets';
 import {Colors, Typography} from '../../style';
 import View from '../../components/view';
-
-import Button from '../../components/button';
+import Button, {ButtonPropTypes} from '../../components/button';
 import Text from '../../components/text';
+
+export interface ModalTopBarPropTypes {
+  /**
+     * title to display in the center of the top bar
+     */
+    title?: string;
+    /**
+     * title custom style
+     */
+    titleStyle?: StyleProp<TextStyle>;
+    /**
+     * done action props (Button props)
+     */
+    doneButtonProps?: Omit<ButtonPropTypes, 'onPress'>;
+    /**
+     * done action label
+     */
+    doneLabel?: string;
+    /**
+     * done action icon
+     */
+    doneIcon?: ImageSourcePropType;
+    /**
+     * done action callback
+     */
+    onDone?: (props: any) => void;
+    /**
+     * cancel action props (Button props)
+     */
+    cancelButtonProps?: Omit<ButtonPropTypes, 'onPress'>;
+    /**
+     * cancel action label
+     */
+    cancelLabel?: string;
+    /**
+     * cancel action icon
+     */
+    cancelIcon?: ImageSourcePropType;
+    /**
+     * cancel action callback
+     */
+    onCancel?: (props: any) => void;
+    /**
+     * whether to include status bar or not (height claculations)
+     */
+    includeStatusBar?: boolean;
+}
+
+type topBarButtonProp = {
+  onPress?: (props: any) => void;
+  label?: string;
+  icon?: ImageSourcePropType;
+  accessibilityLabel?: string;
+  buttonProps?: Omit<ButtonPropTypes, 'onPress'>;
+}
 
 const DEFAULT_BUTTON_PROPS = {
   color: Colors.blue30
@@ -18,54 +71,8 @@ const DEFAULT_BUTTON_PROPS = {
  * @description: Modal.TopBar, inner component for configuring the Modal component's title, buttons and statusBar
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.js
  */
-export default class TopBar extends BaseComponent {
+class TopBar extends Component<ModalTopBarPropTypes> {
   static displayName = 'Modal.TopBar';
-  static propTypes = {
-    /**
-     * title to display in the center of the top bar
-     */
-    title: PropTypes.string,
-    /**
-     * title custom style
-     */
-    titleStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * done action props (Button props)
-     */
-    doneButtonProps: PropTypes.shape(Button.propTypes),
-    /**
-     * done action label
-     */
-    doneLabel: PropTypes.string,
-    /**
-     * done action icon
-     */
-    doneIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * done action callback
-     */
-    onDone: PropTypes.func,
-    /**
-     * cancel action props (Button props)
-     */
-    cancelButtonProps: PropTypes.shape(Button.propTypes),
-    /**
-     * cancel action label
-     */
-    cancelLabel: PropTypes.string,
-    /**
-     * cancel action icon
-     */
-    cancelIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * cancel action callback
-     */
-    onCancel: PropTypes.func,
-    /**
-     * whether to include status bar or not (height claculations)
-     */
-    includeStatusBar: PropTypes.bool
-  };
 
   static defaultProps = {
     doneLabel: 'Save',
@@ -75,11 +82,7 @@ export default class TopBar extends BaseComponent {
     includeStatusBar: Constants.isIOS
   };
 
-  generateStyles() {
-    this.styles = createStyles(this.props);
-  }
-
-  renderTopBarButton({onPress, label, icon, accessibilityLabel, buttonProps}) {
+  renderTopBarButton({onPress, label, icon, accessibilityLabel, buttonProps}: topBarButtonProp) {
     if (onPress && (label || icon)) {
       const {iconStyle, labelStyle, ...otherButtonProps} = buttonProps;
 
@@ -88,9 +91,9 @@ export default class TopBar extends BaseComponent {
           link
           onPress={onPress}
           label={label}
-          labelStyle={[this.styles.actionLabel, labelStyle]}
+          labelStyle={[styles.actionLabel, labelStyle]}
           iconSource={icon}
-          iconStyle={[this.styles.icon, iconStyle]}
+          iconStyle={[styles.icon, iconStyle]}
           {...DEFAULT_BUTTON_PROPS}
           accessibilityLabel={accessibilityLabel}
           {...otherButtonProps}
@@ -101,7 +104,7 @@ export default class TopBar extends BaseComponent {
   }
 
   renderDone() {
-    const {doneButtonProps, doneLabel, doneIcon, onDone} = this.getThemeProps();
+    const {doneButtonProps, doneLabel, doneIcon, onDone} = this.props;
     return this.renderTopBarButton({
       onPress: onDone,
       label: doneLabel,
@@ -112,7 +115,7 @@ export default class TopBar extends BaseComponent {
   }
 
   renderCancel() {
-    const {cancelButtonProps, cancelLabel, cancelIcon, onCancel} = this.getThemeProps();
+    const {cancelButtonProps, cancelLabel, cancelIcon, onCancel} = this.props;
     return this.renderTopBarButton({
       onPress: onCancel,
       label: cancelLabel,
@@ -123,17 +126,17 @@ export default class TopBar extends BaseComponent {
   }
 
   render() {
-    const {title, titleStyle, includeStatusBar} = this.getThemeProps();
+    const {title, titleStyle, includeStatusBar} = this.props;
 
     return (
       <View>
-        {includeStatusBar && <View style={this.styles.statusBar}/>}
-        <View style={this.styles.container}>
+        {includeStatusBar && <View style={styles.statusBar}/>}
+        <View style={styles.container}>
           <View row flex bottom paddingL-15 centerV>
             {this.renderCancel()}
           </View>
           <View row flex-3 bottom centerH centerV>
-            <Text accessible={!!title} numberOfLines={1} text70 style={[this.styles.title, titleStyle]}>
+            <Text accessible={!!title} numberOfLines={1} text70 style={[styles.title, titleStyle]}>
               {title}
             </Text>
           </View>
@@ -146,26 +149,26 @@ export default class TopBar extends BaseComponent {
   }
 }
 
-function createStyles() {
-  return StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      height: 32 + Constants.statusBarHeight
-    },
-    statusBar: {
-      height: Constants.statusBarHeight
-    },
-    title: {
-      fontWeight: '500'
-    },
-    actionLabel: {
-      ...Typography.text70
-    },
-    icon: {
-      // width: 16,
-      // height: 16,
-      tintColor: Colors.dark10,
-      marginBottom: 2
-    }
-  });
-}
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    height: 32 + Constants.statusBarHeight
+  },
+  statusBar: {
+    height: Constants.statusBarHeight
+  },
+  title: {
+    fontWeight: '500'
+  },
+  actionLabel: {
+    ...Typography.text70
+  },
+  icon: {
+    // width: 16,
+    // height: 16,
+    tintColor: Colors.dark10,
+    marginBottom: 2
+  }
+});
+
+export default asBaseComponent<ModalTopBarPropTypes>(TopBar);
