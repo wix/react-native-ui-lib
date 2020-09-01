@@ -77,6 +77,9 @@ function withScrollEnabler<PROPS, STATICS = {}>(
   };
 
   hoistStatics(ScrollEnabler, WrappedComponent);
+  ScrollEnabler.displayName = WrappedComponent.displayName;
+  ScrollEnabler.propTypes = WrappedComponent.propTypes;
+  ScrollEnabler.defaultProps = WrappedComponent.defaultProps;
   return forwardRef(ScrollEnabler) as any;
 }
 
