@@ -4,5 +4,8 @@ interface Props {
     modalVisibility: boolean;
     overlayBackgroundColor: string;
 }
-declare const _default: ({ dialogVisibility, modalVisibility, overlayBackgroundColor }: Props) => JSX.Element;
-export default _default;
+declare const OverlayFadingBackground: {
+    ({ dialogVisibility, modalVisibility, overlayBackgroundColor }: Props): JSX.Element;
+    displayName: string;
+};
+export default OverlayFadingBackground;

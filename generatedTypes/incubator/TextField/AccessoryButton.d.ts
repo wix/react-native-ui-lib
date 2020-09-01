@@ -1,4 +1,7 @@
 /// <reference types="react" />
 import { ButtonPropTypes } from '../../components/button';
-declare const _default: (props: ButtonPropTypes) => JSX.Element;
-export default _default;
+declare const AccessoryButton: {
+    (props: ButtonPropTypes): JSX.Element;
+    displayName: string;
+};
+export default AccessoryButton;

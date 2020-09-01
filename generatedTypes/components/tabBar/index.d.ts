@@ -28,6 +28,10 @@ export declare type TabBarProps = BaseComponentInjectedProps & ViewPropTypes & {
      */
     indicatorStyle?: ViewStyle;
     /**
+     * The background color
+     */
+    backgroundColor: string;
+    /**
      * Tab Bar height
      */
     height?: number;
@@ -65,6 +69,10 @@ declare const _default: React.ComponentClass<BaseComponentInjectedProps & ViewPr
      * custom style for the selected indicator
      */
     indicatorStyle?: ViewStyle | undefined;
+    /**
+     * The background color
+     */
+    backgroundColor: string;
     /**
      * Tab Bar height
      */
