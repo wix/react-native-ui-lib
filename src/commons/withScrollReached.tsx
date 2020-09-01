@@ -101,6 +101,9 @@ function withScrollReached<PROPS, STATICS = {}>(
   };
 
   hoistStatics(ScrollReachedDetector, WrappedComponent);
+  ScrollReachedDetector.displayName = WrappedComponent.displayName;
+  ScrollReachedDetector.propTypes = WrappedComponent.propTypes;
+  ScrollReachedDetector.defaultProps = WrappedComponent.defaultProps;
   return forwardRef(ScrollReachedDetector) as any;
 }
 
