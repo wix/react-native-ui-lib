@@ -43,6 +43,7 @@ declare type StateType = {
     rowWidth: number | typeof undefined;
 };
 export default class Swipeable extends Component<PropType, StateType> {
+    static displayName: string;
     static defaultProps: {
         friction: number;
         overshootFriction: number;
