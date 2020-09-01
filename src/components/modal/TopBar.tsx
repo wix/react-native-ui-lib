@@ -84,6 +84,7 @@ class TopBar extends Component<ModalTopBarPropTypes> {
 
   renderTopBarButton({onPress, label, icon, accessibilityLabel, buttonProps}: topBarButtonProp) {
     if (onPress && (label || icon)) {
+      // @ts-expect-error
       const {iconStyle, labelStyle, ...otherButtonProps} = buttonProps;
 
       return (
