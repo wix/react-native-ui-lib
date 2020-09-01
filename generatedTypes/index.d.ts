@@ -20,6 +20,7 @@ export {default as RadioButton, RadioButtonPropTypes} from './components/radioBu
 export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButton/RadioGroup';
 export {default as TabBar} from './components/TabBar';
 export {default as Fader, FaderProps} from './components/fader';
+export {default as Modal, ModalPropTypes, ModalTopBarPropTypes} from './components/modal';
 
 /* All components with manual typings */
 export {
@@ -63,7 +64,6 @@ export {
   Constants,
   LogService,
   LoaderScreen,
-  Modal,
   StateScreen,
   WheelPicker,
   WheelPickerProps,

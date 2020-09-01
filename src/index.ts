@@ -21,6 +21,7 @@ export {default as RadioButton, RadioButtonPropTypes} from './components/radioBu
 export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButton/RadioGroup';
 export {default as TabBar} from './components/TabBar';
 export {default as Fader, FaderProps, FaderLocation} from './components/fader';
+export {default as Modal, ModalPropTypes, ModalTopBarPropTypes} from './components/modal';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
@@ -29,5 +30,5 @@ export {
   PanGestureView, PanListenerView, PanDismissibleView, PanResponderView, Picker, PickerProps, ProgressBar, Slider,
   GradientSlider, ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,
   WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper, Constants,
-  LogService, LoaderScreen, Modal, StateScreen, WheelPicker, WheelPickerProps, ColorPicker
+  LogService, LoaderScreen, StateScreen, WheelPicker, WheelPickerProps, ColorPicker
 } from '../typings';
