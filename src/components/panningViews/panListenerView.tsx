@@ -4,9 +4,7 @@ import {
   PanResponder,
   PanResponderInstance,
   GestureResponderEvent,
-  PanResponderGestureState,
-  LayoutChangeEvent,
-  LayoutRectangle
+  PanResponderGestureState
 } from 'react-native';
 import asPanViewConsumer from './asPanViewConsumer';
 import PanningProvider, {
@@ -105,7 +103,6 @@ class PanListenerView extends PureComponent<Props> {
   };
 
   private panResponder: PanResponderInstance;
-  private layout: LayoutRectangle;
 
   constructor(props: PanListenerViewPropTypes) {
     super(props);
@@ -222,15 +219,11 @@ class PanListenerView extends PureComponent<Props> {
     _.invoke(this.props.context, 'onPanTerminated');
   };
 
-  onLayout = (event: LayoutChangeEvent) => {
-    this.layout = event.nativeEvent.layout;
-  };
-
   render() {
     const {children, ...others} = this.props;
 
     return (
-      <View {...others} {...this.panResponder.panHandlers} onLayout={this.onLayout}>
+      <View {...others} {...this.panResponder.panHandlers}>
         {children}
       </View>
     );
