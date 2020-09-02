@@ -143,6 +143,7 @@ class Picker extends PureComponent {
 
     this.state = {
       value: props.value,
+      prevValue: undefined,
       selectedItemPosition: 0,
       items: this.extractPickerItems(props)
     };
@@ -163,9 +164,16 @@ class Picker extends PureComponent {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (!_.isEmpty(nextProps.value) && prevState.value !== nextProps.value) {
-      return {
-        value: nextProps.value
-      };
+      if (prevState.prevValue !== prevState.value) { // for this.setState() updates to 'value'
+        // NOTE: this.setState() already updated the 'value' so here we only updating the 'prevValue'
+        return {
+          prevValue: prevState.value
+        };
+      } else { // for prop update to 'value'
+        return {
+          value: nextProps.value
+        };
+      }
     }
     return null;
   }
