@@ -32,6 +32,7 @@ export {
 } from './components/panningViews/panningProvider';
 export {default as PanListenerView, PanListenerViewPropTypes} from './components/panningViews/panListenerView';
 export {default as PanResponderView, PanResponderViewPropTypes} from './components/panningViews/panResponderView';
+export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes} from './components/panningViews/panDismissibleView';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {

@@ -6,7 +6,7 @@ import asPanViewConsumer from './asPanViewConsumer';
 import PanningProvider, {PanningDirections, PanAmountsProps} from './panningProvider';
 import { PanDirectionsProps } from 'generatedTypes';
 
-export interface DismissAnimationPropTypes {
+export interface DismissibleAnimationPropTypes {
     /**
      * The return animation speed (default is 20)
      */
@@ -41,7 +41,7 @@ export interface PanDismissibleViewPropTypes {
    * bounciness - the animation bounciness (default is 6)
    * duration - the dismiss animation duration (default is 280)
    */
-  animationOptions: DismissAnimationPropTypes;
+  animationOptions: DismissibleAnimationPropTypes;
   /**
    * Override the default threshold (height/2 and width/2) with different values.
    */
