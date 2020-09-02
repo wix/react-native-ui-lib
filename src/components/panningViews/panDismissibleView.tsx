@@ -75,11 +75,6 @@ interface DismissPropTypes {
   dragDeltas: PanAmountsProps;
   swipeDirections: PanDirectionsProps;
   swipeVelocities: PanAmountsProps;
-  // onDrag?: ({directions, deltas}: ({directions: PanDirectionsProps, deltas: PanAmountsProps})) => void;
-  // onSwipe?: ({directions, velocities}: ({directions: PanDirectionsProps, velocities: PanAmountsProps})) => void;
-  // onPanStart?: () => void;
-  // onPanRelease?: () => void;
-  // onPanTerminated?: () => void;
 }
 
 interface Props extends PanDismissibleViewPropTypes {
