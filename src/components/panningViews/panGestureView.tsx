@@ -1,43 +1,65 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {PanResponder, Animated} from 'react-native';
+import React, {Component} from 'react';
+import {
+  PanResponder,
+  Animated,
+  PanResponderInstance,
+  GestureResponderEvent,
+  PanResponderGestureState,
+  LayoutChangeEvent,
+  LayoutRectangle,
+  StyleProp,
+  ViewStyle
+} from 'react-native';
 import {Constants} from '../../helpers';
-import {BaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 
-
-const DIRECTIONS = {
+export enum GestureDirections {
   // VERTICAL
-  UP: 'up',
-  DOWN: 'down'
-};
+  UP = 'up',
+  DOWN = 'down'
+}
+
+export interface PanGestureViewPropTypes {
+  /**
+   * Additional styling
+   */
+  style?: StyleProp<ViewStyle>;
+  /**
+   * onDismiss callback
+   */
+  onDismiss?: () => void;
+  /**
+   * The direction of the allowed pan (default is down)
+   */
+  direction?: GestureDirections;
+}
+
 const SWIPE_VELOCITY = 1.8;
 const SPEED = 20;
 const BOUNCINESS = 6;
 
+interface State {
+  deltaY: Animated.AnimatedValue;
+}
+
 /**
  * @description: PanGestureView component for drag and swipe gestures (supports only vertical gestures at the moment)
  */
-export default class PanGestureView extends BaseComponent {
+class PanGestureView extends Component<PanGestureViewPropTypes, State> {
   static displayName = 'PanGestureView'
-  static propTypes = {
-    /**
-     * onDismiss callback
-     */
-    onDismiss: PropTypes.func,
-    /**
-     * The direction of the allowed pan (default is down)
-     */
-    direction: PropTypes.oneOf(Object.values(DIRECTIONS))
-  };
 
-  static defaultProps = {
-    direction: DIRECTIONS.DOWN
+  static defaultProps: Partial<PanGestureViewPropTypes> = {
+    direction: GestureDirections.DOWN
   };
   
-  static directions = DIRECTIONS;
+  static directions = GestureDirections;
 
-  constructor(props) {
+  private panResponder: PanResponderInstance;
+  private swipe?: boolean;
+  private layout?: LayoutRectangle;
+
+  constructor(props: PanGestureViewPropTypes) {
     super(props);
 
     this.state = {
@@ -53,7 +75,7 @@ export default class PanGestureView extends BaseComponent {
     });
   }
 
-  handleMoveShouldSetPanResponder = (e, gestureState) => {
+  handleMoveShouldSetPanResponder = (_e: GestureResponderEvent, gestureState: PanResponderGestureState): boolean => {
     // return true if user is swiping, return false if it's a single click
     const {dy} = gestureState;
     return dy > 5 || dy < -5;
@@ -61,12 +83,12 @@ export default class PanGestureView extends BaseComponent {
   handlePanResponderGrant = () => {
     this.swipe = false;
   };
-  handlePanResponderMove = (e, gestureState) => {
-    const {direction} = this.getThemeProps();
+  handlePanResponderMove = (_e: GestureResponderEvent, gestureState: PanResponderGestureState) => {
+    const {direction} = this.props;
     let newValue = 0;
     
     // VERTICAL
-    const up = (direction === DIRECTIONS.UP);
+    const up = (direction === GestureDirections.UP);
     const panDeltaY = gestureState.dy;
     const panVelocityY = gestureState.vy;
 
@@ -83,13 +105,15 @@ export default class PanGestureView extends BaseComponent {
   };
   handlePanResponderEnd = () => {
     if (!this.swipe) {
-      const {direction} = this.getThemeProps();
+      const {direction} = this.props;
 
       // VERTICAL
-      const up = (direction === DIRECTIONS.UP);
+      const up = (direction === GestureDirections.UP);
       const {deltaY} = this.state;
+      // @ts-ignore
       const threshold = this.layout.height / 2;
-      const endValue = Math.round(deltaY._value); // eslint-disable-line
+      // @ts-ignore
+      const endValue = Math.round(deltaY._value);
       
       if ((up && endValue <= -threshold) || (!up && endValue >= threshold)) {
         this.animateDismiss();
@@ -102,31 +126,34 @@ export default class PanGestureView extends BaseComponent {
     }
   };
 
-  animateDeltaY(toValue) {
+  animateDeltaY(toValue: number) {
     const {deltaY} = this.state;
 
     Animated.spring(deltaY, {
       toValue,
+      useNativeDriver: true,
       speed: SPEED,
       bounciness: BOUNCINESS
     }).start();
   }
 
   animateDismiss() {
-    const {direction} = this.getThemeProps();
+    const {direction} = this.props;
 
     // VERTICAL
-    const up = (direction === DIRECTIONS.UP);
+    const up = (direction === GestureDirections.UP);
     const {deltaY} = this.state;
-    const newValue = up ? -this.layout.height -Constants.statusBarHeight : deltaY._value + Constants.screenHeight; // eslint-disable-line
+    // @ts-ignore
+    const newValue = up ? -this.layout.height - Constants.statusBarHeight : deltaY._value + Constants.screenHeight;
 
     Animated.timing(deltaY, {
       toValue: Math.round(newValue),
+      useNativeDriver: true,
       duration: 280
     }).start(this.onAnimatedFinished);
   }
 
-  onAnimatedFinished = ({finished}) => {
+  onAnimatedFinished = ({finished}: ({finished: boolean})) => {
     if (finished) {
       this.onDismiss();
     }
@@ -143,12 +170,12 @@ export default class PanGestureView extends BaseComponent {
     });
   }
 
-  onLayout = (event) => {
+  onLayout = (event: LayoutChangeEvent) => {
     this.layout = event.nativeEvent.layout;
   }
 
   render() {
-    const {style} = this.getThemeProps();
+    const {style} = this.props;
 
     // VERTICAL
     const {deltaY} = this.state;
@@ -171,3 +198,5 @@ export default class PanGestureView extends BaseComponent {
     );
   }
 }
+
+export default asBaseComponent<PanGestureViewPropTypes>(PanGestureView);
