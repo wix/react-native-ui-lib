@@ -130,13 +130,12 @@ class PanListenerView extends PureComponent<Props> {
     return false;
   };
 
-  shouldPan = (e: GestureResponderEvent, gestureState: PanResponderGestureState) => {
+  shouldPan = (e: GestureResponderEvent, gestureState: PanResponderGestureState): boolean => {
     // return true if user is swiping, return false if it's a single click
     const {dy, dx} = gestureState;
     const {directions, panSensitivity} = this.props;
 
-    console.log('Miki', panSensitivity);
-    return (
+    return Boolean(
       directions &&
       ((directions.includes(PanningProvider.Directions.UP) && dy < -panSensitivity) ||
         (directions.includes(PanningProvider.Directions.DOWN) && dy > panSensitivity) ||
