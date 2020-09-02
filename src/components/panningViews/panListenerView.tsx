@@ -8,11 +8,11 @@ import {
 } from 'react-native';
 import asPanViewConsumer from './asPanViewConsumer';
 import PanningProvider, {
-  DIRECTIONS,
-  DirectionsProps,
-  AmountsProps
+  PanningDirections,
+  PanDirectionsProps,
+  PanAmountsProps
 } from './panningProvider';
-import View from '../view';
+import View, {ViewPropTypes} from '../view';
 
 interface PanningPropTypes {
     /**
@@ -22,7 +22,7 @@ interface PanningPropTypes {
      * deltas - array of deltas (same length and order as directions)
      * Both arrays will have {x, y} - if no x or y drag has occurred this value will be undefined
      */
-    onDrag?: ({directions, deltas}: ({directions: DirectionsProps, deltas: AmountsProps})) => void;
+    onDrag?: ({directions, deltas}: ({directions: PanDirectionsProps, deltas: PanAmountsProps})) => void;
     /**
      * This is were you will get notified when a swipe occurs
      * onSwipe = ({directions, velocities}) => {...}
@@ -30,7 +30,7 @@ interface PanningPropTypes {
      * velocities - array of velocities (same length and order as directions)
      * Both arrays will have {x, y} - if no x or y swipe has occurred this value will be undefined
      */
-    onSwipe?: ({directions, velocities}: ({directions: DirectionsProps, velocities: AmountsProps})) => void;
+    onSwipe?: ({directions, velocities}: ({directions: PanDirectionsProps, velocities: PanAmountsProps})) => void;
     /**
      * This is were you will get notified when the pan starts
      */
@@ -49,12 +49,12 @@ interface PanningPropTypes {
     onPanTerminated?: () => void;
 }
 
-export interface PanListenerViewPropTypes extends PanningPropTypes {
+export interface PanListenerViewPropTypes extends PanningPropTypes, ViewPropTypes {
     /**
      * The directions of the allowed pan (default allows all directions)
      * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###)
      */
-    directions?: DIRECTIONS[];
+    directions?: PanningDirections[];
     /**
      * The sensitivity beyond which a pan is no longer considered a single click (default is 5)
      */
@@ -76,8 +76,8 @@ interface Props extends PanListenerViewPropTypes {
 }
 
 interface PanningResultProps {
-  selectedDirections: DirectionsProps;
-  selectedAmounts: AmountsProps;
+  selectedDirections: PanDirectionsProps;
+  selectedAmounts: PanAmountsProps;
 }
 
 const DEFAULT_DIRECTIONS = [
@@ -158,8 +158,8 @@ class PanListenerView extends PureComponent<Props> {
 
   getDirectionsOverSensitivity = (x: number, y: number, sensitivity: number): PanningResultProps => {
     const {directions} = this.props;
-    const selectedDirections: DirectionsProps = {};
-    const selectedAmounts: AmountsProps = {};
+    const selectedDirections: PanDirectionsProps = {};
+    const selectedAmounts: PanAmountsProps = {};
 
     if (directions.includes(PanningProvider.Directions.LEFT) && x < -sensitivity) {
       selectedDirections.x = PanningProvider.Directions.LEFT;

@@ -1,25 +1,24 @@
 import React, {Component} from 'react';
 import PanningContext from './panningContext';
 
-// TODO: rename DIRECTIONS -> Directions & Directions -> directions
-export enum DIRECTIONS {
+export enum PanningDirections {
   UP = 'up',
   DOWN = 'down',
   LEFT = 'left',
   RIGHT = 'right'
 }
 
-export interface Location {
+export interface PanLocationProps {
   left?: number;
   top?: number;
 }
 
-export interface DirectionsProps {
-  x?: DIRECTIONS;
-  y?: DIRECTIONS;
+export interface PanDirectionsProps {
+  x?: PanningDirections;
+  y?: PanningDirections;
 }
 
-export interface AmountsProps {
+export interface PanAmountsProps {
   x?: number;
   y?: number;
 }
@@ -27,11 +26,11 @@ export interface AmountsProps {
 interface State {
   isPanning: boolean;
   wasTerminated: boolean;
-  dragDirections: DirectionsProps;
-  dragDeltas: AmountsProps;
-  swipeDirections: DirectionsProps;
-  swipeVelocities: AmountsProps;
-  panLocation: Location;
+  dragDirections: PanDirectionsProps;
+  dragDeltas: PanAmountsProps;
+  swipeDirections: PanDirectionsProps;
+  swipeVelocities: PanAmountsProps;
+  panLocation: PanLocationProps;
 }
 
 /**
@@ -39,7 +38,7 @@ interface State {
  */
 export default class PanningProvider extends Component<{}, State> {
   static displayName = 'PanningProvider';
-  static Directions = DIRECTIONS;
+  static Directions = PanningDirections;
 
   constructor(props: {}) {
     super(props);
@@ -95,15 +94,15 @@ export default class PanningProvider extends Component<{}, State> {
     this.setState({isPanning: false, wasTerminated: true});
   };
 
-  onDrag = ({directions, deltas}: {directions: DirectionsProps, deltas: AmountsProps}) => {
+  onDrag = ({directions, deltas}: {directions: PanDirectionsProps, deltas: PanAmountsProps}) => {
     this.setState({dragDirections: directions, dragDeltas: deltas, swipeDirections: {}, swipeVelocities: {}});
   };
 
-  onSwipe = ({directions, velocities}: {directions: DirectionsProps, velocities: AmountsProps}) => {
+  onSwipe = ({directions, velocities}: {directions: PanDirectionsProps, velocities: PanAmountsProps}) => {
     this.setState({swipeDirections: directions, swipeVelocities: velocities, dragDirections: {}, dragDeltas: {}});
   };
 
-  onPanLocationChanged = (location: Location) => {
+  onPanLocationChanged = (location: PanLocationProps) => {
     this.setState({panLocation: location});
   };
 

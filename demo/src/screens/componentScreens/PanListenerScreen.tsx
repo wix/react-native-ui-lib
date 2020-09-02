@@ -1,18 +1,18 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {View, Text, PanListenerView, PanningProvider} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, PanListenerView, PanningProvider, PanDirectionsProps, PanAmountsProps} from 'react-native-ui-lib'; //eslint-disable-line
 
 export default class PanListenerScreen extends Component {
   state = {
     locationText: '',
-    endType: '',
+    endType: ''
   };
 
-  onDrag = ({directions, deltas}) => {
+  onDrag = ({directions, deltas}: ({directions: PanDirectionsProps, deltas: PanAmountsProps})) => {
     this.setState({locationText: `Dragged: ${directions.x}, ${directions.y}`});
   };
 
-  onSwipe = ({directions, velocities}) => {
+  onSwipe = ({directions, velocities}: ({directions: PanDirectionsProps, velocities: PanAmountsProps})) => {
     this.setState({locationText: `Swiped: ${directions.x}, ${directions.y}`});
   };
 
