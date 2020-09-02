@@ -1,21 +1,42 @@
 import React, {Component} from 'react';
 import PanningContext from './panningContext';
 
-const DIRECTIONS = {
-  UP: 'up',
-  DOWN: 'down',
-  LEFT: 'left',
-  RIGHT: 'right'
-};
+export enum DIRECTIONS {
+  UP = 'up',
+  DOWN = 'down',
+  LEFT = 'left',
+  RIGHT = 'right'
+}
+
+export interface Location {
+  left?: number;
+  top?: number;
+}
+
+// TODO: consider refactoring this into several types in next version
+export interface XY {
+  x?: number;
+  y?: number;
+}
+
+interface State {
+  isPanning: boolean;
+  wasTerminated: boolean;
+  dragDirections: XY;
+  dragDeltas: XY;
+  swipeDirections: XY;
+  swipeVelocities: XY;
+  panLocation: Location;
+}
 
 /**
  * @description: Wraps the panResponderView and panListenerView to provide a shared context
  */
-export default class PanningProvider extends Component {
+export default class PanningProvider extends Component<{}, State> {
   static displayName = 'PanningProvider';
   static Directions = DIRECTIONS;
 
-  constructor(props) {
+  constructor(props: {}) {
     super(props);
 
     this.state = {
@@ -69,15 +90,15 @@ export default class PanningProvider extends Component {
     this.setState({isPanning: false, wasTerminated: true});
   };
 
-  onDrag = ({directions, deltas}) => {
+  onDrag = ({directions, deltas}: {directions: XY, deltas: XY}) => {
     this.setState({dragDirections: directions, dragDeltas: deltas, swipeDirections: {}, swipeVelocities: {}});
   };
 
-  onSwipe = ({directions, velocities}) => {
+  onSwipe = ({directions, velocities}: {directions: XY, velocities: XY}) => {
     this.setState({swipeDirections: directions, swipeVelocities: velocities, dragDirections: {}, dragDeltas: {}});
   };
 
-  onPanLocationChanged = location => {
+  onPanLocationChanged = (location: Location) => {
     this.setState({panLocation: location});
   };
 
