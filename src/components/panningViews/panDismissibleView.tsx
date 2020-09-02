@@ -1,10 +1,9 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {Animated, LayoutChangeEvent, StyleProp, ViewStyle, CompositeAnimation} from 'react-native';
+import {Animated, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import {Constants} from '../../helpers';
 import asPanViewConsumer from './asPanViewConsumer';
-import PanningProvider, {PanningDirections, PanAmountsProps} from './panningProvider';
-import { PanDirectionsProps } from 'generatedTypes';
+import PanningProvider, {PanningDirections, PanAmountsProps, PanDirectionsProps} from './panningProvider';
 
 export interface DismissibleAnimationPropTypes {
     /**
@@ -228,7 +227,7 @@ class PanDismissibleView extends PureComponent<Props, State> {
     const {speed, bounciness} = this.props.animationOptions;
     const toX = -this.left;
     const toY = -this.top;
-    const animations: CompositeAnimation[] = [];
+    const animations: Animated.CompositeAnimation[] = [];
     if (!_.isUndefined(toX)) {
       animations.push(Animated.spring(this.animTranslateX, {
         toValue: Math.round(toX),
@@ -335,7 +334,7 @@ class PanDismissibleView extends PureComponent<Props, State> {
 
   _animateDismiss = (isRight?: boolean, isDown?: boolean) => {
     const {duration} = this.props.animationOptions;
-    const animations: CompositeAnimation[] = [];
+    const animations: Animated.CompositeAnimation[] = [];
     let toX;
     let toY;
 
