@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PanningContext from './panningContext';
 
+// TODO: rename DIRECTIONS -> Directions & Directions -> directions
 export enum DIRECTIONS {
   UP = 'up',
   DOWN = 'down',
@@ -13,8 +14,12 @@ export interface Location {
   top?: number;
 }
 
-// TODO: consider refactoring this into several types in next version
-export interface XY {
+export interface DirectionsProps {
+  x?: DIRECTIONS;
+  y?: DIRECTIONS;
+}
+
+export interface AmountsProps {
   x?: number;
   y?: number;
 }
@@ -90,11 +95,11 @@ export default class PanningProvider extends Component<{}, State> {
     this.setState({isPanning: false, wasTerminated: true});
   };
 
-  onDrag = ({directions, deltas}: {directions: XY, deltas: XY}) => {
+  onDrag = ({directions, deltas}: {directions: DirectionsProps, deltas: AmountsProps}) => {
     this.setState({dragDirections: directions, dragDeltas: deltas, swipeDirections: {}, swipeVelocities: {}});
   };
 
-  onSwipe = ({directions, velocities}: {directions: XY, velocities: XY}) => {
+  onSwipe = ({directions, velocities}: {directions: DirectionsProps, velocities: AmountsProps}) => {
     this.setState({swipeDirections: directions, swipeVelocities: velocities, dragDirections: {}, dragDeltas: {}});
   };
 

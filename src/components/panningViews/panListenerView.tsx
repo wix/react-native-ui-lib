@@ -1,11 +1,86 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {PanResponder} from 'react-native';
-import {PureBaseComponent} from '../../commons';
+import React, {PureComponent} from 'react';
+import {
+  PanResponder,
+  PanResponderInstance,
+  GestureResponderEvent,
+  PanResponderGestureState,
+  LayoutChangeEvent,
+  LayoutRectangle
+} from 'react-native';
 import asPanViewConsumer from './asPanViewConsumer';
-import PanningProvider from './panningProvider';
+import PanningProvider, {
+  DIRECTIONS,
+  DirectionsProps,
+  AmountsProps
+} from './panningProvider';
 import View from '../view';
+
+interface PanningPropTypes {
+    /**
+     * This is were you will get notified when a drag occurs
+     * onDrag = ({directions, deltas}) => {...}
+     * directions - array of directions
+     * deltas - array of deltas (same length and order as directions)
+     * Both arrays will have {x, y} - if no x or y drag has occurred this value will be undefined
+     */
+    onDrag: ({directions, deltas}: ({directions: DirectionsProps, deltas: AmountsProps})) => void;
+    /**
+     * This is were you will get notified when a swipe occurs
+     * onSwipe = ({directions, velocities}) => {...}
+     * directions - array of directions
+     * velocities - array of velocities (same length and order as directions)
+     * Both arrays will have {x, y} - if no x or y swipe has occurred this value will be undefined
+     */
+    onSwipe: ({directions, velocities}: ({directions: DirectionsProps, velocities: AmountsProps})) => void;
+    /**
+     * This is were you will get notified when the pan starts
+     */
+    onPanStart: () => void;
+    /**
+     * This is were you will get notified when the pan ends
+     * The user has released all touches while this view is the responder.
+     * This typically means a gesture has succeeded
+     */
+    onPanRelease: () => void;
+    /**
+     * This is were you will get notified when the pan ends
+     * Another component has become the responder,
+     * so this gesture should be cancelled
+     */
+    onPanTerminated: () => void;
+}
+
+export interface PanListenerViewPropTypes extends PanningPropTypes {
+    /**
+     * The directions of the allowed pan (default allows all directions)
+     * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###)
+     */
+    directions: DIRECTIONS;
+    /**
+     * The sensitivity beyond which a pan is no longer considered a single click (default is 5)
+     */
+    panSensitivity: number;
+    /**
+     * The sensitivity beyond which a pan is no longer considered a drag, but a swipe (default is 1.8)
+     * Note: a pan would have to occur (i.e. the panSensitivity has already been surpassed)
+     */
+    swipeVelocitySensitivity: number;
+    /**
+     * Is there a view that is clickable (has onPress etc.) in the PanListenerView.
+     * This can affect the panability of this component.
+     */
+    isClickable: boolean;
+}
+
+interface Props extends PanListenerViewPropTypes {
+  context?: PanningPropTypes;
+}
+
+interface PanningResultProps {
+  selectedDirections: DirectionsProps;
+  selectedAmounts: AmountsProps;
+}
 
 const DEFAULT_PAN_SENSITIVITY = 5;
 const DEFAULT_SWIPE_VELOCITY = 1.8;
@@ -14,61 +89,8 @@ const DEFAULT_SWIPE_VELOCITY = 1.8;
  * @description: PanListenerView component created to making listening to swipe and drag events easier
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PanListenerScreen.js
  */
-class PanListenerView extends PureBaseComponent {
+class PanListenerView extends PureComponent<Props> {
   static displayName = 'PanListenerView';
-  static propTypes = {
-    /**
-     * The directions of the allowed pan (default allows all directions)
-     * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###)
-     */
-    directions: PropTypes.arrayOf(PropTypes.oneOf(Object.values(PanningProvider.Directions))),
-    /**
-     * This is were you will get notified when a drag occurs
-     * onDrag = ({directions, deltas}) => {...}
-     * directions - array of directions
-     * deltas - array of deltas (same length and order as directions)
-     * Both arrays will have {x, y} - if no x or y drag has occurred this value will be undefined
-     */
-    onDrag: PropTypes.func,
-    /**
-     * This is were you will get notified when a swipe occurs
-     * onSwipe = ({directions, velocities}) => {...}
-     * directions - array of directions
-     * velocities - array of velocities (same length and order as directions)
-     * Both arrays will have {x, y} - if no x or y swipe has occurred this value will be undefined
-     */
-    onSwipe: PropTypes.func,
-    /**
-     * This is were you will get notified when the pan starts
-     */
-    onPanStart: PropTypes.func,
-    /**
-     * This is were you will get notified when the pan ends
-     * The user has released all touches while this view is the responder.
-     * This typically means a gesture has succeeded
-     */
-    onPanRelease: PropTypes.func,
-    /**
-     * This is were you will get notified when the pan ends
-     * Another component has become the responder,
-     * so this gesture should be cancelled
-     */
-    onPanTerminated: PropTypes.func,
-    /**
-     * The sensitivity beyond which a pan is no longer considered a single click (default is 5)
-     */
-    panSensitivity: PropTypes.number,
-    /**
-     * The sensitivity beyond which a pan is no longer considered a drag, but a swipe (default is 1.8)
-     * Note: a pan would have to occur (i.e. the panSensitivity has already been surpassed)
-     */
-    swipeVelocitySensitivity: PropTypes.number,
-    /**
-     * Is there a view that is clickable (has onPress etc.) in the PanListenerView.
-     * This can affect the panability of this component.
-     */
-    isClickable: PropTypes.bool
-  };
 
   static defaultProps = {
     directions: [
@@ -81,10 +103,11 @@ class PanListenerView extends PureBaseComponent {
     swipeVelocitySensitivity: DEFAULT_SWIPE_VELOCITY
   };
 
-  constructor(props) {
-    super(props);
+  private panResponder: PanResponderInstance;
+  private layout: LayoutRectangle;
 
-    this.state = {};
+  constructor(props: PanListenerViewPropTypes) {
+    super(props);
 
     const {isClickable} = props;
     this.panResponder = PanResponder.create({
@@ -107,7 +130,7 @@ class PanListenerView extends PureBaseComponent {
     return false;
   };
 
-  shouldPan = (e, gestureState) => {
+  shouldPan = (e: GestureResponderEvent, gestureState: PanResponderGestureState) => {
     // return true if user is swiping, return false if it's a single click
     const {dy, dx} = gestureState;
     const {directions, panSensitivity} = this.props;
@@ -126,19 +149,19 @@ class PanListenerView extends PureBaseComponent {
     _.invoke(this.props.context, 'onPanStart');
   };
 
-  getSwipeDirection = ({vx, vy}) => {
+  getSwipeDirection = ({vx, vy}: ({vx: number, vy: number})): PanningResultProps => {
     const {swipeVelocitySensitivity} = this.props;
     return this.getDirectionsOverSensitivity(vx, vy, swipeVelocitySensitivity);
   };
 
-  getDragDirection = ({dx, dy}) => {
+  getDragDirection = ({dx, dy}: ({dx: number, dy: number})): PanningResultProps => {
     return this.getDirectionsOverSensitivity(dx, dy, 0);
   };
 
-  getDirectionsOverSensitivity = (x, y, sensitivity) => {
+  getDirectionsOverSensitivity = (x: number, y: number, sensitivity: number): PanningResultProps => {
     const {directions} = this.props;
-    const selectedDirections = {};
-    const selectedAmounts = {};
+    const selectedDirections: DirectionsProps = {};
+    const selectedAmounts: AmountsProps = {};
 
     if (directions.includes(PanningProvider.Directions.LEFT) && x < -sensitivity) {
       selectedDirections.x = PanningProvider.Directions.LEFT;
@@ -159,11 +182,11 @@ class PanListenerView extends PureBaseComponent {
     return {selectedDirections, selectedAmounts};
   };
 
-  panResultHasValue = panResult => {
-    return panResult && (panResult.selectedDirections.x || panResult.selectedDirections.y);
+  panResultHasValue = (panResult?: PanningResultProps): boolean => {
+    return Boolean(panResult && (panResult.selectedDirections.x || panResult.selectedDirections.y));
   };
 
-  handlePanMove = (e, gestureState) => {
+  handlePanMove = (e: GestureResponderEvent, gestureState: PanResponderGestureState) => {
     const {onSwipe, onDrag, context} = this.props;
     const hasSwipe = !_.isUndefined(onSwipe);
     const hasDrag = !_.isUndefined(onDrag);
@@ -174,6 +197,7 @@ class PanListenerView extends PureBaseComponent {
     }
 
     if (this.panResultHasValue(panResult)) {
+      // @ts-ignore
       const data = {directions: panResult.selectedDirections, velocities: panResult.selectedAmounts};
       _.invoke(this.props, 'onSwipe', data);
       _.invoke(context, 'onSwipe', data);
@@ -197,12 +221,12 @@ class PanListenerView extends PureBaseComponent {
     _.invoke(this.props.context, 'onPanTerminated');
   };
 
-  onLayout = event => {
+  onLayout = (event: LayoutChangeEvent) => {
     this.layout = event.nativeEvent.layout;
   };
 
   render() {
-    const {children, ...others} = this.getThemeProps();
+    const {children, ...others} = this.props;
 
     return (
       <View {...others} {...this.panResponder.panHandlers} onLayout={this.onLayout}>
@@ -212,4 +236,4 @@ class PanListenerView extends PureBaseComponent {
   }
 }
 
-export default asPanViewConsumer(PanListenerView);
+export default asPanViewConsumer<PanListenerViewPropTypes>(PanListenerView);
