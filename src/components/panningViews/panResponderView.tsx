@@ -1,8 +1,32 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 import View from '../view';
 import asPanViewConsumer from './asPanViewConsumer';
+import {PanLocationProps, PanAmountsProps} from './panningProvider';
+
+export interface PanResponderViewPropTypes {
+    /**
+     * Will be called with the current location ({left, top}) when the pan has ended
+     */
+    onPanLocationChanged?: (location: PanLocationProps) => void;
+    /**
+     * Ignore panning events while this is true
+     */
+    ignorePanning?: boolean;
+    /**
+     * Allow the view to be animated (send animation via style; default is false)
+     */
+    isAnimated?: boolean;
+}
+
+interface PanResponderPropTypes {
+  isPanning: boolean;
+  dragDeltas: PanAmountsProps;
+}
+
+interface Props extends PanResponderViewPropTypes {
+  context: PanResponderPropTypes;
+}
 
 /**
  * @description: panResponderView component created to making listening to swipe and drag events easier.
@@ -10,44 +34,27 @@ import asPanViewConsumer from './asPanViewConsumer';
  *         The PanListenerView is the one that sends the drag\swipe events.
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PanResponderScreen.js
  */
-class PanResponderView extends PureComponent {
+class PanResponderView extends PureComponent<Props> {
   static displayName = 'PanResponderView';
-  static propTypes = {
-    /**
-     * Will be called with the current location ({left, top}) when the pan has ended
-     */
-    onPanLocationChanged: PropTypes.func,
-    /**
-     * Ignore panning events while this is true
-     */
-    ignorePanning: PropTypes.bool,
-    /**
-     * Allow the view to be animated (send animation via style; default is false)
-     */
-    isAnimated: PropTypes.bool
-  };
 
   static defaultProps = {
     isAnimated: false
   };
 
-  constructor(props) {
-    super(props);
-
-    this.initialLeft = 0;
-    this.initialTop = 0;
-
-    this.ref = React.createRef();
-  }
+  private left?: number;
+  private top?: number;
+  initialLeft = 0;
+  initialTop = 0;
+  ref = React.createRef<any>();
 
   componentDidMount() {
     this.setNativeProps(this.initialLeft, this.initialTop);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     const {ignorePanning} = this.props;
-    const {isPanning, dragDeltas} = this.props.context; // eslint-disable-line
-    const {isPanning: prevIsPanning, dragDeltas: prevDragDeltas} = prevProps.context; // eslint-disable-line
+    const {isPanning, dragDeltas} = this.props.context;
+    const {isPanning: prevIsPanning, dragDeltas: prevDragDeltas} = prevProps.context;
 
     if (!ignorePanning && !isPanning && prevIsPanning) {
       this.onPanEnd();
@@ -64,21 +71,21 @@ class PanResponderView extends PureComponent {
   }
 
   onPanEnd() {
-    const location = {left: this.left, top: this.top};
-    this.initialLeft = this.left;
-    this.initialTop = this.top;
+    const location: PanLocationProps = {left: this.left, top: this.top};
+    this.initialLeft = this.left || this.initialLeft;
+    this.initialTop = this.top || this.initialTop;
     _.invoke(this.props, 'onPanLocationChanged', location);
-    _.invoke(this.props.context, 'onPanLocationChanged', location); // eslint-disable-line
+    _.invoke(this.props.context, 'onPanLocationChanged', location);
   }
 
-  onDrag(deltas) {
+  onDrag(deltas: PanAmountsProps) {
     const left = this.initialLeft + (deltas.x ? Math.round(deltas.x) : 0);
     const top = this.initialTop + (deltas.y ? Math.round(deltas.y) : 0);
 
     this.setNativeProps(left, top);
   }
 
-  setNativeProps(left, top) {
+  setNativeProps(left: number, top: number) {
     if (this.ref.current) {
       this.ref.current.setNativeProps({style: {left, top}});
       this.left = left;
@@ -97,4 +104,4 @@ class PanResponderView extends PureComponent {
   }
 }
 
-export default asPanViewConsumer(PanResponderView);
+export default asPanViewConsumer<PanResponderViewPropTypes>(PanResponderView);

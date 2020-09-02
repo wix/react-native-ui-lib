@@ -31,6 +31,7 @@ export {
   PanDirectionsProps
 } from './components/panningViews/panningProvider';
 export {default as PanListenerView, PanListenerViewPropTypes} from './components/panningViews/panListenerView';
+export {default as PanResponderView, PanResponderViewPropTypes} from './components/panningViews/panResponderView';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
