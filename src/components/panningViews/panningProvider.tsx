@@ -27,10 +27,10 @@ export interface AmountsProps {
 interface State {
   isPanning: boolean;
   wasTerminated: boolean;
-  dragDirections: XY;
-  dragDeltas: XY;
-  swipeDirections: XY;
-  swipeVelocities: XY;
+  dragDirections: DirectionsProps;
+  dragDeltas: AmountsProps;
+  swipeDirections: DirectionsProps;
+  swipeVelocities: AmountsProps;
   panLocation: Location;
 }
 

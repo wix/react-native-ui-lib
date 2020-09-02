@@ -82,6 +82,12 @@ interface PanningResultProps {
   selectedAmounts: AmountsProps;
 }
 
+const DEFAULT_DIRECTIONS = [
+  PanningProvider.Directions.UP,
+  PanningProvider.Directions.DOWN,
+  PanningProvider.Directions.LEFT,
+  PanningProvider.Directions.RIGHT
+];
 const DEFAULT_PAN_SENSITIVITY = 5;
 const DEFAULT_SWIPE_VELOCITY = 1.8;
 
@@ -93,12 +99,7 @@ class PanListenerView extends PureComponent<Props> {
   static displayName = 'PanListenerView';
   
   public static defaultProps: Partial<Props> = {
-    directions: [
-      PanningProvider.Directions.UP,
-      PanningProvider.Directions.DOWN,
-      PanningProvider.Directions.LEFT,
-      PanningProvider.Directions.RIGHT
-    ],
+    directions: DEFAULT_DIRECTIONS,
     panSensitivity: DEFAULT_PAN_SENSITIVITY,
     swipeVelocitySensitivity: DEFAULT_SWIPE_VELOCITY
   };
@@ -130,7 +131,7 @@ class PanListenerView extends PureComponent<Props> {
     return false;
   };
 
-  shouldPan = (e: GestureResponderEvent, gestureState: PanResponderGestureState): boolean => {
+  shouldPan = (_e: GestureResponderEvent, gestureState: PanResponderGestureState): boolean => {
     // return true if user is swiping, return false if it's a single click
     const {dy, dx} = gestureState;
     const {directions, panSensitivity} = this.props;
@@ -186,7 +187,7 @@ class PanListenerView extends PureComponent<Props> {
     return Boolean(panResult && (panResult.selectedDirections.x || panResult.selectedDirections.y));
   };
 
-  handlePanMove = (e: GestureResponderEvent, gestureState: PanResponderGestureState) => {
+  handlePanMove = (_e: GestureResponderEvent, gestureState: PanResponderGestureState) => {
     const {onSwipe, onDrag, context} = this.props;
     const hasSwipe = !_.isUndefined(onSwipe);
     const hasDrag = !_.isUndefined(onDrag);
