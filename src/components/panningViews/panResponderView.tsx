@@ -43,9 +43,9 @@ class PanResponderView extends PureComponent<Props> {
 
   private left?: number;
   private top?: number;
-  initialLeft = 0;
-  initialTop = 0;
-  ref = React.createRef<any>();
+  private initialLeft = 0;
+  private initialTop = 0;
+  private ref = React.createRef<any>();
 
   componentDidMount() {
     this.setNativeProps(this.initialLeft, this.initialTop);
