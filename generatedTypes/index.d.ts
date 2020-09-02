@@ -23,7 +23,7 @@ export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as PanningContext} from './components/panningViews/panningContext';
 export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
 export {
-  default as panningProvider,
+  default as PanningProvider,
   PanningDirections,
   PanLocationProps,
   PanAmountsProps,

@@ -1,6 +1,7 @@
 import React from 'react';
+import { ViewPropTypes } from '../view';
 import { PanLocationProps } from './panningProvider';
-export interface PanResponderViewPropTypes {
+export interface PanResponderViewPropTypes extends ViewPropTypes {
     /**
      * Will be called with the current location ({left, top}) when the pan has ended
      */
