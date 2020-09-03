@@ -102,9 +102,4 @@ const styles = StyleSheet.create({
 
 Modal.TopBar = TopBar;
 
-export default asBaseComponent<
-  ModalProps,
-  {
-    TopBar: typeof TopBar;
-  }
->(Modal);
+export default asBaseComponent<typeof Modal>(Modal);

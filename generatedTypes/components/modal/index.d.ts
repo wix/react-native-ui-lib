@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { ModalProps as RNModalProps, GestureResponderEvent } from 'react-native';
-import { ModalTopBarProps } from './TopBar';
+import TopBar, { ModalTopBarProps } from './TopBar';
 export { ModalTopBarProps };
 export interface ModalProps extends RNModalProps {
     /**
@@ -29,11 +29,20 @@ export interface ModalProps extends RNModalProps {
      */
     accessibilityLabel?: string;
 }
-declare const _default: React.ComponentClass<ModalProps & {
+/**
+ * @description: Component that present content on top of the invoking screen
+ * @extends: Modal
+ * @extendslink: https://facebook.github.io/react-native/docs/modal.html
+ * @gif: https://media.giphy.com/media/3oFzmfSX8KgvctI4Ks/giphy.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.js
+ */
+declare class Modal extends Component<ModalProps> {
+    static displayName: string;
+    static TopBar: typeof TopBar;
+    renderTouchableOverlay(): JSX.Element | undefined;
+    render(): JSX.Element;
+}
+declare const _default: React.ComponentClass<typeof Modal & {
     useCustomTheme?: boolean | undefined;
-}, any> & {
-    TopBar: React.ComponentClass<ModalTopBarProps & {
-        useCustomTheme?: boolean | undefined;
-    }, any>;
-};
+}, any>;
 export default _default;
