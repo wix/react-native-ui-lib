@@ -210,10 +210,10 @@ class PanDismissibleView extends PureComponent<Props, State> {
     } else {
       const endValue = {x: Math.round(this.left), y: Math.round(this.top)};
       if (
-        (directions.includes(PanningProvider.Directions.LEFT) && endValue.x <= -this.thresholdX) ||
-        (directions.includes(PanningProvider.Directions.RIGHT) && endValue.x >= this.thresholdX) ||
-        (directions.includes(PanningProvider.Directions.UP) && endValue.y <= -this.thresholdY) ||
-        (directions.includes(PanningProvider.Directions.DOWN) && endValue.y >= this.thresholdY)
+        (directions?.includes(PanningProvider.Directions.LEFT) && endValue.x <= -this.thresholdX) ||
+        (directions?.includes(PanningProvider.Directions.RIGHT) && endValue.x >= this.thresholdX) ||
+        (directions?.includes(PanningProvider.Directions.UP) && endValue.y <= -this.thresholdY) ||
+        (directions?.includes(PanningProvider.Directions.DOWN) && endValue.y >= this.thresholdY)
       ) {
         const {isRight, isDown} = this.getDismissAnimationDirection();
         this._animateDismiss(isRight, isDown);
@@ -382,6 +382,7 @@ class PanDismissibleView extends PureComponent<Props, State> {
 
     return (
       <Animated.View
+        // @ts-ignore
         ref={this.ref}
         style={[
           style,

@@ -131,7 +131,7 @@ class PanListenerView extends PureComponent<Props> {
   shouldPan = (_e: GestureResponderEvent, gestureState: PanResponderGestureState): boolean => {
     // return true if user is swiping, return false if it's a single click
     const {dy, dx} = gestureState;
-    const {directions, panSensitivity} = this.props;
+    const {directions, panSensitivity = DEFAULT_PAN_SENSITIVITY} = this.props;
 
     return Boolean(
       directions &&
@@ -148,7 +148,7 @@ class PanListenerView extends PureComponent<Props> {
   };
 
   getSwipeDirection = ({vx, vy}: ({vx: number, vy: number})): PanningResultProps => {
-    const {swipeVelocitySensitivity} = this.props;
+    const {swipeVelocitySensitivity = DEFAULT_SWIPE_VELOCITY} = this.props;
     return this.getDirectionsOverSensitivity(vx, vy, swipeVelocitySensitivity);
   };
 
@@ -161,18 +161,18 @@ class PanListenerView extends PureComponent<Props> {
     const selectedDirections: PanDirectionsProps = {};
     const selectedAmounts: PanAmountsProps = {};
 
-    if (directions.includes(PanningProvider.Directions.LEFT) && x < -sensitivity) {
+    if (directions?.includes(PanningProvider.Directions.LEFT) && x < -sensitivity) {
       selectedDirections.x = PanningProvider.Directions.LEFT;
       selectedAmounts.x = x;
-    } else if (directions.includes(PanningProvider.Directions.RIGHT) && x > sensitivity) {
+    } else if (directions?.includes(PanningProvider.Directions.RIGHT) && x > sensitivity) {
       selectedDirections.x = PanningProvider.Directions.RIGHT;
       selectedAmounts.x = x;
     }
 
-    if (directions.includes(PanningProvider.Directions.UP) && y < -sensitivity) {
+    if (directions?.includes(PanningProvider.Directions.UP) && y < -sensitivity) {
       selectedDirections.y = PanningProvider.Directions.UP;
       selectedAmounts.y = y;
-    } else if (directions.includes(PanningProvider.Directions.DOWN) && y > sensitivity) {
+    } else if (directions?.includes(PanningProvider.Directions.DOWN) && y > sensitivity) {
       selectedDirections.y = PanningProvider.Directions.DOWN;
       selectedAmounts.y = y;
     }
