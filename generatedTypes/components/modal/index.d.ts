@@ -1,8 +1,8 @@
 import React from 'react';
-import { ModalProps, GestureResponderEvent } from 'react-native';
-import { ModalTopBarPropTypes } from './TopBar';
-export { ModalTopBarPropTypes };
-export interface ModalPropTypes extends ModalProps {
+import { ModalProps as RNModalProps, GestureResponderEvent } from 'react-native';
+import { ModalTopBarProps } from './TopBar';
+export { ModalTopBarProps };
+export interface ModalProps extends RNModalProps {
     /**
      * Blurs the modal background when transparent (iOS only)
      */
@@ -29,10 +29,10 @@ export interface ModalPropTypes extends ModalProps {
      */
     accessibilityLabel?: string;
 }
-declare const _default: React.ComponentClass<ModalPropTypes & {
+declare const _default: React.ComponentClass<ModalProps & {
     useCustomTheme?: boolean | undefined;
 }, any> & {
-    TopBar: React.ComponentClass<ModalTopBarPropTypes & {
+    TopBar: React.ComponentClass<ModalTopBarProps & {
         useCustomTheme?: boolean | undefined;
     }, any>;
 };

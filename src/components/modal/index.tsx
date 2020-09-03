@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, Modal as RNModal, ModalProps, TouchableWithoutFeedback, GestureResponderEvent} from 'react-native';
+import {StyleSheet, Modal as RNModal, ModalProps as RNModalProps, TouchableWithoutFeedback, GestureResponderEvent} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons/new';
-import TopBar, {ModalTopBarPropTypes} from './TopBar';
+import TopBar, {ModalTopBarProps} from './TopBar';
 import View from '../../components/view';
 
-export {ModalTopBarPropTypes};
-export interface ModalPropTypes extends ModalProps {
+export {ModalTopBarProps};
+export interface ModalProps extends RNModalProps {
     /**
      * Blurs the modal background when transparent (iOS only)
      */
@@ -43,7 +43,7 @@ export interface ModalPropTypes extends ModalProps {
  * @gif: https://media.giphy.com/media/3oFzmfSX8KgvctI4Ks/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.js
  */
-class Modal extends Component<ModalPropTypes> {
+class Modal extends Component<ModalProps> {
   static displayName = 'Modal';
   static TopBar: typeof TopBar;
 
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
 Modal.TopBar = TopBar;
 
 export default asBaseComponent<
-  ModalPropTypes,
+  ModalProps,
   {
     TopBar: typeof TopBar;
   }

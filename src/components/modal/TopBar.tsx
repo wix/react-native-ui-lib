@@ -8,7 +8,7 @@ import View from '../../components/view';
 import Button, {ButtonPropTypes} from '../../components/button';
 import Text from '../../components/text';
 
-export interface ModalTopBarPropTypes {
+export interface ModalTopBarProps {
   /**
      * title to display in the center of the top bar
      */
@@ -71,7 +71,7 @@ const DEFAULT_BUTTON_PROPS = {
  * @description: Modal.TopBar, inner component for configuring the Modal component's title, buttons and statusBar
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.js
  */
-class TopBar extends Component<ModalTopBarPropTypes> {
+class TopBar extends Component<ModalTopBarProps> {
   static displayName = 'Modal.TopBar';
 
   static defaultProps = {
@@ -172,4 +172,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default asBaseComponent<ModalTopBarPropTypes>(TopBar);
+export default asBaseComponent<ModalTopBarProps>(TopBar);

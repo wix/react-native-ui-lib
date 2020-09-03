@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleProp, TextStyle, ImageSourcePropType } from 'react-native';
 import { ButtonPropTypes } from '../../components/button';
-export interface ModalTopBarPropTypes {
+export interface ModalTopBarProps {
     /**
        * title to display in the center of the top bar
        */
@@ -47,7 +47,7 @@ export interface ModalTopBarPropTypes {
      */
     includeStatusBar?: boolean;
 }
-declare const _default: React.ComponentClass<ModalTopBarPropTypes & {
+declare const _default: React.ComponentClass<ModalTopBarProps & {
     useCustomTheme?: boolean | undefined;
 }, any>;
 export default _default;
