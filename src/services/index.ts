@@ -1,5 +1,1 @@
-module.exports = {
-  get LogService() {
-    return require('./LogService');
-  }
-};
+export {default as LogService} from './LogService';
