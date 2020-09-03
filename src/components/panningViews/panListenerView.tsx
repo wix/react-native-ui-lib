@@ -157,22 +157,22 @@ class PanListenerView extends PureComponent<Props> {
   };
 
   getDirectionsOverSensitivity = (x: number, y: number, sensitivity: number): PanningResultProps => {
-    const {directions} = this.props;
+    const {directions = DEFAULT_DIRECTIONS} = this.props;
     const selectedDirections: PanDirectionsProps = {};
     const selectedAmounts: PanAmountsProps = {};
 
-    if (directions?.includes(PanningProvider.Directions.LEFT) && x < -sensitivity) {
+    if (directions.includes(PanningProvider.Directions.LEFT) && x < -sensitivity) {
       selectedDirections.x = PanningProvider.Directions.LEFT;
       selectedAmounts.x = x;
-    } else if (directions?.includes(PanningProvider.Directions.RIGHT) && x > sensitivity) {
+    } else if (directions.includes(PanningProvider.Directions.RIGHT) && x > sensitivity) {
       selectedDirections.x = PanningProvider.Directions.RIGHT;
       selectedAmounts.x = x;
     }
 
-    if (directions?.includes(PanningProvider.Directions.UP) && y < -sensitivity) {
+    if (directions.includes(PanningProvider.Directions.UP) && y < -sensitivity) {
       selectedDirections.y = PanningProvider.Directions.UP;
       selectedAmounts.y = y;
-    } else if (directions?.includes(PanningProvider.Directions.DOWN) && y > sensitivity) {
+    } else if (directions.includes(PanningProvider.Directions.DOWN) && y > sensitivity) {
       selectedDirections.y = PanningProvider.Directions.DOWN;
       selectedAmounts.y = y;
     }
