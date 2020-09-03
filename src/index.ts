@@ -5,6 +5,7 @@
  */
 
 export * from './style';
+export * from './services';
 export * as Incubator from './incubator';
 export {default as Avatar, AvatarPropTypes} from './components/avatar';
 export {default as Card, CardPropTypes, CardSectionProps} from './components/card';

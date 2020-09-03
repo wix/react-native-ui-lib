@@ -4,6 +4,7 @@
  * Please use this file for declaring all the exports, so they could be picked up by typescript's complier
  */
 export * from './style';
+export * from './services';
 export * as Incubator from './incubator';
 export {asBaseComponent, withScrollEnabler, withScrollReached, WithScrollEnablerProps, WithScrollReachedProps} from './commons/new';
 export {default as Avatar, AvatarPropTypes} from './components/avatar';
