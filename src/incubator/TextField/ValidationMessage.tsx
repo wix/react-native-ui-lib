@@ -12,11 +12,14 @@ export interface ValidationMessageProps {
    * The validation message to display when field is invalid (depends on validate)
    */
   validationMessage?: string;
+  /**
+   * Custom style for the validation message
+   */
   validationMessageStyle?: TextStyle;
   retainSpace?: boolean;
 }
 
-export default ({
+const ValidationMessage = ({
   validationMessage,
   enableErrors,
   validationMessageStyle,
@@ -40,3 +43,6 @@ const styles = StyleSheet.create({
     minHeight: 20
   }
 });
+
+ValidationMessage.displayName = 'Incubator.TextField';
+export default ValidationMessage;
