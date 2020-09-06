@@ -14,10 +14,7 @@ import AccessoryButton from './AccessoryButton';
 import ValidationMessage, {ValidationMessageProps} from './ValidationMessage';
 import Label, {LabelProps} from './Label';
 import FieldContext from './FieldContext';
-import withFieldState, {
-  FieldStateInjectedProps,
-  FieldStateProps
-} from './withFieldState';
+import useFieldState, {FieldStateProps} from './useFieldState';
 import FloatingPlaceholder, {
   FloatingPlaceholderProps
 } from './FloatingPlaceholder';
@@ -62,7 +59,7 @@ interface TextFieldProps
 
 interface InternalTextFieldProps
   extends TextFieldProps,
-    Omit<FieldStateInjectedProps, keyof InputProps>,
+    // Omit<FieldStateInjectedProps, keyof InputProps>,
     ForwardRefInjectedProps {}
 
 interface StaticMembers {
@@ -100,13 +97,13 @@ const TextField = (
     // Char Counter
     showCharCounter,
     charCounterStyle,
-    // Field State
-    fieldState,
     // Input
     placeholder,
     ...props
   }: InternalTextFieldProps
 ) => {
+  const {onFocus, onBlur, onChangeText, fieldState} = useFieldState(props);
+
   const context = useMemo(() => {
     return {...fieldState, disabled: props.editable === false};
   }, [fieldState, props.editable]);
@@ -141,6 +138,9 @@ const TextField = (
               )}
               <Input
                 {...props}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                onChangeText={onChangeText}
                 placeholder={floatingPlaceholder ? undefined : placeholder}
                 hint={hint}
               />
@@ -173,5 +173,5 @@ TextField.displayName = 'Incubator.TextField';
 TextField.validationMessagePositions = ValidationMessagePosition;
 
 export default asBaseComponent<TextFieldProps, StaticMembers>(
-  forwardRef(withFieldState(TextField as any))
+  forwardRef(TextField as any)
 );

@@ -5,7 +5,7 @@ import { ValidationMessagePosition } from './types';
 import { InputProps } from './Input';
 import { ValidationMessageProps } from './ValidationMessage';
 import { LabelProps } from './Label';
-import { FieldStateProps } from './withFieldState';
+import { FieldStateProps } from './useFieldState';
 import { FloatingPlaceholderProps } from './FloatingPlaceholder';
 import { CharCounterProps } from './CharCounter';
 interface TextFieldProps extends InputProps, LabelProps, FloatingPlaceholderProps, FieldStateProps, ValidationMessageProps, Omit<CharCounterProps, 'maxLength'> {
