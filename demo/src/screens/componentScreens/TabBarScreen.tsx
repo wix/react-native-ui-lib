@@ -175,7 +175,7 @@ export default class TabBarScreen extends Component {
             label={`Change index: ${this.state.selectedIndex}`}
             onPress={this.changeIndex}
           />
-          <TabBar style={styles.tabbar} selectedIndex={this.state.selectedIndex} enableShadow>
+          <TabBar style={styles.tabbar} selectedIndex={this.state.selectedIndex} enableShadow backgroundColor={Colors.green70}>
             <TabBar.Item label="LONG LABEL"/>
             <TabBar.Item label="ACTIVE"/>
             <TabBar.Item label="INACTIVE"/>

@@ -40,7 +40,7 @@ export type ImageProps = RNImageProps & MarginModifiers & {
   aspectRatio?: number;
   /**
    * The type of overly to place on top of the image. Note: the image MUST have proper size, see examples in:
-   * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.js
+   * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.tsx
    */
   overlayType?: OverlayTypeType;
   /**

@@ -5,6 +5,7 @@ import classnames from 'classnames';
 
 export default ({id, link, components, currentPage}) => {
   const hasChildren = _.size(components) > 1;
+
   if (!hasChildren) {
     return <ItemEntry id={id} link={link} currentPage={currentPage} />;
   } else {
@@ -17,7 +18,7 @@ export default ({id, link, components, currentPage}) => {
         </Link>
 
         <ul class="nested">
-          {_.map(_.drop(components, 1), c => {
+          {_.map(_.filter(components, c => c.node.displayName !== id), c => {
             return (
               <ItemEntry id={c.node.displayName} currentPage={currentPage} />
             );

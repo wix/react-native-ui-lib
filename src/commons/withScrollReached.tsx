@@ -55,10 +55,10 @@ const DEFAULT_THRESHOLD = Constants.isAndroid ? 1 : 0;
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WithScrollReachedScreen.tsx
  * @notes: Send `props.scrollReachedProps.onScroll` to your onScroll and receive via props.scrollReachedProps.isScrollAtStart props.scrollReachedProps.isScrollAtEnd
  */
-function withScrollReached<PROPS>(
+function withScrollReached<PROPS, STATICS = {}>(
   WrappedComponent: React.ComponentType<PROPS & WithScrollReachedProps>,
   options: WithScrollReachedOptionsProps = {}
-): React.ComponentType<PROPS> {
+): React.ComponentType<PROPS> & STATICS {
   const ScrollReachedDetector = (props: PROPS & PropTypes) => {
     // The scroll starts at the start, from what I've tested this works fine
     const [isScrollAtStart, setScrollAtStart] = useState(true);
@@ -101,7 +101,10 @@ function withScrollReached<PROPS>(
   };
 
   hoistStatics(ScrollReachedDetector, WrappedComponent);
-  return forwardRef(ScrollReachedDetector);
+  ScrollReachedDetector.displayName = WrappedComponent.displayName;
+  ScrollReachedDetector.propTypes = WrappedComponent.propTypes;
+  ScrollReachedDetector.defaultProps = WrappedComponent.defaultProps;
+  return forwardRef(ScrollReachedDetector) as any;
 }
 
 export default withScrollReached;

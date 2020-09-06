@@ -11,6 +11,7 @@ import {Colors, BorderRadiuses} from '../../style';
 import {WheelPicker} from '../../nativeComponents';
 
 class PickerDialog extends BaseComponent {
+  static displayName = 'IGNORE';
   static propTypes = {
     selectedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     onValueChange: PropTypes.func,

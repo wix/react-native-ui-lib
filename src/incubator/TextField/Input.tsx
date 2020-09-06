@@ -5,6 +5,9 @@ import {Constants} from '../../helpers'
 import FieldContext from './FieldContext';
 
 export interface InputProps extends TextInputProps, React.ComponentPropsWithRef<typeof TextInput> {
+  /**
+   * A hint text to display when focusing the field
+   */
   hint?: string;
 }
 
@@ -23,7 +26,6 @@ const Input = ({style, hint, forwardedRef, ...props}: InputProps & ForwardRefInj
   );
 };
 
-export default Input;
 
 const styles = StyleSheet.create({
   input: {
@@ -40,3 +42,6 @@ const styles = StyleSheet.create({
     })
   }
 });
+
+Input.displayName = 'Incubator.TextField';
+export default Input;

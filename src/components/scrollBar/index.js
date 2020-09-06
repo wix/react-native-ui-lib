@@ -254,5 +254,6 @@ const Item = ({children, index, onLayout}) => {
   );
 };
 
+Item.displayName = 'IGNORE';
 ScrollBar.Item = Item;
 export default forwardRef(ScrollBar);

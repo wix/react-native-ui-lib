@@ -39,12 +39,6 @@ export interface FloatingButtonProps {
   hideBackgroundOverlay?: boolean;
 }
 
-interface State {
-  shouldAnimateHide?: boolean;
-  isVisible?: boolean;
-  animating?: boolean;
-}
-
 const SHOW_ANIMATION_DELAY = 350;
 const SHOW_ANIMATION_DURATION = 180;
 const HIDE_ANIMATION_DURATION = 150;
@@ -57,44 +51,21 @@ const gradientImage = () => require('./gradient.png');
  * @extends: Button
  * @extendsLink: https://github.com/wix/react-native-ui-lib/blob/master/src/components/button/index.js
  */
-class FloatingButton extends PureComponent<FloatingButtonProps, State> {
+class FloatingButton extends PureComponent<FloatingButtonProps> {
   static displayName = 'FloatingButton';
 
+  initialVisibility?: boolean;
+  firstLoad: boolean;
+  
   constructor(props: FloatingButtonProps) {
     super(props);
 
-    this.state = {
-      shouldAnimateHide: false,
-      isVisible: props.visible,
-      animating: false
-    };
+    this.initialVisibility = props.visible;
+    this.firstLoad = true;
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: FloatingButtonProps) {
-    const {withoutAnimation} = this.props;
-    const propsVisible = this.props.visible;
-    const nextVisible = nextProps.visible;
-
-    if (!withoutAnimation) {
-      const shouldStartAnimation =
-        !this.state.isVisible && nextVisible && !this.state.animating;
-      if (shouldStartAnimation) {
-        this.setState({animating: true});
-
-        if (nextProps.duration) {
-          setTimeout(() => {
-            this.setState({isVisible: false, shouldAnimateHide: true});
-          }, nextProps.duration);
-        }
-      }
-    }
-
-    this.setState({
-      shouldAnimateHide: withoutAnimation
-        ? false
-        : !nextVisible && propsVisible,
-      isVisible: nextVisible
-    });
+  componentDidMount() {
+    this.firstLoad = false;
   }
 
   onAnimationEnd = () => {
@@ -143,12 +114,14 @@ class FloatingButton extends PureComponent<FloatingButtonProps, State> {
   }
 
   render() {
-    const {withoutAnimation, secondaryButton} = this.props;
-    const {isVisible, shouldAnimateHide} = this.state;
+    const {withoutAnimation, secondaryButton, visible} = this.props;
     const Container = !withoutAnimation ? AnimatableView : View;
 
-    // NOTE: Don't show if it should not be visible and it was already animated
-    if (!isVisible && !shouldAnimateHide) {
+    // NOTE: On first load, don't show if it should not be visible
+    if (this.firstLoad === true && !this.initialVisibility) {
+      return false;
+    }
+    if (!visible && withoutAnimation) {
       return false;
     }
 
@@ -156,9 +129,9 @@ class FloatingButton extends PureComponent<FloatingButtonProps, State> {
       <Container
         pointerEvents="box-none"
         style={[styles.animatedContainer, Constants.isAndroid && {zIndex: 99}]}
-        animation={!isVisible ? 'fadeOutDown' : 'fadeInUp'}
+        animation={!visible ? 'fadeOutDown' : 'fadeInUp'}
         duration={SHOW_ANIMATION_DURATION}
-        delay={!isVisible ? HIDE_ANIMATION_DURATION : SHOW_ANIMATION_DELAY}
+        delay={!visible ? HIDE_ANIMATION_DURATION : SHOW_ANIMATION_DELAY}
         easing={'ease-out'}
         onAnimationEnd={this.onAnimationEnd}
       >

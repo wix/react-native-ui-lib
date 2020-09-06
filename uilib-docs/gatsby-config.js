@@ -1,4 +1,4 @@
-const {manifestPlugin, markdownPagesPlugin, componentsDocgenPlugin, imagesPlugin, layoutPlugin} = require('./configurations/plugins');
+const {manifestPlugin, markdownPagesPlugin, componentsDocgenPlugin, incubatorComponentsDocgenPlugin, nativeComponentsDocgenPlugin, imagesPlugin, layoutPlugin} = require('./configurations/plugins');
 
 module.exports = {
   pathPrefix: '/react-native-ui-lib',
@@ -12,6 +12,8 @@ module.exports = {
     `gatsby-plugin-sass`,
     ...markdownPagesPlugin,
     ...componentsDocgenPlugin,
+    ...incubatorComponentsDocgenPlugin,
+    ...nativeComponentsDocgenPlugin,
     ...imagesPlugin,
     ...manifestPlugin,
     ...layoutPlugin

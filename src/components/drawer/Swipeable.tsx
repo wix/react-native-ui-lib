@@ -67,6 +67,7 @@ type StateType = {
 };
 
 export default class Swipeable extends Component<PropType, StateType> {
+  static displayName = 'IGNORE';
   static defaultProps = {
     friction: 1,
     overshootFriction: 1,

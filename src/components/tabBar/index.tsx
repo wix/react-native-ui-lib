@@ -42,6 +42,10 @@ export type TabBarProps = BaseComponentInjectedProps & ViewPropTypes & {
      * custom style for the selected indicator
      */
     indicatorStyle?: ViewStyle,
+    /** 
+     * The background color 
+     */
+    backgroundColor: string,
     /**
      * Tab Bar height
      */
@@ -77,7 +81,8 @@ class TabBar extends Component<TabBarProps, State> {
   static displayName = 'TabBar';
 
   static defaultProps = {
-    selectedIndex: 0
+    selectedIndex: 0,
+    backgroundColor: DEFAULT_BACKGROUND_COLOR
   };
 
   static Item: typeof TabBarItem;
@@ -92,7 +97,7 @@ class TabBar extends Component<TabBarProps, State> {
     };
   }
 
-  styles = createStyles();
+  styles = createStyles(this.props);
   scrollContainerWidth: number = Constants.screenWidth;
   scrollContentWidth = 0;
   contentOffset: any = {x: 0, y: 0};
@@ -246,7 +251,7 @@ class TabBar extends Component<TabBarProps, State> {
   }
 
   renderTabBar() {
-    const {height} = this.props;
+    const {height, backgroundColor} = this.props;
     const {scrollEnabled} = this.state;
     const containerHeight = height || DEFAULT_HEIGHT;
 
@@ -267,7 +272,7 @@ class TabBar extends Component<TabBarProps, State> {
             {this.renderChildren()}
           </View>
         </ScrollView>
-        {this.renderGradient(containerHeight, DEFAULT_BACKGROUND_COLOR)}
+        {this.renderGradient(containerHeight, backgroundColor)}
       </View>
     );
   }
@@ -311,7 +316,7 @@ class TabBar extends Component<TabBarProps, State> {
   }
 }
 
-function createStyles() {
+function createStyles({backgroundColor = DEFAULT_BACKGROUND_COLOR}) {
   return StyleSheet.create({
     container: {
       zIndex: 100
@@ -333,7 +338,7 @@ function createStyles() {
     tabBar: {
       flex: 1,
       height: DEFAULT_HEIGHT,
-      backgroundColor: DEFAULT_BACKGROUND_COLOR
+      backgroundColor
     },
     shadowImage: {
       width: '100%'

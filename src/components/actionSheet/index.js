@@ -104,13 +104,13 @@ export default class ActionSheet extends BaseComponent {
     message: undefined
   };
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const {useNativeIOS} = this.getThemeProps();
-    const wasVisible = this.props.visible;
-    const willBeVisible = nextProps.visible;
+    const wasVisible = prevProps.visible;
+    const willBeVisible = this.props.visible;
 
     if (!wasVisible && willBeVisible && useNativeIOS && Constants.isIOS) {
-      const {title, message, cancelButtonIndex, destructiveButtonIndex, options, showCancelButton} = nextProps;
+      const {title, message, cancelButtonIndex, destructiveButtonIndex, options, showCancelButton} = this.props;
 
       const optionsArray = options !== undefined ? options : [];
       let cancelBtnIndex = cancelButtonIndex;

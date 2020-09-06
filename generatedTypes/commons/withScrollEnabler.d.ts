@@ -9,5 +9,5 @@ export declare type WithScrollEnablerProps = {
     scrollEnablerProps: ScrollEnablerProps;
     ref?: any;
 };
-declare function withScrollEnabler<PROPS>(WrappedComponent: React.ComponentType<PROPS & WithScrollEnablerProps>): React.ComponentType<PROPS>;
+declare function withScrollEnabler<PROPS, STATICS = {}>(WrappedComponent: React.ComponentType<PROPS & WithScrollEnablerProps>): React.ComponentType<PROPS> & STATICS;
 export default withScrollEnabler;

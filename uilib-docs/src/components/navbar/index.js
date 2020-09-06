@@ -46,6 +46,7 @@ class Navbar extends Component {
     const components = data.allComponentMetadata.edges;
     const filteredComponents = _.chain(components)
       .filter(component => component.node.displayName !== 'IGNORE')
+      .uniqBy('node.displayName')
       .sortBy('node.displayName')
       .value();
 
@@ -77,7 +78,6 @@ class Navbar extends Component {
     const {filter} = this.state;
     const markdowns = this.getMarkdownPages(data);
     const components = this.getNavbarComponents(data);
-
     const filteredComponents = _.filter(components, component =>
       _.includes(_.lowerCase(component.node.displayName), _.lowerCase(filter))
     );

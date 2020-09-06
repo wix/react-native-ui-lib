@@ -16,14 +16,23 @@ import Text from '../../components/text';
 import FieldContext from './FieldContext';
 
 export interface FloatingPlaceholderProps {
+  /**
+   * The placeholder for the field
+   */
   placeholder?: string;
+  /**
+   * The floating placeholder color
+   */
   floatingPlaceholderColor?: ColorType;
+  /**
+   * Custom style to pass to the floating placeholder
+   */
   floatingPlaceholderStyle?: TextStyle;
 }
 
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
 
-export default ({placeholder, floatingPlaceholderColor = Colors.grey40, floatingPlaceholderStyle}: FloatingPlaceholderProps) => {
+const FloatingPlaceholder = ({placeholder, floatingPlaceholderColor = Colors.grey40, floatingPlaceholderStyle}: FloatingPlaceholderProps) => {
   const context = useContext(FieldContext);
   const [placeholderOffset, setPlaceholderOffset] = useState({
     top: 0,
@@ -97,3 +106,6 @@ function interpolateValue(
     outputRange
   });
 }
+
+FloatingPlaceholder.displayName = 'Incubator.TextField';
+export default FloatingPlaceholder;

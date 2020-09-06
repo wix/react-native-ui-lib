@@ -7,14 +7,26 @@ import {getColorByState} from './Presenter';
 import FieldContext from './FieldContext';
 
 export interface LabelProps {
+  /**
+   * Field label
+   */
   label?: string;
+  /**
+   * Field label color. Either a string or color by state map ({default, focus, error, disabled})
+   */
   labelColor?: ColorType;
+  /**
+   * Custom style for the field label
+   */
   labelStyle?: TextStyle;
+  /**
+   * Pass extra props to the label Text element
+   */
   labelProps?: TextPropTypes;
   validationMessagePosition?: ValidationMessagePosition;
 }
 
-export default ({
+const Label = ({
   label,
   labelColor = Colors.grey10,
   labelStyle,
@@ -41,3 +53,6 @@ export default ({
 
   return null;
 };
+
+Label.displayName = 'Incubator.TextField';
+export default Label;
