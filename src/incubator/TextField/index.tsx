@@ -1,6 +1,5 @@
 import React, {useMemo} from 'react';
 import {ViewStyle, TextStyle} from 'react-native';
-import _ from 'lodash';
 import {
   asBaseComponent,
   forwardRef,
@@ -14,10 +13,7 @@ import AccessoryButton from './AccessoryButton';
 import ValidationMessage, {ValidationMessageProps} from './ValidationMessage';
 import Label, {LabelProps} from './Label';
 import FieldContext from './FieldContext';
-import withFieldState, {
-  FieldStateInjectedProps,
-  FieldStateProps
-} from './withFieldState';
+import useFieldState, {Validator/* , FieldStateProps */} from './useFieldState';
 import FloatingPlaceholder, {
   FloatingPlaceholderProps
 } from './FloatingPlaceholder';
@@ -27,7 +23,8 @@ interface TextFieldProps
   extends InputProps,
     LabelProps,
     FloatingPlaceholderProps,
-    FieldStateProps,
+    // We're declaring these props explicitly here for react-docgen
+    // FieldStateProps, 
     ValidationMessageProps,
     Omit<CharCounterProps, 'maxLength'> {
   /**
@@ -47,6 +44,22 @@ interface TextFieldProps
    */
   floatingPlaceholderStyle?: TextStyle;
   /**
+   * A single or multiple validator. Can be a string (required, email) or custom function.
+   */
+  validate?: Validator | Validator[];
+  /**
+   * Should validate when the TextField mounts
+   */
+  validateOnStart?: boolean;
+  /**
+   * Should validate when the TextField value changes
+   */
+  validateOnChange?: boolean;
+  /**
+   * Should validate when losing focus of TextField
+   */
+  validateOnBlur?: boolean;
+  /**
    * The position of the validation message (top/bottom) 
    */
   validationMessagePosition?: ValidationMessagePosition;
@@ -62,7 +75,7 @@ interface TextFieldProps
 
 interface InternalTextFieldProps
   extends TextFieldProps,
-    Omit<FieldStateInjectedProps, keyof InputProps>,
+    // Omit<FieldStateInjectedProps, keyof InputProps>,
     ForwardRefInjectedProps {}
 
 interface StaticMembers {
@@ -100,13 +113,13 @@ const TextField = (
     // Char Counter
     showCharCounter,
     charCounterStyle,
-    // Field State
-    fieldState,
     // Input
     placeholder,
     ...props
   }: InternalTextFieldProps
 ) => {
+  const {onFocus, onBlur, onChangeText, fieldState} = useFieldState(props);
+
   const context = useMemo(() => {
     return {...fieldState, disabled: props.editable === false};
   }, [fieldState, props.editable]);
@@ -141,6 +154,9 @@ const TextField = (
               )}
               <Input
                 {...props}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                onChangeText={onChangeText}
                 placeholder={floatingPlaceholder ? undefined : placeholder}
                 hint={hint}
               />
@@ -173,5 +189,5 @@ TextField.displayName = 'Incubator.TextField';
 TextField.validationMessagePositions = ValidationMessagePosition;
 
 export default asBaseComponent<TextFieldProps, StaticMembers>(
-  forwardRef(withFieldState(TextField as any))
+  forwardRef(TextField as any)
 );
