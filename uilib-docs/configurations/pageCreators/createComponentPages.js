@@ -64,21 +64,20 @@ function getRelevantComponents(edges) {
     .filter(e => {
       return e.node.displayName !== 'IGNORE';
     })
-    /* Group internal components with parent component */
+    /* Group internal components with the parent component */
     .groupBy(e => e.node.displayName)
-    .map((groupedEdged, id) => {
-      if (groupedEdged.length > 1) {
+    .map((groupedEdge, id) => {
+      if (groupedEdge.length > 1) {
         const edge = {
           node: {
             displayName: id,
-            docblock: _.find(groupedEdged, e => !!e.node.docblock),
-            description: _.find(groupedEdged, e => !!e.node.description),
-            props: _.reduce(groupedEdged, (props, e) => [...props, ...e.node.props], [])
+            docblock: _.chain(groupedEdge).find(e => !!e.node.docblock).get('node.docblock').value(),
+            props: _.reduce(groupedEdge, (props, e) => [...props, ...e.node.props], [])
           }
         };
         return edge;
       } else {
-        return groupedEdged[0];
+        return groupedEdge[0];
       }
     })
     .value();
