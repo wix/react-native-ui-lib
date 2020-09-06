@@ -43,7 +43,7 @@ export default function useFieldState({
 
       setIsValid(_isValid);
     },
-    [value]
+    [value, validate]
   );
 
   const onFocus = useCallback(
@@ -74,7 +74,7 @@ export default function useFieldState({
         validateField(text);
       }
     },
-    [props.onChangeText, validateOnChange]
+    [props.onChangeText, validateOnChange, validateField]
   );
 
   const fieldState = useMemo(() => {
