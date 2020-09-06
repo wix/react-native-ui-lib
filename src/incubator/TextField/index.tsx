@@ -1,6 +1,5 @@
 import React, {useMemo} from 'react';
 import {ViewStyle, TextStyle} from 'react-native';
-import _ from 'lodash';
 import {
   asBaseComponent,
   forwardRef,
@@ -14,7 +13,7 @@ import AccessoryButton from './AccessoryButton';
 import ValidationMessage, {ValidationMessageProps} from './ValidationMessage';
 import Label, {LabelProps} from './Label';
 import FieldContext from './FieldContext';
-import useFieldState, {FieldStateProps} from './useFieldState';
+import useFieldState, {Validator/* , FieldStateProps */} from './useFieldState';
 import FloatingPlaceholder, {
   FloatingPlaceholderProps
 } from './FloatingPlaceholder';
@@ -24,7 +23,8 @@ interface TextFieldProps
   extends InputProps,
     LabelProps,
     FloatingPlaceholderProps,
-    FieldStateProps,
+    // We're declaring these props explicitly here for react-docgen
+    // FieldStateProps, 
     ValidationMessageProps,
     Omit<CharCounterProps, 'maxLength'> {
   /**
@@ -43,6 +43,22 @@ interface TextFieldProps
    * Custom style for the floating placeholder
    */
   floatingPlaceholderStyle?: TextStyle;
+  /**
+   * A single or multiple validator. Can be a string (required, email) or custom function.
+   */
+  validate?: Validator | Validator[];
+  /**
+   * Should validate when the TextField mounts
+   */
+  validateOnStart?: boolean;
+  /**
+   * Should validate when the TextField value changes
+   */
+  validateOnChange?: boolean;
+  /**
+   * Should validate when losing focus of TextField
+   */
+  validateOnBlur?: boolean;
   /**
    * The position of the validation message (top/bottom) 
    */
