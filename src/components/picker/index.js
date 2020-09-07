@@ -358,7 +358,7 @@ class Picker extends BaseComponent {
   };
 
   render() {
-    const {useNativePicker, renderPicker, customPickerProps, testID} = this.props;
+    const {useNativePicker, renderPicker, customPickerProps, containerStyle, testID} = this.props;
 
     if (useNativePicker) {
       return <NativePicker {...this.props}/>;
@@ -378,9 +378,13 @@ class Picker extends BaseComponent {
 
     const textInputProps = TextField.extractOwnProps(this.getThemeProps());
     const label = this.getLabelValueText();
+    const marginsModifiers = this.extractMarginValues();
+    const paddingsModifiers = this.extractPaddingValues();
+
     return (
       <TextField
         {...textInputProps}
+        containerStyle={[containerStyle, marginsModifiers, paddingsModifiers]}
         {...this.getAccessibilityInfo()}
         importantForAccessibility={'no-hide-descendants'}
         value={label}

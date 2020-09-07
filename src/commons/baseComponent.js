@@ -49,6 +49,14 @@ export default function baseComponent(usePure) {
       return Modifiers.extractTypographyValue(this.getThemeProps());
     }
 
+    extractMarginValues() {
+      return Modifiers.extractMarginValues(this.getThemeProps());
+    }
+
+    extractPaddingValues() {
+      return Modifiers.extractPaddingValues(this.getThemeProps());
+    }
+
     extractColorValue = () => Modifiers.extractColorValue(this.getThemeProps());
 
     extractAnimationProps() {
