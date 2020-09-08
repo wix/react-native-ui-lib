@@ -20,7 +20,7 @@ export enum GestureDirections {
   DOWN = 'down'
 }
 
-export interface PanGestureViewPropTypes {
+export interface PanGestureViewProps {
   /**
    * Additional styling
    */
@@ -46,10 +46,10 @@ interface State {
 /**
  * @description: PanGestureView component for drag and swipe gestures (supports only vertical gestures at the moment)
  */
-class PanGestureView extends Component<PanGestureViewPropTypes, State> {
+class PanGestureView extends Component<PanGestureViewProps, State> {
   static displayName = 'PanGestureView'
 
-  static defaultProps: Partial<PanGestureViewPropTypes> = {
+  static defaultProps: Partial<PanGestureViewProps> = {
     direction: GestureDirections.DOWN
   };
   
@@ -59,7 +59,7 @@ class PanGestureView extends Component<PanGestureViewPropTypes, State> {
   private swipe?: boolean;
   private layout?: LayoutRectangle;
 
-  constructor(props: PanGestureViewPropTypes) {
+  constructor(props: PanGestureViewProps) {
     super(props);
 
     this.state = {
@@ -199,4 +199,4 @@ class PanGestureView extends Component<PanGestureViewPropTypes, State> {
   }
 }
 
-export default asBaseComponent<PanGestureViewPropTypes>(PanGestureView);
+export default asBaseComponent<PanGestureViewProps>(PanGestureView);

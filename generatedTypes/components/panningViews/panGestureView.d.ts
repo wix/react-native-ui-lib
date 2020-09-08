@@ -4,7 +4,7 @@ export declare enum GestureDirections {
     UP = "up",
     DOWN = "down"
 }
-export interface PanGestureViewPropTypes {
+export interface PanGestureViewProps {
     /**
      * Additional styling
      */
@@ -18,9 +18,7 @@ export interface PanGestureViewPropTypes {
      */
     direction?: GestureDirections;
 }
-declare const _default: React.ComponentClass<PanGestureViewPropTypes & {
-    useCustomTheme?: boolean | undefined; /**
-     * onDismiss callback
-     */
+declare const _default: React.ComponentClass<PanGestureViewProps & {
+    useCustomTheme?: boolean | undefined;
 }, any>;
 export default _default;

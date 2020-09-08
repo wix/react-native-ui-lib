@@ -1,5 +1,5 @@
 import React from 'react';
-import { PanningDirections, PanDirectionsProps, PanAmountsProps } from './panningProvider';
+import { PanningDirections, PanDirectionsProps, PanAmountsProps, PanningProviderDirection } from './panningProvider';
 import { ViewPropTypes } from '../view';
 interface PanningPropTypes {
     /**
@@ -46,7 +46,7 @@ export interface PanListenerViewPropTypes extends PanningPropTypes, ViewPropType
      * The directions of the allowed pan (default allows all directions)
      * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###)
      */
-    directions?: PanningDirections[];
+    directions?: PanningDirections[] | PanningProviderDirection[];
     /**
      * The sensitivity beyond which a pan is no longer considered a single click (default is 5)
      */
