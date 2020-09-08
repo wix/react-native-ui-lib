@@ -9,8 +9,14 @@ export interface ValidationMessageProps {
      * The validation message to display when field is invalid (depends on validate)
      */
     validationMessage?: string;
+    /**
+     * Custom style for the validation message
+     */
     validationMessageStyle?: TextStyle;
     retainSpace?: boolean;
 }
-declare const _default: ({ validationMessage, enableErrors, validationMessageStyle, retainSpace }: ValidationMessageProps) => JSX.Element | null;
-export default _default;
+declare const ValidationMessage: {
+    ({ validationMessage, enableErrors, validationMessageStyle, retainSpace }: ValidationMessageProps): JSX.Element | null;
+    displayName: string;
+};
+export default ValidationMessage;

@@ -5,10 +5,10 @@ import { ValidationMessagePosition } from './types';
 import { InputProps } from './Input';
 import { ValidationMessageProps } from './ValidationMessage';
 import { LabelProps } from './Label';
-import { FieldStateProps } from './withFieldState';
+import { Validator } from './useFieldState';
 import { FloatingPlaceholderProps } from './FloatingPlaceholder';
 import { CharCounterProps } from './CharCounter';
-interface TextFieldProps extends InputProps, LabelProps, FloatingPlaceholderProps, FieldStateProps, ValidationMessageProps, Omit<CharCounterProps, 'maxLength'> {
+interface TextFieldProps extends InputProps, LabelProps, FloatingPlaceholderProps, ValidationMessageProps, Omit<CharCounterProps, 'maxLength'> {
     /**
      * Pass to render a leading button/icon
      */
@@ -25,6 +25,22 @@ interface TextFieldProps extends InputProps, LabelProps, FloatingPlaceholderProp
      * Custom style for the floating placeholder
      */
     floatingPlaceholderStyle?: TextStyle;
+    /**
+     * A single or multiple validator. Can be a string (required, email) or custom function.
+     */
+    validate?: Validator | Validator[];
+    /**
+     * Should validate when the TextField mounts
+     */
+    validateOnStart?: boolean;
+    /**
+     * Should validate when the TextField value changes
+     */
+    validateOnChange?: boolean;
+    /**
+     * Should validate when losing focus of TextField
+     */
+    validateOnBlur?: boolean;
     /**
      * The position of the validation message (top/bottom)
      */

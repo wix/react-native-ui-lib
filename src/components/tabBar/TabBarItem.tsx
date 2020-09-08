@@ -111,9 +111,9 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
   styles = createStyles();
   layout: any = undefined;
 
-  UNSAFE_componentWillReceiveProps(nextProps: TabBarItemProps) {
-    if (this.props.selected !== nextProps.selected) {
-      this.animate(nextProps.selected);
+  componentDidUpdate(prevProps: TabBarItemProps)  {
+    if (prevProps.selected !== this.props.selected) {
+      this.animate(this.props.selected);
     }
   }
 

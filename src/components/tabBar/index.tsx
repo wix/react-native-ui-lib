@@ -104,20 +104,19 @@ class TabBar extends Component<TabBarProps, State> {
   itemsRefs: any[] = [];
   scrollView?: any = undefined;
 
-  UNSAFE_componentWillReceiveProps(nextProps: TabBarProps) {
+  componentDidUpdate(prevProps: TabBarProps, prevState: State) {
     // TODO: since we're implementing an uncontrolled component here, we should verify the selectedIndex has changed
     // between this.props and nextProps (basically the meaning of selectedIndex should be initialIndex)
+    const {selectedIndex} = this.props;
     const isIndexManuallyChanged =
-      nextProps.selectedIndex !== this.state.currentIndex && this.props.selectedIndex !== nextProps.selectedIndex;
-    if (isIndexManuallyChanged && nextProps.selectedIndex !== undefined) {
-      this.updateIndicator(nextProps.selectedIndex);
-    }
-  }
-
-  componentDidUpdate(prevProps: TabBarProps) {
-    const prevChildrenCount = React.Children.count(prevProps.children);
-    if (this.childrenCount < prevChildrenCount) {
-      this.updateIndicator(0);
+      selectedIndex !== prevState.currentIndex && prevProps.selectedIndex !== selectedIndex;
+    if (isIndexManuallyChanged && selectedIndex !== undefined) {
+      this.updateIndicator(selectedIndex);
+    } else {
+      const prevChildrenCount = React.Children.count(prevProps.children);
+      if (this.childrenCount < prevChildrenCount) {
+        this.updateIndicator(0);
+      }
     }
   }
 

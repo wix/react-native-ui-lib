@@ -86,7 +86,7 @@ export declare type ButtonPropTypes = TouchableOpacityProps & TypographyModifier
     /**
      * Additional styles for label text
      */
-    labelStyle?: TextStyle;
+    labelStyle?: StyleProp<TextStyle>;
     /**
      * Props that will be passed to the button's Text label.
      */
@@ -420,7 +420,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
     /**
      * Additional styles for label text
      */
-    labelStyle?: TextStyle | undefined;
+    labelStyle?: StyleProp<TextStyle>;
     /**
      * Props that will be passed to the button's Text label.
      */
@@ -577,7 +577,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
     /**
      * Additional styles for label text
      */
-    labelStyle?: TextStyle | undefined;
+    labelStyle?: StyleProp<TextStyle>;
     /**
      * Props that will be passed to the button's Text label.
      */
@@ -734,7 +734,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
     /**
      * Additional styles for label text
      */
-    labelStyle?: TextStyle | undefined;
+    labelStyle?: StyleProp<TextStyle>;
     /**
      * Props that will be passed to the button's Text label.
      */
@@ -891,7 +891,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
     /**
      * Additional styles for label text
      */
-    labelStyle?: TextStyle | undefined;
+    labelStyle?: StyleProp<TextStyle>;
     /**
      * Props that will be passed to the button's Text label.
      */

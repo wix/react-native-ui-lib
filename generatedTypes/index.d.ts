@@ -4,6 +4,7 @@
  * Please use this file for declaring all the exports, so they could be picked up by typescript's complier
  */
 export * from './style';
+export * from './services';
 export * as Incubator from './incubator';
 export {asBaseComponent, withScrollEnabler, withScrollReached, WithScrollEnablerProps, WithScrollReachedProps} from './commons/new';
 export {default as Avatar, AvatarPropTypes} from './components/avatar';
@@ -20,6 +21,7 @@ export {default as RadioButton, RadioButtonPropTypes} from './components/radioBu
 export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButton/RadioGroup';
 export {default as TabBar} from './components/TabBar';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
+export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
 export {default as PanningContext} from './components/panningViews/panningContext';
 export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
 export {
@@ -70,7 +72,6 @@ export {
   Constants,
   LogService,
   LoaderScreen,
-  Modal,
   StateScreen,
   WheelPicker,
   WheelPickerProps,
