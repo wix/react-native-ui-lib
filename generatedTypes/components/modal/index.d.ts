@@ -42,7 +42,7 @@ declare class Modal extends Component<ModalProps> {
     renderTouchableOverlay(): JSX.Element | undefined;
     render(): JSX.Element;
 }
-declare const _default: React.ComponentClass<typeof Modal & {
+declare const _default: React.ComponentClass<ModalProps & {
     useCustomTheme?: boolean | undefined;
-}, any>;
+}, any> & typeof Modal;
 export default _default;

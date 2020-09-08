@@ -22,6 +22,7 @@ export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButt
 export {default as TabBar} from './components/TabBar';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
+export {default as PanGestureView, PanGestureViewProps} from './components/panningViews/panGestureView';
 export {default as PanningContext} from './components/panningViews/panningContext';
 export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
 export {
@@ -29,7 +30,8 @@ export {
   PanningDirections,
   PanLocationProps,
   PanAmountsProps,
-  PanDirectionsProps
+  PanDirectionsProps,
+  PanningProviderDirection
 } from './components/panningViews/panningProvider';
 export {default as PanListenerView, PanListenerViewPropTypes} from './components/panningViews/panListenerView';
 export {default as PanResponderView, PanResponderViewPropTypes} from './components/panningViews/panResponderView';

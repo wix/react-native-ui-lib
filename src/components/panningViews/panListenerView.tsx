@@ -10,7 +10,8 @@ import asPanViewConsumer from './asPanViewConsumer';
 import PanningProvider, {
   PanningDirections,
   PanDirectionsProps,
-  PanAmountsProps
+  PanAmountsProps,
+  PanningProviderDirection
 } from './panningProvider';
 import View, {ViewPropTypes} from '../view';
 
@@ -54,7 +55,7 @@ export interface PanListenerViewPropTypes extends PanningPropTypes, ViewPropType
      * The directions of the allowed pan (default allows all directions)
      * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###)
      */
-    directions?: PanningDirections[];
+    directions?: PanningDirections[] | PanningProviderDirection[];
     /**
      * The sensitivity beyond which a pan is no longer considered a single click (default is 5)
      */
