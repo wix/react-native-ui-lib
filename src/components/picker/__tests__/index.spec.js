@@ -1,4 +1,4 @@
-import Picker from '../index';
+import {Picker} from '../index';
 
 const countries = [
   {label: 'Israel', value: 'IL'},
