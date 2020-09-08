@@ -20,8 +20,20 @@ export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as RadioButton, RadioButtonPropTypes} from './components/radioButton/RadioButton';
 export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButton/RadioGroup';
 export {default as TabBar} from './components/TabBar';
-export {default as Fader, FaderProps} from './components/fader';
+export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
+export {default as PanningContext} from './components/panningViews/panningContext';
+export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
+export {
+  default as PanningProvider,
+  PanningDirections,
+  PanLocationProps,
+  PanAmountsProps,
+  PanDirectionsProps
+} from './components/panningViews/panningProvider';
+export {default as PanListenerView, PanListenerViewPropTypes} from './components/panningViews/panListenerView';
+export {default as PanResponderView, PanResponderViewPropTypes} from './components/panningViews/panResponderView';
+export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes} from './components/panningViews/panDismissibleView';
 
 /* All components with manual typings */
 export {
@@ -41,11 +53,6 @@ export {
   MaskedInput,
   ListItem,
   PageControl,
-  PanningProvider,
-  PanGestureView,
-  PanListenerView,
-  PanDismissibleView,
-  PanResponderView,
   ProgressBar,
   Slider,
   GradientSlider,

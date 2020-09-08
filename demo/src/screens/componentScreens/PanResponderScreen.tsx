@@ -9,15 +9,15 @@ import {
   Typography,
   PanListenerView,
   PanningProvider,
-  PanResponderView,
-} from 'react-native-ui-lib'; //eslint-disable-line
+  PanResponderView
+} from 'react-native-ui-lib';
 
 const PAN_LISTENER_VIEW_HEIGHT = 100;
 
 export default class PanResponderScreen extends Component {
   state = {
     location: {left: 50, top: 50},
-    isCoupled: false,
+    isCoupled: false
   };
 
   switchExample = () => {
@@ -25,12 +25,12 @@ export default class PanResponderScreen extends Component {
     if (isCoupled) {
       this.setState({
         isCoupled: false,
-        location: {left: location.left, top: location.top - PAN_LISTENER_VIEW_HEIGHT},
+        location: {left: location.left, top: location.top - PAN_LISTENER_VIEW_HEIGHT}
       });
     } else {
       this.setState({
         isCoupled: true,
-        location: {left: location.left, top: location.top + PAN_LISTENER_VIEW_HEIGHT},
+        location: {left: location.left, top: location.top + PAN_LISTENER_VIEW_HEIGHT}
       });
     }
   };
@@ -71,29 +71,29 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     height: 50,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   panResponder: {
     width: 250,
     height: 250,
-    backgroundColor: Colors.blue30,
+    backgroundColor: Colors.blue30
   },
   panListener: {
     width: '100%',
     height: PAN_LISTENER_VIEW_HEIGHT,
     backgroundColor: Colors.blue60,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   largeText: {
     ...Typography.text50,
-    marginLeft: 40,
+    marginLeft: 40
   },
   smallText: {
     ...Typography.text70,
-    marginLeft: 20,
+    marginLeft: 20
   },
   switch: {
     marginLeft: 20,
-    alignSelf: 'center',
-  },
+    alignSelf: 'center'
+  }
 });
