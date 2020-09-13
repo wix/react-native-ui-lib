@@ -24,9 +24,9 @@ export function getColorByState(color: ColorType, context?: ContextType) {
 }
 
 export function validate(
-  value: string | undefined,
+  value?: string,
   validator?: Validator | Validator[]
-): [boolean, number | undefined] {
+): [boolean, number?] {
   if (_.isUndefined(validator)) {
     return [true, undefined];
   }
