@@ -1,23 +1,95 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {StyleSheet} from 'react-native';
-import {Constants} from '../../helpers';
+import React, {Component} from 'react';
+import {StyleSheet, StyleProp, ViewStyle, ModalPropsIOS, AccessibilityProps} from 'react-native';
 import {Colors} from '../../style';
-import {BaseComponent} from '../../commons';
+import Constants, {orientations} from '../../helpers/Constants';
+import {AlignmentModifiers, extractAlignmentsValues} from '../../commons/modifiers';
+import {asBaseComponent} from '../../commons/new';
 import {LogService} from '../../services';
 import Modal from '../modal';
 import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
 import DialogDismissibleView from './DialogDismissibleView';
 import OverlayFadingBackground from './OverlayFadingBackground';
-import PanningProvider from '../panningViews/panningProvider';
+import PanningProvider, {PanningDirections} from '../panningViews/panningProvider';
 
 // TODO: KNOWN ISSUES
 // 1. iOS pressing on the background while enter animation is happening will not call onDismiss
 //    Touch events are not registered?
 // 2. SafeArea is transparent
 // 3. Check why we need the state change in DialogDismissibleView -> onLayout -> animateTo
+
+interface RNPartialProps
+  extends Pick<ModalPropsIOS, 'supportedOrientations'>,
+    Pick<AccessibilityProps, 'accessibilityLabel'> {}
+
+export interface DialogProps extends AlignmentModifiers, RNPartialProps {
+    /**
+     * Control visibility of the dialog
+     */
+    visible?: boolean;
+    /**
+     * Dismiss callback for when clicking on the background
+     */
+    onDismiss?: (props: any) => void;
+    /**
+     * The color of the overlay background
+     */
+    overlayBackgroundColor?: string;
+    /**
+     * The dialog width (default: 90%)
+     */
+    width?: string | number;
+    /**
+     * The dialog height (default: undefined)
+     */
+    height?: string | number;
+    /**
+     * The direction of the allowed pan (default is DOWN).
+     * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###).
+     * Pass null to remove pan.
+     */
+    panDirection?: PanningDirections;
+    /**
+     * Whether or not to handle SafeArea
+     */
+    useSafeArea?: boolean;
+    /**
+     * Called once the modal has been dismissed (iOS only) - Deprecated, use onDialogDismissed instead
+     */
+    onModalDismissed?: (props: any) => void;
+    /**
+     * Called once the dialog has been dismissed completely
+     */
+    onDialogDismissed?: (props: any) => void;
+    /**
+     * If this is added only the header will be pannable;
+     * this allows for scrollable content (the children of the dialog)
+     * props are transferred to the renderPannableHeader
+     */
+    renderPannableHeader?: (props: any) => JSX.Element;
+    /**
+     * The props that will be passed to the pannable header
+     */
+    pannableHeaderProps?: any;
+    /**
+     * The Dialog`s container style
+     */
+    containerStyle?: StyleProp<ViewStyle>;
+    /**
+     * Used as a testing identifier
+     */
+    testID?: string;
+}
+
+interface DialogState {
+  alignments: AlignmentModifiers;
+  orientationKey: orientations;
+  modalVisibility?: boolean;
+  dialogVisibility?: boolean;
+}
+
+const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.dark10, 0.6);
 
 /**
  * @description: Dialog component for displaying custom content inside a popup dialog
@@ -27,77 +99,26 @@ import PanningProvider from '../panningViews/panningProvider';
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DialogScreen.js
  * @gif: https://media.giphy.com/media/9S58XdLCoUiLzAc1b1/giphy.gif
  */
-class Dialog extends BaseComponent {
+class Dialog extends Component<DialogProps, DialogState> {
   static displayName = 'Dialog';
-  static propTypes = {
-    /**
-     * Control visibility of the dialog
-     */
-    visible: PropTypes.bool,
-    /**
-     * Dismiss callback for when clicking on the background
-     */
-    onDismiss: PropTypes.func,
-    /**
-     * The color of the overlay background
-     */
-    overlayBackgroundColor: PropTypes.string,
-    /**
-     * The dialog width (default: 90%)
-     */
-    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    /**
-     * The dialog height (default: undefined)
-     */
-    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    /**
-     * The direction of the allowed pan (default is DOWN).
-     * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###).
-     * Pass null to remove pan.
-     */
-    panDirection: PropTypes.oneOf(Object.values(PanningProvider.Directions)),
-    /**
-     * Whether or not to handle SafeArea
-     */
-    useSafeArea: PropTypes.bool,
-    /**
-     * Called once the modal has been dismissed (iOS only) - Deprecated, use onDialogDismissed instead
-     */
-    onModalDismissed: PropTypes.func,
-    /**
-     * Called once the dialog has been dismissed completely
-     */
-    onDialogDismissed: PropTypes.func,
-    /**
-     * If this is added only the header will be pannable;
-     * this allows for scrollable content (the children of the dialog)
-     * props are transferred to the renderPannableHeader
-     */
-    renderPannableHeader: PropTypes.elementType,
-    /**
-     * The props that will be passed to the pannable header
-     */
-    pannableHeaderProps: PropTypes.any,
-    /**
-     * The Dialog`s container style
-     */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
-  };
 
   static defaultProps = {
-    overlayBackgroundColor: Colors.rgba(Colors.dark10, 0.6)
+    overlayBackgroundColor: DEFAULT_OVERLAY_BACKGROUND_COLOR
   };
 
-  constructor(props) {
+  private styles: any;
+
+  constructor(props: DialogProps) {
     super(props);
 
     this.state = {
-      alignments: this.state.alignments,
+      alignments: extractAlignmentsValues(props),
       orientationKey: Constants.orientation,
       modalVisibility: props.visible,
       dialogVisibility: props.visible
     };
 
+    this.styles = createStyles(this.props);
     this.setAlignment();
 
     if (!_.isUndefined(props.onModalDismissed)) {
@@ -113,7 +134,7 @@ class Dialog extends BaseComponent {
     Constants.removeDimensionsEventListener(this.onOrientationChange);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: DialogProps) {
     const {visible: nexVisible} = nextProps;
     const {visible} = this.props;
 
@@ -131,10 +152,6 @@ class Dialog extends BaseComponent {
     }
   };
 
-  generateStyles() {
-    this.styles = createStyles(this.getThemeProps());
-  }
-
   setAlignment() {
     const {alignments} = this.state;
     if (_.isEmpty(alignments)) {
@@ -146,7 +163,7 @@ class Dialog extends BaseComponent {
 
   onDismiss = () => {
     this.setState({modalVisibility: false}, () => {
-      const props = this.getThemeProps();
+      const props = this.props;
       if (props.visible) {
         _.invoke(props, 'onDismiss', props);
       }
@@ -166,15 +183,15 @@ class Dialog extends BaseComponent {
     this.setState({dialogVisibility: false});
   };
 
-  renderPannableHeader = directions => {
-    const {renderPannableHeader, pannableHeaderProps} = this.getThemeProps();
+  renderPannableHeader = (directions: PanningDirections[]) => {
+    const {renderPannableHeader, pannableHeaderProps} = this.props;
     if (renderPannableHeader) {
       return <PanListenerView directions={directions}>{renderPannableHeader(pannableHeaderProps)}</PanListenerView>;
     }
   };
 
   renderDialogView = () => {
-    const {children, renderPannableHeader, panDirection = PanningProvider.Directions.DOWN, containerStyle, testID} = this.getThemeProps();
+    const {children, renderPannableHeader, panDirection = PanningProvider.Directions.DOWN, containerStyle, testID} = this.props;
     const {dialogVisibility} = this.state;
     const Container = renderPannableHeader ? View : PanListenerView;
 
@@ -198,10 +215,10 @@ class Dialog extends BaseComponent {
     );
   };
 
-  // TODO: renderOverlay {_.invoke(this.getThemeProps(), 'renderOverlay')}
+  // TODO: renderOverlay {_.invoke(this.props, 'renderOverlay')}
   renderDialogContainer = () => {
     const {modalVisibility, dialogVisibility} = this.state;
-    const {useSafeArea, bottom, overlayBackgroundColor} = this.getThemeProps();
+    const {useSafeArea, bottom, overlayBackgroundColor} = this.props;
     const addBottomSafeArea = Constants.isIphoneX && (useSafeArea && bottom);
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8; // TODO: should this be here or in the input style?
 
@@ -224,7 +241,7 @@ class Dialog extends BaseComponent {
 
   render = () => {
     const {orientationKey, modalVisibility} = this.state;
-    const {testID, supportedOrientations, accessibilityLabel} = this.getThemeProps();
+    const {testID, supportedOrientations, accessibilityLabel} = this.props;
 
     return (
       <Modal
@@ -245,7 +262,7 @@ class Dialog extends BaseComponent {
   };
 }
 
-function createStyles(props) {
+function createStyles(props: DialogProps) {
   const {width = '90%', height} = props;
   const flexType = height ? {flex: 1} : {flex: 0};
   return StyleSheet.create({
@@ -266,4 +283,4 @@ function createStyles(props) {
   });
 }
 
-export default Dialog;
+export default asBaseComponent<DialogProps>(Dialog);
