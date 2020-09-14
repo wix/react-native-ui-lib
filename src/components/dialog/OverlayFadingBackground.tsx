@@ -3,9 +3,9 @@ import View from '../view';
 import {Animated} from 'react-native';
 
 interface Props {
-  dialogVisibility: boolean;
-  modalVisibility: boolean;
-  overlayBackgroundColor: string;
+  dialogVisibility?: boolean;
+  modalVisibility?: boolean;
+  overlayBackgroundColor?: string;
 }
 
 const OverlayFadingBackground = ({

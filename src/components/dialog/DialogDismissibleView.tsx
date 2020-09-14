@@ -1,63 +1,90 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
-import {Animated, Easing, StyleSheet} from 'react-native';
+import {Animated, Easing, StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
 import {Constants} from '../../helpers';
 import View from '../view';
 import asPanViewConsumer from '../panningViews/asPanViewConsumer';
-import PanningProvider from '../panningViews/panningProvider';
+import PanningProvider, {PanningDirections, PanAmountsProps, PanDirectionsProps, PanLocationProps} from '../panningViews/panningProvider';
 import PanResponderView from '../panningViews/panResponderView';
 
 const MAXIMUM_DRAGS_AFTER_SWIPE = 2;
 
-class DialogDismissibleView extends PureComponent {
-  static propTypes = {
-    /**
-     * The direction of the allowed pan (default is DOWN)
-     * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###)
-     */
-    direction: PropTypes.oneOf(Object.values(PanningProvider.Directions)),
-    /**
-     * onDismiss callback
-     */
-    onDismiss: PropTypes.func,
-    /**
-     * The dialog`s container style
-     */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * Whether to show the dialog or not
-     */
-    visible: PropTypes.bool
+interface PanContextProps {
+  isPanning: boolean;
+  dragDeltas: PanAmountsProps;
+  swipeDirections: PanDirectionsProps;
+}
+
+interface DialogDismissibleProps {
+  /**
+   * Additional styling
+   */
+  style?: StyleProp<ViewStyle>;
+  /**
+   * The direction of the allowed pan (default is DOWN)
+   * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###)
+   */
+  direction?: PanningDirections;
+  /**
+   * onDismiss callback
+   */
+  onDismiss?: () => void;
+  /**
+   * The dialog`s container style
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Whether to show the dialog or not
+   */
+  visible?: boolean;
+}
+
+interface Props extends DialogDismissibleProps {
+  context: PanContextProps;
+}
+
+interface State {
+  visible?: boolean;
+  hide: boolean;
+}
+
+interface LocationProps {
+  left: number;
+  top: number;
+}
+
+const DEFAULT_DIRECTION = PanningProvider.Directions.DOWN;
+
+class DialogDismissibleView extends PureComponent<Props, State> {
+
+  public static defaultProps: Partial<Props> = {
+    direction: DEFAULT_DIRECTION,
+    onDismiss: () => {}
   };
 
-  static defaultProps = {
-    direction: PanningProvider.Directions.DOWN,
-    onDismiss: _.noop
-  };
+  private hiddenLocation: LocationProps;
+  private animatedValue = new Animated.Value(0);
+  private width = Constants.screenWidth;
+  private height = Constants.screenHeight;
+  private counter = 0;
+  private swipe: PanDirectionsProps = {};
+  private thresholdX = 0;
+  private thresholdY = 0;
+  private ref = React.createRef<any>();
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
-    this.setInitialValues();
+    this.hiddenLocation = this.getHiddenLocation(0, 0);
     this.state = {
       visible: props.visible,
       hide: false
     };
   }
 
-  setInitialValues() {
-    this.hiddenLocation = {};
-    this.resetSwipe();
-    this.animatedValue = new Animated.Value(0);
-    this.width = Constants.screenWidth;
-    this.height = Constants.screenHeight;
-    this.hiddenLocation = this.getHiddenLocation(0, 0);
-  }
-
-  componentDidUpdate(prevProps) {
-    const {isPanning, dragDeltas, swipeDirections} = this.props.context; // eslint-disable-line
-    const {dragDeltas: prevDragDeltas, swipeDirections: prevSwipeDirections} = prevProps.context; // eslint-disable-line
+  componentDidUpdate(prevProps: Props) {
+    const {isPanning, dragDeltas, swipeDirections} = this.props.context;
+    const {dragDeltas: prevDragDeltas, swipeDirections: prevSwipeDirections} = prevProps.context;
     const {hide} = this.state;
 
     if (
@@ -81,7 +108,7 @@ class DialogDismissibleView extends PureComponent {
     }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps(nextProps: DialogDismissibleProps, prevState: State) {
     const {visible} = nextProps;
     const {visible: prevVisible} = prevState;
 
@@ -97,8 +124,8 @@ class DialogDismissibleView extends PureComponent {
     this.swipe = {};
   };
 
-  isSwiping = () => {
-    return this.swipe.x || this.swipe.y;
+  isSwiping = (): boolean => {
+    return !_.isUndefined(this.swipe.x) || !_.isUndefined(this.swipe.y);
   };
 
   onDrag = () => {
@@ -111,11 +138,11 @@ class DialogDismissibleView extends PureComponent {
     }
   };
 
-  onSwipe = swipeDirections => {
+  onSwipe = (swipeDirections: PanDirectionsProps) => {
     this.swipe = swipeDirections;
   };
 
-  getHiddenLocation = (left, top) => {
+  getHiddenLocation = (left: number, top: number): LocationProps => {
     const {direction} = this.props;
     const topInset = Constants.isIphoneX ? Constants.getSafeAreaInsets().top : Constants.isIOS ? 20 : 0;
     const bottomInset = Constants.isIphoneX ? Constants.getSafeAreaInsets().bottom : Constants.isIOS ? 20 : 0;
@@ -140,7 +167,7 @@ class DialogDismissibleView extends PureComponent {
     return result;
   };
 
-  animateTo = (toValue, animationEndCallback) => {
+  animateTo = (toValue: number, animationEndCallback?: Animated.EndCallback) => {
     Animated.timing(this.animatedValue, {
       toValue,
       duration: 300,
@@ -168,17 +195,19 @@ class DialogDismissibleView extends PureComponent {
     };
   };
 
-  onLayout = event => {
+  onLayout = (event: LayoutChangeEvent) => {
     // DO NOT move the width\height into the measureInWindow - it causes errors with orientation change
     const layout = event.nativeEvent.layout;
     this.width = layout.width;
     this.height = layout.height;
     this.thresholdX = this.width / 2;
     this.thresholdY = this.height / 2;
-    this.ref.measureInWindow((x, y) => {
-      this.hiddenLocation = this.getHiddenLocation(x, y);
-      this.animateTo(1);
-    });
+    if (this.ref.current) {
+      this.ref.current.measureInWindow((x: number, y: number) => {
+        this.hiddenLocation = this.getHiddenLocation(x, y);
+        this.animateTo(1);
+      });
+    }
   };
 
   hide = () => {
@@ -187,7 +216,7 @@ class DialogDismissibleView extends PureComponent {
     this.animateTo(0, () => this.setState({visible: false, hide: false}, onDismiss));
   };
 
-  resetToShown = (left, top, direction) => {
+  resetToShown = (left: number, top: number, direction: PanningDirections) => {
     const toValue = [PanningProvider.Directions.LEFT, PanningProvider.Directions.RIGHT].includes(direction)
       ? 1 + left / this.hiddenLocation.left
       : 1 + top / this.hiddenLocation.top;
@@ -195,8 +224,8 @@ class DialogDismissibleView extends PureComponent {
     this.animateTo(toValue);
   };
 
-  onPanLocationChanged = ({left, top}) => {
-    const {direction} = this.props;
+  onPanLocationChanged = ({left = 0, top = 0}: PanLocationProps) => {
+    const {direction = DEFAULT_DIRECTION} = this.props;
     const endValue = {x: Math.round(left), y: Math.round(top)};
     if (this.isSwiping()) {
       this.hide();
@@ -220,7 +249,7 @@ class DialogDismissibleView extends PureComponent {
     const {visible} = this.state;
 
     return (
-      <View ref={r => (this.ref = r)} style={containerStyle} onLayout={this.onLayout}>
+      <View ref={this.ref} style={containerStyle} onLayout={this.onLayout}>
         <PanResponderView
           // !visible && styles.hidden is done to fix a bug is iOS
           style={[style, this.getAnimationStyle(), !visible && styles.hidden]}
@@ -234,7 +263,7 @@ class DialogDismissibleView extends PureComponent {
   }
 }
 
-export default asPanViewConsumer(DialogDismissibleView);
+export default asPanViewConsumer<DialogDismissibleProps>(DialogDismissibleView);
 
 const styles = StyleSheet.create({
   hidden: {
