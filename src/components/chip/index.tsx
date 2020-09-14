@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, {useCallback} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, ViewProps, TouchableOpacityProps, ImageStyle, ImageProps, TextStyle, ImageSourcePropType} from 'react-native';
-import {BadgeProps} from 'typings';
 // @ts-ignore
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
@@ -9,7 +8,7 @@ import {BorderRadiuses, Spacings} from '../../style';
 // @ts-ignore
 import Avatar, {AvatarPropTypes} from '../avatar';
 // @ts-ignore
-import Badge, {BADGE_SIZES} from '../badge';
+import Badge, {BadgePropTypes, BADGE_SIZES} from '../badge';
 import Image from '../image';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
@@ -64,7 +63,7 @@ export type ChipPropTypes = ViewProps & TouchableOpacityProps & {
   /**
    * Badge props object
    */
-  badgeProps?: BadgeProps;
+  badgeProps?: BadgePropTypes;
 
   //AVATAR
   /**
@@ -166,7 +165,7 @@ const Chip = ({
   const renderBadge = useCallback(() => {
     return (
       <Badge
-        size={BADGE_SIZES.medium}
+        size={BADGE_SIZES.default}
         testID={`${testID}.counter`}
         {...badgeProps}
         // @ts-ignore

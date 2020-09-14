@@ -89,7 +89,7 @@ declare const _default: React.ComponentClass<BaseComponentInjectedProps & ViewPr
         iconSelectedColor?: string | undefined;
         label?: string | undefined;
         labelStyle?: import("react-native").TextStyle | undefined;
-        badge?: any;
+        badge?: import("../badge").BadgePropTypes | undefined;
         maxLines?: number | undefined;
         selectedLabelStyle: import("react-native").TextStyle;
         selected?: boolean | undefined;

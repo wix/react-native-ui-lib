@@ -1,7 +1,7 @@
 import React from 'react';
 import { Animated, ViewStyle, TextStyle } from 'react-native';
 import { BaseComponentInjectedProps } from '../../commons/new';
-import { BadgeProps } from '../badge';
+import { BadgePropTypes } from '../badge';
 export declare type TabBarItemProps = BaseComponentInjectedProps & {
     /**
      * icon of the tab
@@ -26,7 +26,7 @@ export declare type TabBarItemProps = BaseComponentInjectedProps & {
     /**
      * Badge component props to display next the item label
      */
-    badge?: BadgeProps;
+    badge?: BadgePropTypes;
     /**
      * maximum number of lines the label can break
      */
@@ -94,7 +94,7 @@ declare const _default: React.ComponentClass<BaseComponentInjectedProps & {
     /**
      * Badge component props to display next the item label
      */
-    badge?: any;
+    badge?: BadgePropTypes | undefined;
     /**
      * maximum number of lines the label can break
      */
