@@ -340,6 +340,7 @@ declare function createStyles(props: BadgePropTypes): {
         includeFontPadding?: boolean | undefined;
     };
 };
+export { Badge };
 declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps & {
     /**
      * Text to show inside the badge.

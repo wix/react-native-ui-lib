@@ -294,5 +294,6 @@ function createStyles(props: BadgePropTypes) {
 
   return styles;
 }
+export {Badge}; // For tests
 
 export default asBaseComponent<BadgePropTypes, typeof Badge>(Badge)
