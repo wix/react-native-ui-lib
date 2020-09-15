@@ -1,9 +1,11 @@
-import React, {Component} from 'react';
+import React, {Component, Ref} from 'react';
 import PanningContext from './panningContext';
 
-function asPanViewConsumer(WrappedComponent) {
-  class PanViewConsumer extends Component {
-    saveRef = r => {
+function asPanViewConsumer<PROPS>(WrappedComponent: React.ComponentType<any>): React.ComponentClass<PROPS> {
+  class PanViewConsumer extends Component<PROPS> {
+    contentRef: any;
+
+    saveRef = (r: Ref<React.Component<any>>) => {
       this.contentRef = r;
     };
 
@@ -16,7 +18,7 @@ function asPanViewConsumer(WrappedComponent) {
     }
   }
 
-  return PanViewConsumer;
+  return PanViewConsumer as any;
 }
 
 export default asPanViewConsumer;

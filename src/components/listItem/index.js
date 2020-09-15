@@ -12,7 +12,7 @@ import ListItemPart from './ListItemPart';
  * @extends: TouchableOpacity
  * @extendslink: docs/TouchableOpacity
  * @gif: https://media.giphy.com/media/l1IBjHowyPcOTWAY8/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/listScreens/BasicListScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BasicListScreen.js
  */
 class ListItem extends BaseComponent {
   static displayName = 'ListItem';

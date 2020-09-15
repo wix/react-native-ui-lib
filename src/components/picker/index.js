@@ -3,8 +3,8 @@
 
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React from 'react';
-import {BaseComponent} from '../../commons';
+import React, {PureComponent} from 'react';
+import {asBaseComponent, forwardRef} from '../../commons';
 import View from '../../components/view';
 import Modal from '../modal';
 import Button from '../../components/button';
@@ -13,6 +13,7 @@ import * as PickerPresenter from './PickerPresenter';
 import NativePicker from './NativePicker';
 import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
+
 
 const PICKER_MODES = {
   SINGLE: 'SINGLE',
@@ -28,7 +29,7 @@ const ItemType = PropTypes.shape({
  * @gif: https://media.giphy.com/media/3o751SiuZZiByET2lq/giphy.gif, https://media.giphy.com/media/TgMQnyw5grJIDohzvx/giphy.gif, https://media.giphy.com/media/5hsdmVptBRskZKn787/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.js
  */
-class Picker extends BaseComponent {
+class Picker extends PureComponent {
   static displayName = 'Picker';
   static propTypes = {
     ...TextField.propTypes,
@@ -142,6 +143,7 @@ class Picker extends BaseComponent {
 
     this.state = {
       value: props.value,
+      prevValue: undefined,
       selectedItemPosition: 0,
       items: this.extractPickerItems(props)
     };
@@ -160,20 +162,30 @@ class Picker extends BaseComponent {
     // }
   }
 
-  UNSAFE_componentWillReceiveProps(nexProps) {
-    this.setState({
-      value: nexProps.value
-    });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (!_.isEmpty(nextProps.value) && prevState.value !== nextProps.value) {
+      if (prevState.prevValue !== prevState.value) { // for this.setState() updates to 'value'
+        // NOTE: this.setState() already updated the 'value' so here we only updating the 'prevValue'
+        return {
+          prevValue: prevState.value
+        };
+      } else { // for prop update to 'value'
+        return {
+          value: nextProps.value
+        };
+      }
+    }
+    return null;
   }
 
   getAccessibilityInfo() {
     const {placeholder} = this.props;
+    
     return {
       accessibilityLabel: this.getLabelValueText() ? `${placeholder}. selected. ${this.getLabelValueText()}` : `Select ${placeholder}`,
       accessibilityHint: this.getLabelValueText()
         ? 'Double tap to edit'
-        : `Goes to ${placeholder}. Suggestions will be provided`,
-      ...this.extractAccessibilityProps()
+        : `Goes to ${placeholder}. Suggestions will be provided`
     };
   }
 
@@ -191,6 +203,7 @@ class Picker extends BaseComponent {
   getLabelValueText = () => {
     const {value: propsValue} = this.props;
     const {value: stateValue} = this.props;
+    
     if (this.shouldNotChangePickerLabelWhileSelecting()) {
       return this.getLabel(propsValue);
     }
@@ -223,6 +236,7 @@ class Picker extends BaseComponent {
     // otherwise, extract from picker items
     const {items} = this.state;
     const selectedItem = _.find(items, {value});
+    
     return _.get(selectedItem, 'label');
   }
 
@@ -240,39 +254,29 @@ class Picker extends BaseComponent {
     const {getItemValue} = this.props;
     const {value} = this.state;
     const newValue = _.xorBy(value, [item], getItemValue || 'value');
-    this.setState({
-      value: newValue
-    });
+    
+    this.setState({value: newValue});
   };
 
   cancelSelect = () => {
-    this.setState({
-      value: this.props.value
-    });
+    this.setState({value: this.props.value});
     this.toggleExpandableModal(false);
     _.invoke(this.props, 'topBarProps.onCancel');
   };
 
   onDoneSelecting = item => {
     this.clearSearchField();
-    
     this.setState({value: item});
     this.toggleExpandableModal(false);
     _.invoke(this.props, 'onChange', item);
   };
 
   onSearchChange = searchValue => {
-    this.setState({
-      searchValue
-    });
+    this.setState({searchValue});
     _.invoke(this.props, 'onSearchChange', searchValue);
   };
 
-  onSelectedItemLayout = ({
-    nativeEvent: {
-      layout: {y}
-    }
-  }) => {
+  onSelectedItemLayout = ({nativeEvent: {layout: {y}}}) => {
     this.setState({selectedItemPosition: y});
   };
 
@@ -290,6 +294,7 @@ class Picker extends BaseComponent {
       if (!showSearch || _.isEmpty(searchValue) || _.includes(_.lowerCase(childLabel), _.lowerCase(searchValue))) {
         const selectedValue = PickerPresenter.getItemValue({value, getItemValue});
         const isSelected = PickerPresenter.isItemSelected(childValue, selectedValue);
+        
         return React.cloneElement(child, {
           isSelected,
           onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
@@ -318,7 +323,7 @@ class Picker extends BaseComponent {
       renderCustomModal,
       listProps,
       testID
-    } = this.getThemeProps();
+    } = this.props;
     const {showExpandableModal, selectedItemPosition, value} = this.state;
     const children = this.appendPropsToChildren(this.props.children);
 
@@ -331,6 +336,7 @@ class Picker extends BaseComponent {
         onDone: () => this.onDoneSelecting(value),
         onCancel: this.cancelSelect
       };
+
       return renderCustomModal(modalProps);
     }
 
@@ -366,6 +372,7 @@ class Picker extends BaseComponent {
 
     if (_.isFunction(renderPicker)) {
       const {value} = this.state;
+      
       return (
         <View left>
           <Button {...customPickerProps} link onPress={this.handlePickerOnPress} testID={testID}>
@@ -376,7 +383,7 @@ class Picker extends BaseComponent {
       );
     }
 
-    const textInputProps = TextField.extractOwnProps(this.getThemeProps());
+    const textInputProps = TextField.extractOwnProps(this.props);
     const label = this.getLabelValueText();
     const marginsModifiers = this.extractMarginValues();
     const paddingsModifiers = this.extractPaddingValues();
@@ -397,4 +404,6 @@ class Picker extends BaseComponent {
 }
 
 Picker.Item = PickerItem;
-export default Picker;
+
+export {Picker}; // For tests
+export default asBaseComponent(forwardRef(Picker));

@@ -22,7 +22,6 @@ export * from './MultipleShadow';
 export * from './Notification';
 export * from './Overlay';
 export * from './PageControl';
-export * from './PanningViews';
 export * from './Picker';
 export * from './ProgressBar';
 export * from './RadioButton';

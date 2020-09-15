@@ -3,8 +3,15 @@ import {Alert, StyleSheet} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {Colors, Carousel, PageControl, Modal, View, Text} from 'react-native-ui-lib'; // eslint-disable-line
 
+interface ModalScreenPropTypes {
+  componentId: string;
+}
 
-export default class ModalScreen extends Component {
+interface State {
+  currentPage?: number;
+}
+
+export default class ModalScreen extends Component<ModalScreenPropTypes, State> {
 
   static options() {
     return {
@@ -15,7 +22,7 @@ export default class ModalScreen extends Component {
     };
   }
 
-  constructor(props) {
+  constructor(props: ModalScreenPropTypes) {
     super(props);
 
     this.state = {
@@ -40,11 +47,11 @@ export default class ModalScreen extends Component {
         <Carousel onChangePage={currentPage => this.setState({currentPage})} containerStyle={{flex: 1}}>
           <View bg-green50 flex style={styles.page}>
             <Modal.TopBar
-              title='modal title'
+              title="modal title"
               onCancel={() => this.closeScreen()}
               onDone={() => Alert.alert('done')}
               doneButtonProps={{
-                disabled: true,
+                disabled: true
               }}
             />
             <View padding-20>
@@ -59,11 +66,11 @@ export default class ModalScreen extends Component {
 
           <View bg-violet80 flex style={styles.page}>
             <Modal.TopBar
-              title='another example'
+              title="another example"
               onCancel={() => Alert.alert('cancel')}
               onDone={() => Alert.alert('done')}
               cancelIcon={null}
-              cancelLabel='back'
+              cancelLabel="back"
             />
             <View padding-20>
               <Text text70>
@@ -75,11 +82,11 @@ export default class ModalScreen extends Component {
 
           <View bg-orange70 flex style={styles.page}>
             <Modal.TopBar
-              title='last one'
+              title="last one"
               onCancel={() => Alert.alert('cancel')}
               onDone={() => Alert.alert('done')}
               cancelIcon={null}
-              cancelLabel='back'
+              cancelLabel="back"
             />
             <View padding-20>
               <Text text70>
@@ -90,7 +97,7 @@ export default class ModalScreen extends Component {
 
           <View bg-dark70 flex style={styles.page}>
             <Modal.TopBar
-              title='Custom Style'
+              title="Custom Style"
               onCancel={() => Alert.alert('cancel')}
               onDone={() => Alert.alert('done')}
               doneButtonProps={{color: Colors.orange30}}

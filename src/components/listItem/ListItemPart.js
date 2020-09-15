@@ -6,7 +6,7 @@ import View from '../view';
 
 /**
  * @description: ListItem.Part, a sub ListItem component for layout-ing inside a ListItem
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/listScreens/BasicListScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BasicListScreen.js
  */
 export default class ListItemPart extends BaseComponent {
   static displayName = 'ListItem.Part';

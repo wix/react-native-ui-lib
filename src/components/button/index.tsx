@@ -109,7 +109,7 @@ export type ButtonPropTypes = TouchableOpacityProps &
     /**
      * Additional styles for label text
      */
-    labelStyle?: TextStyle;
+    labelStyle?: StyleProp<TextStyle>;
     /**
      * Props that will be passed to the button's Text label.
      */
