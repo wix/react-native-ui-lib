@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerNgrokUrl": "https://je-jj8.ethanshar.expodemo.exp.direct",
+  "packagerNgrokUrl": "https://packager.je-jj8.ethanshar.expodemo.exp.direct",
+  "ngrokPid": 31738
 }
