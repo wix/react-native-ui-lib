@@ -1,9 +1,9 @@
 import {Platform, Dimensions, NativeModules, I18nManager, AccessibilityInfo, AccessibilityEvent} from 'react-native';
 
 
-const orientations = {
-  PORTRAIT: 'portrait',
-  LANDSCAPE: 'landscape'
+export enum orientations {
+  PORTRAIT = 'portrait',
+  LANDSCAPE = 'landscape'
 };
 
 const isAndroid: boolean = Platform.OS === 'android';
