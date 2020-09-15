@@ -5,6 +5,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 import {asBaseComponent, forwardRef} from '../../commons';
+import {extractMarginValues, extractPaddingValues} from '../../commons/modifiers';
 import View from '../../components/view';
 import Modal from '../modal';
 import Button from '../../components/button';
@@ -385,13 +386,12 @@ class Picker extends PureComponent {
 
     const textInputProps = TextField.extractOwnProps(this.props);
     const label = this.getLabelValueText();
-    const marginsModifiers = this.extractMarginValues();
-    const paddingsModifiers = this.extractPaddingValues();
+    const layoutProps = {...extractMarginValues(this.props), ...extractPaddingValues(this.props)};
 
     return (
       <TextField
         {...textInputProps}
-        containerStyle={[containerStyle, marginsModifiers, paddingsModifiers]}
+        containerStyle={[containerStyle, layoutProps]}
         {...this.getAccessibilityInfo()}
         importantForAccessibility={'no-hide-descendants'}
         value={label}
