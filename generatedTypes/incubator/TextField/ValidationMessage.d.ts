@@ -8,7 +8,7 @@ export interface ValidationMessageProps {
     /**
      * The validation message to display when field is invalid (depends on validate)
      */
-    validationMessage?: string;
+    validationMessage?: string | string[];
     /**
      * Custom style for the validation message
      */

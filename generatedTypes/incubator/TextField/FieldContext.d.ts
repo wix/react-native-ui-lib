@@ -4,6 +4,7 @@ export declare type ContextType = {
     isFocused: boolean;
     hasValue: boolean;
     isValid: boolean;
+    failingValidatorIndex?: number;
     disabled: boolean;
 };
 declare const FieldContext: import("react").Context<ContextType>;
