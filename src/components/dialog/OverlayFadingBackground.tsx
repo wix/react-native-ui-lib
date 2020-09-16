@@ -3,12 +3,14 @@ import View from '../view';
 import {Animated} from 'react-native';
 
 interface Props {
+  testID?: string;
   dialogVisibility?: boolean;
   modalVisibility?: boolean;
   overlayBackgroundColor?: string;
 }
 
 const OverlayFadingBackground = ({
+  testID,
   dialogVisibility,
   modalVisibility,
   overlayBackgroundColor
@@ -42,7 +44,7 @@ const OverlayFadingBackground = ({
     };
   }, [overlayBackgroundColor, fadeAnimation]);
 
-  return <View absF animated style={style} pointerEvents="none"/>;
+  return <View testID={testID} absF animated style={style} pointerEvents="none"/>;
 };
 
 OverlayFadingBackground.displayName = 'IGNORE';
