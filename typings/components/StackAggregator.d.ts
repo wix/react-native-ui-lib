@@ -5,6 +5,7 @@ import {ButtonProps} from './Button';
 
 export interface StackAggregatorProps {
   collapsed?: boolean;
+  disablePresses?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
   itemBorderRadius?: number;

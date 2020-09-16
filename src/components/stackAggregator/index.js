@@ -51,12 +51,17 @@ export default class StackAggregator extends PureBaseComponent {
      */
     onItemPress: PropTypes.func,
     /**
-     * A callback for collapse state change (value is collapsed state)
+    * A callback for collapse state change (value is collapsed state)
+    */
+    onCollapseChange: PropTypes.func,
+    /**
+     * A setting that disables pressability on cards
      */
-    onCollapseChange: PropTypes.func
+    disablePresses: PropTypes.boolean
   }
 
   static defaultProps = {
+    disablePresses: false,
     collapsed: true,
     itemBorderRadius: 0
   }
@@ -225,7 +230,7 @@ export default class StackAggregator extends PureBaseComponent {
       >
         <Card
           style={[contentContainerStyle, this.styles.card]}
-          onPress={() => this.onItemPress(index)}
+          onPress={this.props.disablePresses ? false : () => this.onItemPress(index)}
           borderRadius={itemBorderRadius}
           elevation={5}
         >
