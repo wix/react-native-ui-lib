@@ -181,6 +181,7 @@ class Carousel extends Component {
       };
     }
 
+    // for presenter.calcOffset() props parameter
     if (prevProps.containerMarginHorizontal !== nextProps.containerMarginHorizontal || prevProps.loop !== nextProps.loop) {
       return {
         prevProps: nextProps
