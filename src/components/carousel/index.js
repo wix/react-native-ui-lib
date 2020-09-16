@@ -168,7 +168,7 @@ class Carousel extends Component {
 
     if (pageWidth !== nextPageWidth) {
       const pageWidth = nextPageWidth;
-      console.warn('here');
+
       return {
         pageWidth,
         initialOffset: {
