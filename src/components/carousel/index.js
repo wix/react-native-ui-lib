@@ -10,6 +10,7 @@ import Text from '../text';
 import PageControl from '../pageControl';
 import * as presenter from './CarouselPresenter';
 
+
 const PAGE_CONTROL_POSITIONS = {
   OVER: 'over',
   UNDER: 'under'
@@ -123,6 +124,7 @@ class Carousel extends Component {
     super(props);
 
     this.carousel = React.createRef();
+
     const defaultPageWidth =
       props.loop || !props.pageWidth
         ? Constants.screenWidth
@@ -140,7 +142,8 @@ class Carousel extends Component {
           currentPage: props.initialPage,
           pageWidth: defaultPageWidth
         })
-      }
+      },
+      prevProps: props
     };
   }
 
@@ -152,33 +155,44 @@ class Carousel extends Component {
     }
   }
 
-  // TODO: change to getDerivedStateFromProps (requires changing from BaseComponent to asBaseComponent)
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const {currentPage} = this.state;
-    const {pageWidth: nexPageWidth} = nextProps;
-    const {pageWidth} = this.props;
+  componentWillUnmount() {
+    Constants.removeDimensionsEventListener(this.onOrientationChanged);
 
-    if (pageWidth !== nexPageWidth) {
-      const pageWidth = nexPageWidth;
-      this.setState({
+    clearInterval(this.autoplayTimer);
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const {currentPage, prevProps} = prevState;
+    const {pageWidth} = prevProps;
+    const {pageWidth: nextPageWidth} = nextProps;
+
+    if (pageWidth !== nextPageWidth) {
+      const pageWidth = nextPageWidth;
+      console.warn('here');
+      return {
         pageWidth,
         initialOffset: {
-          x: presenter.calcOffset(this.props, {
+          x: presenter.calcOffset(prevProps, {
             currentPage,
             pageWidth
           })
-        }
-      });
+        },
+        prevProps: nextProps
+      };
     }
-  }
 
-  componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChanged);
-    clearInterval(this.autoplayTimer);
+    if (prevProps.containerMarginHorizontal !== nextProps.containerMarginHorizontal || prevProps.loop !== nextProps.loop) {
+      return {
+        prevProps: nextProps
+      };
+    }
+
+    return null;
   }
 
   componentDidUpdate(prevProps, prevState) {
     const {autoplay} = this.props;
+
     if (autoplay && !prevProps.autoplay) {
       this.startAutoPlay();
     } else if (!autoplay && prevProps.autoplay) {
@@ -188,6 +202,7 @@ class Carousel extends Component {
 
   onOrientationChanged = () => {
     const {pageWidth, loop} = this.props;
+
     if (!pageWidth || loop) {
       this.orientationChange = true;
       // HACK: setting to containerWidth for Android's call when view disappear
