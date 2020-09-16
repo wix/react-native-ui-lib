@@ -8,7 +8,7 @@ import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 import Text from '../text';
 // @ts-ignore
-import Badge, {BadgePropTypes} from '../badge';
+import Badge, {BadgeProps} from '../badge';
 
 
 export type TabBarItemProps = BaseComponentInjectedProps & {
@@ -35,7 +35,7 @@ export type TabBarItemProps = BaseComponentInjectedProps & {
   /**
    * Badge component props to display next the item label
    */
-  badge?: BadgePropTypes,
+  badge?: BadgeProps,
   /**
    * maximum number of lines the label can break
    */

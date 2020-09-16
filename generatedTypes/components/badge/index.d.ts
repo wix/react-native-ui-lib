@@ -11,7 +11,7 @@ export declare enum BADGE_SIZES {
 }
 declare type LabelFormatterValues = typeof LABEL_FORMATTER_VALUES[number];
 export declare type BadgeSizes = keyof typeof BADGE_SIZES;
-export declare type BadgePropTypes = ViewProps & TouchableOpacityProps & {
+export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
     /**
      * Text to show inside the badge.
      * Not passing a label (undefined) will present a pimple badge.
@@ -84,13 +84,13 @@ export declare type BadgePropTypes = ViewProps & TouchableOpacityProps & {
  * @image: https://user-images.githubusercontent.com/33805983/34480753-df7a868a-efb6-11e7-9072-80f5c110a4f3.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.js
  */
-declare class Badge extends PureComponent<BadgePropTypes> {
+declare class Badge extends PureComponent<BadgeProps> {
     styles: ReturnType<typeof createStyles>;
     static displayName: string;
     static defaultProps: {
         size: string;
     };
-    constructor(props: BadgePropTypes);
+    constructor(props: BadgeProps);
     getAccessibilityProps(): {
         accessible: boolean;
         accessibilityRole: string;
@@ -104,7 +104,7 @@ declare class Badge extends PureComponent<BadgePropTypes> {
     renderIcon(): JSX.Element;
     render(): JSX.Element;
 }
-declare function createStyles(props: BadgePropTypes): {
+declare function createStyles(props: BadgeProps): {
     badge: {
         alignSelf: "flex-start";
         borderRadius: number;

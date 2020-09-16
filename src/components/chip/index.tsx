@@ -8,7 +8,7 @@ import {BorderRadiuses, Spacings} from '../../style';
 // @ts-ignore
 import Avatar, {AvatarPropTypes} from '../avatar';
 // @ts-ignore
-import Badge, {BadgePropTypes, BADGE_SIZES} from '../badge';
+import Badge, {BadgeProps, BADGE_SIZES} from '../badge';
 import Image from '../image';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
@@ -63,7 +63,7 @@ export type ChipPropTypes = ViewProps & TouchableOpacityProps & {
   /**
    * Badge props object
    */
-  badgeProps?: BadgePropTypes;
+  badgeProps?: BadgeProps;
 
   //AVATAR
   /**

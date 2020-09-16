@@ -8,7 +8,7 @@ export * from './style';
 export * from './services';
 export * as Incubator from './incubator';
 export {default as Avatar, AvatarPropTypes} from './components/avatar';
-export {default as Badge, BadgePropTypes} from './components/badge';
+export {default as Badge, BadgeProps} from './components/badge';
 export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
 export {default as View, ViewPropTypes} from './components/view';
 export {default as Text, TextPropTypes} from './components/text';

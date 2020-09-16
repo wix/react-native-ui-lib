@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleProp, ViewStyle, ViewProps, TouchableOpacityProps, ImageStyle, ImageProps, TextStyle, ImageSourcePropType } from 'react-native';
 import { AvatarPropTypes } from '../avatar';
-import { BadgePropTypes } from '../badge';
+import { BadgeProps } from '../badge';
 export declare type ChipPropTypes = ViewProps & TouchableOpacityProps & {
     /**
      * Chip's size. Number or a width and height object.
@@ -49,7 +49,7 @@ export declare type ChipPropTypes = ViewProps & TouchableOpacityProps & {
     /**
      * Badge props object
      */
-    badgeProps?: BadgePropTypes;
+    badgeProps?: BadgeProps;
     /**
      * Avatar props object
      */
@@ -138,7 +138,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
     /**
      * Badge props object
      */
-    badgeProps?: BadgePropTypes | undefined;
+    badgeProps?: BadgeProps | undefined;
     /**
      * Avatar props object
      */

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { ImageSourcePropType, StyleProp, ViewStyle, ImagePropsBase, ImageStyle, TextStyle } from 'react-native';
-import { BadgePropTypes } from '../badge';
+import { BadgeProps } from '../badge';
 import { ImageProps } from '../image';
 export declare enum StatusModes {
     ONLINE = "ONLINE",
@@ -30,7 +30,7 @@ export declare type AvatarPropTypes = {
     /**
      * Badge props passed down to Badge component
      */
-    badgeProps?: BadgePropTypes;
+    badgeProps?: BadgeProps;
     /**
      * Additional spacing styles for the container
      */
