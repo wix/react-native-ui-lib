@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, PanResponder, ViewPropTypes, AccessibilityInfo} from 'react-native';
+import {StyleSheet, PanResponder, ViewPropTypes, AccessibilityInfo, Animated} from 'react-native';
 import {Constants} from '../../helpers';
 import {PureBaseComponent} from '../../commons';
 import {Colors} from '../../style';
@@ -107,6 +107,7 @@ export default class Slider extends PureBaseComponent {
       containerSize: {width: 0, height: 0},
       trackSize: {width: 0, height: 0},
       thumbSize: {width: 0, height: 0},
+      thumbActiveAnimation: new Animated.Value(1),
       measureCompleted: false
     };
 
@@ -116,6 +117,10 @@ export default class Slider extends PureBaseComponent {
     this._minTrackStyles = {style: {}};
     this._x = 0;
     this._dx = 0;
+    this._thumbAnimationConstants = {
+      duration: 100,
+      defaultScaleFactor: 1.5
+    };
 
     this.initialValue = this.getRoundedValue(props.value);
     this.initialThumbSize = THUMB_SIZE;
@@ -244,9 +249,26 @@ export default class Slider extends PureBaseComponent {
       const style = thumbStyle || styles.thumb;
       const activeStyle = activeThumbStyle || styles.activeThumb;
 
-      this._thumbStyles.style = !this.props.disabled && (start ? activeStyle : style);
+      const activeOrInactiveStyle = !this.props.disabled && (start ? activeStyle : style);
+      this._thumbStyles.style = _.omit(activeOrInactiveStyle, 'height', 'width');
       this.thumb.setNativeProps(this._thumbStyles);
+      this.scaleThumb(start);
     }
+  }
+
+  scaleThumb = start => {
+    const scaleFactor = start ? this.calculatedThumbActiveScale() : 1;
+    this.thumbAnimationAction(scaleFactor);
+  }
+
+  thumbAnimationAction = (toValue) => {
+    const {thumbActiveAnimation} = this.state;
+    const {duration} = this._thumbAnimationConstants;
+    Animated.timing(thumbActiveAnimation, {
+      toValue,
+      duration,
+      useNativeDriver: true
+    }).start();
   }
 
   getRoundedValue(value) {
@@ -295,6 +317,33 @@ export default class Slider extends PureBaseComponent {
 
   setThumbRef = r => {
     this.thumb = r;
+  };
+
+  getMaxMin = (value1, value2) => {
+    const max = Math.max(value1, value2) || 0;
+    const min = Math.min(value1, value2) || 0;
+    return {
+      max, min
+    };
+  }
+
+  calculatedThumbActiveScale = () => {
+    const {activeThumbStyle, thumbStyle, disabled} = this.props;
+    if (disabled) {
+      return 1;
+    }
+    
+    const {defaultScaleFactor} = this._thumbAnimationConstants;
+    const shouldDoubleSizeByDefault = !activeThumbStyle || !thumbStyle;
+
+    if (shouldDoubleSizeByDefault) { 
+      return defaultScaleFactor;
+    }
+      
+    const {max, min} = this.getMaxMin(activeThumbStyle.height, thumbStyle.height);
+    const scaleCalculatedFromSize = min / max;
+
+    return scaleCalculatedFromSize || defaultScaleFactor;
   };
 
   /* Events */
@@ -370,14 +419,42 @@ export default class Slider extends PureBaseComponent {
 
   /* Renders */
 
+  renderThumb = () => {
+    const {
+      thumbStyle,
+      disabled,
+      thumbTintColor
+    } = this.getThemeProps();
+    return (
+      <Animated.View
+        ref={this.setThumbRef}
+        onLayout={this.onThumbLayout}
+        style={[
+          styles.thumb,
+          thumbStyle,
+          {
+            backgroundColor: disabled
+              ? DEFAULT_COLOR
+              : thumbTintColor || ACTIVE_COLOR
+          },
+          {
+            transform: [
+              {
+                scale: this.state.thumbActiveAnimation
+              }
+            ]
+          }
+        ]}
+      />
+    );
+  }
+
   render() {
     const {
       containerStyle,
-      thumbStyle,
       trackStyle,
       renderTrack,
       disabled,
-      thumbTintColor,
       minimumTrackTintColor = ACTIVE_COLOR,
       maximumTrackTintColor = DEFAULT_COLOR
     } = this.getThemeProps();
@@ -427,17 +504,7 @@ export default class Slider extends PureBaseComponent {
             />
           </View>
         )}
-        <View
-          ref={this.setThumbRef}
-          onLayout={this.onThumbLayout}
-          style={[
-            styles.thumb,
-            thumbStyle,
-            {
-              backgroundColor: disabled ? DEFAULT_COLOR : thumbTintColor || ACTIVE_COLOR
-            }
-          ]}
-        />
+        {this.renderThumb()}
         <View style={styles.touchArea} {...this._panResponder.panHandlers}/>
       </View>
     );
@@ -474,7 +541,7 @@ const styles = StyleSheet.create({
     width: THUMB_SIZE + 16,
     height: THUMB_SIZE + 16,
     borderRadius: (THUMB_SIZE + 16) / 2,
-    borderWidth: BORDER_WIDTH + 6
+    borderWidth: BORDER_WIDTH
   },
   touchArea: {
     ...StyleSheet.absoluteFillObject,
