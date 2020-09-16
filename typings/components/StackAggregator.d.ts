@@ -10,6 +10,7 @@ export interface StackAggregatorProps {
   itemBorderRadius?: number;
   buttonProps?: ButtonProps;
   onItemPress?: (index: number) => void;
+  onCollapseChange?: (collapsed: boolean) => void;
 }
 
 export class StackAggregator extends PureBaseComponent<StackAggregatorProps> {}

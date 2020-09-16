@@ -49,7 +49,11 @@ export default class StackAggregator extends PureBaseComponent {
     /**
      * A callback for item press
      */
-    onItemPress: PropTypes.func
+    onItemPress: PropTypes.func,
+    /**
+     * A callback for collapse state change (value is collapsed state)
+     */
+    onCollapseChange: PropTypes.func
   }
 
   static defaultProps = {
@@ -146,10 +150,12 @@ export default class StackAggregator extends PureBaseComponent {
 
   close = () => {
     this.setState({collapsed: true}, () => this.animate());
+    this.props.onCollapseChange && this.props.onCollapseChange(true)
   }
 
   open = () => {
     this.setState({collapsed: false}, () => this.animate());
+    this.props.onCollapseChange && this.props.onCollapseChange(false)
   }
 
   getTop(index) {
