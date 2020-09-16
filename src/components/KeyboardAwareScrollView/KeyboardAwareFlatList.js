@@ -1,42 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ScrollView} from 'react-native';
+import {FlatList} from 'react-native';
 import KeyboardAwareBase from './KeyboardAwareBase';
-import {LogService} from '../../services';
 
-export default class KeyboardAwareListView extends KeyboardAwareBase {
-  static displayName = 'IGNORE';
+/**
+ * @description: A wrapper component which handles the FlatList insets properly when the keyboard is shown and hides the content, scrolling content above the keybaord.
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/KeyboardAwareScrollViewScreen.js
+ */
+export default class KeyboardAwareFlatList extends KeyboardAwareBase {
+  static displayName = 'KeyboardAwareFlatList';
 
-  static propTypes = {
+  static PropTypes = {
+    getTextInputRefs: PropTypes.func,
     onScroll: PropTypes.func
   };
 
   static defaultProps = {
-    ...KeyboardAwareBase.defaultProps
+    ...KeyboardAwareBase.defaultProps,
+    getTextInputRefs: () => {
+      return [];
+    }
   };
 
-  constructor(props) {
-    super(props);
-    LogService.warn(
-      'uilib: Please stop Using KeyboardAwareListView, use either KeyboardAwareScrollView or KeyboardAwareFlatList'
-    );
-  }
-
   render() {
-    const initialOpacity = this.props.startScrolledToBottom ? 0 : 1;
     return (
-      <ScrollView
+      <FlatList
         {...this.props}
         {...this.style}
-        opacity={initialOpacity}
         contentInset={{bottom: this.state.keyboardHeight}}
-        ref={r => {
+        ref={(r) => {
           this._keyboardAwareView = r;
         }}
-        onLayout={layoutEvent => {
+        onLayout={(layoutEvent) => {
           this._onKeyboardAwareViewLayout(layoutEvent.nativeEvent.layout);
         }}
-        onScroll={event => {
+        onScroll={(event) => {
           this._onKeyboardAwareViewScroll(event.nativeEvent.contentOffset);
           if (this.props.onScroll) {
             this.props.onScroll(event);

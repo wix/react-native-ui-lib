@@ -1,199 +1,158 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, TouchableHighlight, RecyclerViewBackedScrollView} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {
-  Button,
   Colors,
   KeyboardAwareScrollView,
-  KeyboardAwareListView,
+  KeyboardAwareFlatList,
   TextField,
   Text,
   Typography,
   View
 } from 'react-native-ui-lib';
+import {renderBooleanOption} from '../ExampleScreenPresenter';
 
-const LOREM_IPSUM =
-  'Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequuntur nec. Erat ocurreret mei ei. Eu paulo sapientem vulputate est, vel an accusam intellegam interesset. Nam eu stet pericula reprimique, ea vim illud modus, putant invidunt reprehendunt ne qui.';
-const hashCode = function (str) {
-  let hash = 15;
-  for (let ii = str.length - 1; ii >= 0; ii--) {
-    // eslint-disable-next-line no-bitwise
-    hash = (hash << 5) - hash + str.charCodeAt(ii);
+const data = [
+  {
+    placeholder: 'First Name',
+    ref: '_firstNameTI',
+    nextRef: '_lastNameTI'
+  },
+  {
+    placeholder: 'Last Name',
+    ref: '_lastNameTI',
+    nextRef: '_countryTI'
+  },
+  {
+    placeholder: 'Country',
+    ref: '_countryTI',
+    nextRef: '_stateTI'
+  },
+  {
+    placeholder: 'State',
+    ref: '_stateTI',
+    nextRef: '_addrTI'
+  },
+  {
+    placeholder: 'Address',
+    ref: '_addrTI',
+    nextRef: '_emailTI'
+  },
+  {
+    placeholder: 'Email',
+    keyboardType: 'email-address',
+    ref: '_emailTI',
+    nextRef: '_msgTI'
+  },
+  {
+    placeholder: 'Message',
+    ref: '_msgTI',
+    nextRef: '_notesTI'
+  },
+  {
+    placeholder: 'Notes',
+    ref: '_notesTI'
   }
-  return hash;
-};
+];
 
 export default class KeyboardAwareScrollViewScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listToggle: false,
-      data: {}
+      isFlatList: false
     };
   }
 
-  _genRows(pressData) {
-    const dataBlob = [];
-    for (let ii = 0; ii < 10; ii++) {
-      const pressedText = pressData[ii] ? ' (pressed)' : '';
-      dataBlob.push('Row ' + ii + pressedText);
-    }
-    return dataBlob;
-  }
-
-  _renderRow(rowData, sectionID, rowID) {
-    const rowHash = Math.abs(hashCode(rowData));
+  renderItem = (data) => {
+    const {isFlatList} = this.state;
+    const item = isFlatList ? data.item : data;
+    const {placeholder, ref, nextRef, keyboardType} = item;
+    const returnKeyType = nextRef ? 'next' : 'go';
+    const onSubmitEditing = nextRef ? () => this[nextRef].focus() : undefined;
     return (
-      <TouchableHighlight>
-        <View>
-          <View style={styles.row}>
-            <Text style={styles.text}>{rowData + ' - ' + LOREM_IPSUM.substr(0, (rowHash % 301) + 10)}</Text>
-          </View>
-          <View style={{backgroundColor: Colors.white}}>
-            <TextField style={[styles.text, {borderWidth: 0.5}]} placeholder={'Text goes here'}/>
-          </View>
-        </View>
-      </TouchableHighlight>
+      <TextField
+        key={placeholder}
+        text70R
+        placeholder={placeholder}
+        ref={(r) => {
+          this[ref] = r;
+        }}
+        returnKeyType={returnKeyType}
+        keyboardType={keyboardType}
+        onSubmitEditing={onSubmitEditing}
+      />
     );
-  }
+  };
 
-  _renderBodyButton(bodyHeaderTitle) {
+  keyExtractor = (item) => item.placeholder;
+
+  renderKeyboardAwareListView() {
     return (
-      <Button
-        text80
-        link
-        label={bodyHeaderTitle}
-        labelStyle={{color: Colors.black}}
-        onPress={() => this.setState({listToggle: !this.state.listToggle})}
-        style={styles.topButton}
+      <KeyboardAwareFlatList
+        showsVerticalScrollIndicator={false}
+        keyboardDismissMode="interactive"
+        keyboardShouldPersistTaps="always"
+        data={data}
+        contentContainerStyle={{paddingTop: 20}}
+        keyExtractor={this.keyExtractor}
+        renderItem={this.renderItem}
+        getTextInputRefs={() => {
+          return [
+            this._firstNameTI,
+            this._lastNameTI,
+            this._countryTI,
+            this._stateTI,
+            this._addrTI,
+            this._emailTI,
+            this._msgTI,
+            this._notesTI
+          ];
+        }}
       />
     );
   }
 
-  _renderKeyboardAwareListView() {
+  renderKeyboardAwareScrollView() {
     return (
-      <View style={styles.container}>
-        {this._renderBodyButton('Switch to ScrollView')}
-        <KeyboardAwareListView
-          keyboardDismissMode="interactive"
-          keyboardShouldPersistTaps="always"
-          dataSource={this.state.data}
-          renderRow={this._renderRow}
-          renderScrollComponent={props => <RecyclerViewBackedScrollView {...props}/>}
-          renderSeparator={(sectionID, rowID) => <View key={`${sectionID}-${rowID}`} style={styles.separator}/>}
-        />
-      </View>
-    );
-  }
-
-  _renderKeyboardAwareScrollView() {
-    return (
-      <View style={styles.container}>
-        <Text text65 marginB-20>
-          KeyboardAwareScrollView
-        </Text>
-        <Text text65R style={{marginBottom: 10}}>Example Form</Text>
-
-        {this.state.listToggle && this._renderBodyButton('Switch to ListView')}
-        <KeyboardAwareScrollView
-          showsVerticalScrollIndicator={false}
-          keyboardDismissMode="interactive"
-          keyboardShouldPersistTaps="always"
-          getTextInputRefs={() => {
-            return [
-              this._firstNameTI,
-              this._lastNameTI,
-              this._countryTI,
-              this._stateTI,
-              this._addrTI,
-              this._emailTI,
-              this._msgTI,
-              this._notesTI
-            ];
-          }}
-        >
-          <TextField
-            style={styles.TextField}
-            placeholder={'First Name'}
-            ref={r => {
-              this._firstNameTI = r;
-            }}
-            returnKeyType={'next'}
-            onSubmitEditing={event => this._lastNameTI.focus()}
-          />
-          <TextField
-            style={styles.TextField}
-            placeholder={'Last Name'}
-            ref={r => {
-              this._lastNameTI = r;
-            }}
-            returnKeyType={'next'}
-            onSubmitEditing={event => this._countryTI.focus()}
-          />
-          <TextField
-            style={styles.TextField}
-            placeholder={'Country'}
-            ref={r => {
-              this._countryTI = r;
-            }}
-            returnKeyType={'next'}
-            onSubmitEditing={event => this._stateTI.focus()}
-          />
-          <TextField
-            style={styles.TextField}
-            placeholder={'State'}
-            ref={r => {
-              this._stateTI = r;
-            }}
-            returnKeyType={'next'}
-            onSubmitEditing={event => this._addrTI.focus()}
-          />
-          <TextField
-            style={styles.TextField}
-            placeholder={'Address'}
-            ref={r => {
-              this._addrTI = r;
-            }}
-            returnKeyType={'next'}
-            onSubmitEditing={event => this._emailTI.focus()}
-          />
-          <TextField
-            style={styles.TextField}
-            keyboardType="email-address"
-            placeholder={'Email'}
-            ref={r => {
-              this._emailTI = r;
-            }}
-            returnKeyType={'next'}
-            onSubmitEditing={event => this._msgTI.focus()}
-          />
-          <TextField
-            style={styles.TextField}
-            placeholder={'Message'}
-            ref={r => {
-              this._msgTI = r;
-            }}
-            returnKeyType={'next'}
-            onSubmitEditing={event => this._notesTI.focus()}
-          />
-          <TextField
-            style={styles.TextField}
-            placeholder={'Notes'}
-            ref={r => {
-              this._notesTI = r;
-            }}
-            returnKeyType={'go'}
-          />
-        </KeyboardAwareScrollView>
-      </View>
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
+        keyboardDismissMode="interactive"
+        keyboardShouldPersistTaps="always"
+        getTextInputRefs={() => {
+          return [
+            this._firstNameTI,
+            this._lastNameTI,
+            this._countryTI,
+            this._stateTI,
+            this._addrTI,
+            this._emailTI,
+            this._msgTI,
+            this._notesTI
+          ];
+        }}
+      >
+        {_.map(data, (item) => this.renderItem(item))}
+      </KeyboardAwareScrollView>
     );
   }
 
   render() {
-    if (this.state.listToggle) {
-      return this._renderKeyboardAwareListView();
-    } else {
-      return this._renderKeyboardAwareScrollView();
-    }
+    const {isFlatList} = this.state;
+    const switchText = `${
+      isFlatList ? 'KeyboardAwareFlatList' : 'KeyboardAwareScrollView'
+    }`;
+    return (
+      <View style={styles.container}>
+        <Text text65 marginB-20>
+          KeyboardAware example form
+        </Text>
+        {renderBooleanOption.call(this, switchText, 'isFlatList')}
+        <View height={40}/>
+        {isFlatList
+          ? this.renderKeyboardAwareListView()
+          : this.renderKeyboardAwareScrollView()}
+      </View>
+    );
   }
 }
 
