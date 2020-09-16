@@ -7,13 +7,13 @@ import {
 } from '../../commons/new';
 import View from '../../components/view';
 import {ButtonPropTypes} from '../../components/button';
-import {ValidationMessagePosition} from './types';
+import {ValidationMessagePosition, Validator} from './types';
 import Input, {InputProps} from './Input';
 import AccessoryButton from './AccessoryButton';
 import ValidationMessage, {ValidationMessageProps} from './ValidationMessage';
 import Label, {LabelProps} from './Label';
 import FieldContext from './FieldContext';
-import useFieldState, {Validator/* , FieldStateProps */} from './useFieldState';
+import useFieldState, {/* , FieldStateProps */} from './useFieldState';
 import FloatingPlaceholder, {
   FloatingPlaceholderProps
 } from './FloatingPlaceholder';

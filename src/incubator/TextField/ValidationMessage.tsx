@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
 import Text from '../../components/text';
 import FieldContext from './FieldContext';
+import {getRelevantValidationMessage} from './Presenter';
 
 export interface ValidationMessageProps {
   /**
@@ -11,7 +12,7 @@ export interface ValidationMessageProps {
   /**
    * The validation message to display when field is invalid (depends on validate)
    */
-  validationMessage?: string;
+  validationMessage?: string | string[];
   /**
    * Custom style for the validation message
    */
@@ -31,9 +32,14 @@ const ValidationMessage = ({
     return null;
   }
 
+  const relevantValidationMessage = getRelevantValidationMessage(
+    validationMessage,
+    context.failingValidatorIndex
+  );
+
   return (
     <Text red30 style={[styles.validationMessage, validationMessageStyle]}>
-      {context.isValid ? '' : validationMessage}
+      {context.isValid ? '' : relevantValidationMessage}
     </Text>
   );
 };

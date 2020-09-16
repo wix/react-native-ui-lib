@@ -1,6 +1,11 @@
 import _ from 'lodash';
-import React, {PureComponent} from 'react';
-import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
+import React, {PureComponent, GetDerivedStateFromProps} from 'react';
+import {
+  asBaseComponent,
+  forwardRef,
+  BaseComponentInjectedProps,
+  ForwardRefInjectedProps
+} from '../../commons/new';
 import View from '../view';
 import RadioGroupContext from './RadioGroupContext';
 
@@ -19,7 +24,9 @@ interface RadioGroupState {
   value?: RadioGroupPropTypes['initialValue'];
 }
 
-type Props = RadioGroupPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
+type Props = RadioGroupPropTypes &
+  BaseComponentInjectedProps &
+  ForwardRefInjectedProps;
 
 /**
  * Wrap a group of Radio Buttons to automatically control their selection
@@ -35,10 +42,24 @@ class RadioGroup extends PureComponent<Props, RadioGroupState> {
     };
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: Props) {
-    if (this.props.initialValue !== nextProps.initialValue) {
-      this.setState({value: nextProps.initialValue});
+  static getUpdatedState = (
+    nextProps: Props,
+    prevState: RadioGroupState
+  ): RadioGroupState | null => {
+    const {value} = prevState;
+    const {initialValue} = nextProps;
+    
+    if (_.isUndefined(nextProps.initialValue) || value === initialValue) {
+      return null;
     }
+
+    return {
+      value: initialValue
+    }
+  };
+
+  static getDerivedStateFromProps: GetDerivedStateFromProps<Props, RadioGroupState> = (props, state) => {
+    return RadioGroup.getUpdatedState(props, state);
   }
 
   getContextProviderValue() {
@@ -62,4 +83,6 @@ class RadioGroup extends PureComponent<Props, RadioGroupState> {
   }
 }
 
-export default asBaseComponent<RadioGroupPropTypes>(forwardRef(RadioGroup));
+export {RadioGroup}; // For tests
+
+export default asBaseComponent(forwardRef(RadioGroup));
