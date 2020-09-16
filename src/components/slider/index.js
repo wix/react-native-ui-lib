@@ -319,12 +319,9 @@ export default class Slider extends PureBaseComponent {
     this.thumb = r;
   };
 
-  getMaxMin = (value1, value2) => {
-    const max = Math.max(value1, value2) || 0;
-    const min = Math.min(value1, value2) || 0;
-    return {
-      max, min
-    };
+  shouldDoubleSizeByDefault = () => {
+    const {activeThumbStyle, thumbStyle} = this.props;
+    return !activeThumbStyle || !thumbStyle;
   }
 
   calculatedThumbActiveScale = () => {
@@ -334,16 +331,12 @@ export default class Slider extends PureBaseComponent {
     }
     
     const {defaultScaleFactor} = this._thumbAnimationConstants;
-    const shouldDoubleSizeByDefault = !activeThumbStyle || !thumbStyle;
-
-    if (shouldDoubleSizeByDefault) { 
+    if (this.shouldDoubleSizeByDefault()) { 
       return defaultScaleFactor;
     }
       
-    const {max, min} = this.getMaxMin(activeThumbStyle.height, thumbStyle.height);
-    const scaleCalculatedFromSize = min / max;
-
-    return scaleCalculatedFromSize || defaultScaleFactor;
+    const scaleRatioFromSize = activeThumbStyle.height / thumbStyle.height;
+    return scaleRatioFromSize || defaultScaleFactor;
   };
 
   /* Events */
@@ -429,6 +422,7 @@ export default class Slider extends PureBaseComponent {
       <Animated.View
         ref={this.setThumbRef}
         onLayout={this.onThumbLayout}
+        {...this._panResponder.panHandlers}
         style={[
           styles.thumb,
           thumbStyle,
@@ -505,7 +499,7 @@ export default class Slider extends PureBaseComponent {
           </View>
         )}
         {this.renderThumb()}
-        <View style={styles.touchArea} {...this._panResponder.panHandlers}/>
+        {/* <View style={styles.touchArea}/> */}
       </View>
     );
   }
