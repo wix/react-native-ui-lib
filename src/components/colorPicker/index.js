@@ -108,14 +108,23 @@ export default class ColorPicker extends PureBaseComponent {
     this.keyboardDidHideListener.remove();
   }
 
+  // TODO: remove method after migration to 'key' completed
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.initialColor !== nextProps.initialColor) {
+      this.showMigrationMessage();
+
       const text = this.getColorValue(nextProps.initialColor || this.props.initialColor);
       const color = Colors.getHSL(nextProps.initialColor);
       const {valid} = this.getValidColorString(text);
 
       this.setState({color, text, valid});
     }
+  }
+
+  showMigrationMessage() {
+    console.warn(`ColorPicker component will soon become uncontrolled component.` +
+    ` Thus 'initialColor' prop will become INITIAL, meaning, no updates to this prop will take effect` +
+    ` unless passing 'key' prop.`);
   }
 
   keyboardDidShow = e => {

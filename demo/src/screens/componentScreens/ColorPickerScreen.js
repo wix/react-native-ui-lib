@@ -60,18 +60,27 @@ export default class ColorPickerScreen extends Component {
     return (
       <ScrollView style={styles.container} contentContainerStyle={{paddingBottom: 20}}>
         <View center bg-white marginV-10>
-          <Text text60 margin-10 style={{color}}>Selected Color: {color}</Text>
+          <Text text60 margin-10 style={{color}}>
+            Selected Color: {color}
+          </Text>
           <View center marginB-10 style={{height: 50, width: 200, backgroundColor: color}}>
-            <Text text60 style={{color: textColor}}>{color}</Text>
+            <Text text60 style={{color: textColor}}>
+              {color}
+            </Text>
           </View>
         </View>
         <View bg-white>
-          <Text text60 marginL-20 marginB-4 marginT-24>Theme Color</Text>
+          <Text text60 marginL-20 marginB-4 marginT-24>
+            Theme Color
+          </Text>
           <Text marginL-20>Choose a color for your place’s theme.</Text>
-          <ColorPalette value={paletteValue} onValueChange={this.onPaletteValueChange} colors={colors}/>
-          <Text marginL-20 marginT-16>Custom Colors</Text>
+          <ColorPalette value={paletteValue} onValueChange={this.onPaletteValueChange} colors={colors} />
+          <Text marginL-20 marginT-16>
+            Custom Colors
+          </Text>
           <ColorPicker
             initialColor={color}
+            // key={color} //TODO: uncomment after migration completed
             colors={customColors}
             onDismiss={this.onDismiss}
             onSubmit={this.onSubmit}
@@ -82,11 +91,19 @@ export default class ColorPickerScreen extends Component {
         </View>
 
         <View marginV-10 bg-white>
-          <Text center text60 marginT-10>Color Name</Text>
+          <Text center text60 marginT-10>
+            Color Name
+          </Text>
           <View spread row margin-10 style={{backgroundColor: nearestColor}}>
-            <Text margin-5 text70 style={{color: textColor}}>{nearestColor}</Text>
-            <Text margin-5 text60 style={{color: textColor}}>{colorName}</Text>
-            <Text margin-5 text70 style={{color: textColor}}>{isMapped}</Text>
+            <Text margin-5 text70 style={{color: textColor}}>
+              {nearestColor}
+            </Text>
+            <Text margin-5 text60 style={{color: textColor}}>
+              {colorName}
+            </Text>
+            <Text margin-5 text70 style={{color: textColor}}>
+              {isMapped}
+            </Text>
           </View>
         </View>
       </ScrollView>
