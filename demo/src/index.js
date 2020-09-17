@@ -46,6 +46,9 @@ module.exports = {
       get DrawerScreen() {
         return require('./screens/componentScreens/DrawerScreen').default;
       },
+      get ExpandableListItemScreen() {
+        return require('./screens/componentScreens/ExpandableListItemScreen').default;
+      },
       get TagsInputScreen() {
         return require('./screens/componentScreens/TagsInputScreen').default;
       },

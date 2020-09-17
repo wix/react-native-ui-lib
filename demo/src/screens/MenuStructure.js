@@ -31,6 +31,7 @@ export const navigationData = {
       {title: 'Cards', tags: 'cards feed', screen: 'unicorn.components.CardsScreen'},
       {title: 'Connection Status Bar', tags: 'connection status bar', screen: 'unicorn.components.ConnectionStatusBar'},
       {title: 'Chip', tags: 'chip', screen: 'unicorn.components.ChipScreen'},
+      {title: 'Expandable List Item', tags: 'expandable List Item', screen: 'unicorn.components.ExpandableListItemScreen'},
       // {title: 'Overlays', tags: 'overlay image', screen: 'unicorn.components.OverlaysScreen'},
       {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
       {title: 'ProgressBar', tags: 'progress bar animated', screen: 'unicorn.animations.ProgressBarScreen'},
