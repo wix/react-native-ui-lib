@@ -15,7 +15,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.ConnectionStatusBar', () => require('./ConnectionStatusBarScreen').default);
   registrar('unicorn.components.DialogScreen', () => require('./DialogScreen').default);
   registrar('unicorn.components.DrawerScreen', () => require('./DrawerScreen').default);
-  registrar('unicorn.components.ExpandableListItemScreen', () => require('./ExpandableListItemScreen').default);
+  registrar('unicorn.components.ExpandableSectionScreen', () => require('./ExpandableSectionScreen').default);
   registrar('unicorn.components.TagsInputScreen', () => require('./TagsInputScreen').default);
   registrar('unicorn.components.HintsScreen', () => require('./HintsScreen').default);
   registrar('unicorn.components.ImageScreen', () => require('./ImageScreen').default);

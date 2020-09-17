@@ -54,8 +54,8 @@ export default {
   get Drawer() {
     return require('./components/drawer').default;
   },
-  get ExpandableListItem() {
-    return require('./components/expandableListItem').default;
+  get ExpandableSection() {
+    return require('./components/expandableSection').default;
   },
   get Fader() {
     return require('./components/fader').default;

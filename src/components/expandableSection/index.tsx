@@ -1,19 +1,23 @@
 import _ from 'lodash';
 import React, {useState} from 'react';
 import {LayoutAnimation} from 'react-native';
-import {View, ListItem, Button} from 'react-native-ui-lib';
+import View from '../view';
+//@ts-ignore
+import ListItem from '../listItem';
+import Button from '../button';
 
-export type ExpandableListItemProps = {
+
+export type ExpandableSectionProps = {
   /**
-   * expandableListItem text element
+   * expandableSection header element
    */
-  textElement?: JSX.Element;
+  sectionHeader?: JSX.Element;
   /**
-   * elements to be in expandableListItem carousel
+   * expandableSection expandable children
    */
-  contentElement?: JSX.Element;
+  children?: React.ReactNode;
   /**
-   * expandableListItem icon color
+   * expandableSection icon color
    */
   iconColor?: string;
 };
@@ -21,9 +25,9 @@ export type ExpandableListItemProps = {
 const chevronDown = require('../../assets/icons/chevronDown.png');
 const chevronUp = require('../../assets/icons/chevronUp.png');
 
-function ExpandableListItem(props: ExpandableListItemProps) {
+function ExpandableSection(props: ExpandableSectionProps) {
   const [expanded, setExpanded] = useState(false);
-  const {iconColor, textElement, contentElement} = props;
+  const {iconColor, sectionHeader, children} = props;
 
   const onExpand = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
@@ -32,22 +36,20 @@ function ExpandableListItem(props: ExpandableListItemProps) {
 
   return (
     <View style={{borderWidth: 0, borderRadius: 0}}>
-      <ListItem>
-        <ListItem.Part column style={{marginLeft: 10, marginTop: 15}}>
-          {textElement}
-        </ListItem.Part>
-        <ListItem.Part column style={{marginLeft: 380, marginTop: 25, position: 'absolute'}}>
+        <View style={{marginLeft: 10, marginTop: 15}}>
+          {sectionHeader}
+        </View>
+        <View style={{marginLeft: 380, marginTop: 25, position: 'absolute'}}>
           <Button
             iconSource={expanded ? chevronUp : chevronDown}
             iconStyle={{tintColor: iconColor}}
             style={{backgroundColor: 'transparent'}}
             onPress={() => onExpand()}
           ></Button>
-        </ListItem.Part>
-      </ListItem>
-      {expanded && contentElement}
+        </View>
+      {expanded && children}
     </View>
   );
 }
 
-export default ExpandableListItem;
+export default ExpandableSection;

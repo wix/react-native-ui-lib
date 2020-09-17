@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, ScrollView} from 'react-native';
-import {ExpandableListItem, Card, Colors, Text, ListItem, Carousel, Spacings, View} from 'react-native-ui-lib';
+import {ScrollView} from 'react-native';
+import {ExpandableSection, Card, Colors, Text, ListItem, Carousel, Spacings, View} from 'react-native-ui-lib';
 
 const cardImage2 = require('../../assets/images/empty-state.jpg');
 const cardImage = require('../../assets/images/card-example.jpg');
@@ -40,8 +40,8 @@ const elements = [
 ];
 
 const textElement = (
-  <Text dark10 text60 numberOfLines={1}>
-    Text Element of ExpandableListItem
+  <Text marginB-12 dark10 text60 numberOfLines={1}>
+    ExpandableSection's sectionHeader
   </Text>
 );
 
@@ -57,18 +57,17 @@ const contentElement = (
   </Carousel>
 );
 
-class ExpandableListItemScreen extends PureComponent {
+class ExpandableSectionScreen extends PureComponent {
   render() {
     return (
       <ScrollView>
-        <ExpandableListItem
+        <ExpandableSection
           iconColor={Colors.blue10}
-          textElement={textElement}
-          contentElement={contentElement}
-        ></ExpandableListItem>
+          sectionHeader={textElement}
+        >{contentElement}</ExpandableSection>
         <ListItem>
           <Text dark10 text60 center numberOfLines={1} style={{marginLeft: 10}}>
-            {'The next list item'}
+            {'The next item'}
           </Text>
         </ListItem>
       </ScrollView>
@@ -76,4 +75,4 @@ class ExpandableListItemScreen extends PureComponent {
   }
 }
 
-export default ExpandableListItemScreen;
+export default ExpandableSectionScreen;

@@ -1,20 +1,13 @@
 /// <reference types="react" />
-export declare type ExpandableListItemProps = {
-  /**
-   * expandableListItem text element
-   */
-  textElement?: JSX.Element;
-  /**
-   * elements to be in expandableListItem carousel
-   */
-  contentElement?: JSX.Element;
-  /**
-   * expandableListItem icon color
-   */
-  iconColor?: string;
-  };
-declare function ExpandableListItem(props: ExpandableListItemProps): JSX.Element;
-declare namespace ExpandableListItem {
-    var displayName: string;
-}
-export default ExpandableListItem;
+export declare type ExpandableSectionProps = {
+    /**
+     * ExpandableSection text element
+     */
+    textElement?: JSX.Element;
+    /**
+     * ExpandableSection icon color
+     */
+    iconColor?: string;
+};
+declare function ExpandableSection(props: ExpandableSectionProps): JSX.Element;
+export default ExpandableSection;
