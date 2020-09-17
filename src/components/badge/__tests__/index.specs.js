@@ -1,4 +1,4 @@
-import Badge from '../index';
+import {Badge} from '../index';
 
 describe('Badge Label', () => {
   it('Should return the label sent (unformatted)', () => {

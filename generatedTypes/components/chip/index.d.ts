@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleProp, ViewStyle, ViewProps, TouchableOpacityProps, ImageStyle, ImageProps, TextStyle, ImageSourcePropType } from 'react-native';
-import { BadgeProps } from 'typings';
 import { AvatarPropTypes } from '../avatar';
+import { BadgeProps } from '../badge';
 export declare type ChipPropTypes = ViewProps & TouchableOpacityProps & {
     /**
      * Chip's size. Number or a width and height object.
