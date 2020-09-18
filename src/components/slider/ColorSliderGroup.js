@@ -1,17 +1,17 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {PureComponent} from 'react';
+import {asBaseComponent, forwardRef} from '../../commons';
 import GradientSlider from './GradientSlider';
 import SliderGroup from './context/SliderGroup';
 import Text from '../text';
-import {PureBaseComponent} from '../../commons';
 
 
 /**
  * @description: A Gradient Slider component
  * @example: https://github.com/wix/react-native-ui-lib/blob/feat/new_components/demo/src/screens/componentScreens/SliderScreen.js
  */
-export default class ColorSliderGroup extends PureBaseComponent {
+class ColorSliderGroup extends PureComponent {
   static displayName = 'ColorSliderGroup';
 
   static propTypes = {
@@ -54,17 +54,13 @@ export default class ColorSliderGroup extends PureBaseComponent {
     initialColor: this.props.initialColor
   }
 
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (prevState.initialColor !== nextProps.initialColor) {
-  //     return {initialColor: nextProps.initialColor};
-  //   }
-  //   return null;
-  // }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.state.initialColor !== nextProps.initialColor) {
-      return {initialColor: nextProps.initialColor};
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.initialColor !== nextProps.initialColor) {
+      return {
+        initialColor: nextProps.initialColor
+      };
     }
+    return null;
   }
 
   onValueChange = (value) => {
@@ -72,7 +68,8 @@ export default class ColorSliderGroup extends PureBaseComponent {
   }
 
   renderSlider = (type) => {
-    const {sliderContainerStyle, showLabels, labelsStyle, accessible, labels} = this.getThemeProps();
+    const {sliderContainerStyle, showLabels, labelsStyle, accessible, labels} = this.props;
+
     return (
       <>
         {showLabels && (
@@ -98,3 +95,5 @@ export default class ColorSliderGroup extends PureBaseComponent {
     );
   }
 }
+
+export default asBaseComponent(forwardRef(ColorSliderGroup));
