@@ -61,7 +61,8 @@ class GradientSlider extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.prevColor !== nextProps.color) {
       return {
-        color: Colors.getHSL(nextProps.color)
+        color: Colors.getHSL(nextProps.color),
+        prevColor: Colors.getHSL(nextProps.color)
       };
     }
     return null;
