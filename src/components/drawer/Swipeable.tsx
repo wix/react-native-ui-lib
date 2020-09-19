@@ -102,6 +102,9 @@ export default class Swipeable extends Component<PropType, StateType> {
       measureCompleted: false
     };
 
+    this.prevProps = props;
+    this.prevState = this.state;
+
     this._updateAnimatedEvent(props, this.state);
 
     this._onGestureEvent = Animated.event([{nativeEvent: {translationX: dragX}}], {
@@ -112,7 +115,7 @@ export default class Swipeable extends Component<PropType, StateType> {
 
   _handleDrag = (e) => {
     const {onToggleSwipeLeft} = this.props;
-    
+
     if (onToggleSwipeLeft) {
       // Drag left toggle
       const {rowWidth, leftWidth} = this.state;
@@ -123,7 +126,7 @@ export default class Swipeable extends Component<PropType, StateType> {
         // move item right
         this.dragThresholdReached = true;
         onToggleSwipeLeft({rowWidth, leftWidth, dragX: x, triggerHaptic: true});
-      } 
+      }
       if (this.dragThresholdReached && x < threshold - 10) {
         // move item left
         this.dragThresholdReached = false;
@@ -132,18 +135,22 @@ export default class Swipeable extends Component<PropType, StateType> {
     }
   }
 
-  // TODO: change to componentDidUpdate
-  UNSAFE_componentWillUpdate(props: PropType, state: StateType) {
+  componentDidUpdate(prevProps, prevState) {
+    this.prevProps = prevProps;
+    this.prevState = prevState;
+  }
+
+  _shouldUpdateAnimatedEvent() {
     if (
-      this.props.friction !== props.friction ||
-      this.props.overshootLeft !== props.overshootLeft ||
-      this.props.overshootRight !== props.overshootRight ||
-      this.props.overshootFriction !== props.overshootFriction ||
-      this.state.leftWidth !== state.leftWidth ||
-      this.state.rightOffset !== state.rightOffset ||
-      this.state.rowWidth !== state.rowWidth
+      this.props.friction !== this.prevProps.friction ||
+      this.props.overshootLeft !== this.prevProps.overshootLeft ||
+      this.props.overshootRight !== this.prevProps.overshootRight ||
+      this.props.overshootFriction !== this.prevProps.overshootFriction ||
+      this.state.leftWidth !== this.prevState.leftWidth ||
+      this.state.rightOffset !== this.prevState.rightOffset ||
+      this.state.rowWidth !== this.prevState.rowWidth
     ) {
-      this._updateAnimatedEvent(props, state);
+      return true;
     }
   }
 
@@ -225,13 +232,13 @@ export default class Swipeable extends Component<PropType, StateType> {
     const {rightOffset = rowWidth} = this.state;
     const rightWidth = rowWidth - rightOffset;
     const {
-      fullSwipeLeft, 
-      fullSwipeRight, 
-      friction, 
-      leftThreshold = leftWidth / 2, 
-      rightThreshold = rightWidth / 2, 
-      fullLeftThreshold, 
-      fullRightThreshold, 
+      fullSwipeLeft,
+      fullSwipeRight,
+      friction,
+      leftThreshold = leftWidth / 2,
+      rightThreshold = rightWidth / 2,
+      fullLeftThreshold,
+      fullRightThreshold,
       onToggleSwipeLeft
     } = this.props;
     const startOffsetX = this._currentOffset() + dragX / friction;
@@ -291,7 +298,7 @@ export default class Swipeable extends Component<PropType, StateType> {
     dragX.setValue(0);
     rowTranslation.setValue(fromValue);
     this.rowState = Math.sign(toValue);
-        
+
     Animated.spring(rowTranslation, {
       toValue,
       restSpeedThreshold: 1.7,
@@ -301,7 +308,7 @@ export default class Swipeable extends Component<PropType, StateType> {
       useNativeDriver: useNativeAnimations,
       ...animationOptions
     }).start(({finished}) => {
-      if (finished) { 
+      if (finished) {
         if (toValue === rowWidth && onFullSwipeLeft) {
           onFullSwipeLeft();
         } else if (toValue === -rowWidth && onFullSwipeRight) {
@@ -420,6 +427,10 @@ export default class Swipeable extends Component<PropType, StateType> {
   };
 
   render() {
+    if (this._shouldUpdateAnimatedEvent()) {
+      this._updateAnimatedEvent(this.props, this.state);
+    }
+
     const {
       children,
       renderLeftActions,
