@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {LayoutAnimation, StyleSheet, Keyboard, TextInput, PixelRatio, I18nManager} from 'react-native';
 import ColorPalette from './ColorPalette';
 import {SWATCH_MARGIN, SWATCH_SIZE} from './ColorSwatch';
 import {Constants} from '../../helpers';
-import {PureBaseComponent} from '../../commons';
+import {asBaseComponent, forwardRef} from '../../commons';
 import Assets from '../../assets';
 import {Colors, Typography} from '../../style';
 import View from '../view';
@@ -30,7 +30,7 @@ const KEYBOARD_HEIGHT = 216;
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.js
  * @notes: This is a screen width component
  */
-export default class ColorPicker extends PureBaseComponent {
+class ColorPicker extends PureComponent {
   static displayName = 'ColorPicker';
 
   static propTypes = {
@@ -156,10 +156,6 @@ export default class ColorPicker extends PureBaseComponent {
     }
   }
 
-  generateStyles() {
-    this.styles = createStyles(this.props);
-  }
-
   showDialog = () => {
     this.setState({show: true});
   };
@@ -259,11 +255,11 @@ export default class ColorPicker extends PureBaseComponent {
   };
 
   renderHeader() {
-    const {useCustomTheme, accessibilityLabels} = this.getThemeProps();
+    const {useCustomTheme, accessibilityLabels} = this.props;
     const {valid} = this.state;
 
     return (
-      <View row spread bg-white paddingH-20 style={this.styles.header}>
+      <View row spread bg-white paddingH-20 style={styles.header}>
         <Button
           link
           iconSource={Assets.icons.x}
@@ -290,10 +286,10 @@ export default class ColorPicker extends PureBaseComponent {
     return (
       <ColorSliderGroup
         initialColor={colorValue}
-        containerStyle={[this.styles.sliderGroup, {height: keyboardHeight}]}
-        sliderContainerStyle={this.styles.slider}
+        containerStyle={[styles.sliderGroup, {height: keyboardHeight}]}
+        sliderContainerStyle={styles.slider}
         showLabels
-        labelsStyle={this.styles.label}
+        labelsStyle={styles.label}
         onValueChange={this.onSliderValueChange}
         accessible={false}
       />
@@ -301,7 +297,7 @@ export default class ColorPicker extends PureBaseComponent {
   }
 
   renderPreview() {
-    const {accessibilityLabels, previewInputStyle} = this.getThemeProps();
+    const {accessibilityLabels, previewInputStyle} = this.props;
     const {color, text} = this.state;
     const hex = this.getHexString(color);
     const textColor = this.getTextColor(hex);
@@ -309,9 +305,9 @@ export default class ColorPicker extends PureBaseComponent {
     const value = Colors.isTransparent(text) ? '000000' : text;
 
     return (
-      <View style={[this.styles.preview, {backgroundColor: hex}]}>
+      <View style={[styles.preview, {backgroundColor: hex}]}>
         <TouchableOpacity center onPress={this.setFocus} activeOpacity={1} accessible={false}>
-          <View style={this.styles.inputContainer}>
+          <View style={styles.inputContainer}>
             <Text
               text60
               white
@@ -332,7 +328,7 @@ export default class ColorPicker extends PureBaseComponent {
               numberOfLines={1}
               onChangeText={this.onChangeText}
               style={[
-                this.styles.input,
+                styles.input,
                 {color: textColor, width: (value.length + 1) * 16.5 * fontScale},
                 Constants.isAndroid && {padding: 0},
                 previewInputStyle
@@ -349,14 +345,14 @@ export default class ColorPicker extends PureBaseComponent {
               accessibilityLabel={accessibilityLabels.input}
             />
           </View>
-          <View style={[{backgroundColor: textColor}, this.styles.underline]}/>
+          <View style={[{backgroundColor: textColor}, styles.underline]}/>
         </TouchableOpacity>
       </View>
     );
   }
 
   renderDialog() {
-    const {testID, dialogProps} = this.getThemeProps();
+    const {testID, dialogProps} = this.props;
     const {show} = this.state;
 
     return (
@@ -368,7 +364,7 @@ export default class ColorPicker extends PureBaseComponent {
         bottom
         centerH
         onDismiss={this.onDismiss}
-        containerStyle={this.styles.dialog}
+        containerStyle={styles.dialog}
         panDirection={PanningProvider.Directions.DOWN}
         testID={`${testID}.dialog`}
         supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOS only
@@ -382,24 +378,24 @@ export default class ColorPicker extends PureBaseComponent {
   }
 
   render() {
-    const {colors, value, testID, accessibilityLabels} = this.getThemeProps();
+    const {colors, value, testID, accessibilityLabels} = this.props;
 
     return (
       <View row testID={testID}>
         <ColorPalette
           value={value}
           colors={colors}
-          style={this.styles.palette}
+          style={styles.palette}
           usePagination={false}
           animatedIndex={this.animatedIndex}
           onValueChange={this.onValueChange}
           testID={`${testID}-palette`}
         />
-        <View style={this.styles.buttonContainer}>
+        <View style={styles.buttonContainer}>
           <Button
             color={Colors.dark10}
             outlineColor={Colors.dark10}
-            style={this.styles.button}
+            style={styles.button}
             round
             outline
             iconSource={Assets.icons.plusSmall}
@@ -419,76 +415,75 @@ export default class ColorPicker extends PureBaseComponent {
   };
 }
 
-function createStyles(props) {
-  const borderRadius = 12;
-  const iconSize = SWATCH_SIZE;
-  const plusButtonContainerWidth = iconSize + 20 + 12;
-  const plusButtonContainerHeight = 92 - 2 * SWATCH_MARGIN;
+export default asBaseComponent(forwardRef(ColorPicker));
 
-  const styles = StyleSheet.create({
-    palette: {
-      paddingLeft: plusButtonContainerWidth
-    },
-    dialog: {
-      backgroundColor: Colors.white,
-      borderTopLeftRadius: borderRadius,
-      borderTopRightRadius: borderRadius
-    },
-    buttonContainer: {
-      position: 'absolute',
-      left: 0,
-      width: plusButtonContainerWidth,
-      height: plusButtonContainerHeight,
-      marginTop: SWATCH_MARGIN,
-      marginBottom: SWATCH_MARGIN,
-      alignItems: 'flex-end',
-      justifyContent: 'center',
-      paddingTop: 1,
-      backgroundColor: Colors.white
-    },
-    button: {
-      width: iconSize,
-      height: iconSize,
-      marginRight: 12
-    },
-    preview: {
-      height: 200,
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    header: {
-      height: 56,
-      borderTopLeftRadius: borderRadius,
-      borderTopRightRadius: borderRadius
-    },
-    inputContainer: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'row',
-      marginBottom: Constants.isAndroid ? 5 : 8,
-      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
-    },
-    input: {
-      ...Typography.text60,
-      letterSpacing: 3,
-      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
-    },
-    underline: {
-      height: 1.5,
-      width: Constants.isAndroid ? 119 : 134,
-      marginRight: Constants.isAndroid ? 13 : 8
-    },
-    sliderGroup: {
-      paddingTop: 12,
-      marginHorizontal: 20
-    },
-    slider: {
-      marginBottom: 15,
-      height: 26
-    },
-    label: {
-      marginBottom: 3
-    }
-  });
-  return styles;
-}
+
+const BORDER_RADIUS = 12;
+const plusButtonContainerWidth = SWATCH_SIZE + 20 + 12;
+const plusButtonContainerHeight = 92 - 2 * SWATCH_MARGIN;
+
+const styles = StyleSheet.create({
+  palette: {
+    paddingLeft: plusButtonContainerWidth
+  },
+  dialog: {
+    backgroundColor: Colors.white,
+    borderTopLeftRadius: BORDER_RADIUS,
+    borderTopRightRadius: BORDER_RADIUS
+  },
+  buttonContainer: {
+    position: 'absolute',
+    left: 0,
+    width: plusButtonContainerWidth,
+    height: plusButtonContainerHeight,
+    marginTop: SWATCH_MARGIN,
+    marginBottom: SWATCH_MARGIN,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    paddingTop: 1,
+    backgroundColor: Colors.white
+  },
+  button: {
+    width: SWATCH_SIZE,
+    height: SWATCH_SIZE,
+    marginRight: 12
+  },
+  preview: {
+    height: 200,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  header: {
+    height: 56,
+    borderTopLeftRadius: BORDER_RADIUS,
+    borderTopRightRadius: BORDER_RADIUS
+  },
+  inputContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    marginBottom: Constants.isAndroid ? 5 : 8,
+    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
+  },
+  input: {
+    ...Typography.text60,
+    letterSpacing: 3,
+    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
+  },
+  underline: {
+    height: 1.5,
+    width: Constants.isAndroid ? 119 : 134,
+    marginRight: Constants.isAndroid ? 13 : 8
+  },
+  sliderGroup: {
+    paddingTop: 12,
+    marginHorizontal: 20
+  },
+  slider: {
+    marginBottom: 15,
+    height: 26
+  },
+  label: {
+    marginBottom: 3
+  }
+});
