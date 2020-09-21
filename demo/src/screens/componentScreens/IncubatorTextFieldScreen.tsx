@@ -103,10 +103,10 @@ export default class TextFieldScreen extends Component {
             label="Email"
             placeholder="Enter email"
             enableErrors
-            validationMessage="Email is invalid"
+            validationMessage={['Email is required', 'Email is invalid']}
             validationMessageStyle={Typography.text90R}
             validationMessagePosition={errorPosition}
-            validate={'email'}
+            validate={['required', 'email']}
             validateOnChange
             // validateOnStart
             // validateOnBlur

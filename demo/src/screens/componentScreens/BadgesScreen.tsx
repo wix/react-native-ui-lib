@@ -33,7 +33,7 @@ export default class BadgesScreen extends Component {
         </Text>
         <View row center style={{alignItems: 'flex-start'}}>
           <View center paddingH-10>
-            <Badge label={this.state.value.toString()} backgroundColor={Colors.red30}/>
+            <Badge size={'default'} label={this.state.value.toString()} backgroundColor={Colors.red30}/>
             <Badge
               label={this.state.value.toString()}
               containerStyle={{marginTop: BadgesSpace}}
@@ -133,7 +133,7 @@ export default class BadgesScreen extends Component {
           <View style={styles.iconBadgeColumnContainer}>
             <Badge icon={star} borderRadius={6} iconStyle={{backgroundColor: Colors.red30}}/>
             <Text text80 style={{marginTop: 10}}>
-              border radius (6)
+              border radius
             </Text>
           </View>
         </View>

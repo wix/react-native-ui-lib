@@ -218,7 +218,7 @@ class Dialog extends Component<DialogProps, DialogState> {
   // TODO: renderOverlay {_.invoke(this.props, 'renderOverlay')}
   renderDialogContainer = () => {
     const {modalVisibility, dialogVisibility} = this.state;
-    const {useSafeArea, bottom, overlayBackgroundColor} = this.props;
+    const {useSafeArea, bottom, overlayBackgroundColor, testID} = this.props;
     const addBottomSafeArea = Constants.isIphoneX && (useSafeArea && bottom);
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8; // TODO: should this be here or in the input style?
 
@@ -229,6 +229,7 @@ class Dialog extends Component<DialogProps, DialogState> {
         pointerEvents="box-none"
       >
         <OverlayFadingBackground
+          testID={`${testID}.overlayFadingBackground`}
           modalVisibility={modalVisibility}
           dialogVisibility={dialogVisibility}
           overlayBackgroundColor={overlayBackgroundColor}
