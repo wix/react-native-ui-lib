@@ -1,11 +1,7 @@
 import _ from 'lodash';
-import React, {useState} from 'react';
-import {LayoutAnimation} from 'react-native';
+import React from 'react';
+import {LayoutAnimation, StyleSheet} from 'react-native';
 import View from '../view';
-//@ts-ignore
-import ListItem from '../listItem';
-import Button from '../button';
-
 
 export type ExpandableSectionProps = {
   /**
@@ -19,37 +15,29 @@ export type ExpandableSectionProps = {
   /**
    * expandableSection icon color
    */
-  iconColor?: string;
+  expanded?: boolean;
 };
 
-const chevronDown = require('../../assets/icons/chevronDown.png');
-const chevronUp = require('../../assets/icons/chevronUp.png');
-
 function ExpandableSection(props: ExpandableSectionProps) {
-  const [expanded, setExpanded] = useState(false);
-  const {iconColor, sectionHeader, children} = props;
+  const {expanded, sectionHeader, children} = props;
 
-  const onExpand = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-    setExpanded(!expanded);
-  };
+  function onValueChange() {
+    LayoutAnimation.configureNext({...LayoutAnimation.Presets.easeInEaseOut, duration: 200});
+    return expanded && children;
+  }
 
   return (
-    <View style={{borderWidth: 0, borderRadius: 0}}>
-        <View style={{marginLeft: 10, marginTop: 15}}>
-          {sectionHeader}
-        </View>
-        <View style={{marginLeft: 380, marginTop: 25, position: 'absolute'}}>
-          <Button
-            iconSource={expanded ? chevronUp : chevronDown}
-            iconStyle={{tintColor: iconColor}}
-            style={{backgroundColor: 'transparent'}}
-            onPress={() => onExpand()}
-          ></Button>
-        </View>
-      {expanded && children}
+    <View style={styles.container}>
+      {sectionHeader}
+      {onValueChange()}
     </View>
   );
 }
 
 export default ExpandableSection;
+
+const styles = StyleSheet.create({
+  container: {
+    overflow: 'hidden'
+  }
+});

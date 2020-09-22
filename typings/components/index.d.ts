@@ -9,7 +9,6 @@ export * from './Carousel';
 export * from './ColorPicker';
 export * from './ConnectionStatusBar';
 export * from './Dialog';
-export * from './ExpandableSection';
 export * from './Fader';
 export * from './FeatureHighlight';
 export * from './FloatingButton';

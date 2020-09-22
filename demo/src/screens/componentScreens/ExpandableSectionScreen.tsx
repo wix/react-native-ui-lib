@@ -1,10 +1,13 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {ScrollView} from 'react-native';
-import {ExpandableSection, Card, Colors, Text, ListItem, Carousel, Spacings, View} from 'react-native-ui-lib';
+import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import {Card, Text, Image, ListItem, Carousel, Spacings, View} from 'react-native-ui-lib';
+import ExpandableSection from '../../../../src/components/expandableSection';
 
 const cardImage2 = require('../../assets/images/empty-state.jpg');
 const cardImage = require('../../assets/images/card-example.jpg');
+const chevronDown = require('../../assets/icons/chevronDown.png');
+const chevronUp = require('../../assets/icons/chevronUp.png');
 
 const elements = [
   <Card style={{marginBottom: 10}} onPress={() => {}}>
@@ -39,34 +42,54 @@ const elements = [
   </Card>
 ];
 
-const textElement = (
-  <Text marginB-12 dark10 text60 numberOfLines={1}>
-    ExpandableSection's sectionHeader
-  </Text>
-);
-
-const contentElement = (
-  <Carousel pageWidth={350} itemSpacings={Spacings.s2}>
-    {_.map(elements, (element, key) => {
-      return (
-        <View key={key} style={{margin: 12}}>
-          {element}
-        </View>
-      );
-    })}
-  </Carousel>
-);
-
 class ExpandableSectionScreen extends PureComponent {
+  state = {
+    expanded: false
+  };
+
+  onExpand() {
+    this.setState({
+      expanded: !this.state.expanded
+    });
+  }
+
+  getHeaderElement() {
+    return (
+      <TouchableOpacity onPress={() => this.onExpand()}>
+        <Text margin-10 dark10 text60>
+          ExpandableSection's sectionHeader
+        </Text>
+        <View style={styles.header}>
+          <Image style={styles.icon} source={!this.state.expanded ? chevronUp : chevronDown} />
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  getBodyElement() {
+    return (
+      <Carousel pageWidth={350} itemSpacings={Spacings.s2}>
+        {_.map(elements, (element, key) => {
+          return (
+            <View key={key} margin-12>
+              {element}
+            </View>
+          );
+        })}
+      </Carousel>
+    );
+  }
+
   render() {
+    const {expanded} = this.state;
+
     return (
       <ScrollView>
-        <ExpandableSection
-          iconColor={Colors.blue10}
-          sectionHeader={textElement}
-        >{contentElement}</ExpandableSection>
+        <ExpandableSection expanded={expanded} sectionHeader={this.getHeaderElement()}>
+          {this.getBodyElement()}
+        </ExpandableSection>
         <ListItem>
-          <Text dark10 text60 center numberOfLines={1} style={{marginLeft: 10}}>
+          <Text dark10 text60 marginL-10>
             {'The next item'}
           </Text>
         </ListItem>
@@ -76,3 +99,14 @@ class ExpandableSectionScreen extends PureComponent {
 }
 
 export default ExpandableSectionScreen;
+
+const styles = StyleSheet.create({
+  header: {
+    marginLeft: 380,
+    marginTop: 20,
+    position: 'absolute'
+  },
+  icon: {
+    backgroundColor: 'transparent'
+  }
+});
