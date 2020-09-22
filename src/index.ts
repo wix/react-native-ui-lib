@@ -8,6 +8,7 @@ export * from './style';
 export * from './services';
 export * as Incubator from './incubator';
 export {default as Avatar, AvatarPropTypes} from './components/avatar';
+export {default as Badge, BadgeProps} from './components/badge';
 export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
 export {default as View, ViewPropTypes} from './components/view';
 export {default as Text, TextPropTypes} from './components/text';
@@ -41,7 +42,7 @@ export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleA
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ActionBar, ActionSheet, Badge, BadgeProps, Carousel, ConnectionStatusBar, Dialog, DialogProps, Drawer,
+  ActionBar, ActionSheet, Carousel, ConnectionStatusBar, Dialog, DialogProps, Drawer,
   FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl,
   Picker, PickerProps, ProgressBar, Slider,
   GradientSlider, ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,
