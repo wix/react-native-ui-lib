@@ -11,7 +11,7 @@ export declare type ExpandableSectionProps = {
     /**
      * expandableSection icon color
      */
-    iconColor?: string;
+    expanded?: boolean;
 };
 declare function ExpandableSection(props: ExpandableSectionProps): JSX.Element;
 export default ExpandableSection;
