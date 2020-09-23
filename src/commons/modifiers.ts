@@ -304,7 +304,10 @@ export function extractModifierProps(props: Dictionary<any>) {
   return modifierProps;
 }
 
-// TODO: should not be used anymore
+/**
+ * TODO:
+ * @deprecated switch to Modifiers#extractComponentProps
+ */
 export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
   //@ts-ignore
   const ownPropTypes = this.propTypes;
