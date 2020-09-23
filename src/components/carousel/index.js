@@ -10,7 +10,6 @@ import Text from '../text';
 import PageControl from '../pageControl';
 import * as presenter from './CarouselPresenter';
 
-
 const PAGE_CONTROL_POSITIONS = {
   OVER: 'over',
   UNDER: 'under'
@@ -68,11 +67,7 @@ class Carousel extends Component {
     /**
      * the carousel style
      */
-    containerStyle: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.number,
-      PropTypes.array
-    ]),
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * PageControl component props
      */
@@ -88,11 +83,7 @@ class Carousel extends Component {
     /**
      * the counter's text style
      */
-    counterTextStyle: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.number,
-      PropTypes.array
-    ]),
+    counterTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
      * will block multiple pages scroll (will not work with 'pageWidth' prop)
      */
@@ -125,16 +116,11 @@ class Carousel extends Component {
 
     this.carousel = React.createRef();
 
-    const defaultPageWidth =
-      props.loop || !props.pageWidth
-        ? Constants.screenWidth
-        : props.pageWidth;
+    const defaultPageWidth = (props.loop || !props.pageWidth) ? Constants.screenWidth : props.pageWidth;
 
     this.state = {
       containerWidth: undefined,
-      currentPage: this.shouldUsePageWidth()
-        ? this.getCalcIndex(props.initialPage)
-        : props.initialPage,
+      currentPage: this.shouldUsePageWidth() ? this.getCalcIndex(props.initialPage) : props.initialPage,
       currentStandingPage: props.initialPage,
       pageWidth: defaultPageWidth,
       initialOffset: {
@@ -182,7 +168,10 @@ class Carousel extends Component {
     }
 
     // for presenter.calcOffset() props parameter
-    if (prevProps.containerMarginHorizontal !== nextProps.containerMarginHorizontal || prevProps.loop !== nextProps.loop) {
+    if (
+      prevProps.containerMarginHorizontal !== nextProps.containerMarginHorizontal ||
+      prevProps.loop !== nextProps.loop
+    ) {
       return {
         prevProps: nextProps
       };
@@ -261,9 +250,7 @@ class Carousel extends Component {
   }
 
   goToPage(pageIndex, animated = true) {
-    this.setState({currentPage: this.getCalcIndex(pageIndex)}, () =>
-      this.updateOffset(animated)
-    );
+    this.setState({currentPage: this.getCalcIndex(pageIndex)}, () => this.updateOffset(animated));
   }
 
   getCalcIndex(index) {
@@ -283,16 +270,11 @@ class Carousel extends Component {
     }
 
     if (containerWidth) {
-      const spacings =
-        pageWidth === containerWidth
-          ? 0
-          : this.getItemSpacings(this.props);
-      const initialBreak =
-        pageWidth - (containerWidth - pageWidth - spacings) / 2;
+      const spacings = pageWidth === containerWidth ? 0 : this.getItemSpacings(this.props);
+      const initialBreak = pageWidth - (containerWidth - pageWidth - spacings) / 2;
       const snapToOffsets = _.times(
         presenter.getChildrenLength(this.props),
-        (index) =>
-          initialBreak + index * pageWidth + this.getContainerMarginHorizontal()
+        index => initialBreak + index * pageWidth + this.getContainerMarginHorizontal()
       );
       return snapToOffsets;
     }
@@ -329,9 +311,7 @@ class Carousel extends Component {
 
   shouldAllowAccessibilityLayout() {
     const {allowAccessibleLayout} = this.props;
-    return (
-      allowAccessibleLayout && Constants.accessibility.isScreenReaderEnabled
-    );
+    return allowAccessibleLayout && Constants.accessibility.isScreenReaderEnabled;
   }
 
   onContentSizeChange = () => {
@@ -348,12 +328,7 @@ class Carousel extends Component {
 
     this.setState({currentStandingPage: index});
     if (currentStandingPage !== index) {
-      _.invoke(
-        this.props,
-        'onChangePage',
-        index,
-        currentStandingPage
-      );
+      _.invoke(this.props, 'onChangePage', index, currentStandingPage);
     }
   };
 
@@ -378,7 +353,7 @@ class Carousel extends Component {
     }
   }
 
-  onScroll = (event) => {
+  onScroll = event => {
     if (!this.skippedInitialScroll) {
       this.skippedInitialScroll = true;
       return;
@@ -391,20 +366,13 @@ class Carousel extends Component {
     if (offsetX >= 0) {
       if (!this.orientationChange) {
         // Avoid new calculation on orientation change
-        const newPage = presenter.calcPageIndex(
-          offsetX,
-          this.props,
-          pageWidth
-        );
+        const newPage = presenter.calcPageIndex(offsetX, this.props, pageWidth);
         this.setState({currentPage: newPage});
       }
       this.orientationChange = false;
     }
 
-    if (
-      loop &&
-      presenter.isOutOfBounds(offsetX, this.props, pageWidth)
-    ) {
+    if (loop && presenter.isOutOfBounds(offsetX, this.props, pageWidth)) {
       this.updateOffset();
     }
 
@@ -418,9 +386,7 @@ class Carousel extends Component {
 
   renderChild = (child, key) => {
     if (child) {
-      const paddingLeft = this.shouldUsePageWidth()
-        ? this.getItemSpacings(this.props)
-        : undefined;
+      const paddingLeft = this.shouldUsePageWidth() ? this.getItemSpacings(this.props) : undefined;
       const index = Number(key);
       const length = presenter.getChildrenLength(this.props);
       const containerMarginHorizontal = this.getContainerMarginHorizontal();
@@ -460,9 +426,7 @@ class Carousel extends Component {
     });
 
     if (loop) {
-      childrenArray.unshift(
-        this.renderChild(children[length - 1], `${length - 1}-clone`)
-      );
+      childrenArray.unshift(this.renderChild(children[length - 1], `${length - 1}-clone`));
       childrenArray.push(this.renderChild(children[0], `${0}-clone`));
     }
 
@@ -473,13 +437,7 @@ class Carousel extends Component {
     const {pageControlPosition, pageControlProps = {}} = this.props;
 
     if (pageControlPosition) {
-      const {
-        size = 6,
-        spacing = 8,
-        color = Colors.dark20,
-        inactiveColor = Colors.dark60,
-        ...others
-      } = pageControlProps;
+      const {size = 6, spacing = 8, color = Colors.dark20, inactiveColor = Colors.dark60, ...others} = pageControlProps;
       const pagesCount = presenter.getChildrenLength(this.props);
       const containerStyle =
         pageControlPosition === PAGE_CONTROL_POSITIONS.UNDER
@@ -548,11 +506,7 @@ class Carousel extends Component {
     const marginBottom = Math.max(0, this.getContainerPaddingVertical() - 16);
 
     return (
-      <View
-        animated={animated}
-        style={[{marginBottom}, containerStyle]}
-        onLayout={this.onContainerLayout}
-      >
+      <View animated={animated} style={[{marginBottom}, containerStyle]} onLayout={this.onContainerLayout}>
         <ScrollView
           {...others}
           ref={this.carousel}
@@ -577,16 +531,12 @@ class Carousel extends Component {
   }
 
   render() {
-    return this.shouldAllowAccessibilityLayout()
-      ? this.renderAccessibleLayout()
-      : this.renderCarousel();
+    return this.shouldAllowAccessibilityLayout() ? this.renderAccessibleLayout() : this.renderCarousel();
   }
 }
 
-
 export {Carousel}; // For tests
 export default asBaseComponent(forwardRef(Carousel));
-
 
 const styles = StyleSheet.create({
   counter: {
