@@ -5,7 +5,7 @@ import {LayoutAnimation, StyleSheet, Keyboard, TextInput, PixelRatio, I18nManage
 import ColorPalette from './ColorPalette';
 import {SWATCH_MARGIN, SWATCH_SIZE} from './ColorSwatch';
 import {Constants} from '../../helpers';
-import {asBaseComponent, forwardRef} from '../../commons';
+import {asBaseComponent} from '../../commons';
 import Assets from '../../assets';
 import {Colors, Typography} from '../../style';
 import View from '../view';
@@ -415,7 +415,7 @@ class ColorPicker extends PureComponent {
   };
 }
 
-export default asBaseComponent(forwardRef(ColorPicker));
+export default asBaseComponent(ColorPicker);
 
 
 const BORDER_RADIUS = 12;
