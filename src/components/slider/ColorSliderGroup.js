@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
-import {asBaseComponent, forwardRef} from '../../commons';
+import {asBaseComponent} from '../../commons';
 import GradientSlider from './GradientSlider';
 import SliderGroup from './context/SliderGroup';
 import Text from '../text';
@@ -96,4 +96,4 @@ class ColorSliderGroup extends PureComponent {
   }
 }
 
-export default asBaseComponent(forwardRef(ColorSliderGroup));
+export default asBaseComponent(ColorSliderGroup);

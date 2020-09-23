@@ -4,7 +4,7 @@ import tinycolor from 'tinycolor2';
 import React, {Component} from 'react';
 import {HueGradient, LightnessGradient, SaturationGradient, Gradient} from 'react-native-color';
 import {Colors} from '../../style';
-import {asBaseComponent, forwardRef} from '../../commons';
+import {asBaseComponent} from '../../commons';
 import Slider from './index';
 import asSliderGroupChild from './context/asSliderGroupChild';
 
@@ -200,4 +200,4 @@ class GradientSlider extends Component {
   }
 }
 
-export default asBaseComponent(forwardRef(asSliderGroupChild(GradientSlider)));
+export default asBaseComponent(asSliderGroupChild(GradientSlider));
