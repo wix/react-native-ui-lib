@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
-import {asBaseComponent, forwardRef} from '../../commons';
+import {asBaseComponent} from '../../commons';
 import View from '../view';
 import Text from '../text';
 import PageControl from '../pageControl';
@@ -133,20 +133,6 @@ class Carousel extends Component {
     };
   }
 
-  componentDidMount() {
-    Constants.addDimensionsEventListener(this.onOrientationChanged);
-
-    if (this.props.autoplay) {
-      this.startAutoPlay();
-    }
-  }
-
-  componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChanged);
-
-    clearInterval(this.autoplayTimer);
-  }
-
   static getDerivedStateFromProps(nextProps, prevState) {
     const {currentPage, prevProps} = prevState;
     const {pageWidth} = prevProps;
@@ -178,6 +164,20 @@ class Carousel extends Component {
     }
 
     return null;
+  }
+
+  componentDidMount() {
+    Constants.addDimensionsEventListener(this.onOrientationChanged);
+
+    if (this.props.autoplay) {
+      this.startAutoPlay();
+    }
+  }
+
+  componentWillUnmount() {
+    Constants.removeDimensionsEventListener(this.onOrientationChanged);
+
+    clearInterval(this.autoplayTimer);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -536,7 +536,7 @@ class Carousel extends Component {
 }
 
 export {Carousel}; // For tests
-export default asBaseComponent(forwardRef(Carousel));
+export default asBaseComponent(Carousel);
 
 const styles = StyleSheet.create({
   counter: {
