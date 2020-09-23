@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import {BaseComponent} from '../../commons';
+import {extractComponentProps} from '../../commons/modifiers';
 import Dialog from '../dialog';
 import View from '../view';
 import Text from '../text';
@@ -51,7 +52,7 @@ class PickerDialog extends BaseComponent {
   }
 
   render() {
-    const dialogProps = Dialog.extractOwnProps(this.props);
+    const dialogProps = extractComponentProps(Dialog, this.props);
     return (
       <Dialog {...dialogProps} height={250} width="100%" migrate bottom animationConfig={{duration: 300}}>
         <View flex bg-white>
