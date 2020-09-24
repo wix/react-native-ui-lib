@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {LayoutAnimation, StyleSheet} from 'react-native';
 import View from '../view';
 
@@ -13,7 +13,7 @@ export type ExpandableSectionProps = {
    */
   children?: React.ReactNode;
   /**
-   * expandableSection icon color
+   * should the expandableSection be expanded
    */
   expanded?: boolean;
 };
@@ -21,15 +21,15 @@ export type ExpandableSectionProps = {
 function ExpandableSection(props: ExpandableSectionProps) {
   const {expanded, sectionHeader, children} = props;
 
-  function onValueChange() {
-    LayoutAnimation.configureNext({...LayoutAnimation.Presets.easeInEaseOut, duration: 200});
-    return expanded && children;
-  }
+  useEffect(() => {
+    LayoutAnimation.configureNext({...LayoutAnimation.Presets.easeInEaseOut, duration: 300});
+  }, [expanded]);
+
 
   return (
     <View style={styles.container}>
       {sectionHeader}
-      {onValueChange()}
+      {expanded && children}
     </View>
   );
 }
