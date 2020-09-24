@@ -9,7 +9,7 @@ export declare type ExpandableSectionProps = {
      */
     children?: React.ReactNode;
     /**
-     * expandableSection icon color
+     * should the expandableSection be expanded
      */
     expanded?: boolean;
 };
