@@ -362,6 +362,7 @@ class Hint extends BaseComponent {
         >
           {this.renderHintTip()}
           <View
+            testID={`${testID}.message`}
             row
             centerV
             style={[styles.hint, color && {backgroundColor: color}, !_.isUndefined(borderRadius) && {borderRadius}]}

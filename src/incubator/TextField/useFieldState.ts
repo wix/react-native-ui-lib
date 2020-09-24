@@ -1,9 +1,8 @@
 import {useCallback, useState, useEffect, useMemo} from 'react';
 import {TextInputProps} from 'react-native';
 import _ from 'lodash';
-import validators from './validators';
-
-export type Validator = Function | keyof typeof validators;
+import * as Presenter from './Presenter';
+import {Validator} from './types';
 
 export interface FieldStateProps extends TextInputProps {
   validateOnStart?: boolean;
@@ -25,6 +24,7 @@ export default function useFieldState({
   const [value, setValue] = useState(props.value);
   const [isFocused, setIsFocused] = useState(false);
   const [isValid, setIsValid] = useState(true);
+  const [failingValidatorIndex, setFailingValidatorIndex] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     if (validateOnStart) {
@@ -34,14 +34,11 @@ export default function useFieldState({
 
   const validateField = useCallback(
     (valueToValidate = value) => {
-      let _isValid = true;
-      if (_.isFunction(validate)) {
-        _isValid = validate(valueToValidate);
-      } else if (_.isString(validate)) {
-        _isValid = _.invoke(validators, validate, valueToValidate);
-      }
+
+      const [_isValid, _failingValidatorIndex] = Presenter.validate(valueToValidate, validate);
 
       setIsValid(_isValid);
+      setFailingValidatorIndex(_failingValidatorIndex);
     },
     [value, validate]
   );
@@ -78,8 +75,8 @@ export default function useFieldState({
   );
 
   const fieldState = useMemo(() => {
-    return {value, hasValue: !_.isEmpty(value), isValid, isFocused};
-  }, [value, isFocused, isValid]);
+    return {value, hasValue: !_.isEmpty(value), isValid, isFocused, failingValidatorIndex};
+  }, [value, isFocused, isValid, failingValidatorIndex]);
 
   return {
     onFocus,
