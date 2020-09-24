@@ -5,7 +5,6 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 import {asBaseComponent, forwardRef} from '../../commons';
-import {extractMarginValues, extractPaddingValues} from '../../commons/modifiers';
 import View from '../../components/view';
 import Modal from '../modal';
 import Button from '../../components/button';
