@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, Incubator} from 'react-native-ui-lib';
 import _ from 'lodash';
 
+// Months
 const items = [
   'January',
   'February',
@@ -16,6 +17,9 @@ const items = [
   'November',
   'December'
 ];
+
+// Years
+// const items = _.times(2000, i => i);
 
 export default () => {
   return (

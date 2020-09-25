@@ -58,7 +58,8 @@ export default ({
         itemOffset,
         itemOffset + 2 * itemHeight
       ],
-      outputRange: [0.8, 1, 0.8]
+      // outputRange: [0.8, 1, 0.8], // with scale change
+      outputRange: [1, 1, 1],
     });
   }, [itemHeight]);
 
