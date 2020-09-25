@@ -40,4 +40,8 @@ export interface TagsInputProps {
 
 export class TagsInput extends BaseComponent<TagsInputProps & AccessibilityProps> {
   static onChangeTagsActions?: () => void
+
+  blur: () => void;
+  focus: () => void;
+  clear: () => void;
 }

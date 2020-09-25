@@ -1,5 +1,5 @@
 import React from 'react';
-import { ViewStyle, ImageStyle, ImageSourcePropType } from 'react-native';
+import { ViewStyle, ImageStyle, ImageSourcePropType, StyleProp } from 'react-native';
 import { ViewPropTypes } from '../view';
 import { TextPropTypes } from '../text';
 import { ImageProps } from '../image';
@@ -15,7 +15,7 @@ export declare type CardSectionProps = ViewPropTypes & {
     /**
      * Style for the content
      */
-    contentStyle?: ViewStyle;
+    contentStyle?: StyleProp<ViewStyle>;
     /**
      * Give the section a background color
      */
@@ -35,11 +35,47 @@ export declare type CardSectionProps = ViewPropTypes & {
     /**
      * The style for the background image
      */
-    imageStyle?: ImageStyle;
+    imageStyle?: StyleProp<ImageStyle>;
     /**
      * Other image props that will be passed to the image
      */
     imageProps?: ImageProps;
 };
-declare const _default: React.ComponentClass<CardSectionProps, any>;
+declare const _default: React.ComponentClass<ViewPropTypes & {
+    /**
+     * Text content for the CardSection.
+     * Example: content={[{text: 'You’re Invited!', text70: true, dark10: true}]}
+     */
+    content?: ContentType[] | undefined;
+    /**
+     * Style for the content
+     */
+    contentStyle?: StyleProp<ViewStyle>;
+    /**
+     * Give the section a background color
+     */
+    backgroundColor?: string | undefined;
+    /**
+     * Image props for a leading icon to render before the text
+     */
+    leadingIcon?: ImageProps | undefined;
+    /**
+     * Image props for a trailing icon to render after the text
+     */
+    trailingIcon?: ImageProps | undefined;
+    /**
+     * Will be used for the background when provided
+     */
+    imageSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    /**
+     * The style for the background image
+     */
+    imageStyle?: StyleProp<ImageStyle>;
+    /**
+     * Other image props that will be passed to the image
+     */
+    imageProps?: ImageProps | undefined;
+} & {
+    useCustomTheme?: boolean | undefined;
+}, any>;
 export default _default;

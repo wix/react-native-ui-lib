@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react';
-import {View as RNView, SafeAreaView, Animated, ViewProps} from 'react-native';
+import {View as RNView, SafeAreaView, Animated, ViewProps, StyleProp, ViewStyle} from 'react-native';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps, ContainerModifiers} from '../../commons/new';
 import Constants from '../../helpers/Constants';
 
-export interface ViewPropTypes extends ViewProps, ContainerModifiers {
+export interface ViewPropTypes extends Omit<ViewProps, 'style'>, ContainerModifiers {
   /**
    * If true, will render as SafeAreaView
    */
@@ -28,6 +28,11 @@ export interface ViewPropTypes extends ViewProps, ContainerModifiers {
    * Experimental: Pass time in ms to delay render
    */
   renderDelay?: number;
+  /**
+   * Set background color
+   */
+  backgroundColor?: string;
+  style?: StyleProp<ViewStyle | Animated.AnimatedProps<ViewStyle>>;
 }
 type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & ViewPropTypes;
 

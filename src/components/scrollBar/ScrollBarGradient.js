@@ -61,4 +61,6 @@ const ScrollBarGradient = ({
   );
 };
 
+ScrollBarGradient.displayName = 'IGNORE';
+
 export default ScrollBarGradient;

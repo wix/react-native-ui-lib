@@ -4,7 +4,7 @@ import {BaseComponentPaddingModifier, BaseComponentMarginModifier} from './spaci
 
 type TypographyName = 'fixme';
 type ColorName = 'fixme';
-export class UIComponent extends React.PureComponent {}
+export class UIComponent<P = {}, S = {}, SS = any> extends React.PureComponent<P, S, SS> {}
 export function forwardRef<T, P>(
   WrappedComponent: React.ComponentType<T, P>
 ): React.ComponentType<T, P>;

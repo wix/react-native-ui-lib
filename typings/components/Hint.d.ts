@@ -5,7 +5,8 @@ import {
   ImageSourcePropType,
   ImageStyle,
   StyleProp,
-  TextStyle
+  TextStyle,
+  ViewStyle
 } from 'react-native';
 import {BaseComponent} from '../commons';
 import {ColorValue} from '../style/colors';
@@ -32,6 +33,7 @@ export interface HintProps {
   offset?: number;
   onBackgroundPress?: (event: GestureResponderEvent) => void;
   containerWidth?: number;
+  style?: ViewStyle;
   testID?: string;
 }
 

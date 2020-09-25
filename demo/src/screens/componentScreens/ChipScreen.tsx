@@ -48,17 +48,26 @@ export default class ChipScreen extends Component {
           'Icon',
           <Chip
             iconSource={checkmark}
-            iconColor={Colors.black}
             iconStyle={{width: 24, height: 24}}
+            iconProps={{tintColor: Colors.black}}
           />
         )}
         {this.renderExample(
-          'label + icon',
+          'Left icon',
           <Chip
             label={'Chip'}
             iconSource={checkmark}
             iconStyle={{width: 24, height: 24}}
-            iconColor={Colors.black}
+            iconProps={{tintColor: Colors.black}}
+          />
+        )}
+        {this.renderExample(
+          'Right icon',
+          <Chip
+            label={'Chip'}
+            rightIconSource={checkmark}
+            iconStyle={{width: 24, height: 24}}
+            iconProps={{tintColor: Colors.black}}
           />
         )}
         {this.renderExample(
@@ -101,17 +110,16 @@ export default class ChipScreen extends Component {
         </Text>
         <View center row>
           <Chip
-            iconSource={checkmark}
             label={'Chip'}
             labelStyle={{color: Colors.green20}}
-            iconColor={Colors.green20}
+            iconSource={checkmark}
+            iconProps={{tintColor: Colors.green20}}
             containerStyle={{borderColor: Colors.green20}}
           />
           <Chip
             iconSource={checkmark}
             label={'Chip'}
             labelStyle={{color: Colors.white}}
-            iconColor={Colors.white}
             containerStyle={{borderColor: Colors.green20, backgroundColor: Colors.green20, marginLeft: Spacings.s3}}
           />
           <Chip

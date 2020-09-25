@@ -21,6 +21,7 @@ export declare type PropType = {
     onSwipeableWillOpen?: Function;
     onSwipeableWillClose?: Function;
     onFullSwipeLeft?: Function;
+    onToggleSwipeLeft?: Function;
     onWillFullSwipeLeft?: Function;
     onFullSwipeRight?: Function;
     onWillFullSwipeRight?: Function;
@@ -42,6 +43,7 @@ declare type StateType = {
     rowWidth: number | typeof undefined;
 };
 export default class Swipeable extends Component<PropType, StateType> {
+    static displayName: string;
     static defaultProps: {
         friction: number;
         overshootFriction: number;
@@ -50,6 +52,7 @@ export default class Swipeable extends Component<PropType, StateType> {
         fullRightThreshold: number;
     };
     constructor(props: PropType);
+    _handleDrag: (e: any) => void;
     UNSAFE_componentWillUpdate(props: PropType, state: StateType): void;
     _updateAnimatedEvent: (props: PropType, state: StateType) => void;
     _onTapHandlerStateChange: ({ nativeEvent }: {
@@ -64,6 +67,7 @@ export default class Swipeable extends Component<PropType, StateType> {
     close: () => void;
     openLeft: () => void;
     openLeftFull: () => void;
+    toggleLeft: () => void;
     openRight: () => void;
     openRightFull: () => void;
     _onRowLayout: ({ nativeEvent }: {

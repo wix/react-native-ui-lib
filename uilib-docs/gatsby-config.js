@@ -1,4 +1,4 @@
-const {manifestPlugin, markdownPagesPlugin, componentsDocgenPlugin, imagesPlugin} = require('./configurations/plugins');
+const {manifestPlugin, markdownPagesPlugin, componentsDocgenPlugin, incubatorComponentsDocgenPlugin, nativeComponentsDocgenPlugin, imagesPlugin, layoutPlugin} = require('./configurations/plugins');
 
 module.exports = {
   pathPrefix: '/react-native-ui-lib',
@@ -12,8 +12,11 @@ module.exports = {
     `gatsby-plugin-sass`,
     ...markdownPagesPlugin,
     ...componentsDocgenPlugin,
+    ...incubatorComponentsDocgenPlugin,
+    ...nativeComponentsDocgenPlugin,
     ...imagesPlugin,
-    ...manifestPlugin
+    ...manifestPlugin,
+    ...layoutPlugin
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // 'gatsby-plugin-offline',

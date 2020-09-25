@@ -121,6 +121,8 @@ export default class Slider extends PureBaseComponent {
     this.initialThumbSize = THUMB_SIZE;
 
     this.checkProps(props);
+
+    this.createPanResponderConfig();
   }
 
   checkProps(props) {
@@ -132,7 +134,7 @@ export default class Slider extends PureBaseComponent {
     }
   }
 
-  UNSAFE_componentWillMount() {
+  createPanResponderConfig() {
     this._panResponder = PanResponder.create({
       onMoveShouldSetPanResponder: this.handleMoveShouldSetPanResponder,
       onPanResponderGrant: this.handlePanResponderGrant,

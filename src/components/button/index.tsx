@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Platform, StyleSheet, LayoutAnimation, Image, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
+import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
 import _ from 'lodash';
 import {
   asBaseComponent,
@@ -17,15 +17,17 @@ import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
 import {extractColorValue, extractTypographyValue} from '../../commons/modifiers';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Text, {TextPropTypes} from '../text';
+import Image from '../image';
 
-enum ButtonSize {
+
+export enum ButtonSize {
   xSmall = 'xSmall',
   small = 'small',
   medium = 'medium',
   large = 'large',
 }
 
-enum AnimationDirection {
+export enum AnimationDirection {
   center = 'center',
   left = 'left',
   right = 'right',
@@ -57,9 +59,17 @@ export type ButtonPropTypes = TouchableOpacityProps &
      */
     iconOnRight?: boolean;
     /**
+    * whether the icon should flip horizontally on RTL locals
+    */
+    supportRTL?: boolean;
+    /**
      * Color of the button background
      */
     backgroundColor?: string;
+    /**
+     * Color of the disabled button background
+     */
+    disabledBackgroundColor?: string;
     /**
      * Size of the button [large, medium, small, xSmall]
      */
@@ -99,7 +109,7 @@ export type ButtonPropTypes = TouchableOpacityProps &
     /**
      * Additional styles for label text
      */
-    labelStyle?: TextStyle;
+    labelStyle?: StyleProp<TextStyle>;
     /**
      * Props that will be passed to the button's Text label.
      */
@@ -250,12 +260,12 @@ class Button extends PureComponent<Props, ButtonState> {
 
   getBackgroundColor() {
     const {backgroundColor: themeBackgroundColor, modifiers} = this.props;
-    const {disabled, outline, link, backgroundColor: propsBackgroundColor} = this.props;
+    const {disabled, outline, link, disabledBackgroundColor, backgroundColor: propsBackgroundColor} = this.props;
     const {backgroundColor: stateBackgroundColor} = modifiers;
 
     if (!outline && !link) {
       if (disabled) {
-        return ThemeManager.CTADisabledColor;
+        return disabledBackgroundColor || ThemeManager.CTADisabledColor;
       }
 
       return propsBackgroundColor || stateBackgroundColor || themeBackgroundColor || Colors.blue30;
@@ -447,14 +457,14 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   renderIcon() {
-    const {iconSource} = this.props;
+    const {iconSource, supportRTL} = this.props;
 
     if (iconSource) {
       const iconStyle = this.getIconStyle();
       if (typeof iconSource === 'function') {
         return iconSource(iconStyle);
       } else {
-        return <Image source={iconSource} style={iconStyle}/>;
+        return <Image source={iconSource} supportRTL={supportRTL} style={iconStyle}/>;
       }
     }
     return null;

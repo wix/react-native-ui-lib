@@ -39,7 +39,7 @@ const {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TabControllerScreen/index.js
  */
 class TabBar extends PureComponent {
-  static displayName = 'TabController.TabBar';
+  static displayName = 'IGNORE';
   static contextType = TabBarContext;
 
   static propTypes = {

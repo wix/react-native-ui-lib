@@ -7,6 +7,7 @@ import View from '../../view';
 
 
 export default class SliderGroup extends Component {
+  static displayName = 'IGNORE';
   static propTypes = {
     color: PropTypes.string,
     onValueChange: PropTypes.func

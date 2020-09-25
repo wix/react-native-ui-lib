@@ -59,5 +59,9 @@ export function registerScreens(registrar) {
   registrar('unicorn.screens.LoadingScreen', () => require('./LoadingScreen').default);
   registrar('unicorn.screens.ModalScreen', () => require('./ModalScreen').default);
   registrar('unicorn.components.WithScrollEnablerScreen', () => require('./WithScrollEnablerScreen').default);
+  registrar('unicorn.components.WithScrollReachedScreen', () => require('./WithScrollReachedScreen').default);
+  registrar('unicorn.components.FaderScreen', () => require('./FaderScreen').default);
+  // Incubator Screens
+  registrar('unicorn.components.IncubatorTextFieldScreen', () => require('./IncubatorTextFieldScreen').default);
 }
 

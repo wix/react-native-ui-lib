@@ -15,7 +15,7 @@ import TouchableOpacity from '../touchableOpacity';
  * @description: Picker.Item, for configuring the Picker's selectable options
  * @extends: TouchableOpacity
  * @extendslink: docs/TouchableOpacity
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FormScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.js
  */
 class PickerItem extends BaseComponent {
   static displayName = 'Picker.Item';
@@ -131,6 +131,7 @@ class PickerItem extends BaseComponent {
         onLayout={isSelected ? this.onSelectedLayout : undefined}
         disabled={disabled}
         testID={testID}
+        throttleTime={0}
         {...this.extractAccessibilityProps()}
       >
         {renderItem ? renderItem(value, this.props, this.getLabel()) : this.renderItem()}

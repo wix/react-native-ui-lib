@@ -58,13 +58,16 @@ export default class PickerScreen extends Component {
   };
 
   renderDialog = modalProps => {
-    const {visible, toggleModal, children} = modalProps;
-
+    const {visible, children, toggleModal, onDone} = modalProps;
+    
     return (
       <Dialog
         migrate
         visible={visible}
-        onDismiss={() => toggleModal(false)}
+        onDismiss={() => {
+          onDone();
+          toggleModal(false);
+        }}
         width="100%"
         height="45%"
         bottom
@@ -109,7 +112,6 @@ export default class PickerScreen extends Component {
               onChange={items => this.setState({languages: items})}
               mode={Picker.modes.MULTI}
               rightIconSource={dropdown}
-              hideUnderline
             >
               {_.map(options, option => (
                 <Picker.Item key={option.value} value={option} disabled={option.disabled}/>

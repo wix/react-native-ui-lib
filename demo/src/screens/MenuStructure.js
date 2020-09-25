@@ -95,6 +95,16 @@ export const navigationData = {
         tags: 'scroll enabled withScrollEnabler',
         screen: 'unicorn.components.WithScrollEnablerScreen'
       },
+      {
+        title: 'withScrollReached',
+        tags: 'scroll reach start end',
+        screen: 'unicorn.components.WithScrollReachedScreen'
+      },
+      {
+        title: 'Fader',
+        tags: 'scroll fader',
+        screen: 'unicorn.components.FaderScreen'
+      },
       {title: 'Wizard', tags: 'wizard', screen: 'unicorn.components.WizardScreen'}
     ]
   },
@@ -138,6 +148,7 @@ export const navigationData = {
     title: 'Incubator (Experimental)',
     screens: [
       {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'},
+      {title: '(New) TextField', tags: 'text field input', screen: 'unicorn.components.IncubatorTextFieldScreen'},
       {title: 'WheelPicker (Incubator)', tags: 'wheel picker spinner experimental', screen: 'unicorn.incubator.WheelPickerScreen'}
     ]
   },

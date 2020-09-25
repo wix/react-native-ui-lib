@@ -6,5 +6,8 @@ export interface BaseComponentInjectedProps {
      */
     modifiers: ReturnType<typeof Modifiers.generateModifiersStyle>;
 }
-declare function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentType<any>): React.ComponentClass<PROPS> & STATICS;
+declare type ThemeComponent = {
+    useCustomTheme?: boolean;
+};
+declare function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentType<any>): React.ComponentClass<PROPS & ThemeComponent> & STATICS;
 export default asBaseComponent;

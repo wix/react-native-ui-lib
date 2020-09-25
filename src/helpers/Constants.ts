@@ -1,19 +1,19 @@
 import {Platform, Dimensions, NativeModules, I18nManager, AccessibilityInfo, AccessibilityEvent} from 'react-native';
 
 
-const orientations = {
-  PORTRAIT: 'portrait',
-  LANDSCAPE: 'landscape'
+export enum orientations {
+  PORTRAIT = 'portrait',
+  LANDSCAPE = 'landscape'
 };
 
-const isAndroid = Platform.OS === 'android';
-const isIOS = Platform.OS === 'ios';
+const isAndroid: boolean = Platform.OS === 'android';
+const isIOS: boolean = Platform.OS === 'ios';
 let isTablet: boolean;
 let statusBarHeight: number;
-let screenHeight = Dimensions.get('screen').height;
-let screenWidth = Dimensions.get('screen').width;
-let windowHeight = Dimensions.get('window').height;
-let windowWidth = Dimensions.get('window').width;
+let screenHeight: number = Dimensions.get('screen').height;
+let screenWidth: number = Dimensions.get('screen').width;
+let windowHeight: number = Dimensions.get('window').height;
+let windowWidth: number = Dimensions.get('window').width;
 
 //@ts-ignore
 isTablet = Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
@@ -29,16 +29,12 @@ function setStatusBarHeight() {
 }
 
 function getAspectRatio() {
-  return screenWidth < screenHeight
-    ? screenHeight / screenWidth
-    : screenWidth / screenHeight;
+  return screenWidth < screenHeight ? screenHeight / screenWidth : screenWidth / screenHeight;
 }
-
 
 function getOrientation(height: number, width: number) {
   return width < height ? orientations.PORTRAIT : orientations.LANDSCAPE;
 }
-
 
 export function updateConstants(dimensions: any) {
   screenHeight = dimensions.screen.height;
@@ -49,17 +45,16 @@ export function updateConstants(dimensions: any) {
   setStatusBarHeight();
 }
 
-
-
-
 const accessibility = {
   isScreenReaderEnabled: false
 };
+
 function handleScreenReaderChanged(isScreenReaderEnabled: AccessibilityEvent) {
   accessibility.isScreenReaderEnabled = isScreenReaderEnabled as boolean;
 }
 
 AccessibilityInfo.addEventListener('screenReaderChanged', handleScreenReaderChanged);
+
 function setAccessibility() {
   AccessibilityInfo.isScreenReaderEnabled().then(isScreenReaderEnabled => {
     accessibility.isScreenReaderEnabled = isScreenReaderEnabled;
@@ -134,25 +129,17 @@ const constants = {
   addDimensionsEventListener: (callback: any) => {
     Dimensions.addEventListener('change', callback);
   },
-
+  /* Dimensions */
   removeDimensionsEventListener: (callback: any) => {
     Dimensions.removeEventListener('change', callback);
   },
-  // Accessibility
+  /* Accessibility */
   get accessibility() {
     return accessibility;
   }
 };
 
-
-
 setStatusBarHeight();
-
-
-
-
 Dimensions.addEventListener('change', updateConstants);
-
-
 
 export default constants;

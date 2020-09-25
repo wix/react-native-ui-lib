@@ -10,7 +10,7 @@
 
 #import "LNInterpolation.h"
 
-@implementation LNViewAnimation
+@implementation LNViewAnimationTemp
 {
     id _fromValue;
 }
@@ -19,7 +19,7 @@
 
 - (instancetype)init
 {
-    [NSException raise:NSInvalidArgumentException format:@"Use animationWithView:keyPath:toValue: to create LNViewAnimation objects."];
+    [NSException raise:NSInvalidArgumentException format:@"Use animationWithView:keyPath:toValue: to create LNViewAnimationTemp objects."];
     return nil;
 }
 
@@ -30,7 +30,7 @@
 
 + (instancetype)animationWithView:(UIView*)view keyPath:(NSString*)keyPath toValue:(id)toValue
 {
-    LNViewAnimation* rv = [[LNViewAnimation alloc] _init];
+    LNViewAnimationTemp* rv = [[LNViewAnimationTemp alloc] _init];
     
     if(rv)
     {
@@ -62,7 +62,7 @@
 
 - (instancetype)init
 {
-    [NSException raise:NSInvalidArgumentException format:@"Use animationWithView:keyPath:toValue: to create LNViewAnimation objects."];
+    [NSException raise:NSInvalidArgumentException format:@"Use animationWithView:keyPath:toValue: to create LNViewAnimationTemp objects."];
     return nil;
 }
 
@@ -71,7 +71,7 @@
     return [super init];
 }
 
-+ (instancetype)animatorWithDuration:(NSTimeInterval)duration animations:(NSArray<id<LNAnimation>>*)animations completionHandler:(void(^)(BOOL completed))completionHandler
++ (instancetype)animatorWithDuration:(NSTimeInterval)duration animations:(NSArray<id<LNAnimationTemp>>*)animations completionHandler:(void(^)(BOOL completed))completionHandler
 {
     LNAnimatorTemp* rv = [[LNAnimatorTemp alloc] _init];
     if(rv)
@@ -102,7 +102,7 @@
     }
     _previousFrameTimestamp = _displayLink.timestamp;
     
-    [_animations enumerateObjectsUsingBlock:^(id<LNAnimation>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [_animations enumerateObjectsUsingBlock:^(id<LNAnimationTemp>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         obj.progress = MIN(_elapsedTime / _duration, 1.0);
     }];
     

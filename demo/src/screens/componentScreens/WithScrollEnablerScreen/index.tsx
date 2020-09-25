@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
+// eslint-disable-next-line no-unused-vars
 import {LayoutChangeEvent} from 'react-native';
 import {Text, View} from 'react-native-ui-lib';
 import {
   renderHeader,
   renderBooleanOption,
   renderSliderOption
+  // @ts-ignore
 } from '../../ExampleScreenPresenter';
 import AutoLockScrollView from './AutoLockScrollView';
 import AutoLockFlatList from './AutoLockFlatList';
@@ -49,7 +51,6 @@ class WithScrollEnablerScreen extends Component {
     const Container = isListView ? AutoLockScrollView : AutoLockFlatList;
 
     return (
-      // @ts-ignore
       <Container
         key={`${isHorizontal}`}
         horizontal={isHorizontal}

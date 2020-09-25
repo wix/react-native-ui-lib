@@ -1,13 +1,14 @@
 import _ from 'lodash';
 import React from 'react';
 import {BaseComponent} from '../../commons';
-import TextField from '../inputs/TextField';
+import TextField from '../textField';
 import {WheelPicker} from '../../nativeComponents';
 import PickerDialog from './PickerDialog';
 import TouchableOpacity from '../touchableOpacity';
 import {Colors} from '../../style';
 
 class NativePicker extends BaseComponent {
+  static displayName = 'IGNORE';
   state = {
     selectedValue: this.props.value,
     items: this.extractPickerItems(this.props),

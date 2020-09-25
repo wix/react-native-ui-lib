@@ -54,6 +54,9 @@ export default {
   get Drawer() {
     return require('./components/drawer').default;
   },
+  get Fader() {
+    return require('./components/fader').default;
+  },
   get FloatingButton() {
     return require('./components/floatingButton').default;
   },
@@ -76,16 +79,16 @@ export default {
     return require('./components/KeyboardAwareScrollView').KeyboardAwareListView;
   },
   get BaseInput() {
-    return require('./components/inputs/BaseInput').default;
+    return require('./components/baseInput').default;
   },
   get TextArea() {
-    return require('./components/inputs/TextArea').default;
+    return require('./components/textArea').default;
   },
   get TextField() {
-    return require('./components/inputs/TextField').default;
+    return require('./components/textField').default;
   },
   get MaskedInput() {
-    return require('./components/inputs/MaskedInput').default;
+    return require('./components/maskedInput').default;
   },
   get Modal() {
     return require('./components/modal').default;
@@ -190,6 +193,9 @@ export default {
   },
 
   // Commons
+  get asBaseComponent() {
+    return require('./commons').asBaseComponent;
+  },
   get BaseComponent() {
     return require('./commons').BaseComponent;
   },
@@ -208,6 +214,9 @@ export default {
   get withScrollEnabler() {
     return require('./commons').withScrollEnabler;
   },
+  get withScrollReached() {
+    return require('./commons').withScrollReached;
+  },
 
   // Helpers
   get AvatarHelper() {
@@ -225,7 +234,7 @@ export default {
     return require('./services').LogService;
   },
 
-  // NativeComponents
+  // NativeComponents 
   get HighlighterOverlayView() {
     return require('./nativeComponents').HighlighterOverlayView;
   },
@@ -239,7 +248,7 @@ export default {
     return require('./nativeComponents').SafeAreaInsetsManager;
   },
   get Keyboard() {
-    return require('./nativeComponents').Keyboard;
+    return require('../lib/components/Keyboard').default;
   },
 
   // Style

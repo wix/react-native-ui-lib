@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, Image, Colors} from 'react-native-ui-lib';
-import {renderBooleanOption, renderRadioGroup} from '../ExampleScreenPresenter';
+import {renderBooleanOption, renderRadioGroup, renderSliderOption} from '../ExampleScreenPresenter';
 
 import cameraIcon from '../../assets/icons/cameraSelected.png';
 
@@ -12,7 +12,8 @@ class ImageScreen extends Component {
   state = {
     cover: true,
     showOverlayContent: false,
-    overlayType: 'none'
+    overlayType: 'none',
+    margin: 0
   };
 
   renderOverlayContent() {
@@ -38,8 +39,9 @@ class ImageScreen extends Component {
       }
     }
   }
+
   render() {
-    const {cover, overlayType} = this.state;
+    const {cover, overlayType, margin} = this.state;
 
     return (
       <View flex>
@@ -50,6 +52,7 @@ class ImageScreen extends Component {
             overlayType={overlayType !== 'none' ? overlayType : undefined}
             style={!cover && {width: DEFAULT_SIZE, height: DEFAULT_SIZE}}
             customOverlayContent={this.renderOverlayContent()}
+            {...{[`margin-${margin}`]: true}}
           />
         </View>
         <View height={2} bg-grey60/>
@@ -59,6 +62,7 @@ class ImageScreen extends Component {
               {renderBooleanOption.call(this, 'Show as Cover Image', 'cover')}
               {renderBooleanOption.call(this, 'Show Overlay Content', 'showOverlayContent')}
               {renderRadioGroup.call(this, 'Overlay Type', 'overlayType', {none: 'none', ...Image.overlayTypes})}
+              {renderSliderOption.call(this, 'Margin(margin-XX)', 'margin', {step: 4, min: 0, max: 40})}
             </View>
             <Text text40>Image Screen</Text>
           </View>

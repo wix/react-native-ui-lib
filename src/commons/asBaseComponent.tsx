@@ -14,7 +14,12 @@ export interface BaseComponentInjectedProps {
   modifiers: ReturnType<typeof Modifiers.generateModifiersStyle>;
 }
 
-function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentType<any>): React.ComponentClass<PROPS> & STATICS {
+// TODO: find a proper way to inject this type in the private repo
+type ThemeComponent = {
+  useCustomTheme?: boolean;
+}
+
+function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentType<any>): React.ComponentClass<PROPS & ThemeComponent> & STATICS {
   class BaseComponent extends UIComponent {
     state = Modifiers.generateModifiersStyle(undefined, BaseComponent.getThemeProps(this.props, this.context));
     static displayName: string | undefined;

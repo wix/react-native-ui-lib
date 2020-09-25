@@ -155,7 +155,8 @@ export default class InputsScreen extends Component {
             placeholder="Underline colors & error"
             onChangeText={this.onChangeText}
             error={this.state.error}
-            underlineColor={{focus: Colors.purple50, error: Colors.yellow60}}
+            underlineColor={{focus: Colors.purple50, error: Colors.orange60}}
+            errorColor={Colors.orange60}
           />
 
           <TextField
@@ -216,7 +217,7 @@ export default class InputsScreen extends Component {
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
             placeholder="With right button"
-            rightButtonProps={{iconSource: richText, onPress: this.onPressInfo}}
+            rightButtonProps={{iconSource: richText, onPress: this.onPressInfo, accessibilityLabel: 'TextField Info'}}
           />
 
           <TextField

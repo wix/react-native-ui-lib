@@ -1,42 +1,53 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {Keyboard, Colors} from 'react-native-ui-lib';
+import React from 'react';
+import {ScrollView} from 'react-native';
+import {Keyboard, View, Text, Image, Spacings} from 'react-native-ui-lib';
+import _ from 'lodash';
 const KeyboardRegistry = Keyboard.KeyboardRegistry;
-import KeyboardView from './KeyboardView';
 
-class KeyboardView1 extends Component {
-  static propTypes = {
-    title: PropTypes.string
-  };
+const images = [
+  'https://images.pexels.com/photos/1148521/pexels-photo-1148521.jpeg?auto=compress&cs=tinysrgb&dpr=1&h=200',
+  'https://images.pexels.com/photos/1528975/pexels-photo-1528975.jpeg?auto=compress&cs=tinysrgb&dpr=1&h=200',
+  'https://images.pexels.com/photos/1495580/pexels-photo-1495580.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=200',
+  'https://images.pexels.com/photos/943150/pexels-photo-943150.jpeg?auto=compress&cs=tinysrgb&dpr=1&h=200',
+  'https://images.pexels.com/photos/1769408/pexels-photo-1769408.jpeg?auto=compress&cs=tinysrgb&dpr=1&h=200'
+];
 
-  onButtonPress() {
-    KeyboardRegistry.onItemSelected('KeyboardView1', {
-      message: 'Item selected from keyboard 1'
-    });
-  }
-
-  render() {
-    const {title} = this.props;
-    return <KeyboardView title={title} backgroundColor={Colors.violet10} onPress={this.onButtonPress}/>;
-  }
+function ImagesKeyboard() {
+  return (
+    <View flex>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{padding: Spacings.s4}}
+      >
+        {_.map(images, (image, i) => {
+          return (
+            <Image
+              key={i}
+              source={{uri: image}}
+              style={{height: '100%', width: 200}}
+              marginR-s4
+            />
+          );
+        })}
+      </ScrollView>
+    </View>
+  );
 }
 
-class KeyboardView2 extends Component {
-  static propTypes = {
-    title: PropTypes.string
-  };
-
-  onButtonPress() {
-    KeyboardRegistry.onItemSelected('KeyboardView2', {
-      message: 'Item selected from keyboard 2'
-    });
-  }
-
-  render() {
-    const {title} = this.props;
-    return <KeyboardView title={title} backgroundColor={Colors.yellow20} onPress={this.onButtonPress}/>;
-  }
+function CustomKeyboard() {
+  return (
+    <View flex padding-s4>
+      <Text h3>Custom Keyboard</Text>
+    </View>
+  );
 }
 
-KeyboardRegistry.registerKeyboard('KeyboardView1', () => KeyboardView1);
-KeyboardRegistry.registerKeyboard('KeyboardView2', () => KeyboardView2);
+KeyboardRegistry.registerKeyboard(
+  'unicorn.ImagesKeyboard',
+  () => ImagesKeyboard
+);
+KeyboardRegistry.registerKeyboard(
+  'unicorn.CustomKeyboard',
+  () => CustomKeyboard
+);

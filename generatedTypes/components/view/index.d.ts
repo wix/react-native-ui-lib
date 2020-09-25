@@ -1,7 +1,7 @@
 import React from 'react';
-import { ViewProps } from 'react-native';
+import { Animated, ViewProps, StyleProp, ViewStyle } from 'react-native';
 import { ContainerModifiers } from '../../commons/new';
-export interface ViewPropTypes extends ViewProps, ContainerModifiers {
+export interface ViewPropTypes extends Omit<ViewProps, 'style'>, ContainerModifiers {
     /**
      * If true, will render as SafeAreaView
      */
@@ -26,6 +26,13 @@ export interface ViewPropTypes extends ViewProps, ContainerModifiers {
      * Experimental: Pass time in ms to delay render
      */
     renderDelay?: number;
+    /**
+     * Set background color
+     */
+    backgroundColor?: string;
+    style?: StyleProp<ViewStyle | Animated.AnimatedProps<ViewStyle>>;
 }
-declare const _default: React.ComponentClass<ViewPropTypes, any>;
+declare const _default: React.ComponentClass<ViewPropTypes & {
+    useCustomTheme?: boolean | undefined;
+}, any>;
 export default _default;

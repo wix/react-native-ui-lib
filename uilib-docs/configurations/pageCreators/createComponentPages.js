@@ -1,4 +1,5 @@
 const path = require('path');
+const _ = require('lodash');
 
 module.exports = async ({graphql, boundActionCreators}) => {
   const {createPage} = boundActionCreators;
@@ -39,8 +40,12 @@ module.exports = async ({graphql, boundActionCreators}) => {
     }
   });
 
+  const allComponents = getRelevantComponents(
+    result.data.allComponentMetadata.edges
+  );
+
   // Create components pages
-  result.data.allComponentMetadata.edges.map(({node}) => {
+  allComponents.map(({node}) => {
     createPage({
       path: `/docs/${node.displayName}`,
       component: path.resolve('./src/templates/component.js'),
@@ -52,3 +57,30 @@ module.exports = async ({graphql, boundActionCreators}) => {
     });
   });
 };
+
+function getRelevantComponents(edges) {
+  const components = _.chain(edges)
+    /* Filter all Ignored components */
+    .filter(e => {
+      return e.node.displayName !== 'IGNORE';
+    })
+    /* Group internal components with the parent component */
+    .groupBy(e => e.node.displayName)
+    .map((groupedEdge, id) => {
+      if (groupedEdge.length > 1) {
+        const edge = {
+          node: {
+            displayName: id,
+            docblock: _.chain(groupedEdge).find(e => !!e.node.docblock).get('node.docblock').value(),
+            props: _.reduce(groupedEdge, (props, e) => [...props, ...e.node.props], [])
+          }
+        };
+        return edge;
+      } else {
+        return groupedEdge[0];
+      }
+    })
+    .value();
+
+  return components;
+}

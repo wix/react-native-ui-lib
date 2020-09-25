@@ -8,13 +8,13 @@
 
 @import UIKit;
 
-@protocol LNAnimation <NSObject>
+@protocol LNAnimationTemp <NSObject>
 
 @property (nonatomic) CGFloat progress;
 
 @end
 
-@interface LNViewAnimation : NSObject <LNAnimation>
+@interface LNViewAnimationTemp : NSObject <LNAnimationTemp>
 
 @property (nonatomic, strong, readonly) UIView* view;
 @property (nonatomic, strong, readonly) NSString* keyPath;
@@ -27,9 +27,9 @@
 @interface LNAnimatorTemp : NSObject
 
 @property (nonatomic, readonly) NSTimeInterval duration;
-@property (nonatomic, strong, readonly) NSArray<id<LNAnimation>>* animations;
+@property (nonatomic, strong, readonly) NSArray<id<LNAnimationTemp>>* animations;
 
-+ (instancetype)animatorWithDuration:(NSTimeInterval)duration animations:(NSArray<id<LNAnimation>>*)animations completionHandler:(void(^)(BOOL completed))completionHandler;
++ (instancetype)animatorWithDuration:(NSTimeInterval)duration animations:(NSArray<id<LNAnimationTemp>>*)animations completionHandler:(void(^)(BOOL completed))completionHandler;
 
 - (void)start;
 

@@ -1,8 +1,10 @@
-import _ from 'lodash';
 import React, {useState, useCallback, useRef} from 'react';
 // eslint-disable-next-line no-unused-vars
 import {FlatListProps, ScrollViewProps, LayoutChangeEvent} from 'react-native';
+// eslint-disable-next-line no-unused-vars
 import forwardRef, {ForwardRefInjectedProps} from './forwardRef';
+//@ts-ignore
+import hoistStatics from 'hoist-non-react-statics';
 
 export type ScrollEnablerProps = {
   onContentSizeChange: (contentWidth: number, contentHeight: number) => void;
@@ -10,17 +12,19 @@ export type ScrollEnablerProps = {
   scrollEnabled: boolean;
 };
 
-type SupportedViews = FlatListProps<any> | ScrollViewProps;
+declare type SupportedViewsProps = FlatListProps<any> | ScrollViewProps;
 
-export type WithScrollEnablerProps = SupportedViews & {
+export type WithScrollEnablerProps = {
   scrollEnablerProps: ScrollEnablerProps;
   ref?: any;
 };
-type PropTypes = ForwardRefInjectedProps & SupportedViews;
-function withScrollEnabler<PROPS extends SupportedViews>(
-  WrappedComponent: React.ComponentType<WithScrollEnablerProps>
-): React.ComponentType<PROPS> {
-  const ScrollEnabler = (props: PropTypes) => {
+
+type PropTypes = ForwardRefInjectedProps & SupportedViewsProps;
+
+function withScrollEnabler<PROPS, STATICS = {}>(
+  WrappedComponent: React.ComponentType<PROPS & WithScrollEnablerProps>
+): React.ComponentType<PROPS> & STATICS {
+  const ScrollEnabler = (props: PROPS & PropTypes) => {
     const [scrollEnabled, setScrollEnabled] = useState(true);
     const contentSize = useRef(0);
     const layoutSize = useRef(0);
@@ -46,7 +50,7 @@ function withScrollEnabler<PROPS extends SupportedViews>(
     );
 
     const onLayout = useCallback(
-      (event) => {
+      (event: LayoutChangeEvent) => {
         const {
           nativeEvent: {
             layout: {width, height}
@@ -72,6 +76,10 @@ function withScrollEnabler<PROPS extends SupportedViews>(
     );
   };
 
+  hoistStatics(ScrollEnabler, WrappedComponent);
+  ScrollEnabler.displayName = WrappedComponent.displayName;
+  ScrollEnabler.propTypes = WrappedComponent.propTypes;
+  ScrollEnabler.defaultProps = WrappedComponent.defaultProps;
   return forwardRef(ScrollEnabler) as any;
 }
 

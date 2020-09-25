@@ -106,9 +106,19 @@ export default class TabBarItem extends PureComponent {
     onPress: _.noop
   };
 
-  state = {};
-  itemWidth = this.props.width;
-  itemRef = React.createRef();
+  constructor(props) {
+    super(props);
+
+    this.itemWidth = this.props.width;
+    this.state = {};
+    this.itemRef = React.createRef();
+
+    if (this.itemWidth) {
+      const {index, onLayout} = this.props;
+      onLayout({width: this.itemWidth}, index);
+    }
+  }
+
 
   onStateChange = event([
     {
@@ -138,7 +148,7 @@ export default class TabBarItem extends PureComponent {
   };
 
   getItemStyle() {
-    const {state} = this.props;
+    const {state, style: propsStyle} = this.props;
     const opacity = block([
       cond(eq(state, State.END), call([], this.onPress)),
       cond(eq(state, State.BEGAN), this.props.activeOpacity, 1)
@@ -148,13 +158,13 @@ export default class TabBarItem extends PureComponent {
       opacity
     };
 
-    // if (this.itemWidth) {
-    //   style.flex = undefined;
-    //   style.width = this.itemWidth;
-    //   style.paddingHorizontal = undefined;
-    // }
+    if (this.props.width) {
+      style.flex = undefined;
+      style.width = this.itemWidth;
+      style.paddingHorizontal = undefined;
+    }
 
-    return style;
+    return [style, propsStyle];
   }
 
   getLabelStyle() {
@@ -234,7 +244,7 @@ export default class TabBarItem extends PureComponent {
         onPress={this.onPress}
         testID={testID}
       >
-        {icon && <Reanimated.Image source={icon} style={[styles.tabItemIcon, this.getIconStyle()]}/>}
+        {icon && <Reanimated.Image source={icon} style={[label && styles.tabItemIconWithLabel, this.getIconStyle()]}/>}
         {!_.isEmpty(label) && (
           <Reanimated.Text style={[styles.tabItemLabel, this.getLabelStyle()]}>
             {uppercase ? _.toUpper(label) : label}
@@ -257,7 +267,7 @@ const styles = StyleSheet.create({
   tabItemLabel: {
     ...Typography.text80
   },
-  tabItemIcon: {
+  tabItemIconWithLabel: {
     marginRight: 10
   },
   badge: {

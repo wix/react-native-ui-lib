@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import {BaseComponent} from '../../commons';
+import {extractComponentProps} from '../../commons/modifiers';
 import Dialog from '../dialog';
 import View from '../view';
 import Text from '../text';
@@ -11,6 +12,7 @@ import {Colors, BorderRadiuses} from '../../style';
 import {WheelPicker} from '../../nativeComponents';
 
 class PickerDialog extends BaseComponent {
+  static displayName = 'IGNORE';
   static propTypes = {
     selectedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     onValueChange: PropTypes.func,
@@ -79,7 +81,7 @@ class PickerDialog extends BaseComponent {
   }
 
   render() {
-    const dialogProps = Dialog.extractOwnProps(this.props);
+    const dialogProps = extractComponentProps(Dialog, this.props);
     return (
       <Dialog {...dialogProps} migrate height="50%" width="77%">
         <View style={styles.dialog}>

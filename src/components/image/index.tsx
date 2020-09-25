@@ -4,12 +4,12 @@ import React, {PureComponent} from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {Image as RNImage, ImageProps as RNImageProps, StyleSheet, ImageBackground, ImageSourcePropType} from 'react-native';
 import Constants from '../../helpers/Constants';
-import {asBaseComponent, ForwardRefInjectedProps} from '../../commons/new';
+import {asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers} from '../../commons/new';
 // @ts-ignore
 import Assets from '../../assets';
 import Overlay, {OverlayTypeType} from '../overlay';
 
-export type ImageProps = RNImageProps & {
+export type ImageProps = RNImageProps & MarginModifiers & {
   /**
    * custom source transform handler for manipulating the image source (great for size control)
    */
@@ -40,7 +40,7 @@ export type ImageProps = RNImageProps & {
   aspectRatio?: number;
   /**
    * The type of overly to place on top of the image. Note: the image MUST have proper size, see examples in:
-   * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.js
+   * https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.tsx
    */
   overlayType?: OverlayTypeType;
   /**
@@ -53,7 +53,7 @@ export type ImageProps = RNImageProps & {
   customOverlayContent?: JSX.Element;
 };
 
-type Props = ImageProps & ForwardRefInjectedProps;
+type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
 
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
@@ -122,10 +122,12 @@ class Image extends PureComponent<Props> {
       overlayType,
       overlayColor,
       customOverlayContent,
+      modifiers,
       ...others
     } = this.props;
     const shouldFlipRTL = supportRTL && Constants.isRTL;
     const ImageView = this.shouldUseImageBackground() ? ImageBackground : RNImage;
+    const {margins} = modifiers;
 
     return (
       // @ts-ignore
@@ -136,6 +138,7 @@ class Image extends PureComponent<Props> {
           cover && styles.coverImage,
           this.isGif() && styles.gifImage,
           aspectRatio && {aspectRatio},
+          margins,
           style
         ]}
         accessible={false}

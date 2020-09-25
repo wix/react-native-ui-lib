@@ -3,8 +3,8 @@
 
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React from 'react';
-import {BaseComponent} from '../../commons';
+import React, {PureComponent} from 'react';
+import {asBaseComponent, forwardRef} from '../../commons';
 import View from '../../components/view';
 import Modal from '../modal';
 import Button from '../../components/button';
@@ -13,6 +13,7 @@ import * as PickerPresenter from './PickerPresenter';
 import NativePicker from './NativePicker';
 import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
+
 
 const PICKER_MODES = {
   SINGLE: 'SINGLE',
@@ -26,9 +27,9 @@ const ItemType = PropTypes.shape({
 /**
  * @description: Picker Component, support single or multiple selection, blurModel and nativePicker
  * @gif: https://media.giphy.com/media/3o751SiuZZiByET2lq/giphy.gif, https://media.giphy.com/media/TgMQnyw5grJIDohzvx/giphy.gif, https://media.giphy.com/media/5hsdmVptBRskZKn787/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FormScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.js
  */
-class Picker extends BaseComponent {
+class Picker extends PureComponent {
   static displayName = 'Picker';
   static propTypes = {
     ...TextField.propTypes,
@@ -77,9 +78,13 @@ class Picker extends BaseComponent {
      */
     onPress: PropTypes.func,
     /**
-     * A function that extract the unique value out of the value prop in case value has a custom structure
+     * A function that extract the unique value out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
      */
     getItemValue: PropTypes.func,
+    /**
+     * A function that extract the label out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
+     */
+    getItemLabel: PropTypes.func,
     /**
      * A function that returns the label to show for the selected Picker value
      */
@@ -138,6 +143,7 @@ class Picker extends BaseComponent {
 
     this.state = {
       value: props.value,
+      prevValue: undefined,
       selectedItemPosition: 0,
       items: this.extractPickerItems(props)
     };
@@ -156,20 +162,30 @@ class Picker extends BaseComponent {
     // }
   }
 
-  UNSAFE_componentWillReceiveProps(nexProps) {
-    this.setState({
-      value: nexProps.value
-    });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (!_.isEmpty(nextProps.value) && prevState.value !== nextProps.value) {
+      if (prevState.prevValue !== prevState.value) { // for this.setState() updates to 'value'
+        // NOTE: this.setState() already updated the 'value' so here we only updating the 'prevValue'
+        return {
+          prevValue: prevState.value
+        };
+      } else { // for prop update to 'value'
+        return {
+          value: nextProps.value
+        };
+      }
+    }
+    return null;
   }
 
   getAccessibilityInfo() {
     const {placeholder} = this.props;
+    
     return {
-      accessibilityLabel: this.getLabel() ? `${placeholder}. selected. ${this.getLabel()}` : `Select ${placeholder}`,
-      accessibilityHint: this.getLabel()
+      accessibilityLabel: this.getLabelValueText() ? `${placeholder}. selected. ${this.getLabelValueText()}` : `Select ${placeholder}`,
+      accessibilityHint: this.getLabelValueText()
         ? 'Double tap to edit'
-        : `Goes to ${placeholder}. Suggestions will be provided`,
-      ...this.extractAccessibilityProps()
+        : `Goes to ${placeholder}. Suggestions will be provided`
     };
   }
 
@@ -179,17 +195,36 @@ class Picker extends BaseComponent {
     return items;
   }
 
-  getLabel() {
-    const {value} = this.state;
+  shouldNotChangePickerLabelWhileSelecting = () => {
+    const {mode} = this.props;
+    return mode === Picker.modes.MULTI;
+  }
+
+  getLabelValueText = () => {
+    const {value: propsValue} = this.props;
+    const {value: stateValue} = this.props;
+    
+    if (this.shouldNotChangePickerLabelWhileSelecting()) {
+      return this.getLabel(propsValue);
+    }
+    return this.getLabel(stateValue);
+  }
+
+  getLabelsFromArray = (value) => {
+    const {getItemLabel} = this.props;
+    return _.chain(value)
+      .map(getItemLabel || 'label')
+      .join(', ')
+      .value();
+  };
+
+  getLabel(value) {
+    const {getLabel} = this.props;
 
     if (_.isArray(value)) {
-      return _.chain(value)
-        .map('label')
-        .join(', ')
-        .value();
+      return this.getLabelsFromArray(value);
     }
 
-    const {getLabel} = this.props;
     if (_.isFunction(getLabel)) {
       return getLabel(value);
     }
@@ -201,6 +236,7 @@ class Picker extends BaseComponent {
     // otherwise, extract from picker items
     const {items} = this.state;
     const selectedItem = _.find(items, {value});
+    
     return _.get(selectedItem, 'label');
   }
 
@@ -211,47 +247,45 @@ class Picker extends BaseComponent {
 
   toggleExpandableModal = value => {
     this.setState({showExpandableModal: value});
+    this.clearSearchField();
   };
 
   toggleItemSelection = item => {
+    const {getItemValue} = this.props;
     const {value} = this.state;
-    const newValue = _.xorBy(value, [item], 'value');
-    this.setState({
-      value: newValue
-    });
+    const newValue = _.xorBy(value, [item], getItemValue || 'value');
+    
+    this.setState({value: newValue});
   };
 
   cancelSelect = () => {
-    this.setState({
-      value: this.props.value
-    });
+    this.setState({value: this.props.value});
     this.toggleExpandableModal(false);
     _.invoke(this.props, 'topBarProps.onCancel');
   };
 
   onDoneSelecting = item => {
-    this.setState({searchValue: '', value: item}); // clean search when done selecting
+    this.clearSearchField();
+    this.setState({value: item});
     this.toggleExpandableModal(false);
     _.invoke(this.props, 'onChange', item);
   };
 
   onSearchChange = searchValue => {
-    this.setState({
-      searchValue
-    });
+    this.setState({searchValue});
     _.invoke(this.props, 'onSearchChange', searchValue);
   };
 
-  onSelectedItemLayout = ({
-    nativeEvent: {
-      layout: {y}
-    }
-  }) => {
+  onSelectedItemLayout = ({nativeEvent: {layout: {y}}}) => {
     this.setState({selectedItemPosition: y});
   };
 
+  clearSearchField = () => {
+    this.setState({searchValue: ''});
+  };
+
   appendPropsToChildren = () => {
-    const {children, mode, getItemValue, showSearch, renderItem} = this.props;
+    const {children, mode, getItemValue, getItemLabel, showSearch, renderItem} = this.props;
     const {value, searchValue} = this.state;
     const childrenWithProps = React.Children.map(children, child => {
       const childValue = PickerPresenter.getItemValue({getItemValue, ...child.props});
@@ -260,10 +294,12 @@ class Picker extends BaseComponent {
       if (!showSearch || _.isEmpty(searchValue) || _.includes(_.lowerCase(childLabel), _.lowerCase(searchValue))) {
         const selectedValue = PickerPresenter.getItemValue({value, getItemValue});
         const isSelected = PickerPresenter.isItemSelected(childValue, selectedValue);
+        
         return React.cloneElement(child, {
           isSelected,
           onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
           getItemValue: child.props.getItemValue || getItemValue,
+          getItemLabel: child.props.getItemLabel || getItemLabel,
           onSelectedLayout: this.onSelectedItemLayout,
           renderItem: child.props.renderItem || renderItem,
           accessibilityState: isSelected ? {selected: true} : undefined,
@@ -287,8 +323,8 @@ class Picker extends BaseComponent {
       renderCustomModal,
       listProps,
       testID
-    } = this.getThemeProps();
-    const {showExpandableModal, selectedItemPosition} = this.state;
+    } = this.props;
+    const {showExpandableModal, selectedItemPosition, value} = this.state;
     const children = this.appendPropsToChildren(this.props.children);
 
     if (renderCustomModal) {
@@ -296,7 +332,9 @@ class Picker extends BaseComponent {
         visible: showExpandableModal,
         toggleModal: this.toggleExpandableModal,
         onSearchChange: this.onSearchChange,
-        children
+        children,
+        onDone: () => this.onDoneSelecting(value),
+        onCancel: this.cancelSelect
       };
 
       return renderCustomModal(modalProps);
@@ -311,7 +349,7 @@ class Picker extends BaseComponent {
         topBarProps={{
           ...topBarProps,
           onCancel: this.cancelSelect,
-          onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(this.state.value) : undefined
+          onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(value) : undefined
         }}
         showSearch={showSearch}
         searchStyle={searchStyle}
@@ -334,6 +372,7 @@ class Picker extends BaseComponent {
 
     if (_.isFunction(renderPicker)) {
       const {value} = this.state;
+      
       return (
         <View left>
           <Button {...customPickerProps} link onPress={this.handlePickerOnPress} testID={testID}>
@@ -344,8 +383,9 @@ class Picker extends BaseComponent {
       );
     }
 
-    const textInputProps = TextField.extractOwnProps(this.getThemeProps());
-    const label = this.getLabel();
+    const textInputProps = TextField.extractOwnProps(this.props);
+    const label = this.getLabelValueText();
+    
     return (
       <TextField
         {...textInputProps}
@@ -361,4 +401,6 @@ class Picker extends BaseComponent {
 }
 
 Picker.Item = PickerItem;
-export default Picker;
+
+export {Picker}; // For tests
+export default asBaseComponent(forwardRef(Picker));

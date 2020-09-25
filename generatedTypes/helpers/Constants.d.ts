@@ -1,15 +1,16 @@
+export declare enum orientations {
+    PORTRAIT = "portrait",
+    LANDSCAPE = "landscape"
+}
 export declare function updateConstants(dimensions: any): void;
 declare const constants: {
-    orientations: {
-        PORTRAIT: string;
-        LANDSCAPE: string;
-    };
+    orientations: typeof orientations;
     isAndroid: boolean;
     isIOS: boolean;
     getAndroidVersion: () => number | undefined;
     readonly statusBarHeight: number;
     isRTL: boolean;
-    readonly orientation: string;
+    readonly orientation: orientations;
     readonly isLandscape: boolean;
     readonly screenWidth: number;
     readonly screenHeight: number;
