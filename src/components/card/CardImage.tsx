@@ -1,18 +1,13 @@
 import React, {PureComponent} from 'react';
-import {View, StyleSheet, ImageSourcePropType} from 'react-native';
-// import {BaseComponent} from '../../commons';
+import {View, StyleSheet} from 'react-native';
 import Image, {ImageProps} from '../image';
 import * as CardPresenter from './CardPresenter';
 import asCardChild, {asCardChildProps} from './asCardChild';
 // @ts-ignore
 import {LogService} from '../../services';
 
-// TODO: Remove omitting source after imageSource deprecation
-export type CardImageProps = Omit<ImageProps, 'source'> & {
-  /**
-   * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
-   */
-  imageSource?: ImageSourcePropType;
+
+export type CardImageProps = ImageProps & {
   /**
    * Image width
    */
@@ -27,15 +22,6 @@ export type CardImageProps = Omit<ImageProps, 'source'> & {
    * Card component
    */
   position?: string[];
-  /**
-   * border radius, basically for Android since overflow doesn't work well (deprecated)
-   */
-  borderRadius?: number;
-  /**
-   * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
-   * TODO: Remove after imageSource deprecation - should take it from Image props
-   */
-  source?: ImageSourcePropType;
 };
 
 type Props = CardImageProps & asCardChildProps;
@@ -52,31 +38,24 @@ class CardImage extends PureComponent<Props> {
   constructor(props: Props) {
     super(props);
 
-    if (props.borderRadius) {
-      LogService.warn(
-        'uilib: Please stop passing borderRadius to Card.Image, it will get the borderRadius from the Card'
-      );
-    }
     this.styles = createStyles(props);
   }
 
   render() {
     const {
-      imageSource,
       source,
       style,
       testID,
       overlayType,
       context: {borderStyle}
     } = this.props;
-    const finalSource = source || imageSource;
 
-    if (finalSource) {
+    if (source) {
       return (
         <View style={[this.styles.container, borderStyle, style]}>
           <Image
             testID={testID}
-            source={finalSource}
+            source={source}
             style={[this.styles.image]}
             overlayType={overlayType}
           />
@@ -88,9 +67,8 @@ class CardImage extends PureComponent<Props> {
 }
 
 function createStyles({width, height, context: {position}}: Props) {
-  const {top, left, right, bottom} = CardPresenter.extractPositionValues(
-    position
-  );
+  const {top, left, right, bottom} = CardPresenter.extractPositionValues(position);
+
   return StyleSheet.create({
     container: {
       height: left || right ? undefined : height,
