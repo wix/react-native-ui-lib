@@ -205,9 +205,6 @@ export default {
   get PureBaseComponent() {
     return require('./commons').PureBaseComponent;
   },
-  get SelectableComponent() {
-    return require('./commons').SelectableComponent;
-  },
   get UIComponent() {
     return require('./commons').UIComponent;
   },
@@ -237,7 +234,7 @@ export default {
     return require('./services').LogService;
   },
 
-  // NativeComponents 
+  // NativeComponents
   get HighlighterOverlayView() {
     return require('./nativeComponents').HighlighterOverlayView;
   },

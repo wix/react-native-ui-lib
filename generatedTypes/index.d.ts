@@ -97,7 +97,6 @@ export const KeyboardAwareScrollView;
 export const SafeAreaInsetsManager;
 export const SafeAreaSpacerView;
 export const ScrollBar;
-export const SelectableComponent;
 export const Switch;
 export const TabController;
 export const TextField;
