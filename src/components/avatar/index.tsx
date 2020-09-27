@@ -18,13 +18,6 @@ const deprecatedProps = [
   {old: 'imageSource', new: 'source'}
 ];
 
-export enum StatusModes {
-  ONLINE = 'ONLINE',
-  OFFLINE = 'OFFLINE',
-  AWAY = 'AWAY',
-  NONE = 'NONE'
-};
-
 export enum BadgePosition {
   TOP_RIGHT = 'TOP_RIGHT',
   TOP_LEFT = 'TOP_LEFT',
@@ -108,14 +101,6 @@ export type AvatarPropTypes = {
    */
   customRibbon?: JSX.Element;
   /**
-   * Determine if to show online badge
-   */
-  isOnline?: boolean;
-  /**
-   * AWAY, ONLINE, OFFLINE or NONE mode (if set to a value other then 'NONE' will override isOnline prop)
-   */
-  status?: StatusModes;
-  /**
    * Custom size for the Avatar
    */
   size: number;
@@ -154,7 +139,6 @@ class Avatar extends PureComponent<AvatarPropTypes> {
   }
 
   static displayName = 'Avatar';
-  static modes = StatusModes;
   static badgePosition = BadgePosition;
 
   static defaultProps = {
@@ -198,28 +182,10 @@ class Avatar extends PureComponent<AvatarPropTypes> {
     };
   }
 
-  getStatusBadgeColor(status: StatusModes | undefined): string | null {
-    switch (status) {
-      case Avatar.modes.AWAY:
-        return Colors.yellow30;
-      case Avatar.modes.ONLINE:
-        return Colors.green30;
-      case Avatar.modes.OFFLINE:
-        return Colors.dark60;
-      case Avatar.modes.NONE:
-      default:
-        return null;
-    }
-  }
-
   getBadgeBorderWidth = () => _.get(this.props, 'badgeProps.borderWidth', 0);
 
   getBadgeColor() {
-    const {isOnline, status} = this.props;
-    const statusColor = this.getStatusBadgeColor(status);
-    const onlineColor = isOnline ? Colors.green30 : undefined;
-
-    return _.get(this.props, 'badgeProps.backgroundColor') || statusColor || onlineColor;
+    return _.get(this.props, 'badgeProps.backgroundColor');
   }
 
   getBadgeSize = (): number => {
@@ -280,7 +246,6 @@ class Avatar extends PureComponent<AvatarPropTypes> {
       animate,
       source,
       // @ts-ignore
-      imageSource,
       onImageLoadStart,
       onImageLoadEnd,
       onImageLoadError,
@@ -288,16 +253,15 @@ class Avatar extends PureComponent<AvatarPropTypes> {
       imageProps,
       imageStyle
     } = this.props;
-    const hasImage = !_.isUndefined(imageSource) || !_.isUndefined(source);
+    const hasImage = !_.isUndefined(source);
     const ImageContainer = animate ? AnimatedImage : Image;
-    const avatarImageSource = imageSource || source;
 
     if (hasImage) {
       return (
         <ImageContainer
           animate={animate}
           style={[this.getContainerStyle(), StyleSheet.absoluteFillObject, imageStyle]}
-          source={avatarImageSource}
+          source={source}
           onLoadStart={onImageLoadStart}
           onLoadEnd={onImageLoadEnd}
           onError={onImageLoadError}
@@ -315,7 +279,6 @@ class Avatar extends PureComponent<AvatarPropTypes> {
       labelColor: color,
       source,
       //@ts-ignore
-      imageSource,
       backgroundColor,
       onPress,
       containerStyle,
@@ -326,7 +289,7 @@ class Avatar extends PureComponent<AvatarPropTypes> {
       forwardedRef
     } = this.props;
     const Container = onPress ? TouchableOpacity : View;
-    const hasImage = !_.isUndefined(imageSource) || !_.isUndefined(source);
+    const hasImage = !_.isUndefined(source);
     const fontSizeToImageSizeRatio = 0.32;
     const fontSize = size * fontSizeToImageSizeRatio;
 
