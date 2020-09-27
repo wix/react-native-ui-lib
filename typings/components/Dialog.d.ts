@@ -1,3 +1,4 @@
+import { PanningProvider } from 'react-native-ui-lib';
 
 import {ReactElement} from 'react';
 import {
@@ -6,7 +7,7 @@ import {
 } from 'react-native';
 import {BaseComponent} from '../commons';
 import {ColorValue} from '../style/colors';
-import {PanningProviderDirection} from './PanningViews';
+import {PanningDirections} from './PanningViews';
 
 export interface DialogProps {
   visible?: boolean;
@@ -14,7 +15,7 @@ export interface DialogProps {
   overlayBackgroundColor?: ColorValue;
   width?: number | string;
   height?: number | string;
-  panDirection?: PanningProviderDirection;
+  panDirection?: PanningDirections;
   useSafeArea?: boolean;
   onModalDismissed?: () => void;
   renderPannableHeader?: (pannableHeaderProps: object) => ReactElement;
