@@ -5,7 +5,7 @@ import {Colors} from '../../style';
 import {forwardRef, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 //@ts-ignore
-import Badge, {BadgeProps, BADGE_SIZES} from '../badge';
+import Badge, {BadgeProps} from '../badge';
 import View from '../view';
 import Text from '../text';
 import Image, {ImageProps} from '../image';
@@ -20,7 +20,7 @@ export enum BadgePosition {
   BOTTOM_LEFT = 'BOTTOM_LEFT'
 };
 
-const DEFAULT_BADGE_SIZE = 'pimpleBig';
+const DEFAULT_BADGE_SIZE = 10;
 
 export type AvatarPropTypes = {
   /**
@@ -178,12 +178,7 @@ class Avatar extends PureComponent<AvatarPropTypes> {
   }
 
   getBadgeSize = (): number => {
-    const badgeSize: BadgeProps['size'] = _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
-
-    if (_.isString(badgeSize)) {
-      return BADGE_SIZES[badgeSize] || BADGE_SIZES[DEFAULT_BADGE_SIZE];
-    }
-    return badgeSize;
+    return _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
   }
 
   getBadgePosition = (): object => {

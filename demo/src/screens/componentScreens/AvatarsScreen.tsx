@@ -25,7 +25,7 @@ const examples = [
       uri:
         'https://lh3.googleusercontent.com/-cw77lUnOvmI/AAAAAAAAAAI/AAAAAAAAAAA/WMNck32dKbc/s181-c/104220521160525129167.jpg'
     },
-    badgeProps: {size: 'pimpleBig', backgroundColor: Colors.yellow30},
+    badgeProps: {size: 10, backgroundColor: Colors.yellow30},
     badgePosition: 'BOTTOM_RIGHT'
   },
 
@@ -36,7 +36,7 @@ const examples = [
       uri:
         'https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg'
     },
-    badgeProps: {size: 'pimpleBig', backgroundColor: Colors.dark50},
+    badgeProps: {size: 10, backgroundColor: Colors.dark50},
     badgePosition: 'BOTTOM_LEFT'
   },
   {
@@ -53,7 +53,7 @@ const examples = [
     source: {
       uri: 'https://randomuser.me/api/portraits/women/24.jpg'
     },
-    badgeProps: {size: 'pimpleHuge', borderWidth: 0, backgroundColor: onlineColor},
+    badgeProps: {size: 14, borderWidth: 0, backgroundColor: onlineColor},
     badgePosition: 'TOP_LEFT'
   },
   {
@@ -64,7 +64,7 @@ const examples = [
     },
     badgeProps: {
       icon: star,
-      size: 'pimpleHuge',
+      size: 14,
       borderWidth: 1.5,
       borderColor: Colors.white,
       iconStyle: {backgroundColor: Colors.yellow20}

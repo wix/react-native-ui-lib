@@ -1,28 +1,17 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {ImageSourcePropType, ImageStyle, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacityProps, ViewStyle, ViewProps} from 'react-native';
-import {View as AnimatableView} from 'react-native-animatable';
-import {extractAccessibilityProps, extractAnimationProps} from '../../commons/modifiers';
+import {extractAccessibilityProps} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';
 import {BorderRadiuses, Colors, ThemeManager, Typography} from '../../style';
-import Image from '../image';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
+import Image from '../image';
 
+
+const DEFAULT_SIZE = 16;
 const LABEL_FORMATTER_VALUES = [1, 2, 3, 4] as const;
-
-// TODO: depreciate enum badge sizes, use only number for size
-export enum BADGE_SIZES {
-  pimpleSmall = 6,
-  pimpleBig = 10,
-  pimpleHuge = 14,
-  small = 16,
-  default = 20,
-  large = 24
-};
-
 type LabelFormatterValues = typeof LABEL_FORMATTER_VALUES[number]
-export type BadgeSizes = keyof typeof BADGE_SIZES
 
 export type BadgeProps = ViewProps & TouchableOpacityProps & {
   /**
@@ -35,9 +24,9 @@ export type BadgeProps = ViewProps & TouchableOpacityProps & {
    */
   backgroundColor?: string;
   /**
-   * the badge size (default, small)
+   * the badge size
    */
-  size: BadgeSizes | number;
+  size: number;
   /**
    * Press handler
    */
@@ -85,10 +74,6 @@ export type BadgeProps = ViewProps & TouchableOpacityProps & {
    * Additional props passed to icon
    */
   iconProps?: object;
-  /**
-   * Use to identify the badge in tests
-   */
-  testId?: string;
 }
 
 /**
@@ -104,16 +89,13 @@ class Badge extends PureComponent<BadgeProps> {
 
   static displayName = 'Badge';
   static defaultProps = {
-    size: 'default'
+    size: DEFAULT_SIZE
   };
 
   constructor(props: BadgeProps) {
     super(props);
-    this.styles = createStyles(props);
 
-    if (props.testId) {
-      console.warn('Badge prop \'testId\' is deprecated. Please use RN \'testID\' prop instead.');
-    }
+    this.styles = createStyles(props);
   }
 
   getAccessibilityProps() {
@@ -129,18 +111,17 @@ class Badge extends PureComponent<BadgeProps> {
 
   isSmallBadge() {
     const {size} = this.props;
-    return size === 'small';
+    return size === DEFAULT_SIZE;
   }
 
   getBadgeSizeStyle() {
     const {borderWidth, size, icon} = this.props;
     const label = this.getFormattedLabel();
-    const badgeHeight = _.isNumber(size) ? size : BADGE_SIZES[size];
 
     const style: any = {
       paddingHorizontal: this.isSmallBadge() ? 4 : 6,
-      height: badgeHeight,
-      minWidth: badgeHeight
+      height: size,
+      minWidth: size
     };
 
     const isPimple = label === undefined;
@@ -229,7 +210,6 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   render() {
-    // TODO: remove testId after deprecation
     const {
       activeOpacity,
       backgroundColor,
@@ -237,32 +217,25 @@ class Badge extends PureComponent<BadgeProps> {
       hitSlop,
       icon,
       onPress,
-      testId,
       testID,
       ...others
     } = this.props;
     const backgroundStyle = backgroundColor && {backgroundColor};
     const sizeStyle = this.getBadgeSizeStyle();
     const borderStyle = this.getBorderStyling();
-    const animationProps =  extractAnimationProps();
-    const Container = !_.isEmpty(animationProps) ? AnimatableView : onPress ? TouchableOpacity : View;
+    const Container = onPress ? TouchableOpacity : View;
 
-    if (!_.isEmpty(animationProps)) {
-      console.warn('Badge component will soon stop supporting animationProps.' +
-          'Please wrap your Badge component with your own animation component, such as Animatable.View');
-    }
     return (
       // The extra View wrapper is to break badge's flex-ness
       // @ts-ignore
       <View style={containerStyle} {...others} backgroundColor={undefined} borderWidth={undefined} {...this.getAccessibilityProps()}>
         <Container
-          testID={testID || testId}
+          testID={testID}
           pointerEvents={'none'}
           style={[sizeStyle, this.styles.badge, borderStyle, backgroundStyle]}
           onPress={onPress}
           activeOpacity={activeOpacity}
           hitSlop={hitSlop}
-          {...animationProps}
         >
           {icon ? this.renderIcon() : this.renderLabel()}
         </Container>
