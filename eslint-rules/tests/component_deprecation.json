@@ -32,5 +32,11 @@
     "component": "List.Part",
     "source": "module-with-deprecations",
     "message": "Please use the 'List.Item' component instead."
+  },
+  {
+    "component": "TagsInput",
+    "source": "module-with-deprecations",
+    "message": "Please use the 'ChipsInput' component instead.",
+    "fix": {"componentName": "ChipsInput"}
   }
 ]

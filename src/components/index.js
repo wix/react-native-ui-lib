@@ -131,10 +131,12 @@ export default {
   get TabBar() {
     return require('./tabBar').default;
   },
-  get TagsInput() {
+  get TagsInput() { //Renamed to ChipsInput, to be deleted after migration
     return require('./tagsInput').default;
   },
-
+  get ChipsInput() {
+    return require('./ChipsInput').default;
+  },
   get RadioButton() {
     return require('./radioButton').RadioButton;
   },

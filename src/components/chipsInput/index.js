@@ -6,7 +6,6 @@ import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses, ThemeManager, Typography} from '../../style';
 import Assets from '../../assets';
 import {BaseComponent} from '../../commons';
-import {LogService} from '../../services'
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import {TextField} from '../inputs';
@@ -26,8 +25,8 @@ const GUTTER_SPACING = 8;
  * @extends: TextField
  * @extendsLink: https://github.com/wix/react-native-ui-lib/blob/master/src/components/inputs/TextField.js
  */
-export default class TagsInput extends BaseComponent {
-  static displayName = 'TagsInput';
+export default class ChipsInput extends BaseComponent {
+  static displayName = 'ChipsInput';
 
   static propTypes = {
     /**
@@ -92,8 +91,6 @@ export default class TagsInput extends BaseComponent {
   constructor(props) {
     super(props);
 
-    LogService.warn('TagsInput has been renamed to ChipsInput, please replace accordingly')
-
     this.addTag = this.addTag.bind(this);
     this.onChangeText = this.onChangeText.bind(this);
     this.renderTagWrapper = this.renderTagWrapper.bind(this);
@@ -150,7 +147,7 @@ export default class TagsInput extends BaseComponent {
       value: '',
       tags: newTags
     });
-    _.invoke(this.props, 'onChangeTags', newTags, TagsInput.onChangeTagsActions.ADDED, newTag);
+    _.invoke(this.props, 'onChangeTags', newTags, ChipsInput.onChangeTagsActions.ADDED, newTag);
     this.clear();
   }
 
@@ -165,7 +162,7 @@ export default class TagsInput extends BaseComponent {
         tags,
         tagIndexToRemove: undefined
       });
-      _.invoke(this.props, 'onChangeTags', tags, TagsInput.onChangeTagsActions.REMOVED, removedTag);
+      _.invoke(this.props, 'onChangeTags', tags, ChipsInput.onChangeTagsActions.REMOVED, removedTag);
     }
   }
 
