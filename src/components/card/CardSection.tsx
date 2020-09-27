@@ -1,11 +1,12 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType, StyleProp} from 'react-native';
+import {StyleSheet, ViewStyle, ImageStyle, StyleProp} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import View, {ViewPropTypes} from '../view';
 import Text, {TextPropTypes} from '../text';
 import Image, {ImageProps} from '../image';
 import asCardChild, {asCardChildProps} from './asCardChild';
+
 
 type ContentType = TextPropTypes & {text?: string};
 
@@ -32,9 +33,9 @@ export type CardSectionProps = ViewPropTypes & {
    */
   trailingIcon?: ImageProps;
   /**
-   * Will be used for the background when provided
+   * The image source that will be used for the background
    */
-  imageSource?: ImageSourcePropType;
+  source?: ImageProps;
   /**
    * The style for the background image
    */
@@ -62,10 +63,11 @@ class CardSection extends PureComponent<Props> {
       contentStyle,
       testID
     } = this.props;
+
     return (
       <>
         {leadingIcon && (
-          <Image testID={`${testID}.leadingIcon`} {...leadingIcon} />
+          <Image testID={`${testID}.leadingIcon`} {...leadingIcon}/>
         )}
         <View testID={`${testID}.contentContainer`} style={[contentStyle]}>
           {_.map(
@@ -87,20 +89,21 @@ class CardSection extends PureComponent<Props> {
           )}
         </View>
         {trailingIcon && (
-          <Image testID={`${testID}.trailingIcon`} {...trailingIcon} />
+          <Image testID={`${testID}.trailingIcon`} {...trailingIcon}/>
         )}
       </>
     );
   };
 
   renderImage = () => {
-    const {imageSource, imageStyle, imageProps, testID} = this.props;
+    const {source, imageStyle, imageProps, testID} = this.props;
+
     // not actually needed, instead of adding ts-ignore
-    if (imageSource) {
+    if (source) {
       return (
         <Image
           testID={`${testID}.image`}
-          source={imageSource}
+          source={source}
           style={imageStyle}
           customOverlayContent={this.renderContent()}
           {...imageProps}
@@ -111,21 +114,23 @@ class CardSection extends PureComponent<Props> {
 
   render() {
     const {
-      imageSource,
+      source,
       context: {borderStyle},
       style,
       ...others
     } = this.props;
+
     return (
       <View style={[styles.container, borderStyle, style]} {...others}>
-        {imageSource && this.renderImage()}
-        {!imageSource && this.renderContent()}
+        {source && this.renderImage()}
+        {!source && this.renderContent()}
       </View>
     );
   }
 }
 
 export default asBaseComponent<CardSectionProps>(asCardChild(CardSection));
+
 
 const styles = StyleSheet.create({
   container: {

@@ -4,11 +4,11 @@ import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import {Card, Text, Image, ListItem, Carousel, Spacings, View} from 'react-native-ui-lib';
 import ExpandableSection from '../../../../src/components/expandableSection';
 
+
 const cardImage2 = require('../../assets/images/empty-state.jpg');
 const cardImage = require('../../assets/images/card-example.jpg');
 const chevronDown = require('../../assets/icons/chevronDown.png');
 const chevronUp = require('../../assets/icons/chevronUp.png');
-
 const elements = [
   <Card style={{marginBottom: 10}} onPress={() => {}}>
     <Card.Section
@@ -18,7 +18,7 @@ const elements = [
       ]}
       style={{padding: 20}}
     />
-    <Card.Section imageSource={cardImage2} imageStyle={{height: 120}} />
+    <Card.Section source={cardImage2} imageStyle={{height: 120}}/>
   </Card>,
   <Card style={{marginBottom: 10}} onPress={() => {}}>
     <Card.Section
@@ -28,7 +28,7 @@ const elements = [
       ]}
       style={{padding: 20}}
     />
-    <Card.Section imageSource={cardImage} imageStyle={{height: 120}} />
+    <Card.Section source={cardImage} imageStyle={{height: 120}}/>
   </Card>,
   <Card style={{marginBottom: 10}} onPress={() => {}}>
     <Card.Section
@@ -38,7 +38,7 @@ const elements = [
       ]}
       style={{padding: 20}}
     />
-    <Card.Section imageSource={cardImage2} imageStyle={{height: 120}} />
+    <Card.Section source={cardImage2} imageStyle={{height: 120}}/>
   </Card>
 ];
 
@@ -60,7 +60,7 @@ class ExpandableSectionScreen extends PureComponent {
           ExpandableSection's sectionHeader
         </Text>
         <View style={styles.header}>
-          <Image style={styles.icon} source={!this.state.expanded ? chevronUp : chevronDown} />
+          <Image style={styles.icon} source={!this.state.expanded ? chevronUp : chevronDown}/>
         </View>
       </TouchableOpacity>
     );
