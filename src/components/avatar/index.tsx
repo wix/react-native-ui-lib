@@ -12,11 +12,6 @@ import Image, {ImageProps} from '../image';
 // @ts-ignore
 import AnimatedImage from '../animatedImage';
 
-const deprecatedProps = [
-  {old: 'isOnline', new: 'badgeProps.backgroundColor'},
-  {old: 'status', new: 'badgeProps.backgroundColor'},
-  {old: 'imageSource', new: 'source'}
-];
 
 export enum BadgePosition {
   TOP_RIGHT = 'TOP_RIGHT',
@@ -130,12 +125,6 @@ class Avatar extends PureComponent<AvatarPropTypes> {
     super(props);
 
     this.styles = createStyles(props);
-    deprecatedProps.forEach(prop => {
-      //@ts-ignore
-      if (props[prop.old]) {
-        console.warn(`"Avatar's ${prop.old}" property is deprecated, please use "${prop.new}"`);
-      }
-    });
   }
 
   static displayName = 'Avatar';
