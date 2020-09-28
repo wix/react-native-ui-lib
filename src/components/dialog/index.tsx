@@ -55,10 +55,6 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
      */
     useSafeArea?: boolean;
     /**
-     * Called once the modal has been dismissed (iOS only) - Deprecated, use onDialogDismissed instead
-     */
-    onModalDismissed?: (props: any) => void;
-    /**
      * Called once the dialog has been dismissed completely
      */
     onDialogDismissed?: (props: any) => void;
@@ -120,10 +116,6 @@ class Dialog extends Component<DialogProps, DialogState> {
 
     this.styles = createStyles(this.props);
     this.setAlignment();
-
-    if (!_.isUndefined(props.onModalDismissed)) {
-      LogService.deprecationWarn({component: 'Dialog', oldProp: 'onModalDismissed', newProp: 'onDialogDismissed'});
-    }
   }
 
   componentDidMount() {
@@ -174,9 +166,8 @@ class Dialog extends Component<DialogProps, DialogState> {
     });
   };
 
-  onModalDismissed = () => {
+  onDialogDismissed = () => {
     _.invoke(this.props, 'onDialogDismissed', this.props);
-    _.invoke(this.props, 'onModalDismissed', this.props);
   }
 
   hideDialogView = () => {
@@ -253,7 +244,7 @@ class Dialog extends Component<DialogProps, DialogState> {
         animationType={'none'}
         onBackgroundPress={this.hideDialogView}
         onRequestClose={this.hideDialogView}
-        onDismiss={this.onModalDismissed}
+        onDismiss={this.onDialogDismissed}
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}
       >
