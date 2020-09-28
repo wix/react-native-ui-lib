@@ -165,9 +165,7 @@ export default class StackAggregator extends PureBaseComponent {
 
   close = () => {
     this.setState({collapsed: true}, async () => {
-      if (this.props.onCollapseWillChange) {
-        this.props.onCollapseWillChange(true)
-      }
+      _.invoke(this.props, 'onCollapseWillChange', true);
       if (this.props.onCollapseChanged) {
         await this.animate()
         this.props.onCollapseChanged(true)
@@ -179,9 +177,7 @@ export default class StackAggregator extends PureBaseComponent {
 
   open = () => {
     this.setState({collapsed: false}, async () => {
-      if (this.props.onCollapseWillChange) {
-        this.props.onCollapseWillChange(false)
-      }
+      _.invoke(this.props, 'onCollapseWillChange', false);
       if (this.props.onCollapseChanged) {
         await this.animate()
         this.props.onCollapseChanged(false)
