@@ -9,7 +9,7 @@ export default class ChipsInputScreen extends Component {
 
     this.state = {
       tags: [{label: 'Amit'}, {label: 'Ethan', invalid: true}],
-      tags2: ['Tags', 'Input'],
+      tags2: ['Chips', 'Input'],
       tags3: ['Non', 'Removable', 'Tags']
     };
   }

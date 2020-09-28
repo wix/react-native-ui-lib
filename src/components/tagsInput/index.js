@@ -6,7 +6,7 @@ import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses, ThemeManager, Typography} from '../../style';
 import Assets from '../../assets';
 import {BaseComponent} from '../../commons';
-import {LogService} from '../../services'
+import {LogService} from '../../services';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import {TextField} from '../inputs';
@@ -92,7 +92,7 @@ export default class TagsInput extends BaseComponent {
   constructor(props) {
     super(props);
 
-    LogService.warn('TagsInput has been renamed to ChipsInput, please replace accordingly')
+    LogService.warn('TagsInput has been renamed to ChipsInput, please replace accordingly');
 
     this.addTag = this.addTag.bind(this);
     this.onChangeText = this.onChangeText.bind(this);
@@ -249,14 +249,14 @@ export default class TagsInput extends BaseComponent {
     return (
       <View row centerV>
         {shouldMarkTag && (
-          <Image
-            style={[styles.removeIcon, tag.invalid && styles.inValidTagRemoveIcon]}
-            source={Assets.icons.x}
-          />)
-        }
+          <Image style={[styles.removeIcon, tag.invalid && styles.inValidTagRemoveIcon]} source={Assets.icons.x} />
+        )}
         <Text
-          style={[tag.invalid ? (shouldMarkTag ? styles.errorMessageWhileMarked : styles.errorMessage)
-            : styles.tagLabel, typography]} accessibilityLabel={`${label} tag`}
+          style={[
+            tag.invalid ? (shouldMarkTag ? styles.errorMessageWhileMarked : styles.errorMessage) : styles.tagLabel,
+            typography
+          ]}
+          accessibilityLabel={`${label} tag`}
         >
           {!tag.invalid && shouldMarkTag ? 'Remove' : label}
         </Text>
@@ -271,10 +271,7 @@ export default class TagsInput extends BaseComponent {
 
     if (tag.invalid) {
       return (
-        <View
-          key={index}
-          style={[styles.inValidTag, tagStyle, shouldMarkTag && styles.inValidMarkedTag]}
-        >
+        <View key={index} style={[styles.inValidTag, tagStyle, shouldMarkTag && styles.inValidMarkedTag]}>
           {this.renderLabel(tag, shouldMarkTag)}
         </View>
       );
@@ -345,14 +342,13 @@ export default class TagsInput extends BaseComponent {
           {_.map(tags, tagRenderFn)}
           {this.renderTextInput()}
         </View>
-        {validationErrorMessage ?
-          (
-            <View>
-              <Text style={[styles.errorMessage, tagIndexToRemove && styles.errorMessageWhileMarked]}>
-                {validationErrorMessage}
-              </Text>
-            </View>
-          ) : null}
+        {validationErrorMessage ? (
+          <View>
+            <Text style={[styles.errorMessage, tagIndexToRemove && styles.errorMessageWhileMarked]}>
+              {validationErrorMessage}
+            </Text>
+          </View>
+        ) : null}
       </View>
     );
   }
