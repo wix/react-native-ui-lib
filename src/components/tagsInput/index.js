@@ -249,7 +249,7 @@ export default class TagsInput extends BaseComponent {
     return (
       <View row centerV>
         {shouldMarkTag && (
-          <Image style={[styles.removeIcon, tag.invalid && styles.inValidTagRemoveIcon]} source={Assets.icons.x} />
+          <Image style={[styles.removeIcon, tag.invalid && styles.inValidTagRemoveIcon]} source={Assets.icons.x}/>
         )}
         <Text
           style={[
