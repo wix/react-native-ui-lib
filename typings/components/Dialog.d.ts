@@ -17,10 +17,9 @@ export interface DialogProps {
   height?: number | string;
   panDirection?: PanningDirections;
   useSafeArea?: boolean;
-  onModalDismissed?: () => void;
+  onDialogDismissed?: () => void;
   renderPannableHeader?: (pannableHeaderProps: object) => ReactElement;
   pannableHeaderProps?: object;
-  migrate?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
   testID?: string;
   renderOverlay?: () => React.Node;

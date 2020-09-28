@@ -59,10 +59,9 @@ export default class PickerScreen extends Component {
 
   renderDialog = modalProps => {
     const {visible, children, toggleModal, onDone} = modalProps;
-    
+
     return (
       <Dialog
-        migrate
         visible={visible}
         onDismiss={() => {
           onDone();

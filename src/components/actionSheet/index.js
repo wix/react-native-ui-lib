@@ -83,7 +83,7 @@ export default class ActionSheet extends BaseComponent {
      */
     renderAction: PropTypes.elementType,
     /**
-     * Called once the modal has been dissmissed (iOS only, modal only)
+     * Called once the modal has been dismissed (iOS only, modal only)
      */
     onModalDismissed: PropTypes.func,
     /**
@@ -201,9 +201,9 @@ export default class ActionSheet extends BaseComponent {
     const {
       useNativeIOS,
       visible,
+      dialogStyle,
       onDismiss,
       useModal,
-      dialogStyle,
       onModalDismissed,
       testID,
       useSafeArea
@@ -215,7 +215,6 @@ export default class ActionSheet extends BaseComponent {
 
     return (
       <Dialog
-        migrate
         useSafeArea={useSafeArea}
         testID={testID}
         bottom

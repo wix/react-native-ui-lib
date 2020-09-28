@@ -352,7 +352,6 @@ export default class ColorPicker extends PureBaseComponent {
 
     return (
       <Dialog
-        migrate
         visible={show}
         width="100%"
         height={null}

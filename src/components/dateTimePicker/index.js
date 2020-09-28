@@ -133,7 +133,7 @@ class DateTimePicker extends BaseComponent {
         // since handleChange() is not called on iOS when there is no actual change
         this.chosenDate = new Date();
       }
-      
+
       _.invoke(this.props, 'onChange', this.chosenDate);
       this.setState({value: this.chosenDate});
     });
@@ -160,7 +160,6 @@ class DateTimePicker extends BaseComponent {
 
     return (
       <Dialog
-        migrate
         visible={showExpandableOverlay}
         width="100%"
         height={null}
@@ -191,10 +190,10 @@ class DateTimePicker extends BaseComponent {
           iconStyle={{tintColor: Colors.dark10}}
           onPress={this.toggleExpandableOverlay}
         />
-        <Button 
-          link 
-          iconSource={Assets.icons.check} 
-          useCustomTheme={useCustomTheme} 
+        <Button
+          link
+          iconSource={Assets.icons.check}
+          useCustomTheme={useCustomTheme}
           onPress={this.onDonePressed}
         />
       </View>

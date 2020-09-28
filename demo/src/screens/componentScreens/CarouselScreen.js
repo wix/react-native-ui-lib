@@ -108,7 +108,6 @@ class CarouselScreen extends Component {
 
         <Carousel
           key={numberOfPagesShown}
-          migrate
           ref={(r) => (this.carousel = r)}
           //loop
           autoplay={autoplay}

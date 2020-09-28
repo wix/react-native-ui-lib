@@ -190,7 +190,7 @@ export default class ColorPalette extends PureBaseComponent {
 
     if (scrollable && this.selectedColorIndex !== undefined) {
       const childRef = this.itemsRefs[this.selectedColorIndex];
-      
+
       if (childRef) {
         const handle = findNodeHandle(childRef);
         if (handle) {
@@ -236,7 +236,7 @@ export default class ColorPalette extends PureBaseComponent {
     const isFirst = index === 0;
     const isOnLeft = isFirst || index % this.itemsPerRow === 0;
     const isOnRight = index % this.itemsPerRow === this.itemsPerRow - 1;
-    
+
     let marginLeft;
     let marginRight;
 
@@ -329,7 +329,7 @@ export default class ColorPalette extends PureBaseComponent {
 
     return (
       <View center style={[containerStyle, styles.paginationContainer]}>
-        <Carousel migrate loop={loop} onChangePage={this.onChangePage} ref={this.carousel}>
+        <Carousel loop={loop} onChangePage={this.onChangePage} ref={this.carousel}>
           {_.map(colorGroups, (colorsPerPage, index) => {
             return this.renderPalette(others, {...styles.page, width: this.containerWidth}, colorsPerPage, index);
           })}
