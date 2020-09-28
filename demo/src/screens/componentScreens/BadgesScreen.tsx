@@ -91,11 +91,11 @@ export default class BadgesScreen extends Component {
             style={{justifyContent: 'space-around', alignItems: 'flex-start', width: 140, height: 140}}
           >
             <Text text80 row>
-              size={'{\'pimpleSmall\'}'}
+              size={'{\'Small pimple\'}'}
             </Text>
-            <Text text80>size={'{\'pimpleBig\'}'}</Text>
+            <Text text80>size={'{\'Pimple\'}'}</Text>
             <Text text80 row>
-              size={'{\'pimpleHuge\'}'}
+              size={'{\'Big pimple\'}'}
             </Text>
           </View>
 

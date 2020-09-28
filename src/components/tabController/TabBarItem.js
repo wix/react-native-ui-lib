@@ -250,7 +250,7 @@ export default class TabBarItem extends PureComponent {
             {uppercase ? _.toUpper(label) : label}
           </Reanimated.Text>
         )}
-        {badge && <Badge backgroundColor={Colors.red30} size={'default'} {...badge} containerStyle={styles.badge}/>}
+        {badge && <Badge backgroundColor={Colors.red30} size={20} {...badge} containerStyle={styles.badge}/>}
       </TouchableOpacity>
     );
   }

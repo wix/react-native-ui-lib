@@ -37,7 +37,7 @@ export default class TabBarScreen extends Component {
       do {
         index = Math.floor(Math.random() * this.tabbar.props.children.length);
       } while (index === this.state.selectedIndex);
-  
+
       this.setState({selectedIndex: index});
     }
   };
@@ -82,7 +82,7 @@ export default class TabBarScreen extends Component {
   removeTab = () => {
     const index = this.state.selectedIndex;
     const newTabs = this.state.currentTabs;
-    
+
     if (newTabs.length >= 0) {
       newTabs.splice(index, 1);
     }
@@ -92,7 +92,7 @@ export default class TabBarScreen extends Component {
   /** Actions */
   getTabs(showAddTab: boolean) {
     const tabs = _.map(this.state.currentTabs, tab => this.renderTabs(tab));
-    
+
     if (showAddTab) {
       tabs.push(this.renderAddTabsTab());
     } else {
@@ -146,7 +146,7 @@ export default class TabBarScreen extends Component {
 
           <TabBar style={styles.tabbar} selectedIndex={0} ref={r => (this.tabbar = r)} enableShadow>
             <TabBar.Item label="Scroll"/>
-            <TabBar.Item label="View" badge={{size: 'pimpleSmall'}}/>
+            <TabBar.Item label="View" badge={{size: 6}}/>
             <TabBar.Item label="tab"/>
             <TabBar.Item label="bar"/>
             <TabBar.Item label="Container"/>
