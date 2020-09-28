@@ -36,7 +36,7 @@
   {
     "component": "TagsInput",
     "source": "module-with-deprecations",
-    "message": "Please use the 'ChipsInput' component instead.",
+    "message": "TagsInput was renamed, Please use 'ChipsInput' instead.",
     "fix": {"componentName": "ChipsInput"}
   }
 ]
