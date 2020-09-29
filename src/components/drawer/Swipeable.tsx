@@ -102,11 +102,6 @@ export default class Swipeable extends Component<PropType, StateType> {
       measureCompleted: false
     };
 
-    this.prevProps = props;
-    this.prevState = this.state;
-
-    this._updateAnimatedEvent(props, this.state);
-
     this._onGestureEvent = Animated.event([{nativeEvent: {translationX: dragX}}], {
       useNativeDriver: props.useNativeAnimations,
       listener: this._handleDrag
@@ -135,31 +130,12 @@ export default class Swipeable extends Component<PropType, StateType> {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    this.prevProps = prevProps;
-    this.prevState = prevState;
-  }
-
-  _shouldUpdateAnimatedEvent() {
-    if (
-      this.props.friction !== this.prevProps.friction ||
-      this.props.overshootLeft !== this.prevProps.overshootLeft ||
-      this.props.overshootRight !== this.prevProps.overshootRight ||
-      this.props.overshootFriction !== this.prevProps.overshootFriction ||
-      this.state.leftWidth !== this.prevState.leftWidth ||
-      this.state.rightOffset !== this.prevState.rightOffset ||
-      this.state.rowWidth !== this.prevState.rowWidth
-    ) {
-      return true;
-    }
-  }
-
-  _updateAnimatedEvent = (props: PropType, state: StateType) => {
-    const {friction, overshootFriction} = props;
-    const {dragX, rowTranslation, leftWidth = 0, rowWidth = 0} = state;
-    const {rightOffset = rowWidth} = state;
+  getTransX = () => {
+    const {friction, overshootFriction} = this.props;
+    const {dragX, rowTranslation, leftWidth = 0, rowWidth = 0} = this.state;
+    const {rightOffset = rowWidth} = this.state;
     const rightWidth = Math.max(0, rowWidth - rightOffset);
-    const {overshootLeft = leftWidth > 0, overshootRight = rightWidth > 0} = props;
+    const {overshootLeft = leftWidth > 0, overshootRight = rightWidth > 0} = this.props;
 
     const transX = Animated.add(
       rowTranslation,
@@ -181,32 +157,63 @@ export default class Swipeable extends Component<PropType, StateType> {
         leftWidth + (overshootLeft || overshootFriction > 1 ? 1 : 0)
       ],
     });
-    this._transX = transX;
-    this._showLeftAction =
-      leftWidth > 0
-        ? transX.interpolate({
+
+    return transX;
+  }
+
+  getShowLeftAction = () => {
+    const transX = this.getTransX();
+    const {leftWidth = 0} = this.state;
+
+    const showLeftAction = leftWidth > 0 ?
+      transX.interpolate({
           inputRange: [-1, 0, leftWidth],
           outputRange: [0, 0, 1]
         })
-        : new Animated.Value(0);
-    this._leftActionTranslate = this._showLeftAction.interpolate({
+      : new Animated.Value(0);
+
+    return showLeftAction;
+  }
+
+  getLeftActionTranslate = () => {
+    const showLeftAction = this.getShowLeftAction();
+
+    const leftActionTranslate = showLeftAction.interpolate({
       inputRange: [0, Number.MIN_VALUE],
       outputRange: [-10000, 0],
       extrapolate: 'clamp'
     });
-    this._showRightAction =
-      rightWidth > 0
-        ? transX.interpolate({
+
+    return leftActionTranslate;
+  }
+
+  getShowRightAction = () => {
+    const transX = this.getTransX();
+    const {rowWidth = 0} = this.state;
+    const {rightOffset = rowWidth} = this.state;
+    const rightWidth = Math.max(0, rowWidth - rightOffset);
+
+    const showRightAction = rightWidth > 0 ?
+      transX.interpolate({
           inputRange: [-rightWidth, 0, 1],
           outputRange: [1, 0, 0]
         })
-        : new Animated.Value(0);
-    this._rightActionTranslate = this._showRightAction.interpolate({
+      : new Animated.Value(0);
+
+    return showRightAction;
+  }
+
+  getRightActionTranslate = () => {
+    const showRightAction = this.getShowRightAction();
+
+    const rightActionTranslate = showRightAction.interpolate({
       inputRange: [0, Number.MIN_VALUE],
       outputRange: [-10000, 0],
       extrapolate: 'clamp'
     });
-  };
+
+    return rightActionTranslate;
+  }
 
   _onTapHandlerStateChange = ({nativeEvent}) => {
     if (this.rowState !== 0) {
@@ -427,10 +434,6 @@ export default class Swipeable extends Component<PropType, StateType> {
   };
 
   render() {
-    if (this._shouldUpdateAnimatedEvent()) {
-      this._updateAnimatedEvent(this.props, this.state);
-    }
-
     const {
       children,
       renderLeftActions,
@@ -447,10 +450,10 @@ export default class Swipeable extends Component<PropType, StateType> {
         style={[
           styles.leftActions,
           leftActionsContainerStyle,
-          {transform: [{translateX: this._leftActionTranslate}]}
+          {transform: [{translateX: this.getLeftActionTranslate()}]}
         ]}
       >
-        {renderLeftActions(this._showLeftAction, this._transX)}
+        {renderLeftActions(this.getShowLeftAction(), this.getTransX())}
         <View onLayout={this._onLeftLayout}/>
       </Animated.View>
     );
@@ -460,10 +463,10 @@ export default class Swipeable extends Component<PropType, StateType> {
         style={[
           styles.rightActions,
           rightActionsContainerStyle,
-          {transform: [{translateX: this._rightActionTranslate}]}
+          {transform: [{translateX: this.getRightActionTranslate()}]}
         ]}
       >
-        {renderRightActions(this._showRightAction, this._transX)}
+        {renderRightActions(this.getShowRightAction(), this.getTransX())}
         <View onLayout={this._onRightLayout}/>
       </Animated.View>
     );
@@ -483,7 +486,7 @@ export default class Swipeable extends Component<PropType, StateType> {
             <Animated.View
               testID={testID}
               style={[
-                {transform: [{translateX: this._transX}]},
+                {transform: [{translateX: this.getTransX()}]},
                 childrenContainerStyle
               ]}
             >
