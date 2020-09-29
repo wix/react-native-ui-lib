@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Checkbox, Assets, Text, View, Colors} from 'react-native-ui-lib'; //eslint-disable-line
-
+import {Checkbox, Assets, Text, View, Colors, Spacings} from 'react-native-ui-lib'; //eslint-disable-line
 
 class CheckboxScreen extends Component {
   state = {
@@ -8,7 +7,8 @@ class CheckboxScreen extends Component {
     value2: false,
     value3: true,
     value4: true,
-    value5: false
+    value5: false,
+    value6: false
   };
 
   render() {
@@ -20,6 +20,14 @@ class CheckboxScreen extends Component {
               value={this.state.value1}
               onValueChange={value1 => this.setState({value1})}
               style={{marginBottom: 20}}
+            />
+            <Checkbox
+              value={this.state.value6}
+              label={'with label'}
+              labelStyle={{marginLeft: Spacings.s3}}
+              color={Colors.green20}
+              onValueChange={value6 => this.setState({value6})}
+              style={{marginBottom: 20, marginLeft: 75}}
             />
             <Checkbox
               value={this.state.value2}
@@ -40,7 +48,9 @@ class CheckboxScreen extends Component {
               style={{marginBottom: 20}}
             />
             <View row marginB-20>
-              <Text text70 centerV>Disabled: </Text>
+              <Text text70 centerV>
+                Disabled:{' '}
+              </Text>
               <Checkbox
                 disabled
                 value={this.state.value5}

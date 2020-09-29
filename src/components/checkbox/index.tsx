@@ -1,6 +1,16 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {Animated, Easing, StyleSheet, StyleProp, TouchableOpacityProps, ViewStyle} from 'react-native';
+import {
+  View,
+  Text,
+  Animated,
+  Easing,
+  StyleSheet,
+  StyleProp,
+  TouchableOpacityProps,
+  ViewStyle,
+  TextStyle
+} from 'react-native';
 import {Colors} from '../../style';
 //@ts-ignore
 import Assets from '../../assets';
@@ -46,14 +56,22 @@ export interface CheckboxPropTypes extends TouchableOpacityProps {
    */
   iconColor?: string;
   /**
+   * The label of the checkbox
+   */
+  label?: string;
+  /**
+   * The style of the label
+   */
+  labelStyle?: StyleProp<TextStyle>;
+  /**
    * Additional styling
    */
-  style?: StyleProp<ViewStyle>
+  style?: StyleProp<ViewStyle>;
 }
 
 interface CheckboxState {
   isChecked: Animated.Value;
-};
+}
 
 /**
  * @description: Checkbox component for toggling boolean value related to some context
@@ -155,34 +173,41 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
   }
 
   render() {
-    const {selectedIcon, color, iconColor, disabled, testID, style, ...others} = this.props;
+    const {selectedIcon, color, iconColor, disabled, testID, label, labelStyle, style, ...others} = this.props;
     return (
       // @ts-ignore
-      <TouchableOpacity
-        {...this.getAccessibilityProps()}
-        activeOpacity={1}
-        testID={testID}
-        {...others}
-        style={[this.getBorderStyle(), style]}
-        onPress={this.onPress}
-      >
-        {
-          <Animated.View
-            style={[this.styles.container, {backgroundColor: this.getColor()}, {opacity: this.animationStyle.opacity}]}
-          >
-            <Animated.Image
+      <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity
+          {...this.getAccessibilityProps()}
+          activeOpacity={1}
+          testID={testID}
+          {...others}
+          style={[this.getBorderStyle(), style]}
+          onPress={this.onPress}
+        >
+          {
+            <Animated.View
               style={[
-                this.styles.selectedIcon,
-                color && {tintColor: iconColor},
-                {transform: this.animationStyle.transform},
-                disabled && {tintColor: DEFAULT_ICON_COLOR}
+                this.styles.container,
+                {backgroundColor: this.getColor()},
+                {opacity: this.animationStyle.opacity}
               ]}
-              source={selectedIcon || Assets.icons.checkSmall}
-              testID={`${testID}.selected`}
-            />
-          </Animated.View>
-        }
-      </TouchableOpacity>
+            >
+              <Animated.Image
+                style={[
+                  this.styles.selectedIcon,
+                  color && {tintColor: iconColor},
+                  {transform: this.animationStyle.transform},
+                  disabled && {tintColor: DEFAULT_ICON_COLOR}
+                ]}
+                source={selectedIcon || Assets.icons.checkSmall}
+                testID={`${testID}.selected`}
+              />
+            </Animated.View>
+          }
+        </TouchableOpacity>
+        {label && <Text style={labelStyle}>{label}</Text>}
+      </View>
     );
   }
 }
