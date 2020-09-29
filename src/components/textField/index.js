@@ -504,7 +504,7 @@ export default class TextField extends BaseInput {
       return renderExpandable(this.getThemeProps(), this.state);
     }
 
-    const textInputProps = TextField.extractOwnProps(this.props, 'error');
+    const textInputProps = TextField.extractOwnProps(this.props, ['error', 'testID']);
 
     return (
       <Modal
