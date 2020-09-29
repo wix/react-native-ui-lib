@@ -148,7 +148,7 @@ export default class TabBarItem extends PureComponent {
   };
 
   getItemStyle() {
-    const {state} = this.props;
+    const {state, style: propsStyle} = this.props;
     const opacity = block([
       cond(eq(state, State.END), call([], this.onPress)),
       cond(eq(state, State.BEGAN), this.props.activeOpacity, 1)
@@ -164,7 +164,7 @@ export default class TabBarItem extends PureComponent {
       style.paddingHorizontal = undefined;
     }
 
-    return style;
+    return [style, propsStyle];
   }
 
   getLabelStyle() {

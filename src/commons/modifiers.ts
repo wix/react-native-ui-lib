@@ -304,6 +304,10 @@ export function extractModifierProps(props: Dictionary<any>) {
   return modifierProps;
 }
 
+/**
+ * TODO:
+ * @deprecated switch to Modifiers#extractComponentProps
+ */
 export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
   //@ts-ignore
   const ownPropTypes = this.propTypes;
@@ -313,6 +317,16 @@ export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
     .value();
 
   return ownProps;
+}
+
+export function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps: string[]) {
+  const componentPropTypes = component.propTypes;
+  const componentProps = _.chain(props)
+    .pickBy((_value, key) => _.includes(Object.keys(componentPropTypes), key))
+    .omit(ignoreProps)
+    .value();
+
+  return componentProps;
 }
 
 //@ts-ignore
