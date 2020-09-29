@@ -50,6 +50,9 @@ export default {
   get Drawer() {
     return require('./drawer').default;
   },
+  get ExpandableSection() {
+    return require('./expandableSection').default;
+  },
   get Fader() {
     return require('./fader').default;
   },
