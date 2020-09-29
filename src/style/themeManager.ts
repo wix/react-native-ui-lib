@@ -25,6 +25,7 @@ export class ThemeManager {
   }
 
   setTheme(overrides: Dictionary<string>) {
+    console.warn('ThemeManager.setTheme() is deprecated. Please remove usage before next uilib major version update.');
     this.theme = _.merge(this.theme, overrides);
   }
 
