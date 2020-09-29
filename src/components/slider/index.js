@@ -1,7 +1,13 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, PanResponder, ViewPropTypes, AccessibilityInfo, Animated} from 'react-native';
+import {
+  StyleSheet,
+  PanResponder,
+  ViewPropTypes,
+  AccessibilityInfo,
+  Animated
+} from 'react-native';
 import {Constants} from '../../helpers';
 import {PureBaseComponent} from '../../commons';
 import {Colors} from '../../style';
@@ -339,6 +345,19 @@ export default class Slider extends PureBaseComponent {
     return scaleRatioFromSize || defaultScaleFactor;
   };
 
+  updateTrackStepAndStyle = ({nativeEvent}) => {
+    const {step} = this.props;
+    
+    this._x = nativeEvent.locationX;
+    this.updateValue(nativeEvent.locationX);
+
+    if (step > 0) {
+      this.bounceToStep();
+    } else {
+      this.updateStyles(nativeEvent.locationX);
+    }
+  }
+
   /* Events */
 
   onValueChange = value => {
@@ -363,6 +382,15 @@ export default class Slider extends PureBaseComponent {
 
   onThumbLayout = ({nativeEvent}) => {
     this.handleMeasure('thumbSize', nativeEvent);
+  };
+
+  handleTrackPress = ({nativeEvent}) => {
+    if (this.props.disabled) {
+      return;
+    }
+    
+    this.updateTrackStepAndStyle({nativeEvent});
+    this.onSeekEnd();
   };
 
   handleMeasure = (name, nativeEvent) => {
@@ -498,8 +526,9 @@ export default class Slider extends PureBaseComponent {
             />
           </View>
         )}
+        
+        <View style={styles.touchArea} onTouchEnd={this.handleTrackPress}/>
         {this.renderThumb()}
-        {/* <View style={styles.touchArea}/> */}
       </View>
     );
   }
