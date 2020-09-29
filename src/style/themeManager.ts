@@ -24,10 +24,6 @@ export class ThemeManager {
     components: {} as Extendable
   }
 
-  setTheme(overrides: Dictionary<string>) {
-    this.theme = _.merge(this.theme, overrides);
-  }
-
   getTheme() {
     return this.theme;
   }

@@ -21,16 +21,6 @@ import {registerScreens} from './screens';
 //   gold: '#FFD700',
 // });
 
-// ThemeManager.setTheme({
-//   primaryColor: Colors.purple30,
-//   CTA: {
-//     backgroundColor: Colors.purple30,
-//     textColor: Colors.dark10,
-//   },
-//   titleColor: Colors.blue10,
-//   subtitleColor: Colors.blue40,
-// });
-
 // ThemeManager.setComponentTheme('Picker', (props) => {
 //   if (props.useNativePicker) {
 //     return {
