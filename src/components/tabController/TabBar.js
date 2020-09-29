@@ -58,7 +58,7 @@ class TabBar extends PureComponent {
     /**
      * custom shadow style
      */
-    shadowStyle: RNText.propTypes.style,
+    shadowStyle: ViewPropTypes.style,
     // /**
     //  * The minimum number of tabs to render in scroll mode
     //  */
