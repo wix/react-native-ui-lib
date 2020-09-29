@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {
-  View,
   Text,
   Animated,
   Easing,
@@ -16,6 +15,7 @@ import {Colors} from '../../style';
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
+import View from '../view'
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
@@ -175,7 +175,7 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
   render() {
     const {selectedIcon, color, iconColor, disabled, testID, label, labelStyle, style, ...others} = this.props;
     return (
-      <View style={{flexDirection: 'row'}}>
+      <View row>
         {/*
           // @ts-ignore */}
         <TouchableOpacity
