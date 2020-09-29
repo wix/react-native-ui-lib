@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, TouchableOpacityProps, ViewStyle } from 'react-native';
+import { StyleProp, TouchableOpacityProps, ViewStyle, TextStyle } from 'react-native';
 export interface CheckboxPropTypes extends TouchableOpacityProps {
     /**
      * The value of the Checkbox. If true the switch will be turned on. Default value is false.
@@ -33,6 +33,14 @@ export interface CheckboxPropTypes extends TouchableOpacityProps {
      * The selected icon color
      */
     iconColor?: string;
+    /**
+     * The label of the checkbox
+     */
+    label?: string;
+    /**
+     * The style of the label
+     */
+    labelStyle?: StyleProp<TextStyle>;
     /**
      * Additional styling
      */
