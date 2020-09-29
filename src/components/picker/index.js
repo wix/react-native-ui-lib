@@ -398,11 +398,10 @@ class Picker extends PureComponent {
       <TextField
         {...textInputProps}
         containerStyle={[
-          containerStyle,
           paddings,
           margins,
-          alignments,
-          positionStyle
+          positionStyle,
+          containerStyle
         ]}
         {...this.getAccessibilityInfo()}
         importantForAccessibility={'no-hide-descendants'}
