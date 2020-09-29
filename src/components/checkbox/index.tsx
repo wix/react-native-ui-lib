@@ -175,8 +175,8 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
   render() {
     const {selectedIcon, color, iconColor, disabled, testID, label, labelStyle, style, ...others} = this.props;
     return (
-      // @ts-ignore
       <View style={{flexDirection: 'row'}}>
+      {/* @ts-ignore */}
         <TouchableOpacity
           {...this.getAccessibilityProps()}
           activeOpacity={1}
