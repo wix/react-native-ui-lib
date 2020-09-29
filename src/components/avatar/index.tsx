@@ -5,7 +5,7 @@ import {Colors} from '../../style';
 import {forwardRef, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 //@ts-ignore
-import Badge, {BADGE_SIZES} from '../badge';
+import Badge, {BadgeProps, BADGE_SIZES} from '../badge';
 import View from '../view';
 import Text from '../text';
 import Image, {ImageProps} from '../image';
@@ -50,7 +50,7 @@ export type AvatarPropTypes = {
   /**
    * Badge props passed down to Badge component
    */
-  badgeProps?: object;
+  badgeProps?: BadgeProps;
   /**
    * Additional spacing styles for the container
    */
@@ -222,8 +222,8 @@ class Avatar extends PureComponent<AvatarPropTypes> {
     return _.get(this.props, 'badgeProps.backgroundColor') || statusColor || onlineColor;
   }
 
-  getBadgeSize = () => {
-    const badgeSize = _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
+  getBadgeSize = (): number => {
+    const badgeSize: BadgeProps['size'] = _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
 
     if (_.isString(badgeSize)) {
       return BADGE_SIZES[badgeSize] || BADGE_SIZES[DEFAULT_BADGE_SIZE];
@@ -231,7 +231,7 @@ class Avatar extends PureComponent<AvatarPropTypes> {
     return badgeSize;
   }
 
-  getBadgePosition() {
+  getBadgePosition = (): object => {
     const {size, badgePosition} = this.props;
     const radius = size / 2;
     const x = Math.sqrt(radius ** 2 * 2);
