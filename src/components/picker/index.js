@@ -392,7 +392,7 @@ class Picker extends PureComponent {
 
     const textInputProps = TextField.extractOwnProps(this.props);
     const label = this.getLabelValueText();
-    const {paddings, margins, alignments, positionStyle} = modifiers;
+    const {paddings, margins, positionStyle} = modifiers;
 
     return (
       <TextField
