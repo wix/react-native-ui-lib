@@ -88,7 +88,7 @@
     "jest": "^25.2.4",
     "metro-react-native-babel-preset": "^0.59.0",
     "mocha": "^5.0.0",
-    "prettier-eslint": "^9.0.0",
+    "prettier-eslint": "11.0.0",
     "react": "16.13.1",
     "react-autobind": "^1.0.6",
     "react-dom": "^15.4.2",
