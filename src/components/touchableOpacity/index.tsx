@@ -62,6 +62,11 @@ type Props = BaseComponentInjectedProps &
 class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   static displayName = 'TouchableOpacity';
 
+  static defaultProps = {
+    throttleTime: 0,
+    throttleOptions: {leading: true, trailing: false}
+  }
+
   constructor(props: Props) {
     super(props);
 
