@@ -41,7 +41,7 @@ export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleA
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ActionBar, ActionSheet, Carousel, ConnectionStatusBar, Dialog, DialogProps, Drawer,
+  ActionBar, ActionSheet, Carousel, ConnectionStatusBar, ChipsInput,  Dialog, DialogProps, Drawer,
   FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl,
   Picker, PickerProps, ProgressBar, Slider,
   GradientSlider, ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,

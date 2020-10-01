@@ -50,6 +50,9 @@ export default {
   get Drawer() {
     return require('./drawer').default;
   },
+  get ExpandableSection() {
+    return require('./expandableSection').default;
+  },
   get Fader() {
     return require('./fader').default;
   },
@@ -131,10 +134,12 @@ export default {
   get TabBar() {
     return require('./tabBar').default;
   },
-  get TagsInput() {
+  get TagsInput() { // TODO: Renamed to ChipsInput, to be deleted after migration
     return require('./tagsInput').default;
   },
-
+  get ChipsInput() {
+    return require('./ChipsInput').default;
+  },
   get RadioButton() {
     return require('./radioButton').RadioButton;
   },

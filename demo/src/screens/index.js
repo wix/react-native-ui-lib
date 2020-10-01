@@ -14,6 +14,5 @@ export function registerScreens(registrar) {
   registrar('unicorn.MainScreen', () => require('./MainScreen').default);
   registrar('unicorn.PlaygroundScreen', () => gestureHandlerRootHOC(require('./PlaygroundScreen').default));
   registrar('unicorn.Settings', () => require('./SettingsScreen').default);
-  registrar('unicorn.CustomScreen', () => require('./CustomScreen').default);
 
 }

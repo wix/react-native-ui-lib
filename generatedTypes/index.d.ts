@@ -63,6 +63,7 @@ export {
   ColorSliderGroup,
   Stepper,
   TagsInput,
+  ChipsInput,
   SharedTransition,
   StackAggregator,
   Toast,
