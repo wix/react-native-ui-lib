@@ -8,7 +8,7 @@ export declare type RadioGroupPropTypes = {
     /**
      * Invoked once when value changes, by selecting one of the radio buttons in the group
      */
-    onValueChange?: (value: string | number | boolean) => void;
+    onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void);
 };
 interface RadioGroupState {
     value?: RadioGroupPropTypes['initialValue'];
@@ -30,7 +30,7 @@ declare class RadioGroup extends PureComponent<Props, RadioGroupState> {
     render(): JSX.Element;
 }
 export { RadioGroup };
-declare const _default: React.ComponentClass<{
+declare const _default: React.ComponentClass<RadioGroupPropTypes & {
     useCustomTheme?: boolean | undefined;
 }, any>;
 export default _default;
