@@ -203,7 +203,15 @@ function validateHex(value: string) {
   if (!/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value)) {
     throw new Error(`${value} is invalid hex color`);
   }
-  return value.replace('#', '');
+  value = value.replace('#', '');
+  if (value.length === 3) {
+    value = threeDigitHexToSix(value);
+  }
+  return value;
+}
+
+function threeDigitHexToSix(value: string) { 
+  return value.replace(/./g, '$&$&');
 }
 
 const TypedColors = Colors as ExtendTypeWith<typeof Colors, typeof colorsPalette>
