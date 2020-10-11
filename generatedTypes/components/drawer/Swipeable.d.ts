@@ -53,8 +53,11 @@ export default class Swipeable extends Component<PropType, StateType> {
     };
     constructor(props: PropType);
     _handleDrag: (e: any) => void;
-    UNSAFE_componentWillUpdate(props: PropType, state: StateType): void;
-    _updateAnimatedEvent: (props: PropType, state: StateType) => void;
+    getTransX: () => Animated.AnimatedInterpolation;
+    getShowLeftAction: () => Animated.Value | Animated.AnimatedInterpolation;
+    getLeftActionTranslate: () => Animated.AnimatedInterpolation;
+    getShowRightAction: () => Animated.Value | Animated.AnimatedInterpolation;
+    getRightActionTranslate: () => Animated.AnimatedInterpolation;
     _onTapHandlerStateChange: ({ nativeEvent }: {
         nativeEvent: any;
     }) => void;

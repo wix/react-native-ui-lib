@@ -37,6 +37,7 @@ export {
 export {default as PanListenerView, PanListenerViewPropTypes} from './components/panningViews/panListenerView';
 export {default as PanResponderView, PanResponderViewPropTypes} from './components/panningViews/panResponderView';
 export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes} from './components/panningViews/panDismissibleView';
+export {default as Dialog, DialogProps} from './components/dialog';
 
 /* All components with manual typings */
 export {
@@ -47,7 +48,6 @@ export {
   Card,
   Carousel,
   ConnectionStatusBar,
-  Dialog,
   Drawer,
   ExpandableSection,
   FeatureHighlight,
@@ -63,6 +63,7 @@ export {
   ColorSliderGroup,
   Stepper,
   TagsInput,
+  ChipsInput,
   SharedTransition,
   StackAggregator,
   Toast,
