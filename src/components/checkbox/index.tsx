@@ -15,7 +15,6 @@ import {Colors} from '../../style';
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
-import View from '../view'
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
