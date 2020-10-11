@@ -1,7 +1,8 @@
 import _ from 'lodash';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {LayoutAnimation, StyleSheet} from 'react-native';
 import View from '../view';
+import TouchableOpacity from '../touchableOpacity'
 
 export type ExpandableSectionProps = {
   /**
@@ -16,19 +17,23 @@ export type ExpandableSectionProps = {
    * should the expandableSection be expanded
    */
   expanded?: boolean;
+  /**
+   * action for when pressing the header of the expandableSection
+   */
+  onPress?: () => void;
 };
 
 function ExpandableSection(props: ExpandableSectionProps) {
   const {expanded, sectionHeader, children} = props;
 
-  useEffect(() => {
-    LayoutAnimation.configureNext({...LayoutAnimation.Presets.easeInEaseOut, duration: 300});
-  }, [expanded]);
-
+const onPress = () => {
+  props.onPress?.();
+  LayoutAnimation.configureNext({...LayoutAnimation.Presets.easeInEaseOut, duration: 300});
+  }
 
   return (
     <View style={styles.container}>
-      {sectionHeader}
+      <TouchableOpacity onPress={onPress}>{sectionHeader}</TouchableOpacity>
       {expanded && children}
     </View>
   );
