@@ -436,6 +436,8 @@ export default class Slider extends PureBaseComponent {
     _.invoke(AccessibilityInfo, 'announceForAccessibility', `New value ${newValue}`);
   };
 
+  thumbHitSlop = {top: 10, bottom: 10, left: 24, right: 24};
+
   /* Renders */
 
   renderThumb = () => {
@@ -446,6 +448,7 @@ export default class Slider extends PureBaseComponent {
     } = this.getThemeProps();
     return (
       <Animated.View
+        hitSlop={this.thumbHitSlop}
         ref={this.setThumbRef}
         onLayout={this.onThumbLayout}
         {...this._panResponder.panHandlers}
