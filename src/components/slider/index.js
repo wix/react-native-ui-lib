@@ -331,8 +331,8 @@ export default class Slider extends PureBaseComponent {
   }
 
   calculatedThumbActiveScale = () => {
-    const {activeThumbStyle, thumbStyle, disabled} = this.props;
-    if (disabled) {
+    const {activeThumbStyle, thumbStyle, disabled, disableActiveStyling} = this.props;
+    if (disabled || disableActiveStyling) {
       return 1;
     }
     
