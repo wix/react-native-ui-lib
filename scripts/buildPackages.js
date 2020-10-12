@@ -17,6 +17,17 @@ const packages = [
       'Shadows',
       'ThemeManager'
     ]
+  },
+  {
+    filename: 'style.js',
+    styleComponents: [
+      'Colors',
+      'Typography',
+      'BorderRadiuses',
+      'Shadows',
+      'Spacings',
+      'ThemeManager'
+    ]
   }
 ];
 
