@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import {Constants} from '../../../helpers';
-import TagsInput from '../index';
+import ChipsInput from '../index';
 
-describe('TagsInput', () => {
+describe('ChipsInput', () => {
   let uut;
   beforeEach(() => {
-    uut = new TagsInput({});
+    uut = new ChipsInput({});
     uut.setState = jest.fn(state => _.assign(uut.state, state));
     _.set(uut.state, 'tags', [{}, {}, {}]);
   });
@@ -23,13 +23,13 @@ describe('TagsInput', () => {
 
     it('should return the label according to getLabel callback provided in props', () => {
       const getLabel = jest.fn(item => item.value);
-      uut = new TagsInput({getLabel});
+      uut = new ChipsInput({getLabel});
       expect(uut.getLabel({value: 'label', label: 'bla'})).toBe('label');
     });
 
     it('should return the label according to getLabel callback even if item is a string', () => {
       const getLabel = jest.fn(item => `${item}1`);
-      uut = new TagsInput({getLabel});
+      uut = new ChipsInput({getLabel});
       expect(uut.getLabel('label')).toBe('label1');
     });
   });
@@ -82,7 +82,7 @@ describe('TagsInput', () => {
     it('should invoke onKeyPress callback provided in props with the event', () => {
       const pressEvent = {nativeEvent: {key: 'space'}};
       const onKeyPressCallback = jest.fn();
-      uut = new TagsInput({onKeyPress: onKeyPressCallback});
+      uut = new ChipsInput({onKeyPress: onKeyPressCallback});
 
       uut.onKeyPress(pressEvent);
       expect(onKeyPressCallback).toHaveBeenCalledWith(pressEvent);
