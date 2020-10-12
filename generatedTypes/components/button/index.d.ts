@@ -36,8 +36,8 @@ export declare type ButtonPropTypes = TouchableOpacityProps & TypographyModifier
      */
     iconOnRight?: boolean;
     /**
-    * whether the icon should flip horizontally on RTL locals
-    */
+     * whether the icon should flip horizontally on RTL locals
+     */
     supportRTL?: boolean;
     /**
      * Color of the button background
@@ -370,8 +370,8 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
      */
     iconOnRight?: boolean | undefined;
     /**
-    * whether the icon should flip horizontally on RTL locals
-    */
+     * whether the icon should flip horizontally on RTL locals
+     */
     supportRTL?: boolean | undefined;
     /**
      * Color of the button background
@@ -527,8 +527,8 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
      */
     iconOnRight?: boolean | undefined;
     /**
-    * whether the icon should flip horizontally on RTL locals
-    */
+     * whether the icon should flip horizontally on RTL locals
+     */
     supportRTL?: boolean | undefined;
     /**
      * Color of the button background
@@ -684,8 +684,8 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
      */
     iconOnRight?: boolean | undefined;
     /**
-    * whether the icon should flip horizontally on RTL locals
-    */
+     * whether the icon should flip horizontally on RTL locals
+     */
     supportRTL?: boolean | undefined;
     /**
      * Color of the button background
@@ -841,8 +841,8 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
      */
     iconOnRight?: boolean | undefined;
     /**
-    * whether the icon should flip horizontally on RTL locals
-    */
+     * whether the icon should flip horizontally on RTL locals
+     */
     supportRTL?: boolean | undefined;
     /**
      * Color of the button background

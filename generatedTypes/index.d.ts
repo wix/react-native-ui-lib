@@ -21,6 +21,7 @@ export {default as RadioButton, RadioButtonPropTypes} from './components/radioBu
 export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButton/RadioGroup';
 export {default as TabBar} from './components/TabBar';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
+export {default as ExpandableSection, ExpandableSectionProps } from './components/ExpandableSection';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
 export {default as PanGestureView, PanGestureViewProps} from './components/panningViews/panGestureView';
 export {default as PanningContext} from './components/panningViews/panningContext';
@@ -36,6 +37,7 @@ export {
 export {default as PanListenerView, PanListenerViewPropTypes} from './components/panningViews/panListenerView';
 export {default as PanResponderView, PanResponderViewPropTypes} from './components/panningViews/panResponderView';
 export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes} from './components/panningViews/panDismissibleView';
+export {default as Dialog, DialogProps} from './components/dialog';
 
 /* All components with manual typings */
 export {
@@ -46,8 +48,8 @@ export {
   Card,
   Carousel,
   ConnectionStatusBar,
-  Dialog,
   Drawer,
+  ExpandableSection,
   FeatureHighlight,
   Hint,
   BaseInput,
@@ -61,6 +63,7 @@ export {
   ColorSliderGroup,
   Stepper,
   TagsInput,
+  ChipsInput,
   SharedTransition,
   StackAggregator,
   Toast,

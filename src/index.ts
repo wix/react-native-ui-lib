@@ -23,6 +23,7 @@ export {default as RadioButton, RadioButtonPropTypes} from './components/radioBu
 export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButton/RadioGroup';
 export {default as TabBar} from './components/TabBar';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
+export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
 export {default as PanGestureView, PanGestureViewProps} from './components/panningViews/panGestureView';
 export {default as PanningContext} from './components/panningViews/panningContext';
@@ -38,10 +39,11 @@ export {
 export {default as PanListenerView, PanListenerViewPropTypes} from './components/panningViews/panListenerView';
 export {default as PanResponderView, PanResponderViewPropTypes} from './components/panningViews/panResponderView';
 export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes} from './components/panningViews/panDismissibleView';
+export {default as Dialog, DialogProps} from './components/dialog';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ActionBar, ActionSheet, Carousel, ConnectionStatusBar, Dialog, DialogProps, Drawer,
+  ActionBar, ActionSheet, Carousel, ConnectionStatusBar, ChipsInput, Drawer,
   FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl,
   Picker, PickerProps, ProgressBar, Slider,
   GradientSlider, ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,
