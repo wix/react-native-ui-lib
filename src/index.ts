@@ -10,6 +10,7 @@ export * as Incubator from './incubator';
 export {default as Avatar, AvatarPropTypes} from './components/avatar';
 export {default as Badge, BadgeProps} from './components/badge';
 export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
+export {default as Constants} from './helpers/Constants';
 export {default as View, ViewPropTypes} from './components/view';
 export {default as Text, TextPropTypes} from './components/text';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';
@@ -47,6 +48,6 @@ export {
   FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl,
   Picker, PickerProps, ProgressBar, Slider,
   GradientSlider, ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,
-  WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper, Constants,
+  WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper,
   LogService, LoaderScreen, StateScreen, WheelPicker, WheelPickerProps, ColorPicker
 } from '../typings';
