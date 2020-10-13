@@ -6,6 +6,7 @@ import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses, ThemeManager, Typography} from '../../style';
 import Assets from '../../assets';
 import {BaseComponent} from '../../commons';
+import {LogService} from '../../services';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import {TextField} from '../inputs';
@@ -21,7 +22,7 @@ const GUTTER_SPACING = 8;
  * @description: Tags input component (chips)
  * @modifiers: Typography
  * @gif: https://camo.githubusercontent.com/9c2671024f60566b980638ea01b517f6fb509d0b/68747470733a2f2f6d656469612e67697068792e636f6d2f6d656469612f336f45686e374a79685431566658746963452f67697068792e676966
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TagsInputScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipsInputScreen.js
  * @extends: TextField
  * @extendsLink: https://github.com/wix/react-native-ui-lib/blob/master/src/components/inputs/TextField.js
  */
@@ -90,6 +91,8 @@ export default class TagsInput extends BaseComponent {
 
   constructor(props) {
     super(props);
+
+    LogService.warn('TagsInput has been renamed to ChipsInput, please replace accordingly');
 
     this.addTag = this.addTag.bind(this);
     this.onChangeText = this.onChangeText.bind(this);
@@ -246,14 +249,14 @@ export default class TagsInput extends BaseComponent {
     return (
       <View row centerV>
         {shouldMarkTag && (
-          <Image
-            style={[styles.removeIcon, tag.invalid && styles.inValidTagRemoveIcon]}
-            source={Assets.icons.x}
-          />)
-        }
+          <Image style={[styles.removeIcon, tag.invalid && styles.inValidTagRemoveIcon]} source={Assets.icons.x}/>
+        )}
         <Text
-          style={[tag.invalid ? (shouldMarkTag ? styles.errorMessageWhileMarked : styles.errorMessage)
-            : styles.tagLabel, typography]} accessibilityLabel={`${label} tag`}
+          style={[
+            tag.invalid ? (shouldMarkTag ? styles.errorMessageWhileMarked : styles.errorMessage) : styles.tagLabel,
+            typography
+          ]}
+          accessibilityLabel={`${label} tag`}
         >
           {!tag.invalid && shouldMarkTag ? 'Remove' : label}
         </Text>
@@ -268,10 +271,7 @@ export default class TagsInput extends BaseComponent {
 
     if (tag.invalid) {
       return (
-        <View
-          key={index}
-          style={[styles.inValidTag, tagStyle, shouldMarkTag && styles.inValidMarkedTag]}
-        >
+        <View key={index} style={[styles.inValidTag, tagStyle, shouldMarkTag && styles.inValidMarkedTag]}>
           {this.renderLabel(tag, shouldMarkTag)}
         </View>
       );
@@ -342,14 +342,13 @@ export default class TagsInput extends BaseComponent {
           {_.map(tags, tagRenderFn)}
           {this.renderTextInput()}
         </View>
-        {validationErrorMessage ?
-          (
-            <View>
-              <Text style={[styles.errorMessage, tagIndexToRemove && styles.errorMessageWhileMarked]}>
-                {validationErrorMessage}
-              </Text>
-            </View>
-          ) : null}
+        {validationErrorMessage ? (
+          <View>
+            <Text style={[styles.errorMessage, tagIndexToRemove && styles.errorMessageWhileMarked]}>
+              {validationErrorMessage}
+            </Text>
+          </View>
+        ) : null}
       </View>
     );
   }

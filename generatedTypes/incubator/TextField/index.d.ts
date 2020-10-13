@@ -1,11 +1,10 @@
 import React from 'react';
 import { ViewStyle, TextStyle } from 'react-native';
 import { ButtonPropTypes } from '../../components/button';
-import { ValidationMessagePosition } from './types';
+import { ValidationMessagePosition, Validator } from './types';
 import { InputProps } from './Input';
 import { ValidationMessageProps } from './ValidationMessage';
 import { LabelProps } from './Label';
-import { Validator } from './useFieldState';
 import { FloatingPlaceholderProps } from './FloatingPlaceholder';
 import { CharCounterProps } from './CharCounter';
 interface TextFieldProps extends InputProps, LabelProps, FloatingPlaceholderProps, ValidationMessageProps, Omit<CharCounterProps, 'maxLength'> {

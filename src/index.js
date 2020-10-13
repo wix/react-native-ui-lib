@@ -54,6 +54,9 @@ export default {
   get Drawer() {
     return require('./components/drawer').default;
   },
+  get ExpandableSection() {
+    return require('./components/expandableSection').default;
+  },
   get Fader() {
     return require('./components/fader').default;
   },
@@ -147,8 +150,11 @@ export default {
   get TabBar() {
     return require('./components/tabBar').default;
   },
-  get TagsInput() {
+  get TagsInput() { // TODO: Renamed to ChipsInput, to be deleted after migration
     return require('./components/tagsInput').default;
+  },
+  get ChipsInput() {
+    return require('./components/chipsInput').default;
   },
   get RadioButton() {
     return require('./components/radioButton/RadioButton').default;
@@ -234,7 +240,7 @@ export default {
     return require('./services').LogService;
   },
 
-  // NativeComponents 
+  // NativeComponents
   get HighlighterOverlayView() {
     return require('./nativeComponents').HighlighterOverlayView;
   },

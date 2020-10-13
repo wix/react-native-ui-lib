@@ -46,8 +46,11 @@ module.exports = {
       get DrawerScreen() {
         return require('./screens/componentScreens/DrawerScreen').default;
       },
-      get TagsInputScreen() {
-        return require('./screens/componentScreens/TagsInputScreen').default;
+      get ExpandableSectionScreen() {
+        return require('./screens/componentScreens/ExpandableSectionScreen').default;
+      },
+      get ChipsInputScreen() {
+        return require('./screens/componentScreens/ChipsInputScreen').default;
       },
       get HintsScreen() {
         return require('./screens/componentScreens/HintsScreen').default;
@@ -103,7 +106,7 @@ module.exports = {
       get TextScreen() {
         return require('./screens/componentScreens/TextScreen').default;
       },
-      // TODO: fix Expo issues (navigation) before un-commenting 
+      // TODO: fix Expo issues (navigation) before un-commenting
       // get TextFieldScreen() {
       //   return require('./screens/componentScreens/TextFieldScreen').default;
       // },
@@ -157,7 +160,7 @@ module.exports = {
       get LoadingScreen() {
         return require('./screens/componentScreens/LoadingScreen').default;
       },
-      // TODO: fix Expo issues (navigation) before un-commenting 
+      // TODO: fix Expo issues (navigation) before un-commenting
       // get ModalScreen() {
       //   return require('./screens/componentScreens/ModalScreen').default;
       // },

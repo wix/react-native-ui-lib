@@ -85,9 +85,15 @@ export declare function extractPositionStyle(props: Dictionary<any>): {
 } | undefined;
 export declare function extractFlexStyle(props: Dictionary<any>): Partial<Record<NativeFlexModifierKeyType, number>> | undefined;
 export declare function extractAccessibilityProps(props?: any): Partial<any>;
+export declare function extractAnimationProps(props?: any): Pick<any, "onAnimationEnd" | "animation" | "duration" | "delay" | "direction" | "easing" | "iterationCount" | "transition" | "onAnimationBegin" | "useNativeDriver">;
 export declare function extractBorderRadiusValue(props: Dictionary<any>): number | undefined;
 export declare function extractModifierProps(props: Dictionary<any>): _.Dictionary<any>;
+/**
+ * TODO:
+ * @deprecated switch to Modifiers#extractComponentProps
+ */
 export declare function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]): Pick<Partial<Dictionary<any>>, number>;
+export declare function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps: string[]): Pick<Partial<Dictionary<any>>, number>;
 export declare function getThemeProps(props?: any, context?: any): any;
 export declare function generateModifiersStyle(options: {
     color: boolean;

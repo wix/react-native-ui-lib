@@ -82,6 +82,7 @@ export default class HintsScreen extends Component {
                 label={showHint ? 'Hide' : 'Show'}
                 onPress={() => this.setState({showHint: !showHint})}
                 style={{alignSelf: targetPosition}}
+                testID={'Hint.button'}
                 // style={{alignSelf: targetPosition, marginLeft: 30}}
                 // style={{alignSelf: targetPosition, position: 'absolute', top: 160, left: 100}}
               />
