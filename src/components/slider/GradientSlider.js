@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import tinycolor from 'tinycolor2';
-import React from 'react';
+import React, {Component} from 'react';
 import {HueGradient, LightnessGradient, SaturationGradient, Gradient} from 'react-native-color';
 import {Colors} from '../../style';
-import {BaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons';
 import Slider from './index';
 import asSliderGroupChild from './context/asSliderGroupChild';
 
@@ -20,7 +20,7 @@ const GRADIENT_TYPES = {
  * @description: A Gradient Slider component
  * @example: https://github.com/wix/react-native-ui-lib/blob/feat/new_components/demo/src/screens/componentScreens/SliderScreen.js
  */
-class GradientSlider extends BaseComponent {
+class GradientSlider extends Component {
   static displayName = 'GradientSlider';
 
   static propTypes = {
@@ -53,14 +53,19 @@ class GradientSlider extends BaseComponent {
     super(props);
 
     this.state = {
+      prevColor: props.color,
       color: props.color ? Colors.getHSL(props.color) : undefined
     };
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.color !== nextProps.color) {
-      this.setState({color: Colors.getHSL(nextProps.color)});
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.prevColor !== nextProps.color) {
+      return {
+        color: Colors.getHSL(nextProps.color),
+        prevColor: Colors.getHSL(nextProps.color)
+      };
     }
+    return null;
   }
 
   getColor() {
@@ -88,7 +93,7 @@ class GradientSlider extends BaseComponent {
 
   renderHueGradient = () => {
     const {gradientSteps} = this.props;
-    
+
     return (
       <HueGradient gradientSteps={gradientSteps}/>
     );
@@ -180,7 +185,7 @@ class GradientSlider extends BaseComponent {
     }
 
     return (
-      <Slider 
+      <Slider
         renderTrack={renderTrack}
         step={step}
         maximumValue={maximumValue}
@@ -195,4 +200,4 @@ class GradientSlider extends BaseComponent {
   }
 }
 
-export default asSliderGroupChild(GradientSlider);
+export default asBaseComponent(asSliderGroupChild(GradientSlider));

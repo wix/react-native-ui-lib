@@ -21,22 +21,9 @@ export default class SliderGroup extends Component {
     };
   }
 
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (nextProps.color !== Colors.getHexString(prevState.value)) {
-  //     return {value: Colors.getHSL(nextProps.color)};
-  //   }
-  //   return null;
-  // }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.color !== Colors.getHexString(this.state.value)) {
-      return {value: Colors.getHSL(nextProps.color)};
-    }
-  }
-
   getContextProviderValue() {
     return {
-      value: this.state.value, 
+      value: this.state.value,
       setValue: this.setValue
     };
   }

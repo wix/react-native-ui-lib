@@ -94,7 +94,7 @@ declare const _default: React.ComponentClass<BaseComponentInjectedProps & {
     /**
      * Badge component props to display next the item label
      */
-    badge?: any;
+    badge?: BadgeProps | undefined;
     /**
      * maximum number of lines the label can break
      */

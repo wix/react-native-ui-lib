@@ -93,18 +93,12 @@ function getDefaultNavigationStyle() {
       title: {
         color: Colors.white,
         fontSize: Typography.text60H.fontSize,
-        fontFamily: Constants.isAndroid
-          ? Typography.text65H.fontFamily
-          : '.SFUIText-Heavy',
-        fontWeight: 'heavy'
+        fontFamily: Typography.text65H.fontFamily
       },
       subtitle: {
         color: Colors.white,
         fontSize: Typography.text80T.fontSize,
-        fontFamily: Constants.isAndroid
-          ? Typography.text80.fontFamily
-          : '.SFUIText-Medium',
-        fontWeight: 'medium'
+        fontFamily: Typography.text80.fontFamily
       },
       backButton: {
         // visible: true,

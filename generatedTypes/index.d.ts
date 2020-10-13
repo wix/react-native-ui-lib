@@ -9,6 +9,7 @@ export * as Incubator from './incubator';
 export {asBaseComponent, withScrollEnabler, withScrollReached, WithScrollEnablerProps, WithScrollReachedProps} from './commons/new';
 export {default as Avatar, AvatarPropTypes} from './components/avatar';
 export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
+export {default as Constants} from './helpers/Constants';
 export {default as View, ViewPropTypes} from './components/view';
 export {default as Text, TextPropTypes} from './components/text';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';
@@ -21,6 +22,7 @@ export {default as RadioButton, RadioButtonPropTypes} from './components/radioBu
 export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButton/RadioGroup';
 export {default as TabBar} from './components/TabBar';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
+export {default as ExpandableSection, ExpandableSectionProps } from './components/ExpandableSection';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
 export {default as PanGestureView, PanGestureViewProps} from './components/panningViews/panGestureView';
 export {default as PanningContext} from './components/panningViews/panningContext';
@@ -36,6 +38,7 @@ export {
 export {default as PanListenerView, PanListenerViewPropTypes} from './components/panningViews/panListenerView';
 export {default as PanResponderView, PanResponderViewPropTypes} from './components/panningViews/panResponderView';
 export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes} from './components/panningViews/panDismissibleView';
+export {default as Dialog, DialogProps} from './components/dialog';
 
 /* All components with manual typings */
 export {
@@ -46,8 +49,8 @@ export {
   Card,
   Carousel,
   ConnectionStatusBar,
-  Dialog,
   Drawer,
+  ExpandableSection,
   FeatureHighlight,
   Hint,
   BaseInput,
@@ -61,6 +64,7 @@ export {
   ColorSliderGroup,
   Stepper,
   TagsInput,
+  ChipsInput,
   SharedTransition,
   StackAggregator,
   Toast,
@@ -71,7 +75,6 @@ export {
   UIComponent,
   forwardRef,
   AvatarHelper,
-  Constants,
   LogService,
   LoaderScreen,
   StateScreen,
