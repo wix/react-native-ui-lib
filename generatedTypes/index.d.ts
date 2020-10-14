@@ -46,7 +46,6 @@ export {
   ActionSheet,
   Badge,
   BadgeProps,
-  Card,
   Carousel,
   ConnectionStatusBar,
   Drawer,
