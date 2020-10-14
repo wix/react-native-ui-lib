@@ -17,7 +17,7 @@ export type RadioGroupPropTypes = {
   /**
    * Invoked once when value changes, by selecting one of the radio buttons in the group
    */
-  onValueChange?: (value: string | number | boolean) => void;
+  onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void);
 };
 
 interface RadioGroupState {
@@ -85,4 +85,4 @@ class RadioGroup extends PureComponent<Props, RadioGroupState> {
 
 export {RadioGroup}; // For tests
 
-export default asBaseComponent(forwardRef(RadioGroup));
+export default asBaseComponent<RadioGroupPropTypes>(forwardRef(RadioGroup));

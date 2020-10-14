@@ -12,6 +12,10 @@ export declare type ExpandableSectionProps = {
      * should the expandableSection be expanded
      */
     expanded?: boolean;
+    /**
+     * action for when pressing the header of the expandableSection
+     */
+    onPress?: () => void;
 };
 declare function ExpandableSection(props: ExpandableSectionProps): JSX.Element;
 export default ExpandableSection;
