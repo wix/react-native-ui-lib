@@ -14,7 +14,8 @@ export default class KeyboardAwareBase extends Component {
       '_onKeyboardAwareViewLayout',
       '_updateKeyboardAwareViewContentSize',
       'scrollToBottom',
-      'scrollBottomOnNextSizeChange');
+      'scrollBottomOnNextSizeChange',
+      '_onKeyboardAwareViewScroll');
     this.contentSize = undefined;
     this.layoutSize = undefined;
     this.state = {keyboardHeight: 0};
@@ -65,9 +66,12 @@ export default class KeyboardAwareBase extends Component {
     this._updateKeyboardAwareViewContentSize();
   }
 
-  _onKeyboardAwareViewScroll(contentOffset) {
-    this._keyboardAwareView.contentOffset = contentOffset;
+  _onKeyboardAwareViewScroll(event) {
+    this._keyboardAwareView.contentOffset = event.nativeEvent.contentOffset;
     this._updateKeyboardAwareViewContentSize();
+    if (this.props.onScroll) {
+      this.props.onScroll(event);
+    }
   }
 
   _updateKeyboardAwareViewContentSize(width, height) {
