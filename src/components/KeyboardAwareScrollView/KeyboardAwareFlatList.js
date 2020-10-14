@@ -35,6 +35,7 @@ export default class KeyboardAwareFlatList extends KeyboardAwareBase {
         onLayout={this._onKeyboardAwareViewLayout}
         onScroll={this._onKeyboardAwareViewScroll}
         onContentSizeChange={this._updateKeyboardAwareViewContentSize}
+        removeClippedSubviews={false}
       />
     );
   }
