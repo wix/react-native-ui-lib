@@ -1,5 +1,13 @@
-import React, {useMemo} from 'react';
+/**
+ * Known issues with React Native TextInput component
+ * 1. iOS - input inner padding is off in multiline mode
+ * 2. Android - input has minHeight that can't be overridden with zero padding (unlike iOS)
+ * 3. Passing typography preset that includes lineHeight usually cause alignment issues with
+ * other elements (leading/trailing accessories). It usually best to set lineHeight with undefined
+ */
+import React, {ReactElement, useMemo} from 'react';
 import {ViewStyle, TextStyle} from 'react-native';
+import {omit} from 'lodash';
 import {
   asBaseComponent,
   forwardRef,
@@ -11,10 +19,8 @@ import {
   ColorsModifiers
 } from '../../commons/new';
 import View from '../../components/view';
-import {ButtonPropTypes} from '../../components/button';
 import {ValidationMessagePosition, Validator} from './types';
 import Input, {InputProps} from './Input';
-import AccessoryButton from './AccessoryButton';
 import ValidationMessage, {ValidationMessageProps} from './ValidationMessage';
 import Label, {LabelProps} from './Label';
 import FieldContext from './FieldContext';
@@ -34,13 +40,13 @@ type TextFieldProps = MarginModifiers &
   ValidationMessageProps &
   Omit<CharCounterProps, 'maxLength'> & {
     /**
-     * Pass to render a leading button/icon
+     * Pass to render a leading element
      */
-    leadingButton?: ButtonPropTypes;
+    leadingAccessory?: ReactElement;
     /**
-     * Pass to render a trailing button/icon
+     * Pass to render a trailing element
      */
-    trailingButton?: ButtonPropTypes;
+    trailingAccessory?: ReactElement;
     /**
      * Pass to add floating placeholder support
      */
@@ -109,8 +115,8 @@ const TextField = ({
   labelStyle,
   labelProps,
   // Accessory Buttons
-  leadingButton,
-  trailingButton,
+  leadingAccessory,
+  trailingAccessory,
   // Validation
   enableErrors, // TODO: rename to enableValidation
   validationMessage,
@@ -130,6 +136,7 @@ const TextField = ({
   }, [fieldState, props.editable]);
 
   const {margins, paddings, typography, color} = modifiers;
+  const typographyStyle = useMemo(() => omit(typography, 'lineHeight') , [typography]);
   const colorStyle = useMemo(() => color && {color}, [color]);
 
   return (
@@ -152,18 +159,18 @@ const TextField = ({
         )}
         <View style={[paddings, fieldStyle]}>
           <View row centerV>
-            {leadingButton && <AccessoryButton {...leadingButton} />}
+            {leadingAccessory}
             <View flex>
               {floatingPlaceholder && (
                 <FloatingPlaceholder
                   placeholder={placeholder}
-                  floatingPlaceholderStyle={[typography, floatingPlaceholderStyle]}
+                  floatingPlaceholderStyle={[typographyStyle, floatingPlaceholderStyle]}
                   floatingPlaceholderColor={floatingPlaceholderColor}
                 />
               )}
               <Input
                 {...props}
-                style={[typography, colorStyle, props.style]}
+                style={[typographyStyle, colorStyle, props.style]}
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onChangeText={onChangeText}
@@ -171,7 +178,7 @@ const TextField = ({
                 hint={hint}
               />
             </View>
-            {trailingButton && <AccessoryButton {...trailingButton} />}
+            {trailingAccessory}
           </View>
         </View>
         <View row spread>
