@@ -36,7 +36,7 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
     /**
      * A single or multiple validator. Can be a string (required, email) or custom function.
      */
-    validate?: "number" | Function | "url" | "email" | "required" | "price" | Validator[] | undefined;
+    validate?: "number" | Function | "required" | "email" | "url" | "price" | Validator[] | undefined;
     /**
      * Should validate when the TextField mounts
      */
@@ -83,7 +83,7 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
     /**
      * A single or multiple validator. Can be a string (required, email) or custom function.
      */
-    validate?: "number" | Function | "url" | "email" | "required" | "price" | Validator[] | undefined;
+    validate?: "number" | Function | "required" | "email" | "url" | "price" | Validator[] | undefined;
     /**
      * Should validate when the TextField mounts
      */
@@ -130,7 +130,7 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
     /**
      * A single or multiple validator. Can be a string (required, email) or custom function.
      */
-    validate?: "number" | Function | "url" | "email" | "required" | "price" | Validator[] | undefined;
+    validate?: "number" | Function | "required" | "email" | "url" | "price" | Validator[] | undefined;
     /**
      * Should validate when the TextField mounts
      */
@@ -177,7 +177,7 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
     /**
      * A single or multiple validator. Can be a string (required, email) or custom function.
      */
-    validate?: "number" | Function | "url" | "email" | "required" | "price" | Validator[] | undefined;
+    validate?: "number" | Function | "required" | "email" | "url" | "price" | Validator[] | undefined;
     /**
      * Should validate when the TextField mounts
      */

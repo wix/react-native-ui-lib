@@ -32,7 +32,7 @@ export default class TextFieldScreen extends Component {
           iconSource={Assets.icons.demo.search}
           link
           marginL-s2
-          dark10
+          grey10
           onPress={() => {
             this.setState({searching: true});
             setTimeout(() => {
