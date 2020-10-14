@@ -25,6 +25,7 @@ export default class KeyboardAwareFlatList extends KeyboardAwareBase {
   render() {
     return (
       <FlatList
+        scrollEventThrottle={200}
         {...this.props}
         {...this.style}
         contentInset={{bottom: this.state.keyboardHeight}}
@@ -34,7 +35,6 @@ export default class KeyboardAwareFlatList extends KeyboardAwareBase {
         onLayout={this._onKeyboardAwareViewLayout}
         onScroll={this._onKeyboardAwareViewScroll}
         onContentSizeChange={this._updateKeyboardAwareViewContentSize}
-        scrollEventThrottle={200}
       />
     );
   }
