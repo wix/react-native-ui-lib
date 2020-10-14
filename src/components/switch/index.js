@@ -107,7 +107,7 @@ class Switch extends BaseComponent {
     const {disabled} = this.getThemeProps();
 
     if (!disabled) {
-      _.invoke(this.props, 'onValueChange', !this.props.value);
+      _.invoke(this.getThemeProps(), 'onValueChange', !this.props.value);
     }
   };
 

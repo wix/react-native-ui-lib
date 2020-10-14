@@ -54,14 +54,14 @@ class ExpandableSectionScreen extends PureComponent {
 
   getHeaderElement() {
     return (
-      <TouchableOpacity onPress={() => this.onExpand()}>
+      <View>
         <Text margin-10 dark10 text60>
           ExpandableSection's sectionHeader
         </Text>
         <View style={styles.header}>
           <Image style={styles.icon} source={!this.state.expanded ? chevronUp : chevronDown} />
         </View>
-      </TouchableOpacity>
+      </View>
     );
   }
 
@@ -84,7 +84,7 @@ class ExpandableSectionScreen extends PureComponent {
 
     return (
       <ScrollView>
-        <ExpandableSection expanded={expanded} sectionHeader={this.getHeaderElement()}>
+        <ExpandableSection expanded={expanded} sectionHeader={this.getHeaderElement()} onPress={() => this.onExpand()}>
           {this.getBodyElement()}
         </ExpandableSection>
         <ListItem>
