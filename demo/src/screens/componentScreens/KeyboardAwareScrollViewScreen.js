@@ -86,7 +86,7 @@ export default class KeyboardAwareScrollViewScreen extends Component {
 
   keyExtractor = (item) => item.placeholder;
 
-  renderKeyboardAwareListView() {
+  renderKeyboardAwareFlatList() {
     return (
       <KeyboardAwareFlatList
         showsVerticalScrollIndicator={false}
@@ -149,7 +149,7 @@ export default class KeyboardAwareScrollViewScreen extends Component {
         {renderBooleanOption.call(this, switchText, 'isFlatList')}
         <View height={40}/>
         {isFlatList
-          ? this.renderKeyboardAwareListView()
+          ? this.renderKeyboardAwareFlatList()
           : this.renderKeyboardAwareScrollView()}
       </View>
     );
