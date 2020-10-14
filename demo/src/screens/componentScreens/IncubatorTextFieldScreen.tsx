@@ -68,7 +68,7 @@ export default class TextFieldScreen extends Component {
             />
           </View>
           <Text h3 blue50 marginV-s4>
-            Leading/Trailing Button
+            Accessories
           </Text>
 
           <TextField
