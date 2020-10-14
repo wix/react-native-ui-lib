@@ -174,11 +174,8 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
   render() {
     const {selectedIcon, color, iconColor, disabled, testID, label, labelStyle, style, ...others} = this.props;
     return (
-      <TouchableOpacity row onPress={this.onPress}
-      >
-        {/*
-          // @ts-ignore */}
-        <TouchableOpacity
+      <TouchableOpacity row onPress={this.onPress}>
+        <Animated.View
           {...this.getAccessibilityProps()}
           activeOpacity={1}
           testID={testID}
@@ -205,7 +202,7 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
               />
             </Animated.View>
           }
-        </TouchableOpacity>
+        </Animated.View>
         {label && <Text style={labelStyle}>{label}</Text>}
       </TouchableOpacity>
     );
