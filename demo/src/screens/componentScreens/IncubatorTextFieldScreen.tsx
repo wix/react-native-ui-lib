@@ -1,8 +1,9 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {TextInput, StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
-import {Assets, Colors, Spacings, Typography, View, Text, Button, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
+import {Assets, Colors, Spacings, Typography, View, Text, Button, Keyboard, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
 const {TextField} = Incubator;
+const {KeyboardAwareInsetsView} = Keyboard;
 
 export default class TextFieldScreen extends Component {
   input = React.createRef<TextInput>();
@@ -194,6 +195,7 @@ export default class TextFieldScreen extends Component {
             fieldStyle={styles.withUnderline}
           />
         </View>
+        <KeyboardAwareInsetsView/>
       </ScrollView>
     );
   }
