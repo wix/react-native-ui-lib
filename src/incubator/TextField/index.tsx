@@ -132,6 +132,7 @@ const TextField = (
           labelColor={labelColor}
           labelStyle={labelStyle}
           labelProps={labelProps}
+          floatingPlaceholder={floatingPlaceholder}
           validationMessagePosition={validationMessagePosition}
         />
         {validationMessagePosition === ValidationMessagePosition.TOP && (
