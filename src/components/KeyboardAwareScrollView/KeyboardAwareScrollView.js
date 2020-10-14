@@ -31,18 +31,14 @@ export default class KeyboardAwareScrollView extends KeyboardAwareBase {
         ref={r => {
           this._keyboardAwareView = r;
         }}
-        onLayout={layoutEvent => {
-          this._onKeyboardAwareViewLayout(layoutEvent.nativeEvent.layout);
-        }}
+        onLayout={this._onKeyboardAwareViewLayout}
         onScroll={event => {
           this._onKeyboardAwareViewScroll(event.nativeEvent.contentOffset);
           if (this.props.onScroll) {
             this.props.onScroll(event);
           }
         }}
-        onContentSizeChange={() => {
-          this._updateKeyboardAwareViewContentSize();
-        }}
+        onContentSizeChange={this._updateKeyboardAwareViewContentSize}
         scrollEventThrottle={200}
       />
     );

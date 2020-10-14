@@ -1,7 +1,7 @@
+import _ from 'lodash';
 import {Component} from 'react';
 import PropTypes from 'prop-types';
-import ReactNative, {DeviceEventEmitter, Keyboard, NativeModules} from 'react-native';
-const ScrollViewManager = NativeModules.ScrollViewManager;
+import ReactNative, {DeviceEventEmitter, Keyboard} from 'react-native';
 
 export default class KeyboardAwareBase extends Component {
   constructor(props) {
@@ -12,8 +12,11 @@ export default class KeyboardAwareBase extends Component {
       '_removeKeyboardListeners',
       '_scrollToFocusedTextInput',
       '_onKeyboardAwareViewLayout',
+      '_updateKeyboardAwareViewContentSize',
       'scrollToBottom',
       'scrollBottomOnNextSizeChange');
+    this.contentSize = undefined;
+    this.layoutSize = undefined;
     this.state = {keyboardHeight: 0};
     this._addKeyboardEventListeners();
   }
@@ -55,8 +58,9 @@ export default class KeyboardAwareBase extends Component {
     }
   }
 
-  _onKeyboardAwareViewLayout(layout) {
-    this._keyboardAwareView.layout = layout;
+  _onKeyboardAwareViewLayout(layoutEvent) {
+    const layout = layoutEvent.nativeEvent.layout;
+    this.layoutSize = layout;
     this._keyboardAwareView.contentOffset = {x: 0, y: 0};
     this._updateKeyboardAwareViewContentSize();
   }
@@ -66,17 +70,22 @@ export default class KeyboardAwareBase extends Component {
     this._updateKeyboardAwareViewContentSize();
   }
 
-  _updateKeyboardAwareViewContentSize() {
-    if (ScrollViewManager?.getContentSize) {
-      ScrollViewManager.getContentSize(ReactNative.findNodeHandle(this._keyboardAwareView), res => {
-        if (this._keyboardAwareView) {
-          this._keyboardAwareView.contentSize = res;
-          if (this.state.scrollBottomOnNextSizeChange) {
-            this.scrollToBottom();
-            this.setState({scrollBottomOnNextSizeChange: false});
-          }
-        }
-      });
+  _updateKeyboardAwareViewContentSize(width, height) {
+    let heightHasChanged = false;
+    if (width && height) {
+      if (this.contentSize && this.contentSize.height !== height) { // for FlatList
+        heightHasChanged = true;
+      }
+
+      this.contentSize = {width, height};
+    }
+
+    if (this._keyboardAwareView) {
+      if (this.state.scrollBottomOnNextSizeChange ||
+          (this.props.startScrolledToBottom && heightHasChanged)) {
+        this.scrollToBottom();
+        this.setState({scrollBottomOnNextSizeChange: false});
+      }
     }
   }
 
@@ -137,24 +146,21 @@ export default class KeyboardAwareBase extends Component {
 
   scrollToBottom(scrollAnimated = true) {
     if (this._keyboardAwareView) {
-      if (!this._keyboardAwareView.contentSize) {
+      if (!this.contentSize || !this.layoutSize) {
         setTimeout(() => this.scrollToBottom(scrollAnimated), 50);
         return;
       }
 
-      const bottomYOffset =
-        this._keyboardAwareView.contentSize.height -
-        this._keyboardAwareView.layout.height +
-        this._keyboardAwareView.props.contentInset.bottom;
-      this.scrollTo({x: 0, y: bottomYOffset, animated: scrollAnimated});
+      this._keyboardAwareView.scrollToEnd({animated: scrollAnimated});
     }
   }
+
   scrollTo(options) {
     if (this._keyboardAwareView) {
       if (this._keyboardAwareView.scrollTo) {
         this._keyboardAwareView.scrollTo(options);
-      } else if (this._keyboardAwareView.scrollToOffset) { // scroll to start in FlatList
-        this._keyboardAwareView.scrollToOffset({...options, offset: 0});
+      } else if (this._keyboardAwareView.scrollToOffset) {
+        this._keyboardAwareView.scrollToOffset({...options, offset: _.get(options, 'y', 0)});
       }
     }
   }
