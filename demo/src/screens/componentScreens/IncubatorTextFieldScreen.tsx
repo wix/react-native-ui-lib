@@ -26,7 +26,7 @@ export default class TextFieldScreen extends Component {
   renderTrailingAccessory() {
     const {searching} = this.state;
     if (searching) {
-      return <ActivityIndicator />;
+      return <ActivityIndicator color={Colors.grey10} />;
     } else {
       return (
         <Button
