@@ -136,7 +136,10 @@ const constants = {
   /* Accessibility */
   get accessibility() {
     return accessibility;
-  }
+  },
+  /* Keyboard */
+  backspaceKey: 'Backspace',
+  enterKey: 'Enter'
 };
 
 setStatusBarHeight();
