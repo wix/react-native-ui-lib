@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {TextStyle} from 'react-native';
+import {StyleSheet, TextStyle} from 'react-native';
 import {Colors} from '../../style';
 import Text, {TextPropTypes} from '../../components/text';
 import {ColorType, ValidationMessagePosition} from './types';
@@ -24,6 +24,7 @@ export interface LabelProps {
    */
   labelProps?: TextPropTypes;
   validationMessagePosition?: ValidationMessagePosition;
+  floatingPlaceholder?: boolean;
 }
 
 const Label = ({
@@ -31,19 +32,18 @@ const Label = ({
   labelColor = Colors.grey10,
   labelStyle,
   labelProps,
-  validationMessagePosition
+  validationMessagePosition,
+  floatingPlaceholder
 }: LabelProps) => {
   const context = useContext(FieldContext);
 
-  const forceHidingLabel =
-    !context.isValid &&
-    validationMessagePosition === ValidationMessagePosition.TOP;
+  const forceHidingLabel = !context.isValid && validationMessagePosition === ValidationMessagePosition.TOP;
 
-  if (label && !forceHidingLabel) {
+  if ((label || floatingPlaceholder) && !forceHidingLabel) {
     return (
       <Text
         color={getColorByState(labelColor, context)}
-        style={labelStyle}
+        style={[labelStyle, floatingPlaceholder && styles.dummyPlaceholder]}
         {...labelProps}
       >
         {label}
@@ -53,6 +53,12 @@ const Label = ({
 
   return null;
 };
+
+const styles = StyleSheet.create({
+  dummyPlaceholder: {
+    opacity: 0
+  }
+});
 
 Label.displayName = 'Incubator.TextField';
 export default Label;
