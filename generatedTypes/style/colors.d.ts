@@ -45,11 +45,7 @@ declare const colorObject: Colors & {
     dark80: string;
     grey10: string;
     grey20: string;
-    grey30: string; /**
-     * Load custom set of colors
-     * arguments:
-     * colors - map of keys and colors values e.g {dark10: '#20303C', dark20: '#43515C'}
-     */
+    grey30: string;
     grey40: string;
     grey50: string;
     grey60: string;
@@ -65,6 +61,14 @@ declare const colorObject: Colors & {
     blue80: string;
     cyan10: string;
     cyan20: string;
+    /**
+     * Add alpha to hex or rgb color
+     * arguments:
+     * p1 - hex color / R part of RGB
+     * p2 - opacity / G part of RGB
+     * p3 - B part of RGB
+     * p4 - opacity
+     */
     cyan30: string;
     cyan40: string;
     cyan50: string;
