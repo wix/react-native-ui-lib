@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Alert, StyleSheet, ScrollView, FlatList} from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {AnimatableManager, ThemeManager, Colors, View, Button, ListItem, Text} from 'react-native-ui-lib';//eslint-disable-line
+import {AnimatableManager, Colors, View, Button, ListItem, Text} from 'react-native-ui-lib'; //eslint-disable-line
 
 
 const listItems = [
@@ -31,7 +31,7 @@ export default class ListAnimationsScreen extends Component {
       entranceAnimation: true,
       addingAnimation: false,
       animation: animationType.ENTRANCE,
-      counter: 0,
+      counter: 0
     };
   }
 
@@ -53,12 +53,14 @@ export default class ListAnimationsScreen extends Component {
   addItem() {
     const {items, counter} = this.state;
     const itemsCopy = [...items];
+
     itemsCopy.splice(counter, 0, {id: `${itemsCopy.length}-new`, text: 'Item'});
     this.setState({items: itemsCopy, animation: animationType.ADDING});
   }
 
   renderItem(item, index) {
     const {animation, counter} = this.state;
+
     let animationProps;
     switch (animation) {
       case animationType.FADE_IN:
@@ -98,17 +100,17 @@ export default class ListAnimationsScreen extends Component {
         </View>
         <View row center>
           <Button outline size='medium' margin-10 label={`Add at index: ${counter}`} onPress={() => this.addItem()}/>
-          <Button 
-            round outline size='large' label='+' 
+          <Button
+            round outline size='large' label='+'
             onPress={() => this.setState({counter: counter < items.length ? counter + 1 : counter})}
           />
-          <Button 
-            round outline size='large' margin-10 label='-' 
+          <Button
+            round outline size='large' margin-10 label='-'
             onPress={() => this.setState({counter: counter !== 0 ? counter - 1 : 0})}
           />
         </View>
         <ScrollView style={{flex: 1}}>
-          {visible && 
+          {visible &&
           <FlatList
             data={items}
             renderItem={({item, index}) => this.renderItem(item, index)}
@@ -125,6 +127,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: Colors.dark60,
     borderBottomWidth: 2,
-    borderColor: ThemeManager.dividerColor,
-  },
+    borderColor: Colors.dark70
+  }
 });

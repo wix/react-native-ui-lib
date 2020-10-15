@@ -1,15 +1,16 @@
 // TODO: deprecate passing an an object as a value, use label and value props separately
-import React from 'react';
-import PropTypes from 'prop-types';
-import {StyleSheet} from 'react-native';
 import _ from 'lodash';
-import {Colors, Typography, ThemeManager} from '../../style';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {StyleSheet} from 'react-native';
+import {Colors, Typography} from '../../style';
 import {BaseComponent} from '../../commons';
 import Assets from '../../assets';
 import View from '../view';
-import Text from '../text';
-import Image from '../image';
 import TouchableOpacity from '../touchableOpacity';
+import Image from '../image';
+import Text from '../text';
+
 
 /**
  * @description: Picker.Item, for configuring the Picker's selectable options
@@ -19,6 +20,7 @@ import TouchableOpacity from '../touchableOpacity';
  */
 class PickerItem extends BaseComponent {
   static displayName = 'Picker.Item';
+
   static propTypes = {
     /**
      * [DEPRECATED - please include the label in the value prop] The item label
@@ -87,6 +89,7 @@ class PickerItem extends BaseComponent {
 
   getLabel() {
     const {value, label} = this.props;
+
     if (_.isObject(value)) {
       return _.invoke(this.props, 'getItemLabel', value) || _.get(value, 'label');
     }
@@ -98,8 +101,9 @@ class PickerItem extends BaseComponent {
       isSelected,
       disabled,
       selectedIcon = Assets.icons.check,
-      selectedIconColor = ThemeManager.primaryColor
+      selectedIconColor = Colors.primary
     } = this.props;
+
     if (isSelected) {
       return <Image source={selectedIcon} tintColor={disabled ? Colors.dark60 : selectedIconColor}/>;
     }
@@ -107,6 +111,7 @@ class PickerItem extends BaseComponent {
 
   renderItem() {
     const {disabled} = this.props;
+
     return (
       <View style={this.styles.container} flex row spread centerV>
         <Text numberOfLines={1} style={[this.styles.labelText, disabled && this.styles.labelTextDisabled]}>

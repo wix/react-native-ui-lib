@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactNative, {NativeModules, StyleSheet, ViewPropTypes, Image, DeviceEventEmitter} from 'react-native';
 import {Constants} from '../../helpers';
-import {Colors, BorderRadiuses, ThemeManager, Typography} from '../../style';
+import {Colors, BorderRadiuses, Typography} from '../../style';
 import Assets from '../../assets';
 import {BaseComponent} from '../../commons';
 import {LogService} from '../../services';
@@ -112,6 +112,7 @@ export default class TagsInput extends BaseComponent {
   componentDidMount() {
     if (Constants.isAndroid) {
       const textInputHandle = ReactNative.findNodeHandle(this.input);
+
       if (textInputHandle && NativeModules.TextInputDelKeyHandler) {
         NativeModules.TextInputDelKeyHandler.register(textInputHandle);
         DeviceEventEmitter.addListener('onBackspacePress', this.onKeyPress);
@@ -146,6 +147,7 @@ export default class TagsInput extends BaseComponent {
 
     const newTag = _.isFunction(onCreateTag) ? onCreateTag(value) : value;
     const newTags = [...tags, newTag];
+
     this.setState({
       value: '',
       tags: newTags
@@ -382,7 +384,7 @@ const basicIconStyle = {
 const styles = StyleSheet.create({
   withUnderline: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: ThemeManager.dividerColor
+    borderColor: Colors.dark70
   },
   tagsList: {
     flexDirection: 'row',

@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {AccessibilityInfo, findNodeHandle, StyleSheet, Animated, Easing, ActivityIndicator} from 'react-native';
 import {PureBaseComponent} from '../../commons';
-import View from '../view';
-import Text from '../text';
-import Button from '../button';
-import Image from '../image';
-import {Colors, Typography, BorderRadiuses, ThemeManager} from '../../style';
+import {Colors, Typography, BorderRadiuses} from '../../style';
 import Assets from '../../assets';
+import View from '../view';
+import Image from '../image';
+import Button from '../button';
+import Text from '../text';
 
 
 // Create animated view base on uilib view for the safeArea support
@@ -143,6 +143,7 @@ export default class Toast extends PureBaseComponent {
       easing: Easing.bezier(0.215, 0.61, 0.355, 1),
       useNativeDriver: true
     }).start(this.onAnimationEnd);
+
     this.setAnimationStatus(true);
   }
 
@@ -249,7 +250,7 @@ export default class Toast extends PureBaseComponent {
     }
 
     if (action) {
-      const actionBg = backgroundColor || Colors.rgba(ThemeManager.primaryColor, 0);
+      const actionBg = backgroundColor || Colors.rgba(Colors.primary, 0);
 
       return (
         <Button
@@ -315,7 +316,7 @@ export default class Toast extends PureBaseComponent {
       return null;
     }
 
-    const bg = backgroundColor || ThemeManager.primaryColor;
+    const bg = backgroundColor || Colors.primary;
     const isTop = position === 'top';
     const positionMultiplier = isTop ? -1 : 1;
     const translateY = this.toastAnim.interpolate({
