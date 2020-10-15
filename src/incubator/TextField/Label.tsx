@@ -43,7 +43,7 @@ const Label = ({
     return (
       <Text
         color={getColorByState(labelColor, context)}
-        style={[labelStyle, floatingPlaceholder && styles.dummyPlaceholder]}
+        style={[styles.label, labelStyle, floatingPlaceholder && styles.dummyPlaceholder]}
         {...labelProps}
       >
         {label}
@@ -55,6 +55,9 @@ const Label = ({
 };
 
 const styles = StyleSheet.create({
+  label: {
+    minHeight: 20
+  },
   dummyPlaceholder: {
     opacity: 0
   }
