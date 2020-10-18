@@ -27,7 +27,7 @@ export class Typography {
     return this.keysPattern;
   }
 
-  generateKeysPattern() {
+  generateKeysPattern(): RegExp {
     return new RegExp(_.chain(this)
       .keys()
       .map(key => [`${key}`])

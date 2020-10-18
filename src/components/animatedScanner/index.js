@@ -1,10 +1,11 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Animated} from 'react-native';
+import {ViewPropTypes, StyleSheet, Animated} from 'react-native';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
+
 
 // TODO: add finisher animation (check icon animation or something)
 /**
@@ -40,7 +41,11 @@ export default class AnimatedScanner extends BaseComponent {
     /**
      * should hide the scanner line
      */
-    hideScannerLine: PropTypes.bool
+    hideScannerLine: PropTypes.bool,
+    /**
+     * the container style
+     */
+    containerStyle: ViewPropTypes.style
   };
 
   static defaultProps = {
@@ -59,6 +64,7 @@ export default class AnimatedScanner extends BaseComponent {
 
   componentDidMount() {
     const {progress, duration} = this.props;
+
     if (progress > 0) {
       this.animate(progress, duration);
     }
@@ -70,6 +76,7 @@ export default class AnimatedScanner extends BaseComponent {
 
   componentDidUpdate(prevProps) {
     const {progress, duration} = this.props;
+
     if (prevProps.progress !== progress) {
       this.animate(progress, duration);
     }
@@ -81,6 +88,7 @@ export default class AnimatedScanner extends BaseComponent {
 
   animate(toValue, duration) {
     const {animatedProgress} = this.state;
+
     Animated.timing(animatedProgress, {
       toValue,
       duration,
@@ -88,19 +96,18 @@ export default class AnimatedScanner extends BaseComponent {
     }).start(({finished}) => {
       if (finished) {
         const isDone = toValue >= 100;
-        this.setState({
-          isDone
-        });
+        this.setState({isDone});
         _.invoke(this.props, 'onBreakpoint', {progress: toValue, isDone});
       }
     });
   }
 
   render() {
-    const {opacity, backgroundColor, hideScannerLine, style} = this.props;
+    const {opacity, backgroundColor, hideScannerLine, style, containerStyle} = this.props;
     const {isDone, animatedProgress} = this.state;
+
     return (
-      <View style={{...StyleSheet.absoluteFillObject}}>
+      <View style={[{...StyleSheet.absoluteFillObject}, containerStyle]}>
         <Animated.View
           style={[
             this.styles.container,

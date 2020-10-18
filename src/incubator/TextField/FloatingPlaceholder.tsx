@@ -1,12 +1,5 @@
-import React, {
-  useContext,
-  useEffect,
-  useRef,
-  useCallback,
-  useState,
-  useMemo
-} from 'react';
-import {Animated, LayoutChangeEvent, StyleSheet, Platform, TextStyle} from 'react-native';
+import React, {useContext, useEffect, useRef, useCallback, useState, useMemo} from 'react';
+import {Animated, LayoutChangeEvent, StyleSheet, Platform, TextStyle, StyleProp} from 'react-native';
 import {ColorType} from './types';
 import {getColorByState} from './Presenter';
 import {Colors} from '../../style';
@@ -27,19 +20,22 @@ export interface FloatingPlaceholderProps {
   /**
    * Custom style to pass to the floating placeholder
    */
-  floatingPlaceholderStyle?: TextStyle;
+  floatingPlaceholderStyle?: StyleProp<TextStyle>;
 }
 
 const FLOATING_PLACEHOLDER_SCALE = 0.875;
 
-const FloatingPlaceholder = ({placeholder, floatingPlaceholderColor = Colors.grey40, floatingPlaceholderStyle}: FloatingPlaceholderProps) => {
+const FloatingPlaceholder = ({
+  placeholder,
+  floatingPlaceholderColor = Colors.grey40,
+  floatingPlaceholderStyle
+}: FloatingPlaceholderProps) => {
   const context = useContext(FieldContext);
   const [placeholderOffset, setPlaceholderOffset] = useState({
     top: 0,
     left: 0
   });
-  const animation = useRef(new Animated.Value(Number(context.isFocused)))
-    .current;
+  const animation = useRef(new Animated.Value(Number(context.isFocused))).current;
 
   const animatedStyle = useMemo(() => {
     return {
@@ -97,10 +93,7 @@ const styles = StyleSheet.create({
   }
 });
 
-function interpolateValue(
-  animatedValue: Animated.Value,
-  outputRange: number[]
-) {
+function interpolateValue(animatedValue: Animated.Value, outputRange: number[]) {
   return animatedValue.interpolate({
     inputRange: [0, 1],
     outputRange

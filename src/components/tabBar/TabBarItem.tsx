@@ -215,6 +215,7 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
           {badge && (
             <Badge
               backgroundColor={Colors.red30}
+              // @ts-ignore
               size={'small'}
               {...badge}
               containerStyle={[this.styles.badge, badge.containerStyle]}

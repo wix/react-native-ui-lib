@@ -1,17 +1,9 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {TextInput, StyleSheet, ScrollView} from 'react-native';
-import {
-  Assets,
-  Colors,
-  Spacings,
-  Typography,
-  View,
-  Text,
-  Button,
-  Incubator
-} from 'react-native-ui-lib'; //eslint-disable-line
+import {TextInput, StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
+import {Assets, Colors, Spacings, Typography, View, Text, Button, Keyboard, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
 const {TextField} = Incubator;
+const {KeyboardAwareInsetsView} = Keyboard;
 
 export default class TextFieldScreen extends Component {
   input = React.createRef<TextInput>();
@@ -19,7 +11,8 @@ export default class TextFieldScreen extends Component {
   state = {
     errorPosition: TextField.validationMessagePositions.TOP,
     shouldDisable: false,
-    value: 'Initial Value'
+    value: 'Initial Value',
+    searching: false
   };
 
   componentDidMount() {
@@ -28,6 +21,28 @@ export default class TextFieldScreen extends Component {
 
   resetFieldValue = () => {
     this.input2.current?.clear();
+  };
+
+  renderTrailingAccessory() {
+    const {searching} = this.state;
+    if (searching) {
+      return <ActivityIndicator color={Colors.grey10} />;
+    } else {
+      return (
+        <Button
+          iconSource={Assets.icons.demo.search}
+          link
+          marginL-s2
+          grey10
+          onPress={() => {
+            this.setState({searching: true});
+            setTimeout(() => {
+              this.setState({searching: false});
+            }, 1200);
+          }}
+        />
+      );
+    }
   }
 
   render() {
@@ -39,11 +54,7 @@ export default class TextFieldScreen extends Component {
           <Text h3 blue50 marginV-s4>
             Default
           </Text>
-          <TextField
-            ref={this.input}
-            label="Name"
-            placeholder="Enter first and last name"
-          />
+          <TextField ref={this.input} label="Name" placeholder="Enter full name" />
 
           <Text h3 blue50 marginV-s4>
             Static vs Floating Placeholder
@@ -68,15 +79,42 @@ export default class TextFieldScreen extends Component {
             />
           </View>
           <Text h3 blue50 marginV-s4>
-            Leading/Trailing Button
+            Accessories
           </Text>
 
           <TextField
             ref={this.input2}
-            placeholder="Enter text..."
-            leadingButton={{iconSource: Assets.icons.demo.search}}
-            trailingButton={{iconSource: Assets.icons.demo.refresh, onPress: this.resetFieldValue}}
+            placeholder="Enter search term"
+            text70
+            trailingAccessory={this.renderTrailingAccessory()}
             fieldStyle={styles.withUnderline}
+            marginB-s4
+          />
+
+          <TextField
+            ref={this.input2}
+            placeholder="Enter URL"
+            text70
+            leadingAccessory={
+              <Text text70 blue30>
+                Https://
+              </Text>
+            }
+            fieldStyle={styles.withUnderline}
+            marginB-s4
+          />
+
+          <TextField
+            ref={this.input2}
+            placeholder="Enter weight"
+            text70
+            trailingAccessory={
+              <Text text70 dark30>
+                Kg.
+              </Text>
+            }
+            fieldStyle={styles.withUnderline}
+            keyboardType="numeric"
           />
 
           <View row marginV-s4 spread>
@@ -99,12 +137,12 @@ export default class TextFieldScreen extends Component {
 
           <TextField
             value={this.state.value}
-            onChangeText={(value) => this.setState({value})}
+            onChangeText={value => this.setState({value})}
             label="Email"
             placeholder="Enter email"
             enableErrors
             validationMessage={['Email is required', 'Email is invalid']}
-            validationMessageStyle={Typography.text90R}
+            // validationMessageStyle={Typography.text90R}
             validationMessagePosition={errorPosition}
             validate={['required', 'email']}
             validateOnChange
@@ -118,8 +156,8 @@ export default class TextFieldScreen extends Component {
               Colors By State
             </Text>
             <Button
-              label={shouldDisable ? 'Enable' : 'Disable'} 
-              onPress={() => this.setState({shouldDisable: !shouldDisable})} 
+              label={shouldDisable ? 'Enable' : 'Disable'}
+              onPress={() => this.setState({shouldDisable: !shouldDisable})}
               size={Button.sizes.xSmall}
             />
           </View>
@@ -157,6 +195,7 @@ export default class TextFieldScreen extends Component {
             fieldStyle={styles.withUnderline}
           />
         </View>
+        <KeyboardAwareInsetsView/>
       </ScrollView>
     );
   }
