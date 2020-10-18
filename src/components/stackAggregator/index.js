@@ -141,11 +141,11 @@ export default class StackAggregator extends PureBaseComponent {
           useNativeDriver: true
         })
       ]).start(resolve);
-    })
+    });
   }
 
   animateCards() {    
-    const promises = []
+    const promises = [];
     for (let index = 0; index < this.itemsCount; index++) {
       const newScale = this.getItemScale(index);
 
@@ -156,21 +156,21 @@ export default class StackAggregator extends PureBaseComponent {
             easing: this.easeOut,
             duration: DURATION,
             useNativeDriver: true
-          }).start(resolve)
+          }).start(resolve);
         })
-      )  
+      );
     }
-    return Promise.all(promises)
+    return Promise.all(promises);
   }
 
   close = () => {
     this.setState({collapsed: true}, async () => {
       _.invoke(this.props, 'onCollapseWillChange', true);
       if (this.props.onCollapseChanged) {
-        await this.animate()
-        this.props.onCollapseChanged(true)
+        await this.animate();
+        this.props.onCollapseChanged(true);
       } else {
-        this.animate()
+        this.animate();
       }
     });
   }
@@ -179,10 +179,10 @@ export default class StackAggregator extends PureBaseComponent {
     this.setState({collapsed: false}, async () => {
       _.invoke(this.props, 'onCollapseWillChange', false);
       if (this.props.onCollapseChanged) {
-        await this.animate()
-        this.props.onCollapseChanged(false)
+        await this.animate();
+        this.props.onCollapseChanged(false);
       } else {
-        this.animate()
+        this.animate();
       }
     });
   }

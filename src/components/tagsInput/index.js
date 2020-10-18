@@ -268,10 +268,7 @@ export default class TagsInput extends BaseComponent {
 
     if (tag.invalid) {
       return (
-        <View
-          key={index}
-          style={[styles.inValidTag, tagStyle, shouldMarkTag && styles.inValidMarkedTag]}
-        >
+        <View key={index} style={[styles.inValidTag, tagStyle, shouldMarkTag && styles.inValidMarkedTag]}>
           {this.renderLabel(tag, shouldMarkTag)}
         </View>
       );
