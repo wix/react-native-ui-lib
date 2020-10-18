@@ -20,12 +20,12 @@ isTablet = Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth, sc
 
 function setStatusBarHeight() {
   const {StatusBarManager} = NativeModules;
-  statusBarHeight = 0; // so there will be a value for any case
-  statusBarHeight = isIOS ? 20 : StatusBarManager.HEIGHT;
-  if (isIOS) {
-    // override guesstimate height with the actual height from StatusBarManager
-    StatusBarManager.getHeight((data: any) => (statusBarHeight = data.height));
-  }
+  statusBarHeight = StatusBarManager.HEIGHT || 0; // So there will be a value for any case
+  // statusBarHeight = isIOS ? 20 : StatusBarManager.HEIGHT;
+  // if (isIOS) {
+  //   // override guesstimate height with the actual height from StatusBarManager
+  //   StatusBarManager.getHeight((data: any) => (statusBarHeight = data.height));
+  // }
 }
 
 function getAspectRatio() {
