@@ -2,12 +2,12 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {Alert, StyleSheet} from 'react-native';
 import {Colors, Typography, View, ActionBar, PageControl, Carousel} from 'react-native-ui-lib'; //eslint-disable-line
-import cameraSelected from '../../assets/icons/cameraSelected.png';
-import video from '../../assets/icons/video.png';
-import tags from '../../assets/icons/tags.png';
-import collections from '../../assets/icons/collections.png';
-import richText from '../../assets/icons/richText.png';
 
+const cameraSelected = require('../../assets/icons/cameraSelected.png');
+const video = require('../../assets/icons/video.png');
+const tags = require('../../assets/icons/tags.png');
+const collections = require('../../assets/icons/collections.png');
+const richText = require('../../assets/icons/richText.png');
 
 export default class ActionBarScreen extends Component {
 
