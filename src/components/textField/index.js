@@ -681,10 +681,11 @@ export default class TextField extends BaseInput {
           {this.renderPrefix()}
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
-          {this.renderRightButton()}
-          {this.renderRightIcon()}
           {expandable && this.renderExpandableModal()}
         </View>
+
+        {this.renderRightButton()}
+        {this.renderRightIcon()}
 
         {!_.isUndefined(this.getErrorMessage()) && useTopErrors && (
           <View
