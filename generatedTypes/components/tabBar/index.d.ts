@@ -2,6 +2,7 @@ import React from 'react';
 import { Animated, ViewStyle } from 'react-native';
 import { BaseComponentInjectedProps } from '../../commons/new';
 import { ViewPropTypes } from '../view';
+import TabBarItem from './TabBarItem';
 export declare type TabBarProps = BaseComponentInjectedProps & ViewPropTypes & {
     /**
      * Show Tab Bar bottom shadow
@@ -83,27 +84,6 @@ declare const _default: React.ComponentClass<BaseComponentInjectedProps & ViewPr
 } & {
     useCustomTheme?: boolean | undefined;
 }, any> & {
-    Item: React.ComponentClass<BaseComponentInjectedProps & {
-        icon?: number | undefined;
-        iconColor?: string | undefined;
-        iconSelectedColor?: string | undefined;
-        label?: string | undefined;
-        labelStyle?: import("react-native").TextStyle | undefined;
-        badge?: import("../badge").BadgeProps | undefined;
-        maxLines?: number | undefined;
-        selectedLabelStyle: import("react-native").TextStyle;
-        selected?: boolean | undefined;
-        showDivider?: boolean | undefined;
-        width?: number | undefined;
-        ignore?: boolean | undefined;
-        onPress?: ((props: any) => void) | undefined;
-        uppercase?: boolean | undefined;
-        activeBackgroundColor?: string | undefined;
-        indicatorStyle?: ViewStyle | undefined;
-        style?: ViewStyle | undefined;
-        testID?: string | undefined;
-    } & {
-        useCustomTheme?: boolean | undefined;
-    }, any> & import("./TabBarItem").State;
+    Item: typeof TabBarItem;
 };
 export default _default;
