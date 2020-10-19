@@ -1,6 +1,3 @@
-// TODO: deprecate value allowing passing an object, separate between label and value props
-// TODO: extract picker labels from children in order to obtain the correct label to render (similar to NativePicker)
-
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
@@ -160,6 +157,9 @@ class Picker extends PureComponent {
     // if (props.useNativePicker && _.isPlainObject(props.value)) {
     //   console.warn('UILib Picker: don\'t use object as value for native picker, use either string or a number');
     // }
+    if (_.isPlainObject(props.value)) {
+      console.warn('UILib Picker will stop supporting passing object as value in the next major version. Please use either string or a number as value');
+    }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
