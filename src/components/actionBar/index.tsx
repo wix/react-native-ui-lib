@@ -17,37 +17,35 @@ export type ActionBarProps = {
     /**
      * action bar height
      */
-    height?: number,
+    height?: number;
     /**
      * action bar background color
      */
-    backgroundColor?: string,
+    backgroundColor?: string;
     /**
      * actions for the action bar
      */
-    actions: ButtonPropTypes[],
+    actions: ButtonPropTypes[];
     /**
      * should action be equally centered
      */
-    centered?: boolean,
+    centered?: boolean;
     /**
      * use safe area, in case action bar attached to the bottom (default: true)
      */
-    useSafeArea?: boolean,
+    useSafeArea?: boolean;
     /**
      * keep the action bar position relative instead of it absolute position
      */
-    keepRelative?: boolean,
+    keepRelative?: boolean;
     /**
      * style the action bar
      */
-    style?: ViewStyle ;
+    style?: ViewStyle;
 };
 
 class ActionBar extends Component<ActionBarProps> {
   static displayName = 'ActionBar';
-  static propTypes = {
-  };
 
   static defaultProps = {
     height: 48,
@@ -59,10 +57,8 @@ class ActionBar extends Component<ActionBarProps> {
     super(props);
   }
 
-
   styles = createStyles(this.props);
   
-
   getAlignment(actionIndex: number) {
     const {actions, centered} = this.props;
     const first = actionIndex === 0;
