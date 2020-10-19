@@ -354,7 +354,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
     /**
      * the badge size (default, small)
      */
-    size: number | "small" | "default" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "large";
+    size: number | "small" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "default" | "large";
     /**
      * Press handler
      */
