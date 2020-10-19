@@ -1,6 +1,3 @@
-// TODO: deprecate value allowing passing an object, separate between label and value props
-// TODO: extract picker labels from children in order to obtain the correct label to render (similar to NativePicker)
-
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';

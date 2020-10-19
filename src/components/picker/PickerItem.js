@@ -1,4 +1,3 @@
-// TODO: deprecate passing an an object as a value, use label and value props separately
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
