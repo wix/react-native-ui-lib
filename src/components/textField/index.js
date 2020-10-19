@@ -654,7 +654,7 @@ export default class TextField extends BaseInput {
 
     if (rightIconSource) {
       return (
-        <View style={this.styles.rightIcon} pointerEvents="none">
+        <View style={this.styles.rightButton} pointerEvents="none">
           <Image source={rightIconSource} resizeMode={'center'} style={[this.styles.rightButtonImage, rightIconStyle]}/>
         </View>
       );
@@ -804,12 +804,6 @@ function createStyles({centered, multiline, hideUnderline}, rightItemTopPadding 
     },
     rightElement: {
       paddingRight: ICON_SIZE + ICON_LEFT_PADDING
-    },
-    rightIcon: {
-      position: 'absolute',
-      right: 0,
-      alignSelf: 'flex-start',
-      paddingTop: itemTopPadding
     },
     rightButton: {
       position: 'absolute',
