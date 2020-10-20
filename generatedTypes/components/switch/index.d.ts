@@ -7,7 +7,7 @@ export declare type SwitchProps = {
     /**
      * Invoked with the new value when the value changes
      */
-    onValueChange?: () => void;
+    onValueChange?: (value: boolean) => void;
     /**
      * Whether the switch should be disabled
      */
@@ -45,6 +45,7 @@ export declare type SwitchProps = {
      */
     thumbStyle?: object | number | [];
     style?: any;
+    testID?: string;
 };
 declare const _default: React.ComponentClass<SwitchProps & {
     useCustomTheme?: boolean | undefined;

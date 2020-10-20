@@ -19,7 +19,7 @@ export type SwitchProps = {
   /**
    * Invoked with the new value when the value changes
    */
-  onValueChange?: () => void;
+  onValueChange?: (value: boolean) => void;
   /**
    * Whether the switch should be disabled
    */
@@ -56,7 +56,8 @@ export type SwitchProps = {
    * The Switch's thumb style
    */
   thumbStyle?: object | number | []; 
-  style?: any,
+  style?: any;
+  testID?: string; 
 }
 
 /**
@@ -65,10 +66,6 @@ export type SwitchProps = {
 class Switch extends Component<SwitchProps> {
   static displayName = 'Switch';
   
-  constructor(props: SwitchProps) {
-    super(props);
-  }
-
   state = {
     thumbPosition: new Animated.Value(this.props.value ? 1 : 0)
   };
@@ -94,7 +91,7 @@ class Switch extends Component<SwitchProps> {
     };
   }
 
-  toggle(value: any) {
+  toggle(value?: boolean) {
     const {thumbPosition} = this.state;
 
     Animated.timing(thumbPosition, {
@@ -124,7 +121,7 @@ class Switch extends Component<SwitchProps> {
 
   getSwitchStyle() {
     const {value, onColor, offColor, style: propsStyle, disabled, disabledColor} = this.props;
-    let style: any = [this.styles.switch];
+    const style: object[] = [this.styles.switch];
 
     if (disabled) {
       style.push(disabledColor ? {backgroundColor: disabledColor} : this.styles.switchDisabled);
