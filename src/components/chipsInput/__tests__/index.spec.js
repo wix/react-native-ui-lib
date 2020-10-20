@@ -41,7 +41,7 @@ describe('ChipsInput', () => {
     });
 
     it('should update state - tagIndexToRemove with last tag index', () => {
-      const pressEvent = {nativeEvent: {key: 'Backspace'}};
+      const pressEvent = {nativeEvent: {key: Constants.backspaceKey}};
       uut.onKeyPress(pressEvent);
       expect(uut.state.tagIndexToRemove).toBe(2);
     });
@@ -54,7 +54,7 @@ describe('ChipsInput', () => {
     });
 
     it('should not update state if there are not tags', () => {
-      const pressEvent = {nativeEvent: {key: 'Backspace'}};
+      const pressEvent = {nativeEvent: {key: Constants.backspaceKey}};
       _.set(uut.state, 'tags', []);
       uut.onKeyPress(pressEvent);
       expect(uut.state.tagIndexToRemove).toBe(undefined);
@@ -71,7 +71,7 @@ describe('ChipsInput', () => {
     });
 
     it('should not update state if input value is not empty', () => {
-      const pressEvent = {nativeEvent: {key: 'Backspace'}};
+      const pressEvent = {nativeEvent: {key: Constants.backspaceKey}};
       _.set(uut.state, 'tags', [{}, {}, {}]);
       _.set(uut.state, 'value', 'some text');
       uut.onKeyPress(pressEvent);
@@ -89,7 +89,7 @@ describe('ChipsInput', () => {
     });
 
     it('should not set last tag index if it is already set to last index, instead call remove tag', () => {
-      const pressEvent = {nativeEvent: {key: 'Backspace'}};
+      const pressEvent = {nativeEvent: {key: Constants.backspaceKey}};
       _.set(uut.state, 'tagIndexToRemove', 2);
       uut.onKeyPress(pressEvent);
       expect(removeTagSpy).toHaveBeenCalled();
