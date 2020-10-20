@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 export declare type SwitchProps = {
     /**
      * The value of the switch. If true the switch will be turned on. Default value is false
@@ -44,7 +45,7 @@ export declare type SwitchProps = {
      * The Switch's thumb style
      */
     thumbStyle?: object | number | [];
-    style?: any;
+    style?: StyleProp<ViewStyle>;
     testID?: string;
 };
 declare const _default: React.ComponentClass<SwitchProps & {

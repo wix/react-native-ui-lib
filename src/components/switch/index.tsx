@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, Animated, Easing} from 'react-native';
+import {StyleSheet, Animated, Easing, StyleProp, ViewStyle} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -56,7 +56,7 @@ export type SwitchProps = {
    * The Switch's thumb style
    */
   thumbStyle?: object | number | []; 
-  style?: any;
+  style?: StyleProp<ViewStyle>;
   testID?: string; 
 }
 
@@ -121,7 +121,7 @@ class Switch extends Component<SwitchProps> {
 
   getSwitchStyle() {
     const {value, onColor, offColor, style: propsStyle, disabled, disabledColor} = this.props;
-    const style: object[] = [this.styles.switch];
+    const style: SwitchProps['style'] = [this.styles.switch];
 
     if (disabled) {
       style.push(disabledColor ? {backgroundColor: disabledColor} : this.styles.switchDisabled);
