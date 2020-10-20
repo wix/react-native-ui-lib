@@ -397,6 +397,11 @@ export default class TextField extends BaseInput {
     return !expandable && rightButtonProps && rightButtonProps.iconSource;
   }
 
+  shouldRenderTitle() {
+    const {floatingPlaceholder, title} = this.getThemeProps();
+    return !floatingPlaceholder && title;
+  }
+
   onPressRightButton = () => {
     _.invoke(this.props, 'rightButtonProps.onPress');
   };
@@ -470,7 +475,7 @@ export default class TextField extends BaseInput {
     const {floatingPlaceholder, title, titleColor, titleStyle} = this.getThemeProps();
     const color = this.getStateColor(titleColor || PLACEHOLDER_COLOR_BY_STATE);
 
-    if (!floatingPlaceholder && title) {
+    if (this.shouldRenderTitle()) {
       return <Text style={[{color}, this.styles.topLabel, this.styles.label, titleStyle]}>{title}</Text>;
     }
   }
@@ -740,7 +745,7 @@ export default class TextField extends BaseInput {
   };
 }
 
-function createStyles({centered, multiline, hideUnderline}, rightItemTopPadding = 0) {
+function createStyles({centered, multiline, title, floatingPlaceholder}, rightItemTopPadding = 0) {
   const itemTopPadding = Constants.isIOS ? (rightItemTopPadding - 3) : (rightItemTopPadding - 1);
 
   return StyleSheet.create({
@@ -808,6 +813,7 @@ function createStyles({centered, multiline, hideUnderline}, rightItemTopPadding 
     },
     rightButton: {
       position: 'absolute',
+      top: title && !floatingPlaceholder ? 22 : 0,
       right: 0,
       alignSelf: 'flex-start',
       paddingTop: itemTopPadding
