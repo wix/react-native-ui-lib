@@ -472,7 +472,7 @@ export default class TextField extends BaseInput {
   }
 
   renderTitle() {
-    const {floatingPlaceholder, title, titleColor, titleStyle} = this.getThemeProps();
+    const {title, titleColor, titleStyle} = this.getThemeProps();
     const color = this.getStateColor(titleColor || PLACEHOLDER_COLOR_BY_STATE);
 
     if (this.shouldRenderTitle()) {
