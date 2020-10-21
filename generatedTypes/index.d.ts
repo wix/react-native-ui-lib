@@ -7,6 +7,7 @@ export * from './style';
 export * from './services';
 export * as Incubator from './incubator';
 export {asBaseComponent, withScrollEnabler, withScrollReached, WithScrollEnablerProps, WithScrollReachedProps} from './commons/new';
+export {default as ActionBar, ActionBarProps} from './components/actionBar';
 export {default as Avatar, AvatarPropTypes} from './components/avatar';
 export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
 export {default as Constants} from './helpers/Constants';
@@ -42,11 +43,9 @@ export {default as Dialog, DialogProps} from './components/dialog';
 
 /* All components with manual typings */
 export {
-  ActionBar,
   ActionSheet,
   Badge,
   BadgeProps,
-  Card,
   Carousel,
   ConnectionStatusBar,
   Drawer,

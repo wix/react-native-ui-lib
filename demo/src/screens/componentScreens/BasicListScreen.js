@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Alert, FlatList} from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {AnimatableManager, ThemeManager, Colors, BorderRadiuses, ListItem, Text} from 'react-native-ui-lib'; //eslint-disable-line
+import {AnimatableManager, Colors, BorderRadiuses, ListItem, Text} from 'react-native-ui-lib'; //eslint-disable-line
 import orders from '../../data/orders';
 
 
@@ -9,10 +9,10 @@ export default class BasicListScreen extends Component {
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
       onEdit: false,
-      updating: false,
+      updating: false
     };
   }
 
@@ -69,10 +69,10 @@ const styles = StyleSheet.create({
     width: 54,
     height: 54,
     borderRadius: BorderRadiuses.br20,
-    marginHorizontal: 14,
+    marginHorizontal: 14
   },
   border: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: ThemeManager.dividerColor,
-  },
+    borderColor: Colors.dark70
+  }
 });

@@ -63,6 +63,7 @@ type topBarButtonProp = {
   buttonProps?: Omit<ButtonPropTypes, 'onPress'>;
 }
 
+const TOP_BAR_HEIGHT = Constants.isIOS ? 44 : 56;
 const DEFAULT_BUTTON_PROPS = {
   color: Colors.blue30
 };
@@ -153,7 +154,7 @@ class TopBar extends Component<ModalTopBarProps> {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    height: 32 + Constants.statusBarHeight
+    height: TOP_BAR_HEIGHT
   },
   statusBar: {
     height: Constants.statusBarHeight

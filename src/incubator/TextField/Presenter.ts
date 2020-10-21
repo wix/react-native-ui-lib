@@ -14,10 +14,10 @@ export function getColorByState(color: ColorType, context?: ContextType) {
     } else if (!context?.isValid) {
       finalColor = color?.error;
     } else if (context?.isFocused) {
-      finalColor = color?.focus;
-    } else {
-      finalColor = color?.default;
+      finalColor = color?.focus;      
     }
+
+    finalColor = finalColor || color?.default || Colors.grey10;
   }
 
   return finalColor;
