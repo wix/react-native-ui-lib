@@ -108,7 +108,7 @@ declare function createStyles(props: BadgeProps): {
     badge: {
         alignSelf: "flex-start";
         borderRadius: number;
-        backgroundColor: string | undefined;
+        backgroundColor: any;
         alignItems: "center";
         justifyContent: "center";
         overflow: "hidden";
@@ -354,7 +354,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
     /**
      * the badge size (default, small)
      */
-    size: number | "small" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "default" | "large";
+    size: number | "small" | "default" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "large";
     /**
      * Press handler
      */

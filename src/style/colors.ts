@@ -2,7 +2,7 @@ import _ from 'lodash';
 //@ts-ignore
 import Color from 'color';
 import tinycolor from 'tinycolor2';
-import {colorsPalette} from './colorsPalette';
+import {colorsPalette, themeColors} from './colorsPalette';
 //@ts-ignore
 import ColorName from './colorName';
 
@@ -10,7 +10,8 @@ export class Colors {
   [key: string]: any;
 
   constructor() {
-    Object.assign(this, colorsPalette);
+    const colors = Object.assign(colorsPalette, themeColors);
+    Object.assign(this, colors);
   }
   /**
    * Load custom set of colors

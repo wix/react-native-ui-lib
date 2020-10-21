@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {
   TouchableOpacity as RNTouchableOpacity,
@@ -6,7 +7,6 @@ import {
   ViewStyle,
   Animated
 } from 'react-native';
-import _ from 'lodash';
 import {
   asBaseComponent,
   forwardRef,
@@ -16,6 +16,7 @@ import {
 } from '../../commons/new';
 // @ts-ignore
 import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
+
 
 export type TouchableOpacityProps = Omit<RNTouchableOpacityProps, 'style'> &
   ContainerModifiers & {
@@ -65,40 +66,34 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   constructor(props: Props) {
     super(props);
 
-    const {throttleTime, throttleOptions} = this.props;
+    this.state = {
+      active: false
+    };
 
+    const {throttleTime = 0, throttleOptions = {leading: true, trailing: false}} = props;
     this.onPress = _.throttle(
       this.onPress.bind(this),
       throttleTime,
       throttleOptions
     );
-    this.onPressIn = this.onPressIn.bind(this);
-    this.onPressOut = this.onPressOut.bind(this);
   }
-
-  state = {
-    active: false
-  };
 
   getAccessibilityInfo() {
     const {disabled} = this.props;
+
     return {
       accessibilityRole: 'button',
       accessibilityStates: disabled ? ['disabled'] : []
     };
   }
 
-  onPressIn(...args: any) {
-    this.setState({
-      active: true
-    });
+  onPressIn = (...args: any) => {
+    this.setState({active: true});
     _.invoke(this.props, 'onPressIn', ...args);
   }
 
-  onPressOut(...args: any) {
-    this.setState({
-      active: false
-    });
+  onPressOut = (...args: any) => {
+    this.setState({active: false});
     _.invoke(this.props, 'onPressOut', ...args);
   }
 

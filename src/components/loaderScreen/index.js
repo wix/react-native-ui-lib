@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, ActivityIndicator} from 'react-native';
-import {Colors, Typography, ThemeManager} from '../../style';
+import {Colors, Typography} from '../../style';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
 import Text from '../../components/text';
+
 
 /**
  * @description: Component that shows a full screen with an activity indicator
@@ -50,7 +51,7 @@ export default class LoaderScreen extends BaseComponent {
           <ActivityIndicator
             size={'large'}
             animating
-            color={loaderColor || (Constants.isIOS ? Colors.dark60 : ThemeManager.primaryColor)}
+            color={loaderColor || (Constants.isIOS ? Colors.dark60 : Colors.primary)}
             {...others}
           />
           {!overlay && message && <Text style={[styles.message, messageStyle]}>{message}</Text>}
