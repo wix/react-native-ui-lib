@@ -74,6 +74,9 @@ export default {
   get KeyboardAwareListView() {
     return require('./KeyboardAwareScrollView').KeyboardAwareListView;
   },
+  get KeyboardAwareFlatList() {
+    return require('./KeyboardAwareScrollView').KeyboardAwareFlatList;
+  },
   get BaseInput() {
     return require('./baseInput').default;
   },
