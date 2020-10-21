@@ -212,10 +212,7 @@ function validateHex(value: string) {
 }
 
 function threeDigitHexToSix(value: string) { 
-  const firstDigit = value[0];
-  const secondDigit = value[1];
-  const thirdDigit = value[2];
-  return firstDigit.concat(firstDigit, secondDigit, secondDigit, thirdDigit, thirdDigit);
+  return value.replace(/./g, '$&$&');
 }
 
 const TypedColors = Colors as ExtendTypeWith<typeof Colors, typeof colorsPalette>
