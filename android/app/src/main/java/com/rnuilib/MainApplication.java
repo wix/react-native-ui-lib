@@ -11,6 +11,7 @@ import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.wix.reactnativeuilib.UiLibPackageList;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import com.airbnb.android.react.lottie.LottiePackage;
 
 
 public class MainApplication extends NavigationApplication {

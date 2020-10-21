@@ -95,6 +95,9 @@ export default {
   get LoaderScreen() {
     return require('./loaderScreen').default;
   },
+  get LottieAnimation() {
+    return require('./lottieAnimation').default;
+  },
   get PageControl() {
     return require('./pageControl').default;
   },

@@ -102,6 +102,9 @@ export default {
   get LoaderScreen() {
     return require('./components/loaderScreen').default;
   },
+  get LottieAnimation() {
+    return require('./components/lottieAnimation').default;
+  },
   get PageControl() {
     return require('./components/pageControl').default;
   },
