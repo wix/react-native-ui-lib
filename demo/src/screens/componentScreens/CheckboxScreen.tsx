@@ -24,7 +24,6 @@ class CheckboxScreen extends Component {
             <Checkbox
               value={this.state.value6}
               label={'with label'}
-              labelStyle={{marginLeft: Spacings.s3}}
               color={Colors.green20}
               onValueChange={value6 => this.setState({value6})}
               style={{marginBottom: 20, marginLeft: 75}}

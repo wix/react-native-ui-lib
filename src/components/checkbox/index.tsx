@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {
-  Text,
   Animated,
   Easing,
   StyleSheet,
@@ -15,6 +14,9 @@ import {Colors} from '../../style';
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
+import Text from '../text';
+import View from '../view';
+import Spacing from '../../style/spacings';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
@@ -85,6 +87,7 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
   styles: {
     container: StyleProp<ViewStyle>;
     selectedIcon: StyleProp<ViewStyle>;
+    checkboxLabel: StyleProp<TextStyle>;
   };
 
   animationStyle: {
@@ -174,13 +177,15 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
   render() {
     const {selectedIcon, color, iconColor, disabled, testID, label, labelStyle, style, ...others} = this.props;
     return (
-      <TouchableOpacity row onPress={this.onPress}>
-        <Animated.View
+      <View row style={style}>
+        {/*@ts-ignore*/}
+        <TouchableOpacity
           {...this.getAccessibilityProps()}
           activeOpacity={1}
           testID={testID}
           {...others}
-          style={[this.getBorderStyle(), style]}
+          style={this.getBorderStyle()}
+          onPress={this.onPress}
         >
           {
             <Animated.View
@@ -202,9 +207,13 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
               />
             </Animated.View>
           }
-        </Animated.View>
-        {label && <Text style={labelStyle}>{label}</Text>}
-      </TouchableOpacity>
+        </TouchableOpacity>
+        {label && (
+          <Text style={[this.styles.checkboxLabel, labelStyle]} onPress={this.onPress}>
+            {label}
+          </Text>
+        )}
+      </View>
     );
   }
 }
@@ -225,6 +234,10 @@ function createStyles(props: CheckboxPropTypes) {
       tintColor: iconColor,
       alignItems: 'center',
       justifyContent: 'center'
+    },
+    checkboxLabel: {
+      marginLeft: Spacing.s3,
+      alignSelf: 'center'
     }
   });
 }
