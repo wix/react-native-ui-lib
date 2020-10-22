@@ -17,9 +17,9 @@ const TRACK_SIZE = 6;
 const THUMB_SIZE = 24;
 const BORDER_WIDTH = 6;
 const SHADOW_RADIUS = 4;
-const DEFAULT_COLOR = Colors.dark50;
+const DEFAULT_COLOR = Colors.grey50;
 const ACTIVE_COLOR = Colors.violet30;
-const INACTIVE_COLOR = Colors.dark60;
+const INACTIVE_COLOR = Colors.grey60;
 
 /**
  * @description: A Slider component
@@ -335,12 +335,12 @@ export default class Slider extends PureBaseComponent {
     if (disabled || disableActiveStyling) {
       return 1;
     }
-    
+
     const {defaultScaleFactor} = this._thumbAnimationConstants;
-    if (this.shouldDoubleSizeByDefault()) { 
+    if (this.shouldDoubleSizeByDefault()) {
       return defaultScaleFactor;
     }
-      
+
     const scaleRatioFromSize = activeThumbStyle.height / thumbStyle.height;
     return scaleRatioFromSize || defaultScaleFactor;
   };
@@ -348,7 +348,7 @@ export default class Slider extends PureBaseComponent {
   updateTrackStepAndStyle = ({nativeEvent}) => {
     this._x = nativeEvent.locationX;
     this.updateValue(nativeEvent.locationX);
-  
+
     if (this.props.step > 0) {
       this.bounceToStep();
     } else {
@@ -386,7 +386,7 @@ export default class Slider extends PureBaseComponent {
     if (this.props.disabled) {
       return;
     }
-    
+
     this.updateTrackStepAndStyle({nativeEvent});
     this.onSeekEnd();
   };
@@ -527,7 +527,7 @@ export default class Slider extends PureBaseComponent {
             />
           </View>
         )}
-        
+
         <View style={styles.touchArea} onTouchEnd={this.handleTrackPress}/>
         {this.renderThumb()}
       </View>

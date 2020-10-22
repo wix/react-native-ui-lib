@@ -25,7 +25,7 @@ export default class ConnectionStatusBarScreen extends Component {
             textAlign: 'center',
             marginBottom: 10,
             ...Typography.text60,
-            color: Colors.dark40,
+            color: Colors.grey40,
           }}
         >
           Turn your wifi on/off to see the component in action

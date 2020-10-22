@@ -109,7 +109,7 @@ function createStyles() {
       alignItems: 'center',
       paddingLeft: 16,
       borderBottomWidth: StyleSheet.hairlineWidth,
-      borderBottomColor: Colors.dark60
+      borderBottomColor: Colors.grey60
     },
     searchIcon: {
       marginRight: 12

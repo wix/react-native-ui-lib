@@ -80,11 +80,11 @@ class FeatureHighlightScreen extends Component {
 
   getPageControlProps() {
     return {
-      numOfPages: titles.length, 
-      currentPage: this.state.currentTargetIndex, 
+      numOfPages: titles.length,
+      currentPage: this.state.currentTargetIndex,
       onPagePress: this.onPagePress,
-      color: Colors.dark30,
-      inactiveColor: Colors.dark80,
+      color: Colors.grey30,
+      inactiveColor: Colors.grey80,
       size: 8
     };
   }
@@ -131,7 +131,7 @@ class FeatureHighlightScreen extends Component {
           <View right flex>
             <View row flex>
               <View
-                marginT-40 marginR-60 bg-cyan30
+                marginT-40 marginR-60 bg-blue30
                 style={{width: 50, height: 70}}
                 testID={'2'}
                 ref={r => (this.addTarget(r, '2'))}

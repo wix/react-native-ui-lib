@@ -187,7 +187,7 @@ class DateTimePicker extends BaseComponent {
         <Button
           link
           iconSource={Assets.icons.x}
-          iconStyle={{tintColor: Colors.dark10}}
+          iconStyle={{tintColor: Colors.grey10}}
           onPress={this.toggleExpandableOverlay}
         />
         <Button
@@ -249,7 +249,7 @@ function createStyles(props) {
     header: {
       height: 56,
       borderBottomWidth: 1,
-      borderBottomColor: Colors.dark80
+      borderBottomColor: Colors.grey80
     },
     dialog: {
       backgroundColor: Colors.white,

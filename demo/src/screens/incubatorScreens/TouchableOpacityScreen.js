@@ -38,7 +38,7 @@ class TouchableOpacityScreen extends Component {
   render() {
     const {counter, longPressCounter} = this.state;
     return (
-      <View bg-dark80 flex padding-20>
+      <View bg-grey80 flex padding-20>
         <Text text40>Native TouchableOpacity</Text>
 
         <Text text50 center marginT-20>

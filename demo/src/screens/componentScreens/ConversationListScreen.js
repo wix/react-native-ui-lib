@@ -39,7 +39,7 @@ class ConversationListScreen extends Component {
         {
           text: 'More',
           icon: shareIcon,
-          background: Colors.dark60,
+          background: Colors.grey60,
           onPress: () => Alert.alert(`More button pressed for item #${item.name}`)
         },
         {
@@ -157,11 +157,11 @@ class ContactItem extends PureComponent {
           </ListItem.Part>
           <ListItem.Part middle column containerStyle={styles.border}>
             <ListItem.Part containerStyle={styles.middle}>
-              <Text style={styles.text} text70 color={Colors.dark10} numberOfLines={1}>{item.name}</Text>
-              <Text style={styles.subtitle} text90 color={Colors.dark50}>{item.timestamp}</Text>
+              <Text style={styles.text} text70 color={Colors.grey10} numberOfLines={1}>{item.name}</Text>
+              <Text style={styles.subtitle} text90 color={Colors.grey50}>{item.timestamp}</Text>
             </ListItem.Part>
             <ListItem.Part>
-              <Text style={styles.text} text80 color={Colors.dark40} numberOfLines={1}>{item.text}</Text>
+              <Text style={styles.text} text80 color={Colors.grey40} numberOfLines={1}>{item.text}</Text>
               {item.count > 0 && <Button size={'small'} label={item.count} onPress={item.buttonPress}/>}
             </ListItem.Part>
           </ListItem.Part>
@@ -174,7 +174,7 @@ class ContactItem extends PureComponent {
 const styles = StyleSheet.create({
   border: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.dark70,
+    borderColor: Colors.grey70,
     paddingRight: 17
   },
   avatar: {

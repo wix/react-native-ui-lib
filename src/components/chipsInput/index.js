@@ -407,7 +407,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.red10
   },
   tagMarked: {
-    backgroundColor: Colors.dark10
+    backgroundColor: Colors.grey10
   },
   removeIcon: {
     tintColor: Colors.white,

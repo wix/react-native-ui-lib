@@ -34,10 +34,10 @@ class SettingsScreen extends Component {
     const {screens} = this.state;
     const defaultScreenId = await AsyncStorage.getItem('uilib.defaultScreen');
     const defaultScreen = _.find(screens, {value: defaultScreenId});
-    
+
     const isRTLString = await AsyncStorage.getItem('uilib.isRTL');
     const isRTL = isRTLString === 'true';
-    
+
     this.setState({defaultScreen, isRTL});
   }
 
@@ -63,7 +63,7 @@ class SettingsScreen extends Component {
     const {defaultScreen, showRefreshMessage, isRTL, screens} = this.state;
     const {extraSettingsUI} = this.props;
     const filteredScreens = _.filter(screens, screen => !_.isUndefined(screen.value));
-  
+
     return (
       <View flex padding-25 bg-grey80>
         <View flex>
@@ -82,10 +82,10 @@ class SettingsScreen extends Component {
               <Picker.Item key={screen.value} value={screen}/>
             ))}
           </Picker>
-            
-          <View style={{borderWidth: 1, borderColor: Colors.dark70, marginTop: 40}}>
+
+          <View style={{borderWidth: 1, borderColor: Colors.grey70, marginTop: 40}}>
             <View style={[{padding: 5, borderBottomWidth: 1}, styles.block]}>
-              <Text text80 dark20>Current layout direction</Text>
+              <Text text80 grey20>Current layout direction</Text>
             </View>
             <View center margin-5 padding-10>
               <Text text70>{isRTL ? 'RIGHT to LEFT' : 'LEFT to RIGHT'}</Text>
@@ -96,14 +96,14 @@ class SettingsScreen extends Component {
                 value={isRTL}
                 onValueChange={this.onDirectionChange}
               />
-              <Text text80 dark20>Force RTL</Text>
+              <Text text80 grey20>Force RTL</Text>
             </View>
           </View>
 
           {extraSettingsUI?.()}
         </View>
 
-        <Text text30 dark10>Settings</Text>
+        <Text text30 grey10>Settings</Text>
         <Toast visible={showRefreshMessage} position="bottom" message="Refresh the app!"/>
       </View>
     );
@@ -112,8 +112,8 @@ class SettingsScreen extends Component {
 
 const styles = StyleSheet.create({
   block: {
-    borderColor: Colors.dark70,
-    backgroundColor: Colors.dark80
+    borderColor: Colors.grey70,
+    backgroundColor: Colors.grey80
   }
 });
 

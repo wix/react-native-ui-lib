@@ -93,7 +93,7 @@ class NativePicker extends BaseComponent {
     const label = this.getLabel();
     return (
       <TextField
-        color={Colors.dark10}
+        color={Colors.grey10}
         {...textInputProps}
         value={label}
         expandable

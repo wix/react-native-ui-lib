@@ -66,7 +66,7 @@ class PickerItem extends BaseComponent {
     onSelectedLayout: PropTypes.func
   };
 
-  
+
   constructor(props) {
     super(props);
 
@@ -74,7 +74,7 @@ class PickerItem extends BaseComponent {
       console.warn('UILib Picker.Item will stop supporting passing object as value & label (e.g {value, label}) in the next major version. Please pass separate label and value props');
     }
   }
-  
+
 
   generateStyles() {
     this.styles = createStyles(this.props);
@@ -98,7 +98,7 @@ class PickerItem extends BaseComponent {
     } = this.props;
 
     if (isSelected) {
-      return <Image source={selectedIcon} tintColor={disabled ? Colors.dark60 : selectedIconColor}/>;
+      return <Image source={selectedIcon} tintColor={disabled ? Colors.grey60 : selectedIconColor}/>;
     }
   }
 
@@ -149,17 +149,17 @@ function createStyles() {
     container: {
       height: 56.5,
       paddingHorizontal: 23,
-      borderColor: Colors.rgba(Colors.dark10, 0.1),
+      borderColor: Colors.rgba(Colors.grey10, 0.1),
       borderBottomWidth: 1
     },
     labelText: {
       ...Typography.text70,
-      color: Colors.dark10,
+      color: Colors.grey10,
       flex: 1,
       textAlign: 'left'
     },
     labelTextDisabled: {
-      color: Colors.dark60
+      color: Colors.grey60
     }
   });
 }

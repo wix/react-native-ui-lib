@@ -9,7 +9,7 @@ declare type ContentType = TextPropTypes & {
 export declare type CardSectionProps = ViewPropTypes & {
     /**
      * Text content for the CardSection.
-     * Example: content={[{text: 'You’re Invited!', text70: true, dark10: true}]}
+     * Example: content={[{text: 'You’re Invited!', text70: true, grey10: true}]}
      */
     content?: ContentType[];
     /**
@@ -44,7 +44,7 @@ export declare type CardSectionProps = ViewPropTypes & {
 declare const _default: React.ComponentClass<ViewPropTypes & {
     /**
      * Text content for the CardSection.
-     * Example: content={[{text: 'You’re Invited!', text70: true, dark10: true}]}
+     * Example: content={[{text: 'You’re Invited!', text70: true, grey10: true}]}
      */
     content?: ContentType[] | undefined;
     /**

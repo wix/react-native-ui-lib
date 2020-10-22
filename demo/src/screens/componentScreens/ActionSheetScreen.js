@@ -39,7 +39,7 @@ export default class ActionSheetScreen extends Component {
                 size='small'
                 text50
                 marginB-10
-                dark10
+                grey10
                 label={`> ${useCase.label}`}
                 onPress={() =>
                   this.setState({

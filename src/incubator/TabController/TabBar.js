@@ -199,8 +199,8 @@ class TabBar extends PureComponent {
 
       this.setState({itemsWidths, itemsOffsets});
       const selectedItemOffset = itemsOffsets[selectedIndex] - INDICATOR_INSET;
-      
-      if (selectedItemOffset + this._itemsWidths[selectedIndex] > Constants.screenWidth) {  
+
+      if (selectedItemOffset + this._itemsWidths[selectedIndex] > Constants.screenWidth) {
         this.tabBar.current.scrollTo({x: selectedItemOffset, animated: true});
       }
     }
@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
   containerShadow: {
     ...Platform.select({
       ios: {
-        shadowColor: Colors.dark10,
+        shadowColor: Colors.grey10,
         shadowOpacity: 0.05,
         shadowRadius: 2,
         shadowOffset: {height: 6, width: 0}

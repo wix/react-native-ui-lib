@@ -51,7 +51,7 @@ export default class LoaderScreen extends BaseComponent {
           <ActivityIndicator
             size={'large'}
             animating
-            color={loaderColor || (Constants.isIOS ? Colors.dark60 : Colors.primary)}
+            color={loaderColor || (Constants.isIOS ? Colors.grey60 : Colors.primary)}
             {...others}
           />
           {!overlay && message && <Text style={[styles.message, messageStyle]}>{message}</Text>}
@@ -73,6 +73,6 @@ const styles = StyleSheet.create({
   message: {
     ...Typography.text70,
     marginTop: 18,
-    color: Colors.dark10
+    color: Colors.grey10
   }
 });
