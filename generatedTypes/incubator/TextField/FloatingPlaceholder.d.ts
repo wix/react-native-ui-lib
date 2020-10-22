@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { TextStyle } from 'react-native';
+import { TextStyle, StyleProp } from 'react-native';
 import { ColorType } from './types';
 export interface FloatingPlaceholderProps {
     /**
@@ -13,7 +13,7 @@ export interface FloatingPlaceholderProps {
     /**
      * Custom style to pass to the floating placeholder
      */
-    floatingPlaceholderStyle?: TextStyle;
+    floatingPlaceholderStyle?: StyleProp<TextStyle>;
 }
 declare const FloatingPlaceholder: {
     ({ placeholder, floatingPlaceholderColor, floatingPlaceholderStyle }: FloatingPlaceholderProps): JSX.Element;

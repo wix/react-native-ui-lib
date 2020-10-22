@@ -1,16 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, Image} from 'react-native';
-import {
-  View,
-  Colors,
-  Dialog,
-  Text,
-  Picker,
-  Avatar,
-  Assets,
-  PanningProvider
-} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Colors, Dialog, Text, Picker, Avatar, Assets, PanningProvider} from 'react-native-ui-lib'; //eslint-disable-line
 import contacts from '../../data/conversations';
 import tagIcon from '../../assets/icons/tags.png';
 import dropdown from '../../assets/icons/chevronDown.png';
@@ -37,6 +28,7 @@ export default class PickerScreen extends Component {
       itemsCount: 1,
       // language: {value: 'java', label: 'Java'},
       language: undefined,
+      language2: undefined, // for migrated picker example
       languages: [],
       nativePickerValue: 'java',
       customModalValues: [],
@@ -236,6 +228,24 @@ export default class PickerScreen extends Component {
                 )}
                 getItemLabel={item => item.name}
               />
+            ))}
+          </Picker>
+
+          <Text text60 marginT-s5 marginB-s2>Migrated Picker</Text>
+
+          <Picker
+            title="Language"
+            placeholder="Favorite Language"
+            value={this.state.language2}
+            onChange={value => this.setState({language2: value})}
+            topBarProps={{title: 'Languages'}}
+            showSearch
+            searchPlaceholder={'Search a language'}
+            searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.dark50}}
+            // useNativePicker
+          >
+            {_.map(options, option => (
+              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled} />
             ))}
           </Picker>
         </View>

@@ -10,10 +10,6 @@ export default class CardScannerScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.start = this.start.bind(this);
-    this.reset = this.reset.bind(this);
-    this.onBreak = this.onBreak.bind(this);
-
     this.state = {
       progress: 0,
       started: false,
@@ -22,7 +18,7 @@ export default class CardScannerScreen extends Component {
     };
   }
 
-  onBreak({isDone}) {
+  onBreak = ({isDone}) => {
     if (!isDone) {
       this.start();
     } else {
@@ -30,7 +26,7 @@ export default class CardScannerScreen extends Component {
     }
   }
 
-  start() {
+  start = () => {
     const {progress} = this.state;
 
     this.setState({
@@ -40,7 +36,7 @@ export default class CardScannerScreen extends Component {
     });
   }
 
-  reset() {
+  reset = () => {
     this.setState({
       started: false,
       progress: 0,
@@ -57,8 +53,12 @@ export default class CardScannerScreen extends Component {
     return (
       <View flex useSafeArea>
         <View flex padding-20>
-          <View paddingL-40 height={6} width={'100%'} bg-violet50 marginB-20>
-            <AnimatedScanner backgroundColor={Colors.purple30} progress={98} duration={1600}/>
+          <View paddingL-40 marginB-20>
+            <AnimatedScanner
+              backgroundColor={Colors.purple30}
+              progress={98} duration={1600}
+              containerStyle={{backgroundColor: Colors.violet50, height: 6}}
+            />
           </View>
 
           <Card containerStyle={{marginBottom: 15}} onPress={() => console.log('press on a card')}>

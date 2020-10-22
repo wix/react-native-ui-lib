@@ -3,8 +3,9 @@ import React, {PureComponent} from 'react';
 import {ImageSourcePropType, ImageStyle, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacityProps, ViewStyle, ViewProps} from 'react-native';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';
-import {BorderRadiuses, Colors, ThemeManager, Typography} from '../../style';
+import {BorderRadiuses, Colors, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
+import Image from '../image';
 import View from '../view';
 import Image from '../image';
 
@@ -247,7 +248,7 @@ function createStyles(props: BadgeProps) {
     badge: {
       alignSelf: 'flex-start',
       borderRadius: BorderRadiuses.br100,
-      backgroundColor: !props.icon ? ThemeManager.primaryColor : undefined,
+      backgroundColor: !props.icon ? Colors.primary : undefined,
       alignItems: 'center',
       justifyContent: 'center',
       overflow: 'hidden'

@@ -32,5 +32,7 @@ declare const constants: {
     readonly accessibility: {
         isScreenReaderEnabled: boolean;
     };
+    backspaceKey: string;
+    enterKey: string;
 };
 export default constants;

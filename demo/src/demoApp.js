@@ -1,14 +1,9 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import {Navigation} from 'react-native-navigation';
 import * as Animatable from 'react-native-animatable';
-import {
-  AnimatableManager,
-  ThemeManager,
-  Constants,
-  Colors,
-  Typography
-} from 'react-native-ui-lib'; // eslint-disable-line
+import {AnimatableManager, Constants, Colors, Typography} from 'react-native-ui-lib'; // eslint-disable-line
 import {registerScreens} from './screens';
+
 
 /** Examples - uncomment when needed */
 // Typography.loadTypographies({
@@ -67,7 +62,7 @@ function getDefaultNavigationStyle() {
     statusBar: {
       visible: true,
       style: 'light',
-      backgroundColor: ThemeManager.primaryColor // for Android
+      backgroundColor: Colors.primary // for Android
     },
     layout: {
       backgroundColor: Colors.white,
@@ -78,7 +73,7 @@ function getDefaultNavigationStyle() {
       noBorder: true, // for iOS
       elevation: 0, // for Android
       background: {
-        color: ThemeManager.primaryColor
+        color: Colors.primary
       },
       title: {
         color: Colors.white,

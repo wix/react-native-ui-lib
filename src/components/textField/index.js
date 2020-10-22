@@ -197,7 +197,8 @@ export default class TextField extends BaseInput {
       value: props.value, // for floatingPlaceholder functionality
       floatingPlaceholderState: new Animated.Value(this.shouldFloatPlaceholder(props.value) ? 1 : 0),
       showExpandableModal: false,
-      floatingPlaceholderTranslate: 0
+      floatingPlaceholderTranslate: 0,
+      charCountColor: CHAR_COUNTER_COLOR_BY_STATE.default
     };
 
     this.generatePropsWarnings(props);
@@ -316,6 +317,23 @@ export default class TextField extends BaseInput {
       return value.length;
     }
     return 0;
+  }
+
+  setCharCountColor(key) {
+    this.maxReached = key === Constants.backspaceKey ? false : this.isCounterLimit();
+    const color = this.state.focused && this.maxReached ?
+      CHAR_COUNTER_COLOR_BY_STATE.error : CHAR_COUNTER_COLOR_BY_STATE.default;
+
+    if (color !== this.state.charCountColor) {
+      this.setState({charCountColor: color});
+    }
+  }
+
+  getCharCountColor() {
+    const {charCountColor} = this.state;
+    const {disabledColor} = this.getThemeProps();
+
+    return this.isDisabled() && disabledColor ? disabledColor : charCountColor;
   }
 
   getTopPaddings() {
@@ -458,14 +476,11 @@ export default class TextField extends BaseInput {
   }
 
   renderCharCounter() {
-    const {focused} = this.state;
-    const {maxLength, showCharacterCounter, disabledColor} = this.getThemeProps();
+    const {maxLength, showCharacterCounter} = this.getThemeProps();
 
     if (maxLength && showCharacterCounter) {
       const counter = this.getCharCount();
-      const textColor =
-        this.isCounterLimit() && focused ? CHAR_COUNTER_COLOR_BY_STATE.error : CHAR_COUNTER_COLOR_BY_STATE.default;
-      const color = this.isDisabled() && disabledColor ? disabledColor : textColor;
+      const color = this.getCharCountColor();
 
       return (
         <Text
@@ -620,7 +635,7 @@ export default class TextField extends BaseInput {
 
       return (
         <TouchableOpacity
-          {...others} accessibilityLabel={accessibilityLabel} 
+          {...others} accessibilityLabel={accessibilityLabel}
           style={[this.styles.rightButton, style]} onPress={this.onPressRightButton}
         >
           <Image
@@ -698,13 +713,14 @@ export default class TextField extends BaseInput {
 
   onKeyPress = event => {
     this.lastKey = event.nativeEvent.key;
+    this.setCharCountColor(this.lastKey);
     _.invoke(this.props, 'onKeyPress', event);
   };
 
   onChangeText = text => {
     // when character count exceeds maxLength text will be empty string.
     // HACK: To avoid setting state value to '' we check the source of that deletion
-    if (text === '' && this.lastKey && this.lastKey !== 'Backspace') {
+    if (text === '' && this.lastKey && this.lastKey !== Constants.backspaceKey) {
       return;
     }
 
