@@ -7,7 +7,6 @@ import {BorderRadiuses, Colors, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import View from '../view';
-import Image from '../image';
 
 
 const DEFAULT_SIZE = 16;
