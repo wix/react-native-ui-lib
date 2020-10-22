@@ -1,5 +1,4 @@
 const colorsPalette = {
-  dark10: '#20303C',
   // GREYS
   grey10: '#20303C',
   grey20: '#4D5963',
@@ -72,7 +71,7 @@ const colorsPalette = {
   yellow60: '#FFEEB9',
   yellow70: '#FFF4D3',
   yellow80: '#FFF9E4',
-  // BLACK&WHITE
+  // OTHERS
   white: '#FFFFFF',
   black: '#000000'
 };

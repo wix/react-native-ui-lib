@@ -39,7 +39,7 @@
       border: 0;
       padding: 5px;
       background: transparent;
-      background: $dark60;
+      background: $grey60;
       border-radius: 20px;
       display: flex;
       align-items: center;
@@ -59,7 +59,7 @@
 
     input {
       background: transparent;
-      color: $dark10;
+      color: $grey10;
       width: 100%;
       flex: 1;
       display: inline-block;
@@ -70,7 +70,7 @@
       font-size: $text20;
 
       &::placeholder {
-        color: $dark30;
+        color: $grey30;
       }
     }
   }

@@ -230,7 +230,7 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
 function createStyles() {
   return StyleSheet.create({
     label: {
-      color: Colors.dark30,
+      color: Colors.grey30,
       ...Typography.text80
     },
     selectedLabel: {
@@ -240,7 +240,7 @@ function createStyles() {
     },
     divider: {
       borderRightWidth: 1,
-      borderRightColor: Colors.dark70,
+      borderRightColor: Colors.grey70,
       marginVertical: 14 // NOTE: will not cut long text at the top and bottom in iOS if TabBar not high enough
     },
     indicator: {

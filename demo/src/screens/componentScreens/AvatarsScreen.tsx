@@ -36,7 +36,7 @@ const examples = [
       uri:
         'https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg'
     },
-    badgeProps: {size: 10, backgroundColor: Colors.dark50},
+    badgeProps: {size: 10, backgroundColor: Colors.grey50},
     badgePosition: 'BOTTOM_LEFT'
   },
   {
@@ -80,7 +80,7 @@ const examples = [
   {
     title: 'Invalid Gravatar (see logs)',
     label: '🤦',
-    backgroundColor: Colors.dark60,
+    backgroundColor: Colors.grey60,
     source: {uri: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=404'},
     onImageLoadStart: () => console.log('AvatarScreen: Invalid avatar load STARTED...'), // eslint-disable-line
     onImageLoadEnd: () => console.log('AvatarScreen: Invalid avatar load ENDED'), // eslint-disable-line

@@ -53,7 +53,7 @@ export default class PanDismissibleScreen extends Component {
     const panListener = this.renderPanListener();
 
     return (
-      <View flex bg-dark80>
+      <View flex bg-grey80>
         <Text style={styles.largeText}>Pan Dismissible</Text>
         <View style={styles.container}>
           <Switch value={isCoupled} onValueChange={this.switchExample} style={styles.switch}/>

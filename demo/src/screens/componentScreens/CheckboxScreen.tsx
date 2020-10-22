@@ -35,7 +35,7 @@ class CheckboxScreen extends Component {
               onValueChange={value3 => this.setState({value3})}
               borderRadius={5}
               size={18}
-              color={Colors.dark10}
+              color={Colors.grey10}
               iconColor={Colors.green10}
               style={{marginBottom: 20}}
             />
@@ -55,7 +55,7 @@ class CheckboxScreen extends Component {
               />
             </View>
           </View>
-          <Text text40 dark10>
+          <Text text40 grey10>
             Checkbox
           </Text>
         </View>

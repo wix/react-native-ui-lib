@@ -57,7 +57,7 @@ export default class CardsScreen extends Component<
           onPress={() => this.setState({selected2: !selected2})}
           activeOpacity={1}
           selectionOptions={{
-            color: Colors.dark10,
+            color: Colors.grey10,
             indicatorSize: 25,
             borderWidth: 3
           }}
@@ -72,14 +72,14 @@ export default class CardsScreen extends Component<
     return (
       <Card.Section
         content={[
-          {text: 'You’re Invited!', text70: true, dark10: true},
+          {text: 'You’re Invited!', text70: true, grey10: true},
           {
             text:
               '222 Join Old The Town Barbershop Official Store. Download the Wix app to...',
             text80: true,
-            dark10: true
+            grey10: true
           },
-          {text: 'wix.to/A465c', text90: true, dark50: true}
+          {text: 'wix.to/A465c', text90: true, grey50: true}
         ]}
         style={{padding: 20, flex: 1}}
       />
@@ -89,14 +89,14 @@ export default class CardsScreen extends Component<
   renderText = () => {
     return (
       <View padding-20 flex>
-        <Text text70 dark10>
+        <Text text70 grey10>
           You’re Invited!
         </Text>
-        <Text text80 dark10>
+        <Text text80 grey10>
           222 Join Old The Town Barbershop Official Store. Download the Wix app
           to...
         </Text>
-        <Text text90 dark50>
+        <Text text90 grey50>
           wix.to/A465c
         </Text>
       </View>
@@ -143,8 +143,8 @@ export default class CardsScreen extends Component<
       <Card style={{marginBottom: 10}} onPress={() => {}}>
         <Card.Section
           content={[
-            {text: 'You’re Invited!', text70: true, dark10: true},
-            {text: 'join now', text90: true, dark50: true}
+            {text: 'You’re Invited!', text70: true, grey10: true},
+            {text: 'join now', text90: true, grey50: true}
           ]}
           style={{padding: 20}}
         />
@@ -177,7 +177,7 @@ export default class CardsScreen extends Component<
         <Card.Section
           padding-20
           flex
-          content={[{text: 'All site', text70: true, dark10: true}]}
+          content={[{text: 'All site', text70: true, grey10: true}]}
           contentStyle={{alignItems: 'center', margin: 0, padding: 0}}
         />
       </Card>
@@ -207,7 +207,7 @@ export default class CardsScreen extends Component<
         {image}
         <Card.Section
           padding-20
-          content={[{text: 'All site', text70: true, dark10: true}]}
+          content={[{text: 'All site', text70: true, grey10: true}]}
           contentStyle={{alignItems: 'center'}}
         />
       </Card>
@@ -272,7 +272,7 @@ export default class CardsScreen extends Component<
           return (
             <Card key={i} width={100} style={{marginRight: 20}}>
               <View padding-15>
-                <Text text30 dark30>
+                <Text text30 grey30>
                   {i}
                 </Text>
               </View>
@@ -295,7 +295,7 @@ export default class CardsScreen extends Component<
     return (
       <View row marginV-10>
         {this.renderBackgroundCard(
-          {'marginR-20': true, style: {backgroundColor: Colors.dark60}},
+          {'marginR-20': true, style: {backgroundColor: Colors.grey60}},
           <Text text80 center white>
             With custom background color
           </Text>
@@ -303,7 +303,7 @@ export default class CardsScreen extends Component<
         {this.renderBackgroundCard(
           {
             'marginR-20': true,
-            style: {backgroundColor: Colors.rgba(Colors.dark60, 0.75)}
+            style: {backgroundColor: Colors.rgba(Colors.grey60, 0.75)}
           },
           <Text text70 center white>
             With opacity
@@ -313,10 +313,10 @@ export default class CardsScreen extends Component<
           this.renderBackgroundCard(
             {enableBlur: true, 'marginL-20': true},
             <>
-              <Text text70 dark20 center>
+              <Text text70 grey20 center>
                 With Blur effect
               </Text>
-              <Text text80 dark20 center>
+              <Text text80 grey20 center>
                 (iOS only)
               </Text>
             </>
@@ -342,7 +342,7 @@ export default class CardsScreen extends Component<
           />
 
           <View padding-20>
-            <Text text40 color={Colors.dark10}>
+            <Text text40 color={Colors.grey10}>
               {post.title}
             </Text>
             <View row>
@@ -352,12 +352,12 @@ export default class CardsScreen extends Component<
               <Text text90> | {post.timestamp}</Text>
             </View>
 
-            <Text text70 color={Colors.dark10}>
+            <Text text70 color={Colors.grey10}>
               {post.description}
             </Text>
 
             <View>
-              <Text text90 color={Colors.dark50}>
+              <Text text90 color={Colors.grey50}>
                 {post.likes} Likes
               </Text>
               <View row right>

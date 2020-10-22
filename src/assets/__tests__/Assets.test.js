@@ -85,10 +85,10 @@ describe('Assets', () => {
         beforeEach(() => {
           assets.loadAssetsGroup('icons', {
             get back() {
-              return './back-dark.png';
+              return './back-grey.png';
             },
             get forward() {
-              return './forward-dark.png';
+              return './forward-grey.png';
             }
           });
         });
@@ -98,11 +98,11 @@ describe('Assets', () => {
         });
 
         it('should overwrite existing assets if they have the same names', () => {
-          expect(assets.icons.back).toBe('./back-dark.png');
+          expect(assets.icons.back).toBe('./back-grey.png');
         });
 
         it('should append extra assets to the group', () => {
-          expect(assets.icons.forward).toBe('./forward-dark.png');
+          expect(assets.icons.forward).toBe('./forward-grey.png');
         });
       });
     });

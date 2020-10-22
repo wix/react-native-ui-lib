@@ -95,7 +95,7 @@ Last type of modifiers are for styling your components
 
 ```
 <Text blue30>...</Text>
-<View bg-dark70>...</View>
+<View bg-grey70>...</View>
 <TouchableOpacity bg-red30/>
 ```
 

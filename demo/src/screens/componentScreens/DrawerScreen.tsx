@@ -241,7 +241,7 @@ class DrawerScreen extends Component {
       drawerProps.leftItem = {
         ...ITEMS.read,
         icon: this.state.unread ? require('../../assets/icons/mail.png') : require('../../assets/icons/refresh.png'),
-        text: !this.state.unread ? 'Unread' : 'Read', 
+        text: !this.state.unread ? 'Unread' : 'Read',
         background: this.state.unread ? Colors.green30 : Colors.orange30,
         onPress: this.toggleReadState
       };
@@ -317,12 +317,12 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   listContent: {
-    backgroundColor: Colors.dark80
+    backgroundColor: Colors.grey80
   },
   rowContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.dark80
+    backgroundColor: Colors.grey80
   },
   rowIcon: {
     width: 38,
@@ -334,11 +334,11 @@ const styles = StyleSheet.create({
   rowTitle: {
     ...Typography.text70,
     fontWeight: 'bold',
-    color: Colors.dark20
+    color: Colors.grey20
   },
   rowSubtitle: {
     ...Typography.text80,
-    color: Colors.dark30
+    color: Colors.grey30
   },
   rowButtonContainer: {
     flex: 1,
