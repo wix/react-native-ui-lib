@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
 import _ from 'lodash';
-import {ScrollView} from 'react-native';
-import {View, Text, ProgressBar, Colors} from 'react-native-ui-lib';//eslint-disable-line
+import React, {Component} from 'react';
+import {StyleSheet, ScrollView} from 'react-native';
+import {View, Text, ProgressBar, Colors, Spacings} from 'react-native-ui-lib';//eslint-disable-line
 
 export default class ProgressBarScreen extends Component {
 
   state = {
-    progresses: [0, 0, 0, 0],
+    progresses: [0, 0, 0, 0]
   };
 
   componentDidMount() {
@@ -21,9 +21,7 @@ export default class ProgressBarScreen extends Component {
   startProgress(index, stepSize) {
     const {progresses} = this.state;
     progresses[index] = Math.min(progresses[index] + stepSize, 100);
-    this.setState({
-      progresses,
-    });
+    this.setState({progresses});
 
     if (progresses[index] < 100) {
       setTimeout(() => {
@@ -43,28 +41,46 @@ export default class ProgressBarScreen extends Component {
               ProgressBar
             </Text>
           </View>
-          {_.map(progresses, (value, index) => {
-            return (
-              <View key={index}>
-                <ProgressBar
-                  // style={{borderRadius: 10}}
-                  ref={element => this.elements[index] = element}
-                  progress={value}
-                  height={[10, 15, 22, 30][index]}
-                  backgroundColor={[Colors.red70, Colors.purple70, Colors.blue70, Colors.green70][index]}
-                  progressBackgroundColor={[Colors.red40, Colors.purple40, Colors.blue30, Colors.green40][index]}
-                />
 
-                <View bg-dark10 padding-12>
-                  <Text white>
-                    {this.elements[index] && this.elements[index].getSnippet()}
-                  </Text>
-                </View>
-              </View>
-            );
-          })}
+          <Text bodyBold style={styles.text}>
+            Default
+          </Text>
+          <ProgressBar progress={progresses[0]} style={styles.progressBar}/>
+
+          <Text bodyBold style={styles.text}>
+            fullWidth
+          </Text>
+          <ProgressBar progress={progresses[1]} fullWidth style={styles.fullWidthProgressBar}/>
+
+          <Text bodyBold style={styles.text}>
+            styled
+          </Text>
+          <ProgressBar
+            progress={progresses[2]}
+            style={[styles.progressBar, styles.styledProgressBar]}
+            progressColor={Colors.purple70}
+          />
         </View>
       </ScrollView>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  text: {
+    paddingTop: 20,
+    paddingBottom: 15,
+    paddingLeft: 20
+  },
+  progressBar: {
+    marginBottom: 10,
+    marginHorizontal: Spacings.s4
+  },
+  styledProgressBar: {
+    backgroundColor: Colors.purple40,
+    height: 30
+  },
+  fullWidthProgressBar: {
+    marginBottom: 10
+  }
+});
