@@ -340,6 +340,10 @@ export default class TextField extends BaseInput {
     return this.shouldFakePlaceholder() ? (this.shouldShowTopError() ? undefined : 25) : undefined;
   }
 
+  getTopErrorsPosition() {
+    return !this.props.title && this.shouldShowTopError() ? {top: Constants.isIOS ? -25 : -27} : undefined;
+  }
+
   isDisabled() {
     return this.props.editable === false;
   }
@@ -665,10 +669,6 @@ export default class TextField extends BaseInput {
         </View>
       );
     }
-  }
-
-  getTopErrorsPosition() {
-    return !this.props.title && this.shouldShowTopError() ? {top: Constants.isIOS ? -25 : -27} : undefined;
   }
 
   render() {
