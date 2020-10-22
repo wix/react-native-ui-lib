@@ -424,6 +424,7 @@ export default class TextField extends BaseInput {
             onLayout={this.onPlaceholderLayout}
             style={[
               this.styles.placeholder,
+              this.getTopErrorsPosition(),
               typography,
               // TODO: we need to exclude completely any dependency on line height
               // in this component since it always breaks alignments
@@ -641,7 +642,7 @@ export default class TextField extends BaseInput {
       return (
         <TouchableOpacity
           {...others} accessibilityLabel={accessibilityLabel}
-          style={[this.styles.rightButton, style]} onPress={this.onPressRightButton}
+          style={[this.styles.rightButton, this.getTopErrorsPosition(), style]} onPress={this.onPressRightButton}
         >
           <Image
             pointerEvents="none"
@@ -659,11 +660,15 @@ export default class TextField extends BaseInput {
 
     if (rightIconSource) {
       return (
-        <View style={this.styles.rightButton} pointerEvents="none">
+        <View style={[this.styles.rightButton, this.getTopErrorsPosition()]} pointerEvents="none">
           <Image source={rightIconSource} resizeMode={'center'} style={[this.styles.rightButtonImage, rightIconStyle]}/>
         </View>
       );
     }
+  }
+
+  getTopErrorsPosition() {
+    return !this.props.title && this.shouldShowTopError() ? {top: Constants.isIOS ? -25 : -27} : undefined;
   }
 
   render() {
@@ -686,11 +691,10 @@ export default class TextField extends BaseInput {
           {this.renderPrefix()}
           {this.renderPlaceholder()}
           {expandable ? this.renderExpandableInput() : this.renderTextInput()}
+          {this.renderRightButton()}
+          {this.renderRightIcon()}
           {expandable && this.renderExpandableModal()}
         </View>
-
-        {this.renderRightButton()}
-        {this.renderRightIcon()}
 
         {!_.isUndefined(this.getErrorMessage()) && useTopErrors && (
           <View
@@ -813,7 +817,6 @@ function createStyles({centered, multiline, title, floatingPlaceholder}, rightIt
     },
     rightButton: {
       position: 'absolute',
-      top: title && !floatingPlaceholder ? 22 : 0,
       right: 0,
       alignSelf: 'flex-start',
       paddingTop: itemTopPadding
