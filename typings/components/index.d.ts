@@ -32,7 +32,6 @@ export * from './StackAggregator';
 export * from './StateScreen';
 export * from './Stepper';
 export * from './TabBar';
-export * from './TagsInput';
 export * from './Text';
 export * from './Toast';
 export * from './TouchableOpacity';

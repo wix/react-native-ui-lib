@@ -48,7 +48,7 @@ export {
   ActionSheet, Carousel, ConnectionStatusBar, ChipsInput, Drawer,
   FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl,
   Picker, PickerProps, ProgressBar, Slider,
-  GradientSlider, ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,
+  GradientSlider, ColorSliderGroup, Stepper, SharedTransition, StackAggregator, Toast,
   WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper,
   LogService, LoaderScreen, StateScreen, WheelPicker, WheelPickerProps, ColorPicker
 } from '../typings';
