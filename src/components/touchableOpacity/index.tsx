@@ -44,7 +44,6 @@ export type TouchableOpacityProps = Omit<RNTouchableOpacityProps, 'style'> &
      * Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback
      */
     customValue?: any;
-    ref?: any;
     style?: StyleProp<ViewStyle> | Animated.AnimatedProps<StyleProp<ViewStyle>>;
   };
 

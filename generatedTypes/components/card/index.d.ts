@@ -72,7 +72,6 @@ declare const _default: React.ComponentClass<ViewPropTypes & Pick<import("react-
     activeBackgroundColor?: string | undefined;
     useNative?: boolean | undefined;
     customValue?: any;
-    ref?: any;
     style?: false | ViewStyle | import("react-native").RegisteredStyle<ViewStyle> | import("react-native").RecursiveArray<false | ViewStyle | import("react-native").RegisteredStyle<ViewStyle> | null | undefined> | Animated.AnimatedProps<ViewStyle> | Animated.AnimatedProps<import("react-native").RegisteredStyle<ViewStyle>> | Animated.AnimatedProps<import("react-native").RecursiveArray<false | ViewStyle | import("react-native").RegisteredStyle<ViewStyle> | null | undefined>> | null | undefined;
 } & {
     /**
