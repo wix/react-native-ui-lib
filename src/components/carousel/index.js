@@ -326,9 +326,12 @@ class Carousel extends Component {
     const {currentStandingPage, currentPage} = this.state;
     const index = this.getCalcIndex(currentPage);
 
-    this.setState({currentStandingPage: index});
-    if (currentStandingPage !== index) {
-      _.invoke(this.props, 'onChangePage', index, currentStandingPage);
+    const pagesCount = presenter.getChildrenLength(this.props);
+    if (index < pagesCount) {
+      this.setState({currentStandingPage: index});
+      if (currentStandingPage !== index) {
+        _.invoke(this.props, 'onChangePage', index, currentStandingPage);
+      }
     }
   };
 

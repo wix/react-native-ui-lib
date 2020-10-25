@@ -8,7 +8,6 @@ import tags from '../../assets/icons/tags.png';
 import collections from '../../assets/icons/collections.png';
 import richText from '../../assets/icons/richText.png';
 
-
 export default class ActionBarScreen extends Component {
 
   constructor(props) {
