@@ -139,8 +139,9 @@ class PickerItem extends BaseComponent {
 
   // TODO: deprecate the check for object
   onPress = () => {
-    const {label, value, onPress} = this.props;
-    onPress(_.isObject(value) ? value : {value, label});
+    const {value, onPress} = this.props;
+    // onPress(_.isObject(value) ? value : {value, label});
+    onPress(value);
   };
 }
 
