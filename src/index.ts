@@ -7,6 +7,7 @@
 export * from './style';
 export * from './services';
 export * as Incubator from './incubator';
+export {default as ActionBar, ActionBarProps} from './components/actionBar';
 export {default as Avatar, AvatarPropTypes} from './components/avatar';
 export {default as Badge, BadgeProps} from './components/badge';
 export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
@@ -22,6 +23,7 @@ export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as RadioButton, RadioButtonPropTypes} from './components/radioButton/RadioButton';
 export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButton/RadioGroup';
+export {default as Switch, SwitchProps} from './components/switch';
 export {default as TabBar} from './components/TabBar';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
@@ -44,7 +46,7 @@ export {default as Dialog, DialogProps} from './components/dialog';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ActionBar, ActionSheet, Carousel, ConnectionStatusBar, ChipsInput, Drawer,
+  ActionSheet, Carousel, ConnectionStatusBar, ChipsInput, Drawer,
   FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl,
   Picker, PickerProps, ProgressBar, Slider,
   GradientSlider, ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,

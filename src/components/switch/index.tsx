@@ -1,10 +1,9 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {StyleSheet, Animated, Easing} from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, Animated, Easing, StyleProp, ViewStyle} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
-import {BaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 
 const INNER_PADDING = 2;
@@ -12,76 +11,76 @@ const DEFAULT_WIDTH = 42;
 const DEFAULT_HEIGHT = 24;
 const DEFAULT_THUMB_SIZE = 20;
 
+export type SwitchProps = {
+  /**
+   * The value of the switch. If true the switch will be turned on. Default value is false
+   */
+  value?: boolean;
+  /**
+   * Invoked with the new value when the value changes
+   */
+  onValueChange?: (value: boolean) => void;
+  /**
+   * Whether the switch should be disabled
+   */
+  disabled?: boolean;
+  /**
+   * The Switch width
+   */
+  width?: number;
+  /**
+   * The Switch height
+   */
+  height?: number;
+  /**
+   * The Switch background color when it's turned on
+   */
+  onColor?: string;
+  /**
+   * The Switch background color when it's turned off
+   */
+  offColor?: string;
+  /**
+   * The Switch background color when it's disabled
+   */
+  disabledColor?: string;
+  /**
+   * The Switch's thumb color
+   */
+  thumbColor?: string;
+  /**
+   * The Switch's thumb size (width & height)
+   */
+  thumbSize?: number;
+  /**
+   * The Switch's thumb style
+   */
+  thumbStyle?: object | number | []; 
+  style?: StyleProp<ViewStyle>;
+  testID?: string; 
+}
+
 /**
  * Switch component for toggling boolean value related to some context
  */
-class Switch extends BaseComponent {
+class Switch extends Component<SwitchProps> {
   static displayName = 'Switch';
-
-  static propTypes = {
-    /**
-     * The value of the switch. If true the switch will be turned on. Default value is false
-     */
-    value: PropTypes.bool,
-    /**
-     * Invoked with the new value when the value changes
-     */
-    onValueChange: PropTypes.func,
-    /**
-     * Whether the switch should be disabled
-     */
-    disabled: PropTypes.bool,
-    /**
-     * The Switch width
-     */
-    width: PropTypes.number,
-    /**
-     * The Switch height
-     */
-    height: PropTypes.number,
-    /**
-     * The Switch background color when it's turned on
-     */
-    onColor: PropTypes.string,
-    /**
-     * The Switch background color when it's turned off
-     */
-    offColor: PropTypes.string,
-    /**
-     * The Switch background color when it's disabled
-     */
-    disabledColor: PropTypes.string,
-    /**
-     * The Switch's thumb color
-     */
-    thumbColor: PropTypes.string,
-    /**
-     * The Switch's thumb size (width & height)
-     */
-    thumbSize: PropTypes.number,
-    /**
-     * The Switch's thumb style
-     */
-    thumbStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
-  };
-
+  
   state = {
     thumbPosition: new Animated.Value(this.props.value ? 1 : 0)
   };
 
-  generateStyles() {
-    this.styles = createStyles(this.getThemeProps());
-  }
-
-  componentDidUpdate(prevProps) {
-    const {value} = this.getThemeProps();
+  styles = createStyles(this.props);
+  
+  componentDidUpdate(prevProps: SwitchProps) {
+    const {value} = this.props;
     if (prevProps.value !== value) {
       this.toggle(value);
     }
   }
 
   getAccessibilityProps() {
-    const {disabled, value} = this.getThemeProps();
+    const {disabled, value} = this.props;
 
     
     return {
@@ -92,7 +91,7 @@ class Switch extends BaseComponent {
     };
   }
 
-  toggle(value) {
+  toggle(value?: boolean) {
     const {thumbPosition} = this.state;
 
     Animated.timing(thumbPosition, {
@@ -104,15 +103,15 @@ class Switch extends BaseComponent {
   }
 
   onPress = () => {
-    const {disabled} = this.getThemeProps();
+    const {disabled} = this.props;
 
     if (!disabled) {
-      _.invoke(this.getThemeProps(), 'onValueChange', !this.props.value);
+      _.invoke(this.props, 'onValueChange', !this.props.value);
     }
   };
 
   calcThumbOnPosition() {
-    const props = this.getThemeProps();
+    const props = this.props;
     const width = props.width || DEFAULT_WIDTH;
     const thumbSize = props.thumbSize || DEFAULT_THUMB_SIZE;
     let position = width - (2 * INNER_PADDING + thumbSize);
@@ -121,8 +120,8 @@ class Switch extends BaseComponent {
   }
 
   getSwitchStyle() {
-    const {value, onColor, offColor, style: propsStyle, disabled, disabledColor} = this.getThemeProps();
-    const style = [this.styles.switch];
+    const {value, onColor, offColor, style: propsStyle, disabled, disabledColor} = this.props;
+    const style: SwitchProps['style'] = [this.styles.switch];
 
     if (disabled) {
       style.push(disabledColor ? {backgroundColor: disabledColor} : this.styles.switchDisabled);
@@ -137,7 +136,7 @@ class Switch extends BaseComponent {
   }
 
   renderThumb() {
-    const {thumbStyle} = this.getThemeProps();
+    const {thumbStyle} = this.props;
     const {thumbPosition} = this.state;
 
     const interpolatedTranslateX = thumbPosition.interpolate({
@@ -153,9 +152,9 @@ class Switch extends BaseComponent {
   }
 
   render() {
-    const {...others} = this.getThemeProps();
-
+    const {...others} = this.props;
     return (
+      // @ts-ignore
       <TouchableOpacity
         {...this.getAccessibilityProps()}
         activeOpacity={1}
@@ -204,4 +203,4 @@ function createStyles({
   });
 }
 
-export default Switch;
+export default asBaseComponent<SwitchProps>(Switch);
