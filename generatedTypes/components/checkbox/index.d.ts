@@ -45,6 +45,10 @@ export interface CheckboxPropTypes extends TouchableOpacityProps {
      * Additional styling
      */
     style?: StyleProp<ViewStyle>;
+    /**
+     * Additional styling for checkbox and label container
+     */
+    containerStyle?: StyleProp<ViewStyle>;
 }
 declare const _default: React.ComponentClass<CheckboxPropTypes & {
     useCustomTheme?: boolean | undefined;

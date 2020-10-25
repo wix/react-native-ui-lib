@@ -16,7 +16,7 @@ import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
 import View from '../view';
-import Spacing from '../../style/spacings';
+import {Spacings} from '../../style';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
@@ -68,6 +68,11 @@ export interface CheckboxPropTypes extends TouchableOpacityProps {
    * Additional styling
    */
   style?: StyleProp<ViewStyle>;
+  /**
+   * Additional styling for checkbox and label container
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+
 }
 
 interface CheckboxState {
@@ -175,16 +180,16 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
   }
 
   render() {
-    const {selectedIcon, color, iconColor, disabled, testID, label, labelStyle, style, ...others} = this.props;
+    const {selectedIcon, color, iconColor, disabled, testID, label, labelStyle, style, containerStyle, ...others} = this.props;
     return (
-      <View row style={style}>
+      <View row style={containerStyle}>
         {/*@ts-ignore*/}
         <TouchableOpacity
           {...this.getAccessibilityProps()}
           activeOpacity={1}
           testID={testID}
           {...others}
-          style={this.getBorderStyle()}
+          style={[this.getBorderStyle(), style]}
           onPress={this.onPress}
         >
           {
@@ -236,7 +241,7 @@ function createStyles(props: CheckboxPropTypes) {
       justifyContent: 'center'
     },
     checkboxLabel: {
-      marginLeft: Spacing.s3,
+      marginLeft: Spacings.s3,
       alignSelf: 'center'
     }
   });
