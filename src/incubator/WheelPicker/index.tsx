@@ -3,7 +3,7 @@
 // TODO: Support control of visible items
 import _ from 'lodash';
 import React, {useCallback, useRef} from 'react';
-import {TextStyle, FlatList} from 'react-native';
+import {TextStyle, FlatList, StyleProp} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent, useValues} from 'react-native-redash';
 
@@ -17,7 +17,7 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 export interface WheelPickerProps {
   items?: ItemProps[];
   itemHeight?: number;
-  itemTextStyle?: TextStyle;
+  itemTextStyle?: StyleProp<TextStyle>;
   onChange: (item: ItemProps, index: number) => void;
 }
 
