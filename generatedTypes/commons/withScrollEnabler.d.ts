@@ -1,6 +1,6 @@
 import React from 'react';
 import { LayoutChangeEvent } from 'react-native';
-export declare type ScrollEnablerProps = {
+declare type ScrollEnablerProps = {
     onContentSizeChange: (contentWidth: number, contentHeight: number) => void;
     onLayout: (event: LayoutChangeEvent) => void;
     scrollEnabled: boolean;

@@ -9,15 +9,14 @@ export interface ForwardRefInjectedProps {
   forwardedRef: any;
 }
 
-export default function forwardRef(WrappedComponent: React.ComponentType<any>): React.ComponentType<any> {
-  function forwardRef(props: any, ref: any) {
+export default function forwardRef<P = any>(WrappedComponent: React.ComponentType<P>): React.ComponentType<P> {
+  function forwardRef(props: P, ref: any) {
     return <WrappedComponent {...props} forwardedRef={ref}/>;
   }
 
   const ForwardedComponent = React.forwardRef(forwardRef);
 
   hoistStatics(ForwardedComponent, WrappedComponent);
-  //@ts-ignore
   ForwardedComponent.displayName = WrappedComponent.displayName;
   //@ts-ignore
   ForwardedComponent.propTypes = WrappedComponent.propTypes;
