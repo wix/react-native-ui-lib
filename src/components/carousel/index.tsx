@@ -1,19 +1,16 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React, {Component} from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import React, {Component, RefObject, ReactNode, Key} from 'react';
+import {ScrollView, StyleSheet, LayoutChangeEvent, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
-import {asBaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Text from '../text';
 import PageControl from '../pageControl';
 import * as presenter from './CarouselPresenter';
+import {CarouselProps, CarouselState, PageControlPosition} from './types';
 
-const PAGE_CONTROL_POSITIONS = {
-  OVER: 'over',
-  UNDER: 'under'
-};
+interface DefaultProps extends Partial<CarouselProps> {}
 
 /**
  * @description: Carousel for scrolling pages horizontally
@@ -23,108 +20,36 @@ const PAGE_CONTROL_POSITIONS = {
  * @extendsLink: https://facebook.github.io/react-native/docs/scrollview
  * @notes: This is screed width Component
  */
-class Carousel extends Component {
+class Carousel extends Component<CarouselProps, CarouselState> {
   static displayName = 'Carousel';
 
-  static propTypes = {
-    /**
-     * the first page to start with
-     */
-    initialPage: PropTypes.number,
-    /**
-     * the page width (all pages should have the same width). Does not work if passing 'loop' prop
-     */
-    pageWidth: PropTypes.number,
-    /**
-     * the spacing between the items
-     */
-    itemSpacings: PropTypes.number,
-    /**
-     * Horizontal margin for the container
-     */
-    containerMarginHorizontal: PropTypes.number,
-    /**
-     * Vertical padding for the container.
-     * Sometimes needed when there are overflows that are cut in Android.
-     */
-    containerPaddingVertical: PropTypes.number,
-    /**
-     * if true, will have infinite scroll
-     */
-    loop: PropTypes.bool,
-    /**
-     * callback for when page has changed
-     */
-    onChangePage: PropTypes.func,
-    /**
-     * callback for onScroll event of the internal ScrollView
-     */
-    onScroll: PropTypes.func,
-    /**
-     * Should the container be animated (send the animation style via containerStyle)
-     */
-    animated: PropTypes.bool,
-    /**
-     * the carousel style
-     */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * PageControl component props
-     */
-    pageControlProps: PropTypes.shape(PageControl.propTypes),
-    /**
-     * The position of the PageControl component ['over', 'under'], otherwise it won't display
-     */
-    pageControlPosition: PropTypes.oneOf(Object.values(PAGE_CONTROL_POSITIONS)),
-    /**
-     * whether to show a page counter (will not work with 'pageWidth' prop)
-     */
-    showCounter: PropTypes.bool,
-    /**
-     * the counter's text style
-     */
-    counterTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * will block multiple pages scroll (will not work with 'pageWidth' prop)
-     */
-    pagingEnabled: PropTypes.bool,
-    /**
-     * Whether to layout Carousel for accessibility
-     */
-    allowAccessibleLayout: PropTypes.bool,
-    /**
-     * Whether to switch automatically between the pages
-     */
-    autoplay: PropTypes.bool,
-    /**
-     * the amount of ms to wait before switching to the next page, in case autoplay is on
-     */
-    autoplayInterval: PropTypes.number
-  };
-
-  static defaultProps = {
+  static defaultProps: DefaultProps = {
     initialPage: 0,
     pagingEnabled: true,
     autoplay: false,
     autoplayInterval: 4000
   };
 
-  static pageControlPositions = PAGE_CONTROL_POSITIONS;
+  static pageControlPositions = PageControlPosition;
+  carousel: RefObject<ScrollView> = React.createRef();
+  autoplayTimer?: number;
+  orientationChange?: boolean;
+  skippedInitialScroll?: boolean;
 
-  constructor(props) {
+  constructor(props: CarouselProps) {
     super(props);
-
-    this.carousel = React.createRef();
 
     const defaultPageWidth = (props.loop || !props.pageWidth) ? Constants.screenWidth : props.pageWidth;
 
     this.state = {
       containerWidth: undefined,
+      // @ts-ignore (defaultProps)
       currentPage: this.shouldUsePageWidth() ? this.getCalcIndex(props.initialPage) : props.initialPage,
       currentStandingPage: props.initialPage,
       pageWidth: defaultPageWidth,
       initialOffset: {
         x: presenter.calcOffset(props, {
+          // @ts-ignore (defaultProps)
           currentPage: props.initialPage,
           pageWidth: defaultPageWidth
         })
@@ -133,12 +58,12 @@ class Carousel extends Component {
     };
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps(nextProps: CarouselProps, prevState: CarouselState) {
     const {currentPage, prevProps} = prevState;
     const {pageWidth} = prevProps;
     const {pageWidth: nextPageWidth} = nextProps;
 
-    if (pageWidth !== nextPageWidth) {
+    if (!_.isUndefined(nextPageWidth) && pageWidth !== nextPageWidth) {
       const pageWidth = nextPageWidth;
 
       return {
@@ -177,10 +102,12 @@ class Carousel extends Component {
   componentWillUnmount() {
     Constants.removeDimensionsEventListener(this.onOrientationChanged);
 
-    clearInterval(this.autoplayTimer);
+    if (this.autoplayTimer) {
+      clearInterval(this.autoplayTimer);
+    }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: CarouselProps) {
     const {autoplay} = this.props;
 
     if (autoplay && !prevProps.autoplay) {
@@ -202,19 +129,19 @@ class Carousel extends Component {
     }
   };
 
-  getItemSpacings(props) {
+  getItemSpacings(props: CarouselProps): number {
     const {itemSpacings = 16} = props;
     return itemSpacings;
   }
 
-  getContainerMarginHorizontal = () => {
+  getContainerMarginHorizontal = (): number => {
     const {containerMarginHorizontal = 0} = this.props;
     return containerMarginHorizontal;
   };
 
   // TODO: RN 61.5 - try to remove this from the children and move to the ScrollView's contentContainerStyle
   // style={{overflow: 'visible'}} does not work in ScrollView on Android, maybe it will be fixed in the future
-  getContainerPaddingVertical = () => {
+  getContainerPaddingVertical = (): number => {
     const {containerPaddingVertical = 0} = this.props;
     return containerPaddingVertical;
   };
@@ -222,7 +149,7 @@ class Carousel extends Component {
   updateOffset = (animated = false) => {
     const x = presenter.calcOffset(this.props, this.state);
 
-    if (this.carousel) {
+    if (this.carousel && this.carousel.current) {
       this.carousel.current.scrollTo({x, animated});
 
       if (Constants.isAndroid) {
@@ -241,7 +168,9 @@ class Carousel extends Component {
   }
 
   stopAutoPlay() {
-    clearInterval(this.autoplayTimer);
+    if (this.autoplayTimer) {
+      clearInterval(this.autoplayTimer);
+    }
   }
 
   resetAutoPlay() {
@@ -249,11 +178,11 @@ class Carousel extends Component {
     this.startAutoPlay();
   }
 
-  goToPage(pageIndex, animated = true) {
+  goToPage(pageIndex: number, animated: boolean = true) {
     this.setState({currentPage: this.getCalcIndex(pageIndex)}, () => this.updateOffset(animated));
   }
 
-  getCalcIndex(index) {
+  getCalcIndex(index: number): number {
     // to handle scrollView index issue in Android's RTL layout
     if (Constants.isRTL && Constants.isAndroid) {
       const length = presenter.getChildrenLength(this.props) - 1;
@@ -262,7 +191,7 @@ class Carousel extends Component {
     return index;
   }
 
-  getSnapToOffsets = () => {
+  getSnapToOffsets = (): number[] | undefined => {
     const {containerWidth, pageWidth} = this.state;
 
     if (this.shouldEnablePagination()) {
@@ -294,19 +223,17 @@ class Carousel extends Component {
     nativeEvent: {
       layout: {width: containerWidth}
     }
-  }) => {
-    const update = {containerWidth};
+  }: LayoutChangeEvent) => {
     const {pageWidth = containerWidth} = this.props;
 
-    update.pageWidth = pageWidth;
-    update.initialOffset = {
+    const initialOffset = {
       x: presenter.calcOffset(this.props, {
         currentPage: this.state.currentPage,
         pageWidth
       })
     };
 
-    this.setState(update);
+    this.setState({containerWidth, pageWidth, initialOffset});
   };
 
   shouldAllowAccessibilityLayout() {
@@ -356,7 +283,7 @@ class Carousel extends Component {
     }
   }
 
-  onScroll = event => {
+  onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (!this.skippedInitialScroll) {
       this.skippedInitialScroll = true;
       return;
@@ -387,7 +314,7 @@ class Carousel extends Component {
     _.invoke(this.props, 'onScroll', event);
   };
 
-  renderChild = (child, key) => {
+  renderChild = (child: ReactNode, key: Key): JSX.Element | undefined => {
     if (child) {
       const paddingLeft = this.shouldUsePageWidth() ? this.getItemSpacings(this.props) : undefined;
       const index = Number(key);
@@ -428,8 +355,10 @@ class Carousel extends Component {
       return this.renderChild(child, `${index}`);
     });
 
-    if (loop) {
+    if (loop && childrenArray) {
+      // @ts-ignore
       childrenArray.unshift(this.renderChild(children[length - 1], `${length - 1}-clone`));
+      // @ts-ignore
       childrenArray.push(this.renderChild(children[0], `${0}-clone`));
     }
 
@@ -443,7 +372,7 @@ class Carousel extends Component {
       const {size = 6, spacing = 8, color = Colors.dark20, inactiveColor = Colors.dark60, ...others} = pageControlProps;
       const pagesCount = presenter.getChildrenLength(this.props);
       const containerStyle =
-        pageControlPosition === PAGE_CONTROL_POSITIONS.UNDER
+        pageControlPosition === PageControlPosition.UNDER
           ? {marginVertical: 16 - this.getContainerPaddingVertical()}
           : styles.pageControlContainerStyle;
 
@@ -539,7 +468,7 @@ class Carousel extends Component {
 }
 
 export {Carousel}; // For tests
-export default asBaseComponent(Carousel);
+export default asBaseComponent<CarouselProps>(Carousel);
 
 const styles = StyleSheet.create({
   counter: {
