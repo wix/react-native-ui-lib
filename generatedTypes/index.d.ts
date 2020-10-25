@@ -41,6 +41,7 @@ export {default as PanListenerView, PanListenerViewPropTypes} from './components
 export {default as PanResponderView, PanResponderViewPropTypes} from './components/panningViews/panResponderView';
 export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes} from './components/panningViews/panDismissibleView';
 export {default as Dialog, DialogProps} from './components/dialog';
+export {default as PageControl, PageControlProps} from './components/pageControl';
 
 /* All components with manual typings */
 export {
@@ -57,7 +58,6 @@ export {
   TextArea,
   MaskedInput,
   ListItem,
-  PageControl,
   ProgressBar,
   Slider,
   GradientSlider,

@@ -43,11 +43,12 @@ export {default as PanListenerView, PanListenerViewPropTypes} from './components
 export {default as PanResponderView, PanResponderViewPropTypes} from './components/panningViews/panResponderView';
 export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes} from './components/panningViews/panDismissibleView';
 export {default as Dialog, DialogProps} from './components/dialog';
+export {default as PageControl, PageControlProps} from './components/pageControl';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
   ActionSheet, Carousel, ConnectionStatusBar, ChipsInput, Drawer,
-  FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, PageControl,
+  FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem,
   Picker, PickerProps, ProgressBar, Slider,
   GradientSlider, ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,
   WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper,
