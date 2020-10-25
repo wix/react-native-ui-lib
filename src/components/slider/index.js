@@ -96,7 +96,8 @@ export default class Slider extends PureBaseComponent {
     /**
      * If true the Slider will be disabled and will appear in disabled color
      */
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    testID: PropTypes.string
   };
 
   static defaultProps = {
@@ -479,7 +480,8 @@ export default class Slider extends PureBaseComponent {
       renderTrack,
       disabled,
       minimumTrackTintColor = ACTIVE_COLOR,
-      maximumTrackTintColor = DEFAULT_COLOR
+      maximumTrackTintColor = DEFAULT_COLOR,
+      testID
     } = this.getThemeProps();
 
     return (
@@ -494,6 +496,7 @@ export default class Slider extends PureBaseComponent {
         // accessibilityActions={['increment', 'decrement']}
         accessibilityActions={[{name: 'increment', label: 'increment'}, {name: 'decrement', label: 'decrement'}]}
         onAccessibilityAction={this.onAccessibilityAction}
+        testID={testID}
       >
         {_.isFunction(renderTrack) ? (
           <View
