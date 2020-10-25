@@ -243,6 +243,7 @@ export default class PickerScreen extends Component {
             showSearch
             searchPlaceholder={'Search a language'}
             searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.dark50}}
+            // mode={Picker.modes.MULTI}
             // useNativePicker
           >
             {_.map(options, option => (

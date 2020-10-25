@@ -1,3 +1,4 @@
+// TODO: deprecate all places where we check if _.isPlainObject
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
@@ -213,7 +214,7 @@ class Picker extends PureComponent {
       showSearch,
       searchValue
     };
-  }
+  };
 
   shouldNotChangePickerLabelWhileSelecting = () => {
     const {mode} = this.props;
@@ -231,9 +232,12 @@ class Picker extends PureComponent {
   };
 
   getLabelsFromArray = value => {
-    const {getItemLabel} = this.props;
+    const {items} = this.state;
+    const itemsByValue = _.keyBy(items, 'value');
+
+    const {getItemLabel = _.noop} = this.props;
     return _.chain(value)
-      .map(getItemLabel || 'label')
+      .map(item => (_.isPlainObject(item) ? getItemLabel(item) || item.label : itemsByValue[item].label))
       .join(', ')
       .value();
   };
@@ -273,7 +277,12 @@ class Picker extends PureComponent {
   toggleItemSelection = item => {
     const {getItemValue} = this.props;
     const {value} = this.state;
-    const newValue = _.xorBy(value, [item], getItemValue || 'value');
+    let newValue;
+    if (_.isPlainObject(value)) {
+      newValue = _.xorBy(value, [item], getItemValue || 'value');
+    } else {
+      newValue = _.xor(value, [item]);
+    }
 
     this.setState({value: newValue});
   };
