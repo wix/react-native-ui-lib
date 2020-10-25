@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Constants} from '../../helpers';
-import {Typography, ThemeManager} from '../../style';
+import {Typography, Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
 import Image from '../../components/image';
@@ -92,18 +92,18 @@ function createStyles(isRemoteImage) {
     title: {
       textAlign: 'center',
       ...Typography.text50,
-      color: ThemeManager.titleColor,
+      color: Colors.dark10,
       fontWeight: '300'
     },
     subtitle: {
       textAlign: 'center',
       ...Typography.text70,
-      color: ThemeManager.subtitleColor,
+      color: Colors.dark40,
       fontWeight: '300',
       marginTop: 12
     },
     ctaLabel: {
-      color: ThemeManager.primaryColor,
+      color: Colors.primary,
       ...Typography.text70
     }
   });

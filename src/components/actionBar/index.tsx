@@ -1,10 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {StyleSheet} from 'react-native';
+import React, { Component } from 'react';
+import {StyleSheet, ViewStyle} from 'react-native';
 import _ from 'lodash';
-import {BaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import View from '../view';
-import Button from '../button';
+import Button, {ButtonPropTypes} from '../button';
 import {Colors, Shadows} from '../../style';
 
 /**
@@ -13,38 +12,40 @@ import {Colors, Shadows} from '../../style';
  * @gif: https://media.giphy.com/media/xULW8DwxkniFDMw7TO/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionBarScreen.js
  */
-export default class ActionBar extends BaseComponent {
-  static displayName = 'ActionBar';
-  static propTypes = {
+
+export type ActionBarProps = {
     /**
      * action bar height
      */
-    height: PropTypes.number,
+    height?: number;
     /**
      * action bar background color
      */
-    backgroundColor: PropTypes.string,
+    backgroundColor?: string;
     /**
      * actions for the action bar
      */
-    actions: PropTypes.arrayOf(PropTypes.shape(Button.propTypes)),
+    actions: ButtonPropTypes[];
     /**
      * should action be equally centered
      */
-    centered: PropTypes.bool,
+    centered?: boolean;
     /**
      * use safe area, in case action bar attached to the bottom (default: true)
      */
-    useSafeArea: PropTypes.bool,
+    useSafeArea?: boolean;
     /**
      * keep the action bar position relative instead of it absolute position
      */
-    keepRelative: PropTypes.bool,
+    keepRelative?: boolean;
     /**
      * style the action bar
      */
-    style: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
-  };
+    style?: ViewStyle;
+};
+
+class ActionBar extends Component<ActionBarProps> {
+  static displayName = 'ActionBar';
 
   static defaultProps = {
     height: 48,
@@ -52,11 +53,13 @@ export default class ActionBar extends BaseComponent {
     useSafeArea: true
   };
 
-  generateStyles() {
-    this.styles = createStyles(this.props);
+  constructor(props: ActionBarProps) {
+    super(props);
   }
 
-  getAlignment(actionIndex) {
+  styles = createStyles(this.props);
+  
+  getAlignment(actionIndex: number) {
     const {actions, centered} = this.props;
     const first = actionIndex === 0;
     const last = actionIndex === actions.length - 1;
@@ -75,7 +78,7 @@ export default class ActionBar extends BaseComponent {
         <View row centerV paddingH-20={!centered} style={[this.styles.container, style]} {...others}>
           {_.map(actions, (action, i) => (
             <View key={i} flex {...this.getAlignment(i)}>
-              <Button link size="medium" blue30 {...action}/>
+              <Button link size={Button.sizes.medium} blue30 {...action}/>
             </View>
           ))}
         </View>
@@ -84,7 +87,9 @@ export default class ActionBar extends BaseComponent {
   }
 }
 
-function createStyles({height, backgroundColor}) {
+export default asBaseComponent<ActionBarProps>(ActionBar);
+
+function createStyles({height, backgroundColor} : any) {
   return StyleSheet.create({
     container: {
       height

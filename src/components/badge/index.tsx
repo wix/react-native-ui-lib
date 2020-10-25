@@ -4,10 +4,11 @@ import {ImageSourcePropType, ImageStyle, StyleProp, StyleSheet, Text, TextStyle,
 import {View as AnimatableView} from 'react-native-animatable';
 import {extractAccessibilityProps, extractAnimationProps} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';
-import {BorderRadiuses, Colors, ThemeManager, Typography} from '../../style';
-import Image from '../image';
+import {BorderRadiuses, Colors, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
+import Image from '../image';
 import View from '../view';
+
 
 const LABEL_FORMATTER_VALUES = [1, 2, 3, 4] as const;
 
@@ -276,7 +277,7 @@ function createStyles(props: BadgeProps) {
     badge: {
       alignSelf: 'flex-start',
       borderRadius: BorderRadiuses.br100,
-      backgroundColor: !props.icon ? ThemeManager.primaryColor : undefined,
+      backgroundColor: !props.icon ? Colors.primary : undefined,
       alignItems: 'center',
       justifyContent: 'center',
       overflow: 'hidden'

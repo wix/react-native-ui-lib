@@ -1,6 +1,3 @@
-// TODO: deprecate value allowing passing an object, separate between label and value props
-// TODO: extract picker labels from children in order to obtain the correct label to render (similar to NativePicker)
-
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
@@ -160,6 +157,9 @@ class Picker extends PureComponent {
     // if (props.useNativePicker && _.isPlainObject(props.value)) {
     //   console.warn('UILib Picker: don\'t use object as value for native picker, use either string or a number');
     // }
+    if (_.isPlainObject(props.value)) {
+      console.warn('UILib Picker will stop supporting passing object as value in the next major version. Please use either string or a number as value');
+    }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -180,7 +180,7 @@ class Picker extends PureComponent {
 
   getAccessibilityInfo() {
     const {placeholder} = this.props;
-    
+
     return {
       accessibilityLabel: this.getLabelValueText() ? `${placeholder}. selected. ${this.getLabelValueText()}` : `Select ${placeholder}`,
       accessibilityHint: this.getLabelValueText()
@@ -203,7 +203,7 @@ class Picker extends PureComponent {
   getLabelValueText = () => {
     const {value: propsValue} = this.props;
     const {value: stateValue} = this.props;
-    
+
     if (this.shouldNotChangePickerLabelWhileSelecting()) {
       return this.getLabel(propsValue);
     }
@@ -236,7 +236,7 @@ class Picker extends PureComponent {
     // otherwise, extract from picker items
     const {items} = this.state;
     const selectedItem = _.find(items, {value});
-    
+
     return _.get(selectedItem, 'label');
   }
 
@@ -254,7 +254,7 @@ class Picker extends PureComponent {
     const {getItemValue} = this.props;
     const {value} = this.state;
     const newValue = _.xorBy(value, [item], getItemValue || 'value');
-    
+
     this.setState({value: newValue});
   };
 
@@ -294,7 +294,7 @@ class Picker extends PureComponent {
       if (!showSearch || _.isEmpty(searchValue) || _.includes(_.lowerCase(childLabel), _.lowerCase(searchValue))) {
         const selectedValue = PickerPresenter.getItemValue({value, getItemValue});
         const isSelected = PickerPresenter.isItemSelected(childValue, selectedValue);
-        
+
         return React.cloneElement(child, {
           isSelected,
           onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
@@ -364,7 +364,14 @@ class Picker extends PureComponent {
   };
 
   render() {
-    const {useNativePicker, renderPicker, customPickerProps, testID} = this.props;
+    const {
+      useNativePicker,
+      renderPicker,
+      customPickerProps,
+      containerStyle,
+      testID,
+      modifiers
+    } = this.props;
 
     if (useNativePicker) {
       return <NativePicker {...this.props}/>;
@@ -372,7 +379,7 @@ class Picker extends PureComponent {
 
     if (_.isFunction(renderPicker)) {
       const {value} = this.state;
-      
+
       return (
         <View left>
           <Button {...customPickerProps} link onPress={this.handlePickerOnPress} testID={testID}>
@@ -385,10 +392,17 @@ class Picker extends PureComponent {
 
     const textInputProps = TextField.extractOwnProps(this.props);
     const label = this.getLabelValueText();
-    
+    const {paddings, margins, positionStyle} = modifiers;
+
     return (
       <TextField
         {...textInputProps}
+        containerStyle={[
+          paddings,
+          margins,
+          positionStyle,
+          containerStyle
+        ]}
         {...this.getAccessibilityInfo()}
         importantForAccessibility={'no-hide-descendants'}
         value={label}

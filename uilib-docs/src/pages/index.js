@@ -121,8 +121,8 @@ class MyScreen extends Component {
         <Card height={100} center padding-card marginB-s4>
           <Text body>This is an example card </Text>
         </Card>
-        
-        <Button label="Button" body bg-primaryColor square></Button>
+
+        <Button label="Button" body bg-blue30 square></Button>
       </View>
     );
   }

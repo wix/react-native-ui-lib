@@ -17,12 +17,34 @@ const packages = [
       'Shadows',
       'ThemeManager'
     ]
+  },
+  {
+    filename: 'style.js',
+    styleComponents: [
+      'Colors',
+      'Typography',
+      'BorderRadiuses',
+      'Shadows',
+      'Spacings',
+      'ThemeManager'
+    ]
   }
 ];
 
 /* Write custom packages */
+function addTyping(typings, component) {
+  if (_.isEmpty(typings)) {
+    typings += `{${component}`;
+  } else {
+    typings += `, ${component}`;
+  }
+
+  return typings;
+}
+
 packages.forEach((package) => {
   let content = package.content || '';
+  let typings = '';
 
   if (package.components || package.styleComponents) {
     content += 'module.exports = {\n';
@@ -32,6 +54,8 @@ packages.forEach((package) => {
         component
       )}').default;`;
       content += `},\n`;
+
+      typings = addTyping(typings, component);
     });
 
     _.forEach(package.styleComponents, (component) => {
@@ -40,11 +64,19 @@ packages.forEach((package) => {
         component
       )}').default;`;
       content += `},\n`;
+
+      typings = addTyping(typings, component);
     });
     content += '};\n';
+    typings += '}';
+    typings = `import ${typings} from './generatedTypes';\nexport ${typings};\n`;
   }
 
   fs.writeFileSync(package.filename, content);
+  if (!_.isEmpty(typings)) {
+    const filename = `${package.filename.substring(0, package.filename.indexOf('.js'))}.d.ts`;
+    fs.writeFileSync(filename, typings);
+  }
 });
 
 /* Write all components as separate packages */
@@ -57,6 +89,11 @@ fs.readdir(path, (err, files) => {
         fs.writeFileSync(
           `${file}.js`,
           `module.exports = require('${path}/${file}').default;\n`
+        );
+        const componentName = _.upperFirst(file);
+        fs.writeFileSync(
+          `${file}.d.ts`,
+          `import {${componentName}} from './generatedTypes';\nexport default ${componentName};\n`
         );
       });
   }

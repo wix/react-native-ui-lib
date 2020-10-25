@@ -1,21 +1,21 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {View, Colors, Text, Typography, TagsInput} from 'react-native-ui-lib'; // eslint-disable-line
+import {View, Colors, Text, Typography, ChipsInput} from 'react-native-ui-lib'; // eslint-disable-line
 
 
-export default class TagsInputScreen extends Component {
+export default class ChipsInputScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       tags: [{label: 'Amit'}, {label: 'Ethan', invalid: true}],
-      tags2: ['Tags', 'Input'],
+      tags2: ['Chips', 'Input'],
       tags3: ['Non', 'Removable', 'Tags']
     };
   }
 
   onTagPress = (tagIndex, markedTagIndex) => {
-    this.customTagsInput.markTagIndex(tagIndex === markedTagIndex ? undefined : tagIndex);
+    this.customChipsInput.markTagIndex(tagIndex === markedTagIndex ? undefined : tagIndex);
   };
 
   renderCustomTag(tag, index, shouldMarkToRemove) {
@@ -31,15 +31,15 @@ export default class TagsInputScreen extends Component {
       <ScrollView keyboardShouldPersistTaps="never">
         <View style={styles.container}>
           <Text text40 marginB-20>
-            TagsInput
+            ChipsInput
           </Text>
 
-          <TagsInput containerStyle={{marginBottom: 25}} placeholder="Enter Tags" tags={this.state.tags2}/>
+          <ChipsInput containerStyle={{marginBottom: 25}} placeholder="Enter Tags" tags={this.state.tags2}/>
 
-          <TagsInput containerStyle={{marginBottom: 25}} placeholder="Enter Tags" tags={this.state.tags}
+          <ChipsInput containerStyle={{marginBottom: 25}} placeholder="Enter Tags" tags={this.state.tags}
                      validationErrorMessage="error validation message" />
 
-          <TagsInput
+          <ChipsInput
             containerStyle={{marginBottom: 25}}
             placeholder="Editing disabled"
             tags={this.state.tags3}
@@ -47,8 +47,8 @@ export default class TagsInputScreen extends Component {
             disableTagAdding
           />
 
-          <TagsInput
-            ref={r => (this.customTagsInput = r)}
+          <ChipsInput
+            ref={r => (this.customChipsInput = r)}
             containerStyle={{marginBottom: 25}}
             placeholder="With custom tags"
             tags={this.state.tags}
