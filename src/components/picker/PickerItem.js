@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useContext} from 'react';
 import {StyleSheet} from 'react-native';
 import {Colors, Typography} from '../../style';
 import * as Modifiers from '../../commons/modifiers';
@@ -9,6 +9,8 @@ import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import Text from '../text';
+import {getItemLabel, isItemSelected, shouldFilterOut} from './PickerPresenter';
+import PickerContext from './PickerContext';
 
 /**
  * @description: Picker.Item, for configuring the Picker's selectable options
@@ -18,16 +20,14 @@ import Text from '../text';
  */
 const PickerItem = props => {
   const {
-    renderItem,
     value,
     label,
-    onPress,
     disabled,
-    isSelected,
     selectedIcon = Assets.icons.check,
     selectedIconColor,
     testID
   } = props;
+  const context = useContext(PickerContext);
 
   useEffect(() => {
     if (_.isPlainObject(value)) {
@@ -35,21 +35,26 @@ const PickerItem = props => {
     }
   }, []);
 
-  // TODO: deprecate the check for object
   const _onPress = useCallback(() => {
-    // onPress(_.isObject(value) ? value : {value, label});
-    onPress(value);
-  }, [value, onPress]);
+    context.onPress(value);
+  }, [value, context.onPress]);
 
   const onSelectedLayout = useCallback((...args) => {
-    _.invoke(props, 'onSelectedLayout', ...args);
+    _.invoke(context, 'onSelectedLayout', ...args);
   }, []);
 
-  const getLabel = () => {
-    if (_.isObject(value)) {
-      return _.invoke(props, 'getItemLabel', value) || _.get(value, 'label');
-    }
-    return label;
+  const itemLabel = getItemLabel(label, value, props.getItemLabel || context.getItemLabel);
+  if (context.showSearch && shouldFilterOut(context.searchValue, itemLabel)) {
+    return null;
+  }
+
+  const {renderItem} = context;
+  const isSelected = isItemSelected(value, context.value);
+
+  const accessibilityProps = {
+    accessibilityState: isSelected ? {selected: true} : undefined,
+    accessibilityHint: 'Double click to select this suggestion',
+    ...Modifiers.extractAccessibilityProps(props)
   };
 
   const renderSelectedIndicator = () => {
@@ -62,7 +67,7 @@ const PickerItem = props => {
     return (
       <View style={styles.container} flex row spread centerV>
         <Text numberOfLines={1} style={[styles.labelText, disabled && styles.labelTextDisabled]}>
-          {getLabel()}
+          {itemLabel}
         </Text>
         {renderSelectedIndicator()}
       </View>
@@ -77,9 +82,9 @@ const PickerItem = props => {
       disabled={disabled}
       testID={testID}
       throttleTime={0}
-      {...Modifiers.extractAccessibilityProps(props)}
+      {...accessibilityProps}
     >
-      {renderItem ? renderItem(value, props, getLabel()) : _renderItem()}
+      {renderItem ? renderItem(value, props, itemLabel) : _renderItem()}
     </TouchableOpacity>
   );
 };

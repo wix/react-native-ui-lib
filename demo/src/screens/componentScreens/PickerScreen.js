@@ -28,7 +28,7 @@ export default class PickerScreen extends Component {
       itemsCount: 1,
       // language: {value: 'java', label: 'Java'},
       language: undefined,
-      language2: undefined, // for migrated picker example
+      language2: options[2].value, // for migrated picker example
       languages: [],
       nativePickerValue: 'java',
       customModalValues: [],
