@@ -37,8 +37,9 @@ const PickerItem = props => {
 
   // TODO: deprecate the check for object
   const _onPress = useCallback(() => {
-    onPress(_.isObject(value) ? value : {value, label});
-  }, [label, value, onPress]);
+    // onPress(_.isObject(value) ? value : {value, label});
+    onPress(value);
+  }, [value, onPress]);
 
   const onSelectedLayout = useCallback((...args) => {
     _.invoke(props, 'onSelectedLayout', ...args);
