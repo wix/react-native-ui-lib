@@ -7,6 +7,7 @@ export {default as withScrollReached, WithScrollReachedProps} from './withScroll
 export {
   ContainerModifiers,
   MarginModifiers,
+  PaddingModifiers,
   TypographyModifiers,
   ColorsModifiers,
   BackgroundColorModifier

@@ -1,22 +1,42 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import {TextInput, TextInputProps, StyleSheet, Platform} from 'react-native';
 import {ForwardRefInjectedProps} from '../../commons/new';
-import {Constants} from '../../helpers'
+import {ColorType} from './types';
+import {getColorByState} from './Presenter';
+import {Colors} from '../../style';
+import {Constants} from '../../helpers';
 import FieldContext from './FieldContext';
+
+const DEFAULT_INPUT_COLOR: ColorType = {
+  default: Colors.grey10,
+  disabled: Colors.grey40
+};
 
 export interface InputProps extends TextInputProps, React.ComponentPropsWithRef<typeof TextInput> {
   /**
    * A hint text to display when focusing the field
    */
   hint?: string;
+  /**
+   * Input color
+   */
+  color?: ColorType;
 }
 
-const Input = ({style, hint, forwardedRef, ...props}: InputProps & ForwardRefInjectedProps) => {
+const Input = ({
+  style,
+  hint,
+  color = DEFAULT_INPUT_COLOR,
+  forwardedRef,
+  ...props
+}: InputProps & ForwardRefInjectedProps) => {
   const context = useContext(FieldContext);
-  const placeholder = !context.isFocused ? props.placeholder : (hint || props.placeholder);
+  const placeholder = !context.isFocused ? props.placeholder : hint || props.placeholder;
+  const inputColor = getColorByState(color, context);
+
   return (
     <TextInput
-      style={[styles.input, style]}
+      style={[styles.input, !!inputColor && {color: inputColor}, style]}
       {...props}
       placeholder={placeholder}
       ref={forwardedRef}
@@ -25,7 +45,6 @@ const Input = ({style, hint, forwardedRef, ...props}: InputProps & ForwardRefInj
     />
   );
 };
-
 
 const styles = StyleSheet.create({
   input: {

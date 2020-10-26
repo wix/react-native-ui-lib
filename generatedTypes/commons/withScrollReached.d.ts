@@ -1,6 +1,6 @@
 import React from 'react';
 import { NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
-export declare type ScrollReachedProps = {
+declare type ScrollReachedProps = {
     onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
     /**
      * Is the scroll at the start (or equal\smaller than the threshold if one was given)

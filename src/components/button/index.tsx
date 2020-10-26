@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
-import _ from 'lodash';
 import {
   asBaseComponent,
   forwardRef,
@@ -13,7 +13,7 @@ import {
 } from '../../commons/new';
 //@ts-ignore
 import {Constants} from '../../helpers';
-import {Colors, Typography, ThemeManager, BorderRadiuses} from '../../style';
+import {Colors, Typography, BorderRadiuses} from '../../style';
 import {extractColorValue, extractTypographyValue} from '../../commons/modifiers';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Text, {TextPropTypes} from '../text';
@@ -46,7 +46,7 @@ export type ButtonPropTypes = TouchableOpacityProps &
      */
     color?: string;
     /**
-     * Icon image source
+     * Icon image source or a callback function that returns a source
      */
     iconSource?: object | number | Function;
     /**
@@ -174,6 +174,7 @@ const MIN_WIDTH = {
   LARGE: 90
 };
 const DEFAULT_SIZE = ButtonSize.large;
+const DISABLED_COLOR = Colors.dark60;
 
 type Props = ButtonPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
 
@@ -231,6 +232,7 @@ class Button extends PureComponent<Props, ButtonState> {
   // This method will be called more than once in case of layout change!
   onLayout = (event: LayoutChangeEvent) => {
     const height = event.nativeEvent.layout.height;
+
     if (this.props.round) {
       const width = event.nativeEvent.layout.width;
       const size = height >= width ? height : width;
@@ -264,7 +266,7 @@ class Button extends PureComponent<Props, ButtonState> {
 
     if (!outline && !link) {
       if (disabled) {
-        return disabledBackgroundColor || ThemeManager.CTADisabledColor;
+        return disabledBackgroundColor || DISABLED_COLOR;
       }
 
       return propsBackgroundColor || stateBackgroundColor || themeBackgroundColor || Colors.blue30;
@@ -274,6 +276,7 @@ class Button extends PureComponent<Props, ButtonState> {
 
   getActiveBackgroundColor() {
     const {getActiveBackgroundColor} = this.props;
+
     if (getActiveBackgroundColor) {
       return getActiveBackgroundColor(this.getBackgroundColor(), this.props);
     }
@@ -292,7 +295,7 @@ class Button extends PureComponent<Props, ButtonState> {
     }
 
     if (disabled && (link || outline)) {
-      return ThemeManager.CTADisabledColor;
+      return DISABLED_COLOR;
     }
 
     color = propsColor || extractColorValue(this.props) || color;
@@ -397,6 +400,7 @@ class Button extends PureComponent<Props, ButtonState> {
 
   getBorderRadiusStyle() {
     const {link, fullWidth, borderRadius: borderRadiusFromProps, modifiers} = this.props;
+
     if (link || fullWidth || borderRadiusFromProps === 0) {
       return {borderRadius: 0};
     }
@@ -409,6 +413,7 @@ class Button extends PureComponent<Props, ButtonState> {
   getShadowStyle() {
     const backgroundColor = this.getBackgroundColor();
     const {enableShadow} = this.props;
+
     if (enableShadow) {
       return [this.styles.shadowStyle, backgroundColor && {shadowColor: backgroundColor}];
     }
@@ -420,8 +425,8 @@ class Button extends PureComponent<Props, ButtonState> {
     const iconStyle: ImageStyle = {
       tintColor: this.getLabelColor()
     };
-
     const marginSide = [Button.sizes.large, Button.sizes.medium].includes(size) ? 8 : 4;
+
     if (!this.isIconButton) {
       if (iconOnRight) {
         iconStyle.marginLeft = marginSide;
@@ -460,6 +465,7 @@ class Button extends PureComponent<Props, ButtonState> {
 
     if (iconSource) {
       const iconStyle = this.getIconStyle();
+
       if (typeof iconSource === 'function') {
         return iconSource(iconStyle);
       } else {
@@ -566,4 +572,4 @@ function createStyles() {
 
 export {Button}; // For tests
 
-export default asBaseComponent<ButtonPropTypes, typeof Button>(forwardRef(Button));
+export default asBaseComponent<ButtonPropTypes, typeof Button>(forwardRef<Props>(Button));

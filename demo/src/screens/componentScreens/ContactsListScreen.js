@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Alert, FlatList} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
-import {AnimatableManager, Colors, ThemeManager, ListItem, Text, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
+import {AnimatableManager, Colors, ListItem, Text, Avatar, AvatarHelper} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
 
 
@@ -12,7 +12,7 @@ export default class ContactsListScreen extends Component {
 
     this.state = {
       onEdit: false,
-      updating: false,
+      updating: false
     };
   }
 
@@ -58,6 +58,6 @@ export default class ContactsListScreen extends Component {
 const styles = StyleSheet.create({
   border: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: ThemeManager.dividerColor,
-  },
+    borderColor: Colors.dark70
+  }
 });

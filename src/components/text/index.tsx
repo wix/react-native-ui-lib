@@ -155,4 +155,4 @@ const styles = StyleSheet.create({
 
 export {Text}; // For tests
 
-export default asBaseComponent<TextPropTypes>(forwardRef(Text));
+export default asBaseComponent<TextPropTypes>(forwardRef<PropsTypes>(Text));

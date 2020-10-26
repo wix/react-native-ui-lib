@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, {Component, PureComponent} from 'react';
 import {StyleSheet, Alert, FlatList} from 'react-native';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
-import {ThemeManager, Colors, ListItem, Text, Avatar, AvatarHelper, Drawer, Button} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, ListItem, Text, Avatar, AvatarHelper, Drawer, Button} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
 
 
@@ -174,7 +174,7 @@ class ContactItem extends PureComponent {
 const styles = StyleSheet.create({
   border: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: ThemeManager.dividerColor,
+    borderColor: Colors.dark70,
     paddingRight: 17
   },
   avatar: {
