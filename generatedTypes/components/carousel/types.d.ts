@@ -1,4 +1,4 @@
-import { StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, PointPropType } from 'react-native';
 import { PageControlProps } from '../pageControl';
 export declare enum PageControlPosition {
     OVER = "over",
@@ -84,8 +84,6 @@ export interface CarouselState {
     currentPage: number;
     currentStandingPage?: number;
     pageWidth: number;
-    initialOffset: {
-        x: number;
-    };
+    initialOffset: PointPropType;
     prevProps: CarouselProps;
 }

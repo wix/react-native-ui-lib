@@ -87,6 +87,6 @@ export interface CarouselState {
     currentPage: number;
     currentStandingPage?: number;
     pageWidth: number;
-    initialOffset: {x: number};
+    initialOffset: PointPropType;
     prevProps: CarouselProps;
 }

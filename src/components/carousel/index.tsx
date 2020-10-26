@@ -52,7 +52,8 @@ class Carousel extends Component<CarouselProps, CarouselState> {
           // @ts-ignore (defaultProps)
           currentPage: props.initialPage,
           pageWidth: defaultPageWidth
-        })
+        }),
+        y: 0
       },
       prevProps: props
     };
@@ -230,7 +231,8 @@ class Carousel extends Component<CarouselProps, CarouselState> {
       x: presenter.calcOffset(this.props, {
         currentPage: this.state.currentPage,
         pageWidth
-      })
+      }),
+      y: 0
     };
 
     this.setState({containerWidth, pageWidth, initialOffset});
