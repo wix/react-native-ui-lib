@@ -1,4 +1,3 @@
-// TODO: deprecate passing an an object as a value, use label and value props separately
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -11,7 +10,6 @@ import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import Text from '../text';
 
-
 /**
  * @description: Picker.Item, for configuring the Picker's selectable options
  * @extends: TouchableOpacity
@@ -23,20 +21,19 @@ class PickerItem extends BaseComponent {
 
   static propTypes = {
     /**
-     * [DEPRECATED - please include the label in the value prop] The item label
-     */
-    label: PropTypes.string,
-    /**
-     * The item value with the following format - {value: ..., label: ...},
-     * for custom shape use getItemLabel, getItemValue props
+     * Item's value
      */
     value: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
     /**
-     * Function to return the label out of the item value prop when value is custom shaped.
+     * Item's label
+     */
+    label: PropTypes.string,
+    /**
+     * Custom function for the item label (e.g (value) => customLabel)
      */
     getItemLabel: PropTypes.func,
     /**
-     * Function to return the value out of the item value prop when value is custom shaped.
+     * DEPRECATE: Function to return the value out of the item value prop when value is custom shaped.
      */
     getItemValue: PropTypes.func,
     /**
@@ -69,19 +66,15 @@ class PickerItem extends BaseComponent {
     onSelectedLayout: PropTypes.func
   };
 
-  /* eslint-disable */
-  /* constructor(props) {
+  
+  constructor(props) {
     super(props);
 
-    if (props.label) {
-      console.warn('PickerItem \'label\' prop will be deprecated soon. please include label in \'value\' prop. (refer docs)');  //eslint-disable-line
+    if (_.isPlainObject(props.value)) {
+      console.warn('UILib Picker.Item will stop supporting passing object as value & label (e.g {value, label}) in the next major version. Please pass separate label and value props');
     }
-
-    if (!_.isObject(props.value)) {
-      console.warn('PickerItem \'value\' prop type has changed to object, please use it with the following format: {value: ..., label: ...} or use getItemValue & getItemLabel props'); //eslint-disable-line
-    }
-  } */
-  /* eslint-enable */
+  }
+  
 
   generateStyles() {
     this.styles = createStyles(this.props);
@@ -146,8 +139,9 @@ class PickerItem extends BaseComponent {
 
   // TODO: deprecate the check for object
   onPress = () => {
-    const {label, value, onPress} = this.props;
-    onPress(_.isObject(value) ? value : {value, label});
+    const {value, onPress} = this.props;
+    // onPress(_.isObject(value) ? value : {value, label});
+    onPress(value);
   };
 }
 

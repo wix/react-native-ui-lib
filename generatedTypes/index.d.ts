@@ -7,6 +7,7 @@ export * from './style';
 export * from './services';
 export * as Incubator from './incubator';
 export {asBaseComponent, withScrollEnabler, withScrollReached, WithScrollEnablerProps, WithScrollReachedProps} from './commons/new';
+export {default as ActionBar, ActionBarProps} from './components/actionBar';
 export {default as Avatar, AvatarPropTypes} from './components/avatar';
 export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
 export {default as Constants} from './helpers/Constants';
@@ -20,6 +21,7 @@ export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as RadioButton, RadioButtonPropTypes} from './components/radioButton/RadioButton';
 export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButton/RadioGroup';
+export {default as Switch, SwitchProps} from './components/switch';
 export {default as TabBar} from './components/TabBar';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as ExpandableSection, ExpandableSectionProps } from './components/ExpandableSection';
@@ -39,10 +41,10 @@ export {default as PanListenerView, PanListenerViewPropTypes} from './components
 export {default as PanResponderView, PanResponderViewPropTypes} from './components/panningViews/panResponderView';
 export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes} from './components/panningViews/panDismissibleView';
 export {default as Dialog, DialogProps} from './components/dialog';
+export {default as PageControl, PageControlProps} from './components/pageControl';
 
 /* All components with manual typings */
 export {
-  ActionBar,
   ActionSheet,
   Badge,
   BadgeProps,
@@ -56,7 +58,6 @@ export {
   TextArea,
   MaskedInput,
   ListItem,
-  PageControl,
   ProgressBar,
   Slider,
   GradientSlider,
@@ -98,7 +99,6 @@ export const SafeAreaInsetsManager;
 export const SafeAreaSpacerView;
 export const ScrollBar;
 export const SelectableComponent;
-export const Switch;
 export const TabController;
 export const TextField;
 export const Wizard;

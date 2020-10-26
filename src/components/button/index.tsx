@@ -572,4 +572,4 @@ function createStyles() {
 
 export {Button}; // For tests
 
-export default asBaseComponent<ButtonPropTypes, typeof Button>(forwardRef(Button));
+export default asBaseComponent<ButtonPropTypes, typeof Button>(forwardRef<Props>(Button));
