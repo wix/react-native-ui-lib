@@ -30,6 +30,12 @@ export default class ProgressBarScreen extends Component {
     }
   }
 
+  get customElement() {
+    return (
+      <View style={{backgroundColor: Colors.green30}}/>
+    );
+  }
+
   render() {
     const {progresses} = this.state;
 
@@ -45,12 +51,19 @@ export default class ProgressBarScreen extends Component {
           <Text bodyBold style={styles.text}>
             Default
           </Text>
-          <ProgressBar progress={progresses[0]} style={styles.progressBar}/>
+          <ProgressBar
+            progress={progresses[0]}
+            style={styles.progressBar}
+          />
 
           <Text bodyBold style={styles.text}>
             fullWidth
           </Text>
-          <ProgressBar progress={progresses[1]} fullWidth style={styles.fullWidthProgressBar}/>
+          <ProgressBar
+            progress={progresses[1]}
+            style={styles.fullWidthProgressBar}
+            fullWidth
+          />
 
           <Text bodyBold style={styles.text}>
             styled
@@ -59,6 +72,15 @@ export default class ProgressBarScreen extends Component {
             progress={progresses[2]}
             style={[styles.progressBar, styles.styledProgressBar]}
             progressColor={Colors.purple70}
+          />
+
+          <Text bodyBold style={styles.text}>
+            Custom Element
+          </Text>
+          <ProgressBar
+            progress={progresses[0]}
+            style={styles.progressBar}
+            customElement={this.customElement}
           />
         </View>
       </ScrollView>

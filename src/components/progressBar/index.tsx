@@ -33,7 +33,11 @@ export interface Props {
   /**
    * Progress color
    */
-  progressColor?: string
+  progressColor?: string,
+  /**
+   * Custom element to render on top of the animated progress
+   */
+  customElement?: JSX.Element
 }
 
 interface State {
@@ -118,6 +122,16 @@ export default class ProgressBar extends PureBaseComponent<Props, State> {
     };
   }
 
+  renderCustomElement() {
+    const {customElement} = this.props;
+
+    if (customElement) {
+      return React.cloneElement(customElement, {
+        style: [customElement.props.style, styles.progress]
+      });
+    }
+  }
+
   render() {
     const {style} = this.props;
     const {containerWidth} = this.state;
@@ -130,7 +144,9 @@ export default class ProgressBar extends PureBaseComponent<Props, State> {
         {...this.getAccessibilityProps()}
       >
         {!!containerWidth && (
-          <Animated.View style={[styles.progress, this.getProgressStyle(), {transform: [{translateX: newProgress}]}]}/>
+          <Animated.View style={[styles.progress, this.getProgressStyle(), {transform: [{translateX: newProgress}]}]}>
+            {this.renderCustomElement()}
+          </Animated.View>
         )}
       </View>
     );
