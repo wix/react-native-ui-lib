@@ -1,11 +1,9 @@
-import {StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, PointPropType} from 'react-native';
-import {PageControlProps} from '../pageControl';
-
-export enum PageControlPosition {
-    OVER = 'over',
-    UNDER = 'under'
-  };
-
+import { StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { PageControlProps } from '../pageControl';
+export declare enum PageControlPosition {
+    OVER = "over",
+    UNDER = "under"
+}
 export interface CarouselProps {
     /**
      * the first page to start with
@@ -80,13 +78,14 @@ export interface CarouselProps {
      * the amount of ms to wait before switching to the next page, in case autoplay is on
      */
     autoplayInterval?: number;
-  };
-
+}
 export interface CarouselState {
     containerWidth?: number;
     currentPage: number;
     currentStandingPage?: number;
     pageWidth: number;
-    initialOffset: {x: number};
+    initialOffset: {
+        x: number;
+    };
     prevProps: CarouselProps;
 }

@@ -47,6 +47,10 @@ export interface PageControlProps {
      * The space between the siblings page indicators
      */
     spacing?: number;
+    /**
+     * Used to identify the pageControl in tests
+     */
+    testID?: string;
 }
 declare const _default: React.ComponentClass<PageControlProps & {
     useCustomTheme?: boolean | undefined;
