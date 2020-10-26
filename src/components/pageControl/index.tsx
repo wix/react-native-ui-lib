@@ -28,56 +28,56 @@ function getNumberOfPagesShown(props: PageControlProps) {
 }
 
 export interface PageControlProps {
-/**
-     * Limit the number of page indicators shown.
-     * enlargeActive prop is disabled in this state,
-     * When set to true there will be maximum of 7 shown.
-     * Only relevant when numOfPages > 5.
-     */
-    limitShownPages?: boolean;
-    /**
-     * Additional styles for the top container
-     */
-    containerStyle?: StyleProp<ViewStyle>;
-    /**
-     * Total number of pages
-     */
-    numOfPages: number;
-    /**
-     * Zero-based index of the current page
-     */
-    currentPage: number;
-    /**
-     * Action handler for clicking on a page indicator
-     */
-    onPagePress?: (index: number) => void;
-    /**
-     * Color of the selected page dot and, if inactiveColor not passed, the border of the not selected pages
-     */
-    color?: string;
-    /**
-     * Color of the unselected page dots and the border of the not selected pages
-     */
-    inactiveColor?: string;
-    /**
-     * The size of the page indicator.
-     * When setting limitShownPages the medium sized will be 2/3 of size and the small will be 1/3 of size.
-     * An alternative is to send an array [smallSize, mediumSize, largeSize].
-     */
-    size?: number | [number, number, number];
-    /**
-     * Whether to enlarge the active page indicator
-     * Irrelevant when limitShownPages is in effect.
-     */
-    enlargeActive?: boolean;
-    /**
-     * The space between the siblings page indicators
-     */
-    spacing?: number;
-    /**
-     * Used to identify the pageControl in tests
-     */
-    testID?: string;
+  /**
+   * Limit the number of page indicators shown.
+   * enlargeActive prop is disabled in this state,
+   * When set to true there will be maximum of 7 shown.
+   * Only relevant when numOfPages > 5.
+   */
+  limitShownPages?: boolean;
+  /**
+   * Additional styles for the top container
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Total number of pages
+   */
+  numOfPages: number;
+  /**
+   * Zero-based index of the current page
+   */
+  currentPage: number;
+  /**
+   * Action handler for clicking on a page indicator
+   */
+  onPagePress?: (index: number) => void;
+  /**
+   * Color of the selected page dot and, if inactiveColor not passed, the border of the not selected pages
+   */
+  color?: string;
+  /**
+   * Color of the unselected page dots and the border of the not selected pages
+   */
+  inactiveColor?: string;
+  /**
+   * The size of the page indicator.
+   * When setting limitShownPages the medium sized will be 2/3 of size and the small will be 1/3 of size.
+   * An alternative is to send an array [smallSize, mediumSize, largeSize].
+   */
+  size?: number | [number, number, number];
+  /**
+   * Whether to enlarge the active page indicator
+   * Irrelevant when limitShownPages is in effect.
+   */
+  enlargeActive?: boolean;
+  /**
+   * The space between the siblings page indicators
+   */
+  spacing?: number;
+  /**
+   * Used to identify the pageControl in tests
+   */
+  testID?: string;
 }
 
 interface State {
@@ -114,12 +114,14 @@ class PageControl extends PureComponent<PageControlProps, State> {
 
     if (Array.isArray(props.size)) {
       if (props.size[0] >= props.size[1] || props.size[1] >= props.size[2]) {
-        console.warn('It is recommended that largeSize > mediumSize > smallSize, currently: smallSize=',
+        console.warn(
+          'It is recommended that largeSize > mediumSize > smallSize, currently: smallSize=',
           props.size[0],
           'mediumSize=',
           props.size[1],
           'largeSize=',
-          props.size[2]);
+          props.size[2]
+        );
       }
     }
   }
@@ -127,7 +129,7 @@ class PageControl extends PureComponent<PageControlProps, State> {
   static getDerivedStateFromProps(nextProps: PageControlProps, prevState: State) {
     const {currentPage} = nextProps;
     const {largeIndicatorsOffset: prevLargeIndicatorsOffset, prevPage} = prevState;
-    const newState: {prevPage?: number, pagesOffset?: number, largeIndicatorsOffset?: number} = {};
+    const newState: {prevPage?: number; pagesOffset?: number; largeIndicatorsOffset?: number} = {};
 
     if (currentPage !== prevPage) {
       newState.prevPage = currentPage;
@@ -229,7 +231,9 @@ class PageControl extends PureComponent<PageControlProps, State> {
 
     return (
       <View style={[styles.container, containerStyle]} inaccessible testID={testID}>
-        {PageControl.showLimitedVersion(this.props) ? this.renderDifferentSizeIndicators() : this.renderSameSizeIndicators()}
+        {PageControl.showLimitedVersion(this.props)
+          ? this.renderDifferentSizeIndicators()
+          : this.renderSameSizeIndicators()}
       </View>
     );
   }

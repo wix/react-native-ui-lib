@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 export interface PageControlProps {
     /**
-         * Limit the number of page indicators shown.
-         * enlargeActive prop is disabled in this state,
-         * When set to true there will be maximum of 7 shown.
-         * Only relevant when numOfPages > 5.
-         */
+     * Limit the number of page indicators shown.
+     * enlargeActive prop is disabled in this state,
+     * When set to true there will be maximum of 7 shown.
+     * Only relevant when numOfPages > 5.
+     */
     limitShownPages?: boolean;
     /**
      * Additional styles for the top container

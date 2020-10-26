@@ -33,7 +33,7 @@ export function calcPageIndex(offset: number, props: CarouselProps, pageWidth: n
 export function isOutOfBounds(offset: number, props: CarouselProps, pageWidth: number) {
   const length = getChildrenLength(props);
   const minLimit = 1;
-  const maxLimit = ((length + 1) * pageWidth) - 1;
+  const maxLimit = (length + 1) * pageWidth - 1;
 
   return !_.inRange(offset, minLimit, maxLimit);
 }

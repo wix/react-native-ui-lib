@@ -39,7 +39,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   constructor(props: CarouselProps) {
     super(props);
 
-    const defaultPageWidth = (props.loop || !props.pageWidth) ? Constants.screenWidth : props.pageWidth;
+    const defaultPageWidth = props.loop || !props.pageWidth ? Constants.screenWidth : props.pageWidth;
 
     this.state = {
       containerWidth: undefined,
