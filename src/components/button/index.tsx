@@ -46,7 +46,7 @@ export type ButtonPropTypes = TouchableOpacityProps &
      */
     color?: string;
     /**
-     * Icon image source
+     * Icon image source or a callback function that returns a source
      */
     iconSource?: object | number | Function;
     /**
