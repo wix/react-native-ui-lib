@@ -74,6 +74,10 @@ export interface PageControlProps {
      * The space between the siblings page indicators
      */
     spacing?: number;
+    /**
+     * Used to identify the pageControl in tests
+     */
+    testID?: string;
 }
 
 interface State {
@@ -221,10 +225,10 @@ class PageControl extends PureComponent<PageControlProps, State> {
   }
 
   render() {
-    const {containerStyle} = this.props;
+    const {containerStyle, testID} = this.props;
 
     return (
-      <View style={[styles.container, containerStyle]} inaccessible>
+      <View style={[styles.container, containerStyle]} inaccessible testID={testID}>
         {PageControl.showLimitedVersion(this.props) ? this.renderDifferentSizeIndicators() : this.renderSameSizeIndicators()}
       </View>
     );
