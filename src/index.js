@@ -226,6 +226,15 @@ export default {
   get withScrollReached() {
     return require('./commons').withScrollReached;
   },
+  get BaseComponentInjectedProps() {
+    return require('./commons').BaseComponentInjectedProps;
+  },
+  get ForwardRefInjectedProps() {
+    return require('./commons').ForwardRefInjectedProps;
+  },
+  get ModifiersProps() {
+    return require('./commons').default;
+  },
 
   // Helpers
   get AvatarHelper() {

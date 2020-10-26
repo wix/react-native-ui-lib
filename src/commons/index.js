@@ -27,5 +27,14 @@ module.exports = {
   },
   get withScrollReached() {
     return require('./withScrollReached').default;
+  },
+  get BaseComponentInjectedProps() {
+    return require('./asBaseComponent').BaseComponentInjectedProps;
+  },
+  get ForwardRefInjectedProps() {
+    return require('./forwardRef').ForwardRefInjectedProps;
+  },
+  get ModifiersProps() {
+    return require('./modifiers').default;
   }
 };
