@@ -9,6 +9,7 @@ import Text from '../text';
 import PageControl from '../pageControl';
 import * as presenter from './CarouselPresenter';
 import {CarouselProps, CarouselState, PageControlPosition} from './types';
+export {CarouselProps, PageControlPosition};
 
 interface DefaultProps extends Partial<CarouselProps> {}
 
@@ -470,7 +471,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 }
 
 export {Carousel}; // For tests
-export default asBaseComponent<CarouselProps>(Carousel);
+export default asBaseComponent<CarouselProps, typeof Carousel>(Carousel);
 
 const styles = StyleSheet.create({
   counter: {

@@ -1,6 +1,7 @@
 import React, { Component, RefObject, ReactNode, Key } from 'react';
 import { ScrollView, LayoutChangeEvent, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { CarouselProps, CarouselState, PageControlPosition } from './types';
+export { CarouselProps, PageControlPosition };
 interface DefaultProps extends Partial<CarouselProps> {
 }
 /**
@@ -64,5 +65,5 @@ declare class Carousel extends Component<CarouselProps, CarouselState> {
 export { Carousel };
 declare const _default: React.ComponentClass<CarouselProps & {
     useCustomTheme?: boolean | undefined;
-}, any>;
+}, any> & typeof Carousel;
 export default _default;
