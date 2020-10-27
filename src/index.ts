@@ -6,6 +6,16 @@
 
 export * from './style';
 export * from './services';
+export {
+  BaseComponentInjectedProps,
+  ForwardRefInjectedProps,
+  ContainerModifiers,
+  MarginModifiers,
+  PaddingModifiers,
+  TypographyModifiers,
+  ColorsModifiers,
+  BackgroundColorModifier
+} from './commons/new';
 export * as Incubator from './incubator';
 export {default as ActionBar, ActionBarProps} from './components/actionBar';
 export {default as Avatar, AvatarPropTypes} from './components/avatar';
