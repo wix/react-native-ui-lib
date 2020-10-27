@@ -80,7 +80,6 @@ export default class ColorPickerScreen extends Component {
           </Text>
           <ColorPicker
             initialColor={color}
-            // key={color} //TODO: uncomment after migration completed
             colors={customColors}
             onDismiss={this.onDismiss}
             onSubmit={this.onSubmit}
