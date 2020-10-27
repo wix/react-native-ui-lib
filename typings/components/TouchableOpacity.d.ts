@@ -1,7 +1,7 @@
 
 import {TouchableOpacityProps as RNTouchableOpacityProps} from 'react-native';
 import {PureBaseComponent} from '../commons';
-import {AlignmentModifiers, FlexModifiers} from '../modifiers';
+import {AlignmentModifiers, FlexModifiers} from '../../src/commons/modifiers';
 import {ColorValue} from '../style/colors';
 
 export interface TouchableOpacityThrottleOptions {
