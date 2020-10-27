@@ -101,7 +101,7 @@ class ColorPicker extends PureComponent {
   }
 
   render() {
-    const {/* initialColor,  */colors, value, testID, accessibilityLabels} = this.props;
+    const {initialColor, colors, value, testID, accessibilityLabels} = this.props;
     const {show} = this.state;
 
     return (
@@ -132,7 +132,7 @@ class ColorPicker extends PureComponent {
           {...this.props}
           visible={show}
           onDismiss={this.hideDialog}
-          /* key={initialColor} */
+          key={initialColor}
         />
       </View>
     );

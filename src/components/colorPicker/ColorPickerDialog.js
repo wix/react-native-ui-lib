@@ -98,17 +98,6 @@ class ColorPickerDialog extends PureComponent {
     this.keyboardDidHideListener.remove();
   }
 
-  // TODO: remove method after migration to 'key' completed
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.initialColor !== nextProps.initialColor) {
-      const text = this.getColorValue(nextProps.initialColor || this.props.initialColor);
-      const color = Colors.getHSL(nextProps.initialColor);
-      const {valid} = this.getValidColorString(text);
-
-      this.setState({color, text, valid});
-    }
-  }
-
   keyboardDidShow = e => {
     if (Constants.isIOS && this.state.keyboardHeight !== e.endCoordinates.height) {
       this.setState({keyboardHeight: e.endCoordinates.height});
