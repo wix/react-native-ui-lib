@@ -26,26 +26,7 @@ class ColorPickerDialog extends PureComponent {
   static displayName = 'ColorPickerDialog';
 
   static propTypes = {
-    /**
-     * Control visibility of the dialog
-     */
-    visible: PropTypes.bool,
-    /**
-     * Array of colors for the picker's color palette (hex values)
-     */
-    colors: PropTypes.arrayOf(PropTypes.string),
-    /**
-     * The value of the selected swatch
-     */
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    /**
-     * The index of the item to animate at first render (default is last)
-     */
-    // animatedIndex: PropTypes.number,
-    /**
-     * onValueChange callback for the picker's color palette change
-     */
-    onValueChange: PropTypes.func,
+    ...Dialog.PropTypes,
     /**
      * The initial color to pass the picker dialog
      */
@@ -55,7 +36,7 @@ class ColorPickerDialog extends PureComponent {
      */
     onSubmit: PropTypes.func,
     /**
-     * Props to pass the Dialog component
+     * Props to pass the Dialog component // TODO: deprecate 'dialogProps' prop
      */
     dialogProps: PropTypes.object,
     /**
@@ -66,11 +47,14 @@ class ColorPickerDialog extends PureComponent {
      * Accessibility labels as an object of strings, ex. {addButton: 'add custom color using hex code', dismissButton: 'dismiss', doneButton: 'done', input: 'custom hex color code'}
      */
     accessibilityLabels: PropTypes.shape({
-      addButton: PropTypes.string,
       dismissButton: PropTypes.string,
       doneButton: PropTypes.string,
       input: PropTypes.string
     })
+  };
+
+  static defaultProps = {
+    initialColor: Colors.dark80
   };
 
   constructor(props) {
@@ -314,7 +298,6 @@ class ColorPickerDialog extends PureComponent {
 
     return (
       <Dialog
-        migrate
         visible={visible}
         width="100%"
         height={null}
@@ -325,7 +308,7 @@ class ColorPickerDialog extends PureComponent {
         panDirection={PanningProvider.Directions.DOWN}
         testID={`${testID}.dialog`}
         supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOS only
-        {...dialogProps}
+        {...dialogProps} //TODO: pass this.props instead
       >
         {this.renderHeader()}
         {this.renderPreview()}

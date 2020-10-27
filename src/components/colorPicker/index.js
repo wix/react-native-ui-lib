@@ -28,12 +28,13 @@ class ColorPicker extends PureComponent {
   static displayName = 'ColorPicker';
 
   static propTypes = {
+    ...ColorPickerDialog.PropTypes,
     /**
      * Array of colors for the picker's color palette (hex values)
      */
     colors: PropTypes.arrayOf(PropTypes.string),
     /**
-     * The value of the selected swatch
+     * The value of the selected swatch // TODO: rename prop 'selectedValue'
      */
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     /**
@@ -45,23 +46,13 @@ class ColorPicker extends PureComponent {
      */
     onValueChange: PropTypes.func,
     /**
-     * The initial color to pass the picker dialog
-     */
-    initialColor: PropTypes.string,
-    /**
-     * onSubmit callback for the picker dialog color change
-     */
-    onSubmit: PropTypes.func,
-    /**
-     * Props to pass the Dialog component
-     */
-    dialogProps: PropTypes.object,
-    /**
-     * Additional styling for the color preview text.
-     */
-    previewInputStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * Accessibility labels as an object of strings, ex. {addButton: 'add custom color using hex code', dismissButton: 'dismiss', doneButton: 'done', input: 'custom hex color code'}
+     * Accessibility labels as an object of strings, ex.
+     * {
+     *  addButton: 'add custom color using hex code',
+     *  dismissButton: 'dismiss',
+     *  doneButton: 'done',
+     *  input: 'custom hex color code'
+     * }
      */
     accessibilityLabels: PropTypes.shape({
       addButton: PropTypes.string,
@@ -72,7 +63,6 @@ class ColorPicker extends PureComponent {
   };
 
   static defaultProps = {
-    initialColor: Colors.dark80,
     accessibilityLabels: ACCESSIBILITY_LABELS
   };
 
@@ -130,9 +120,14 @@ class ColorPicker extends PureComponent {
         </View>
         <ColorPickerDialog
           {...this.props}
+          key={initialColor}
           visible={show}
           onDismiss={this.hideDialog}
-          key={initialColor}
+          accessibilityLabels={{
+            dismissButton: accessibilityLabels.dismissButton,
+            doneButton: accessibilityLabels.doneButton,
+            input: accessibilityLabels.input
+          }}
         />
       </View>
     );
