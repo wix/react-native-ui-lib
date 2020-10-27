@@ -1,17 +1,16 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
-import {StyleSheet, LayoutAnimation} from 'react-native';
-import {asBaseComponent, forwardRef} from '../../commons';
+import {StyleSheet, LayoutAnimation, StyleProp, ViewStyle} from 'react-native';
+import {asBaseComponent, forwardRef} from '../../commons/new';
 import {Colors} from '../../style';
-import TouchableOpacity from '../touchableOpacity';
+import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import View from '../view';
 
 const MAX_SHOWN_PAGES = 7;
 const NUM_LARGE_INDICATORS = 3;
 const DEFAULT_INDICATOR_COLOR = Colors.blue30;
 
-function getColorStyle(color, inactiveColor, isCurrentPage) {
+function getColorStyle(isCurrentPage: boolean, color?: string, inactiveColor?: string) {
   const activeColor = color || DEFAULT_INDICATOR_COLOR;
   return {
     borderColor: isCurrentPage ? activeColor : inactiveColor || activeColor,
@@ -19,9 +18,73 @@ function getColorStyle(color, inactiveColor, isCurrentPage) {
   };
 }
 
-function getSizeStyle(size, enlargeActive, index, currentPage) {
+function getSizeStyle(size: number, index: number, currentPage: number, enlargeActive?: boolean) {
   const temp = enlargeActive ? (index === currentPage ? size + 2 : size) : size;
   return {width: temp, height: temp, borderRadius: temp / 2};
+}
+
+function getNumberOfPagesShown(props: PageControlProps) {
+  return Math.min(MAX_SHOWN_PAGES, props.numOfPages);
+}
+
+export interface PageControlProps {
+/**
+     * Limit the number of page indicators shown.
+     * enlargeActive prop is disabled in this state,
+     * When set to true there will be maximum of 7 shown.
+     * Only relevant when numOfPages > 5.
+     */
+    limitShownPages?: boolean;
+    /**
+     * Additional styles for the top container
+     */
+    containerStyle?: StyleProp<ViewStyle>;
+    /**
+     * Total number of pages
+     */
+    numOfPages: number;
+    /**
+     * Zero-based index of the current page
+     */
+    currentPage: number;
+    /**
+     * Action handler for clicking on a page indicator
+     */
+    onPagePress?: (index: number) => void;
+    /**
+     * Color of the selected page dot and, if inactiveColor not passed, the border of the not selected pages
+     */
+    color?: string;
+    /**
+     * Color of the unselected page dots and the border of the not selected pages
+     */
+    inactiveColor?: string;
+    /**
+     * The size of the page indicator.
+     * When setting limitShownPages the medium sized will be 2/3 of size and the small will be 1/3 of size.
+     * An alternative is to send an array [smallSize, mediumSize, largeSize].
+     */
+    size?: number | [number, number, number];
+    /**
+     * Whether to enlarge the active page indicator
+     * Irrelevant when limitShownPages is in effect.
+     */
+    enlargeActive?: boolean;
+    /**
+     * The space between the siblings page indicators
+     */
+    spacing?: number;
+    /**
+     * Used to identify the pageControl in tests
+     */
+    testID?: string;
+}
+
+interface State {
+  numOfPagesShown: number;
+  largeIndicatorsOffset: number;
+  pagesOffset: number;
+  prevPage?: number;
 }
 
 /**
@@ -29,56 +92,8 @@ function getSizeStyle(size, enlargeActive, index, currentPage) {
  * @image: https://user-images.githubusercontent.com/33805983/34663655-76698110-f460-11e7-854b-243d27f66fec.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PageControlScreen.js
  */
-class PageControl extends PureComponent {
+class PageControl extends PureComponent<PageControlProps, State> {
   static displayName = 'PageControl';
-  static propTypes = {
-    /**
-     * Limit the number of page indicators shown.
-     * enlargeActive prop is disabled in this state,
-     * When set to true there will be maximum of 7 shown.
-     * Only relevant when numOfPages > 5.
-     */
-    limitShownPages: PropTypes.bool,
-    /**
-     * Additional styles for the top container
-     */
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * Total number of pages
-     */
-    numOfPages: PropTypes.number,
-    /**
-     * Zero-based index of the current page
-     */
-    currentPage: PropTypes.number,
-    /**
-     * Action handler for clicking on a page indicator
-     */
-    onPagePress: PropTypes.func,
-    /**
-     * Color of the selected page dot and, if inactiveColor not passed, the border of the not selected pages
-     */
-    color: PropTypes.string,
-    /**
-     * Color of the unselected page dots and the border of the not selected pages
-     */
-    inactiveColor: PropTypes.string,
-    /**
-     * The size of the page indicator.
-     * When setting limitShownPages the medium sized will be 2/3 of size and the small will be 1/3 of size.
-     * An alternative is to send an array [smallSize, mediumSize, largeSize].
-     */
-    size: PropTypes.oneOfType([PropTypes.number, PropTypes.array]),
-    /**
-     * Whether to enlarge the active page indicator
-     * Irrelevant when limitShownPages is in effect.
-     */
-    enlargeActive: PropTypes.bool,
-    /**
-     * The space between the siblings page indicators
-     */
-    spacing: PropTypes.number
-  };
 
   static DEFAULT_SIZE = 10;
   static DEFAULT_SPACING = 4;
@@ -87,11 +102,11 @@ class PageControl extends PureComponent {
     enlargeActive: false
   };
 
-  constructor(props) {
+  constructor(props: PageControlProps) {
     super(props);
 
     this.state = {
-      numOfPagesShown: Math.min(MAX_SHOWN_PAGES, props.numOfPages),
+      numOfPagesShown: getNumberOfPagesShown(props),
       largeIndicatorsOffset: 0,
       pagesOffset: 0,
       prevPage: undefined
@@ -109,10 +124,10 @@ class PageControl extends PureComponent {
     }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps(nextProps: PageControlProps, prevState: State) {
     const {currentPage} = nextProps;
     const {largeIndicatorsOffset: prevLargeIndicatorsOffset, prevPage} = prevState;
-    const newState = {};
+    const newState: {prevPage?: number, pagesOffset?: number, largeIndicatorsOffset?: number} = {};
 
     if (currentPage !== prevPage) {
       newState.prevPage = currentPage;
@@ -130,17 +145,17 @@ class PageControl extends PureComponent {
     return _.isEmpty(newState) ? null : newState;
   }
 
-  static animate(props) {
+  static animate(props: PageControlProps) {
     if (PageControl.showLimitedVersion(props)) {
       LayoutAnimation.configureNext({...LayoutAnimation.Presets.linear, duration: 100});
     }
   }
 
-  static showLimitedVersion({limitShownPages, numOfPages}) {
+  static showLimitedVersion({limitShownPages, numOfPages}: PageControlProps) {
     return limitShownPages && numOfPages > 5;
   }
 
-  getSize(index) {
+  getSize(index: number): undefined | number {
     const {largeIndicatorsOffset} = this.state;
     const {numOfPages} = this.props;
     let mediumSize,
@@ -166,23 +181,23 @@ class PageControl extends PureComponent {
     }
   }
 
-  onPagePress = ({index}) => {
+  onPagePress = ({customValue: index}: TouchableOpacityProps) => {
     PageControl.animate(this.props);
     _.invoke(this.props, 'onPagePress', index);
   };
 
-  renderIndicator(index, size, enlargeActive) {
+  renderIndicator(index: number, size: number, enlargeActive?: boolean) {
     const {currentPage, color, inactiveColor, onPagePress, spacing = PageControl.DEFAULT_SPACING} = this.props;
     return (
       <TouchableOpacity
-        index={index}
+        customValue={index}
         onPress={onPagePress && this.onPagePress}
         key={index}
         style={[
           styles.pageIndicator,
           {marginHorizontal: spacing / 2},
-          getColorStyle(color, inactiveColor, index === currentPage),
-          getSizeStyle(size, enlargeActive, index, currentPage)
+          getColorStyle(index === currentPage, color, inactiveColor),
+          getSizeStyle(size, index, currentPage, enlargeActive)
         ]}
       />
     );
@@ -210,17 +225,17 @@ class PageControl extends PureComponent {
   }
 
   render() {
-    const {containerStyle} = this.props;
+    const {containerStyle, testID} = this.props;
 
     return (
-      <View style={[styles.container, containerStyle]} inaccessible>
+      <View style={[styles.container, containerStyle]} inaccessible testID={testID}>
         {PageControl.showLimitedVersion(this.props) ? this.renderDifferentSizeIndicators() : this.renderSameSizeIndicators()}
       </View>
     );
   }
 }
 
-export default asBaseComponent(forwardRef(PageControl));
+export default asBaseComponent<PageControlProps>(forwardRef(PageControl));
 
 const styles = StyleSheet.create({
   container: {

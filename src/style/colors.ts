@@ -2,7 +2,7 @@ import _ from 'lodash';
 //@ts-ignore
 import Color from 'color';
 import tinycolor from 'tinycolor2';
-import {colorsPalette} from './colorsPalette';
+import {colorsPalette, themeColors} from './colorsPalette';
 //@ts-ignore
 import ColorName from './colorName';
 
@@ -10,7 +10,8 @@ export class Colors {
   [key: string]: any;
 
   constructor() {
-    Object.assign(this, colorsPalette);
+    const colors = Object.assign(colorsPalette, themeColors);
+    Object.assign(this, colors);
   }
   /**
    * Load custom set of colors
@@ -203,7 +204,15 @@ function validateHex(value: string) {
   if (!/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value)) {
     throw new Error(`${value} is invalid hex color`);
   }
-  return value.replace('#', '');
+  value = value.replace('#', '');
+  if (value.length === 3) {
+    value = threeDigitHexToSix(value);
+  }
+  return value;
+}
+
+function threeDigitHexToSix(value: string) { 
+  return value.replace(/./g, '$&$&');
 }
 
 const TypedColors = Colors as ExtendTypeWith<typeof Colors, typeof colorsPalette>

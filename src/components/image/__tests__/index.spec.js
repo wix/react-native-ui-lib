@@ -19,20 +19,6 @@ describe('Image', () => {
       expect(uut.getImageSource()).toBe(2);
     });
 
-    // TODO: currently impossible to test it cause we can't export the Image we use in tests
-    // with asBaseComponent
-    // it('should return transformed source prop, according to sourceTransform in ThemeManager', () => {
-    //   ThemeManager.setTheme({
-    //     components: {
-    //       Image: {
-    //         sourceTransformer: jest.fn(() => 3)
-    //       }
-    //     }
-    //   });
-    //   const uut = new Image({source: 1});
-    //   expect(uut.getImageSource()).toBe(3);
-    // });
-
     it('should return transformed source prop, according to sourceTransform prop and other given props', () => {
       const sourceTransformer = jest.fn(({size, source}) => (size === 'small' ? source : 3));
       let uut = new Image({source: 1, size: 'small', sourceTransformer});

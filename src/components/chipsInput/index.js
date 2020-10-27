@@ -213,7 +213,7 @@ export default class ChipsInput extends BaseComponent {
     const tagsCount = _.size(tags);
     const keyCode = _.get(event, 'nativeEvent.key');
     const hasNoValue = _.isEmpty(value);
-    const pressedBackspace = Constants.isAndroid || keyCode === 'Backspace';
+    const pressedBackspace = Constants.isAndroid || keyCode === Constants.backspaceKey;
     const hasTags = tagsCount > 0;
 
     if (pressedBackspace) {

@@ -20,9 +20,10 @@ export interface LabelProps {
      */
     labelProps?: TextPropTypes;
     validationMessagePosition?: ValidationMessagePosition;
+    floatingPlaceholder?: boolean;
 }
 declare const Label: {
-    ({ label, labelColor, labelStyle, labelProps, validationMessagePosition }: LabelProps): JSX.Element | null;
+    ({ label, labelColor, labelStyle, labelProps, validationMessagePosition, floatingPlaceholder }: LabelProps): JSX.Element | null;
     displayName: string;
 };
 export default Label;
