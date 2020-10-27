@@ -298,7 +298,7 @@ class ColorPickerDialog extends PureComponent {
 
     return (
       <Dialog
-        visible={visible}
+        visible={visible} //TODO: pass all Dialog props instead
         width="100%"
         height={null}
         bottom
@@ -308,7 +308,7 @@ class ColorPickerDialog extends PureComponent {
         panDirection={PanningProvider.Directions.DOWN}
         testID={`${testID}.dialog`}
         supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOS only
-        {...dialogProps} //TODO: pass this.props instead
+        {...dialogProps}
       >
         {this.renderHeader()}
         {this.renderPreview()}
