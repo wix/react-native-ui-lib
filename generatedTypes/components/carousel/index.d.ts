@@ -1,7 +1,7 @@
 import React, { Component, RefObject, ReactNode, Key } from 'react';
 import { ScrollView, LayoutChangeEvent, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { CarouselProps, CarouselState, PageControlPosition } from './types';
-export { CarouselProps, PageControlPosition };
+export { CarouselProps };
 interface DefaultProps extends Partial<CarouselProps> {
 }
 /**
