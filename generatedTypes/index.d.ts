@@ -56,13 +56,13 @@ export {default as PanResponderView, PanResponderViewPropTypes} from './componen
 export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes} from './components/panningViews/panDismissibleView';
 export {default as Dialog, DialogProps} from './components/dialog';
 export {default as PageControl, PageControlProps} from './components/pageControl';
+export {default as Carousel, CarouselProps} from './components/carousel';
 
 /* All components with manual typings */
 export {
   ActionSheet,
   Badge,
   BadgeProps,
-  Carousel,
   ConnectionStatusBar,
   Drawer,
   ExpandableSection,
