@@ -1,4 +1,4 @@
-import React, { Component, RefObject } from 'react';
+import React, { Component, RefObject, ReactNode, Key } from 'react';
 import { ScrollView, LayoutChangeEvent, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { CarouselProps, CarouselState, PageControlPosition } from './types';
 export { CarouselProps };
@@ -54,7 +54,7 @@ declare class Carousel extends Component<CarouselProps, CarouselState> {
     onMomentumScrollEnd: () => void;
     goToNextPage(): void;
     onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
-    renderChild: (child: React.ReactNode, key: string | number) => JSX.Element | undefined;
+    renderChild: (child: ReactNode, key: Key) => JSX.Element | undefined;
     renderChildren(): JSX.Element[] | null | undefined;
     renderPageControl(): JSX.Element | undefined;
     renderCounter(): JSX.Element | undefined;

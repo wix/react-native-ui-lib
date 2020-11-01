@@ -26,7 +26,7 @@ declare class RadioGroup extends PureComponent<Props, RadioGroupState> {
         value: string | number | boolean | undefined;
         onValueChange: (value: string | number | boolean | undefined) => void;
     };
-    onValueChange: (value: string | number | boolean | undefined) => void;
+    onValueChange: (value: RadioGroupPropTypes['initialValue']) => void;
     render(): JSX.Element;
 }
 export { RadioGroup };
