@@ -6,7 +6,7 @@ import forwardRef, {ForwardRefInjectedProps} from './forwardRef';
 //@ts-ignore
 import hoistStatics from 'hoist-non-react-statics';
 
-export type ScrollEnablerProps = {
+type ScrollEnablerProps = {
   onContentSizeChange: (contentWidth: number, contentHeight: number) => void;
   onLayout: (event: LayoutChangeEvent) => void;
   scrollEnabled: boolean;
@@ -24,7 +24,7 @@ type PropTypes = ForwardRefInjectedProps & SupportedViewsProps;
 function withScrollEnabler<PROPS, STATICS = {}>(
   WrappedComponent: React.ComponentType<PROPS & WithScrollEnablerProps>
 ): React.ComponentType<PROPS> & STATICS {
-  const ScrollEnabler = (props: PROPS & PropTypes) => {
+  const ScrollEnabler: React.FunctionComponent<PROPS & PropTypes> = (props: PROPS & PropTypes) => {
     const [scrollEnabled, setScrollEnabled] = useState(true);
     const contentSize = useRef(0);
     const layoutSize = useRef(0);
@@ -78,7 +78,9 @@ function withScrollEnabler<PROPS, STATICS = {}>(
 
   hoistStatics(ScrollEnabler, WrappedComponent);
   ScrollEnabler.displayName = WrappedComponent.displayName;
+  //@ts-ignore
   ScrollEnabler.propTypes = WrappedComponent.propTypes;
+  //@ts-ignore
   ScrollEnabler.defaultProps = WrappedComponent.defaultProps;
   return forwardRef(ScrollEnabler) as any;
 }

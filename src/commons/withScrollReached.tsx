@@ -15,7 +15,7 @@ import forwardRef, {ForwardRefInjectedProps} from './forwardRef';
 import hoistStatics from 'hoist-non-react-statics';
 import {Constants} from '../helpers';
 
-export type ScrollReachedProps = {
+type ScrollReachedProps = {
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   /**
    * Is the scroll at the start (or equal\smaller than the threshold if one was given)
@@ -59,7 +59,7 @@ function withScrollReached<PROPS, STATICS = {}>(
   WrappedComponent: React.ComponentType<PROPS & WithScrollReachedProps>,
   options: WithScrollReachedOptionsProps = {}
 ): React.ComponentType<PROPS> & STATICS {
-  const ScrollReachedDetector = (props: PROPS & PropTypes) => {
+  const ScrollReachedDetector: React.FunctionComponent<PROPS & PropTypes> = (props: PROPS & PropTypes) => {
     // The scroll starts at the start, from what I've tested this works fine
     const [isScrollAtStart, setScrollAtStart] = useState(true);
     const [isScrollAtEnd, setScrollAtEnd] = useState(false);
@@ -102,9 +102,11 @@ function withScrollReached<PROPS, STATICS = {}>(
 
   hoistStatics(ScrollReachedDetector, WrappedComponent);
   ScrollReachedDetector.displayName = WrappedComponent.displayName;
+  //@ts-ignore
   ScrollReachedDetector.propTypes = WrappedComponent.propTypes;
+  //@ts-ignore
   ScrollReachedDetector.defaultProps = WrappedComponent.defaultProps;
-  return forwardRef(ScrollReachedDetector) as any;
+  return forwardRef<PROPS & PropTypes>(ScrollReachedDetector) as any;
 }
 
 export default withScrollReached;
