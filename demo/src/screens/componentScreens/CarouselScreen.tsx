@@ -6,8 +6,8 @@ import {
   Spacings,
   View,
   Text,
-  Carousel,
   Image,
+  Carousel,
   Colors
 } from 'react-native-ui-lib';
 import {
@@ -46,7 +46,7 @@ interface State {
 }
 
 class CarouselScreen extends Component<Props ,State> {
-  carousel = React.createRef<any>();
+  carousel = React.createRef<typeof Carousel>();
 
   constructor(props: Props) {
     super(props);
@@ -164,7 +164,7 @@ class CarouselScreen extends Component<Props ,State> {
               size: 10,
               containerStyle: styles.loopCarousel
             }}
-            pageControlPosition={Carousel.pageControlPositions.OVER}
+            pageControlPosition={Carousel.pageControlPositions.UNDER}
           >
             {IMAGES.map((image, i) => {
               return (
