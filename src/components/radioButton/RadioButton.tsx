@@ -18,12 +18,12 @@ import View from '../view';
 import Text from '../text';
 import Image from '../image';
 import asRadioGroupChild from './asRadioGroupChild';
-import {RadioGroupContextPropTypes} from './RadioGroupContext';
+import {RadioGroupContextProps} from './RadioGroupContext';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
 
-export type RadioButtonPropTypes = RadioGroupContextPropTypes & ViewProps & {
+export type RadioButtonProps = RadioGroupContextProps & ViewProps & {
   /**
    * The identifier value of the radio button. must be different than other RadioButtons in the same group
    */
@@ -83,7 +83,7 @@ interface RadioButtonState {
   scaleAnimationValue: Animated.Value;
 }
 
-type Props = RadioButtonPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
+type Props = RadioButtonProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
 
 /**
  * A Radio Button component, should be wrapped inside a RadioGroup
@@ -265,7 +265,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   }
 }
 
-function createStyles(props: RadioButtonPropTypes) {
+function createStyles(props: RadioButtonProps) {
   const {size = DEFAULT_SIZE, borderRadius = DEFAULT_SIZE / 2, color = DEFAULT_COLOR, disabled} = props;
   return StyleSheet.create({
     radioButtonOutline: {
@@ -287,4 +287,4 @@ function createStyles(props: RadioButtonPropTypes) {
   });
 }
 
-export default asBaseComponent<RadioButtonPropTypes>(forwardRef(asRadioGroupChild(RadioButton)));
+export default asBaseComponent<RadioButtonProps>(forwardRef(asRadioGroupChild(RadioButton)));

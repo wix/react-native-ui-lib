@@ -1,10 +1,11 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import {StyleSheet, ViewStyle} from 'react-native';
-import _ from 'lodash';
+import {Colors, Shadows} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
-import Button, {ButtonPropTypes} from '../button';
-import {Colors, Shadows} from '../../style';
+import Button, {ButtonProps} from '../button';
+
 
 /**
  * @description: Quick actions bar, each action support Button component props
@@ -25,7 +26,7 @@ export type ActionBarProps = {
     /**
      * actions for the action bar
      */
-    actions: ButtonPropTypes[];
+    actions: ButtonProps[];
     /**
      * should action be equally centered
      */
@@ -58,7 +59,7 @@ class ActionBar extends Component<ActionBarProps> {
   }
 
   styles = createStyles(this.props);
-  
+
   getAlignment(actionIndex: number) {
     const {actions, centered} = this.props;
     const first = actionIndex === 0;

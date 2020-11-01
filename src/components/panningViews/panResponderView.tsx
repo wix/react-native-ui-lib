@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import View, {ViewPropTypes} from '../view';
+import View, {ViewProps} from '../view';
 import asPanViewConsumer from './asPanViewConsumer';
 import {PanLocationProps, PanAmountsProps} from './panningProvider';
 
-export interface PanResponderViewPropTypes extends ViewPropTypes {
+export interface PanResponderViewProps extends ViewProps {
     /**
      * Will be called with the current location ({left, top}) when the pan has ended
      */
@@ -19,13 +19,13 @@ export interface PanResponderViewPropTypes extends ViewPropTypes {
     isAnimated?: boolean;
 }
 
-interface PanResponderPropTypes {
+interface PanResponderProps {
   isPanning: boolean;
   dragDeltas: PanAmountsProps;
 }
 
-interface Props extends PanResponderViewPropTypes {
-  context: PanResponderPropTypes;
+interface Props extends PanResponderViewProps {
+  context: PanResponderProps;
 }
 
 /**
@@ -104,4 +104,4 @@ class PanResponderView extends PureComponent<Props> {
   }
 }
 
-export default asPanViewConsumer<PanResponderViewPropTypes>(PanResponderView);
+export default asPanViewConsumer<PanResponderViewProps>(PanResponderView);

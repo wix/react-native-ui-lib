@@ -2,15 +2,15 @@ import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, ViewStyle, ImageStyle, StyleProp} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
-import View, {ViewPropTypes} from '../view';
-import Text, {TextPropTypes} from '../text';
+import View, {ViewProps} from '../view';
+import Text, {TextProps} from '../text';
 import Image, {ImageProps} from '../image';
 import asCardChild, {asCardChildProps} from './asCardChild';
 
 
-type ContentType = TextPropTypes & {text?: string};
+type ContentType = TextProps & {text?: string};
 
-export type CardSectionProps = ViewPropTypes & {
+export type CardSectionProps = ViewProps & {
   /**
    * Text content for the CardSection.
    * Example: content={[{text: 'You’re Invited!', text70: true, dark10: true}]}

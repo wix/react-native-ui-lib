@@ -6,7 +6,7 @@ import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
 import {BorderRadiuses, Spacings} from '../../style';
 // @ts-ignore
-import Avatar, {AvatarPropTypes} from '../avatar';
+import Avatar, {AvatarProps} from '../avatar';
 // @ts-ignore
 import Badge, {BadgeProps} from '../badge';
 import Image from '../image';
@@ -15,7 +15,7 @@ import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 
 
-export type ChipPropTypes = ViewProps & TouchableOpacityProps & {
+export type ChipProps = ViewProps & TouchableOpacityProps & {
   //GENERAL
   /**
    * Chip's size. Number or a width and height object.
@@ -70,7 +70,7 @@ export type ChipPropTypes = ViewProps & TouchableOpacityProps & {
   /**
    * Avatar props object
    */
-  avatarProps?: AvatarPropTypes;
+  avatarProps?: AvatarProps;
 
   //ICON GENERAL
   /**
@@ -146,7 +146,7 @@ const Chip = ({
   useSizeAsMinimum,
   testID,
   ...others
-}: ChipPropTypes) => {
+}: ChipProps) => {
 
   const renderIcon = useCallback((iconPosition) => {
     const isLeftIcon = iconPosition === 'left';
@@ -330,4 +330,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default asBaseComponent<ChipPropTypes>(Chip);
+export default asBaseComponent<ChipProps>(Chip);

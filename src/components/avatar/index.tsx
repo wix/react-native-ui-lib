@@ -22,7 +22,7 @@ export enum BadgePosition {
 
 const DEFAULT_BADGE_SIZE = 10;
 
-export type AvatarPropTypes = {
+export type AvatarProps = {
   /**
    * Adds fade in animation when Avatar image loads
    */
@@ -117,11 +117,11 @@ export type AvatarPropTypes = {
  * @image: https://user-images.githubusercontent.com/33805983/34480603-197d7f64-efb6-11e7-9feb-db8ba756f055.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.js
  */
-class Avatar extends PureComponent<AvatarPropTypes> {
+class Avatar extends PureComponent<AvatarProps> {
 
   styles: ReturnType<typeof createStyles>;
 
-  constructor(props: AvatarPropTypes) {
+  constructor(props: AvatarProps) {
     super(props);
 
     this.styles = createStyles(props);
@@ -304,7 +304,7 @@ class Avatar extends PureComponent<AvatarPropTypes> {
   }
 }
 
-function createStyles(props: AvatarPropTypes) {
+function createStyles(props: AvatarProps) {
   const {labelColor} = props;
   const styles = StyleSheet.create({
     initialsContainerWithInset: {
@@ -329,4 +329,4 @@ function createStyles(props: AvatarPropTypes) {
 
 export {Avatar}; // For tests
 
-export default asBaseComponent<AvatarPropTypes, typeof Avatar>(forwardRef(Avatar))
+export default asBaseComponent<AvatarProps, typeof Avatar>(forwardRef(Avatar))

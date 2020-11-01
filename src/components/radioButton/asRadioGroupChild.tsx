@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import hoistStatics from 'hoist-non-react-statics';
 import RadioGroupContext from './RadioGroupContext';
 
-interface RadioGroupChildPropTypes {
+interface RadioGroupChildProps {
   /**
    * The identifier value of the radio button. must be different than other RadioButtons in the same group
    */
@@ -14,7 +14,7 @@ interface RadioGroupChildPropTypes {
   selected?: boolean;
 }
 
-type PropTypes = RadioGroupChildPropTypes;
+type PropTypes = RadioGroupChildProps;
 
 export default function asRadioGroupChild(WrappedComponent: React.ComponentType<any>) {
   class RadioGroupChild extends Component<PropTypes> {

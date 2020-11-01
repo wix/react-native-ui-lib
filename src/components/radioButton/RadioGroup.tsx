@@ -9,7 +9,7 @@ import {
 import View from '../view';
 import RadioGroupContext from './RadioGroupContext';
 
-export type RadioGroupPropTypes = {
+export type RadioGroupProps = {
   /**
    * The initial value of the selected radio button
    */
@@ -21,10 +21,10 @@ export type RadioGroupPropTypes = {
 };
 
 interface RadioGroupState {
-  value?: RadioGroupPropTypes['initialValue'];
+  value?: RadioGroupProps['initialValue'];
 }
 
-type Props = RadioGroupPropTypes &
+type Props = RadioGroupProps &
   BaseComponentInjectedProps &
   ForwardRefInjectedProps;
 
@@ -48,7 +48,7 @@ class RadioGroup extends PureComponent<Props, RadioGroupState> {
   ): RadioGroupState | null => {
     const {value} = prevState;
     const {initialValue} = nextProps;
-    
+
     if (_.isUndefined(nextProps.initialValue) || value === initialValue) {
       return null;
     }
@@ -67,7 +67,7 @@ class RadioGroup extends PureComponent<Props, RadioGroupState> {
     return {value, onValueChange: this.onValueChange};
   }
 
-  onValueChange = (value: RadioGroupPropTypes['initialValue']) => {
+  onValueChange = (value: RadioGroupProps['initialValue']) => {
     this.setState({value});
     _.invoke(this.props, 'onValueChange', value);
   };
@@ -85,4 +85,4 @@ class RadioGroup extends PureComponent<Props, RadioGroupState> {
 
 export {RadioGroup}; // For tests
 
-export default asBaseComponent<RadioGroupPropTypes>(forwardRef(RadioGroup));
+export default asBaseComponent<RadioGroupProps>(forwardRef(RadioGroup));
