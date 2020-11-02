@@ -6,6 +6,16 @@
 
 export * from './style';
 export * from './services';
+export {
+  BaseComponentInjectedProps,
+  ForwardRefInjectedProps,
+  ContainerModifiers,
+  MarginModifiers,
+  PaddingModifiers,
+  TypographyModifiers,
+  ColorsModifiers,
+  BackgroundColorModifier
+} from './commons/new';
 export * as Incubator from './incubator';
 export {default as ActionBar, ActionBarProps} from './components/actionBar';
 export {default as Avatar, AvatarPropTypes} from './components/avatar';
@@ -44,10 +54,11 @@ export {default as PanResponderView, PanResponderViewPropTypes} from './componen
 export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes} from './components/panningViews/panDismissibleView';
 export {default as Dialog, DialogProps} from './components/dialog';
 export {default as PageControl, PageControlProps} from './components/pageControl';
+export {default as Carousel, CarouselProps} from './components/carousel';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ActionSheet, Carousel, ConnectionStatusBar, ChipsInput, Drawer,
+  ActionSheet, ConnectionStatusBar, ChipsInput, Drawer,
   FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem,
   Picker, PickerProps, ProgressBar, Slider,
   GradientSlider, ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,
