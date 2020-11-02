@@ -29,23 +29,23 @@ Use our alignment props to quickly position your view's content without getting 
 
 ```
 <View flex left>
-  <Button label="Button">
+  <Button label="Button" />
 </View>
 
 <View flex right>
-  <Button label="Button">
+  <Button label="Button" />
 </View>
 
 <View flex top>
-  <Button label="Button">
+  <Button label="Button" />
 </View>
 
 <View flex bottom>
-  <Button label="Button">
+  <Button label="Button" />
 </View>
 
 <View flex center>
-  <Button label="Button">
+  <Button label="Button" />
 </View>
 ```
 <img src="https://cloud.githubusercontent.com/assets/1780255/24798566/4de91efc-1b9f-11e7-9974-e06e3daa7c63.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798569/50dc99a4-1b9f-11e7-8231-fbcbb139a010.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798571/52766d08-1b9f-11e7-95a3-b2b262e81170.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798572/545b7abe-1b9f-11e7-9098-409ceee6ff22.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798575/55e3c4f4-1b9f-11e7-998d-7986a038abb6.png" width="160"/>

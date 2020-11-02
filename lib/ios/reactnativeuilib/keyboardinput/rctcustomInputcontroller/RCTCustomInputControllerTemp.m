@@ -6,7 +6,7 @@
 //
 
 #import "RCTCustomInputControllerTemp.h"
-#import "RCTCustomKeyboardViewController.h"
+#import "RCTCustomKeyboardViewControllerTemp.h"
 
 #import <React/RCTUIManager.h>
 #import <objc/runtime.h>
@@ -15,22 +15,22 @@
 
 #define kHlperViewTag 0x1f1f1f
 
-NSString *const RCTCustomInputControllerKeyboardResigendEvent = @"kbdResigned";
+NSString *const RCTCustomInputControllerKeyboardResigendEventTemp = @"kbdResigned";
 
-@protocol _WXInputHelperViewDelegate <NSObject>
+@protocol _WXInputHelperViewDelegateTemp <NSObject>
 -(void)_WXInputHelperViewResignFirstResponder:(UIView*)wxInputHelperView;
 @end
 
-@interface _WXInputHelperView : UIView
+@interface _WXInputHelperViewTemp : UIView
 
 @property (nullable, nonatomic, readwrite, strong) UIInputViewController *inputViewController;
-@property (nonatomic, weak) id<_WXInputHelperViewDelegate> delegate;
+@property (nonatomic, weak) id<_WXInputHelperViewDelegateTemp> delegate;
 @property (nullable, readwrite, strong) UIView *inputAccessoryView;
 @property (nonatomic) BOOL keepInSuperviewOnResign;
 
 @end
 
-@implementation _WXInputHelperView
+@implementation _WXInputHelperViewTemp
 
 - (BOOL)canBecomeFirstResponder
 {
@@ -58,7 +58,7 @@ NSString *const RCTCustomInputControllerKeyboardResigendEvent = @"kbdResigned";
 @end
 
 
-@interface RCTCustomInputControllerTemp () <_WXInputHelperViewDelegate> {
+@interface RCTCustomInputControllerTemp () <_WXInputHelperViewDelegateTemp> {
     UIWindow *_fullScreenWindow;
     BOOL _performingExpandTransition;
 }
@@ -81,7 +81,7 @@ NSString *const RCTCustomInputControllerKeyboardResigendEvent = @"kbdResigned";
 
 - (NSArray<NSString *> *)supportedEvents
 {
-    return @[RCTCustomInputControllerKeyboardResigendEvent];
+    return @[RCTCustomInputControllerKeyboardResigendEventTemp];
 }
 
 RCT_EXPORT_MODULE(CustomInputControllerTemp)
@@ -114,6 +114,10 @@ RCT_EXPORT_MODULE(CustomInputControllerTemp)
     return nil;
 }
 
+- (BOOL)shouldUseSafeAreaFrom:(NSDictionary *)params {
+    return [params[@"useSafeArea"] isEqual:@(1)];
+}
+
 RCT_EXPORT_METHOD(presentCustomInputComponent:(nonnull NSNumber*)inputFieldTag params:(nonnull NSDictionary*)params)
 {
     RCTBridge* bridge = [self.bridge valueForKey:@"parentBridge"];
@@ -136,10 +140,11 @@ RCT_EXPORT_METHOD(presentCustomInputComponent:(nonnull NSNumber*)inputFieldTag p
     
     self.customInputComponentPresented = NO;
     
-    RCTCustomKeyboardViewController* customKeyboardController = [[RCTCustomKeyboardViewController alloc] init];
+    BOOL useSafeArea = [self shouldUseSafeAreaFrom:params];
+    RCTCustomKeyboardViewControllerTemp* customKeyboardController = [[RCTCustomKeyboardViewControllerTemp alloc] initWithUsingSafeArea:useSafeArea];
     customKeyboardController.rootView = rv;
     
-    _WXInputHelperView* helperView = [[_WXInputHelperView alloc] initWithFrame:CGRectZero];
+    _WXInputHelperViewTemp* helperView = [[_WXInputHelperViewTemp alloc] initWithFrame:CGRectZero];
     helperView.tag = kHlperViewTag;
     helperView.delegate = self;
     
@@ -205,7 +210,7 @@ RCT_EXPORT_METHOD(resetInput:(nonnull NSNumber*)inputFieldTag)
     UIView* inputField = [self.bridge.uiManager viewForReactTag:inputFieldTag];
     if(inputField != nil)
     {
-        _WXInputHelperView* helperView = [inputField.superview viewWithTag:kHlperViewTag];
+        _WXInputHelperViewTemp* helperView = [inputField.superview viewWithTag:kHlperViewTag];
         if(helperView != nil && [helperView isFirstResponder])
         {//restore the first responder only if it was already the first responder to prevent the keyboard from opening again if not necessary
             [inputField reactFocus];
@@ -227,11 +232,11 @@ RCT_EXPORT_METHOD(dismissKeyboard)
     UIView* inputField = [self.bridge.uiManager viewForReactTag:inputFieldTag];
     if(inputField != nil)
     {
-        _WXInputHelperView* helperView = [inputField.superview viewWithTag:kHlperViewTag];
+        _WXInputHelperViewTemp* helperView = [inputField.superview viewWithTag:kHlperViewTag];
         if(helperView != nil)
         {
-            [((RCTCustomKeyboardViewController*)helperView.inputViewController) setAllowsSelfSizing:YES];
-            ((RCTCustomKeyboardViewController*)helperView.inputViewController).heightConstraint.constant = newHeight;
+            [((RCTCustomKeyboardViewControllerTemp*)helperView.inputViewController) setAllowsSelfSizing:YES];
+            ((RCTCustomKeyboardViewControllerTemp*)helperView.inputViewController).heightConstraint.constant = newHeight;
             
             UIInputView *inputView = helperView.inputViewController.inputView;
             [inputView setNeedsUpdateConstraints];
@@ -283,14 +288,14 @@ RCT_EXPORT_METHOD(expandFullScreenForInput:(nonnull NSNumber*)inputFieldTag)
     UIView* inputField = [self.bridge.uiManager viewForReactTag:inputFieldTag];
     if(inputField != nil)
     {
-        _WXInputHelperView* helperView = [inputField.superview viewWithTag:kHlperViewTag];
+        _WXInputHelperViewTemp* helperView = [inputField.superview viewWithTag:kHlperViewTag];
         if(helperView != nil)
         {
             _performingExpandTransition = YES;
             
             helperView.keepInSuperviewOnResign = YES;
             
-            RCTCustomKeyboardViewController *customKeyboardViewController = (RCTCustomKeyboardViewController*)helperView.inputViewController;
+            RCTCustomKeyboardViewControllerTemp *customKeyboardViewController = (RCTCustomKeyboardViewControllerTemp*)helperView.inputViewController;
             RCTRootView *rv = customKeyboardViewController.rootView;
             UIInputView *inputView = helperView.inputViewController.inputView;
             
@@ -313,7 +318,7 @@ RCT_EXPORT_METHOD(expandFullScreenForInput:(nonnull NSNumber*)inputFieldTag)
             }];
 
             [[LNAnimatorTemp animatorWithDuration:0.5
-                                   animations:@[[LNViewAnimation animationWithView:_fullScreenWindow keyPath:@"frame" toValue:[NSValue valueWithCGRect:[UIScreen mainScreen].bounds]]]
+                                   animations:@[[LNViewAnimationTemp animationWithView:_fullScreenWindow keyPath:@"frame" toValue:[NSValue valueWithCGRect:[UIScreen mainScreen].bounds]]]
                             completionHandler:^(BOOL completed)
             {
                 [UIView performWithoutAnimation:^{
@@ -339,7 +344,7 @@ RCT_EXPORT_METHOD(resetSizeForInput:(nonnull NSNumber*)inputFieldTag)
     UIView* inputField = [self.bridge.uiManager viewForReactTag:inputFieldTag];
     if(inputField != nil)
     {
-        _WXInputHelperView* helperView = [inputField.superview viewWithTag:kHlperViewTag];
+        _WXInputHelperViewTemp* helperView = [inputField.superview viewWithTag:kHlperViewTag];
         if(helperView != nil)
         {
             _performingExpandTransition = YES;
@@ -361,10 +366,10 @@ RCT_EXPORT_METHOD(resetSizeForInput:(nonnull NSNumber*)inputFieldTag)
             [_fullScreenWindow endEditing:YES];
             
             [[LNAnimatorTemp animatorWithDuration:0.5
-                                   animations:@[[LNViewAnimation animationWithView:_fullScreenWindow keyPath:@"frame" toValue:[NSValue valueWithCGRect:keyboardTargetFrame]]]
+                                   animations:@[[LNViewAnimationTemp animationWithView:_fullScreenWindow keyPath:@"frame" toValue:[NSValue valueWithCGRect:keyboardTargetFrame]]]
                             completionHandler:^(BOOL completed)
             {
-                RCTCustomKeyboardViewController *customKeyboardViewController = (RCTCustomKeyboardViewController*)helperView.inputViewController;
+                RCTCustomKeyboardViewControllerTemp *customKeyboardViewController = (RCTCustomKeyboardViewControllerTemp*)helperView.inputViewController;
                 RCTRootView *rv = (RCTRootView*)_fullScreenWindow.rootViewController.view;
                 
                 [UIView performWithoutAnimation:^{
@@ -383,13 +388,13 @@ RCT_EXPORT_METHOD(resetSizeForInput:(nonnull NSNumber*)inputFieldTag)
     }
 }
 
-#pragma mark - _WXInputHelperViewDelegate methods
+#pragma mark - _WXInputHelperViewDelegateTemp methods
 
 -(void)_WXInputHelperViewResignFirstResponder:(UIView*)wxInputHelperView
 {
     if(self.customInputComponentPresented)
     {
-        [self sendEventWithName:RCTCustomInputControllerKeyboardResigendEvent body:nil];
+        [self sendEventWithName:RCTCustomInputControllerKeyboardResigendEventTemp body:nil];
     }
     self.customInputComponentPresented = NO;
 }

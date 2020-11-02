@@ -1,7 +1,9 @@
 import _ from 'lodash';
 import Colors from './colors';
 
+
 export class ThemeManager {
+
   theme = {
     primaryColor: Colors.blue30,
     CTA: {
@@ -12,19 +14,16 @@ export class ThemeManager {
     titleColor: Colors.dark10,
     subtitleColor: Colors.dark40,
     dividerColor: Colors.dark70,
-    components: {
-      TouchableOpacity: {
-        throttleTime: 0,
-        throttleOptions: {leading: true, trailing: false}
-      }
-    } as Extendable
+    components: {} as Extendable // leave this key and delete the rest on V6
   };
 
   forcedTheme = {
     components: {} as Extendable
   }
 
+  //TODO: deprecate on V6
   setTheme(overrides: Dictionary<string>) {
+    console.warn('ThemeManager.setTheme() is deprecated. Please remove usage before next uilib major version update. Consider using ThemeManager.setComponentTheme instead');
     this.theme = _.merge(this.theme, overrides);
   }
 
@@ -32,7 +31,7 @@ export class ThemeManager {
     return this.theme;
   }
 
-  setItem(key: string, value: string) {
+  setItem(key: string, value: any) {
     if (key === 'components') {
       throw new Error('Overriding the "components" key is not possible.');
     }
@@ -45,7 +44,7 @@ export class ThemeManager {
     return _.get(this.theme, key);
   }
 
-  setComponentTheme(componentName: string, overrides: Dictionary<string | number> | Function) {
+  setComponentTheme(componentName: string, overrides: Dictionary<any> | Function) {
     if (_.isFunction(overrides)) {
       this.theme.components[componentName] = overrides;
     } else {
@@ -53,7 +52,7 @@ export class ThemeManager {
     }
   }
 
-  setComponentForcedTheme(componentName: string, overrides: Dictionary<string> | Function) {
+  setComponentForcedTheme(componentName: string, overrides: Dictionary<any> | Function) {
     if (_.isFunction(overrides)) {
       this.forcedTheme.components[componentName] = overrides;
     } else {
@@ -69,6 +68,7 @@ export class ThemeManager {
     return this.forcedTheme.components;
   }
 
+  // TODO: remove getters below
   get primaryColor() {
     return this.theme.primaryColor;
   }

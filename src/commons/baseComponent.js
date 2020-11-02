@@ -3,7 +3,6 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {Colors} from '../style';
-import {DocsGenerator} from '../helpers';
 import * as Modifiers from './modifiers';
 
 export default function baseComponent(usePure) {
@@ -35,7 +34,7 @@ export default function baseComponent(usePure) {
 
     // TODO: stop using this and remove it
     getSnippet() {
-      return DocsGenerator.generateSnippet(DocsGenerator.extractComponentInfo(this));
+      return null;
     }
 
     generateStyles() {

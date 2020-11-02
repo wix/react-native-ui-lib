@@ -21,5 +21,11 @@ module.exports = {
   },
   get forwardRef() {
     return require('./forwardRef').default;
+  },
+  get withScrollEnabler() {
+    return require('./withScrollEnabler').default;
+  },
+  get withScrollReached() {
+    return require('./withScrollReached').default;
   }
 };

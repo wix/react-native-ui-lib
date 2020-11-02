@@ -45,11 +45,20 @@ export default {
   get ConnectionStatusBar() {
     return require('./components/connectionStatusBar').default;
   },
+  get Chip() {
+    return require('./components/chip').default;
+  },
   get Dialog() {
     return require('./components/dialog').default;
   },
   get Drawer() {
     return require('./components/drawer').default;
+  },
+  get ExpandableSection() {
+    return require('./components/expandableSection').default;
+  },
+  get Fader() {
+    return require('./components/fader').default;
   },
   get FloatingButton() {
     return require('./components/floatingButton').default;
@@ -72,17 +81,20 @@ export default {
   get KeyboardAwareListView() {
     return require('./components/KeyboardAwareScrollView').KeyboardAwareListView;
   },
+  get KeyboardAwareFlatList() {
+    return require('./components/KeyboardAwareScrollView').KeyboardAwareFlatList;
+  },
   get BaseInput() {
-    return require('./components/inputs/BaseInput').default;
+    return require('./components/baseInput').default;
   },
   get TextArea() {
-    return require('./components/inputs/TextArea').default;
+    return require('./components/textArea').default;
   },
   get TextField() {
-    return require('./components/inputs/TextField').default;
+    return require('./components/textField').default;
   },
   get MaskedInput() {
-    return require('./components/inputs/MaskedInput').default;
+    return require('./components/maskedInput').default;
   },
   get Modal() {
     return require('./components/modal').default;
@@ -141,8 +153,11 @@ export default {
   get TabBar() {
     return require('./components/tabBar').default;
   },
-  get TagsInput() {
+  get TagsInput() { // TODO: Renamed to ChipsInput, to be deleted after migration
     return require('./components/tagsInput').default;
+  },
+  get ChipsInput() {
+    return require('./components/chipsInput').default;
   },
   get RadioButton() {
     return require('./components/radioButton/RadioButton').default;
@@ -187,6 +202,9 @@ export default {
   },
 
   // Commons
+  get asBaseComponent() {
+    return require('./commons').asBaseComponent;
+  },
   get BaseComponent() {
     return require('./commons').BaseComponent;
   },
@@ -201,6 +219,12 @@ export default {
   },
   get forwardRef() {
     return require('./commons').forwardRef;
+  },
+  get withScrollEnabler() {
+    return require('./commons').withScrollEnabler;
+  },
+  get withScrollReached() {
+    return require('./commons').withScrollReached;
   },
 
   // Helpers
@@ -233,7 +257,7 @@ export default {
     return require('./nativeComponents').SafeAreaInsetsManager;
   },
   get Keyboard() {
-    return require('./nativeComponents').Keyboard;
+    return require('../lib/components/Keyboard').default;
   },
 
   // Style

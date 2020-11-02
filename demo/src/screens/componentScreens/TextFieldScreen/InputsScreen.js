@@ -155,7 +155,8 @@ export default class InputsScreen extends Component {
             placeholder="Underline colors & error"
             onChangeText={this.onChangeText}
             error={this.state.error}
-            underlineColor={{focus: Colors.purple50, error: Colors.yellow60}}
+            underlineColor={{focus: Colors.purple50, error: Colors.orange60}}
+            errorColor={Colors.orange60}
           />
 
           <TextField
@@ -214,9 +215,28 @@ export default class InputsScreen extends Component {
           <TextField
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
+            title="Title"
+            placeholder="With right icon"
+            rightIconSource={star}
+            useTopErrors
+            validate={'required'}
+            errorMessage="Please fill this input"
+          />
+
+          <TextField
+            text70
+            containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
             placeholder="With right button"
-            rightButtonProps={{iconSource: richText, onPress: this.onPressInfo}}
+            rightButtonProps={{
+              iconSource: richText,
+              onPress: this.onPressInfo,
+              accessibilityLabel: 'TextField Info',
+              iconColor: Colors.red30
+            }}
+            useTopErrors
+            validate={'required'}
+            errorMessage="Please fill this input"
           />
 
           <TextField
@@ -225,15 +245,7 @@ export default class InputsScreen extends Component {
             floatingPlaceholder
             placeholder="Multiline & right button"
             multiline
-            rightButtonProps={{iconSource: richText, onPress: this.onPressInfo, iconColor: Colors.red30}}
-          />
-
-          <TextField
-            text70
-            containerStyle={{marginBottom: INPUT_SPACING}}
-            floatingPlaceholder
-            placeholder="With right icon"
-            rightIconSource={star}
+            rightButtonProps={{iconSource: richText, onPress: this.onPressInfo}}
           />
 
           <TextField

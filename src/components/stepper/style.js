@@ -1,10 +1,12 @@
 import {StyleSheet, PixelRatio} from 'react-native';
 import {Constants} from '../../helpers';
-import {Colors, Typography, ThemeManager} from '../../style';
+import {Colors, Typography} from '../../style';
+
 
 export default function createStyles() {
   const separatorColor = Colors.dark70;
   const bottomTextMargin = 4; // use margins to center the text until we move to using assets
+
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -44,7 +46,7 @@ export default function createStyles() {
     buttonText: {
       ...Typography.text40,
       fontWeight: '200',
-      color: ThemeManager.primaryColor,
+      color: Colors.primary,
       backgroundColor: 'transparent',
       marginBottom: bottomTextMargin
     },

@@ -20,7 +20,7 @@ module.exports = {
     schema: [MAP_SCHEMA],
   },
   create(context) {
-    function reportDeprecatedTypography(node, options) {
+    function reportDeprecatedTypography(node, options, useShortVersion) {
       try {
         const {dueDate} = context.options[0];
         const dueDateNotice = dueDate ? ` Please fix this issue by ${dueDate}!` : '';
@@ -30,7 +30,8 @@ module.exports = {
           message: `${msg}`,
           fix(fixer) {
             if (options.fix) {
-              return fixer.replaceText(node, options.fix);
+              const fix = useShortVersion ? options.fix.substr(`${defaultImportName}.`.length) : options.fix;
+              return fixer.replaceText(node, fix);
             }
           },
         });
@@ -47,23 +48,23 @@ module.exports = {
       localImportSpecifier = utils.getLocalImportSpecifier(node, source, defaultImportName);
     }
 
-    function findAndReportDeprecation(node, possibleDeprecation) {
+    function findAndReportDeprecation(node, possibleDeprecation, useShortVersion) {
       const path = `${defaultImportName}.${possibleDeprecation}`;
       const foundDeprecation = _.find(deprecations, {path});
       if (foundDeprecation) {
-        reportDeprecatedTypography(node, foundDeprecation);
+        reportDeprecatedTypography(node, foundDeprecation, useShortVersion);
       }
     }
 
     function testMemberDeprecation(node) {
       if (node && node.object && node.property && node.object.name === localImportSpecifier) {
-        findAndReportDeprecation(node, node.property.name);
+        findAndReportDeprecation(node, node.property.name, false);
       }
     }
 
     function testJSXAttribute(node) {
       if (node && node.name) {
-        findAndReportDeprecation(node, node.name.name);
+        findAndReportDeprecation(node, node.name.name, true);
       }
     }
 

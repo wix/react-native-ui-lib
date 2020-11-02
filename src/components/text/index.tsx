@@ -38,8 +38,6 @@ export type TextPropTypes = TextProps & TypographyModifiers & ColorsModifiers & 
    * Use Animated.Text as a container
    */
   animated?: boolean;
-
-  ref?: any;
   textAlign?: string;
 }
 
@@ -157,4 +155,4 @@ const styles = StyleSheet.create({
 
 export {Text}; // For tests
 
-export default asBaseComponent<TextPropTypes>(forwardRef(Text));
+export default asBaseComponent<TextPropTypes>(forwardRef<PropsTypes>(Text));

@@ -1,17 +1,17 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {PureComponent} from 'react';
+import {asBaseComponent} from '../../commons';
 import GradientSlider from './GradientSlider';
 import SliderGroup from './context/SliderGroup';
 import Text from '../text';
-import {PureBaseComponent} from '../../commons';
 
 
 /**
  * @description: A Gradient Slider component
  * @example: https://github.com/wix/react-native-ui-lib/blob/feat/new_components/demo/src/screens/componentScreens/SliderScreen.js
  */
-export default class ColorSliderGroup extends PureBaseComponent {
+class ColorSliderGroup extends PureComponent {
   static displayName = 'ColorSliderGroup';
 
   static propTypes = {
@@ -32,49 +32,68 @@ export default class ColorSliderGroup extends PureBaseComponent {
      */
     sliderContainerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /**
-     * Show the sliders labels (Hue, Lightness, Saturation)
+     * Show the sliders labels (defaults are: Hue, Lightness, Saturation)
      */
     showLabels: PropTypes.bool,
+    /**
+     * In case you would like to change the default labels (translations etc.), you can provide
+     * this prop with a map to the relevant labels ({hue: ..., lightness: ..., saturation: ...}).
+     */
+    labels: PropTypes.object,
     /**
      * The labels style
      */
     labelsStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
   }
 
+  static defaultProps = {
+    labels: {hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation'}
+  }
+
   state = {
     initialColor: this.props.initialColor
   }
 
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (prevState.initialColor !== nextProps.initialColor) {
-  //     return {initialColor: nextProps.initialColor};
-  //   }
-  //   return null;
-  // }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.state.initialColor !== nextProps.initialColor) {
-      return {initialColor: nextProps.initialColor};
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.initialColor !== nextProps.initialColor) {
+      return {
+        initialColor: nextProps.initialColor
+      };
     }
+    return null;
   }
 
   onValueChange = (value) => {
     _.invoke(this.props, 'onValueChange', value);
   }
 
+  renderSlider = (type) => {
+    const {sliderContainerStyle, showLabels, labelsStyle, accessible, labels} = this.props;
+
+    return (
+      <>
+        {showLabels && (
+          <Text dark30 text80 style={labelsStyle} accessible={accessible}>
+            {labels[type]}
+          </Text>
+        )}
+        <GradientSlider type={type} containerStyle={sliderContainerStyle} accessible={accessible}/>
+      </>
+    );
+  };
+
   render() {
-    const {containerStyle, sliderContainerStyle, showLabels, labelsStyle, accessible} = this.props;
+    const {containerStyle} = this.props;
     const {initialColor} = this.state;
 
     return (
       <SliderGroup style={containerStyle} color={initialColor} onValueChange={this.onValueChange}>
-        {showLabels && <Text dark30 text80 style={labelsStyle} accessible={accessible}>Hue</Text>}
-        <GradientSlider type={GradientSlider.types.HUE} containerStyle={sliderContainerStyle} accessible={accessible}/>
-        {showLabels && <Text dark30 text80 style={labelsStyle} accessible={accessible}>Lightness</Text>}
-        <GradientSlider type={GradientSlider.types.LIGHTNESS} containerStyle={sliderContainerStyle} accessible={accessible}/>
-        {showLabels && <Text dark30 text80 style={labelsStyle} accessible={accessible}>Saturation</Text>}
-        <GradientSlider type={GradientSlider.types.SATURATION} containerStyle={sliderContainerStyle} accessible={accessible}/>
+        {this.renderSlider(GradientSlider.types.HUE)}
+        {this.renderSlider(GradientSlider.types.LIGHTNESS)}
+        {this.renderSlider(GradientSlider.types.SATURATION)}
       </SliderGroup>
     );
   }
 }
+
+export default asBaseComponent(ColorSliderGroup);

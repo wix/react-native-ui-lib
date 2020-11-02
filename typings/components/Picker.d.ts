@@ -28,6 +28,7 @@ export interface PickerItemProps {
   renderItem?: PickerItemRenderItemFunc;
   onPress?: (event: GestureResponderEvent) => void;
   onSelectedLayout?: (event: LayoutChangeEvent) => void;
+  testID?: string;
 }
 
 export type PickerMode = 'SINGLE' | 'MULTI';

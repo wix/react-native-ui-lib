@@ -125,10 +125,10 @@ export function extractTypographyValue(props: Dictionary<any>): object | undefin
     .keys()
     .filter(key => Typography.getKeysPattern().test(key))
     .value() as unknown as Array<keyof typeof TypographyPresets>;
-  let typography;
+  let typography: any;
   _.forEach(typographyPropsKeys, key => {
     if (props[key] === true) {
-      typography = Typography[key];
+      typography = {...typography, ...Typography[key]};
     }
   });
 
@@ -260,6 +260,22 @@ export function extractAccessibilityProps(props: any = this.props) {
   });
 }
 
+//@ts-ignore
+export function extractAnimationProps(props: any = this.props) {
+  return _.pick(props, [
+    'animation',
+    'duration',
+    'delay',
+    'direction',
+    'easing',
+    'iterationCount',
+    'transition',
+    'onAnimationBegin',
+    'onAnimationEnd',
+    'useNativeDriver'
+  ]);
+}
+
 export function extractBorderRadiusValue(props: Dictionary<any>) {
   let borderRadius;
 
@@ -288,6 +304,10 @@ export function extractModifierProps(props: Dictionary<any>) {
   return modifierProps;
 }
 
+/**
+ * TODO:
+ * @deprecated switch to Modifiers#extractComponentProps
+ */
 export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
   //@ts-ignore
   const ownPropTypes = this.propTypes;
@@ -297,6 +317,16 @@ export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
     .value();
 
   return ownProps;
+}
+
+export function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps: string[]) {
+  const componentPropTypes = component.propTypes;
+  const componentProps = _.chain(props)
+    .pickBy((_value, key) => _.includes(Object.keys(componentPropTypes), key))
+    .omit(ignoreProps)
+    .value();
+
+  return componentProps;
 }
 
 //@ts-ignore
@@ -360,12 +390,14 @@ export function generateModifiersStyle(options = {
   if (options.flex) {
     style.flexStyle = extractFlexStyle(boundProps);
   }
-
   if (options.position) {
     style.positionStyle = extractPositionStyle(boundProps);
   }
 
   return style;
+  // clean empty objects and undefined
+  // (!) This change is currently breaking UI layout for some reason - worth investigating
+  // return _.omitBy(style, value => _.isUndefined(value) || (_.isPlainObject(value) && _.isEmpty(value)));
 }
 
 export function getAlteredModifiersOptions(currentProps: any, nextProps: any) {

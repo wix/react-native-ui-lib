@@ -34,6 +34,26 @@ const componentsDocgenPlugin = [
   }
 ];
 
+const incubatorComponentsDocgenPlugin = [
+  'gatsby-transformer-react-docgen',
+  {
+    resolve: 'gatsby-source-filesystem',
+    options: {
+      path: `${__dirname}/../../src/incubator/`
+    }
+  }
+];
+
+const nativeComponentsDocgenPlugin = [
+  'gatsby-transformer-react-docgen',
+  {
+    resolve: 'gatsby-source-filesystem',
+    options: {
+      path: `${__dirname}/../../lib/components/`
+    }
+  }
+];
+
 const imagesPlugin = [
   {
     resolve: `gatsby-source-filesystem`,
@@ -46,9 +66,21 @@ const imagesPlugin = [
   `gatsby-plugin-sharp`
 ];
 
+const layoutPlugin = [
+  {
+    resolve: `gatsby-plugin-layout`,
+    options: {
+      component: require.resolve(`${__dirname}/../src/components/layout.js`)
+    }
+  }
+];
+
 module.exports = {
   manifestPlugin,
   markdownPagesPlugin,
   componentsDocgenPlugin,
-  imagesPlugin
+  incubatorComponentsDocgenPlugin,
+  nativeComponentsDocgenPlugin,
+  imagesPlugin,
+  layoutPlugin
 };

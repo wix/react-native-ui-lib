@@ -20,7 +20,7 @@ const DEFAULT_SELECTED_LABEL_COLOR = Colors.blue30;
  * @notes: Must be rendered as a direct child of TabController.TabBar.
  */
 export default class TabBarItem extends PureComponent {
-  static displayName = 'TabController.TabBarItem';
+  static displayName = 'IGNORE';
 
   static propTypes = {
     /**

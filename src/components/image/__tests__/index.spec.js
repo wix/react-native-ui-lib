@@ -1,4 +1,4 @@
-import Image from '../index';
+import {Image} from '../index';
 import {ThemeManager} from '../../../style';
 import Assets from '../../../assets';
 
@@ -17,18 +17,6 @@ describe('Image', () => {
       const sourceTransformer = jest.fn(() => 2);
       const uut = new Image({source: 1, sourceTransformer});
       expect(uut.getImageSource()).toBe(2);
-    });
-
-    it('should return transformed source prop, according to sourceTransform in ThemeManager', () => {
-      ThemeManager.setTheme({
-        components: {
-          Image: {
-            sourceTransformer: jest.fn(() => 3)
-          }
-        }
-      });
-      const uut = new Image({source: 1});
-      expect(uut.getImageSource()).toBe(3);
     });
 
     it('should return transformed source prop, according to sourceTransform prop and other given props', () => {

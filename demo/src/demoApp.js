@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import {Navigation} from 'react-native-navigation';
 import * as Animatable from 'react-native-animatable';
-import {AnimatableManager, ThemeManager, Constants, Assets, Colors, Typography} from 'react-native-ui-lib'; // eslint-disable-line
+import {AnimatableManager, Constants, Colors, Typography} from 'react-native-ui-lib'; // eslint-disable-line
 import {registerScreens} from './screens';
+
 
 /** Examples - uncomment when needed */
 // Typography.loadTypographies({
@@ -15,16 +16,6 @@ import {registerScreens} from './screens';
 //   gold: '#FFD700',
 // });
 
-// ThemeManager.setTheme({
-//   primaryColor: Colors.purple30,
-//   CTA: {
-//     backgroundColor: Colors.purple30,
-//     textColor: Colors.dark10,
-//   },
-//   titleColor: Colors.blue10,
-//   subtitleColor: Colors.blue40,
-// });
-
 // ThemeManager.setComponentTheme('Picker', (props) => {
 //   if (props.useNativePicker) {
 //     return {
@@ -34,10 +25,6 @@ import {registerScreens} from './screens';
 //       },
 //     };
 //   }
-// });
-
-// Assets.loadAssetsGroup('icons.general', {
-//   camera: require('./assets/icons/cameraSelected.png'),
 // });
 
 // AnimatableManager.loadAnimationPresets({
@@ -66,14 +53,16 @@ import {registerScreens} from './screens';
 //   },
 // };
 // IMPORTANT! Make uilib's animations available globally for the app's use (option to pass adittional animation definitions)
-Animatable.initializeRegistryWithDefinitions(AnimatableManager.loadAnimationDefinitions(/** customAnimationsDefinitions */));
+Animatable.initializeRegistryWithDefinitions(
+  AnimatableManager.loadAnimationDefinitions(/** customAnimationsDefinitions */)
+);
 
 function getDefaultNavigationStyle() {
   return {
     statusBar: {
       visible: true,
       style: 'light',
-      backgroundColor: ThemeManager.primaryColor // for Android
+      backgroundColor: Colors.primary // for Android
     },
     layout: {
       backgroundColor: Colors.white,
@@ -84,19 +73,17 @@ function getDefaultNavigationStyle() {
       noBorder: true, // for iOS
       elevation: 0, // for Android
       background: {
-        color: ThemeManager.primaryColor
+        color: Colors.primary
       },
       title: {
         color: Colors.white,
         fontSize: Typography.text60H.fontSize,
-        fontFamily: Constants.isAndroid ? Typography.text65H.fontFamily : '.SFUIText-Heavy',
-        fontWeight: 'heavy'
+        fontFamily: Typography.text65H.fontFamily
       },
       subtitle: {
         color: Colors.white,
         fontSize: Typography.text80T.fontSize,
-        fontFamily: Constants.isAndroid ? Typography.text80.fontFamily : '.SFUIText-Medium',
-        fontWeight: 'medium'
+        fontFamily: Typography.text80.fontFamily
       },
       backButton: {
         // visible: true,

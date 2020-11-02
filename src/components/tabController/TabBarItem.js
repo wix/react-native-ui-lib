@@ -10,7 +10,7 @@ import {Colors, Typography, Spacings} from '../../style';
 import Badge from '../../components/badge';
 import {TouchableOpacity} from '../../incubator';
 
-const {cond, eq, call, block, event, and, defined} = Reanimated;
+const {cond, eq, call, block, event, and} = Reanimated;
 
 const DEFAULT_LABEL_COLOR = Colors.black;
 const DEFAULT_SELECTED_LABEL_COLOR = Colors.blue30;
@@ -106,9 +106,19 @@ export default class TabBarItem extends PureComponent {
     onPress: _.noop
   };
 
-  state = {
-    itemWidth: undefined
-  };
+  constructor(props) {
+    super(props);
+
+    this.itemWidth = this.props.width;
+    this.state = {};
+    this.itemRef = React.createRef();
+
+    if (this.itemWidth) {
+      const {index, onLayout} = this.props;
+      onLayout({width: this.itemWidth}, index);
+    }
+  }
+
 
   onStateChange = event([
     {
@@ -123,11 +133,11 @@ export default class TabBarItem extends PureComponent {
     }
   }) => {
     const {index, onLayout} = this.props;
-    const {itemWidth} = this.state;
-    if (!itemWidth) {
+    if (!this.itemWidth) {
+      this.itemWidth = width;
+      this.itemRef.current.setNativeProps({style: {width, paddingHorizontal: null, flex: null}});
       if (onLayout) {
-        this.setState({itemWidth: width});
-        onLayout({width, x}, index);
+        onLayout({width}, index);
       }
     }
   };
@@ -138,8 +148,7 @@ export default class TabBarItem extends PureComponent {
   };
 
   getItemStyle() {
-    const {state, width} = this.props;
-    const {itemWidth} = this.state;
+    const {state, style: propsStyle} = this.props;
     const opacity = block([
       cond(eq(state, State.END), call([], this.onPress)),
       cond(eq(state, State.BEGAN), this.props.activeOpacity, 1)
@@ -149,42 +158,42 @@ export default class TabBarItem extends PureComponent {
       opacity
     };
 
-    if (width || itemWidth) {
+    if (this.props.width) {
       style.flex = undefined;
-      style.width = width || itemWidth;
+      style.width = this.itemWidth;
       style.paddingHorizontal = undefined;
     }
 
-    return style;
+    return [style, propsStyle];
   }
 
   getLabelStyle() {
-    const {itemWidth} = this.state;
-    const {
-      index,
-      currentPage,
-      targetPage,
-      labelColor,
-      selectedLabelColor,
-      ignore
-    } = this.props;
+    const {index, currentPage, targetPage, labelColor, selectedLabelColor, ignore} = this.props;
 
     const labelStyle = this.props.labelStyle;
     const selectedLabelStyle = this.props.selectedLabelStyle;
+    let fontWeight, letterSpacing, fontFamily;
 
-    const fontWeight = cond(and(eq(targetPage, index), defined(itemWidth)),
-      selectedLabelStyle.fontWeight || 'normal',
-      labelStyle.fontWeight || 'normal');
-    const letterSpacing = cond(and(eq(targetPage, index), defined(itemWidth)),
-      selectedLabelStyle.letterSpacing || 0,
-      labelStyle.letterSpacing || 0);
-  
+    if (labelStyle.fontWeight || selectedLabelStyle.fontWeight) {
+      fontWeight = cond(and(eq(targetPage, index) /* , defined(itemWidth) */),
+        selectedLabelStyle.fontWeight || 'normal',
+        labelStyle.fontWeight || 'normal');
+    }
+
+    if (labelStyle.letterSpacing || selectedLabelStyle.letterSpacing) {
+      letterSpacing = cond(and(eq(targetPage, index) /* , defined(itemWidth) */),
+        selectedLabelStyle.letterSpacing || 0,
+        labelStyle.letterSpacing || 0);
+    }
+
+    if (labelStyle.fontFamily || selectedLabelStyle.fontFamily) {
+      fontFamily = cond(and(eq(targetPage, index) /* , defined(itemWidth) */),
+        selectedLabelStyle.fontFamily,
+        labelStyle.fontFamily);
+    }
+
     const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
     const activeColor = !ignore ? selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR : inactiveColor;
-
-    // const color = cond(eq(currentPage, index),
-    //   processColor(activeColor),
-    //   processColor(ignore ? activeColor : inactiveColor),);
 
     // Animated color
     const color = interpolateColor(currentPage, {
@@ -194,11 +203,13 @@ export default class TabBarItem extends PureComponent {
 
     return [
       labelStyle,
-      {
+      _.omitBy({
+        fontFamily,
         fontWeight,
         letterSpacing,
         color
-      }
+      },
+      _.isUndefined)
     ];
   }
 
@@ -224,6 +235,7 @@ export default class TabBarItem extends PureComponent {
 
     return (
       <TouchableOpacity
+        ref={this.itemRef}
         pressState={state}
         style={[styles.tabItem, this.getItemStyle()]}
         onLayout={this.onLayout}
@@ -232,7 +244,7 @@ export default class TabBarItem extends PureComponent {
         onPress={this.onPress}
         testID={testID}
       >
-        {icon && <Reanimated.Image source={icon} style={[styles.tabItemIcon, this.getIconStyle()]}/>}
+        {icon && <Reanimated.Image source={icon} style={[label && styles.tabItemIconWithLabel, this.getIconStyle()]}/>}
         {!_.isEmpty(label) && (
           <Reanimated.Text style={[styles.tabItemLabel, this.getLabelStyle()]}>
             {uppercase ? _.toUpper(label) : label}
@@ -255,7 +267,7 @@ const styles = StyleSheet.create({
   tabItemLabel: {
     ...Typography.text80
   },
-  tabItemIcon: {
+  tabItemIconWithLabel: {
     marginRight: 10
   },
   badge: {

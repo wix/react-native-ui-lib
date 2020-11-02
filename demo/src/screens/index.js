@@ -1,6 +1,8 @@
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 
 export function registerScreens(registrar) {
+  // load demo app presets
+  require('../configurations');
 
   require('./componentScreens').registerScreens(registrar);
   require('./foundationScreens').registerScreens(registrar);
@@ -12,5 +14,5 @@ export function registerScreens(registrar) {
   registrar('unicorn.MainScreen', () => require('./MainScreen').default);
   registrar('unicorn.PlaygroundScreen', () => gestureHandlerRootHOC(require('./PlaygroundScreen').default));
   registrar('unicorn.Settings', () => require('./SettingsScreen').default);
-  registrar('unicorn.CustomScreen', () => require('./CustomScreen').default);
+
 }

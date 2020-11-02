@@ -12,7 +12,11 @@
     "packagerOpts": {
       "projectRoot": "."
     },
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "description": "Demo project show case for react-native-ui-lib components",
     "githubUrl": "https://github.com/wix/react-native-ui-lib"
   }

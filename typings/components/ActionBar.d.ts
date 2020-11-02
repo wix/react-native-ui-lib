@@ -1,6 +1,7 @@
 
-import {ButtonProps, StyleProp, ViewStyle} from 'react-native';
+import {StyleProp, ViewStyle} from 'react-native';
 import {BaseComponent} from '../commons';
+import {ButtonProps} from './Button';
 
 export interface ActionBarProps {
   height?: number;

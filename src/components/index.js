@@ -26,6 +26,9 @@ export default {
   get Carousel() {
     return require('./carousel').default;
   },
+  get Chip() {
+    return require('./chip').default;
+  },
   get Checkbox() {
     return require('./checkbox').default;
   },
@@ -47,6 +50,12 @@ export default {
   get Drawer() {
     return require('./drawer').default;
   },
+  get ExpandableSection() {
+    return require('./expandableSection').default;
+  },
+  get Fader() {
+    return require('./fader').default;
+  },
   get FeatureHighlight() {
     return require('./featureHighlight').default;
   },
@@ -65,20 +74,20 @@ export default {
   get KeyboardAwareListView() {
     return require('./KeyboardAwareScrollView').KeyboardAwareListView;
   },
+  get KeyboardAwareFlatList() {
+    return require('./KeyboardAwareScrollView').KeyboardAwareFlatList;
+  },
   get BaseInput() {
-    return require('./inputs').BaseInput;
+    return require('./baseInput').default;
   },
   get TextArea() {
-    return require('./inputs').TextArea;
+    return require('./textArea').default;
   },
   get TextField() {
-    return require('./inputs').TextField;
-  },
-  get TextInput() {
-    return require('./inputs').TextInput;
+    return require('./textField').default;
   },
   get MaskedInput() {
-    return require('./inputs').MaskedInput;
+    return require('./maskedInput').default;
   },
   get Modal() {
     return require('./modal').default;
@@ -128,10 +137,12 @@ export default {
   get TabBar() {
     return require('./tabBar').default;
   },
-  get TagsInput() {
+  get TagsInput() { // TODO: Renamed to ChipsInput, to be deleted after migration
     return require('./tagsInput').default;
   },
-
+  get ChipsInput() {
+    return require('./ChipsInput').default;
+  },
   get RadioButton() {
     return require('./radioButton').RadioButton;
   },

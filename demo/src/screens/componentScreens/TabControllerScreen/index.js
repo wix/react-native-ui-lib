@@ -1,6 +1,13 @@
 import React, {Component} from 'react';
 import {ActivityIndicator} from 'react-native';
-import {TabController, Colors, View, Text, Image, Assets, Button} from 'react-native-ui-lib'; //eslint-disable-line
+import {
+  Assets,
+  TabController,
+  Colors,
+  View,
+  Text,
+  Button
+} from 'react-native-ui-lib'; //eslint-disable-line
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import _ from 'lodash';
 
@@ -8,18 +15,35 @@ import Tab1 from './tab1';
 import Tab2 from './tab2';
 import Tab3 from './tab3';
 
-const TABS = ['Home', 'Posts', 'Reviews', 'Videos', 'Photos', 'Events', 'About', 'Community', 'Groups', 'Offers'];
+const TABS = [
+  'Home',
+  'Posts',
+  'Reviews',
+  'Videos',
+  'Photos',
+  'Events',
+  'About',
+  'Community',
+  'Groups',
+  'Offers'
+];
 
 class TabControllerScreen extends Component {
-  state = {
-    asCarousel: true,
-    centerSelected: false,
-    selectedIndex: 0,
-    items: _.chain(TABS)
-      .map((tab) => ({label: tab, key: tab}))
-      .value(),
-    key: Date.now()
-  };
+  constructor(props) {
+    super(props);
+
+    
+    this.state = {
+      asCarousel: true,
+      centerSelected: false,
+      fewItems: false,
+      selectedIndex: 0,
+      key: Date.now()
+    };
+    
+    const items = this.generateTabItems();
+    this.state.items = items;
+  }
 
   componentDidMount() {
     // this.slow();
@@ -35,12 +59,26 @@ class TabControllerScreen extends Component {
     }, 10);
   }
 
-  addTab = () => {
-    const {tabsCount} = this.state;
+  onAddItem = () => {
+    console.warn('Add Item');
+  }
 
-    if (tabsCount < 6) {
-      this.setState({tabsCount: tabsCount + 1, key: Date.now(), selectedIndex: tabsCount});
+  generateTabItems = (fewItems = this.state.fewItems, centerSelected = this.state.centerSelected)  => {
+    let items = _.chain(TABS)
+      .take(fewItems ? 3 : TABS.length)
+      .map((tab) => ({label: tab, key: tab}))
+      .value();
+    
+    if (!centerSelected) {
+      items = [...items, {icon: Assets.icons.demo.add, key: 'add', ignore: true, width: 60, onPress: this.onAddItem}];
     }
+    return items;
+  }
+
+  toggleItemsCount = () => {
+    const {fewItems} = this.state;
+    const items = this.generateTabItems(!fewItems);
+    this.setState({fewItems: !fewItems, items, key: Date.now()});
   };
 
   toggleCarouselMode = () => {
@@ -51,8 +89,10 @@ class TabControllerScreen extends Component {
   };
 
   toggleCenterSelected = () => {
+    const {fewItems, centerSelected} = this.state;
     this.setState({
-      centerSelected: !this.state.centerSelected,
+      items: this.generateTabItems(fewItems, !centerSelected),
+      centerSelected: !centerSelected,
       key: Date.now()
     });
   };
@@ -84,7 +124,12 @@ class TabControllerScreen extends Component {
         <TabController.TabPage index={1}>
           <Tab2/>
         </TabController.TabPage>
-        <TabController.TabPage index={2} lazy lazyLoadTime={1500} renderLoading={this.renderLoadingPage}>
+        <TabController.TabPage
+          index={2}
+          lazy
+          lazyLoadTime={1500}
+          renderLoading={this.renderLoadingPage}
+        >
           <Tab3/>
         </TabController.TabPage>
 
@@ -102,7 +147,14 @@ class TabControllerScreen extends Component {
   }
 
   render() {
-    const {key, selectedIndex, asCarousel, centerSelected, items} = this.state;
+    const {
+      key,
+      selectedIndex,
+      asCarousel,
+      centerSelected,
+      fewItems,
+      items
+    } = this.state;
     return (
       <View flex bg-grey70>
         <TabController
@@ -110,9 +162,10 @@ class TabControllerScreen extends Component {
           asCarousel={asCarousel}
           selectedIndex={selectedIndex}
           onChangeIndex={this.onChangeIndex}
+          items={items}
         >
           <TabController.TabBar
-            items={items}
+            // items={items}
             // key={key}
             // uppercase
             // indicatorStyle={{backgroundColor: 'green', height: 3}}
@@ -121,6 +174,7 @@ class TabControllerScreen extends Component {
             // labelStyle={{fontSize: 20}}
             // iconColor={'green'}
             // selectedIconColor={'blue'}
+            enableShadow
             activeBackgroundColor={Colors.blue60}
             centerSelected={centerSelected}
           >
@@ -129,6 +183,14 @@ class TabControllerScreen extends Component {
           {this.renderTabPages()}
         </TabController>
         <View absB left margin-20 marginB-100 style={{zIndex: 1}}>
+          <Button
+            bg-green10={!fewItems}
+            bg-green30={fewItems}
+            label={fewItems ? 'Show Many Items' : 'Show Few Items'}
+            marginB-12
+            size="small"
+            onPress={this.toggleItemsCount}
+          />
           <Button
             bg-grey20={!asCarousel}
             bg-green30={asCarousel}

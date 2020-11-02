@@ -1,0 +1,124 @@
+@import 'src/styles/constants';
+
+.navbar {
+  position: fixed;
+  width: $navbarWidth;
+  height: calc(100% - #{$headerHeight} - 20px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: $primary;
+  padding: 20px;
+  border-radius: 2px;
+
+  .search {
+    position: sticky;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: $secondary;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    width: 100%;
+    transition: width 0.3s;
+    border-radius: 2px;
+    z-index: 10;
+    overflow: hidden;
+
+    &:focus-within {
+      width: 100%;
+    }
+
+    img {
+      display: inline;
+      height: 16px;
+    }
+
+    .clear-button {
+      border: 0;
+      padding: 5px;
+      background: transparent;
+      background: $dark60;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &.hidden {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+
+      > img {
+        height: 14px;
+      }
+    }
+
+    input {
+      background: transparent;
+      color: $dark10;
+      width: 100%;
+      flex: 1;
+      display: inline-block;
+      margin-left: 10px;
+      height: 100%;
+      outline: 0;
+      border: 0;
+      font-size: $text20;
+
+      &::placeholder {
+        color: $dark30;
+      }
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    position: relative;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 12px 8px;
+    margin-bottom: 2px;
+
+    &:hover > a > .entry {
+      color: $yellow20;
+    }
+
+    .entry {
+      color: $white;
+      font-size: $text50;
+      font-weight: 600;
+      line-height: 1.4;
+      width: 100%;
+      display: inline-block;
+      text-decoration: none;
+
+      &.selected {
+        color: $yellow20;
+        font-weight: 600;
+      }
+    }
+
+    .nested {
+      border-left: 1px solid $white;
+      margin-top: 10px;
+      padding-left: 10px;
+    }
+
+    &.separator {
+      border-bottom: 1px solid $white;
+      width: 100%;
+      margin: 8px 0;
+      padding: 0;
+    }
+  }
+}

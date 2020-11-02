@@ -63,6 +63,10 @@ export default class ColorPicker extends PureBaseComponent {
      */
     dialogProps: PropTypes.object,
     /**
+     * Additional styling for the color preview text.
+     */
+    previewInputStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    /**
      * Accessibility labels as an object of strings, ex. {addButton: 'add custom color using hex code', dismissButton: 'dismiss', doneButton: 'done', input: 'custom hex color code'}
      */
     accessibilityLabels: PropTypes.shape({
@@ -109,7 +113,7 @@ export default class ColorPicker extends PureBaseComponent {
       const text = this.getColorValue(nextProps.initialColor || this.props.initialColor);
       const color = Colors.getHSL(nextProps.initialColor);
       const {valid} = this.getValidColorString(text);
-      
+
       this.setState({color, text, valid});
     }
   }
@@ -185,7 +189,7 @@ export default class ColorPicker extends PureBaseComponent {
 
   getValidColorString(text) {
     const hex = this.getHexColor(text);
-    
+
     if (Colors.isValidHex(hex)) {
       return {hex, valid: true};
     }
@@ -212,7 +216,7 @@ export default class ColorPicker extends PureBaseComponent {
     const color = Colors.getHSL(this.props.initialColor);
     const text = this.getColorValue(this.props.initialColor);
     const {valid} = this.getValidColorString(text);
-    
+
     this.setState({
       show: false,
       color,
@@ -275,8 +279,8 @@ export default class ColorPicker extends PureBaseComponent {
     const colorValue = color.a === 0 ? Colors.black : Colors.getHexString(color);
 
     return (
-      <ColorSliderGroup 
-        initialColor={colorValue} 
+      <ColorSliderGroup
+        initialColor={colorValue}
         containerStyle={[this.styles.sliderGroup, {height: keyboardHeight}]}
         sliderContainerStyle={this.styles.slider}
         showLabels
@@ -288,7 +292,7 @@ export default class ColorPicker extends PureBaseComponent {
   }
 
   renderPreview() {
-    const {accessibilityLabels} = this.getThemeProps();
+    const {accessibilityLabels, previewInputStyle} = this.getThemeProps();
     const {color, text} = this.state;
     const hex = this.getHexString(color);
     const textColor = this.getTextColor(hex);
@@ -299,11 +303,11 @@ export default class ColorPicker extends PureBaseComponent {
       <View style={[this.styles.preview, {backgroundColor: hex}]}>
         <TouchableOpacity center onPress={this.setFocus} activeOpacity={1} accessible={false}>
           <View style={this.styles.inputContainer}>
-            <Text 
-              text60 
-              white 
-              marginL-13 
-              marginR-5={Constants.isIOS} 
+            <Text
+              text60
+              white
+              marginL-13
+              marginR-5={Constants.isIOS}
               style={{
                 color: textColor,
                 transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]
@@ -321,7 +325,8 @@ export default class ColorPicker extends PureBaseComponent {
               style={[
                 this.styles.input,
                 {color: textColor, width: (value.length + 1) * 16.5 * fontScale},
-                Constants.isAndroid && {padding: 0}
+                Constants.isAndroid && {padding: 0},
+                previewInputStyle
               ]}
               selectionColor={textColor}
               underlineColorAndroid="transparent"
@@ -410,7 +415,7 @@ function createStyles(props) {
   const iconSize = SWATCH_SIZE;
   const plusButtonContainerWidth = iconSize + 20 + 12;
   const plusButtonContainerHeight = 92 - 2 * SWATCH_MARGIN;
-  
+
   const styles = StyleSheet.create({
     palette: {
       paddingLeft: plusButtonContainerWidth

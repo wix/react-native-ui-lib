@@ -1,35 +1,56 @@
-import React, {PureComponent} from 'react';
-import {TouchableOpacity as RNTouchableOpacity, TouchableOpacityProps} from 'react-native';
 import _ from 'lodash';
-import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps, ContainerModifiers} from '../../commons/new';
+import React, {PureComponent} from 'react';
+import {
+  TouchableOpacity as RNTouchableOpacity,
+  TouchableOpacityProps as RNTouchableOpacityProps,
+  StyleProp,
+  ViewStyle,
+  Animated
+} from 'react-native';
+import {
+  asBaseComponent,
+  forwardRef,
+  BaseComponentInjectedProps,
+  ForwardRefInjectedProps,
+  ContainerModifiers
+} from '../../commons/new';
 // @ts-ignore
-import Incubator from '../../incubator';
+import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
 
-type IProps = TouchableOpacityProps & ContainerModifiers & {
-  /**
-   * background color for TouchableOpacity
-   */
-  backgroundColor?: string;
-  /**
-   * throttle time in MS for onPress callback
-   */
-  throttleTime?: number;
-  /**
-   * throttle options {leading, trailing}
-   */
-  throttleOptions?: {leading: boolean, trailing: boolean};
-  /**
-   * Apply background color on TouchableOpacity when active (press is on)
-   */
-  activeBackgroundColor?: string;
-  /**
-   * Should use a more native touchable opacity component
-   */
-  useNative?: boolean;
-  ref?: any;
-};
 
-type Props = BaseComponentInjectedProps & ForwardRefInjectedProps & IProps;
+export type TouchableOpacityProps = Omit<RNTouchableOpacityProps, 'style' | 'onPress'> &
+  ContainerModifiers & {
+    /**
+     * background color for TouchableOpacity
+     */
+    backgroundColor?: string;
+    /**
+     * throttle time in MS for onPress callback
+     */
+    throttleTime?: number;
+    /**
+     * throttle options {leading, trailing}
+     */
+    throttleOptions?: {leading: boolean; trailing: boolean};
+    /**
+     * Apply background color on TouchableOpacity when active (press is on)
+     */
+    activeBackgroundColor?: string;
+    /**
+     * Should use a more native touchable opacity component
+     */
+    useNative?: boolean;
+    /**
+     * Custom value of any type to pass on to TouchableOpacity and receive back in onPress callback
+     */
+    customValue?: any;
+    style?: StyleProp<ViewStyle> | Animated.AnimatedProps<StyleProp<ViewStyle>>;
+    onPress?: (props: TouchableOpacityProps) => void;
+  };
+
+type Props = BaseComponentInjectedProps &
+  ForwardRefInjectedProps &
+  TouchableOpacityProps;
 
 /**
  * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
@@ -45,36 +66,34 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   constructor(props: Props) {
     super(props);
 
-    const {throttleTime, throttleOptions} = this.props;
+    this.state = {
+      active: false
+    };
 
-    this.onPress = _.throttle(this.onPress.bind(this), throttleTime, throttleOptions);
-    this.onPressIn = this.onPressIn.bind(this);
-    this.onPressOut = this.onPressOut.bind(this);
+    const {throttleTime = 0, throttleOptions = {leading: true, trailing: false}} = props;
+    this.onPress = _.throttle(
+      this.onPress.bind(this),
+      throttleTime,
+      throttleOptions
+    );
   }
-
-  state = {
-    active: false
-  };
 
   getAccessibilityInfo() {
     const {disabled} = this.props;
+
     return {
       accessibilityRole: 'button',
       accessibilityStates: disabled ? ['disabled'] : []
     };
   }
 
-  onPressIn(...args: any) {
-    this.setState({
-      active: true
-    });
+  onPressIn = (...args: any) => {
+    this.setState({active: true});
     _.invoke(this.props, 'onPressIn', ...args);
   }
 
-  onPressOut(...args: any) {
-    this.setState({
-      active: false
-    });
+  onPressOut = (...args: any) => {
+    this.setState({active: false});
     _.invoke(this.props, 'onPressOut', ...args);
   }
 
@@ -101,7 +120,8 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
     const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
 
     if (useNative) {
-      return <Incubator.TouchableOpacity {...this.props}/>;
+      // @ts-ignore
+      return <IncubatorTouchableOpacity {...this.props}/>;
     }
 
     return (
@@ -132,4 +152,6 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   }
 }
 
-export default asBaseComponent<IProps>(forwardRef(TouchableOpacity));
+export default asBaseComponent<TouchableOpacityProps>(
+  forwardRef(TouchableOpacity)
+);
