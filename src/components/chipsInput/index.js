@@ -5,7 +5,7 @@ import ReactNative, {NativeModules, StyleSheet, ViewPropTypes, Image, DeviceEven
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses, ThemeManager, Typography} from '../../style';
 import Assets from '../../assets';
-import {asBaseComponent} from '../../commons/new';
+import {asBaseComponent} from '../../commons';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import {TextField} from '../inputs';
@@ -363,6 +363,8 @@ class ChipsInput extends Component {
     this.input.clear();
   }
 }
+
+export {ChipsInput}; // For tests
 
 export default asBaseComponent(ChipsInput);
 
