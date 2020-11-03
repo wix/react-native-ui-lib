@@ -14,7 +14,8 @@ export {
   PaddingModifiers,
   TypographyModifiers,
   ColorsModifiers,
-  BackgroundColorModifier
+  BackgroundColorModifier,
+  useToggleValue
 } from './commons/new';
 export * as Incubator from './incubator';
 export {default as ActionBar, ActionBarProps} from './components/actionBar';
