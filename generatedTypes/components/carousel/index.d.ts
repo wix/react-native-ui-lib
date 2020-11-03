@@ -65,5 +65,7 @@ declare class Carousel extends Component<CarouselProps, CarouselState> {
 export { Carousel };
 declare const _default: React.ComponentClass<CarouselProps & {
     useCustomTheme?: boolean | undefined;
-}, any> & typeof Carousel;
+}, any> & Carousel & {
+    pageControlPositions: typeof PageControlPosition;
+};
 export default _default;

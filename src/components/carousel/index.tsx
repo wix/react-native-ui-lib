@@ -471,7 +471,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 }
 
 export {Carousel}; // For tests
-export default asBaseComponent<CarouselProps, typeof Carousel>(Carousel);
+export default asBaseComponent<CarouselProps, Carousel & {pageControlPositions: typeof PageControlPosition}>(Carousel);
 
 const styles = StyleSheet.create({
   counter: {

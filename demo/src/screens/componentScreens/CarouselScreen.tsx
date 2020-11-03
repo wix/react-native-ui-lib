@@ -46,7 +46,7 @@ interface State {
 }
 
 class CarouselScreen extends Component<Props ,State> {
-  carousel = React.createRef<any>();
+  carousel = React.createRef<typeof Carousel>();
 
   constructor(props: Props) {
     super(props);
