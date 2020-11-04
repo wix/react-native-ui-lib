@@ -1,5 +1,5 @@
 import {renderHook, act} from '@testing-library/react-hooks';
-import useToggleValue from '../useToggleValue';
+import useToggleValue from '../index';
 
 describe('useOrientation hook tests', () => {
   const makeSUT = (initial, secondary) => {
