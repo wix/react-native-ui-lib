@@ -33,7 +33,7 @@ const PickerItem = props => {
     if (_.isPlainObject(value)) {
       console.warn('UILib Picker.Item will stop supporting passing object as value & label (e.g {value, label}) in the next major version. Please pass separate label and value props');
     }
-  }, []);
+  }, [value]);
 
   // TODO: deprecate the check for object
   const _onPress = useCallback(() => {
