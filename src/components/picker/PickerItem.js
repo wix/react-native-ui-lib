@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {Colors, Typography} from '../../style';
 import * as Modifiers from '../../commons/modifiers';
@@ -52,11 +52,11 @@ const PickerItem = props => {
     return label;
   };
 
-  const renderSelectedIndicator = () => {
+  const selectedIndicator = useMemo(() => {
     if (isSelected) {
       return <Image source={selectedIcon} tintColor={disabled ? Colors.dark60 : selectedIconColor}/>;
     }
-  };
+  }, [isSelected, disabled, selectedIcon, selectedIconColor]);
 
   const _renderItem = () => {
     return (
@@ -64,7 +64,7 @@ const PickerItem = props => {
         <Text numberOfLines={1} style={[styles.labelText, disabled && styles.labelTextDisabled]}>
           {getLabel()}
         </Text>
-        {renderSelectedIndicator()}
+        {selectedIndicator}
       </View>
     );
   };
