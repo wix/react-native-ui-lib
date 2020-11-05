@@ -49,7 +49,7 @@ export type TouchableOpacityProps = Omit<RNTouchableOpacityProps, 'style' | 'onP
 
 type Props = BaseComponentInjectedProps &
   ForwardRefInjectedProps &
-  Partial<TouchableOpacityProps>;
+  TouchableOpacityProps;
 
 /**
  * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
