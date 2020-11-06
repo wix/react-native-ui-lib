@@ -25,7 +25,7 @@ const PickerItem = props => {
     disabled,
     isSelected,
     selectedIcon = Assets.icons.check,
-    selectedIconColor,
+    selectedIconColor = Colors.primary,
     testID
   } = props;
 
