@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
-import {Card, Text, Image, ListItem, Carousel, Spacings, View, ExpandableSection} from 'react-native-ui-lib';
+import {ScrollView, StyleSheet} from 'react-native';
+import {Card, Text, Image, ListItem, Carousel, Spacings, View, ExpandableSection, Switch} from 'react-native-ui-lib';
 
 const cardImage2 = require('../../assets/images/empty-state.jpg');
 const cardImage = require('../../assets/images/card-example.jpg');
@@ -43,13 +43,21 @@ const elements = [
 
 class ExpandableSectionScreen extends PureComponent {
   state = {
-    expanded: false
+    expanded: false,
+    top: false
   };
 
   onExpand() {
     this.setState({
       expanded: !this.state.expanded
     });
+  }
+
+  getChevron() {
+    if (this.state.expanded) {
+      return this.state.top ? chevronDown : chevronUp;
+    }
+    return this.state.top ? chevronUp : chevronDown;
   }
 
   getHeaderElement() {
@@ -59,7 +67,7 @@ class ExpandableSectionScreen extends PureComponent {
           ExpandableSection's sectionHeader
         </Text>
         <View style={styles.header}>
-          <Image style={styles.icon} source={!this.state.expanded ? chevronUp : chevronDown} />
+          <Image style={styles.icon} source={this.getChevron()} />
         </View>
       </View>
     );
@@ -80,11 +88,27 @@ class ExpandableSectionScreen extends PureComponent {
   }
 
   render() {
-    const {expanded} = this.state;
+    const {expanded, top} = this.state;
 
     return (
       <ScrollView>
-        <ExpandableSection expanded={expanded} sectionHeader={this.getHeaderElement()} onPress={() => this.onExpand()}>
+        <View row center margin-20>
+          <Text dark10 text70 marginR-10>
+            Open section on top
+          </Text>
+          <Switch
+            value={this.state.top}
+            onValueChange={() => {
+              this.setState({top: !this.state.top});
+            }}
+          ></Switch>
+        </View>
+        <ExpandableSection
+          top={top}
+          expanded={expanded}
+          sectionHeader={this.getHeaderElement()}
+          onPress={() => this.onExpand()}
+        >
           {this.getBodyElement()}
         </ExpandableSection>
         <ListItem>

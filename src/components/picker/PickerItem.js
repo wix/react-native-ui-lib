@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useContext} from 'react';
+import React, {useCallback, useEffect, useMemo, useContext} from 'react';
 import {StyleSheet} from 'react-native';
 import {Colors, Typography} from '../../style';
 import * as Modifiers from '../../commons/modifiers';
@@ -33,7 +33,7 @@ const PickerItem = props => {
     if (_.isPlainObject(value)) {
       console.warn('UILib Picker.Item will stop supporting passing object as value & label (e.g {value, label}) in the next major version. Please pass separate label and value props');
     }
-  }, []);
+  }, [value]);
 
   const _onPress = useCallback(() => {
     context.onPress(value);
@@ -57,11 +57,11 @@ const PickerItem = props => {
     ...Modifiers.extractAccessibilityProps(props)
   };
 
-  const renderSelectedIndicator = () => {
+  const selectedIndicator = useMemo(() => {
     if (isSelected) {
       return <Image source={selectedIcon} tintColor={disabled ? Colors.dark60 : selectedIconColor}/>;
     }
-  };
+  }, [isSelected, disabled, selectedIcon, selectedIconColor]);
 
   const _renderItem = () => {
     return (
@@ -69,7 +69,7 @@ const PickerItem = props => {
         <Text numberOfLines={1} style={[styles.labelText, disabled && styles.labelTextDisabled]}>
           {itemLabel}
         </Text>
-        {renderSelectedIndicator()}
+        {selectedIndicator}
       </View>
     );
   };
