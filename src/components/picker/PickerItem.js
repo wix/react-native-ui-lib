@@ -24,7 +24,7 @@ const PickerItem = props => {
     label,
     disabled,
     selectedIcon = Assets.icons.check,
-    selectedIconColor,
+    selectedIconColor = Colors.primary,
     testID
   } = props;
   const context = useContext(PickerContext);
