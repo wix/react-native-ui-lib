@@ -4,15 +4,15 @@ import {View, StyleSheet, ImageSourcePropType} from 'react-native';
 import Image, {ImageProps} from '../image';
 import * as CardPresenter from './CardPresenter';
 import asCardChild, {asCardChildProps} from './asCardChild';
-// @ts-ignore
-import {LogService} from '../../services';
 
-// TODO: Remove omitting source after imageSource deprecation
+
+// TODO: Remove omitting source after imageSource deprecation (since it's required for Image)
 export type CardImageProps = Omit<ImageProps, 'source'> & {
   /**
    * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
    */
   imageSource?: ImageSourcePropType;
+  source?: ImageSourcePropType; //TODO: Remove after imageSource deprecation - should take it from Image props
   /**
    * Image width
    */
@@ -31,11 +31,6 @@ export type CardImageProps = Omit<ImageProps, 'source'> & {
    * border radius, basically for Android since overflow doesn't work well (deprecated)
    */
   borderRadius?: number;
-  /**
-   * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
-   * TODO: Remove after imageSource deprecation - should take it from Image props
-   */
-  source?: ImageSourcePropType;
 };
 
 type Props = CardImageProps & asCardChildProps;
@@ -52,12 +47,16 @@ class CardImage extends PureComponent<Props> {
   constructor(props: Props) {
     super(props);
 
+    this.styles = createStyles(props);
+
+    if (props.imageSource) {
+      console.warn(`CardImage's 'imageSource' property is deprecated, please use 'source' instead`);
+    }
     if (props.borderRadius) {
-      LogService.warn(
+      console.warn(
         'uilib: Please stop passing borderRadius to Card.Image, it will get the borderRadius from the Card'
       );
     }
-    this.styles = createStyles(props);
   }
 
   render() {

@@ -22,6 +22,7 @@ export default class StateScreen extends BaseComponent {
      * The image source that's showing at the top. use an image that was required locally
      */
     imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    source: PropTypes.oneOfType([PropTypes.object, PropTypes.number]), //TODO: Remove after imageSource deprecation
     /**
      * To to show as the title
      */
@@ -48,23 +49,29 @@ export default class StateScreen extends BaseComponent {
     super(props);
 
     if (props.testId) {
-      console.warn('StateScreen prop \'testId\' is deprecated. Please use RN \'testID\' prop instead.');
+      console.warn(`StateScreen's 'testId' property is deprecated. Please use RN 'testID' prop instead.`);
+    }
+    if (props.imageSource) {
+      console.warn(`StateScreen's 'imageSource' property is deprecated, please use 'source' instead`);
     }
   }
 
   generateStyles() {
-    const {imageSource} = this.props;
-    const isRemoteImage = _.isObject(imageSource) && Boolean(imageSource.uri);
+    const {source, imageSource} = this.props;
+    const finalSource = source || imageSource;
+
+    const isRemoteImage = _.isObject(finalSource) && Boolean(finalSource.uri);
     this.styles = createStyles(isRemoteImage);
   }
 
   render() {
-    // TODO: remove testId after deprecation
-    const {title, subtitle, imageSource, ctaLabel, onCtaPress, testId, testID} = this.props;
+    // TODO: remove testId and imageSource after deprecation
+    const {title, subtitle, source, imageSource, ctaLabel, onCtaPress, testId, testID} = this.props;
+    const finalSource = source || imageSource;
 
     return (
       <View style={this.styles.container} testID={testID || testId}>
-        <Image style={this.styles.image} resizeMode={'contain'} source={imageSource}/>
+        <Image style={this.styles.image} resizeMode={'contain'} source={finalSource}/>
         <Text style={[this.styles.title]}>{title}</Text>
         <Text style={[this.styles.subtitle]}>{subtitle}</Text>
         <Button
