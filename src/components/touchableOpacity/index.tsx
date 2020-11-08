@@ -14,7 +14,6 @@ import {
   ForwardRefInjectedProps,
   ContainerModifiers
 } from '../../commons/new';
-// @ts-ignore
 import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
 
 
