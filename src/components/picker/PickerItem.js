@@ -28,12 +28,26 @@ const PickerItem = props => {
     testID
   } = props;
   const context = useContext(PickerContext);
+  const {renderItem} = context;
+  const isSelected = isItemSelected(value, context.value);
+  const itemLabel = getItemLabel(label, value, props.getItemLabel || context.getItemLabel);
+  const accessibilityProps = {
+    accessibilityState: isSelected ? {selected: true} : undefined,
+    accessibilityHint: 'Double click to select this suggestion',
+    ...Modifiers.extractAccessibilityProps(props)
+  };
 
   useEffect(() => {
     if (_.isPlainObject(value)) {
       console.warn('UILib Picker.Item will stop supporting passing object as value & label (e.g {value, label}) in the next major version. Please pass separate label and value props');
     }
   }, [value]);
+
+  const selectedIndicator = useMemo(() => {
+    if (isSelected) {
+      return <Image source={selectedIcon} tintColor={disabled ? Colors.dark60 : selectedIconColor}/>;
+    }
+  }, [isSelected, disabled, selectedIcon, selectedIconColor]);
 
   const _onPress = useCallback(() => {
     context.onPress(value);
@@ -43,26 +57,6 @@ const PickerItem = props => {
     _.invoke(context, 'onSelectedLayout', ...args);
   }, []);
 
-  const selectedIndicator = useMemo(() => {
-    if (isSelected) {
-      return <Image source={selectedIcon} tintColor={disabled ? Colors.dark60 : selectedIconColor}/>;
-    }
-  }, [isSelected, disabled, selectedIcon, selectedIconColor]);
-
-  const itemLabel = getItemLabel(label, value, props.getItemLabel || context.getItemLabel);
-  if (context.showSearch && shouldFilterOut(context.searchValue, itemLabel)) {
-    return null;
-  }
-
-  const {renderItem} = context;
-  const isSelected = isItemSelected(value, context.value);
-
-  const accessibilityProps = {
-    accessibilityState: isSelected ? {selected: true} : undefined,
-    accessibilityHint: 'Double click to select this suggestion',
-    ...Modifiers.extractAccessibilityProps(props)
-  };
-  
   const _renderItem = () => {
     return (
       <View style={styles.container} flex row spread centerV>
@@ -73,6 +67,10 @@ const PickerItem = props => {
       </View>
     );
   };
+
+  if (context.showSearch && shouldFilterOut(context.searchValue, itemLabel)) {
+    return null;
+  }
 
   return (
     <TouchableOpacity
