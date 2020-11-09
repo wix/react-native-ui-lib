@@ -6,6 +6,7 @@
 export * from './style';
 export * from './services';
 export * as Incubator from './incubator';
+export * as Hooks from './hooks';
 export {
   asBaseComponent,
   withScrollEnabler,

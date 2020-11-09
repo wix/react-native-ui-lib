@@ -27,8 +27,5 @@ module.exports = {
   },
   get withScrollReached() {
     return require('./withScrollReached').default;
-  },
-  get useToggleValue() {
-    return require('./useToggleValue').default;
   }
 };
