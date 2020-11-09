@@ -43,6 +43,12 @@ const PickerItem = props => {
     _.invoke(context, 'onSelectedLayout', ...args);
   }, []);
 
+  const selectedIndicator = useMemo(() => {
+    if (isSelected) {
+      return <Image source={selectedIcon} tintColor={disabled ? Colors.dark60 : selectedIconColor}/>;
+    }
+  }, [isSelected, disabled, selectedIcon, selectedIconColor]);
+
   const itemLabel = getItemLabel(label, value, props.getItemLabel || context.getItemLabel);
   if (context.showSearch && shouldFilterOut(context.searchValue, itemLabel)) {
     return null;
@@ -56,13 +62,7 @@ const PickerItem = props => {
     accessibilityHint: 'Double click to select this suggestion',
     ...Modifiers.extractAccessibilityProps(props)
   };
-
-  const selectedIndicator = useMemo(() => {
-    if (isSelected) {
-      return <Image source={selectedIcon} tintColor={disabled ? Colors.dark60 : selectedIconColor}/>;
-    }
-  }, [isSelected, disabled, selectedIcon, selectedIconColor]);
-
+  
   const _renderItem = () => {
     return (
       <View style={styles.container} flex row spread centerV>
