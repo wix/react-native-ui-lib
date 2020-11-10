@@ -65,6 +65,10 @@ class DateTimePicker extends BaseComponent {
      */
     timeFormat: PropTypes.string,
     /**
+     * A callback function to format time
+     */
+    timeFormatter: PropTypes.func,
+    /**
      * Allows changing of the locale of the component (iOS only)
      */
     locale: PropTypes.string,
@@ -144,10 +148,13 @@ class DateTimePicker extends BaseComponent {
 
   getStringValue = () => {
     const {value} = this.state;
-    const {mode, dateFormat, timeFormat, dateFormatter} = this.getThemeProps();
+    const {mode, dateFormat, timeFormat, dateFormatter, timeFormatter} = this.getThemeProps();
     if (value) {
-      if (dateFormatter) {
+      if (dateFormatter && mode === MODES.DATE) {
         return dateFormatter(value);
+      }
+      if (timeFormatter && mode === MODES.TIME) {
+        return timeFormatter(value);
       }
       const dateString =
         mode === MODES.DATE
