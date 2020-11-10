@@ -161,9 +161,10 @@ class Dialog extends Component<DialogProps, DialogState> {
     }
   }
 
+  // TODO: revert adding this workaround once RN fixes https://github.com/facebook/react-native/issues/29455
   onFadeDone = () => {
     if (!this.state.modalVisibility) {
-      setTimeout(() => { // unfortunately this is needed if a modal needs to open on iOS 
+      setTimeout(() => { // unfortunately this is needed if a modal needs to open on iOS
         _.invoke(this.props, 'onDialogDismissed', this.props);
         _.invoke(this.props, 'onModalDismissed', this.props);
       }, 50);
