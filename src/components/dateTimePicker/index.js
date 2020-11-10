@@ -57,6 +57,10 @@ class DateTimePicker extends BaseComponent {
      */
     dateFormat: PropTypes.string,
     /**
+     * A callback function to format date
+     */
+    dateFormatter: PropTypes.func,
+    /**
      * The time format for the text display
      */
     timeFormat: PropTypes.string,
@@ -140,8 +144,11 @@ class DateTimePicker extends BaseComponent {
 
   getStringValue = () => {
     const {value} = this.state;
-    const {mode, dateFormat, timeFormat} = this.getThemeProps();
+    const {mode, dateFormat, timeFormat, dateFormatter} = this.getThemeProps();
     if (value) {
+      if (dateFormatter) {
+        return dateFormatter(value);
+      }
       const dateString =
         mode === MODES.DATE
           ? dateFormat
