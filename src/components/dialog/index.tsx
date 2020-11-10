@@ -161,6 +161,15 @@ class Dialog extends Component<DialogProps, DialogState> {
     }
   }
 
+  onFadeDone = () => {
+    if (Constants.isIOS && !this.state.modalVisibility) {
+      setTimeout(() => { // unfortunately this is needed if a modal needs to open on iOS 
+        _.invoke(this.props, 'onDialogDismissed', this.props);
+        _.invoke(this.props, 'onModalDismissed', this.props);
+      }, 50);
+    }
+  }
+
   onDismiss = () => {
     this.setState({modalVisibility: false}, () => {
       const props = this.props;
@@ -233,6 +242,7 @@ class Dialog extends Component<DialogProps, DialogState> {
           modalVisibility={modalVisibility}
           dialogVisibility={dialogVisibility}
           overlayBackgroundColor={overlayBackgroundColor}
+          onFadeDone={this.onFadeDone}
         />
         {this.renderDialogView()}
         {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>}
@@ -253,7 +263,7 @@ class Dialog extends Component<DialogProps, DialogState> {
         animationType={'none'}
         onBackgroundPress={this.hideDialogView}
         onRequestClose={this.hideDialogView}
-        onDismiss={this.onModalDismissed}
+        // onDismiss={this.onModalDismissed}
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}
       >
