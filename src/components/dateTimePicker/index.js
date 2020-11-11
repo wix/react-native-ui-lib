@@ -150,21 +150,18 @@ class DateTimePicker extends BaseComponent {
     const {value} = this.state;
     const {mode, dateFormat, timeFormat, dateFormatter, timeFormatter} = this.getThemeProps();
     if (value) {
-      if (dateFormatter && mode === MODES.DATE) {
-        return dateFormatter(value);
+      switch (mode) {
+        case MODES.DATE:
+          if (dateFormatter) {
+            return dateFormatter(value);
+          }
+          return dateFormat ? moment(value).format(dateFormat) : value.toLocaleDateString();
+        case MODES.TIME:
+          if (timeFormatter) {
+            return timeFormatter(value);
+          }
+          return timeFormat ? moment(value).format(timeFormat) : value.toLocaleTimeString();
       }
-      if (timeFormatter && mode === MODES.TIME) {
-        return timeFormatter(value);
-      }
-      const dateString =
-        mode === MODES.DATE
-          ? dateFormat
-            ? moment(value).format(dateFormat)
-            : value.toLocaleDateString()
-          : timeFormat
-            ? moment(value).format(timeFormat)
-            : value.toLocaleTimeString();
-      return dateString;
     }
   };
 
