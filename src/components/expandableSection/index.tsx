@@ -18,13 +18,17 @@ export type ExpandableSectionProps = {
    */
   expanded?: boolean;
   /**
+   * should the expandableSection open above the sectionHeader
+   */
+  top?: boolean;
+  /**
    * action for when pressing the header of the expandableSection
    */
   onPress?: () => void;
 };
 
 function ExpandableSection(props: ExpandableSectionProps) {
-  const {expanded, sectionHeader, children} = props;
+  const {expanded, sectionHeader, children, top} = props;
 
 const onPress = () => {
   props.onPress?.();
@@ -32,9 +36,10 @@ const onPress = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container}> 
+      {top && expanded && children}
       <TouchableOpacity onPress={onPress}>{sectionHeader}</TouchableOpacity>
-      {expanded && children}
+      {!top && expanded && children}
     </View>
   );
 }

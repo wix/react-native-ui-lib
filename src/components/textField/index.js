@@ -340,6 +340,10 @@ export default class TextField extends BaseInput {
     return this.shouldFakePlaceholder() ? (this.shouldShowTopError() ? undefined : 25) : undefined;
   }
 
+  getTopErrorsPosition() {
+    return !this.props.title && this.shouldShowTopError() ? {top: Constants.isIOS ? -25 : -27} : undefined;
+  }
+
   isDisabled() {
     return this.props.editable === false;
   }
@@ -397,6 +401,11 @@ export default class TextField extends BaseInput {
     return !expandable && rightButtonProps && rightButtonProps.iconSource;
   }
 
+  shouldRenderTitle() {
+    const {floatingPlaceholder, title} = this.getThemeProps();
+    return !floatingPlaceholder && title;
+  }
+
   onPressRightButton = () => {
     _.invoke(this.props, 'rightButtonProps.onPress');
   };
@@ -419,6 +428,7 @@ export default class TextField extends BaseInput {
             onLayout={this.onPlaceholderLayout}
             style={[
               this.styles.placeholder,
+              this.getTopErrorsPosition(),
               typography,
               // TODO: we need to exclude completely any dependency on line height
               // in this component since it always breaks alignments
@@ -467,10 +477,10 @@ export default class TextField extends BaseInput {
   }
 
   renderTitle() {
-    const {floatingPlaceholder, title, titleColor, titleStyle} = this.getThemeProps();
+    const {title, titleColor, titleStyle} = this.getThemeProps();
     const color = this.getStateColor(titleColor || PLACEHOLDER_COLOR_BY_STATE);
 
-    if (!floatingPlaceholder && title) {
+    if (this.shouldRenderTitle()) {
       return <Text style={[{color}, this.styles.topLabel, this.styles.label, titleStyle]}>{title}</Text>;
     }
   }
@@ -636,7 +646,7 @@ export default class TextField extends BaseInput {
       return (
         <TouchableOpacity
           {...others} accessibilityLabel={accessibilityLabel}
-          style={[this.styles.rightButton, style]} onPress={this.onPressRightButton}
+          style={[this.styles.rightButton, this.getTopErrorsPosition(), style]} onPress={this.onPressRightButton}
         >
           <Image
             pointerEvents="none"
@@ -654,7 +664,7 @@ export default class TextField extends BaseInput {
 
     if (rightIconSource) {
       return (
-        <View style={this.styles.rightIcon} pointerEvents="none">
+        <View style={[this.styles.rightButton, this.getTopErrorsPosition()]} pointerEvents="none">
           <Image source={rightIconSource} resizeMode={'center'} style={[this.styles.rightButtonImage, rightIconStyle]}/>
         </View>
       );
@@ -739,7 +749,7 @@ export default class TextField extends BaseInput {
   };
 }
 
-function createStyles({centered, multiline, hideUnderline}, rightItemTopPadding = 0) {
+function createStyles({centered, multiline, title, floatingPlaceholder}, rightItemTopPadding = 0) {
   const itemTopPadding = Constants.isIOS ? (rightItemTopPadding - 3) : (rightItemTopPadding - 1);
 
   return StyleSheet.create({
@@ -804,12 +814,6 @@ function createStyles({centered, multiline, hideUnderline}, rightItemTopPadding 
     },
     rightElement: {
       paddingRight: ICON_SIZE + ICON_LEFT_PADDING
-    },
-    rightIcon: {
-      position: 'absolute',
-      right: 0,
-      alignSelf: 'flex-start',
-      paddingTop: itemTopPadding
     },
     rightButton: {
       position: 'absolute',

@@ -4,7 +4,7 @@ describe('Carousel presenter', () => {
   it('should getChildrenLength', () => {
     expect(uut.getChildrenLength({children: [{}, {}, {}]})).toBe(3);
     expect(uut.getChildrenLength({children: [{}]})).toBe(1);
-    expect(uut.getChildrenLength({})).toBe(0);
+    expect(uut.getChildrenLength()).toBe(0);
   });
 
   describe('calcOffset', () => {

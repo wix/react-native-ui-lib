@@ -35,7 +35,7 @@ export default class SliderScreen extends Component {
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
         <View flex padding-20>
-          <Text titleHuge marginB-20>Sliders</Text>
+          <Text text40 marginB-20>Sliders</Text>
 
           <View row centerV>
             <Image assetName={'megaphone'} style={styles.image}/>
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 4,
     borderWidth: 1,
-    borderColor: Colors.grey60
+    borderColor: Colors.grey
   },
   group: {
     backgroundColor: Colors.grey60,

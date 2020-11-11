@@ -64,10 +64,6 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
     this.firstLoad = true;
   }
 
-  componentDidMount() {
-    this.firstLoad = false;
-  }
-
   onAnimationEnd = () => {
     this.setState({animating: false});
   };
@@ -116,6 +112,9 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   render() {
     const {withoutAnimation, secondaryButton, visible} = this.props;
     const Container = !withoutAnimation ? AnimatableView : View;
+
+    // NOTE: keep this.firstLoad as true as long as the visibility changed to true
+    this.firstLoad && !visible ? this.firstLoad = true : this.firstLoad = false;
 
     // NOTE: On first load, don't show if it should not be visible
     if (this.firstLoad === true && !this.initialVisibility) {

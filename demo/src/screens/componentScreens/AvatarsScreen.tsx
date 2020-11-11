@@ -98,6 +98,18 @@ const examples = [
     title: 'Empty Gravatar',
     backgroundColor: Colors.red60,
     source: {uri: 'https://www.gravatar.com/avatar/2497473d558a37020c558bf26e380a7c?d=blank'}
+  },
+  {
+    title: 'With custom badge label',
+    label: 'LD',
+    backgroundColor: Colors.red60,
+    badgePosition: 'BOTTOM_RIGHT',
+    badgeProps: {
+      label: '+2',
+      size: 'large',
+      borderWidth: 1.5,
+      borderColor: Colors.white,
+    }
   }
 ];
 

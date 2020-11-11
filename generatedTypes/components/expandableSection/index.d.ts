@@ -13,6 +13,10 @@ export declare type ExpandableSectionProps = {
      */
     expanded?: boolean;
     /**
+     * should the expandableSection open above the sectionHeader
+     */
+    top?: boolean;
+    /**
      * action for when pressing the header of the expandableSection
      */
     onPress?: () => void;

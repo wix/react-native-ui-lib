@@ -22,7 +22,7 @@ export default class PageControlScreen extends Component {
     this.setState({currentPage: this.state.currentPage + 1});
   }
 
-  onPagePress = (index) => {
+  onPagePress = (index: number) => {
     this.setState({currentPage: index});
   }
 
