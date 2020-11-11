@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     padding: 30,
     paddingBottom: 0,
     flex: 1,
-    backgroundColor: Colors.dark80
+    backgroundColor: Colors.grey80
   },
   buttonsContainer: {
     flexDirection: 'row',
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     margin: 20
   },
   triggerButton: {
-    backgroundColor: Colors.dark10,
+    backgroundColor: Colors.grey10,
     width: 100,
     height: 30,
     borderWidth: 1,

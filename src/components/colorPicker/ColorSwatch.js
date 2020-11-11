@@ -24,10 +24,10 @@ export const SWATCH_SIZE = DEFAULT_SIZE;
  */
 export default class ColorSwatch extends PureBaseComponent {
   static displayName = 'ColorSwatch';
-  
+
   static propTypes = {
     /**
-     * The identifier value of the ColorSwatch in a ColorSwatch palette. 
+     * The identifier value of the ColorSwatch in a ColorSwatch palette.
      * Must be different than other ColorSwatches in the same group
      */
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
@@ -185,7 +185,7 @@ export default class ColorSwatch extends PureBaseComponent {
   }
 }
 
-function createStyles({color = Colors.dark30}) {
+function createStyles({color = Colors.grey30}) {
   return StyleSheet.create({
     container: {
       backgroundColor: color,
@@ -194,7 +194,7 @@ function createStyles({color = Colors.dark30}) {
       borderRadius: DEFAULT_SIZE / 2,
       margin: SWATCH_MARGIN,
       borderWidth: color === 'transparent' ? undefined : 1,
-      borderColor: Colors.rgba(Colors.dark30, 0.2)
+      borderColor: Colors.rgba(Colors.grey30, 0.2)
     },
     transparentImage: {
       ...StyleSheet.absoluteFillObject,

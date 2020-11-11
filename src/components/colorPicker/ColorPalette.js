@@ -336,8 +336,8 @@ export default class ColorPalette extends PureBaseComponent {
         </Carousel>
         <PageControl
           size={6}
-          color={Colors.dark10}
-          inactiveColor={Colors.dark50}
+          color={Colors.grey10}
+          inactiveColor={Colors.grey50}
           spacing={8}
           numOfPages={colorGroups.length}
           currentPage={currentPage}

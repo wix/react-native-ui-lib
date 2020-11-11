@@ -13,7 +13,7 @@ function hashStringToNumber(str: string) {
 }
 
 export function getAvatarColors() {
-  return [Colors.blue20, Colors.cyan20, Colors.green20, Colors.yellow20,
+  return [Colors.blue20, Colors.blue20, Colors.green20, Colors.yellow20,
     Colors.orange20, Colors.red20, Colors.purple20, Colors.violet20];
 }
 

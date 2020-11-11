@@ -13,7 +13,7 @@ type ContentType = TextPropTypes & {text?: string};
 export type CardSectionProps = ViewPropTypes & {
   /**
    * Text content for the CardSection.
-   * Example: content={[{text: 'You’re Invited!', text70: true, dark10: true}]}
+   * Example: content={[{text: 'You’re Invited!', text70: true, grey10: true}]}
    */
   content?: ContentType[];
   /**

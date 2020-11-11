@@ -143,7 +143,7 @@ function createStyles() {
   const typography = Constants.isSmallScreen ? Typography.text90 : Typography.text80;
   return StyleSheet.create({
     topContainer: {
-      backgroundColor: Colors.dark30
+      backgroundColor: Colors.grey30
     },
     absolutePosition: {
       ...StyleSheet.absoluteFillObject,
@@ -157,7 +157,7 @@ function createStyles() {
       flex: 1,
       ...typography,
       textAlign: 'center',
-      color: Colors.dark60,
+      color: Colors.grey60,
       marginTop: 8,
       marginBottom: 8,
       alignSelf: 'center'

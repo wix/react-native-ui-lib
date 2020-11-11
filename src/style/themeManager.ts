@@ -8,12 +8,12 @@ export class ThemeManager {
     primaryColor: Colors.blue30,
     CTA: {
       textColor: Colors.white,
-      disabledColor: Colors.dark60,
+      disabledColor: Colors.grey60,
       backgroundColor: Colors.blue30
     },
-    titleColor: Colors.dark10,
-    subtitleColor: Colors.dark40,
-    dividerColor: Colors.dark70,
+    titleColor: Colors.grey10,
+    subtitleColor: Colors.grey40,
+    dividerColor: Colors.grey70,
     components: {} as Extendable // leave this key and delete the rest on V6
   };
 

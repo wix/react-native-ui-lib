@@ -17,7 +17,7 @@ const DIRECTIONS = {
 
 export default class ActionsList extends Component {
   static displayName = 'ActionsList';
-  
+
   static propTypes = {
     item: PropTypes.object,
     index: PropTypes.number
@@ -25,7 +25,7 @@ export default class ActionsList extends Component {
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
       animationValue: new Animated.Value(0),
       animationValue2: new Animated.Value(0),
@@ -68,7 +68,7 @@ export default class ActionsList extends Component {
   closePanels = () => {
     if (this.rightPanel) {
       this.animate(DIRECTIONS.RIGHT);
-    } 
+    }
     if (this.leftPanel) {
       this.animate(DIRECTIONS.LEFT);
     }
@@ -78,9 +78,9 @@ export default class ActionsList extends Component {
     if (panelDirection) {
       this.direction = panelDirection;
     }
-    
+
     const {animationValue, animationValue2} = this.state;
-    
+
     if (this.direction === DIRECTIONS.LEFT && !this.rightPanel && !this.leftPanel) { // open rightPanel
       Animated.spring(animationValue, {
         toValue: 1,
@@ -128,7 +128,7 @@ export default class ActionsList extends Component {
     const {leftPanelWidth, animationValue2} = this.state;
 
     return (
-      <Animated.View 
+      <Animated.View
         style={{
           position: 'absolute',
           alignSelf: 'flex-start',
@@ -139,12 +139,12 @@ export default class ActionsList extends Component {
           ]
         }}
       >
-        <View 
+        <View
           style={{
             overflow: 'hidden',
             height: INITIAL_WIDTH,
-            width: leftPanelWidth, 
-            backgroundColor: Colors.rgba(Colors.red20, 0.9), 
+            width: leftPanelWidth,
+            backgroundColor: Colors.rgba(Colors.red20, 0.9),
             borderRadius: 20
           }}
         >
@@ -171,7 +171,7 @@ export default class ActionsList extends Component {
     const {rightPanelWidth, animationValue} = this.state;
 
     return (
-      <Animated.View 
+      <Animated.View
         style={{
           position: 'absolute',
           alignSelf: 'flex-end',
@@ -182,12 +182,12 @@ export default class ActionsList extends Component {
           ]
         }}
       >
-        <View 
+        <View
           style={{
             overflow: 'hidden',
             height: INITIAL_WIDTH,
             width: rightPanelWidth,
-            backgroundColor: Colors.rgba(Colors.violet30, 0.9), 
+            backgroundColor: Colors.rgba(Colors.violet30, 0.9),
             borderRadius: 20
           }}
         >
@@ -244,18 +244,18 @@ export default class ActionsList extends Component {
     const {item, index} = this.props;
 
     return (
-      <View 
+      <View
         style={{
           height: 80,
           backgroundColor: Colors.white,
           borderBottomWidth: 1,
-          borderBottomColor: Colors.dark70
+          borderBottomColor: Colors.grey70
         }}
         {...this.panResponder.panHandlers}
       >
         <TouchableOpacity flex center activeOpacity={0.5} onPress={this.closePanels}>
           <View row>
-            <Text text80 dark10 style={{alignSelf: 'center'}}>{item.text} #{item.id}</Text>
+            <Text text80 grey10 style={{alignSelf: 'center'}}>{item.text} #{item.id}</Text>
             <Text text60 marginH-12>Swipe to any direction</Text>
             <Button size={'small'} label={`Button #${index}`} onPress={() => console.warn(`button ${index} press`)}/>
           </View>

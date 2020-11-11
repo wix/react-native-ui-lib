@@ -174,7 +174,7 @@ const MIN_WIDTH = {
   LARGE: 90
 };
 const DEFAULT_SIZE = ButtonSize.large;
-const DISABLED_COLOR = Colors.dark60;
+const DISABLED_COLOR = Colors.grey60;
 
 type Props = ButtonPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
 
@@ -291,7 +291,7 @@ class Button extends PureComponent<Props, ButtonState> {
     } else if (outline) {
       color = outlineColor || Colors.blue30;
     } else if (this.isIconButton) {
-      color = undefined; // Colors.dark10;
+      color = undefined; // Colors.grey10;
     }
 
     if (disabled && (link || outline)) {
@@ -392,7 +392,7 @@ class Button extends PureComponent<Props, ButtonState> {
       };
 
       if (disabled) {
-        outlineStyle.borderColor = Colors.dark70;
+        outlineStyle.borderColor = Colors.grey70;
       }
     }
     return outlineStyle;
@@ -436,7 +436,7 @@ class Button extends PureComponent<Props, ButtonState> {
     }
 
     if (disabled && !this.isFilled) {
-      iconStyle.tintColor = Colors.dark60;
+      iconStyle.tintColor = Colors.grey60;
     }
 
     return [iconStyle, propsIconStyle];
@@ -545,7 +545,7 @@ function createStyles() {
       alignItems: 'center'
     },
     containerDisabled: {
-      backgroundColor: Colors.dark60
+      backgroundColor: Colors.grey60
     },
     innerContainerLink: {
       minWidth: undefined,

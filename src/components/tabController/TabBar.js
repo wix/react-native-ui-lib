@@ -241,7 +241,7 @@ class TabBar extends PureComponent {
         const offsetChange = Math.max(0, itemOffset - (this.tabBarScrollOffset + this.containerWidth));
         targetOffset = this.tabBarScrollOffset + offsetChange + itemWidth;
       }
-      
+
       if (!_.isUndefined(targetOffset)) {
 
         if (Constants.isRTL && Constants.isAndroid) {
@@ -397,7 +397,7 @@ class TabBar extends PureComponent {
 
   getShadowStyle() {
     const {enableShadow, shadowStyle} = this.props;
-    return enableShadow && (shadowStyle || styles.containerShadow); 
+    return enableShadow && (shadowStyle || styles.containerShadow);
   }
 
   render() {
@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
   containerShadow: {
     ...Platform.select({
       ios: {
-        shadowColor: Colors.dark10,
+        shadowColor: Colors.grey10,
         shadowOpacity: 0.05,
         shadowRadius: 2,
         shadowOffset: {height: 6, width: 0}

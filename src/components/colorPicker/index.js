@@ -78,7 +78,7 @@ export default class ColorPicker extends PureBaseComponent {
   };
 
   static defaultProps = {
-    initialColor: Colors.dark80,
+    initialColor: Colors.grey80,
     accessibilityLabels: ACCESSIBILITY_LABELS
   };
 
@@ -184,7 +184,7 @@ export default class ColorPicker extends PureBaseComponent {
   }
 
   getTextColor(color) {
-    return Colors.isDark(color) ? Colors.white : Colors.dark10;
+    return Colors.isDark(color) ? Colors.white : Colors.grey10;
   }
 
   getValidColorString(text) {
@@ -258,7 +258,7 @@ export default class ColorPicker extends PureBaseComponent {
         <Button
           link
           iconSource={Assets.icons.x}
-          iconStyle={{tintColor: Colors.dark10}}
+          iconStyle={{tintColor: Colors.grey10}}
           onPress={this.onDismiss}
           accessibilityLabel={accessibilityLabels.dismissButton}
         />
@@ -387,8 +387,8 @@ export default class ColorPicker extends PureBaseComponent {
         />
         <View style={this.styles.buttonContainer}>
           <Button
-            color={Colors.dark10}
-            outlineColor={Colors.dark10}
+            color={Colors.grey10}
+            outlineColor={Colors.grey10}
             style={this.styles.button}
             round
             outline

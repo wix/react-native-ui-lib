@@ -41,9 +41,9 @@ export default class ProgressBarScreen extends Component {
 
     return (
       <ScrollView>
-        <View flex bg-dark80 spread paddingV-18>
+        <View flex bg-grey80 spread paddingV-18>
           <View paddingL-18 marginB-18>
-            <Text text40 dark10>
+            <Text text40 grey10>
               ProgressBar
             </Text>
           </View>

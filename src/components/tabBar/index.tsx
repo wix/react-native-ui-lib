@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {
-  Platform, 
-  StyleSheet, 
-  Animated, 
-  ScrollView, 
-  NativeSyntheticEvent, 
-  NativeScrollEvent, 
+  Platform,
+  StyleSheet,
+  Animated,
+  ScrollView,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
   ViewStyle
 } from 'react-native';
 import {Constants} from '../../helpers';
@@ -42,8 +42,8 @@ export type TabBarProps = BaseComponentInjectedProps & ViewPropTypes & {
      * custom style for the selected indicator
      */
     indicatorStyle?: ViewStyle,
-    /** 
-     * The background color 
+    /**
+     * The background color
      */
     backgroundColor: string,
     /**
@@ -141,7 +141,7 @@ class TabBar extends Component<TabBarProps, State> {
     if (this.itemsRefs && this.state.currentIndex) {
       const childRef = this.itemsRefs[this.state.currentIndex];
       const childLayout = childRef.getLayout();
-  
+
       if (childLayout && this.hasOverflow()) {
         if (childLayout.x + childLayout.width - this.contentOffset.x > this.scrollContainerWidth) {
           this.scrollView.scrollTo({x: childLayout.x - this.scrollContainerWidth + childLayout.width, y: 0, animated});
@@ -324,7 +324,7 @@ function createStyles({backgroundColor = DEFAULT_BACKGROUND_COLOR}) {
     containerShadow: {
       ...Platform.select({
         ios: {
-          shadowColor: Colors.dark10,
+          shadowColor: Colors.grey10,
           shadowOpacity: 0.05,
           shadowRadius: 2,
           shadowOffset: {height: 6, width: 0}

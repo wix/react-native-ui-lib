@@ -293,7 +293,7 @@ export default class TextField extends BaseInput {
     const {disabledColor} = this.getThemeProps();
 
     if (_.isString(colorProp)) {
-      return colorProp || Colors.dark10;
+      return colorProp || Colors.grey10;
     } else if (_.isPlainObject(colorProp)) {
       const mergedColorState = {...COLOR_BY_STATE, ...colorProp};
 
@@ -308,7 +308,7 @@ export default class TextField extends BaseInput {
       }
     }
 
-    return colorProp || Colors.dark10;
+    return colorProp || Colors.grey10;
   }
 
   getCharCount() {
@@ -760,7 +760,7 @@ function createStyles({centered, multiline, title, floatingPlaceholder}, rightIt
       flexDirection: 'row',
       justifyContent: centered ? 'center' : undefined,
       borderBottomWidth: 1,
-      borderColor: Colors.dark70,
+      borderColor: Colors.grey70,
       paddingBottom: Constants.isIOS ? 10 : 5
     },
     innerContainerWithoutUnderline: {

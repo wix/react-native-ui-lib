@@ -27,7 +27,7 @@ export default class BadgesScreen extends Component {
 
   render() {
     return (
-      <ScrollView style={{backgroundColor: Colors.dark70}} contentContainerStyle={styles.container}>
+      <ScrollView style={{backgroundColor: Colors.grey70}} contentContainerStyle={styles.container}>
         <Text text50 row center marginB-15>
           Badges
         </Text>
@@ -63,7 +63,7 @@ export default class BadgesScreen extends Component {
 
         <View row paddingT-20 marginB-15>
           <Button
-            bg-dark60
+            bg-grey60
             style={{width: 30, height: 30, borderWidth: 1, marginRight: 15}}
             iconSource={minusIcon}
             avoidMinWidth
@@ -71,7 +71,7 @@ export default class BadgesScreen extends Component {
             onLongPress={() => this.changeLabelValue(-10)}
           />
           <Button
-            bg-dark60
+            bg-grey60
             style={{width: 30, height: 30, borderWidth: 1}}
             iconSource={plusIcon}
             avoidMinWidth
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     padding: 20,
-    backgroundColor: Colors.dark70
+    backgroundColor: Colors.grey70
   },
   iconBadgeColumnContainer: {
     flex: 1,

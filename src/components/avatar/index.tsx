@@ -132,9 +132,9 @@ class Avatar extends PureComponent<AvatarPropTypes> {
 
   static defaultProps = {
     animate: false,
-    backgroundColor: Colors.dark80,
+    backgroundColor: Colors.grey80,
     size: 50,
-    labelColor: Colors.dark10,
+    labelColor: Colors.grey10,
     badgePosition: BadgePosition.TOP_RIGHT
   };
 

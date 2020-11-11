@@ -40,18 +40,18 @@
         min-width: 120px;
         padding: 3px;
         border-radius: 2px;
-        box-shadow: -1px 1px 2px $dark60;
+        box-shadow: -1px 1px 2px $grey60;
       }
-      
+
       &:before {
         content: "";
         position: absolute;
         right: 100%;
         top: 30px;
         border: 5px solid transparent;
-        border-left-color: $dark80;
+        border-left-color: $grey80;
       }
-      
+
       > a {
         display: inline-block;
         background-color: $white;
@@ -61,7 +61,7 @@
         width: 170px;
         padding: 4px 8px;
         border-radius: 2px;
-        box-shadow: -1px 1px 2px $dark60;
+        box-shadow: -1px 1px 2px $grey60;
         &:hover {
           background-color: $violet70;
         }
@@ -70,8 +70,8 @@
   }
 
   .platforms-section {
-    background: $dark80;
-    color: $dark10;
+    background: $grey80;
+    color: $grey10;
     width: 100%;
     margin-top: 20px;
     display: flex;
@@ -81,7 +81,7 @@
       display: flex;
       flex: 1;
       height: 100%;
-      background: $dark80;
+      background: $grey80;
       padding: 20px 10px;
       justify-content: space-evenly;
       align-items: center;
@@ -112,7 +112,7 @@
         display: inline-block;
         white-space: pre;
         text-align: left;
-        background: $dark10;
+        background: $grey10;
         padding: 10px;
         margin-right: 10px;
         font-size: $text40;
@@ -124,7 +124,7 @@
   .components-section {
     padding: 40px;
     text-align: center;
-    background-color: $dark80;
+    background-color: $grey80;
     margin-top: 20px;
 
     > .image-examples {
@@ -177,14 +177,14 @@
 
     .docs-button {
       background: $secondary;
-      color: $dark10;
+      color: $grey10;
       display: inline-block;
       margin-top: -30px;
       padding: 10px 25px;
       border-radius: 2px;
       font-size: $text10;
       letter-spacing: 3px;
-      box-shadow: 3px 3px 1px 1px $dark60;
+      box-shadow: 3px 3px 1px 1px $grey60;
       cursor: pointer;
       transition: all 0.2s;
 
@@ -193,7 +193,7 @@
       }
 
       &:active {
-        box-shadow: 1px 1px 0px 0px $dark60;
+        box-shadow: 1px 1px 0px 0px $grey60;
       }
     }
   }

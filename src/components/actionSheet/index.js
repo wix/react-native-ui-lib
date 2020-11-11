@@ -147,11 +147,11 @@ export default class ActionSheet extends BaseComponent {
         key={index}
         testID={option.testID}
         onPress={() => this.onOptionPress(index)}
-        activeBackgroundColor={Colors.dark80}
+        activeBackgroundColor={Colors.grey80}
       >
         <View row paddingL-16 flex centerV>
           {option.icon && this.renderIcon(option.icon)}
-          <Text text70 dark10 numberOfLines={1}>
+          <Text text70 grey10 numberOfLines={1}>
             {option.label}
           </Text>
         </View>
@@ -178,7 +178,7 @@ export default class ActionSheet extends BaseComponent {
     if (!_.isEmpty(title)) {
       return (
         <View height={56} paddingL-16 centerV>
-          <Text dark40 text70 style={{alignSelf: 'flex-start'}}>
+          <Text grey40 text70 style={{alignSelf: 'flex-start'}}>
             {title}
           </Text>
         </View>

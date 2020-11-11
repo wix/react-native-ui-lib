@@ -17,14 +17,14 @@
   }
 
   pre {
-    background-color: $dark80;
+    background-color: $grey80;
     border-radius: 4px;
     padding: 16px;
     max-width: 60vw;
 
     code {
       background: transparent;
-      color: $dark10;
+      color: $grey10;
     }
   }
 
@@ -33,7 +33,7 @@
     display: inline;
     word-break: break-word;
     width: 100%;
-    background: $dark70;
+    background: $grey70;
     color: $primary;
   }
 

@@ -131,7 +131,7 @@ export default class StackAggregator extends PureBaseComponent {
     ]).start();
   }
 
-  animateCards() {    
+  animateCards() {
     for (let index = 0; index < this.itemsCount; index++) {
       const newScale = this.getItemScale(index);
 
@@ -154,7 +154,7 @@ export default class StackAggregator extends PureBaseComponent {
 
   getTop(index) {
     let start = 0;
-    
+
     if (index === this.itemsCount - 2) {
       start += PEEP;
     }
@@ -168,10 +168,10 @@ export default class StackAggregator extends PureBaseComponent {
   getStyle(index) {
     const {collapsed} = this.state;
     const top = this.getTop(index);
-    
+
     if (collapsed) {
       return {
-        position: index !== 0 ? 'absolute' : undefined, 
+        position: index !== 0 ? 'absolute' : undefined,
         top
       };
     }
@@ -183,7 +183,7 @@ export default class StackAggregator extends PureBaseComponent {
 
   onLayout = event => {
     const height = event.nativeEvent.layout.height;
-    
+
     if (height) {
       this.setState({firstItemHeight: height});
     }
@@ -198,7 +198,7 @@ export default class StackAggregator extends PureBaseComponent {
     const {firstItemHeight, collapsed} = this.state;
 
     return (
-      <Animated.View 
+      <Animated.View
         key={index}
         onLayout={index === 0 ? this.onLayout : undefined}
         style={[
@@ -238,7 +238,7 @@ export default class StackAggregator extends PureBaseComponent {
     return (
       <View style={containerStyle}>
         <View style={{marginBottom: PEEP * 3}}>
-          <Animated.View 
+          <Animated.View
             style={{
               position: 'absolute',
               right: 0,
@@ -248,13 +248,13 @@ export default class StackAggregator extends PureBaseComponent {
               ]
             }}
           >
-            <Button 
-              label={'Show less'} 
+            <Button
+              label={'Show less'}
               iconSource={icon}
               link
-              size={'small'} 
+              size={'small'}
               {...buttonProps}
-              marginH-24 
+              marginH-24
               marginB-20
               onPress={this.close}
             />
@@ -264,12 +264,12 @@ export default class StackAggregator extends PureBaseComponent {
             return this.renderItem(item, index);
           })}
 
-          {collapsed && 
-            <TouchableOpacity 
-              onPress={this.open} 
-              activeOpacity={1} 
+          {collapsed &&
+            <TouchableOpacity
+              onPress={this.open}
+              activeOpacity={1}
               style={[
-                this.styles.touchable, 
+                this.styles.touchable,
                 {
                   height: firstItemHeight ? firstItemHeight + (PEEP * 2) : undefined,
                   zIndex: this.itemsCount
@@ -286,18 +286,18 @@ export default class StackAggregator extends PureBaseComponent {
 function createStyles() {
   return StyleSheet.create({
     touchable: {
-      position: 'absolute', 
+      position: 'absolute',
       width: '100%'
     },
     containerShadow: {
       backgroundColor: Colors.white,
-      shadowColor: Colors.dark40,
+      shadowColor: Colors.grey40,
       shadowOpacity: 0.25,
       shadowRadius: 12,
       shadowOffset: {height: 5, width: 0}
     },
     card: {
-      overflow: 'hidden', 
+      overflow: 'hidden',
       flexShrink: 1
     }
   });

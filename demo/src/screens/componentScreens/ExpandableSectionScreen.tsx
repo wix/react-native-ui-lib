@@ -12,8 +12,8 @@ const elements = [
   <Card style={{marginBottom: 10}} onPress={() => {}}>
     <Card.Section
       content={[
-        {text: 'Card #1', text70: true, dark10: true},
-        {text: 'card description', text90: true, dark50: true}
+        {text: 'Card #1', text70: true, grey10: true},
+        {text: 'card description', text90: true, grey50: true}
       ]}
       style={{padding: 20}}
     />
@@ -22,8 +22,8 @@ const elements = [
   <Card style={{marginBottom: 10}} onPress={() => {}}>
     <Card.Section
       content={[
-        {text: 'Card #2', text70: true, dark10: true},
-        {text: 'card description', text90: true, dark50: true}
+        {text: 'Card #2', text70: true, grey10: true},
+        {text: 'card description', text90: true, grey50: true}
       ]}
       style={{padding: 20}}
     />
@@ -32,8 +32,8 @@ const elements = [
   <Card style={{marginBottom: 10}} onPress={() => {}}>
     <Card.Section
       content={[
-        {text: 'Card #3', text70: true, dark10: true},
-        {text: 'card description', text90: true, dark50: true}
+        {text: 'Card #3', text70: true, grey10: true},
+        {text: 'card description', text90: true, grey50: true}
       ]}
       style={{padding: 20}}
     />
@@ -63,7 +63,7 @@ class ExpandableSectionScreen extends PureComponent {
   getHeaderElement() {
     return (
       <View>
-        <Text margin-10 dark10 text60>
+        <Text margin-10 grey10 text60>
           ExpandableSection's sectionHeader
         </Text>
         <View style={styles.header}>
@@ -112,7 +112,7 @@ class ExpandableSectionScreen extends PureComponent {
           {this.getBodyElement()}
         </ExpandableSection>
         <ListItem>
-          <Text dark10 text60 marginL-10>
+          <Text grey10 text60 marginL-10>
             {'The next item'}
           </Text>
         </ListItem>

@@ -43,7 +43,7 @@ class ListItem extends BaseComponent {
   static defaultProps = {
     height: 63,
     containerElement: TouchableOpacity,
-    underlayColor: Colors.dark70
+    underlayColor: Colors.grey70
   };
 
   constructor(props) {

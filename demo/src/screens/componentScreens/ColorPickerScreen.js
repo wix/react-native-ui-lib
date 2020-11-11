@@ -97,6 +97,6 @@ export default class ColorPickerScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.dark80
+    backgroundColor: Colors.grey80
   }
 });
