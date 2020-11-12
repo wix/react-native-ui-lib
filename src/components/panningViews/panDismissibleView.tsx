@@ -19,6 +19,7 @@ export interface DismissibleAnimationProps {
      */
     duration?: number;
 }
+export type DismissibleAnimationPropTypes = DismissibleAnimationProps; //TODO: remove after ComponentPropTypes deprecation;
 
 export interface PanDismissibleViewProps {
   /**
@@ -51,6 +52,7 @@ export interface PanDismissibleViewProps {
    */
   allowDiagonalDismiss?: boolean;
 }
+export type PanDismissiblePropTypes = PanDismissibleViewProps; //TODO: remove after ComponentPropTypes deprecation;
 
 const DEFAULT_DIRECTIONS = [
   PanningProvider.Directions.UP,

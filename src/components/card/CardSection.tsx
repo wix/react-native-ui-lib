@@ -45,6 +45,7 @@ export type CardSectionProps = ViewProps & {
    */
   imageProps?: ImageProps;
 };
+export type CardSectionPropTypes = CardSectionProps; //TODO: remove after ComponentPropTypes deprecation;
 
 type Props = CardSectionProps & asCardChildProps;
 

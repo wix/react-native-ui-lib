@@ -116,6 +116,7 @@ export type ChipProps = ViewProps & TouchableOpacityProps & {
    */
   dismissContainerStyle?: StyleProp<ImageStyle>;
 }
+export type ChipPropTypes = ChipProps; //TODO: remove after ComponentPropTypes deprecation;
 
 /**
  * @description: Chip component

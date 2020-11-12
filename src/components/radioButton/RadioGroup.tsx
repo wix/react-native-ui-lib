@@ -19,6 +19,7 @@ export type RadioGroupProps = {
    */
   onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void);
 };
+export type RadioGroupPropTypes = RadioGroupProps; //TODO: remove after ComponentPropTypes deprecation;
 
 interface RadioGroupState {
   value?: RadioGroupProps['initialValue'];

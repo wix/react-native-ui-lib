@@ -38,6 +38,7 @@ export interface FloatingButtonProps {
    */
   hideBackgroundOverlay?: boolean;
 }
+export type FloatingButtonPropTypes = FloatingButtonProps; //TODO: remove after ComponentPropTypes deprecation;
 
 const SHOW_ANIMATION_DELAY = 350;
 const SHOW_ANIMATION_DURATION = 180;
