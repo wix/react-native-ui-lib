@@ -52,7 +52,7 @@ export interface PanDismissibleViewProps {
    */
   allowDiagonalDismiss?: boolean;
 }
-export type PanDismissiblePropTypes = PanDismissibleViewProps; //TODO: remove after ComponentPropTypes deprecation;
+export type PanDismissibleViewPropTypes = PanDismissibleViewProps; //TODO: remove after ComponentPropTypes deprecation;
 
 const DEFAULT_DIRECTIONS = [
   PanningProvider.Directions.UP,
@@ -279,7 +279,7 @@ class PanDismissibleView extends PureComponent<Props, State> {
 
         return {isRight, isDown};
       }
-      
+
       if (hasHorizontalSwipe) {
         isRight = swipeDirections.x === PanningProvider.Directions.RIGHT;
       }

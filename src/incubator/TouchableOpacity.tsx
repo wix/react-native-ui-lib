@@ -64,8 +64,6 @@ type TouchableOpacityProps = {
    */
   style?: ViewStyle;
 };
-export type TouchableOpacityPropTypes = TouchableOpacityProps; //TODO: remove after ComponentPropTypes deprecation;
-
 
 /**
  * @description: a Better, enhanced TouchableOpacity component
