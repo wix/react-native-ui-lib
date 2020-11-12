@@ -5,7 +5,7 @@ import {Constants} from '../../helpers';
 import asPanViewConsumer from './asPanViewConsumer';
 import PanningProvider, {PanningDirections, PanningProviderDirection, PanAmountsProps, PanDirectionsProps} from './panningProvider';
 
-export interface DismissibleAnimationPropTypes {
+export interface DismissibleAnimationProps {
     /**
      * The return animation speed (default is 20)
      */
@@ -20,7 +20,7 @@ export interface DismissibleAnimationPropTypes {
     duration?: number;
 }
 
-export interface PanDismissibleViewPropTypes {
+export interface PanDismissibleViewProps {
   /**
    * Additional styling
    */
@@ -40,7 +40,7 @@ export interface PanDismissibleViewPropTypes {
    * bounciness - the animation bounciness (default is 6)
    * duration - the dismiss animation duration (default is 280)
    */
-  animationOptions?: DismissibleAnimationPropTypes;
+  animationOptions?: DismissibleAnimationProps;
   /**
    * Override the default threshold (height/2 and width/2) with different values.
    */
@@ -68,7 +68,7 @@ const DEFAULT_ANIMATION_OPTIONS = {
 };
 const MAXIMUM_DRAGS_AFTER_SWIPE = 2;
 
-interface DismissPropTypes {
+interface DismissProps {
   isPanning: boolean;
   dragDirections: PanDirectionsProps;
   dragDeltas: PanAmountsProps;
@@ -76,8 +76,8 @@ interface DismissPropTypes {
   swipeVelocities: PanAmountsProps;
 }
 
-interface Props extends PanDismissibleViewPropTypes {
-  context: DismissPropTypes;
+interface Props extends PanDismissibleViewProps {
+  context: DismissProps;
 }
 
 interface State {
@@ -400,4 +400,4 @@ class PanDismissibleView extends PureComponent<Props, State> {
   }
 }
 
-export default asPanViewConsumer<PanDismissibleViewPropTypes>(PanDismissibleView);
+export default asPanViewConsumer<PanDismissibleViewProps>(PanDismissibleView);

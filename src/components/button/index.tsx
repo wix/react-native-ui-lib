@@ -16,7 +16,7 @@ import {Constants} from '../../helpers';
 import {Colors, Typography, BorderRadiuses} from '../../style';
 import {extractColorValue, extractTypographyValue} from '../../commons/modifiers';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
-import Text, {TextPropTypes} from '../text';
+import Text, {TextProps} from '../text';
 import Image from '../image';
 
 export enum ButtonSize {
@@ -32,7 +32,7 @@ export enum AnimationDirection {
   right = 'right'
 }
 
-export type ButtonPropTypes = TouchableOpacityProps &
+export type ButtonProps = TouchableOpacityProps &
   TypographyModifiers &
   ColorsModifiers &
   BackgroundColorModifier &
@@ -112,7 +112,7 @@ export type ButtonPropTypes = TouchableOpacityProps &
     /**
      * Props that will be passed to the button's Text label.
      */
-    labelProps?: TextPropTypes;
+    labelProps?: TextProps;
     /**
      * should the button act as a coast to coast button (no border radius)
      */
@@ -176,7 +176,7 @@ const MIN_WIDTH = {
 const DEFAULT_SIZE = ButtonSize.large;
 const DISABLED_COLOR = Colors.dark60;
 
-type Props = ButtonPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
+type Props = ButtonProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
 
 /**
  * @description: Basic button component
@@ -572,4 +572,4 @@ function createStyles() {
 
 export {Button}; // For tests
 
-export default asBaseComponent<ButtonPropTypes, typeof Button>(forwardRef<Props>(Button));
+export default asBaseComponent<ButtonProps, typeof Button>(forwardRef<Props>(Button));
