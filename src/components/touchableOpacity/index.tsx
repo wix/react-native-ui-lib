@@ -46,6 +46,7 @@ export type TouchableOpacityProps = Omit<RNTouchableOpacityProps, 'style' | 'onP
     style?: StyleProp<ViewStyle> | Animated.AnimatedProps<StyleProp<ViewStyle>>;
     onPress?: (props: TouchableOpacityProps) => void;
   };
+export type TouchableOpacityPropTypes = TouchableOpacityProps; //TODO: remove after ComponentPropTypes deprecation;
 
 type Props = BaseComponentInjectedProps &
   ForwardRefInjectedProps &

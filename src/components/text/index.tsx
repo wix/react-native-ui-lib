@@ -40,6 +40,7 @@ export type TextProps = RNTextProps & TypographyModifiers & ColorsModifiers & Ma
   animated?: boolean;
   textAlign?: string;
 }
+export type TextPropTypes = TextProps; //TODO: remove after ComponentPropTypes deprecation;
 
 type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextProps;
 

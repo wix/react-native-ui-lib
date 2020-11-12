@@ -90,6 +90,7 @@ export type CardProps = ViewProps &
       hideIndicator?: boolean;
     };
   };
+export type CardPropTypes = CardProps; //TODO: remove after ComponentPropTypes deprecation;
 
 type PropTypes = BaseComponentInjectedProps &
   ForwardRefInjectedProps &

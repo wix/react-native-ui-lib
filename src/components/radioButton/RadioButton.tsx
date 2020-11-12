@@ -77,6 +77,7 @@ export type RadioButtonProps = RadioGroupContextProps & ViewProps & {
      */
     contentOnRight?: boolean;
   };
+export type RadioButtonPropTypes = RadioButtonProps; //TODO: remove after ComponentPropTypes deprecation;
 
 interface RadioButtonState {
   opacityAnimationValue: Animated.Value;

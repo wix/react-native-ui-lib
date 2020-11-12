@@ -128,6 +128,7 @@ export type AvatarProps = {
    */
   testID?: string;
 };
+export type AvatarPropTypes = AvatarProps; //TODO: remove after ComponentPropTypes deprecation;
 
 /**
  * @description: Avatar component for displaying user profile images

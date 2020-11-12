@@ -148,6 +148,7 @@ export type ButtonProps = TouchableOpacityProps &
      */
     animateTo?: AnimationDirection;
   };
+export type ButtonPropTypes = ButtonProps; //TODO: remove after ComponentPropTypes deprecation;
 
 export type ButtonState = {
   size?: number;
