@@ -161,6 +161,16 @@ class Dialog extends Component<DialogProps, DialogState> {
     }
   }
 
+  // TODO: revert adding this workaround once RN fixes https://github.com/facebook/react-native/issues/29455
+  onFadeDone = () => {
+    if (!this.state.modalVisibility) {
+      setTimeout(() => { // unfortunately this is needed if a modal needs to open on iOS
+        _.invoke(this.props, 'onDialogDismissed', this.props);
+        _.invoke(this.props, 'onModalDismissed', this.props);
+      }, 50);
+    }
+  }
+
   onDismiss = () => {
     this.setState({modalVisibility: false}, () => {
       const props = this.props;
@@ -221,6 +231,7 @@ class Dialog extends Component<DialogProps, DialogState> {
     const {useSafeArea, bottom, overlayBackgroundColor, testID} = this.props;
     const addBottomSafeArea = Constants.isIphoneX && (useSafeArea && bottom);
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8; // TODO: should this be here or in the input style?
+    const onFadeDone = Constants.isIOS ? this.onFadeDone : undefined;
 
     return (
       <View
@@ -233,6 +244,7 @@ class Dialog extends Component<DialogProps, DialogState> {
           modalVisibility={modalVisibility}
           dialogVisibility={dialogVisibility}
           overlayBackgroundColor={overlayBackgroundColor}
+          onFadeDone={onFadeDone}
         />
         {this.renderDialogView()}
         {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>}
@@ -253,7 +265,7 @@ class Dialog extends Component<DialogProps, DialogState> {
         animationType={'none'}
         onBackgroundPress={this.hideDialogView}
         onRequestClose={this.hideDialogView}
-        onDismiss={this.onModalDismissed}
+        // onDismiss={this.onModalDismissed}
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}
       >
