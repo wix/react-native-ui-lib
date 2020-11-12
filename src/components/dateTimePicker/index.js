@@ -152,15 +152,17 @@ class DateTimePicker extends BaseComponent {
     if (value) {
       switch (mode) {
         case MODES.DATE:
-          if (dateFormatter) {
-            return dateFormatter(value);
-          }
-          return dateFormat ? moment(value).format(dateFormat) : value.toLocaleDateString();
+          return dateFormatter
+            ? dateFormatter(value)
+            : dateFormat
+              ? moment(value).format(dateFormat)
+              : value.toLocaleDateString();
         case MODES.TIME:
-          if (timeFormatter) {
-            return timeFormatter(value);
-          }
-          return timeFormat ? moment(value).format(timeFormat) : value.toLocaleTimeString();
+          return timeFormatter
+            ? timeFormatter(value)
+            : timeFormat
+              ? moment(value).format(timeFormat)
+              : value.toLocaleTimeString();
       }
     }
   };
@@ -202,12 +204,7 @@ class DateTimePicker extends BaseComponent {
           iconStyle={{tintColor: Colors.dark10}}
           onPress={this.toggleExpandableOverlay}
         />
-        <Button 
-          link 
-          iconSource={Assets.icons.check} 
-          useCustomTheme={useCustomTheme} 
-          onPress={this.onDonePressed}
-        />
+        <Button link iconSource={Assets.icons.check} useCustomTheme={useCustomTheme} onPress={this.onDonePressed} />
       </View>
     );
   }
