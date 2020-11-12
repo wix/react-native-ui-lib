@@ -204,7 +204,7 @@ class DateTimePicker extends BaseComponent {
           iconStyle={{tintColor: Colors.dark10}}
           onPress={this.toggleExpandableOverlay}
         />
-        <Button link iconSource={Assets.icons.check} useCustomTheme={useCustomTheme} onPress={this.onDonePressed} />
+        <Button link iconSource={Assets.icons.check} useCustomTheme={useCustomTheme} onPress={this.onDonePressed}/>
       </View>
     );
   }
