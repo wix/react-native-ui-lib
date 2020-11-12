@@ -10,7 +10,8 @@ export default class ChipsInputScreen extends Component {
     this.state = {
       tags: [{label: 'Amit'}, {label: 'Ethan', invalid: true}],
       tags2: ['Chips', 'Input'],
-      tags3: ['Non', 'Removable', 'Tags']
+      tags3: ['Non', 'Removable', 'Tags'],
+      tags4: ['Change', 'Typography']
     };
   }
 
@@ -35,7 +36,6 @@ export default class ChipsInputScreen extends Component {
           </Text>
 
           <ChipsInput
-            text60
             containerStyle={{marginBottom: 25}}
             placeholder="Enter Tags"
             tags={this.state.tags2}
@@ -65,6 +65,13 @@ export default class ChipsInputScreen extends Component {
             onCreateTag={value => ({label: value})}
             onTagPress={this.onTagPress}
             inputStyle={{...Typography.text60, color: Colors.blue30}}
+          />
+
+          <ChipsInput
+            text60
+            containerStyle={{marginBottom: 25}}
+            placeholder="Enter Tags"
+            tags={this.state.tags4}
           />
         </View>
       </ScrollView>
