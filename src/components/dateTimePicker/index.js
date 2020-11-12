@@ -57,9 +57,17 @@ class DateTimePicker extends BaseComponent {
      */
     dateFormat: PropTypes.string,
     /**
+     * A callback function to format date
+     */
+    dateFormatter: PropTypes.func,
+    /**
      * The time format for the text display
      */
     timeFormat: PropTypes.string,
+    /**
+     * A callback function to format time
+     */
+    timeFormatter: PropTypes.func,
     /**
      * Allows changing of the locale of the component (iOS only)
      */
@@ -140,17 +148,22 @@ class DateTimePicker extends BaseComponent {
 
   getStringValue = () => {
     const {value} = this.state;
-    const {mode, dateFormat, timeFormat} = this.getThemeProps();
+    const {mode, dateFormat, timeFormat, dateFormatter, timeFormatter} = this.getThemeProps();
     if (value) {
-      const dateString =
-        mode === MODES.DATE
-          ? dateFormat
-            ? moment(value).format(dateFormat)
-            : value.toLocaleDateString()
-          : timeFormat
-            ? moment(value).format(timeFormat)
-            : value.toLocaleTimeString();
-      return dateString;
+      switch (mode) {
+        case MODES.DATE:
+          return dateFormatter
+            ? dateFormatter(value)
+            : dateFormat
+              ? moment(value).format(dateFormat)
+              : value.toLocaleDateString();
+        case MODES.TIME:
+          return timeFormatter
+            ? timeFormatter(value)
+            : timeFormat
+              ? moment(value).format(timeFormat)
+              : value.toLocaleTimeString();
+      }
     }
   };
 
@@ -191,12 +204,7 @@ class DateTimePicker extends BaseComponent {
           iconStyle={{tintColor: Colors.dark10}}
           onPress={this.toggleExpandableOverlay}
         />
-        <Button 
-          link 
-          iconSource={Assets.icons.check} 
-          useCustomTheme={useCustomTheme} 
-          onPress={this.onDonePressed}
-        />
+        <Button link iconSource={Assets.icons.check} useCustomTheme={useCustomTheme} onPress={this.onDonePressed}/>
       </View>
     );
   }

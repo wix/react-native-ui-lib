@@ -329,7 +329,7 @@ export default class ColorPalette extends PureBaseComponent {
 
     return (
       <View center style={[containerStyle, styles.paginationContainer]}>
-        <Carousel migrate loop={loop} onChangePage={this.onChangePage} ref={this.carousel}>
+        <Carousel loop={loop} onChangePage={this.onChangePage} ref={this.carousel}>
           {_.map(colorGroups, (colorsPerPage, index) => {
             return this.renderPalette(others, {...styles.page, width: this.containerWidth}, colorsPerPage, index);
           })}
