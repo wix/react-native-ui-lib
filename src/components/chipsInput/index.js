@@ -95,7 +95,8 @@ class ChipsInput extends Component {
     this.state = {
       value: props.value,
       tags: _.cloneDeep(props.tags) || [],
-      tagIndexToRemove: undefined
+      tagIndexToRemove: undefined,
+      initialTags: props.tags
     };
   }
 
@@ -116,8 +117,9 @@ class ChipsInput extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.tags !== prevState.tags) {
+    if (nextProps.tags !== prevState.initialTags) {
       return {
+        initialTags: nextProps.tags,
         tags: nextProps.tags
       };
     }
