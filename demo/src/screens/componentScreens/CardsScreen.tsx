@@ -6,7 +6,7 @@ import {
   Colors,
   View,
   Card,
-  CardPropTypes,
+  CardProps,
   Button,
   Text,
   Image
@@ -152,7 +152,7 @@ export default class CardsScreen extends Component<
     );
   };
 
-  renderCoupon = (cardProps: CardPropTypes) => {
+  renderCoupon = (cardProps: CardProps) => {
     return (
       <Card
         {...cardProps}
@@ -192,7 +192,7 @@ export default class CardsScreen extends Component<
     );
   };
 
-  renderComplexImage = (cardProps: CardPropTypes, image: React.ReactNode) => {
+  renderComplexImage = (cardProps: CardProps, image: React.ReactNode) => {
     return (
       <Card
         {...cardProps}
@@ -282,7 +282,7 @@ export default class CardsScreen extends Component<
     );
   };
 
-  renderBackgroundCard = (cardProps: CardPropTypes, body: React.ReactNode) => {
+  renderBackgroundCard = (cardProps: CardProps, body: React.ReactNode) => {
     return (
       <Card flex center height={80} {...cardProps}>
         {body}
