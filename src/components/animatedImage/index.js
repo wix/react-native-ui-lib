@@ -1,4 +1,5 @@
 // TODO: consider unify this component functionality with our Image component
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Animated, View, StyleSheet} from 'react-native';
@@ -48,6 +49,7 @@ class AnimatedImage extends BaseComponent {
       const animationParams = {toValue: 1, duration: this.props.animationDuration, useNativeDriver: true};
       Animated.timing(this.state.opacity, animationParams).start();
     });
+    _.invoke(this.props, 'onLoad', ...args);
   };
 
   render() {
