@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import {View, StyleSheet, ImageSourcePropType} from 'react-native';
+import {LogService} from '../../services';
 // import {BaseComponent} from '../../commons';
 import Image, {ImageProps} from '../image';
 import * as CardPresenter from './CardPresenter';
@@ -12,7 +13,7 @@ export type CardImageProps = Omit<ImageProps, 'source'> & {
    * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
    */
   imageSource?: ImageSourcePropType;
-  source?: ImageSourcePropType; //TODO: Remove after imageSource deprecation - should take it from Image props
+  source?: ImageSourcePropType; //TODO: Remove after imageSource deprecation - should take it from ImageProps
   /**
    * Image width
    */
@@ -50,12 +51,10 @@ class CardImage extends PureComponent<Props> {
     this.styles = createStyles(props);
 
     if (props.imageSource) {
-      console.warn(`CardImage's 'imageSource' property is deprecated, please use 'source' instead`);
+      LogService.deprecationWarn({component: 'CardImage', oldProp: 'imageSource', newProp: 'source'});
     }
     if (props.borderRadius) {
-      console.warn(
-        'uilib: Please stop passing borderRadius to Card.Image, it will get the borderRadius from the Card'
-      );
+      LogService.deprecationWarn({component: 'CardImage', oldProp: 'borderRadius'});
     }
   }
 

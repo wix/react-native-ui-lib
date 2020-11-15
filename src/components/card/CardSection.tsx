@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType, StyleProp} from 'react-native';
+import {LogService} from '../../services';
 import {asBaseComponent} from '../../commons/new';
 import View, {ViewPropTypes} from '../view';
 import Text, {TextPropTypes} from '../text';
@@ -36,7 +37,7 @@ export type CardSectionProps = ViewPropTypes & {
    * Will be used for the background when provided
    */
   imageSource?: ImageSourcePropType;
-  source?: ImageSourcePropType; //TODO: Remove after imageSource deprecation - should take it from Image props
+  source?: ImageSourcePropType;
   /**
    * The style for the background image
    */
@@ -60,7 +61,7 @@ class CardSection extends PureComponent<Props> {
     super(props);
 
     if (props.imageSource) {
-      console.warn(`CardSection's 'imageSource' property is deprecated, please use 'source' instead`);
+      LogService.deprecationWarn({component: 'CardSection', oldProp: 'imageSource', newProp: 'source'});
     }
   }
 

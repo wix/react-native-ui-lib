@@ -22,7 +22,7 @@ export default class StateScreen extends BaseComponent {
      * The image source that's showing at the top. use an image that was required locally
      */
     imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    source: PropTypes.oneOfType([PropTypes.object, PropTypes.number]), //TODO: Remove after imageSource deprecation
+    source: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
      * To to show as the title
      */
