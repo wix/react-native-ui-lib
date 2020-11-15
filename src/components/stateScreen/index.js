@@ -2,6 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
+import {LogService} from '../../services';
 import {Constants} from '../../helpers';
 import {Typography, Colors} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -49,10 +50,11 @@ export default class StateScreen extends BaseComponent {
     super(props);
 
     if (props.testId) {
-      console.warn(`StateScreen's 'testId' property is deprecated. Please use RN 'testID' prop instead.`);
+      LogService.deprecationWarn({component: 'StateScreen', oldProp: 'testId', newProp: 'testID'});
+
     }
     if (props.imageSource) {
-      console.warn(`StateScreen's 'imageSource' property is deprecated, please use 'source' instead`);
+      LogService.deprecationWarn({component: 'StateScreen', oldProp: 'imageSource', newProp: 'source'});
     }
   }
 
