@@ -45,7 +45,7 @@ interface Props extends ViewPropTypes, ThemeComponent, ScrollBarProps {
    */
   height?: number;
   /**
-   * use tablet wide view
+   * use tablet wide view with tablet margins
    */
   useTabletWide?: boolean;
   /**

@@ -132,7 +132,12 @@ export default class TabBarScreen extends Component {
             />
           </TabBar>
 
-          <TabBar style={styles.tabbar} selectedIndex={0} enableShadow>
+          <TabBar
+            style={styles.tabbar}
+            selectedIndex={0}
+            enableShadow
+            // tabletMargins={{portrait: 0, landscape: 0}}
+          >
             <TabBar.Item label="Fixed" uppercase backgroundColor={Colors.blue80}/>
             <TabBar.Item label="Tab" badgeProps={{label: '100'}} uppercase style={{backgroundColor: Colors.blue80}}/>
             <TabBar.Item label="Bar" uppercase style={{backgroundColor: Colors.blue80}}/>
