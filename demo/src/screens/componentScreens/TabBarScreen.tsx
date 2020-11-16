@@ -169,13 +169,21 @@ export default class TabBarScreen extends Component {
             {this.getTabs(true)}
           </TabBar>
 
-          <Button
-            size={Button.sizes.small}
-            margin-20
-            label={`Change index: ${this.state.selectedIndex}`}
-            onPress={this.changeIndex}
-          />
-          <TabBar style={styles.tabbar} selectedIndex={this.state.selectedIndex} enableShadow backgroundColor={Colors.green70}>
+          <View center>
+            <Button
+              size={Button.sizes.small}
+              margin-20
+              label={`Change index: ${this.state.selectedIndex}`}
+              onPress={this.changeIndex}
+            />
+          </View>
+          <TabBar
+            style={styles.tabbar}
+            selectedIndex={this.state.selectedIndex}
+            enableShadow
+            backgroundColor={Colors.green70}
+            useTabletWide={false}
+          >
             <TabBar.Item label="LONG LABEL"/>
             <TabBar.Item label="ACTIVE"/>
             <TabBar.Item label="INACTIVE"/>
@@ -187,7 +195,7 @@ export default class TabBarScreen extends Component {
             <TabBar.Item label="MODE"/>
           </TabBar>
 
-          <View row>
+          <View center row>
             <Button size={Button.sizes.small} margin-20 label={`Change Labels`} onPress={this.changeLabels}/>
             <Button size={Button.sizes.small} margin-20 label={`Change Color`} onPress={this.changeColors}/>
           </View>

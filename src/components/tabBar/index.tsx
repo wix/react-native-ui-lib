@@ -1,4 +1,3 @@
-// TODO: Use public TabBar component and pass style to control its Tablet margin
 import _ from 'lodash';
 import React, {ElementRef, RefObject} from 'react';
 import {Platform, StyleSheet, StyleProp, ViewStyle} from 'react-native';
@@ -6,17 +5,17 @@ import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import View, {ViewPropTypes} from '../view';
-import ScrollBar from '../scrollBar';
+import ScrollBar/* , {ScrollBarProps} */ from '../scrollBar';
 import TabBarItem from './TabBarItem';
-// import TabletView from '../TabletView';
-// import Constants from '../../configurations/constants.config';
 
 
 const MIN_TABS_FOR_SCROLL = 1;
 const DEFAULT_BACKGROUND_COLOR = Colors.white;
 const DEFAULT_HEIGHT = 48;
 
-interface Props extends ViewPropTypes, ThemeComponent {
+const ScrollBarProps = ScrollBar.propTypes; //TODO: remove after TS migration
+
+interface Props extends ViewPropTypes, ThemeComponent, ScrollBarProps {
   /**
    * Show Tab Bar bottom shadow
    */
@@ -49,6 +48,10 @@ interface Props extends ViewPropTypes, ThemeComponent {
    * use tablet wide view
    */
   useTabletWide?: boolean;
+  /**
+   * Tablet margin as an object. ex. {portrait: 60, landscape: 160}
+   */
+  tabletMargins?: number;
   /**
    * Pass when container width is different than the screen width
    */
@@ -129,17 +132,21 @@ export default class TabBar extends BaseComponent<Props, State> {
     }
   }
 
-  // componentDidMount() {
-  //   Constants.addDimensionsEventListener(this.onOrientationChanged);
-  // }
+  componentDidMount() {
+    Constants.addDimensionsEventListener(this.onOrientationChanged);
+  }
 
-  // componentWillUnmount() {
-  //   Constants.removeDimensionsEventListener(this.onOrientationChanged);
-  // }
+  componentWillUnmount() {
+    Constants.removeDimensionsEventListener(this.onOrientationChanged);
+  }
 
-  // onOrientationChanged = () => {
-  //   this.setState({something: 0}); // only to trigger render
-  // }
+  onOrientationChanged = () => {
+    this.setState({something: 0}); // only to trigger render
+  }
+
+  generateStyles() {
+    this.styles = createStyles(this.getThemeProps());
+  }
 
   get childrenCount() {
     return React.Children.count(this.props.children);
@@ -149,14 +156,45 @@ export default class TabBar extends BaseComponent<Props, State> {
     return this.props.containerWidth || Constants.screenWidth;
   }
 
-  generateStyles() {
-    this.styles = createStyles(this.getThemeProps());
+  getMargins() {
+    const {useTabletWide, tabletMargins} = this.getThemeProps();
+    if (useTabletWide) {
+      if (Constants.screenWidth <= 767) {
+        // Small tablet
+        return 0;
+      } else if (Constants.screenWidth <= 1023) {
+        // Tablet portrait
+        return tabletMargins ? tabletMargins.portrait : 60;
+      } else {
+        // Tablet landscape
+        return tabletMargins ? tabletMargins.landscape : 160;
+      }
+    } else {
+      return 0;
+    }
+  };
+
+  getStylePropValue(flattenStyle, propName) {
+    let prop;
+    if (flattenStyle) {
+      const propObject = _.pick(flattenStyle, [propName]);
+      prop = propObject[propName];
+    }
+    return prop;
   }
 
   isIgnored(index) {
     const child = React.Children.toArray(this.props.children)[index];
     return _.get(child, 'props.ignore');
   }
+
+  hasOverflow() {
+    return this.scrollContentWidth > this.scrollContainerWidth;
+  }
+
+  shouldBeMarked = index => {
+    return this.state.currentIndex === index && !this.isIgnored(index) && this.childrenCount > 1;
+  };
 
   updateIndicator(index) {
     if (!this.isIgnored(index)) {
@@ -199,15 +237,6 @@ export default class TabBar extends BaseComponent<Props, State> {
     }, 0);
   };
 
-  getStylePropValue(flattenStyle, propName) {
-    let prop;
-    if (flattenStyle) {
-      const propObject = _.pick(flattenStyle, [propName]);
-      prop = propObject[propName];
-    }
-    return prop;
-  }
-
   onScroll = event => {
     const {contentOffset} = event.nativeEvent;
     this.contentOffset = contentOffset;
@@ -224,16 +253,10 @@ export default class TabBar extends BaseComponent<Props, State> {
     }
   };
 
-  hasOverflow() {
-    return this.scrollContentWidth > this.scrollContainerWidth;
-  }
-
   renderTabBar() {
-    const {height, useTabletWide, backgroundColor} = this.getThemeProps();
+    const {height, backgroundColor} = this.getThemeProps();
     const {scrollEnabled} = this.state;
     const containerHeight = height || DEFAULT_HEIGHT;
-    const Container = Constants.isTablet && useTabletWide && scrollEnabled ? TabletView : View;
-    const tabletMargins = (useTabletWide) ? Constants.getTabletMargins() : undefined;
 
     return (
       <ScrollBar
@@ -243,22 +266,15 @@ export default class TabBar extends BaseComponent<Props, State> {
         scrollEventThrottle={16}
         onScroll={this.onScroll}
         onContentSizeChange={this.onContentSizeChange}
-        containerView={Container}
-        containerProps={{fullWidth: false}}
         height={containerHeight}
-        gradientMargins={tabletMargins}
         gradientColor={backgroundColor}
       >
-        <View row style={[this.styles.tabBar, !scrollEnabled && {paddingHorizontal: tabletMargins}]}>
+        <View row style={this.styles.tabBar}>
           {this.renderChildren()}
         </View>
       </ScrollBar>
     );
   }
-
-  shouldBeMarked = index => {
-    return this.state.currentIndex === index && !this.isIgnored(index) && this.childrenCount > 1;
-  };
 
   renderChildren() {
     this.itemsRefs = [];
@@ -289,24 +305,34 @@ export default class TabBar extends BaseComponent<Props, State> {
   renderContents() {
     return !Constants.isTablet ?
       this.renderTabBar() :
-      <View style={{width: this.scrollContainerWidth, backgroundColor: DEFAULT_BACKGROUND_COLOR}}>
+      <View
+        style={{
+            paddingHorizontal: this.getMargins(),
+            width: this.scrollContainerWidth
+          }}
+      >
         {this.renderTabBar()}
       </View>
     ;
   }
 
   render() {
-    const {enableShadow, style, useTabletWide} = this.getThemeProps();
-    // TODO: once we start using public TabBar we should pass a style (in config)
-    const Container = useTabletWide ? TabletView : View;
+    const {enableShadow, style} = this.getThemeProps();
 
     return (
-      <Container
+      <View
         useSafeArea
-        style={[this.styles.container, enableShadow && this.styles.containerShadow, style, {height: undefined}]}
+        style={[
+          this.styles.container,
+          enableShadow && this.styles.containerShadow,
+          style,
+          {
+            height: undefined,
+          }
+        ]}
       >
         {this.renderContents()}
-      </Container>
+      </View>
     );
   }
 }
@@ -314,7 +340,8 @@ export default class TabBar extends BaseComponent<Props, State> {
 function createStyles({height = DEFAULT_HEIGHT, backgroundColor = DEFAULT_BACKGROUND_COLOR}) {
   return StyleSheet.create({
     container: {
-      zIndex: 100
+      zIndex: 100,
+      backgroundColor
     },
     containerShadow: {
       ...Platform.select({
@@ -333,7 +360,8 @@ function createStyles({height = DEFAULT_HEIGHT, backgroundColor = DEFAULT_BACKGR
     tabBar: {
       flex: 1,
       height,
-      backgroundColor
+      backgroundColor,
+      borderWidth: 1
     },
     shadowImage: {
       width: '100%'
