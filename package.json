@@ -17,6 +17,7 @@
     "start": "watchman watch-del-all && export DEV_MODE=true && react-native start",
     "start-ios": "node ./scripts/cliStuff.js",
     "ios": "react-native run-ios",
+    "iPad": "react-native run-ios --simulator='iPad Pro (9.7 inch)'",
     "android": "react-native run-android",
     "pretest": "npm run lint",
     "test": "jest",
