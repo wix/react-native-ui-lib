@@ -24,7 +24,7 @@ export declare type ButtonPropTypes = TouchableOpacityProps & TypographyModifier
      */
     color?: string;
     /**
-     * Icon image source
+     * Icon image source or a callback function that returns a source
      */
     iconSource?: object | number | Function;
     /**
@@ -358,7 +358,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
      */
     color?: string | undefined;
     /**
-     * Icon image source
+     * Icon image source or a callback function that returns a source
      */
     iconSource?: number | object | Function | undefined;
     /**
@@ -515,7 +515,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
      */
     color?: string | undefined;
     /**
-     * Icon image source
+     * Icon image source or a callback function that returns a source
      */
     iconSource?: number | object | Function | undefined;
     /**
@@ -672,7 +672,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
      */
     color?: string | undefined;
     /**
-     * Icon image source
+     * Icon image source or a callback function that returns a source
      */
     iconSource?: number | object | Function | undefined;
     /**
@@ -829,7 +829,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
      */
     color?: string | undefined;
     /**
-     * Icon image source
+     * Icon image source or a callback function that returns a source
      */
     iconSource?: number | object | Function | undefined;
     /**

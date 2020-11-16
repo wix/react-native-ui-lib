@@ -34,8 +34,21 @@ const BACKGROUND_COLORS = [
   Colors.purple60
 ];
 
-class CarouselScreen extends Component {
-  constructor(props) {
+interface Props {}
+
+interface State {
+  orientation: typeof Constants.orientation;
+  width: number;
+  limitShownPages: boolean;
+  numberOfPagesShown: number;
+  currentPage: number;
+  autoplay: boolean;
+}
+
+class CarouselScreen extends Component<Props ,State> {
+  carousel = React.createRef<typeof Carousel>();
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -69,12 +82,14 @@ class CarouselScreen extends Component {
     return Constants.windowWidth - Spacings.s5 * 2;
   };
 
-  onChangePage = (currentPage) => {
+  onChangePage = (currentPage: number) => {
     this.setState({currentPage});
   };
 
-  onPagePress = (index) => {
-    this.carousel.goToPage(index, true);
+  onPagePress = (index: number) => {
+    if (this.carousel && this.carousel.current) {
+      this.carousel.current.goToPage(index, true);
+    }
   };
 
   render() {
@@ -108,8 +123,7 @@ class CarouselScreen extends Component {
 
         <Carousel
           key={numberOfPagesShown}
-          migrate
-          ref={(r) => (this.carousel = r)}
+          ref={this.carousel}
           //loop
           autoplay={autoplay}
           onChangePage={this.onChangePage}
@@ -118,7 +132,7 @@ class CarouselScreen extends Component {
           containerMarginHorizontal={Spacings.s2}
           initialPage={INITIAL_PAGE}
           containerStyle={{height: 160}}
-          pageControlPosition={'under'}
+          pageControlPosition={Carousel.pageControlPositions.UNDER}
           pageControlProps={{onPagePress: this.onPagePress, limitShownPages}}
           // showCounter
           allowAccessibleLayout
@@ -172,6 +186,7 @@ class CarouselScreen extends Component {
   }
 }
 
+// @ts-ignore
 const Page = ({children, style, ...others}) => {
   return (
     <View {...others} style={[styles.page, style]}>

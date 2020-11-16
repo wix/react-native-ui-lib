@@ -253,7 +253,6 @@ class Avatar extends PureComponent<AvatarPropTypes> {
           size={this.getBadgeSize()}
           {...badgeProps}
           containerStyle={this.getBadgePosition()}
-          label={undefined}
           testID={`${testID}.onlineBadge`}
         />
       );
