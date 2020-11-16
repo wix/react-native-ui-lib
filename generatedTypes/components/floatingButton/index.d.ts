@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { ButtonPropTypes } from '../button';
 export interface FloatingButtonProps {
     /**
@@ -8,11 +8,11 @@ export interface FloatingButtonProps {
     /**
      * Button element (all Button's component's props)
      */
-    button?: ButtonPropTypes;
+    button?: PropsWithChildren<ButtonPropTypes>;
     /**
      * Secondary button element (all Button's component's props)
      */
-    secondaryButton?: ButtonPropTypes;
+    secondaryButton?: PropsWithChildren<ButtonPropTypes>;
     /**
      * The bottom margin of the button, or secondary button if passed
      */
