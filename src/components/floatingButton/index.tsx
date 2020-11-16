@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {PropsWithChildren, PureComponent} from 'react';
 import {StyleSheet} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {Constants} from '../../helpers';
@@ -16,11 +16,11 @@ export interface FloatingButtonProps {
   /**
    * Button element (all Button's component's props)
    */
-  button?: ButtonPropTypes;
+  button?: PropsWithChildren<ButtonPropTypes>;
   /**
    * Secondary button element (all Button's component's props)
    */
-  secondaryButton?: ButtonPropTypes;
+  secondaryButton?: PropsWithChildren<ButtonPropTypes>;
   /**
    * The bottom margin of the button, or secondary button if passed
    */
