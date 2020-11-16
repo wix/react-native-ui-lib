@@ -360,8 +360,7 @@ function createStyles({height = DEFAULT_HEIGHT, backgroundColor = DEFAULT_BACKGR
     tabBar: {
       flex: 1,
       height,
-      backgroundColor,
-      borderWidth: 1
+      backgroundColor
     },
     shadowImage: {
       width: '100%'
