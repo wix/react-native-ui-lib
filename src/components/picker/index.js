@@ -3,6 +3,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 import {asBaseComponent, forwardRef} from '../../commons';
+import {LogService} from '../../services';
 import View from '../../components/view';
 import Modal from '../modal';
 import Button from '../../components/button';
@@ -146,10 +147,10 @@ class Picker extends PureComponent {
     };
 
     if (props.mode === Picker.modes.SINGLE && Array.isArray(props.value)) {
-      console.warn('Picker in SINGLE mode cannot accept an array for value');
+      LogService.warn('Picker in SINGLE mode cannot accept an array for value');
     }
     if (props.mode === Picker.modes.MULTI && !Array.isArray(props.value)) {
-      console.warn('Picker in MULTI mode must accept an array for value');
+      LogService.warn('Picker in MULTI mode must accept an array for value');
     }
 
     // TODO: this warning should be replaced by the opposite
@@ -158,7 +159,7 @@ class Picker extends PureComponent {
     //   console.warn('UILib Picker: don\'t use object as value for native picker, use either string or a number');
     // }
     if (_.isPlainObject(props.value)) {
-      console.warn(
+      LogService.warn(
         'UILib Picker will stop supporting passing object as value in the next major version. Please use either string or a number as value'
       );
     }

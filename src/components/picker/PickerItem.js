@@ -2,6 +2,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useContext} from 'react';
 import {StyleSheet} from 'react-native';
+import {LogService} from '../../services';
 import {Colors, Typography} from '../../style';
 import * as Modifiers from '../../commons/modifiers';
 import Assets from '../../assets';
@@ -39,7 +40,7 @@ const PickerItem = props => {
 
   useEffect(() => {
     if (_.isPlainObject(value)) {
-      console.warn('UILib Picker.Item will stop supporting passing object as value & label (e.g {value, label}) in the next major version. Please pass separate label and value props');
+      LogService.warn('UILib Picker.Item will stop supporting passing object as value & label (e.g {value, label}) in the next major version. Please pass separate label and value props');
     }
   }, [value]);
 
