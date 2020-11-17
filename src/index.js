@@ -291,6 +291,9 @@ export default {
   get AnimatableManager() {
     return require('./style').AnimatableManager;
   },
+  get Hooks() {
+    return require('./hooks');
+  },
 
   // Incubator
   get Incubator() {

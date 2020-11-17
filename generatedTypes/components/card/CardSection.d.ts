@@ -32,6 +32,7 @@ export declare type CardSectionProps = ViewPropTypes & {
      * Will be used for the background when provided
      */
     imageSource?: ImageSourcePropType;
+    source?: ImageSourcePropType;
     /**
      * The style for the background image
      */
@@ -67,6 +68,7 @@ declare const _default: React.ComponentClass<ViewPropTypes & {
      * Will be used for the background when provided
      */
     imageSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    source?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
     /**
      * The style for the background image
      */

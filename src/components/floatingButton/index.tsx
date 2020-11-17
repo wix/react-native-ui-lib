@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {PropsWithChildren, PureComponent} from 'react';
 import {StyleSheet} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {Constants} from '../../helpers';

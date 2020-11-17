@@ -47,7 +47,7 @@ export default class CardsScreen extends Component<
           activeOpacity={1}
           marginR-20
         >
-          <Card.Section imageSource={cardImage} imageStyle={{height: '100%'}} />
+          <Card.Section source={cardImage} imageStyle={{height: '100%'}} />
         </Card>
         <Card
           height={120}
@@ -61,7 +61,7 @@ export default class CardsScreen extends Component<
             borderWidth: 3
           }}
         >
-          <Card.Section imageSource={cardImage} imageStyle={{height: '100%'}} />
+          <Card.Section source={cardImage} imageStyle={{height: '100%'}} />
         </Card>
       </View>
     );
@@ -122,14 +122,14 @@ export default class CardsScreen extends Component<
       >
         {isImageOnLeft && (
           <Card.Section
-            imageSource={cardImage}
+            source={cardImage}
             imageStyle={{width: 115, height: '100%'}}
           />
         )}
         {useSection ? this.renderTextSection() : this.renderText()}
         {!isImageOnLeft && (
           <Card.Section
-            imageSource={cardImage}
+            source={cardImage}
             imageStyle={{width: 115, height: '100%'}}
           />
         )}
@@ -147,7 +147,7 @@ export default class CardsScreen extends Component<
           ]}
           style={{padding: 20}}
         />
-        <Card.Section imageSource={cardImage2} imageStyle={{height: 120}} />
+        <Card.Section source={cardImage2} imageStyle={{height: 120}} />
       </Card>
     );
   };
@@ -223,7 +223,7 @@ export default class CardsScreen extends Component<
             <Card.Section
               flex
               backgroundColor={Colors.blue20}
-              imageSource={featureIcon}
+              source={featureIcon}
               imageStyle={{
                 width: 25,
                 height: 25,
@@ -242,7 +242,7 @@ export default class CardsScreen extends Component<
             {'marginL-5': true},
             <Card.Section
               flex
-              imageSource={cardImage2}
+              source={cardImage2}
               imageStyle={{height: '100%'}}
               content={[
                 {text: 'Special sale!', text70: true, blue10: true},
@@ -336,7 +336,7 @@ export default class CardsScreen extends Component<
           onPress={() => console.log('press on a card')}
         >
           <Card.Section
-            imageSource={post.coverImage}
+            source={post.coverImage}
             imageStyle={{height: 160}}
           />
 

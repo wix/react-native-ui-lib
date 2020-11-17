@@ -6,6 +6,7 @@
 export * from './style';
 export * from './services';
 export * as Incubator from './incubator';
+export * as Hooks from './hooks';
 export {
   asBaseComponent,
   withScrollEnabler,
@@ -19,7 +20,8 @@ export {
   PaddingModifiers,
   TypographyModifiers,
   ColorsModifiers,
-  BackgroundColorModifier
+  BackgroundColorModifier,
+  useToggleValue
 } from './commons/new';
 export {default as ActionBar, ActionBarProps} from './components/actionBar';
 export {default as Avatar, AvatarPropTypes} from './components/avatar';
