@@ -1,6 +1,5 @@
 {
   "name": "uilib-docs",
-  "private": true,
   "description": "uilib docs template",
   "version": "1.0.0",
   "author": "Ethan Sharabi <ethans@wix.com>",
