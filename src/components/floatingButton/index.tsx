@@ -5,7 +5,7 @@ import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons/new';
 import {Colors, Spacings} from '../../style';
 import View from '../view';
-import Button, {ButtonPropTypes} from '../button';
+import Button, {ButtonProps} from '../button';
 import Image from '../image';
 
 export interface FloatingButtonProps {
@@ -16,11 +16,11 @@ export interface FloatingButtonProps {
   /**
    * Button element (all Button's component's props)
    */
-  button?: PropsWithChildren<ButtonPropTypes>;
+  button?: PropsWithChildren<ButtonProps>;
   /**
    * Secondary button element (all Button's component's props)
    */
-  secondaryButton?: PropsWithChildren<ButtonPropTypes>;
+  secondaryButton?: PropsWithChildren<ButtonProps>;
   /**
    * The bottom margin of the button, or secondary button if passed
    */
@@ -56,7 +56,7 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
 
   initialVisibility?: boolean;
   firstLoad: boolean;
-  
+
   constructor(props: FloatingButtonProps) {
     super(props);
 
