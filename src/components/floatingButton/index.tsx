@@ -16,11 +16,11 @@ export interface FloatingButtonProps {
   /**
    * Button element (all Button's component's props)
    */
-  button?: ButtonProps;
+  button?: PropsWithChildren<ButtonProps>;
   /**
    * Secondary button element (all Button's component's props)
    */
-  secondaryButton?: ButtonProps;
+  secondaryButton?: PropsWithChildren<ButtonProps>;
   /**
    * The bottom margin of the button, or secondary button if passed
    */
