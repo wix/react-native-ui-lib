@@ -45,10 +45,6 @@ interface Props extends ViewPropTypes, ThemeComponent, ScrollBarProps {
    */
   height?: number;
   /**
-   * use tablet wide view with tablet margins
-   */
-  useTabletWide?: boolean;
-  /**
    * Tablet margin as an object. ex. {portrait: 60, landscape: 160}
    */
   tabletMargins?: number;
@@ -86,12 +82,7 @@ export default class TabBar extends BaseComponent<Props, State> {
 
   static defaultProps: Partial<Props> = {
     selectedIndex: 0,
-    useTabletWide: Constants.isTablet
-  };
-
-  static modes = { // TODO: deprecate
-    FIT: 'FIT',
-    SCROLL: 'SCROLL'
+    // tabletMargins: {portrait: 60, landscape: 160}
   };
 
   scrollContentWidth?: number;
@@ -156,18 +147,18 @@ export default class TabBar extends BaseComponent<Props, State> {
     return this.props.containerWidth || Constants.screenWidth;
   }
 
-  getMargins() {
-    const {useTabletWide, tabletMargins} = this.getThemeProps();
-    if (useTabletWide) {
+  getTabletMargins() {
+    const {tabletMargins} = this.getThemeProps();
+    if (Constants.isTablet && tabletMargins) {
       if (Constants.screenWidth <= 767) {
         // Small tablet
         return 0;
       } else if (Constants.screenWidth <= 1023) {
         // Tablet portrait
-        return tabletMargins ? tabletMargins.portrait : 60;
+        return tabletMargins.portrait;
       } else {
         // Tablet landscape
-        return tabletMargins ? tabletMargins.landscape : 160;
+        return tabletMargins.landscape;
       }
     } else {
       return 0;
@@ -307,7 +298,7 @@ export default class TabBar extends BaseComponent<Props, State> {
       this.renderTabBar() :
       <View
         style={{
-            paddingHorizontal: this.getMargins(),
+            paddingHorizontal: this.getTabletMargins(),
             width: this.scrollContainerWidth
           }}
       >
