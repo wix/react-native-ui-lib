@@ -132,7 +132,7 @@ export default class TabBar extends BaseComponent<Props, State> {
   }
 
   onOrientationChanged = () => {
-    this.setState({something: 0}); // only to trigger render
+    this.setState({something: 0}); // only to trigger render to re-layout for the new orientation
   }
 
   generateStyles() {
