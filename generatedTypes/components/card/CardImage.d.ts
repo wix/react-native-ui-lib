@@ -6,6 +6,7 @@ export declare type CardImageProps = Omit<ImageProps, 'source'> & {
      * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
      */
     imageSource?: ImageSourcePropType;
+    source?: ImageSourcePropType;
     /**
      * Image width
      */
@@ -24,11 +25,6 @@ export declare type CardImageProps = Omit<ImageProps, 'source'> & {
      * border radius, basically for Android since overflow doesn't work well (deprecated)
      */
     borderRadius?: number;
-    /**
-     * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
-     * TODO: Remove after imageSource deprecation - should take it from Image props
-     */
-    source?: ImageSourcePropType;
 };
 declare const _default: React.ComponentType<CardImageProps>;
 export default _default;

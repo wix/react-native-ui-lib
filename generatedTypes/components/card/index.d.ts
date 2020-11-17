@@ -71,9 +71,7 @@ declare const _default: React.ComponentClass<ViewPropTypes & Pick<import("react-
     } | undefined;
     activeBackgroundColor?: string | undefined;
     useNative?: boolean | undefined;
-    customValue?: any; /**
-     * card custom height
-     */
+    customValue?: any;
     style?: false | ViewStyle | import("react-native").RegisteredStyle<ViewStyle> | import("react-native").RecursiveArray<false | ViewStyle | import("react-native").RegisteredStyle<ViewStyle> | null | undefined> | Animated.AnimatedProps<ViewStyle> | Animated.AnimatedProps<import("react-native").RegisteredStyle<ViewStyle>> | Animated.AnimatedProps<import("react-native").RecursiveArray<false | ViewStyle | import("react-native").RegisteredStyle<ViewStyle> | null | undefined>> | null | undefined;
     onPress?: ((props: TouchableOpacityProps) => void) | undefined;
 } & {
