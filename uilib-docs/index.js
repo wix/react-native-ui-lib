@@ -1,7 +1,7 @@
-import PageCreators from './configurations/pageCreators';
-import Plugins from './configurations/plugins';
+const PageCreators = require('./configurations/pageCreators');
+const Plugins = require('./configurations/plugins');
 
-export default {
+module.exports = {
   PageCreators,
   Plugins
 };
