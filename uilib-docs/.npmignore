@@ -1,3 +1,5 @@
-.cache
 node_modules/
 .npmignore
+
+.cache
+public
