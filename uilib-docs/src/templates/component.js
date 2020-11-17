@@ -40,10 +40,10 @@ export default class ComponentTemplate extends Component {
     const {pageContext} = this.props;
     const allComponents = pageContext.components;
 
-    const extendedComponents = _.chain(componentInfo.extends)
-      .replace(/ /g, '')
-      .split(',')
-      .value();
+    const extendedComponents = _.flow(
+      text => _.replace(text, / /g, ''),
+      text => _.split(text, ',')
+    )(componentInfo.extends);
 
     return _.map(extendedComponents, (component, index) => {
       const isLast = index === _.size(extendedComponents) - 1;
