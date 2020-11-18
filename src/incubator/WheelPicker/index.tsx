@@ -1,3 +1,4 @@
+// TODO: Support onChange callback
 // TODO: Support style customization
 // TODO: Support control of visible items
 import _ from 'lodash';
@@ -55,6 +56,10 @@ const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle, inactiveItemT
 
   const [itemsWrap, setItemWrapped] = useState<WrappedItem[]>(wrapItems(items));
 
+  const updateItems = () => {
+    setItemWrapped(wrapItems(items));
+  };
+
   const selectItem = useCallback(
     index => {
       if (scrollView.current?.getNode()) {
@@ -67,7 +72,7 @@ const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle, inactiveItemT
 
   const onChange = useCallback(() => {
     onChangeEvent(activeIndex.current, items?.[activeIndex.current]);
-  }, [itemHeight]);
+  }, []);
 
   const valueInRange = (value: number, min: number, max: number): number => {
     if (value < min || value === -0) {
@@ -84,10 +89,6 @@ const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle, inactiveItemT
     return valueInRange(calculatedIndex, 0, items!.length - 1);
   };
 
-  const updateItems = () => {
-    setItemWrapped(wrapItems(items));
-  };
-
   const onScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const currentIndex = calculateCurrentIndex(event.nativeEvent.contentOffset.y);
     if (activeIndex.current != currentIndex) {
@@ -100,9 +101,10 @@ const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle, inactiveItemT
     return (
       <Item
         index={index}
+        activeIndex={activeIndex.current}
         itemHeight={itemHeight}
         offset={offset}
-        textStyle={activeItemTextStyle}
+        textStyle={index === activeIndex.current ? activeItemTextStyle : inactiveItemTextStyle}
         {...item}
         onSelect={selectItem}
       />
@@ -124,7 +126,7 @@ const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle, inactiveItemT
             borderTopWidth: 1,
             borderBottomWidth: 1,
             height: itemHeight,
-            borderColor: Colors.grey60
+            borderColor: Colors.grey50
           }}
         />
       </View>
@@ -137,7 +139,7 @@ const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle, inactiveItemT
         <AnimatedFlatList
           data={itemsWrap}
           keyExtractor={keyExtractor}
-          scrollEventThrottle={16}
+          scrollEventThrottle={100}
           onScroll={onScroll}
           onMomentumScrollEnd={onChange}
           showsVerticalScrollIndicator={false}
