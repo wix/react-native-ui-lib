@@ -2,12 +2,13 @@
 // TODO: Support style customization
 // TODO: Support control of visible items
 import _ from 'lodash';
-import React, {useCallback, useRef} from 'react';
+import React, {useCallback, useRef, useMemo} from 'react';
 import {TextStyle, FlatList, StyleProp} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent, useValues} from 'react-native-redash';
-
+import {Colors} from '../../../src/style';
 import View from '../../components/view';
+import Fader, {FaderPosition} from '../../components/fader';
 import {Constants} from '../../helpers';
 
 import Item, {ItemProps} from './Item';
@@ -74,6 +75,28 @@ const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle}: WheelPickerP
     );
   }, []);
 
+  const renderFader = useMemo(
+    () => (position: FaderPosition) => {
+      return <Fader visible position={position} size={60} />;
+    },
+    []
+  );
+
+  const renderSeparators = useMemo(() => {
+    return (
+      <View absF centerV pointerEvents="none">
+        <View
+          style={{
+            borderTopWidth: 1,
+            borderBottomWidth: 1,
+            height: itemHeight,
+            borderColor: Colors.grey60
+          }}
+        />
+      </View>
+    );
+  }, []);
+
   return (
     <View>
       <View width={250} height={height} br20>
@@ -93,15 +116,9 @@ const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle}: WheelPickerP
           decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
           renderItem={renderItem}
         />
-        <View absF centerV pointerEvents="none">
-          <View
-            style={{
-              borderTopWidth: 1,
-              borderBottomWidth: 1,
-              height: itemHeight
-            }}
-          />
-        </View>
+        {renderFader(FaderPosition.BOTTOM)}
+        {renderFader(FaderPosition.TOP)}
+        {renderSeparators}
       </View>
     </View>
   );
