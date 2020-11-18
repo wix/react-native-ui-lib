@@ -24,11 +24,13 @@ module.exports = async ({graphql, boundActionCreators}) => {
   `);
 
   result.data.allFile.edges.forEach(({node}) => {
-    createPage({
-      name: node.name,
-      path: node.childMarkdownRemark.frontmatter.path,
-      component: path.resolve(`src/templates/markdownTemplate.js`),
-      context: {} // additional data can be passed via context
-    });
+    if (node.childMarkdownRemark.frontmatter.path) {
+      createPage({
+        name: node.name,
+        path: node.childMarkdownRemark.frontmatter.path,
+        component: path.resolve(`src/templates/markdownTemplate.js`),
+        context: {} // additional data can be passed via context
+      });
+    }
   });
 };

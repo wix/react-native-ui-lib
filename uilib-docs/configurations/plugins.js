@@ -13,12 +13,12 @@ const manifestPlugin = [
   }
 ];
 
-const markdownPagesPlugin = [
+const markdownPagesPlugin = (path = `${__dirname}/../../markdowns/`) => [
   {
     resolve: `gatsby-source-filesystem`,
     options: {
       name: `markdown-pages`,
-      path: `${__dirname}/../../markdowns/`
+      path
     }
   },
   `gatsby-transformer-remark`
