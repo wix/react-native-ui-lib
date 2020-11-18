@@ -45,10 +45,6 @@ interface Props extends ViewPropTypes, ThemeComponent, ScrollBarProps {
    */
   height?: number;
   /**
-   * Tablet margin as an object. ex. {portrait: 60, landscape: 160}
-   */
-  tabletMargins?: number;
-  /**
    * Pass when container width is different than the screen width
    */
   containerWidth?: number;
@@ -81,8 +77,7 @@ export default class TabBar extends BaseComponent<Props, State> {
   static Item = TabBarItem;
 
   static defaultProps: Partial<Props> = {
-    selectedIndex: 0,
-    // tabletMargins: {portrait: 60, landscape: 160}
+    selectedIndex: 0
   };
 
   scrollContentWidth?: number;
@@ -123,18 +118,6 @@ export default class TabBar extends BaseComponent<Props, State> {
     }
   }
 
-  componentDidMount() {
-    Constants.addDimensionsEventListener(this.onOrientationChanged);
-  }
-
-  componentWillUnmount() {
-    Constants.removeDimensionsEventListener(this.onOrientationChanged);
-  }
-
-  onOrientationChanged = () => {
-    this.setState({something: 0}); // only to trigger render to re-layout for the new orientation
-  }
-
   generateStyles() {
     this.styles = createStyles(this.getThemeProps());
   }
@@ -146,24 +129,6 @@ export default class TabBar extends BaseComponent<Props, State> {
   get scrollContainerWidth() {
     return this.props.containerWidth || Constants.screenWidth;
   }
-
-  getTabletMargins() {
-    const {tabletMargins} = this.getThemeProps();
-    if (Constants.isTablet && tabletMargins) {
-      if (Constants.screenWidth <= 767) {
-        // Small tablet
-        return 0;
-      } else if (Constants.screenWidth <= 1023) {
-        // Tablet portrait
-        return tabletMargins.portrait;
-      } else {
-        // Tablet landscape
-        return tabletMargins.landscape;
-      }
-    } else {
-      return 0;
-    }
-  };
 
   getStylePropValue(flattenStyle, propName) {
     let prop;
@@ -245,7 +210,7 @@ export default class TabBar extends BaseComponent<Props, State> {
   };
 
   renderTabBar() {
-    const {height, backgroundColor} = this.getThemeProps();
+    const {height, backgroundColor, containerView, containerProps} = this.getThemeProps();
     const {scrollEnabled} = this.state;
     const containerHeight = height || DEFAULT_HEIGHT;
 
@@ -259,6 +224,8 @@ export default class TabBar extends BaseComponent<Props, State> {
         onContentSizeChange={this.onContentSizeChange}
         height={containerHeight}
         gradientColor={backgroundColor}
+        containerView={containerView}
+        containerProps={containerProps}
       >
         <View row style={this.styles.tabBar}>
           {this.renderChildren()}
@@ -293,20 +260,6 @@ export default class TabBar extends BaseComponent<Props, State> {
     return children;
   }
 
-  renderContents() {
-    return !Constants.isTablet ?
-      this.renderTabBar() :
-      <View
-        style={{
-            paddingHorizontal: this.getTabletMargins(),
-            width: this.scrollContainerWidth
-          }}
-      >
-        {this.renderTabBar()}
-      </View>
-    ;
-  }
-
   render() {
     const {enableShadow, style} = this.getThemeProps();
 
@@ -322,7 +275,7 @@ export default class TabBar extends BaseComponent<Props, State> {
           }
         ]}
       >
-        {this.renderContents()}
+        {this.renderTabBar()}
       </View>
     );
   }
