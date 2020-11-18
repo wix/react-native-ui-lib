@@ -1,4 +1,3 @@
-// TODO: Support onChange callback
 // TODO: Support style customization
 // TODO: Support control of visible items
 import _ from 'lodash';
@@ -42,7 +41,7 @@ type WrappedItem = {
   isActive: boolean;
 } & ItemProps;
 
-const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle}: WheelPickerProps) => {
+const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle, inactiveItemTextStyle, onChange: onChangeEvent}: WheelPickerProps) => {
   const height = itemHeight * 4;
   const scrollView = useRef<Animated.ScrollView>();
   const [offset] = useValues([0], []);
@@ -67,7 +66,7 @@ const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle}: WheelPickerP
   );
 
   const onChange = useCallback(() => {
-    // TODO: need to implement on change event that calc the current selected index
+    onChangeEvent(activeIndex.current, items?.[activeIndex.current]);
   }, [itemHeight]);
 
   const valueInRange = (value: number, min: number, max: number): number => {
