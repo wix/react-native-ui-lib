@@ -214,7 +214,7 @@ export default class TabBar extends BaseComponent<Props, State> {
   };
 
   renderTabBar() {
-    const {height, backgroundColor, containerView, containerProps} = this.getThemeProps();
+    const {height, backgroundColor, containerView, containerProps, gradientMargins} = this.getThemeProps();
     const {scrollEnabled} = this.state;
     const containerHeight = height || DEFAULT_HEIGHT;
 
@@ -230,6 +230,7 @@ export default class TabBar extends BaseComponent<Props, State> {
         gradientColor={backgroundColor}
         containerView={containerView}
         containerProps={containerProps}
+        gradientMargins={gradientMargins}
       >
         <View row style={this.styles.tabBar}>
           {this.renderChildren()}
