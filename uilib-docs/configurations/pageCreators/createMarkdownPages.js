@@ -4,7 +4,7 @@ module.exports = async ({graphql, boundActionCreators}) => {
   const {createPage} = boundActionCreators;
   const result = await graphql(`
     {
-      allFile(filter: {sourceInstanceName: {eq: "markdown-pages"}}) {
+      allFile(filter: {sourceInstanceName: {eq: "markdown-pages"}, childMarkdownRemark: {frontmatter: {path: {ne: null}}}}) {
         edges {
           node {
             id
