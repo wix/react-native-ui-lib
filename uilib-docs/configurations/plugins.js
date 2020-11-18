@@ -1,3 +1,5 @@
+const path = require('path');
+
 const manifestPlugin = [
   {
     resolve: `gatsby-plugin-manifest`,
@@ -73,7 +75,7 @@ const layoutPlugin = [
   {
     resolve: `gatsby-plugin-layout`,
     options: {
-      component: require.resolve(`${__dirname}/../src/components/layout.js`)
+      component: require.resolve(`${path.resolve('./')}/src/components/layout.js`)
     }
   }
 ];
