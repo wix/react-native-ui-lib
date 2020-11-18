@@ -43,14 +43,15 @@ type WrappedItem = {
 
 const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle}: WheelPickerProps) => {
   const height = itemHeight * 4;
-  const scrollview = useRef<Animated.ScrollView>();
+  const scrollView = useRef<Animated.ScrollView>();
   const [offset] = useValues([0], []);
   const onScroll = onScrollEvent({y: offset});
 
   const selectItem = useCallback(
     index => {
-      if (scrollview.current) {
-        scrollview.current.getNode().scrollTo({y: index * itemHeight, animated: true});
+      if (scrollView.current?.getNode()) {
+        //@ts-ignore for some reason scrollToOffset not recognized
+        scrollView.current.getNode().scrollToOffset({offset: index * itemHeight, animated: true});
       }
     },
     [itemHeight]
@@ -84,7 +85,7 @@ const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle}: WheelPickerP
           onMomentumScrollEnd={onChange}
           showsVerticalScrollIndicator={false}
           // @ts-ignore
-          ref={scrollview}
+          ref={scrollView}
           contentContainerStyle={{
             paddingVertical: height / 2 - itemHeight / 2
           }}
