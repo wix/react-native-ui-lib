@@ -15,13 +15,33 @@ import Item, {ItemProps} from './Item';
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 export interface WheelPickerProps {
+  /**
+   * Data source for WheelPicker
+   */
   items?: ItemProps[];
+  /**
+   * Describe the height of each item in the WheelPicker
+   */
   itemHeight?: number;
-  itemTextStyle?: StyleProp<TextStyle>;
-  onChange: (item: ItemProps, index: number) => void;
+  /**
+   * TextStyle for the focused row
+   */
+  activeItemTextStyle?: StyleProp<TextStyle>;
+  /**
+   * TextStyle for other, non-focused rows
+   */
+  inactiveItemTextStyle?: StyleProp<TextStyle>;
+  /**
+   * Event, on active row change
+   */
+  onChange: (index: number, item?: ItemProps) => void;
 }
 
-const WheelPicker = ({items, itemHeight = 48, itemTextStyle}: WheelPickerProps) => {
+type WrappedItem = {
+  isActive: boolean;
+} & ItemProps;
+
+const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle}: WheelPickerProps) => {
   const height = itemHeight * 4;
   const scrollview = useRef<Animated.ScrollView>();
   const [offset] = useValues([0], []);
@@ -46,7 +66,7 @@ const WheelPicker = ({items, itemHeight = 48, itemTextStyle}: WheelPickerProps) 
         index={index}
         itemHeight={itemHeight}
         offset={offset}
-        textStyle={itemTextStyle}
+        textStyle={activeItemTextStyle}
         {...item}
         onSelect={selectItem}
       />
@@ -86,6 +106,6 @@ const WheelPicker = ({items, itemHeight = 48, itemTextStyle}: WheelPickerProps) 
   );
 };
 
-const keyExtractor = (item: ItemProps) => item.value;
+const keyExtractor = (item: WrappedItem) => `${item.value}-${item.isActive}`;
 
 export default WheelPicker;
