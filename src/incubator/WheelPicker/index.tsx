@@ -2,10 +2,10 @@
 // TODO: Support style customization
 // TODO: Support control of visible items
 import _ from 'lodash';
-import React, {useCallback, useRef, useMemo} from 'react';
-import {TextStyle, FlatList, StyleProp} from 'react-native';
+import React, {useCallback, useRef, useState, useMemo} from 'react';
+import {TextStyle, FlatList, StyleProp, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import Animated from 'react-native-reanimated';
-import {onScrollEvent, useValues} from 'react-native-redash';
+import {useValues} from 'react-native-redash';
 import {Colors} from '../../../src/style';
 import View from '../../components/view';
 import Fader, {FaderPosition} from '../../components/fader';
@@ -46,7 +46,15 @@ const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle}: WheelPickerP
   const height = itemHeight * 4;
   const scrollView = useRef<Animated.ScrollView>();
   const [offset] = useValues([0], []);
-  const onScroll = onScrollEvent({y: offset});
+  const activeIndex = useRef<number>(0);
+
+  const wrapItems = (items?: ItemProps[]): WrappedItem[] => {
+    return _.map(items, (item, index: number) => {
+      return {...item, isActive: activeIndex.current === index};
+    });
+  };
+
+  const [itemsWrap, setItemWrapped] = useState<WrappedItem[]>(wrapItems(items));
 
   const selectItem = useCallback(
     index => {
@@ -61,6 +69,33 @@ const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle}: WheelPickerP
   const onChange = useCallback(() => {
     // TODO: need to implement on change event that calc the current selected index
   }, [itemHeight]);
+
+  const valueInRange = (value: number, min: number, max: number): number => {
+    if (value < min || value === -0) {
+      return min;
+    }
+    if (value > max) {
+      return max;
+    }
+    return value;
+  };
+
+  const calculateCurrentIndex = (offset: number): number => {
+    const calculatedIndex = Math.round(offset / itemHeight);
+    return valueInRange(calculatedIndex, 0, items!.length - 1);
+  };
+
+  const updateItems = () => {
+    setItemWrapped(wrapItems(items));
+  };
+
+  const onScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const currentIndex = calculateCurrentIndex(event.nativeEvent.contentOffset.y);
+    if (activeIndex.current != currentIndex) {
+      activeIndex.current = currentIndex;
+      updateItems();
+    }
+  }, []);
 
   const renderItem = useCallback(({item, index}) => {
     return (
@@ -101,7 +136,7 @@ const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle}: WheelPickerP
     <View>
       <View width={250} height={height} br20>
         <AnimatedFlatList
-          data={items}
+          data={itemsWrap}
           keyExtractor={keyExtractor}
           scrollEventThrottle={16}
           onScroll={onScroll}
