@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { ButtonPropTypes } from '../button';
+import { ButtonProps } from '../button';
 export interface FloatingButtonProps {
     /**
      * Whether the button is visible
@@ -8,11 +8,11 @@ export interface FloatingButtonProps {
     /**
      * Button element (all Button's component's props)
      */
-    button?: PropsWithChildren<ButtonPropTypes>;
+    button?: PropsWithChildren<ButtonProps>;
     /**
      * Secondary button element (all Button's component's props)
      */
-    secondaryButton?: PropsWithChildren<ButtonPropTypes>;
+    secondaryButton?: PropsWithChildren<ButtonProps>;
     /**
      * The bottom margin of the button, or secondary button if passed
      */

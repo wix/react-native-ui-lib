@@ -1,6 +1,6 @@
 import React from 'react';
 import { ViewStyle } from 'react-native';
-declare type TouchableOpacityPropTypes = {
+declare type TouchableOpacityProps = {
     /**
      * Background color
      */
@@ -38,7 +38,7 @@ declare type TouchableOpacityPropTypes = {
      */
     style?: ViewStyle;
 };
-declare const _default: React.ComponentClass<TouchableOpacityPropTypes & {
+declare const _default: React.ComponentClass<TouchableOpacityProps & {
     useCustomTheme?: boolean | undefined;
 }, any>;
 export default _default;

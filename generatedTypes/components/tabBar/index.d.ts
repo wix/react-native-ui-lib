@@ -1,9 +1,9 @@
 import React from 'react';
 import { Animated, ViewStyle } from 'react-native';
 import { BaseComponentInjectedProps } from '../../commons/new';
-import { ViewPropTypes } from '../view';
+import { ViewProps } from '../view';
 import TabBarItem from './TabBarItem';
-export declare type TabBarProps = BaseComponentInjectedProps & ViewPropTypes & {
+export declare type TabBarProps = BaseComponentInjectedProps & ViewProps & {
     /**
      * Show Tab Bar bottom shadow
      */
@@ -45,7 +45,7 @@ export declare type State = {
     scrollEnabled?: boolean;
     currentIndex?: number;
 };
-declare const _default: React.ComponentClass<BaseComponentInjectedProps & ViewPropTypes & {
+declare const _default: React.ComponentClass<BaseComponentInjectedProps & ViewProps & {
     /**
      * Show Tab Bar bottom shadow
      */

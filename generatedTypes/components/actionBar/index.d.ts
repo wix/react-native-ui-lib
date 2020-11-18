@@ -1,6 +1,6 @@
 import React from 'react';
 import { ViewStyle } from 'react-native';
-import { ButtonPropTypes } from '../button';
+import { ButtonProps } from '../button';
 /**
  * @description: Quick actions bar, each action support Button component props
  * @modifiers: margin, padding
@@ -19,7 +19,7 @@ export declare type ActionBarProps = {
     /**
      * actions for the action bar
      */
-    actions: ButtonPropTypes[];
+    actions: ButtonProps[];
     /**
      * should action be equally centered
      */

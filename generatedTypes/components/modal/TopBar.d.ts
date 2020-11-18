@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleProp, TextStyle, ImageSourcePropType } from 'react-native';
-import { ButtonPropTypes } from '../../components/button';
+import { ButtonProps } from '../../components/button';
 export interface ModalTopBarProps {
     /**
        * title to display in the center of the top bar
@@ -13,7 +13,7 @@ export interface ModalTopBarProps {
     /**
      * done action props (Button props)
      */
-    doneButtonProps?: Omit<ButtonPropTypes, 'onPress'>;
+    doneButtonProps?: Omit<ButtonProps, 'onPress'>;
     /**
      * done action label
      */
@@ -29,7 +29,7 @@ export interface ModalTopBarProps {
     /**
      * cancel action props (Button props)
      */
-    cancelButtonProps?: Omit<ButtonPropTypes, 'onPress'>;
+    cancelButtonProps?: Omit<ButtonProps, 'onPress'>;
     /**
      * cancel action label
      */
