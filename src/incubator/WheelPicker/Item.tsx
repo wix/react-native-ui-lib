@@ -1,9 +1,9 @@
-import React, {useCallback, useMemo} from 'react';
-import Animated, {concat} from 'react-native-reanimated';
-import {transformOrigin} from 'react-native-redash';
+import React, {useCallback} from 'react';
+import Animated from 'react-native-reanimated';
 import Text from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
 import {TextStyle} from 'react-native';
+import {Typography, Colors} from '../../../src/style';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(
   TouchableOpacity
@@ -20,6 +20,7 @@ interface InternalProps extends ItemProps {
   offset: any;
   itemHeight: number;
   textStyle?: TextStyle;
+  activeIndex: number;
   onSelect: (index: number) => void;
 }
 
@@ -30,56 +31,28 @@ export default ({
   // value,
   itemHeight,
   onSelect,
-  offset
+  activeIndex
 }: InternalProps) => {
-  const itemOffset = index * itemHeight;
-  const opacity = Animated.interpolate(offset, {
-    inputRange: [itemOffset - itemHeight, itemOffset, itemOffset + itemHeight],
-    outputRange: [0.5, 1, 0.5]
-  });
-
-  const rotateXValue = useMemo(() => {
-    return Animated.interpolate(offset, {
-      inputRange: [
-        itemOffset - 2.5 * itemHeight,
-        itemOffset,
-        itemOffset + 2.5 * itemHeight
-      ],
-      outputRange: [-85, 0, -85]
-    });
-  }, [itemHeight]);
-
-  const rotateX = concat(rotateXValue, 'deg');
-
-  const scale = useMemo(() => {
-    return Animated.interpolate(offset, {
-      inputRange: [
-        itemOffset - 2 * itemHeight,
-        itemOffset,
-        itemOffset + 2 * itemHeight
-      ],
-      // outputRange: [0.8, 1, 0.8], // with scale change
-      outputRange: [1, 1, 1],
-    });
-  }, [itemHeight]);
+  
+  const isActive = activeIndex === index;
 
   const selectItem = useCallback(() => onSelect(index), [index]);
+
+  const color = isActive ? Colors.primary : Colors.grey20;
+  const font = isActive ? Typography.text60BO : Typography.text60R;
 
   return (
     <AnimatedTouchableOpacity
       activeOpacity={1}
       style={{
-        height: itemHeight,
-        opacity,
-        // @ts-ignore
-        transform: transformOrigin({x: 125, y: 24}, {rotateX})
+        height: itemHeight
       }}
       key={index}
       center
       onPress={selectItem}
       index={index}
     >
-      <AnimatedText text60 style={[textStyle, {transform: [{scale}]}]}>
+      <AnimatedText text60 style={[{color, ...font}, textStyle]}>
         {text}
       </AnimatedText>
     </AnimatedTouchableOpacity>
