@@ -42,7 +42,7 @@ type WrappedItem = {
 } & ItemProps;
 
 const WheelPicker = ({items, itemHeight = 48, activeItemTextStyle, inactiveItemTextStyle, onChange: onChangeEvent}: WheelPickerProps) => {
-  const height = itemHeight * 4;
+  const height = itemHeight * 5;
   const scrollView = useRef<Animated.ScrollView>();
   const [offset] = useValues([0], []);
   const activeIndex = useRef<number>(0);
