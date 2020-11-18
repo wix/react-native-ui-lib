@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {StyleSheet, TextStyle} from 'react-native';
 import {Colors} from '../../style';
-import Text, {TextPropTypes} from '../../components/text';
+import Text, {TextProps} from '../../components/text';
 import {ColorType, ValidationMessagePosition} from './types';
 import {getColorByState} from './Presenter';
 import FieldContext from './FieldContext';
@@ -22,7 +22,7 @@ export interface LabelProps {
   /**
    * Pass extra props to the label Text element
    */
-  labelProps?: TextPropTypes;
+  labelProps?: TextProps;
   validationMessagePosition?: ValidationMessagePosition;
   floatingPlaceholder?: boolean;
 }
