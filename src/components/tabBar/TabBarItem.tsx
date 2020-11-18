@@ -62,10 +62,6 @@ interface Props extends ThemeComponent {
    */
   width?: number;
   /**
-   * set darkTheme style
-   */
-  darkTheme?: boolean;
-  /**
    * tabBar's background color
    */
   backgroundColor?: string;

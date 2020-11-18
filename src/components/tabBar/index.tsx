@@ -52,6 +52,10 @@ interface Props extends ViewPropTypes, ThemeComponent, ScrollBarProps {
    * The background color
    */
   backgroundColor: string,
+  /**
+   * set darkTheme style
+   */
+  darkTheme?: boolean;
   children?: React.ReactNode;
   style?: ViewStyle
 }
