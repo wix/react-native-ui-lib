@@ -1,14 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {
-  Animated,
-  Easing,
-  StyleSheet,
-  StyleProp,
-  TouchableOpacityProps,
-  ViewStyle,
-  TextStyle
-} from 'react-native';
+import {Animated, Easing, StyleSheet, StyleProp, TouchableOpacityProps, ViewStyle, TextStyle} from 'react-native';
 import {Colors} from '../../style';
 //@ts-ignore
 import Assets from '../../assets';
@@ -179,46 +171,50 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     return borderStyle;
   }
 
-  render() {
-    const {selectedIcon, color, iconColor, disabled, testID, label, labelStyle, style, containerStyle, ...others} = this.props;
+  renderCheckbox() {
+    const {selectedIcon, color, iconColor, disabled, testID, style, containerStyle, ...others} = this.props;
+
     return (
-      <View row style={containerStyle}>
-        {/*@ts-ignore*/}
-        <TouchableOpacity
-          {...this.getAccessibilityProps()}
-          activeOpacity={1}
-          testID={testID}
-          {...others}
-          style={[this.getBorderStyle(), style]}
-          onPress={this.onPress}
-        >
-          {
-            <Animated.View
+      //@ts-ignore
+      <TouchableOpacity
+        {...this.getAccessibilityProps()}
+        activeOpacity={1}
+        testID={testID}
+        {...others}
+        style={[this.getBorderStyle(), style]}
+        onPress={this.onPress}
+      >
+        {
+          <Animated.View
+            style={[this.styles.container, {backgroundColor: this.getColor()}, {opacity: this.animationStyle.opacity}]}
+          >
+            <Animated.Image
               style={[
-                this.styles.container,
-                {backgroundColor: this.getColor()},
-                {opacity: this.animationStyle.opacity}
+                this.styles.selectedIcon,
+                color && {tintColor: iconColor},
+                {transform: this.animationStyle.transform},
+                disabled && {tintColor: DEFAULT_ICON_COLOR}
               ]}
-            >
-              <Animated.Image
-                style={[
-                  this.styles.selectedIcon,
-                  color && {tintColor: iconColor},
-                  {transform: this.animationStyle.transform},
-                  disabled && {tintColor: DEFAULT_ICON_COLOR}
-                ]}
-                source={selectedIcon || Assets.icons.checkSmall}
-                testID={`${testID}.selected`}
-              />
-            </Animated.View>
-          }
-        </TouchableOpacity>
-        {label && (
-          <Text style={[this.styles.checkboxLabel, labelStyle]} onPress={this.onPress}>
-            {label}
-          </Text>
-        )}
+              source={selectedIcon || Assets.icons.checkSmall}
+              testID={`${testID}.selected`}
+            />
+          </Animated.View>
+        }
+      </TouchableOpacity>
+    );
+  }
+
+  render() {
+    const {label, labelStyle, containerStyle} = this.props;
+    return label ? (
+      <View row centerV style={[containerStyle]}>
+        {this.renderCheckbox()}
+        <Text style={[this.styles.checkboxLabel, labelStyle]} onPress={this.onPress}>
+          {label}
+        </Text>
       </View>
+    ) : (
+      this.renderCheckbox()
     );
   }
 }
