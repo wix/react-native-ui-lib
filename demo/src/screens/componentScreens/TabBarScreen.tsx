@@ -187,7 +187,6 @@ export default class TabBarScreen extends Component {
             selectedIndex={this.state.selectedIndex}
             enableShadow
             backgroundColor={Colors.green70}
-            useTabletWide={false}
           >
             <TabBar.Item label="LONG LABEL"/>
             <TabBar.Item label="ACTIVE"/>
