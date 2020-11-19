@@ -172,7 +172,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   }
 
   renderCheckbox() {
-    const {selectedIcon, color, iconColor, disabled, testID, style, containerStyle, ...others} = this.props;
+    const {selectedIcon, color, iconColor, label, disabled, testID, style, containerStyle, ...others} = this.props;
 
     return (
       //@ts-ignore
@@ -181,7 +181,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
         activeOpacity={1}
         testID={testID}
         {...others}
-        style={[this.getBorderStyle(), style]}
+        style={[this.getBorderStyle(), style, !label && containerStyle]}
         onPress={this.onPress}
       >
         {
