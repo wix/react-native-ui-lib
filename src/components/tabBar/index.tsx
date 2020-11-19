@@ -106,20 +106,17 @@ export default class TabBar extends BaseComponent<Props, State> {
     this.scrollBar = React.createRef();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    // TODO: since we're implementing an uncontrolled component here, we should verify the selectedIndex has changed
-    // between this.props and nextProps (basically the meaning of selectedIndex should be initialIndex)
-    const isIndexManuallyChanged =
-      nextProps.selectedIndex !== this.state.currentIndex && this.props.selectedIndex !== nextProps.selectedIndex;
-    if (isIndexManuallyChanged) {
-      this.updateIndicator(nextProps.selectedIndex);
-    }
-  }
-
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props, prevState: State) {
     const prevChildrenCount = React.Children.count(prevProps.children);
     if (this.childrenCount < prevChildrenCount) {
       this.updateIndicator(0);
+    }
+    // TODO: since we're implementing an uncontrolled component here, we should verify the selectedIndex has changed
+    // between this.props and nextProps (basically the meaning of selectedIndex should be initialIndex)
+    const isIndexManuallyChanged =
+      this.props.selectedIndex !== prevState.currentIndex && prevProps.selectedIndex !== this.props.selectedIndex;
+    if (isIndexManuallyChanged) {
+      this.updateIndicator(this.props.selectedIndex);
     }
   }
 
