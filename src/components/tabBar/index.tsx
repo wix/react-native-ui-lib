@@ -276,6 +276,7 @@ export default class TabBar extends BaseComponent<Props, State> {
           style,
           {
             height: undefined,
+            width: this.scrollContainerWidth
           }
         ]}
       >
