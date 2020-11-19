@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useCallback} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, ViewProps, TouchableOpacityProps, ImageStyle, ImageProps, TextStyle, ImageSourcePropType} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle, ViewProps, ImageStyle, ImageProps, TextStyle, ImageSourcePropType} from 'react-native';
 // @ts-ignore
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
@@ -11,7 +11,7 @@ import Avatar, {AvatarProps} from '../avatar';
 import Badge, {BadgeProps, BADGE_SIZES} from '../badge';
 import Image from '../image';
 import Text from '../text';
-import TouchableOpacity from '../touchableOpacity';
+import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import View from '../view';
 
 
