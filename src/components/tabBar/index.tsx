@@ -264,12 +264,13 @@ export default class TabBar extends BaseComponent<Props, State> {
   }
 
   render() {
-    const {enableShadow, style, containerView} = this.getThemeProps();
+    const {enableShadow, style, containerView, containerWidth} = this.getThemeProps();
     const Container = containerView ? containerView : View;
 
     return (
       <Container
         useSafeArea
+        fullWidth={containerWidth ? false : undefined}
         style={[
           this.styles.container,
           enableShadow && this.styles.containerShadow,
