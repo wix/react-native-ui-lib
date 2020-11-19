@@ -350,25 +350,27 @@ class Picker extends PureComponent {
     }
 
     return (
-      <PickerModal
-        testID={`${testID}.modal`}
-        visible={showExpandableModal}
-        scrollPosition={selectedItemPosition}
-        enableModalBlur={enableModalBlur}
-        topBarProps={{
-          ...topBarProps,
-          onCancel: this.cancelSelect,
-          onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(value) : undefined
-        }}
-        showSearch={showSearch}
-        searchStyle={searchStyle}
-        searchPlaceholder={searchPlaceholder}
-        onSearchChange={this.onSearchChange}
-        renderCustomSearch={renderCustomSearch}
-        listProps={listProps}
-      >
-        <PickerContext.Provider value={this.getContextValue()}>{children}</PickerContext.Provider>
-      </PickerModal>
+      <PickerContext.Provider value={this.getContextValue()}>
+        <PickerModal
+          testID={`${testID}.modal`}
+          visible={showExpandableModal}
+          scrollPosition={selectedItemPosition}
+          enableModalBlur={enableModalBlur}
+          topBarProps={{
+            ...topBarProps,
+            onCancel: this.cancelSelect,
+            onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(value) : undefined
+          }}
+          showSearch={showSearch}
+          searchStyle={searchStyle}
+          searchPlaceholder={searchPlaceholder}
+          onSearchChange={this.onSearchChange}
+          renderCustomSearch={renderCustomSearch}
+          listProps={listProps}
+        >
+          {children} 
+        </PickerModal>
+      </PickerContext.Provider>
     );
   };
 
