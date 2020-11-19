@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import {StyleSheet, Animated, Easing, LayoutChangeEvent, LayoutRectangle, StyleProp, ViewStyle, TextStyle} from 'react-native';
+import {LogService} from '../../services';
 import {Constants} from '../../helpers';
 import {Colors, Typography, Spacings} from '../../style';
 import {PureBaseComponent} from '../../commons';
@@ -119,13 +120,13 @@ export default class TabBarItem extends PureBaseComponent<Props, State> {
     };
 
     if (!_.isEmpty(props.badge)) {
-      console.warn(`TabBarItem's 'badge' prop is deprecated. Please use 'badgeProps' prop instead`);
+      LogService.deprecationWarn({component: 'TabBarItem', oldProp: 'badge', newProp: 'badgeProps'});
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.selected !== nextProps.selected) {
-      this.animate(nextProps.selected);
+  componentDidUpdate(prevProps: TabBarItemProps)  {
+    if (prevProps.selected !== this.props.selected) {
+      this.animate(this.props.selected);
     }
   }
 
@@ -254,11 +255,12 @@ function createStyles() {
   return StyleSheet.create({
     label: {
       color: Colors.primary,
-      ...Typography.bodySmall
+      ...Typography.text80
     },
     selectedLabel: {
       color: Colors.primary,
-      ...Typography.bodySmallBold
+      ...Typography.text80,
+      fontWeight: 'bold'
     },
     divider: {
       borderRightWidth: 1,
