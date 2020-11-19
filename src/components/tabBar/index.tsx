@@ -266,10 +266,11 @@ export default class TabBar extends BaseComponent<Props, State> {
   }
 
   render() {
-    const {enableShadow, style} = this.getThemeProps();
+    const {enableShadow, style, containerView} = this.getThemeProps();
+    const Container = containerView ? containerView : View;
 
     return (
-      <View
+      <Container
         useSafeArea
         style={[
           this.styles.container,
@@ -281,7 +282,7 @@ export default class TabBar extends BaseComponent<Props, State> {
         ]}
       >
         {this.renderTabBar()}
-      </View>
+      </Container>
     );
   }
 }
