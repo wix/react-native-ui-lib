@@ -78,7 +78,7 @@ export default class OverlaysScreen extends Component {
             Card.Image Overlay
           </Text>
           <Card marginB-s4 padding-s2 borderRadius={4} row height={106}>
-            <Card.Image style={styles.cardImage} imageSource={image} overlayType={Image.overlayTypes.VERTICAL}/>
+            <Card.Image style={styles.cardImage} source={image} overlayType={Image.overlayTypes.VERTICAL}/>
             <View flex marginL-s2 centerV>
               <Text text50>{Image.overlayTypes.VERTICAL}</Text>
               <Text text70>Ipsum nostrud officia deserunt irure eu.</Text>

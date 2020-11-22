@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleProp, ViewStyle, ViewProps, TouchableOpacityProps, ImageStyle, ImageProps, TextStyle, ImageSourcePropType } from 'react-native';
-import { AvatarPropTypes } from '../avatar';
+import { StyleProp, ViewStyle, ViewProps, ImageStyle, ImageProps, TextStyle, ImageSourcePropType } from 'react-native';
+import { AvatarProps } from '../avatar';
 import { BadgeProps } from '../badge';
-export declare type ChipPropTypes = ViewProps & TouchableOpacityProps & {
+import { TouchableOpacityProps } from '../touchableOpacity';
+export declare type ChipProps = ViewProps & TouchableOpacityProps & {
     /**
      * Chip's size. Number or a width and height object.
      */
@@ -53,7 +54,7 @@ export declare type ChipPropTypes = ViewProps & TouchableOpacityProps & {
     /**
      * Avatar props object
      */
-    avatarProps?: AvatarPropTypes;
+    avatarProps?: AvatarProps;
     /**
      * Additional icon props
      */
@@ -91,7 +92,20 @@ export declare type ChipPropTypes = ViewProps & TouchableOpacityProps & {
      */
     dismissContainerStyle?: StyleProp<ImageStyle>;
 };
-declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps & {
+export declare type ChipPropTypes = ChipProps;
+declare const _default: React.ComponentClass<ViewProps & Pick<import("react-native").TouchableOpacityProps, "testID" | "onLayout" | "hitSlop" | "hasTVPreferredFocus" | "tvParallaxProperties" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "accessibilityValue" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "disabled" | "activeOpacity" | "onLongPress" | "delayLongPress" | "delayPressIn" | "delayPressOut" | "onBlur" | "onFocus" | "onPressIn" | "onPressOut" | "pressRetentionOffset"> & Partial<Record<import("../../commons/modifiers").AlignmentLiterals, boolean>> & Partial<Record<import("../../commons/modifiers").PositionLiterals, boolean>> & Partial<Record<"padding" | "paddingL" | "paddingT" | "paddingR" | "paddingB" | "paddingH" | "paddingV", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & Partial<Record<"flex" | "flexG" | "flexS", boolean>> & Partial<Record<"br0" | "br10" | "br20" | "br30" | "br40" | "br50" | "br60" | "br100", boolean>> & Partial<Record<"bg", boolean>> & {
+    backgroundColor?: string | undefined;
+    throttleTime?: number | undefined;
+    throttleOptions?: {
+        leading: boolean;
+        trailing: boolean;
+    } | undefined;
+    activeBackgroundColor?: string | undefined;
+    useNative?: boolean | undefined;
+    customValue?: any;
+    style?: false | ViewStyle | import("react-native").RegisteredStyle<ViewStyle> | import("react-native").RecursiveArray<false | ViewStyle | import("react-native").RegisteredStyle<ViewStyle> | null | undefined> | import("react-native").Animated.AnimatedProps<ViewStyle> | import("react-native").Animated.AnimatedProps<import("react-native").RegisteredStyle<ViewStyle>> | import("react-native").Animated.AnimatedProps<import("react-native").RecursiveArray<false | ViewStyle | import("react-native").RegisteredStyle<ViewStyle> | null | undefined>> | null | undefined;
+    onPress?: ((props: TouchableOpacityProps) => void) | undefined;
+} & {
     /**
      * Chip's size. Number or a width and height object.
      */
@@ -142,7 +156,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
     /**
      * Avatar props object
      */
-    avatarProps?: AvatarPropTypes | undefined;
+    avatarProps?: AvatarProps | undefined;
     /**
      * Additional icon props
      */

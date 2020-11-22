@@ -1,7 +1,7 @@
 import React from 'react';
-import { ViewPropTypes } from '../view';
+import { ViewProps } from '../view';
 import { PanLocationProps } from './panningProvider';
-export interface PanResponderViewPropTypes extends ViewPropTypes {
+export interface PanResponderViewProps extends ViewProps {
     /**
      * Will be called with the current location ({left, top}) when the pan has ended
      */
@@ -15,5 +15,6 @@ export interface PanResponderViewPropTypes extends ViewPropTypes {
      */
     isAnimated?: boolean;
 }
-declare const _default: React.ComponentClass<PanResponderViewPropTypes, any>;
+export declare type PanResponderViewPropTypes = PanResponderViewProps;
+declare const _default: React.ComponentClass<PanResponderViewProps, any>;
 export default _default;
