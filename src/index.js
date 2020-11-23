@@ -226,11 +226,8 @@ export default {
   get withScrollReached() {
     return require('./commons').withScrollReached;
   },
-  get extractAccessibilityProps() {
-    return require('./commons').extractAccessibilityProps;
-  },
-  get extractComponentProps() {
-    return require('./commons').extractComponentProps;
+  get Modifiers() {
+    return require('./commons').modifiers;
   },
 
   // Helpers
