@@ -226,6 +226,12 @@ export default {
   get withScrollReached() {
     return require('./commons').withScrollReached;
   },
+  get extractAccessibilityProps() {
+    return require('./commons/new').extractAccessibilityProps;
+  },
+  get extractComponentProps() {
+    return require('./commons/new').extractComponentProps;
+  },
 
   // Helpers
   get AvatarHelper() {

@@ -14,7 +14,9 @@ export {
   PaddingModifiers,
   TypographyModifiers,
   ColorsModifiers,
-  BackgroundColorModifier
+  BackgroundColorModifier,
+  extractAccessibilityProps,
+  extractComponentProps
 } from './commons/new';
 export * as Incubator from './incubator';
 export * as Hooks from './hooks';

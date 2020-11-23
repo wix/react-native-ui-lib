@@ -11,5 +11,7 @@ export {
   PaddingModifiers,
   TypographyModifiers,
   ColorsModifiers,
-  BackgroundColorModifier
+  BackgroundColorModifier,
+  extractAccessibilityProps,
+  extractComponentProps
 } from './modifiers';
