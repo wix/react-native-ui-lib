@@ -227,10 +227,10 @@ export default {
     return require('./commons').withScrollReached;
   },
   get extractAccessibilityProps() {
-    return require('./commons/new').extractAccessibilityProps;
+    return require('./commons').extractAccessibilityProps;
   },
   get extractComponentProps() {
-    return require('./commons/new').extractComponentProps;
+    return require('./commons').extractComponentProps;
   },
 
   // Helpers

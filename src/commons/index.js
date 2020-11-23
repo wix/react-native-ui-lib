@@ -27,5 +27,11 @@ module.exports = {
   },
   get withScrollReached() {
     return require('./withScrollReached').default;
+  },
+  get extractAccessibilityProps() {
+    return require('./modifiers').extractAccessibilityProps;
+  },
+  get extractComponentProps() {
+    return require('./modifiers').extractComponentProps;
   }
 };
