@@ -217,19 +217,9 @@ class Picker extends PureComponent {
     };
   };
 
-  shouldNotChangePickerLabelWhileSelecting = () => {
-    const {mode} = this.props;
-    return mode === Picker.modes.MULTI;
-  };
-
   getLabelValueText = () => {
-    const {value: propsValue} = this.props;
-    const {value: stateValue} = this.props;
-
-    if (this.shouldNotChangePickerLabelWhileSelecting()) {
-      return this.getLabel(propsValue);
-    }
-    return this.getLabel(stateValue);
+    const {value} = this.props;
+    return this.getLabel(value);
   };
 
   getLabelsFromArray = value => {
