@@ -143,7 +143,7 @@ class Picker extends PureComponent {
       value: props.value,
       prevValue: undefined,
       selectedItemPosition: 0,
-      items: this.extractPickerItems(props)
+      items: Picker.extractPickerItems(props)
     };
 
     if (props.mode === Picker.modes.SINGLE && Array.isArray(props.value)) {
@@ -183,6 +183,12 @@ class Picker extends PureComponent {
     return null;
   }
 
+  static extractPickerItems(props) {
+    const {children} = props;
+    const items = React.Children.map(children, child => ({value: child.props.value, label: child.props.label}));
+    return items;
+  }
+
   getAccessibilityInfo() {
     const {placeholder} = this.props;
 
@@ -194,12 +200,6 @@ class Picker extends PureComponent {
         ? 'Double tap to edit'
         : `Goes to ${placeholder}. Suggestions will be provided`
     };
-  }
-
-  extractPickerItems(props) {
-    const {children} = props;
-    const items = React.Children.map(children, child => ({value: child.props.value, label: child.props.label}));
-    return items;
   }
 
   getContextValue = () => {
