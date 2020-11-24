@@ -1,6 +1,6 @@
 const conversations = [
   {
-    name: 'rallylongmailname@wix.com',
+    name: 'reallylongmailname@wix.com',
     text: 'Made a purchase in the total of 7.00$',
     timestamp: '7/14/2016',
     thumbnail:
