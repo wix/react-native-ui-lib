@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, Animated, Easing, LayoutChangeEvent, ViewStyle, TextStyle} from 'react-native';
+import {StyleSheet, Animated, Easing, LayoutChangeEvent, ViewStyle, TextStyle, AccessibilityState} from 'react-native';
 import {Colors, Typography} from '../../style';
 import {asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
 import Image from '../image';
@@ -10,6 +10,8 @@ import Text from '../text';
 // @ts-ignore
 import Badge, {BadgeProps} from '../badge';
 
+const ACCESSIBILITY_STATE_EMPTY: AccessibilityState = {};
+const ACCESSIBILITY_STATE_SELECTED: AccessibilityState = {selected: true};
 
 export type TabBarItemProps = BaseComponentInjectedProps & {
   /**
@@ -182,6 +184,7 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
       iconSelectedColor ||
       this.getColorFromStyle(selectedLabelStyle) ||
       this.getColorFromStyle(this.styles.selectedLabel);
+    const accessibilityState = selected ? ACCESSIBILITY_STATE_SELECTED : ACCESSIBILITY_STATE_EMPTY;
 
     return (
       <TouchableOpacity
@@ -191,7 +194,7 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
         testID={testID}
         activeBackgroundColor={activeBackgroundColor}
         onLayout={this.onLayout}
-        accessibilityStates={selected ? ['selected'] : []}
+        accessibilityState={accessibilityState}
       >
         <View row flex center style={[showDivider && this.styles.divider, {paddingHorizontal: 16}]}>
           {icon && (
