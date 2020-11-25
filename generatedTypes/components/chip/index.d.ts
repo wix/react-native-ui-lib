@@ -58,7 +58,7 @@ export declare type ChipProps = ViewProps & TouchableOpacityProps & {
     /**
      * Additional icon props
      */
-    iconProps?: ImageProps;
+    iconProps?: Partial<ImageProps>;
     /**
      * Icon style
      */
@@ -160,7 +160,7 @@ declare const _default: React.ComponentClass<ViewProps & Pick<import("react-nati
     /**
      * Additional icon props
      */
-    iconProps?: ImageProps | undefined;
+    iconProps?: Partial<ImageProps> | undefined;
     /**
      * Icon style
      */
