@@ -2,13 +2,14 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 import {StyleSheet} from 'react-native';
-import ColorPalette from './ColorPalette';
-import {SWATCH_MARGIN, SWATCH_SIZE} from './ColorSwatch';
+import {LogService} from '../../services';
 import {asBaseComponent} from '../../commons';
 import Assets from '../../assets';
 import {Colors} from '../../style';
 import View from '../view';
 import Button from '../button';
+import {SWATCH_MARGIN, SWATCH_SIZE} from './ColorSwatch';
+import ColorPalette from './ColorPalette';
 import ColorPickerDialog from './ColorPickerDialog';
 
 
@@ -34,9 +35,10 @@ class ColorPicker extends PureComponent {
      */
     colors: PropTypes.arrayOf(PropTypes.string),
     /**
-     * The value of the selected swatch // TODO: rename prop 'selectedValue'
+     * The value of the selected swatch // TODO: remove after migration to 'selectedValue'
      */
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     /**
      * The index of the item to animate at first render (default is last)
      */
@@ -72,6 +74,13 @@ class ColorPicker extends PureComponent {
     this.state = {
       show: false
     };
+
+    if (props.value) {
+      LogService.deprecationWarn({component: 'ColorPicker', oldProp: 'value', newProp: 'selectedValue'});
+    }
+    if (props.dialogProps) {
+      LogService.warn(`ColorPicker's 'dialogProps' is deprecated. Please do NOT wrap Dialog props inside an object.`);
+    }
   }
 
   get animatedIndex() {
@@ -91,13 +100,13 @@ class ColorPicker extends PureComponent {
   }
 
   render() {
-    const {initialColor, colors, value, testID, accessibilityLabels} = this.props;
+    const {initialColor, colors, value, selectedValue, testID, accessibilityLabels} = this.props;
     const {show} = this.state;
 
     return (
       <View row testID={testID}>
         <ColorPalette
-          value={value}
+          value={selectedValue || value}
           colors={colors}
           style={styles.palette}
           usePagination={false}

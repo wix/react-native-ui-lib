@@ -4,6 +4,7 @@ import React, {PureComponent} from 'react';
 import {LayoutAnimation, StyleSheet, Keyboard, TextInput, PixelRatio, I18nManager} from 'react-native';
 import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons';
+import {extractComponentProps} from '../../commons/modifiers';
 import Assets from '../../assets';
 import {Colors, Typography} from '../../style';
 import View from '../view';
@@ -36,7 +37,7 @@ class ColorPickerDialog extends PureComponent {
      */
     onSubmit: PropTypes.func,
     /**
-     * Props to pass the Dialog component // TODO: deprecate 'dialogProps' prop
+     * Props to pass the Dialog component // TODO: remove 'dialogProps' prop after deprecation
      */
     dialogProps: PropTypes.object,
     /**
@@ -294,11 +295,11 @@ class ColorPickerDialog extends PureComponent {
   }
 
   renderDialog() {
-    const {visible, dialogProps, testID} = this.props;
+    const {dialogProps, testID} = this.props;
+    const dialogProp = extractComponentProps(Dialog, this.props);
 
     return (
       <Dialog
-        visible={visible} //TODO: pass all Dialog props instead
         width="100%"
         height={null}
         bottom
@@ -309,6 +310,7 @@ class ColorPickerDialog extends PureComponent {
         testID={`${testID}.dialog`}
         supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOS only
         {...dialogProps}
+        {...dialogProp}
       >
         {this.renderHeader()}
         {this.renderPreview()}
