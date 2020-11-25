@@ -9,9 +9,9 @@ public class KeyboardInputModule extends ReactContextBaseJavaModule {
 
     private static final String REACT_CLASS = "CustomKeyboardInputTemp";
 
-    private final CustomKeyboardLayout mLayout;
+    private final CustomKeyboardLayout.Box mLayout;
 
-    public KeyboardInputModule(ReactApplicationContext reactContext, CustomKeyboardLayout layout) {
+    public KeyboardInputModule(ReactApplicationContext reactContext, CustomKeyboardLayout.Box layout) {
         super(reactContext);
 
         mLayout = layout;
@@ -24,11 +24,17 @@ public class KeyboardInputModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void reset(Promise promise) {
-        mLayout.forceReset(promise);
+        CustomKeyboardLayout layoutInst = mLayout.getInstance();
+        if (layoutInst != null) {
+            layoutInst.forceReset(promise);
+        }
     }
 
     @ReactMethod
     public void clearFocusedView() {
-        mLayout.clearFocusedView();
+        CustomKeyboardLayout layoutInst = mLayout.getInstance();
+        if (layoutInst != null) {
+            layoutInst.clearFocusedView();
+        }
     }
 }

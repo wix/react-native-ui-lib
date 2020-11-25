@@ -6,9 +6,9 @@ import com.facebook.react.uimanager.ViewGroupManager;
 
 public class CustomKeyboardRootViewManager extends ViewGroupManager<CustomKeyboardRootView> {
 
-    private final CustomKeyboardLayout mLayout;
+    public CustomKeyboardLayout.Box mLayout;
 
-    public CustomKeyboardRootViewManager(CustomKeyboardLayout layout) {
+    public CustomKeyboardRootViewManager(CustomKeyboardLayout.Box layout) {
         mLayout = layout;
     }
 

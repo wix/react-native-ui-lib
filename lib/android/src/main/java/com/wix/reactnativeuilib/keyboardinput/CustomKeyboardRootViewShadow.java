@@ -5,18 +5,25 @@ import com.facebook.react.uimanager.NativeViewHierarchyOptimizer;
 
 public class CustomKeyboardRootViewShadow extends LayoutShadowNode {
 
-    private final CustomKeyboardLayout mLayout;
+    private final CustomKeyboardLayout.Box mLayout;
 
-    CustomKeyboardRootViewShadow(CustomKeyboardLayout layout) {
+    CustomKeyboardRootViewShadow(CustomKeyboardLayout.Box layout) {
         setStyleHeight(0);
 
         mLayout = layout;
-        mLayout.setShadowNode(this);
+
+        CustomKeyboardLayout layoutInst = layout.getInstance();
+        if (layoutInst != null) {
+            layoutInst.setShadowNode(this);
+        }
     }
 
     @Override
     public void onBeforeLayout(NativeViewHierarchyOptimizer nativeViewHierarchyOptimizer) {
-        mLayout.setShadowNode(this);
+        CustomKeyboardLayout layoutInst = mLayout.getInstance();
+        if (layoutInst != null) {
+            layoutInst.setShadowNode(this);
+        }
     }
 
     public void setHeight(int heightPx) {

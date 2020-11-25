@@ -8,9 +8,9 @@ import androidx.annotation.NonNull;
 
 public class CustomKeyboardRootView extends FrameLayout {
 
-    private final CustomKeyboardLayout mLayout;
+    private final CustomKeyboardLayout.Box mLayout;
 
-    public CustomKeyboardRootView(@NonNull Context context, CustomKeyboardLayout layout) {
+    public CustomKeyboardRootView(@NonNull Context context, CustomKeyboardLayout.Box layout) {
         super(context);
         mLayout = layout;
 
@@ -20,7 +20,10 @@ public class CustomKeyboardRootView extends FrameLayout {
     @Override
     public void onViewAdded(View child) {
         if (getChildCount() == 1) {
-            mLayout.onKeyboardHasCustomContent();
+            CustomKeyboardLayout layout = mLayout.getInstance();
+            if (layout != null) {
+                layout.onKeyboardHasCustomContent();
+            }
         }
         super.onViewAdded(child);
     }

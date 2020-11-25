@@ -14,7 +14,7 @@ import java.util.List;
 
 public class KeyboardInputPackage implements ReactPackage {
 
-    private CustomKeyboardLayout mLayout;
+    private CustomKeyboardLayout.Box mLayout = new CustomKeyboardLayout.Box();
 
     public KeyboardInputPackage(Application application) {
         AppContextHolder.setApplication(application);
@@ -43,7 +43,7 @@ public class KeyboardInputPackage implements ReactPackage {
 
             final ReactScreenMonitor screenMonitor = new ReactScreenMonitor(reactContext);
             final ReactSoftKeyboardMonitor keyboardMonitor = new ReactSoftKeyboardMonitor(screenMonitor);
-            mLayout = new CustomKeyboardLayout(reactContext, keyboardMonitor, screenMonitor);
+            mLayout.setInstance(new CustomKeyboardLayout(reactContext, keyboardMonitor, screenMonitor));
         }
     }
 }

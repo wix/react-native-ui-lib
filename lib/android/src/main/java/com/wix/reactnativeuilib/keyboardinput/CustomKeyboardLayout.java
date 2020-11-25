@@ -186,4 +186,19 @@ public class CustomKeyboardLayout implements ReactSoftKeyboardMonitor.Listener, 
         }
     }
 
+    public static class Box {
+        private CustomKeyboardLayout instance;
+
+        Box() {
+            this.instance = null;
+        }
+
+        public void setInstance(CustomKeyboardLayout instance) {
+            this.instance = instance;
+        }
+
+        public CustomKeyboardLayout getInstance() {
+            return instance;
+        }
+    }
 }
