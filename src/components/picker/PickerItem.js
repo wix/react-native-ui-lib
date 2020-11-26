@@ -29,7 +29,7 @@ const PickerItem = props => {
     testID
   } = props;
   const context = useContext(PickerContext);
-  const {renderItem} = context;
+  const {migrate, renderItem} = context;
   const isSelected = isItemSelected(value, context.value);
   const itemLabel = getItemLabel(label, value, props.getItemLabel || context.getItemLabel);
   const accessibilityProps = {
@@ -51,8 +51,12 @@ const PickerItem = props => {
   }, [isSelected, disabled, selectedIcon, selectedIconColor]);
 
   const _onPress = useCallback(() => {
-    context.onPress(value);
-  }, [value, context.onPress]);
+    if (migrate) {
+      context.onPress(value);
+    } else {
+      context.onPress(_.isObject(value) ? value : {value, label: itemLabel});
+    }
+  }, [migrate, value, context.onPress]);
 
   const onSelectedLayout = useCallback((...args) => {
     _.invoke(context, 'onSelectedLayout', ...args);

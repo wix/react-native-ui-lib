@@ -30,6 +30,10 @@ const ItemType = PropTypes.shape({
 class Picker extends PureComponent {
   static displayName = 'Picker';
   static propTypes = {
+    /**
+     * Temporary prop required for migration to Picker's new API
+     */
+    migrate: PropTypes.bool,
     ...TextField.propTypes,
     /**
      * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
@@ -204,8 +208,9 @@ class Picker extends PureComponent {
 
   getContextValue = () => {
     const {value, searchValue} = this.state;
-    const {mode, getItemValue, getItemLabel, renderItem, showSearch} = this.props;
+    const {migrate, mode, getItemValue, getItemLabel, renderItem, showSearch} = this.props;
     return {
+      migrate,
       value,
       onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
       getItemValue,

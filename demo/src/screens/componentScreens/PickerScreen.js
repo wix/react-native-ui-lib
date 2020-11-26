@@ -235,6 +235,7 @@ export default class PickerScreen extends Component {
           <Text text60 marginT-s5 marginB-s2>Migrated Picker</Text>
 
           <Picker
+            migrate
             title="Language"
             placeholder="Favorite Language"
             value={this.state.language2}
