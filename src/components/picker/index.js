@@ -213,6 +213,7 @@ class Picker extends PureComponent {
       migrate,
       value,
       onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
+      isMultiMode: mode === Picker.modes.MULTI,
       getItemValue,
       getItemLabel,
       onSelectedLayout: this.onSelectedItemLayout,
