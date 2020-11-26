@@ -30,7 +30,7 @@ const PickerItem = props => {
   } = props;
   const context = useContext(PickerContext);
   const {migrate, renderItem} = context;
-  const isSelected = isItemSelected(value, context.value);
+  const isSelected = isItemSelected(value, !migrate && _.isObject(context.value) ? context.value.value : context.value);
   const itemLabel = getItemLabel(label, value, props.getItemLabel || context.getItemLabel);
   const accessibilityProps = {
     accessibilityState: isSelected ? {selected: true} : undefined,
