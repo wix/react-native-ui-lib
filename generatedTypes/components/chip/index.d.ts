@@ -58,7 +58,7 @@ export declare type ChipProps = ViewProps & TouchableOpacityProps & {
     /**
      * Additional icon props
      */
-    iconProps?: Partial<ImageProps>;
+    iconProps?: Omit<ImageProps, 'source'>;
     /**
      * Icon style
      */
@@ -160,7 +160,7 @@ declare const _default: React.ComponentClass<ViewProps & Pick<import("react-nati
     /**
      * Additional icon props
      */
-    iconProps?: Partial<ImageProps> | undefined;
+    iconProps?: Pick<ImageProps, "style" | "testID" | "onLayout" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "accessibilityValue" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "width" | "height" | "borderRadius" | "borderBottomLeftRadius" | "borderBottomRightRadius" | "borderTopLeftRadius" | "borderTopRightRadius" | "onError" | "onLoad" | "onLoadEnd" | "onLoadStart" | "progressiveRenderingEnabled" | "resizeMode" | "resizeMethod" | "loadingIndicatorSource" | "defaultSource" | "blurRadius" | "capInsets" | "onProgress" | "onPartialLoad" | "fadeDuration"> | undefined;
     /**
      * Icon style
      */

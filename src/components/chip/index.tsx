@@ -76,7 +76,7 @@ export type ChipProps = ViewProps & TouchableOpacityProps & {
   /**
    * Additional icon props
    */
-  iconProps?: Partial<ImageProps>;
+  iconProps?: Omit<ImageProps, 'source'>;
   /**
    * Icon style
    */
