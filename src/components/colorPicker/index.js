@@ -35,10 +35,9 @@ class ColorPicker extends PureComponent {
      */
     colors: PropTypes.arrayOf(PropTypes.string),
     /**
-     * The value of the selected swatch // TODO: remove after migration to 'selectedValue'
+     * The value of the selected swatch
      */
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     /**
      * The index of the item to animate at first render (default is last)
      */
@@ -75,9 +74,6 @@ class ColorPicker extends PureComponent {
       show: false
     };
 
-    if (props.value) {
-      LogService.deprecationWarn({component: 'ColorPicker', oldProp: 'value', newProp: 'selectedValue'});
-    }
     if (props.dialogProps) {
       LogService.warn(`ColorPicker's 'dialogProps' is deprecated. Please do NOT wrap Dialog props inside an object.`);
     }
@@ -100,13 +96,13 @@ class ColorPicker extends PureComponent {
   }
 
   render() {
-    const {initialColor, colors, value, selectedValue, testID, accessibilityLabels} = this.props;
+    const {initialColor, colors, value, testID, accessibilityLabels} = this.props;
     const {show} = this.state;
 
     return (
       <View row testID={testID}>
         <ColorPalette
-          value={selectedValue || value}
+          value={value}
           colors={colors}
           style={styles.palette}
           usePagination={false}
