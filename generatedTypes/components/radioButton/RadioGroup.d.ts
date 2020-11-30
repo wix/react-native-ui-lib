@@ -1,6 +1,6 @@
 import React, { PureComponent, GetDerivedStateFromProps } from 'react';
 import { BaseComponentInjectedProps, ForwardRefInjectedProps } from '../../commons/new';
-export declare type RadioGroupPropTypes = {
+export declare type RadioGroupProps = {
     /**
      * The initial value of the selected radio button
      */
@@ -10,10 +10,11 @@ export declare type RadioGroupPropTypes = {
      */
     onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void);
 };
+export declare type RadioGroupPropTypes = RadioGroupProps;
 interface RadioGroupState {
-    value?: RadioGroupPropTypes['initialValue'];
+    value?: RadioGroupProps['initialValue'];
 }
-declare type Props = RadioGroupPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
+declare type Props = RadioGroupProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
 /**
  * Wrap a group of Radio Buttons to automatically control their selection
  */
@@ -26,11 +27,11 @@ declare class RadioGroup extends PureComponent<Props, RadioGroupState> {
         value: string | number | boolean | undefined;
         onValueChange: (value: string | number | boolean | undefined) => void;
     };
-    onValueChange: (value: RadioGroupPropTypes['initialValue']) => void;
+    onValueChange: (value: RadioGroupProps['initialValue']) => void;
     render(): JSX.Element;
 }
 export { RadioGroup };
-declare const _default: React.ComponentClass<RadioGroupPropTypes & {
+declare const _default: React.ComponentClass<RadioGroupProps & {
     useCustomTheme?: boolean | undefined;
 }, any>;
 export default _default;

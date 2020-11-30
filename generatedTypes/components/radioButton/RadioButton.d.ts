@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextStyle, ImageSourcePropType, ImageStyle, ViewProps } from 'react-native';
-import { RadioGroupContextPropTypes } from './RadioGroupContext';
-export declare type RadioButtonPropTypes = RadioGroupContextPropTypes & ViewProps & {
+import { RadioGroupContextProps } from './RadioGroupContext';
+export declare type RadioButtonProps = RadioGroupContextProps & ViewProps & {
     /**
      * The identifier value of the radio button. must be different than other RadioButtons in the same group
      */
@@ -55,7 +55,8 @@ export declare type RadioButtonPropTypes = RadioGroupContextPropTypes & ViewProp
       */
     contentOnRight?: boolean;
 };
-declare const _default: React.ComponentClass<RadioGroupContextPropTypes & ViewProps & {
+export declare type RadioButtonPropTypes = RadioButtonProps;
+declare const _default: React.ComponentClass<RadioGroupContextProps & ViewProps & {
     /**
      * The identifier value of the radio button. must be different than other RadioButtons in the same group
      */

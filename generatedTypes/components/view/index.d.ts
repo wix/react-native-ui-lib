@@ -1,7 +1,7 @@
 import React from 'react';
-import { Animated, ViewProps, StyleProp, ViewStyle } from 'react-native';
+import { Animated, ViewProps as RNViewProps, StyleProp, ViewStyle } from 'react-native';
 import { ContainerModifiers } from '../../commons/new';
-export interface ViewPropTypes extends Omit<ViewProps, 'style'>, ContainerModifiers {
+export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifiers {
     /**
      * If true, will render as SafeAreaView
      */
@@ -32,7 +32,8 @@ export interface ViewPropTypes extends Omit<ViewProps, 'style'>, ContainerModifi
     backgroundColor?: string;
     style?: StyleProp<ViewStyle | Animated.AnimatedProps<ViewStyle>>;
 }
-declare const _default: React.ComponentClass<ViewPropTypes & {
+export declare type ViewPropTypes = ViewProps;
+declare const _default: React.ComponentClass<ViewProps & {
     useCustomTheme?: boolean | undefined;
 }, any>;
 export default _default;

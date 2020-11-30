@@ -15,7 +15,7 @@ const DEFAULT_COLOR = Colors.blue30;
 const DEFAULT_ICON_COLOR = Colors.white;
 const DEFAULT_DISABLED_COLOR = Colors.grey50;
 
-export interface CheckboxPropTypes extends TouchableOpacityProps {
+export interface CheckboxProps extends TouchableOpacityProps {
   /**
    * The value of the Checkbox. If true the switch will be turned on. Default value is false.
    */
@@ -64,8 +64,8 @@ export interface CheckboxPropTypes extends TouchableOpacityProps {
    * Additional styling for checkbox and label container
    */
   containerStyle?: StyleProp<ViewStyle>;
-
 }
+export type CheckboxPropTypes = CheckboxProps; //TODO: remove after ComponentPropTypes deprecation;
 
 interface CheckboxState {
   isChecked: Animated.Value;
@@ -78,7 +78,7 @@ interface CheckboxState {
  * @gif: https://media.giphy.com/media/xULW8j5WzsuPytqklq/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CheckboxScreen.tsx
  */
-class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
+class Checkbox extends Component<CheckboxProps, CheckboxState> {
   static displayName = 'Checkbox';
 
   styles: {
@@ -99,7 +99,7 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
     ];
   };
 
-  constructor(props: CheckboxPropTypes) {
+  constructor(props: CheckboxProps) {
     super(props);
 
     this.state = {
@@ -121,7 +121,7 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
     };
   }
 
-  componentDidUpdate(prevProps: CheckboxPropTypes) {
+  componentDidUpdate(prevProps: CheckboxProps) {
     const {value} = this.props;
     if (prevProps.value !== value) {
       this.animateCheckbox(value);
@@ -140,7 +140,7 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
     };
   }
 
-  animateCheckbox(value: CheckboxPropTypes['value']) {
+  animateCheckbox(value: CheckboxProps['value']) {
     const {isChecked} = this.state;
 
     Animated.timing(isChecked, {
@@ -219,7 +219,7 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
   }
 }
 
-function createStyles(props: CheckboxPropTypes) {
+function createStyles(props: CheckboxProps) {
   const {color = DEFAULT_COLOR, iconColor = DEFAULT_ICON_COLOR, size = DEFAULT_SIZE, borderRadius} = props;
 
   return StyleSheet.create({
@@ -243,4 +243,4 @@ function createStyles(props: CheckboxPropTypes) {
   });
 }
 
-export default asBaseComponent<CheckboxPropTypes>(Checkbox);
+export default asBaseComponent<CheckboxProps>(Checkbox);

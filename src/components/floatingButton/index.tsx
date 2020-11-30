@@ -1,11 +1,11 @@
-import React, {PureComponent} from 'react';
+import React, {PropsWithChildren, PureComponent} from 'react';
 import {StyleSheet} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons/new';
 import {Colors, Spacings} from '../../style';
 import View from '../view';
-import Button, {ButtonPropTypes} from '../button';
+import Button, {ButtonProps} from '../button';
 import Image from '../image';
 
 export interface FloatingButtonProps {
@@ -16,11 +16,11 @@ export interface FloatingButtonProps {
   /**
    * Button element (all Button's component's props)
    */
-  button?: ButtonPropTypes;
+  button?: PropsWithChildren<ButtonProps>;
   /**
    * Secondary button element (all Button's component's props)
    */
-  secondaryButton?: ButtonPropTypes;
+  secondaryButton?: PropsWithChildren<ButtonProps>;
   /**
    * The bottom margin of the button, or secondary button if passed
    */
@@ -56,16 +56,12 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
 
   initialVisibility?: boolean;
   firstLoad: boolean;
-  
+
   constructor(props: FloatingButtonProps) {
     super(props);
 
     this.initialVisibility = props.visible;
     this.firstLoad = true;
-  }
-
-  componentDidMount() {
-    this.firstLoad = false;
   }
 
   onAnimationEnd = () => {
@@ -116,6 +112,9 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   render() {
     const {withoutAnimation, secondaryButton, visible} = this.props;
     const Container = !withoutAnimation ? AnimatableView : View;
+
+    // NOTE: keep this.firstLoad as true as long as the visibility changed to true
+    this.firstLoad && !visible ? this.firstLoad = true : this.firstLoad = false;
 
     // NOTE: On first load, don't show if it should not be visible
     if (this.firstLoad === true && !this.initialVisibility) {

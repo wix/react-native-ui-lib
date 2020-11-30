@@ -2,14 +2,31 @@ const fs = require('fs');
 const _ = require('lodash');
 const childProcess = require('child_process');
 const fetch = require('node-fetch');
+const readline = require('readline');
 
-const GITHUB_TOKEN = 'bbb2a40e413ca175fc2a91f2aec8e46586da5279';
-const LATEST_VERSION = '5.14.0';
-const NEW_VERSION = '5.15.0';
-
+const GITHUB_TOKEN = 'a0e1c50d4d4859bf5007453335c64e9f66d13ece';
+let LATEST_VERSION = '5.14.0';
+let NEW_VERSION = '5.15.0';
 let releaseNotes;
 
-run();
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+rl.question(`What is the current version? `, currentVersion => {
+  rl.question('What is the next version for release? ', newVersion => {
+    LATEST_VERSION = currentVersion;
+    NEW_VERSION = newVersion;
+    rl.close();
+  });
+});
+
+rl.on('close', () => {
+  console.info(`Current latest version is v${LATEST_VERSION}`);
+  console.info(`Generating release notes out or PRs for v${NEW_VERSION}`);
+  run();
+});
 
 async function run() {
   const latestReleaseDate = await fetchLatestReleaseDate(LATEST_VERSION);
