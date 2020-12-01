@@ -1,15 +1,12 @@
 import _ from 'lodash';
 import React, {useCallback} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, ViewProps, ImageStyle, ImageProps, TextStyle, ImageSourcePropType} from 'react-native';
-// @ts-ignore
+import {StyleSheet, StyleProp, ViewStyle, ViewProps, ImageStyle, TextStyle, ImageSourcePropType} from 'react-native';
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
 import {BorderRadiuses, Spacings} from '../../style';
-// @ts-ignore
 import Avatar, {AvatarProps} from '../avatar';
-// @ts-ignore
 import Badge, {BadgeProps, BADGE_SIZES} from '../badge';
-import Image from '../image';
+import Image, {ImageProps} from '../image';
 import Text from '../text';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import View from '../view';
@@ -213,7 +210,6 @@ const Chip = ({
       <Text
         text90M
         numberOfLines={1}
-        // @ts-ignore
         style={[styles.label, getMargins('label'), labelStyle]}
         testID={`${testID}.label`}
       >
