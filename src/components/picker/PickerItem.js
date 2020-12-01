@@ -29,7 +29,8 @@ const PickerItem = props => {
     testID
   } = props;
   const context = useContext(PickerContext);
-  const {migrate, renderItem} = context;
+  const {migrate} = context;
+  const customRenderItem = context.renderItem || props.renderItem;
   const isSelected = isItemSelected(value, !migrate && _.isPlainObject(context.value) ? context.value.value : context.value);
   const itemLabel = getItemLabel(label, value, props.getItemLabel || context.getItemLabel);
   const accessibilityProps = {
@@ -87,7 +88,7 @@ const PickerItem = props => {
       throttleTime={0}
       {...accessibilityProps}
     >
-      {renderItem ? renderItem(value, {...props, isSelected}, itemLabel) : _renderItem()}
+      {customRenderItem ? customRenderItem(value, {...props, isSelected}, itemLabel) : _renderItem()}
     </TouchableOpacity>
   );
 };
