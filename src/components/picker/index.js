@@ -17,10 +17,13 @@ const PICKER_MODES = {
   SINGLE: 'SINGLE',
   MULTI: 'MULTI'
 };
-const ItemType = PropTypes.shape({
-  value: PropTypes.any,
-  label: PropTypes.string
-});
+const ItemType = PropTypes.oneOfType([
+  PropTypes.number, 
+  PropTypes.string,
+  PropTypes.shape({
+    value: PropTypes.any,
+    label: PropTypes.string
+  })]);
 
 /**
  * @description: Picker Component, support single or multiple selection, blurModel and nativePicker
@@ -163,9 +166,7 @@ class Picker extends PureComponent {
     //   console.warn('UILib Picker: don\'t use object as value for native picker, use either string or a number');
     // }
     if (_.isPlainObject(props.value)) {
-      LogService.warn(
-        'UILib Picker will stop supporting passing object as value in the next major version. Please use either string or a number as value'
-      );
+      LogService.warn('UILib Picker will stop supporting passing object as value in the next major version. Please use either string or a number as value');
     }
   }
 
