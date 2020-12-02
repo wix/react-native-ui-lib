@@ -17,10 +17,13 @@ const PICKER_MODES = {
   SINGLE: 'SINGLE',
   MULTI: 'MULTI'
 };
-const ItemType = PropTypes.shape({
-  value: PropTypes.any,
-  label: PropTypes.string
-});
+const ItemType = PropTypes.oneOfType([
+  PropTypes.number, 
+  PropTypes.string,
+  PropTypes.shape({
+    value: PropTypes.any,
+    label: PropTypes.string
+  })]);
 
 /**
  * @description: Picker Component, support single or multiple selection, blurModel and nativePicker
@@ -30,6 +33,10 @@ const ItemType = PropTypes.shape({
 class Picker extends PureComponent {
   static displayName = 'Picker';
   static propTypes = {
+    /**
+     * Temporary prop required for migration to Picker's new API
+     */
+    migrate: PropTypes.bool,
     ...TextField.propTypes,
     /**
      * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
@@ -159,9 +166,7 @@ class Picker extends PureComponent {
     //   console.warn('UILib Picker: don\'t use object as value for native picker, use either string or a number');
     // }
     if (_.isPlainObject(props.value)) {
-      LogService.warn(
-        'UILib Picker will stop supporting passing object as value in the next major version. Please use either string or a number as value'
-      );
+      LogService.warn('UILib Picker will stop supporting passing object as value in the next major version. Please use either string or a number as value');
     }
   }
 
@@ -204,10 +209,12 @@ class Picker extends PureComponent {
 
   getContextValue = () => {
     const {value, searchValue} = this.state;
-    const {mode, getItemValue, getItemLabel, renderItem, showSearch} = this.props;
+    const {migrate, mode, getItemValue, getItemLabel, renderItem, showSearch} = this.props;
     return {
+      migrate,
       value,
       onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
+      isMultiMode: mode === Picker.modes.MULTI,
       getItemValue,
       getItemLabel,
       onSelectedLayout: this.onSelectedItemLayout,

@@ -29,8 +29,9 @@ const PickerItem = props => {
     testID
   } = props;
   const context = useContext(PickerContext);
-  const {renderItem} = context;
-  const isSelected = isItemSelected(value, context.value);
+  const {migrate} = context;
+  const customRenderItem = context.renderItem || props.renderItem;
+  const isSelected = isItemSelected(value, !migrate && _.isPlainObject(context.value) ? context.value.value : context.value);
   const itemLabel = getItemLabel(label, value, props.getItemLabel || context.getItemLabel);
   const accessibilityProps = {
     accessibilityState: isSelected ? {selected: true} : undefined,
@@ -51,8 +52,12 @@ const PickerItem = props => {
   }, [isSelected, disabled, selectedIcon, selectedIconColor]);
 
   const _onPress = useCallback(() => {
-    context.onPress(value);
-  }, [value, context.onPress]);
+    if (migrate) {
+      context.onPress(value);
+    } else {
+      context.onPress((_.isPlainObject(value) || context.isMultiMode) ? value : {value, label: itemLabel});
+    }
+  }, [migrate, value, context.onPress]);
 
   const onSelectedLayout = useCallback((...args) => {
     _.invoke(context, 'onSelectedLayout', ...args);
@@ -83,7 +88,7 @@ const PickerItem = props => {
       throttleTime={0}
       {...accessibilityProps}
     >
-      {renderItem ? renderItem(value, {...props, isSelected}, itemLabel) : _renderItem()}
+      {customRenderItem ? customRenderItem(value, {...props, isSelected}, itemLabel) : _renderItem()}
     </TouchableOpacity>
   );
 };
