@@ -17,7 +17,7 @@ export interface WheelPickerProps {
     /**
      * TextStyle for other, non-focused rows
      */
-    unselectedItemTextStyle?: string;
+    unselectedTextStyle?: string;
     /**
      * Row text style
      */
@@ -27,5 +27,5 @@ export interface WheelPickerProps {
      */
     onChange: (index: number, item?: ItemProps) => void;
 }
-declare const WheelPicker: ({ items, itemHeight, selectedTextColor, unselectedItemTextStyle, onChange: onChangeEvent }: WheelPickerProps) => JSX.Element;
+declare const WheelPicker: ({ items, itemHeight, selectedTextColor, unselectedTextStyle, onChange: onChangeEvent }: WheelPickerProps) => JSX.Element;
 export default WheelPicker;
