@@ -1,9 +1,9 @@
-import React, {useCallback} from 'react';
-import Animated from 'react-native-reanimated';
+import React, {useCallback, useMemo} from 'react';
+import Animated, {interpolateColors} from 'react-native-reanimated';
 import Text from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
 import {TextStyle} from 'react-native';
-import {Typography, Colors} from '../../../src/style';
+import {Colors} from '../../../src/style';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(
   TouchableOpacity
@@ -19,28 +19,37 @@ interface InternalProps extends ItemProps {
   index: number;
   offset: any;
   itemHeight: number;
-  textStyle?: TextStyle;
-  activeIndex: number;
+  selectedColor?: string;
+  unselectedColor?: string;
+  style?: TextStyle;
   onSelect: (index: number) => void;
 }
 
 export default ({
   index,
   text,
-  textStyle,
-  // value,
   itemHeight,
   onSelect,
-  activeIndex
+  offset,
+  selectedColor = Colors.primary,
+  unselectedColor = Colors.grey20,
+  style
 }: InternalProps) => {
   
-  const isActive = activeIndex === index;
-
   const selectItem = useCallback(() => onSelect(index), [index]);
+  const itemOffset = index * itemHeight;
 
-  const color = isActive ? Colors.primary : Colors.grey20;
-  const font = isActive ? Typography.text60BO : Typography.text60R;
-
+  const color = useMemo(() => {
+    return interpolateColors(offset, {
+      inputRange: [
+        itemOffset - itemHeight,
+        itemOffset,
+        itemOffset + itemHeight
+      ],
+      outputColorRange: [unselectedColor, selectedColor, unselectedColor]
+    });
+  }, [itemHeight]);
+  
   return (
     <AnimatedTouchableOpacity
       activeOpacity={1}
@@ -52,7 +61,7 @@ export default ({
       onPress={selectItem}
       index={index}
     >
-      <AnimatedText text60 style={[{color, ...font}, textStyle]}>
+      <AnimatedText text60R style={{color, ...style}}>
         {text}
       </AnimatedText>
     </AnimatedTouchableOpacity>
