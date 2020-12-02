@@ -42,7 +42,7 @@ export interface WheelPickerProps {
   onChange: (index: number, item?: ItemProps) => void;
 }
 
-const WheelPicker = ({items, itemHeight = 48, selectedTextColor, unselectedTextStyle, onChange: onChangeEvent}: WheelPickerProps) => {
+const WheelPicker = ({items, itemHeight = 48, selectedTextColor, unselectedTextStyle, textStyle, onChange: onChangeEvent}: WheelPickerProps) => {
   const height = itemHeight * 5;
   const scrollView = useRef<Animated.ScrollView>();
   const [offset] = useValues([0], []);
@@ -74,6 +74,7 @@ const WheelPicker = ({items, itemHeight = 48, selectedTextColor, unselectedTextS
         offset={offset}
         activeColor={selectedTextColor}
         inactiveColor={unselectedTextStyle}
+        style={textStyle}
         {...item}
         onSelect={selectItem}
       />
