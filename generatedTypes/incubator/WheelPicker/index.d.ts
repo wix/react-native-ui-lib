@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { TextStyle, StyleProp } from 'react-native';
+import { TextStyle } from 'react-native';
 import { ItemProps } from './Item';
 export interface WheelPickerProps {
     /**
@@ -13,15 +13,19 @@ export interface WheelPickerProps {
     /**
      * TextStyle for the focused row
      */
-    activeItemTextStyle?: StyleProp<TextStyle>;
+    selectedTextColor?: string;
     /**
      * TextStyle for other, non-focused rows
      */
-    inactiveItemTextStyle?: StyleProp<TextStyle>;
+    unselectedItemTextStyle?: string;
+    /**
+     * Row text style
+     */
+    textStyle?: TextStyle;
     /**
      * Event, on active row change
      */
     onChange: (index: number, item?: ItemProps) => void;
 }
-declare const WheelPicker: ({ items, itemHeight, activeItemTextStyle, onChange: onChangeEvent }: WheelPickerProps) => JSX.Element;
+declare const WheelPicker: ({ items, itemHeight, selectedTextColor, unselectedItemTextStyle, onChange: onChangeEvent }: WheelPickerProps) => JSX.Element;
 export default WheelPicker;
