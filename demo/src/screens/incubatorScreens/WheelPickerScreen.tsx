@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {View, Text, Incubator, Colors} from 'react-native-ui-lib';
+import {View, Text, Incubator, Colors, Typography} from 'react-native-ui-lib';
 import _ from 'lodash';
 import {ItemProps} from 'src/incubator/WheelPicker/Item';
 
@@ -38,6 +38,7 @@ export default () => {
           selectedTextColor={Colors.primary}
           unselectedTextStyle={Colors.grey20}
           items={_.map(months, i => ({text: i, value: i}))}
+          textStyle={{...Typography.text60R}}
         />
 
         <Text h3 marginT-s5>Years</Text>
