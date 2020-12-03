@@ -243,12 +243,12 @@ class Picker extends PureComponent {
   getLabel(value) {
     const {getLabel} = this.props;
 
+    if (_.isFunction(getLabel) && !_.isUndefined(getLabel(value))) {
+      return getLabel(value);
+    }
+    
     if (_.isArray(value)) {
       return this.getLabelsFromArray(value);
-    }
-
-    if (_.isFunction(getLabel)) {
-      return getLabel(value);
     }
 
     if (_.isPlainObject(value)) {
