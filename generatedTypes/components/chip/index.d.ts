@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleProp, ViewStyle, ViewProps, ImageStyle, ImageProps, TextStyle, ImageSourcePropType } from 'react-native';
+import { StyleProp, ViewStyle, ViewProps, ImageStyle, TextStyle, ImageSourcePropType } from 'react-native';
 import { AvatarProps } from '../avatar';
 import { BadgeProps } from '../badge';
+import { ImageProps } from '../image';
 import { TouchableOpacityProps } from '../touchableOpacity';
 export declare type ChipProps = ViewProps & TouchableOpacityProps & {
     /**
@@ -58,7 +59,7 @@ export declare type ChipProps = ViewProps & TouchableOpacityProps & {
     /**
      * Additional icon props
      */
-    iconProps?: ImageProps;
+    iconProps?: Omit<ImageProps, 'source'>;
     /**
      * Icon style
      */
@@ -160,7 +161,7 @@ declare const _default: React.ComponentClass<ViewProps & Pick<import("react-nati
     /**
      * Additional icon props
      */
-    iconProps?: ImageProps | undefined;
+    iconProps?: Pick<ImageProps, "margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV" | "style" | "testID" | "onLayout" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "accessibilityValue" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "width" | "height" | "borderRadius" | "borderBottomLeftRadius" | "borderBottomRightRadius" | "borderTopLeftRadius" | "borderTopRightRadius" | "aspectRatio" | "onError" | "onLoad" | "onLoadEnd" | "onLoadStart" | "progressiveRenderingEnabled" | "resizeMode" | "resizeMethod" | "loadingIndicatorSource" | "defaultSource" | "blurRadius" | "capInsets" | "onProgress" | "onPartialLoad" | "fadeDuration" | "cover" | "sourceTransformer" | "assetName" | "assetGroup" | "tintColor" | "supportRTL" | "overlayType" | "overlayColor" | "customOverlayContent"> | undefined;
     /**
      * Icon style
      */
