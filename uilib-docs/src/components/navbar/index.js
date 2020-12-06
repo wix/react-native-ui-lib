@@ -24,31 +24,35 @@ class Navbar extends Component {
   getCurrentPage = () => {
     if (typeof window !== 'undefined') {
       const path = window.location.href;
-      return _.chain(path)
-        .split('/')
-        .filter(item => !_.isEmpty(item))
-        .last()
-        .value();
+
+      return _.flow(
+        p => _.split(p, '/'),
+        items => _.filter(items, i => !_.isEmpty(i)),
+        _.last,
+      )(path);
     }
   };
 
   getMarkdownPages(data) {
     const markdownPages = data.allFile.edges;
-    const pages = _.chain(markdownPages)
-      .map(({node}) => node.childMarkdownRemark.frontmatter)
-      .sortBy('index')
-      .value();
+    const pages = _.flow(pages =>
+      _.map(
+        pages,
+        ({node}) => node.childMarkdownRemark.frontmatter,
+        items => _.sortBy(items, 'index')
+      )
+    )(markdownPages);
 
     return pages;
   }
 
   getNavbarComponents(data) {
     const components = data.allComponentMetadata.edges;
-    const filteredComponents = _.chain(components)
-      .filter(component => component.node.displayName !== 'IGNORE')
-      .uniqBy('node.displayName')
-      .sortBy('node.displayName')
-      .value();
+    const filteredComponents = _.flow(
+      components => _.filter(components, component => component.node.displayName !== 'IGNORE'),
+      components => _.uniqBy(components, 'node.displayName'),
+      components => _.sortBy(components, 'node.displayName')
+    )(components);
 
     return filteredComponents;
   }

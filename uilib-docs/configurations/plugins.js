@@ -29,7 +29,8 @@ const componentsDocgenPlugin = [
   {
     resolve: 'gatsby-source-filesystem',
     options: {
-      path: `${__dirname}/../../src/components/`
+      path: `${__dirname}/../../src/components/`,
+      ignore: ['**/\*.tsx']
     }
   }
 ];
@@ -39,7 +40,8 @@ const incubatorComponentsDocgenPlugin = [
   {
     resolve: 'gatsby-source-filesystem',
     options: {
-      path: `${__dirname}/../../src/incubator/`
+      path: `${__dirname}/../../src/incubator/`,
+      ignore: ['**/\*.tsx']
     }
   }
 ];
@@ -49,7 +51,8 @@ const nativeComponentsDocgenPlugin = [
   {
     resolve: 'gatsby-source-filesystem',
     options: {
-      path: `${__dirname}/../../lib/components/`
+      path: `${__dirname}/../../lib/components/`,
+      ignore: ['**/\*.tsx']
     }
   }
 ];

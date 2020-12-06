@@ -26,7 +26,7 @@ const {
   stopClock
 } = Reanimated;
 
-type TouchableOpacityPropTypes = {
+type TouchableOpacityProps = {
   /**
    * Background color
    */
@@ -65,13 +65,12 @@ type TouchableOpacityPropTypes = {
   style?: ViewStyle;
 };
 
-
 /**
  * @description: a Better, enhanced TouchableOpacity component
  * @modifiers: flex, margin, padding, background
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TouchableOpacityScreen.js
  */
-class TouchableOpacity extends PureComponent<TouchableOpacityPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps> {
+class TouchableOpacity extends PureComponent<TouchableOpacityProps & BaseComponentInjectedProps & ForwardRefInjectedProps> {
   static displayName = 'Incubator.TouchableOpacity';
 
   static defaultProps = {
@@ -217,4 +216,4 @@ function runTiming(clock: any, gestureState: any, initialValue: number, endValue
   ]);
 }
 
-export default asBaseComponent<TouchableOpacityPropTypes>(forwardRef(TouchableOpacity));
+export default asBaseComponent<TouchableOpacityProps>(forwardRef(TouchableOpacity));

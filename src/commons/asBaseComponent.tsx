@@ -21,20 +21,9 @@ type ThemeComponent = {
 
 function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentType<any>): React.ComponentClass<PROPS & ThemeComponent> & STATICS {
   class BaseComponent extends UIComponent {
-    state = Modifiers.generateModifiersStyle(undefined, BaseComponent.getThemeProps(this.props, this.context));
     static displayName: string | undefined;
     static propTypes: any;
     static defaultProps: any;
-
-    static getDerivedStateFromProps(nextProps: any, prevState: any) {
-      const themeProps = BaseComponent.getThemeProps(nextProps, undefined);
-      const newModifiers = Modifiers.generateModifiersStyle(undefined, themeProps);
-      if (!_.isEqual(newModifiers, prevState)) {
-        return newModifiers;
-      }
-
-      return null;
-    }
 
     static getThemeProps = (props: any, context: any) => {
       return Modifiers.getThemeProps.call(WrappedComponent, props, context);
@@ -42,10 +31,11 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
 
     render() {
       const themeProps = BaseComponent.getThemeProps(this.props, this.context);
+      const modifiers = Modifiers.generateModifiersStyle(undefined, themeProps);
       // TODO: omit original modifiers props (left, right, flex, etc..)
       // Because they throws an error when being passed to RNView on Android
       const {forwardedRef, ...others} = themeProps;
-      return <WrappedComponent /* {...this.props} */ {...others} modifiers={this.state} ref={forwardedRef}/>;
+      return <WrappedComponent {...others} modifiers={modifiers} ref={forwardedRef}/>;
     }
   }
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import { ViewStyle, ImageStyle, ImageSourcePropType, StyleProp } from 'react-native';
-import { ViewPropTypes } from '../view';
-import { TextPropTypes } from '../text';
+import { ViewProps } from '../view';
+import { TextProps } from '../text';
 import { ImageProps } from '../image';
-declare type ContentType = TextPropTypes & {
+declare type ContentType = TextProps & {
     text?: string;
 };
-export declare type CardSectionProps = ViewPropTypes & {
+export declare type CardSectionProps = ViewProps & {
     /**
      * Text content for the CardSection.
      * Example: content={[{text: 'You’re Invited!', text70: true, dark10: true}]}
@@ -32,6 +32,7 @@ export declare type CardSectionProps = ViewPropTypes & {
      * Will be used for the background when provided
      */
     imageSource?: ImageSourcePropType;
+    source?: ImageSourcePropType;
     /**
      * The style for the background image
      */
@@ -41,7 +42,7 @@ export declare type CardSectionProps = ViewPropTypes & {
      */
     imageProps?: ImageProps;
 };
-declare const _default: React.ComponentClass<ViewPropTypes & {
+declare const _default: React.ComponentClass<ViewProps & {
     /**
      * Text content for the CardSection.
      * Example: content={[{text: 'You’re Invited!', text70: true, dark10: true}]}
@@ -67,6 +68,7 @@ declare const _default: React.ComponentClass<ViewPropTypes & {
      * Will be used for the background when provided
      */
     imageSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    source?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
     /**
      * The style for the background image
      */

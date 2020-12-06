@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Text as RNText, StyleSheet, TextProps, TextStyle, Animated} from 'react-native';
+import {Text as RNText, StyleSheet, TextProps as RNTextProps, TextStyle, Animated} from 'react-native';
 import {
   asBaseComponent,
   forwardRef,
@@ -13,7 +13,7 @@ import {Colors} from '../../style';
 import _ from 'lodash';
 
 
-export type TextPropTypes = TextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
+export type TextProps = RNTextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
   /**
    * color of the text
    */
@@ -40,8 +40,9 @@ export type TextPropTypes = TextProps & TypographyModifiers & ColorsModifiers & 
   animated?: boolean;
   textAlign?: string;
 }
+export type TextPropTypes = TextProps; //TODO: remove after ComponentPropTypes deprecation;
 
-type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPropTypes;
+type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextProps;
 
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
@@ -155,4 +156,4 @@ const styles = StyleSheet.create({
 
 export {Text}; // For tests
 
-export default asBaseComponent<TextPropTypes>(forwardRef<PropsTypes>(Text));
+export default asBaseComponent<TextProps>(forwardRef<PropsTypes>(Text));

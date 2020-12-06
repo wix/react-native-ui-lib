@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {Component} from 'react';
 import ReactNative, {NativeModules, StyleSheet, ViewPropTypes, Image, DeviceEventEmitter} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses, ThemeManager, Typography} from '../../style';
 import Assets from '../../assets';
-import {BaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import {TextField} from '../inputs';
@@ -14,6 +14,7 @@ import Text from '../text';
 // TODO: support updating tags externally
 // TODO: support char array as tag creators (like comma)
 // TODO: add notes to Docs about the Android fix for onKeyPress
+
 
 const GUTTER_SPACING = 8;
 
@@ -25,7 +26,7 @@ const GUTTER_SPACING = 8;
  * @extends: TextField
  * @extendsLink: https://github.com/wix/react-native-ui-lib/blob/master/src/components/inputs/TextField.js
  */
-export default class ChipsInput extends BaseComponent {
+class ChipsInput extends Component {
   static displayName = 'ChipsInput';
 
   static propTypes = {
@@ -41,6 +42,10 @@ export default class ChipsInput extends BaseComponent {
      * callback for custom rendering tag item
      */
     renderTag: PropTypes.elementType,
+    /**
+     * callback for custom rendering invalid tag item
+     */
+    renderInvalidTag: PropTypes.elementType,
     /**
      * callback for onChangeTags event
      */
@@ -91,18 +96,11 @@ export default class ChipsInput extends BaseComponent {
   constructor(props) {
     super(props);
 
-    this.addTag = this.addTag.bind(this);
-    this.onChangeText = this.onChangeText.bind(this);
-    this.renderTagWrapper = this.renderTagWrapper.bind(this);
-    this.renderTag = this.renderTag.bind(this);
-    this.getLabel = this.getLabel.bind(this);
-    this.onKeyPress = this.onKeyPress.bind(this);
-    this.markTagIndex = this.markTagIndex.bind(this);
-
     this.state = {
       value: props.value,
       tags: _.cloneDeep(props.tags) || [],
-      tagIndexToRemove: undefined
+      tagIndexToRemove: undefined,
+      initialTags: props.tags
     };
   }
 
@@ -122,16 +120,18 @@ export default class ChipsInput extends BaseComponent {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.tags !== this.state.tags) {
-      this.setState({
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.tags !== prevState.initialTags) {
+      return {
+        initialTags: nextProps.tags,
         tags: nextProps.tags
-      });
+      };
     }
+    return null;
   }
 
-  addTag() {
-    const {onCreateTag, disableTagAdding} = this.getThemeProps();
+  addTag = () => {
+    const {onCreateTag, disableTagAdding} = this.props;
     const {value, tags} = this.state;
 
     if (disableTagAdding) {
@@ -143,10 +143,12 @@ export default class ChipsInput extends BaseComponent {
 
     const newTag = _.isFunction(onCreateTag) ? onCreateTag(value) : value;
     const newTags = [...tags, newTag];
+
     this.setState({
       value: '',
       tags: newTags
     });
+
     _.invoke(this.props, 'onChangeTags', newTags, ChipsInput.onChangeTagsActions.ADDED, newTag);
     this.clear();
   }
@@ -162,15 +164,16 @@ export default class ChipsInput extends BaseComponent {
         tags,
         tagIndexToRemove: undefined
       });
+
       _.invoke(this.props, 'onChangeTags', tags, ChipsInput.onChangeTagsActions.REMOVED, removedTag);
     }
   }
 
-  markTagIndex(tagIndex) {
+  markTagIndex = (tagIndex) => {
     this.setState({tagIndexToRemove: tagIndex});
   }
 
-  onChangeText(value) {
+  onChangeText = (value) => {
     this.setState({value, tagIndexToRemove: undefined});
     _.invoke(this.props, 'onChangeText', value);
   }
@@ -201,10 +204,10 @@ export default class ChipsInput extends BaseComponent {
     return isLastTagMarked;
   }
 
-  onKeyPress(event) {
+  onKeyPress = (event) => {
     _.invoke(this.props, 'onKeyPress', event);
 
-    const {disableTagRemoval} = this.getThemeProps();
+    const {disableTagRemoval} = this.props;
     if (disableTagRemoval) {
       return;
     }
@@ -227,7 +230,7 @@ export default class ChipsInput extends BaseComponent {
     }
   }
 
-  getLabel(item) {
+  getLabel = (item) => {
     const {getLabel} = this.props;
 
     if (getLabel) {
@@ -240,7 +243,7 @@ export default class ChipsInput extends BaseComponent {
   }
 
   renderLabel(tag, shouldMarkTag) {
-    const typography = this.extractTypographyValue();
+    const {typography} = this.props.modifiers;
     const label = this.getLabel(tag);
 
     return (
@@ -261,12 +264,16 @@ export default class ChipsInput extends BaseComponent {
     );
   }
 
-  renderTag(tag, index) {
-    const {tagStyle, renderTag} = this.getThemeProps();
+  renderTag = (tag, index) => {
+    const {tagStyle, renderTag, renderInvalidTag} = this.props;
     const {tagIndexToRemove} = this.state;
     const shouldMarkTag = tagIndexToRemove === index;
 
     if (tag.invalid) {
+      if (_.isFunction(renderInvalidTag)) {
+        return renderInvalidTag(tag, index, shouldMarkTag, this.getLabel(tag));
+      }
+  
       return (
         <View
           key={index}
@@ -288,7 +295,7 @@ export default class ChipsInput extends BaseComponent {
     );
   }
 
-  renderTagWrapper(tag, index) {
+  renderTagWrapper = (tag, index) => {
     return (
       <TouchableOpacity
         key={index}
@@ -302,7 +309,7 @@ export default class ChipsInput extends BaseComponent {
   }
 
   renderTextInput() {
-    const {inputStyle, selectionColor, ...others} = this.getThemeProps();
+    const {inputStyle, selectionColor, ...others} = this.props;
     const {value} = this.state;
     const isLastTagMarked = this.isLastTagMarked();
 
@@ -332,7 +339,7 @@ export default class ChipsInput extends BaseComponent {
   }
 
   render() {
-    const {disableTagRemoval, containerStyle, hideUnderline, validationErrorMessage} = this.getThemeProps();
+    const {disableTagRemoval, containerStyle, hideUnderline, validationErrorMessage} = this.props;
     const tagRenderFn = disableTagRemoval ? this.renderTag : this.renderTagWrapper;
     const {tags, tagIndexToRemove} = this.state;
 
@@ -366,18 +373,17 @@ export default class ChipsInput extends BaseComponent {
     this.input.clear();
   }
 }
+
+export {ChipsInput}; // For tests
+export default asBaseComponent(ChipsInput);
+
+
 const basicTagStyle = {
   borderRadius: BorderRadiuses.br100,
   paddingVertical: 4.5,
   paddingHorizontal: 12,
   marginRight: GUTTER_SPACING,
   marginVertical: GUTTER_SPACING / 2
-};
-
-const basicIconStyle = {
-  width: 10,
-  height: 10,
-  marginRight: 6
 };
 
 const styles = StyleSheet.create({
@@ -411,7 +417,9 @@ const styles = StyleSheet.create({
   },
   removeIcon: {
     tintColor: Colors.white,
-    ...basicIconStyle
+    width: 10,
+    height: 10,
+    marginRight: 6
   },
   inValidTagRemoveIcon: {
     tintColor: Colors.red10
