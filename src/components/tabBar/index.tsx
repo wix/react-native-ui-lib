@@ -1,23 +1,23 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {
-  Platform, 
-  StyleSheet, 
-  Animated, 
-  ScrollView, 
-  NativeSyntheticEvent, 
-  NativeScrollEvent, 
+  Platform,
+  StyleSheet,
+  Animated,
+  ScrollView,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
   ViewStyle
 } from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
-import View, {ViewPropTypes} from '../view';
+import View, {ViewProps} from '../view';
 import Image from '../image';
 import TabBarItem, {TabBarItemProps} from './TabBarItem';
 
 
-export type TabBarProps = BaseComponentInjectedProps & ViewPropTypes & {
+export type TabBarProps = BaseComponentInjectedProps & ViewProps & {
     /**
      * Show Tab Bar bottom shadow
      */
@@ -42,8 +42,8 @@ export type TabBarProps = BaseComponentInjectedProps & ViewPropTypes & {
      * custom style for the selected indicator
      */
     indicatorStyle?: ViewStyle,
-    /** 
-     * The background color 
+    /**
+     * The background color
      */
     backgroundColor: string,
     /**
@@ -141,7 +141,7 @@ class TabBar extends Component<TabBarProps, State> {
     if (this.itemsRefs && this.state.currentIndex) {
       const childRef = this.itemsRefs[this.state.currentIndex];
       const childLayout = childRef.getLayout();
-  
+
       if (childLayout && this.hasOverflow()) {
         if (childLayout.x + childLayout.width - this.contentOffset.x > this.scrollContainerWidth) {
           this.scrollView.scrollTo({x: childLayout.x - this.scrollContainerWidth + childLayout.width, y: 0, animated});

@@ -11,7 +11,7 @@ import {
   BaseComponentInjectedProps,
   ForwardRefInjectedProps
 } from '../../commons/new';
-import View, {ViewPropTypes} from '../view';
+import View, {ViewProps} from '../view';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Image from '../image';
 import CardImage from './CardImage';
@@ -32,7 +32,7 @@ const DEFAULT_SELECTION_PROPS = {
 };
 
 export {CardSectionProps};
-export type CardPropTypes = ViewPropTypes &
+export type CardProps = ViewProps &
   TouchableOpacityProps & {
     /**
      * card custom width
@@ -90,10 +90,11 @@ export type CardPropTypes = ViewPropTypes &
       hideIndicator?: boolean;
     };
   };
+export type CardPropTypes = CardProps; //TODO: remove after ComponentPropTypes deprecation;
 
 type PropTypes = BaseComponentInjectedProps &
   ForwardRefInjectedProps &
-  CardPropTypes;
+  CardProps;
 
 type State = {
   animatedSelected: Animated.Value;
@@ -322,7 +323,7 @@ function createStyles({
   height,
   borderRadius,
   selectionOptions
-}: CardPropTypes) {
+}: CardProps) {
   const selectionOptionsWithDefaults = {
     ...DEFAULT_SELECTION_PROPS,
     ...selectionOptions
@@ -375,7 +376,7 @@ Card.Image = CardImage;
 Card.Section = CardSection;
 
 export default asBaseComponent<
-  CardPropTypes,
+  CardProps,
   {
     Image: typeof CardImage;
     Section: typeof CardSection;

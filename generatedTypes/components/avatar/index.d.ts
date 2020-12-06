@@ -14,7 +14,7 @@ export declare enum BadgePosition {
     BOTTOM_RIGHT = "BOTTOM_RIGHT",
     BOTTOM_LEFT = "BOTTOM_LEFT"
 }
-export declare type AvatarPropTypes = {
+export declare type AvatarProps = {
     /**
      * Adds fade in animation when Avatar image loads
      */
@@ -108,6 +108,7 @@ export declare type AvatarPropTypes = {
      */
     testID?: string;
 };
+export declare type AvatarPropTypes = AvatarProps;
 /**
  * @description: Avatar component for displaying user profile images
  * @extends: TouchableOpacity
@@ -116,9 +117,9 @@ export declare type AvatarPropTypes = {
  * @image: https://user-images.githubusercontent.com/33805983/34480603-197d7f64-efb6-11e7-9feb-db8ba756f055.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.js
  */
-declare class Avatar extends PureComponent<AvatarPropTypes> {
+declare class Avatar extends PureComponent<AvatarProps> {
     styles: ReturnType<typeof createStyles>;
-    constructor(props: AvatarPropTypes);
+    constructor(props: AvatarProps);
     static displayName: string;
     static modes: typeof StatusModes;
     static badgePosition: typeof BadgePosition;
@@ -142,7 +143,7 @@ declare class Avatar extends PureComponent<AvatarPropTypes> {
     renderImage(): JSX.Element | undefined;
     render(): JSX.Element;
 }
-declare function createStyles(props: AvatarPropTypes): {
+declare function createStyles(props: AvatarProps): {
     initialsContainerWithInset: {
         top: number;
         right: number;
@@ -160,7 +161,7 @@ declare function createStyles(props: AvatarPropTypes): {
     };
 };
 export { Avatar };
-declare const _default: React.ComponentClass<AvatarPropTypes & {
+declare const _default: React.ComponentClass<AvatarProps & {
     useCustomTheme?: boolean | undefined;
 }, any> & typeof Avatar;
 export default _default;

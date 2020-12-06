@@ -1,25 +1,29 @@
+// TODO: deprecate all places where we check if _.isPlainObject
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 import {asBaseComponent, forwardRef} from '../../commons';
+import {LogService} from '../../services';
 import View from '../../components/view';
 import Modal from '../modal';
 import Button from '../../components/button';
 import {TextField} from '../inputs';
-import * as PickerPresenter from './PickerPresenter';
 import NativePicker from './NativePicker';
 import PickerModal from './PickerModal';
 import PickerItem from './PickerItem';
-
+import PickerContext from './PickerContext';
 
 const PICKER_MODES = {
   SINGLE: 'SINGLE',
   MULTI: 'MULTI'
 };
-const ItemType = PropTypes.shape({
-  value: PropTypes.any,
-  label: PropTypes.string
-});
+const ItemType = PropTypes.oneOfType([
+  PropTypes.number, 
+  PropTypes.string,
+  PropTypes.shape({
+    value: PropTypes.any,
+    label: PropTypes.string
+  })]);
 
 /**
  * @description: Picker Component, support single or multiple selection, blurModel and nativePicker
@@ -29,6 +33,10 @@ const ItemType = PropTypes.shape({
 class Picker extends PureComponent {
   static displayName = 'Picker';
   static propTypes = {
+    /**
+     * Temporary prop required for migration to Picker's new API
+     */
+    migrate: PropTypes.bool,
     ...TextField.propTypes,
     /**
      * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
@@ -142,14 +150,14 @@ class Picker extends PureComponent {
       value: props.value,
       prevValue: undefined,
       selectedItemPosition: 0,
-      items: this.extractPickerItems(props)
+      items: Picker.extractPickerItems(props)
     };
 
     if (props.mode === Picker.modes.SINGLE && Array.isArray(props.value)) {
-      console.warn('Picker in SINGLE mode cannot accept an array for value');
+      LogService.warn('Picker in SINGLE mode cannot accept an array for value');
     }
     if (props.mode === Picker.modes.MULTI && !Array.isArray(props.value)) {
-      console.warn('Picker in MULTI mode must accept an array for value');
+      LogService.warn('Picker in MULTI mode must accept an array for value');
     }
 
     // TODO: this warning should be replaced by the opposite
@@ -158,18 +166,20 @@ class Picker extends PureComponent {
     //   console.warn('UILib Picker: don\'t use object as value for native picker, use either string or a number');
     // }
     if (_.isPlainObject(props.value)) {
-      console.warn('UILib Picker will stop supporting passing object as value in the next major version. Please use either string or a number as value');
+      LogService.warn('UILib Picker will stop supporting passing object as value in the next major version. Please use either string or a number as value');
     }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (!_.isEmpty(nextProps.value) && prevState.value !== nextProps.value) {
-      if (prevState.prevValue !== prevState.value) { // for this.setState() updates to 'value'
+      if (prevState.prevValue !== prevState.value) {
+        // for this.setState() updates to 'value'
         // NOTE: this.setState() already updated the 'value' so here we only updating the 'prevValue'
         return {
           prevValue: prevState.value
         };
-      } else { // for prop update to 'value'
+      } else {
+        // for prop update to 'value'
         return {
           value: nextProps.value
         };
@@ -178,27 +188,46 @@ class Picker extends PureComponent {
     return null;
   }
 
+  static extractPickerItems(props) {
+    const {children} = props;
+    const items = React.Children.map(children, child => ({value: child.props.value, label: child.props.label}));
+    return items;
+  }
+
   getAccessibilityInfo() {
     const {placeholder} = this.props;
 
     return {
-      accessibilityLabel: this.getLabelValueText() ? `${placeholder}. selected. ${this.getLabelValueText()}` : `Select ${placeholder}`,
+      accessibilityLabel: this.getLabelValueText()
+        ? `${placeholder}. selected. ${this.getLabelValueText()}`
+        : `Select ${placeholder}`,
       accessibilityHint: this.getLabelValueText()
         ? 'Double tap to edit'
         : `Goes to ${placeholder}. Suggestions will be provided`
     };
   }
 
-  extractPickerItems(props) {
-    const {children} = props;
-    const items = React.Children.map(children, child => ({value: child.props.value, label: child.props.label}));
-    return items;
-  }
+  getContextValue = () => {
+    const {value, searchValue} = this.state;
+    const {migrate, mode, getItemValue, getItemLabel, renderItem, showSearch} = this.props;
+    return {
+      migrate,
+      value,
+      onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
+      isMultiMode: mode === Picker.modes.MULTI,
+      getItemValue,
+      getItemLabel,
+      onSelectedLayout: this.onSelectedItemLayout,
+      renderItem,
+      showSearch,
+      searchValue
+    };
+  };
 
   shouldNotChangePickerLabelWhileSelecting = () => {
     const {mode} = this.props;
     return mode === Picker.modes.MULTI;
-  }
+  };
 
   getLabelValueText = () => {
     const {value: propsValue} = this.props;
@@ -208,12 +237,15 @@ class Picker extends PureComponent {
       return this.getLabel(propsValue);
     }
     return this.getLabel(stateValue);
-  }
+  };
 
-  getLabelsFromArray = (value) => {
-    const {getItemLabel} = this.props;
+  getLabelsFromArray = value => {
+    const {items} = this.state;
+    const itemsByValue = _.keyBy(items, 'value');
+
+    const {getItemLabel = _.noop} = this.props;
     return _.chain(value)
-      .map(getItemLabel || 'label')
+      .map(item => (_.isPlainObject(item) ? getItemLabel(item) || item.label : itemsByValue[item].label))
       .join(', ')
       .value();
   };
@@ -253,7 +285,12 @@ class Picker extends PureComponent {
   toggleItemSelection = item => {
     const {getItemValue} = this.props;
     const {value} = this.state;
-    const newValue = _.xorBy(value, [item], getItemValue || 'value');
+    let newValue;
+    if (_.isPlainObject(value)) {
+      newValue = _.xorBy(value, [item], getItemValue || 'value');
+    } else {
+      newValue = _.xor(value, [item]);
+    }
 
     this.setState({value: newValue});
   };
@@ -284,33 +321,6 @@ class Picker extends PureComponent {
     this.setState({searchValue: ''});
   };
 
-  appendPropsToChildren = () => {
-    const {children, mode, getItemValue, getItemLabel, showSearch, renderItem} = this.props;
-    const {value, searchValue} = this.state;
-    const childrenWithProps = React.Children.map(children, child => {
-      const childValue = PickerPresenter.getItemValue({getItemValue, ...child.props});
-      const childLabel = PickerPresenter.getItemLabel({...child.props, getLabel: child.props.getItemLabel});
-
-      if (!showSearch || _.isEmpty(searchValue) || _.includes(_.lowerCase(childLabel), _.lowerCase(searchValue))) {
-        const selectedValue = PickerPresenter.getItemValue({value, getItemValue});
-        const isSelected = PickerPresenter.isItemSelected(childValue, selectedValue);
-
-        return React.cloneElement(child, {
-          isSelected,
-          onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
-          getItemValue: child.props.getItemValue || getItemValue,
-          getItemLabel: child.props.getItemLabel || getItemLabel,
-          onSelectedLayout: this.onSelectedItemLayout,
-          renderItem: child.props.renderItem || renderItem,
-          accessibilityState: isSelected ? {selected: true} : undefined,
-          accessibilityHint: 'Double click to select this suggestion'
-        });
-      }
-    });
-
-    return childrenWithProps;
-  };
-
   renderExpandableModal = () => {
     const {
       mode,
@@ -322,10 +332,10 @@ class Picker extends PureComponent {
       renderCustomSearch,
       renderCustomModal,
       listProps,
+      children,
       testID
     } = this.props;
     const {showExpandableModal, selectedItemPosition, value} = this.state;
-    const children = this.appendPropsToChildren(this.props.children);
 
     if (renderCustomModal) {
       const modalProps = {
@@ -337,41 +347,42 @@ class Picker extends PureComponent {
         onCancel: this.cancelSelect
       };
 
-      return renderCustomModal(modalProps);
+      return (
+        <>
+          <PickerContext.Provider value={this.getContextValue()}>
+            {renderCustomModal(modalProps)}
+          </PickerContext.Provider>
+        </>
+      );
     }
 
     return (
-      <PickerModal
-        testID={`${testID}.modal`}
-        visible={showExpandableModal}
-        scrollPosition={selectedItemPosition}
-        enableModalBlur={enableModalBlur}
-        topBarProps={{
-          ...topBarProps,
-          onCancel: this.cancelSelect,
-          onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(value) : undefined
-        }}
-        showSearch={showSearch}
-        searchStyle={searchStyle}
-        searchPlaceholder={searchPlaceholder}
-        onSearchChange={this.onSearchChange}
-        renderCustomSearch={renderCustomSearch}
-        listProps={listProps}
-      >
-        {children}
-      </PickerModal>
+      <PickerContext.Provider value={this.getContextValue()}>
+        <PickerModal
+          testID={`${testID}.modal`}
+          visible={showExpandableModal}
+          scrollPosition={selectedItemPosition}
+          enableModalBlur={enableModalBlur}
+          topBarProps={{
+            ...topBarProps,
+            onCancel: this.cancelSelect,
+            onDone: mode === Picker.modes.MULTI ? () => this.onDoneSelecting(value) : undefined
+          }}
+          showSearch={showSearch}
+          searchStyle={searchStyle}
+          searchPlaceholder={searchPlaceholder}
+          onSearchChange={this.onSearchChange}
+          renderCustomSearch={renderCustomSearch}
+          listProps={listProps}
+        >
+          {children} 
+        </PickerModal>
+      </PickerContext.Provider>
     );
   };
 
   render() {
-    const {
-      useNativePicker,
-      renderPicker,
-      customPickerProps,
-      containerStyle,
-      testID,
-      modifiers
-    } = this.props;
+    const {useNativePicker, renderPicker, customPickerProps, containerStyle, testID, modifiers} = this.props;
 
     if (useNativePicker) {
       return <NativePicker {...this.props}/>;
@@ -397,12 +408,7 @@ class Picker extends PureComponent {
     return (
       <TextField
         {...textInputProps}
-        containerStyle={[
-          paddings,
-          margins,
-          positionStyle,
-          containerStyle
-        ]}
+        containerStyle={[paddings, margins, positionStyle, containerStyle]}
         {...this.getAccessibilityInfo()}
         importantForAccessibility={'no-hide-descendants'}
         value={label}

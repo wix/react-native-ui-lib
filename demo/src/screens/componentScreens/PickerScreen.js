@@ -28,7 +28,7 @@ export default class PickerScreen extends Component {
       itemsCount: 1,
       // language: {value: 'java', label: 'Java'},
       language: undefined,
-      language2: undefined, // for migrated picker example
+      language2: options[2].value, // for migrated picker example
       languages: [],
       nativePickerValue: 'java',
       customModalValues: [],
@@ -235,6 +235,7 @@ export default class PickerScreen extends Component {
           <Text text60 marginT-s5 marginB-s2>Migrated Picker</Text>
 
           <Picker
+            migrate
             title="Language"
             placeholder="Favorite Language"
             value={this.state.language2}
@@ -243,6 +244,7 @@ export default class PickerScreen extends Component {
             showSearch
             searchPlaceholder={'Search a language'}
             searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.dark50}}
+            // mode={Picker.modes.MULTI}
             // useNativePicker
           >
             {_.map(options, option => (

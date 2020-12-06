@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { LayoutChangeEvent, ImageStyle, TextStyle, StyleProp } from 'react-native';
 import { BaseComponentInjectedProps, ForwardRefInjectedProps, TypographyModifiers, ColorsModifiers, BackgroundColorModifier, MarginModifiers } from '../../commons/new';
 import { TouchableOpacityProps } from '../touchableOpacity';
-import { TextPropTypes } from '../text';
+import { TextProps } from '../text';
 export declare enum ButtonSize {
     xSmall = "xSmall",
     small = "small",
@@ -14,7 +14,7 @@ export declare enum AnimationDirection {
     left = "left",
     right = "right"
 }
-export declare type ButtonPropTypes = TouchableOpacityProps & TypographyModifiers & ColorsModifiers & BackgroundColorModifier & MarginModifiers & {
+export declare type ButtonProps = TouchableOpacityProps & TypographyModifiers & ColorsModifiers & BackgroundColorModifier & MarginModifiers & {
     /**
      * Text to show inside the button
      */
@@ -90,7 +90,7 @@ export declare type ButtonPropTypes = TouchableOpacityProps & TypographyModifier
     /**
      * Props that will be passed to the button's Text label.
      */
-    labelProps?: TextPropTypes;
+    labelProps?: TextProps;
     /**
      * should the button act as a coast to coast button (no border radius)
      */
@@ -126,12 +126,13 @@ export declare type ButtonPropTypes = TouchableOpacityProps & TypographyModifier
      */
     animateTo?: AnimationDirection;
 };
+export declare type ButtonPropTypes = ButtonProps;
 export declare type ButtonState = {
     size?: number;
     borderRadius?: number;
     isLandscape?: boolean;
 };
-declare type Props = ButtonPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
+declare type Props = ButtonProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
 /**
  * @description: Basic button component
  * @extends: TouchableOpacity
@@ -344,7 +345,9 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         trailing: boolean;
     } | undefined;
     activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined;
+    useNative?: boolean | undefined; /**
+     * Text to show inside the button
+     */
     customValue?: any;
     style?: false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined> | import("react-native").Animated.AnimatedProps<import("react-native").ViewStyle> | import("react-native").Animated.AnimatedProps<import("react-native").RegisteredStyle<import("react-native").ViewStyle>> | import("react-native").Animated.AnimatedProps<import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined>> | null | undefined;
     onPress?: ((props: TouchableOpacityProps) => void) | undefined;
@@ -501,7 +504,9 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         trailing: boolean;
     } | undefined;
     activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined;
+    useNative?: boolean | undefined; /**
+     * Text to show inside the button
+     */
     customValue?: any;
     style?: false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined> | import("react-native").Animated.AnimatedProps<import("react-native").ViewStyle> | import("react-native").Animated.AnimatedProps<import("react-native").RegisteredStyle<import("react-native").ViewStyle>> | import("react-native").Animated.AnimatedProps<import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined>> | null | undefined;
     onPress?: ((props: TouchableOpacityProps) => void) | undefined;
@@ -658,7 +663,9 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         trailing: boolean;
     } | undefined;
     activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined;
+    useNative?: boolean | undefined; /**
+     * Text to show inside the button
+     */
     customValue?: any;
     style?: false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined> | import("react-native").Animated.AnimatedProps<import("react-native").ViewStyle> | import("react-native").Animated.AnimatedProps<import("react-native").RegisteredStyle<import("react-native").ViewStyle>> | import("react-native").Animated.AnimatedProps<import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined>> | null | undefined;
     onPress?: ((props: TouchableOpacityProps) => void) | undefined;
@@ -815,7 +822,9 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         trailing: boolean;
     } | undefined;
     activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined;
+    useNative?: boolean | undefined; /**
+     * Text to show inside the button
+     */
     customValue?: any;
     style?: false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined> | import("react-native").Animated.AnimatedProps<import("react-native").ViewStyle> | import("react-native").Animated.AnimatedProps<import("react-native").RegisteredStyle<import("react-native").ViewStyle>> | import("react-native").Animated.AnimatedProps<import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined>> | null | undefined;
     onPress?: ((props: TouchableOpacityProps) => void) | undefined;
