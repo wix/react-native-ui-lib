@@ -18,6 +18,7 @@ export {
 } from './commons/new';
 export * as Incubator from './incubator';
 export * as Hooks from './hooks';
+export * as Modifiers from './commons/modifiers';
 export {default as ActionBar, ActionBarProps} from './components/actionBar';
 export {default as Avatar, AvatarPropTypes, AvatarProps} from './components/avatar';
 export {default as Badge, BadgeProps} from './components/badge';
