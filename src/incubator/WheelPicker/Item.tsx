@@ -1,9 +1,9 @@
 import React, {useCallback, useMemo} from 'react';
-import Animated, {concat} from 'react-native-reanimated';
-import {transformOrigin} from 'react-native-redash';
+import Animated, {interpolateColors} from 'react-native-reanimated';
 import Text from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
 import {TextStyle} from 'react-native';
+import {Colors} from '../../../src/style';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(
   TouchableOpacity
@@ -19,67 +19,49 @@ interface InternalProps extends ItemProps {
   index: number;
   offset: any;
   itemHeight: number;
-  textStyle?: TextStyle;
+  activeColor?: string;
+  inactiveColor?: string;
+  style?: TextStyle;
   onSelect: (index: number) => void;
 }
 
 export default ({
   index,
   text,
-  textStyle,
-  // value,
   itemHeight,
   onSelect,
-  offset
+  offset,
+  activeColor = Colors.primary,
+  inactiveColor = Colors.grey20,
+  style
 }: InternalProps) => {
-  const itemOffset = index * itemHeight;
-  const opacity = Animated.interpolate(offset, {
-    inputRange: [itemOffset - itemHeight, itemOffset, itemOffset + itemHeight],
-    outputRange: [0.5, 1, 0.5]
-  });
-
-  const rotateXValue = useMemo(() => {
-    return Animated.interpolate(offset, {
-      inputRange: [
-        itemOffset - 2.5 * itemHeight,
-        itemOffset,
-        itemOffset + 2.5 * itemHeight
-      ],
-      outputRange: [-85, 0, -85]
-    });
-  }, [itemHeight]);
-
-  const rotateX = concat(rotateXValue, 'deg');
-
-  const scale = useMemo(() => {
-    return Animated.interpolate(offset, {
-      inputRange: [
-        itemOffset - 2 * itemHeight,
-        itemOffset,
-        itemOffset + 2 * itemHeight
-      ],
-      // outputRange: [0.8, 1, 0.8], // with scale change
-      outputRange: [1, 1, 1],
-    });
-  }, [itemHeight]);
-
+  
   const selectItem = useCallback(() => onSelect(index), [index]);
+  const itemOffset = index * itemHeight;
 
+  const color = useMemo(() => {
+    return interpolateColors(offset, {
+      inputRange: [
+        itemOffset - itemHeight,
+        itemOffset,
+        itemOffset + itemHeight
+      ],
+      outputColorRange: [inactiveColor, activeColor, inactiveColor]
+    });
+  }, [itemHeight]);
+  
   return (
     <AnimatedTouchableOpacity
       activeOpacity={1}
       style={{
-        height: itemHeight,
-        opacity,
-        // @ts-ignore
-        transform: transformOrigin({x: 125, y: 24}, {rotateX})
+        height: itemHeight
       }}
       key={index}
       center
       onPress={selectItem}
       index={index}
     >
-      <AnimatedText text60 style={[textStyle, {transform: [{scale}]}]}>
+      <AnimatedText text60R style={{color, ...style}}>
         {text}
       </AnimatedText>
     </AnimatedTouchableOpacity>

@@ -2,54 +2,104 @@
 // TODO: Support style customization
 // TODO: Support control of visible items
 import _ from 'lodash';
-import React, {useCallback, useRef} from 'react';
-import {TextStyle, FlatList, StyleProp} from 'react-native';
+import React, {useCallback, useRef, useMemo} from 'react';
+import {TextStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent, useValues} from 'react-native-redash';
-
+import {Colors} from '../../../src/style';
 import View from '../../components/view';
+import Fader, {FaderPosition} from '../../components/fader';
 import {Constants} from '../../helpers';
-
+import useMiddleIndex from './helpers/useListMiddleIndex';
 import Item, {ItemProps} from './Item';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 export interface WheelPickerProps {
+  /**
+   * Data source for WheelPicker
+   */
   items?: ItemProps[];
+  /**
+   * Describe the height of each item in the WheelPicker
+   */
   itemHeight?: number;
-  itemTextStyle?: StyleProp<TextStyle>;
-  onChange: (item: ItemProps, index: number) => void;
+  /**
+   * Text color for the focused row
+   */
+  activeTextColor?: string;
+  /**
+   * Text color for other, non-focused rows
+   */
+  inactiveTextColor?: string;
+  /**
+   * Row text style
+   */
+  textStyle?: TextStyle;
+  /**
+   * Event, on active row change
+   */
+  onChange: (index: number, item?: ItemProps) => void;
 }
 
-const WheelPicker = ({items, itemHeight = 48, itemTextStyle}: WheelPickerProps) => {
-  const height = itemHeight * 4;
-  const scrollview = useRef<Animated.ScrollView>();
+const WheelPicker = ({items, itemHeight = 48, activeTextColor, inactiveTextColor, textStyle, onChange: onChangeEvent}: WheelPickerProps) => {
+  const height = itemHeight * 5;
+  const scrollView = useRef<Animated.ScrollView>();
   const [offset] = useValues([0], []);
   const onScroll = onScrollEvent({y: offset});
+  
+  const listSize = items?.length || 0;
+  const middleIndex = useMiddleIndex({itemHeight, listSize});
 
   const selectItem = useCallback(
     index => {
-      if (scrollview.current) {
-        scrollview.current.getNode().scrollTo({y: index * itemHeight, animated: true});
+      if (scrollView.current?.getNode()) {
+        //@ts-ignore for some reason scrollToOffset isn't recognized
+        scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated: true})
       }
     },
     [itemHeight]
   );
 
-  const onChange = useCallback(() => {
-    // TODO: need to implement on change event that calc the current selected index
-  }, [itemHeight]);
-
+  const onChange = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const index = middleIndex(event.nativeEvent.contentOffset.y);
+    onChangeEvent(index, items?.[index]);
+  }, []);
+  
   const renderItem = useCallback(({item, index}) => {
     return (
       <Item
         index={index}
         itemHeight={itemHeight}
         offset={offset}
-        textStyle={itemTextStyle}
+        activeColor={activeTextColor}
+        inactiveColor={inactiveTextColor}
+        style={textStyle}
         {...item}
         onSelect={selectItem}
       />
+    );
+  }, [itemHeight]);
+
+  const fader = useMemo(
+    () => (position: FaderPosition) => {
+      return <Fader visible position={position} size={60} />;
+    },
+    []
+  );
+
+  const separators = useMemo(() => {
+    return (
+      <View absF centerV pointerEvents="none">
+        <View
+          style={{
+            borderTopWidth: 1,
+            borderBottomWidth: 1,
+            height: itemHeight,
+            borderColor: Colors.grey50
+          }}
+        />
+      </View>
     );
   }, []);
 
@@ -59,12 +109,12 @@ const WheelPicker = ({items, itemHeight = 48, itemTextStyle}: WheelPickerProps) 
         <AnimatedFlatList
           data={items}
           keyExtractor={keyExtractor}
-          scrollEventThrottle={16}
+          scrollEventThrottle={100}
           onScroll={onScroll}
           onMomentumScrollEnd={onChange}
           showsVerticalScrollIndicator={false}
           // @ts-ignore
-          ref={scrollview}
+          ref={scrollView}
           contentContainerStyle={{
             paddingVertical: height / 2 - itemHeight / 2
           }}
@@ -72,20 +122,14 @@ const WheelPicker = ({items, itemHeight = 48, itemTextStyle}: WheelPickerProps) 
           decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
           renderItem={renderItem}
         />
-        <View absF centerV pointerEvents="none">
-          <View
-            style={{
-              borderTopWidth: 1,
-              borderBottomWidth: 1,
-              height: itemHeight
-            }}
-          />
-        </View>
+        {fader(FaderPosition.BOTTOM)}
+        {fader(FaderPosition.TOP)}
+        {separators}
       </View>
     </View>
   );
 };
 
-const keyExtractor = (item: ItemProps) => item.value;
+const keyExtractor = (item: ItemProps) => `${item.value}`;
 
 export default WheelPicker;
