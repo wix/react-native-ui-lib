@@ -19,8 +19,8 @@ interface InternalProps extends ItemProps {
   index: number;
   offset: any;
   itemHeight: number;
-  selectedColor?: string;
-  unselectedColor?: string;
+  activeColor?: string;
+  inactiveColor?: string;
   style?: TextStyle;
   onSelect: (index: number) => void;
 }
@@ -31,8 +31,8 @@ export default ({
   itemHeight,
   onSelect,
   offset,
-  selectedColor = Colors.primary,
-  unselectedColor = Colors.grey20,
+  activeColor = Colors.primary,
+  inactiveColor = Colors.grey20,
   style
 }: InternalProps) => {
   
@@ -46,7 +46,7 @@ export default ({
         itemOffset,
         itemOffset + itemHeight
       ],
-      outputColorRange: [unselectedColor, selectedColor, unselectedColor]
+      outputColorRange: [inactiveColor, activeColor, inactiveColor]
     });
   }, [itemHeight]);
   
