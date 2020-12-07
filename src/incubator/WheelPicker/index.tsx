@@ -88,7 +88,7 @@ const WheelPicker = ({items, itemHeight = 48, selectedTextColor, unselectedTextS
     []
   );
 
-  const renderSeparators = useMemo(() => {
+  const separators = useMemo(() => {
     return (
       <View absF centerV pointerEvents="none">
         <View
