@@ -31,7 +31,7 @@ First, run `npm install react-native-ui-lib`
 
 If you want it all, install **peer dependencies**
 ```
-npm i react-native-gesture-handler react-native-reanimated @react-native-community/blur @react-native-community/datetimepicker @react-native-community/netinfo @react-native-community/picker
+npm i react-native-gesture-handler react-native-reanimated @react-native-community/blur @react-native-community/datetimepicker @react-native-community/netinfo @react-native-picker/picker
 
 cd ios && pod install
 ```
@@ -50,7 +50,7 @@ It's important to run `cd ios && pod install` if you are using a component that 
 - ~~"react-native-interactable": ">=2.0.0"~~ (No Need in >=V5.0.0)
 - "@react-native-community/datetimepicker": "^2.1.0"
 - "@react-native-community/netinfo": "^5.6.2"
-- "@react-native-community/picker": "^1.6.5"
+- "@react-native-picker/picker": "^1.9.4",
 
 ## Demo App
 
