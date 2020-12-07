@@ -55,7 +55,7 @@ const WheelPicker = ({items, itemHeight = 48, activeTextColor, inactiveTextColor
     index => {
       if (scrollView.current?.getNode()) {
         //@ts-ignore for some reason scrollToOffset isn't recognized
-        scrollView.current.getNode().scrollToOffset({offset: index * itemHeight, animated: true});
+        scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated: true})
       }
     },
     [itemHeight]
