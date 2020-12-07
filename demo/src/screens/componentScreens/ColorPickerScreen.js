@@ -84,7 +84,7 @@ export default class ColorPickerScreen extends Component {
             onDismiss={this.onDismiss}
             onSubmit={this.onSubmit}
             onValueChange={this.onValueChange}
-            selectedValue={pickerValue}
+            value={pickerValue}
             // animatedIndex={0}
           />
         </View>
