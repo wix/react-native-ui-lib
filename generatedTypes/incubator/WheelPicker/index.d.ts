@@ -11,13 +11,13 @@ export interface WheelPickerProps {
      */
     itemHeight?: number;
     /**
-     * TextStyle for the focused row
+     * Text color for the focused row
      */
-    selectedTextColor?: string;
+    activeTextColor?: string;
     /**
-     * TextStyle for other, non-focused rows
+     * Text color for other, non-focused rows
      */
-    unselectedTextStyle?: string;
+    inactiveTextColor?: string;
     /**
      * Row text style
      */
@@ -27,5 +27,5 @@ export interface WheelPickerProps {
      */
     onChange: (index: number, item?: ItemProps) => void;
 }
-declare const WheelPicker: ({ items, itemHeight, selectedTextColor, unselectedTextStyle, onChange: onChangeEvent }: WheelPickerProps) => JSX.Element;
+declare const WheelPicker: ({ items, itemHeight, activeTextColor, inactiveTextColor, textStyle, onChange: onChangeEvent }: WheelPickerProps) => JSX.Element;
 export default WheelPicker;

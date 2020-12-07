@@ -35,8 +35,8 @@ export default () => {
         <Text h3>Months</Text>
         <Incubator.WheelPicker
           onChange={onChange}
-          selectedTextColor={Colors.primary}
-          unselectedTextStyle={Colors.grey20}
+          activeTextColor={Colors.primary}
+          inactiveTextColor={Colors.grey20}
           items={_.map(months, i => ({text: i, value: i}))}
           textStyle={{...Typography.text60R}}
         />

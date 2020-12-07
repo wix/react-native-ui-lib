@@ -25,13 +25,13 @@ export interface WheelPickerProps {
    */
   itemHeight?: number;
   /**
-   * TextStyle for the focused row
+   * Text color for the focused row
    */
-  selectedTextColor?: string;
+  activeTextColor?: string;
   /**
-   * TextStyle for other, non-focused rows
+   * Text color for other, non-focused rows
    */
-  unselectedTextStyle?: string;
+  inactiveTextColor?: string;
   /**
    * Row text style
    */
@@ -42,7 +42,7 @@ export interface WheelPickerProps {
   onChange: (index: number, item?: ItemProps) => void;
 }
 
-const WheelPicker = ({items, itemHeight = 48, selectedTextColor, unselectedTextStyle, textStyle, onChange: onChangeEvent}: WheelPickerProps) => {
+const WheelPicker = ({items, itemHeight = 48, activeTextColor, inactiveTextColor, textStyle, onChange: onChangeEvent}: WheelPickerProps) => {
   const height = itemHeight * 5;
   const scrollView = useRef<Animated.ScrollView>();
   const [offset] = useValues([0], []);
@@ -72,8 +72,8 @@ const WheelPicker = ({items, itemHeight = 48, selectedTextColor, unselectedTextS
         index={index}
         itemHeight={itemHeight}
         offset={offset}
-        activeColor={selectedTextColor}
-        inactiveColor={unselectedTextStyle}
+        activeColor={activeTextColor}
+        inactiveColor={inactiveTextColor}
         style={textStyle}
         {...item}
         onSelect={selectItem}
@@ -81,7 +81,7 @@ const WheelPicker = ({items, itemHeight = 48, selectedTextColor, unselectedTextS
     );
   }, [itemHeight]);
 
-  const renderFader = useMemo(
+  const fader = useMemo(
     () => (position: FaderPosition) => {
       return <Fader visible position={position} size={60} />;
     },
@@ -122,9 +122,9 @@ const WheelPicker = ({items, itemHeight = 48, selectedTextColor, unselectedTextS
           decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
           renderItem={renderItem}
         />
-        {renderFader(FaderPosition.BOTTOM)}
-        {renderFader(FaderPosition.TOP)}
-        {renderSeparators}
+        {fader(FaderPosition.BOTTOM)}
+        {fader(FaderPosition.TOP)}
+        {separators}
       </View>
     </View>
   );
