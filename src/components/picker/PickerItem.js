@@ -31,7 +31,8 @@ const PickerItem = props => {
   const context = useContext(PickerContext);
   const {migrate} = context;
   const customRenderItem = context.renderItem || props.renderItem;
-  const isSelected = isItemSelected(value, !migrate && _.isPlainObject(context.value) ? context.value.value : context.value);
+  const itemValue = !migrate && _.isPlainObject(value) ? value?.value : value;
+  const isSelected = isItemSelected(itemValue, context.value);
   const itemLabel = getItemLabel(label, value, props.getItemLabel || context.getItemLabel);
   const accessibilityProps = {
     accessibilityState: isSelected ? {selected: true} : undefined,
