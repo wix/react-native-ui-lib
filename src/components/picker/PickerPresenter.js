@@ -4,7 +4,9 @@ export function isItemSelected(childValue, selectedValue) {
   let isSelected = false;
 
   if (Array.isArray(selectedValue)) {
-    isSelected = _.includes(selectedValue, childValue);
+    isSelected = !!_.find(selectedValue, v => {
+      return v === childValue || v?.value === childValue;
+    });
   } else {
     isSelected = childValue === selectedValue;
   }

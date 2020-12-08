@@ -2,9 +2,11 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, Image} from 'react-native';
 import {View, Colors, Dialog, Text, Picker, Avatar, Assets, PanningProvider} from 'react-native-ui-lib'; //eslint-disable-line
-import contacts from '../../data/conversations';
+import contactsData from '../../data/conversations';
 import tagIcon from '../../assets/icons/tags.png';
 import dropdown from '../../assets/icons/chevronDown.png';
+
+const contacts = _.map(contactsData, c => ({...c, value: c.name, label: c.name}));
 
 const options = [
   {label: 'JavaScript', value: 'js'},
@@ -248,7 +250,7 @@ export default class PickerScreen extends Component {
             // useNativePicker
           >
             {_.map(options, option => (
-              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled} />
+              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
             ))}
           </Picker>
         </View>
