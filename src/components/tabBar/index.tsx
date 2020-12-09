@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import React, {ElementRef, RefObject} from 'react';
+import React, {Component, ElementRef, RefObject} from 'react';
 import {Platform, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
-import {BaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons';
 import View, {ViewPropTypes} from '../view';
 import ScrollBar/* , {ScrollBarProps} */ from '../scrollBar';
 import TabBarItem from './TabBarItem';
@@ -51,7 +51,7 @@ interface Props extends ViewPropTypes, ThemeComponent, ScrollBarProps {
   /**
    * The background color
    */
-  backgroundColor: string;
+  backgroundColor?: string;
   /**
    * set darkTheme style
    */
@@ -76,13 +76,14 @@ export type TabBarProps = Props;
  * @extendsLink:https://github.com/wix/react-native-ui-lib/blob/master/src/components/scrollBar/index.js
  * @notes: This is screen width component.
  */
-export default class TabBar extends BaseComponent<Props, State> {
+class TabBar extends Component<Props, State> {
   static displayName = 'TabBar';
 
   static Item = TabBarItem;
 
   static defaultProps: Partial<Props> = {
-    selectedIndex: 0
+    selectedIndex: 0,
+    backgroundColor: DEFAULT_BACKGROUND_COLOR
   };
 
   scrollContentWidth?: number;
@@ -120,9 +121,9 @@ export default class TabBar extends BaseComponent<Props, State> {
     }
   }
 
-  generateStyles() {
-    this.styles = createStyles(this.getThemeProps());
-  }
+  // generateStyles() {
+  //   this.styles = createStyles(this.props);
+  // }
 
   get childrenCount() {
     return React.Children.count(this.props.children);
@@ -203,7 +204,7 @@ export default class TabBar extends BaseComponent<Props, State> {
   onContentSizeChange = (width: number) => {
     if (this.scrollContentWidth !== width) {
       this.scrollContentWidth = width;
-      const {minTabsForScroll} = this.getThemeProps();
+      const {minTabsForScroll} = this.props;
       const minChildrenCount = minTabsForScroll || MIN_TABS_FOR_SCROLL;
       if (this.hasOverflow() && this.childrenCount > minChildrenCount) {
         this.setState({scrollEnabled: true});
@@ -212,7 +213,7 @@ export default class TabBar extends BaseComponent<Props, State> {
   };
 
   renderTabBar() {
-    const {height, backgroundColor, containerView, containerProps, gradientMargins} = this.getThemeProps();
+    const {height, backgroundColor, containerView, containerProps, gradientMargins} = this.props;
     const {scrollEnabled} = this.state;
     const containerHeight = height || DEFAULT_HEIGHT;
 
@@ -230,7 +231,16 @@ export default class TabBar extends BaseComponent<Props, State> {
         containerProps={containerProps}
         gradientMargins={gradientMargins}
       >
-        <View row style={this.styles.tabBar}>
+        <View
+          row
+          style={[
+            styles.tabBar,
+            {
+              height: containerHeight,
+              backgroundColor: backgroundColor
+            }
+          ]}
+        >
           {this.renderChildren()}
         </View>
       </ScrollBar>
@@ -239,7 +249,7 @@ export default class TabBar extends BaseComponent<Props, State> {
 
   renderChildren() {
     this.itemsRefs = [];
-    const {indicatorStyle, darkTheme} = this.getThemeProps();
+    const {indicatorStyle, darkTheme} = this.props;
 
     const children = React.Children.map<any, TabBarItem>(this.props.children as TabBarItem[], (child, index) => {
       const accessLabel = child.props.accessibilityLabel || child.props.label || '';
@@ -264,7 +274,7 @@ export default class TabBar extends BaseComponent<Props, State> {
   }
 
   render() {
-    const {enableShadow, style, containerView, containerWidth} = this.getThemeProps();
+    const {enableShadow, style, containerView, containerWidth, backgroundColor} = this.props;
     const Container = containerView ? containerView : View;
 
     return (
@@ -272,12 +282,13 @@ export default class TabBar extends BaseComponent<Props, State> {
         useSafeArea
         fullWidth={containerWidth ? false : undefined}
         style={[
-          this.styles.container,
-          enableShadow && this.styles.containerShadow,
+          styles.container,
+          enableShadow && styles.containerShadow,
           style,
           {
             height: undefined,
-            width: this.scrollContainerWidth
+            width: this.scrollContainerWidth,
+            backgroundColor: backgroundColor
           }
         ]}
       >
@@ -287,33 +298,31 @@ export default class TabBar extends BaseComponent<Props, State> {
   }
 }
 
-function createStyles({height = DEFAULT_HEIGHT, backgroundColor = DEFAULT_BACKGROUND_COLOR}) {
-  return StyleSheet.create({
-    container: {
-      zIndex: 100,
-      backgroundColor
-    },
-    containerShadow: {
-      ...Platform.select({
-        ios: {
-          shadowColor: Colors.dark10,
-          shadowOpacity: 0.05,
-          shadowRadius: 2,
-          shadowOffset: {height: 6, width: 0}
-        },
-        android: {
-          elevation: 5,
-          backgroundColor: Colors.white
-        }
-      })
-    },
-    tabBar: {
-      flex: 1,
-      height,
-      backgroundColor
-    },
-    shadowImage: {
-      width: '100%'
-    }
-  });
-}
+export default asBaseComponent<TabBarProps, typeof TabBar>(TabBar);
+
+
+const styles = StyleSheet.create({
+  container: {
+    zIndex: 100
+  },
+  containerShadow: {
+    ...Platform.select({
+      ios: {
+        shadowColor: Colors.dark10,
+        shadowOpacity: 0.05,
+        shadowRadius: 2,
+        shadowOffset: {height: 6, width: 0}
+      },
+      android: {
+        elevation: 5,
+        backgroundColor: Colors.white
+      }
+    })
+  },
+  tabBar: {
+    flex: 1
+  },
+  shadowImage: {
+    width: '100%'
+  }
+});
