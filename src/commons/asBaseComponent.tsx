@@ -25,8 +25,17 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
     static propTypes: any;
     static defaultProps: any;
 
+    state = {
+      error: false
+    };
+
     static getThemeProps = (props: any, context: any) => {
       return Modifiers.getThemeProps.call(WrappedComponent, props, context);
+    }
+
+    static getDerivedStateFromError(error: any) {
+      UIComponent.defaultProps?.onError(error, WrappedComponent.defaultProps);
+      return {error: true};
     }
 
     render() {
@@ -35,7 +44,11 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
       // TODO: omit original modifiers props (left, right, flex, etc..)
       // Because they throws an error when being passed to RNView on Android
       const {forwardedRef, ...others} = themeProps;
-      return <WrappedComponent {...others} modifiers={modifiers} ref={forwardedRef}/>;
+      return (
+        (this.state.error && UIComponent.defaultProps?.renderError) || (
+          <WrappedComponent {...others} modifiers={modifiers} ref={forwardedRef} />
+        )
+      )
     }
   }
 
