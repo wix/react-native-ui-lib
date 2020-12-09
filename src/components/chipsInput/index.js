@@ -43,10 +43,6 @@ class ChipsInput extends Component {
      */
     renderTag: PropTypes.elementType,
     /**
-     * callback for custom rendering invalid tag item
-     */
-    renderInvalidTag: PropTypes.elementType,
-    /**
      * callback for onChangeTags event
      */
     onChangeTags: PropTypes.func,
@@ -265,31 +261,18 @@ class ChipsInput extends Component {
   }
 
   renderTag = (tag, index) => {
-    const {tagStyle, renderTag, renderInvalidTag} = this.props;
+    const {tagStyle, renderTag} = this.props;
     const {tagIndexToRemove} = this.state;
     const shouldMarkTag = tagIndexToRemove === index;
-
-    if (tag.invalid) {
-      if (_.isFunction(renderInvalidTag)) {
-        return renderInvalidTag(tag, index, shouldMarkTag, this.getLabel(tag));
-      }
-  
-      return (
-        <View
-          key={index}
-          style={[styles.inValidTag, tagStyle, shouldMarkTag && styles.inValidMarkedTag]}
-        >
-          {this.renderLabel(tag, shouldMarkTag)}
-        </View>
-      );
-    }
+    const markedTagStyle = tag.invalid ? styles.inValidMarkedTag : styles.tagMarked;
+    const defaultTagStyle = tag.invalid ? styles.inValidTag : styles.tag;
 
     if (_.isFunction(renderTag)) {
       return renderTag(tag, index, shouldMarkTag, this.getLabel(tag));
     }
 
     return (
-      <View key={index} style={[styles.tag, tagStyle, shouldMarkTag && styles.tagMarked]}>
+      <View key={index} style={[defaultTagStyle, tagStyle, shouldMarkTag && markedTagStyle]}>
         {this.renderLabel(tag, shouldMarkTag)}
       </View>
     );
