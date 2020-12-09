@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import React, {Component, ElementRef, RefObject} from 'react';
-import {Platform, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {Platform, StyleSheet, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {asBaseComponent} from '../../commons';
 import View, {ViewPropTypes} from '../view';
 import ScrollBar/* , {ScrollBarProps} */ from '../scrollBar';
-import TabBarItem from './TabBarItem';
+import TabBarItem, {TabBarItemProps} from './TabBarItem';
 
 
 const MIN_TABS_FOR_SCROLL = 1;
@@ -15,7 +15,7 @@ const DEFAULT_HEIGHT = 48;
 
 const ScrollBarProps = ScrollBar.propTypes; //TODO: remove after TS migration
 
-interface Props extends ViewPropTypes, ThemeComponent, ScrollBarProps {
+interface Props extends ViewPropTypes, ThemeComponent, ScrollBarProps, TabBarItemProps {
   /**
    * Show Tab Bar bottom shadow
    */
@@ -93,7 +93,6 @@ class TabBar extends Component<Props, State> {
   }
   scrollBar: RefObject<typeof ScrollBar>;
   itemsRefs: ElementRef<typeof TabBarItem>[];
-  styles: ReturnType<typeof createStyles>;
 
   constructor(props: Props) {
     super(props);
@@ -133,16 +132,7 @@ class TabBar extends Component<Props, State> {
     return this.props.containerWidth || Constants.screenWidth;
   }
 
-  getStylePropValue(flattenStyle, propName) {
-    let prop;
-    if (flattenStyle) {
-      const propObject = _.pick(flattenStyle, [propName]);
-      prop = propObject[propName];
-    }
-    return prop;
-  }
-
-  isIgnored(index) {
+  isIgnored(index: number) {
     const child = React.Children.toArray(this.props.children)[index];
     return _.get(child, 'props.ignore');
   }
@@ -151,12 +141,12 @@ class TabBar extends Component<Props, State> {
     return this.scrollContentWidth > this.scrollContainerWidth;
   }
 
-  shouldBeMarked = index => {
+  shouldBeMarked = (index: number) => {
     return this.state.currentIndex === index && !this.isIgnored(index) && this.childrenCount > 1;
   };
 
-  updateIndicator(index) {
-    if (!this.isIgnored(index)) {
+  updateIndicator(index?: number) {
+    if (index && !this.isIgnored(index)) {
       this.setState({currentIndex: index}, () => {
         this.scrollToSelected();
       });
@@ -176,15 +166,15 @@ class TabBar extends Component<Props, State> {
     }
   }
 
-  onChangeIndex(index) {
+  onChangeIndex(index: number) {
     _.invoke(this.props, 'onChangeIndex', index);
   }
 
-  onTabSelected(index) {
+  onTabSelected(index: number) {
     _.invoke(this.props, 'onTabSelected', index);
   }
 
-  onItemPress = (index, props) => {
+  onItemPress = (index: number, props: Props) => {
     this.updateIndicator(index);
 
     setTimeout(() => {
@@ -196,7 +186,7 @@ class TabBar extends Component<Props, State> {
     }, 0);
   };
 
-  onScroll = event => {
+  onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const {contentOffset} = event.nativeEvent;
     this.contentOffset = contentOffset;
   };

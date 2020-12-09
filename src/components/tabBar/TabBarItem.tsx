@@ -1,10 +1,10 @@
 import _ from 'lodash';
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, Easing, LayoutChangeEvent, LayoutRectangle, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {LogService} from '../../services';
 import {Constants} from '../../helpers';
 import {Colors, Typography, Spacings} from '../../style';
-import {PureBaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
@@ -90,7 +90,7 @@ interface Props extends ThemeComponent {
 
 interface State {
   indicatorOpacity: Animated.Value;
-  selected: boolean;
+  selected?: boolean;
 }
 
 export type TabBarItemProps = Props;
@@ -101,7 +101,7 @@ export type TabBarItemProps = Props;
  * @extends: TouchableOpacity
  * @extendsLink: https://facebook.github.io/react-native/docs/touchableopacity
  */
-export default class TabBarItem extends PureBaseComponent<Props, State> {
+class TabBarItem extends PureComponent<Props, State> {
   static displayName = 'TabBar.Item';
 
   static defaultProps: Partial<Props> = {
@@ -109,7 +109,6 @@ export default class TabBarItem extends PureBaseComponent<Props, State> {
   };
 
   layout?: LayoutRectangle;
-  styles: ReturnType<typeof createStyles>;
 
   constructor(props: Props) {
     super(props);
@@ -130,7 +129,7 @@ export default class TabBarItem extends PureBaseComponent<Props, State> {
     }
   }
 
-  animate(newValue) {
+  animate(newValue?: boolean) {
     Animated.timing(this.state.indicatorOpacity, {
       toValue: newValue ? 1 : 0,
       easing: Easing.ease,
@@ -143,15 +142,11 @@ export default class TabBarItem extends PureBaseComponent<Props, State> {
     this.setState({selected: this.props.selected});
   };
 
-  generateStyles() {
-    this.styles = createStyles();
-  }
-
-  getFlattenStyle(style) {
+  getFlattenStyle(style: StyleProp<TextStyle>) {
     return StyleSheet.flatten(style);
   }
 
-  getStylePropValue(flattenStyle, propName) {
+  getStylePropValue(flattenStyle: StyleProp<TextStyle>, propName: string) {
     let prop;
     if (flattenStyle) {
       const propObject = _.pick(flattenStyle, [propName]);
@@ -160,7 +155,7 @@ export default class TabBarItem extends PureBaseComponent<Props, State> {
     return prop;
   }
 
-  getColorFromStyle(style) {
+  getColorFromStyle(style: StyleProp<TextStyle>) {
     const flattenStyle = this.getFlattenStyle(style);
     return this.getStylePropValue(flattenStyle, 'color');
   }
@@ -196,13 +191,13 @@ export default class TabBarItem extends PureBaseComponent<Props, State> {
       testID,
       accessibilityLabel,
       style
-    } = this.getThemeProps();
+    } = this.props;
 
-    const iconTint = iconColor || this.getColorFromStyle(labelStyle) || this.getColorFromStyle(this.styles.label);
+    const iconTint = iconColor || this.getColorFromStyle(labelStyle) || this.getColorFromStyle(styles.label);
     const iconSelectedTint =
       iconSelectedColor ||
       this.getColorFromStyle(selectedLabelStyle) ||
-      this.getColorFromStyle(this.styles.selectedLabel);
+      this.getColorFromStyle(styles.selectedLabel);
     const badgeFinalProps = badgeProps || badge;
 
     return (
@@ -218,7 +213,7 @@ export default class TabBarItem extends PureBaseComponent<Props, State> {
         accessibilityRole={'tab'}
         accessibilityLabel={accessibilityLabel}
       >
-        <View row flex center style={[showDivider && this.styles.divider, {paddingHorizontal: HORIZONTAL_PADDING}]}>
+        <View row flex center style={[showDivider && styles.divider, {paddingHorizontal: HORIZONTAL_PADDING}]}>
           {icon && (
             <Image
               style={!_.isEmpty(label) && {marginRight: 6}}
@@ -230,7 +225,7 @@ export default class TabBarItem extends PureBaseComponent<Props, State> {
             <Text
               numberOfLines={maxLines}
               uppercase={uppercase}
-              style={[labelStyle || this.styles.label, selected && (selectedLabelStyle || this.styles.selectedLabel)]}
+              style={[labelStyle || styles.label, selected && (selectedLabelStyle || styles.selectedLabel)]}
             >
               {label}
             </Text>
@@ -241,39 +236,40 @@ export default class TabBarItem extends PureBaseComponent<Props, State> {
               backgroundColor={Colors.red30}
               size={'small'}
               {...badgeFinalProps}
-              containerStyle={[this.styles.badge, badgeFinalProps.containerStyle]}
+              containerStyle={[styles.badge, badgeFinalProps.containerStyle]}
             />
           )}
         </View>
-        <Animated.View style={[{opacity: indicatorOpacity}, this.styles.indicator, indicatorStyle]}/>
+        <Animated.View style={[{opacity: indicatorOpacity}, styles.indicator, indicatorStyle]}/>
       </TouchableOpacity>
     );
   }
 }
 
-function createStyles() {
-  return StyleSheet.create({
-    label: {
-      color: Colors.primary,
-      ...Typography.text80
-    },
-    selectedLabel: {
-      color: Colors.primary,
-      ...Typography.text80,
-      fontWeight: 'bold'
-    },
-    divider: {
-      borderRightWidth: 1,
-      borderRightColor: Colors.dark70,
-      marginVertical: 14 // NOTE: will not cut long text at the top and bottom in iOS if TabBar not high enough
-    },
-    indicator: {
-      backgroundColor: INDICATOR_BG_COLOR,
-      height: INDICATOR_HEIGHT,
-      marginHorizontal: HORIZONTAL_PADDING
-    },
-    badge: {
-      marginLeft: Spacings.s1
-    }
-  });
-}
+export default asBaseComponent<TabBarItemProps, State>(TabBarItem);
+
+
+const styles =  StyleSheet.create({
+  label: {
+    color: Colors.primary,
+    ...Typography.text80
+  },
+  selectedLabel: {
+    color: Colors.primary,
+    ...Typography.text80,
+    fontWeight: 'bold'
+  },
+  divider: {
+    borderRightWidth: 1,
+    borderRightColor: Colors.dark70,
+    marginVertical: 14 // NOTE: will not cut long text at the top and bottom in iOS if TabBar not high enough
+  },
+  indicator: {
+    backgroundColor: INDICATOR_BG_COLOR,
+    height: INDICATOR_HEIGHT,
+    marginHorizontal: HORIZONTAL_PADDING
+  },
+  badge: {
+    marginLeft: Spacings.s1
+  }
+});
