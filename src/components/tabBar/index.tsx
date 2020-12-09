@@ -210,7 +210,7 @@ class TabBar extends Component<Props, State> {
     return (
       <ScrollBar
         ref={this.scrollBar}
-        contentContainerStyle={{minWidth: '100%'}}
+        contentContainerStyle={styles.scrollBarContainer}
         scrollEnabled={scrollEnabled}
         scrollEventThrottle={16}
         onScroll={this.onScroll}
@@ -315,5 +315,8 @@ const styles = StyleSheet.create({
   },
   shadowImage: {
     width: '100%'
+  },
+  scrollBarContainer: {
+    minWidth: '100%'
   }
 });

@@ -213,10 +213,10 @@ class TabBarItem extends PureComponent<Props, State> {
         accessibilityRole={'tab'}
         accessibilityLabel={accessibilityLabel}
       >
-        <View row flex center style={[showDivider && styles.divider, {paddingHorizontal: HORIZONTAL_PADDING}]}>
+        <View row flex center style={[showDivider && styles.divider, styles.contentContainer]}>
           {icon && (
             <Image
-              style={!_.isEmpty(label) && {marginRight: 6}}
+              style={!_.isEmpty(label) && styles.icon}
               source={icon}
               tintColor={selected ? iconSelectedTint : iconTint}
             />
@@ -250,6 +250,9 @@ export default asBaseComponent<TabBarItemProps, State>(TabBarItem);
 
 
 const styles =  StyleSheet.create({
+  contentContainer: {
+    paddingHorizontal: HORIZONTAL_PADDING
+  },
   label: {
     color: Colors.primary,
     ...Typography.text80
@@ -271,5 +274,8 @@ const styles =  StyleSheet.create({
   },
   badge: {
     marginLeft: Spacings.s1
+  },
+  icon: {
+    marginRight: 6
   }
 });
