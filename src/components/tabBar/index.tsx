@@ -79,7 +79,7 @@ export type TabBarProps = Props;
 class TabBar extends Component<Props, State> {
   static displayName = 'TabBar';
 
-  static Item = TabBarItem;
+  static Item: typeof TabBarItem;
 
   static defaultProps: Partial<Props> = {
     selectedIndex: 0,
@@ -288,7 +288,8 @@ class TabBar extends Component<Props, State> {
   }
 }
 
-export default asBaseComponent<TabBarProps, typeof TabBar>(TabBar);
+TabBar.Item = TabBarItem;
+export default asBaseComponent<TabBarProps, {Item: typeof TabBarItem}>(TabBar);
 
 
 const styles = StyleSheet.create({
