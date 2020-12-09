@@ -145,8 +145,8 @@ class TabBar extends Component<Props, State> {
     return this.state.currentIndex === index && !this.isIgnored(index) && this.childrenCount > 1;
   };
 
-  updateIndicator(index?: number) {
-    if (index && !this.isIgnored(index)) {
+  updateIndicator(index: number) {
+    if (!this.isIgnored(index)) {
       this.setState({currentIndex: index}, () => {
         this.scrollToSelected();
       });
