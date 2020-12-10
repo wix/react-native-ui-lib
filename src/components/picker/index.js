@@ -1,4 +1,6 @@
 // TODO: deprecate all places where we check if _.isPlainObject
+// TODO: deprecate getItemValue prop
+// TODO: deprecate getItemLabel prop
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
@@ -210,9 +212,10 @@ class Picker extends PureComponent {
   getContextValue = () => {
     const {value, searchValue} = this.state;
     const {migrate, mode, getItemValue, getItemLabel, renderItem, showSearch} = this.props;
+    const pickerValue = !migrate && _.isPlainObject(value) ? value?.value : value;
     return {
       migrate,
-      value,
+      value: pickerValue,
       onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
       isMultiMode: mode === Picker.modes.MULTI,
       getItemValue,

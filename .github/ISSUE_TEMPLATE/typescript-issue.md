@@ -7,7 +7,12 @@ assignees: ''
 
 ---
 
-**Component**
+### Component
+<!--
 Which component has a missing or invalid typings? 
+-->
 
-**What's the issue?**
+### What's the issue?
+<!--
+Add relevant details 
+-->
