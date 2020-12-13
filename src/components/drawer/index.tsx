@@ -121,6 +121,7 @@ interface Props {
 }
 
 export type DrawerProps = Props;
+export type DrawerItemProps = ItemProps;
 
 /**
  * @description: Drawer Component

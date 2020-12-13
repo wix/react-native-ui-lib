@@ -35,7 +35,7 @@ export {default as TouchableOpacity, TouchableOpacityProps} from './components/t
 export {default as Button, ButtonPropTypes, ButtonProps} from './components/button';
 export {default as Checkbox, CheckboxPropTypes, CheckboxProps} from './components/checkbox';
 export {default as Chip, ChipPropTypes, ChipProps} from './components/chip';
-export {default as Drawer, DrawerProps, ItemProps} from './components/drawer';
+export {default as Drawer, DrawerProps, DrawerItemProps} from './components/drawer';
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
 export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
