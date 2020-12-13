@@ -133,7 +133,7 @@ class Image extends PureComponent<Props> {
       // @ts-ignore
       <ImageView
         style={[
-          {tintColor},
+          tintColor && {tintColor},
           shouldFlipRTL && styles.rtlFlipped,
           cover && styles.coverImage,
           this.isGif() && styles.gifImage,

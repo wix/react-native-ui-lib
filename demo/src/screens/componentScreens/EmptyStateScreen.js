@@ -36,7 +36,7 @@ export default class EmptyStateScreen extends Component {
               title='Oppsie (with local image)'
               subtitle='Nothing to see here..'
               ctaLabel='OK'
-              imageSource={localImageSource}
+              source={localImageSource}
             />
           </View>
           <View style={styles.pageView}>
@@ -44,7 +44,7 @@ export default class EmptyStateScreen extends Component {
               title='Oppsie (with remote image)'
               subtitle='Nothing to see here..'
               ctaLabel='OK'
-              imageSource={remoteImageSource}
+              source={remoteImageSource}
             />
           </View>
         </ScrollView>

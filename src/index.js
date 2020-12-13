@@ -226,6 +226,9 @@ export default {
   get withScrollReached() {
     return require('./commons').withScrollReached;
   },
+  get Modifiers() {
+    return require('./commons').modifiers;
+  },
 
   // Helpers
   get AvatarHelper() {
@@ -290,6 +293,9 @@ export default {
   },
   get AnimatableManager() {
     return require('./style').AnimatableManager;
+  },
+  get Hooks() {
+    return require('./hooks');
   },
 
   // Incubator

@@ -17,24 +17,26 @@ export {
   BackgroundColorModifier
 } from './commons/new';
 export * as Incubator from './incubator';
+export * as Hooks from './hooks';
+export * as Modifiers from './commons/modifiers';
 export {default as ActionBar, ActionBarProps} from './components/actionBar';
-export {default as Avatar, AvatarPropTypes} from './components/avatar';
+export {default as Avatar, AvatarPropTypes, AvatarProps} from './components/avatar';
 export {default as Badge, BadgeProps} from './components/badge';
-export {default as Card, CardPropTypes, CardSectionProps} from './components/card';
+export {default as Card, CardPropTypes, CardProps, CardSectionProps} from './components/card';
 export {default as Constants} from './helpers/Constants';
-export {default as View, ViewPropTypes} from './components/view';
-export {default as Text, TextPropTypes} from './components/text';
+export {default as View, ViewPropTypes, ViewProps} from './components/view';
+export {default as Text, TextPropTypes, TextProps} from './components/text';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';
-export {default as Button, ButtonPropTypes} from './components/button';
-export {default as Checkbox, CheckboxPropTypes} from './components/checkbox';
-export {default as Chip, ChipPropTypes} from './components/chip';
+export {default as Button, ButtonPropTypes, ButtonProps} from './components/button';
+export {default as Checkbox, CheckboxPropTypes, CheckboxProps} from './components/checkbox';
+export {default as Chip, ChipPropTypes, ChipProps} from './components/chip';
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
 export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
-export {default as RadioButton, RadioButtonPropTypes} from './components/radioButton/RadioButton';
-export {default as RadioGroup, RadioGroupPropTypes} from './components/radioButton/RadioGroup';
+export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './components/radioButton/RadioButton';
+export {default as RadioGroup, RadioGroupPropTypes, RadioGroupProps} from './components/radioButton/RadioGroup';
 export {default as Switch, SwitchProps} from './components/switch';
-export {default as TabBar} from './components/TabBar';
+export {default as TabBar, TabBarProps} from './components/TabBar';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
@@ -49,19 +51,19 @@ export {
   PanDirectionsProps,
   PanningProviderDirection
 } from './components/panningViews/panningProvider';
-export {default as PanListenerView, PanListenerViewPropTypes} from './components/panningViews/panListenerView';
-export {default as PanResponderView, PanResponderViewPropTypes} from './components/panningViews/panResponderView';
-export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes} from './components/panningViews/panDismissibleView';
+export {default as PanListenerView, PanListenerViewPropTypes, PanListenerViewProps} from './components/panningViews/panListenerView';
+export {default as PanResponderView, PanResponderViewPropTypes, PanResponderViewProps} from './components/panningViews/panResponderView';
+export {default as PanDismissibleView, PanDismissibleViewPropTypes, DismissibleAnimationPropTypes, PanDismissibleViewProps, DismissibleAnimationProps} from './components/panningViews/panDismissibleView';
 export {default as Dialog, DialogProps} from './components/dialog';
 export {default as PageControl, PageControlProps} from './components/pageControl';
 export {default as Carousel, CarouselProps} from './components/carousel';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ActionSheet, ConnectionStatusBar, ChipsInput, Drawer,
-  FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem,
-  Picker, PickerProps, ProgressBar, Slider,
-  GradientSlider, ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,
-  WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper,
+  ActionSheet, ConnectionStatusBar, ChipsInput,
+  FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, Picker,
+  PickerProps, ProgressBar, Slider, GradientSlider, ColorSliderGroup, Stepper,
+  TagsInput, SharedTransition, StackAggregator, Toast, WheelPickerDialog, Assets,
+  BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper,
   LogService, LoaderScreen, StateScreen, WheelPicker, WheelPickerProps, ColorPicker
 } from '../typings';

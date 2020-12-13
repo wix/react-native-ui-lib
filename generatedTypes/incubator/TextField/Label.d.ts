@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import { TextStyle } from 'react-native';
-import { TextPropTypes } from '../../components/text';
+import { TextProps } from '../../components/text';
 import { ColorType, ValidationMessagePosition } from './types';
 export interface LabelProps {
     /**
@@ -18,7 +18,7 @@ export interface LabelProps {
     /**
      * Pass extra props to the label Text element
      */
-    labelProps?: TextPropTypes;
+    labelProps?: TextProps;
     validationMessagePosition?: ValidationMessagePosition;
     floatingPlaceholder?: boolean;
 }

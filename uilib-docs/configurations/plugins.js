@@ -1,3 +1,5 @@
+const path = require('path');
+
 const manifestPlugin = [
   {
     resolve: `gatsby-plugin-manifest`,
@@ -13,12 +15,12 @@ const manifestPlugin = [
   }
 ];
 
-const markdownPagesPlugin = [
+const markdownPagesPlugin = (path = `${__dirname}/../../markdowns/`) => [
   {
     resolve: `gatsby-source-filesystem`,
     options: {
       name: `markdown-pages`,
-      path: `${__dirname}/../../markdowns/`
+      path
     }
   },
   `gatsby-transformer-remark`
@@ -29,7 +31,8 @@ const componentsDocgenPlugin = [
   {
     resolve: 'gatsby-source-filesystem',
     options: {
-      path: `${__dirname}/../../src/components/`
+      path: `${__dirname}/../../src/components/`,
+      ignore: ['**/\*.tsx']
     }
   }
 ];
@@ -39,7 +42,8 @@ const incubatorComponentsDocgenPlugin = [
   {
     resolve: 'gatsby-source-filesystem',
     options: {
-      path: `${__dirname}/../../src/incubator/`
+      path: `${__dirname}/../../src/incubator/`,
+      ignore: ['**/\*.tsx']
     }
   }
 ];
@@ -49,7 +53,8 @@ const nativeComponentsDocgenPlugin = [
   {
     resolve: 'gatsby-source-filesystem',
     options: {
-      path: `${__dirname}/../../lib/components/`
+      path: `${__dirname}/../../lib/components/`,
+      ignore: ['**/\*.tsx']
     }
   }
 ];
@@ -70,7 +75,7 @@ const layoutPlugin = [
   {
     resolve: `gatsby-plugin-layout`,
     options: {
-      component: require.resolve(`${__dirname}/../src/components/layout.js`)
+      component: require.resolve(`${path.resolve('./')}/src/components/layout.js`)
     }
   }
 ];

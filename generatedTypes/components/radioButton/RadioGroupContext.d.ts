@@ -1,5 +1,5 @@
 import React from 'react';
-export interface RadioGroupContextPropTypes {
+export interface RadioGroupContextProps {
     /**
      * The identifier value of the radio button. must be different than other RadioButtons in the same group
      */
@@ -9,5 +9,6 @@ export interface RadioGroupContextPropTypes {
      */
     onValueChange?: (value: string | number | boolean) => void;
 }
-declare const _default: React.Context<RadioGroupContextPropTypes>;
+export declare type RadioGroupContextPropTypes = RadioGroupContextProps;
+declare const _default: React.Context<RadioGroupContextProps>;
 export default _default;

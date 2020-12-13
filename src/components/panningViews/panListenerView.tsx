@@ -13,9 +13,9 @@ import PanningProvider, {
   PanAmountsProps,
   PanningProviderDirection
 } from './panningProvider';
-import View, {ViewPropTypes} from '../view';
+import View, {ViewProps} from '../view';
 
-interface PanningPropTypes {
+interface PanningProps {
     /**
      * This is were you will get notified when a drag occurs
      * onDrag = ({directions, deltas}) => {...}
@@ -50,7 +50,7 @@ interface PanningPropTypes {
     onPanTerminated?: () => void;
 }
 
-export interface PanListenerViewPropTypes extends PanningPropTypes, ViewPropTypes {
+export interface PanListenerViewProps extends PanningProps, ViewProps {
     /**
      * The directions of the allowed pan (default allows all directions)
      * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###)
@@ -71,9 +71,11 @@ export interface PanListenerViewPropTypes extends PanningPropTypes, ViewPropType
      */
     isClickable?: boolean;
 }
+export type PanListenerViewPropTypes = PanListenerViewProps; //TODO: remove after ComponentPropTypes deprecation;
 
-interface Props extends PanListenerViewPropTypes {
-  context?: PanningPropTypes;
+
+interface Props extends PanListenerViewProps {
+  context?: PanningProps;
 }
 
 interface PanningResultProps {
@@ -105,7 +107,7 @@ class PanListenerView extends PureComponent<Props> {
 
   private panResponder: PanResponderInstance;
 
-  constructor(props: PanListenerViewPropTypes) {
+  constructor(props: PanListenerViewProps) {
     super(props);
 
     const {isClickable} = props;
@@ -231,4 +233,4 @@ class PanListenerView extends PureComponent<Props> {
   }
 }
 
-export default asPanViewConsumer<PanListenerViewPropTypes>(PanListenerView);
+export default asPanViewConsumer<PanListenerViewProps>(PanListenerView);
