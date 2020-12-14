@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component, ElementRef, RefObject} from 'react';
-import {Platform, StyleSheet, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import {Platform, StyleSheet, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {asBaseComponent} from '../../commons';
@@ -108,7 +108,7 @@ class TabBar extends Component<Props, State> {
 
   componentDidUpdate(prevProps: Props, prevState: State) {
     const prevChildrenCount = React.Children.count(prevProps.children);
-    if (this.childrenCount < prevChildrenCount) {
+    if (this.childrenCount !== prevChildrenCount) {
       this.updateIndicator(0);
     }
     // TODO: since we're implementing an uncontrolled component here, we should verify the selectedIndex has changed
