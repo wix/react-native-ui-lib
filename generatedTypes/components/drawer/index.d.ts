@@ -104,8 +104,13 @@ interface Props {
      * Custom value of any type to pass on to the component and receive back in the action callbacks
      */
     customValue?: any;
+    /**
+     * Used as testing identifier
+     */
+    testID?: string;
 }
 export declare type DrawerProps = Props;
+export declare type DrawerItemProps = ItemProps;
 /**
  * @description: Drawer Component
  * @important: If your app works with RNN, your screen must be wrapped

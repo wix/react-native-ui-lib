@@ -37,6 +37,10 @@ export interface FloatingButtonProps {
    * Whether to show background overlay
    */
   hideBackgroundOverlay?: boolean;
+  /**
+   * Used as testing identifier
+   */
+  testID?: string;
 }
 
 const SHOW_ANIMATION_DELAY = 350;
