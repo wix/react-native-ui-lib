@@ -166,11 +166,20 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     }
   };
 
-  getColor = () => this.props.disabled ? DEFAULT_DISABLED_COLOR : this.props.color || DEFAULT_COLOR;
+  getColor = () => (this.props.disabled ? DEFAULT_DISABLED_COLOR : this.props.color || DEFAULT_COLOR);
 
-  getBackgroundColor = () => this.props.outline ? 'transparent' : this.getColor();
+  getBackgroundColor = () => (this.props.outline ? 'transparent' : this.getColor());
 
-  getTintColor = () => this.props.outline ? this.getColor() : DEFAULT_ICON_COLOR;
+  getTintColor = () => {
+    const {outline, disabled, iconColor} = this.props;
+    if (outline) {
+      if (disabled) return DEFAULT_DISABLED_COLOR;
+      else return iconColor || DEFAULT_COLOR;
+    } else {
+      if (disabled) return Colors.white;
+      else return iconColor || Colors.white;
+    }
+  };
 
   getBorderStyle() {
     const borderColor = {borderColor: this.getColor()};
@@ -231,7 +240,12 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 }
 
 function createStyles(props: CheckboxProps) {
-  const {color = DEFAULT_COLOR, iconColor = DEFAULT_ICON_COLOR, size = DEFAULT_SIZE, borderRadius = DEFAULT_BORDER_RADIUS} = props;
+  const {
+    color = DEFAULT_COLOR,
+    iconColor = DEFAULT_ICON_COLOR,
+    size = DEFAULT_SIZE,
+    borderRadius = DEFAULT_BORDER_RADIUS
+  } = props;
 
   return StyleSheet.create({
     container: {
