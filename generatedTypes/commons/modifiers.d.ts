@@ -60,6 +60,7 @@ export declare type TypographyLiterals = keyof typeof TypographyPresets;
 export declare type BorderRadiusLiterals = keyof typeof BorderRadiusesLiterals;
 export declare type AlignmentLiterals = 'row' | 'spread' | 'center' | 'centerH' | 'centerV' | 'left' | 'right' | 'top' | 'bottom';
 export declare type PositionLiterals = 'absF' | 'absL' | 'absR' | 'absT' | 'absB' | 'absV' | 'absH';
+export declare type NumberModifier<T extends string> = Partial<Record<T, number>>;
 export declare type Modifier<T extends string> = Partial<Record<T, boolean>>;
 export declare type CustomModifier = {
     [key: string]: boolean;
@@ -69,7 +70,7 @@ export declare type ColorsModifiers = Modifier<ColorLiterals> | CustomModifier;
 export declare type BackgroundColorModifier = Modifier<'bg'>;
 export declare type AlignmentModifiers = Modifier<AlignmentLiterals>;
 export declare type PositionModifiers = Modifier<PositionLiterals>;
-export declare type PaddingModifiers = Modifier<PaddingLiterals>;
+export declare type PaddingModifiers = NumberModifier<PaddingLiterals>;
 export declare type MarginModifiers = Modifier<MarginLiterals>;
 export declare type FlexModifiers = Modifier<FlexLiterals>;
 export declare type BorderRadiusModifiers = Modifier<BorderRadiusLiterals>;
