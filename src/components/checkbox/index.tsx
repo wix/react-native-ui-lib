@@ -75,7 +75,6 @@ interface CheckboxState {
  * @description: Checkbox component for toggling boolean value related to some context
  * @extends: TouchableOpacity
  * @extendslink: docs/TouchableOpacity
- * @gif: https://media.giphy.com/media/xULW8j5WzsuPytqklq/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CheckboxScreen.tsx
  */
 class Checkbox extends Component<CheckboxProps, CheckboxState> {
