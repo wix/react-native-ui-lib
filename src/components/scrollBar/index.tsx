@@ -17,7 +17,7 @@ import View from '../view';
 import Image from '../image';
 
 
-interface Props extends FlatListProps<any> {
+interface Props extends FlatListProps<any>, ForwardRefInjectedProps {
   /**
      * Whether to use a FlatList. NOTE: you must pass 'data' and 'renderItem' props as well
      */
@@ -61,7 +61,7 @@ interface Props extends FlatListProps<any> {
     focusIndex?: number
 };
 
-export type ScrollBarProps = Props & ForwardRefInjectedProps;
+export type ScrollBarProps = Props;
 
 export type State = {
   gradientOpacity: Animated.Value,

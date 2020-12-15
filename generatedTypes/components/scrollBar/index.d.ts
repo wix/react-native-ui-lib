@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Animated, FlatListProps, ImageSourcePropType, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent } from 'react-native';
 import { ForwardRefInjectedProps } from '../../commons/new';
-interface Props extends FlatListProps<any> {
+interface Props extends FlatListProps<any>, ForwardRefInjectedProps {
     /**
        * Whether to use a FlatList. NOTE: you must pass 'data' and 'renderItem' props as well
        */
@@ -44,7 +44,7 @@ interface Props extends FlatListProps<any> {
      */
     focusIndex?: number;
 }
-export declare type ScrollBarProps = Props & ForwardRefInjectedProps;
+export declare type ScrollBarProps = Props;
 export declare type State = {
     gradientOpacity: Animated.Value;
     gradientOpacityLeft: Animated.Value;
@@ -84,6 +84,8 @@ declare const Item: {
     displayName: string;
 };
 declare const _default: React.ComponentClass<Props & {
-    useCustomTheme?: boolean | undefined;
+    useCustomTheme?: boolean | undefined; /**
+       * Whether to use a FlatList. NOTE: you must pass 'data' and 'renderItem' props as well
+       */
 }, any> & typeof ScrollBar;
 export default _default;
