@@ -7,7 +7,7 @@ import {Constants} from '../../helpers';
 
 const {Code, Value, cond, set, and, call, block, eq} = Reanimated;
 
-interface TabPageProps {
+export interface TabPageProps {
   /**
    * The index of the the TabPage
    */
