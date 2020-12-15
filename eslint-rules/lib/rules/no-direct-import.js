@@ -31,10 +31,10 @@ module.exports = {
       try {
         const origin = context.options[0].origin;
         const destination = context.options[0].destination;
-        const msg = `Do not import directly from '${origin}'. Please use '${destination}' (autofix available).`;
+        const message = `Do not import directly from '${origin}'. Please use '${destination}' (autofix available).`;
         context.report({
           node,
-          message: `${msg}`,
+          message,
           fix(fixer) {
             if (node && destination) {
               return fixer.replaceText(node.source, `'${destination}'`);
@@ -46,7 +46,7 @@ module.exports = {
       }
     }
 
-    function checkImportDeclaretion(node) {
+    function checkImportDeclaration(node) {
       const origin = context.options[0].origin;
       const source = node.source.value;
       if (source && origin && source === origin) {
@@ -55,7 +55,7 @@ module.exports = {
     }
 
     return {
-      ImportDeclaration: node => checkImportDeclaretion(node),
+      ImportDeclaration: checkImportDeclaration
     };
   },
 };
