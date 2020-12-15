@@ -3,10 +3,10 @@ index: 6
 path: "/foundation/assets"
 title: "Assets"
 ---
-Assets are big part of the whole UI system, whether it's an icon, placeholder or an illustration, we use them everywhere. <br>
+Assets are big part of the whole UI system, whether it's an icon, placeholder or an illustration, we use them everywhere.  
 Load assets groups and easily render them with the _Image_ component.
 
-```jsx
+```javascript
 import {Assets, Image} from 'react-native-ui-lib';
 
 Assets.loadAssetsGroup('icons', {
@@ -25,6 +25,10 @@ Assets.loadAssetsGroup('illustrations.emptyStates.', {
   noContacts: require('noContacts.png'),
 });
 
+```
+
+And use them like this
+```jsx
 // Use them with the Image component (our Image component)
 <Image assetName="icon1"/> // default assetGroup is "icons"
 <Image assetName="emptyCart" assetGroup="illustrations.placeholders"/>
