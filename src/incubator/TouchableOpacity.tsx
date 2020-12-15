@@ -1,10 +1,11 @@
 // TODO: support hitSlop
 import React, {PureComponent} from 'react';
-import {processColor, StyleSheet, ViewStyle} from 'react-native';
+import {processColor, StyleSheet, LayoutChangeEvent} from 'react-native';
 import _ from 'lodash';
 import Reanimated, {Easing} from 'react-native-reanimated';
 import {TapGestureHandler, LongPressGestureHandler, State, LongPressGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../commons/new';
+import {ViewProps} from '../components/view';
 
 const {
   Clock,
@@ -26,7 +27,7 @@ const {
   stopClock
 } = Reanimated;
 
-type TouchableOpacityProps = {
+export type TouchableOpacityProps = {
   /**
    * Background color
    */
@@ -54,7 +55,7 @@ type TouchableOpacityProps = {
   /**
    * Pass controlled pressState to track gesture state changes
    */
-  pressState?: object;
+  pressState?: State;
   /**
    * If true, disable all interactions for this component.
    */
@@ -62,15 +63,21 @@ type TouchableOpacityProps = {
   /**
    * Pass custom style
    */
-  style?: ViewStyle;
+  style?: ViewProps['style'];
+  // TODO: get these from somewhere
+  ref?: any;
+  onLayout?: (event: LayoutChangeEvent) => void;
+  testID?: string;
 };
+
+type Props = TouchableOpacityProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
 
 /**
  * @description: a Better, enhanced TouchableOpacity component
  * @modifiers: flex, margin, padding, background
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TouchableOpacityScreen.js
  */
-class TouchableOpacity extends PureComponent<TouchableOpacityProps & BaseComponentInjectedProps & ForwardRefInjectedProps> {
+class TouchableOpacity extends PureComponent<Props> {
   static displayName = 'Incubator.TouchableOpacity';
 
   static defaultProps = {
@@ -216,4 +223,4 @@ function runTiming(clock: any, gestureState: any, initialValue: number, endValue
   ]);
 }
 
-export default asBaseComponent<TouchableOpacityProps>(forwardRef(TouchableOpacity));
+export default asBaseComponent<TouchableOpacityProps>(forwardRef<Props>(TouchableOpacity));
