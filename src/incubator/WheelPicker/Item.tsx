@@ -11,7 +11,7 @@ const AnimatedTouchableOpacity = Animated.createAnimatedComponent(
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
 export interface ItemProps {
-  text: string;
+  label: string;
   value: string | number;
 }
 
@@ -27,7 +27,7 @@ interface InternalProps extends ItemProps {
 
 export default ({
   index,
-  text,
+  label,
   itemHeight,
   onSelect,
   offset,
@@ -62,7 +62,7 @@ export default ({
       index={index}
     >
       <AnimatedText text60R style={{color, ...style}}>
-        {text}
+        {label}
       </AnimatedText>
     </AnimatedTouchableOpacity>
   );
