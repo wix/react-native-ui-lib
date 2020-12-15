@@ -8,7 +8,6 @@ import _ from 'lodash';
 
 import TabBarContext from './TabBarContext';
 import TabBarItem from './TabBarItem';
-// import ReanimatedObject from './ReanimatedObject';
 import {asBaseComponent, forwardRef} from '../../commons';
 import View from '../../components/view';
 import ScrollBarGradient from '../scrollBar/ScrollBarGradient';
