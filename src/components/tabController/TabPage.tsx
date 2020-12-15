@@ -40,6 +40,7 @@ export default class TabPage extends PureComponent<TabPageProps> {
   static contextType = TabBarContext;
 
   static defaultProps = {
+    lazy: false,
     activeOpacity: 0.6,
     lazyLoadTime: 300,
     renderLoading: _.noop
