@@ -4,7 +4,7 @@ import {StyleSheet, Animated, Easing, LayoutChangeEvent, LayoutRectangle, StyleP
 import {LogService} from '../../services';
 import {Constants} from '../../helpers';
 import {Colors, Typography, Spacings} from '../../style';
-import {asBaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
@@ -16,7 +16,7 @@ const INDICATOR_HEIGHT = 2;
 const INDICATOR_BG_COLOR = Colors.primary;
 const HORIZONTAL_PADDING = Constants.isTablet ? Spacings.s7 : Spacings.s5;
 
-interface Props extends ThemeComponent {
+interface Props {
   /**
    * icon of the tab
    */
@@ -43,7 +43,7 @@ interface Props extends ThemeComponent {
   badge?: BadgeProps; //TODO: remove after deprecation
   badgeProps?: BadgeProps;
   /**
-   * maximun number of lines the label can break
+   * maximum number of lines the label can break
    */
   maxLines?: number;
   /**
@@ -149,7 +149,7 @@ class TabBarItem extends PureComponent<Props, State> {
   getStylePropValue(flattenStyle: StyleProp<TextStyle>, propName: string) {
     let prop;
     if (flattenStyle) {
-      const propObject = _.pick(flattenStyle, [propName]);
+      const propObject: any = _.pick(flattenStyle, [propName]);
       prop = propObject[propName];
     }
     return prop;
@@ -199,6 +199,7 @@ class TabBarItem extends PureComponent<Props, State> {
       this.getColorFromStyle(selectedLabelStyle) ||
       this.getColorFromStyle(styles.selectedLabel);
     const badgeFinalProps = badgeProps || badge;
+    const badgeSize = _.get(badgeFinalProps, 'size', 'small');
 
     return (
       <TouchableOpacity
@@ -234,8 +235,8 @@ class TabBarItem extends PureComponent<Props, State> {
           {!_.isNil(badgeFinalProps) && (
             <Badge
               backgroundColor={Colors.red30}
-              size={'small'}
               {...badgeFinalProps}
+              size={badgeSize}
               containerStyle={[styles.badge, badgeFinalProps.containerStyle]}
             />
           )}

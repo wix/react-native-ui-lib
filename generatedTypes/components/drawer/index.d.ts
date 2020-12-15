@@ -106,6 +106,7 @@ interface Props {
     customValue?: any;
 }
 export declare type DrawerProps = Props;
+export declare type DrawerItemProps = ItemProps;
 /**
  * @description: Drawer Component
  * @important: If your app works with RNN, your screen must be wrapped

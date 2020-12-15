@@ -3,8 +3,8 @@ import React, {Component, ElementRef, RefObject} from 'react';
 import {Platform, StyleSheet, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
-import {asBaseComponent} from '../../commons';
-import View, {ViewPropTypes} from '../view';
+import {asBaseComponent} from '../../commons/new';
+import View from '../view';
 import ScrollBar/* , {ScrollBarProps} */ from '../scrollBar';
 import TabBarItem, {TabBarItemProps} from './TabBarItem';
 
@@ -15,7 +15,7 @@ const DEFAULT_HEIGHT = 48;
 
 const ScrollBarProps = ScrollBar.propTypes; //TODO: remove after TS migration
 
-interface Props extends ViewPropTypes, ThemeComponent, ScrollBarProps, TabBarItemProps {
+interface Props extends ScrollBarProps, TabBarItemProps {
   /**
    * Show Tab Bar bottom shadow
    */
@@ -99,11 +99,12 @@ class TabBar extends Component<Props, State> {
 
     this.state = {
       scrollEnabled: false,
-      currentIndex: props.selectedIndex
+      currentIndex: props.selectedIndex || 0
     };
 
     this.contentOffset = {x: 0, y: 0};
     this.scrollBar = React.createRef();
+    this.itemsRefs= [];
   }
 
   componentDidUpdate(prevProps: Props, prevState: State) {
@@ -138,15 +139,15 @@ class TabBar extends Component<Props, State> {
   }
 
   hasOverflow() {
-    return this.scrollContentWidth > this.scrollContainerWidth;
+    return this.scrollContentWidth && this.scrollContentWidth > this.scrollContainerWidth;
   }
 
   shouldBeMarked = (index: number) => {
     return this.state.currentIndex === index && !this.isIgnored(index) && this.childrenCount > 1;
   };
 
-  updateIndicator(index: number) {
-    if (!this.isIgnored(index)) {
+  updateIndicator(index?: number) {
+    if (index !== undefined && !this.isIgnored(index)) {
       this.setState({currentIndex: index}, () => {
         this.scrollToSelected();
       });
@@ -154,7 +155,7 @@ class TabBar extends Component<Props, State> {
   }
 
   scrollToSelected(animated = true) {
-    const childRef = this.itemsRefs[this.state.currentIndex];
+    const childRef: any = this.itemsRefs[this.state.currentIndex];
     const childLayout = childRef.getLayout();
 
     if (childLayout && this.hasOverflow()) {
@@ -192,7 +193,7 @@ class TabBar extends Component<Props, State> {
   };
 
   onContentSizeChange = (width: number) => {
-    if (this.scrollContentWidth !== width) {
+    if (this.scrollContentWidth && this.scrollContentWidth !== width) {
       this.scrollContentWidth = width;
       const {minTabsForScroll} = this.props;
       const minChildrenCount = minTabsForScroll || MIN_TABS_FOR_SCROLL;
@@ -241,7 +242,7 @@ class TabBar extends Component<Props, State> {
     this.itemsRefs = [];
     const {indicatorStyle, darkTheme} = this.props;
 
-    const children = React.Children.map<any, TabBarItem>(this.props.children as TabBarItem[], (child, index) => {
+    const children = React.Children.map<any, typeof TabBarItem>(this.props.children as typeof TabBarItem[], (child, index) => {
       const accessLabel = child.props.accessibilityLabel || child.props.label || '';
 
       //TODO: review it again, all types here should be correct. As from React.Children.map it gets definitely child: React.ReactNode, and React.cloneElement does not accept it.
@@ -254,7 +255,7 @@ class TabBar extends Component<Props, State> {
         onPress: () => {
           this.onItemPress(index, child.props);
         },
-        ref: r => {
+        ref: (r: any) => {
           this.itemsRefs[index] = r;
         },
         accessibilityLabel: `${accessLabel} ${index + 1} out of ${this.childrenCount}`
