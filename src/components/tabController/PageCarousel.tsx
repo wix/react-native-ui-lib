@@ -14,7 +14,7 @@ const {Code, block, call} = Animated;
 class PageCarousel extends PureComponent {
   static displayName = 'TabController.PageCarousel';
   static contextType = TabBarContext;
-  carousel = React.createRef();
+  carousel = React.createRef<Animated.ScrollView>();
 
   onScroll = Animated.event([{nativeEvent: {contentOffset: {x: this.context.carouselOffset}}}], {
     useNativeDriver: true
@@ -28,11 +28,11 @@ class PageCarousel extends PureComponent {
     }
   }
 
-  onTabChange = ([index]) => {
+  onTabChange = ([index]: readonly number[]) => {
     this.scrollToPage(index, true);
   };
 
-  scrollToPage = (pageIndex, animated) => {
+  scrollToPage = (pageIndex: number, animated: boolean) => {
     const {pageWidth} = this.context;
     const node = _.invoke(this.carousel, 'current.getNode');
     if (node) {
@@ -60,7 +60,7 @@ class PageCarousel extends PureComponent {
           showsHorizontalScrollIndicator={false}
           onScroll={this.onScroll}
           scrollEventThrottle={16}
-          contentOffset={{x: selectedIndex * pageWidth}} // iOS only
+          contentOffset={{x: selectedIndex * pageWidth, y: 0}} // iOS only
         />
 
         <Code>{this.renderCodeBlock}</Code>
