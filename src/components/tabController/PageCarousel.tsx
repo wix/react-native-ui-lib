@@ -23,16 +23,16 @@ class PageCarousel extends PureComponent {
   componentDidMount() {
     if (Constants.isAndroid) {
       setTimeout(() => {
-        this.scrollToPage(this.context.selectedIndex, false);
+        this.scrollToPage(this.context.selectedIndex);
       }, 0);
     }
   }
 
   onTabChange = ([index]: readonly number[]) => {
-    this.scrollToPage(index, true);
+    this.scrollToPage(index);
   };
 
-  scrollToPage = (pageIndex: number, animated: boolean) => {
+  scrollToPage = (pageIndex: number) => {
     const {pageWidth} = this.context;
     const node = _.invoke(this.carousel, 'current.getNode');
     if (node) {

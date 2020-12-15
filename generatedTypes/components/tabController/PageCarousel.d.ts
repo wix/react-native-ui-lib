@@ -12,7 +12,7 @@ declare class PageCarousel extends PureComponent {
     onScroll: (...args: any[]) => void;
     componentDidMount(): void;
     onTabChange: ([index]: readonly number[]) => void;
-    scrollToPage: (pageIndex: number, animated: boolean) => void;
+    scrollToPage: (pageIndex: number) => void;
     renderCodeBlock: () => Animated.Node<number>;
     render(): JSX.Element;
 }
