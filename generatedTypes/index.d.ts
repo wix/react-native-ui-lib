@@ -43,6 +43,7 @@ export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './
 export {default as RadioGroup, RadioGroupPropTypes, RadioGroupProps} from './components/radioButton/RadioGroup';
 export {default as Switch, SwitchProps} from './components/switch';
 export {default as TabBar, TabBarProps} from './components/TabBar';
+export {default as ScrollBar, ScrollBarProps} from './components/ScrollBar';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
@@ -113,7 +114,6 @@ export const KeyboardAwareListView;
 export const KeyboardAwareScrollView;
 export const SafeAreaInsetsManager;
 export const SafeAreaSpacerView;
-export const ScrollBar;
 export const SelectableComponent;
 export const TabController;
 export const TextField;
