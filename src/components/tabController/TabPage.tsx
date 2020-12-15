@@ -25,7 +25,7 @@ export interface TabPageProps {
    */
   renderLoading?: () => JSX.Element;
   /**
-   * testID
+   * Used as a testing identifier
    */
   testID?: string;
 }
