@@ -187,13 +187,13 @@ class ScrollBar extends Component<Props, State> {
 
   renderScrollable() {
     const {useList, forwardedRef, children} = this.props;
-    const Component = useList ? FlatList : ScrollView;
+    const Component: any = useList ? FlatList : ScrollView;
 
     return (
       <Component
         scrollEventThrottle={100}
         {...this.props}
-        ref={r => {
+        ref={(r: any) => {
           this.scrollbar = r;
           if (_.isFunction(forwardedRef)) {
             forwardedRef(r);
