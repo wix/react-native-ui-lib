@@ -37,7 +37,7 @@ export default class TabBarScreen extends Component {
       do {
         index = Math.floor(Math.random() * this.tabbar.props.children.length);
       } while (index === this.state.selectedIndex);
-
+  
       this.setState({selectedIndex: index});
     }
   };
@@ -82,7 +82,7 @@ export default class TabBarScreen extends Component {
   removeTab = () => {
     const index = this.state.selectedIndex;
     const newTabs = this.state.currentTabs;
-
+    
     if (newTabs.length >= 0) {
       newTabs.splice(index, 1);
     }
@@ -92,7 +92,7 @@ export default class TabBarScreen extends Component {
   /** Actions */
   getTabs(showAddTab: boolean) {
     const tabs = _.map(this.state.currentTabs, tab => this.renderTabs(tab));
-
+    
     if (showAddTab) {
       tabs.push(this.renderAddTabsTab());
     } else {
@@ -126,20 +126,15 @@ export default class TabBarScreen extends Component {
       <ScrollView style={{overflow: 'visible'}} showsVerticalScrollIndicator={false}>
         <View bg-dark80>
           <TabBar style={styles.tabbar} selectedIndex={0} enableShadow>
-            <TabBar.Item
-              label="single tab"
+            <TabBar.Item 
+              label="single tab" 
               labelStyle={{color: Colors.green30, fontWeight: 'bold', textTransform: 'capitalize'}}
             />
           </TabBar>
 
-          <TabBar
-            style={styles.tabbar}
-            selectedIndex={0}
-            enableShadow
-            // tabletMargins={{portrait: 0, landscape: 0}}
-          >
-            <TabBar.Item label="Fixed" uppercase backgroundColor={Colors.blue80}/>
-            <TabBar.Item label="Tab" badgeProps={{label: '100'}} uppercase style={{backgroundColor: Colors.blue80}}/>
+          <TabBar style={styles.tabbar} selectedIndex={0} enableShadow>
+            <TabBar.Item label="Fixed" uppercase style={{backgroundColor: Colors.blue80}}/>
+            <TabBar.Item label="Tab" badge={{label: '100'}} uppercase style={{backgroundColor: Colors.blue80}}/>
             <TabBar.Item label="Bar" uppercase style={{backgroundColor: Colors.blue80}}/>
           </TabBar>
 
@@ -151,7 +146,7 @@ export default class TabBarScreen extends Component {
 
           <TabBar style={styles.tabbar} selectedIndex={0} ref={r => (this.tabbar = r)} enableShadow>
             <TabBar.Item label="Scroll"/>
-            <TabBar.Item label="View" badgeProps={{size: 'pimpleSmall'}}/>
+            <TabBar.Item label="View" badge={{size: 'pimpleSmall'}}/>
             <TabBar.Item label="tab"/>
             <TabBar.Item label="bar"/>
             <TabBar.Item label="Container"/>
@@ -174,20 +169,13 @@ export default class TabBarScreen extends Component {
             {this.getTabs(true)}
           </TabBar>
 
-          <View center>
-            <Button
-              size={Button.sizes.small}
-              margin-20
-              label={`Change index: ${this.state.selectedIndex}`}
-              onPress={this.changeIndex}
-            />
-          </View>
-          <TabBar
-            style={styles.tabbar}
-            selectedIndex={this.state.selectedIndex}
-            enableShadow
-            backgroundColor={Colors.green70}
-          >
+          <Button
+            size={Button.sizes.small}
+            margin-20
+            label={`Change index: ${this.state.selectedIndex}`}
+            onPress={this.changeIndex}
+          />
+          <TabBar style={styles.tabbar} selectedIndex={this.state.selectedIndex} enableShadow backgroundColor={Colors.green70}>
             <TabBar.Item label="LONG LABEL"/>
             <TabBar.Item label="ACTIVE"/>
             <TabBar.Item label="INACTIVE"/>
@@ -199,7 +187,7 @@ export default class TabBarScreen extends Component {
             <TabBar.Item label="MODE"/>
           </TabBar>
 
-          <View center row>
+          <View row>
             <Button size={Button.sizes.small} margin-20 label={`Change Labels`} onPress={this.changeLabels}/>
             <Button size={Button.sizes.small} margin-20 label={`Change Color`} onPress={this.changeColors}/>
           </View>
