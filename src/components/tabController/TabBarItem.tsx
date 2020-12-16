@@ -203,7 +203,7 @@ export default class TabBarItem extends PureComponent<Props> {
 
     if (labelStyle.fontWeight || selectedLabelStyle.fontWeight) {
       fontWeight = cond(
-        // @ts-ignore TODO: add or delete and?
+        // @ts-ignore TODO: typescript - add or delete and?
         and(eq(targetPage, index) /* , defined(itemWidth) */),
         selectedLabelStyle.fontWeight || 'normal',
         labelStyle.fontWeight || 'normal'
@@ -212,7 +212,7 @@ export default class TabBarItem extends PureComponent<Props> {
 
     if (labelStyle.letterSpacing || selectedLabelStyle.letterSpacing) {
       letterSpacing = cond(
-        // @ts-ignore TODO: add or delete and?
+        // @ts-ignore TODO: typescript - add or delete and?
         and(eq(targetPage, index) /* , defined(itemWidth) */),
         selectedLabelStyle.letterSpacing || 0,
         labelStyle.letterSpacing || 0
@@ -221,7 +221,7 @@ export default class TabBarItem extends PureComponent<Props> {
 
     if (labelStyle.fontFamily || selectedLabelStyle.fontFamily) {
       fontFamily = cond(
-        // @ts-ignore TODO: add or delete and?
+        // @ts-ignore TODO: typescript - add or delete and?
         and(eq(targetPage, index) /* , defined(itemWidth) */),
         // @ts-ignore
         selectedLabelStyle.fontFamily,
