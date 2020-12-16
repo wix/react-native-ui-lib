@@ -1,15 +1,14 @@
 // TODO: support commented props
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Reanimated, {Easing} from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
 import {timing, fract, between} from 'react-native-redash';
 import {Constants} from '../../helpers';
-import {asBaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import TabBarContext from './TabBarContext';
 import TabBar from './TabBar';
-import TabBarItem from './TabBarItem';
+import TabBarItem, {TabBarItemProps} from './TabBarItem';
 import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
 
@@ -36,6 +35,47 @@ const {
   multiply
 } = Reanimated;
 
+interface TabControllerProps {
+  /**
+   * The list of tab bar items
+   */
+  items: TabBarItemProps[];
+  /**
+   * Initial selected index
+   */
+  selectedIndex: number;
+  /**
+   * callback for when index has change (will not be called on ignored items)
+   */
+  onChangeIndex: (index: number) => void;
+  /**
+   * When using TabController.PageCarousel this should be turned on
+   */
+  asCarousel?: boolean;
+  /**
+   * Pass for custom carousel page width
+   */
+  carouselPageWidth?: number;
+}
+
+interface StateProps {
+  selectedIndex: number;
+  asCarousel?: boolean;
+  pageWidth: number;
+  // items
+  items: TabControllerProps['items'];
+  itemStates: any[]; // TODO: typescript?
+  ignoredItems: any[]; // TODO: typescript?
+  // animated values
+  targetPage: any; // TODO: typescript?
+  currentPage: any; // TODO: typescript?
+  carouselOffset: any; // TODO: typescript?
+  containerWidth: any; // TODO: typescript?
+  // callbacks
+  registerTabItems: (tabItemsCount: number, ignoredItems: StateProps['ignoredItems']) => void;
+  onChangeIndex: (index: number) => void;
+}
+
 /**
  * @description: A performant solution for a tab controller with lazy load mechanism
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
@@ -43,47 +83,32 @@ const {
  * @important: On Android, if using react-native-navigation, make sure to wrap your screen with gestureHandlerRootHOC
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
-class TabController extends Component {
+class TabController extends Component<TabControllerProps, StateProps> {
   static displayName = 'TabController';
   static contextType = TabBarContext;
 
-  static propTypes = {
-    /**
-     * The list of tab bar items
-     */
-    items: PropTypes.arrayOf(PropTypes.shape(TabBarItem.propTypes)),
-    /**
-     * Initial selected index
-     */
-    selectedIndex: PropTypes.number,
-    /**
-     * callback for when index has change (will not be called on ignored items)
-     */
-    onChangeIndex: PropTypes.func,
-    /**
-     * When using TabController.PageCarousel this should be turned on
-     */
-    asCarousel: PropTypes.bool,
-    /**
-     * Pass for custom carousel page width
-     */
-    carouselPageWidth: PropTypes.number
-  };
+  static TabBar: typeof TabBar;
+  static TabBarItem: typeof TabBarItem;
+  static TabPage: typeof TabPage;
+  static PageCarousel: typeof PageCarousel;
 
   static defaultProps = {
     selectedIndex: 0,
     activeOpacity: 0.2
   };
 
-  constructor(props) {
+  constructor(props: TabControllerProps) {
     super(props);
 
-    let itemStates = [];
-    let ignoredItems = [];
+    let itemStates: any[] = []; // TODO: typescript?
+    let ignoredItems: any[] = []; // TODO: typescript?
     if (props.items) {
-      const itemsCount = _.chain(props.items).filter(item => !item.ignore).size().value();
+      const itemsCount = _.chain(props.items)
+        .filter(item => !item.ignore)
+        .size()
+        .value();
       itemStates = _.times(itemsCount, () => new Value(State.UNDETERMINED));
-      ignoredItems = _.filter(props.items, item => item.ignore);
+      ignoredItems = _.filter<TabBarItemProps[]>(props.items, (item: TabBarItemProps) => item.ignore);
     }
 
     this.state = {
@@ -105,7 +130,7 @@ class TabController extends Component {
     };
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps(nextProps: TabControllerProps, prevState: StateProps) {
     if (!_.isUndefined(nextProps.carouselPageWidth) && nextProps.carouselPageWidth !== prevState.pageWidth) {
       return {
         pageWidth: nextProps.carouselPageWidth
@@ -114,7 +139,7 @@ class TabController extends Component {
     return null;
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_prevProps: TabControllerProps, prevState: StateProps) {
     if (prevState.pageWidth !== this.state.pageWidth) {
       this.state.containerWidth.setValue(this.state.pageWidth);
     }
@@ -124,12 +149,12 @@ class TabController extends Component {
     return this.props.carouselPageWidth || Constants.screenWidth;
   }
 
-  registerTabItems = (tabItemsCount, ignoredItems) => {
+  registerTabItems = (tabItemsCount: number, ignoredItems: StateProps['ignoredItems']) => {
     const itemStates = _.times(tabItemsCount, () => new Value(State.UNDETERMINED));
     this.setState({itemStates, ignoredItems});
   };
 
-  onPageChange = ([index]) => {
+  onPageChange = ([index]: readonly number[]) => {
     _.invoke(this.props, 'onChangeIndex', index);
   };
 
@@ -147,20 +172,25 @@ class TabController extends Component {
       ..._.map(itemStates, (state, index) => {
         const ignoredItem = _.includes(ignoredItems, index);
         return [
-          onChange(state,
+          onChange(
+            state,
+            // @ts-ignore TODO: typescript?
             cond(and(eq(state, State.END), !ignoredItem), [
               set(fromPage, toPage),
               set(toPage, index),
               set(targetPage, index)
-            ]))
+            ])
+          )
         ];
       }),
 
       // Animate currentPage to its target
       cond(neq(currentPage, toPage), [
         set(isAnimating, 1),
-        set(currentPage,
-          timing({clock, from: fromPage, to: toPage, duration: 280, easing: Easing.bezier(0.34, 1.3, 0.64, 1)}))
+        set(
+          currentPage,
+          timing({clock, from: fromPage, to: toPage, duration: 280, easing: Easing.bezier(0.34, 1.3, 0.64, 1)})
+        )
       ]),
       // Set isAnimating flag off
       cond(and(eq(isAnimating, 1), not(clockRunning(clock))), set(isAnimating, 0)),
@@ -168,19 +198,21 @@ class TabController extends Component {
       /* Page change by Carousel scroll */
       onChange(carouselOffset, [
         set(isScrolling, lessThan(round(abs(diff(carouselOffset))), round(containerWidth))),
-        cond(and(not(isAnimating)), [
-          set(currentPage,
+        cond(not(isAnimating), [
+          set(
+            currentPage,
             interpolate(round(carouselOffset), {
-              inputRange: itemStates.map((v, i) => round(multiply(i, containerWidth))),
-              outputRange: itemStates.map((v, i) => i)
-            })),
+              inputRange: itemStates.map((_v, i) => round(multiply(i, containerWidth))),
+              outputRange: itemStates.map((_v, i) => i)
+            })
+          ),
           set(toPage, currentPage)
         ])
       ]),
       // Update/Sync target page when scrolling is done
       cond(and(eq(isScrolling, 1), eq(floor(abs(diff(carouselOffset))), 0)), [
         set(isScrolling, 0),
-        cond(not(between(fract(currentPage), 0.1, 0.9, 1)), set(targetPage, round(currentPage)))
+        cond(not(between(fract(currentPage), 0.1, 0.9, true)), set(targetPage, round(currentPage)))
       ]),
 
       /* Invoke index change */
@@ -204,4 +236,13 @@ TabController.TabBar = TabBar;
 TabController.TabBarItem = TabBarItem;
 TabController.TabPage = TabPage;
 TabController.PageCarousel = PageCarousel;
-export default asBaseComponent(TabController);
+export default asBaseComponent<
+  TabControllerProps,
+  {
+    TabBar: typeof TabBar;
+    TabBarItem: typeof TabBarItem;
+    TabPage: typeof TabPage;
+    PageCarousel: typeof PageCarousel;
+  }
+  //@ts-ignore typescript - will be fixed when moved to functional component
+>(TabController);
