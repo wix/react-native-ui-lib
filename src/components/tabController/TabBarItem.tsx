@@ -30,11 +30,11 @@ export interface TabBarItemProps {
   /**
    * custom label style
    */
-  labelStyle: TextStyle;
+  labelStyle?: TextStyle;
   /**
    * custom selected label style
    */
-  selectedLabelStyle: TextStyle;
+  selectedLabelStyle?: TextStyle;
   /**
    * the default label color
    */
@@ -201,31 +201,31 @@ export default class TabBarItem extends PureComponent<Props> {
 
     let fontWeight, letterSpacing, fontFamily;
 
-    if (labelStyle.fontWeight || selectedLabelStyle.fontWeight) {
+    if (labelStyle?.fontWeight || selectedLabelStyle?.fontWeight) {
       fontWeight = cond(
         // @ts-ignore TODO: typescript - add or delete and?
         and(eq(targetPage, index) /* , defined(itemWidth) */),
-        selectedLabelStyle.fontWeight || 'normal',
-        labelStyle.fontWeight || 'normal'
+        selectedLabelStyle?.fontWeight || 'normal',
+        labelStyle?.fontWeight || 'normal'
       );
     }
 
-    if (labelStyle.letterSpacing || selectedLabelStyle.letterSpacing) {
+    if (labelStyle?.letterSpacing || selectedLabelStyle?.letterSpacing) {
       letterSpacing = cond(
         // @ts-ignore TODO: typescript - add or delete and?
         and(eq(targetPage, index) /* , defined(itemWidth) */),
-        selectedLabelStyle.letterSpacing || 0,
-        labelStyle.letterSpacing || 0
+        selectedLabelStyle?.letterSpacing || 0,
+        labelStyle?.letterSpacing || 0
       );
     }
 
-    if (labelStyle.fontFamily || selectedLabelStyle.fontFamily) {
+    if (labelStyle?.fontFamily || selectedLabelStyle?.fontFamily) {
       fontFamily = cond(
         // @ts-ignore TODO: typescript - add or delete and?
         and(eq(targetPage, index) /* , defined(itemWidth) */),
         // @ts-ignore
         selectedLabelStyle.fontFamily,
-        labelStyle.fontFamily
+        labelStyle?.fontFamily
       );
     }
 

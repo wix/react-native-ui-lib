@@ -14,11 +14,11 @@ export interface TabBarItemProps {
     /**
      * custom label style
      */
-    labelStyle: TextStyle;
+    labelStyle?: TextStyle;
     /**
      * custom selected label style
      */
-    selectedLabelStyle: TextStyle;
+    selectedLabelStyle?: TextStyle;
     /**
      * the default label color
      */
@@ -102,7 +102,7 @@ export default class TabBarItem extends PureComponent<Props> {
     onLayout: ({ nativeEvent: { layout: { width } } }: LayoutChangeEvent) => void;
     onPress: () => void;
     getItemStyle(): TouchableOpacityProps['style'];
-    getLabelStyle(): (TextStyle | _.Dictionary<Reanimated.Node<number> | Reanimated.Node<"normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900"> | Reanimated.Node<string | number | boolean> | undefined>)[];
+    getLabelStyle(): (TextStyle | _.Dictionary<Reanimated.Node<number> | Reanimated.Node<"normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900"> | Reanimated.Node<string | number | boolean> | undefined> | undefined)[];
     getIconStyle(): {
         tintColor: Reanimated.Node<string>;
     };

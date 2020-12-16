@@ -3,7 +3,8 @@ import TabBar from './TabBar';
 import TabBarItem, { TabBarItemProps } from './TabBarItem';
 import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
-interface TabControllerProps {
+export { TabBarItemProps };
+export interface TabControllerProps {
     /**
      * The list of tab bar items
      */

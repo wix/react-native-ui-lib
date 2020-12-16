@@ -11,6 +11,7 @@ import TabBar from './TabBar';
 import TabBarItem, {TabBarItemProps} from './TabBarItem';
 import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
+export {TabBarItemProps};
 
 const {
   and,
@@ -35,7 +36,7 @@ const {
   multiply
 } = Reanimated;
 
-interface TabControllerProps {
+export interface TabControllerProps {
   /**
    * The list of tab bar items
    */
