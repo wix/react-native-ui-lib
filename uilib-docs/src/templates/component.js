@@ -152,25 +152,26 @@ export default class ComponentTemplate extends Component {
     const notes = componentInfo.notes
       ? componentInfo.notes.split(';')
       : undefined;
-
+      
+    const examples = _.split(componentInfo.example, ',');
     return (
       <div className="docs-page">
         <div className="docs-page__content">
           <h1 className="title inline">{selectedComponent.displayName}</h1>
-          {componentInfo.example && (
-            <span className="code-example">
-              (
-              <a
-                className="inline"
-                target="_blank"
-                rel="noopener noreferrer"
-                href={componentInfo.example}
-              >
-                code example
-              </a>
-              )
-            </span>
-          )}
+          {_.map(examples, example => {
+            return <span className="code-example">
+            (
+            <a
+              className="inline"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={example}
+            >
+              code example
+            </a>
+            )
+          </span>
+          })}
 
           <h3>{componentInfo.description}</h3>
           {componentInfo.extends && (

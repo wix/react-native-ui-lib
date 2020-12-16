@@ -29,6 +29,10 @@ export interface FloatingButtonProps {
      * Whether to show background overlay
      */
     hideBackgroundOverlay?: boolean;
+    /**
+     * Used as testing identifier
+     */
+    testID?: string;
 }
 declare const _default: React.ComponentClass<FloatingButtonProps & {
     useCustomTheme?: boolean | undefined;

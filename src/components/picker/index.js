@@ -19,10 +19,13 @@ const PICKER_MODES = {
   SINGLE: 'SINGLE',
   MULTI: 'MULTI'
 };
-const ItemType = PropTypes.shape({
-  value: PropTypes.any,
-  label: PropTypes.string
-});
+const ItemType = PropTypes.oneOfType([
+  PropTypes.number, 
+  PropTypes.string,
+  PropTypes.shape({
+    value: PropTypes.any,
+    label: PropTypes.string
+  })]);
 
 /**
  * @description: Picker Component, support single or multiple selection, blurModel and nativePicker
@@ -165,9 +168,7 @@ class Picker extends PureComponent {
     //   console.warn('UILib Picker: don\'t use object as value for native picker, use either string or a number');
     // }
     if (_.isPlainObject(props.value)) {
-      LogService.warn(
-        'UILib Picker will stop supporting passing object as value in the next major version. Please use either string or a number as value'
-      );
+      LogService.warn('UILib Picker will stop supporting passing object as value in the next major version. Please use either string or a number as value');
     }
   }
 
@@ -226,19 +227,9 @@ class Picker extends PureComponent {
     };
   };
 
-  shouldNotChangePickerLabelWhileSelecting = () => {
-    const {mode} = this.props;
-    return mode === Picker.modes.MULTI;
-  };
-
   getLabelValueText = () => {
-    const {value: propsValue} = this.props;
-    const {value: stateValue} = this.props;
-
-    if (this.shouldNotChangePickerLabelWhileSelecting()) {
-      return this.getLabel(propsValue);
-    }
-    return this.getLabel(stateValue);
+    const {value} = this.props;
+    return this.getLabel(value);
   };
 
   getLabelsFromArray = value => {
@@ -255,12 +246,12 @@ class Picker extends PureComponent {
   getLabel(value) {
     const {getLabel} = this.props;
 
+    if (_.isFunction(getLabel) && !_.isUndefined(getLabel(value))) {
+      return getLabel(value);
+    }
+    
     if (_.isArray(value)) {
       return this.getLabelsFromArray(value);
-    }
-
-    if (_.isFunction(getLabel)) {
-      return getLabel(value);
     }
 
     if (_.isPlainObject(value)) {

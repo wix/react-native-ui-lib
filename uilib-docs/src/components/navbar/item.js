@@ -3,6 +3,8 @@ import Link from 'gatsby-link';
 import _ from 'lodash';
 import classnames from 'classnames';
 
+const undocumentedGroups = ['Incubator'];
+
 export default ({id, link, components, currentPage}) => {
   const hasChildren = _.size(components) > 1;
 
@@ -11,11 +13,13 @@ export default ({id, link, components, currentPage}) => {
   } else {
     return (
       <li key={id}>
-        <Link key={id} to={`/docs/${id}/`}>
-          <span class={classnames('entry', {selected: id === currentPage})}>
-            {id}
-          </span>
-        </Link>
+        {undocumentedGroups.includes(id) ? (
+          <span class={classnames('entry', {selected: id === currentPage})}>{id}</span>
+        ) : (
+          <Link key={id} to={`/docs/${id}/`}>
+            <span class={classnames('entry', {selected: id === currentPage})}>{id}</span>
+          </Link>
+        )}
 
         <ul class="nested">
           {_.map(_.filter(components, c => c.node.displayName !== id), c => {

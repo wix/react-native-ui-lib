@@ -4,7 +4,7 @@ const childProcess = require('child_process');
 const fetch = require('node-fetch');
 const readline = require('readline');
 
-const GITHUB_TOKEN = 'a0e1c50d4d4859bf5007453335c64e9f66d13ece';
+const GITHUB_TOKEN = 'da554c8d1361101862fa5145c68dd5f3c0a90d02';
 let LATEST_VERSION = '5.14.0';
 let NEW_VERSION = '5.15.0';
 let releaseNotes;

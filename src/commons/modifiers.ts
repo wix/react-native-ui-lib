@@ -319,7 +319,7 @@ export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
   return ownProps;
 }
 
-export function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps: string[]) {
+export function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps: string[] = []) {
   const componentPropTypes = component.propTypes;
   const componentProps = _.chain(props)
     .pickBy((_value, key) => _.includes(Object.keys(componentPropTypes), key))

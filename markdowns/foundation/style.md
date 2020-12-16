@@ -6,7 +6,7 @@ title: "Style"
 The base foundation of each UI component is its style.
 We use basic style presets to define the rules and the style guide we follow.
 
-Our presets includes: **Colors**, **Typography**, **Shadows**, **Border Radius** and more..
+Our presets includes: **Colors**, **Typography**, **Spacings**, **Shadows**, **Border Radius** and more..
 
 The UILib already comes with a set of predefined constants and [presets](https://github.com/wix/react-native-ui-lib/tree/master/src/style).
 
@@ -15,7 +15,7 @@ You can easily use it anywhere in your code as you would have used any other con
 It's also very easy to define your own presets..
 
 ```jsx
-import {Typography, Colors} from 'react-native-ui-lib';
+import {Typography, Colors, Spacings} from 'react-native-ui-lib';
 
 Colors.loadColors({
   pink: '#FF69B4',
@@ -25,6 +25,10 @@ Colors.loadColors({
 Typography.loadTypographies({
   h1: {fontSize: 58, fontWeight: '300', lineHeight: 80},
   h2: {fontSize: 46, fontWeight: '300', lineHeight: 64},
+});
+
+Spacings.loadSpacings({
+  page: isSmallScreen ? 16 : 20
 });
 ```
 
