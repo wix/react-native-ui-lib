@@ -4,7 +4,7 @@ import {ImageSourcePropType, ImageStyle, StyleProp, StyleSheet, Text, TextStyle,
 import {View as AnimatableView} from 'react-native-animatable';
 import {extractAccessibilityProps, extractAnimationProps} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';
-import {BorderRadiuses, Colors, Typography} from '../../style';
+import {BorderRadiuses, Colors, Spacings, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import View from '../view';
@@ -89,6 +89,10 @@ export type BadgeProps = ViewProps & TouchableOpacityProps & {
   /**
    * Use to identify the badge in tests
    */
+  withCounterIcon?: boolean;
+  /**
+   * Use to identify the badge in tests
+   */
   testId?: string;
 }
 
@@ -134,7 +138,7 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   getBadgeSizeStyle() {
-    const {borderWidth, size, icon} = this.props;
+    const {borderWidth, size, icon, withCounterIcon} = this.props;
     const label = this.getFormattedLabel();
     const badgeHeight = _.isNumber(size) ? size : BADGE_SIZES[size];
 
@@ -143,6 +147,15 @@ class Badge extends PureComponent<BadgeProps> {
       height: badgeHeight,
       minWidth: badgeHeight
     };
+    if (withCounterIcon) {
+      style.paddingRight = 6;
+      style.paddingLeft = 4;
+      style.height = Spacings.s5;
+      if (borderWidth) {
+        style.height += borderWidth * 2;
+      }
+      return style;
+    }
 
     const isPimple = label === undefined;
     if (isPimple || icon) {
@@ -213,7 +226,8 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   renderIcon() {
-    const {icon, iconStyle, iconProps, borderColor} = this.props;
+    const {icon, iconStyle, iconProps, borderColor, withCounterIcon} = this.props;
+    const flex = withCounterIcon ? 0 : 1;
     return (
       <Image
         source={icon!}
@@ -222,11 +236,25 @@ class Badge extends PureComponent<BadgeProps> {
         borderColor={borderColor}
         {...iconProps}
         style={{
-          flex: 1,
+          flex,
           ...iconStyle
         }}
       />
     );
+  }
+
+  renderContent() {
+    const {withCounterIcon, icon, label} = this.props;
+
+    if (withCounterIcon && icon && label) {
+      return (
+        <View flex row centerV>
+          {this.renderIcon()}
+          {this.renderLabel()}
+        </View>
+      );  
+    }
+    return icon ? this.renderIcon() : this.renderLabel();
   }
 
   render() {
@@ -265,7 +293,7 @@ class Badge extends PureComponent<BadgeProps> {
           hitSlop={hitSlop}
           {...animationProps}
         >
-          {icon ? this.renderIcon() : this.renderLabel()}
+          {this.renderContent()}
         </Container>
       </View>
     );
