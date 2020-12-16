@@ -32,7 +32,7 @@ class TabControllerScreen extends Component<{}, State> {
       items: []
     };
 
-    this.setState({items: this.generateTabItems()});
+    this.state.items = this.generateTabItems();
   }
 
   generateTabItems = (fewItems = this.state.fewItems, centerSelected = this.state.centerSelected): TabBarItemProps[] => {

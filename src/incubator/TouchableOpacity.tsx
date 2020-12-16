@@ -64,8 +64,6 @@ export type TouchableOpacityProps = {
    * Pass custom style
    */
   style?: ViewProps['style'];
-  // TODO: get these from somewhere
-  ref?: any;
   onLayout?: (event: LayoutChangeEvent) => void;
   testID?: string;
 };

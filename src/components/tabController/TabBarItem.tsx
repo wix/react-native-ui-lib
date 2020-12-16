@@ -104,7 +104,7 @@ export interface TabBarItemProps {
 
 interface Props extends TabBarItemProps {
   index: number;
-  targetPage: number;
+  targetPage: any; // TODO: typescript?
   state: State;
   currentPage: Animated.Adaptable<number>;
   onLayout: (layout: Partial<LayoutRectangle>, index: number) => void;

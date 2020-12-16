@@ -125,7 +125,7 @@ export interface TabBarProps {
 type ChildProps = React.ReactElement<TabBarItemProps>;
 
 interface Props extends TabBarProps, BaseComponentInjectedProps, ForwardRefInjectedProps {
-  children: ChildProps[] | ChildProps;
+  children?: ChildProps[] | ChildProps;
 }
 
 interface State {
@@ -402,6 +402,10 @@ class TabBar extends PureComponent<Props, State> {
         return this.tabBarItems;
       }
 
+      if (!this.children) {
+        return;
+      }
+
       this.tabBarItems = React.Children.map(this.children, (child: Partial<ChildProps>, index: number) => {
         // @ts-ignore TODO: typescript - not sure if this can be easily solved
         return React.cloneElement(child, {
@@ -427,7 +431,6 @@ class TabBar extends PureComponent<Props, State> {
   renderCodeBlock = () => {
     const {currentPage, targetPage} = this.context;
     const {itemsWidths, itemsOffsets} = this.state;
-
     const nodes = [];
 
     nodes.push(
@@ -476,7 +479,7 @@ class TabBar extends PureComponent<Props, State> {
           <View
             style={[
               styles.tabBar,
-              _.isUndefined(height) && {height},
+              !_.isUndefined(height) && {height},
               {paddingHorizontal: this.centerOffset, backgroundColor}
             ]}
           >
