@@ -48,7 +48,7 @@ export interface TabControllerProps {
   /**
    * callback for when index has change (will not be called on ignored items)
    */
-  onChangeIndex: (index: number) => void;
+  onChangeIndex?: (index: number) => void;
   /**
    * When using TabController.PageCarousel this should be turned on
    */
@@ -74,7 +74,7 @@ interface StateProps {
   containerWidth: any; // TODO: typescript?
   // callbacks
   registerTabItems: (tabItemsCount: number, ignoredItems: StateProps['ignoredItems']) => void;
-  onChangeIndex: (index: number) => void;
+  onChangeIndex?: (index: number) => void;
 }
 
 /**
