@@ -239,11 +239,6 @@ TabController.TabPage = TabPage;
 TabController.PageCarousel = PageCarousel;
 export default asBaseComponent<
   TabControllerProps,
-  {
-    TabBar: typeof TabBar;
-    TabBarItem: typeof TabBarItem;
-    TabPage: typeof TabPage;
-    PageCarousel: typeof PageCarousel;
-  }
+  typeof TabController
   //@ts-ignore typescript - will be fixed when moved to functional component
 >(TabController);

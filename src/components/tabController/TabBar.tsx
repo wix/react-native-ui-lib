@@ -291,7 +291,7 @@ class TabBar extends PureComponent<Props, State> {
           targetOffset = scrollingWidth - targetOffset;
         }
 
-        if (this.tabBar && this.tabBar.current) {
+        if (this.tabBar?.current) {
           this.tabBar.current.scrollTo({x: targetOffset, animated});
         }
       }
