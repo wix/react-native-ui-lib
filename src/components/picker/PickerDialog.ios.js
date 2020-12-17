@@ -9,7 +9,7 @@ import Dialog from '../dialog';
 import View from '../view';
 import Text from '../text';
 import {Colors} from '../../style';
-import {WheelPicker} from '../../nativeComponents';
+import WheelPicker from '../../incubator/WheelPicker';
 
 class PickerDialog extends BaseComponent {
   static displayName = 'IGNORE';
@@ -40,12 +40,12 @@ class PickerDialog extends BaseComponent {
   }
 
   renderPicker() {
-    const {children, onValueChange, selectedValue, renderNativePicker} = this.props;
+    const {children, onValueChange, selectedValue, renderNativePicker, pickerStyle} = this.props;
     if (_.isFunction(renderNativePicker)) {
       return renderNativePicker(this.props);
     }
     return (
-      <WheelPicker onValueChange={onValueChange} selectedValue={selectedValue}>
+      <WheelPicker style={pickerStyle} selectedValue={selectedValue} onValueChange={onValueChange}>
         {children}
       </WheelPicker>
     );
@@ -56,7 +56,7 @@ class PickerDialog extends BaseComponent {
     // TODO: should be taken from dialogProps but there's an issue with "babel-plugin-typescript-to-proptypes" plugin
     const {panDirection} = this.props;
     return (
-      <Dialog {...dialogProps} height={250} width="100%" migrate bottom animationConfig={{duration: 300}} panDirection={panDirection}>
+      <Dialog {...dialogProps} width="100%" migrate bottom animationConfig={{duration: 300}} panDirection={panDirection}>
         <View flex bg-white>
           {this.renderHeader()}
           <View centerV flex>
