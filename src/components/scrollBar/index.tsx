@@ -198,6 +198,7 @@ class ScrollBar extends Component<Props, State> {
           if (_.isFunction(forwardedRef)) {
             forwardedRef(r);
           } else if (_.isObject(forwardedRef)) {
+            //@ts-ignore
             forwardedRef.current = r;
           }
         }}
