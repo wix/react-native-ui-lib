@@ -153,6 +153,7 @@ declare function createStyles(props: AvatarProps): {
     initials: {
         color: string | undefined;
         backgroundColor: string;
+        lineHeight: undefined;
     };
     ribbon: {
         backgroundColor: string;
