@@ -75,10 +75,6 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
     /**
      * Use to identify the badge in tests
      */
-    withCounterIcon?: boolean;
-    /**
-     * Use to identify the badge in tests
-     */
     testId?: string;
 };
 /**
@@ -106,7 +102,6 @@ declare class Badge extends PureComponent<BadgeProps> {
     getBorderStyling(): ViewStyle;
     renderLabel(): JSX.Element | undefined;
     renderIcon(): JSX.Element;
-    renderContent(): JSX.Element | undefined;
     render(): JSX.Element;
 }
 declare function createStyles(props: BadgeProps): {
@@ -407,10 +402,6 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      * Additional props passed to icon
      */
     iconProps?: object | undefined;
-    /**
-     * Use to identify the badge in tests
-     */
-    withCounterIcon?: boolean | undefined;
     /**
      * Use to identify the badge in tests
      */

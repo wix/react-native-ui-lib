@@ -89,10 +89,6 @@ export type BadgeProps = ViewProps & TouchableOpacityProps & {
   /**
    * Use to identify the badge in tests
    */
-  withCounterIcon?: boolean;
-  /**
-   * Use to identify the badge in tests
-   */
   testId?: string;
 }
 
@@ -138,7 +134,7 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   getBadgeSizeStyle() {
-    const {borderWidth, size, icon, withCounterIcon} = this.props;
+    const {borderWidth, size, icon} = this.props;
     const label = this.getFormattedLabel();
     const badgeHeight = _.isNumber(size) ? size : BADGE_SIZES[size];
 
@@ -147,7 +143,7 @@ class Badge extends PureComponent<BadgeProps> {
       height: badgeHeight,
       minWidth: badgeHeight
     };
-    if (withCounterIcon) {
+    if (icon && label) {
       style.paddingRight = 6;
       style.paddingLeft = 4;
       style.height = Spacings.s5;
@@ -226,8 +222,8 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   renderIcon() {
-    const {icon, iconStyle, iconProps, borderColor, withCounterIcon} = this.props;
-    const flex = withCounterIcon ? 0 : 1;
+    const {icon, iconStyle, iconProps, borderColor, label} = this.props;
+    const flex = label ? 0 : 1;
     return (
       <Image
         source={icon!}
@@ -243,20 +239,6 @@ class Badge extends PureComponent<BadgeProps> {
     );
   }
 
-  renderContent() {
-    const {withCounterIcon, icon, label} = this.props;
-
-    if (withCounterIcon && icon && label) {
-      return (
-        <View flex row centerV>
-          {this.renderIcon()}
-          {this.renderLabel()}
-        </View>
-      );  
-    }
-    return icon ? this.renderIcon() : this.renderLabel();
-  }
-
   render() {
     // TODO: remove testId after deprecation
     const {
@@ -265,6 +247,7 @@ class Badge extends PureComponent<BadgeProps> {
       containerStyle,
       hitSlop,
       icon,
+      label,
       onPress,
       testId,
       testID,
@@ -293,7 +276,10 @@ class Badge extends PureComponent<BadgeProps> {
           hitSlop={hitSlop}
           {...animationProps}
         >
-          {this.renderContent()}
+          <View flex row centerV>
+          {icon && this.renderIcon()}
+          {label && this.renderLabel()}
+          </View>
         </Container>
       </View>
     );
