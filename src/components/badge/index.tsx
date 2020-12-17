@@ -275,11 +275,10 @@ class Badge extends PureComponent<BadgeProps> {
           activeOpacity={activeOpacity}
           hitSlop={hitSlop}
           {...animationProps}
+          row
         >
-          <View flex row centerV>
           {icon && this.renderIcon()}
           {label && this.renderLabel()}
-          </View>
         </Container>
       </View>
     );
