@@ -70,7 +70,7 @@ declare class Image extends PureComponent<Props> {
     render(): JSX.Element;
 }
 export { Image };
-declare const _default: React.ComponentClass<RNImageProps & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
+declare const _default: React.ComponentClass<RNImageProps & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", number>> & {
     /**
      * custom source transform handler for manipulating the image source (great for size control)
      */

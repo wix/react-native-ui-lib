@@ -84,7 +84,7 @@ export type BackgroundColorModifier = Modifier<'bg'>;
 export type AlignmentModifiers = Modifier<AlignmentLiterals>;
 export type PositionModifiers = Modifier<PositionLiterals>;
 export type PaddingModifiers = NumberModifier<PaddingLiterals>;
-export type MarginModifiers = Modifier<MarginLiterals>;
+export type MarginModifiers = NumberModifier<MarginLiterals>;
 export type FlexModifiers = Modifier<FlexLiterals>;
 export type BorderRadiusModifiers = Modifier<BorderRadiusLiterals>;
 
