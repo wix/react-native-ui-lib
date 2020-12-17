@@ -90,12 +90,6 @@ const WheelPicker = ({
     return items;
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      scrollToPassedIndex(false);
-    }, 100);    
-  }, []);
-
   const getIndexFromSelectedValue = (): number => {
     if (_.isNumber(selectedValue)) {      
       return selectedValue >= 0 ? selectedValue : 0;
@@ -110,6 +104,12 @@ const WheelPicker = ({
     const index = getIndexFromSelectedValue();
     scrollToIndex(index, animated);
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      scrollToPassedIndex(false);
+    }, 100);    
+  }, []);
 
   const scrollToIndex = (index: number, animated: boolean) => {
     if (scrollView.current?.getNode()) {
