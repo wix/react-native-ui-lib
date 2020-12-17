@@ -2,10 +2,10 @@ import _ from 'lodash';
 import React from 'react';
 import {BaseComponent} from '../../commons';
 import TextField from '../textField';
-import {WheelPicker} from '../../nativeComponents';
 import PickerDialog from './PickerDialog';
 import TouchableOpacity from '../touchableOpacity';
 import {Colors} from '../../style';
+import WheelPicker from '../../incubator/WheelPicker';
 
 class NativePicker extends BaseComponent {
   static displayName = 'IGNORE';
@@ -14,6 +14,11 @@ class NativePicker extends BaseComponent {
     items: this.extractPickerItems(this.props),
     showDialog: false
   };
+
+  NUMBER_OF_ROWS = 5;
+  ROW_HEIGHT = 44;
+  MENU_HEIGHT = 44;
+  PICKER_HEIGHT = this.NUMBER_OF_ROWS * this.ROW_HEIGHT + this.MENU_HEIGHT;
 
   extractPickerItems(props) {
     const {children, useNativePicker} = props;
@@ -59,9 +64,11 @@ class NativePicker extends BaseComponent {
 
   renderPickerDialog = () => {
     const {selectedValue, showDialog} = this.state;
-
+    
     return (
       <PickerDialog
+        height={this.PICKER_HEIGHT + this.MENU_HEIGHT}
+        pickerStyle={{width: '100%'}}
         {...this.getThemeProps()}
         visible={showDialog}
         panDirection={null}
