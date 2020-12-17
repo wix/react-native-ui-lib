@@ -2,8 +2,8 @@
 // TODO: Support style customization
 // TODO: Support control of visible items
 import _ from 'lodash';
-import React, {useCallback, useRef, useMemo} from 'react';
-import {TextStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
+import React, {useCallback, useRef, useMemo, useEffect} from 'react';
+import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent, useValues} from 'react-native-redash';
 import {Colors} from '../../../src/style';
@@ -12,6 +12,7 @@ import Fader, {FaderPosition} from '../../components/fader';
 import {Constants} from '../../helpers';
 import useMiddleIndex from './helpers/useListMiddleIndex';
 import Item, {ItemProps} from './Item';
+import {Spacings} from 'react-native-ui-lib';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -22,8 +23,14 @@ export interface WheelPickerProps {
   items?: ItemProps[];
   /**
    * Describe the height of each item in the WheelPicker
+   * default value: 44
    */
   itemHeight?: number;
+  /**
+   * Describe the number of rows visible
+   * default value: 5
+   */
+  numberOfVisibleRows?: number;
   /**
    * Text color for the focused row
    */
@@ -39,47 +46,107 @@ export interface WheelPickerProps {
   /**
    * Event, on active row change
    */
-  onChange: (index: number, item?: ItemProps) => void;
+  onValueChange: (item: string | undefined, index: number) => void;
+  /**
+   * Container's ViewStyle, height is computed according to itemHeight * numberOfVisibleRows
+   */
+  style?: Omit<ViewStyle, 'height'>;
+  /**
+   * Support passing items as children props
+   */
+  children?: JSX.Element | JSX.Element[];
+  /**
+   * WheelPicker initial value, can be ItemProps.value, number as index
+   */
+  selectedValue?: ItemProps | number
 }
 
-const WheelPicker = ({items, itemHeight = 48, activeTextColor, inactiveTextColor, textStyle, onChange: onChangeEvent}: WheelPickerProps) => {
-  const height = itemHeight * 5;
+const WheelPicker = ({
+  items: propsItems,
+  itemHeight = 44,
+  numberOfVisibleRows = 6,
+  activeTextColor,
+  inactiveTextColor,
+  textStyle,
+  onValueChange,
+  style,
+  children,
+  selectedValue,
+}: WheelPickerProps) => {
+  const height = itemHeight * numberOfVisibleRows;
   const scrollView = useRef<Animated.ScrollView>();
   const [offset] = useValues([0], []);
   const onScroll = onScrollEvent({y: offset});
+  const items = children ? extractItemsFromChildren() : propsItems;
   
   const listSize = items?.length || 0;
   const middleIndex = useMiddleIndex({itemHeight, listSize});
 
+  function extractItemsFromChildren (): ItemProps[] | undefined {
+    const items = React.Children.map(children, child => {
+      let childAsType: ItemProps = {value: child?.props.value, label: child?.props.label};
+      return childAsType;
+    });
+    return items;
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      scrollToPassedIndex(false);
+    }, 100);    
+  }, []);
+
+  const getIndexFromSelectedValue = (): number => {
+    if (_.isNumber(selectedValue)) {      
+      return selectedValue >= 0 ? selectedValue : 0;
+    }
+    if (_.isString(selectedValue)) {
+      return _.findIndex(items, {value: selectedValue});
+    }
+    return _.findIndex(items, {value: selectedValue?.value});
+  }
+
+  const scrollToPassedIndex = (animated: boolean = true) => {
+    const index = getIndexFromSelectedValue();
+    scrollToIndex(index, animated);
+  }
+
+  const scrollToIndex = (index: number, animated: boolean) => {
+    if (scrollView.current?.getNode()) {
+      //@ts-ignore for some reason scrollToOffset isn't recognized
+      scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated: animated});
+    }
+  }
+
   const selectItem = useCallback(
     index => {
-      if (scrollView.current?.getNode()) {
-        //@ts-ignore for some reason scrollToOffset isn't recognized
-        scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated: true})
-      }
+      scrollToIndex(index, true);
     },
     [itemHeight]
   );
 
   const onChange = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const index = middleIndex(event.nativeEvent.contentOffset.y);
-    onChangeEvent(index, items?.[index]);
+    onValueChange?.('' + items?.[index].value, index);
   }, []);
-  
-  const renderItem = useCallback(({item, index}) => {
-    return (
-      <Item
-        index={index}
-        itemHeight={itemHeight}
-        offset={offset}
-        activeColor={activeTextColor}
-        inactiveColor={inactiveTextColor}
-        style={textStyle}
-        {...item}
-        onSelect={selectItem}
-      />
-    );
-  }, [itemHeight]);
+
+  const renderItem = useCallback(
+    ({item, index}) => {
+      return (
+        <Item
+          index={index}
+          itemHeight={itemHeight}
+          offset={offset}
+          activeColor={activeTextColor}
+          inactiveColor={inactiveTextColor}
+          style={textStyle}
+          {...item}
+          onSelect={selectItem}
+        />
+      );
+    },
+    [itemHeight]
+  );
 
   const fader = useMemo(
     () => (position: FaderPosition) => {
@@ -95,8 +162,8 @@ const WheelPicker = ({items, itemHeight = 48, activeTextColor, inactiveTextColor
           style={{
             borderTopWidth: 1,
             borderBottomWidth: 1,
-            height: itemHeight,
-            borderColor: Colors.grey50
+            height: Spacings.s9,
+            borderColor: Colors.grey60
           }}
         />
       </View>
@@ -104,28 +171,27 @@ const WheelPicker = ({items, itemHeight = 48, activeTextColor, inactiveTextColor
   }, []);
 
   return (
-    <View>
-      <View width={250} height={height} br20>
-        <AnimatedFlatList
-          data={items}
-          keyExtractor={keyExtractor}
-          scrollEventThrottle={100}
-          onScroll={onScroll}
-          onMomentumScrollEnd={onChange}
-          showsVerticalScrollIndicator={false}
-          // @ts-ignore
-          ref={scrollView}
-          contentContainerStyle={{
-            paddingVertical: height / 2 - itemHeight / 2
-          }}
-          snapToInterval={itemHeight}
-          decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
-          renderItem={renderItem}
-        />
-        {fader(FaderPosition.BOTTOM)}
-        {fader(FaderPosition.TOP)}
-        {separators}
-      </View>
+    <View style={style}>
+      <AnimatedFlatList
+        height={height}
+        data={items}
+        keyExtractor={keyExtractor}
+        scrollEventThrottle={100}
+        onScroll={onScroll}
+        onMomentumScrollEnd={onChange}
+        showsVerticalScrollIndicator={false}
+        // @ts-ignore
+        ref={scrollView}
+        contentContainerStyle={{
+          paddingVertical: height / 2 - itemHeight / 2
+        }}
+        snapToInterval={itemHeight}
+        decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
+        renderItem={renderItem}
+      />
+      {fader(FaderPosition.BOTTOM)}
+      {fader(FaderPosition.TOP)}
+      {separators}
     </View>
   );
 };
