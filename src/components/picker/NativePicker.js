@@ -5,7 +5,7 @@ import TextField from '../textField';
 import PickerDialog from './PickerDialog';
 import TouchableOpacity from '../touchableOpacity';
 import {Colors} from '../../style';
-import WheelPicker from '../../incubator/WheelPicker';
+import {WheelPicker} from '../../nativeComponents';
 
 class NativePicker extends BaseComponent {
   static displayName = 'IGNORE';
