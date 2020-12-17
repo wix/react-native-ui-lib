@@ -15,6 +15,9 @@ const DEFAULT_COLOR = Colors.blue30;
 const DEFAULT_ICON_COLOR = Colors.white;
 const DEFAULT_DISABLED_COLOR = Colors.grey50;
 
+const DEFAULT_BORDER_WIDTH = 2;
+const DEFAULT_BORDER_RADIUS = 8;
+
 export interface CheckboxProps extends TouchableOpacityProps {
   /**
    * The value of the Checkbox. If true the switch will be turned on. Default value is false.
@@ -32,6 +35,10 @@ export interface CheckboxProps extends TouchableOpacityProps {
    * The Checkbox color
    */
   color?: string;
+  /**
+   * alternative Checkbox outline style
+   */
+  outline?: boolean;
   /**
    * The size of the checkbox. affect both width and height
    */
@@ -75,7 +82,6 @@ interface CheckboxState {
  * @description: Checkbox component for toggling boolean value related to some context
  * @extends: TouchableOpacity
  * @extendslink: docs/TouchableOpacity
- * @gif: https://media.giphy.com/media/xULW8j5WzsuPytqklq/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CheckboxScreen.tsx
  */
 class Checkbox extends Component<CheckboxProps, CheckboxState> {
@@ -159,14 +165,24 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     }
   };
 
-  getColor() {
-    const {color, disabled} = this.props;
-    return disabled ? DEFAULT_DISABLED_COLOR : color || DEFAULT_COLOR;
-  }
+  getColor = () => (this.props.disabled ? DEFAULT_DISABLED_COLOR : this.props.color || DEFAULT_COLOR);
+
+  getBackgroundColor = () => (this.props.outline ? 'transparent' : this.getColor());
+
+  getTintColor = () => {
+    const {outline, disabled, iconColor} = this.props;
+    if (outline) {
+      if (disabled) return DEFAULT_DISABLED_COLOR;
+      else return iconColor || DEFAULT_COLOR;
+    } else {
+      if (disabled) return Colors.white;
+      else return iconColor || Colors.white;
+    }
+  };
 
   getBorderStyle() {
     const borderColor = {borderColor: this.getColor()};
-    const borderStyle = [this.styles.container, {borderWidth: 2}, borderColor];
+    const borderStyle = [this.styles.container, {borderWidth: DEFAULT_BORDER_WIDTH}, borderColor];
 
     return borderStyle;
   }
@@ -186,14 +202,17 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
       >
         {
           <Animated.View
-            style={[this.styles.container, {backgroundColor: this.getColor()}, {opacity: this.animationStyle.opacity}]}
+            style={[
+              this.styles.container,
+              {opacity: this.animationStyle.opacity},
+              {backgroundColor: this.getBackgroundColor()}
+            ]}
           >
             <Animated.Image
               style={[
                 this.styles.selectedIcon,
-                color && {tintColor: iconColor},
                 {transform: this.animationStyle.transform},
-                disabled && {tintColor: DEFAULT_ICON_COLOR}
+                {tintColor: this.getTintColor()}
               ]}
               source={selectedIcon || Assets.icons.checkSmall}
               testID={`${testID}.selected`}
@@ -220,13 +239,18 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 }
 
 function createStyles(props: CheckboxProps) {
-  const {color = DEFAULT_COLOR, iconColor = DEFAULT_ICON_COLOR, size = DEFAULT_SIZE, borderRadius} = props;
+  const {
+    color = DEFAULT_COLOR,
+    iconColor = DEFAULT_ICON_COLOR,
+    size = DEFAULT_SIZE,
+    borderRadius = DEFAULT_BORDER_RADIUS
+  } = props;
 
   return StyleSheet.create({
     container: {
       width: size,
       height: size,
-      borderRadius: borderRadius || 8,
+      borderRadius: borderRadius,
       alignItems: 'center',
       justifyContent: 'center',
       borderColor: color

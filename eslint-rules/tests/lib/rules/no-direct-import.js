@@ -10,20 +10,21 @@ RuleTester.setDefaultConfig({
 
 const ruleTester = new RuleTester();
 
-const valideExample = `import {Component} from 'another-module';`;
-const invalideExample = `import {Component} from 'some-module';`;
+const validExample = `import {Component} from 'another-module';`;
+const invalidExample = `import {Component} from 'some-module';`;
 
 ruleTester.run('no-direct-import', rule, {
   valid: [
     {
       options: ruleOptions,
-      code: valideExample,
+      code: validExample,
     },
   ],
   invalid: [
     {
       options: ruleOptions,
-      code: invalideExample,
+      code: invalidExample,
+      output: `import {Component} from 'another-module';`,
       errors: [
         { message: `Do not import directly from 'some-module'. Please use 'another-module' (autofix available).` },
       ],
