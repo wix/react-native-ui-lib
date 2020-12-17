@@ -4,7 +4,7 @@ import {ImageSourcePropType, ImageStyle, StyleProp, StyleSheet, Text, TextStyle,
 import {View as AnimatableView} from 'react-native-animatable';
 import {extractAccessibilityProps, extractAnimationProps} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';
-import {BorderRadiuses, Colors, Typography} from '../../style';
+import {BorderRadiuses, Colors, Spacings, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import View from '../view';
@@ -143,6 +143,15 @@ class Badge extends PureComponent<BadgeProps> {
       height: badgeHeight,
       minWidth: badgeHeight
     };
+    if (icon && label) {
+      style.paddingRight = 6;
+      style.paddingLeft = 4;
+      style.height = Spacings.s5;
+      if (borderWidth) {
+        style.height += borderWidth * 2;
+      }
+      return style;
+    }
 
     const isPimple = label === undefined;
     if (isPimple || icon) {
@@ -213,7 +222,8 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   renderIcon() {
-    const {icon, iconStyle, iconProps, borderColor} = this.props;
+    const {icon, iconStyle, iconProps, borderColor, label} = this.props;
+    const flex = label ? 0 : 1;
     return (
       <Image
         source={icon!}
@@ -222,7 +232,7 @@ class Badge extends PureComponent<BadgeProps> {
         borderColor={borderColor}
         {...iconProps}
         style={{
-          flex: 1,
+          flex,
           ...iconStyle
         }}
       />
@@ -237,6 +247,7 @@ class Badge extends PureComponent<BadgeProps> {
       containerStyle,
       hitSlop,
       icon,
+      label,
       onPress,
       testId,
       testID,
@@ -265,7 +276,10 @@ class Badge extends PureComponent<BadgeProps> {
           hitSlop={hitSlop}
           {...animationProps}
         >
-          {icon ? this.renderIcon() : this.renderLabel()}
+          <View flex row centerV>
+          {icon && this.renderIcon()}
+          {label && this.renderLabel()}
+          </View>
         </Container>
       </View>
     );
