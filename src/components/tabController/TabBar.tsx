@@ -353,7 +353,7 @@ class TabBar extends PureComponent<Props, State> {
     const {itemsWidths} = this.state;
     const {indicatorStyle} = this.props;
     if (itemsWidths.length > 0) {
-      return <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, this._indicatorTransitionStyle]} />;
+      return <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, this._indicatorTransitionStyle]}/>;
     }
   }
 
@@ -428,31 +428,23 @@ class TabBar extends PureComponent<Props, State> {
     }
   }
 
-  renderCodeBlock = () => {
+  renderCodeBlock = _.memoize(() => {
     const {currentPage, targetPage} = this.context;
     const {itemsWidths, itemsOffsets} = this.state;
     const nodes = [];
 
-    nodes.push(
-      set(
-        this._indicatorOffset,
-        interpolate(currentPage, {
-          inputRange: itemsOffsets.map((_v, i) => i),
-          outputRange: itemsOffsets
-        })
-      )
-    );
-    nodes.push(
-      set(
-        this._indicatorWidth,
-        interpolate(currentPage, {inputRange: itemsWidths.map((_v, i) => i), outputRange: itemsWidths})
-      )
-    );
+    nodes.push(set(this._indicatorOffset,
+      interpolate(currentPage, {
+        inputRange: itemsOffsets.map((_v, i) => i),
+        outputRange: itemsOffsets
+      })));
+    nodes.push(set(this._indicatorWidth,
+      interpolate(currentPage, {inputRange: itemsWidths.map((_v, i) => i), outputRange: itemsWidths})));
 
     nodes.push(Reanimated.onChange(targetPage, Reanimated.call([targetPage], this.focusSelected)));
 
-    return block(nodes);
-  };
+    return <Code>{() => block(nodes)}</Code>;
+  });
 
   getShadowStyle() {
     const {enableShadow, shadowStyle} = this.props;
@@ -487,9 +479,9 @@ class TabBar extends PureComponent<Props, State> {
           </View>
           {this.renderSelectedIndicator()}
         </ScrollView>
-        {_.size(itemsWidths) > 1 && <Code>{this.renderCodeBlock}</Code>}
-        <ScrollBarGradient left visible={fadeLeft} />
-        <ScrollBarGradient visible={fadeRight} />
+        {_.size(itemsWidths) > 1 && this.renderCodeBlock()}
+        <ScrollBarGradient left visible={fadeLeft}/>
+        <ScrollBarGradient visible={fadeRight}/>
       </View>
     );
   }

@@ -40,13 +40,20 @@ class PageCarousel extends PureComponent {
     }
   };
 
-  renderCodeBlock = () => {
+  renderCodeBlock = _.memoize(() => {
     const {targetPage, containerWidth} = this.context;
-    return block([
-      Animated.onChange(targetPage, [call([targetPage], this.onTabChange)]),
-      Animated.onChange(containerWidth, [call([targetPage], this.onTabChange)])
-    ]);
-  };
+
+    return (
+      <Code>
+        {() =>
+          block([
+            Animated.onChange(targetPage, [call([targetPage], this.onTabChange)]),
+            Animated.onChange(containerWidth, [call([targetPage], this.onTabChange)])
+          ])
+        }
+      </Code>
+    );
+  });
 
   render() {
     const {selectedIndex, pageWidth} = this.context;
@@ -63,7 +70,7 @@ class PageCarousel extends PureComponent {
           contentOffset={{x: selectedIndex * pageWidth, y: 0}} // iOS only
         />
 
-        <Code>{this.renderCodeBlock}</Code>
+        {this.renderCodeBlock()}
       </>
     );
   }

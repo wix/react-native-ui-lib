@@ -160,7 +160,7 @@ class TabController extends Component<TabControllerProps, StateProps> {
     _.invoke(this.props, 'onChangeIndex', index);
   };
 
-  renderCodeBlock = () => {
+  renderCodeBlock = _.memoize(() => {
     const {itemStates, ignoredItems, currentPage, targetPage, carouselOffset, containerWidth} = this.state;
     const {selectedIndex} = this.props;
     const clock = new Clock();
@@ -171,61 +171,60 @@ class TabController extends Component<TabControllerProps, StateProps> {
     // temps
     const _carouselOffsetDiff = new Value(0);
 
-    return block([
-      /* Page change by TabBar */
-      ..._.map(itemStates, (state, index) => {
-        const ignoredItem = _.includes(ignoredItems, index);
-        return [
-          onChange(
-            state,
-            // @ts-ignore TODO: typescript?
-            cond(and(eq(state, State.END), !ignoredItem), [
-              set(fromPage, toPage),
-              set(toPage, index),
-              set(targetPage, index)
-            ])
-          )
-        ];
-      }),
+    return (
+      <Code>
+        {() =>
+          block([
+            /* Page change by TabBar */
+            ..._.map(itemStates, (state, index) => {
+              const ignoredItem = _.includes(ignoredItems, index);
+              return [
+                onChange(state,
+                  // @ts-ignore TODO: typescript?
+                  cond(and(eq(state, State.END), !ignoredItem), [
+                    set(fromPage, toPage),
+                    set(toPage, index),
+                    set(targetPage, index)
+                  ]))
+              ];
+            }),
 
-      // Animate currentPage to its target
-      cond(neq(currentPage, toPage), [
-        set(isAnimating, 1),
-        set(
-          currentPage,
-          timing({clock, from: fromPage, to: toPage, duration: 280, easing: Easing.bezier(0.34, 1.3, 0.64, 1)})
-        )
-      ]),
-      // Set isAnimating flag off
-      cond(and(eq(isAnimating, 1), not(clockRunning(clock))), set(isAnimating, 0)),
+            // Animate currentPage to its target
+            cond(neq(currentPage, toPage), [
+              set(isAnimating, 1),
+              set(currentPage,
+                timing({clock, from: fromPage, to: toPage, duration: 280, easing: Easing.bezier(0.34, 1.3, 0.64, 1)}))
+            ]),
+            // Set isAnimating flag off
+            cond(and(eq(isAnimating, 1), not(clockRunning(clock))), set(isAnimating, 0)),
 
-      /* Page change by Carousel scroll */
-      onChange(carouselOffset, [
-        set(_carouselOffsetDiff, round(abs(diff(carouselOffset)))),
-        set(isScrolling,
-          and(
-            lessThan(_carouselOffsetDiff, round(containerWidth)),
-            greaterThan(_carouselOffsetDiff, 0))
-          ),
-        cond(not(isAnimating), [
-          set(currentPage,
-            interpolate(round(carouselOffset), {
-              inputRange: itemStates.map((_v, i) => round(multiply(i, containerWidth))),
-              outputRange: itemStates.map((_v, i) => i)
-            })),
-          set(toPage, currentPage)
-        ])
-      ]),
-      // Update/Sync target page when scrolling is done
-      cond(and(eq(isScrolling, 1), eq(floor(abs(diff(carouselOffset))), 0)), [
-        set(isScrolling, 0),
-        cond(not(between(fract(currentPage), 0.1, 0.9, true)), set(targetPage, round(currentPage)))
-      ]),
+            /* Page change by Carousel scroll */
+            onChange(carouselOffset, [
+              set(_carouselOffsetDiff, round(abs(diff(carouselOffset)))),
+              set(isScrolling,
+                and(lessThan(_carouselOffsetDiff, round(containerWidth)), greaterThan(_carouselOffsetDiff, 0))),
+              cond(not(isAnimating), [
+                set(currentPage,
+                  interpolate(round(carouselOffset), {
+                    inputRange: itemStates.map((_v, i) => round(multiply(i, containerWidth))),
+                    outputRange: itemStates.map((_v, i) => i)
+                  })),
+                set(toPage, currentPage)
+              ])
+            ]),
+            // Update/Sync target page when scrolling is done
+            cond(and(eq(isScrolling, 1), eq(floor(abs(diff(carouselOffset))), 0)), [
+              set(isScrolling, 0),
+              cond(not(between(fract(currentPage), 0.1, 0.9, true)), set(targetPage, round(currentPage)))
+            ]),
 
-      /* Invoke index change */
-      onChange(targetPage, call([targetPage], this.onPageChange))
-    ]);
-  };
+            /* Invoke index change */
+            onChange(targetPage, call([targetPage], this.onPageChange))
+          ])
+        }
+      </Code>
+    );
+  });
 
   render() {
     const {itemStates} = this.state;
@@ -233,7 +232,7 @@ class TabController extends Component<TabControllerProps, StateProps> {
     return (
       <TabBarContext.Provider value={this.state}>
         {this.props.children}
-        {!_.isEmpty(itemStates) && <Code>{this.renderCodeBlock}</Code>}
+        {!_.isEmpty(itemStates) && this.renderCodeBlock()}
       </TabBarContext.Provider>
     );
   }

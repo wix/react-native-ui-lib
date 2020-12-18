@@ -68,16 +68,25 @@ export default class TabPage extends PureComponent<TabPageProps> {
     }, this.props.lazyLoadTime); // tab bar indicator transition time
   };
 
-  renderCodeBlock = () => {
+  renderCodeBlock = _.memoize(() => {
     const {targetPage} = this.context;
     const {index, lazy} = this.props;
-    return block([
-      cond(and(eq(targetPage, index), Number(lazy), eq(this._loaded, 0)), [set(this._loaded, 1), call([], this.lazyLoad)]),
-      cond(eq(targetPage, index),
-        [set(this._opacity, 1), set(this._zIndex, 1)],
-        [set(this._opacity, 0), set(this._zIndex, 0)])
-    ]);
-  };
+    return (
+      <Code>
+        {() =>
+          block([
+            cond(and(eq(targetPage, index), Number(lazy), eq(this._loaded, 0)), [
+              set(this._loaded, 1),
+              call([], this.lazyLoad)
+            ]),
+            cond(eq(targetPage, index),
+              [set(this._opacity, 1), set(this._zIndex, 1)],
+              [set(this._opacity, 0), set(this._zIndex, 0)])
+          ])
+        }
+      </Code>
+    );
+  });
 
   render() {
     const {renderLoading, testID} = this.props;
@@ -87,9 +96,7 @@ export default class TabPage extends PureComponent<TabPageProps> {
       <Reanimated.View style={this._pageStyle} testID={testID}>
         {!loaded && renderLoading?.()}
         {loaded && this.props.children}
-        <Code>
-          {this.renderCodeBlock}
-        </Code>
+        {this.renderCodeBlock()}
       </Reanimated.View>
     );
   }
