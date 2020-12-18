@@ -24,6 +24,7 @@ const {
   diff,
   eq,
   floor,
+  greaterThan,
   lessThan,
   neq,
   not,
@@ -167,6 +168,8 @@ class TabController extends Component<TabControllerProps, StateProps> {
     const toPage = new Value(selectedIndex);
     const isAnimating = new Value(0);
     const isScrolling = new Value(0);
+    // temps
+    const _carouselOffsetDiff = new Value(0);
 
     return block([
       /* Page change by TabBar */
@@ -198,15 +201,18 @@ class TabController extends Component<TabControllerProps, StateProps> {
 
       /* Page change by Carousel scroll */
       onChange(carouselOffset, [
-        set(isScrolling, lessThan(round(abs(diff(carouselOffset))), round(containerWidth))),
+        set(_carouselOffsetDiff, round(abs(diff(carouselOffset)))),
+        set(isScrolling,
+          and(
+            lessThan(_carouselOffsetDiff, round(containerWidth)),
+            greaterThan(_carouselOffsetDiff, 0))
+          ),
         cond(not(isAnimating), [
-          set(
-            currentPage,
+          set(currentPage,
             interpolate(round(carouselOffset), {
               inputRange: itemStates.map((_v, i) => round(multiply(i, containerWidth))),
               outputRange: itemStates.map((_v, i) => i)
-            })
-          ),
+            })),
           set(toPage, currentPage)
         ])
       ]),
