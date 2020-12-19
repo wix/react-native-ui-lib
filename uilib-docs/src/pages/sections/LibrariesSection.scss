@@ -1,0 +1,43 @@
+@import 'src/styles/constants';
+
+.libraries-section {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 250px;
+  background-color: $primary;
+  color: $white;
+
+  .inner {
+    width: 80%;
+    min-width: 50vw;
+    display: flex;
+    justify-content: space-between;
+
+    .headline {
+      width: 28%;
+      min-width: 400px;
+      align-self: center;
+      margin-right: 40px;
+    }
+
+    .libraries {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 50%;
+      
+
+      .library {
+        text-align: center;
+        img {
+          height: 5vw;
+          min-height: 60px;
+        }
+        .name {
+          margin: 0;
+        }
+      }
+    }
+  }
+}

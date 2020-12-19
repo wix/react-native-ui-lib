@@ -2,14 +2,14 @@ import React from 'react';
 import Link from 'gatsby-link';
 
 import './header.scss';
-import logo from '../images/logo.png';
+import logo from '../images/newDesign/headerLogo.svg';
 
 const Header = () => {
   return (
     <div className="header">
       <Link to="/">
         <img className="logo" src={logo} alt="logo"/>
-        <span className="logo-title">RNUILIB</span>
+
       </Link>
 
 
