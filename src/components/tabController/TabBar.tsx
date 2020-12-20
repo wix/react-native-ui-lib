@@ -431,7 +431,7 @@ class TabBar extends PureComponent<Props, State> {
   renderCodeBlock = _.memoize(() => {
     const {currentPage, targetPage} = this.context;
     const {itemsWidths, itemsOffsets} = this.state;
-    const nodes = [];
+    const nodes: any[] = []; // TODO: typescript?
 
     nodes.push(set(this._indicatorOffset,
       interpolate(currentPage, {
