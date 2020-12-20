@@ -8,7 +8,7 @@ import ComponentsSection from './sections/ComponentsSection';
 import RtlAndAccessibilitySection from './sections/RtlAndAccessibilitySection.jsx';
 import CodeSection from './sections/CodeSection';
 import LibrariesSection from './sections/LibrariesSection';
-import InfoSection from './sections/InfoSection';
+// import InfoSection from './sections/InfoSection';
 
 const IndexPage = props => {
   return (
@@ -18,7 +18,7 @@ const IndexPage = props => {
       <RtlAndAccessibilitySection />
       <CodeSection />
       <LibrariesSection />
-      <InfoSection />
+      {/* <InfoSection /> */}
 
       {/* <div className="main-section">
         <div className="logo-box">

@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'gatsby-link';
 import './ComponentsSection.scss';
 import showcase from '../../images/newDesign/showcase.jpg';
 
@@ -10,7 +11,9 @@ export default () => {
         <p>
           Basic components like Button, Avatar and Card and more sophisticated ones like Hints, ColorPicker and Drawer.
         </p>
-        <button className="dark">View Docs</button>
+        <Link to="/getting-started/setup">
+          <button className="dark">View Docs</button>
+        </Link>
       </div>
       <img src={showcase} />
     </div>

@@ -54,8 +54,8 @@
     .buttons {
       margin-top: 40px;
 
-      > button:first-child {
-        margin-right: 20px;
+      > :first-child {
+        margin-right: 10px;
       }
     }
   }

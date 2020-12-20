@@ -1,5 +1,6 @@
 import React from 'react';
-import './IntroSection.scss'
+import Link from 'gatsby-link';
+import './IntroSection.scss';
 import introCover from '../../images/newDesign/introCover.jpg';
 
 export default () => {
@@ -16,12 +17,17 @@ export default () => {
               <img />
               Star
             </span>
-            <span>2.5k</span>
+            <span>2.7k</span>
           </div>
 
           <div className="buttons">
-            <button className="dark">View Docs</button>
-            <button>Expo-Snack Demo</button>
+            <Link to="/getting-started/setup">
+              <button className="dark">View Docs</button>
+            </Link>
+
+            <a href="https://snack.expo.io/@ethanshar/rnuilib_snack" target="_blank" rel="noopener noreferrer">
+              <button>Expo-Snack Demo</button>
+            </a>
           </div>
         </div>
       </div>

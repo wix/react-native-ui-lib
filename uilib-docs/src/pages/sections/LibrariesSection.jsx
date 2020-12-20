@@ -13,21 +13,23 @@ export default () => {
         <h1 className="headline">Check out more libraries made by us!</h1>
 
         <div className="libraries">
-          <Library name="RNN" image={rnn} />
-          <Library name="Detox" image={detox} />
-          <Library name="Calendars" image={calendars} />
-          <Library name="Remx" image={remx} />
+          <Library name="RNN" image={rnn} link="https://github.com/wix/react-native-navigation" />
+          <Library name="Detox" image={detox} link="https://github.com/wix/Detox" />
+          <Library name="Calendars" image={calendars} link="https://github.com/wix/react-native-calendars" />
+          <Library name="Remx" image={remx} link="https://github.com/wix/remx" />
         </div>
       </div>
     </div>
   );
 };
 
-const Library = ({image, name}) => {
+const Library = ({image, name, link}) => {
   return (
-    <div className="library">
-      <img src={image} />
-      <h3 className="name">{name}</h3>
-    </div>
+    <a href={link} target="_blank" rel="noopener noreferrer">
+      <div className="library">
+        <img src={image} />
+        <h3 className="name">{name}</h3>
+      </div>
+    </a>
   );
 };

@@ -26,16 +26,25 @@
       justify-content: space-between;
       align-items: center;
       width: 50%;
-      
+
 
       .library {
         text-align: center;
+        color: $white;
+
         img {
           height: 5vw;
           min-height: 60px;
+          filter: grayscale(0.8);
+          transition: 0.3s all;
         }
+
         .name {
           margin: 0;
+        }
+
+        &:hover img {
+          filter: grayscale(0);
         }
       }
     }

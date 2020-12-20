@@ -1,4 +1,5 @@
 import React, {useState, useCallback} from 'react';
+import Link from 'gatsby-link';
 import classnames from 'classnames';
 
 import {foundationSnippet, themeSnippet, modifiersSnippet} from './CodeSectionSnippets';
@@ -22,8 +23,9 @@ export default () => {
       <div className="code-example">
         <TabBar onChangeIndex={setSelectedTab} selectedIndex={selectedTab} />
         <Tab {...tabs[selectedTab]} />
-
-        <button className="dark">View Docs</button>
+        <Link className="view-docs-button" to="/getting-started/setup">
+          <button className="dark">View Docs</button>
+        </Link>
       </div>
     </div>
   );
