@@ -1,10 +1,42 @@
 @import 'src/styles/constants';
 
+@mixin button() {
+  button {
+    box-shadow: none;
+    outline: 0;
+    border: 0;
+    min-width: 180px;
+    padding: 12px 24px;
+    border-radius: 100px;
+    font-size: $text40;
+    font-weight: 500;
+    background-color: $white;
+    color: $black;
+    border: 1px solid $black;
+    cursor: pointer;
+    transition: 0.2s all;
+
+    &:hover {
+      background-color: $black;
+      color: $white;
+    }
+
+    &.dark {
+      background-color: $black;
+      color: $white;
+
+      &:hover {
+        background-color: $dark10;
+      }
+    }
+  }
+}
+
 .main-page {
+  @include button();
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding-bottom: 20px;
   margin: auto;
   align-items: center;
 
