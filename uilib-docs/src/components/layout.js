@@ -27,18 +27,15 @@ const Layout = ({children, location}) => {
         <meta property="og:description" content={metaDescription} />
         <meta property="twitter:title" content={metaTitle} />
         <meta property="twitter:description" content={metaDescription} />
-        <link
-          rel="canonical"
-          href="https://wix.github.io/react-native-ui-lib/"
-        />
+        <link rel="canonical" href="https://wix.github.io/react-native-ui-lib/" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/prism.min.js" integrity="sha512-9+422Bs3A87UkWfp+qV80Nfv9arhbCXKY1rxrF2seorI36mIIstMiuBfyKLF1yH1nnzQkEWq2xrzT4XU3Z+vrA==" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism-tomorrow.min.css" integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg==" crossorigin="anonymous" />
       </Helmet>
       <Header />
       {/* <div className={`main ${!showSidebar ? 'fill' : ''}`}> */}
       <div className={`main`}>
         {showSidebar && <Navbar />}
-        <div className={`content ${showSidebar ? 'with-navbar' : ''}`}>
-          {children}
-        </div>
+        <div className={`content ${showSidebar ? 'with-navbar' : ''}`}>{children}</div>
       </div>
     </div>
   );
