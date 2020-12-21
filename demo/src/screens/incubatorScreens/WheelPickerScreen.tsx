@@ -33,17 +33,17 @@ export default () => {
       
       <View flex centerV centerH>
         <Text h3>Months</Text>
-        <View height={300} width={'100%'}>
           <Incubator.WheelPicker
+            style={{width: '100%'}}
             onValueChange={onChange}
             activeTextColor={Colors.primary}
             inactiveTextColor={Colors.grey20}
             items={_.map(months, i => ({label: i, value: i}))}
             textStyle={{...Typography.text60R}}
           />
-        </View>
-        <Text h3>Years</Text>
+        
         <View height={300} width={'100%'}>
+          <Text h3>Years</Text>
           <Incubator.WheelPicker onValueChange={onChange} items={_.map(years, i => ({label: '' + i, value: i}))} />
         </View>
       </View>
