@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {ActivityIndicator} from 'react-native';
-import {Assets, TabController, Colors, View, Text, Button, TabControllerProps} from 'react-native-ui-lib';
+import {Assets, TabController, Colors, View, Text, Button, TabBarItemProps} from 'react-native-ui-lib';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import _ from 'lodash';
-declare type TabBarItemProps = TabControllerProps.TabBarItemProps;
 
 import Tab1 from './tab1';
 import Tab2 from './tab2';
