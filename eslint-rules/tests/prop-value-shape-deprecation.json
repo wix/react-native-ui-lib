@@ -1,0 +1,19 @@
+[
+  {
+    "component": "ListItem",
+    "props": [
+      {
+        "prop": "avatar",
+        "value": [
+          {
+            "prop": "imageSource",
+            "message": "Please use the 'source' prop instead (fix is available).",
+            "fix": {
+                "propName": "source"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
