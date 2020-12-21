@@ -368,7 +368,8 @@ function createStyles(props: AvatarProps) {
     },
     initials: {
       color: labelColor,
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
+      lineHeight: undefined
     },
     ribbon: {
       backgroundColor: Colors.blue30,
