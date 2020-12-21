@@ -30,9 +30,10 @@ export default () => {
   return (
     <View flex padding-page>
       <Text h1>Wheel Picker</Text>
-      <View flex centerV centerH paddingT-page>
+      
+      <View flex centerV centerH>
+        <Text h3>Months</Text>
         <View height={300} width={'100%'}>
-          <Text h3>Months</Text>
           <Incubator.WheelPicker
             onValueChange={onChange}
             activeTextColor={Colors.primary}
@@ -41,11 +42,8 @@ export default () => {
             textStyle={{...Typography.text60R}}
           />
         </View>
-
+        <Text h3>Years</Text>
         <View height={300} width={'100%'}>
-          <Text h3 marginT-s5>
-            Years
-          </Text>
           <Incubator.WheelPicker onValueChange={onChange} items={_.map(years, i => ({label: '' + i, value: i}))} />
         </View>
       </View>
