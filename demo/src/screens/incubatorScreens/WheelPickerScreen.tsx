@@ -23,7 +23,6 @@ const months = [
 const years = _.times(2020, i => i);
 
 export default () => {
-
   const onChange = useCallback((index: number, item?: ItemProps) => {
     console.log(item, index);
   }, []);
@@ -32,17 +31,23 @@ export default () => {
     <View flex padding-page>
       <Text h1>Wheel Picker</Text>
       <View flex centerV centerH paddingT-page>
-        <Text h3>Months</Text>
-        <Incubator.WheelPicker
-          onChange={onChange}
-          activeTextColor={Colors.primary}
-          inactiveTextColor={Colors.grey20}
-          items={_.map(months, i => ({text: i, value: i}))}
-          textStyle={{...Typography.text60R}}
-        />
+        <View height={300} width={'100%'}>
+          <Text h3>Months</Text>
+          <Incubator.WheelPicker
+            onValueChange={onChange}
+            activeTextColor={Colors.primary}
+            inactiveTextColor={Colors.grey20}
+            items={_.map(months, i => ({label: i, value: i}))}
+            textStyle={{...Typography.text60R}}
+          />
+        </View>
 
-        <Text h3 marginT-s5>Years</Text>
-        <Incubator.WheelPicker onChange={onChange} items={_.map(years, i => ({text: '' + i, value: i}))} />
+        <View height={300} width={'100%'}>
+          <Text h3 marginT-s5>
+            Years
+          </Text>
+          <Incubator.WheelPicker onValueChange={onChange} items={_.map(years, i => ({label: '' + i, value: i}))} />
+        </View>
       </View>
     </View>
   );

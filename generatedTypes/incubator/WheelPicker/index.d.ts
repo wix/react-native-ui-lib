@@ -25,7 +25,7 @@ export interface WheelPickerProps {
     /**
      * Event, on active row change
      */
-    onChange: (index: number, item?: ItemProps) => void;
+    onValueChange: (index: number, item?: ItemProps) => void;
 }
 declare const WheelPicker: ({ items, itemHeight, activeTextColor, inactiveTextColor, textStyle, onChange: onChangeEvent }: WheelPickerProps) => JSX.Element;
 export default WheelPicker;
