@@ -8,6 +8,7 @@ interface Props {
   modalVisibility?: boolean;
   overlayBackgroundColor?: string;
   onFadeDone?: () => void;
+  fadeOut?: boolean;
 }
 
 const OverlayFadingBackground = ({
@@ -15,11 +16,19 @@ const OverlayFadingBackground = ({
   dialogVisibility,
   modalVisibility,
   overlayBackgroundColor,
-  onFadeDone
+  onFadeDone: propsOnFadeDone,
+  fadeOut
 }: Props) => {
   const fadeAnimation = useRef(new Animated.Value(0)).current;
+  const isAnimating = useRef(false);
+
+  const onFadeDone = useCallback(() => {
+    isAnimating.current = false;
+    propsOnFadeDone?.();
+  }, [propsOnFadeDone]);
 
   const animateFading = useCallback((toValue) => {
+    isAnimating.current = true;
     Animated.timing(fadeAnimation, {
       toValue,
       duration: 400,
@@ -28,10 +37,10 @@ const OverlayFadingBackground = ({
   }, [fadeAnimation, onFadeDone]);
 
   useEffect(() => {
-    if (!dialogVisibility) {
+    if (!isAnimating.current && (!dialogVisibility || fadeOut)) {
       animateFading(0);
     }
-  }, [dialogVisibility, animateFading]);
+  }, [dialogVisibility, animateFading, fadeOut]);
 
   useEffect(() => {
     if (modalVisibility) {

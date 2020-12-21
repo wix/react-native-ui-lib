@@ -87,6 +87,7 @@ interface DialogState {
   orientationKey: orientations;
   modalVisibility?: boolean;
   dialogVisibility?: boolean;
+  fadeOut?: boolean;
 }
 
 const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.dark10, 0.6);
@@ -171,7 +172,7 @@ class Dialog extends Component<DialogProps, DialogState> {
     }
   }
 
-  onDismiss = () => {
+  _onDismiss = () => {
     this.setState({modalVisibility: false}, () => {
       const props = this.props;
       if (props.visible) {
@@ -182,6 +183,19 @@ class Dialog extends Component<DialogProps, DialogState> {
         _.invoke(props, 'onDialogDismissed', props);
       }
     });
+  }
+
+  onDismiss = () => {
+    let fadeOut = false;
+    if (Constants.isIOS && this.props.visible) {
+      fadeOut = true;
+    }
+
+    if (fadeOut) {
+      this.setState({fadeOut}, this._onDismiss);
+    } else {
+      this._onDismiss();
+    }
   };
 
   onModalDismissed = () => {
@@ -227,7 +241,7 @@ class Dialog extends Component<DialogProps, DialogState> {
 
   // TODO: renderOverlay {_.invoke(this.props, 'renderOverlay')}
   renderDialogContainer = () => {
-    const {modalVisibility, dialogVisibility} = this.state;
+    const {modalVisibility, dialogVisibility, fadeOut} = this.state;
     const {useSafeArea, bottom, overlayBackgroundColor, testID} = this.props;
     const addBottomSafeArea = Constants.isIphoneX && (useSafeArea && bottom);
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8; // TODO: should this be here or in the input style?
@@ -245,6 +259,7 @@ class Dialog extends Component<DialogProps, DialogState> {
           dialogVisibility={dialogVisibility}
           overlayBackgroundColor={overlayBackgroundColor}
           onFadeDone={onFadeDone}
+          fadeOut={fadeOut}
         />
         {this.renderDialogView()}
         {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>}
