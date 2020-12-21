@@ -7,7 +7,7 @@ import {Constants} from '../../helpers';
 
 const {Code, Value, cond, set, and, call, block, eq} = Reanimated;
 
-export interface TabPageProps {
+export interface TabControllerPageProps {
   /**
    * The index of the the TabPage
    */
@@ -34,7 +34,7 @@ export interface TabPageProps {
  * @description: TabController's TabPage
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
  */
-export default class TabPage extends PureComponent<TabPageProps> {
+export default class TabPage extends PureComponent<TabControllerPageProps> {
   static displayName = 'TabController.TabPage';
 
   static contextType = TabBarContext;

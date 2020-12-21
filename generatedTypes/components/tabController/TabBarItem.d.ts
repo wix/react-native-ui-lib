@@ -6,7 +6,7 @@ import Animated from 'react-native-reanimated';
 import { State } from 'react-native-gesture-handler';
 import { BadgeProps } from '../../components/badge';
 import { TouchableOpacityProps } from '../../incubator';
-export interface TabBarItemProps {
+export interface TabControllerItemProps {
     /**
      * label of the tab
      */
@@ -77,7 +77,7 @@ export interface TabBarItemProps {
      */
     testID?: string;
 }
-interface Props extends TabBarItemProps {
+interface Props extends TabControllerItemProps {
     index: number;
     targetPage: any;
     state: State;

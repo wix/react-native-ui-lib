@@ -1,11 +1,11 @@
 import React from 'react';
 import { TextProps, StyleProp, ViewStyle } from 'react-native';
-import { TabBarItemProps } from './TabBarItem';
-export interface TabBarProps {
+import { TabControllerItemProps } from './TabBarItem';
+export interface TabControllerBarProps {
     /**
      * The list of tab bar items
      */
-    items?: TabBarItemProps[];
+    items?: TabControllerItemProps[];
     /**
      * Tab Bar height
      */
@@ -76,7 +76,7 @@ export interface TabBarProps {
      */
     testID?: string;
 }
-declare const _default: React.ComponentClass<TabBarProps & {
+declare const _default: React.ComponentClass<TabControllerBarProps & {
     useCustomTheme?: boolean | undefined;
 }, any>;
 export default _default;

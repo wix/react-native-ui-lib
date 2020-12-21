@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import Reanimated from 'react-native-reanimated';
-export interface TabPageProps {
+import _ from 'lodash';
+export interface TabControllerPageProps {
     /**
      * The index of the the TabPage
      */
@@ -26,7 +27,7 @@ export interface TabPageProps {
  * @description: TabController's TabPage
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
  */
-export default class TabPage extends PureComponent<TabPageProps> {
+export default class TabPage extends PureComponent<TabControllerPageProps> {
     static displayName: string;
     static contextType: React.Context<{}>;
     static defaultProps: {
@@ -65,6 +66,6 @@ export default class TabPage extends PureComponent<TabPageProps> {
         width?: undefined;
     } | undefined)[];
     lazyLoad: () => void;
-    renderCodeBlock: () => Reanimated.Node<number>;
+    renderCodeBlock: (() => JSX.Element) & _.MemoizedFunction;
     render(): JSX.Element;
 }

@@ -16,7 +16,7 @@ import Reanimated from 'react-native-reanimated';
 import _ from 'lodash';
 
 import TabBarContext from './TabBarContext';
-import TabBarItem, {TabBarItemProps} from './TabBarItem';
+import TabBarItem, {TabControllerItemProps} from './TabBarItem';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import View from '../../components/view';
 import ScrollBarGradient from '../scrollBar/ScrollBarGradient';
@@ -42,11 +42,11 @@ const DEFAULT_SELECTED_LABEL_STYLE = {
   letterSpacing: 0
 };
 
-export interface TabBarProps {
+export interface TabControllerBarProps {
   /**
    * The list of tab bar items
    */
-  items?: TabBarItemProps[];
+  items?: TabControllerItemProps[];
   /**
    * Tab Bar height
    */
@@ -122,9 +122,9 @@ export interface TabBarProps {
   testID?: string;
 }
 
-type ChildProps = React.ReactElement<TabBarItemProps>;
+type ChildProps = React.ReactElement<TabControllerItemProps>;
 
-interface Props extends TabBarProps, BaseComponentInjectedProps, ForwardRefInjectedProps {
+interface Props extends TabControllerBarProps, BaseComponentInjectedProps, ForwardRefInjectedProps {
   children?: ChildProps[] | ChildProps;
 }
 
@@ -431,7 +431,7 @@ class TabBar extends PureComponent<Props, State> {
   renderCodeBlock = _.memoize(() => {
     const {currentPage, targetPage} = this.context;
     const {itemsWidths, itemsOffsets} = this.state;
-    const nodes = [];
+    const nodes: any[] = [];
 
     nodes.push(set(this._indicatorOffset,
       interpolate(currentPage, {
@@ -529,4 +529,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default asBaseComponent<TabBarProps>(forwardRef<Props>(TabBar));
+export default asBaseComponent<TabControllerBarProps>(forwardRef<Props>(TabBar));

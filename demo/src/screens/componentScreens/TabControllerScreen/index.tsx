@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ActivityIndicator} from 'react-native';
-import {Assets, TabController, Colors, View, Text, Button, TabBarItemProps} from 'react-native-ui-lib';
+import {Assets, TabController, Colors, View, Text, Button, TabControllerItemProps} from 'react-native-ui-lib';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import _ from 'lodash';
 
@@ -16,7 +16,7 @@ interface State {
   fewItems: boolean;
   selectedIndex: number;
   key: string | number;
-  items: TabBarItemProps[];
+  items: TabControllerItemProps[];
 }
 
 class TabControllerScreen extends Component<{}, State> {
@@ -35,13 +35,13 @@ class TabControllerScreen extends Component<{}, State> {
     this.state.items = this.generateTabItems();
   }
 
-  generateTabItems = (fewItems = this.state.fewItems, centerSelected = this.state.centerSelected): TabBarItemProps[] => {
-    let items: TabBarItemProps[] = _.chain(TABS)
+  generateTabItems = (fewItems = this.state.fewItems, centerSelected = this.state.centerSelected): TabControllerItemProps[] => {
+    let items: TabControllerItemProps[] = _.chain(TABS)
       .take(fewItems ? 3 : TABS.length)
-      .map<TabBarItemProps>(tab => ({label: tab, key: tab}))
+      .map<TabControllerItemProps>(tab => ({label: tab, key: tab}))
       .value();
 
-    const addItem: TabBarItemProps = {icon: Assets.icons.demo.add, key: 'add', ignore: true, width: 60, onPress: this.onAddItem};
+    const addItem: TabControllerItemProps = {icon: Assets.icons.demo.add, key: 'add', ignore: true, width: 60, onPress: this.onAddItem};
 
     if (!centerSelected) {
       items = [...items, addItem];

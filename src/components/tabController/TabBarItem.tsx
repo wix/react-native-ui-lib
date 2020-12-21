@@ -22,7 +22,7 @@ const {cond, eq, call, block, event, and} = Reanimated;
 const DEFAULT_LABEL_COLOR = Colors.black;
 const DEFAULT_SELECTED_LABEL_COLOR = Colors.blue30;
 
-export interface TabBarItemProps {
+export interface TabControllerItemProps {
   /**
    * label of the tab
    */
@@ -102,7 +102,7 @@ export interface TabBarItemProps {
   testID?: string;
 }
 
-interface Props extends TabBarItemProps {
+interface Props extends TabControllerItemProps {
   index: number;
   targetPage: any; // TODO: typescript?
   state: State;

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import Reanimated from 'react-native-reanimated';
+import _ from 'lodash';
 import TabBar from './TabBar';
-import TabBarItem, { TabBarItemProps } from './TabBarItem';
+import TabBarItem, { TabControllerItemProps } from './TabBarItem';
 import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
-export { TabBarItemProps };
+export { TabControllerItemProps };
 export interface TabControllerProps {
     /**
      * The list of tab bar items
      */
-    items: TabBarItemProps[];
+    items: TabControllerItemProps[];
     /**
      * Initial selected index
      */
@@ -67,7 +67,7 @@ declare class TabController extends Component<TabControllerProps, StateProps> {
     get pageWidth(): number;
     registerTabItems: (tabItemsCount: number, ignoredItems: StateProps['ignoredItems']) => void;
     onPageChange: ([index]: readonly number[]) => void;
-    renderCodeBlock: () => Reanimated.Node<number>;
+    renderCodeBlock: (() => JSX.Element) & _.MemoizedFunction;
     render(): JSX.Element;
 }
 declare const _default: React.ComponentClass<TabControllerProps & {

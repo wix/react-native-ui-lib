@@ -8,10 +8,10 @@ import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons/new';
 import TabBarContext from './TabBarContext';
 import TabBar from './TabBar';
-import TabBarItem, {TabBarItemProps} from './TabBarItem';
+import TabBarItem, {TabControllerItemProps} from './TabBarItem';
 import TabPage from './TabPage';
 import PageCarousel from './PageCarousel';
-export {TabBarItemProps};
+export {TabControllerItemProps};
 
 const {
   and,
@@ -41,7 +41,7 @@ export interface TabControllerProps {
   /**
    * The list of tab bar items
    */
-  items: TabBarItemProps[];
+  items: TabControllerItemProps[];
   /**
    * Initial selected index
    */
@@ -110,7 +110,7 @@ class TabController extends Component<TabControllerProps, StateProps> {
         .size()
         .value();
       itemStates = _.times(itemsCount, () => new Value(State.UNDETERMINED));
-      ignoredItems = _.filter<TabBarItemProps[]>(props.items, (item: TabBarItemProps) => item.ignore);
+      ignoredItems = _.filter<TabControllerItemProps[]>(props.items, (item: TabControllerItemProps) => item.ignore);
     }
 
     this.state = {
