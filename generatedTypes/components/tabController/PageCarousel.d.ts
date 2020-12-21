@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import _ from 'lodash';
 import Animated from 'react-native-reanimated';
 /**
  * @description: TabController's Page Carousel
@@ -14,7 +13,7 @@ declare class PageCarousel extends PureComponent {
     componentDidMount(): void;
     onTabChange: ([index]: readonly number[]) => void;
     scrollToPage: (pageIndex: number) => void;
-    renderCodeBlock: (() => JSX.Element) & _.MemoizedFunction;
+    renderCodeBlock: () => Animated.Node<number>;
     render(): JSX.Element;
 }
 export default PageCarousel;

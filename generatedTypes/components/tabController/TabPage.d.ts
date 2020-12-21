@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import Reanimated from 'react-native-reanimated';
-import _ from 'lodash';
 export interface TabPageProps {
     /**
      * The index of the the TabPage
@@ -66,6 +65,6 @@ export default class TabPage extends PureComponent<TabPageProps> {
         width?: undefined;
     } | undefined)[];
     lazyLoad: () => void;
-    renderCodeBlock: (() => JSX.Element) & _.MemoizedFunction;
+    renderCodeBlock: () => Reanimated.Node<number>;
     render(): JSX.Element;
 }
