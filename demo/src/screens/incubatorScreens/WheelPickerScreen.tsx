@@ -23,7 +23,7 @@ const months = [
 const years = _.times(2020, i => i);
 
 export default () => {
-  const onChange = useCallback((index: number, item?: ItemProps) => {
+  const onChange = useCallback((item: string | undefined, index: number) => {
     console.log(item, index);
   }, []);
 
@@ -42,8 +42,8 @@ export default () => {
             textStyle={{...Typography.text60R}}
           />
         
+        <Text h3>Years</Text>
         <View height={300} width={'100%'}>
-          <Text h3>Years</Text>
           <Incubator.WheelPicker onValueChange={onChange} items={_.map(years, i => ({label: '' + i, value: i}))} />
         </View>
       </View>
