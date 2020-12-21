@@ -173,7 +173,7 @@ class Dialog extends Component<DialogProps, DialogState> {
   }
 
   _onDismiss = () => {
-    this.setState({modalVisibility: false}, () => {
+    this.setState({modalVisibility: false, fadeOut: false}, () => {
       const props = this.props;
       if (props.visible) {
         _.invoke(props, 'onDismiss', props);
