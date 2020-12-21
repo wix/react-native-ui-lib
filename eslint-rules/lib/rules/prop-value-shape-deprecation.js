@@ -29,12 +29,7 @@ const MAP_SCHEMA = {
                 },
                 fix: {
                   type: 'object',
-                  required: ['propName'],
-                  properties: {
-                    propName: {
-                      type: 'string'
-                    }
-                  }
+                  additionalProperties: true
                 }
               }
             }
