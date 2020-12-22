@@ -62,6 +62,7 @@ class PickerDialog extends BaseComponent {
           <View centerV flex>
             {this.renderPicker()}
           </View>
+          <View useSafeArea/>
         </View>
       </Dialog>
     );

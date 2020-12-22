@@ -64,7 +64,7 @@ export interface WheelPickerProps {
 const WheelPicker = ({
   items: propsItems,
   itemHeight = 44,
-  numberOfVisibleRows = 6,
+  numberOfVisibleRows = 5,
   activeTextColor,
   inactiveTextColor,
   textStyle,
@@ -100,16 +100,10 @@ const WheelPicker = ({
     return _.findIndex(items, {value: selectedValue?.value});
   }
 
-  const scrollToPassedIndex = (animated: boolean = true) => {
+  const scrollToPassedIndex = (animated: boolean = false) => {
     const index = getIndexFromSelectedValue();
     scrollToIndex(index, animated);
   }
-
-  useEffect(() => {
-    setTimeout(() => {
-      scrollToPassedIndex(false);
-    }, 100);    
-  }, []);
 
   const scrollToIndex = (index: number, animated: boolean) => {
     if (scrollView.current?.getNode()) {
@@ -180,6 +174,7 @@ const WheelPicker = ({
         onScroll={onScroll}
         onMomentumScrollEnd={onChange}
         showsVerticalScrollIndicator={false}
+        onLayout={scrollToPassedIndex}
         // @ts-ignore
         ref={scrollView}
         contentContainerStyle={{
