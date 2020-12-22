@@ -46,7 +46,7 @@ export interface WheelPickerProps {
   /**
    * Event, on active row change
    */
-  onValueChange: (item: string | undefined, index: number) => void;
+  onValueChange?: (item: string | undefined, index: number) => void;
   /**
    * Container's ViewStyle, height is computed according to itemHeight * numberOfVisibleRows
    */
