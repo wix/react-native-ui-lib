@@ -59,13 +59,13 @@ export interface TabControllerItemProps {
    * Badge component props to display next the item label
    */
   badge?: BadgeProps;
-  // /**
-  //  * maximun number of lines the label can break
-  //  */
+  /**
+   * maximun number of lines the label can break
+   */
   // maxLines?: number;
-  // /**
-  //  * whether the tab will have a divider on its right
-  //  */
+  /**
+   * whether the tab will have a divider on its right
+   */
   // showDivider?: boolean;
   /**
    * A fixed width for the item
