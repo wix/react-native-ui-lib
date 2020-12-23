@@ -46,7 +46,7 @@ export interface WheelPickerProps {
   /**
    * Event, on active row change
    */
-  onValueChange?: (item: string | undefined, index: number) => void;
+  onValueChange?: (item: string | number, index: number) => void;
   /**
    * Container's ViewStyle, height is computed according to itemHeight * numberOfVisibleRows
    */
@@ -58,8 +58,10 @@ export interface WheelPickerProps {
   /**
    * WheelPicker initial value, can be ItemProps.value, number as index
    */
-  selectedValue?: ItemProps | number
+  selectedValue: ItemProps | number | string
 }
+
+type ItemValueTypes = ItemProps | number | string;
 
 const WheelPicker = ({
   items: propsItems,
@@ -76,18 +78,19 @@ const WheelPicker = ({
   const height = itemHeight * numberOfVisibleRows;
   const scrollView = useRef<Animated.ScrollView>();
   const [offset] = useValues([0], []);
-  const onScroll = onScrollEvent({y: offset});
-  const items = children ? extractItemsFromChildren() : propsItems;
+  const onScroll = onScrollEvent({y: offset})
+  const items = children ? extractItemsFromChildren() : propsItems!;
+  let componentScrolledToValue = useRef<ItemValueTypes | undefined>(null).current;
   
   const listSize = items?.length || 0;
   const middleIndex = useMiddleIndex({itemHeight, listSize});
 
-  function extractItemsFromChildren (): ItemProps[] | undefined {
+  function extractItemsFromChildren (): ItemProps[] {
     const items = React.Children.map(children, child => {
       let childAsType: ItemProps = {value: child?.props.value, label: child?.props.label};
       return childAsType;
     });
-    return items;
+    return items || [];
   };
 
   const getIndexFromSelectedValue = (): number => {
@@ -98,6 +101,22 @@ const WheelPicker = ({
       return _.findIndex(items, {value: selectedValue});
     }
     return _.findIndex(items, {value: selectedValue?.value});
+  }
+
+  useEffect(() => {   
+    controlComponent();
+  });
+
+  /**
+   * The picker is a controlled component. This means we expect the
+   * to relay on `selectedValue` prop to be our 
+   * source of truth - not the picker current value.
+   * This way, you can control disallow or mutate selection of some values.
+   */
+  const controlComponent = () => {
+    if (selectedValue !== componentScrolledToValue) {
+      scrollToIndex(getIndexFromSelectedValue(), true);
+    }
   }
 
   const scrollToPassedIndex = (animated: boolean = false) => {
@@ -119,10 +138,12 @@ const WheelPicker = ({
     [itemHeight]
   );
 
-  const onChange = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
+  const onChange = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const index = middleIndex(event.nativeEvent.contentOffset.y);
-    onValueChange?.('' + items?.[index].value, index);
-  }, []);
+    const newSelectedValue = items[index].value
+    onValueChange?.(newSelectedValue, index);
+    componentScrolledToValue = newSelectedValue;
+  };
 
   const renderItem = useCallback(
     ({item, index}) => {
