@@ -9,7 +9,7 @@ import Dialog from '../dialog';
 import View from '../view';
 import Text from '../text';
 import {Colors, BorderRadiuses} from '../../style';
-import WheelPicker from '../../incubator/WheelPicker';
+import WheelPicker from '../../incubator';
 
 class PickerDialog extends BaseComponent {
   static displayName = 'IGNORE';
