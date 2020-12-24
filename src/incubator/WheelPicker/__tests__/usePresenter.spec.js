@@ -11,8 +11,7 @@ describe('WheelPicker presenter tests', () => {
         children,
         itemHeight,
         preferredNumVisibleRows
-      })
-    );
+      }));
   };
 
   const makeItems = (count, stringValue) => {
