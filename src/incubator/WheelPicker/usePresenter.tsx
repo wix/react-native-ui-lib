@@ -41,10 +41,7 @@ const usePresenter = ({selectedValue, children, items: propItems, itemHeight, pr
   const middleIndex = useMiddleIndex({itemHeight, listSize: items.length});
 
   const getSelectedValueIndex = (): number => {
-    if (_.isNumber(selectedValue)) {      
-      return selectedValue >= 0 ? selectedValue : 0;
-    }
-    if (_.isString(selectedValue)) {
+    if (_.isString(selectedValue) || _.isNumber(selectedValue)) {
       return _.findIndex(items, {value: selectedValue});
     }
     return _.findIndex(items, {value: selectedValue?.value});
