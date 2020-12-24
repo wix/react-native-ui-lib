@@ -10,9 +10,9 @@ import {Colors} from '../../../src/style';
 import View from '../../components/view';
 import Fader, {FaderPosition} from '../../components/fader';
 import {Constants} from '../../helpers';
-import useMiddleIndex from './helpers/useListMiddleIndex';
 import Item, {ItemProps} from './Item';
 import {Spacings} from 'react-native-ui-lib';
+import usePresenter from './usePresenter';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -58,13 +58,11 @@ export interface WheelPickerProps {
   /**
    * WheelPicker initial value, can be ItemProps.value, number as index
    */
-  selectedValue: ItemProps | number | string
+  selectedValue: ItemProps | number | string;
 }
 
-type ItemValueTypes = ItemProps | number | string;
-
 const WheelPicker = ({
-  items: propsItems,
+  items: propItems,
   itemHeight = 44,
   numberOfVisibleRows = 5,
   activeTextColor,
@@ -73,63 +71,47 @@ const WheelPicker = ({
   onValueChange,
   style,
   children,
-  selectedValue,
+  selectedValue
 }: WheelPickerProps) => {
-  const height = itemHeight * numberOfVisibleRows;
   const scrollView = useRef<Animated.ScrollView>();
   const [offset] = useValues([0], []);
-  const onScroll = onScrollEvent({y: offset})
-  const items = children ? extractItemsFromChildren() : propsItems!;
-  let componentScrolledToValue = useRef<ItemValueTypes | undefined>(null).current;
-  
-  const listSize = items?.length || 0;
-  const middleIndex = useMiddleIndex({itemHeight, listSize});
+  let scrollOffset = useRef<number>(0).current;
+  const onScroll = onScrollEvent({y: offset});
 
-  function extractItemsFromChildren (): ItemProps[] {
-    const items = React.Children.map(children, child => {
-      let childAsType: ItemProps = {value: child?.props.value, label: child?.props.label};
-      return childAsType;
-    });
-    return items || [];
-  };
+  const {height, items, shouldControlComponent, index: currentIndex, getRowItemAtOffset} = usePresenter({
+    selectedValue,
+    items: propItems,
+    children,
+    itemHeight,
+    preferredNumVisibleRows: numberOfVisibleRows
+  });
 
-  const getIndexFromSelectedValue = (): number => {
-    if (_.isNumber(selectedValue)) {      
-      return selectedValue >= 0 ? selectedValue : 0;
-    }
-    if (_.isString(selectedValue)) {
-      return _.findIndex(items, {value: selectedValue});
-    }
-    return _.findIndex(items, {value: selectedValue?.value});
-  }
-
-  useEffect(() => {   
+  useEffect(() => {
     controlComponent();
   });
 
   /**
    * The picker is a controlled component. This means we expect the
-   * to relay on `selectedValue` prop to be our 
+   * to relay on `selectedValue` prop to be our
    * source of truth - not the picker current value.
    * This way, you can control disallow or mutate selection of some values.
    */
   const controlComponent = () => {
-    if (selectedValue !== componentScrolledToValue) {
-      scrollToIndex(getIndexFromSelectedValue(), true);
+    if (shouldControlComponent(scrollOffset)) {
+      scrollToIndex(currentIndex, true);
     }
-  }
+  };
 
   const scrollToPassedIndex = (animated: boolean = false) => {
-    const index = getIndexFromSelectedValue();
-    scrollToIndex(index, animated);
-  }
+    scrollToIndex(currentIndex, animated);
+  };
 
   const scrollToIndex = (index: number, animated: boolean) => {
     if (scrollView.current?.getNode()) {
       //@ts-ignore for some reason scrollToOffset isn't recognized
       scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated: animated});
     }
-  }
+  };
 
   const selectItem = useCallback(
     index => {
@@ -139,10 +121,10 @@ const WheelPicker = ({
   );
 
   const onChange = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const index = middleIndex(event.nativeEvent.contentOffset.y);
-    const newSelectedValue = items[index].value
-    onValueChange?.(newSelectedValue, index);
-    componentScrolledToValue = newSelectedValue;
+    scrollOffset = event.nativeEvent.contentOffset.y;
+    
+    const {index, value} = getRowItemAtOffset(scrollOffset);
+    onValueChange?.(value, index);
   };
 
   const renderItem = useCallback(
