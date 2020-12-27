@@ -186,10 +186,7 @@ class Dialog extends Component<DialogProps, DialogState> {
   }
 
   onDismiss = () => {
-    let fadeOut = false;
-    if (Constants.isIOS && this.props.visible) {
-      fadeOut = true;
-    }
+    const fadeOut = Constants.isIOS && this.props.visible;
 
     if (fadeOut) {
       this.setState({fadeOut}, this._onDismiss);
