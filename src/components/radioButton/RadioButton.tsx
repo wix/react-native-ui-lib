@@ -77,6 +77,10 @@ export type RadioButtonProps = RadioGroupContextProps &
      * Should the content be rendered right to the button
      */
     contentOnRight?: boolean;
+    /**
+     * Additional styling for the container
+     */
+    containerStyle?: StyleProp<ViewStyle>;
   };
 export type RadioButtonPropTypes = RadioButtonProps; //TODO: remove after ComponentPropTypes deprecation;
 
@@ -245,12 +249,20 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   }
 
   render() {
-    const {onPress, onValueChange, contentOnRight, style, ...others} = this.props;
+    const {onPress, onValueChange, contentOnRight, style, containerStyle, ...others} = this.props;
     const Container = onPress || onValueChange ? TouchableOpacity : View;
 
     return (
       // @ts-ignore
-      <Container row centerV activeOpacity={1} {...others} onPress={this.onPress} {...this.getAccessibilityProps()}>
+      <Container
+        row
+        centerV
+        activeOpacity={1}
+        style={containerStyle}
+        {...others}
+        onPress={this.onPress}
+        {...this.getAccessibilityProps()}
+      >
         {!contentOnRight && this.renderButton()}
         {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
         {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
