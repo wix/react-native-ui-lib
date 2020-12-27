@@ -1,13 +1,15 @@
 import React, {useCallback} from 'react';
 import {ViewProps, ScrollView, ScrollViewProps, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
-import Fader from '../../components/fader';
+import Fader from '../fader';
 import withScrollEnabler, {WithScrollEnablerProps} from '../../commons/withScrollEnabler';
 import withScrollReached, {WithScrollReachedProps} from '../../commons/withScrollReached';
 import forwardRef, {ForwardRefInjectedProps} from '../../commons/forwardRef';
+import {Constants} from '../../helpers';
 
-export type FadedScrollViewProps = ViewProps & ScrollViewProps & {
-  children?: React.ReactNode | React.ReactNode[];
-};
+export type FadedScrollViewProps = ViewProps &
+  ScrollViewProps & {
+    children?: React.ReactNode | React.ReactNode[];
+  };
 
 type ScrollReachedProps = FadedScrollViewProps & WithScrollReachedProps;
 type ScrollEnabledProps = ScrollReachedProps & WithScrollEnablerProps;
@@ -17,16 +19,20 @@ const FADER_SIZE = 76;
 
 const FadedScrollView = (props: Props) => {
   const {scrollEnablerProps, scrollReachedProps, children, onScroll: propsOnScroll, ...other} = props;
-  const fadeLeft = scrollEnablerProps.scrollEnabled && !scrollReachedProps.isScrollAtStart;
-  const fadeRight = scrollEnablerProps.scrollEnabled && !scrollReachedProps.isScrollAtEnd;
+  const showLeft =
+    scrollEnablerProps.scrollEnabled &&
+    (Constants.isRTL ? !scrollReachedProps.isScrollAtEnd : !scrollReachedProps.isScrollAtStart);
+  const leftPosition = Constants.isRTL ? Fader.position.RIGHT : Fader.position.LEFT;
+  const showRight =
+    scrollEnablerProps.scrollEnabled &&
+    (Constants.isRTL ? !scrollReachedProps.isScrollAtStart : !scrollReachedProps.isScrollAtEnd);
+  const rightPosition = Constants.isRTL ? Fader.position.LEFT : Fader.position.RIGHT;
 
-  const onScroll = useCallback(
-    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-      scrollReachedProps.onScroll(event);
+  const onScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    scrollReachedProps.onScroll(event);
       propsOnScroll?.(event);
-    },
-    [scrollReachedProps.onScroll, propsOnScroll]
-  );
+  },
+  [scrollReachedProps.onScroll, propsOnScroll]);
 
   if (children) {
     return (
@@ -45,8 +51,8 @@ const FadedScrollView = (props: Props) => {
         >
           {children}
         </ScrollView>
-        <Fader visible={fadeLeft} position={Fader.position.LEFT} size={FADER_SIZE} />
-        <Fader visible={fadeRight} position={Fader.position.RIGHT} size={FADER_SIZE} />
+        <Fader visible={showLeft} position={leftPosition} size={FADER_SIZE} supportRTL/>
+        <Fader visible={showRight} position={rightPosition} size={FADER_SIZE} supportRTL/>
       </>
     );
   }

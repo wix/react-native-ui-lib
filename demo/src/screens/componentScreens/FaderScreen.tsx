@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import {
+  Constants,
   Colors,
   Text,
   View,
@@ -34,7 +35,7 @@ class FaderScreen extends Component<WithScrollReachedProps> {
     const {scrollReachedProps} = this.props;
     const visible =
       faderPosition === Fader.position.BOTTOM ||
-      faderPosition === Fader.position.RIGHT
+      (faderPosition === Fader.position.RIGHT && !Constants.isRTL)
         ? !scrollReachedProps.isScrollAtEnd
         : !scrollReachedProps.isScrollAtStart;
 
@@ -54,6 +55,7 @@ class FaderScreen extends Component<WithScrollReachedProps> {
               {_.times(numberOfItems, this.renderItem)}
             </ScrollView>
             <Fader
+              supportRTL
               visible={visible}
               position={faderPosition}
               tintColor={tintColor}

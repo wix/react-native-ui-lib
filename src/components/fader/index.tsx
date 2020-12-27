@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, {useCallback} from 'react';
 import {StyleSheet} from 'react-native';
 import View from '../view';
-import Image from '../image';
+import Image, {ImageProps} from '../image';
 
 export enum FaderPosition {
   LEFT = 'LEFT',
@@ -11,7 +11,7 @@ export enum FaderPosition {
   BOTTOM = 'BOTTOM'
 }
 
-export type FaderProps = {
+export type FaderProps = Pick<ImageProps, 'supportRTL'> & {
   /**
    * Whether the fader is visible (default is true)
    */
@@ -80,6 +80,7 @@ function Fader(props: FaderProps) {
     <View pointerEvents={'none'} style={styles.containerStyle}>
       {(props.visible || _.isUndefined(props.visible)) && (
         <Image
+          supportRTL={props.supportRTL}
           source={styles.imageSource}
           tintColor={props.tintColor}
           style={styles.imageStyle}
