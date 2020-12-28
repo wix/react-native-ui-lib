@@ -32,7 +32,7 @@ export interface ChipsInputProps {
   tagStyle?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<TextStyle>;
   hideUnderline?: boolean;
-  placeholderTextColor?: string;
+  placeholderTextColor?: ColorValue;
   selectionColor?: ColorValue;
   style?: StyleProp<ViewStyle>;
   testID?: string;
