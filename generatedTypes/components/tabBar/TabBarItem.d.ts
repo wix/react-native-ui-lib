@@ -1,8 +1,7 @@
 import React from 'react';
-import { Animated, ViewStyle, TextStyle } from 'react-native';
-import { BaseComponentInjectedProps } from '../../commons/new';
+import { Animated, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { BadgeProps } from '../badge';
-export declare type TabBarItemProps = BaseComponentInjectedProps & {
+interface Props {
     /**
      * icon of the tab
      */
@@ -22,11 +21,12 @@ export declare type TabBarItemProps = BaseComponentInjectedProps & {
     /**
      * custom label style
      */
-    labelStyle?: TextStyle;
+    labelStyle?: StyleProp<TextStyle>;
     /**
      * Badge component props to display next the item label
      */
     badge?: BadgeProps;
+    badgeProps?: BadgeProps;
     /**
      * maximum number of lines the label can break
      */
@@ -34,7 +34,7 @@ export declare type TabBarItemProps = BaseComponentInjectedProps & {
     /**
      * custom selected tab label style
      */
-    selectedLabelStyle: TextStyle;
+    selectedLabelStyle?: StyleProp<TextStyle>;
     /**
      * whether the tab is selected or not
      */
@@ -48,13 +48,17 @@ export declare type TabBarItemProps = BaseComponentInjectedProps & {
      */
     width?: number;
     /**
+     * tabBar's background color
+     */
+    backgroundColor?: string;
+    /**
      * ignore of the tab
      */
     ignore?: boolean;
     /**
      * callback for when pressing a tab
      */
-    onPress?: (props: any) => void;
+    onPress?: () => void;
     /**
      * whether to change the text to uppercase
      */
@@ -63,78 +67,17 @@ export declare type TabBarItemProps = BaseComponentInjectedProps & {
      * Apply background color on press for TouchableOpacity
      */
     activeBackgroundColor?: string;
-    indicatorStyle?: ViewStyle;
+    accessibilityLabel?: string;
+    indicatorStyle?: StyleProp<ViewStyle>;
     style?: ViewStyle;
     testID?: string;
-};
-export declare type State = {
-    indicatorOpacity?: Animated.Value;
-};
-declare const _default: React.ComponentClass<BaseComponentInjectedProps & {
-    /**
-     * icon of the tab
-     */
-    icon?: number | undefined;
-    /**
-     * icon tint color
-     */
-    iconColor?: string | undefined;
-    /**
-     * icon selected tint color
-     */
-    iconSelectedColor?: string | undefined;
-    /**
-     * label of the tab
-     */
-    label?: string | undefined;
-    /**
-     * custom label style
-     */
-    labelStyle?: TextStyle | undefined;
-    /**
-     * Badge component props to display next the item label
-     */
-    badge?: BadgeProps | undefined;
-    /**
-     * maximum number of lines the label can break
-     */
-    maxLines?: number | undefined;
-    /**
-     * custom selected tab label style
-     */
-    selectedLabelStyle: TextStyle;
-    /**
-     * whether the tab is selected or not
-     */
-    selected?: boolean | undefined;
-    /**
-     * whether the tab will have a divider on its right
-     */
-    showDivider?: boolean | undefined;
-    /**
-     * A fixed width for the item
-     */
-    width?: number | undefined;
-    /**
-     * ignore of the tab
-     */
-    ignore?: boolean | undefined;
-    /**
-     * callback for when pressing a tab
-     */
-    onPress?: ((props: any) => void) | undefined;
-    /**
-     * whether to change the text to uppercase
-     */
-    uppercase?: boolean | undefined;
-    /**
-     * Apply background color on press for TouchableOpacity
-     */
-    activeBackgroundColor?: string | undefined;
-    indicatorStyle?: ViewStyle | undefined;
-    style?: ViewStyle | undefined;
-    testID?: string | undefined;
-} & {
+}
+interface State {
+    indicatorOpacity: Animated.Value;
+    selected?: boolean;
+}
+export declare type TabBarItemProps = Props;
+declare const _default: React.ComponentClass<Props & {
     useCustomTheme?: boolean | undefined;
 }, any> & State;
 export default _default;
