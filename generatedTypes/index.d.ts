@@ -7,6 +7,7 @@ export * from './style';
 export * from './services';
 export * as Incubator from './incubator';
 export * as Hooks from './hooks';
+export * as Modifiers from './commons/modifiers';
 export {
   asBaseComponent,
   withScrollEnabler,
@@ -34,12 +35,14 @@ export {default as TouchableOpacity, TouchableOpacityProps} from './components/t
 export {default as Button, ButtonPropTypes, ButtonProps} from './components/button';
 export {default as Checkbox, CheckboxPropTypes, CheckboxProps} from './components/checkbox';
 export {default as Chip, ChipPropTypes, ChipProps} from './components/chip';
+export {default as Drawer, DrawerProps, DrawerItemProps} from './components/drawer';
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
 export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './components/radioButton/RadioButton';
 export {default as RadioGroup, RadioGroupPropTypes, RadioGroupProps} from './components/radioButton/RadioGroup';
 export {default as Switch, SwitchProps} from './components/switch';
+export {default as TabController, TabControllerProps, TabControllerItemProps} from './components/tabController';
 export {default as TabBar, TabBarProps} from './components/TabBar';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
@@ -66,7 +69,6 @@ export {default as Carousel, CarouselProps} from './components/carousel';
 export {
   ActionSheet,
   ConnectionStatusBar,
-  Drawer,
   FeatureHighlight,
   Hint,
   BaseInput,
@@ -114,6 +116,5 @@ export const SafeAreaInsetsManager;
 export const SafeAreaSpacerView;
 export const ScrollBar;
 export const SelectableComponent;
-export const TabController;
 export const TextField;
 export const Wizard;

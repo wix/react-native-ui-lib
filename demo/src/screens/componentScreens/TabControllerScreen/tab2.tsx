@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {Colors, View, Text, Image, Assets, Button} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, Image} from 'react-native-ui-lib';
 
 class Tab2 extends Component {
   state = {

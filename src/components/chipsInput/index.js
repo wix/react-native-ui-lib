@@ -264,24 +264,15 @@ class ChipsInput extends Component {
     const {tagStyle, renderTag} = this.props;
     const {tagIndexToRemove} = this.state;
     const shouldMarkTag = tagIndexToRemove === index;
-
-    if (tag.invalid) {
-      return (
-        <View
-          key={index}
-          style={[styles.inValidTag, tagStyle, shouldMarkTag && styles.inValidMarkedTag]}
-        >
-          {this.renderLabel(tag, shouldMarkTag)}
-        </View>
-      );
-    }
+    const markedTagStyle = tag.invalid ? styles.inValidMarkedTag : styles.tagMarked;
+    const defaultTagStyle = tag.invalid ? styles.inValidTag : styles.tag;
 
     if (_.isFunction(renderTag)) {
       return renderTag(tag, index, shouldMarkTag, this.getLabel(tag));
     }
 
     return (
-      <View key={index} style={[styles.tag, tagStyle, shouldMarkTag && styles.tagMarked]}>
+      <View key={index} style={[defaultTagStyle, tagStyle, shouldMarkTag && markedTagStyle]}>
         {this.renderLabel(tag, shouldMarkTag)}
       </View>
     );

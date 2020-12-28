@@ -18,9 +18,6 @@ const Header = () => {
         <a target="_blank" href="https://github.com/wix/react-native-ui-lib">
           GitHub
         </a>
-        <a target="_blank" href="https://github.com/wix/react-native-ui-lib/wiki">
-          Wiki
-        </a>
       </div>
     </div>
   );

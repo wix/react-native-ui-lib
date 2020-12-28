@@ -1,4 +1,6 @@
 // TODO: deprecate all places where we check if _.isPlainObject
+// TODO: deprecate getItemValue prop
+// TODO: deprecate getItemLabel prop
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
@@ -17,10 +19,13 @@ const PICKER_MODES = {
   SINGLE: 'SINGLE',
   MULTI: 'MULTI'
 };
-const ItemType = PropTypes.shape({
-  value: PropTypes.any,
-  label: PropTypes.string
-});
+const ItemType = PropTypes.oneOfType([
+  PropTypes.number, 
+  PropTypes.string,
+  PropTypes.shape({
+    value: PropTypes.any,
+    label: PropTypes.string
+  })]);
 
 /**
  * @description: Picker Component, support single or multiple selection, blurModel and nativePicker
@@ -30,6 +35,10 @@ const ItemType = PropTypes.shape({
 class Picker extends PureComponent {
   static displayName = 'Picker';
   static propTypes = {
+    /**
+     * Temporary prop required for migration to Picker's new API
+     */
+    migrate: PropTypes.bool,
     ...TextField.propTypes,
     /**
      * Picker current value in the shape of {value: ..., label: ...}, for custom shape use 'getItemValue' prop
@@ -159,9 +168,7 @@ class Picker extends PureComponent {
     //   console.warn('UILib Picker: don\'t use object as value for native picker, use either string or a number');
     // }
     if (_.isPlainObject(props.value)) {
-      LogService.warn(
-        'UILib Picker will stop supporting passing object as value in the next major version. Please use either string or a number as value'
-      );
+      LogService.warn('UILib Picker will stop supporting passing object as value in the next major version. Please use either string or a number as value');
     }
   }
 
@@ -204,10 +211,13 @@ class Picker extends PureComponent {
 
   getContextValue = () => {
     const {value, searchValue} = this.state;
-    const {mode, getItemValue, getItemLabel, renderItem, showSearch} = this.props;
+    const {migrate, mode, getItemValue, getItemLabel, renderItem, showSearch} = this.props;
+    const pickerValue = !migrate && _.isPlainObject(value) ? value?.value : value;
     return {
-      value,
+      migrate,
+      value: pickerValue,
       onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
+      isMultiMode: mode === Picker.modes.MULTI,
       getItemValue,
       getItemLabel,
       onSelectedLayout: this.onSelectedItemLayout,
@@ -217,19 +227,9 @@ class Picker extends PureComponent {
     };
   };
 
-  shouldNotChangePickerLabelWhileSelecting = () => {
-    const {mode} = this.props;
-    return mode === Picker.modes.MULTI;
-  };
-
   getLabelValueText = () => {
-    const {value: propsValue} = this.props;
-    const {value: stateValue} = this.props;
-
-    if (this.shouldNotChangePickerLabelWhileSelecting()) {
-      return this.getLabel(propsValue);
-    }
-    return this.getLabel(stateValue);
+    const {value} = this.props;
+    return this.getLabel(value);
   };
 
   getLabelsFromArray = value => {
@@ -246,12 +246,12 @@ class Picker extends PureComponent {
   getLabel(value) {
     const {getLabel} = this.props;
 
+    if (_.isFunction(getLabel) && !_.isUndefined(getLabel(value))) {
+      return getLabel(value);
+    }
+    
     if (_.isArray(value)) {
       return this.getLabelsFromArray(value);
-    }
-
-    if (_.isFunction(getLabel)) {
-      return getLabel(value);
     }
 
     if (_.isPlainObject(value)) {

@@ -8,7 +8,8 @@ import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import View from '../view';
-import Swipeable, {PropType as SwipeableProps} from './Swipeable';
+import Swipeable, {SwipeableProps} from './Swipeable';
+
 
 const DEFAULT_BG = Colors.blue30;
 const DEFAULT_BOUNCINESS = 0;
@@ -24,7 +25,7 @@ interface ItemProps {
   testID?: string;
 }
 
-interface DrawerProps {
+interface Props {
   /**
    * The drawer animation bounciness
    */
@@ -105,7 +106,26 @@ interface DrawerProps {
    * Style
    */
   style?: ViewStyle;
+  /**
+   * Callback for open action
+   */
+  onSwipeableWillOpen?: Function;
+  /**
+   * Callback for close action
+   */
+  onSwipeableWillClose?: Function;
+  /**
+   * Custom value of any type to pass on to the component and receive back in the action callbacks
+   */
+  customValue?: any;
+  /**
+   * Used as testing identifier
+   */
+  testID?: string;
 }
+
+export type DrawerProps = Props;
+export type DrawerItemProps = ItemProps;
 
 /**
  * @description: Drawer Component
@@ -113,7 +133,7 @@ interface DrawerProps {
  * with gestureHandlerRootHOC from 'react-native-gesture-handler'. see
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
-class Drawer extends PureComponent<DrawerProps> {
+class Drawer extends PureComponent<Props> {
   static displayName = 'Drawer';
 
   static defaultProps = {
@@ -204,7 +224,7 @@ class Drawer extends PureComponent<DrawerProps> {
 
   private animateItem({rowWidth, leftWidth, dragX, released, resetItemPosition}: any) {
     const toValue = resetItemPosition ? 0 : dragX ? dragX - leftWidth : rowWidth * 0.6 - leftWidth;
-    
+
     Animated.timing(this.leftActionX, {
       toValue,
       easing: Easing.bezier(0.25, 1, 0.5, 1),

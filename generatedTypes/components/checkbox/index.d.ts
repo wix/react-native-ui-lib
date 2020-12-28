@@ -18,6 +18,10 @@ export interface CheckboxProps extends TouchableOpacityProps {
      */
     color?: string;
     /**
+     * alternative Checkbox outline style
+     */
+    outline?: boolean;
+    /**
      * The size of the checkbox. affect both width and height
      */
     size?: number;

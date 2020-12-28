@@ -18,6 +18,7 @@ export {
 } from './commons/new';
 export * as Incubator from './incubator';
 export * as Hooks from './hooks';
+export * as Modifiers from './commons/modifiers';
 export {default as ActionBar, ActionBarProps} from './components/actionBar';
 export {default as Avatar, AvatarPropTypes, AvatarProps} from './components/avatar';
 export {default as Badge, BadgeProps} from './components/badge';
@@ -35,6 +36,7 @@ export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as RadioButton, RadioButtonPropTypes, RadioButtonProps} from './components/radioButton/RadioButton';
 export {default as RadioGroup, RadioGroupPropTypes, RadioGroupProps} from './components/radioButton/RadioGroup';
 export {default as Switch, SwitchProps} from './components/switch';
+export {default as TabController, TabControllerProps, TabControllerItemProps} from './components/tabController';
 export {default as TabBar, TabBarProps} from './components/TabBar';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
@@ -59,10 +61,10 @@ export {default as Carousel, CarouselProps} from './components/carousel';
 
 //================ Manual typings (all those exports should be removed one day) ==========
 export {
-  ActionSheet, ConnectionStatusBar, ChipsInput, Drawer,
-  FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem,
-  Picker, PickerProps, ProgressBar, Slider,
-  GradientSlider, ColorSliderGroup, Stepper, TagsInput, SharedTransition, StackAggregator, Toast,
-  WheelPickerDialog, Assets, BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper,
+  ActionSheet, ConnectionStatusBar, ChipsInput,
+  FeatureHighlight, Hint, BaseInput, TextArea, TextField, MaskedInput, ListItem, Picker,
+  PickerProps, ProgressBar, Slider, GradientSlider, ColorSliderGroup, Stepper,
+  TagsInput, SharedTransition, StackAggregator, Toast, WheelPickerDialog, Assets,
+  BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper,
   LogService, LoaderScreen, StateScreen, WheelPicker, WheelPickerProps, ColorPicker
 } from '../typings';

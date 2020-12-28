@@ -14,7 +14,7 @@ const {Code, block, call} = Animated;
 class PageCarousel extends PureComponent {
   static displayName = 'TabController.PageCarousel';
   static contextType = TabBarContext;
-  carousel = React.createRef();
+  carousel = React.createRef<Animated.ScrollView>();
 
   onScroll = Animated.event([{nativeEvent: {contentOffset: {x: this.context.carouselOffset}}}], {
     useNativeDriver: true
@@ -23,16 +23,16 @@ class PageCarousel extends PureComponent {
   componentDidMount() {
     if (Constants.isAndroid) {
       setTimeout(() => {
-        this.scrollToPage(this.context.selectedIndex, false);
+        this.scrollToPage(this.context.selectedIndex);
       }, 0);
     }
   }
 
-  onTabChange = ([index]) => {
-    this.scrollToPage(index, true);
+  onTabChange = ([index]: readonly number[]) => {
+    this.scrollToPage(index);
   };
 
-  scrollToPage = (pageIndex, animated) => {
+  scrollToPage = (pageIndex: number) => {
     const {pageWidth} = this.context;
     const node = _.invoke(this.carousel, 'current.getNode');
     if (node) {
@@ -40,13 +40,20 @@ class PageCarousel extends PureComponent {
     }
   };
 
-  renderCodeBlock = () => {
+  renderCodeBlock = _.memoize(() => {
     const {targetPage, containerWidth} = this.context;
-    return block([
-      Animated.onChange(targetPage, [call([targetPage], this.onTabChange)]),
-      Animated.onChange(containerWidth, [call([targetPage], this.onTabChange)])
-    ]);
-  };
+
+    return (
+      <Code>
+        {() =>
+          block([
+            Animated.onChange(targetPage, [call([targetPage], this.onTabChange)]),
+            Animated.onChange(containerWidth, [call([targetPage], this.onTabChange)])
+          ])
+        }
+      </Code>
+    );
+  });
 
   render() {
     const {selectedIndex, pageWidth} = this.context;
@@ -60,10 +67,10 @@ class PageCarousel extends PureComponent {
           showsHorizontalScrollIndicator={false}
           onScroll={this.onScroll}
           scrollEventThrottle={16}
-          contentOffset={{x: selectedIndex * pageWidth}} // iOS only
+          contentOffset={{x: selectedIndex * pageWidth, y: 0}} // iOS only
         />
 
-        <Code>{this.renderCodeBlock}</Code>
+        {this.renderCodeBlock()}
       </>
     );
   }

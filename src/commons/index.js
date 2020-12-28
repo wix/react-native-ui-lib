@@ -27,5 +27,8 @@ module.exports = {
   },
   get withScrollReached() {
     return require('./withScrollReached').default;
+  },
+  get modifiers() {
+    return require('./modifiers');
   }
 };
