@@ -95,6 +95,7 @@ class TouchableOpacity extends PureComponent<Props> {
   _scale = runTiming(this.clock, this.pressState, this.props.activeScale || 1, 1);
   _opacity = runTiming(this.clock, this.pressState, this.props.activeOpacity || 0.2, 1);
   _color = cond(eq(this.pressState, State.BEGAN),
+    // @ts-expect-error
     processColor(this.props.feedbackColor || this.backgroundColor),
     processColor(this.backgroundColor));
 

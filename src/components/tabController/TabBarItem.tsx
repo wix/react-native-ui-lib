@@ -15,7 +15,7 @@ import {State} from 'react-native-gesture-handler';
 import {interpolateColor} from 'react-native-redash';
 import {Colors, Typography, Spacings} from '../../style';
 import Badge, {BadgeProps, BADGE_SIZES} from '../../components/badge';
-import {TouchableOpacity, TouchableOpacityProps} from '../../incubator';
+import {TouchableOpacity} from '../../incubator';
 
 const {cond, eq, call, block, event, and} = Reanimated;
 
@@ -167,14 +167,14 @@ export default class TabBarItem extends PureComponent<Props> {
     onPress?.(index);
   };
 
-  getItemStyle(): TouchableOpacityProps['style'] {
+  getItemStyle() {
     const {state, style: propsStyle, activeOpacity = TabBarItem.defaultProps.activeOpacity} = this.props;
     const opacity = block([
       cond(eq(state, State.END), call([], this.onPress)),
       cond(eq(state, State.BEGAN), activeOpacity, 1)
     ]);
 
-    const style: TouchableOpacityProps['style'] = {
+    const style: any = {
       opacity
     };
 

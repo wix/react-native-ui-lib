@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {Animated, Easing, StyleSheet, StyleProp, TouchableOpacityProps, ViewStyle, TextStyle} from 'react-native';
+import {Animated, Easing, StyleSheet, StyleProp, TouchableOpacityProps, ViewStyle, TextStyle, ImageStyle} from 'react-native';
 import {Colors} from '../../style';
 //@ts-ignore
 import Assets from '../../assets';
@@ -89,7 +89,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 
   styles: {
     container: StyleProp<ViewStyle>;
-    selectedIcon: StyleProp<ViewStyle>;
+    selectedIcon: StyleProp<ImageStyle>;
     checkboxLabel: StyleProp<TextStyle>;
   };
 
