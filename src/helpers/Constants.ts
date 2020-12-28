@@ -1,4 +1,4 @@
-import {Platform, Dimensions, NativeModules, I18nManager, AccessibilityInfo, AccessibilityEvent} from 'react-native';
+import {Platform, Dimensions, NativeModules, I18nManager, AccessibilityInfo, AccessibilityChangeEvent} from 'react-native';
 
 
 export enum orientations {
@@ -49,7 +49,7 @@ const accessibility = {
   isScreenReaderEnabled: false
 };
 
-function handleScreenReaderChanged(isScreenReaderEnabled: AccessibilityEvent) {
+function handleScreenReaderChanged(isScreenReaderEnabled: AccessibilityChangeEvent) {
   accessibility.isScreenReaderEnabled = isScreenReaderEnabled as boolean;
 }
 

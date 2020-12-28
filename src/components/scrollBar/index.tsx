@@ -62,7 +62,7 @@ export interface ScrollBarProps extends FlatListProps<any> {
 };
 type Props = ScrollBarProps & ForwardRefInjectedProps;
 
-export type State = {
+type State = {
   gradientOpacity: Animated.Value,
   gradientOpacityLeft: Animated.Value
 };

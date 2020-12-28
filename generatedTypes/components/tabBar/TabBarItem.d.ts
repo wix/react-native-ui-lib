@@ -1,7 +1,7 @@
 import React from 'react';
-import { Animated, StyleProp, ViewStyle, TextStyle } from 'react-native';
+import { StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { BadgeProps } from '../badge';
-interface Props {
+export interface TabBarItemProps {
     /**
      * icon of the tab
      */
@@ -72,12 +72,7 @@ interface Props {
     style?: ViewStyle;
     testID?: string;
 }
-interface State {
-    indicatorOpacity: Animated.Value;
-    selected?: boolean;
-}
-export declare type TabBarItemProps = Props;
-declare const _default: React.ComponentClass<Props & {
+declare const _default: React.ComponentClass<TabBarItemProps & {
     useCustomTheme?: boolean | undefined;
-}, any> & State;
+}, any>;
 export default _default;

@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import React, {Component, ElementRef, RefObject} from 'react';
-import {Platform, StyleSheet, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
+import {Platform, StyleSheet, ScrollView, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
-import ScrollBar/* , {ScrollBarProps} */ from '../scrollBar';
+import ScrollBar, {ScrollBarProps} from '../scrollBar';
 import TabBarItem, {TabBarItemProps} from './TabBarItem';
 
 
@@ -13,9 +13,7 @@ const MIN_TABS_FOR_SCROLL = 1;
 const DEFAULT_BACKGROUND_COLOR = Colors.white;
 const DEFAULT_HEIGHT = 48;
 
-const ScrollBarProps = ScrollBar.propTypes; //TODO: remove after TS migration
-
-interface Props extends ScrollBarProps, TabBarItemProps {
+type TabBarProps = ScrollBarProps /* & TabBarItemProps */ & {
   /**
    * Show Tab Bar bottom shadow
    */
@@ -66,8 +64,6 @@ interface State {
   currentIndex: number;
 }
 
-export type TabBarProps = Props;
-
 /**
  * @description: TabBar Component
  * @modifiers: alignment, flex, padding, margin, background, typography, color (list of supported modifiers)
@@ -76,25 +72,25 @@ export type TabBarProps = Props;
  * @extendsLink:https://github.com/wix/react-native-ui-lib/blob/master/src/components/scrollBar/index.js
  * @notes: This is screen width component.
  */
-class TabBar extends Component<Props, State> {
+class TabBar extends Component<TabBarProps, State> {
   static displayName = 'TabBar';
 
-  static Item: typeof TabBarItem;
-
-  static defaultProps: Partial<Props> = {
+  static defaultProps: Partial<TabBarProps> = {
     selectedIndex: 0,
     backgroundColor: DEFAULT_BACKGROUND_COLOR
   };
+
+  static Item = TabBarItem;
 
   scrollContentWidth?: number;
   contentOffset: {
     x: number;
     y: number;
   }
-  scrollBar: RefObject<typeof ScrollBar>;
+  scrollBar: RefObject<ScrollView>;
   itemsRefs: ElementRef<typeof TabBarItem>[];
 
-  constructor(props: Props) {
+  constructor(props: TabBarProps) {
     super(props);
 
     this.state = {
@@ -107,7 +103,7 @@ class TabBar extends Component<Props, State> {
     this.itemsRefs= [];
   }
 
-  componentDidUpdate(prevProps: Props, prevState: State) {
+  componentDidUpdate(prevProps: TabBarProps, prevState: State) {
     const prevChildrenCount = React.Children.count(prevProps.children);
     if (this.childrenCount !== prevChildrenCount) {
       this.updateIndicator(0);
@@ -160,9 +156,9 @@ class TabBar extends Component<Props, State> {
 
     if (childLayout && this.hasOverflow()) {
       if (childLayout.x + childLayout.width - this.contentOffset.x > this.scrollContainerWidth) {
-        this.scrollBar.current.scrollTo({x: childLayout.x - this.scrollContainerWidth + childLayout.width, y: 0, animated});
+        this.scrollBar?.current?.scrollTo?.({x: childLayout.x - this.scrollContainerWidth + childLayout.width, y: 0, animated});
       } else if (childLayout.x - this.contentOffset.x < 0) {
-        this.scrollBar.current.scrollTo({x: childLayout.x, y: 0, animated});
+        this.scrollBar?.current?.scrollTo?.({x: childLayout.x, y: 0, animated});
       }
     }
   }
@@ -175,7 +171,7 @@ class TabBar extends Component<Props, State> {
     _.invoke(this.props, 'onTabSelected', index);
   }
 
-  onItemPress = (index: number, props: Props) => {
+  onItemPress = (index: number, props: TabBarItemProps) => {
     this.updateIndicator(index);
 
     setTimeout(() => {
@@ -210,6 +206,7 @@ class TabBar extends Component<Props, State> {
 
     return (
       <ScrollBar
+        // @ts-ignore
         ref={this.scrollBar}
         contentContainerStyle={styles.scrollBarContainer}
         scrollEnabled={scrollEnabled}
@@ -242,8 +239,9 @@ class TabBar extends Component<Props, State> {
     this.itemsRefs = [];
     const {indicatorStyle, darkTheme} = this.props;
 
-    const children = React.Children.map<any, typeof TabBarItem>(this.props.children as typeof TabBarItem[], (child, index) => {
-      const accessLabel = child.props.accessibilityLabel || child.props.label || '';
+    const children = React.Children.map(this.props.children, (child, index) => {
+      // @ts-ignore
+      const accessLabel = child?.props.accessibilityLabel || child.props.label || '';
 
       //TODO: review it again, all types here should be correct. As from React.Children.map it gets definitely child: React.ReactNode, and React.cloneElement does not accept it.
       // But seems it's work in a real life, so maybe it is just trouble with types compatibility
@@ -253,6 +251,7 @@ class TabBar extends Component<Props, State> {
         darkTheme,
         selected: this.shouldBeMarked(index),
         onPress: () => {
+          // @ts-ignore
           this.onItemPress(index, child.props);
         },
         ref: (r: any) => {
@@ -269,6 +268,7 @@ class TabBar extends Component<Props, State> {
     const Container = containerView ? containerView : View;
 
     return (
+      // @ts-ignore
       <Container
         useSafeArea
         fullWidth={containerWidth ? false : undefined}
@@ -289,8 +289,7 @@ class TabBar extends Component<Props, State> {
   }
 }
 
-TabBar.Item = TabBarItem;
-export default asBaseComponent<TabBarProps, {Item: typeof TabBarItem}>(TabBar);
+export default asBaseComponent<TabBarProps, typeof TabBar>(TabBar);
 
 
 const styles = StyleSheet.create({
