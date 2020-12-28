@@ -277,5 +277,5 @@ const Item = ({children, index, onLayout}: any) => {
 
 Item.displayName = 'IGNORE';
 ScrollBar.Item = Item;
-export default asBaseComponent<Props, typeof ScrollBar>(forwardRef<Props>(ScrollBar));
+export default asBaseComponent<ScrollBarProps, typeof ScrollBar>(forwardRef(ScrollBar));
 
