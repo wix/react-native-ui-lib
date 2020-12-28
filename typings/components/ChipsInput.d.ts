@@ -1,5 +1,5 @@
 import {ReactElement} from 'react';
-import {StyleProp, TextStyle, ViewStyle, AccessibilityProps} from 'react-native';
+import {StyleProp, TextStyle, ViewStyle, AccessibilityProps, ColorValue} from 'react-native';
 import {BaseComponent} from '../commons';
 import {AccessibilityProps} from '../modifiers';
 
@@ -33,7 +33,7 @@ export interface ChipsInputProps {
   inputStyle?: StyleProp<TextStyle>;
   hideUnderline?: boolean;
   placeholderTextColor?: string;
-  selectionColor?: string;
+  selectionColor?: ColorValue;
   style?: StyleProp<ViewStyle>;
   testID?: string;
 }
