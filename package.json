@@ -73,7 +73,7 @@
     "@testing-library/react-hooks": "^3.4.2",
     "@types/lodash": "^4.0.0",
     "@types/prop-types": "^15.5.3",
-    "@types/react-native": "0.62.4",
+    "@types/react-native": "0.63.4",
     "@types/tinycolor2": "^1.4.2",
     "@typescript-eslint/eslint-plugin": "^2.13.0",
     "@typescript-eslint/parser": "^2.13.0",
