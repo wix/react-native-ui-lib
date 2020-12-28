@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import {StyleSheet} from 'react-native';
-import PropTypes from 'prop-types';
 import Reanimated from 'react-native-reanimated';
 import _ from 'lodash';
 import TabBarContext from './TabBarContext';
@@ -8,35 +7,40 @@ import {Constants} from '../../helpers';
 
 const {Code, Value, cond, set, and, call, block, eq} = Reanimated;
 
+export interface TabControllerPageProps {
+  /**
+   * The index of the the TabPage
+   */
+  index: number;
+  /**
+   * Whether this page should be loaded lazily
+   */
+  lazy?: boolean;
+  /**
+   * How long to wait till lazy load complete (good for showing loader screens)
+   */
+  lazyLoadTime?: number;
+  /**
+   * Render a custom loading page when lazy loading
+   */
+  renderLoading?: () => JSX.Element;
+  /**
+   * Used as a testing identifier
+   */
+  testID?: string;
+}
+
 /**
  * @description: TabController's TabPage
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
  */
-export default class TabPage extends PureComponent {
+export default class TabPage extends PureComponent<TabControllerPageProps> {
   static displayName = 'TabController.TabPage';
 
   static contextType = TabBarContext;
 
-  static propTypes = {
-    /**
-     * The index of the the TabPage
-     */
-    index: PropTypes.number.isRequired,
-    /**
-     * Whether this page should be loaded lazily
-     */
-    lazy: PropTypes.bool,
-    /**
-     * How long to wait till lazy load complete (good for showing loader screens)
-     */
-    lazyLoadTime: PropTypes.number,
-    /**
-     * Render a custom loading page when lazy loading
-     */
-    renderLoading: PropTypes.elementType
-  };
-
   static defaultProps = {
+    lazy: false,
     activeOpacity: 0.6,
     lazyLoadTime: 300,
     renderLoading: _.noop
@@ -64,16 +68,25 @@ export default class TabPage extends PureComponent {
     }, this.props.lazyLoadTime); // tab bar indicator transition time
   };
 
-  renderCodeBlock = () => {
+  renderCodeBlock = _.memoize(() => {
     const {targetPage} = this.context;
     const {index, lazy} = this.props;
-    return block([
-      cond(and(eq(targetPage, index), lazy, eq(this._loaded, 0)), [set(this._loaded, 1), call([], this.lazyLoad)]),
-      cond(eq(targetPage, index),
-        [set(this._opacity, 1), set(this._zIndex, 1)],
-        [set(this._opacity, 0), set(this._zIndex, 0)])
-    ]);
-  };
+    return (
+      <Code>
+        {() =>
+          block([
+            cond(and(eq(targetPage, index), Number(lazy), eq(this._loaded, 0)), [
+              set(this._loaded, 1),
+              call([], this.lazyLoad)
+            ]),
+            cond(eq(targetPage, index),
+              [set(this._opacity, 1), set(this._zIndex, 1)],
+              [set(this._opacity, 0), set(this._zIndex, 0)])
+          ])
+        }
+      </Code>
+    );
+  });
 
   render() {
     const {renderLoading, testID} = this.props;
@@ -81,11 +94,9 @@ export default class TabPage extends PureComponent {
 
     return (
       <Reanimated.View style={this._pageStyle} testID={testID}>
-        {!loaded && renderLoading()}
+        {!loaded && renderLoading?.()}
         {loaded && this.props.children}
-        <Code>
-          {this.renderCodeBlock}
-        </Code>
+        {this.renderCodeBlock()}
       </Reanimated.View>
     );
   }
