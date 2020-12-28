@@ -1,15 +1,14 @@
 import React from 'react';
-import { Animated, ViewStyle } from 'react-native';
-import { BaseComponentInjectedProps } from '../../commons/new';
-import { ViewProps } from '../view';
-import TabBarItem from './TabBarItem';
-export declare type TabBarProps = BaseComponentInjectedProps & ViewProps & {
+import { StyleProp, ViewStyle } from 'react-native';
+import { ScrollBarProps } from '../scrollBar';
+import TabBarItem, { TabBarItemProps } from './TabBarItem';
+interface Props extends ScrollBarProps, TabBarItemProps {
     /**
      * Show Tab Bar bottom shadow
      */
     enableShadow?: boolean;
     /**
-     * The minimum number of tabs to render
+     * The minimum number of tabs to render in scroll mode
      */
     minTabsForScroll?: number;
     /**
@@ -19,69 +18,37 @@ export declare type TabBarProps = BaseComponentInjectedProps & ViewProps & {
     /**
      * callback for when index has change (will not be called on ignored items)
      */
-    onChangeIndex?: (props: any) => void;
+    onChangeIndex?: (index: number) => void;
     /**
      * callback for when tab selected
      */
-    onTabSelected?: (props: any) => void;
+    onTabSelected?: (index: number) => void;
     /**
      * custom style for the selected indicator
      */
-    indicatorStyle?: ViewStyle;
-    /**
-     * The background color
-     */
-    backgroundColor: string;
+    indicatorStyle?: StyleProp<ViewStyle>;
     /**
      * Tab Bar height
      */
     height?: number;
-    children: React.ReactNode;
-    style?: ViewStyle;
-    testID?: string;
-};
-export declare type State = {
-    gradientOpacity: Animated.Value;
-    scrollEnabled?: boolean;
-    currentIndex?: number;
-};
-declare const _default: React.ComponentClass<BaseComponentInjectedProps & ViewProps & {
     /**
-     * Show Tab Bar bottom shadow
+     * Pass when container width is different than the screen width
      */
-    enableShadow?: boolean | undefined;
-    /**
-     * The minimum number of tabs to render
-     */
-    minTabsForScroll?: number | undefined;
-    /**
-     * current selected tab index
-     */
-    selectedIndex?: number | undefined;
-    /**
-     * callback for when index has change (will not be called on ignored items)
-     */
-    onChangeIndex?: ((props: any) => void) | undefined;
-    /**
-     * callback for when tab selected
-     */
-    onTabSelected?: ((props: any) => void) | undefined;
-    /**
-     * custom style for the selected indicator
-     */
-    indicatorStyle?: ViewStyle | undefined;
+    containerWidth?: number;
     /**
      * The background color
      */
-    backgroundColor: string;
+    backgroundColor?: string;
     /**
-     * Tab Bar height
+     * set darkTheme style
      */
-    height?: number | undefined;
-    children: React.ReactNode;
-    style?: ViewStyle | undefined;
-    testID?: string | undefined;
-} & {
+    darkTheme?: boolean;
+    children?: React.ReactNode;
+    style?: ViewStyle;
+    testID?: string;
+}
+export declare type TabBarProps = Props;
+declare const _default: React.ComponentClass<Props & {
     useCustomTheme?: boolean | undefined;
 }, any> & {
     Item: typeof TabBarItem;

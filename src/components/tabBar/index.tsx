@@ -5,15 +5,13 @@ import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
-import ScrollBar/* , {ScrollBarProps} */ from '../scrollBar';
+import ScrollBar , {ScrollBarProps} from '../scrollBar';
 import TabBarItem, {TabBarItemProps} from './TabBarItem';
 
 
 const MIN_TABS_FOR_SCROLL = 1;
 const DEFAULT_BACKGROUND_COLOR = Colors.white;
 const DEFAULT_HEIGHT = 48;
-
-const ScrollBarProps = ScrollBar.propTypes; //TODO: remove after TS migration
 
 interface Props extends ScrollBarProps, TabBarItemProps {
   /**

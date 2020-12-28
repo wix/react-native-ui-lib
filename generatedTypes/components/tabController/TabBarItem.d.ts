@@ -44,6 +44,12 @@ export interface TabControllerItemProps {
      */
     badge?: BadgeProps;
     /**
+     * maximun number of lines the label can break
+     */
+    /**
+     * whether the tab will have a divider on its right
+     */
+    /**
      * A fixed width for the item
      */
     width?: number;
