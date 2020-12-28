@@ -16,7 +16,7 @@ const INDICATOR_HEIGHT = 2;
 const INDICATOR_BG_COLOR = Colors.primary;
 const HORIZONTAL_PADDING = Constants.isTablet ? Spacings.s7 : Spacings.s5;
 
-interface Props {
+export interface TabBarItemProps {
   /**
    * icon of the tab
    */
@@ -93,24 +93,22 @@ interface State {
   selected?: boolean;
 }
 
-export type TabBarItemProps = Props;
-
 /**
  * @description: TabBar.Item, inner component of TabBar for configuring the tabs
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabBarScreen.tsx
  * @extends: TouchableOpacity
  * @extendsLink: https://facebook.github.io/react-native/docs/touchableopacity
  */
-class TabBarItem extends PureComponent<Props, State> {
+class TabBarItem extends PureComponent<TabBarItemProps, State> {
   static displayName = 'TabBar.Item';
 
-  static defaultProps: Partial<Props> = {
+  static defaultProps: Partial<TabBarItemProps> = {
     maxLines: 1
   };
 
   layout?: LayoutRectangle;
 
-  constructor(props: Props) {
+  constructor(props: TabBarItemProps) {
     super(props);
 
     this.state = {
@@ -247,7 +245,7 @@ class TabBarItem extends PureComponent<Props, State> {
   }
 }
 
-export default asBaseComponent<TabBarItemProps, State>(TabBarItem);
+export default asBaseComponent<TabBarItemProps>(TabBarItem);
 
 
 const styles =  StyleSheet.create({
