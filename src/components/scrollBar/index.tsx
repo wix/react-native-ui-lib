@@ -1,12 +1,72 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React, {useCallback} from 'react';
-import {Animated, ScrollView, FlatList} from 'react-native';
+import React, {Component, useCallback} from 'react';
+import {
+  Animated,
+  ScrollView,
+  FlatList,
+  FlatListProps,
+  ImageSourcePropType,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+  LayoutChangeEvent
+} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
-import {BaseComponent, forwardRef} from '../../commons';
+import {asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import View from '../view';
 import Image from '../image';
+
+
+export interface ScrollBarProps extends FlatListProps<any> {
+  /**
+     * Whether to use a FlatList. NOTE: you must pass 'data' and 'renderItem' props as well
+     */
+    useList?: boolean,
+    /**
+     * The element to use as a container, instead of a View
+     */
+    containerView?: JSX.Element,
+    /**
+     * The props to pass the container
+     */
+    containerProps?: object,
+    /**
+     * The component's height
+     */
+    height?: number,
+    /**
+     * The gradient's height, defaults to the component's height
+     */
+    gradientHeight?: number,
+    /**
+     * The gradient's width
+     */
+    gradientWidth?: number,
+    /**
+     * The gradient's margins for the edge
+     */
+    gradientMargins?: number,
+    /**
+     * The gradient's tint color
+     */
+    gradientColor?: string,
+    /**
+     * The gradient's image, instead of the default image.
+     * NOTE: pass an image for the right-hand side and it will be flipped to match the left-hand side
+     */
+    gradientImage?: ImageSourcePropType,
+    /**
+     * The index to currently focus on
+     */
+    focusIndex?: number
+};
+type Props = ScrollBarProps & ForwardRefInjectedProps;
+
+export type State = {
+  gradientOpacity: Animated.Value,
+  gradientOpacityLeft: Animated.Value
+};
+
 
 const GRADIENT_WIDTH = 76;
 const defaultImage = () => require('./assets/gradientOverlay.png');
@@ -16,54 +76,8 @@ const defaultImage = () => require('./assets/gradientOverlay.png');
  * @extends: ScrollView / FlatList
  */
 
-class ScrollBar extends BaseComponent {
+class ScrollBar extends Component<Props, State> {
   static displayName = 'ScrollBar';
-
-  static propTypes = {
-    ...ScrollView.propTypes,
-    ...FlatList.propTypes,
-    /**
-     * Whether to use a FlatList. NOTE: you must pass 'data' and 'renderItem' props as well
-     */
-    useList: PropTypes.bool,
-    /**
-     * The element to use as a container, instead of a View
-     */
-    containerView: PropTypes.oneOfType([PropTypes.element, PropTypes.elementType]),
-    /**
-     * The props to pass the container
-     */
-    containerProps: PropTypes.object,
-    /**
-     * The component's height
-     */
-    height: PropTypes.number,
-    /**
-     * The gradient's height, defaults to the component's height
-     */
-    gradientHeight: PropTypes.number,
-    /**
-     * The gradient's width
-     */
-    gradientWidth: PropTypes.number,
-    /**
-     * The gradient's margins for the edge
-     */
-    gradientMargins: PropTypes.number,
-    /**
-     * The gradient's tint color
-     */
-    gradientColor: PropTypes.string,
-    /**
-     * The gradient's image, instead of the default image.
-     * NOTE: pass an image for the right-hand side and it will be flipped to match the left-hand side
-     */
-    gradientImage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    /**
-     * The index to currently focus on
-     */
-    focusIndex: PropTypes.number
-  };
 
   static defaultProps = {
     gradientWidth: GRADIENT_WIDTH,
@@ -72,27 +86,31 @@ class ScrollBar extends BaseComponent {
     focusIndex: 0
   };
 
-  constructor(props) {
+  static Item: typeof Item;
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {
       gradientOpacity: new Animated.Value(0),
       gradientOpacityLeft: new Animated.Value(0)
     };
-
-    this.scrollContentWidth = undefined;
-    this.itemsLayouts = {};
-    this.contentOffset = 0;
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  private scrollbar: any = undefined;
+  private itemsLayouts: any = {};
+  private contentOffset: number = 0;
+  private scrollContentWidth: number = 0;
+  private containerWidth: number = 0;
+
+  componentDidUpdate(prevProps: Props) {
     const {focusIndex} = this.props;
-    if (focusIndex && prevProps.focusIndex !== focusIndex) {
+    if (prevProps.focusIndex !== focusIndex) {
       this.focusIndex(focusIndex);
     }
   }
 
-  focusIndex = index => {
+  focusIndex = (index: number = 0) => {
     const focusedItemLayout = this.itemsLayouts[index];
     if (focusedItemLayout) {
       const {x, width} = focusedItemLayout;
@@ -105,7 +123,7 @@ class ScrollBar extends BaseComponent {
     }
   };
 
-  animateGradientOpacity = (offsetX, contentWidth, containerWidth) => {
+  animateGradientOpacity = (offsetX: number, contentWidth: number, containerWidth: number) => {
     const overflow = contentWidth - containerWidth;
     const newValue = offsetX > 0 && offsetX >= overflow - 1 ? 0 : 1;
     const newValueLeft = offsetX > 0 ? 1 : 0;
@@ -124,7 +142,7 @@ class ScrollBar extends BaseComponent {
     ]).start();
   };
 
-  onScroll = event => {
+  onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const {layoutMeasurement, contentOffset, contentSize} = event.nativeEvent;
     this.contentOffset = contentOffset.x;
     const offsetX = contentOffset.x;
@@ -136,7 +154,7 @@ class ScrollBar extends BaseComponent {
     _.invoke(this.props, 'onScroll', event);
   };
 
-  onContentSizeChange = (contentWidth, contentHeight) => {
+  onContentSizeChange = (contentWidth: number, contentHeight: number) => {
     if (this.scrollContentWidth !== contentWidth) {
       this.scrollContentWidth = contentWidth;
 
@@ -149,34 +167,37 @@ class ScrollBar extends BaseComponent {
     }
   };
 
-  onLayout = ({nativeEvent}) => {
-    this.containerWidth = nativeEvent.layout.width;
+  onLayout = (event: LayoutChangeEvent) => {
+    this.containerWidth = event.nativeEvent.layout.width;
 
     // 1 - for race condition, in case onContentSizeChange() is called before
     // 0 - for containerWidth change, when onContentSizeChange() is called first
     this.setState({gradientOpacity: new Animated.Value(this.scrollContentWidth > this.containerWidth ? 1 : 0)});
   };
 
-  onItemLayout = ({layout, index}) => {
+  onItemLayout = ({layout, index}: any) => {
     this.itemsLayouts[index] = layout;
-    if (_.keys(this.itemsLayouts).length === this.props.children.length) {
-      this.focusIndex(this.props.focusIndex);
+
+    const {children, focusIndex} = this.props;
+    if (children && _.keys(this.itemsLayouts).length === _.keys(children).length) {
+      this.focusIndex(focusIndex);
     }
   };
 
   renderScrollable() {
     const {useList, forwardedRef, children} = this.props;
-    const Component = useList ? FlatList : ScrollView;
+    const Component: any = useList ? FlatList : ScrollView;
 
     return (
       <Component
         scrollEventThrottle={100}
-        {...this.getThemeProps()}
-        ref={r => {
+        {...this.props}
+        ref={(r: any) => {
           this.scrollbar = r;
           if (_.isFunction(forwardedRef)) {
             forwardedRef(r);
           } else if (_.isObject(forwardedRef)) {
+            //@ts-ignore
             forwardedRef.current = r;
           }
         }}
@@ -197,9 +218,9 @@ class ScrollBar extends BaseComponent {
     );
   }
 
-  renderGradient(left) {
+  renderGradient(left: boolean) {
     const {gradientOpacity, gradientOpacityLeft} = this.state;
-    const {gradientWidth, gradientHeight, gradientMargins, height, gradientColor, gradientImage} = this.getThemeProps();
+    const {gradientWidth, gradientHeight, gradientMargins, height, gradientColor, gradientImage} = this.props;
     const imageTransform = Constants.isRTL ? (left ? undefined : [{scaleX: -1}]) : left ? [{scaleX: -1}] : undefined;
     const heightToUse = gradientHeight || height || '100%';
     return (
@@ -229,23 +250,23 @@ class ScrollBar extends BaseComponent {
   }
 
   render() {
-    const {containerView, containerProps} = this.getThemeProps();
-    const Container = containerView || View;
+    const {containerView, containerProps} = this.props;
+    const Container: any = containerView || View;
 
     return (
       <Container row {...containerProps} onLayout={this.onLayout}>
         {this.renderScrollable()}
-        {this.renderGradient()}
+        {this.renderGradient(false)}
         {this.renderGradient(true)}
       </Container>
     );
   }
 }
 
-const Item = ({children, index, onLayout}) => {
+const Item = ({children, index, onLayout}: any) => {
   const onItemLayout = useCallback(({nativeEvent: {layout}}) => {
     onLayout({layout, index});
-  });
+  }, [children]);
 
   return (
     <View flexG onLayout={onItemLayout}>
@@ -256,4 +277,5 @@ const Item = ({children, index, onLayout}) => {
 
 Item.displayName = 'IGNORE';
 ScrollBar.Item = Item;
-export default forwardRef(ScrollBar);
+export default asBaseComponent<ScrollBarProps, typeof ScrollBar>(forwardRef(ScrollBar));
+
