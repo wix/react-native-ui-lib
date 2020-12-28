@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
 import _ from 'lodash';
-import {Card, Avatar, View, Text, Image, Assets, Button} from 'react-native-ui-lib'; //eslint-disable-line
+import {Card, Avatar, View, Text} from 'react-native-ui-lib';
 
 class Tab2 extends Component {
   state = {
-    loading: true,
+    loading: true
   };
 
   componentDidMount() {
@@ -51,10 +51,12 @@ class Tab2 extends Component {
                   <Avatar
                     size={50}
                     source={{
-                      uri: 'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg',
+                      uri: 'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg'
                     }}
                   />
-                  <Text text40 marginL-20>{index}</Text>
+                  <Text text40 marginL-20>
+                    {index}
+                  </Text>
                 </Card>
               );
             })}

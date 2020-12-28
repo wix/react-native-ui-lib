@@ -1,15 +1,23 @@
 // TODO: support commented props
 // TODO: disable scroll when content width is shorter than screen width
 import React, {PureComponent} from 'react';
-import {StyleSheet, ScrollView, ViewPropTypes, Platform, Text as RNText} from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  Platform,
+  TextProps,
+  StyleProp,
+  ViewStyle,
+  LayoutRectangle,
+  NativeSyntheticEvent,
+  NativeScrollEvent
+} from 'react-native';
 import Reanimated from 'react-native-reanimated';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import TabBarContext from './TabBarContext';
-import TabBarItem from './TabBarItem';
-// import ReanimatedObject from './ReanimatedObject';
-import {asBaseComponent, forwardRef} from '../../commons';
+import TabBarItem, {TabControllerItemProps} from './TabBarItem';
+import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import View from '../../components/view';
 import ScrollBarGradient from '../scrollBar/ScrollBarGradient';
 import {Colors, Spacings, Typography} from '../../style';
@@ -34,85 +42,107 @@ const DEFAULT_SELECTED_LABEL_STYLE = {
   letterSpacing: 0
 };
 
+export interface TabControllerBarProps {
+  /**
+   * The list of tab bar items
+   */
+  items?: TabControllerItemProps[];
+  /**
+   * Tab Bar height
+   */
+  height?: number;
+  /**
+   * Show Tab Bar bottom shadow
+   */
+  enableShadow?: boolean;
+  /**
+   * custom shadow style
+   */
+  shadowStyle?: StyleProp<ViewStyle>;
+  // /**
+  //  * The minimum number of tabs to render in scroll mode
+  //  */
+  // minTabsForScroll?: number;
+  /**
+   * custom style for the selected indicator
+   */
+  indicatorStyle?: StyleProp<ViewStyle>;
+  /**
+   * custom label style
+   */
+  labelStyle?: TextProps;
+  /**
+   * custom selected label style
+   */
+  selectedLabelStyle?: TextProps;
+  /**
+   * the default label color
+   */
+  labelColor?: string;
+  /**
+   * the selected label color
+   */
+  selectedLabelColor?: string;
+  /**
+   * whether to change the text to uppercase
+   */
+  uppercase?: boolean;
+  /**
+   * icon tint color
+   */
+  iconColor?: string;
+  /**
+   * icon selected tint color
+   */
+  selectedIconColor?: string;
+  /**
+   * TODO: rename to feedbackColor
+   * Apply background color on press for TouchableOpacity
+   */
+  activeBackgroundColor?: string;
+  /**
+   * The TabBar background Color
+   */
+  backgroundColor?: string;
+  /**
+   * The TabBar container width
+   */
+  containerWidth?: number;
+  /**
+   * Pass to center selected item
+   */
+  centerSelected?: boolean;
+  /**
+   * Additional styles for the container
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Used as a testing identifier
+   */
+  testID?: string;
+}
+
+type ChildProps = React.ReactElement<TabControllerItemProps>;
+
+interface Props extends TabControllerBarProps, BaseComponentInjectedProps, ForwardRefInjectedProps {
+  children?: ChildProps[] | ChildProps;
+}
+
+interface State {
+  scrollEnabled?: boolean;
+  itemsWidths: number[];
+  itemsOffsets: number[];
+  fadeLeft?: boolean;
+  fadeRight?: boolean;
+}
+
 /**
  * @description: TabController's TabBar component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
  */
-class TabBar extends PureComponent {
+class TabBar extends PureComponent<Props, State> {
   static displayName = 'TabController.TabBar';
   static contextType = TabBarContext;
-
-  static propTypes = {
-    /**
-     * The list of tab bar items
-     */
-    items: PropTypes.arrayOf(PropTypes.shape(TabBarItem.propTypes)),
-    /**
-     * Tab Bar height
-     */
-    height: PropTypes.number,
-    /**
-     * Show Tab Bar bottom shadow
-     */
-    enableShadow: PropTypes.bool,
-    /**
-     * custom shadow style
-     */
-    shadowStyle: ViewPropTypes.style,
-    // /**
-    //  * The minimum number of tabs to render in scroll mode
-    //  */
-    // minTabsForScroll: PropTypes.number,
-    /**
-     * custom style for the selected indicator
-     */
-    indicatorStyle: ViewPropTypes.style,
-    /**
-     * custom label style
-     */
-    labelStyle: RNText.propTypes.style,
-    /**
-     * custom selected label style
-     */
-    selectedLabelStyle: RNText.propTypes.style,
-    /**
-     * the default label color
-     */
-    labelColor: PropTypes.string,
-    /**
-     * the selected label color
-     */
-    selectedLabelColor: PropTypes.string,
-    /**
-     * whether to change the text to uppercase
-     */
-    uppercase: PropTypes.bool,
-    /**
-     * icon tint color
-     */
-    iconColor: PropTypes.string,
-    /**
-     * icon selected tint color
-     */
-    selectedIconColor: PropTypes.string,
-    /**
-     * TODO: rename to feedbackColor
-     * Apply background color on press for TouchableOpacity
-     */
-    activeBackgroundColor: PropTypes.string,
-    /**
-     * The TabBar background Color
-     */
-    backgroundColor: PropTypes.string,
-    /**
-     * The TabBar container width
-     */
-    containerWidth: PropTypes.number,
-    /**
-     * Pass to center selected item
-     */
-    centerSelected: PropTypes.bool
-  };
 
   static defaultProps = {
     labelStyle: DEFAULT_LABEL_STYLE,
@@ -122,7 +152,18 @@ class TabBar extends PureComponent {
     // containerWidth: Constants.screenWidth
   };
 
-  constructor(props, context) {
+  private tabBar = React.createRef<ScrollView>();
+  private tabBarScrollOffset: number;
+  private _itemsWidths: (number | null | undefined)[];
+  private _itemsOffsets: (number | null)[];
+  private _indicatorOffset: any; // TODO: typescript?
+  private _indicatorWidth: any; // TODO: typescript?
+  private _indicatorTransitionStyle: StyleProp<ViewStyle>;
+  private contentWidth: number;
+  private tabBarItems?: Props['children'];
+
+  //@ts-ignore typescript - will be fixed when moved to functional component
+  constructor(props: Props, context) {
     super(props, context);
 
     if (this.props.children) {
@@ -131,7 +172,6 @@ class TabBar extends PureComponent {
 
     const itemsCount = this.getItemsCount();
 
-    this.tabBar = React.createRef();
     this.tabBarScrollOffset = 0;
 
     this._itemsWidths = _.times(itemsCount, () => null);
@@ -144,9 +184,12 @@ class TabBar extends PureComponent {
       left: this._indicatorOffset
     };
 
+    this.contentWidth = 0;
+
     this.state = {
       scrollEnabled: false,
-      itemsWidths: undefined
+      itemsWidths: [],
+      itemsOffsets: []
     };
 
     if ((props.items || this.children) && !context.items) {
@@ -158,10 +201,9 @@ class TabBar extends PureComponent {
     return this.props.containerWidth || Constants.screenWidth;
   }
 
-  get children() {
-    return _.filter(this.props.children, (child) => !!child);
+  get children(): Props['children'] {
+    return _.filter(this.props.children, (child: ChildProps) => !!child);
   }
-
 
   get centerOffset() {
     const {centerSelected} = this.props;
@@ -187,8 +229,8 @@ class TabBar extends PureComponent {
     const {centerSelected} = this.props;
     const {itemsWidths, itemsOffsets} = this.state;
 
-    if (itemsWidths && centerSelected) {
-      return _.times(itemsWidths.length, (index) => {
+    if (itemsWidths.length > 0 && itemsOffsets.length > 0 && centerSelected) {
+      return _.times(itemsWidths.length, index => {
         const screenCenter = this.containerWidth / 2;
         const itemOffset = itemsOffsets[index];
         const itemWidth = itemsWidths[index];
@@ -200,7 +242,7 @@ class TabBar extends PureComponent {
   registerTabItems() {
     const {registerTabItems} = this.context;
     const {items} = this.props;
-    const ignoredItems = [];
+    const ignoredItems: number[] = [];
     let itemsCount;
 
     if (items) {
@@ -213,7 +255,8 @@ class TabBar extends PureComponent {
       // TODO: deprecate with props.children
     } else {
       itemsCount = React.Children.count(this.children);
-      React.Children.toArray(this.children).forEach((child, index) => {
+      // @ts-ignore TODO: typescript - not sure if this can be solved
+      React.Children.toArray(this.children).forEach((child: ChildProps, index: number) => {
         if (child.props.ignore) {
           ignoredItems.push(index);
         }
@@ -224,7 +267,7 @@ class TabBar extends PureComponent {
   }
 
   // TODO: move this logic into a ScrollPresenter or something
-  focusSelected = ([index], animated = true) => {
+  focusSelected = ([index]: readonly number[], animated: boolean = true) => {
     const {centerSelected} = this.props;
     const itemOffset = this._itemsOffsets[index];
     const itemWidth = this._itemsWidths[index];
@@ -241,20 +284,21 @@ class TabBar extends PureComponent {
         const offsetChange = Math.max(0, itemOffset - (this.tabBarScrollOffset + this.containerWidth));
         targetOffset = this.tabBarScrollOffset + offsetChange + itemWidth;
       }
-      
-      if (!_.isUndefined(targetOffset)) {
 
+      if (!_.isUndefined(targetOffset)) {
         if (Constants.isRTL && Constants.isAndroid) {
           const scrollingWidth = Math.max(0, this.contentWidth - this.containerWidth);
           targetOffset = scrollingWidth - targetOffset;
         }
 
-        this.tabBar.current.scrollTo({x: targetOffset, animated});
+        if (this.tabBar?.current) {
+          this.tabBar.current.scrollTo({x: targetOffset, animated});
+        }
       }
     }
   };
 
-  onItemLayout = ({width}, itemIndex) => {
+  onItemLayout = ({width}: Partial<LayoutRectangle>, itemIndex: number) => {
     this._itemsWidths[itemIndex] = width;
     if (!_.includes(this._itemsWidths, null)) {
       this.setItemsLayouts();
@@ -264,9 +308,12 @@ class TabBar extends PureComponent {
   setItemsLayouts = () => {
     const {selectedIndex} = this.context;
     // It's important to calculate itemOffsets for RTL support
-    this._itemsOffsets = _.times(this._itemsWidths.length, (i) => _.chain(this._itemsWidths).take(i).sum().value() + this.centerOffset);
-    const itemsOffsets = _.map(this._itemsOffsets, (offset) => offset + INDICATOR_INSET);
-    const itemsWidths = _.map(this._itemsWidths, (width) => width - INDICATOR_INSET * 2);
+    this._itemsOffsets = _.times(
+      this._itemsWidths.length,
+      i => _.chain(this._itemsWidths).take(i).sum().value() + this.centerOffset
+    );
+    const itemsOffsets = _.map(this._itemsOffsets, offset => (offset ? offset : 0) + INDICATOR_INSET);
+    const itemsWidths = _.map(this._itemsWidths, width => (width ? width : 0) - INDICATOR_INSET * 2);
     this.contentWidth = _.sum(this._itemsWidths);
     const scrollEnabled = this.contentWidth > this.containerWidth;
 
@@ -274,14 +321,14 @@ class TabBar extends PureComponent {
     this.focusSelected([selectedIndex], false);
   };
 
-  onScroll = ({nativeEvent: {contentOffset}}) => {
+  onScroll = ({nativeEvent: {contentOffset}}: NativeSyntheticEvent<NativeScrollEvent>) => {
     const {fadeLeft, fadeRight} = this.state;
     this.tabBarScrollOffset = contentOffset.x;
     if (Constants.isRTL && Constants.isAndroid) {
       const scrollingWidth = Math.max(0, this.contentWidth - this.containerWidth);
       this.tabBarScrollOffset = scrollingWidth - this.tabBarScrollOffset;
     }
-    const stateUpdate = {};
+    const stateUpdate: Pick<State, 'fadeLeft' | 'fadeRight'> = {};
     // TODO: extract this logic to scrollbar presenter or something
     const leftThreshold = 50;
     if (this.tabBarScrollOffset > leftThreshold && !fadeLeft) {
@@ -290,7 +337,7 @@ class TabBar extends PureComponent {
       stateUpdate.fadeLeft = false;
     }
 
-    const rightThreshold = (this.contentWidth - this.containerWidth);
+    const rightThreshold = this.contentWidth - this.containerWidth;
     if (this.tabBarScrollOffset < rightThreshold && !fadeRight) {
       stateUpdate.fadeRight = true;
     } else if (this.tabBarScrollOffset >= rightThreshold && fadeRight) {
@@ -302,11 +349,10 @@ class TabBar extends PureComponent {
     }
   };
 
-
   renderSelectedIndicator() {
     const {itemsWidths} = this.state;
     const {indicatorStyle} = this.props;
-    if (itemsWidths) {
+    if (itemsWidths.length > 0) {
       return <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, this._indicatorTransitionStyle]}/>;
     }
   }
@@ -356,7 +402,12 @@ class TabBar extends PureComponent {
         return this.tabBarItems;
       }
 
-      this.tabBarItems = React.Children.map(this.children, (child, index) => {
+      if (!this.children) {
+        return;
+      }
+
+      this.tabBarItems = React.Children.map(this.children, (child: Partial<ChildProps>, index: number) => {
+        // @ts-ignore TODO: typescript - not sure if this can be easily solved
         return React.cloneElement(child, {
           labelColor,
           selectedLabelColor,
@@ -377,36 +428,34 @@ class TabBar extends PureComponent {
     }
   }
 
-  renderCodeBlock = () => {
+  renderCodeBlock = _.memoize(() => {
     const {currentPage, targetPage} = this.context;
     const {itemsWidths, itemsOffsets} = this.state;
-    const nodes = [];
+    const nodes: any[] = [];
 
     nodes.push(set(this._indicatorOffset,
       interpolate(currentPage, {
-        inputRange: itemsOffsets.map((v, i) => i),
+        inputRange: itemsOffsets.map((_v, i) => i),
         outputRange: itemsOffsets
       })));
     nodes.push(set(this._indicatorWidth,
-      interpolate(currentPage, {inputRange: itemsWidths.map((v, i) => i), outputRange: itemsWidths})));
+      interpolate(currentPage, {inputRange: itemsWidths.map((_v, i) => i), outputRange: itemsWidths})));
 
     nodes.push(Reanimated.onChange(targetPage, Reanimated.call([targetPage], this.focusSelected)));
 
-    return block(nodes);
-  };
+    return <Code>{() => block(nodes)}</Code>;
+  });
 
   getShadowStyle() {
     const {enableShadow, shadowStyle} = this.props;
-    return enableShadow && (shadowStyle || styles.containerShadow); 
+    return enableShadow && (shadowStyle || styles.containerShadow);
   }
 
   render() {
     const {height, containerStyle, testID, backgroundColor} = this.props;
     const {itemsWidths, scrollEnabled, fadeLeft, fadeRight} = this.state;
     return (
-      <View
-        style={[styles.container, this.getShadowStyle(), {width: this.containerWidth}, containerStyle]}
-      >
+      <View style={[styles.container, this.getShadowStyle(), {width: this.containerWidth}, containerStyle]}>
         <ScrollView
           ref={this.tabBar}
           horizontal
@@ -419,12 +468,18 @@ class TabBar extends PureComponent {
           snapToOffsets={this.getSnapBreakpoints()}
           decelerationRate={'fast'}
         >
-          <View style={[styles.tabBar, height && {height}, {paddingHorizontal: this.centerOffset, backgroundColor}]}>
+          <View
+            style={[
+              styles.tabBar,
+              !_.isUndefined(height) && {height},
+              {paddingHorizontal: this.centerOffset, backgroundColor}
+            ]}
+          >
             {this.renderTabBarItems()}
           </View>
           {this.renderSelectedIndicator()}
         </ScrollView>
-        {_.size(itemsWidths) > 1 && <Code>{this.renderCodeBlock}</Code>}
+        {_.size(itemsWidths) > 1 && this.renderCodeBlock()}
         <ScrollBarGradient left visible={fadeLeft}/>
         <ScrollBarGradient visible={fadeRight}/>
       </View>
@@ -474,4 +529,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default asBaseComponent(forwardRef(TabBar));
+export default asBaseComponent<TabControllerBarProps>(forwardRef<Props>(TabBar));
