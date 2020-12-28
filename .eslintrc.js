@@ -9,9 +9,9 @@ module.exports = {
     'no-mixed-operators': ['off'],
     'no-trailing-spaces': 'off',
     'operator-linebreak': 'off',
-    'max-len': ['warn', {code: 120}],
+    'max-len': ['warn', {code: 120, "ignoreComments": true, "ignoreStrings": true}],
     'react/jsx-no-bind': [
-      'warn',
+      'off',
       {
         ignoreRefs: true,
         allowArrowFunctions: false,
