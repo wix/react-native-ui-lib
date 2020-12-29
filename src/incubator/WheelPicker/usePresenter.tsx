@@ -48,7 +48,7 @@ const usePresenter = ({selectedValue, children, items: propItems, itemHeight, pr
   }
 
   const shouldControlComponent = (offset: number): boolean => {
-    return selectedValue !== getRowItemAtOffset(offset).value;
+    return offset >= 0 && selectedValue !== getRowItemAtOffset(offset).value;
   }
   
   const getRowItemAtOffset = (offset: number): RowItem => {
