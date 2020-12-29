@@ -4,7 +4,7 @@ import {ItemProps} from './Item';
 import useMiddleIndex from './helpers/useListMiddleIndex';
 
 type ItemValueTypes = ItemProps | number | string
-export { ItemValueTypes };
+export {ItemValueTypes};
 
 type PropTypes = {
     selectedValue: ItemValueTypes;
