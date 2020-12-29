@@ -1,7 +1,12 @@
 module.exports = {
   extends: ['plugin:@typescript-eslint/recommended', 'wix/react-native', 'plugin:react-hooks/recommended'],
   parser: '@typescript-eslint/parser',
+  // plugins: ['@typescript-eslint'],
   rules: {
+    /* Disabled rules for typescript */
+    'no-dupe-class-members': 'off',
+    /* Other Rules */
+    'no-unused-expressions': 'off',
     'arrow-parens': 'off',
     // TODO: remove after migration of legacy lifecycle methods
     camelcase: 'off',
@@ -26,8 +31,8 @@ module.exports = {
     "@typescript-eslint/no-var-requires": 0,
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/member-delimiter-style": 0,
-    // "@typescript-eslint/no-unused-vars": [2, {"args": "all", "argsIgnorePattern": "^_"}],
-    "@typescript-eslint/no-unused-vars": 0, //todo: uncomment this line and use the the better unused rule above ^
+    "@typescript-eslint/no-unused-vars": [2, {"args": "all", "argsIgnorePattern": "^_"}],
+    // "@typescript-eslint/no-unused-vars": 0, //todo: uncomment this line and use the the better unused rule above ^
     "@typescript-eslint/no-non-null-assertion": 0,
     "@typescript-eslint/explicit-member-accessibility": 0,
     "@typescript-eslint/prefer-optional-chain": "error",
@@ -35,8 +40,7 @@ module.exports = {
     "@typescript-eslint/no-empty-function": 0,
     "@typescript-eslint/camelcase": 0,
     "@typescript-eslint/indent": 0
-  },
-  plugins: ['@typescript-eslint'],
+  }
 };
 
 // OLD ESlint configuration
