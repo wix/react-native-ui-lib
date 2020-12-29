@@ -1,17 +1,14 @@
-// TODO: Support onChange callback
 // TODO: Support style customization
-// TODO: Support control of visible items
 import _ from 'lodash';
-import React, {useCallback, useRef, useMemo, useEffect} from 'react';
+import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
 import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent, useValues} from 'react-native-redash';
-import {Colors} from '../../../src/style';
+import {Colors, Spacings} from '../../../src/style';
 import View from '../../components/view';
 import Fader, {FaderPosition} from '../../components/fader';
 import {Constants} from '../../helpers';
 import Item, {ItemProps} from './Item';
-import {Spacings} from 'react-native-ui-lib';
 import usePresenter from './usePresenter';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -46,7 +43,7 @@ export interface WheelPickerProps {
   /**
    * Event, on active row change
    */
-  onValueChange?: (item: string | number, index: number) => void;
+  onChange?: (item: string | number, index: number) => void;
   /**
    * Container's ViewStyle, height is computed according to itemHeight * numberOfVisibleRows
    */
@@ -61,138 +58,138 @@ export interface WheelPickerProps {
   selectedValue: ItemProps | number | string;
 }
 
-const WheelPicker = ({
-  items: propItems,
-  itemHeight = 44,
-  numberOfVisibleRows = 5,
-  activeTextColor,
-  inactiveTextColor,
-  textStyle,
-  onValueChange,
-  style,
-  children,
-  selectedValue
-}: WheelPickerProps) => {
-  const scrollView = useRef<Animated.ScrollView>();
-  const [offset] = useValues([0], []);
-  let scrollOffset = useRef<number>(0).current;
-  const onScroll = onScrollEvent({y: offset});
-
-  const {height, items, shouldControlComponent, index: currentIndex, getRowItemAtOffset} = usePresenter({
-    selectedValue,
+const WheelPicker = React.memo(
+  ({
     items: propItems,
+    itemHeight = 44,
+    numberOfVisibleRows = 5,
+    activeTextColor,
+    inactiveTextColor,
+    textStyle,
+    onChange,
+    style,
     children,
-    itemHeight,
-    preferredNumVisibleRows: numberOfVisibleRows
-  });
+    selectedValue
+  }: WheelPickerProps) => {
+    const scrollView = useRef<Animated.ScrollView>();
+    const [offset] = useValues([0], []);
+    const onScroll = onScrollEvent({y: offset});
 
-  useEffect(() => {
-    controlComponent();
-  });
+    const {height, items, shouldControlComponent, index: currentIndex, getRowItemAtOffset} = usePresenter({
+      selectedValue,
+      items: propItems,
+      children,
+      itemHeight,
+      preferredNumVisibleRows: numberOfVisibleRows
+    });
 
-  /**
-   * The picker is a controlled component. This means we expect the
-   * to relay on `selectedValue` prop to be our
-   * source of truth - not the picker current value.
-   * This way, you can control disallow or mutate selection of some values.
-   */
-  const controlComponent = () => {
-    if (shouldControlComponent(scrollOffset)) {
-      scrollToIndex(currentIndex, true);
-    }
-  };
+    const [scrollOffset, setScrollOffset] = useState(currentIndex * itemHeight);
 
-  const scrollToPassedIndex = (animated: boolean = false) => {
-    scrollToIndex(currentIndex, animated);
-  };
+    useEffect(() => {
+      controlComponent();
+    });
 
-  const scrollToIndex = (index: number, animated: boolean) => {
-    if (scrollView.current?.getNode()) {
-      //@ts-ignore for some reason scrollToOffset isn't recognized
-      scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated: animated});
-    }
-  };
+    /**
+     * The picker is a controlled component. This means we expect the
+     * to relay on `selectedValue` prop to be our
+     * source of truth - not the picker current value.
+     * This way, you can control disallow or mutate selection of some values.
+     */
+    const controlComponent = () => {
+      if (shouldControlComponent(scrollOffset)) {
+        scrollToIndex(currentIndex, true);
+      }
+    };
 
-  const selectItem = useCallback(
-    index => {
-      scrollToIndex(index, true);
-    },
-    [itemHeight]
-  );
+    const scrollToPassedIndex = (animated: boolean = false) => {
+      scrollToIndex(currentIndex, animated);
+    };
 
-  const onChange = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    scrollOffset = event.nativeEvent.contentOffset.y;
-    
-    const {index, value} = getRowItemAtOffset(scrollOffset);
-    onValueChange?.(value, index);
-  };
+    const scrollToIndex = (index: number, animated: boolean) => {
+      if (scrollView.current?.getNode()) {
+        //@ts-ignore for some reason scrollToOffset isn't recognized
+        scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated: animated});
+      }
+    };
 
-  const renderItem = useCallback(
-    ({item, index}) => {
+    const selectItem = useCallback(
+      index => {
+        scrollToIndex(index, true);
+      },
+      [itemHeight]
+    );
+
+    const onValueChange = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      setScrollOffset(event.nativeEvent.contentOffset.y);
+
+      const {index, value} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
+      onChange?.(value, index);
+    };
+
+    const renderItem = useCallback(
+      ({item, index}) => {
+        return (
+          <Item
+            index={index}
+            itemHeight={itemHeight}
+            offset={offset}
+            activeColor={activeTextColor}
+            inactiveColor={inactiveTextColor}
+            style={textStyle}
+            {...item}
+            onSelect={selectItem}
+          />
+        );
+      },
+      [itemHeight]
+    );
+
+    const separators = () => {
       return (
-        <Item
-          index={index}
-          itemHeight={itemHeight}
-          offset={offset}
-          activeColor={activeTextColor}
-          inactiveColor={inactiveTextColor}
-          style={textStyle}
-          {...item}
-          onSelect={selectItem}
-        />
+        <View absF centerV pointerEvents="none">
+          <View
+            style={{
+              borderTopWidth: 1,
+              borderBottomWidth: 1,
+              height: Spacings.s9,
+              borderColor: Colors.grey60
+            }}
+          />
+        </View>
       );
-    },
-    [itemHeight]
-  );
+    };
 
-  const fader = useMemo(
-    () => (position: FaderPosition) => {
+    const fader = useMemo(() => (position: FaderPosition) => {
       return <Fader visible position={position} size={60} />;
-    },
-    []
-  );
+    }, []);
 
-  const separators = useMemo(() => {
     return (
-      <View absF centerV pointerEvents="none">
-        <View
-          style={{
-            borderTopWidth: 1,
-            borderBottomWidth: 1,
-            height: Spacings.s9,
-            borderColor: Colors.grey60
+      <View style={style}>
+        <AnimatedFlatList
+          height={height}
+          data={items}
+          keyExtractor={keyExtractor}
+          scrollEventThrottle={100}
+          onScroll={onScroll}
+          onMomentumScrollEnd={onValueChange}
+          showsVerticalScrollIndicator={false}
+          onLayout={scrollToPassedIndex}
+          // @ts-ignore
+          ref={scrollView}
+          contentContainerStyle={{
+            paddingVertical: height / 2 - itemHeight / 2
           }}
+          snapToInterval={itemHeight}
+          decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
+          renderItem={renderItem}
         />
+        {fader(FaderPosition.BOTTOM)}
+        {fader(FaderPosition.TOP)}
+        {separators()}
       </View>
     );
-  }, []);
-
-  return (
-    <View style={style}>
-      <AnimatedFlatList
-        height={height}
-        data={items}
-        keyExtractor={keyExtractor}
-        scrollEventThrottle={100}
-        onScroll={onScroll}
-        onMomentumScrollEnd={onChange}
-        showsVerticalScrollIndicator={false}
-        onLayout={scrollToPassedIndex}
-        // @ts-ignore
-        ref={scrollView}
-        contentContainerStyle={{
-          paddingVertical: height / 2 - itemHeight / 2
-        }}
-        snapToInterval={itemHeight}
-        decelerationRate={Constants.isAndroid ? 0.98 : 'normal'}
-        renderItem={renderItem}
-      />
-      {fader(FaderPosition.BOTTOM)}
-      {fader(FaderPosition.TOP)}
-      {separators}
-    </View>
-  );
-};
+  }
+);
 
 const keyExtractor = (item: ItemProps) => `${item.value}`;
 
