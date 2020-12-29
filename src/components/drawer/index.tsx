@@ -10,7 +10,6 @@ import {Colors} from '../../style';
 import View from '../view';
 import Swipeable, {SwipeableProps} from './Swipeable';
 
-
 const DEFAULT_BG = Colors.blue30;
 const DEFAULT_BOUNCINESS = 0;
 
@@ -160,11 +159,11 @@ class Drawer extends PureComponent<Props> {
 
   private getLeftActionsContainerStyle = memoize((leftItem, rightItems) => {
     return this.getActionsContainerStyle(Constants.isRTL ? rightItems : [leftItem]);
-  })
+  });
 
   private getRightActionsContainerStyle = memoize((rightItems, leftItem) => {
     return this.getActionsContainerStyle(Constants.isRTL ? [leftItem] : rightItems);
-  })
+  });
 
   private getActionsContainerStyle(items: ItemProps[]) {
     return {backgroundColor: _.get(_.first(items), 'background', DEFAULT_BG)};
@@ -203,7 +202,7 @@ class Drawer extends PureComponent<Props> {
       this.closeDrawer();
     }
     _.invoke(item, 'onPress', this.props);
-  }
+  };
 
   private onSwipeableWillOpen = () => {
     _.invoke(this.props, 'onSwipeableWillOpen', this.props);
@@ -220,7 +219,7 @@ class Drawer extends PureComponent<Props> {
       }
       this.animateItem(options);
     }
-  }
+  };
 
   private animateItem({rowWidth, leftWidth, dragX, released, resetItemPosition}: any) {
     const toValue = resetItemPosition ? 0 : dragX ? dragX - leftWidth : rowWidth * 0.6 - leftWidth;
@@ -273,7 +272,7 @@ class Drawer extends PureComponent<Props> {
 
   private onAccessibilityAction = (event: AccessibilityActionEvent) => {
     const actions = this.getAccessibilityActions(true);
-    const action = _.find(actions, (o) => {
+    const action = _.find(actions, o => {
       // return o.text === event.nativeEvent.action;
       return o.name === event.nativeEvent.actionName;
     });
@@ -283,18 +282,18 @@ class Drawer extends PureComponent<Props> {
   /** Renders */
 
   // TODO: enable support for rendering more than one left item
-  private renderLeftActions = (progress: Animated.Value/* , dragX: Animated.Value */) => {
+  private renderLeftActions = (progress: Animated.Value /* , dragX: Animated.Value */) => {
     const {leftItem} = this.props;
     const leftItems = leftItem ? [leftItem] : undefined;
-    return this.renderActions(leftItems, progress/* , dragX */);
+    return this.renderActions(leftItems, progress /* , dragX */);
   };
 
-  private renderRightActions = (progress: Animated.Value/* , dragX: Animated.Value */) => {
+  private renderRightActions = (progress: Animated.Value /* , dragX: Animated.Value */) => {
     const {rightItems} = this.props;
-    return this.renderActions(rightItems, progress/* , dragX */);
+    return this.renderActions(rightItems, progress /* , dragX */);
   };
 
-  private renderActions(items: ItemProps[] | undefined, progress: Animated.Value/* , dragX: Animated.Value */) {
+  private renderActions(items: ItemProps[] | undefined, progress: Animated.Value /* , dragX: Animated.Value */) {
     if (items) {
       return (
         // @ts-ignore
