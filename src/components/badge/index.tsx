@@ -279,6 +279,7 @@ class Badge extends PureComponent<BadgeProps> {
         style={containerStyle}
         {...others}
         backgroundColor={undefined}
+        // @ts-expect-error
         borderWidth={undefined}
         {...this.getAccessibilityProps()}
       >
