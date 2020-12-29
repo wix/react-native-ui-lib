@@ -26,8 +26,7 @@ const useData = (initialMonth?: string, initialYear?: string) => {
   const [selectedMonth, setMonth] = useState<string | undefined>(initialMonth);
   const [selectedYear, setYear] = useState<string | undefined>(initialYear);
 
-  const onMonthChange = (item: string | undefined, index: number) => {
-    console.log('selected WheelPicker Index', index);
+  const onMonthChange = (item: string | undefined, _: number) => {
     setMonth(item);
   }
 
@@ -36,11 +35,11 @@ const useData = (initialMonth?: string, initialYear?: string) => {
   }
 
   const getMonths = useCallback(() => {
-    return _.map(months, value => ({label: value, value: value}));
+    return _.map(months, item => ({label: item, value: item}));
   }, []);
 
   const getYears = useCallback(() => {
-    return _.map(years, i => ({label: '' + i, value: i}));
+    return _.map(years, item => ({label: '' + item, value: item}));
   }, []);
 
   return {
@@ -65,7 +64,7 @@ export default () => {
         <Text h3>Months</Text>
           <Incubator.WheelPicker
             style={{width: '100%'}}
-            onValueChange={onMonthChange}
+            onChange={onMonthChange}
             activeTextColor={Colors.primary}
             inactiveTextColor={Colors.grey20}
             items={getMonths()}
@@ -75,7 +74,7 @@ export default () => {
         
         <Text h3>Years</Text>
         <View height={300} width={'100%'}>
-          <Incubator.WheelPicker onValueChange={onYearChange} selectedValue={selectedYear} items={getYears()} />
+          <Incubator.WheelPicker onChange={onYearChange} selectedValue={selectedYear} items={getYears()} />
         </View>
       </View>
     </View>
