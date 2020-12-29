@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle, ColorValue } from 'react-native';
 export declare type SwitchProps = {
     /**
      * The value of the switch. If true the switch will be turned on. Default value is false
@@ -24,19 +24,19 @@ export declare type SwitchProps = {
     /**
      * The Switch background color when it's turned on
      */
-    onColor?: string;
+    onColor?: ColorValue;
     /**
      * The Switch background color when it's turned off
      */
-    offColor?: string;
+    offColor?: ColorValue;
     /**
      * The Switch background color when it's disabled
      */
-    disabledColor?: string;
+    disabledColor?: ColorValue;
     /**
      * The Switch's thumb color
      */
-    thumbColor?: string;
+    thumbColor?: ColorValue;
     /**
      * The Switch's thumb size (width & height)
      */
@@ -44,7 +44,7 @@ export declare type SwitchProps = {
     /**
      * The Switch's thumb style
      */
-    thumbStyle?: object | number | [];
+    thumbStyle?: StyleProp<ViewStyle>;
     style?: StyleProp<ViewStyle>;
     testID?: string;
 };
