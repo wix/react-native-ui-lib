@@ -200,7 +200,7 @@ const TabBar = (props: Props) => {
 
   const itemsCount = useRef<number>(items ? _.size(items) : React.Children.count(children.current));
 
-  const {onItemLayout, onScroll, itemsWidths, focusIndex} = focusItemsHelper({
+  const {onItemLayout, itemsWidths, focusIndex} = focusItemsHelper({
     scrollViewRef: tabBar,
     itemsCount: itemsCount.current,
     selectedIndex,
@@ -354,7 +354,6 @@ const TabBar = (props: Props) => {
         horizontal
         contentContainerStyle={scrollViewContainerStyle}
         scrollEnabled // TODO:
-        onScroll={onScroll}
         testID={testID}
       >
         <View style={indicatorContainerStyle}>{renderTabBarItems}</View>

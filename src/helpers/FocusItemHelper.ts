@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {RefObject, useState, useCallback, useEffect, useRef} from 'react';
-import {LayoutChangeEvent, ScrollView, FlatList, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
+import {LayoutChangeEvent, ScrollView, FlatList} from 'react-native';
 import {Constants} from '.';
 
 export enum OffsetType {
@@ -56,11 +56,6 @@ export type ResultProps = {
    */
   onItemLayout: (event: LayoutChangeEvent, index: number) => void;
   /**
-   * This should be called by the ScrollView (or FlatList)
-   * If this is not used OffsetType.DYNAMIC will not work properly
-   */
-  onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
-  /**
    * The items' width
    */
   itemsWidths: number[];
@@ -81,7 +76,7 @@ const focusItemsHelper = (props: Props): ResultProps => {
     innerSpacing = 0
   } = props;
   const itemsWidths = useRef<(number | null)[]>(_.times(itemsCount, () => null));
-  const contentOffset = useRef<number>(0);
+  const currentIndex = useRef<number>(selectedIndex || 0);
   const [offsets, setOffsets] = useState<Offsets>({CENTER: [], LEFT: [], RIGHT: []});
 
   // TODO: reset?
@@ -135,10 +130,6 @@ const focusItemsHelper = (props: Props): ResultProps => {
   },
   [setSnapBreakpoints]);
 
-  const onScroll = useCallback(({nativeEvent}: NativeSyntheticEvent<NativeScrollEvent>) => {
-    contentOffset.current = nativeEvent.contentOffset.x;
-  }, []);
-
   const scroll = (scrollTo: number, animated: boolean) => {
     // @ts-ignore
     if (_.isFunction(scrollViewRef.current.scrollToOffset)) {
@@ -156,8 +147,9 @@ const focusItemsHelper = (props: Props): ResultProps => {
       if (offsetType !== OffsetType.DYNAMIC) {
         scroll(offsets[offsetType][index], animated);
       } else {
-        const indexIsOnLeftOfCenter = contentOffset.current < offsets[OffsetType.CENTER][index];
-        scroll(indexIsOnLeftOfCenter ? offsets[OffsetType.LEFT][index] : offsets[OffsetType.RIGHT][index], animated);
+        const movingLeft = index < currentIndex.current;
+        currentIndex.current = index;
+        scroll(movingLeft ? offsets[OffsetType.RIGHT][index] : offsets[OffsetType.LEFT][index], animated);
       }
     }
   },
@@ -171,7 +163,6 @@ const focusItemsHelper = (props: Props): ResultProps => {
 
   return {
     onItemLayout,
-    onScroll,
     itemsWidths: offsets.CENTER.length > 0 ? (itemsWidths.current as number[]) : [],
     focusIndex
   };

@@ -1,5 +1,5 @@
 import { RefObject } from 'react';
-import { LayoutChangeEvent, ScrollView, FlatList, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { LayoutChangeEvent, ScrollView, FlatList } from 'react-native';
 export declare enum OffsetType {
     CENTER = "CENTER",
     DYNAMIC = "DYNAMIC",
@@ -43,11 +43,6 @@ export declare type ResultProps = {
      * This should be called by each ot the items' onLayout
      */
     onItemLayout: (event: LayoutChangeEvent, index: number) => void;
-    /**
-     * This should be called by the ScrollView (or FlatList)
-     * If this is not used OffsetType.DYNAMIC will not work properly
-     */
-    onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
     /**
      * The items' width
      */
