@@ -27,7 +27,7 @@ export {default as Constants} from './helpers/Constants';
 export {default as View, ViewPropTypes, ViewProps} from './components/view';
 export {default as Text, TextPropTypes, TextProps} from './components/text';
 export {default as TouchableOpacity, TouchableOpacityProps} from './components/touchableOpacity';
-export {default as Button, ButtonPropTypes, ButtonProps} from './components/button';
+export {default as Button, ButtonPropTypes, ButtonProps, ButtonSize, ButtonAnimationDirection} from './components/button';
 export {default as Checkbox, CheckboxPropTypes, CheckboxProps} from './components/checkbox';
 export {default as Chip, ChipPropTypes, ChipProps} from './components/chip';
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
