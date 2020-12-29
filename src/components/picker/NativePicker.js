@@ -68,7 +68,6 @@ class NativePicker extends BaseComponent {
     return (
       <PickerDialog
         height={this.PICKER_HEIGHT + this.MENU_HEIGHT}
-        pickerStyle={{width: '100%'}}
         {...this.getThemeProps()}
         visible={showDialog}
         panDirection={null}
