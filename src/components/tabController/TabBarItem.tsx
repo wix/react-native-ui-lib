@@ -9,7 +9,7 @@ import {Colors, Typography, Spacings} from '../../style';
 import Badge, {BadgeProps, BADGE_SIZES} from '../../components/badge';
 import {TouchableOpacity} from '../../incubator';
 
-const {cond, eq, call, block, event, and} = Reanimated;
+const {cond, eq, call, block, and} = Reanimated;
 
 const DEFAULT_LABEL_COLOR = Colors.black;
 const DEFAULT_SELECTED_LABEL_COLOR = Colors.blue30;

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import {RefObject, useState, useCallback, useEffect, useRef} from 'react';
 import {LayoutChangeEvent, ScrollView, FlatList, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
-import {Constants} from 'react-native-ui-lib';
+import {Constants} from '.';
 
 export enum OffsetType {
   CENTER = 'CENTER',
@@ -68,7 +68,6 @@ export type ResultProps = {
    * Use in order to focus the item with the specified index
    */
   focusIndex: (index: number, animated?: boolean) => void;
-  // focusIndex: ([]) => void;
 };
 
 const focusItemsHelper = (props: Props): ResultProps => {
