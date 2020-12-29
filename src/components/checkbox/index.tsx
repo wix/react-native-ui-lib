@@ -1,14 +1,22 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {Animated, Easing, StyleSheet, StyleProp, TouchableOpacityProps, ViewStyle, TextStyle, ImageStyle} from 'react-native';
-import {Colors} from '../../style';
+import {
+  Animated,
+  Easing,
+  StyleSheet,
+  StyleProp,
+  TouchableOpacityProps,
+  ViewStyle,
+  TextStyle,
+  ImageStyle
+} from 'react-native';
+import {Colors, Spacings} from '../../style';
 //@ts-ignore
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
 import View from '../view';
-import {Spacings} from '../../style';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
@@ -172,11 +180,15 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   getTintColor = () => {
     const {outline, disabled, iconColor} = this.props;
     if (outline) {
-      if (disabled) return DEFAULT_DISABLED_COLOR;
-      else return iconColor || DEFAULT_COLOR;
+      if (disabled) {
+        return DEFAULT_DISABLED_COLOR;
+      } else {
+        return iconColor || DEFAULT_COLOR;
+      }
+    } else if (disabled) {
+      return Colors.white;
     } else {
-      if (disabled) return Colors.white;
-      else return iconColor || Colors.white;
+      return iconColor || Colors.white;
     }
   };
 
@@ -188,7 +200,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   }
 
   renderCheckbox() {
-    const {selectedIcon, color, iconColor, label, disabled, testID, style, containerStyle, ...others} = this.props;
+    const {selectedIcon, label, testID, style, containerStyle, ...others} = this.props;
 
     return (
       //@ts-ignore
@@ -250,7 +262,7 @@ function createStyles(props: CheckboxProps) {
     container: {
       width: size,
       height: size,
-      borderRadius: borderRadius,
+      borderRadius,
       alignItems: 'center',
       justifyContent: 'center',
       borderColor: color

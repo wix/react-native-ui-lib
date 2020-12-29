@@ -100,7 +100,7 @@ class TabBar extends Component<TabBarProps, State> {
 
     this.contentOffset = {x: 0, y: 0};
     this.scrollBar = React.createRef();
-    this.itemsRefs= [];
+    this.itemsRefs = [];
   }
 
   componentDidUpdate(prevProps: TabBarProps, prevState: State) {
@@ -225,7 +225,7 @@ class TabBar extends Component<TabBarProps, State> {
             styles.tabBar,
             {
               height: containerHeight,
-              backgroundColor: backgroundColor
+              backgroundColor
             }
           ]}
         >
@@ -279,7 +279,7 @@ class TabBar extends Component<TabBarProps, State> {
           {
             height: undefined,
             width: this.scrollContainerWidth,
-            backgroundColor: backgroundColor
+            backgroundColor
           }
         ]}
       >

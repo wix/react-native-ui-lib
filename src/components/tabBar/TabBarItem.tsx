@@ -121,7 +121,7 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
     }
   }
 
-  componentDidUpdate(prevProps: TabBarItemProps)  {
+  componentDidUpdate(prevProps: TabBarItemProps) {
     if (prevProps.selected !== this.props.selected) {
       this.animate(this.props.selected);
     }
@@ -248,7 +248,7 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
 export default asBaseComponent<TabBarItemProps>(TabBarItem);
 
 
-const styles =  StyleSheet.create({
+const styles = StyleSheet.create({
   contentContainer: {
     paddingHorizontal: HORIZONTAL_PADDING
   },

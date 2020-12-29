@@ -267,7 +267,7 @@ class TabBar extends PureComponent<Props, State> {
   }
 
   // TODO: move this logic into a ScrollPresenter or something
-  focusSelected = ([index]: readonly number[], animated: boolean = true) => {
+  focusSelected = ([index]: readonly number[], animated = true) => {
     const {centerSelected} = this.props;
     const itemOffset = this._itemsOffsets[index];
     const itemWidth = this._itemsWidths[index];

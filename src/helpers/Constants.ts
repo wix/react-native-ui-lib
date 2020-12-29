@@ -4,7 +4,7 @@ import {Platform, Dimensions, NativeModules, I18nManager, AccessibilityInfo, Acc
 export enum orientations {
   PORTRAIT = 'portrait',
   LANDSCAPE = 'landscape'
-};
+}
 
 const isAndroid: boolean = Platform.OS === 'android';
 const isIOS: boolean = Platform.OS === 'ios';

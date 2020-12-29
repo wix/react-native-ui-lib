@@ -59,7 +59,8 @@ export interface ScrollBarProps extends FlatListProps<any> {
      * The index to currently focus on
      */
     focusIndex?: number
-};
+}
+
 type Props = ScrollBarProps & ForwardRefInjectedProps;
 
 type State = {
@@ -99,9 +100,9 @@ class ScrollBar extends Component<Props, State> {
 
   private scrollbar: any = undefined;
   private itemsLayouts: any = {};
-  private contentOffset: number = 0;
-  private scrollContentWidth: number = 0;
-  private containerWidth: number = 0;
+  private contentOffset = 0;
+  private scrollContentWidth = 0;
+  private containerWidth = 0;
 
   componentDidUpdate(prevProps: Props) {
     const {focusIndex} = this.props;
@@ -110,7 +111,7 @@ class ScrollBar extends Component<Props, State> {
     }
   }
 
-  focusIndex = (index: number = 0) => {
+  focusIndex = (index = 0) => {
     const focusedItemLayout = this.itemsLayouts[index];
     if (focusedItemLayout) {
       const {x, width} = focusedItemLayout;

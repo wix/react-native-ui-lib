@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import _ from 'lodash';
 import Reanimated from 'react-native-reanimated';
-import Animated from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
 import {interpolateColor} from 'react-native-redash';
 import {Colors, Typography, Spacings} from '../../style';
@@ -106,7 +105,7 @@ interface Props extends TabControllerItemProps {
   index: number;
   targetPage: any; // TODO: typescript?
   state: State;
-  currentPage: Animated.Adaptable<number>;
+  currentPage: Reanimated.Adaptable<number>;
   onLayout: (layout: Partial<LayoutRectangle>, index: number) => void;
 }
 
@@ -298,7 +297,7 @@ export default class TabBarItem extends PureComponent<Props> {
         )}
         {badge && (
           // @ts-ignore
-          <Badge backgroundColor={Colors.red30} size={BADGE_SIZES.default} {...badge} containerStyle={styles.badge} />
+          <Badge backgroundColor={Colors.red30} size={BADGE_SIZES.default} {...badge} containerStyle={styles.badge}/>
         )}
       </TouchableOpacity>
     );

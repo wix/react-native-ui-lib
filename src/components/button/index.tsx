@@ -325,31 +325,31 @@ class Button extends PureComponent<Props, ButtonState> {
     CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.XSMALL}
       : {
-          paddingVertical: PADDINGS.XSMALL,
-          paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
-          minWidth: MIN_WIDTH.XSMALL
-        };
+        paddingVertical: PADDINGS.XSMALL,
+        paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
+        minWidth: MIN_WIDTH.XSMALL
+      };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.SMALL}
       : {
-          paddingVertical: PADDINGS.SMALL,
-          paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
-          minWidth: MIN_WIDTH.SMALL
-        };
+        paddingVertical: PADDINGS.SMALL,
+        paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
+        minWidth: MIN_WIDTH.SMALL
+      };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.MEDIUM}
       : {
-          paddingVertical: PADDINGS.MEDIUM,
-          paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
-          minWidth: MIN_WIDTH.MEDIUM
-        };
+        paddingVertical: PADDINGS.MEDIUM,
+        paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
+        minWidth: MIN_WIDTH.MEDIUM
+      };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.LARGE}
       : {
-          paddingVertical: PADDINGS.LARGE,
-          paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
-          minWidth: MIN_WIDTH.LARGE
-        };
+        paddingVertical: PADDINGS.LARGE,
+        paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
+        minWidth: MIN_WIDTH.LARGE
+      };
 
     if (outline) {
       _.forEach(CONTAINER_STYLE_BY_SIZE, style => {
@@ -470,7 +470,7 @@ class Button extends PureComponent<Props, ButtonState> {
       if (typeof iconSource === 'function') {
         return iconSource(iconStyle);
       } else {
-        return <Image source={iconSource} supportRTL={supportRTL} style={iconStyle} />;
+        return <Image source={iconSource} supportRTL={supportRTL} style={iconStyle}/>;
       }
     }
     return null;
