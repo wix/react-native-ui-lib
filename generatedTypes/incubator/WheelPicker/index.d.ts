@@ -43,7 +43,7 @@ export interface WheelPickerProps {
   /**
    * WheelPicker initial value, can be ItemProps.value, number as index
    */
-  selectedValue?: ItemProps | number;
+  selectedValue?: ItemProps | string | number;
 }
 declare const WheelPicker: ({
   items,
