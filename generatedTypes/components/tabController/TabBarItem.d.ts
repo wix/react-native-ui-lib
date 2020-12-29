@@ -2,10 +2,8 @@ import { PureComponent } from 'react';
 import { TextStyle, LayoutRectangle, LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native';
 import _ from 'lodash';
 import Reanimated from 'react-native-reanimated';
-import Animated from 'react-native-reanimated';
 import { State } from 'react-native-gesture-handler';
 import { BadgeProps } from '../../components/badge';
-import { TouchableOpacityProps } from '../../incubator';
 export interface TabControllerItemProps {
     /**
      * label of the tab
@@ -87,7 +85,7 @@ interface Props extends TabControllerItemProps {
     index: number;
     targetPage: any;
     state: State;
-    currentPage: Animated.Adaptable<number>;
+    currentPage: Reanimated.Adaptable<number>;
     onLayout: (layout: Partial<LayoutRectangle>, index: number) => void;
 }
 /**
@@ -107,8 +105,8 @@ export default class TabBarItem extends PureComponent<Props> {
     onStateChange: (...args: any[]) => void;
     onLayout: ({ nativeEvent: { layout: { width } } }: LayoutChangeEvent) => void;
     onPress: () => void;
-    getItemStyle(): TouchableOpacityProps['style'];
-    getLabelStyle(): (TextStyle | _.Dictionary<Reanimated.Node<number> | Reanimated.Node<"normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900"> | Reanimated.Node<string | number | boolean> | undefined> | undefined)[];
+    getItemStyle(): any[];
+    getLabelStyle(): (TextStyle | _.Dictionary<Reanimated.Node<number> | Reanimated.Node<string | number | boolean> | Reanimated.Node<"normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900"> | undefined> | undefined)[];
     getIconStyle(): {
         tintColor: Reanimated.Node<string>;
     };

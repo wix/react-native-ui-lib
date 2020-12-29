@@ -176,15 +176,15 @@ export default class Slider extends PureBaseComponent {
 
   /* Gesture Recognizer */
 
-  handleMoveShouldSetPanResponder = (e, gestureState) => {
+  handleMoveShouldSetPanResponder = () => {
     return true;
   };
-  handlePanResponderGrant = (e, gestureState) => {
+  handlePanResponderGrant = () => {
     this.updateThumbStyle(true);
     this._dx = 0;
     this.onSeekStart();
   };
-  handlePanResponderMove = (e, gestureState) => {
+  handlePanResponderMove = (_e, gestureState) => {
     if (this.props.disabled) {
       return;
     }
@@ -192,7 +192,7 @@ export default class Slider extends PureBaseComponent {
     this.update(dx - this._dx);
     this._dx = dx;
   };
-  handlePanResponderEnd = (e, gestureState) => {
+  handlePanResponderEnd = () => {
     this.updateThumbStyle(false);
     this.bounceToStep();
     this.onSeekEnd();

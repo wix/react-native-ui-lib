@@ -56,7 +56,7 @@ class RadioGroup extends PureComponent<Props, RadioGroupState> {
 
     return {
       value: initialValue
-    }
+    };
   };
 
   static getDerivedStateFromProps: GetDerivedStateFromProps<Props, RadioGroupState> = (props, state) => {
