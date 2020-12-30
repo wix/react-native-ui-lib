@@ -10,7 +10,6 @@ import TouchableOpacity from '../touchableOpacity';
 import Button from '../button';
 import Card from '../card';
 
-
 const PEEP = 8;
 const DURATION = 300;
 const MARGIN_BOTTOM = 24;
@@ -50,12 +49,12 @@ export default class StackAggregator extends PureBaseComponent {
      * A callback for item press
      */
     onItemPress: PropTypes.func
-  }
+  };
 
   static defaultProps = {
     collapsed: true,
     itemBorderRadius: 0
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -73,7 +72,7 @@ export default class StackAggregator extends PureBaseComponent {
     this.animatedContentOpacity = new Animated.Value(this.state.collapsed ? 0 : 1);
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_prevProps, prevState) {
     if (prevState.collapsed !== this.state.collapsed) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
@@ -84,7 +83,7 @@ export default class StackAggregator extends PureBaseComponent {
   }
 
   getAnimatedScales() {
-    return React.Children.map(this.props.children, (item, index) => {
+    return React.Children.map(this.props.children, (_item, index) => {
       return new Animated.Value(this.getItemScale(index));
     });
   }
@@ -95,7 +94,7 @@ export default class StackAggregator extends PureBaseComponent {
         return 0.95;
       }
       if (index === this.itemsCount - 1) {
-        return 0.90;
+        return 0.9;
       }
     }
     return 1;
@@ -104,7 +103,7 @@ export default class StackAggregator extends PureBaseComponent {
   animate = () => {
     this.animateValues();
     this.animateCards();
-  }
+  };
 
   animateValues() {
     const {collapsed} = this.state;
@@ -131,7 +130,7 @@ export default class StackAggregator extends PureBaseComponent {
     ]).start();
   }
 
-  animateCards() {    
+  animateCards() {
     for (let index = 0; index < this.itemsCount; index++) {
       const newScale = this.getItemScale(index);
 
@@ -146,20 +145,20 @@ export default class StackAggregator extends PureBaseComponent {
 
   close = () => {
     this.setState({collapsed: true}, () => this.animate());
-  }
+  };
 
   open = () => {
     this.setState({collapsed: false}, () => this.animate());
-  }
+  };
 
   getTop(index) {
     let start = 0;
-    
+
     if (index === this.itemsCount - 2) {
       start += PEEP;
     }
     if (index === this.itemsCount - 1) {
-      start += (PEEP * 2);
+      start += PEEP * 2;
     }
 
     return start;
@@ -168,10 +167,10 @@ export default class StackAggregator extends PureBaseComponent {
   getStyle(index) {
     const {collapsed} = this.state;
     const top = this.getTop(index);
-    
+
     if (collapsed) {
       return {
-        position: index !== 0 ? 'absolute' : undefined, 
+        position: index !== 0 ? 'absolute' : undefined,
         top
       };
     }
@@ -183,22 +182,22 @@ export default class StackAggregator extends PureBaseComponent {
 
   onLayout = event => {
     const height = event.nativeEvent.layout.height;
-    
+
     if (height) {
       this.setState({firstItemHeight: height});
     }
-  }
+  };
 
-  onItemPress = (index) => {
+  onItemPress = index => {
     _.invoke(this.props, 'onItemPress', index);
-  }
+  };
 
   renderItem = (item, index) => {
     const {contentContainerStyle, itemBorderRadius} = this.props;
     const {firstItemHeight, collapsed} = this.state;
 
     return (
-      <Animated.View 
+      <Animated.View
         key={index}
         onLayout={index === 0 ? this.onLayout : undefined}
         style={[
@@ -208,9 +207,7 @@ export default class StackAggregator extends PureBaseComponent {
             borderRadius: Constants.isIOS ? itemBorderRadius : undefined,
             alignSelf: 'center',
             zIndex: this.itemsCount - index,
-            transform: [
-              {scaleX: this.animatedScaleArray[index]}
-            ],
+            transform: [{scaleX: this.animatedScaleArray[index]}],
             width: Constants.screenWidth - 40,
             height: collapsed ? firstItemHeight : undefined
           }
@@ -229,7 +226,7 @@ export default class StackAggregator extends PureBaseComponent {
         </Card>
       </Animated.View>
     );
-  }
+  };
 
   render() {
     const {children, containerStyle, buttonProps} = this.props;
@@ -238,23 +235,21 @@ export default class StackAggregator extends PureBaseComponent {
     return (
       <View style={containerStyle}>
         <View style={{marginBottom: PEEP * 3}}>
-          <Animated.View 
+          <Animated.View
             style={{
               position: 'absolute',
               right: 0,
               opacity: this.animatedOpacity,
-              transform: [
-                {scale: this.animatedScale}
-              ]
+              transform: [{scale: this.animatedScale}]
             }}
           >
-            <Button 
-              label={'Show less'} 
+            <Button
+              label={'Show less'}
               iconSource={icon}
               link
-              size={'small'} 
+              size={'small'}
               {...buttonProps}
-              marginH-24 
+              marginH-24
               marginB-20
               onPress={this.close}
             />
@@ -264,19 +259,19 @@ export default class StackAggregator extends PureBaseComponent {
             return this.renderItem(item, index);
           })}
 
-          {collapsed && 
-            <TouchableOpacity 
-              onPress={this.open} 
-              activeOpacity={1} 
+          {collapsed && (
+            <TouchableOpacity
+              onPress={this.open}
+              activeOpacity={1}
               style={[
-                this.styles.touchable, 
+                this.styles.touchable,
                 {
-                  height: firstItemHeight ? firstItemHeight + (PEEP * 2) : undefined,
+                  height: firstItemHeight ? firstItemHeight + PEEP * 2 : undefined,
                   zIndex: this.itemsCount
                 }
               ]}
             />
-          }
+          )}
         </View>
       </View>
     );
@@ -286,7 +281,7 @@ export default class StackAggregator extends PureBaseComponent {
 function createStyles() {
   return StyleSheet.create({
     touchable: {
-      position: 'absolute', 
+      position: 'absolute',
       width: '100%'
     },
     containerShadow: {
@@ -297,7 +292,7 @@ function createStyles() {
       shadowOffset: {height: 5, width: 0}
     },
     card: {
-      overflow: 'hidden', 
+      overflow: 'hidden',
       flexShrink: 1
     }
   });

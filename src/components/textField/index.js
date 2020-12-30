@@ -215,7 +215,7 @@ export default class TextField extends BaseInput {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_prevProps, prevState) {
     if (_.isEmpty(prevState.value) !== _.isEmpty(this.state.value) || prevState.focused !== this.state.focused) {
       this.updateFloatingPlaceholderState();
     }
@@ -749,7 +749,7 @@ export default class TextField extends BaseInput {
   };
 }
 
-function createStyles({centered, multiline, title, floatingPlaceholder}, rightItemTopPadding = 0) {
+function createStyles({centered, multiline}, rightItemTopPadding = 0) {
   const itemTopPadding = Constants.isIOS ? (rightItemTopPadding - 3) : (rightItemTopPadding - 1);
 
   return StyleSheet.create({

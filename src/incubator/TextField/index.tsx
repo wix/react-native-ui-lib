@@ -136,7 +136,7 @@ const TextField = ({
   }, [fieldState, props.editable]);
 
   const {margins, paddings, typography, color} = modifiers;
-  const typographyStyle = useMemo(() => omit(typography, 'lineHeight') , [typography]);
+  const typographyStyle = useMemo(() => omit(typography, 'lineHeight'), [typography]);
   const colorStyle = useMemo(() => color && {color}, [color]);
 
   return (
@@ -190,7 +190,7 @@ const TextField = ({
               retainSpace
             />
           )}
-          {showCharCounter && <CharCounter maxLength={props.maxLength} charCounterStyle={charCounterStyle} />}
+          {showCharCounter && <CharCounter maxLength={props.maxLength} charCounterStyle={charCounterStyle}/>}
         </View>
       </View>
     </FieldContext.Provider>

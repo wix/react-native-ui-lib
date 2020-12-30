@@ -19,7 +19,7 @@ class SourceElement extends Component {
     const {setSharedData, setSource} = this.context;
     setSharedData(data);
 
-    this.element.measure((x, y, width, height, pageX, pageY) => {
+    this.element.measure((_x, _y, width, height, pageX, pageY) => {
       const sourceLayout = {x: pageX, y: pageY, width, height};
       setSource(sourceLayout, this.props.children);
     });

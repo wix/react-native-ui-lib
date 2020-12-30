@@ -74,7 +74,7 @@ export default function baseComponent(usePure) {
     extractContainerStyle(props) {
       let containerStyle = {};
       if (props.containerStyle) {
-        containerStyle = _.pickBy(props.containerStyle, (value, key) => {
+        containerStyle = _.pickBy(props.containerStyle, (_value, key) => {
           return key.includes('margin') || _.includes(['alignSelf', 'transform'], key);
         });
       }

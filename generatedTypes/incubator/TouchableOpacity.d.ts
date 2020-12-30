@@ -1,6 +1,8 @@
 import React from 'react';
-import { ViewStyle } from 'react-native';
-declare type TouchableOpacityProps = {
+import { LayoutChangeEvent } from 'react-native';
+import { State } from 'react-native-gesture-handler';
+import { ViewProps } from '../components/view';
+export declare type TouchableOpacityProps = {
     /**
      * Background color
      */
@@ -28,7 +30,7 @@ declare type TouchableOpacityProps = {
     /**
      * Pass controlled pressState to track gesture state changes
      */
-    pressState?: object;
+    pressState?: State;
     /**
      * If true, disable all interactions for this component.
      */
@@ -36,7 +38,9 @@ declare type TouchableOpacityProps = {
     /**
      * Pass custom style
      */
-    style?: ViewStyle;
+    style?: ViewProps['style'];
+    onLayout?: (event: LayoutChangeEvent) => void;
+    testID?: string;
 };
 declare const _default: React.ComponentClass<TouchableOpacityProps & {
     useCustomTheme?: boolean | undefined;
