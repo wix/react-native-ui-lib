@@ -10,7 +10,7 @@ export const BorderRadiusesLiterals = {
   br50: Constants.isIOS ? 15 : 16,
   br60: 20,
   br100: 999
-}
+};
 export class BorderRadiuses {
   loadBorders(borders: Dictionary<number>) {
     _.forEach(borders, (value, key) => {
@@ -23,7 +23,7 @@ export class BorderRadiuses {
     return /^(br[0-9]+)/;
   }
 }
-const TypedBorderRadiuses = BorderRadiuses as ExtendTypeWith<typeof BorderRadiuses, typeof BorderRadiusesLiterals>
+const TypedBorderRadiuses = BorderRadiuses as ExtendTypeWith<typeof BorderRadiuses, typeof BorderRadiusesLiterals>;
 const borderRadiusesInstance = new TypedBorderRadiuses();
 borderRadiusesInstance.loadBorders(BorderRadiusesLiterals);
 

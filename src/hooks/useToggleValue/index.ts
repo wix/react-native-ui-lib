@@ -10,7 +10,7 @@ const useToggleValue = (initial: any, second?: any) => {
   const toggle = () => {
     if (_.isBoolean(initialValue)) {
       setValue(!initialValue);
-    } else if (value == initialValue) {
+    } else if (value === initialValue) {
       setValue(secondValue);
     } else {
       setValue(initialValue);

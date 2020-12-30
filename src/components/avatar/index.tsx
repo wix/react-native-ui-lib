@@ -1,6 +1,15 @@
 import _ from 'lodash';
-import React , {PureComponent} from 'react';
-import {StyleSheet, ImageSourcePropType, StyleProp, ViewStyle, TouchableOpacity, ImagePropsBase, ImageStyle, TextStyle} from 'react-native';
+import React, {PureComponent} from 'react';
+import {
+  StyleSheet,
+  ImageSourcePropType,
+  StyleProp,
+  ViewStyle,
+  TouchableOpacity,
+  ImagePropsBase,
+  ImageStyle,
+  TextStyle
+} from 'react-native';
 import {Colors} from '../../style';
 import {forwardRef, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
@@ -23,14 +32,14 @@ export enum StatusModes {
   OFFLINE = 'OFFLINE',
   AWAY = 'AWAY',
   NONE = 'NONE'
-};
+}
 
 export enum BadgePosition {
   TOP_RIGHT = 'TOP_RIGHT',
   TOP_LEFT = 'TOP_LEFT',
   BOTTOM_RIGHT = 'BOTTOM_RIGHT',
   BOTTOM_LEFT = 'BOTTOM_LEFT'
-};
+}
 
 const DEFAULT_BADGE_SIZE = 'pimpleBig';
 
@@ -46,7 +55,7 @@ export type AvatarProps = {
   /**
    * Badge location on Avatar
    */
-  badgePosition?: BadgePosition,
+  badgePosition?: BadgePosition;
   /**
    * Badge props passed down to Badge component
    */
@@ -72,17 +81,17 @@ export type AvatarProps = {
    * Listener-callback for when an image's (uri) loading
    * starts (equiv. to Image.onLoadStart()).
    */
-  onImageLoadStart?: ImagePropsBase["onLoadStart"];
+  onImageLoadStart?: ImagePropsBase['onLoadStart'];
   /**
    * Listener-callback for when an image's (uri) loading
    * either succeeds or fails (equiv. to Image.onLoadEnd()).
    */
-  onImageLoadEnd?: ImagePropsBase["onLoadEnd"];
+  onImageLoadEnd?: ImagePropsBase['onLoadEnd'];
   /**
    * Listener-callback for when an image's (uri) loading
    * fails (equiv. to Image.onError()).
    */
-  onImageLoadError?: ImagePropsBase["onError"];
+  onImageLoadError?: ImagePropsBase['onError'];
   /**
    * Label that can represent initials
    */
@@ -139,7 +148,6 @@ export type AvatarPropTypes = AvatarProps; //TODO: remove after ComponentPropTyp
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.js
  */
 class Avatar extends PureComponent<AvatarProps> {
-
   styles: ReturnType<typeof createStyles>;
 
   constructor(props: AvatarProps) {
@@ -230,7 +238,7 @@ class Avatar extends PureComponent<AvatarProps> {
       return BADGE_SIZES[badgeSize] || BADGE_SIZES[DEFAULT_BADGE_SIZE];
     }
     return badgeSize;
-  }
+  };
 
   getBadgePosition = (): object => {
     const {size, badgePosition} = this.props;
@@ -242,7 +250,7 @@ class Avatar extends PureComponent<AvatarProps> {
     const badgeAlignment = {position: 'absolute', [badgeLocation[0]]: shift, [badgeLocation[1]]: shift};
 
     return badgeAlignment;
-  }
+  };
 
   renderBadge() {
     const {testID, badgeProps} = this.props;
@@ -344,9 +352,11 @@ class Avatar extends PureComponent<AvatarProps> {
         <View
           style={[this.getInitialsContainer(), {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
         >
-          {!_.isUndefined(label) && <Text numberOfLines={1} style={[{fontSize}, this.styles.initials, {color}]} testID={`${testID}.label`}>
-            {label}
-          </Text>}
+          {!_.isUndefined(label) && (
+            <Text numberOfLines={1} style={[{fontSize}, this.styles.initials, {color}]} testID={`${testID}.label`}>
+              {label}
+            </Text>
+          )}
         </View>
         {this.renderImage()}
         {this.renderBadge()}
@@ -383,4 +393,4 @@ function createStyles(props: AvatarProps) {
 
 export {Avatar}; // For tests
 
-export default asBaseComponent<AvatarProps, typeof Avatar>(forwardRef(Avatar))
+export default asBaseComponent<AvatarProps, typeof Avatar>(forwardRef(Avatar));
