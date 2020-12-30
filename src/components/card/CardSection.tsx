@@ -8,7 +8,6 @@ import Text, {TextProps} from '../text';
 import Image, {ImageProps} from '../image';
 import asCardChild, {asCardChildProps} from './asCardChild';
 
-
 type ContentType = TextProps & {text?: string};
 
 export type CardSectionProps = ViewProps & {
@@ -66,40 +65,24 @@ class CardSection extends PureComponent<Props> {
   }
 
   renderContent = () => {
-    const {
-      content,
-      leadingIcon,
-      trailingIcon,
-      contentStyle,
-      testID
-    } = this.props;
+    const {content, leadingIcon, trailingIcon, contentStyle, testID} = this.props;
     return (
       <>
-        {leadingIcon && (
-          <Image testID={`${testID}.leadingIcon`} {...leadingIcon} />
-        )}
+        {leadingIcon && <Image testID={`${testID}.leadingIcon`} {...leadingIcon}/>}
         <View testID={`${testID}.contentContainer`} style={[contentStyle]}>
-          {_.map(
-            content,
+          {_.map(content,
             // @ts-ignore
             ({text, ...others} = {}, index) => {
               return (
                 !_.isUndefined(text) && (
-                  <Text
-                    testID={`${testID}.text.${index}`}
-                    key={index}
-                    {...others}
-                  >
+                  <Text testID={`${testID}.text.${index}`} key={index} {...others}>
                     {text}
                   </Text>
                 )
               );
-            }
-          )}
+            })}
         </View>
-        {trailingIcon && (
-          <Image testID={`${testID}.trailingIcon`} {...trailingIcon} />
-        )}
+        {trailingIcon && <Image testID={`${testID}.trailingIcon`} {...trailingIcon}/>}
       </>
     );
   };

@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 //@ts-ignore
 import hoistStatics from 'hoist-non-react-statics';
 //@ts-ignore
@@ -17,7 +16,7 @@ export interface BaseComponentInjectedProps {
 // TODO: find a proper way to inject this type in the private repo
 type ThemeComponent = {
   useCustomTheme?: boolean;
-}
+};
 
 function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentType<any>): React.ComponentClass<PROPS & ThemeComponent> & STATICS {
   class BaseComponent extends UIComponent {
@@ -31,7 +30,7 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
 
     static getThemeProps = (props: any, context: any) => {
       return Modifiers.getThemeProps.call(WrappedComponent, props, context);
-    }
+    };
 
     static getDerivedStateFromError(error: any) {
       UIComponent.defaultProps?.onError(error, WrappedComponent.defaultProps);
@@ -46,9 +45,9 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
       const {forwardedRef, ...others} = themeProps;
       return (
         (this.state.error && UIComponent.defaultProps?.renderError) || (
-          <WrappedComponent {...others} modifiers={modifiers} ref={forwardedRef} />
+          <WrappedComponent {...others} modifiers={modifiers} ref={forwardedRef}/>
         )
-      )
+      );
     }
   }
 

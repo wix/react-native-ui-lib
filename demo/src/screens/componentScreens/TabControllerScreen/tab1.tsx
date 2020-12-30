@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {Colors, View, Text, Image, Assets, Button} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, Image, Assets, Button} from 'react-native-ui-lib';
 
 class Tab1 extends Component {
   state = {};
@@ -19,7 +19,14 @@ class Tab1 extends Component {
           Home
         </Text>
         <View absR marginR-20>
-          <Button marginT-20 round style={{width: 50}} size="small" iconSource={Assets.icons.search} white/>
+          <Button
+            marginT-20
+            round
+            style={{width: 50}}
+            size={Button.sizes.small}
+            iconSource={Assets.icons.search}
+            white
+          />
         </View>
       </View>
     );
