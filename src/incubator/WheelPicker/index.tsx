@@ -1,5 +1,4 @@
 // TODO: Support style customization
-import _ from 'lodash';
 import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
 import {TextStyle, ViewStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import Animated from 'react-native-reanimated';
@@ -101,14 +100,14 @@ const WheelPicker = React.memo(
       }
     };
 
-    const scrollToPassedIndex = (animated: boolean = false) => {
+    const scrollToPassedIndex = (animated = false) => {
       scrollToIndex(currentIndex, animated);
     };
 
     const scrollToIndex = (index: number, animated: boolean) => {
       if (scrollView.current?.getNode()) {
         //@ts-ignore for some reason scrollToOffset isn't recognized
-        scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated: animated});
+        scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated});
       }
     };
 
@@ -160,7 +159,7 @@ const WheelPicker = React.memo(
     };
 
     const fader = useMemo(() => (position: FaderPosition) => {
-      return <Fader visible position={position} size={60} />;
+      return <Fader visible position={position} size={60}/>;
     }, []);
 
     return (
@@ -188,8 +187,7 @@ const WheelPicker = React.memo(
         {separators()}
       </View>
     );
-  }
-);
+  });
 
 const keyExtractor = (item: ItemProps) => `${item.value}`;
 

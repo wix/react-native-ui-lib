@@ -19,5 +19,5 @@ export default ({itemHeight, listSize}: ItemType) => {
     return valueInRange(calculatedIndex, 0, listSize - 1);
   };
 
-  return middleIndex
+  return middleIndex;
 };
