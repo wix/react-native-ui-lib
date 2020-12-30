@@ -377,8 +377,7 @@ const TabBar = (props: Props) => {
   return (
     <View style={[styles.container, shadowStyle, {width: containerWidth}, containerStyle]}>
       <FadedScrollView
-        /**
-         // @ts-ignore TODO: typescript */
+         // @ts-ignore TODO: typescript
         ref={tabBar}
         horizontal
         contentContainerStyle={{minWidth: containerWidth}}
