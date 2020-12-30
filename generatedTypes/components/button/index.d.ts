@@ -9,7 +9,7 @@ export declare enum ButtonSize {
     medium = "medium",
     large = "large"
 }
-export declare enum AnimationDirection {
+export declare enum ButtonAnimationDirection {
     center = "center",
     left = "left",
     right = "right"
@@ -124,7 +124,7 @@ export declare type ButtonProps = TouchableOpacityProps & TypographyModifiers & 
     /**
      * the direction of the animation ('left' and 'right' will effect the button's own alignment)
      */
-    animateTo?: AnimationDirection;
+    animateTo?: ButtonAnimationDirection;
 };
 export declare type ButtonPropTypes = ButtonProps;
 export declare type ButtonState = {
@@ -147,7 +147,7 @@ declare class Button extends PureComponent<Props, ButtonState> {
         iconOnRight: boolean;
     };
     static sizes: typeof ButtonSize;
-    static animationDirection: typeof AnimationDirection;
+    static animationDirection: typeof ButtonAnimationDirection;
     constructor(props: Props);
     state: {
         size: undefined;
@@ -345,9 +345,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         trailing: boolean;
     } | undefined;
     activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined; /**
-     * Text to show inside the button
-     */
+    useNative?: boolean | undefined;
     customValue?: any;
     style?: false | {} | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined> | {
         backfaceVisibility?: "visible" | "hidden" | import("react-native").Animated.Value | import("react-native").Animated.AnimatedInterpolation | undefined;
@@ -645,7 +643,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
     /**
      * the direction of the animation ('left' and 'right' will effect the button's own alignment)
      */
-    animateTo?: AnimationDirection | undefined;
+    animateTo?: ButtonAnimationDirection | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }) | (Pick<import("react-native").TouchableOpacityProps, "testID" | "onLayout" | "hitSlop" | "hasTVPreferredFocus" | "tvParallaxProperties" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityState" | "accessibilityHint" | "accessibilityValue" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "disabled" | "activeOpacity" | "onLongPress" | "delayLongPress" | "delayPressIn" | "delayPressOut" | "onBlur" | "onFocus" | "onPressIn" | "onPressOut" | "pressRetentionOffset" | "touchSoundDisabled"> & Partial<Record<import("../../commons/modifiers").AlignmentLiterals, boolean>> & Partial<Record<import("../../commons/modifiers").PositionLiterals, boolean>> & Partial<Record<"padding" | "paddingL" | "paddingT" | "paddingR" | "paddingB" | "paddingH" | "paddingV", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & Partial<Record<"flex" | "flexG" | "flexS", boolean>> & Partial<Record<"br0" | "br10" | "br20" | "br30" | "br40" | "br50" | "br60" | "br100", boolean>> & Partial<Record<"bg", boolean>> & {
@@ -656,9 +654,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         trailing: boolean;
     } | undefined;
     activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined; /**
-     * Text to show inside the button
-     */
+    useNative?: boolean | undefined;
     customValue?: any;
     style?: false | {} | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined> | {
         backfaceVisibility?: "visible" | "hidden" | import("react-native").Animated.Value | import("react-native").Animated.AnimatedInterpolation | undefined;
@@ -956,7 +952,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
     /**
      * the direction of the animation ('left' and 'right' will effect the button's own alignment)
      */
-    animateTo?: AnimationDirection | undefined;
+    animateTo?: ButtonAnimationDirection | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }) | (Pick<import("react-native").TouchableOpacityProps, "testID" | "onLayout" | "hitSlop" | "hasTVPreferredFocus" | "tvParallaxProperties" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityState" | "accessibilityHint" | "accessibilityValue" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "disabled" | "activeOpacity" | "onLongPress" | "delayLongPress" | "delayPressIn" | "delayPressOut" | "onBlur" | "onFocus" | "onPressIn" | "onPressOut" | "pressRetentionOffset" | "touchSoundDisabled"> & Partial<Record<import("../../commons/modifiers").AlignmentLiterals, boolean>> & Partial<Record<import("../../commons/modifiers").PositionLiterals, boolean>> & Partial<Record<"padding" | "paddingL" | "paddingT" | "paddingR" | "paddingB" | "paddingH" | "paddingV", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & Partial<Record<"flex" | "flexG" | "flexS", boolean>> & Partial<Record<"br0" | "br10" | "br20" | "br30" | "br40" | "br50" | "br60" | "br100", boolean>> & Partial<Record<"bg", boolean>> & {
@@ -967,9 +963,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         trailing: boolean;
     } | undefined;
     activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined; /**
-     * Text to show inside the button
-     */
+    useNative?: boolean | undefined;
     customValue?: any;
     style?: false | {} | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined> | {
         backfaceVisibility?: "visible" | "hidden" | import("react-native").Animated.Value | import("react-native").Animated.AnimatedInterpolation | undefined;
@@ -1267,7 +1261,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
     /**
      * the direction of the animation ('left' and 'right' will effect the button's own alignment)
      */
-    animateTo?: AnimationDirection | undefined;
+    animateTo?: ButtonAnimationDirection | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }) | (Pick<import("react-native").TouchableOpacityProps, "testID" | "onLayout" | "hitSlop" | "hasTVPreferredFocus" | "tvParallaxProperties" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityState" | "accessibilityHint" | "accessibilityValue" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "disabled" | "activeOpacity" | "onLongPress" | "delayLongPress" | "delayPressIn" | "delayPressOut" | "onBlur" | "onFocus" | "onPressIn" | "onPressOut" | "pressRetentionOffset" | "touchSoundDisabled"> & Partial<Record<import("../../commons/modifiers").AlignmentLiterals, boolean>> & Partial<Record<import("../../commons/modifiers").PositionLiterals, boolean>> & Partial<Record<"padding" | "paddingL" | "paddingT" | "paddingR" | "paddingB" | "paddingH" | "paddingV", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & Partial<Record<"flex" | "flexG" | "flexS", boolean>> & Partial<Record<"br0" | "br10" | "br20" | "br30" | "br40" | "br50" | "br60" | "br100", boolean>> & Partial<Record<"bg", boolean>> & {
@@ -1278,9 +1272,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         trailing: boolean;
     } | undefined;
     activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined; /**
-     * Text to show inside the button
-     */
+    useNative?: boolean | undefined;
     customValue?: any;
     style?: false | {} | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined> | {
         backfaceVisibility?: "visible" | "hidden" | import("react-native").Animated.Value | import("react-native").Animated.AnimatedInterpolation | undefined;
@@ -1578,7 +1570,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
     /**
      * the direction of the animation ('left' and 'right' will effect the button's own alignment)
      */
-    animateTo?: AnimationDirection | undefined;
+    animateTo?: ButtonAnimationDirection | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }), any> & typeof Button;
