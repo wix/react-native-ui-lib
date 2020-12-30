@@ -74,7 +74,7 @@ const WheelPicker = ({items, itemHeight = 48, activeTextColor, inactiveTextColor
         activeColor={activeTextColor}
         inactiveColor={inactiveTextColor}
         style={textStyle}
-        {...item}git 
+        {...item} 
         onSelect={selectItem}
       />
     );
