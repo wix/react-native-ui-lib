@@ -224,7 +224,7 @@ const TabBar = (props: Props) => {
   },
   [containerWidth]);
 
-  const getSnapBreakpoints = useMemo(() => {
+  const snapBreakpoints = useMemo(() => {
     return itemsWidths && itemsOffsets && itemsWidths.length > 0 && itemsOffsets.length > 0 && propsCenterSelected
       ? _.times(itemsWidths.length, index => {
         const screenCenter = containerWidth / 2;
@@ -384,7 +384,7 @@ const TabBar = (props: Props) => {
         scrollEnabled={scrollEnabled}
         onScroll={onScroll}
         testID={testID}
-        snapToOffsets={getSnapBreakpoints}
+        snapToOffsets={snapBreakpoints}
       >
         <View
           style={[
