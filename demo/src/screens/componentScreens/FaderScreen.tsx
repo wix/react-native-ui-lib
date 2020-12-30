@@ -1,15 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {
-  Constants,
-  Colors,
-  Text,
-  View,
-  Fader,
-  withScrollReached,
-  WithScrollReachedProps
-} from 'react-native-ui-lib';
+import {Colors, Text, View, Fader, withScrollReached, WithScrollReachedProps} from 'react-native-ui-lib';
 import {renderHeader} from '../ExampleScreenPresenter';
 
 const numberOfItems = 3;
@@ -18,9 +10,7 @@ const itemWidth = 100;
 const itemHeight = 100;
 const tintColor = undefined;
 
-const horizontal =
-  faderPosition === Fader.position.LEFT ||
-  faderPosition === Fader.position.RIGHT;
+const horizontal = faderPosition === Fader.position.START || faderPosition === Fader.position.END;
 
 class FaderScreen extends Component<WithScrollReachedProps> {
   renderItem = (index: number) => {
@@ -34,8 +24,7 @@ class FaderScreen extends Component<WithScrollReachedProps> {
   render() {
     const {scrollReachedProps} = this.props;
     const visible =
-      faderPosition === Fader.position.BOTTOM ||
-      (faderPosition === Fader.position.RIGHT && !Constants.isRTL)
+      faderPosition === Fader.position.BOTTOM || faderPosition === Fader.position.END
         ? !scrollReachedProps.isScrollAtEnd
         : !scrollReachedProps.isScrollAtStart;
 
@@ -54,12 +43,7 @@ class FaderScreen extends Component<WithScrollReachedProps> {
             >
               {_.times(numberOfItems, this.renderItem)}
             </ScrollView>
-            <Fader
-              supportRTL
-              visible={visible}
-              position={faderPosition}
-              tintColor={tintColor}
-            />
+            <Fader visible={visible} position={faderPosition} tintColor={tintColor}/>
           </View>
         </View>
       </View>

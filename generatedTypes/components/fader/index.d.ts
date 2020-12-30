@@ -1,18 +1,25 @@
 /// <reference types="react" />
-import { ImageProps } from '../image';
 export declare enum FaderPosition {
+    /**
+     * @deprecated please use START instead
+     */
     LEFT = "LEFT",
+    START = "START",
+    /**
+     * @deprecated please use END instead
+     */
     RIGHT = "RIGHT",
+    END = "END",
     TOP = "TOP",
     BOTTOM = "BOTTOM"
 }
-export declare type FaderProps = Pick<ImageProps, 'supportRTL'> & {
+export declare type FaderProps = {
     /**
      * Whether the fader is visible (default is true)
      */
     visible?: boolean;
     /**
-     * The position of the fader (the image is different), defaults to Fader.position.RIGHT
+     * The position of the fader (the image is different), defaults to Fader.position.END
      */
     position?: FaderPosition;
     /**
