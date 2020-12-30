@@ -357,7 +357,7 @@ const TabBar = (props: Props) => {
       <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]}/>
     ) : undefined;
 
-  const renderCodeBlock = _.memoize(() => {
+  const renderCodeBlock = () => {
     const nodes: any[] = [];
 
     nodes.push(set(_indicatorOffset,
@@ -371,13 +371,13 @@ const TabBar = (props: Props) => {
     nodes.push(Reanimated.onChange(targetPage, Reanimated.call([targetPage], focusSelected)));
 
     return <Code>{() => block(nodes)}</Code>;
-  });
+  };
 
   const shadowStyle = enableShadow ? propsShadowStyle || styles.containerShadow : undefined;
   return (
     <View style={[styles.container, shadowStyle, {width: containerWidth}, containerStyle]}>
       <FadedScrollView
-         // @ts-ignore TODO: typescript
+        // @ts-ignore TODO: typescript
         ref={tabBar}
         horizontal
         contentContainerStyle={{minWidth: containerWidth}}
