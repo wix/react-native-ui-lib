@@ -4,7 +4,7 @@ import _ from 'lodash';
 /**
  * This hook avoid calling useEffect on the initial value of his dependency array
  */
-const useDidUpdate = (action: () => void, dep: [any]) => {
+const useDidUpdate = (callback: () => void, dep: [any]) => {
   const _dep = useRef<[any] | undefined>(dep);
 
   const isDataChanged = useCallback(() => {
@@ -17,7 +17,7 @@ const useDidUpdate = (action: () => void, dep: [any]) => {
     }
     _dep.current = dep;
 
-    action();
+    callback();
   }, [dep]);
 };
 
