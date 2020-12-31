@@ -1,4 +1,4 @@
-import {renderHook, act} from '@testing-library/react-hooks';
+import {renderHook} from '@testing-library/react-hooks';
 import useDidUpdate from '../index';
 
 describe('useDidUpdate hook tests', () => {
