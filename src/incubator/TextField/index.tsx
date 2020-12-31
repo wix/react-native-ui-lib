@@ -25,10 +25,11 @@ import ValidationMessage, {ValidationMessageProps} from './ValidationMessage';
 import Label, {LabelProps} from './Label';
 import FieldContext from './FieldContext';
 import useFieldState /* , FieldStateProps */ from './useFieldState';
+import usePreset from './usePreset';
 import FloatingPlaceholder, {FloatingPlaceholderProps} from './FloatingPlaceholder';
 import CharCounter, {CharCounterProps} from './CharCounter';
 
-type TextFieldProps = MarginModifiers &
+export type TextFieldProps = MarginModifiers &
   PaddingModifiers &
   TypographyModifiers &
   ColorsModifiers &
@@ -83,9 +84,13 @@ type TextFieldProps = MarginModifiers &
      * Container style of the whole component
      */
     containerStyle?: ViewStyle;
+    /**
+     * Predefined preset to use for styling the field
+     */
+    preset?: 'default' | undefined;
   };
 
-type InternalTextFieldProps = TextFieldProps &
+export type InternalTextFieldProps = TextFieldProps &
   // Omit<FieldStateInjectedProps, keyof InputProps> &
   BaseComponentInjectedProps &
   ForwardRefInjectedProps;
@@ -100,40 +105,41 @@ interface StaticMembers {
  * @extendslink: https://reactnative.dev/docs/textinput
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/IncubatorTextFieldScreen.tsx
  */
-const TextField = ({
-  modifiers,
-  // General
-  fieldStyle,
-  containerStyle,
-  floatingPlaceholder,
-  floatingPlaceholderColor,
-  floatingPlaceholderStyle,
-  hint,
-  // Label
-  label,
-  labelColor,
-  labelStyle,
-  labelProps,
-  // Accessory Buttons
-  leadingAccessory,
-  trailingAccessory,
-  // Validation
-  enableErrors, // TODO: rename to enableValidation
-  validationMessage,
-  validationMessageStyle,
-  validationMessagePosition = ValidationMessagePosition.BOTTOM,
-  // Char Counter
-  showCharCounter,
-  charCounterStyle,
-  // Input
-  placeholder,
-  ...props
-}: InternalTextFieldProps) => {
-  const {onFocus, onBlur, onChangeText, fieldState} = useFieldState(props);
+const TextField = (props: InternalTextFieldProps) => {
+  const {
+    modifiers,
+    // General
+    fieldStyle,
+    containerStyle,
+    floatingPlaceholder,
+    floatingPlaceholderColor,
+    floatingPlaceholderStyle,
+    hint,
+    // Label
+    label,
+    labelColor,
+    labelStyle,
+    labelProps,
+    // Accessory Buttons
+    leadingAccessory,
+    trailingAccessory,
+    // Validation
+    enableErrors, // TODO: rename to enableValidation
+    validationMessage,
+    validationMessageStyle,
+    validationMessagePosition = ValidationMessagePosition.BOTTOM,
+    // Char Counter
+    showCharCounter,
+    charCounterStyle,
+    // Input
+    placeholder,
+    ...others
+  } = usePreset(props);
+  const {onFocus, onBlur, onChangeText, fieldState} = useFieldState(others);
 
   const context = useMemo(() => {
-    return {...fieldState, disabled: props.editable === false};
-  }, [fieldState, props.editable]);
+    return {...fieldState, disabled: others.editable === false};
+  }, [fieldState, others.editable]);
 
   const {margins, paddings, typography, color} = modifiers;
   const typographyStyle = useMemo(() => omit(typography, 'lineHeight'), [typography]);
@@ -169,8 +175,8 @@ const TextField = ({
                 />
               )}
               <Input
-                {...props}
-                style={[typographyStyle, colorStyle, props.style]}
+                {...others}
+                style={[typographyStyle, colorStyle, others.style]}
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onChangeText={onChangeText}
@@ -190,7 +196,7 @@ const TextField = ({
               retainSpace
             />
           )}
-          {showCharCounter && <CharCounter maxLength={props.maxLength} charCounterStyle={charCounterStyle}/>}
+          {showCharCounter && <CharCounter maxLength={others.maxLength} charCounterStyle={charCounterStyle}/>}
         </View>
       </View>
     </FieldContext.Provider>
