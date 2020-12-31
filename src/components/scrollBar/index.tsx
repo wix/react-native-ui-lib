@@ -25,7 +25,7 @@ export interface ScrollBarProps extends FlatListProps<any> {
     /**
      * The element to use as a container, instead of a View
      */
-    containerView?: object,
+    containerView?: JSX.ElementClass,
     /**
      * The props to pass the container
      */
