@@ -21,8 +21,7 @@ export {
   PaddingModifiers,
   TypographyModifiers,
   ColorsModifiers,
-  BackgroundColorModifier,
-  useToggleValue
+  BackgroundColorModifier
 } from './commons/new';
 export {default as ActionBar, ActionBarProps} from './components/actionBar';
 export {default as Avatar, AvatarPropTypes, AvatarProps} from './components/avatar';
