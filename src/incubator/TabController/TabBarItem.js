@@ -42,7 +42,7 @@ export default class TabBarItem extends PureComponent {
     /**
      * icon of the tab
      */
-    icon: PropTypes.number,
+    icon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
      * icon tint color
      */
