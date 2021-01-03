@@ -5,8 +5,16 @@ import View from '../view';
 import Image, {ImageProps} from '../image';
 
 export enum FaderPosition {
+  /**
+   * @deprecated please use START instead
+   */
   LEFT = 'LEFT',
+  START = 'START',
+  /**
+   * @deprecated please use END instead
+   */
   RIGHT = 'RIGHT',
+  END = 'END',
   TOP = 'TOP',
   BOTTOM = 'BOTTOM'
 }
@@ -17,7 +25,7 @@ export type FaderProps = Pick<ImageProps, 'supportRTL'> & {
    */
   visible?: boolean;
   /**
-   * The position of the fader (the image is different), defaults to Fader.position.RIGHT
+   * The position of the fader (the image is different), defaults to Fader.position.END
    */
   position?: FaderPosition;
   /**
@@ -39,15 +47,17 @@ function Fader(props: FaderProps) {
 
   const fadeSize = getFadeSize();
   const getStyles = useCallback(() => {
-    const position = props.position || FaderPosition.RIGHT;
+    const position = props.position || FaderPosition.END;
     let containerStyle, imageStyle, imageSource;
     switch (position) {
       case FaderPosition.LEFT:
+      case FaderPosition.START:
         containerStyle = {...staticStyles.containerLeft, width: fadeSize};
         imageStyle = {height: '100%', width: fadeSize};
         imageSource = require('./gradientLeft.png');
         break;
       case FaderPosition.RIGHT:
+      case FaderPosition.END:
         containerStyle = {...staticStyles.containerRight, width: fadeSize};
         imageStyle = {height: '100%', width: fadeSize};
         imageSource = require('./gradientRight.png');
@@ -80,7 +90,7 @@ function Fader(props: FaderProps) {
     <View pointerEvents={'none'} style={styles.containerStyle}>
       {(props.visible || _.isUndefined(props.visible)) && (
         <Image
-          supportRTL={props.supportRTL}
+          supportRTL
           source={styles.imageSource}
           tintColor={props.tintColor}
           style={styles.imageStyle}

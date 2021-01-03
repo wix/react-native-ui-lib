@@ -23,59 +23,64 @@ import {RadioGroupContextProps} from './RadioGroupContext';
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.blue30;
 
-export type RadioButtonProps = RadioGroupContextProps & ViewProps & {
-  /**
-   * The identifier value of the radio button. must be different than other RadioButtons in the same group
-   */
-  value?: string | number | boolean;
-  /**
-   * When using RadioButton without a RadioGroup, use this prop to toggle selection
-   */
-  selected?: boolean;
-  /**
-   * Invoked when pressing the button
-   */
-  onPress?: (selected: boolean) => void;
-  /**
-   * Whether the radio button should be disabled
-   */
-  disabled?: boolean;
-  /**
-   * The color of the radio button
-   */
-  color?: string;
-  /**
-   * The size of the radio button, affect both width & height
-   */
-  size?: number;
-  /**
-   * The radio button border radius
-   */
-  borderRadius?: number;
-  /**
-   * A label for the radio button description
-   */
-  label?: string;
-  /**
-   * Label style
-   */
-  labelStyle?: TextStyle;
-  /**
-   * Icon image source
-   */
-  iconSource?: ImageSourcePropType;
-  /**
-   * Icon image style
-   */
-  iconStyle?: ImageStyle;
-  /**
-   * Should the icon be on the right side of the label
-   */
-  iconOnRight?: boolean;
-   /**
+export type RadioButtonProps = RadioGroupContextProps &
+  ViewProps & {
+    /**
+     * The identifier value of the radio button. must be different than other RadioButtons in the same group
+     */
+    value?: string | number | boolean;
+    /**
+     * When using RadioButton without a RadioGroup, use this prop to toggle selection
+     */
+    selected?: boolean;
+    /**
+     * Invoked when pressing the button
+     */
+    onPress?: (selected: boolean) => void;
+    /**
+     * Whether the radio button should be disabled
+     */
+    disabled?: boolean;
+    /**
+     * The color of the radio button
+     */
+    color?: string;
+    /**
+     * The size of the radio button, affect both width & height
+     */
+    size?: number;
+    /**
+     * The radio button border radius
+     */
+    borderRadius?: number;
+    /**
+     * A label for the radio button description
+     */
+    label?: string;
+    /**
+     * Label style
+     */
+    labelStyle?: TextStyle;
+    /**
+     * Icon image source
+     */
+    iconSource?: ImageSourcePropType;
+    /**
+     * Icon image style
+     */
+    iconStyle?: ImageStyle;
+    /**
+     * Should the icon be on the right side of the label
+     */
+    iconOnRight?: boolean;
+    /**
      * Should the content be rendered right to the button
      */
     contentOnRight?: boolean;
+    /**
+     * Additional styling for the container
+     */
+    containerStyle?: StyleProp<ViewStyle>;
   };
 export type RadioButtonPropTypes = RadioButtonProps; //TODO: remove after ComponentPropTypes deprecation;
 
@@ -244,7 +249,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   }
 
   render() {
-    const {onPress, onValueChange, contentOnRight, ...others} = this.props;
+    const {onPress, onValueChange, contentOnRight, containerStyle, ...others} = this.props;
     const Container = onPress || onValueChange ? TouchableOpacity : View;
 
     return (
@@ -254,6 +259,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
         centerV
         activeOpacity={1}
         {...others}
+        style={containerStyle}
         onPress={this.onPress}
         {...this.getAccessibilityProps()}
       >

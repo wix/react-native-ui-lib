@@ -32,47 +32,38 @@ export default function useFieldState({
     }
   }, []);
 
-  const validateField = useCallback(
-    (valueToValidate = value) => {
+  const validateField = useCallback((valueToValidate = value) => {
+    const [_isValid, _failingValidatorIndex] = Presenter.validate(valueToValidate, validate);
 
-      const [_isValid, _failingValidatorIndex] = Presenter.validate(valueToValidate, validate);
+    setIsValid(_isValid);
+    setFailingValidatorIndex(_failingValidatorIndex);
+  },
+  [value, validate]);
 
-      setIsValid(_isValid);
-      setFailingValidatorIndex(_failingValidatorIndex);
-    },
-    [value, validate]
-  );
+  const onFocus = useCallback((...args: any) => {
+    setIsFocused(true);
+    _.invoke(props, 'onFocus', ...args);
+  },
+  [props.onFocus]);
 
-  const onFocus = useCallback(
-    (...args: any) => {
-      setIsFocused(true);
-      _.invoke(props, 'onFocus', ...args);
-    },
-    [props.onFocus]
-  );
+  const onBlur = useCallback((...args: any) => {
+    setIsFocused(false);
+    _.invoke(props, 'onBlur', ...args);
+    if (validateOnBlur) {
+      validateField();
+    }
+  },
+  [props.onBlur, validateOnBlur, validateField]);
 
-  const onBlur = useCallback(
-    (...args: any) => {
-      setIsFocused(false);
-      _.invoke(props, 'onBlur', ...args);
-      if (validateOnBlur) {
-        validateField();
-      }
-    },
-    [props.onBlur, validateOnBlur, validateField]
-  );
+  const onChangeText = useCallback(text => {
+    setValue(text);
+    _.invoke(props, 'onChangeText', text);
 
-  const onChangeText = useCallback(
-    (text) => {
-      setValue(text);
-      _.invoke(props, 'onChangeText', text);
-
-      if (validateOnChange) {
-        validateField(text);
-      }
-    },
-    [props.onChangeText, validateOnChange, validateField]
-  );
+    if (validateOnChange) {
+      validateField(text);
+    }
+  },
+  [props.onChangeText, validateOnChange, validateField]);
 
   const fieldState = useMemo(() => {
     return {value, hasValue: !_.isEmpty(value), isValid, isFocused, failingValidatorIndex};
