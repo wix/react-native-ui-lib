@@ -23,7 +23,7 @@ export default class StateScreen extends BaseComponent {
      * The image source that's showing at the top. use an image that was required locally
      */
     imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    source: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    source: PropTypes.oneOfType([PropTypes.object, PropTypes.number]), // TODO: remove
     /**
      * To to show as the title
      */
@@ -54,13 +54,13 @@ export default class StateScreen extends BaseComponent {
 
     }
     if (props.imageSource) {
-      LogService.deprecationWarn({component: 'StateScreen', oldProp: 'imageSource', newProp: 'source'});
+      LogService.deprecationWarn({component: 'StateScreen', oldProp: 'source', newProp: 'imageSource'});
     }
   }
 
   generateStyles() {
     const {source, imageSource} = this.props;
-    const finalSource = source || imageSource;
+    const finalSource = imageSource || source;
 
     const isRemoteImage = _.isObject(finalSource) && Boolean(finalSource.uri);
     this.styles = createStyles(isRemoteImage);
@@ -69,7 +69,7 @@ export default class StateScreen extends BaseComponent {
   render() {
     // TODO: remove testId and imageSource after deprecation
     const {title, subtitle, source, imageSource, ctaLabel, onCtaPress, testId, testID} = this.props;
-    const finalSource = source || imageSource;
+    const finalSource = imageSource || source;
 
     return (
       <View style={this.styles.container} testID={testID || testId}>
