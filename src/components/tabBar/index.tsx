@@ -76,8 +76,7 @@ class TabBar extends Component<TabBarProps, State> {
   static displayName = 'TabBar';
 
   static defaultProps: Partial<TabBarProps> = {
-    selectedIndex: 0,
-    backgroundColor: DEFAULT_BACKGROUND_COLOR
+    selectedIndex: 0
   };
 
   static Item = TabBarItem;
@@ -189,7 +188,7 @@ class TabBar extends Component<TabBarProps, State> {
   };
 
   onContentSizeChange = (width: number) => {
-    if (this.scrollContentWidth && this.scrollContentWidth !== width) {
+    if (this.scrollContentWidth !== width) {
       this.scrollContentWidth = width;
       const {minTabsForScroll} = this.props;
       const minChildrenCount = minTabsForScroll || MIN_TABS_FOR_SCROLL;
@@ -200,7 +199,7 @@ class TabBar extends Component<TabBarProps, State> {
   };
 
   renderTabBar() {
-    const {height, backgroundColor, containerView, containerProps, gradientMargins} = this.props;
+    const {height, backgroundColor = DEFAULT_BACKGROUND_COLOR, containerView, containerProps, gradientMargins} = this.props;
     const {scrollEnabled} = this.state;
     const containerHeight = height || DEFAULT_HEIGHT;
 
@@ -264,14 +263,12 @@ class TabBar extends Component<TabBarProps, State> {
   }
 
   render() {
-    const {enableShadow, style, containerView, containerWidth, backgroundColor} = this.props;
-    const Container = containerView ? containerView : View;
+    const {enableShadow, style, backgroundColor = DEFAULT_BACKGROUND_COLOR} = this.props;
 
     return (
       // @ts-ignore
-      <Container
+      <View
         useSafeArea
-        fullWidth={containerWidth ? false : undefined}
         style={[
           styles.container,
           enableShadow && styles.containerShadow,
@@ -284,7 +281,7 @@ class TabBar extends Component<TabBarProps, State> {
         ]}
       >
         {this.renderTabBar()}
-      </Container>
+      </View>
     );
   }
 }
