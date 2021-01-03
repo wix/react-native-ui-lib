@@ -1,5 +1,4 @@
 import {useEffect, useRef} from 'react';
-import _ from 'lodash';
 
 /**
  * This hook avoid calling useEffect on the initial value of his dependency array
