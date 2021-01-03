@@ -258,8 +258,8 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
         row
         centerV
         activeOpacity={1}
-        style={containerStyle}
         {...others}
+        style={containerStyle}
         onPress={this.onPress}
         {...this.getAccessibilityProps()}
       >
