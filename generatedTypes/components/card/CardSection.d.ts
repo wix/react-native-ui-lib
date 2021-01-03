@@ -32,7 +32,6 @@ export declare type CardSectionProps = ViewProps & {
      * Will be used for the background when provided
      */
     imageSource?: ImageSourcePropType;
-    source?: ImageSourcePropType;
     /**
      * The style for the background image
      */
@@ -68,7 +67,6 @@ declare const _default: React.ComponentClass<ViewProps & {
      * Will be used for the background when provided
      */
     imageSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
-    source?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
     /**
      * The style for the background image
      */
@@ -78,6 +76,10 @@ declare const _default: React.ComponentClass<ViewProps & {
      */
     imageProps?: ImageProps | undefined;
 } & {
+    /**
+     * Text content for the CardSection.
+     * Example: content={[{text: 'You’re Invited!', text70: true, dark10: true}]}
+     */
     useCustomTheme?: boolean | undefined;
 }, any>;
 export default _default;

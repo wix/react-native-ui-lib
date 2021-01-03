@@ -96,18 +96,16 @@ class CardSection extends PureComponent<Props> {
 
   render() {
     const {
-      source,
       imageSource,
       context: {borderStyle},
       style,
       ...others
     } = this.props;
-    const finalSource = source || imageSource;
 
     return (
       <View style={[styles.container, borderStyle, style]} {...others}>
-        {finalSource && this.renderImage()}
-        {!finalSource && this.renderContent()}
+        {imageSource && this.renderImage()}
+        {!imageSource && this.renderContent()}
       </View>
     );
   }
