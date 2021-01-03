@@ -1,24 +1,22 @@
-import {useEffect, useRef, useMemo} from 'react';
+import {useEffect, useRef} from 'react';
 import _ from 'lodash';
 
 /**
  * This hook avoid calling useEffect on the initial value of his dependency array
  */
 const useDidUpdate = (callback: () => void, dep: [any]) => {
-  const _dep = useRef<[any]>(dep);
+  const isMounted = useRef<boolean>(false);
 
-  const isDataChanged = useMemo(() => {
-    return !_.isEqual(_dep.current, dep);
+  useEffect(() => {
+    if (!isMounted.current) {
+      return;
+    }
+    callback();
   }, [dep]);
 
   useEffect(() => {
-    if (!isDataChanged) {
-      return;
-    }
-    _dep.current = dep;
-
-    callback();
-  }, [dep]);
+    isMounted.current = true;
+  }, []);
 };
 
 export default useDidUpdate;
