@@ -36,7 +36,7 @@ export type CardSectionProps = ViewProps & {
    * Will be used for the background when provided
    */
   imageSource?: ImageSourcePropType;
-  source?: ImageSourcePropType; // TODO: remove
+  source?: ImageSourcePropType; // TODO: remove after deprecation
   /**
    * The style for the background image
    */
