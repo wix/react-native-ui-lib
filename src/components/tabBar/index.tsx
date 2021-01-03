@@ -263,14 +263,12 @@ class TabBar extends Component<TabBarProps, State> {
   }
 
   render() {
-    const {enableShadow, style, containerView, containerWidth, backgroundColor = DEFAULT_BACKGROUND_COLOR} = this.props;
-    const Container = containerView ? containerView : View;
+    const {enableShadow, style, backgroundColor = DEFAULT_BACKGROUND_COLOR} = this.props;
 
     return (
       // @ts-ignore
-      <Container
+      <View
         useSafeArea
-        fullWidth={containerWidth ? false : undefined}
         style={[
           styles.container,
           enableShadow && styles.containerShadow,
@@ -283,7 +281,7 @@ class TabBar extends Component<TabBarProps, State> {
         ]}
       >
         {this.renderTabBar()}
-      </Container>
+      </View>
     );
   }
 }
