@@ -35,7 +35,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
           activeOpacity={1}
           marginR-20
         >
-          <Card.Section source={cardImage} imageStyle={{height: '100%'}}/>
+          <Card.Section imageSource={cardImage} imageStyle={{height: '100%'}}/>
         </Card>
         <Card
           height={120}
@@ -49,7 +49,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
             borderWidth: 3
           }}
         >
-          <Card.Section source={cardImage} imageStyle={{height: '100%'}}/>
+          <Card.Section imageSource={cardImage} imageStyle={{height: '100%'}}/>
         </Card>
       </View>
     );
@@ -102,9 +102,9 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
         activeOpacity={1}
         activeScale={isImageOnLeft ? 0.96 : 1.04}
       >
-        {isImageOnLeft && <Card.Section source={cardImage} imageStyle={{width: 115, height: '100%'}}/>}
+        {isImageOnLeft && <Card.Section imageSource={cardImage} imageStyle={{width: 115, height: '100%'}}/>}
         {useSection ? this.renderTextSection() : this.renderText()}
-        {!isImageOnLeft && <Card.Section source={cardImage} imageStyle={{width: 115, height: '100%'}}/>}
+        {!isImageOnLeft && <Card.Section imageSource={cardImage} imageStyle={{width: 115, height: '100%'}}/>}
       </Card>
     );
   };
@@ -119,7 +119,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
           ]}
           style={{padding: 20}}
         />
-        <Card.Section source={cardImage2} imageStyle={{height: 120}}/>
+        <Card.Section imageSource={cardImage2} imageStyle={{height: 120}}/>
       </Card>
     );
   };
@@ -178,7 +178,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
             <Card.Section
               flex
               backgroundColor={Colors.blue20}
-              source={featureIcon}
+              imageSource={featureIcon}
               imageStyle={{
                 width: 25,
                 height: 25,
@@ -195,7 +195,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
           this.renderComplexImage({'marginL-5': true},
             <Card.Section
               flex
-              source={cardImage2}
+              imageSource={cardImage2}
               imageStyle={{height: '100%'}}
               content={[
                 {text: 'Special sale!', text70: true, blue10: true},
@@ -272,7 +272,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
 
       return (
         <Card key={i} style={{marginBottom: 15}} onPress={() => console.log('press on a card')}>
-          <Card.Section source={post.coverImage} imageStyle={{height: 160}}/>
+          <Card.Section imageSource={post.coverImage} imageStyle={{height: 160}}/>
 
           <View padding-20>
             <Text text40 color={Colors.dark10}>

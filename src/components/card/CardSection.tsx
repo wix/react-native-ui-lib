@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType, StyleProp} from 'react-native';
-import {LogService} from '../../services';
 import {asBaseComponent} from '../../commons/new';
 import View, {ViewProps} from '../view';
 import Text, {TextProps} from '../text';
@@ -36,7 +35,6 @@ export type CardSectionProps = ViewProps & {
    * Will be used for the background when provided
    */
   imageSource?: ImageSourcePropType;
-  source?: ImageSourcePropType;
   /**
    * The style for the background image
    */
@@ -55,14 +53,6 @@ type Props = CardSectionProps & asCardChildProps;
  */
 class CardSection extends PureComponent<Props> {
   static displayName = 'Card.Section';
-
-  constructor(props: Props) {
-    super(props);
-
-    if (props.imageSource) {
-      LogService.deprecationWarn({component: 'CardSection', oldProp: 'imageSource', newProp: 'source'});
-    }
-  }
 
   renderContent = () => {
     const {content, leadingIcon, trailingIcon, contentStyle, testID} = this.props;
@@ -88,15 +78,14 @@ class CardSection extends PureComponent<Props> {
   };
 
   renderImage = () => {
-    const {source, imageSource, imageStyle, imageProps, testID} = this.props;
-    const finalSource = source || imageSource;
+    const {imageSource, imageStyle, imageProps, testID} = this.props;
 
     // not actually needed, instead of adding ts-ignore
-    if (finalSource) {
+    if (imageSource) {
       return (
         <Image
           testID={`${testID}.image`}
-          source={finalSource}
+          source={imageSource}
           style={imageStyle}
           customOverlayContent={this.renderContent()}
           {...imageProps}
