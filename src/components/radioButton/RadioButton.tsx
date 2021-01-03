@@ -229,7 +229,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   renderIcon() {
     const {iconSource, iconStyle} = this.props;
     const style = [this.styles.image, iconStyle];
-    return iconSource && <Image style={style} source={iconSource} />;
+    return iconSource && <Image style={style} source={iconSource}/>;
   }
 
   renderButton() {
@@ -249,7 +249,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   }
 
   render() {
-    const {onPress, onValueChange, contentOnRight, style, containerStyle, ...others} = this.props;
+    const {onPress, onValueChange, contentOnRight, containerStyle, ...others} = this.props;
     const Container = onPress || onValueChange ? TouchableOpacity : View;
 
     return (
