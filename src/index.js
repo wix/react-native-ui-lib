@@ -223,8 +223,14 @@ export default {
   get withScrollEnabler() {
     return require('./commons').withScrollEnabler;
   },
+  get useScrollEnabler() {
+    return require('./commons').useScrollEnabler;
+  },
   get withScrollReached() {
     return require('./commons').withScrollReached;
+  },
+  get useScrollReached() {
+    return require('./commons').useScrollReached;
   },
   get Modifiers() {
     return require('./commons').modifiers;

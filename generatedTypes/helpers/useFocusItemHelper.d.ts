@@ -52,5 +52,5 @@ export declare type ResultProps = {
      */
     focusIndex: (index: number, animated?: boolean) => void;
 };
-declare const focusItemsHelper: (props: Props) => ResultProps;
-export default focusItemsHelper;
+declare const useFocusItemsHelper: (props: Props) => ResultProps;
+export default useFocusItemsHelper;
