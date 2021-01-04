@@ -1,7 +1,6 @@
 // TODO: Support onChange callback
 // TODO: Support style customization
 // TODO: Support control of visible items
-import _ from 'lodash';
 import React, {useCallback, useRef, useMemo} from 'react';
 import {TextStyle, FlatList, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import Animated from 'react-native-reanimated';
@@ -55,7 +54,7 @@ const WheelPicker = ({items, itemHeight = 48, activeTextColor, inactiveTextColor
     index => {
       if (scrollView.current?.getNode()) {
         //@ts-ignore for some reason scrollToOffset isn't recognized
-        scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated: true})
+        scrollView.current?.getNode()?.scrollToOffset({offset: index * itemHeight, animated: true});
       }
     },
     [itemHeight]
@@ -83,7 +82,7 @@ const WheelPicker = ({items, itemHeight = 48, activeTextColor, inactiveTextColor
 
   const fader = useMemo(
     () => (position: FaderPosition) => {
-      return <Fader visible position={position} size={60} />;
+      return <Fader visible position={position} size={60}/>;
     },
     []
   );

@@ -34,6 +34,8 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifier
 }
 export declare type ViewPropTypes = ViewProps;
 declare const _default: React.ComponentClass<ViewProps & {
-    useCustomTheme?: boolean | undefined;
+    useCustomTheme?: boolean | undefined; /**
+     * Use Animate.View as a container
+     */
 }, any>;
 export default _default;

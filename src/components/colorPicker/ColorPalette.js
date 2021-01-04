@@ -12,7 +12,6 @@ import PageControl from '../pageControl';
 import ColorSwatch, {SWATCH_SIZE} from './ColorSwatch';
 import ScrollBar from '../scrollBar';
 
-
 const VERTICAL_PADDING = 16;
 const HORIZONTAL_PADDING = 20;
 const MINIMUM_MARGIN = 16;
@@ -102,7 +101,7 @@ export default class ColorPalette extends PureBaseComponent {
       this.initLocalVariables();
       this.setState({orientation: Constants.orientation}); // only to trigger render
     }
-  }
+  };
 
   initLocalVariables() {
     this.itemsRefs = undefined;
@@ -134,7 +133,7 @@ export default class ColorPalette extends PureBaseComponent {
     return containerWidth || Constants.screenWidth;
   }
 
-  getUniqueColors = memoize((colors) => {
+  getUniqueColors = memoize(colors => {
     const c = _.map(colors, color => {
       if (Colors.isTransparent(color)) {
         return color;
@@ -190,7 +189,7 @@ export default class ColorPalette extends PureBaseComponent {
 
     if (scrollable && this.selectedColorIndex !== undefined) {
       const childRef = this.itemsRefs[this.selectedColorIndex];
-      
+
       if (childRef) {
         const handle = findNodeHandle(childRef);
         if (handle) {
@@ -198,7 +197,7 @@ export default class ColorPalette extends PureBaseComponent {
             e => {
               console.warn(e);
             },
-            (x, y, w, h) => {
+            (x, _y, w, _h) => {
               if (x + w > this.containerWidth) {
                 this.scrollBar.current.scrollTo({
                   x: x + w + HORIZONTAL_PADDING - this.containerWidth,
@@ -232,11 +231,11 @@ export default class ColorPalette extends PureBaseComponent {
     }, 0);
   };
 
-  getHorizontalMargins = (index) => {
+  getHorizontalMargins = index => {
     const isFirst = index === 0;
     const isOnLeft = isFirst || index % this.itemsPerRow === 0;
     const isOnRight = index % this.itemsPerRow === this.itemsPerRow - 1;
-    
+
     let marginLeft;
     let marginRight;
 
@@ -252,7 +251,7 @@ export default class ColorPalette extends PureBaseComponent {
     return {marginLeft, marginRight};
   };
 
-  getSwatchStyle = (index) => {
+  getSwatchStyle = index => {
     const sizeHasChanged = this.colors.length !== this.currentColorsCount;
     const isNextToLastIndex = index === this.colors.length - 2;
 

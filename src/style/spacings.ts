@@ -34,7 +34,7 @@ export class Spacings {
       .value());
   }
 }
-const TypedSpacings = Spacings as ExtendTypeWith<typeof Spacings, typeof SpacingLiterals>
+const TypedSpacings = Spacings as ExtendTypeWith<typeof Spacings, typeof SpacingLiterals>;
 const spacingInstance = new TypedSpacings();
-spacingInstance.loadSpacings(SpacingLiterals)
+spacingInstance.loadSpacings(SpacingLiterals);
 export default spacingInstance;

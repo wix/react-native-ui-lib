@@ -8,7 +8,6 @@ import Text, {TextProps} from '../text';
 import Image, {ImageProps} from '../image';
 import asCardChild, {asCardChildProps} from './asCardChild';
 
-
 type ContentType = TextProps & {text?: string};
 
 export type CardSectionProps = ViewProps & {
@@ -37,7 +36,7 @@ export type CardSectionProps = ViewProps & {
    * Will be used for the background when provided
    */
   imageSource?: ImageSourcePropType;
-  source?: ImageSourcePropType;
+  source?: ImageSourcePropType; // TODO: remove after deprecation
   /**
    * The style for the background image
    */
@@ -61,52 +60,36 @@ class CardSection extends PureComponent<Props> {
     super(props);
 
     if (props.imageSource) {
-      LogService.deprecationWarn({component: 'CardSection', oldProp: 'imageSource', newProp: 'source'});
+      LogService.deprecationWarn({component: 'CardSection', oldProp: 'source', newProp: 'imageSource'});
     }
   }
 
   renderContent = () => {
-    const {
-      content,
-      leadingIcon,
-      trailingIcon,
-      contentStyle,
-      testID
-    } = this.props;
+    const {content, leadingIcon, trailingIcon, contentStyle, testID} = this.props;
     return (
       <>
-        {leadingIcon && (
-          <Image testID={`${testID}.leadingIcon`} {...leadingIcon} />
-        )}
+        {leadingIcon && <Image testID={`${testID}.leadingIcon`} {...leadingIcon}/>}
         <View testID={`${testID}.contentContainer`} style={[contentStyle]}>
-          {_.map(
-            content,
+          {_.map(content,
             // @ts-ignore
             ({text, ...others} = {}, index) => {
               return (
                 !_.isUndefined(text) && (
-                  <Text
-                    testID={`${testID}.text.${index}`}
-                    key={index}
-                    {...others}
-                  >
+                  <Text testID={`${testID}.text.${index}`} key={index} {...others}>
                     {text}
                   </Text>
                 )
               );
-            }
-          )}
+            })}
         </View>
-        {trailingIcon && (
-          <Image testID={`${testID}.trailingIcon`} {...trailingIcon} />
-        )}
+        {trailingIcon && <Image testID={`${testID}.trailingIcon`} {...trailingIcon}/>}
       </>
     );
   };
 
   renderImage = () => {
     const {source, imageSource, imageStyle, imageProps, testID} = this.props;
-    const finalSource = source || imageSource;
+    const finalSource = imageSource || source;
 
     // not actually needed, instead of adding ts-ignore
     if (finalSource) {
@@ -130,7 +113,7 @@ class CardSection extends PureComponent<Props> {
       style,
       ...others
     } = this.props;
-    const finalSource = source || imageSource;
+    const finalSource = imageSource || source;
 
     return (
       <View style={[styles.container, borderStyle, style]} {...others}>
