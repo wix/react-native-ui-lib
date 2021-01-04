@@ -65,7 +65,7 @@ export type ResultProps = {
   focusIndex: (index: number, animated?: boolean) => void;
 };
 
-const focusItemsHelper = (props: Props): ResultProps => {
+const useFocusItemsHelper = (props: Props): ResultProps => {
   const {
     scrollViewRef,
     itemsCount,
@@ -168,4 +168,4 @@ const focusItemsHelper = (props: Props): ResultProps => {
   };
 };
 
-export default focusItemsHelper;
+export default useFocusItemsHelper;

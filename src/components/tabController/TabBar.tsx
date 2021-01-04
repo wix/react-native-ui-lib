@@ -14,7 +14,7 @@ import {Constants} from '../../helpers';
 import {LogService} from '../../services';
 import FadedScrollView from './FadedScrollView';
 
-import focusItemsHelper, {OffsetType} from '../../helpers/FocusItemHelper';
+import useFocusItemsHelper, {OffsetType} from '../../helpers/useFocusItemHelper';
 
 const {Code, Value, interpolate, block, set} = Reanimated;
 
@@ -200,7 +200,7 @@ const TabBar = (props: Props) => {
 
   const itemsCount = useRef<number>(items ? _.size(items) : React.Children.count(children.current));
 
-  const {onItemLayout, itemsWidths, focusIndex} = focusItemsHelper({
+  const {onItemLayout, itemsWidths, focusIndex} = useFocusItemsHelper({
     scrollViewRef: tabBar,
     itemsCount: itemsCount.current,
     selectedIndex,
