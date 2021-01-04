@@ -100,7 +100,7 @@ class Image extends PureComponent<Props, State> {
     };
   }
 
-  static getDerivedStateFromProps(nextProps: any, prevState: any) {
+  static getDerivedStateFromProps(nextProps: Partial<Props>, prevState: State) {
     if (nextProps.source !== prevState.prevSource) {
       return {
         error: false

@@ -72,7 +72,7 @@ declare class Image extends PureComponent<Props, State> {
     };
     sourceTransformer?: (props: any) => ImageSourcePropType;
     constructor(props: Props);
-    static getDerivedStateFromProps(nextProps: any, prevState: any): {
+    static getDerivedStateFromProps(nextProps: Partial<Props>, prevState: State): {
         error: boolean;
     } | null;
     isGif(): boolean | undefined;
