@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { ImageProps as RNImageProps, ImageSourcePropType } from 'react-native';
+import { ImageProps as RNImageProps, ImageSourcePropType, NativeSyntheticEvent, ImageErrorEventData } from 'react-native';
 import { ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers } from '../../commons/new';
 import { OverlayTypeType } from '../overlay';
 export declare type ImageProps = RNImageProps & MarginModifiers & {
@@ -44,14 +44,22 @@ export declare type ImageProps = RNImageProps & MarginModifiers & {
      * Render an overlay with custom content
      */
     customOverlayContent?: JSX.Element;
+    /**
+     * Default image source in case of an error
+     */
+    defaultSource?: ImageSourcePropType;
 };
 declare type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
+declare type State = {
+    error: boolean;
+    prevSource: ImageSourcePropType;
+};
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
  * @extends: Image
  * @extendslink: https://facebook.github.io/react-native/docs/image.html
  */
-declare class Image extends PureComponent<Props> {
+declare class Image extends PureComponent<Props, State> {
     static displayName: string;
     static defaultProps: {
         assetGroup: string;
@@ -64,9 +72,13 @@ declare class Image extends PureComponent<Props> {
     };
     sourceTransformer?: (props: any) => ImageSourcePropType;
     constructor(props: Props);
+    static getDerivedStateFromProps(nextProps: any, prevState: any): {
+        error: boolean;
+    } | null;
     isGif(): boolean | undefined;
     shouldUseImageBackground(): boolean;
     getImageSource(): any;
+    onError: (event: NativeSyntheticEvent<ImageErrorEventData>) => void;
     render(): JSX.Element;
 }
 export { Image };
@@ -112,6 +124,10 @@ declare const _default: React.ComponentClass<RNImageProps & Partial<Record<"marg
      * Render an overlay with custom content
      */
     customOverlayContent?: JSX.Element | undefined;
+    /**
+     * Default image source in case of an error
+     */
+    defaultSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any>;

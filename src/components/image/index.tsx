@@ -2,12 +2,21 @@ import _ from 'lodash';
 import React, {PureComponent} from 'react';
 //@ts-ignore
 import hoistNonReactStatic from 'hoist-non-react-statics';
-import {Image as RNImage, ImageProps as RNImageProps, StyleSheet, ImageBackground, ImageSourcePropType} from 'react-native';
+import {
+  StyleSheet,
+  Image as RNImage,
+  ImageProps as RNImageProps,
+  ImageBackground,
+  ImageSourcePropType,
+  NativeSyntheticEvent,
+  ImageErrorEventData
+} from 'react-native';
 import Constants from '../../helpers/Constants';
 import {asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers} from '../../commons/new';
 // @ts-ignore
 import Assets from '../../assets';
 import Overlay, {OverlayTypeType} from '../overlay';
+
 
 export type ImageProps = RNImageProps & MarginModifiers & {
   /**
@@ -51,16 +60,25 @@ export type ImageProps = RNImageProps & MarginModifiers & {
    * Render an overlay with custom content
    */
   customOverlayContent?: JSX.Element;
+  /**
+   * Default image source in case of an error
+   */
+  defaultSource?: ImageSourcePropType
 };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
+
+type State = {
+  error: boolean,
+  prevSource: ImageSourcePropType
+}
 
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
  * @extends: Image
  * @extendslink: https://facebook.github.io/react-native/docs/image.html
  */
-class Image extends PureComponent<Props> {
+class Image extends PureComponent<Props, State> {
   static displayName = 'Image';
 
   static defaultProps = {
@@ -75,6 +93,20 @@ class Image extends PureComponent<Props> {
     super(props);
 
     this.sourceTransformer = this.props.sourceTransformer;
+
+    this.state = {
+      error: false,
+      prevSource: props.source
+    };
+  }
+
+  static getDerivedStateFromProps(nextProps: any, prevState: any) {
+    if (nextProps.source !== prevState.prevSource) {
+      return {
+        error: false
+      };
+    }
+    return null;
   }
 
   isGif() {
@@ -111,8 +143,15 @@ class Image extends PureComponent<Props> {
     return source;
   }
 
+  onError = (event: NativeSyntheticEvent<ImageErrorEventData>) => {
+    if (event.nativeEvent.error) {
+      this.setState({error: true});
+    }
+  }
+
   render() {
-    const source = this.getImageSource();
+    const {error} = this.state;
+    const source = error ? this.props.defaultSource : this.getImageSource();
     const {
       tintColor,
       style,
@@ -144,6 +183,7 @@ class Image extends PureComponent<Props> {
         accessible={false}
         accessibilityRole={'image'}
         {...others}
+        onError={this.onError}
         source={source}
       >
         {(overlayType || customOverlayContent) && (
