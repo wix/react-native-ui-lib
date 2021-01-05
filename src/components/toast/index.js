@@ -54,7 +54,7 @@ export default class Toast extends PureBaseComponent {
     /**
      * a left icon
      */
-    icon: PropTypes.number,
+    icon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
      * a single action for the user
      */

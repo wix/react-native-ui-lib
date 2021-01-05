@@ -22,7 +22,7 @@
     "pretest": "npm run lint",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "eslint src -c .eslintrc.js",
+    "lint": "eslint src -c .eslintrc.js --ext .tsx,.ts,.js",
     "lint:fix": "eslint src -c .eslintrc.js --fix",
     "lint:test": "mocha --compilers js:babel-core/register eslint-rules/tests/lib/rules",
     "xcode": "xed ios",
