@@ -63,7 +63,7 @@ export type ImageProps = RNImageProps & MarginModifiers & {
   /**
    * Default image source in case of an error
    */
-  defaultSource?: ImageSourcePropType
+  errorSource?: ImageSourcePropType
 };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
@@ -124,23 +124,25 @@ class Image extends PureComponent<Props, State> {
     return !!overlayType || this.isGif() || !_.isUndefined(customOverlayContent);
   }
 
-  getImageSource() {
-    const {assetName, assetGroup} = this.props;
-    if (!_.isUndefined(assetName)) {
-      return _.get(Assets, `${assetGroup}.${assetName}`);
-    }
-
-    if (this.sourceTransformer) {
-      return this.sourceTransformer(this.props);
-    }
-
-    const {source} = this.props;
+  getVerifiedSource(source?: ImageSourcePropType) {
     if (_.get(source, 'uri') === null || _.get(source, 'uri') === '') {
       // @ts-ignore
       return {...source, uri: undefined};
     }
-
     return source;
+  }
+
+  getImageSource() {
+    const {assetName, assetGroup, source} = this.props;
+
+    if (!_.isUndefined(assetName)) {
+      return _.get(Assets, `${assetGroup}.${assetName}`);
+    }
+    if (this.sourceTransformer) {
+      return this.sourceTransformer(this.props);
+    }
+
+    return this.getVerifiedSource(source);
   }
 
   onError = (event: NativeSyntheticEvent<ImageErrorEventData>) => {
@@ -151,7 +153,7 @@ class Image extends PureComponent<Props, State> {
 
   render() {
     const {error} = this.state;
-    const source = error ? this.props.defaultSource : this.getImageSource();
+    const source = error ? this.getVerifiedSource(this.props.errorSource) : this.getImageSource();
     const {
       tintColor,
       style,
