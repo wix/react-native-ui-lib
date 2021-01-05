@@ -47,7 +47,7 @@ export declare type ImageProps = RNImageProps & MarginModifiers & {
     /**
      * Default image source in case of an error
      */
-    defaultSource?: ImageSourcePropType;
+    errorSource?: ImageSourcePropType;
 };
 declare type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
 declare type State = {
@@ -77,6 +77,7 @@ declare class Image extends PureComponent<Props, State> {
     } | null;
     isGif(): boolean | undefined;
     shouldUseImageBackground(): boolean;
+    getVerifiedSource(source?: ImageSourcePropType): any;
     getImageSource(): any;
     onError: (event: NativeSyntheticEvent<ImageErrorEventData>) => void;
     render(): JSX.Element;
@@ -127,7 +128,7 @@ declare const _default: React.ComponentClass<RNImageProps & Partial<Record<"marg
     /**
      * Default image source in case of an error
      */
-    defaultSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    errorSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any>;
