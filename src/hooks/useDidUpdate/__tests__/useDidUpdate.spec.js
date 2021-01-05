@@ -66,4 +66,15 @@ describe('useDidUpdate hook tests', () => {
     rerender();
     expect(action.mock.calls.length).toBe(1);
   });
+
+  it('Expect action not to be called when value in array dependencies array has not change value just reference', () => {
+    const action = jest.fn();
+    let dependencies = [false];
+    const {rerender} = renderHook(() => useDidUpdate(action, dependencies));
+
+    dependencies = [false];
+    rerender();
+    expect(action.mock.calls.length).toBe(0);
+  });
+
 });
