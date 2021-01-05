@@ -4,13 +4,13 @@ import {useEffect, useRef} from 'react';
  * This hook avoid calling useEffect on the initial value of his dependency array
  */
 const useDidUpdate = (callback: () => void, dep: [any]) => {
-  const didMountRef = useRef(false);
+  const isMounted = useRef<boolean>(false);
 
   useEffect(() => {
-    if (didMountRef.current) {
+    if (isMounted.current) {
       callback();
     } else {
-      didMountRef.current = true;
+      isMounted.current = true;
     }
   }, dep);
 };
