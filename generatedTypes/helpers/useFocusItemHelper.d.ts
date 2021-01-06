@@ -32,7 +32,7 @@ export declare type Props = {
     /**
      * How much space (padding \ margin) is there on he left\right of the items
      */
-    sideSpacing?: number;
+    outerSpacing?: number;
     /**
      * How much space (padding \ margin) is there between each item
      */

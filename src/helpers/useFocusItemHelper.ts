@@ -36,7 +36,7 @@ export type Props = {
   /**
    * How much space (padding \ margin) is there on he left\right of the items
    */
-  sideSpacing?: number;
+  outerSpacing?: number;
   /**
    * How much space (padding \ margin) is there between each item
    */
@@ -72,7 +72,7 @@ const useFocusItemsHelper = (props: Props): ResultProps => {
     selectedIndex,
     offsetType = OffsetType.CENTER,
     addOffsetMargin = true,
-    sideSpacing = 0,
+    outerSpacing = 0,
     innerSpacing = 0
   } = props;
   const itemsWidths = useRef<(number | null)[]>(_.times(itemsCount, () => null));
@@ -95,7 +95,7 @@ const useFocusItemsHelper = (props: Props): ResultProps => {
     const screenCenter = Constants.screenWidth / 2; // TODO: change to something more dynamic?
     let index = 0;
     const centeredOffsets = [];
-    let currentCenterOffset = sideSpacing;
+    let currentCenterOffset = outerSpacing;
     const leftOffsets = [];
     leftOffsets.push(0);
     const rightOffsets = [];
@@ -119,7 +119,7 @@ const useFocusItemsHelper = (props: Props): ResultProps => {
 
     setOffsets({CENTER: centeredOffsets, LEFT: leftOffsets, RIGHT: rightOffsets}); // default for DYNAMIC is CENTER
   },
-  [itemsCount, sideSpacing, innerSpacing, addOffsetMargin]);
+  [itemsCount, outerSpacing, innerSpacing, addOffsetMargin]);
 
   const onItemLayout = useCallback((event: LayoutChangeEvent, index: number) => {
     const {width} = event.nativeEvent.layout;
