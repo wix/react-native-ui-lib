@@ -34,7 +34,7 @@ export type Props = {
    */
   addOffsetMargin?: boolean;
   /**
-   * How much space (padding \ margin) is there on he left\right of the items
+   * How much space (padding \ margin) is there on the left\right of the items
    */
   outerSpacing?: number;
   /**
