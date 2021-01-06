@@ -1,6 +1,12 @@
 import React, {PureComponent} from 'react';
 import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle} from 'react-native';
-import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps, ContainerModifiers} from '../../commons/new';
+import {
+  asBaseComponent,
+  forwardRef,
+  BaseComponentInjectedProps,
+  ForwardRefInjectedProps,
+  ContainerModifiers
+} from '../../commons/new';
 import Constants from '../../helpers/Constants';
 
 export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifiers {
@@ -90,11 +96,13 @@ class View extends PureComponent<PropsTypes, ViewState> {
     const {
       modifiers,
       style,
+      /* eslint-disable */
       left,
       top,
       right,
       bottom,
       flex: propsFlex,
+      /* eslint-enable */
       forwardedRef,
       inaccessible,
       ...others

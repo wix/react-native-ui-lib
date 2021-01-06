@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextStyle, ImageSourcePropType, ImageStyle, ViewProps } from 'react-native';
+import { TextStyle, StyleProp, ImageSourcePropType, ImageStyle, ViewStyle, ViewProps } from 'react-native';
 import { RadioGroupContextProps } from './RadioGroupContext';
 export declare type RadioButtonProps = RadioGroupContextProps & ViewProps & {
     /**
@@ -51,9 +51,13 @@ export declare type RadioButtonProps = RadioGroupContextProps & ViewProps & {
      */
     iconOnRight?: boolean;
     /**
-      * Should the content be rendered right to the button
-      */
+     * Should the content be rendered right to the button
+     */
     contentOnRight?: boolean;
+    /**
+     * Additional styling for the container
+     */
+    containerStyle?: StyleProp<ViewStyle>;
 };
 export declare type RadioButtonPropTypes = RadioButtonProps;
 declare const _default: React.ComponentClass<RadioGroupContextProps & ViewProps & {
@@ -106,9 +110,13 @@ declare const _default: React.ComponentClass<RadioGroupContextProps & ViewProps 
      */
     iconOnRight?: boolean | undefined;
     /**
-      * Should the content be rendered right to the button
-      */
+     * Should the content be rendered right to the button
+     */
     contentOnRight?: boolean | undefined;
+    /**
+     * Additional styling for the container
+     */
+    containerStyle?: StyleProp<ViewStyle>;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any>;

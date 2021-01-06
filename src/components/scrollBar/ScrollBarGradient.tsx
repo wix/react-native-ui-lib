@@ -1,6 +1,6 @@
 // TODO: use this component inside ScrollBar
 import React, {useRef, useEffect, useMemo} from 'react';
-import {Animated} from 'react-native';
+import {Animated, ImageSourcePropType} from 'react-native';
 
 import {Colors} from '../../style';
 import {Constants} from '../../helpers';
@@ -8,6 +8,43 @@ import View from '../view';
 import Image from '../image';
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
+
+export interface ScrollBarGradientProps {
+  /**
+   * Is the gradient visible
+   */
+  visible?: boolean;
+  /**
+   * Should the gradient be on the left (reverse)
+   */
+  left?: boolean;
+  /**
+   * The gradient's width (default is 76)
+   */
+  gradientWidth?: number;
+  /**
+   * The gradient's height (default 100%)
+   */
+  gradientHeight?: number;
+  /**
+   * The gradient's margins (default is 0)
+   */
+  gradientMargins?: number;
+  // TODO: deprecate
+  /**
+   * The gradient's height (default 100%)
+   * @deprecated
+   */
+  height?: number;
+  /**
+   * The gradient's color (default is white)
+   */
+  gradientColor?: string;
+  /**
+   * Image source for the gradient (default is assets/gradientOverlay.png)
+   */
+  gradientImage?: ImageSourcePropType;
+}
 
 const ScrollBarGradient = ({
   visible,
@@ -18,7 +55,7 @@ const ScrollBarGradient = ({
   height,
   gradientColor = Colors.white,
   gradientImage = require('./assets/gradientOverlay.png')
-}) => {
+}: ScrollBarGradientProps) => {
   const gradientOpacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {

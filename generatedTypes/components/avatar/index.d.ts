@@ -52,17 +52,17 @@ export declare type AvatarProps = {
      * Listener-callback for when an image's (uri) loading
      * starts (equiv. to Image.onLoadStart()).
      */
-    onImageLoadStart?: ImagePropsBase["onLoadStart"];
+    onImageLoadStart?: ImagePropsBase['onLoadStart'];
     /**
      * Listener-callback for when an image's (uri) loading
      * either succeeds or fails (equiv. to Image.onLoadEnd()).
      */
-    onImageLoadEnd?: ImagePropsBase["onLoadEnd"];
+    onImageLoadEnd?: ImagePropsBase['onLoadEnd'];
     /**
      * Listener-callback for when an image's (uri) loading
      * fails (equiv. to Image.onError()).
      */
-    onImageLoadError?: ImagePropsBase["onError"];
+    onImageLoadError?: ImagePropsBase['onError'];
     /**
      * Label that can represent initials
      */
@@ -153,6 +153,7 @@ declare function createStyles(props: AvatarProps): {
     initials: {
         color: string | undefined;
         backgroundColor: string;
+        lineHeight: undefined;
     };
     ribbon: {
         backgroundColor: string;
