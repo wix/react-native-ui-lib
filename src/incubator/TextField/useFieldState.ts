@@ -2,7 +2,9 @@ import {useCallback, useState, useEffect, useMemo} from 'react';
 import {TextInputProps} from 'react-native';
 import _ from 'lodash';
 import * as Presenter from './Presenter';
+import {useDidUpdate} from '../../hooks';
 import {Validator} from './types';
+
 
 export interface FieldStateProps extends TextInputProps {
   validateOnStart?: boolean;
@@ -12,6 +14,10 @@ export interface FieldStateProps extends TextInputProps {
    * A single or multiple validator. Can be a string (required, email) or custom function.
    */
   validate?: Validator | Validator[];
+  /**
+   * Callback for when field validity has changed
+   */
+  onChangeValidity?: (isValid: boolean) => void
 }
 
 export default function useFieldState({
@@ -19,6 +25,7 @@ export default function useFieldState({
   validateOnBlur,
   validateOnChange,
   validateOnStart,
+  onChangeValidity,
   ...props
 }: FieldStateProps) {
   const [value, setValue] = useState(props.value);
@@ -31,6 +38,10 @@ export default function useFieldState({
       validateField();
     }
   }, []);
+
+  useDidUpdate(() => {
+    onChangeValidity?.(isValid);
+  }, [isValid]);
 
   const validateField = useCallback((valueToValidate = value) => {
     const [_isValid, _failingValidatorIndex] = Presenter.validate(valueToValidate, validate);

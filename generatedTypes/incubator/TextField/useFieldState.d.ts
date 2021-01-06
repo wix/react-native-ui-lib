@@ -8,8 +8,12 @@ export interface FieldStateProps extends TextInputProps {
      * A single or multiple validator. Can be a string (required, email) or custom function.
      */
     validate?: Validator | Validator[];
+    /**
+     * Callback for when field validity has changed
+     */
+    onChangeValidity?: (isValid: boolean) => void;
 }
-export default function useFieldState({ validate, validateOnBlur, validateOnChange, validateOnStart, ...props }: FieldStateProps): {
+export default function useFieldState({ validate, validateOnBlur, validateOnChange, validateOnStart, onChangeValidity, ...props }: FieldStateProps): {
     onFocus: (...args: any) => void;
     onBlur: (...args: any) => void;
     onChangeText: (text: any) => void;
