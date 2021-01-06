@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import {RefObject, useState, useCallback, useEffect, useRef} from 'react';
 import {LayoutChangeEvent, ScrollView, FlatList} from 'react-native';
-import {Constants} from '.';
+import {Constants} from '../../helpers';
 
 export enum OffsetType {
   CENTER = 'CENTER',

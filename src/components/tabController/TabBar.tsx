@@ -14,7 +14,7 @@ import {Constants} from '../../helpers';
 import {LogService} from '../../services';
 import FadedScrollView from './FadedScrollView';
 
-import useFocusItemsHelper, {OffsetType} from '../../helpers/useFocusItemHelper';
+import useFocusItemsHelper, {OffsetType} from '../../hooks/useFocusItemsHelper';
 
 const {Code, Value, interpolate, block, set} = Reanimated;
 
