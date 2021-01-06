@@ -304,7 +304,7 @@ const TabBar = (props: Props) => {
     left: _indicatorOffset
   };
 
-  const renderSelectedIndicator =
+  const selectedIndicator =
     itemsWidths && itemsWidths.length > 0 ? (
       <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]}/>
     ) : undefined;
@@ -357,7 +357,7 @@ const TabBar = (props: Props) => {
         testID={testID}
       >
         <View style={indicatorContainerStyle}>{renderTabBarItems}</View>
-        {renderSelectedIndicator}
+        {selectedIndicator}
       </FadedScrollView>
       {_.size(itemsWidths) > 1 && renderCodeBlock()}
     </View>
