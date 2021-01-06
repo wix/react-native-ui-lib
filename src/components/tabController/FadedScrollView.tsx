@@ -1,8 +1,8 @@
 import React, {useCallback} from 'react';
 import {ViewProps, ScrollView, ScrollViewProps, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import Fader from '../fader';
-import useScrollEnabler from '../../commons/useScrollEnabler';
-import useScrollReached from '../../commons/useScrollReached';
+import useScrollEnabler from '../../hooks/useScrollEnabler';
+import useScrollReached from '../../hooks/useScrollReached';
 import forwardRef, {ForwardRefInjectedProps} from '../../commons/forwardRef';
 
 export type FadedScrollViewProps = ViewProps &

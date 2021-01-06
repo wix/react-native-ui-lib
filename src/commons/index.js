@@ -25,14 +25,8 @@ module.exports = {
   get withScrollEnabler() {
     return require('./withScrollEnabler').default;
   },
-  get useScrollEnabler() {
-    return require('./useScrollEnabler').default;
-  },
   get withScrollReached() {
     return require('./withScrollReached').default;
-  },
-  get useScrollReached() {
-    return require('./useScrollReached').default;
   },
   get modifiers() {
     return require('./modifiers');
