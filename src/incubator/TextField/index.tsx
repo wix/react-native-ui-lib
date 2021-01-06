@@ -36,7 +36,7 @@ export type TextFieldProps = MarginModifiers &
   InputProps &
   LabelProps &
   FloatingPlaceholderProps &
-  // We're declaring these props explicitly here for react-docgen
+  // We're declaring these props explicitly here for react-docgen (which can't read hooks)
   // FieldStateProps &
   ValidationMessageProps &
   Omit<CharCounterProps, 'maxLength'> & {
@@ -72,6 +72,10 @@ export type TextFieldProps = MarginModifiers &
      * Should validate when losing focus of TextField
      */
     validateOnBlur?: boolean;
+    /**
+     * Callback for when field validity has changed
+     */
+    onChangeValidity?: (isValid: boolean) => void;
     /**
      * The position of the validation message (top/bottom)
      */
