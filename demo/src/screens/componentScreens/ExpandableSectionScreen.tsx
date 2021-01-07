@@ -17,7 +17,7 @@ const elements = [
       ]}
       style={{padding: 20}}
     />
-    <Card.Section source={cardImage2} imageStyle={{height: 120}}/>
+    <Card.Section imageSource={cardImage2} imageStyle={{height: 120}}/>
   </Card>,
   <Card style={{marginBottom: 10}} onPress={() => {}}>
     <Card.Section
@@ -27,7 +27,7 @@ const elements = [
       ]}
       style={{padding: 20}}
     />
-    <Card.Section source={cardImage} imageStyle={{height: 120}}/>
+    <Card.Section imageSource={cardImage} imageStyle={{height: 120}}/>
   </Card>,
   <Card style={{marginBottom: 10}} onPress={() => {}}>
     <Card.Section
@@ -37,7 +37,7 @@ const elements = [
       ]}
       style={{padding: 20}}
     />
-    <Card.Section source={cardImage2} imageStyle={{height: 120}}/>
+    <Card.Section imageSource={cardImage2} imageStyle={{height: 120}}/>
   </Card>
 ];
 
@@ -67,7 +67,7 @@ class ExpandableSectionScreen extends PureComponent {
           ExpandableSection's sectionHeader
         </Text>
         <View style={styles.header}>
-          <Image style={styles.icon} source={this.getChevron()} />
+          <Image style={styles.icon} source={this.getChevron()}/>
         </View>
       </View>
     );

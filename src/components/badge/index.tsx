@@ -256,6 +256,7 @@ class Badge extends PureComponent<BadgeProps> {
       >
         <Container
           testID={testID}
+          row
           pointerEvents={'none'}
           style={[sizeStyle, this.styles.badge, borderStyle, backgroundStyle]}
           onPress={onPress}
