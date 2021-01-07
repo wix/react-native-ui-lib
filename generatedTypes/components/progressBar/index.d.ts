@@ -1,11 +1,10 @@
-import React from 'react';
-import { Animated, StyleProp, ViewStyle } from 'react-native';
-import { PureBaseComponent } from '../../commons';
+import React, { PureComponent } from 'react';
+import { Animated, StyleProp, ViewStyle, LayoutChangeEvent } from 'react-native';
 /**
  * @description: Progress bar
  * @example:https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ProgressBarScreen.js
  */
-export interface Props {
+interface Props {
     /**
      * The progress of the bar from 0 to 100
      */
@@ -27,35 +26,41 @@ export interface Props {
      */
     customElement?: JSX.Element;
 }
+export declare type ProgressBarProps = Props;
 interface State {
     containerWidth?: number;
 }
-export default class ProgressBar extends PureBaseComponent<Props, State> {
+declare class ProgressBar extends PureComponent<Props, State> {
     static displayName: string;
     static defaultProps: Partial<Props>;
     progressAnimation: Animated.Value;
     constructor(props: Props);
-    componentDidUpdate(prevProps: any): void;
-    getContainerWidth: (event: any) => void;
-    animateProgress(toValue: any): void;
-    getAccessibilityProps(): any;
+    componentDidUpdate(prevProps: Props): void;
+    getContainerWidth: (event: LayoutChangeEvent) => void;
+    animateProgress(toValue?: number): void;
+    getAccessibilityProps(): {
+        accessible: boolean;
+        accessibilityLabel: string;
+    } | undefined;
     getContainerStyle(): {
         height: number;
         borderRadius?: number;
     };
     getProgressStyle(): {
-        right: any;
+        right: number | undefined;
         backgroundColor: any;
         borderRadius: number;
     } | {
-        right: any;
+        right: number | undefined;
         backgroundColor: any;
         borderBottomRightRadius: number;
         borderTopRightRadius: number;
     };
-    renderCustomElement(): React.FunctionComponentElement<{
-        style: any[];
-    }> | undefined;
+    renderCustomElement(): React.FunctionComponentElement<any> | undefined;
     render(): JSX.Element;
 }
-export {};
+export { ProgressBar };
+declare const _default: React.ComponentClass<Props & {
+    useCustomTheme?: boolean | undefined;
+}, any> & typeof ProgressBar;
+export default _default;

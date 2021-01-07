@@ -1,8 +1,9 @@
-import React from 'react';
-import {Animated, Easing, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-// import {ThemeService} from '../../services';
-import {PureBaseComponent} from '../../commons';
+import React, {PureComponent} from 'react';
+import {Animated, Easing, StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
+import {asBaseComponent} from '../../commons/new';
+import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Constants} from '../../helpers';
+// import {ThemeService} from '../../services';
 import View from '../view';
 import {Colors, BorderRadiuses, Spacings} from '../../style';
 
@@ -17,7 +18,7 @@ const DEFAULT_COLOR = Colors.primary;
  * @description: Progress bar
  * @example:https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ProgressBarScreen.js
  */
-export interface Props {
+interface Props {
   /**
    * The progress of the bar from 0 to 100
    */
@@ -40,11 +41,13 @@ export interface Props {
   customElement?: JSX.Element
 }
 
+export type ProgressBarProps = Props;
+
 interface State {
   containerWidth?: number;
 }
 
-export default class ProgressBar extends PureBaseComponent<Props, State> {
+class ProgressBar extends PureComponent<Props, State> {
   static displayName = 'ProgressBar';
 
   static defaultProps: Partial<Props> = {
@@ -62,7 +65,7 @@ export default class ProgressBar extends PureBaseComponent<Props, State> {
     };
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     const {progress} = this.props;
 
     if (prevProps.progress !== progress) {
@@ -70,29 +73,32 @@ export default class ProgressBar extends PureBaseComponent<Props, State> {
     }
   }
 
-  getContainerWidth = event => {
+  getContainerWidth = (event: LayoutChangeEvent) => {
     if (!this.state.containerWidth) {
       this.setState({containerWidth: event.nativeEvent.layout.width});
     }
   };
 
-  animateProgress(toValue) {
-    Animated.timing(this.progressAnimation, {
-      duration: 220,
-      easing: Easing.ease,
-      toValue,
-      useNativeDriver: true
-    }).start();
+  animateProgress(toValue?: number) {
+    if (toValue) {
+      Animated.timing(this.progressAnimation, {
+        duration: 220,
+        easing: Easing.ease,
+        toValue,
+        useNativeDriver: true
+      }).start();
+    }
   }
 
   getAccessibilityProps() {
     const {progress} = this.props;
-
-    return {
-      accessible: true,
-      accessibilityLabel: `progress bar. ${Math.round(progress)}%`,
-      ...this.extractAccessibilityProps()
-    };
+    if (progress) {
+      return {
+        accessible: true,
+        accessibilityLabel: `progress bar. ${Math.round(progress)}%`,
+        ...extractAccessibilityProps()
+      };
+    }
   }
 
   getContainerStyle() {
@@ -135,7 +141,10 @@ export default class ProgressBar extends PureBaseComponent<Props, State> {
   render() {
     const {style} = this.props;
     const {containerWidth} = this.state;
-    const newProgress = this.progressAnimation.interpolate({inputRange: [0, 100], outputRange: [0, containerWidth]});
+    const newProgress = this.progressAnimation.interpolate({
+      inputRange: [0, 100],
+      outputRange: [0, containerWidth || 0]
+    });
 
     return (
       <View
@@ -152,6 +161,9 @@ export default class ProgressBar extends PureBaseComponent<Props, State> {
     );
   }
 }
+
+export {ProgressBar}; // For tests
+export default asBaseComponent<ProgressBarProps, typeof ProgressBar>(ProgressBar);
 
 const styles = StyleSheet.create({
   container: {

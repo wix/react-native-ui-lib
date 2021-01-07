@@ -1,6 +1,5 @@
-/// <reference types="react" />
-import { AccessibilityProps } from 'react-native';
-import { PureBaseComponent } from '../../commons';
+import React, { PureComponent } from 'react';
+import { AccessibilityProps, AccessibilityActionEvent } from 'react-native';
 interface Props {
     /**
      * Component accessibility label
@@ -39,6 +38,7 @@ interface Props {
      */
     testID?: string;
 }
+export declare type StepperProps = Props;
 interface State {
     currentStepperValue: number;
 }
@@ -46,15 +46,19 @@ interface State {
  * @description: A stepper component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StepperScreen.js
  */
-declare class Stepper extends PureBaseComponent<Props, State> {
+declare class Stepper extends PureComponent<Props, State> {
     constructor(props: Props);
     UNSAFE_componentWillReceiveProps(nextProps: Props): void;
     getAccessibilityProps(): AccessibilityProps;
-    onAccessibilityAction: (event: any) => void;
-    accessibilityActionHandler(actionType: any, newStepperValue: any, actionLimitMsg: any): void;
+    onAccessibilityAction: (event: AccessibilityActionEvent) => void;
+    accessibilityActionHandler(actionType: string, newStepperValue: number, actionLimitMsg: string): void;
     allowStepChange(buttonType: string): boolean | undefined;
     handleStepChange(buttonType: string): void;
     renderButton(buttonType: string): JSX.Element;
     render(): JSX.Element;
 }
-export default Stepper;
+export { Stepper };
+declare const _default: React.ComponentClass<Props & {
+    useCustomTheme?: boolean | undefined;
+}, any> & typeof Stepper;
+export default _default;

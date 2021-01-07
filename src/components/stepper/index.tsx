@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import React from 'react';
-import {StyleSheet, AccessibilityInfo, AccessibilityProps} from 'react-native';
+import React, {PureComponent} from 'react';
+import {StyleSheet, AccessibilityInfo, AccessibilityProps, AccessibilityActionEvent} from 'react-native';
 import {Typography, Spacings} from '../../style';
-import {PureBaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Button from '../button';
 import Text from '../text';
@@ -55,6 +55,8 @@ interface Props {
   testID?: string;
 }
 
+export type StepperProps = Props;
+
 interface State {
   currentStepperValue: number;
 }
@@ -63,7 +65,7 @@ interface State {
  * @description: A stepper component
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StepperScreen.js
  */
-class Stepper extends PureBaseComponent<Props, State> {
+class Stepper extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -80,24 +82,26 @@ class Stepper extends PureBaseComponent<Props, State> {
       currentStepperValue: initialValue
     };
 
-    if (initialValue < minValue) {
+    if (minValue && initialValue < minValue) {
       console.warn(
         `Stepper ID: ${id}'s Minimum value: ${minValue} is greater than current stepper value: ${initialValue}`
       );
     }
-    if (initialValue > maxValue) {
+    if (maxValue && initialValue > maxValue) {
       console.warn(
         `Stepper ID: ${id}'s Maximum value: ${maxValue} is less than current stepper value: ${initialValue}`
       );
     }
-    if (minValue > maxValue) {
+    if (maxValue && minValue && minValue > maxValue) {
       console.warn(`Stepper ID: ${id}'s Minimum value: ${minValue} is greater than the Maximum value: ${maxValue}`);
     }
   }
 
   UNSAFE_componentWillReceiveProps(nextProps: Props) {
     if (this.props.value !== nextProps.value) {
-      this.setState({currentStepperValue: nextProps.value});
+      if (nextProps.value) {
+        this.setState({currentStepperValue: nextProps.value});
+      }
     }
   }
 
@@ -115,7 +119,7 @@ class Stepper extends PureBaseComponent<Props, State> {
     };
   }
 
-  onAccessibilityAction = event => {
+  onAccessibilityAction = (event: AccessibilityActionEvent) => {
     const {currentStepperValue} = this.state;
     const eventMsgContext = event.nativeEvent.actionName === 'decrement' ? 'Minimum' : 'Maximum';
     const stepperLimitMsg = `${eventMsgContext} stepper value, ${currentStepperValue}, reached`;
@@ -132,7 +136,7 @@ class Stepper extends PureBaseComponent<Props, State> {
     }
   };
 
-  accessibilityActionHandler(actionType, newStepperValue, actionLimitMsg) {
+  accessibilityActionHandler(actionType: string, newStepperValue: number, actionLimitMsg: string) {
     if (this.allowStepChange(actionType)) {
       this.handleStepChange(actionType);
       _.invoke(AccessibilityInfo, 'announceForAccessibility', `${newStepperValue}`);
@@ -204,10 +208,11 @@ class Stepper extends PureBaseComponent<Props, State> {
   }
 }
 
+export {Stepper}; // For tests
+export default asBaseComponent<StepperProps, typeof Stepper>(Stepper);
+
 const styles = StyleSheet.create({
   text: {
     marginHorizontal: Spacings.s5
   }
 });
-
-export default Stepper;
