@@ -59,10 +59,6 @@ class Picker extends PureComponent {
      */
     mode: PropTypes.oneOf(Object.keys(PICKER_MODES)),
     /**
-     * Adds blur effect to picker modal (iOS only)
-     */
-    enableModalBlur: PropTypes.bool,
-    /**
      * Render custom picker - input will be value (see above)
      * Example:
      * renderPicker = (selectedItem) => {...}
@@ -317,7 +313,6 @@ class Picker extends PureComponent {
   renderExpandableModal = () => {
     const {
       mode,
-      enableModalBlur,
       topBarProps,
       showSearch,
       searchStyle,
@@ -355,7 +350,6 @@ class Picker extends PureComponent {
           testID={`${testID}.modal`}
           visible={showExpandableModal}
           scrollPosition={selectedItemPosition}
-          enableModalBlur={enableModalBlur}
           topBarProps={{
             ...topBarProps,
             onCancel: this.cancelSelect,

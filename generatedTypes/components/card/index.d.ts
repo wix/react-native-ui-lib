@@ -35,14 +35,6 @@ export declare type CardProps = ViewProps & TouchableOpacityProps & {
      */
     elevation?: number;
     /**
-     * enable blur effect (iOS only)
-     */
-    enableBlur?: boolean;
-    /**
-     * blur option for blur effect according to @react-native-community/blur lib (make sure enableBlur is on)
-     */
-    blurOptions?: object;
-    /**
      * Additional styles for the top container
      */
     containerStyle?: ViewStyle;
@@ -72,9 +64,7 @@ declare const _default: React.ComponentClass<ViewProps & Pick<import("react-nati
     } | undefined;
     activeBackgroundColor?: string | undefined;
     useNative?: boolean | undefined;
-    customValue?: any; /**
-     * card custom height
-     */
+    customValue?: any;
     style?: false | {} | ViewStyle | import("react-native").RegisteredStyle<ViewStyle> | import("react-native").RecursiveArray<false | ViewStyle | import("react-native").RegisteredStyle<ViewStyle> | null | undefined> | {
         backfaceVisibility?: "visible" | "hidden" | Animated.Value | Animated.AnimatedInterpolation | undefined;
         backgroundColor?: string | typeof import("react-native").OpaqueColorValue | Animated.Value | Animated.AnimatedInterpolation | undefined;
@@ -258,14 +248,6 @@ declare const _default: React.ComponentClass<ViewProps & Pick<import("react-nati
      * elevation value (Android only)
      */
     elevation?: number | undefined;
-    /**
-     * enable blur effect (iOS only)
-     */
-    enableBlur?: boolean | undefined;
-    /**
-     * blur option for blur effect according to @react-native-community/blur lib (make sure enableBlur is on)
-     */
-    blurOptions?: object | undefined;
     /**
      * Additional styles for the top container
      */

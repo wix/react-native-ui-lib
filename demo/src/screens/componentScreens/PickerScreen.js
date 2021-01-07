@@ -84,7 +84,6 @@ export default class PickerScreen extends Component {
             placeholder="Favorite Language"
             floatingPlaceholder
             value={this.state.language}
-            enableModalBlur={false}
             onChange={item => this.setState({language: item})}
             topBarProps={{title: 'Languages'}}
             style={{color: Colors.red20}}

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Constants, Colors, View, Card, CardProps, Button, Text, Image} from 'react-native-ui-lib';
+import {Colors, View, Card, CardProps, Button, Text} from 'react-native-ui-lib';
 // @ts-ignore
 import posts from '../../data/posts';
 
@@ -97,7 +97,6 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
         height={160}
         style={{marginBottom: 15}}
         onPress={() => {}}
-        enableBlur
         borderRadius={borderRadius}
         useNative
         backgroundColor={Colors.white}
@@ -125,6 +124,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
     return (
       <Card style={{marginBottom: 10}} onPress={() => {}}>
         <Card.Section
+          bg-white
           content={[
             {text: 'You’re Invited!', text70: true, grey10: true},
             {text: 'join now', text90: true, grey50: true}
@@ -150,6 +150,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
           contentStyle={{alignItems: 'center'}}
         />
         <Card.Section
+          bg-white
           padding-20
           flex
           content={[{text: 'All site', text70: true, grey10: true}]}
@@ -173,6 +174,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
       <Card {...cardProps} flex marginV-10 onPress={() => {}} useNative activeOpacity={1} activeScale={0.96}>
         {image}
         <Card.Section
+          bg-white
           padding-20
           content={[{text: 'All site', text70: true, grey10: true}]}
           contentStyle={{alignItems: 'center'}}
@@ -226,10 +228,10 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
 
   renderNumbers = () => {
     return (
-      <ScrollView style={{height: 100}} horizontal showsHorizontalScrollIndicator={false}>
+      <ScrollView style={{height: 100, marginBottom: 20}} horizontal showsHorizontalScrollIndicator={false}>
         {_.times(4, i => {
           return (
-            <Card key={i} width={100} style={{marginRight: 20}}>
+            <Card key={i} width={100} style={{marginRight: 20}} backgroundColor={Colors.white}>
               <View padding-15>
                 <Text text30 grey30>
                   {i}
@@ -250,37 +252,6 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
     );
   };
 
-  renderBackgroundTypes = () => {
-    return (
-      <View row marginV-10>
-        {this.renderBackgroundCard(
-          {'marginR-20': true, style: {backgroundColor: Colors.grey60}},
-          <Text text80 center white>
-            With custom background color
-          </Text>
-        )}
-        {this.renderBackgroundCard(
-          {
-            'marginR-20': true,
-            style: {backgroundColor: Colors.rgba(Colors.grey60, 0.75)}
-          },
-          <Text text70 center white>
-            With opacity
-        </Text>)}
-        {Constants.isIOS &&
-          this.renderBackgroundCard({enableBlur: true, 'marginL-20': true},
-            <>
-              <Text text70 grey20 center>
-                With Blur effect
-              </Text>
-              <Text text80 grey20 center>
-                (iOS only)
-              </Text>
-            </>)}
-      </View>
-    );
-  };
-
   renderComplexExample = () => {
     return _.map(posts, (post, i) => {
       const statusColor = post.status === 'Published' ? Colors.green30 : Colors.orange30;
@@ -296,7 +267,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
             imageStyle={{height: 160}}
           />
 
-          <View padding-20>
+          <View padding-20 bg-white>
             <Text text40 color={Colors.grey10}>
               {post.title}
             </Text>
@@ -337,7 +308,6 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
       <>
         {this.renderNumbers()}
         {this.renderImageOnBottom()}
-        {this.renderBackgroundTypes()}
         {this.renderComplexExample()}
       </>
     );

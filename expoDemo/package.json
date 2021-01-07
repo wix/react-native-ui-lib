@@ -8,7 +8,6 @@
     "expo": "expo start"
   },
   "dependencies": {
-    "@react-native-community/blur": "^3.4.1",
     "@react-native-community/datetimepicker": "3.0.4",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/netinfo": "5.9.7",
