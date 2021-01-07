@@ -297,7 +297,7 @@ export default class TabBarItem extends PureComponent<Props> {
         )}
         {badge && (
           // @ts-ignore
-          <Badge backgroundColor={Colors.red30} size={BADGE_SIZES.default} {...badge} containerStyle={styles.badge}/>
+          <Badge backgroundColor={Colors.red30} size={20} {...badge} containerStyle={styles.badge}/>
         )}
       </TouchableOpacity>
     );
