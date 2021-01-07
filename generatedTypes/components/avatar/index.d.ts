@@ -2,19 +2,13 @@ import React, { PureComponent } from 'react';
 import { ImageSourcePropType, StyleProp, ViewStyle, ImagePropsBase, ImageStyle, TextStyle } from 'react-native';
 import { BadgeProps } from '../badge';
 import { ImageProps } from '../image';
-export declare enum StatusModes {
-    ONLINE = "ONLINE",
-    OFFLINE = "OFFLINE",
-    AWAY = "AWAY",
-    NONE = "NONE"
-}
 export declare enum BadgePosition {
     TOP_RIGHT = "TOP_RIGHT",
     TOP_LEFT = "TOP_LEFT",
     BOTTOM_RIGHT = "BOTTOM_RIGHT",
     BOTTOM_LEFT = "BOTTOM_LEFT"
 }
-export declare type AvatarPropTypes = {
+export declare type AvatarProps = {
     /**
      * Adds fade in animation when Avatar image loads
      */
@@ -52,17 +46,17 @@ export declare type AvatarPropTypes = {
      * Listener-callback for when an image's (uri) loading
      * starts (equiv. to Image.onLoadStart()).
      */
-    onImageLoadStart?: ImagePropsBase["onLoadStart"];
+    onImageLoadStart?: ImagePropsBase['onLoadStart'];
     /**
      * Listener-callback for when an image's (uri) loading
      * either succeeds or fails (equiv. to Image.onLoadEnd()).
      */
-    onImageLoadEnd?: ImagePropsBase["onLoadEnd"];
+    onImageLoadEnd?: ImagePropsBase['onLoadEnd'];
     /**
      * Listener-callback for when an image's (uri) loading
      * fails (equiv. to Image.onError()).
      */
-    onImageLoadError?: ImagePropsBase["onError"];
+    onImageLoadError?: ImagePropsBase['onError'];
     /**
      * Label that can represent initials
      */
@@ -88,14 +82,6 @@ export declare type AvatarPropTypes = {
      */
     customRibbon?: JSX.Element;
     /**
-     * Determine if to show online badge
-     */
-    isOnline?: boolean;
-    /**
-     * AWAY, ONLINE, OFFLINE or NONE mode (if set to a value other then 'NONE' will override isOnline prop)
-     */
-    status?: StatusModes;
-    /**
      * Custom size for the Avatar
      */
     size: number;
@@ -108,6 +94,7 @@ export declare type AvatarPropTypes = {
      */
     testID?: string;
 };
+export declare type AvatarPropTypes = AvatarProps;
 /**
  * @description: Avatar component for displaying user profile images
  * @extends: TouchableOpacity
@@ -116,11 +103,10 @@ export declare type AvatarPropTypes = {
  * @image: https://user-images.githubusercontent.com/33805983/34480603-197d7f64-efb6-11e7-9feb-db8ba756f055.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.js
  */
-declare class Avatar extends PureComponent<AvatarPropTypes> {
+declare class Avatar extends PureComponent<AvatarProps> {
     styles: ReturnType<typeof createStyles>;
-    constructor(props: AvatarPropTypes);
+    constructor(props: AvatarProps);
     static displayName: string;
-    static modes: typeof StatusModes;
     static badgePosition: typeof BadgePosition;
     static defaultProps: {
         animate: boolean;
@@ -132,7 +118,6 @@ declare class Avatar extends PureComponent<AvatarPropTypes> {
     getContainerStyle(): StyleProp<ViewStyle>;
     getInitialsContainer(): StyleProp<ViewStyle>;
     getRibbonStyle(): StyleProp<ViewStyle>;
-    getStatusBadgeColor(status: StatusModes | undefined): string | null;
     getBadgeBorderWidth: () => any;
     getBadgeColor(): any;
     getBadgeSize: () => number;
@@ -142,7 +127,7 @@ declare class Avatar extends PureComponent<AvatarPropTypes> {
     renderImage(): JSX.Element | undefined;
     render(): JSX.Element;
 }
-declare function createStyles(props: AvatarPropTypes): {
+declare function createStyles(props: AvatarProps): {
     initialsContainerWithInset: {
         top: number;
         right: number;
@@ -152,6 +137,7 @@ declare function createStyles(props: AvatarPropTypes): {
     initials: {
         color: string | undefined;
         backgroundColor: string;
+        lineHeight: undefined;
     };
     ribbon: {
         backgroundColor: string;
@@ -160,7 +146,7 @@ declare function createStyles(props: AvatarPropTypes): {
     };
 };
 export { Avatar };
-declare const _default: React.ComponentClass<AvatarPropTypes & {
+declare const _default: React.ComponentClass<AvatarProps & {
     useCustomTheme?: boolean | undefined;
 }, any> & typeof Avatar;
 export default _default;

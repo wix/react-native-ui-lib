@@ -13,7 +13,7 @@ import Reanimated from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
 import {interpolateColor} from 'react-native-redash';
 import {Colors, Typography, Spacings} from '../../style';
-import Badge, {BadgeProps, BADGE_SIZES} from '../../components/badge';
+import Badge, {BadgeProps} from '../../components/badge';
 import {TouchableOpacity} from '../../incubator';
 
 const {cond, eq, call, block, event, and} = Reanimated;

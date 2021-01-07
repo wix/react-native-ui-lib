@@ -1,11 +1,11 @@
 import React from 'react';
 import { ImageSourcePropType } from 'react-native';
 import { ImageProps } from '../image';
-export declare type CardImageProps = Omit<ImageProps, 'source'> & {
+export declare type CardImageProps = ImageProps & {
     /**
      * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
      */
-    imageSource?: ImageSourcePropType;
+    source?: ImageSourcePropType;
     /**
      * Image width
      */
@@ -20,15 +20,6 @@ export declare type CardImageProps = Omit<ImageProps, 'source'> & {
      * Card component
      */
     position?: string[];
-    /**
-     * border radius, basically for Android since overflow doesn't work well (deprecated)
-     */
-    borderRadius?: number;
-    /**
-     * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
-     * TODO: Remove after imageSource deprecation - should take it from Image props
-     */
-    source?: ImageSourcePropType;
 };
 declare const _default: React.ComponentType<CardImageProps>;
 export default _default;

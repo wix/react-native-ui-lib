@@ -1,16 +1,7 @@
 import React, { PureComponent } from 'react';
 import { ImageSourcePropType, ImageStyle, StyleProp, TextStyle, TouchableOpacityProps, ViewStyle, ViewProps } from 'react-native';
 declare const LABEL_FORMATTER_VALUES: readonly [1, 2, 3, 4];
-export declare enum BADGE_SIZES {
-    pimpleSmall = 6,
-    pimpleBig = 10,
-    pimpleHuge = 14,
-    small = 16,
-    default = 20,
-    large = 24
-}
 declare type LabelFormatterValues = typeof LABEL_FORMATTER_VALUES[number];
-export declare type BadgeSizes = keyof typeof BADGE_SIZES;
 export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
     /**
      * Text to show inside the badge.
@@ -22,9 +13,9 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
      */
     backgroundColor?: string;
     /**
-     * the badge size (default, small)
+     * the badge size
      */
-    size: BadgeSizes | number;
+    size: number;
     /**
      * Press handler
      */
@@ -57,7 +48,7 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
      * Receives a number from 1 to 4, representing the label's max digit length.
      * Beyond the max number for that digit length, a "+" will show at the end.
      * If set to a value not included in LABEL_FORMATTER_VALUES, no formatting will occur.
-     * Example: labelLengthFormater={2}, label={124}, label will present "99+".
+     * Example: labelLengthFormatter={2}, label={124}, label will present "99+".
      */
     labelFormatterLimit?: LabelFormatterValues;
     /**
@@ -72,15 +63,9 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
      * Additional props passed to icon
      */
     iconProps?: object;
-    /**
-     * Use to identify the badge in tests
-     */
-    testId?: string;
 };
 /**
  * @description: Round colored badge, typically used to show a number
- * @extends: Animatable.View
- * @extendslink: https://github.com/oblador/react-native-animatable
  * @image: https://user-images.githubusercontent.com/33805983/34480753-df7a868a-efb6-11e7-9072-80f5c110a4f3.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.js
  */
@@ -88,7 +73,7 @@ declare class Badge extends PureComponent<BadgeProps> {
     styles: ReturnType<typeof createStyles>;
     static displayName: string;
     static defaultProps: {
-        size: string;
+        size: number;
     };
     constructor(props: BadgeProps);
     getAccessibilityProps(): {
@@ -125,8 +110,8 @@ declare function createStyles(props: BadgeProps): {
         textAlign?: "auto" | "left" | "right" | "center" | "justify" | undefined;
         textDecorationLine?: "none" | "underline" | "line-through" | "underline line-through" | undefined;
         textDecorationStyle?: "solid" | "double" | "dotted" | "dashed" | undefined;
-        textDecorationColor?: string | undefined;
-        textShadowColor?: string | undefined;
+        textDecorationColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
+        textShadowColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
         textShadowOffset?: {
             width: number;
             height: number;
@@ -137,22 +122,22 @@ declare function createStyles(props: BadgeProps): {
         fontVariant?: import("react-native").FontVariant[] | undefined;
         writingDirection?: "auto" | "ltr" | "rtl" | undefined;
         backfaceVisibility?: "visible" | "hidden" | undefined;
-        borderBottomColor?: string | undefined;
+        borderBottomColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
         borderBottomEndRadius?: number | undefined;
         borderBottomLeftRadius?: number | undefined;
         borderBottomRightRadius?: number | undefined;
         borderBottomStartRadius?: number | undefined;
         borderBottomWidth?: number | undefined;
-        borderColor?: string | undefined;
-        borderEndColor?: string | undefined;
-        borderLeftColor?: string | undefined;
+        borderColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
+        borderEndColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
+        borderLeftColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
         borderLeftWidth?: number | undefined;
         borderRadius?: number | undefined;
-        borderRightColor?: string | undefined;
+        borderRightColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
         borderRightWidth?: number | undefined;
-        borderStartColor?: string | undefined;
+        borderStartColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
         borderStyle?: "solid" | "dotted" | "dashed" | undefined;
-        borderTopColor?: string | undefined;
+        borderTopColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
         borderTopEndRadius?: number | undefined;
         borderTopLeftRadius?: number | undefined;
         borderTopRightRadius?: number | undefined;
@@ -209,7 +194,7 @@ declare function createStyles(props: BadgeProps): {
         width?: string | number | undefined;
         zIndex?: number | undefined;
         direction?: "ltr" | "rtl" | "inherit" | undefined;
-        shadowColor?: string | undefined;
+        shadowColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
         shadowOffset?: {
             width: number;
             height: number;
@@ -228,7 +213,7 @@ declare function createStyles(props: BadgeProps): {
     };
     labelSmall: {
         lineHeight: undefined;
-        color?: string | undefined;
+        color?: string | typeof import("react-native").OpaqueColorValue | undefined;
         fontFamily?: string | undefined;
         fontSize?: number | undefined;
         fontStyle?: "normal" | "italic" | undefined;
@@ -237,8 +222,8 @@ declare function createStyles(props: BadgeProps): {
         textAlign?: "auto" | "left" | "right" | "center" | "justify" | undefined;
         textDecorationLine?: "none" | "underline" | "line-through" | "underline line-through" | undefined;
         textDecorationStyle?: "solid" | "double" | "dotted" | "dashed" | undefined;
-        textDecorationColor?: string | undefined;
-        textShadowColor?: string | undefined;
+        textDecorationColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
+        textShadowColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
         textShadowOffset?: {
             width: number;
             height: number;
@@ -249,23 +234,23 @@ declare function createStyles(props: BadgeProps): {
         fontVariant?: import("react-native").FontVariant[] | undefined;
         writingDirection?: "auto" | "ltr" | "rtl" | undefined;
         backfaceVisibility?: "visible" | "hidden" | undefined;
-        backgroundColor?: string | undefined;
-        borderBottomColor?: string | undefined;
+        backgroundColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
+        borderBottomColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
         borderBottomEndRadius?: number | undefined;
         borderBottomLeftRadius?: number | undefined;
         borderBottomRightRadius?: number | undefined;
         borderBottomStartRadius?: number | undefined;
         borderBottomWidth?: number | undefined;
-        borderColor?: string | undefined;
-        borderEndColor?: string | undefined;
-        borderLeftColor?: string | undefined;
+        borderColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
+        borderEndColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
+        borderLeftColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
         borderLeftWidth?: number | undefined;
         borderRadius?: number | undefined;
-        borderRightColor?: string | undefined;
+        borderRightColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
         borderRightWidth?: number | undefined;
-        borderStartColor?: string | undefined;
+        borderStartColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
         borderStyle?: "solid" | "dotted" | "dashed" | undefined;
-        borderTopColor?: string | undefined;
+        borderTopColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
         borderTopEndRadius?: number | undefined;
         borderTopLeftRadius?: number | undefined;
         borderTopRightRadius?: number | undefined;
@@ -322,7 +307,7 @@ declare function createStyles(props: BadgeProps): {
         width?: string | number | undefined;
         zIndex?: number | undefined;
         direction?: "ltr" | "rtl" | "inherit" | undefined;
-        shadowColor?: string | undefined;
+        shadowColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
         shadowOffset?: {
             width: number;
             height: number;
@@ -352,9 +337,9 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      */
     backgroundColor?: string | undefined;
     /**
-     * the badge size (default, small)
+     * the badge size
      */
-    size: number | "small" | "default" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "large";
+    size: number;
     /**
      * Press handler
      */
@@ -374,7 +359,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
     /**
      * color of border around the badge
      */
-    borderColor?: string | undefined;
+    borderColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
     /**
      * Additional styles for the top container
      */
@@ -387,7 +372,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      * Receives a number from 1 to 4, representing the label's max digit length.
      * Beyond the max number for that digit length, a "+" will show at the end.
      * If set to a value not included in LABEL_FORMATTER_VALUES, no formatting will occur.
-     * Example: labelLengthFormater={2}, label={124}, label will present "99+".
+     * Example: labelLengthFormatter={2}, label={124}, label will present "99+".
      */
     labelFormatterLimit?: 1 | 3 | 2 | 4 | undefined;
     /**
@@ -402,10 +387,6 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      * Additional props passed to icon
      */
     iconProps?: object | undefined;
-    /**
-     * Use to identify the badge in tests
-     */
-    testId?: string | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any> & typeof Badge;

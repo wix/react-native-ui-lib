@@ -1,12 +1,12 @@
 import React from 'react';
 import { ViewStyle, ImageStyle, ImageSourcePropType, StyleProp } from 'react-native';
-import { ViewPropTypes } from '../view';
-import { TextPropTypes } from '../text';
+import { ViewProps } from '../view';
+import { TextProps } from '../text';
 import { ImageProps } from '../image';
-declare type ContentType = TextPropTypes & {
+declare type ContentType = TextProps & {
     text?: string;
 };
-export declare type CardSectionProps = ViewPropTypes & {
+export declare type CardSectionProps = ViewProps & {
     /**
      * Text content for the CardSection.
      * Example: content={[{text: 'You’re Invited!', text70: true, grey10: true}]}
@@ -29,7 +29,7 @@ export declare type CardSectionProps = ViewPropTypes & {
      */
     trailingIcon?: ImageProps;
     /**
-     * Will be used for the background when provided
+     * The image source that will be used for the background
      */
     imageSource?: ImageSourcePropType;
     /**
@@ -41,7 +41,7 @@ export declare type CardSectionProps = ViewPropTypes & {
      */
     imageProps?: ImageProps;
 };
-declare const _default: React.ComponentClass<ViewPropTypes & {
+declare const _default: React.ComponentClass<ViewProps & {
     /**
      * Text content for the CardSection.
      * Example: content={[{text: 'You’re Invited!', text70: true, grey10: true}]}
@@ -64,7 +64,7 @@ declare const _default: React.ComponentClass<ViewPropTypes & {
      */
     trailingIcon?: ImageProps | undefined;
     /**
-     * Will be used for the background when provided
+     * The image source that will be used for the background
      */
     imageSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
     /**
@@ -76,6 +76,10 @@ declare const _default: React.ComponentClass<ViewPropTypes & {
      */
     imageProps?: ImageProps | undefined;
 } & {
+    /**
+     * Text content for the CardSection.
+     * Example: content={[{text: 'You’re Invited!', text70: true, grey10: true}]}
+     */
     useCustomTheme?: boolean | undefined;
 }, any>;
 export default _default;

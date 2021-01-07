@@ -1,7 +1,7 @@
 import React from 'react';
-import { PanningDirections, PanDirectionsProps, PanAmountsProps, PanningProviderDirection } from './panningProvider';
-import { ViewPropTypes } from '../view';
-interface PanningPropTypes {
+import { PanningDirections, PanDirectionsProps, PanAmountsProps } from './panningProvider';
+import { ViewProps } from '../view';
+interface PanningProps {
     /**
      * This is were you will get notified when a drag occurs
      * onDrag = ({directions, deltas}) => {...}
@@ -41,12 +41,12 @@ interface PanningPropTypes {
      */
     onPanTerminated?: () => void;
 }
-export interface PanListenerViewPropTypes extends PanningPropTypes, ViewPropTypes {
+export interface PanListenerViewProps extends PanningProps, ViewProps {
     /**
      * The directions of the allowed pan (default allows all directions)
      * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###)
      */
-    directions?: PanningDirections[] | PanningProviderDirection[];
+    directions?: PanningDirections[];
     /**
      * The sensitivity beyond which a pan is no longer considered a single click (default is 5)
      */
@@ -62,5 +62,6 @@ export interface PanListenerViewPropTypes extends PanningPropTypes, ViewPropType
      */
     isClickable?: boolean;
 }
-declare const _default: React.ComponentClass<PanListenerViewPropTypes, any>;
+export declare type PanListenerViewPropTypes = PanListenerViewProps;
+declare const _default: React.ComponentClass<PanListenerViewProps, any>;
 export default _default;

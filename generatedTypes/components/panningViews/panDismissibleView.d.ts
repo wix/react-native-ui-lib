@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-import { PanningDirections, PanningProviderDirection, PanAmountsProps } from './panningProvider';
-export interface DismissibleAnimationPropTypes {
+import { PanningDirections, PanAmountsProps } from './panningProvider';
+export interface DismissibleAnimationProps {
     /**
      * The return animation speed (default is 20)
      */
@@ -15,7 +15,8 @@ export interface DismissibleAnimationPropTypes {
      */
     duration?: number;
 }
-export interface PanDismissibleViewPropTypes {
+export declare type DismissibleAnimationPropTypes = DismissibleAnimationProps;
+export interface PanDismissibleViewProps {
     /**
      * Additional styling
      */
@@ -24,7 +25,7 @@ export interface PanDismissibleViewPropTypes {
      * The directions of the allowed pan (default allows all directions)
      * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###)
      */
-    directions?: PanningDirections[] | PanningProviderDirection[];
+    directions?: PanningDirections[];
     /**
      * onDismiss callback
      */
@@ -35,7 +36,7 @@ export interface PanDismissibleViewPropTypes {
      * bounciness - the animation bounciness (default is 6)
      * duration - the dismiss animation duration (default is 280)
      */
-    animationOptions?: DismissibleAnimationPropTypes;
+    animationOptions?: DismissibleAnimationProps;
     /**
      * Override the default threshold (height/2 and width/2) with different values.
      */
@@ -46,5 +47,6 @@ export interface PanDismissibleViewPropTypes {
      */
     allowDiagonalDismiss?: boolean;
 }
-declare const _default: React.ComponentClass<PanDismissibleViewPropTypes, any>;
+export declare type PanDismissibleViewPropTypes = PanDismissibleViewProps;
+declare const _default: React.ComponentClass<PanDismissibleViewProps, any>;
 export default _default;

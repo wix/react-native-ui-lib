@@ -66,13 +66,12 @@ interface State {
 class Stepper extends PureBaseComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    const {value, minValue, maxValue, id} = props;
 
+    const {value, minValue, maxValue, id} = props;
     let initialValue = 0;
     if (minValue) {
       initialValue = minValue;
     }
-
     if (value !== undefined) {
       initialValue = value;
     }
@@ -96,7 +95,7 @@ class Stepper extends PureBaseComponent<Props, State> {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: Props) {
     if (this.props.value !== nextProps.value) {
       this.setState({currentStepperValue: nextProps.value});
     }
@@ -142,7 +141,7 @@ class Stepper extends PureBaseComponent<Props, State> {
     }
   }
 
-  allowStepChange(buttonType) {
+  allowStepChange(buttonType: string) {
     const {minValue, maxValue} = this.props;
     const {currentStepperValue} = this.state;
 
@@ -154,7 +153,7 @@ class Stepper extends PureBaseComponent<Props, State> {
     }
   }
 
-  handleStepChange(buttonType) {
+  handleStepChange(buttonType: string) {
     const {id} = this.props;
     const {currentStepperValue} = this.state;
     let newCurrent = currentStepperValue;
@@ -169,7 +168,7 @@ class Stepper extends PureBaseComponent<Props, State> {
     _.invoke(this.props, 'onValueChange', newCurrent, id);
   }
 
-  renderButton(buttonType) {
+  renderButton(buttonType: string) {
     const {disabled, small, testID} = this.props;
     const allowStepChange = this.allowStepChange(buttonType);
     const minusButton = small ? minusIconSmall : minusIcon;

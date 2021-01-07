@@ -41,25 +41,25 @@ export interface Props {
 }
 
 interface State {
-  containerWidth: number;
+  containerWidth?: number;
 }
 
 export default class ProgressBar extends PureBaseComponent<Props, State> {
   static displayName = 'ProgressBar';
 
+  static defaultProps: Partial<Props> = {
+    progress: 0
+  }
+
   progressAnimation: Animated.Value;
 
   constructor(props: Props) {
     super(props);
-    this.progressAnimation = new Animated.Value(props.progress);
+    this.progressAnimation = new Animated.Value(props.progress || 0);
 
     this.state = {
       containerWidth: undefined
     };
-  }
-
-  static defaultProps: Partial<Props> = {
-    progress: 0
   }
 
   componentDidUpdate(prevProps) {
