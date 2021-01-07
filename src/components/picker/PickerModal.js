@@ -2,7 +2,6 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, FlatList, TextInput} from 'react-native';
-import {Constants} from '../../helpers';
 import {Typography, Colors} from '../../style';
 import Assets from '../../assets';
 import {BaseComponent} from '../../commons';
