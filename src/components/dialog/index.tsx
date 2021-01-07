@@ -5,7 +5,6 @@ import {Colors} from '../../style';
 import Constants, {orientations} from '../../helpers/Constants';
 import {AlignmentModifiers, extractAlignmentsValues} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';
-import {LogService} from '../../services';
 import Modal from '../modal';
 import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
