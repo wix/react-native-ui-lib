@@ -29,14 +29,12 @@ const MAP_SCHEMA = {
             type: 'string'
           },
           fix: {
-            type: 'object',
-            additionalProperties: true
+            type: 'object'
           }
         }
       }
     }
-  },
-  additionalProperties: true
+  }
 };
 
 module.exports = {
@@ -53,6 +51,21 @@ module.exports = {
     schema: [MAP_SCHEMA]
   },
   create(context) {
+    function reportPropValueShapeDeprecation(attributePropertyKey, attributeName, origin, node) {
+      const nodeName = _.get(node, 'name.name');
+      const destination = _.get(origin, 'fix.propName');
+      const message = `The shape of '${attributeName}' prop of '${nodeName}' doesn't contain '${origin.prop}' anymore. Please use '${destination}' instead (fix is available).`;
+      context.report({
+        node,
+        message,
+        fix(fixer) {
+          if (destination && attributePropertyKey) {
+            return fixer.replaceText(attributePropertyKey, destination);
+          }
+        }
+      });
+    }
+
     function testJSXAttributes(node) {
       try {
         const {deprecations} = _.get(context, 'options[0]');
@@ -68,43 +81,11 @@ module.exports = {
                   spreadSource.properties[0].value.properties,
                   spreadSourceName,
                   deprecation,
-                  nodeName,
                   node,
                   context
                 );
               } else if (_.includes(deprecation.propNames, attributeName)) {
-                const attributeType = _.get(attribute, 'value.expression.type');
-                if (attributeType === 'Identifier') {
-                  const passedProp = utils.findValueNodeOfIdentifier(
-                    attribute.value.expression.name,
-                    context.getScope()
-                  );
-                  if (passedProp && passedProp.properties) {
-                    checkAttributeProperties(
-                      passedProp.properties,
-                      attributeName,
-                      deprecation,
-                      nodeName,
-                      node,
-                      context
-                    );
-                  }
-                }
-                const attributeProps = _.get(attribute, 'value.expression.properties');
-                for (let index = 0; index < attributeProps.length; index++) {
-                  const spreadElementType = _.get(attribute, `value.expression.properties[${index}].type`);
-                  if (attributeType === 'ObjectExpression' && spreadElementType === 'ExperimentalSpreadProperty') {
-                    const spreadSource = utils.findValueNodeOfIdentifier(
-                      attribute.value.expression.properties[index].argument.name,
-                      context.getScope()
-                    );
-                    if (spreadSource && spreadSource.properties) {
-                      checkAttributeProperties(spreadSource.properties, attributeName, deprecation, nodeName, node, context);
-                    }
-                  }
-                }
-                const attributeProperties = _.get(attribute, 'value.expression.properties');
-                checkAttributeProperties(attributeProperties, attributeName, deprecation, nodeName, node, context);
+                checkAttribute(attribute, deprecation, node);
               }
             });
           }
@@ -114,22 +95,38 @@ module.exports = {
       }
     }
 
-    function checkAttributeProperties(attributeProperties, attributeName, deprecation, nodeName, node, context) {
+    function checkAttribute(attribute, deprecation, node) {
+      const attributeName = _.get(attribute, 'name.name');
+      const attributeType = _.get(attribute, 'value.expression.type');
+      if (attributeType === 'Identifier') {
+        const passedProp = utils.findValueNodeOfIdentifier(attribute.value.expression.name, context.getScope());
+        if (passedProp && passedProp.properties) {
+          checkAttributeProperties(passedProp.properties, attributeName, deprecation, node, context);
+        }
+      }
+      const attributeProps = _.get(attribute, 'value.expression.properties');
+      for (let index = 0; index < attributeProps.length; index++) {
+        const spreadElementType = _.get(attribute, `value.expression.properties[${index}].type`);
+        if (attributeType === 'ObjectExpression' && spreadElementType === 'ExperimentalSpreadProperty') {
+          const spreadSource = utils.findValueNodeOfIdentifier(
+            attribute.value.expression.properties[index].argument.name,
+            context.getScope()
+          );
+          if (spreadSource && spreadSource.properties) {
+            checkAttributeProperties(spreadSource.properties, attributeName, deprecation, node);
+          }
+        }
+      }
+      const attributeProperties = _.get(attribute, 'value.expression.properties');
+      checkAttributeProperties(attributeProperties, attributeName, deprecation, node);
+    }
+
+    function checkAttributeProperties(attributeProperties, attributeName, deprecation, node) {
       for (let i = 0; i <= attributeProperties.length; i++) {
         const propertyName = _.get(attributeProperties[i], 'key.name');
         const origin = propertyName && _.find(deprecation.shape, ['prop', propertyName]);
         if (origin && origin.prop && propertyName === origin.prop) {
-          const destination = _.get(origin, 'fix.propName');
-          const message = `The shape of '${attributeName}' prop of '${nodeName}' doesn't contain '${origin.prop}' anymore. Please use '${destination}' instead (fix is available).`;
-          context.report({
-            node,
-            message,
-            fix(fixer) {
-              if (destination && attributeProperties[i].key) {
-                return fixer.replaceText(attributeProperties[i].key, destination);
-              }
-            }
-          });
+          reportPropValueShapeDeprecation(attributeProperties[i].key, attributeName, origin, node);
         }
       }
     }

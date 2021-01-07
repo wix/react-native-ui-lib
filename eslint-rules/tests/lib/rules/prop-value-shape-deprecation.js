@@ -8,12 +8,13 @@ RuleTester.setDefaultConfig({
 });
 
 const ruleTester = new RuleTester();
-
+const imageSource = 'imageSource: {uri: some_uri}';
+const source = 'source: {uri: some_uri}';
 const ruleOptions = [{deprecations: deprecationsJson}];
 const PassedPropExampleCode = `
   const myProps = {
     goodProp: goodValue,
-    imageSource: {uri: some_uri}
+    ${imageSource}
   };
 
   <Label avatar={myProps}/>
@@ -21,7 +22,7 @@ const PassedPropExampleCode = `
 const PassedPropExampleOutput = `
   const myProps = {
     goodProp: goodValue,
-    source: {uri: some_uri}
+    ${source}
   };
 
   <Label avatar={myProps}/>
@@ -31,7 +32,7 @@ const firstLevelSpreadCode = `
 const myProps = {
   avatarProps: {
     goodProp: goodValue,
-    imageSource: {uri: some_uri}
+    ${imageSource}
   }
 };
 
@@ -42,7 +43,7 @@ const firstLevelSpreadOutput = `
 const myProps = {
   avatarProps: {
     goodProp: goodValue,
-    source: {uri: some_uri}
+    ${source}
   }
 };
 
@@ -52,7 +53,7 @@ const myProps = {
 const secondLevelSpreadCode = `
 const myProps = {
   goodProp: goodValue,
-  imageSource: {uri: some_uri}
+  ${imageSource}
 };
 
 <Label avatar={{goodProp: goodValue, ...myProps}}/>
@@ -61,55 +62,86 @@ const myProps = {
 const secondLevelSpreadOutput = `
 const myProps = {
   goodProp: goodValue,
-  source: {uri: some_uri}
+  ${source}
 };
 
 <Label avatar={{goodProp: goodValue, ...myProps}}/>
 `;
 
-
 ruleTester.run('prop-value-shape-deprecation', rule, {
   valid: [
     {
       options: ruleOptions,
-      code: '<ListItem avatar={{source: {uri: some_uri}}}/>'
+      code: `<ListItem avatar={{${source}}}/>`
+    },
+    {
+      options: ruleOptions,
+      code: `<ListItem avatar={{someProp: goodValue, ${source}}}/>`
+    },
+    {
+      options: ruleOptions,
+      code: `<ListItem goodProp={{${imageSource}}} avatar={{${source}}}/>`
     }
   ],
   invalid: [
     {
       options: ruleOptions,
-      code: '<ListItem avatar={{imageSource: {uri: some_uri}, someProp: someValue}}/>',
-      errors: [{message: `The shape of 'avatar' prop of 'ListItem' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`}],
-      output: '<ListItem avatar={{source: {uri: some_uri}, someProp: someValue}}/>'
+      code: `<ListItem avatar={{${imageSource}, someProp: someValue}}/>`,
+      errors: [
+        {
+          message: `The shape of 'avatar' prop of 'ListItem' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+        }
+      ],
+      output: `<ListItem avatar={{${source}, someProp: someValue}}/>`
     },
     {
       options: ruleOptions,
-      code: '<ListItem avatar={{someProp: someValue, imageSource: {uri: some_uri}}}/>',
-      errors: [{message: `The shape of 'avatar' prop of 'ListItem' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`}],
-      output: '<ListItem avatar={{someProp: someValue, source: {uri: some_uri}}}/>'
+      code: `<ListItem avatar={{someProp: someValue, ${imageSource}}}/>`,
+      errors: [
+        {
+          message: `The shape of 'avatar' prop of 'ListItem' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+        }
+      ],
+      output: `<ListItem avatar={{someProp: someValue, ${source}}}/>`
     },
     {
       options: ruleOptions,
-      code: '<ListItem someProp={someValue} avatar={{imageSource: {uri: some_uri}}}/>',
-      errors: [{message: `The shape of 'avatar' prop of 'ListItem' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`}],
-      output: '<ListItem someProp={someValue} avatar={{source: {uri: some_uri}}}/>'
+      code: `<ListItem someProp={someValue} avatar={{${imageSource}}}/>`,
+      errors: [
+        {
+          message: `The shape of 'avatar' prop of 'ListItem' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+        }
+      ],
+      output: `<ListItem someProp={someValue} avatar={{${source}}}/>`
     },
     {
       options: ruleOptions,
       code: PassedPropExampleCode,
-      errors: [{message: `The shape of 'avatar' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`}],
+      errors: [
+        {
+          message: `The shape of 'avatar' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+        }
+      ],
       output: PassedPropExampleOutput
     },
     {
       options: ruleOptions,
       code: firstLevelSpreadCode,
-      errors: [{message: `The shape of 'avatarProps' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`}],
+      errors: [
+        {
+          message: `The shape of 'avatarProps' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+        }
+      ],
       output: firstLevelSpreadOutput
     },
     {
       options: ruleOptions,
       code: secondLevelSpreadCode,
-      errors: [{message: `The shape of 'avatar' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`}],
+      errors: [
+        {
+          message: `The shape of 'avatar' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+        }
+      ],
       output: secondLevelSpreadOutput
     }
   ]
