@@ -26,7 +26,9 @@ ThemeManager.setComponentTheme('Text', {
 ThemeManager.setComponentTheme('Button', (props, context) => {
 
   return {
-    backgroundColor: props.outline ? 'black' : 'green' , // this will apply a different backgroundColor depends if the Button is an outline or not
+    // this will apply a different backgroundColor
+    // depends if the Button is an outline or not
+    backgroundColor: props.outline ? 'black' : 'green',
   };
 });
 ```

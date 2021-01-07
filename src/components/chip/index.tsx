@@ -1,21 +1,18 @@
 import _ from 'lodash';
 import React, {useCallback} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, ViewProps, TouchableOpacityProps, ImageStyle, ImageProps, TextStyle, ImageSourcePropType} from 'react-native';
-// @ts-ignore
+import {StyleSheet, StyleProp, ViewStyle, ViewProps, ImageStyle, TextStyle, ImageSourcePropType} from 'react-native';
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
 import {BorderRadiuses, Spacings} from '../../style';
-// @ts-ignore
-import Avatar, {AvatarPropTypes} from '../avatar';
-// @ts-ignore
-import Badge, {BadgeProps} from '../badge';
-import Image from '../image';
+import Avatar, {AvatarProps} from '../avatar';
+import Badge, {BadgeProps, BADGE_SIZES} from '../badge';
+import Image, {ImageProps} from '../image';
 import Text from '../text';
-import TouchableOpacity from '../touchableOpacity';
+import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import View from '../view';
 
 
-export type ChipPropTypes = ViewProps & TouchableOpacityProps & {
+export type ChipProps = ViewProps & TouchableOpacityProps & {
   //GENERAL
   /**
    * Chip's size. Number or a width and height object.
@@ -70,13 +67,13 @@ export type ChipPropTypes = ViewProps & TouchableOpacityProps & {
   /**
    * Avatar props object
    */
-  avatarProps?: AvatarPropTypes;
+  avatarProps?: AvatarProps;
 
   //ICON GENERAL
   /**
    * Additional icon props
    */
-  iconProps?: ImageProps
+  iconProps?: Omit<ImageProps, 'source'>;
   /**
    * Icon style
    */
@@ -116,6 +113,7 @@ export type ChipPropTypes = ViewProps & TouchableOpacityProps & {
    */
   dismissContainerStyle?: StyleProp<ImageStyle>;
 }
+export type ChipPropTypes = ChipProps; //TODO: remove after ComponentPropTypes deprecation;
 
 /**
  * @description: Chip component
@@ -146,7 +144,7 @@ const Chip = ({
   useSizeAsMinimum,
   testID,
   ...others
-}: ChipPropTypes) => {
+}: ChipProps) => {
 
   const renderIcon = useCallback((iconPosition) => {
     const isLeftIcon = iconPosition === 'left';
@@ -212,7 +210,6 @@ const Chip = ({
       <Text
         text90M
         numberOfLines={1}
-        // @ts-ignore
         style={[styles.label, getMargins('label'), labelStyle]}
         testID={`${testID}.label`}
       >
@@ -330,4 +327,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default asBaseComponent<ChipPropTypes>(Chip);
+export default asBaseComponent<ChipProps>(Chip);

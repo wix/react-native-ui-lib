@@ -5,7 +5,7 @@ import {Constants} from '../../helpers';
 import Assets from '../../assets';
 import {Colors, Typography} from '../../style';
 import View from '../../components/view';
-import Button, {ButtonPropTypes} from '../../components/button';
+import Button, {ButtonProps} from '../../components/button';
 import Text from '../../components/text';
 
 export interface ModalTopBarProps {
@@ -20,7 +20,7 @@ export interface ModalTopBarProps {
     /**
      * done action props (Button props)
      */
-    doneButtonProps?: Omit<ButtonPropTypes, 'onPress'>;
+    doneButtonProps?: Omit<ButtonProps, 'onPress'>;
     /**
      * done action label
      */
@@ -36,7 +36,7 @@ export interface ModalTopBarProps {
     /**
      * cancel action props (Button props)
      */
-    cancelButtonProps?: Omit<ButtonPropTypes, 'onPress'>;
+    cancelButtonProps?: Omit<ButtonProps, 'onPress'>;
     /**
      * cancel action label
      */
@@ -60,7 +60,7 @@ type topBarButtonProp = {
   label?: string;
   icon?: ImageSourcePropType;
   accessibilityLabel?: string;
-  buttonProps?: Omit<ButtonPropTypes, 'onPress'>;
+  buttonProps?: Omit<ButtonProps, 'onPress'>;
 }
 
 const TOP_BAR_HEIGHT = Constants.isIOS ? 44 : 56;

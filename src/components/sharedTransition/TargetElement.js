@@ -11,7 +11,7 @@ class TargetElement extends Component {
 
     if (!this.targetLayout) {
       setTimeout(() => {
-        this.element.measure((x, y, width, height, pageX, pageY) => {
+        this.element.measure((_x, _y, width, height, pageX, pageY) => {
           this.targetLayout = {x: pageX, y: pageY, width, height};
           setTarget(this.targetLayout);
         });

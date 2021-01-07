@@ -1,9 +1,19 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {ImageSourcePropType, ImageStyle, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacityProps, ViewStyle, ViewProps} from 'react-native';
+import {
+  ImageSourcePropType,
+  ImageStyle,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacityProps,
+  ViewStyle,
+  ViewProps
+} from 'react-native';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';
-import {BorderRadiuses, Colors, Typography} from '../../style';
+import {BorderRadiuses, Colors, Spacings, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import View from '../view';
@@ -59,7 +69,7 @@ export type BadgeProps = ViewProps & TouchableOpacityProps & {
    * Receives a number from 1 to 4, representing the label's max digit length.
    * Beyond the max number for that digit length, a "+" will show at the end.
    * If set to a value not included in LABEL_FORMATTER_VALUES, no formatting will occur.
-   * Example: labelLengthFormater={2}, label={124}, label will present "99+".
+   * Example: labelLengthFormatter={2}, label={124}, label will present "99+".
    */
   labelFormatterLimit?: LabelFormatterValues;
   /**
@@ -82,7 +92,6 @@ export type BadgeProps = ViewProps & TouchableOpacityProps & {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.js
  */
 class Badge extends PureComponent<BadgeProps> {
-
   styles: ReturnType<typeof createStyles>;
 
   static displayName = 'Badge';
@@ -121,6 +130,15 @@ class Badge extends PureComponent<BadgeProps> {
       height: size,
       minWidth: size
     };
+    if (icon && label) {
+      style.paddingRight = 6;
+      style.paddingLeft = 4;
+      style.height = Spacings.s5;
+      if (borderWidth) {
+        style.height += borderWidth * 2;
+      }
+      return style;
+    }
 
     const isPimple = label === undefined;
     if (isPimple || icon) {
@@ -144,7 +162,7 @@ class Badge extends PureComponent<BadgeProps> {
   getFormattedLabel() {
     const {labelFormatterLimit, label} = this.props;
 
-      if (_.isNaN(label)) {
+    if (_.isNaN(label)) {
       return label;
     }
 
@@ -191,7 +209,8 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   renderIcon() {
-    const {icon, iconStyle, iconProps, borderColor} = this.props;
+    const {icon, iconStyle, iconProps, borderColor, label} = this.props;
+    const flex = label ? 0 : 1;
     return (
       <Image
         source={icon!}
@@ -200,7 +219,7 @@ class Badge extends PureComponent<BadgeProps> {
         borderColor={borderColor}
         {...iconProps}
         style={{
-          flex: 1,
+          flex,
           ...iconStyle
         }}
       />
@@ -214,6 +233,7 @@ class Badge extends PureComponent<BadgeProps> {
       containerStyle,
       hitSlop,
       icon,
+      label,
       onPress,
       testID,
       ...others
@@ -226,7 +246,14 @@ class Badge extends PureComponent<BadgeProps> {
     return (
       // The extra View wrapper is to break badge's flex-ness
       // @ts-ignore
-      <View style={containerStyle} {...others} backgroundColor={undefined} borderWidth={undefined} {...this.getAccessibilityProps()}>
+      <View
+        style={containerStyle}
+        {...others}
+        backgroundColor={undefined}
+        // @ts-expect-error
+        borderWidth={undefined}
+        {...this.getAccessibilityProps()}
+      >
         <Container
           testID={testID}
           pointerEvents={'none'}
@@ -235,7 +262,8 @@ class Badge extends PureComponent<BadgeProps> {
           activeOpacity={activeOpacity}
           hitSlop={hitSlop}
         >
-          {icon ? this.renderIcon() : this.renderLabel()}
+          {icon && this.renderIcon()}
+          {label && this.renderLabel()}
         </Container>
       </View>
     );
@@ -267,4 +295,4 @@ function createStyles(props: BadgeProps) {
 }
 export {Badge}; // For tests
 
-export default asBaseComponent<BadgeProps, typeof Badge>(Badge)
+export default asBaseComponent<BadgeProps, typeof Badge>(Badge);

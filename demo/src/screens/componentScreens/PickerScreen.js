@@ -2,9 +2,11 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, Image} from 'react-native';
 import {View, Colors, Dialog, Text, Picker, Avatar, Assets, PanningProvider} from 'react-native-ui-lib'; //eslint-disable-line
-import contacts from '../../data/conversations';
+import contactsData from '../../data/conversations';
 import tagIcon from '../../assets/icons/tags.png';
 import dropdown from '../../assets/icons/chevronDown.png';
+
+const contacts = _.map(contactsData, c => ({...c, value: c.name, label: c.name}));
 
 const options = [
   {label: 'JavaScript', value: 'js'},
@@ -28,7 +30,7 @@ export default class PickerScreen extends Component {
       itemsCount: 1,
       // language: {value: 'java', label: 'Java'},
       language: undefined,
-      language2: undefined, // for migrated picker example
+      language2: options[2].value, // for migrated picker example
       languages: [],
       nativePickerValue: 'java',
       customModalValues: [],
@@ -234,6 +236,7 @@ export default class PickerScreen extends Component {
           <Text text60 marginT-s5 marginB-s2>Migrated Picker</Text>
 
           <Picker
+            migrate
             title="Language"
             placeholder="Favorite Language"
             value={this.state.language2}
@@ -245,7 +248,7 @@ export default class PickerScreen extends Component {
             // useNativePicker
           >
             {_.map(options, option => (
-              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled} />
+              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
             ))}
           </Picker>
         </View>

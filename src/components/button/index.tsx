@@ -16,7 +16,7 @@ import {Constants} from '../../helpers';
 import {Colors, Typography, BorderRadiuses} from '../../style';
 import {extractColorValue, extractTypographyValue} from '../../commons/modifiers';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
-import Text, {TextPropTypes} from '../text';
+import Text, {TextProps} from '../text';
 import Image from '../image';
 
 export enum ButtonSize {
@@ -26,13 +26,13 @@ export enum ButtonSize {
   large = 'large'
 }
 
-export enum AnimationDirection {
+export enum ButtonAnimationDirection {
   center = 'center',
   left = 'left',
   right = 'right'
 }
 
-export type ButtonPropTypes = TouchableOpacityProps &
+export type ButtonProps = TouchableOpacityProps &
   TypographyModifiers &
   ColorsModifiers &
   BackgroundColorModifier &
@@ -112,7 +112,7 @@ export type ButtonPropTypes = TouchableOpacityProps &
     /**
      * Props that will be passed to the button's Text label.
      */
-    labelProps?: TextPropTypes;
+    labelProps?: TextProps;
     /**
      * should the button act as a coast to coast button (no border radius)
      */
@@ -146,8 +146,9 @@ export type ButtonPropTypes = TouchableOpacityProps &
     /**
      * the direction of the animation ('left' and 'right' will effect the button's own alignment)
      */
-    animateTo?: AnimationDirection;
+    animateTo?: ButtonAnimationDirection;
   };
+export type ButtonPropTypes = ButtonProps; //TODO: remove after ComponentPropTypes deprecation;
 
 export type ButtonState = {
   size?: number;
@@ -176,7 +177,7 @@ const MIN_WIDTH = {
 const DEFAULT_SIZE = ButtonSize.large;
 const DISABLED_COLOR = Colors.grey60;
 
-type Props = ButtonPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
+type Props = ButtonProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
 
 /**
  * @description: Basic button component
@@ -195,7 +196,7 @@ class Button extends PureComponent<Props, ButtonState> {
 
   static sizes = ButtonSize;
 
-  static animationDirection = AnimationDirection;
+  static animationDirection = ButtonAnimationDirection;
 
   // This redundant constructor for some reason fix tests :/
   // eslint-disable-next-line
@@ -324,31 +325,31 @@ class Button extends PureComponent<Props, ButtonState> {
     CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.XSMALL}
       : {
-          paddingVertical: PADDINGS.XSMALL,
-          paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
-          minWidth: MIN_WIDTH.XSMALL
-        };
+        paddingVertical: PADDINGS.XSMALL,
+        paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
+        minWidth: MIN_WIDTH.XSMALL
+      };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.SMALL}
       : {
-          paddingVertical: PADDINGS.SMALL,
-          paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
-          minWidth: MIN_WIDTH.SMALL
-        };
+        paddingVertical: PADDINGS.SMALL,
+        paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
+        minWidth: MIN_WIDTH.SMALL
+      };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.MEDIUM}
       : {
-          paddingVertical: PADDINGS.MEDIUM,
-          paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
-          minWidth: MIN_WIDTH.MEDIUM
-        };
+        paddingVertical: PADDINGS.MEDIUM,
+        paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
+        minWidth: MIN_WIDTH.MEDIUM
+      };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.LARGE}
       : {
-          paddingVertical: PADDINGS.LARGE,
-          paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
-          minWidth: MIN_WIDTH.LARGE
-        };
+        paddingVertical: PADDINGS.LARGE,
+        paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
+        minWidth: MIN_WIDTH.LARGE
+      };
 
     if (outline) {
       _.forEach(CONTAINER_STYLE_BY_SIZE, style => {
@@ -469,7 +470,7 @@ class Button extends PureComponent<Props, ButtonState> {
       if (typeof iconSource === 'function') {
         return iconSource(iconStyle);
       } else {
-        return <Image source={iconSource} supportRTL={supportRTL} style={iconStyle} />;
+        return <Image source={iconSource} supportRTL={supportRTL} style={iconStyle}/>;
       }
     }
     return null;
@@ -572,4 +573,4 @@ function createStyles() {
 
 export {Button}; // For tests
 
-export default asBaseComponent<ButtonPropTypes, typeof Button>(forwardRef<Props>(Button));
+export default asBaseComponent<ButtonProps, typeof Button>(forwardRef<Props>(Button));

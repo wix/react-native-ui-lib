@@ -91,7 +91,8 @@ export default {
     return require('./components/textArea').default;
   },
   get TextField() {
-    return require('./components/textField').default;
+    return require('./components/textField/TextFieldMigrator').default;
+    // return require('./components/textField').default;
   },
   get MaskedInput() {
     return require('./components/maskedInput').default;
@@ -220,6 +221,9 @@ export default {
   get withScrollReached() {
     return require('./commons').withScrollReached;
   },
+  get Modifiers() {
+    return require('./commons').modifiers;
+  },
 
   // Helpers
   get AvatarHelper() {
@@ -284,6 +288,9 @@ export default {
   },
   get AnimatableManager() {
     return require('./style').AnimatableManager;
+  },
+  get Hooks() {
+    return require('./hooks');
   },
 
   // Incubator

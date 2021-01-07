@@ -22,7 +22,7 @@ export default class StateScreen extends BaseComponent {
     /**
      * The image source that's showing at the top. use an image that was required locally
      */
-    source: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
      * To to show as the title
      */
@@ -42,17 +42,18 @@ export default class StateScreen extends BaseComponent {
   };
 
   generateStyles() {
-    const {source} = this.props;
-    const isRemoteImage = _.isObject(source) && Boolean(source.uri);
+    const {imageSource} = this.props;
+
+    const isRemoteImage = _.isObject(imageSource) && Boolean(imageSource.uri);
     this.styles = createStyles(isRemoteImage);
   }
 
   render() {
-    const {title, subtitle, source, ctaLabel, onCtaPress, testID} = this.props;
+    const {title, subtitle, imageSource, ctaLabel, onCtaPress, testID} = this.props;
 
     return (
       <View style={this.styles.container} testID={testID}>
-        <Image style={this.styles.image} resizeMode={'contain'} source={source}/>
+        <Image style={this.styles.image} resizeMode={'contain'} source={imageSource}/>
         <Text style={[this.styles.title]}>{title}</Text>
         <Text style={[this.styles.subtitle]}>{subtitle}</Text>
         <Button

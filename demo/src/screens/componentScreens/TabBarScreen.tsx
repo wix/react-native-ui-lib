@@ -132,9 +132,14 @@ export default class TabBarScreen extends Component {
             />
           </TabBar>
 
-          <TabBar style={styles.tabbar} selectedIndex={0} enableShadow>
-            <TabBar.Item label="Fixed" uppercase style={{backgroundColor: Colors.blue80}}/>
-            <TabBar.Item label="Tab" badge={{label: '100'}} uppercase style={{backgroundColor: Colors.blue80}}/>
+          <TabBar
+            style={styles.tabbar}
+            selectedIndex={0}
+            enableShadow
+            // tabletMargins={{portrait: 0, landscape: 0}}
+          >
+            <TabBar.Item label="Fixed" uppercase backgroundColor={Colors.blue80}/>
+            <TabBar.Item label="Tab" badgeProps={{label: '100'}} uppercase style={{backgroundColor: Colors.blue80}}/>
             <TabBar.Item label="Bar" uppercase style={{backgroundColor: Colors.blue80}}/>
           </TabBar>
 
@@ -169,13 +174,20 @@ export default class TabBarScreen extends Component {
             {this.getTabs(true)}
           </TabBar>
 
-          <Button
-            size={Button.sizes.small}
-            margin-20
-            label={`Change index: ${this.state.selectedIndex}`}
-            onPress={this.changeIndex}
-          />
-          <TabBar style={styles.tabbar} selectedIndex={this.state.selectedIndex} enableShadow backgroundColor={Colors.green70}>
+          <View center>
+            <Button
+              size={Button.sizes.small}
+              margin-20
+              label={`Change index: ${this.state.selectedIndex}`}
+              onPress={this.changeIndex}
+            />
+          </View>
+          <TabBar
+            style={styles.tabbar}
+            selectedIndex={this.state.selectedIndex}
+            enableShadow
+            backgroundColor={Colors.green70}
+          >
             <TabBar.Item label="LONG LABEL"/>
             <TabBar.Item label="ACTIVE"/>
             <TabBar.Item label="INACTIVE"/>
@@ -187,7 +199,7 @@ export default class TabBarScreen extends Component {
             <TabBar.Item label="MODE"/>
           </TabBar>
 
-          <View row>
+          <View center row>
             <Button size={Button.sizes.small} margin-20 label={`Change Labels`} onPress={this.changeLabels}/>
             <Button size={Button.sizes.small} margin-20 label={`Change Color`} onPress={this.changeColors}/>
           </View>

@@ -82,8 +82,10 @@ class PickerDialog extends BaseComponent {
 
   render() {
     const dialogProps = extractComponentProps(Dialog, this.props);
+    // TODO: should be taken from dialogProps but there's an issue with "babel-plugin-typescript-to-proptypes" plugin
+    const {panDirection} = this.props;
     return (
-      <Dialog {...dialogProps} height="50%" width="77%">
+      <Dialog {...dialogProps} migrate height="50%" width="77%" panDirection={panDirection}>
         <View style={styles.dialog}>
           {this.renderHeader()}
           <View flex center paddingH-24>

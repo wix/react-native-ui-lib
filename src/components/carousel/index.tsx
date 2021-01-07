@@ -11,7 +11,7 @@ import * as presenter from './CarouselPresenter';
 import {CarouselProps, CarouselState, PageControlPosition} from './types';
 export {CarouselProps};
 
-interface DefaultProps extends Partial<CarouselProps> {}
+type DefaultProps = Partial<CarouselProps>
 
 /**
  * @description: Carousel for scrolling pages horizontally
@@ -180,7 +180,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     this.startAutoPlay();
   }
 
-  goToPage(pageIndex: number, animated: boolean = true) {
+  goToPage(pageIndex: number, animated = true) {
     this.setState({currentPage: this.getCalcIndex(pageIndex)}, () => this.updateOffset(animated));
   }
 
@@ -203,10 +203,8 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     if (containerWidth) {
       const spacings = pageWidth === containerWidth ? 0 : this.getItemSpacings(this.props);
       const initialBreak = pageWidth - (containerWidth - pageWidth - spacings) / 2;
-      const snapToOffsets = _.times(
-        presenter.getChildrenLength(this.props),
-        index => initialBreak + index * pageWidth + this.getContainerMarginHorizontal()
-      );
+      const snapToOffsets = _.times(presenter.getChildrenLength(this.props),
+        index => initialBreak + index * pageWidth + this.getContainerMarginHorizontal());
       return snapToOffsets;
     }
   };

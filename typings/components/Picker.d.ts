@@ -68,4 +68,5 @@ export class Picker extends BaseComponent<PickerProps & ColorsModifiers> {}
 
 export namespace Picker {
   export class Item extends BaseComponent<PickerItemProps> {}
+  export function extractPickerItems(props: any): [{value: string, label: string}]
 }

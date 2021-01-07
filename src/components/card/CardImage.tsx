@@ -8,6 +8,15 @@ import {LogService} from '../../services';
 
 
 export type CardImageProps = ImageProps & {
+
+
+// TODO: Remove omitting source after imageSource deprecation (since it's required for Image)
+export type CardImageProps = Omit<ImageProps, 'source'> & {
+  /**
+   * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
+   */
+  imageSource?: ImageSourcePropType;
+  source?: ImageSourcePropType; //TODO: Remove after imageSource deprecation - should take it from ImageProps
   /**
    * Image width
    */
@@ -39,6 +48,13 @@ class CardImage extends PureComponent<Props> {
     super(props);
 
     this.styles = createStyles(props);
+
+    if (props.imageSource) {
+      LogService.deprecationWarn({component: 'CardImage', oldProp: 'imageSource', newProp: 'source'});
+    }
+    if (props.borderRadius) {
+      LogService.deprecationWarn({component: 'CardImage', oldProp: 'borderRadius'});
+    }
   }
 
   render() {

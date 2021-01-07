@@ -1,17 +1,18 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import React from 'react';
+import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import Assets from '../../assets';
-import {BaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons';
 import {TextField} from '../inputs';
 import Dialog from '../dialog';
 import View from '../view';
 import Button from '../button';
+
 
 const MODES = {
   DATE: 'date',
@@ -28,8 +29,9 @@ const MODES = {
  */
 /*eslint-enable*/
 
-class DateTimePicker extends BaseComponent {
+class DateTimePicker extends Component {
   static displayName = 'DateTimePicker';
+
   static propTypes = {
     ...TextField.propTypes,
     /**
@@ -57,9 +59,17 @@ class DateTimePicker extends BaseComponent {
      */
     dateFormat: PropTypes.string,
     /**
+     * A callback function to format date
+     */
+    dateFormatter: PropTypes.func,
+    /**
      * The time format for the text display
      */
     timeFormat: PropTypes.string,
+    /**
+     * A callback function to format time
+     */
+    timeFormatter: PropTypes.func,
     /**
      * Allows changing of the locale of the component (iOS only)
      */
@@ -79,7 +89,11 @@ class DateTimePicker extends BaseComponent {
     /**
      * Props to pass the Dialog component
      */
-    dialogProps: PropTypes.object
+    dialogProps: PropTypes.object,
+    /**
+     * style to apply to the iOS dialog header
+     */
+    headerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
   };
 
   static defaultProps = {
@@ -90,17 +104,23 @@ class DateTimePicker extends BaseComponent {
   constructor(props) {
     super(props);
 
-    const initialValue = props.value;
-    this.chosenDate = initialValue;
+    this.chosenDate = props.value;
 
     this.state = {
       showExpandableOverlay: false,
-      value: initialValue
+      prevValue: props.value,
+      value: props.value
     };
   }
 
-  generateStyles() {
-    this.styles = createStyles(this.props);
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.value !== prevState.prevValue) {
+      return {
+        prevValue: prevState.value,
+        value: nextProps.value
+      };
+    }
+    return null;
   }
 
   handleChange = (event = {}, date) => {
@@ -140,22 +160,27 @@ class DateTimePicker extends BaseComponent {
 
   getStringValue = () => {
     const {value} = this.state;
-    const {mode, dateFormat, timeFormat} = this.getThemeProps();
+    const {mode, dateFormat, timeFormat, dateFormatter, timeFormatter} = this.props;
     if (value) {
-      const dateString =
-        mode === MODES.DATE
-          ? dateFormat
-            ? moment(value).format(dateFormat)
-            : value.toLocaleDateString()
-          : timeFormat
-            ? moment(value).format(timeFormat)
-            : value.toLocaleTimeString();
-      return dateString;
+      switch (mode) {
+        case MODES.DATE:
+          return dateFormatter
+            ? dateFormatter(value)
+            : dateFormat
+              ? moment(value).format(dateFormat)
+              : value.toLocaleDateString();
+        case MODES.TIME:
+          return timeFormatter
+            ? timeFormatter(value)
+            : timeFormat
+              ? moment(value).format(timeFormat)
+              : value.toLocaleTimeString();
+      }
     }
   };
 
   renderExpandableOverlay = () => {
-    const {testID, dialogProps} = this.getThemeProps();
+    const {testID, dialogProps} = this.props;
     const {showExpandableOverlay} = this.state;
 
     return (
@@ -166,7 +191,7 @@ class DateTimePicker extends BaseComponent {
         bottom
         centerH
         onDismiss={this.toggleExpandableOverlay}
-        containerStyle={this.styles.dialog}
+        containerStyle={styles.dialog}
         testID={`${testID}.dialog`}
         supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']} // iOS only
         {...dialogProps}
@@ -180,10 +205,10 @@ class DateTimePicker extends BaseComponent {
   };
 
   renderHeader() {
-    const {useCustomTheme} = this.props;
+    const {useCustomTheme, headerStyle} = this.props;
 
     return (
-      <View row spread bg-white paddingH-20 style={this.styles.header}>
+      <View row spread bg-white paddingH-20 style={[styles.header, headerStyle]}>
         <Button
           link
           iconSource={Assets.icons.x}
@@ -226,7 +251,7 @@ class DateTimePicker extends BaseComponent {
   };
 
   render() {
-    const textInputProps = TextField.extractOwnProps(this.getThemeProps());
+    const textInputProps = TextField.extractOwnProps(this.props);
 
     return (
       <TextField
@@ -240,23 +265,19 @@ class DateTimePicker extends BaseComponent {
   }
 }
 
-export default DateTimePicker;
+export {DateTimePicker}; // For tests
+export default asBaseComponent(DateTimePicker);
 
-function createStyles(props) {
-  const borderRadius = 12;
 
-  const styles = StyleSheet.create({
-    header: {
-      height: 56,
-      borderBottomWidth: 1,
-      borderBottomColor: Colors.grey80
-    },
-    dialog: {
-      backgroundColor: Colors.white,
-      borderTopLeftRadius: borderRadius,
-      borderTopRightRadius: borderRadius
-    }
-  });
-
-  return styles;
-}
+const styles = StyleSheet.create({
+  header: {
+    height: 56,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.dark80
+  },
+  dialog: {
+    backgroundColor: Colors.white,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12
+  }
+});

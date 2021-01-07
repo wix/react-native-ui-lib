@@ -3,7 +3,7 @@ index: 5
 path: "/foundation/modifiers"
 title: "Modifiers"
 ---
-As you probably noticed already, we translate our style presets into modifiers.
+As you probably noticed already, we translate our style presets into modifiers.  
 **Modifiers** will help you create a stunning UI easily and quickly.
 
 **[!IMPORTANT]** <br>

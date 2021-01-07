@@ -245,7 +245,7 @@ export function extractFlexStyle(props: Dictionary<any>): Partial<Record<NativeF
   const keys = Object.keys(props);
   const flexProp = keys.find(item => FLEX_KEY_PATTERN.test(item));
   if (flexProp && props[flexProp] === true) {
-    let [flexKey, flexValue] = flexProp.split('-') as [keyof typeof STYLE_KEY_CONVERTERS, string];
+    const [flexKey, flexValue] = flexProp.split('-') as [keyof typeof STYLE_KEY_CONVERTERS, string];
     const convertedFlexKey = STYLE_KEY_CONVERTERS[flexKey];
     const flexValueAsNumber = _.isEmpty(flexValue) ? 1 : Number(flexValue);
 
@@ -319,7 +319,7 @@ export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
   return ownProps;
 }
 
-export function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps: string[]) {
+export function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps: string[] = []) {
   const componentPropTypes = component.propTypes;
   const componentProps = _.chain(props)
     .pickBy((_value, key) => _.includes(Object.keys(componentPropTypes), key))

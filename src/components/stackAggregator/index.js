@@ -10,7 +10,6 @@ import TouchableOpacity from '../touchableOpacity';
 import Button from '../button';
 import Card from '../card';
 
-
 const PEEP = 8;
 const DURATION = 300;
 const MARGIN_BOTTOM = 24;
@@ -50,12 +49,12 @@ export default class StackAggregator extends PureBaseComponent {
      * A callback for item press
      */
     onItemPress: PropTypes.func
-  }
+  };
 
   static defaultProps = {
     collapsed: true,
     itemBorderRadius: 0
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -73,7 +72,7 @@ export default class StackAggregator extends PureBaseComponent {
     this.animatedContentOpacity = new Animated.Value(this.state.collapsed ? 0 : 1);
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_prevProps, prevState) {
     if (prevState.collapsed !== this.state.collapsed) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
@@ -84,7 +83,7 @@ export default class StackAggregator extends PureBaseComponent {
   }
 
   getAnimatedScales() {
-    return React.Children.map(this.props.children, (item, index) => {
+    return React.Children.map(this.props.children, (_item, index) => {
       return new Animated.Value(this.getItemScale(index));
     });
   }
@@ -95,7 +94,7 @@ export default class StackAggregator extends PureBaseComponent {
         return 0.95;
       }
       if (index === this.itemsCount - 1) {
-        return 0.90;
+        return 0.9;
       }
     }
     return 1;
@@ -104,7 +103,7 @@ export default class StackAggregator extends PureBaseComponent {
   animate = () => {
     this.animateValues();
     this.animateCards();
-  }
+  };
 
   animateValues() {
     const {collapsed} = this.state;
@@ -146,11 +145,11 @@ export default class StackAggregator extends PureBaseComponent {
 
   close = () => {
     this.setState({collapsed: true}, () => this.animate());
-  }
+  };
 
   open = () => {
     this.setState({collapsed: false}, () => this.animate());
-  }
+  };
 
   getTop(index) {
     let start = 0;
@@ -159,7 +158,7 @@ export default class StackAggregator extends PureBaseComponent {
       start += PEEP;
     }
     if (index === this.itemsCount - 1) {
-      start += (PEEP * 2);
+      start += PEEP * 2;
     }
 
     return start;
@@ -187,11 +186,11 @@ export default class StackAggregator extends PureBaseComponent {
     if (height) {
       this.setState({firstItemHeight: height});
     }
-  }
+  };
 
-  onItemPress = (index) => {
+  onItemPress = index => {
     _.invoke(this.props, 'onItemPress', index);
-  }
+  };
 
   renderItem = (item, index) => {
     const {contentContainerStyle, itemBorderRadius} = this.props;
@@ -208,9 +207,7 @@ export default class StackAggregator extends PureBaseComponent {
             borderRadius: Constants.isIOS ? itemBorderRadius : undefined,
             alignSelf: 'center',
             zIndex: this.itemsCount - index,
-            transform: [
-              {scaleX: this.animatedScaleArray[index]}
-            ],
+            transform: [{scaleX: this.animatedScaleArray[index]}],
             width: Constants.screenWidth - 40,
             height: collapsed ? firstItemHeight : undefined
           }
@@ -229,7 +226,7 @@ export default class StackAggregator extends PureBaseComponent {
         </Card>
       </Animated.View>
     );
-  }
+  };
 
   render() {
     const {children, containerStyle, buttonProps} = this.props;
@@ -243,9 +240,7 @@ export default class StackAggregator extends PureBaseComponent {
               position: 'absolute',
               right: 0,
               opacity: this.animatedOpacity,
-              transform: [
-                {scale: this.animatedScale}
-              ]
+              transform: [{scale: this.animatedScale}]
             }}
           >
             <Button
@@ -264,19 +259,19 @@ export default class StackAggregator extends PureBaseComponent {
             return this.renderItem(item, index);
           })}
 
-          {collapsed &&
+          {collapsed && (
             <TouchableOpacity
               onPress={this.open}
               activeOpacity={1}
               style={[
                 this.styles.touchable,
                 {
-                  height: firstItemHeight ? firstItemHeight + (PEEP * 2) : undefined,
+                  height: firstItemHeight ? firstItemHeight + PEEP * 2 : undefined,
                   zIndex: this.itemsCount
                 }
               ]}
             />
-          }
+          )}
         </View>
       </View>
     );

@@ -194,7 +194,7 @@ class TabBar extends PureComponent {
     if (!_.includes(this._itemsWidths, null)) {
       const {selectedIndex} = this.context;
       const itemsOffsets = _.map(this._itemsWidths,
-        (w, index) => INDICATOR_INSET + _.sum(_.take(this._itemsWidths, index)));
+        (_w, index) => INDICATOR_INSET + _.sum(_.take(this._itemsWidths, index)));
       const itemsWidths = _.map(this._itemsWidths, width => width - INDICATOR_INSET * 2);
 
       this.setState({itemsWidths, itemsOffsets});
@@ -295,13 +295,13 @@ class TabBar extends PureComponent {
     if (asCarousel) {
       nodes.push(set(this._indicatorOffset,
         interpolate(carouselOffset, {
-          inputRange: itemsOffsets.map((value, index) => index * Constants.screenWidth),
+          inputRange: itemsOffsets.map((_value, index) => index * Constants.screenWidth),
           outputRange: itemsOffsets,
           extrapolate: Extrapolate.CLAMP
         })),
       set(this._indicatorWidth,
         interpolate(carouselOffset, {
-          inputRange: itemsWidths.map((value, index) => index * Constants.screenWidth),
+          inputRange: itemsWidths.map((_value, index) => index * Constants.screenWidth),
           outputRange: itemsWidths,
           extrapolate: Extrapolate.CLAMP
         })));
@@ -403,7 +403,7 @@ function runIndicatorTimer(clock, currentPage, values) {
   };
 
   return block([
-    ..._.map(values, (value, index) => {
+    ..._.map(values, (_value, index) => {
       return cond(and(eq(currentPage, index), neq(config.toValue, index)), [
         set(state.finished, 0),
         set(state.time, 0),

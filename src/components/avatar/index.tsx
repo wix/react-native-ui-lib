@@ -1,6 +1,15 @@
 import _ from 'lodash';
-import React , {PureComponent} from 'react';
-import {StyleSheet, ImageSourcePropType, StyleProp, ViewStyle, TouchableOpacity, ImagePropsBase, ImageStyle, TextStyle} from 'react-native';
+import React, {PureComponent} from 'react';
+import {
+  StyleSheet,
+  ImageSourcePropType,
+  StyleProp,
+  ViewStyle,
+  TouchableOpacity,
+  ImagePropsBase,
+  ImageStyle,
+  TextStyle
+} from 'react-native';
 import {Colors} from '../../style';
 import {forwardRef, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
@@ -18,11 +27,11 @@ export enum BadgePosition {
   TOP_LEFT = 'TOP_LEFT',
   BOTTOM_RIGHT = 'BOTTOM_RIGHT',
   BOTTOM_LEFT = 'BOTTOM_LEFT'
-};
+}
 
 const DEFAULT_BADGE_SIZE = 10;
 
-export type AvatarPropTypes = {
+export type AvatarProps = {
   /**
    * Adds fade in animation when Avatar image loads
    */
@@ -34,7 +43,7 @@ export type AvatarPropTypes = {
   /**
    * Badge location on Avatar
    */
-  badgePosition?: BadgePosition,
+  badgePosition?: BadgePosition;
   /**
    * Badge props passed down to Badge component
    */
@@ -60,17 +69,17 @@ export type AvatarPropTypes = {
    * Listener-callback for when an image's (uri) loading
    * starts (equiv. to Image.onLoadStart()).
    */
-  onImageLoadStart?: ImagePropsBase["onLoadStart"];
+  onImageLoadStart?: ImagePropsBase['onLoadStart'];
   /**
    * Listener-callback for when an image's (uri) loading
    * either succeeds or fails (equiv. to Image.onLoadEnd()).
    */
-  onImageLoadEnd?: ImagePropsBase["onLoadEnd"];
+  onImageLoadEnd?: ImagePropsBase['onLoadEnd'];
   /**
    * Listener-callback for when an image's (uri) loading
    * fails (equiv. to Image.onError()).
    */
-  onImageLoadError?: ImagePropsBase["onError"];
+  onImageLoadError?: ImagePropsBase['onError'];
   /**
    * Label that can represent initials
    */
@@ -108,6 +117,7 @@ export type AvatarPropTypes = {
    */
   testID?: string;
 };
+export type AvatarPropTypes = AvatarProps; //TODO: remove after ComponentPropTypes deprecation;
 
 /**
  * @description: Avatar component for displaying user profile images
@@ -117,11 +127,10 @@ export type AvatarPropTypes = {
  * @image: https://user-images.githubusercontent.com/33805983/34480603-197d7f64-efb6-11e7-9feb-db8ba756f055.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.js
  */
-class Avatar extends PureComponent<AvatarPropTypes> {
-
+class Avatar extends PureComponent<AvatarProps> {
   styles: ReturnType<typeof createStyles>;
 
-  constructor(props: AvatarPropTypes) {
+  constructor(props: AvatarProps) {
     super(props);
 
     this.styles = createStyles(props);
@@ -191,7 +200,7 @@ class Avatar extends PureComponent<AvatarPropTypes> {
     const badgeAlignment = {position: 'absolute', [badgeLocation[0]]: shift, [badgeLocation[1]]: shift};
 
     return badgeAlignment;
-  }
+  };
 
   renderBadge() {
     const {testID, badgeProps} = this.props;
@@ -290,9 +299,11 @@ class Avatar extends PureComponent<AvatarPropTypes> {
         <View
           style={[this.getInitialsContainer(), {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
         >
-          {!_.isUndefined(label) && <Text numberOfLines={1} style={[{fontSize}, this.styles.initials, {color}]} testID={`${testID}.label`}>
-            {label}
-          </Text>}
+          {!_.isUndefined(label) && (
+            <Text numberOfLines={1} style={[{fontSize}, this.styles.initials, {color}]} testID={`${testID}.label`}>
+              {label}
+            </Text>
+          )}
         </View>
         {this.renderImage()}
         {this.renderBadge()}
@@ -303,7 +314,7 @@ class Avatar extends PureComponent<AvatarPropTypes> {
   }
 }
 
-function createStyles(props: AvatarPropTypes) {
+function createStyles(props: AvatarProps) {
   const {labelColor} = props;
   const styles = StyleSheet.create({
     initialsContainerWithInset: {
@@ -314,7 +325,8 @@ function createStyles(props: AvatarPropTypes) {
     },
     initials: {
       color: labelColor,
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
+      lineHeight: undefined
     },
     ribbon: {
       backgroundColor: Colors.blue30,
@@ -328,4 +340,4 @@ function createStyles(props: AvatarPropTypes) {
 
 export {Avatar}; // For tests
 
-export default asBaseComponent<AvatarPropTypes, typeof Avatar>(forwardRef(Avatar))
+export default asBaseComponent<AvatarProps, typeof Avatar>(forwardRef(Avatar));

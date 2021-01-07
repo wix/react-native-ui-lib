@@ -2,12 +2,21 @@ import _ from 'lodash';
 import React, {PureComponent} from 'react';
 //@ts-ignore
 import hoistNonReactStatic from 'hoist-non-react-statics';
-import {Image as RNImage, ImageProps as RNImageProps, StyleSheet, ImageBackground, ImageSourcePropType} from 'react-native';
+import {
+  StyleSheet,
+  Image as RNImage,
+  ImageProps as RNImageProps,
+  ImageBackground,
+  ImageSourcePropType,
+  NativeSyntheticEvent,
+  ImageErrorEventData
+} from 'react-native';
 import Constants from '../../helpers/Constants';
 import {asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers} from '../../commons/new';
 // @ts-ignore
 import Assets from '../../assets';
 import Overlay, {OverlayTypeType} from '../overlay';
+
 
 export type ImageProps = RNImageProps & MarginModifiers & {
   /**
@@ -51,16 +60,25 @@ export type ImageProps = RNImageProps & MarginModifiers & {
    * Render an overlay with custom content
    */
   customOverlayContent?: JSX.Element;
+  /**
+   * Default image source in case of an error
+   */
+  errorSource?: ImageSourcePropType
 };
 
 type Props = ImageProps & ForwardRefInjectedProps & BaseComponentInjectedProps;
+
+type State = {
+  error: boolean,
+  prevSource: ImageSourcePropType
+}
 
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
  * @extends: Image
  * @extendslink: https://facebook.github.io/react-native/docs/image.html
  */
-class Image extends PureComponent<Props> {
+class Image extends PureComponent<Props, State> {
   static displayName = 'Image';
 
   static defaultProps = {
@@ -75,6 +93,20 @@ class Image extends PureComponent<Props> {
     super(props);
 
     this.sourceTransformer = this.props.sourceTransformer;
+
+    this.state = {
+      error: false,
+      prevSource: props.source
+    };
+  }
+
+  static getDerivedStateFromProps(nextProps: Partial<Props>, prevState: State) {
+    if (nextProps.source !== prevState.prevSource) {
+      return {
+        error: false
+      };
+    }
+    return null;
   }
 
   isGif() {
@@ -92,27 +124,36 @@ class Image extends PureComponent<Props> {
     return !!overlayType || this.isGif() || !_.isUndefined(customOverlayContent);
   }
 
-  getImageSource() {
-    const {assetName, assetGroup} = this.props;
-    if (!_.isUndefined(assetName)) {
-      return _.get(Assets, `${assetGroup}.${assetName}`);
-    }
-
-    if (this.sourceTransformer) {
-      return this.sourceTransformer(this.props);
-    }
-
-    const {source} = this.props;
+  getVerifiedSource(source?: ImageSourcePropType) {
     if (_.get(source, 'uri') === null || _.get(source, 'uri') === '') {
       // @ts-ignore
       return {...source, uri: undefined};
     }
-
     return source;
   }
 
+  getImageSource() {
+    const {assetName, assetGroup, source} = this.props;
+
+    if (!_.isUndefined(assetName)) {
+      return _.get(Assets, `${assetGroup}.${assetName}`);
+    }
+    if (this.sourceTransformer) {
+      return this.sourceTransformer(this.props);
+    }
+
+    return this.getVerifiedSource(source);
+  }
+
+  onError = (event: NativeSyntheticEvent<ImageErrorEventData>) => {
+    if (event.nativeEvent.error) {
+      this.setState({error: true});
+    }
+  }
+
   render() {
-    const source = this.getImageSource();
+    const {error} = this.state;
+    const source = error ? this.getVerifiedSource(this.props.errorSource) : this.getImageSource();
     const {
       tintColor,
       style,
@@ -133,7 +174,7 @@ class Image extends PureComponent<Props> {
       // @ts-ignore
       <ImageView
         style={[
-          {tintColor},
+          tintColor && {tintColor},
           shouldFlipRTL && styles.rtlFlipped,
           cover && styles.coverImage,
           this.isGif() && styles.gifImage,
@@ -144,6 +185,7 @@ class Image extends PureComponent<Props> {
         accessible={false}
         accessibilityRole={'image'}
         {...others}
+        onError={this.onError}
         source={source}
       >
         {(overlayType || customOverlayContent) && (

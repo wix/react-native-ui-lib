@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {Constants} from '../../../helpers';
-import ChipsInput from '../index';
+import {ChipsInput} from '../index';
 
 describe('ChipsInput', () => {
   let uut;

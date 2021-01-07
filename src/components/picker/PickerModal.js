@@ -39,7 +39,7 @@ class PickerModal extends BaseComponent {
     scrollContentHeight: undefined
   };
 
-  keyExtractor = (item, index) => index.toString();
+  keyExtractor = (_item, index) => index.toString();
 
   generateStyles() {
     this.styles = createStyles(this.props);

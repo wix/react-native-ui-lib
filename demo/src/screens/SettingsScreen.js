@@ -30,7 +30,7 @@ class SettingsScreen extends Component {
     };
   }
 
-  async componentWillMount() {
+  async UNSAFE_componentWillMount() {
     const {screens} = this.state;
     const defaultScreenId = await AsyncStorage.getItem('uilib.defaultScreen');
     const defaultScreen = _.find(screens, {value: defaultScreenId});

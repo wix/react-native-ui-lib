@@ -161,7 +161,7 @@ export default class ActionSheet extends BaseComponent {
 
   renderActions() {
     const {title, options, cancelButtonIndex, renderAction, optionsStyle} = this.props;
-    const optionsToRender = _.filter(options, (option, index) => index !== cancelButtonIndex);
+    const optionsToRender = _.filter(options, (_option, index) => index !== cancelButtonIndex);
 
     return (
       <View style={[_.isEmpty(title) ? styles.listNoTitle : styles.listWithTitle, optionsStyle]}>
