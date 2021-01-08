@@ -68,10 +68,8 @@ class Modal extends Component<ModalProps> {
 
     return (
       <RNModal visible={Boolean(visible)} {...others}>
-        <View style={{flex: 1}}>
-          {this.renderTouchableOverlay()}
-          {this.props.children}
-        </View>
+        {this.renderTouchableOverlay()}
+        {this.props.children}
       </RNModal>
     );
   }
