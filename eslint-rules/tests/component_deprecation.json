@@ -32,5 +32,10 @@
     "component": "List.Part",
     "source": "module-with-deprecations",
     "message": "Please use the 'List.Item' component instead."
+  },
+  {
+    "component": "List",
+    "source": "another-module-with-deprecations",
+    "message": "Please use the 'ListList' component instead."
   }
 ]
