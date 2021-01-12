@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Constants, Colors, View, Card, CardProps, Button, Text, Image} from 'react-native-ui-lib';
+import {Colors, View, Card, CardProps, Button, Text} from 'react-native-ui-lib';
 // @ts-ignore
 import posts from '../../data/posts';
 
@@ -11,7 +11,6 @@ const cardImage = require('../../assets/images/card-example.jpg');
 const cardImage2 = require('../../assets/images/empty-state.jpg');
 
 type CardsScreenProps = {};
-
 type CardsScreenState = {
   selected1: boolean;
   selected2: boolean;
@@ -25,6 +24,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
 
   renderSelectableCards = () => {
     const {selected1, selected2} = this.state;
+
     return (
       <View row marginV-10>
         <Card
@@ -35,7 +35,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
           activeOpacity={1}
           marginR-20
         >
-          <Card.Section source={cardImage} imageStyle={{height: '100%'}}/>
+          <Card.Section imageSource={cardImage} imageStyle={{height: '100%'}}/>
         </Card>
         <Card
           height={120}
@@ -44,12 +44,12 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
           onPress={() => this.setState({selected2: !selected2})}
           activeOpacity={1}
           selectionOptions={{
-            color: Colors.dark10,
+            color: Colors.grey10,
             indicatorSize: 25,
             borderWidth: 3
           }}
         >
-          <Card.Section source={cardImage} imageStyle={{height: '100%'}}/>
+          <Card.Section imageSource={cardImage} imageStyle={{height: '100%'}}/>
         </Card>
       </View>
     );
@@ -59,13 +59,13 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
     return (
       <Card.Section
         content={[
-          {text: 'You’re Invited!', text70: true, dark10: true},
+          {text: 'You’re Invited!', text70: true, grey10: true},
           {
             text: '222 Join Old The Town Barbershop Official Store. Download the Wix app to...',
             text80: true,
-            dark10: true
+            grey10: true
           },
-          {text: 'wix.to/A465c', text90: true, dark50: true}
+          {text: 'wix.to/A465c', text90: true, grey50: true}
         ]}
         style={{padding: 20, flex: 1}}
       />
@@ -75,13 +75,14 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
   renderText = () => {
     return (
       <View padding-20 flex>
-        <Text text70 dark10>
+        <Text text70 grey10>
           You’re Invited!
         </Text>
-        <Text text80 dark10>
-          222 Join Old The Town Barbershop Official Store. Download the Wix app to...
+        <Text text80 grey10>
+          222 Join Old The Town Barbershop Official Store. Download the Wix app
+          to...
         </Text>
-        <Text text90 dark50>
+        <Text text90 grey50>
           wix.to/A465c
         </Text>
       </View>
@@ -95,16 +96,25 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
         height={160}
         style={{marginBottom: 15}}
         onPress={() => {}}
-        enableBlur
         borderRadius={borderRadius}
         useNative
         backgroundColor={Colors.white}
         activeOpacity={1}
         activeScale={isImageOnLeft ? 0.96 : 1.04}
       >
-        {isImageOnLeft && <Card.Section source={cardImage} imageStyle={{width: 115, height: '100%'}}/>}
+        {isImageOnLeft && (
+          <Card.Section
+            imageSource={cardImage}
+            imageStyle={{width: 115, height: '100%'}}
+          />
+        )}
         {useSection ? this.renderTextSection() : this.renderText()}
-        {!isImageOnLeft && <Card.Section source={cardImage} imageStyle={{width: 115, height: '100%'}}/>}
+        {!isImageOnLeft && (
+          <Card.Section
+            imageSource={cardImage}
+            imageStyle={{width: 115, height: '100%'}}
+          />
+        )}
       </Card>
     );
   };
@@ -113,13 +123,14 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
     return (
       <Card style={{marginBottom: 10}} onPress={() => {}}>
         <Card.Section
+          bg-white
           content={[
-            {text: 'You’re Invited!', text70: true, dark10: true},
-            {text: 'join now', text90: true, dark50: true}
+            {text: 'You’re Invited!', text70: true, grey10: true},
+            {text: 'join now', text90: true, grey50: true}
           ]}
           style={{padding: 20}}
         />
-        <Card.Section source={cardImage2} imageStyle={{height: 120}}/>
+        <Card.Section imageSource={cardImage2} imageStyle={{height: 120}}/>
       </Card>
     );
   };
@@ -138,9 +149,10 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
           contentStyle={{alignItems: 'center'}}
         />
         <Card.Section
+          bg-white
           padding-20
           flex
-          content={[{text: 'All site', text70: true, dark10: true}]}
+          content={[{text: 'All site', text70: true, grey10: true}]}
           contentStyle={{alignItems: 'center', margin: 0, padding: 0}}
         />
       </Card>
@@ -161,8 +173,9 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
       <Card {...cardProps} flex marginV-10 onPress={() => {}} useNative activeOpacity={1} activeScale={0.96}>
         {image}
         <Card.Section
+          bg-white
           padding-20
-          content={[{text: 'All site', text70: true, dark10: true}]}
+          content={[{text: 'All site', text70: true, grey10: true}]}
           contentStyle={{alignItems: 'center'}}
         />
       </Card>
@@ -178,7 +191,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
             <Card.Section
               flex
               backgroundColor={Colors.blue20}
-              source={featureIcon}
+              imageSource={featureIcon}
               imageStyle={{
                 width: 25,
                 height: 25,
@@ -195,7 +208,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
           this.renderComplexImage({'marginL-5': true},
             <Card.Section
               flex
-              source={cardImage2}
+              imageSource={cardImage2}
               imageStyle={{height: '100%'}}
               content={[
                 {text: 'Special sale!', text70: true, blue10: true},
@@ -214,12 +227,12 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
 
   renderNumbers = () => {
     return (
-      <ScrollView style={{height: 100}} horizontal showsHorizontalScrollIndicator={false}>
+      <ScrollView style={{height: 100, marginBottom: 20}} horizontal showsHorizontalScrollIndicator={false}>
         {_.times(4, i => {
           return (
-            <Card key={i} width={100} style={{marginRight: 20}}>
+            <Card key={i} width={100} style={{marginRight: 20}} backgroundColor={Colors.white}>
               <View padding-15>
-                <Text text30 dark30>
+                <Text text30 grey30>
                   {i}
                 </Text>
               </View>
@@ -238,44 +251,23 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
     );
   };
 
-  renderBackgroundTypes = () => {
-    return (
-      <View row marginV-10>
-        {this.renderBackgroundCard({'marginR-20': true, style: {backgroundColor: Colors.dark60}},
-          <Text text80 center white>
-            With custom background color
-          </Text>)}
-        {this.renderBackgroundCard({
-          'marginR-20': true,
-          style: {backgroundColor: Colors.rgba(Colors.dark60, 0.75)}
-        },
-        <Text text70 center white>
-            With opacity
-        </Text>)}
-        {Constants.isIOS &&
-          this.renderBackgroundCard({enableBlur: true, 'marginL-20': true},
-            <>
-              <Text text70 dark20 center>
-                With Blur effect
-              </Text>
-              <Text text80 dark20 center>
-                (iOS only)
-              </Text>
-            </>)}
-      </View>
-    );
-  };
-
   renderComplexExample = () => {
     return _.map(posts, (post, i) => {
       const statusColor = post.status === 'Published' ? Colors.green30 : Colors.orange30;
 
       return (
-        <Card key={i} style={{marginBottom: 15}} onPress={() => console.log('press on a card')}>
-          <Card.Section source={post.coverImage} imageStyle={{height: 160}}/>
+        <Card
+          key={i}
+          style={{marginBottom: 15}}
+          onPress={() => console.log('press on a card')}
+        >
+          <Card.Section
+            imageSource={post.coverImage}
+            imageStyle={{height: 160}}
+          />
 
-          <View padding-20>
-            <Text text40 color={Colors.dark10}>
+          <View padding-20 bg-white>
+            <Text text40 color={Colors.grey10}>
               {post.title}
             </Text>
             <View row>
@@ -285,16 +277,22 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
               <Text text90> | {post.timestamp}</Text>
             </View>
 
-            <Text text70 color={Colors.dark10}>
+            <Text text70 color={Colors.grey10}>
               {post.description}
             </Text>
 
             <View>
-              <Text text90 color={Colors.dark50}>
+              <Text text90 color={Colors.grey50}>
                 {post.likes} Likes
               </Text>
               <View row right>
-                <Button style={{marginRight: 10}} text90 link iconSource={featureIcon} label="Feature"/>
+                <Button
+                  style={{marginRight: 10}}
+                  text90
+                  link
+                  iconSource={featureIcon}
+                  label="Feature"
+                />
                 <Button text90 link iconSource={shareIcon} label="Share"/>
               </View>
             </View>
@@ -309,7 +307,6 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
       <>
         {this.renderNumbers()}
         {this.renderImageOnBottom()}
-        {this.renderBackgroundTypes()}
         {this.renderComplexExample()}
       </>
     );
