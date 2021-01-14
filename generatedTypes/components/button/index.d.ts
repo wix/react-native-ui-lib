@@ -311,7 +311,7 @@ declare class Button extends PureComponent<Props, ButtonState> {
     getContainerSizeStyle(): any;
     getOutlineStyle(): {
         borderWidth: number;
-        borderColor: string;
+        borderColor: any;
     } | undefined;
     getBorderRadiusStyle(): {
         borderRadius: number;

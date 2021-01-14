@@ -19,7 +19,7 @@ import Text from '../text';
 import View from '../view';
 
 const DEFAULT_SIZE = 24;
-const DEFAULT_COLOR = Colors.blue30;
+const DEFAULT_COLOR = Colors.primary;
 const DEFAULT_ICON_COLOR = Colors.white;
 const DEFAULT_DISABLED_COLOR = Colors.grey50;
 

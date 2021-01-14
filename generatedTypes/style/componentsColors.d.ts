@@ -1,5 +1,5 @@
 declare const ComponentsColors: {
-    CTA: string;
+    CTA: any;
     disabledText: string;
 };
 export default ComponentsColors;

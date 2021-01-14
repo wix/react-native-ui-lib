@@ -156,7 +156,7 @@ declare function createStyles(props: AvatarProps): {
         lineHeight: undefined;
     };
     ribbon: {
-        backgroundColor: string;
+        backgroundColor: any;
         paddingHorizontal: number;
         paddingVertical: number;
     };

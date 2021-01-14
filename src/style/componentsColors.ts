@@ -1,7 +1,7 @@
 import Colors from './colors';
 
 const ComponentsColors = {
-  CTA: Colors.blue30,
+  CTA: Colors.primary,
   disabledText: Colors.dark50
 };
 

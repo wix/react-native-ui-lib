@@ -24,7 +24,7 @@ import * as CardPresenter from './CardPresenter';
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 const DEFAULT_SELECTION_PROPS = {
   borderWidth: 2,
-  color: Colors.blue30,
+  color: Colors.primary,
   indicatorSize: 20,
   icon: Assets.icons.checkSmall,
   iconColor: Colors.white,
