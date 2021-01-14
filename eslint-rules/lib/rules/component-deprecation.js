@@ -1,191 +1,133 @@
 const _ = require('lodash');
 const utils = require('../utils');
+const {addToImports, organizeDeprecations, OrganizationType, getComponentLocalName, getComponentName} = utils;
 
 const MAP_SCHEMA = {
   type: 'object',
-  additionalProperties: true,
-};
-
-const FIX_TYPES = {
-  PROP_NAME: 'propName',
-  COMPONENT_NAME: 'componentName'
+  additionalProperties: true
 };
 
 module.exports = {
   meta: {
     docs: {
-      description: "component or some of the component's props are deprecated",
+      description: 'component is deprecated',
       category: 'Best Practices',
-      recommended: true,
+      recommended: true
     },
     messages: {
-      uiLib: 'This component is deprecated or contains deprecated props.',
+      uiLib: 'This component is deprecated.'
     },
     fixable: 'code',
-    schema: [MAP_SCHEMA],
+    schema: [MAP_SCHEMA]
   },
   create(context) {
-    function reportDeprecatedComponentOrProps(node, options) {
+    function reportDeprecatedComponent(node, data) {
       try {
         const {dueDate} = context.options[0];
         const dueDateNotice = dueDate ? ` Please fix this issue by ${dueDate}!` : '';
-        const msg =
-          options.prop === undefined
-            ? `The '${options.name}' component is deprecated. ${options.message}${dueDateNotice}`
-            : `The '${options.name}' component's prop '${options.prop}' is deprecated. ${options.message}${dueDateNotice}`;
-        
+        const msg = `The '${data.component}' component is deprecated. ${data.message}${dueDateNotice}`;
         context.report({
           node,
           message: `${msg}`,
           fix(fixer) {
-            if (options.fix) {
-              const type = Object.keys(options.fix)[0];
-              const fix = Object.values(options.fix)[0];
-
-              switch (type) {
-                case FIX_TYPES.PROP_NAME:
-                  // Fix for prop name change only (when prop's value and type does not change)
-                  return fixer.replaceText(node.name, fix);
-                case FIX_TYPES.COMPONENT_NAME:
-                  if (node.type === 'ImportDeclaration') {
-                    const index = utils.getSpecifierIndex(node, options.name);
-                    return fixer.replaceText(node.specifiers[index], fix);
-                  }
-                  return fixer.replaceText(node.name, fix);
-                default:
-                  break;
-              }
+            if (data.fix && data.fixNode) {
+              return fixer.replaceText(data.fixNode, data.fix.componentName);
             }
-          },
+          }
         });
       } catch (err) {
         console.log('Found error in: ', context.getFilename());
       }
     }
 
-    function checkPropDeprecation(node, propName, deprecatedPropList, componentName) {
-      const deprecatedProp = _.find(deprecatedPropList, {prop: propName});
-      if (deprecatedProp) {
-        const {prop, message, fix} = deprecatedProp;
-        reportDeprecatedComponentOrProps(node, {name: componentName, prop, message, fix});
-      }
+    const {deprecations} = context.options[0];
+    const organizedDeprecations = organizeDeprecations(deprecations, OrganizationType.SOURCE);
+
+    const imports = [];
+
+    function importDeprecationCheck(node) {
+      const previousImports = _.cloneDeep(imports);
+      addToImports(node, imports);
+      const addedImports = _.differenceWith(imports, previousImports, _.isEqual);
+      addedImports.forEach(currentImport => {
+        const source = Object.keys(currentImport)[0];
+        const deprecationSource = organizedDeprecations[source];
+        if (deprecationSource) {
+          // There are deprecations from this source
+          const components = currentImport[source];
+          const foundDeprecations = deprecationSource.filter(currentDeprecationSource =>
+            Object.values(components).includes(currentDeprecationSource.component)
+          );
+
+          if (foundDeprecations.length > 0) {
+            foundDeprecations.forEach(foundDeprecation => {
+              let fixNode;
+              if (node.type === 'ImportDeclaration') {
+                fixNode = node.specifiers.filter(
+                  specifier => _.get(specifier, 'imported.name') === foundDeprecation.component
+                )[0].imported;
+              } else if (node.type === 'VariableDeclarator') {
+                const properties = _.get(node, 'id.properties');
+                if (properties) {
+                  fixNode = properties.filter(property => _.get(property, 'key.name') === foundDeprecation.component)[0]
+                    .key;
+                }
+              }
+
+              reportDeprecatedComponent(node, {...foundDeprecation, fixNode});
+            });
+          }
+        }
+      });
     }
 
-    function deprecationCheck(node, componentName) {
-      let component = componentName;
-      if (!componentName && node.name) {
-        if (node.name.object) {
-          component = `${node.name.object.name}.${node.name.property.name}`;
-        } else {
-          component = node.name.name;
-        }
-      }
-      if (component) {
-        if (isComponentDeprecated(component)) {
-          const deprecatedComponent = getDeprecatedObject(component);
-          if (isComponentImportMatch(deprecatedComponent)) {
-            const name = deprecatedComponent.component;
-            const message = deprecatedComponent.message;
-            const fix = deprecatedComponent.fix;
-            const props = deprecatedComponent.props;
-  
-            if (!props) {
-              reportDeprecatedComponentOrProps(node, {name, message, fix});
-            } else {
-              const nodeAttributes = node.attributes;
-              nodeAttributes.forEach((att) => {
-                if (att.type === 'JSXAttribute') {
-                  checkPropDeprecation(att, att.name.name, props, name);
-                } else if (att.type === 'JSXSpreadAttribute') {
-                  const spreadSource = utils.findValueNodeOfIdentifier(att.argument.name, context.getScope());
-                  if (spreadSource) {
-                    _.forEach(spreadSource.properties, (property) => {
-                      const key = _.get(property, 'key');
-                      const propName = _.get(property, 'key.name');
-                      checkPropDeprecation(key, propName, props, name);
-                    });
-                  }
+    function usageDeprecationCheck(node) {
+      imports.forEach(currentImport => {
+        const source = Object.keys(currentImport)[0];
+        const componentLocalName = getComponentLocalName(node);
+        if (componentLocalName) {
+          const deprecationSource = organizedDeprecations[source];
+          if (deprecationSource) {
+            // There are deprecations from this source
+            const componentName = getComponentName(componentLocalName, imports);
+            const foundDeprecations = deprecationSource.filter(
+              currentDeprecationSource => currentDeprecationSource.component === componentName
+            );
+
+            if (foundDeprecations.length > 0) {
+              const foundDeprecation = foundDeprecations[0];
+
+              // This is a little hacky, is there a better way?
+              if (componentLocalName.includes(foundDeprecation.component)) {
+                let fixNode;
+                const dotCount = (componentLocalName.match(/\./g) || []).length;
+                if (dotCount <= 1) {
+                  fixNode =
+                    componentLocalName === foundDeprecation.component
+                      ? _.get(node, 'name')
+                      : _.get(node, 'name.property');
                 }
-              });
+
+                reportDeprecatedComponent(node, {...foundDeprecation, fixNode});
+              }
             }
           }
         }
-      }
-    }
-
-    const importSpecifiers = {};
-
-    function createImportsObject(node) {
-      const source = node.source.value;
-      if (Object.keys(deprecationSources).indexOf(source) !== -1) {
-        if (!(source in importSpecifiers)) {
-          importSpecifiers[source] = [];
-        }
-        const specifiers = node.specifiers;
-        if (specifiers) {
-          specifiers.forEach((s) => {
-            importSpecifiers[source].push(s.local.name);
-            checkSpecifier(s.local.name, node);
-          });
-        }
-      }
-    }
-
-    function checkSpecifier(name, node) {
-      const deprecatedComponent = getDeprecatedObject(name);
-      if (deprecatedComponent && !deprecatedComponent.props) {
-        deprecationCheck(node, name);
-      }
-    }
-
-    const {deprecations} = context.options[0];
-    const deprecationSources = createDeprecationSourcesObject();
-
-    function createDeprecationSourcesObject() {
-      const obj = {};
-      if (!deprecations) {
-        return obj;
-      }
-      deprecations.forEach((element) => {
-        if (!(element.source in obj)) {
-          obj[element.source] = [element.component];
-        } else {
-          obj[element.source].push(element.component);
-        }
       });
-      return obj;
-    }
-
-    function isComponentDeprecated(component) {
-      const values = _.chain(deprecationSources)
-        .values()
-        .flatten()
-        .value();
-      return _.includes(values, component);
-    }
-
-    function isComponentImportMatch(component) {
-      // in case it's a sub component like List.Item
-      const componentName = _.split(component.component, '.')[0];
-      if (component.source in importSpecifiers) {
-        return _.includes(importSpecifiers[component.source], componentName);
-      }
-      return false;
-    }
-
-    function getDeprecatedObject(component) {
-      let jsonElement;
-      deprecations.forEach((element) => {
-        if (element.component === component) {
-          jsonElement = element;
-        }
-      });
-      return jsonElement;
     }
 
     return {
-      ImportDeclaration: node => createImportsObject(node),
-      JSXOpeningElement: node => deprecationCheck(node),
+      ImportDeclaration: node => importDeprecationCheck(node),
+      VariableDeclarator: node => importDeprecationCheck(node),
+      JSXOpeningElement: node => usageDeprecationCheck(node)
     };
-  },
+  }
 };
+
+// Testing support for List.Part deprecations (module.List.Part)
+// let fixNode = _.get(node, 'name');
+// if (componentLocalName !== foundDeprecation.component) {
+//   const objectCount = (componentLocalName.replace(`${foundDeprecation.component}`, '').match(/\./g) || []).length;
+//   const objects = '.object'.repeat(objectCount);
+//   fixNode = _.get(node, `name${objects}.property`);
+// }

@@ -2,10 +2,9 @@ const RuleTester = require('eslint').RuleTester;
 const rule = require('../../../lib/rules/typography-deprecation');
 const deprecationsJson = require('../../typography_deprecation.json');
 
-
 RuleTester.setDefaultConfig({
   parser: 'babel-eslint',
-  parserOptions: {ecmaVersion: 6, ecmaFeatures: {jsx: true}},
+  parserOptions: {ecmaVersion: 6, ecmaFeatures: {jsx: true}}
 });
 
 const ruleTester = new RuleTester();
@@ -17,9 +16,9 @@ const notOurSource2 = 'another-source-2';
 const options = [{deprecations: deprecationsJson, source: ourSource}];
 const optionsWithDate = [{deprecations: deprecationsJson, source: ourSource, dueDate: '2 November, Friday'}];
 
-const ourImport = `import {Typography} from '${ourSource}';`
-const ourImportRenamed = `import {Typography as UITypography} from '${ourSource}';`
-const notOurImport = `import {Typography} from '${notOurSource}';`
+const ourImport = `import {Typography} from '${ourSource}';`;
+const ourImportRenamed = `import {Typography as UITypography} from '${ourSource}';`;
+const notOurImport = `import {Typography} from '${notOurSource}';`;
 
 const constValid1 = 'const typography = Typography.valid;';
 const constValidRenamed1 = 'const typography = UITypography.valid;';
@@ -193,6 +192,7 @@ class Example extends React.Component {
         <ScrollView contentContainerStyle={{paddingBottom: 10}}>
           {this.renderComponent1()}
           <List.Item
+            title={'bla'}
             prop6={this.props.prop6}
             prop7={this.props.prop7}
             prop8={this.props.prop8}
@@ -219,155 +219,173 @@ ruleTester.run('typography-deprecation', rule, {
   valid: [
     {
       options: options,
-      code: `${notOurImport} ${constDeprecated1}`,
+      code: `${notOurImport} ${constDeprecated1}`
     },
     {
       options: options,
-      code: `${ourImport} ${constValid1}`,
+      code: `${ourImport} ${constValid1}`
     },
     {
       options: options,
-      code: `${ourImport} ${constValid2}`,
+      code: `${ourImport} ${constValid2}`
     },
     {
       options: options,
-      code: `${ourImport} ${constValid3}`,
+      code: `${ourImport} ${constValid3}`
     },
     {
       options: options,
-      code: `${ourImport} ${styleSheetValid1}`,
+      code: `${ourImport} ${styleSheetValid1}`
     },
     {
       options: options,
-      code: `${ourImport} ${styleSheetValid2}`,
+      code: `${ourImport} ${styleSheetValid2}`
     },
     {
       options: options,
-      code: `${ourImport} ${jsxValid1}`,
+      code: `${ourImport} ${jsxValid1}`
     },
     {
       options: options,
-      code: `${ourImport} ${jsxValid2}`,
+      code: `${ourImport} ${jsxValid2}`
     },
     {
       options: options,
-      code: `${jsxValid2}`,
+      code: `${jsxValid2}`
     },
     {
       options: options,
-      code: `${ourImport} ${jsxValid3}`,
+      code: `${ourImport} ${jsxValid3}`
     },
     {
       options: options,
-      code: `${ourImport} ${jsxValid4}`,
+      code: `${ourImport} ${jsxValid4}`
     },
     {
       options: options,
-      code: `${ourImport} ${jsxValid4}`,
+      code: `${ourImport} ${jsxValid4}`
     },
     {
       options: options,
-      code: `${fullClassValid}`,
+      code: `${fullClassValid}`
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${constValidRenamed1}`,
+      code: `${ourImportRenamed} ${constValidRenamed1}`
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${constValidRenamed2}`,
+      code: `${ourImportRenamed} ${constValidRenamed2}`
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${constValid3}`,
+      code: `${ourImportRenamed} ${constValid3}`
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${styleSheetValidRenamed1}`,
+      code: `${ourImportRenamed} ${styleSheetValidRenamed1}`
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${styleSheetValidRenamed2}`,
+      code: `${ourImportRenamed} ${styleSheetValidRenamed2}`
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${jsxValidRenamed1}`,
+      code: `${ourImportRenamed} ${jsxValidRenamed1}`
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${jsxValid2}`,
+      code: `${ourImportRenamed} ${jsxValid2}`
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${jsxValidRenamed3}`,
+      code: `${ourImportRenamed} ${jsxValidRenamed3}`
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${jsxValid4}`,
+      code: `${ourImportRenamed} ${jsxValid4}`
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${jsxValid4}`,
+      code: `${ourImportRenamed} ${jsxValid4}`
     },
     {
       options: options,
-      code: `${fullClassValidRenamed}`,
+      code: `${fullClassValidRenamed}`
+    },
+    {
+      options: options,
+      code: `
+          ${ourImport}
+          import {List} from 'another-source';
+          <List.Item title={'bla'} />`
     }
   ],
   invalid: [
     {
       options: options,
       code: `${ourImport} ${constDeprecated1}`,
+      output: `${ourImport} const typography = Typography.valid;`,
       errors: [{message: error}]
     },
     {
       options: optionsWithDate,
       code: `${ourImport} ${constDeprecated1}`,
+      output: `${ourImport} const typography = Typography.valid;`,
       errors: [{message: error + errorDate}]
     },
     {
       options: optionsWithDate,
       code: `${ourImport} ${constDeprecated2}`,
+      output: `${ourImport} const typography = <Text style={Typography.valid}>Title</Text>;`,
       errors: [{message: error + errorDate}]
     },
     {
       options: optionsWithDate,
       code: `${ourImport} ${constDeprecated3}`,
+      output: `${ourImport} const typography = <Text valid>Title</Text>;`,
       errors: [{message: error + errorDate}]
     },
     {
       options: options,
       code: `${ourImport} ${styleSheetDeprecated1}`,
+      output: `${ourImport} const styles = StyleSheet.create({text: {...Typography.valid}});`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImport} ${styleSheetDeprecated2}`,
+      output: `${ourImport} const styles = StyleSheet.create({text: Typography.valid});`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImport} ${jsxDeprecated1}`,
+      output: `${ourImport} <Text style={Typography.valid}>Title</Text>`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImport} ${jsxDeprecated2}`,
+      output: `${ourImport} <Text valid>Title</Text>`,
       errors: [{message: error}]
     },
     {
       options: options,
-      code: `${jsxDeprecated2}`,
+      code: `${ourImport} ${jsxDeprecated2}`,
+      output: `${ourImport} <Text valid>Title</Text>`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImport} ${jsxDeprecated3}`,
+      output: `${ourImport} <View><Text style={Typography.valid}>Title</Text></View>`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImport} ${jsxDeprecated4}`,
+      output: `${ourImport} <View><Text valid>Title</Text></View>`,
       errors: [{message: error}]
     },
     {
@@ -378,51 +396,61 @@ ruleTester.run('typography-deprecation', rule, {
     {
       options: options,
       code: `${ourImportRenamed} ${constDeprecatedRenamed1}`,
+      output: `${ourImportRenamed} const typography = UITypography.valid;`,
       errors: [{message: error}]
     },
     {
       options: optionsWithDate,
       code: `${ourImportRenamed} ${constDeprecatedRenamed1}`,
+      output: `${ourImportRenamed} const typography = UITypography.valid;`,
       errors: [{message: error + errorDate}]
     },
     {
       options: optionsWithDate,
       code: `${ourImportRenamed} ${constDeprecatedRenamed2}`,
+      output: `${ourImportRenamed} const typography = <Text style={UITypography.valid}>Title</Text>;`,
       errors: [{message: error + errorDate}]
     },
     {
       options: optionsWithDate,
       code: `${ourImportRenamed} ${constDeprecated3}`,
+      output: `${ourImportRenamed} const typography = <Text valid>Title</Text>;`,
       errors: [{message: error + errorDate}]
     },
     {
       options: options,
       code: `${ourImportRenamed} ${styleSheetDeprecatedRenamed1}`,
+      output: `${ourImportRenamed} const styles = StyleSheet.create({text: {...UITypography.valid}});`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImportRenamed} ${styleSheetDeprecatedRenamed2}`,
+      output: `${ourImportRenamed} const styles = StyleSheet.create({text: UITypography.valid});`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImportRenamed} ${jsxDeprecatedRenamed1}`,
+      output: `${ourImportRenamed} <Text style={UITypography.valid}>Title</Text>`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImportRenamed} ${jsxDeprecated2}`,
+      output: `${ourImportRenamed} <Text valid>Title</Text>`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImportRenamed} ${jsxDeprecatedRenamed3}`,
+      output: `${ourImportRenamed} <View><Text style={UITypography.valid}>Title</Text></View>`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImportRenamed} ${jsxDeprecated4}`,
+      output: `${ourImportRenamed} <View><Text valid>Title</Text></View>`,
       errors: [{message: error}]
     },
     {
@@ -440,5 +468,5 @@ ruleTester.run('typography-deprecation', rule, {
       code: `${fullClassTest2}`,
       errors: [{message: error}]
     }
-  ],
+  ]
 });

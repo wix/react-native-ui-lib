@@ -2,25 +2,14 @@
   {
     "component": "Avatar",
     "source": "module-with-deprecations",
-    "message": "",
-    "props": [
-      {
-        "prop": "url",
-        "message": "Please use the 'source' prop instead."
-      }
-    ]
+    "message": "Please use the 'Picture' component instead.",
+    "fix": {"componentName": "Picture"}
   },
   {
     "component": "Button",
     "source": "module-with-deprecations",
-    "message": "",
-    "props": [
-      {
-        "prop": "text",
-        "message": "Please use the 'label' prop instead.",
-        "fix": {"propName": "label"}
-      }
-    ]
+    "message": "Please use the 'Touch' component instead.",
+    "fix": {"componentName": "Touch"}
   },
   {
     "component": "TextInput",
@@ -31,11 +20,13 @@
   {
     "component": "List.Part",
     "source": "module-with-deprecations",
-    "message": "Please use the 'List.Item' component instead."
+    "message": "Please use the 'List.Item' component instead (fix is working partially).",
+    "fix": {"componentName": "List.Item"}
   },
   {
     "component": "List",
     "source": "another-module-with-deprecations",
-    "message": "Please use the 'ListList' component instead."
+    "message": "Please use the 'ListList' component instead.",
+    "fix": {"componentName": "ListList"}
   }
 ]

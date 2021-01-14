@@ -1,9 +1,17 @@
 const _ = require('lodash');
 const utils = require('../utils');
+const {
+  organizeDeprecations,
+  OrganizationType,
+  getLocalizedFix,
+  addToImports,
+  getComponentLocalName,
+  getComponentName
+} = utils;
 
 const MAP_SCHEMA = {
   type: 'object',
-  additionalProperties: true,
+  additionalProperties: true
 };
 
 module.exports = {
@@ -11,15 +19,17 @@ module.exports = {
     docs: {
       description: 'typography is deprecated',
       category: 'Best Practices',
-      recommended: true,
+      recommended: true
     },
     messages: {
-      uiLib: 'This typography is deprecated.',
+      uiLib: 'This typography is deprecated.'
     },
     fixable: 'code',
-    schema: [MAP_SCHEMA],
+    schema: [MAP_SCHEMA]
   },
   create(context) {
+    const defaultImportName = 'Typography';
+
     function reportDeprecatedTypography(node, options, useShortVersion) {
       try {
         const {dueDate} = context.options[0];
@@ -33,52 +43,57 @@ module.exports = {
               const fix = useShortVersion ? options.fix.substr(`${defaultImportName}.`.length) : options.fix;
               return fixer.replaceText(node, fix);
             }
-          },
+          }
         });
       } catch (err) {
         console.log('Found error in: ', context.getFilename());
       }
     }
 
-    const defaultImportName = 'Typography';
     const {deprecations, source} = context.options[0];
-    let localImportSpecifier;
+    const organizedDeprecations = organizeDeprecations(deprecations, OrganizationType.SOURCE, source);
 
-    function setLocalImportSpecifier(node) {
-      localImportSpecifier = utils.getLocalImportSpecifier(node, source, defaultImportName);
-    }
+    const imports = [];
 
-    function findAndReportDeprecation(node, possibleDeprecation, useShortVersion) {
-      const path = `${defaultImportName}.${possibleDeprecation}`;
-      const foundDeprecation = _.find(deprecations, {path});
-      if (foundDeprecation) {
-        reportDeprecatedTypography(node, foundDeprecation, useShortVersion);
-      }
+    function findAndReportDeprecation(node, useDefaultImport, useShortVersion) {
+      imports.forEach(currentImport => {
+        const source = Object.keys(currentImport)[0];
+        const prefix = useDefaultImport ? `${defaultImportName}.` : '';
+        const componentLocalName = `${prefix}${getComponentLocalName(node)}`;
+        if (componentLocalName) {
+          const deprecationSource = organizedDeprecations[source];
+          if (deprecationSource) {
+            // There are deprecations from this source
+            const componentName = getComponentName(componentLocalName, imports) || componentLocalName; // this (|| componentLocalName) is only needed in JSXAttribute but seem to cause no harm in MemberExpression
+            const foundDeprecations = deprecationSource.filter(
+              currentDeprecationSource => currentDeprecationSource.path === componentName
+            );
+
+            if (foundDeprecations.length > 0) {
+              const fix = useDefaultImport
+                ? foundDeprecations[0].fix
+                : getLocalizedFix(foundDeprecations[0].fix, currentImport);
+              reportDeprecatedTypography(node, {...foundDeprecations[0], fix}, useShortVersion);
+            }
+          }
+        }
+      });
     }
 
     function testMemberDeprecation(node) {
-      if (node && node.object && node.property && node.object.name === localImportSpecifier) {
-        findAndReportDeprecation(node, node.property.name, false);
-      }
+      findAndReportDeprecation(node, false, false);
     }
 
     function testJSXAttribute(node) {
-      if (node && node.name) {
-        findAndReportDeprecation(node, node.name.name, true);
-      }
+      if (node.value) return; // so we only have truthy props (title and not title={'Text'})
+      findAndReportDeprecation(node, true, true);
     }
 
     return {
-      ImportDeclaration: node => !localImportSpecifier && setLocalImportSpecifier(node),
-      MemberExpression: node => localImportSpecifier && testMemberDeprecation(node),
-      JSXAttribute: node => testJSXAttribute(node),
-
-
-      // JSXOpeningElement: node => testJSXOpeningElement(node),
-      // ObjectExpression: node => testObjectExpression(node),
-      // VariableDeclarator: node => testVariableDeclarator(node),
-      // Property: node => testProperty(node),
-      // JSXSpreadAttribute: node => testJSXSpreadAttribute(node)
+      ImportDeclaration: node => addToImports(node, imports),
+      VariableDeclarator: node => addToImports(node, imports),
+      MemberExpression: node => testMemberDeprecation(node),
+      JSXAttribute: node => testJSXAttribute(node)
     };
-  },
+  }
 };

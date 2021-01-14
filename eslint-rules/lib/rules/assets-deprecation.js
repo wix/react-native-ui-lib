@@ -1,9 +1,17 @@
 const _ = require('lodash');
 const utils = require('../utils');
+const {
+  organizeDeprecations,
+  OrganizationType,
+  getLocalizedFix,
+  addToImports,
+  getComponentLocalName,
+  getComponentName
+} = utils;
 
 const MAP_SCHEMA = {
   type: 'object',
-  additionalProperties: true,
+  additionalProperties: true
 };
 
 module.exports = {
@@ -11,13 +19,13 @@ module.exports = {
     docs: {
       description: 'asset is deprecated',
       category: 'Best Practices',
-      recommended: true,
+      recommended: true
     },
     messages: {
-      uiLib: 'This asset is deprecated.',
+      uiLib: 'This asset is deprecated.'
     },
     fixable: 'code',
-    schema: [MAP_SCHEMA],
+    schema: [MAP_SCHEMA]
   },
   create(context) {
     function reportDeprecatedAssets(node, options) {
@@ -32,91 +40,43 @@ module.exports = {
             if (options.fix) {
               return fixer.replaceText(node, options.fix);
             }
-          },
+          }
         });
       } catch (err) {
         console.log('Found error in: ', context.getFilename());
       }
     }
 
-    const defaultImportName = 'Assets';
     const {deprecations, source} = context.options[0];
-    let localImportSpecifier;
+    const organizedDeprecations = organizeDeprecations(deprecations, OrganizationType.SOURCE, source);
+    const imports = [];
 
-    function setLocalImportSpecifierFromImport(node) {
-      localImportSpecifier = utils.getLocalImportSpecifier(node, source, defaultImportName);
-    }
+    function deprecationCheck(node) {
+      imports.forEach(currentImport => {
+        const source = Object.keys(currentImport)[0];
+        const componentLocalName = getComponentLocalName(node);
+        if (componentLocalName) {
+          const deprecationSource = organizedDeprecations[source];
+          if (deprecationSource) {
+            // There are deprecations from this source
+            const componentName = getComponentName(componentLocalName, imports);
+            const foundDeprecations = deprecationSource.filter(
+              currentDeprecationSource => currentDeprecationSource.path === componentName
+            );
 
-    function setLocalImportSpecifierFromRequire(node) {    
-      if (node.init && node.init.callee && node.init.callee.name === 'require') {
-        if (node.id && node.id.properties) {
-          _.map(node.id.properties, property => {
-            if (property.key && property.key.name === defaultImportName) {
-              if (property.value && property.value.name) {
-                localImportSpecifier = property.value.name;
-              } else {
-                localImportSpecifier = property.key.name;
-              }
-            }
-          });
-        } 
-      }
-    }
-
-    function getAssetString(node, pathString = '') {
-      if (node) {
-        if (node.object) {
-          if (node.property) {
-            let name;
-            if (node.property.type === 'Identifier' && node.property.name) {
-              name = node.property.name;
-            } else if (node.property.type === 'Literal' && node.property.value) {
-              name = node.property.value;
-            } else if (node.property.type === 'CallExpression' && node.property.callee && node.property.callee.name) {
-              // TODO: ¯\_(ツ)_/¯
-            }
-
-            if (name) {
-              pathString = (pathString === '') ? `${name}` : `${name}.${pathString}`;
-              return getAssetString(node.object, pathString);
+            if (foundDeprecations.length > 0) {
+              const localizedFix = getLocalizedFix(foundDeprecations[0].fix, currentImport);
+              reportDeprecatedAssets(node, {...foundDeprecations[0], fix: localizedFix});
             }
           }
-        } else if (node.name === localImportSpecifier) {
-          pathString = `${node.name}.${pathString}`;
-          return pathString;
         }
-      }
-
-      return undefined;
-    }
-
-    function findAndReportDeprecation(node, possibleDeprecation) {
-      possibleDeprecation = possibleDeprecation.replace(localImportSpecifier, defaultImportName);
-      const deprecatedObject = _.find(deprecations, {path: possibleDeprecation});
-      if (deprecatedObject) {
-        reportDeprecatedAssets(node, deprecatedObject);
-      }
-    }
-
-    function testMemberDeprecation(node) {
-      const assetString = getAssetString(node);
-      if (assetString) {
-        findAndReportDeprecation(node, assetString);
-      }
+      });
     }
 
     return {
-      ImportDeclaration: node => !localImportSpecifier && setLocalImportSpecifierFromImport(node),
-      VariableDeclarator: node => !localImportSpecifier && setLocalImportSpecifierFromRequire(node),
-      MemberExpression: node => localImportSpecifier && testMemberDeprecation(node),
-
-      // ExpressionStatement: node => testExpressionStatement(node),
-      // AssignmentExpression: node => testAssignmentExpression(node),
-      // JSXAttribute: node => testJSXAttribute(node),
-      // JSXOpeningElement: node => testJSXOpeningElement(node),
-      // JSXSpreadAttribute: node => testJSXSpreadAttribute(node),
-      // ObjectExpression: node => testObjectExpression(node),
-      // Property: node => testProperty(node),
+      ImportDeclaration: node => addToImports(node, imports),
+      VariableDeclarator: node => addToImports(node, imports),
+      MemberExpression: node => deprecationCheck(node)
     };
-  },
+  }
 };
