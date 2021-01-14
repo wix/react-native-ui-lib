@@ -141,8 +141,8 @@ export default class BadgesScreen extends Component {
           Counter Icon Badges
         </Text>
         <View row paddingH-15>
-            <Badge marginR-10 withCounterIcon label={'9999'} labelFormatterLimit={3} icon={bell} backgroundColor={Colors.red30} iconStyle={{height: 18, width: 18}}/>
-            <Badge marginR-10 withCounterIcon label={'4'} icon={bell} backgroundColor={Colors.red30} color={Colors.blue30} iconStyle={{height: 18, width: 18}}/>
+            <Badge marginR-10 label={'9999'} labelFormatterLimit={3} icon={bell} backgroundColor={Colors.red30}/>
+            <Badge marginR-10 label={'4'} icon={bell} backgroundColor={Colors.red30}/>
         </View>
 
       </ScrollView>

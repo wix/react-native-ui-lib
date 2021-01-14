@@ -24,7 +24,6 @@ UI Toolset & Components Library for React Native
 [![NPM Downloads](https://img.shields.io/npm/dm/react-native-ui-lib.svg?style=flat)](https://www.npmjs.com/package/react-native-ui-lib)
 
 
-Read more in our [Wiki](https://github.com/wix/react-native-ui-lib/wiki). <br>
 Check out our [Docs](https://wix.github.io/react-native-ui-lib/). <br>
 Our [Discord Channel](https://discord.gg/2eW4g6Z)
 
@@ -35,10 +34,10 @@ Download our Expo demo app <br>
 
 ## Installing
 
-See setup instructions [here](https://github.com/wix/react-native-ui-lib/wiki/SETUP).
+See setup instructions [here](https://wix.github.io/react-native-ui-lib/getting-started/setup).
 
 #### New Major Version 5.0
-See [breaking changes](https://github.com/wix/react-native-ui-lib/wiki/V5-%5BBreaking-Change%5D)
+See [breaking changes](https://wix.github.io/react-native-ui-lib/getting-started/v5)
 
 #### For React Native >= 0.60.0
 please use `react-native-ui-lib`
@@ -106,7 +105,7 @@ ThemeManager.setComponentTheme('Button', (props, context) => {
 
 ### Step 3
 Use it all together. 
-Your configurations will be applied on uilib components so you can use them easily with [modifiers](https://github.com/wix/react-native-ui-lib/wiki/MODIFIERS). 
+Your configurations will be applied on uilib components so you can use them easily with [modifiers](https://wix.github.io/react-native-ui-lib/foundation/modifiers). 
 
 ```
 // MyScreen.js
@@ -129,3 +128,4 @@ class MyScreen extends Component {
   }
 }
 ```
+

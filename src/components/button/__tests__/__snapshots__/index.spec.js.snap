@@ -852,6 +852,7 @@ exports[`Button container size should have no padding of button is an icon butto
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    onError={[Function]}
     source={14}
     style={
       Array [
@@ -1657,6 +1658,7 @@ exports[`Button icon should apply color on icon 1`] = `
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    onError={[Function]}
     source={12}
     style={
       Array [
@@ -1709,6 +1711,7 @@ exports[`Button icon should apply color on icon 2`] = `
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    onError={[Function]}
     source={12}
     style={
       Array [
@@ -1761,6 +1764,7 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    onError={[Function]}
     source={12}
     style={
       Array [
@@ -1818,6 +1822,7 @@ exports[`Button icon should return icon style according to different variations 
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    onError={[Function]}
     source={12}
     style={
       Array [
@@ -1870,6 +1875,7 @@ exports[`Button icon should return icon style according to different variations 
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    onError={[Function]}
     source={12}
     style={
       Array [
@@ -1922,6 +1928,7 @@ exports[`Button icon should return icon style according to different variations 
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    onError={[Function]}
     source={12}
     style={
       Array [
@@ -2875,6 +2882,7 @@ exports[`Button labelColor should return undefined color if this is an icon butt
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    onError={[Function]}
     source={12}
     style={
       Array [
