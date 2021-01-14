@@ -312,6 +312,13 @@ ruleTester.run('typography-deprecation', rule, {
     {
       options: options,
       code: `${fullClassValidRenamed}`,
+    },
+    {
+      options: options,
+      code: `
+          ${ourImport}
+          import {List} from 'another-source';
+          <List.Item title={'bla'} />`
     }
   ],
   invalid: [

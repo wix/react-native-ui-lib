@@ -63,7 +63,7 @@ module.exports = {
     }
 
     function testJSXAttribute(node) {
-      if (node && node.name) {
+      if (node && node.name && !node.value) {
         findAndReportDeprecation(node, node.name.name, true);
       }
     }
