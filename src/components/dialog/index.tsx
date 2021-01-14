@@ -168,7 +168,7 @@ class Dialog extends Component<DialogProps, DialogState> {
       setTimeout(() => { // unfortunately this is needed if a modal needs to open on iOS
         _.invoke(this.props, 'onDialogDismissed', this.props);
         _.invoke(this.props, 'onModalDismissed', this.props);
-      }, 50);
+      }, 100);
     }
   }
 
