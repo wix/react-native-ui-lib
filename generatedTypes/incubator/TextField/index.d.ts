@@ -48,6 +48,10 @@ export declare type TextFieldProps = MarginModifiers & PaddingModifiers & Typogr
      */
     validateOnBlur?: boolean;
     /**
+     * Callback for when field validity has changed
+     */
+    onChangeValidity?: (isValid: boolean) => void;
+    /**
      * The position of the validation message (top/bottom)
      */
     validationMessagePosition?: ValidationMessagePosition;
@@ -102,6 +106,10 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
      */
     validateOnBlur?: boolean | undefined;
     /**
+     * Callback for when field validity has changed
+     */
+    onChangeValidity?: ((isValid: boolean) => void) | undefined;
+    /**
      * The position of the validation message (top/bottom)
      */
     validationMessagePosition?: ValidationMessagePosition | undefined;
@@ -152,6 +160,10 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
      * Should validate when losing focus of TextField
      */
     validateOnBlur?: boolean | undefined;
+    /**
+     * Callback for when field validity has changed
+     */
+    onChangeValidity?: ((isValid: boolean) => void) | undefined;
     /**
      * The position of the validation message (top/bottom)
      */
@@ -204,6 +216,10 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
      */
     validateOnBlur?: boolean | undefined;
     /**
+     * Callback for when field validity has changed
+     */
+    onChangeValidity?: ((isValid: boolean) => void) | undefined;
+    /**
      * The position of the validation message (top/bottom)
      */
     validationMessagePosition?: ValidationMessagePosition | undefined;
@@ -254,6 +270,10 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
      * Should validate when losing focus of TextField
      */
     validateOnBlur?: boolean | undefined;
+    /**
+     * Callback for when field validity has changed
+     */
+    onChangeValidity?: ((isValid: boolean) => void) | undefined;
     /**
      * The position of the validation message (top/bottom)
      */

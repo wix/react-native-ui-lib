@@ -204,6 +204,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validateOnStart?: boolean | undefined;
     validateOnChange?: boolean | undefined;
     validateOnBlur?: boolean | undefined;
+    onChangeValidity?: ((isValid: boolean) => void) | undefined;
     fieldStyle?: import("react-native").ViewStyle | undefined;
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
@@ -581,6 +582,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validateOnStart?: boolean | undefined;
     validateOnChange?: boolean | undefined;
     validateOnBlur?: boolean | undefined;
+    onChangeValidity?: ((isValid: boolean) => void) | undefined;
     fieldStyle?: import("react-native").ViewStyle | undefined;
     containerStyle?: import("react-native").ViewStyle | undefined;
     modifiers: import("../../commons/modifiers").ExtractedStyle;
@@ -1078,6 +1080,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     validateOnStart?: boolean | undefined;
     validateOnChange?: boolean | undefined;
     validateOnBlur: boolean;
+    onChangeValidity?: ((isValid: boolean) => void) | undefined;
     fieldStyle: import("react-native").ViewStyle | {
         borderBottomWidth: number;
         borderBottomColor: string;
