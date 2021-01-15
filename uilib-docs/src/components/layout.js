@@ -2,20 +2,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
+import {graphql, useStaticQuery} from 'gatsby';
 
 import Header from './header';
 import Navbar from '../components/navbar';
 import './layout.scss';
 
-const pathPrefix = '/react-native-ui-lib';
-
 const Layout = ({children, location}) => {
+  const data = useStaticQuery(
+    graphql`
+      query {
+        site {
+          siteMetadata {
+            title
+            description
+            domain
+          }
+        }
+      }
+    `);
+
   const {pathname} = location;
+  const {site: {siteMetadata}} = data;
+  
+  const metaTitle = siteMetadata.title;
+  const metaDescription = siteMetadata.description;
+  const pathPrefix = `/${siteMetadata.domain}`;
+  
   const showSidebar = _.replace(pathname, pathPrefix, '') !== '/';
-
-  const metaTitle = 'RNUILib';
-  const metaDescription = 'React Native UI Toolset and Components Library';
-
   return (
     <div className="layout">
       <Helmet>
