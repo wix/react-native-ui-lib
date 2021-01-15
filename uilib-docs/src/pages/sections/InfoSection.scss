@@ -1,0 +1,24 @@
+.info-section {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 40px;
+
+  .column {
+    margin-right: 20px;
+    min-width: 200px;
+
+    &:last-child {
+      width: 500px;
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .qr {
+    height: 100px;
+  }
+}

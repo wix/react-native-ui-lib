@@ -9,15 +9,13 @@ import remx from '../../images/newDesign/remx.png';
 export default () => {
   return (
     <div className="libraries-section">
-      <div className="inner">
-        <h1 className="headline">Check out more libraries made by us!</h1>
+      <h1 className="headline">Check out more libraries made by us!</h1>
 
-        <div className="libraries">
-          <Library name="RNN" image={rnn} link="https://github.com/wix/react-native-navigation" />
-          <Library name="Detox" image={detox} link="https://github.com/wix/Detox" />
-          <Library name="Calendars" image={calendars} link="https://github.com/wix/react-native-calendars" />
-          <Library name="Remx" image={remx} link="https://github.com/wix/remx" />
-        </div>
+      <div className="libraries">
+        <Library name="RNN" image={rnn} link="https://github.com/wix/react-native-navigation" />
+        <Library name="Detox" image={detox} link="https://github.com/wix/Detox" />
+        <Library name="Calendars" image={calendars} link="https://github.com/wix/react-native-calendars" />
+        <Library name="Remx" image={remx} link="https://github.com/wix/remx" />
       </div>
     </div>
   );

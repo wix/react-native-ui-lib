@@ -16,14 +16,16 @@
 
     .card {
       width: 20vw;
+      min-width: 300px;
+      margin-right: 20px;
       box-shadow: 6px 6px 50px 15px rgba($primary, 0.05);
       background-color: $white;
       text-align: center;
       border-radius: 20px;
-      padding: 3% 5%;
+      padding: 40px;
 
       img {
-        width: 55%;
+        width: 45%;
       }
     }
   }

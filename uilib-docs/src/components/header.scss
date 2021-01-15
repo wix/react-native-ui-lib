@@ -10,6 +10,10 @@
   align-items: center;
   padding: 0px 11%;
   background: $white;
+  z-index: 100;
+  
+  background-color: rgba(white, .15);  
+  backdrop-filter: blur(50px);
 
   .logo {
     height: 40px;

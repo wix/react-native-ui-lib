@@ -6,7 +6,7 @@ import introCover from '../../images/newDesign/introCover.jpg';
 export default () => {
   return (
     <div className="intro">
-      <img src={introCover} />
+      <img src={introCover} className="intro-cover" />
       <div className="intro-inner">
         <div className="intro-content">
           <p>

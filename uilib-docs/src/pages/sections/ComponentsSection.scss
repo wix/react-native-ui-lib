@@ -8,8 +8,6 @@
   width: 100%;
 
   .components-inner {
-    width: 80%;
-    min-width: 50vw;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -23,6 +21,7 @@
   }
 
   img {
-    width: 100%;
+    width: 100vw;
+    min-width: 400px;
   }
 }

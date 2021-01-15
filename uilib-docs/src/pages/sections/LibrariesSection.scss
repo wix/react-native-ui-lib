@@ -1,51 +1,48 @@
 @import 'src/styles/constants';
 
 .libraries-section {
-  display: flex;
-  justify-content: center;
   width: 100vw;
+  padding: 0 14%;
   height: 250px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: $primary;
   color: $white;
 
-  .inner {
-    width: 80%;
-    min-width: 50vw;
+  .headline {
+    width: 20%;
+    min-width: 400px;
+    align-self: center;
+    margin-right: 40px;
+    font-weight: bold;
+  }
+
+  .libraries {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    // border: 1px solid;
 
-    .headline {
-      width: 28%;
-      min-width: 400px;
-      align-self: center;
-      margin-right: 40px;
-    }
+    .library {
+      text-align: center;
+      color: $white;
+      margin-left: 20px;
 
-    .libraries {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 50%;
+      img {
+        height: 5vw;
+        min-height: 60px;
+        filter: grayscale(0.8);
+        transition: 0.3s all;
+      }
 
+      .name {
+        margin: 0;
+      }
 
-      .library {
-        text-align: center;
-        color: $white;
-
-        img {
-          height: 5vw;
-          min-height: 60px;
-          filter: grayscale(0.8);
-          transition: 0.3s all;
-        }
-
-        .name {
-          margin: 0;
-        }
-
-        &:hover img {
-          filter: grayscale(0);
-        }
+      &:hover img {
+        filter: grayscale(0);
       }
     }
   }
