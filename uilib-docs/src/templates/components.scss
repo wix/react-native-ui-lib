@@ -186,9 +186,9 @@ $tabletOfContentWidth: 20vw;
   .notes {
     background-color: $orange30;
     color: $white;
-    padding: 10px;
+    padding: 20px;
     border-radius: 4px;
-    margin-top: 40px;
+    margin-top: 20px;
 
     .title {
       font-weight: 600;
@@ -209,7 +209,7 @@ $tabletOfContentWidth: 20vw;
 
 .docs-page {
   @include component-api();
-  @include tabletOfContent();
+  @include notes();
 
   display: flex;
   flex-direction: row;
@@ -275,6 +275,5 @@ $tabletOfContentWidth: 20vw;
     }
 
     @include modifiersAndExtends();
-    @include notes();
   }
 }

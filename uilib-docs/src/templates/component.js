@@ -204,7 +204,7 @@ export default class ComponentTemplate extends Component {
               })}
 
               <p className="description">{componentInfo.description}</p>
-              {this.renderNotes(componentInfo)}
+              
             </div>
             {shouldRenderRightPart && (
               <div>
@@ -213,6 +213,8 @@ export default class ComponentTemplate extends Component {
               </div>
             )}
           </div>
+
+          {this.renderNotes(componentInfo)}
 
           <ComponentAPI props={componentProps} href={href} />
         </div>
