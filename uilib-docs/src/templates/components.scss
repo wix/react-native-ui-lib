@@ -15,8 +15,18 @@ $tabletOfContentWidth: 20vw;
       margin-bottom: 20px;
 
       .title {
+        position: relative;
         margin: 0;
         font-weight: 600;
+
+        &.focused::before {
+          content: '';
+          position: absolute;
+          top: 10%;
+          left: -10px;
+          height: 80%;
+          border-left: 4px solid $yellow30;
+        }
       }
       .description {
         color: $dark10;
@@ -62,7 +72,7 @@ $tabletOfContentWidth: 20vw;
             content: '';
             position: absolute;
             top: 0;
-            left: -23px;
+            left: -20px;
             display: block;
             height: 100%;
             border-left: 3px solid $yellow30;
@@ -148,6 +158,8 @@ $tabletOfContentWidth: 20vw;
         font-size: $text50;
         padding: 2px 8px;
         border-radius: 2px;
+        margin-right: 4px;
+        margin-bottom: 4px;
 
         &.link {
           background-color: $blue60;
@@ -260,7 +272,6 @@ $tabletOfContentWidth: 20vw;
     .description {
       margin: 0;
       margin-bottom: 12px;
-      // font-weight: 400;
     }
 
     @include modifiersAndExtends();

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Link from 'gatsby-link';
+import classnames from 'classnames';
 
 import './components.scss';
 import importantIcon from '../images/important.svg';
@@ -173,6 +174,7 @@ export default class ComponentTemplate extends Component {
 
   renderComponentPage() {
     const {pageContext} = this.props;
+    const href = this.props?.location?.href;
     const selectedComponent = pageContext.componentNode;
     const componentInfo = this.extractComponentsInfo(selectedComponent);
     const componentProps = _.orderBy(_.get(selectedComponent, 'props'), prop => prop.name.toLowerCase());
@@ -212,7 +214,7 @@ export default class ComponentTemplate extends Component {
             )}
           </div>
 
-          <ComponentAPI props={componentProps} />
+          <ComponentAPI props={componentProps} href={href} />
         </div>
       </div>
     );
@@ -236,17 +238,19 @@ export default class ComponentTemplate extends Component {
   }
 }
 
-const ComponentAPI = ({props}) => {
+const ComponentAPI = ({props, href = ''}) => {
   return (
     <div className="component-api">
       <h1>API</h1>
       {_.map(props, prop => {
         const description = _.get(prop, 'description.text');
         const defaultValue = _.get(prop, 'defaultValue.value');
+        const isFocused = _.includes(href, `#${prop.name}`);
+        const titleClassname = classnames('title', {focused: isFocused});
         return (
           <div className="prop-info">
             <a name={prop.name}>
-              <h3 className="title">{prop.name}</h3>
+              <h3 className={titleClassname}>{prop.name}</h3>
             </a>
             <p className="description">{description}</p>
             <p className="type">{_.get(prop, 'type.name')}</p>
