@@ -6,11 +6,6 @@ import Link from 'gatsby-link';
 import './components.scss';
 import importantIcon from '../images/important.svg';
 
-const IMAGE_TYPES = {
-  GIF: 'GIF',
-  PNG: 'PNG'
-};
-
 export default class ComponentTemplate extends Component {
   static propTypes = {
     pageContext: PropTypes.object
@@ -66,23 +61,6 @@ export default class ComponentTemplate extends Component {
         </span>
       );
     });
-  }
-
-  renderImage(image, index) {
-    return <img key={index} alt={''} src={image} style={{marginRight: 20, width: 320, border: '1px solid black'}} />;
-  }
-
-  renderGif(image, index) {
-    return <img key={index} alt={''} src={image} style={{marginRight: 20, width: 320}} />;
-  }
-
-  renderImages(images, type) {
-    switch (type) {
-      case IMAGE_TYPES.GIF:
-        return images.map(this.renderGif);
-      default:
-        return images.map(this.renderImage);
-    }
   }
 
   renderModifiers(componentInfo) {
@@ -168,13 +146,37 @@ export default class ComponentTemplate extends Component {
     }
   }
 
+  renderVisuals(componentInfo) {
+    const gifs = componentInfo.gif ? componentInfo.gif.split(',') : [];
+    const imgs = componentInfo.image ? componentInfo.image.split(',') : [];
+    const visuals = [...gifs, ...imgs];
+
+    if (!_.isEmpty(visuals)) {
+      return (
+        <div className="visuals">
+          {_.map(visuals, (image, i) => {
+            return <img key={i} alt={''} src={image} />;
+          })}
+        </div>
+      );
+    }
+  }
+
+  renderSidebar(componentInfo, componentProps) {
+    return (
+      <div className="sidebar">
+        <TableOfContent props={componentProps} />
+        {this.renderVisuals(componentInfo)}
+      </div>
+    );
+  }
+
   renderComponentPage() {
     const {pageContext} = this.props;
     const selectedComponent = pageContext.componentNode;
     const componentInfo = this.extractComponentsInfo(selectedComponent);
     const componentProps = _.orderBy(_.get(selectedComponent, 'props'), prop => prop.name.toLowerCase());
-    const gifs = componentInfo.gif ? componentInfo.gif.split(',') : undefined;
-    const imgs = componentInfo.image ? componentInfo.image.split(',') : undefined;
+
     const examples = _.split(componentInfo.example, ',');
 
     const shouldRenderRightPart = componentInfo.modifiers || componentInfo.extends;
@@ -182,6 +184,8 @@ export default class ComponentTemplate extends Component {
     return (
       <div className="docs-page">
         <div className="docs-page__content">
+          {this.renderSidebar(componentInfo, componentProps)}
+
           <div className="component-header">
             <div>
               <h1 className="title inline">{selectedComponent.displayName}</h1>
@@ -209,24 +213,6 @@ export default class ComponentTemplate extends Component {
           </div>
 
           <ComponentAPI props={componentProps} />
-
-          {imgs && (
-            <div className="container">
-              <h3>EXAMPLE</h3>
-              <div className="row">
-                <div className="col-sm-12 text-center">{this.renderImages(imgs, IMAGE_TYPES.PNG)}</div>
-              </div>
-            </div>
-          )}
-
-          {gifs && (
-            <div className="container">
-              <h3>LIVE EXAMPLE</h3>
-              <div className="row">
-                <div className="col-sm-12 text-center">{this.renderImages(gifs, IMAGE_TYPES.GIF)}</div>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     );
@@ -253,36 +239,39 @@ export default class ComponentTemplate extends Component {
 const ComponentAPI = ({props}) => {
   return (
     <div className="component-api">
-      <div>
-        <h1>API</h1>
+      <h1>API</h1>
+      {_.map(props, prop => {
+        const description = _.get(prop, 'description.text');
+        const defaultValue = _.get(prop, 'defaultValue.value');
+        return (
+          <div className="prop-info">
+            <a name={prop.name}>
+              <h3 className="title">{prop.name}</h3>
+            </a>
+            <p className="description">{description}</p>
+            <p className="type">{_.get(prop, 'type.name')}</p>
+            {defaultValue && <p className="default-value">default: {_.get(prop, 'defaultValue.value')}</p>}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+const TableOfContent = ({props}) => {
+  return (
+    <div className="table-of-content">
+      <ul>
+        <div className="list-header">Props</div>
+
         {_.map(props, prop => {
-          const description = _.get(prop, 'description.text');
-          const defaultValue = _.get(prop, 'defaultValue.value');
           return (
-            <div className="prop-info">
-              <a name={prop.name}>
-                <h3 className="title">{prop.name}</h3>
-              </a>
-              <p className="description">{description}</p>
-              <p className="type">{_.get(prop, 'type.name')}</p>
-              {defaultValue && <p className="default-value">default: {_.get(prop, 'defaultValue.value')}</p>}
-            </div>
+            <li>
+              <a href={`#${prop.name}`}>{prop.name}</a>
+            </li>
           );
         })}
-      </div>
-      <div className="table-of-content">
-        <ul>
-          <div className="list-header">Props</div>
-
-          {_.map(props, prop => {
-            return (
-              <li>
-                <a href={`#${prop.name}`}>{prop.name}</a>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      </ul>
     </div>
   );
 };
