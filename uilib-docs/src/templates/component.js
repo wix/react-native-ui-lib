@@ -240,7 +240,7 @@ export default class ComponentTemplate extends Component {
   render() {
     const isIntro = !_.get(this.props, 'pageContext.componentNode');
     return (
-      <div>
+      <div style={{width: '100%'}}>
         {isIntro && (
           <div className="docs-page">
             <div className="docs-page__content">

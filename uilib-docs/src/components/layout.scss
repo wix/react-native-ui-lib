@@ -3,6 +3,7 @@
 .layout {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   height: 100%;
   padding-top: $headerHeight;
@@ -12,16 +13,16 @@
     flex: 1;
     height: 100%;
     border-top: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
+    // overflow-y: auto;
+    // overflow-x: hidden;
+    width: 80%;
+    min-width: 50vw;
   }
 
-  // .fill {
-  //   background: $primary;
-  // }
-
   .content {
-    width: 100%;
+    display: flex;
+    flex: 1;
+    
     &.with-navbar {
       padding-left: $navbarWidth;
     }
