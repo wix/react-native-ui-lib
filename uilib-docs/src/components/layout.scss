@@ -1,4 +1,4 @@
-@import "src/styles/constants";
+@import 'src/styles/constants';
 
 .layout {
   display: flex;
@@ -22,7 +22,8 @@
   .content {
     display: flex;
     flex: 1;
-    
+    width: 100%;
+
     &.with-navbar {
       padding-left: $navbarWidth;
     }
