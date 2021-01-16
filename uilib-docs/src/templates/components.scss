@@ -35,7 +35,7 @@
     .table-of-content {
       background-color: $white;
       margin-top: 20px;
-      width: 300px;
+      width: 25%;
       border-left: 2px solid $dark80;
 
       ul {
@@ -43,9 +43,32 @@
         padding: 20px;
         margin: 0;
 
+        .list-header {
+          font-size: $text30;
+          margin: 0;
+          margin-bottom: 8px;
+        }
+
         li {
+          position: relative;
           font-size: $text50;
           margin-bottom: 4px;
+
+          &:hover {
+            a {
+              color: $yellow30;
+            }
+
+            &::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: -23px;
+              display: block;
+              height: 100%;
+              border-left: 3px solid $yellow30;
+            }
+          }
         }
       }
     }

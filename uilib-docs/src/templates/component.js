@@ -272,6 +272,8 @@ const ComponentAPI = ({props}) => {
       </div>
       <div className="table-of-content">
         <ul>
+          <div className="list-header">Props</div>
+
           {_.map(props, prop => {
             return (
               <li>
