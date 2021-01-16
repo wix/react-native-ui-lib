@@ -208,12 +208,7 @@ export default class ComponentTemplate extends Component {
             )}
           </div>
 
-          {componentProps.length > 0 && (
-            <div>
-              <h3>PROPS</h3>
-              <Props props={componentProps} />
-            </div>
-          )}
+          <ComponentAPI props={componentProps} />
 
           {imgs && (
             <div className="container">
@@ -255,33 +250,37 @@ export default class ComponentTemplate extends Component {
   }
 }
 
-const Props = ({props}) => {
+const ComponentAPI = ({props}) => {
   return (
-    <div className="component-props">
-      <table>
-        <tbody>
-          <tr>
-            <th>name</th>
-            <th>description</th>
-            <th>type</th>
-            <th>default</th>
-          </tr>
-
-          {_.map(props, (prop, index) => {
-            const description = _.get(prop, 'description.text');
-            if (description) {
-              return (
-                <tr key={index}>
-                  <td>{prop.name}</td>
-                  <td>{description}</td>
-                  <td>{_.get(prop, 'type.name')}</td>
-                  <td>{_.get(prop, 'defaultValue.value')}</td>
-                </tr>
-              );
-            }
+    <div className="component-api">
+      <div>
+        <h1>API</h1>
+        {_.map(props, prop => {
+          const description = _.get(prop, 'description.text');
+          const defaultValue = _.get(prop, 'defaultValue.value');
+          return (
+            <div className="prop-info">
+              <a name={prop.name}>
+                <h3 className="title">{prop.name}</h3>
+              </a>
+              <p className="description">{description}</p>
+              <p className="type">{_.get(prop, 'type.name')}</p>
+              {defaultValue && <p className="default-value">default: {_.get(prop, 'defaultValue.value')}</p>}
+            </div>
+          );
+        })}
+      </div>
+      <div className="table-of-content">
+        <ul>
+          {_.map(props, prop => {
+            return (
+              <li>
+                <a href={`#${prop.name}`}>{prop.name}</a>
+              </li>
+            );
           })}
-        </tbody>
-      </table>
+        </ul>
+      </div>
     </div>
   );
 };

@@ -1,44 +1,51 @@
 @import 'src/styles/constants';
 
-@mixin component-props() {
-  .component-props {
-    table {
-      text-align: left;
-      width: 100%;
-      border-collapse: collapse;
+@mixin component-api() {
+  .component-api {
+    position: relative;
+    display: flex;
+    padding-left: 20px;
 
-      tr {
-        &:first-child {
-          background-color: $secondary;
-          color: $primary;
-          font-size: $text30;
-          text-transform: capitalize;
-        }
+    > div:first-child {
+      flex: 1;
+    }
 
-        &:hover {
-          td {
-            border-color: $primary;
-          }
-        }
+    .prop-info {
+      margin-bottom: 20px;
 
-        th {
-          padding: 16px 20px;
+      .title {
+        margin: 0;
+        font-weight: 600;
+      }
+      .description {
+        color: $dark10;
+      }
 
-          &:first-child {
-            border-top-left-radius: 6px;
-            border-bottom-left-radius: 6px;
-          }
+      p {
+        margin: 0;
+      }
 
-          &:last-child {
-            border-top-right-radius: 6px;
-            border-bottom-right-radius: 6px;
-          }
-        }
+      .type,
+      .default-value {
+        font-size: $text50;
+        color: $dark30;
+      }
+    }
 
-        td {
-          padding: 12px;
-          border-bottom: 1px solid $dark60;
-          transition: all 0.2s;
+    .table-of-content {
+      background-color: $white;
+      margin-top: 20px;
+      width: 300px;
+      border-left: 2px solid $dark80;
+
+      ul {
+        list-style: none;
+        padding: 20px;
+        margin: 0;
+
+        li {
+          font-size: $text50;
+          margin-bottom: 4px;
         }
       }
     }
@@ -151,7 +158,7 @@
 }
 
 .docs-page {
-  @include component-props();
+  @include component-api();
 
   display: flex;
   flex-direction: row;
