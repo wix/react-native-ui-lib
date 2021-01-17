@@ -65,7 +65,7 @@ export default class ComponentTemplate extends Component {
   }
 
   renderModifiers(componentInfo) {
-    const modifiers = _.split(componentInfo.modifiers, ',');
+    const modifiers = componentInfo.modifiers ? _.split(componentInfo.modifiers, ',') : [];
 
     if (!_.isEmpty(modifiers)) {
       return (
@@ -204,7 +204,6 @@ export default class ComponentTemplate extends Component {
               })}
 
               <p className="description">{componentInfo.description}</p>
-              
             </div>
             {shouldRenderRightPart && (
               <div>
