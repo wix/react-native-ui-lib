@@ -177,6 +177,49 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
         };
       }`
     },
+    {
+      options: ruleOptions,
+      code: bigExampleError,
+      errors: [{message: `The shape of 'pannableHeaderProps' prop of 'Dialog' doesn't contain 'title' anymore. Please use 'header' instead (fix is available).`}]
+    },
+    {
+      options: ruleOptions,
+      code: `const myProps1 = {
+          avatarProps: {
+            ${imageSource},
+            goodProp1: goodValue1
+          }
+        };
+
+        const myProps2 = {
+          buttonProps: {
+            goodProp2: goodValue2,
+            goodProp3: goodValue3
+          }
+        };
+
+      <Label goodProp={'goodValue'} {...myProps1} {...myProps2}/>`,
+      errors: [{message: `The shape of 'avatarProps' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`}]
+    },
+    {
+      options: ruleOptions,
+      code: `const myProps1 = {
+          buttonProps: {
+            goodProp1: goodValue1,
+            goodProp2: goodValue2,
+          }
+        };
+
+        const myProps2 = {
+          avatarProps: {
+            goodProp3: goodValue3,
+            ${imageSource}
+          }
+        };
+
+      <Label goodProp={'goodValue'} {...myProps1} {...myProps2}/>`,
+      errors: [{message: `The shape of 'avatarProps' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`}]
+    },
     // {
     //   options: ruleOptions,
     //   code: `import React, {Component} from 'react';
@@ -206,11 +249,6 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
     //       )
     //     };
     //   }`
-    // },
-      {
-        options: ruleOptions,
-        code: bigExampleError,
-        errors: [{message: `The shape of 'pannableHeaderProps' prop of 'Dialog' doesn't contain 'title' anymore. Please use 'header' instead (fix is available).`}]
-      }
+    // }
   ]
 });
