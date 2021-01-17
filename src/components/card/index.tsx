@@ -259,6 +259,7 @@ class Card extends PureComponent<PropTypes, State> {
           {borderRadius: brRadius},
           this.elevationStyle,
           this.shadowStyle,
+          {backgroundColor: Colors.white},
           containerStyle,
           style
         ]}
