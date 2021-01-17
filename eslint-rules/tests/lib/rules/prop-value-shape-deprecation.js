@@ -1,6 +1,9 @@
 const RuleTester = require('eslint').RuleTester;
 const rule = require('../../../lib/rules/prop-value-shape-deprecation');
 const deprecationsJson = require('../../prop-value-shape-deprecation.json');
+const fs = require('fs');
+const bigExampleValid = fs.readFileSync('../demo/src/screens/componentScreens/ChipScreen.tsx', 'utf8');
+const bigExampleError = fs.readFileSync('../demo/src/screens/componentScreens/PickerScreen.js', 'utf8');
 
 RuleTester.setDefaultConfig({
   parser: 'babel-eslint',
@@ -81,6 +84,10 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
     {
       options: ruleOptions,
       code: `<ListItem goodProp={{${imageSource}}} avatar={{${source}}}/>`
+    },
+    {
+      options: ruleOptions,
+      code: bigExampleValid
     }
   ],
   invalid: [
@@ -143,25 +150,33 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
         }
       ],
       output: secondLevelSpreadOutput
-    }
-    // {
-    //   options: ruleOptions,
-    //   code: `import React, {Component} from 'react';
-    //   import {Label, View} from 'our-source';
-    //   class NewFeature extends Component {
-    //     render () {
-    //       return (
-    //         <Label title={'Best title ever'} imageSource={{uri: 'some_uri'}}/>
-    //       )
-    //     };
-    //   }`,
-    //   errors: [
-    //     {
-    //       message: `The shape of 'avatar' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
-    //     }
-    //   ],
-    //   output: secondLevelSpreadOutput
-    // },
+    },
+    {
+      options: ruleOptions,
+      code: `import React, {Component} from 'react';
+      import {Label, View} from 'our-source';
+      class NewFeature extends Component {
+        render () {
+          return (
+            <Label title={'Best title ever'} avatar={{imageSource: {uri: 'some_uri'}}}/>
+          )
+        };
+      }`,
+      errors: [
+        {
+          message: `The shape of 'avatar' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+        }
+      ],
+      output: `import React, {Component} from 'react';
+      import {Label, View} from 'our-source';
+      class NewFeature extends Component {
+        render () {
+          return (
+            <Label title={'Best title ever'} avatar={{source: {uri: 'some_uri'}}}/>
+          )
+        };
+      }`
+    },
     // {
     //   options: ruleOptions,
     //   code: `import React, {Component} from 'react';
@@ -170,7 +185,7 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
     //     render () {
     //       return (
     //         <Dialog>
-    //           <Dialog.Header title={'Best title ever'} imageSource={{uri: 'some_uri'}}/>
+    //           <Dialog.Header title={'Best title ever'} avatar={{imageSource: {uri: 'some_uri'}}}/>
     //         </Dialog>
     //       )
     //     };
@@ -180,7 +195,22 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
     //       message: `The shape of 'avatar' prop of 'Dialog.Header' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
     //     }
     //   ],
-    //   output: secondLevelSpreadOutput
-    // }
+    //   output: `import React, {Component} from 'react';
+    //   import {Dialog, View} from 'our-source';
+    //   class NewFeature extends Component {
+    //     render () {
+    //       return (
+    //         <Dialog>
+    //           <Dialog.Header title={'Best title ever'} avatar={{source: {uri: 'some_uri'}}}/>
+    //         </Dialog>
+    //       )
+    //     };
+    //   }`
+    // },
+      {
+        options: ruleOptions,
+        code: bigExampleError,
+        errors: [{message: `The shape of 'pannableHeaderProps' prop of 'Dialog' doesn't contain 'title' anymore. Please use 'header' instead (fix is available).`}]
+      }
   ]
 });
