@@ -144,5 +144,43 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
       ],
       output: secondLevelSpreadOutput
     }
+    // {
+    //   options: ruleOptions,
+    //   code: `import React, {Component} from 'react';
+    //   import {Label, View} from 'our-source';
+    //   class NewFeature extends Component {
+    //     render () {
+    //       return (
+    //         <Label title={'Best title ever'} imageSource={{uri: 'some_uri'}}/>
+    //       )
+    //     };
+    //   }`,
+    //   errors: [
+    //     {
+    //       message: `The shape of 'avatar' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+    //     }
+    //   ],
+    //   output: secondLevelSpreadOutput
+    // },
+    // {
+    //   options: ruleOptions,
+    //   code: `import React, {Component} from 'react';
+    //   import {Dialog, View} from 'our-source';
+    //   class NewFeature extends Component {
+    //     render () {
+    //       return (
+    //         <Dialog>
+    //           <Dialog.Header title={'Best title ever'} imageSource={{uri: 'some_uri'}}/>
+    //         </Dialog>
+    //       )
+    //     };
+    //   }`,
+    //   errors: [
+    //     {
+    //       message: `The shape of 'avatar' prop of 'Dialog.Header' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+    //     }
+    //   ],
+    //   output: secondLevelSpreadOutput
+    // }
   ]
 });

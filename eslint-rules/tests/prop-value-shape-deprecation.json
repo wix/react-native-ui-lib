@@ -1,6 +1,6 @@
 [
   {
-    "components": ["ListItem", "Label"],
+    "components": ["ListItem", "Label", "Dialog.Header"],
     "propNames": ["avatar", "avatarProps"],
     "shape": [
       {
