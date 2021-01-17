@@ -34,15 +34,22 @@
     }
 
     .git-stars {
-      display: inline-block;
+      display: flex;
+      align-items: center;
       border: 1px solid;
       border-radius: 2px;
 
-      span {
-        padding: 2px;
+      img {
+        padding: 0 4px;
+        height: 16px;
       }
-      > span:last-child {
+
+      span {
+        display: inline-block;
+        vertical-align: middle;
+        padding: 0 10px;
         border-left: 1px solid;
+        font-weight: 500;
       }
     }
 

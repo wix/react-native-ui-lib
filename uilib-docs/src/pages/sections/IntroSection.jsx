@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'gatsby-link';
 import './IntroSection.scss';
 import introCover from '../../images/newDesign/introCover.jpg';
+import goldStar from '../../images/goldStar.svg';
 
 export default () => {
   return (
@@ -13,11 +14,8 @@ export default () => {
             <span className="lib-name">RNUI</span> is a UI Toolset & Components Library for React Native
           </p>
           <div className="git-stars">
-            <span>
-              <img />
-              Star
-            </span>
-            <span>2.7k</span>
+            <img src={goldStar} />
+            <span className="star-count">2.7k</span>
           </div>
 
           <div className="buttons">
