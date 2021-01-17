@@ -88,8 +88,12 @@
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s;
-    padding: 12px 8px;
     margin-bottom: 2px;
+
+    a {
+      display: block;
+      padding: 12px 8px;
+    }
 
     &:hover > a > .entry {
       color: $yellow20;
