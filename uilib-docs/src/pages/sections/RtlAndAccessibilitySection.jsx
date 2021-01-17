@@ -21,7 +21,7 @@ const Card = ({image, title, description}) => {
   return (
     <div className="card">
       <img src={image} />
-      <h3>{title}</h3>
+      <h1 className="title">{title}</h1>
       <p>{description}</p>
     </div>
   );

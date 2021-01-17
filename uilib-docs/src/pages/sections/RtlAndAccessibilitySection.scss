@@ -10,12 +10,12 @@
   .images {
     display: flex;
     justify-content: space-between;
-    width: 80%;
+    width: 70%;
     min-width: 50vw;
     margin-top: 3%;
 
     .card {
-      width: 20vw;
+      width: 15vw;
       min-width: 300px;
       margin-right: 20px;
       box-shadow: 6px 6px 50px 15px rgba($primary, 0.05);
@@ -24,8 +24,13 @@
       border-radius: 20px;
       padding: 40px;
 
+      .title {
+        font-weight: 500;
+      }
+
       img {
-        width: 45%;
+        width: 20%;
+        min-width: 50px;
       }
     }
   }
