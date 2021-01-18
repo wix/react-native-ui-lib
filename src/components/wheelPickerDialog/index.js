@@ -117,14 +117,14 @@ const styles = StyleSheet.create({
     marginLeft: 142
   },
   cancelButton: {
-    color: Colors.blue30,
+    color: Colors.primary,
     width: 75,
     height: 36,
     textAlign: 'center',
     textAlignVertical: 'center'
   },
   okButton: {
-    color: Colors.blue30,
+    color: Colors.primary,
     width: 47,
     height: 36,
     textAlign: 'center',

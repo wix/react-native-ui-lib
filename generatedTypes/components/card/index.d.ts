@@ -72,7 +72,8 @@ declare const _default: React.ComponentClass<ViewProps & Pick<import("react-nati
     } | undefined;
     activeBackgroundColor?: string | undefined;
     useNative?: boolean | undefined;
-    customValue?: any; /**
+    customValue?: any;
+    /**
      * card custom height
      */
     style?: false | {} | ViewStyle | import("react-native").RegisteredStyle<ViewStyle> | import("react-native").RecursiveArray<false | ViewStyle | import("react-native").RegisteredStyle<ViewStyle> | null | undefined> | {
