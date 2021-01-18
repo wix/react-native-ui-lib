@@ -108,7 +108,7 @@ declare function createStyles(props: BadgeProps): {
     badge: {
         alignSelf: "flex-start";
         borderRadius: number;
-        backgroundColor: any;
+        backgroundColor: string | undefined;
         alignItems: "center";
         justifyContent: "center";
         overflow: "hidden";

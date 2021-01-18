@@ -125,5 +125,7 @@ declare const colorObject: Colors & {
     violet80: string;
     white: string;
     black: string;
+} & {
+    primary: string;
 };
 export default colorObject;
