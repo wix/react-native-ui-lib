@@ -1,16 +1,12 @@
-import { RefObject } from 'react';
-import { LayoutChangeEvent, ScrollView, FlatList } from 'react-native';
+import { LayoutChangeEvent } from 'react-native';
+import { ScrollToProps, ScrollToSupportedViews, ScrollToResultProps } from '../useScrollTo';
 export declare enum OffsetType {
     CENTER = "CENTER",
     DYNAMIC = "DYNAMIC",
     LEFT = "LEFT",
     RIGHT = "RIGHT"
 }
-export declare type Props = {
-    /**
-     * A reference to the ScrollView (or FlatList) which the items are in
-     */
-    scrollViewRef: RefObject<ScrollView | FlatList>;
+export declare type ScrollToItemProps<T extends ScrollToSupportedViews> = Pick<ScrollToProps<T>, 'scrollViewRef'> & {
     /**
      * The number of items
      */
@@ -38,7 +34,7 @@ export declare type Props = {
      */
     innerSpacing?: number;
 };
-export declare type ResultProps = {
+export declare type ScrollToItemResultProps<T extends ScrollToSupportedViews> = Pick<ScrollToResultProps<T>, 'scrollViewRef'> & {
     /**
      * This should be called by each ot the items' onLayout
      */
@@ -52,5 +48,5 @@ export declare type ResultProps = {
      */
     focusIndex: (index: number, animated?: boolean) => void;
 };
-declare const useScrollToItem: (props: Props) => ResultProps;
+declare const useScrollToItem: <T extends ScrollToSupportedViews>(props: ScrollToItemProps<T>) => ScrollToItemResultProps<T>;
 export default useScrollToItem;

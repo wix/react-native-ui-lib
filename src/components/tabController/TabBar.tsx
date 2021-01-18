@@ -1,7 +1,7 @@
 // TODO: support commented props
 // TODO: disable scroll when content width is shorter than screen width
 import React, {useEffect, useMemo, useRef, useContext, ReactNode} from 'react';
-import {StyleSheet, ScrollView, Platform, TextProps, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, Platform, TextProps, StyleProp, ViewStyle} from 'react-native';
 import Reanimated from 'react-native-reanimated';
 import _ from 'lodash';
 
@@ -189,8 +189,6 @@ const TabBar = (props: Props) => {
     }
   }, []);
 
-  const tabBar = useRef<ScrollView>(null);
-
   const containerWidth: number = useMemo(() => {
     return propsContainerWidth || Constants.screenWidth;
   }, [propsContainerWidth]);
@@ -200,8 +198,7 @@ const TabBar = (props: Props) => {
 
   const itemsCount = useRef<number>(items ? _.size(items) : React.Children.count(children.current));
 
-  const {onItemLayout, itemsWidths, focusIndex} = useScrollToItem({
-    scrollViewRef: tabBar,
+  const {scrollViewRef: tabBar, onItemLayout, itemsWidths, focusIndex} = useScrollToItem({
     itemsCount: itemsCount.current,
     selectedIndex,
     offsetType: centerSelected ? OffsetType.CENTER : OffsetType.DYNAMIC

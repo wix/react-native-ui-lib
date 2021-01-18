@@ -1,6 +1,7 @@
 import _ from 'lodash';
-import {RefObject, useState, useCallback, useEffect, useRef} from 'react';
-import {LayoutChangeEvent, ScrollView, FlatList} from 'react-native';
+import {useState, useCallback, useEffect, useRef} from 'react';
+import {LayoutChangeEvent} from 'react-native';
+import useScrollTo, {ScrollToProps, ScrollToSupportedViews, ScrollToResultProps} from '../useScrollTo';
 import {Constants} from '../../helpers';
 
 export enum OffsetType {
@@ -10,11 +11,7 @@ export enum OffsetType {
   RIGHT = 'RIGHT'
 }
 
-export type Props = {
-  /**
-   * A reference to the ScrollView (or FlatList) which the items are in
-   */
-  scrollViewRef: RefObject<ScrollView | FlatList>;
+export type ScrollToItemProps<T extends ScrollToSupportedViews> = Pick<ScrollToProps<T>, 'scrollViewRef'> & {
   /**
    * The number of items
    */
@@ -50,7 +47,7 @@ type Offsets = {
   RIGHT: number[];
 };
 
-export type ResultProps = {
+export type ScrollToItemResultProps<T extends ScrollToSupportedViews> = Pick<ScrollToResultProps<T>, 'scrollViewRef'> & {
   /**
    * This should be called by each ot the items' onLayout
    */
@@ -65,9 +62,9 @@ export type ResultProps = {
   focusIndex: (index: number, animated?: boolean) => void;
 };
 
-const useScrollToItem = (props: Props): ResultProps => {
+const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemProps<T>): ScrollToItemResultProps<T> => {
   const {
-    scrollViewRef,
+    scrollViewRef: propsScrollViewRef,
     itemsCount,
     selectedIndex,
     offsetType = OffsetType.CENTER,
@@ -78,6 +75,7 @@ const useScrollToItem = (props: Props): ResultProps => {
   const itemsWidths = useRef<(number | null)[]>(_.times(itemsCount, () => null));
   const currentIndex = useRef<number>(selectedIndex || 0);
   const [offsets, setOffsets] = useState<Offsets>({CENTER: [], LEFT: [], RIGHT: []});
+  const {scrollViewRef, scrollTo} = useScrollTo<T>({scrollViewRef: propsScrollViewRef});
 
   // TODO: reset?
   //   useEffect(() => {
@@ -130,30 +128,18 @@ const useScrollToItem = (props: Props): ResultProps => {
   },
   [setSnapBreakpoints]);
 
-  const scroll = (scrollTo: number, animated: boolean) => {
-    // @ts-ignore
-    if (_.isFunction(scrollViewRef.current.scrollToOffset)) {
-      // @ts-ignore
-      scrollViewRef.current.scrollToOffset({offset: scrollTo, animated});
-      // @ts-ignore
-    } else if (_.isFunction(scrollViewRef.current.scrollTo)) {
-      // @ts-ignore
-      scrollViewRef.current.scrollTo({x: scrollTo, animated});
-    }
-  };
-
   const focusIndex = useCallback((index: number, animated = true) => {
     if (index >= 0 && offsets.CENTER.length > index) {
       if (offsetType !== OffsetType.DYNAMIC) {
-        scroll(offsets[offsetType][index], animated);
+        scrollTo(offsets[offsetType][index], animated);
       } else {
         const movingLeft = index < currentIndex.current;
         currentIndex.current = index;
-        scroll(movingLeft ? offsets[OffsetType.RIGHT][index] : offsets[OffsetType.LEFT][index], animated);
+        scrollTo(movingLeft ? offsets[OffsetType.RIGHT][index] : offsets[OffsetType.LEFT][index], animated);
       }
     }
   },
-  [offsets, offsetType]);
+  [offsets, offsetType, scrollTo]);
 
   useEffect(() => {
     if (!_.isUndefined(selectedIndex)) {
@@ -162,6 +148,7 @@ const useScrollToItem = (props: Props): ResultProps => {
   }, [selectedIndex, focusIndex]);
 
   return {
+    scrollViewRef,
     onItemLayout,
     itemsWidths: offsets.CENTER.length > 0 ? (itemsWidths.current as number[]) : [],
     focusIndex
