@@ -95,9 +95,9 @@ class DateTimePicker extends Component {
      */
     headerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     /**
-     * Render custom expandable input (requires expandable to be true)
+     * Render custom input
      */
-    renderExpandableInput: PropTypes.elementType
+    renderInput: PropTypes.elementType
   };
 
   static defaultProps = {
