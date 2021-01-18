@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {DateTimePicker, View, Text, Button} from 'react-native-ui-lib'; // eslint-disable-line
+import {DateTimePicker, View, Text, TouchableOpacity, Colors} from 'react-native-ui-lib'; // eslint-disable-line
 
 export default class DateTimePickerScreen extends Component {
 
   getCustomInputValue = value => {
     if (!value) {
-      return '';
+      return 'Default';
     }
     return value.includes(new Date().getFullYear() + 1) ? 'Next Year' : value;
   };
@@ -13,17 +13,17 @@ export default class DateTimePickerScreen extends Component {
   renderCustomInput = (props, toggle) => {
     const {value} = props;
     return (
-      <View>
-        <Button
-          label={'Select a date'}
-          style={{backgroundColor: 'red', height: 40, width: '100%'}}
-          {...props}
-          onPress={() => {
-            toggle(true);
-          }}
-        />
-        <Text>{this.getCustomInputValue(value)}</Text>
-      </View>
+      <TouchableOpacity
+        flex
+        row
+        spread
+        onPress={() => {
+          toggle(true);
+        }}
+      >
+        <Text>Valid from</Text>
+        <Text absR color={Colors.primary} text80BO>{this.getCustomInputValue(value)}</Text>
+      </TouchableOpacity>
     );
   };
 
