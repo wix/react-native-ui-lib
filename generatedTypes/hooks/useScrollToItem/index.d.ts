@@ -52,5 +52,5 @@ export declare type ResultProps = {
      */
     focusIndex: (index: number, animated?: boolean) => void;
 };
-declare const useScrollIToItem: (props: Props) => ResultProps;
-export default useScrollIToItem;
+declare const useScrollToItem: (props: Props) => ResultProps;
+export default useScrollToItem;

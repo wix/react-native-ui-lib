@@ -65,7 +65,7 @@ export type ResultProps = {
   focusIndex: (index: number, animated?: boolean) => void;
 };
 
-const useScrollIToItem = (props: Props): ResultProps => {
+const useScrollToItem = (props: Props): ResultProps => {
   const {
     scrollViewRef,
     itemsCount,
@@ -168,4 +168,4 @@ const useScrollIToItem = (props: Props): ResultProps => {
   };
 };
 
-export default useScrollIToItem;
+export default useScrollToItem;
