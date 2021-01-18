@@ -2,7 +2,7 @@ import {useState, useCallback} from 'react';
 import {NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import {Constants} from '../../helpers';
 
-export type Props = {
+export type ScrollEnablerProps = {
   /**
    * Whether the scroll is horizontal (default is false).
    */
@@ -14,7 +14,7 @@ export type Props = {
   threshold?: number;
 };
 
-export type ResultProps = {
+export type ScrollEnablerResultProps = {
   /**
    * onScroll callback (should be set to your onScroll).
    */
@@ -31,7 +31,7 @@ export type ResultProps = {
 
 const DEFAULT_THRESHOLD = Constants.isAndroid ? 1 : 0;
 
-const useScrollReached = (props: Props = {}): ResultProps => {
+const useScrollReached = (props: ScrollEnablerProps = {}): ScrollEnablerResultProps => {
   const {horizontal = false, threshold = DEFAULT_THRESHOLD} = props;
   const [isScrollAtStart, setScrollAtStart] = useState(true);
   const [isScrollAtEnd, setScrollAtEnd] = useState(false);

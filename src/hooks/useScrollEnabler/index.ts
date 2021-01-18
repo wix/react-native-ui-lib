@@ -1,14 +1,14 @@
 import {useState, useCallback, useRef} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 
-export type Props = {
+export type ScrollEnablerProps = {
   /**
    * Whether the scroll is horizontal (default is false).
    */
   horizontal?: boolean;
 };
 
-export type ResultProps = {
+export type ScrollEnablerResultProps = {
   /**
    * onContentSizeChange callback (should be set to your onContentSizeChange).
    */
@@ -23,7 +23,7 @@ export type ResultProps = {
   scrollEnabled: boolean;
 };
 
-const useScrollEnabler = (props: Props = {}): ResultProps => {
+const useScrollEnabler = (props: ScrollEnablerProps = {}): ScrollEnablerResultProps => {
   const {horizontal = false} = props;
   const [scrollEnabled, setScrollEnabled] = useState(true);
   const contentSize = useRef<number>(0);
