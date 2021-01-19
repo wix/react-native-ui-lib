@@ -270,7 +270,7 @@ class Button extends PureComponent<Props, ButtonState> {
         return disabledBackgroundColor || DISABLED_COLOR;
       }
 
-      return propsBackgroundColor || stateBackgroundColor || themeBackgroundColor || Colors.blue30;
+      return propsBackgroundColor || stateBackgroundColor || themeBackgroundColor || Colors.primary;
     }
     return 'transparent';
   }
@@ -288,9 +288,9 @@ class Button extends PureComponent<Props, ButtonState> {
 
     let color: string | undefined = Colors.white;
     if (link) {
-      color = linkColor || Colors.blue30;
+      color = linkColor || Colors.primary;
     } else if (outline) {
-      color = outlineColor || Colors.blue30;
+      color = outlineColor || Colors.primary;
     } else if (this.isIconButton) {
       color = undefined; // Colors.dark10;
     }
@@ -389,7 +389,7 @@ class Button extends PureComponent<Props, ButtonState> {
     if ((outline || outlineColor) && !link) {
       outlineStyle = {
         borderWidth: outlineWidth || 1,
-        borderColor: outlineColor || Colors.blue30
+        borderColor: outlineColor || Colors.primary
       };
 
       if (disabled) {

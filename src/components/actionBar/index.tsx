@@ -74,7 +74,7 @@ class ActionBar extends Component<ActionBarProps> {
         <View row centerV paddingH-20={!centered} style={[this.styles.container, style]} {...others}>
           {_.map(actions, (action, i) => (
             <View key={i} flex {...this.getAlignment(i)}>
-              <Button link size={Button.sizes.medium} blue30 {...action}/>
+              <Button link size={Button.sizes.medium} primary {...action}/>
             </View>
           ))}
         </View>
