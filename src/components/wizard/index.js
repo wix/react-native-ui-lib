@@ -16,6 +16,11 @@ import {States, StatesConfig} from './WizardStates';
  *
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WizardScreen.js
  * @notes: Use Wizard with nested Wizard.Step(s) to achieve the desired result.
+ * @configuration: ThemeManager.setComponentTheme('Wizard', (props, context) => {<br/>
+ *    const containerStyle = {width, marginLeft, paddingVertical, paddingHorizontal};<br/>
+ *    const activeConfig = {color: activeColor, circleColor: activeColor};<br/>
+ *    return {containerStyle, activeConfig};
+ *  };
  */
 export default class Wizard extends BaseComponent {
   static displayName = 'Wizard';

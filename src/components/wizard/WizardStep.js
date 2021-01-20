@@ -18,6 +18,24 @@ import {States, StatesConfig} from './WizardStates';
  *
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WizardScreen.js
  * @notes: Use Wizard with nested Wizard.Step(s) to achieve the desired result.
+ * @configuration: const configMap = {<br/>
+ *   enabled: {color: ..., circleColor: ..., enabled: true},<br/>
+ *   disabled: {color: ..., circleColor: ...},<br/>
+ *   error: {color: ..., icon: ..., enabled: true},<br/>
+ *   skipped: {color: ..., enabled: true},<br/>
+ *   completed: {color: ..., circleColor: ..., icon: ..., enabled: true}<br/>
+ * };<br/>
+ * <br/>
+ * ThemeManager.setComponentTheme('Wizard.Step', (props, context) => {<br/>
+ *   const config = configMap[props.state];<br/>
+ *   return {<br/>
+ *     ...config,<br/>
+ *     circleSize: ...,<br/>
+ *     labelStyle: {...},<br/>
+ *     indexLabelStyle: ...,<br/>
+ *     connectorStyle: {borderColor: ...}<br/>
+ *   };
+ * });
  */
 export default class WizardStep extends PureBaseComponent {
   static displayName = 'Wizard.Step';
@@ -51,6 +69,10 @@ export default class WizardStep extends PureBaseComponent {
      * The step's circle size (diameter)
      */
     circleSize: PropTypes.number,
+    /**
+     * Circle's background color
+     */
+    circleBackgroundColor: PropTypes.string,
     /**
      * Icon to replace the (default) index
      */
@@ -94,6 +116,7 @@ export default class WizardStep extends PureBaseComponent {
       circleSize,
       color,
       circleColor = color,
+      circleBackgroundColor,
       icon,
       enabled
     } = props;
@@ -102,7 +125,11 @@ export default class WizardStep extends PureBaseComponent {
     return (
       <TouchableOpacity
         testID={`${testID}.circle`}
-        style={[styles.circle, circleSize && {width: circleSize, height: circleSize}, {borderColor: circleColor}]}
+        style={[
+          styles.circle,
+          circleSize && {width: circleSize, height: circleSize},
+          {borderColor: circleColor, backgroundColor: circleBackgroundColor}
+        ]}
         onPress={enabled ? onPress : undefined}
         hitSlop={{top: hitSlopSize, bottom: hitSlopSize, left: hitSlopSize, right: hitSlopSize}}
         disabled={!enabled}

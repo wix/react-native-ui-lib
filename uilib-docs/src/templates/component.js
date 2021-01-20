@@ -138,6 +138,16 @@ export default class ComponentTemplate extends Component {
     return notes.map(this.renderNote);
   }
 
+  renderConfigurationLine(configuration) {
+    return (
+      <code>{configuration}</code>
+    );
+  }
+
+  renderConfiguration(configuration) {
+    return <div>{configuration.map(this.renderConfigurationLine)}</div>;
+  }
+
   renderComponentPage() {
     const {pageContext} = this.props;
     const selectedComponent = pageContext.componentNode;
@@ -151,6 +161,9 @@ export default class ComponentTemplate extends Component {
       : undefined;
     const notes = componentInfo.notes
       ? componentInfo.notes.split(';')
+      : undefined;
+    const configuration = componentInfo.configuration
+      ? componentInfo.configuration.split('<br/>')
       : undefined;
       
     const examples = _.split(componentInfo.example, ',');
@@ -196,6 +209,12 @@ export default class ComponentTemplate extends Component {
             <div>
               <h4 style={{marginBottom: 10}}>NOTES</h4>
               {this.renderNotes(notes)}
+            </div>
+          )}
+          {componentInfo.configuration && (
+            <div>
+              <h4 style={{marginBottom: 10}}>CONFIGURATION</h4>
+              {this.renderConfiguration(configuration)}
             </div>
           )}
           {componentInfo.important && (

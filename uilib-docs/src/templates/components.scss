@@ -51,6 +51,10 @@
     display: block;
   }
 
+  code {
+    white-space: pre;
+  }
+
   display: flex;
   flex-direction: row;
   flex: 1;
