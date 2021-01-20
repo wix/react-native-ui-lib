@@ -173,7 +173,8 @@ class FeatureHighlight extends BaseComponent {
       this.state.fadeAnim, // The animated value to drive
       {
         toValue, // Animate to value
-        duration: toValue ? 100 : 0 // Make it take a while
+        duration: toValue ? 100 : 0, // Make it take a while
+        useNativeDriver: true
       },).start(); // Starts the animation
   }
 
