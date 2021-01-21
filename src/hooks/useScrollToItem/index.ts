@@ -155,4 +155,6 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
   };
 };
 
+useScrollToItem.offsetType = OffsetType;
+
 export default useScrollToItem;
