@@ -103,7 +103,8 @@ class Image extends PureComponent<Props, State> {
   static getDerivedStateFromProps(nextProps: Partial<Props>, prevState: State) {
     if (nextProps.source !== prevState.prevSource) {
       return {
-        error: false
+        error: false,
+        prevSource: nextProps.source
       };
     }
     return null;

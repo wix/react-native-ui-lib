@@ -74,6 +74,7 @@ declare class Image extends PureComponent<Props, State> {
     constructor(props: Props);
     static getDerivedStateFromProps(nextProps: Partial<Props>, prevState: State): {
         error: boolean;
+        prevSource: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
     } | null;
     isGif(): boolean | undefined;
     shouldUseImageBackground(): boolean;
