@@ -395,7 +395,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 2,
     marginHorizontal: INDICATOR_INSET,
-    backgroundColor: Colors.blue30
+    backgroundColor: Colors.primary
   },
   containerShadow: {
     ...Platform.select({

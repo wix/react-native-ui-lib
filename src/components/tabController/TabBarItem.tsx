@@ -12,7 +12,7 @@ import {TouchableOpacity} from '../../incubator';
 const {cond, eq, call, block, and} = Reanimated;
 
 const DEFAULT_LABEL_COLOR = Colors.black;
-const DEFAULT_SELECTED_LABEL_COLOR = Colors.blue30;
+const DEFAULT_SELECTED_LABEL_COLOR = Colors.primary;
 
 export interface TabControllerItemProps {
   /**

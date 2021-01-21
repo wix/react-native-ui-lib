@@ -65,7 +65,7 @@ type topBarButtonProp = {
 
 const TOP_BAR_HEIGHT = Constants.isIOS ? 44 : 56;
 const DEFAULT_BUTTON_PROPS = {
-  color: Colors.blue30
+  color: Colors.primary
 };
 
 /**

@@ -58,10 +58,10 @@ class PickerDialog extends BaseComponent {
 
     return (
       <View style={styles.footer}>
-        <Text text80 blue30 onPress={onCancel} accessibilityRole={onCancel ? 'button' : undefined} style={cancelLabelStyle}>
+        <Text text80 primary onPress={onCancel} accessibilityRole={onCancel ? 'button' : undefined} style={cancelLabelStyle}>
           {cancelLabel}
         </Text>
-        <Text text80 blue30 marginL-15 onPress={onDone} accessibilityRole={onDone ? 'button' : undefined} style={selectLabelStyle}>
+        <Text text80 primary marginL-15 onPress={onDone} accessibilityRole={onDone ? 'button' : undefined} style={selectLabelStyle}>
           {doneLabel}
         </Text>
       </View>
