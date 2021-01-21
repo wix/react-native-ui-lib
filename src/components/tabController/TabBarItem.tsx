@@ -1,13 +1,6 @@
 // TODO: support commented props
 import React, {PureComponent} from 'react';
-import {
-  StyleSheet,
-  /* processColor, */ TextStyle,
-  LayoutRectangle,
-  LayoutChangeEvent,
-  StyleProp,
-  ViewStyle
-} from 'react-native';
+import {StyleSheet, /* processColor, */ TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import _ from 'lodash';
 import Reanimated from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
@@ -16,7 +9,7 @@ import {Colors, Typography, Spacings} from '../../style';
 import Badge, {BadgeProps, BADGE_SIZES} from '../../components/badge';
 import {TouchableOpacity} from '../../incubator';
 
-const {cond, eq, call, block, event, and} = Reanimated;
+const {cond, eq, call, block, and} = Reanimated;
 
 const DEFAULT_LABEL_COLOR = Colors.black;
 const DEFAULT_SELECTED_LABEL_COLOR = Colors.primary;
@@ -106,7 +99,7 @@ interface Props extends TabControllerItemProps {
   targetPage: any; // TODO: typescript?
   state: State;
   currentPage: Reanimated.Adaptable<number>;
-  onLayout: (layout: Partial<LayoutRectangle>, index: number) => void;
+  onLayout?: (event: LayoutChangeEvent, index: number) => void;
 }
 
 /**
@@ -132,32 +125,18 @@ export default class TabBarItem extends PureComponent<Props> {
 
     if (this.itemWidth) {
       const {index, onLayout} = this.props;
-      onLayout({width: this.itemWidth}, index);
+      onLayout?.({nativeEvent: {layout: {x: 0, y: 0, width: this.itemWidth, height: 0}}}, index);
     }
   }
 
-  onStateChange = event(
-    [
-      {
-        nativeEvent: {state: this.props.state}
-      }
-    ],
-    {useNativeDriver: true}
-  );
-
-  onLayout = ({
-    nativeEvent: {
-      layout: {width}
-    }
-  }: LayoutChangeEvent) => {
+  onLayout = (event: LayoutChangeEvent) => {
+    const {width} = event.nativeEvent.layout;
     const {index, onLayout} = this.props;
     if (!this.itemWidth && this.itemRef && this.itemRef.current) {
       this.itemWidth = width;
       // @ts-ignore
       this.itemRef.current.setNativeProps({style: {width, paddingHorizontal: null, flex: null}});
-      if (onLayout) {
-        onLayout({width}, index);
-      }
+      onLayout?.(event, index);
     }
   };
 
@@ -205,8 +184,7 @@ export default class TabBarItem extends PureComponent<Props> {
         // @ts-ignore TODO: typescript - add or delete and?
         and(eq(targetPage, index) /* , defined(itemWidth) */),
         selectedLabelStyle?.fontWeight || 'normal',
-        labelStyle?.fontWeight || 'normal'
-      );
+        labelStyle?.fontWeight || 'normal');
     }
 
     if (labelStyle?.letterSpacing || selectedLabelStyle?.letterSpacing) {
@@ -214,8 +192,7 @@ export default class TabBarItem extends PureComponent<Props> {
         // @ts-ignore TODO: typescript - add or delete and?
         and(eq(targetPage, index) /* , defined(itemWidth) */),
         selectedLabelStyle?.letterSpacing || 0,
-        labelStyle?.letterSpacing || 0
-      );
+        labelStyle?.letterSpacing || 0);
     }
 
     if (labelStyle?.fontFamily || selectedLabelStyle?.fontFamily) {
@@ -224,8 +201,7 @@ export default class TabBarItem extends PureComponent<Props> {
         and(eq(targetPage, index) /* , defined(itemWidth) */),
         // @ts-ignore
         selectedLabelStyle.fontFamily,
-        labelStyle?.fontFamily
-      );
+        labelStyle?.fontFamily);
     }
 
     const inactiveColor = labelColor || DEFAULT_LABEL_COLOR;
@@ -239,15 +215,13 @@ export default class TabBarItem extends PureComponent<Props> {
 
     return [
       labelStyle,
-      _.omitBy(
-        {
-          fontFamily,
-          fontWeight,
-          letterSpacing,
-          color
-        },
-        _.isUndefined
-      )
+      _.omitBy({
+        fontFamily,
+        fontWeight,
+        letterSpacing,
+        color
+      },
+      _.isUndefined)
     ];
   }
 
@@ -257,13 +231,11 @@ export default class TabBarItem extends PureComponent<Props> {
     const activeColor = selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
     const inactiveColor = iconColor || labelColor || DEFAULT_LABEL_COLOR;
 
-    const tintColor = cond(
-      eq(currentPage, index),
+    const tintColor = cond(eq(currentPage, index),
       // TODO: using processColor here broke functionality,
       // not using it seem to not be very performant
       activeColor,
-      ignore ? activeColor : inactiveColor
-    );
+      ignore ? activeColor : inactiveColor);
 
     return {
       tintColor

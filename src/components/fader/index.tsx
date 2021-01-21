@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, {useCallback} from 'react';
 import {StyleSheet} from 'react-native';
 import View from '../view';
-import Image from '../image';
+import Image, {ImageProps} from '../image';
 
 export enum FaderPosition {
   /**
@@ -19,7 +19,7 @@ export enum FaderPosition {
   BOTTOM = 'BOTTOM'
 }
 
-export type FaderProps = {
+export type FaderProps = Pick<ImageProps, 'supportRTL'> & {
   /**
    * Whether the fader is visible (default is true)
    */
