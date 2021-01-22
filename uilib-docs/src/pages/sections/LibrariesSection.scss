@@ -1,0 +1,49 @@
+@import 'src/styles/constants';
+
+.libraries-section {
+  width: 100vw;
+  padding: 0 20%;
+  height: 250px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $primary;
+  color: $white;
+
+  .headline {
+    width: 20%;
+    min-width: 400px;
+    align-self: center;
+    margin-right: 40px;
+    font-weight: bold;
+  }
+
+  .libraries {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
+    // border: 1px solid;
+
+    .library {
+      text-align: center;
+      color: $white;
+      margin-left: 20px;
+
+      img {
+        height: 4vw;
+        min-height: 45px;
+        filter: grayscale(0.8);
+        transition: 0.3s all;
+      }
+
+      .name {
+        margin: 0;
+      }
+
+      &:hover img {
+        filter: grayscale(0);
+      }
+    }
+  }
+}

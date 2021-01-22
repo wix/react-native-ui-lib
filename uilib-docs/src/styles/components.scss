@@ -25,3 +25,8 @@ p {
 strong {
   font-weight: 600;
 }
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
