@@ -38,7 +38,7 @@ ThemeManager.setComponentTheme('Button', (props, context) => {
       borderRadius: 0
     };
   }
-});`
+});`;
 
 export const modifiersSnippet = `import React, {Component} from 'react';
 import {View, Text, Card, Button} from 'react-native-ui-lib';
@@ -56,4 +56,4 @@ class MyScreen extends Component {
       </View>
     );
   }
-}`
+}`;

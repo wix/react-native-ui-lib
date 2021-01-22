@@ -2,7 +2,7 @@ import React, {useState, useCallback} from 'react';
 import Link from 'gatsby-link';
 import classnames from 'classnames';
 
-import {foundationSnippet, themeSnippet, modifiersSnippet} from './CodeSectionSnippets';
+import {foundationSnippet, themeSnippet, modifiersSnippet} from '../../data/CodeSectionSnippets';
 import './CodeSection.scss';
 
 const tabs = [
