@@ -382,7 +382,7 @@ function createStyles(props: AvatarProps) {
       lineHeight: undefined
     },
     ribbon: {
-      backgroundColor: Colors.blue30,
+      backgroundColor: Colors.primary,
       paddingHorizontal: 6,
       paddingVertical: 3
     }

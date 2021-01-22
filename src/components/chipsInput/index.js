@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   tag: {
-    backgroundColor: Colors.blue30,
+    backgroundColor: Colors.primary,
     ...basicTagStyle
   },
   inValidTag: {

@@ -2,6 +2,7 @@ import {ReactElement} from 'react';
 import {StyleProp, TextStyle, ViewStyle, AccessibilityProps, ColorValue} from 'react-native';
 import {BaseComponent} from '../commons';
 import {AccessibilityProps} from '../modifiers';
+import {TextFieldProps} from './Inputs';
 
 export type Tag =
   | string
@@ -19,7 +20,7 @@ export type ChipsInputOnChangeTagsAction = 'added' | 'removed';
 
 export type ChipsInputOnChangeTagsFunc = (tags: Tag[], action: ChipsInputOnChangeTagsAction, tag: Tag) => void;
 
-export interface ChipsInputProps {
+export interface ChipsInputProps extends TextFieldProps {
   tags?: Tag[];
   getLabel?: (tag?: Tag) => string;
   renderTag?: ChipsInputRenderTagFunc;

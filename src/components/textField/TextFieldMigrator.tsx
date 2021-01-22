@@ -52,7 +52,7 @@ function migrateProps(props: any) {
   return fixedProps;
 }
 
-export default forwardRef(({migrate = false, ...props}: any, ref) => {
+const TextFieldMigrator = forwardRef(({migrate = false, ...props}: any, ref) => {
   if (migrate) {
     const migratedProps = migrateProps(props);
     // @ts-ignore
@@ -62,3 +62,6 @@ export default forwardRef(({migrate = false, ...props}: any, ref) => {
     return <OldTextField {...props} ref={ref}/>;
   }
 });
+
+TextFieldMigrator.displayName = 'TextField';
+export default TextFieldMigrator;
