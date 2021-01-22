@@ -2,7 +2,7 @@
 
 .libraries-section {
   width: 100vw;
-  padding: 0 14%;
+  padding: 0 20%;
   height: 250px;
   display: flex;
   justify-content: space-between;
@@ -22,7 +22,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 50%;
+    width: 60%;
     // border: 1px solid;
 
     .library {
@@ -31,8 +31,8 @@
       margin-left: 20px;
 
       img {
-        height: 5vw;
-        min-height: 60px;
+        height: 4vw;
+        min-height: 45px;
         filter: grayscale(0.8);
         transition: 0.3s all;
       }
