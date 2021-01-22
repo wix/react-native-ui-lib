@@ -94,7 +94,7 @@ const DEFAULT_SWIPE_VELOCITY = 1.8;
 
 /**
  * @description: PanListenerView component created to making listening to swipe and drag events easier
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PanListenerScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PanListenerScreen.tsx
  */
 class PanListenerView extends PureComponent<Props> {
   static displayName = 'PanListenerView';

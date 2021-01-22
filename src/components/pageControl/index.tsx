@@ -90,7 +90,7 @@ interface State {
 /**
  * @description: Page indicator, typically used in paged scroll-views
  * @image: https://user-images.githubusercontent.com/33805983/34663655-76698110-f460-11e7-854b-243d27f66fec.png
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PageControlScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PageControlScreen.tsx
  */
 class PageControl extends PureComponent<PageControlProps, State> {
   static displayName = 'PageControl';

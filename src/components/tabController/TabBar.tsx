@@ -122,7 +122,7 @@ interface Props extends TabControllerBarProps, BaseComponentInjectedProps, Forwa
 
 /**
  * @description: TabController's TabBar component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
  */
 const TabBar = (props: Props) => {
   const {
