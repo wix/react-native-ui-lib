@@ -9,7 +9,7 @@ import remx from '../../images/newDesign/remx.png';
 export default () => {
   return (
     <div className="libraries-section">
-      <h1 className="headline">Check out more libraries made by us!</h1>
+      <h2 className="headline">Check out more libraries made by us!</h2>
 
       <div className="libraries">
         <Library name="RNN" image={rnn} link="https://github.com/wix/react-native-navigation" />
@@ -26,7 +26,7 @@ const Library = ({image, name, link}) => {
     <a href={link} target="_blank" rel="noopener noreferrer">
       <div className="library">
         <img src={image} />
-        <h3 className="name">{name}</h3>
+        <h5 className="name">{name}</h5>
       </div>
     </a>
   );

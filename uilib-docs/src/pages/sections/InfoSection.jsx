@@ -7,11 +7,11 @@ export default () => {
     <div class="info-section">
       <div className="flex-row">
         <div className="column">
-          <h5>Try our Expo App</h5>
+          <h6 className="title">Try our Expo App</h6>
           <img className="qr" src={qr} />
         </div>
         <div className="column">
-          <h5>Find Us</h5>
+          <h6 className="title">Find Us</h6>
           <ul>
             <li>
               <a target="_blank" href="https://twitter.com/rnuilib">
@@ -37,7 +37,8 @@ export default () => {
         </div>
       </div>
       <div className="column">
-        <h5>WIX</h5>© 2006-2020 Wix.com, Inc
+        <h6 className="title">WIX</h6>
+        <small>© 2006-2020 Wix.com, Inc</small>
       </div>
     </div>
   );

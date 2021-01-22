@@ -4,11 +4,16 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding-bottom: 40px;
+  padding: 40px 0;
 
   .column {
     margin-right: 20px;
     min-width: 200px;
+
+    .title {
+      margin: 0;
+      margin-bottom: 20px;
+    }
   }
 
   ul {
@@ -17,6 +22,8 @@
 
     li {
       a {
+        font-size: 0.8em;
+        line-height: 1.2;
         color: $dark10;
       }
     }

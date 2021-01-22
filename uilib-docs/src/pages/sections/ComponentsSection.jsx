@@ -7,7 +7,7 @@ export default () => {
   return (
     <div className="components">
       <div className="components-inner">
-        <h1>Build Stunning Apps Using Over 60  Beautiful Components </h1>
+        <h2>Build Stunning Apps Using Over 60  Beautiful Components </h2>
         <p>
           Basic components like Button, Avatar and Card and more sophisticated ones like Hints, ColorPicker and Drawer.
         </p>

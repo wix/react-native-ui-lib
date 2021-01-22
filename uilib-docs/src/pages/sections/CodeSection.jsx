@@ -19,7 +19,7 @@ export default () => {
 
   return (
     <div className="code-section">
-      <h1>Effortless App Building Using Our Toolset</h1>
+      <h2>Effortless App Building Using Our Toolset</h2>
       <div className="code-example">
         <TabBar onChangeIndex={setSelectedTab} selectedIndex={selectedTab} />
         <Tab {...tabs[selectedTab]} />
@@ -49,7 +49,7 @@ const TabBar = ({onChangeIndex, selectedIndex}) => {
 const Tab = ({headline, codeSnippet}) => {
   return (
     <div className="tab-page">
-      <h3>{headline}</h3>
+      <p>{headline}</p>
       <pre className="code">
         <code className="language-javascript">{codeSnippet}</code>
       </pre>

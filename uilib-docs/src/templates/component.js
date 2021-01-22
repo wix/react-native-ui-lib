@@ -190,7 +190,7 @@ export default class ComponentTemplate extends Component {
 
           <div className="component-header">
             <div>
-              <h1 className="title inline">{selectedComponent.displayName}</h1>
+              <h2 className="title inline">{selectedComponent.displayName}</h2>
               {_.map(examples, example => {
                 return (
                   <span className="code-example">
@@ -242,7 +242,7 @@ export default class ComponentTemplate extends Component {
 const ComponentAPI = ({props, href = ''}) => {
   return (
     <div className="component-api">
-      <h1>API</h1>
+      <h3>API</h3>
       {_.map(props, prop => {
         const description = _.get(prop, 'description.text');
         const defaultValue = _.get(prop, 'defaultValue.value');
@@ -251,9 +251,9 @@ const ComponentAPI = ({props, href = ''}) => {
         return (
           <div className="prop-info">
             <a name={prop.name}>
-              <h3 className={titleClassname}>{prop.name}</h3>
+              <h5 className={titleClassname}>{prop.name}</h5>
             </a>
-            <p className="description">{description}</p>
+            <p className="description default-size">{description}</p>
             <p className="type">{_.get(prop, 'type.name')}</p>
             {defaultValue && <p className="default-value">default: {_.get(prop, 'defaultValue.value')}</p>}
           </div>
