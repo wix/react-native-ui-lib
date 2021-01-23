@@ -1,4 +1,5 @@
 import React from 'react';
+import {Appearance, ColorSchemeName} from 'react-native';
 //@ts-ignore
 import hoistStatics from 'hoist-non-react-statics';
 //@ts-ignore
@@ -23,10 +24,21 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
     static displayName: string | undefined;
     static propTypes: any;
     static defaultProps: any;
+    appearanceListener: any;
 
     state = {
       error: false
     };
+
+    componentDidMount() {
+      this.appearanceListener = Appearance.addChangeListener(({colorScheme}: {colorScheme: ColorSchemeName}) => {
+        this.setState({colorScheme});
+      });
+    }
+
+    componentWillUnmount() {
+      Appearance.removeChangeListener(this.appearanceListener);
+    }
 
     static getThemeProps = (props: any, context: any) => {
       return Modifiers.getThemeProps.call(WrappedComponent, props, context);

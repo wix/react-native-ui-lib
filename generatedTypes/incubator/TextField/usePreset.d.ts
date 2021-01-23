@@ -120,7 +120,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     clearTextOnFocus?: boolean | undefined;
     dataDetectorTypes?: "none" | "link" | "address" | "phoneNumber" | "calendarEvent" | "all" | import("react-native").DataDetectorTypes[] | undefined;
     enablesReturnKeyAutomatically?: boolean | undefined;
-    keyboardAppearance?: "default" | "light" | "dark" | undefined;
+    keyboardAppearance?: "light" | "dark" | "default" | undefined;
     passwordRules?: string | null | undefined;
     rejectResponderTermination?: boolean | null | undefined;
     selectionState?: import("react-native").DocumentSelectionState | undefined;
@@ -498,7 +498,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     clearTextOnFocus?: boolean | undefined;
     dataDetectorTypes?: "none" | "link" | "address" | "phoneNumber" | "calendarEvent" | "all" | import("react-native").DataDetectorTypes[] | undefined;
     enablesReturnKeyAutomatically?: boolean | undefined;
-    keyboardAppearance?: "default" | "light" | "dark" | undefined;
+    keyboardAppearance?: "light" | "dark" | "default" | undefined;
     passwordRules?: string | null | undefined;
     rejectResponderTermination?: boolean | null | undefined;
     selectionState?: import("react-native").DocumentSelectionState | undefined;
@@ -988,7 +988,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     clearTextOnFocus?: boolean | undefined;
     dataDetectorTypes?: "none" | "link" | "address" | "phoneNumber" | "calendarEvent" | "all" | import("react-native").DataDetectorTypes[] | undefined;
     enablesReturnKeyAutomatically?: boolean | undefined;
-    keyboardAppearance?: "default" | "light" | "dark" | undefined;
+    keyboardAppearance?: "light" | "dark" | "default" | undefined;
     passwordRules?: string | null | undefined;
     rejectResponderTermination?: boolean | null | undefined;
     selectionState?: import("react-native").DocumentSelectionState | undefined;

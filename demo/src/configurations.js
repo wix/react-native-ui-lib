@@ -1,4 +1,4 @@
-import {Assets, Typography, Spacings} from 'react-native-ui-lib'; // eslint-disable-line
+import {Assets, Colors, Typography, Spacings} from 'react-native-ui-lib'; // eslint-disable-line
 
 Assets.loadAssetsGroup('icons.demo', {
   add: require('./assets/icons/add.png'),
@@ -12,9 +12,22 @@ Assets.loadAssetsGroup('icons.demo', {
 Typography.loadTypographies({
   h1: {...Typography.text40},
   h2: {...Typography.text50},
-  h3: {...Typography.text60}
+  h3: {...Typography.text60},
+  body: Typography.text70
 });
 
 Spacings.loadSpacings({
   page: Spacings.s5
+});
+
+/* Dark Mode Schemes */
+Colors.loadSchemes({
+  light: {
+    screenBG: 'transparent',
+    textColor: Colors.grey10
+  },
+  dark: {
+    screenBG: Colors.grey10,
+    textColor: Colors.white
+  }
 });
