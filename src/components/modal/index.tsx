@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Modal as RNModal, ModalProps as RNModalProps, TouchableWithoutFeedback, GestureResponderEvent} from 'react-native';
-import {BlurView} from '@react-native-community/blur';
 import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons/new';
 import TopBar, {ModalTopBarProps} from './TopBar';
@@ -9,14 +8,6 @@ import View from '../../components/view';
 
 export {ModalTopBarProps};
 export interface ModalProps extends RNModalProps {
-    /**
-     * Blurs the modal background when transparent (iOS only)
-     */
-    enableModalBlur?: boolean;
-    /**
-     * A custom view to use as a BlueView instead of the default one
-     */
-    blurView?: JSX.Element;
     /**
      * allow dismissing a modal when clicking on its background
      */
@@ -73,16 +64,12 @@ class Modal extends Component<ModalProps> {
   }
 
   render() {
-    const {blurView, enableModalBlur, visible, ...others} = this.props;
-    const defaultContainer = enableModalBlur && Constants.isIOS ? BlurView : View;
-    const Container: any = blurView ? blurView : defaultContainer;
+    const {visible, ...others} = this.props;
 
     return (
       <RNModal visible={Boolean(visible)} {...others}>
-        <Container style={{flex: 1}} blurType="light">
-          {this.renderTouchableOverlay()}
-          {this.props.children}
-        </Container>
+        {this.renderTouchableOverlay()}
+        {this.props.children}
       </RNModal>
     );
   }

@@ -9,7 +9,6 @@ import {
 import {BaseComponent} from '../commons';
 import {ColorValue} from '../style/colors';
 import {ButtonProps} from './Button';
-import {BlurViewProperties} from '@react-native-community/blur';
 
 export type ToastPosition = "relative" | "top" | "bottom";
 
@@ -30,8 +29,6 @@ export interface ToastProps {
   renderContent?: (props: ToastProps) => ReactElement | ReactElement[];
   centerMessage?: boolean;
   animated?: boolean;
-  enableBlur?: boolean;
-  blurOptions?: BlurViewProperties;
   zIndex?: number;
 }
 

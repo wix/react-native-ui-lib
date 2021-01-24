@@ -4,14 +4,6 @@ import TopBar, { ModalTopBarProps } from './TopBar';
 export { ModalTopBarProps };
 export interface ModalProps extends RNModalProps {
     /**
-     * Blurs the modal background when transparent (iOS only)
-     */
-    enableModalBlur?: boolean;
-    /**
-     * A custom view to use as a BlueView instead of the default one
-     */
-    blurView?: JSX.Element;
-    /**
      * allow dismissing a modal when clicking on its background
      */
     onBackgroundPress?: (event: GestureResponderEvent) => void;

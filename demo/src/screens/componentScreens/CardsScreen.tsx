@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Constants, Colors, View, Card, CardProps, Button, Text, Image} from 'react-native-ui-lib';
+import {Colors, View, Card, CardProps, Button, Text} from 'react-native-ui-lib';
 // @ts-ignore
 import posts from '../../data/posts';
 
@@ -97,10 +97,8 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
         height={160}
         style={{marginBottom: 15}}
         onPress={() => {}}
-        enableBlur
         borderRadius={borderRadius}
         useNative
-        backgroundColor={Colors.white}
         activeOpacity={1}
         activeScale={isImageOnLeft ? 0.96 : 1.04}
       >
@@ -144,8 +142,8 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
           padding-20
           flex-3
           content={[
-            {text: 'Special sale!', text70: true, white: true},
-            {text: '10%', text60: true, white: true}
+            {text: 'Special sale!', text70: true},
+            {text: '10%', text60: true}
           ]}
           contentStyle={{alignItems: 'center'}}
         />
@@ -226,7 +224,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
 
   renderNumbers = () => {
     return (
-      <ScrollView style={{height: 100}} horizontal showsHorizontalScrollIndicator={false}>
+      <ScrollView style={{height: 100, marginBottom: 20}} horizontal showsHorizontalScrollIndicator={false}>
         {_.times(4, i => {
           return (
             <Card key={i} width={100} style={{marginRight: 20}}>
@@ -247,37 +245,6 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
       <Card flex center height={80} {...cardProps}>
         {body}
       </Card>
-    );
-  };
-
-  renderBackgroundTypes = () => {
-    return (
-      <View row marginV-10>
-        {this.renderBackgroundCard(
-          {'marginR-20': true, style: {backgroundColor: Colors.grey60}},
-          <Text text80 center white>
-            With custom background color
-          </Text>
-        )}
-        {this.renderBackgroundCard(
-          {
-            'marginR-20': true,
-            style: {backgroundColor: Colors.rgba(Colors.grey60, 0.75)}
-          },
-          <Text text70 center white>
-            With opacity
-        </Text>)}
-        {Constants.isIOS &&
-          this.renderBackgroundCard({enableBlur: true, 'marginL-20': true},
-            <>
-              <Text text70 grey20 center>
-                With Blur effect
-              </Text>
-              <Text text80 grey20 center>
-                (iOS only)
-              </Text>
-            </>)}
-      </View>
     );
   };
 
@@ -337,7 +304,6 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
       <>
         {this.renderNumbers()}
         {this.renderImageOnBottom()}
-        {this.renderBackgroundTypes()}
         {this.renderComplexExample()}
       </>
     );

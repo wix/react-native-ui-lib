@@ -1,10 +1,7 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, ViewStyle} from 'react-native';
-import {BlurView} from '@react-native-community/blur';
-import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
-// import {PureBaseComponent} from '../../commons';
 import {
   asBaseComponent,
   forwardRef,
@@ -62,14 +59,6 @@ export type CardProps = ViewProps &
      * elevation value (Android only)
      */
     elevation?: number;
-    /**
-     * enable blur effect (iOS only)
-     */
-    enableBlur?: boolean;
-    /**
-     * blur option for blur effect according to @react-native-community/blur lib (make sure enableBlur is on)
-     */
-    blurOptions?: object;
     /**
      * Additional styles for the top container
      */
@@ -143,15 +132,6 @@ class Card extends PureComponent<PropTypes, State> {
     }).start();
   }
 
-  getBlurOptions() {
-    const {blurOptions} = this.props;
-    return {
-      blurType: 'light',
-      blurAmount: 5,
-      ...blurOptions
-    };
-  }
-
   // todo: add unit test
   calcChildPosition(childIndex: number) {
     const {row} = this.props;
@@ -183,16 +163,6 @@ class Card extends PureComponent<PropTypes, State> {
 
     if (enableShadow) {
       return this.styles.containerShadow;
-    }
-  }
-
-  get blurBgStyle() {
-    const {enableBlur} = this.props;
-
-    if (Constants.isIOS && enableBlur) {
-      return {backgroundColor: Colors.rgba(Colors.white, 0.85)};
-    } else {
-      return {backgroundColor: Colors.white};
     }
   }
 
@@ -276,11 +246,9 @@ class Card extends PureComponent<PropTypes, State> {
       style,
       selected,
       containerStyle,
-      enableBlur,
       forwardedRef,
       ...others
     } = this.props;
-    const blurOptions = this.getBlurOptions();
     const Container = onPress || onLongPress ? TouchableOpacity : View;
     const brRadius = this.borderRadius;
 
@@ -291,7 +259,7 @@ class Card extends PureComponent<PropTypes, State> {
           {borderRadius: brRadius},
           this.elevationStyle,
           this.shadowStyle,
-          this.blurBgStyle,
+          {backgroundColor: Colors.white},
           containerStyle,
           style
         ]}
@@ -303,14 +271,6 @@ class Card extends PureComponent<PropTypes, State> {
         {...others}
         ref={forwardedRef}
       >
-        {Constants.isIOS && enableBlur && (
-          // @ts-ignore
-          <BlurView
-            style={[this.styles.blurView, {borderRadius: brRadius}]}
-            {...blurOptions}
-          />
-        )}
-
         {this.renderChildren()}
         {this.renderSelection()}
       </Container>
@@ -344,10 +304,6 @@ function createStyles({
       shadowOpacity: 0.25,
       shadowRadius: 12,
       shadowOffset: {height: 5, width: 0}
-    },
-    blurView: {
-      ...StyleSheet.absoluteFillObject,
-      borderRadius: brRadius
     },
     selectedBorder: {
       ...StyleSheet.absoluteFillObject,

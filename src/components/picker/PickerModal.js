@@ -2,7 +2,6 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, FlatList, TextInput} from 'react-native';
-import {Constants} from '../../helpers';
 import {Typography, Colors} from '../../style';
 import Assets from '../../assets';
 import {BaseComponent} from '../../commons';
@@ -78,12 +77,10 @@ class PickerModal extends BaseComponent {
   };
 
   render() {
-    const {visible, enableModalBlur, topBarProps, listProps, children} = this.props;
+    const {visible, topBarProps, listProps, children} = this.props;
     return (
       <Modal
         animationType={'slide'}
-        transparent={Constants.isIOS && enableModalBlur}
-        enableModalBlur={Constants.isIOS && enableModalBlur}
         visible={visible}
         onRequestClose={topBarProps.onCancel}
       >

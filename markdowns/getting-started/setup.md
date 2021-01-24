@@ -31,7 +31,7 @@ If you're planning on using specific components, see **UILib Packages**.
 
 If you want it all, install **peer dependencies**
 ```
-npm i react-native-gesture-handler react-native-reanimated @react-native-community/blur @react-native-community/datetimepicker @react-native-community/netinfo @react-native-community/picker
+npm i react-native-gesture-handler react-native-reanimated @react-native-community/datetimepicker @react-native-community/netinfo @react-native-community/picker
 
 cd ios && pod install
 ```
@@ -46,7 +46,6 @@ It's important to run `cd ios && pod install` if you are using a component that 
 
 - "react-native-gesture-handler": ">=1.5.0",
 - "react-native-reanimated": ">=1.4.0",
-- "@react-native-community/blur": ">=3.4.1",
 - ~~"react-native-interactable": ">=2.0.0"~~ (No Need in >=V5.0.0)
 - "@react-native-community/datetimepicker": "^2.1.0"
 - "@react-native-community/netinfo": "^5.6.2"
