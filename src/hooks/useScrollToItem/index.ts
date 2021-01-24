@@ -57,7 +57,7 @@ export type ScrollToItemResultProps<T extends ScrollToSupportedViews> = Pick<Scr
    */
   itemsWidths: number[];
   /**
-   * Use in order to focus the item with the specified index
+   * Use in order to focus the item with the specified index (use when the selectedIndex is not changed)
    */
   focusIndex: (index: number, animated?: boolean) => void;
 };
@@ -95,22 +95,22 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     const centeredOffsets = [];
     let currentCenterOffset = outerSpacing;
     const leftOffsets = [];
-    leftOffsets.push(0);
+    leftOffsets.push(outerSpacing - innerSpacing);
     const rightOffsets = [];
-    rightOffsets.push(-Constants.screenWidth + itemsWidths[0]);
+    rightOffsets.push(-Constants.screenWidth + itemsWidths[0] + outerSpacing + innerSpacing);
     while (index < itemsCount) {
       centeredOffsets[index] = currentCenterOffset - screenCenter + itemsWidths[index] / 2;
       ++index;
       currentCenterOffset += itemsWidths[index - 1] + innerSpacing;
-      leftOffsets[index] = leftOffsets[index - 1] + itemsWidths[index - 1];
-      rightOffsets[index] = rightOffsets[index - 1] + itemsWidths[index];
+      leftOffsets[index] = leftOffsets[index - 1] + itemsWidths[index - 1] + innerSpacing;
+      rightOffsets[index] = rightOffsets[index - 1] + itemsWidths[index] + innerSpacing;
     }
 
     if (addOffsetMargin) {
-      index = 1;
+      index = 1; 
       while (index < itemsCount - 1) {
         leftOffsets[index] -= itemsWidths[index - 1];
-        rightOffsets[index] += itemsWidths[index + 1];
+        rightOffsets[index] += itemsWidths[index + 1] + innerSpacing;
         ++index;
       }
     }
@@ -154,5 +154,7 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     focusIndex
   };
 };
+
+useScrollToItem.offsetType = OffsetType;
 
 export default useScrollToItem;

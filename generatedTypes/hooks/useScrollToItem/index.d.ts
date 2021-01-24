@@ -48,5 +48,8 @@ export declare type ScrollToItemResultProps<T extends ScrollToSupportedViews> = 
      */
     focusIndex: (index: number, animated?: boolean) => void;
 };
-declare const useScrollToItem: <T extends ScrollToSupportedViews>(props: ScrollToItemProps<T>) => ScrollToItemResultProps<T>;
+declare const useScrollToItem: {
+    <T extends ScrollToSupportedViews>(props: ScrollToItemProps<T>): ScrollToItemResultProps<T>;
+    offsetType: typeof OffsetType;
+};
 export default useScrollToItem;

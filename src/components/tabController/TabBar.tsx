@@ -14,7 +14,7 @@ import {Constants} from '../../helpers';
 import {LogService} from '../../services';
 import FadedScrollView from './FadedScrollView';
 
-import useScrollToItem, {OffsetType} from '../../hooks/useScrollToItem';
+import {useScrollToItem} from '../../hooks';
 
 const {Code, Value, interpolate, block, set} = Reanimated;
 
@@ -201,7 +201,7 @@ const TabBar = (props: Props) => {
   const {scrollViewRef: tabBar, onItemLayout, itemsWidths, focusIndex} = useScrollToItem({
     itemsCount: itemsCount.current,
     selectedIndex,
-    offsetType: centerSelected ? OffsetType.CENTER : OffsetType.DYNAMIC
+    offsetType: centerSelected ? useScrollToItem.offsetType.CENTER : useScrollToItem.offsetType.DYNAMIC
   });
 
   const indicatorOffsets = useMemo((): number[] => {
