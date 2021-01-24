@@ -52,6 +52,10 @@ export default class WizardStep extends PureBaseComponent {
      */
     circleSize: PropTypes.number,
     /**
+     * Circle's background color
+     */
+    circleBackgroundColor: PropTypes.string,
+    /**
      * Icon to replace the (default) index
      */
     icon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
@@ -94,6 +98,7 @@ export default class WizardStep extends PureBaseComponent {
       circleSize,
       color,
       circleColor = color,
+      circleBackgroundColor,
       icon,
       enabled
     } = props;
@@ -102,7 +107,11 @@ export default class WizardStep extends PureBaseComponent {
     return (
       <TouchableOpacity
         testID={`${testID}.circle`}
-        style={[styles.circle, circleSize && {width: circleSize, height: circleSize}, {borderColor: circleColor}]}
+        style={[
+          styles.circle,
+          circleSize && {width: circleSize, height: circleSize},
+          {borderColor: circleColor, backgroundColor: circleBackgroundColor}
+        ]}
         onPress={enabled ? onPress : undefined}
         hitSlop={{top: hitSlopSize, bottom: hitSlopSize, left: hitSlopSize, right: hitSlopSize}}
         disabled={!enabled}
