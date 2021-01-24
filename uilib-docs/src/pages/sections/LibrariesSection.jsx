@@ -4,7 +4,7 @@ import './LibrariesSection.scss';
 import rnn from '../../images/newDesign/rnn.png';
 import detox from '../../images/newDesign/detox.png';
 import calendars from '../../images/newDesign/calendars.png';
-import remx from '../../images/newDesign/remx.png';
+import remx from '../../images/newDesign/remx.svg';
 
 export default () => {
   return (

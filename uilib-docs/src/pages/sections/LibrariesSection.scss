@@ -34,7 +34,6 @@
         max-height: 75px;
         height: 4vw;
         min-height: 45px;
-        filter: grayscale(0.8);
         transition: 0.3s all;
       }
 
@@ -43,7 +42,7 @@
       }
 
       &:hover img {
-        filter: grayscale(0);
+        transform: scale(1.02);
       }
     }
   }
