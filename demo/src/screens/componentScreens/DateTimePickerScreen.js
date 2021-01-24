@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {DateTimePicker, View, Text, TouchableOpacity, Colors} from 'react-native-ui-lib'; // eslint-disable-line
+import {ScrollView} from 'react-native';
+import {DateTimePicker, Text, TouchableOpacity, Colors} from 'react-native-ui-lib'; // eslint-disable-line
 
 export default class DateTimePickerScreen extends Component {
 
@@ -29,7 +30,7 @@ export default class DateTimePickerScreen extends Component {
 
   render() {
     return (
-      <View flex padding-s5>
+      <ScrollView style={{padding: 14}}>
         <Text text40>Date Time Picker</Text>
         <DateTimePicker
           containerStyle={{marginVertical: 20}}
@@ -70,10 +71,10 @@ export default class DateTimePickerScreen extends Component {
           title={'Date'}
           placeholder={'Select a date'}
           renderExpandableInput={this.renderCustomInput}
-          // timeFormat={'h:mm A'}
+          dateFormat={'MMM D, YYYY'}
           // value={new Date('2015-03-25T12:00:00-06:30')}
         />
-      </View>
+      </ScrollView>
     );
   }
 }
