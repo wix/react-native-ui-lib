@@ -28,9 +28,10 @@
     .library {
       text-align: center;
       color: $white;
-      margin-left: 20px;
+      margin-left: 40px;
 
       img {
+        max-height: 75px;
         height: 4vw;
         min-height: 45px;
         filter: grayscale(0.8);
