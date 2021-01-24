@@ -10,7 +10,7 @@ import Button, {ButtonProps} from '../button';
  * @description: Quick actions bar, each action support Button component props
  * @modifiers: margin, padding
  * @gif: https://media.giphy.com/media/xULW8DwxkniFDMw7TO/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionBarScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionBarScreen.tsx
  */
 
 export type ActionBarProps = {
