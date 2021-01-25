@@ -1,7 +1,7 @@
 {
   "name": "uilib-docs",
   "description": "uilib docs template",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": "Ethan Sharabi <ethans@wix.com>",
   "main": "index.js",
   "dependencies": {
