@@ -9,7 +9,7 @@ import {PureBaseComponent} from '../../commons';
 /**
  * @description: Stepper component with increase and decrease buttons
  * @gif: https://media.giphy.com/media/3oFzm47bk0v4WV15O8/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FormScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StepperScreen.js
  */
 export default class Stepper extends PureBaseComponent {
   static displayName = 'Stepper';
