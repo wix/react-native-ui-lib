@@ -319,6 +319,79 @@ ruleTester.run('typography-deprecation', rule, {
           ${ourImport}
           import {List} from 'another-source';
           <List.Item title={'bla'} />`
+    },
+    {
+      options: options,
+      code: `
+        import React, {Component} from 'react';
+        import {Typography} from 'our-source';
+        import {List} from 'another-source';
+        export default class OurList extends Component {
+          render() {
+            const titleVal = 'bla';
+            return (
+              <List.Item title={titleVal}/>
+            )
+          }
+        }`
+    },
+    {
+      options: options,
+      code: `
+        import React, {Component} from 'react';
+        import {Typography, List} from 'our-source';
+        export default class OurList extends Component {
+          render() {
+            const titleVal = 'bla';
+            return (
+              <List.Item title={titleVal}/>
+            )
+          }
+        }`
+    },
+    {
+      options: options,
+      code: `
+        import React, {Component} from 'react';
+        import {Typography, List} from 'our-source';
+        export default class OurList extends Component {
+          render() {
+            const titleVal = this.props.title;
+            const subtitleVal = this.props.subtitle;
+            return (
+              <List.Item title={titleVal} subtitle={subtitleVal}/>
+            )
+          }
+        }`
+    },
+    {
+      options: options,
+      code: `
+        import React, {Component} from 'react';
+        import {Typography, List} from 'our-source';
+        export default class OurList extends Component {
+          render() {
+            const {title, subtitle} = this.props;
+            return (
+              <List.Item title={title} subtitle={subtitle}/>
+            )
+          }
+        }`
+    },
+    {
+      options: options,
+      code: `
+        import React, {Component} from 'react';
+        import {Typography, List} from 'our-source';
+        export default class OurList extends Component {
+          render() {
+            const {title: titleVal, subtitle: subtitleVal} = this.props;
+            return (
+              <List.Item title={titleVal} subtitle={subtitleVal}/>
+            )
+          }
+        }`,
+        errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
     }
   ],
   invalid: [
@@ -446,6 +519,194 @@ ruleTester.run('typography-deprecation', rule, {
       options: options,
       code: `${fullClassTest2}`,
       errors: [{message: error}]
-    }
+    },
+    {
+      options: options,
+      code: `
+        import React, {Component} from 'react';
+        import {Typography, Text} from 'our-source';
+        export default class OurList extends Component {
+          render() {
+            const titleVal = true;
+            return (
+              <Text title={titleVal}/>
+            )
+          }
+        }`,
+        errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
+    },
+    {
+      options: options,
+      code: `
+        import React, {Component} from 'react';
+        import {Typography, Text} from 'our-source';
+        export default class OurList extends Component {
+          render() {
+            const {isTitle} = this.props;
+            const titleVal = this.props.isTitle;
+            const subtitleVal = !this.props.isTitle;
+            return (
+              <Text title={titleVal} subtitle={subtitleVal}/>
+            )
+          }
+        }`,
+        errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
+    },
+    {
+      options: options,
+      code: `
+        import React, {Component} from 'react';
+        import {Typography, Text} from 'our-source';
+        export default class OurList extends Component {
+          render() {
+            const {isTitle} = this.props;
+            const titleVal = isTitle;
+            const subtitleVal = !isTitle;
+            return (
+              <Text title={titleVal} subtitle={subtitleVal}/>
+            )
+          }
+        }`,
+        errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
+    },
+    {
+      options: options,
+      code: `
+        import React, {Component} from 'react';
+        import {Typography, TextField} from 'our-source';
+        export default class OurList extends Component {
+          render() {
+            const titleVal = true;
+            return (
+              <TextField title={titleVal}/>
+            )
+          }
+        }`,
+        errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
+    },
+    {
+      options: options,
+      code: `
+        import React, {Component} from 'react';
+        import {Typography, TextField} from 'our-source';
+        export default class OurList extends Component {
+          render() {
+            const {isTitle} = this.props;
+            const titleVal = this.props.isTitle;
+            const subtitleVal = !this.props.isTitle;
+            return (
+              <TextField title={titleVal} subtitle={subtitleVal}/>
+            )
+          }
+        }`,
+        errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
+    },
+    {
+      options: options,
+      code: `
+        import React, {Component} from 'react';
+        import {Typography, TextField} from 'our-source';
+        export default class OurList extends Component {
+          render() {
+            const {isTitle} = this.props;
+            const titleVal = isTitle;
+            const subtitleVal = !isTitle;
+            return (
+              <TextField title={titleVal} subtitle={subtitleVal}/>
+            )
+          }
+        }`,
+        errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
+    },
+    // {
+    //   options: options,
+    //   code: `
+    //     import React, {Component} from 'react';
+    //     import {Typography, Button} from 'our-source';
+    //     export default class OurList extends Component {
+    //       render() {
+    //         const titleVal = true;
+    //         return (
+    //           <Button labelProps={{title: titleVal}}/>
+    //         )
+    //       }
+    //     }`,
+    //     errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
+    // },
+    // {
+    //   options: options,
+    //   code: `
+    //     import React, {Component} from 'react';
+    //     import {Typography, Button} from 'our-source';
+    //     export default class OurList extends Component {
+    //       render() {
+    //         const titleVal = true;
+    //         return (
+    //           <Button title={titleVal}/>
+    //         )
+    //       }
+    //     }`,
+    //     errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
+    // },
+    // {
+    //   options: options,
+    //   code: `
+    //     import React, {Component} from 'react';
+    //     import {Typography, Card} from 'our-source';
+    //     export default class OurList extends Component {
+    //       render() {
+    //         const titleVal = true;
+    //         return (
+    //           <Card.Section content={{title: titleVal}}/>
+    //         )
+    //       }
+    //     }`,
+    //     errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
+    // },
+    // {
+    //   options: options,
+    //   code: `
+    //     import React, {Component} from 'react';
+    //     import {Typography, TabBar} from 'our-source';
+    //     export default class OurList extends Component {
+    //       render() {
+    //         const titleVal = true;
+    //         return (
+    //           <TabBar labelStyle={{title: titleVal}} selectedLabelStyle={{title: titleVal}}/>
+    //         )
+    //       }
+    //     }`,
+    //     errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
+    // },
+    // {
+    //   options: options,
+    //   code: `
+    //     import React, {Component} from 'react';
+    //     import {Typography, Label} from 'our-source';
+    //     export default class OurList extends Component {
+    //       render() {
+    //         const titleVal = true;
+    //         return (
+    //           <Label labelProps={{title: titleVal}}/>
+    //         )
+    //       }
+    //     }`,
+    //     errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
+    // },
+    // {
+    //   options: options,
+    //   code: `
+    //     import React, {Component} from 'react';
+    //     import {Typography, Text as T} from 'our-source';
+    //     export default class OurList extends Component {
+    //       render() {
+    //         const titleVal = true;
+    //         return (
+    //           <T title={titleVal}/>
+    //         )
+    //       }
+    //     }`,
+    //     errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
+    // },
   ],
 });
