@@ -5,9 +5,10 @@ interface Props {
     modalVisibility?: boolean;
     overlayBackgroundColor?: string;
     onFadeDone?: () => void;
+    fadeOut?: boolean;
 }
 declare const OverlayFadingBackground: {
-    ({ testID, dialogVisibility, modalVisibility, overlayBackgroundColor, onFadeDone }: Props): JSX.Element;
+    ({ testID, dialogVisibility, modalVisibility, overlayBackgroundColor, onFadeDone: propsOnFadeDone, fadeOut }: Props): JSX.Element;
     displayName: string;
 };
 export default OverlayFadingBackground;

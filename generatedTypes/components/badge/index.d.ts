@@ -82,7 +82,7 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
  * @extends: Animatable.View
  * @extendslink: https://github.com/oblador/react-native-animatable
  * @image: https://user-images.githubusercontent.com/33805983/34480753-df7a868a-efb6-11e7-9072-80f5c110a4f3.png
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.tsx
  */
 declare class Badge extends PureComponent<BadgeProps> {
     styles: ReturnType<typeof createStyles>;
@@ -108,7 +108,7 @@ declare function createStyles(props: BadgeProps): {
     badge: {
         alignSelf: "flex-start";
         borderRadius: number;
-        backgroundColor: any;
+        backgroundColor: string | undefined;
         alignItems: "center";
         justifyContent: "center";
         overflow: "hidden";

@@ -1,6 +1,6 @@
 // COLORS
 
-$primary: #5a68f6;
+$primary: #5848ff;
 $secondary: #f0f1fd;
 
 // DARKS
@@ -41,14 +41,14 @@ $green60: #c1e9cf;
 $green70: #e8f7ef;
 $green80: #f3fbf7;
 // YELLOWS
-$yellow10: #e2902b;
-$yellow20: #faa030;
-$yellow30: #faad4d;
-$yellow40: #fbbd71;
-$yellow50: #fcce94;
-$yellow60: #fddeb8;
-$yellow70: #feefdb;
-$yellow80: #fef7ed;
+$yellow10: #e19800;
+$yellow20: #f0a700;
+$yellow30: #ffb600;
+$yellow40: #ffca45;
+$yellow50: #ffdd87;
+$yellow60: #ffeab5;
+$yellow70: #fff2d1;
+$yellow80: #fff7e3;
 // ORANGES
 $orange10: #d9644a;
 $orange20: #e66a4e;
@@ -90,14 +90,15 @@ $white: #ffffff;
 $black: #000000;
 
 // TEXTS
-$text10: 24px;
-$text20: 21px;
-$text30: 18px;
-$text40: 16px;
-$text50: 14px;
-$text60: 10px;
+$fontFamily: Poppins;
+$text10: 1.5em;
+$text20: 1.3em;
+$text30: 1.12em;
+$text40: 1em;
+$text50: 0.8em;
+$text60: 0.6em;
 
 // ELEMENTS
 $minScreenWidth: 1280px;
-$headerHeight: 80px;
+$headerHeight: 72px;
 $navbarWidth: 300px;
