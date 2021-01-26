@@ -47,7 +47,7 @@ const gradientImage = () => require('./gradient.png');
 /**
  * @description: Hovering button with gradient background
  * @modifiers: margin, background, color
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FloatingButtonScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FloatingButtonScreen.tsx
  * @extends: Button
  * @extendsLink: https://github.com/wix/react-native-ui-lib/blob/master/src/components/button/index.js
  */

@@ -16,6 +16,9 @@
   }
 
   .intro-content {
+    position: absolute;
+    top: 20vw;
+    left: 7vw;
     display: flex;
     flex-direction: column;
     z-index: 1;

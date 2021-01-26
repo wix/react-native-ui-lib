@@ -14,7 +14,7 @@ import {Constants} from '../../helpers';
 import {LogService} from '../../services';
 import FadedScrollView from './FadedScrollView';
 
-import useScrollToItem, {OffsetType} from '../../hooks/useScrollToItem';
+import {useScrollToItem} from '../../hooks';
 
 const {Code, Value, interpolate, block, set} = Reanimated;
 
@@ -122,7 +122,7 @@ interface Props extends TabControllerBarProps, BaseComponentInjectedProps, Forwa
 
 /**
  * @description: TabController's TabBar component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
  */
 const TabBar = (props: Props) => {
   const {
@@ -201,7 +201,7 @@ const TabBar = (props: Props) => {
   const {scrollViewRef: tabBar, onItemLayout, itemsWidths, focusIndex} = useScrollToItem({
     itemsCount: itemsCount.current,
     selectedIndex,
-    offsetType: centerSelected ? OffsetType.CENTER : OffsetType.DYNAMIC
+    offsetType: centerSelected ? useScrollToItem.offsetType.CENTER : useScrollToItem.offsetType.DYNAMIC
   });
 
   const indicatorOffsets = useMemo((): number[] => {
