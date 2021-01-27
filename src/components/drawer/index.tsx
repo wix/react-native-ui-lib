@@ -10,7 +10,7 @@ import {Colors} from '../../style';
 import View from '../view';
 import Swipeable, {SwipeableProps} from './Swipeable';
 
-const DEFAULT_BG = Colors.blue30;
+const DEFAULT_BG = Colors.primary;
 const DEFAULT_BOUNCINESS = 0;
 
 interface ItemProps {

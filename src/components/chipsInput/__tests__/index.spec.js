@@ -61,15 +61,6 @@ describe('ChipsInput', () => {
       expect(removeTagSpy).not.toHaveBeenCalled();
     });
 
-    it('should ignore key event if platform is Android', () => {
-      Constants.isAndroid = true;
-      const pressEvent = {};
-      _.set(uut.state, 'tags', [{}, {}, {}]);
-      uut.onKeyPress(pressEvent);
-      expect(uut.state.tagIndexToRemove).toBe(2);
-      Constants.isAndroid = false;
-    });
-
     it('should not update state if input value is not empty', () => {
       const pressEvent = {nativeEvent: {key: Constants.backspaceKey}};
       _.set(uut.state, 'tags', [{}, {}, {}]);

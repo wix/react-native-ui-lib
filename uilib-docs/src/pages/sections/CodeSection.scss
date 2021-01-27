@@ -1,0 +1,47 @@
+@import 'src/styles/constants';
+
+.code-section {
+  padding-bottom: 5%;
+  .code-example {
+    display: flex;
+    flex-direction: column;
+    width: 35vw;
+
+    .view-docs-button {
+      margin-top: 40px;
+      align-self: center;
+    }
+  }
+
+  .tabs {
+    display: flex;
+    height: 46px;
+    border: 1px solid;
+    .tab {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.8em;
+      transition: 0.2s all;
+
+      &:not(:last-child) {
+        border-right: 1px solid;
+      }
+
+      &.selected {
+        background-color: $black;
+        color: $white;
+      }
+    }
+  }
+
+  .tab-page {
+    .code {
+      background-color: $black;
+      padding: 20px;
+      min-width: 600px;
+    }
+  }
+}

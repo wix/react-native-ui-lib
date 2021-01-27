@@ -103,7 +103,8 @@ class Image extends PureComponent<Props, State> {
   static getDerivedStateFromProps(nextProps: Partial<Props>, prevState: State) {
     if (nextProps.source !== prevState.prevSource) {
       return {
-        error: false
+        error: false,
+        prevSource: nextProps.source
       };
     }
     return null;
@@ -148,6 +149,7 @@ class Image extends PureComponent<Props, State> {
   onError = (event: NativeSyntheticEvent<ImageErrorEventData>) => {
     if (event.nativeEvent.error) {
       this.setState({error: true});
+      _.invoke(this.props, 'onError', event);
     }
   }
 

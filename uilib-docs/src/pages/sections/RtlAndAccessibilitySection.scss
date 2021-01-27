@@ -1,0 +1,37 @@
+@import 'src/styles/constants';
+
+.rtl-accessibility-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 100px;
+  width: 100%;
+
+  .images {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    min-width: 50vw;
+    margin-top: 3%;
+
+    .card {
+      width: 15vw;
+      min-width: 300px;
+      margin-right: 20px;
+      box-shadow: 6px 6px 50px 15px rgba($primary, 0.05);
+      background-color: $white;
+      text-align: center;
+      border-radius: 20px;
+      padding: 40px;
+
+      .title {
+        font-weight: 500;
+      }
+
+      img {
+        width: 20%;
+        min-width: 50px;
+      }
+    }
+  }
+}
