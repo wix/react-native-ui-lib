@@ -6,7 +6,8 @@ module.exports = {
     title: `RNUILib`,
     description: `React Native UI Toolset and Components Library`,
     author: `ethans@wix.com`,
-    domain: 'react-native-ui-lib'
+    domain: 'react-native-ui-lib',
+    github: 'https://github.com/wix/react-native-ui-lib'
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

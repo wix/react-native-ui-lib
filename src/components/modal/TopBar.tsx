@@ -70,7 +70,7 @@ const DEFAULT_BUTTON_PROPS = {
 
 /**
  * @description: Modal.TopBar, inner component for configuring the Modal component's title, buttons and statusBar
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.tsx
  */
 class TopBar extends Component<ModalTopBarProps> {
   static displayName = 'Modal.TopBar';

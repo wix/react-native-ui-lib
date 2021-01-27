@@ -1,0 +1,67 @@
+@import 'src/styles/constants';
+.intro {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .intro-cover {
+    position: absolute;
+    width: 100vw;
+  }
+
+  .intro-inner {
+    display: flex;
+  }
+
+  .intro-content {
+    position: absolute;
+    top: 20vw;
+    left: 7vw;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    width: 40%;
+    justify-content: center;
+    align-items: flex-start;
+
+    > p {
+      font-size: 3em;
+      font-weight: 600;
+      margin: 0;
+
+      > .lib-name {
+        color: $primary;
+      }
+    }
+
+    .git-stars {
+      display: flex;
+      align-items: center;
+      border: 1px solid;
+      border-radius: 2px;
+
+      img {
+        padding: 0 4px;
+        height: 16px;
+      }
+
+      span {
+        display: inline-block;
+        vertical-align: middle;
+        padding: 0 10px;
+        border-left: 1px solid;
+        font-weight: 500;
+      }
+    }
+
+    .buttons {
+      margin-top: 40px;
+
+      > :first-child {
+        margin-right: 10px;
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import { PureComponent } from 'react';
-import { TextStyle, LayoutRectangle, LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native';
+import { /* processColor, */ TextStyle, LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native';
 import _ from 'lodash';
 import Reanimated from 'react-native-reanimated';
 import { State } from 'react-native-gesture-handler';
@@ -86,11 +86,11 @@ interface Props extends TabControllerItemProps {
     targetPage: any;
     state: State;
     currentPage: Reanimated.Adaptable<number>;
-    onLayout: (layout: Partial<LayoutRectangle>, index: number) => void;
+    onLayout?: (event: LayoutChangeEvent, index: number) => void;
 }
 /**
  * @description: TabController's TabBarItem
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
  * @notes: Must be rendered as a direct child of TabController.TabBar.
  */
 export default class TabBarItem extends PureComponent<Props> {
@@ -102,8 +102,7 @@ export default class TabBarItem extends PureComponent<Props> {
     private itemWidth?;
     private itemRef;
     constructor(props: Props);
-    onStateChange: (...args: any[]) => void;
-    onLayout: ({ nativeEvent: { layout: { width } } }: LayoutChangeEvent) => void;
+    onLayout: (event: LayoutChangeEvent) => void;
     onPress: () => void;
     getItemStyle(): any[];
     getLabelStyle(): (TextStyle | _.Dictionary<Reanimated.Node<number> | Reanimated.Node<string | number | boolean> | Reanimated.Node<"normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900"> | undefined> | undefined)[];

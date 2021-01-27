@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import {Colors, Text, View, Fader, withScrollReached, WithScrollReachedProps} from 'react-native-ui-lib';
+// @ts-ignore
 import {renderHeader} from '../ExampleScreenPresenter';
 
 const numberOfItems = 3;
@@ -10,6 +11,7 @@ const itemWidth = 100;
 const itemHeight = 100;
 const tintColor = undefined;
 
+// @ts-ignore
 const horizontal = faderPosition === Fader.position.START || faderPosition === Fader.position.END;
 
 class FaderScreen extends Component<WithScrollReachedProps> {
