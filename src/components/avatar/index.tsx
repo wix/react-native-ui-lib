@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   ImagePropsBase,
   ImageStyle,
-  TextStyle
+  TextStyle,
+  AccessibilityProps
 } from 'react-native';
 import {Colors} from '../../style';
 import {forwardRef, asBaseComponent} from '../../commons/new';
@@ -43,7 +44,7 @@ export enum BadgePosition {
 
 const DEFAULT_BADGE_SIZE = 'pimpleBig';
 
-export type AvatarProps = {
+export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
   /**
    * Adds fade in animation when Avatar image loads
    */
