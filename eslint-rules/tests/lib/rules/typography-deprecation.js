@@ -618,6 +618,7 @@ ruleTester.run('typography-deprecation', rule, {
         }`,
         errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
     },
+    // TODO: these tests are not currently supported, they might be supported when prop-value-shape-deprecation is merged (or we'll have to add support)
     // {
     //   options: options,
     //   code: `
@@ -693,6 +694,7 @@ ruleTester.run('typography-deprecation', rule, {
     //     }`,
     //     errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
     // },
+    // TODO: this is not currently supported, it should be easily supported after the new utils are added
     // {
     //   options: options,
     //   code: `
