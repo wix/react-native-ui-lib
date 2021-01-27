@@ -19,7 +19,7 @@ type DefaultProps = Partial<CarouselProps>
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CarouselScreen.tsx
  * @extends: ScrollView
  * @extendsLink: https://facebook.github.io/react-native/docs/scrollview
- * @notes: This is screed width Component
+ * @notes: This is screen width Component
  */
 class Carousel extends Component<CarouselProps, CarouselState> {
   static displayName = 'Carousel';
