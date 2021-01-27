@@ -44,7 +44,7 @@ export declare type ScrollToItemResultProps<T extends ScrollToSupportedViews> = 
      */
     itemsWidths: number[];
     /**
-     * Use in order to focus the item with the specified index
+     * Use in order to focus the item with the specified index (use when the selectedIndex is not changed)
      */
     focusIndex: (index: number, animated?: boolean) => void;
 };
