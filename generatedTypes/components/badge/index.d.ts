@@ -106,7 +106,7 @@ declare class Badge extends PureComponent<BadgeProps> {
     getBorderStyling(): ViewStyle;
     renderLabel(): JSX.Element | undefined;
     renderCustomElement(): JSX.Element | undefined;
-    renderIcon(): false | 0 | JSX.Element | undefined;
+    renderIcon(): 0 | JSX.Element | undefined;
     render(): JSX.Element;
 }
 declare function createStyles(props: BadgeProps): {

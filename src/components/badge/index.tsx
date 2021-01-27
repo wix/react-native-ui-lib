@@ -238,14 +238,13 @@ class Badge extends PureComponent<BadgeProps> {
 
   renderCustomElement() {
     const {customElement} = this.props;
-    return customElement && <View>{customElement}</View>;
+    return customElement;
   }
 
   renderIcon() {
-    const {icon, iconStyle, iconProps, borderColor, label, customElement} = this.props;
+    const {icon, iconStyle, iconProps, borderColor, label} = this.props;
     const flex = label ? 0 : 1;
     return (
-      !customElement &&
       icon && (
         <Image
           source={icon!}
