@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { ImageSourcePropType, StyleProp, ViewStyle, ImagePropsBase, ImageStyle, TextStyle } from 'react-native';
+import { ImageSourcePropType, StyleProp, ViewStyle, ImagePropsBase, ImageStyle, TextStyle, AccessibilityProps } from 'react-native';
 import { BadgeProps } from '../badge';
 import { ImageProps } from '../image';
 export declare enum StatusModes {
@@ -14,7 +14,7 @@ export declare enum BadgePosition {
     BOTTOM_RIGHT = "BOTTOM_RIGHT",
     BOTTOM_LEFT = "BOTTOM_LEFT"
 }
-export declare type AvatarProps = {
+export declare type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
     /**
      * Adds fade in animation when Avatar image loads
      */
@@ -162,7 +162,100 @@ declare function createStyles(props: AvatarProps): {
     };
 };
 export { Avatar };
-declare const _default: React.ComponentClass<AvatarProps & {
+declare const _default: React.ComponentClass<Pick<AccessibilityProps, "accessibilityLabel"> & {
+    /**
+     * Adds fade in animation when Avatar image loads
+     */
+    animate?: boolean | undefined;
+    /**
+     * Background color for Avatar
+     */
+    backgroundColor?: string | undefined;
+    /**
+     * Badge location on Avatar
+     */
+    badgePosition?: BadgePosition | undefined;
+    /**
+     * Badge props passed down to Badge component
+     */
+    badgeProps?: BadgeProps | undefined;
+    /**
+     * Additional spacing styles for the container
+     */
+    containerStyle?: StyleProp<ViewStyle>;
+    /**
+     * The image source (external or assets)
+     */
+    source?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    /**
+     * Image props object
+     */
+    imageProps?: ImageProps | undefined;
+    /**
+     * Image style object used to pass additional style props
+     * by components which render image
+     */
+    imageStyle?: ImageStyle | undefined;
+    /**
+     * Listener-callback for when an image's (uri) loading
+     * starts (equiv. to Image.onLoadStart()).
+     */
+    onImageLoadStart?: (() => void) | undefined;
+    /**
+     * Listener-callback for when an image's (uri) loading
+     * either succeeds or fails (equiv. to Image.onLoadEnd()).
+     */
+    onImageLoadEnd?: (() => void) | undefined;
+    /**
+     * Listener-callback for when an image's (uri) loading
+     * fails (equiv. to Image.onError()).
+     */
+    onImageLoadError?: ((error: import("react-native").NativeSyntheticEvent<import("react-native").ImageErrorEventData>) => void) | undefined;
+    /**
+     * Label that can represent initials
+     */
+    label?: string | undefined;
+    /**
+     * The label color
+     */
+    labelColor?: string | undefined;
+    /**
+     * ribbon label to display on the avatar
+     */
+    ribbonLabel?: string | undefined;
+    /**
+     * ribbon custom style
+     */
+    ribbonStyle?: StyleProp<ViewStyle>;
+    /**
+     * ribbon label custom style
+     */
+    ribbonLabelStyle?: StyleProp<TextStyle>;
+    /**
+     * Custom ribbon
+     */
+    customRibbon?: JSX.Element | undefined;
+    /**
+     * Determine if to show online badge
+     */
+    isOnline?: boolean | undefined;
+    /**
+     * AWAY, ONLINE, OFFLINE or NONE mode (if set to a value other then 'NONE' will override isOnline prop)
+     */
+    status?: StatusModes | undefined;
+    /**
+     * Custom size for the Avatar
+     */
+    size: number;
+    /**
+     * Press handler
+     */
+    onPress?: ((props: any) => void) | undefined;
+    /**
+     * Used as a testing identifier
+     */
+    testID?: string | undefined;
+} & {
     useCustomTheme?: boolean | undefined;
 }, any> & typeof Avatar;
 export default _default;
