@@ -3,17 +3,16 @@ import Link from 'gatsby-link';
 import _ from 'lodash';
 import classnames from 'classnames';
 
-const undocumentedGroups = ['Incubator'];
-
 export default ({id, link, components, currentPage}) => {
   const hasChildren = _.size(components) > 1;
 
   if (!hasChildren) {
     return <ItemEntry id={id} link={link} currentPage={currentPage} />;
   } else {
+    const isUndocumented = _.isUndefined(_.find(components, {node: {displayName: id}}));
     return (
       <li key={id}>
-        {undocumentedGroups.includes(id) ? (
+        {isUndocumented ? (
           <span className={classnames('entry', {selected: id === currentPage})}>{id}</span>
         ) : (
           <Link key={id} to={`/docs/${id}/`}>
