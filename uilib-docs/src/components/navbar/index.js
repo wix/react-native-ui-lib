@@ -64,14 +64,14 @@ class Navbar extends Component {
     });
     return (
       <div className="search">
-        <img src={searchIcon} />
+        <img src={searchIcon} alt="search" />
         <input
           placeholder="Search..."
           onChange={this.setFilter}
           value={filter}
         />
         <button className={clearButtonClassName} onClick={this.resetSearch}>
-          <img src={clearIcon} />
+          <img src={clearIcon} alt="clear search" />
         </button>
       </div>
     );
@@ -96,16 +96,17 @@ class Navbar extends Component {
         {this.renderSearch()}
         <ul>
           {_.map(markdowns, page => {
-            return <Item id={page.title} link={page.path} />;
+            return <Item key={page.title} id={page.title} link={page.path} />;
           })}
           <li className="separator" />
           {_.map(componentsByGroups, (components, key) => {
             return (
               <Item
+                key={key}
                 id={key}
                 components={components}
                 currentPage={currentPage}
-              ></Item>
+              />
             );
           })}
         </ul>

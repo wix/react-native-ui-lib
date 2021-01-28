@@ -20,7 +20,7 @@ export default () => {
 const Card = ({image, title, description}) => {
   return (
     <div className="card">
-      <img src={image} />
+      <img src={image} alt={title} />
       <h3 className="title">{title}</h3>
       <p>{description}</p>
     </div>

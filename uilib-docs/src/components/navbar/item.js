@@ -14,17 +14,17 @@ export default ({id, link, components, currentPage}) => {
     return (
       <li key={id}>
         {undocumentedGroups.includes(id) ? (
-          <span class={classnames('entry', {selected: id === currentPage})}>{id}</span>
+          <span className={classnames('entry', {selected: id === currentPage})}>{id}</span>
         ) : (
           <Link key={id} to={`/docs/${id}/`}>
-            <span class={classnames('entry', {selected: id === currentPage})}>{id}</span>
+            <span className={classnames('entry', {selected: id === currentPage})}>{id}</span>
           </Link>
         )}
 
-        <ul class="nested">
+        <ul className="nested">
           {_.map(_.filter(components, c => c.node.displayName !== id), c => {
             return (
-              <ItemEntry id={c.node.displayName} currentPage={currentPage} />
+              <ItemEntry id={c.node.displayName} key={c.node.displayName} currentPage={currentPage} />
             );
           })}
         </ul>
@@ -37,7 +37,7 @@ const ItemEntry = ({id, link, currentPage}) => {
   return (
     <li key={id}>
       <Link key={id} to={link || `/docs/${id}/`}>
-        <span class={classnames('entry', {selected: id === currentPage})}>
+        <span className={classnames('entry', {selected: id === currentPage})}>
           {id}
         </span>
       </Link>

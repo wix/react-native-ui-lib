@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState} from 'react';
 import Link from 'gatsby-link';
 import classnames from 'classnames';
 
@@ -37,7 +37,14 @@ const TabBar = ({onChangeIndex, selectedIndex}) => {
       {['Foundation', 'Theme', 'Modifiers'].map((title, index) => {
         const tabClassName = classnames('tab', {selected: selectedIndex === index});
         return (
-          <div className={tabClassName} onClick={() => onChangeIndex(index)}>
+          <div
+            key={title}
+            className={tabClassName}
+            onClick={() => onChangeIndex(index)}
+            onKeyPress={() => onChangeIndex(index)}
+            role="tab"
+            tabIndex={index}
+          >
             {title}
           </div>
         );
