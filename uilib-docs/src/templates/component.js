@@ -102,7 +102,7 @@ export default class ComponentTemplate extends Component {
 
           <ul>
             {_.map(extendLinks, link => (
-              <li className="link">{link}</li>
+              <li className="link" key={link}>{link}</li>
             ))}
           </ul>
 
