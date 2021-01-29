@@ -8,19 +8,18 @@
   flex-direction: column;
   background-color: $primary;
   color: $white;
-  
+
   @include desktop {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
   }
 
-
   .headline {
     font-weight: bold;
     text-align: center;
     margin-bottom: 40px;
-    
+
     @include desktop {
       text-align: start;
       align-self: center;
@@ -35,17 +34,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 60%;
+
+    @include desktop {
+      width: 60%;
+    }
 
     .library {
       text-align: center;
       color: $white;
-      margin-left: 40px;
 
       img {
-        max-height: 75px;
-        height: 4vw;
-        min-height: 45px;
+        max-height: 60px;
+        height: 7vw;
         transition: 0.3s all;
       }
 

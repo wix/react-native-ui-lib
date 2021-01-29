@@ -6,6 +6,10 @@
   justify-content: space-between;
   padding: 40px 0;
 
+  & > div:first-child {
+    flex: 1;
+  }
+
   .column {
     margin-right: 20px;
 
