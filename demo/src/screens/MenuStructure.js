@@ -4,7 +4,7 @@ export const navigationData = {
     screens: [
       {title: 'Border Radius', tags: 'corener border radius circle', screen: 'unicorn.style.BorderRadiusesScreen'},
       {title: 'Colors', tags: 'palette rgb hex', screen: 'unicorn.style.ColorsScreen'},
-      {title: 'DarkMode', tags: 'dark mode colors', screen: 'unicorn.style.DarkModeScreen'},
+      {title: 'Dark Mode', tags: 'dark mode colors', screen: 'unicorn.style.DarkModeScreen'},
       {title: 'Shadows (iOS)', tags: 'shadow', screen: 'unicorn.style.ShadowsScreen'},
       {title: 'Spacings', tags: 'space margins paddings gutter', screen: 'unicorn.style.SpacingsScreen'},
       {title: 'Typography', tags: 'fonts text', screen: 'unicorn.style.TypographyScreen'}
