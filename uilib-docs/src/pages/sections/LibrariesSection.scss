@@ -5,17 +5,30 @@
   padding: 0 20%;
   height: 250px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   background-color: $primary;
   color: $white;
+  
+  @include desktop {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
 
   .headline {
-    width: 20%;
-    min-width: 400px;
-    align-self: center;
-    margin-right: 40px;
     font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+    
+    @include desktop {
+      text-align: start;
+      align-self: center;
+      width: 20%;
+      min-width: 400px;
+      margin-right: 40px;
+      margin-bottom: 0;
+    }
   }
 
   .libraries {
@@ -23,7 +36,6 @@
     justify-content: space-between;
     align-items: center;
     width: 60%;
-    // border: 1px solid;
 
     .library {
       text-align: center;
