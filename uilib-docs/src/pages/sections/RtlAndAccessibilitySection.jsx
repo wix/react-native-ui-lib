@@ -8,7 +8,7 @@ export default () => {
   return (
     <div className="rtl-accessibility-section">
       <h2>Full, out-of-the-box support to RTL and Accessibility</h2>
-      <div className="images">
+      <div className="cards">
         <Card image={crossPlatform} title="Cross Platform" description="We got you covered on both platforms" />
         <Card image={accessibility} title="Accessibility" description="Out-of-the-box Accessibility support" />
         <Card image={rtl} title="RTL" description="Everything should be aligned right" />

@@ -5,35 +5,47 @@
   padding: 0 20%;
   height: 250px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   background-color: $primary;
   color: $white;
 
+  @include desktop {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   .headline {
-    width: 20%;
-    min-width: 400px;
-    align-self: center;
-    margin-right: 40px;
     font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+
+    @include desktop {
+      text-align: start;
+      align-self: center;
+      width: 20%;
+      min-width: 400px;
+      margin-right: 40px;
+      margin-bottom: 0;
+    }
   }
 
   .libraries {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 60%;
-    // border: 1px solid;
+
+    @include desktop {
+      width: 60%;
+    }
 
     .library {
       text-align: center;
       color: $white;
-      margin-left: 40px;
 
       img {
-        max-height: 75px;
-        height: 4vw;
-        min-height: 45px;
+        max-height: 60px;
+        height: 7vw;
         transition: 0.3s all;
       }
 
