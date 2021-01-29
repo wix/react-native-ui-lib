@@ -6,27 +6,27 @@
   height: calc(100% - #{$headerHeight});
   overflow-y: auto;
   overflow-x: hidden;
-  background: $primary;
   padding: 20px;
+  padding-top: 0;
   border-radius: 2px;
-  box-shadow: 2px 0px 20px 2px rgba($primary, 0.2);
   margin-top: 20px;
+  border-right: 2px solid $dark80;
 
   .search {
     position: sticky;
+    background-color: $white;
+    border-bottom: 2px solid $secondary;
     top: 0;
     left: 0;
     display: flex;
     align-items: center;
     padding: 10px;
-    background-color: $secondary;
     box-sizing: border-box;
     margin-bottom: 10px;
     width: 100%;
-    transition: width 0.3s;
-    border-radius: 2px;
     z-index: 10;
     overflow: hidden;
+    transition: width 0.3s;
 
     &:focus-within {
       width: 100%;
@@ -41,7 +41,7 @@
       border: 0;
       padding: 5px;
       background: transparent;
-      background: $dark60;
+      background: $dark80;
       border-radius: 20px;
       display: flex;
       align-items: center;
@@ -100,7 +100,7 @@
     }
 
     .entry {
-      color: $white;
+      color: $dark10;
       font-size: 0.9em;
       font-weight: 500;
       width: 100%;
@@ -114,13 +114,13 @@
     }
 
     .nested {
-      border-left: 1px solid $white;
+      border-left: 1px solid $dark60;
       margin-top: 10px;
       padding-left: 10px;
     }
 
     &.separator {
-      border-bottom: 1px solid $white;
+      border-bottom: 2px solid $dark80;
       width: 100%;
       margin: 8px 0;
       padding: 0;
