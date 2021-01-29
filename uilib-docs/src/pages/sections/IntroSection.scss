@@ -1,7 +1,7 @@
 @import 'src/styles/constants';
 .intro {
   position: relative;
-  height: 65vh;
+  height: 75vh;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -28,7 +28,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    top: 25vh;
+    top: 15vh;
     text-align: center;
 
     @include desktop() {
