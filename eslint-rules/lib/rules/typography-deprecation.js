@@ -48,10 +48,21 @@ module.exports = {
       localImportSpecifier = utils.getLocalImportSpecifier(node, source, defaultImportName);
     }
 
+    function isComponentRelevant(node, components) {
+      let isComponentRelevant = true;
+      if (!_.isEmpty(components)) {
+        if (_.get(node, 'parent.type') === 'JSXOpeningElement') {
+          return components.includes(_.get(node, 'parent.name.name'));
+        }
+      }
+
+      return isComponentRelevant;
+    }
+
     function findAndReportDeprecation(node, possibleDeprecation, useShortVersion) {
       const path = `${defaultImportName}.${possibleDeprecation}`;
       const foundDeprecation = _.find(deprecations, {path});
-      if (foundDeprecation) {
+      if (foundDeprecation && isComponentRelevant(node, foundDeprecation.components)) {
         reportDeprecatedTypography(node, foundDeprecation, useShortVersion);
       }
     }

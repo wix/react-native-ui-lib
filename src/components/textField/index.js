@@ -559,7 +559,7 @@ export default class TextField extends BaseInput {
     const {renderExpandableInput, testID} = this.getThemeProps();
 
     if (_.isFunction(renderExpandableInput)) {
-      return renderExpandableInput(this.getThemeProps());
+      return renderExpandableInput(this.getThemeProps(), this.toggleExpandableModal);
     }
 
     return (

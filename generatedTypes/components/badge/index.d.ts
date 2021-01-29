@@ -73,6 +73,10 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
      */
     iconProps?: object;
     /**
+     * Custom element to render instead of an icon
+     */
+    customElement?: JSX.Element;
+    /**
      * Use to identify the badge in tests
      */
     testId?: string;
@@ -101,7 +105,8 @@ declare class Badge extends PureComponent<BadgeProps> {
     getFormattedLabel(): any;
     getBorderStyling(): ViewStyle;
     renderLabel(): JSX.Element | undefined;
-    renderIcon(): JSX.Element;
+    renderCustomElement(): JSX.Element | undefined;
+    renderIcon(): 0 | JSX.Element | undefined;
     render(): JSX.Element;
 }
 declare function createStyles(props: BadgeProps): {
@@ -402,6 +407,10 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      * Additional props passed to icon
      */
     iconProps?: object | undefined;
+    /**
+     * Custom element to render instead of an icon
+     */
+    customElement?: JSX.Element | undefined;
     /**
      * Use to identify the badge in tests
      */
