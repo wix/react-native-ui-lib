@@ -8,7 +8,10 @@
 
   .column {
     margin-right: 20px;
-    min-width: 200px;
+
+    @include desktop {
+      min-width: 200px;
+    }
 
     .title {
       margin: 0;
