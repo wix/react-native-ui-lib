@@ -55,7 +55,7 @@ function migrateProps(props: any) {
 const TextFieldMigrator = forwardRef(({migrate = false, ...props}: any, ref) => {
   useEffect(() => {
     if (!migrate) {
-      // LogService.warn(`RNUILib TextField component will soon be replaced with a new implementation, in order to start the migration - please pass the 'migrate' prop`);
+      LogService.warn(`RNUILib TextField component will soon be replaced with a new implementation, in order to start the migration - please pass the 'migrate' prop`);
     }
   }, []);
 
