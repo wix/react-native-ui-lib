@@ -2,7 +2,7 @@
 import React, {PureComponent} from 'react';
 import {processColor, StyleSheet, LayoutChangeEvent} from 'react-native';
 import _ from 'lodash';
-import Reanimated, {Easing} from 'react-native-reanimated';
+import Reanimated, {EasingNode} from 'react-native-reanimated';
 import {TapGestureHandler, LongPressGestureHandler, State, LongPressGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../commons/new';
 import {ViewProps} from '../components/view';
@@ -15,7 +15,7 @@ const {
   or,
   eq,
   neq,
-  interpolate,
+  interpolateNode,
   Extrapolate,
   Value,
   call,
@@ -194,7 +194,7 @@ function runTiming(clock: any, gestureState: any, initialValue: number, endValue
   const config = {
     duration: 150,
     toValue: new Value(0),
-    easing: Easing.inOut(Easing.ease)
+    easing: EasingNode.inOut(EasingNode.ease)
   };
 
   return block([
@@ -214,7 +214,7 @@ function runTiming(clock: any, gestureState: any, initialValue: number, endValue
     ]),
     timing(clock, state, config),
     cond(state.finished, stopClock(clock)),
-    interpolate(state.position, {
+    interpolateNode(state.position, {
       inputRange: [0, 1],
       outputRange: [endValue, initialValue],
       extrapolate: Extrapolate.CLAMP

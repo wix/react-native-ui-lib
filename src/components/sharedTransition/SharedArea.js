@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import Animated, {Easing} from 'react-native-reanimated';
+import Animated, {EasingNode} from 'react-native-reanimated';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import TouchableOpacity from '../touchableOpacity';
@@ -36,14 +36,14 @@ class SharedArea extends Component {
     return {
       ...StyleSheet.absoluteFillObject,
       backgroundColor: Colors.white,
-      opacity: Animated.interpolate(this.transition, {inputRange: [0, 1], outputRange: [0, 1]})
+      opacity: Animated.interpolateNode(this.transition, {inputRange: [0, 1], outputRange: [0, 1]})
     };
   }
 
   getDetailsStyle() {
     return {
       ...StyleSheet.absoluteFillObject,
-      opacity: Animated.interpolate(this.transition, {inputRange: [90, 100], outputRange: [0, 1]})
+      opacity: Animated.interpolateNode(this.transition, {inputRange: [90, 100], outputRange: [0, 1]})
     };
   }
 
@@ -52,19 +52,19 @@ class SharedArea extends Component {
     if (sourceLayout && this.transition) {
       return {
         position: 'absolute',
-        width: Animated.interpolate(this.transition, {
+        width: Animated.interpolateNode(this.transition, {
           inputRange: [0, 100],
           outputRange: [sourceLayout.width, targetLayout.width]
         }),
-        height: Animated.interpolate(this.transition, {
+        height: Animated.interpolateNode(this.transition, {
           inputRange: [0, 100],
           outputRange: [sourceLayout.height, targetLayout.height]
         }),
-        top: Animated.interpolate(this.transition, {
+        top: Animated.interpolateNode(this.transition, {
           inputRange: [0, 100],
           outputRange: [sourceLayout.y, targetLayout.y]
         }),
-        left: Animated.interpolate(this.transition, {
+        left: Animated.interpolateNode(this.transition, {
           inputRange: [0, 100],
           outputRange: [sourceLayout.x, targetLayout.x]
         })
@@ -110,7 +110,7 @@ class SharedArea extends Component {
     Animated.timing(this.transition, {
       toValue: show ? 100 : 0,
       duration: 600,
-      easing: Easing.bezier(0.19, 1, 0.22, 1),
+      easing: EasingNode.bezier(0.19, 1, 0.22, 1),
       useNativeDriver: false
     }).start(onAnimationEnd);
   }

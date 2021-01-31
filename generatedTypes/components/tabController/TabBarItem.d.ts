@@ -1,5 +1,5 @@
 import { PureComponent } from 'react';
-import { /* processColor, */ TextStyle, LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native';
+import { TextStyle, LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native';
 import _ from 'lodash';
 import Reanimated from 'react-native-reanimated';
 import { State } from 'react-native-gesture-handler';
@@ -107,7 +107,7 @@ export default class TabBarItem extends PureComponent<Props> {
     getItemStyle(): any[];
     getLabelStyle(): (TextStyle | _.Dictionary<Reanimated.Node<number> | Reanimated.Node<string | number | boolean> | Reanimated.Node<"normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900"> | undefined> | undefined)[];
     getIconStyle(): {
-        tintColor: Reanimated.Node<string>;
+        tintColor: Reanimated.Node<number>;
     };
     render(): JSX.Element;
 }

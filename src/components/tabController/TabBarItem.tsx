@@ -1,10 +1,9 @@
 // TODO: support commented props
 import React, {PureComponent} from 'react';
-import {StyleSheet, /* processColor, */ TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, TextStyle, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import _ from 'lodash';
-import Reanimated from 'react-native-reanimated';
+import Reanimated, {interpolateColors, processColor} from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
-import {interpolateColor} from 'react-native-redash';
 import {Colors, Typography, Spacings} from '../../style';
 import Badge, {BadgeProps, BADGE_SIZES} from '../../components/badge';
 import {TouchableOpacity} from '../../incubator';
@@ -208,9 +207,9 @@ export default class TabBarItem extends PureComponent<Props> {
     const activeColor = !ignore ? selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR : inactiveColor;
 
     // Animated color
-    const color = interpolateColor(currentPage, {
+    const color = interpolateColors(currentPage, {
       inputRange: [index - 1, index, index + 1],
-      outputRange: [inactiveColor, activeColor, inactiveColor]
+      outputColorRange: [inactiveColor, activeColor, inactiveColor]
     });
 
     return [
@@ -228,12 +227,10 @@ export default class TabBarItem extends PureComponent<Props> {
   getIconStyle() {
     const {index, currentPage, iconColor, selectedIconColor, labelColor, selectedLabelColor, ignore} = this.props;
 
-    const activeColor = selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR;
-    const inactiveColor = iconColor || labelColor || DEFAULT_LABEL_COLOR;
+    const activeColor = processColor(selectedIconColor || selectedLabelColor || DEFAULT_SELECTED_LABEL_COLOR);
+    const inactiveColor = processColor(iconColor || labelColor || DEFAULT_LABEL_COLOR);
 
     const tintColor = cond(eq(currentPage, index),
-      // TODO: using processColor here broke functionality,
-      // not using it seem to not be very performant
       activeColor,
       ignore ? activeColor : inactiveColor);
 
@@ -259,6 +256,7 @@ export default class TabBarItem extends PureComponent<Props> {
         {icon && (
           <Reanimated.Image
             source={icon}
+            // @ts-expect-error TODO: not sure if this is us or reanimated
             style={[!_.isUndefined(label) && styles.tabItemIconWithLabel, this.getIconStyle()]}
           />
         )}

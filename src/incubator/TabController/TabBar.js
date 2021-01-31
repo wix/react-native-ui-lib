@@ -2,7 +2,7 @@
 // TODO: disable scroll when content width is shorter than screen width
 import React, {PureComponent} from 'react';
 import {StyleSheet, ScrollView, ViewPropTypes, Platform, Text as RNText} from 'react-native';
-import Reanimated, {Easing} from 'react-native-reanimated';
+import Reanimated, {EasingNode} from 'react-native-reanimated';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -27,7 +27,7 @@ const {
   cond,
   stopClock,
   startClock,
-  interpolate,
+  interpolateNode,
   Extrapolate,
   timing,
   block,
@@ -294,13 +294,13 @@ class TabBar extends PureComponent {
 
     if (asCarousel) {
       nodes.push(set(this._indicatorOffset,
-        interpolate(carouselOffset, {
+        interpolateNode(carouselOffset, {
           inputRange: itemsOffsets.map((_value, index) => index * Constants.screenWidth),
           outputRange: itemsOffsets,
           extrapolate: Extrapolate.CLAMP
         })),
       set(this._indicatorWidth,
-        interpolate(carouselOffset, {
+        interpolateNode(carouselOffset, {
           inputRange: itemsWidths.map((_value, index) => index * Constants.screenWidth),
           outputRange: itemsWidths,
           extrapolate: Extrapolate.CLAMP
@@ -399,7 +399,7 @@ function runIndicatorTimer(clock, currentPage, values) {
   const config = {
     duration: 200,
     toValue: new Value(100),
-    easing: Easing.inOut(Easing.ease)
+    easing: EasingNode.inOut(EasingNode.ease)
   };
 
   return block([
@@ -414,7 +414,7 @@ function runIndicatorTimer(clock, currentPage, values) {
     }),
     timing(clock, state, config),
     cond(state.finished, stopClock(clock)),
-    interpolate(state.position, {
+    interpolateNode(state.position, {
       inputRange: _.times(values.length),
       outputRange: values,
       extrapolate: Extrapolate.CLAMP

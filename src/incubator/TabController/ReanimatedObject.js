@@ -1,5 +1,5 @@
 // TODO: consider removing this file if no still using it
-import Reanimated, {Easing} from 'react-native-reanimated';
+import Reanimated, {EasingNode} from 'react-native-reanimated';
 
 const {Clock, Value, cond, stopClock, startClock, clockRunning, timing, block, set} = Reanimated;
 
@@ -15,7 +15,7 @@ export default class ReanimatedObject {
     this.config = {
       duration: 300,
       toValue: new Value(0),
-      easing: Easing.bezier(0.23, 1, 0.32, 1),
+      easing: EasingNode.bezier(0.23, 1, 0.32, 1),
       ...config
     };
     this.prevValue = new Value(0);

@@ -16,7 +16,7 @@ import FadedScrollView from './FadedScrollView';
 
 import {useScrollToItem} from '../../hooks';
 
-const {Code, Value, interpolate, block, set} = Reanimated;
+const {Code, Value, interpolateNode, block, set} = Reanimated;
 
 const DEFAULT_HEIGHT = 48;
 const INDICATOR_INSET = Spacings.s4;
@@ -310,12 +310,12 @@ const TabBar = (props: Props) => {
     const nodes: any[] = [];
 
     nodes.push(set(_indicatorOffset,
-      interpolate(currentPage, {
+      interpolateNode(currentPage, {
         inputRange: indicatorOffsets.map((_v, i) => i),
         outputRange: indicatorOffsets
       })));
     nodes.push(set(_indicatorWidth,
-      interpolate(currentPage, {
+      interpolateNode(currentPage, {
         inputRange: itemsWidths.map((_v, i) => i),
         outputRange: itemsWidths.map(v => v - 2 * INDICATOR_INSET)
       })));
