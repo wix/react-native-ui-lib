@@ -1,14 +1,20 @@
 import _ from 'lodash';
-import React, {PureComponent} from 'react';
+import React, {useEffect, useRef, useCallback, useContext} from 'react';
 import {Animated, Easing, StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
 import {Constants} from '../../helpers';
 import View from '../view';
-import asPanViewConsumer from '../panningViews/asPanViewConsumer';
-import PanningProvider, {PanningDirections, PanAmountsProps, PanDirectionsProps, PanLocationProps} from '../panningViews/panningProvider';
+import PanningContext from '../panningViews/panningContext';
+import PanningProvider, {
+  PanningDirections,
+  PanAmountsProps,
+  PanDirectionsProps,
+  PanLocationProps
+} from '../panningViews/panningProvider';
 import PanResponderView from '../panningViews/panResponderView';
 
 const MAXIMUM_DRAGS_AFTER_SWIPE = 2;
 
+// TODO: move this to panningContext
 interface PanContextProps {
   isPanning: boolean;
   dragDeltas: PanAmountsProps;
@@ -40,12 +46,7 @@ interface DialogDismissibleProps {
 }
 
 interface Props extends DialogDismissibleProps {
-  context: PanContextProps;
-}
-
-interface State {
-  visible?: boolean;
-  hide: boolean;
+  children?: React.ReactNode | React.ReactNode[];
 }
 
 interface LocationProps {
@@ -54,216 +55,199 @@ interface LocationProps {
 }
 
 const DEFAULT_DIRECTION = PanningProvider.Directions.DOWN;
+const TOP_INSET = Constants.isIphoneX ? Constants.getSafeAreaInsets().top : Constants.isIOS ? 20 : 0;
+const BOTTOM_INSET = Constants.isIphoneX ? Constants.getSafeAreaInsets().bottom : Constants.isIOS ? 20 : 0;
 
-class DialogDismissibleView extends PureComponent<Props, State> {
+const DialogDismissibleView = (props: Props) => {
+  const {direction = DEFAULT_DIRECTION, visible: propsVisible, containerStyle, style, children, onDismiss} = props;
+  // @ts-expect-error
+  const {isPanning, dragDeltas, swipeDirections} = useContext<PanContextProps>(PanningContext);
 
-  public static defaultProps: Partial<Props> = {
-    direction: DEFAULT_DIRECTION,
-    onDismiss: () => {}
-  };
+  const width = useRef<number>(Constants.screenWidth);
+  const height = useRef<number>(Constants.screenHeight);
+  const thresholdX = useRef<number>(0);
+  const thresholdY = useRef<number>(0);
+  const counter = useRef<number>(0);
+  const containerRef = useRef<typeof View>();
+  const animatedValue = useRef<Animated.AnimatedValue>(new Animated.Value(0));
+  const swipe = useRef<PanDirectionsProps>({});
+  const prevDragDeltas = useRef<PanAmountsProps>();
+  const prevSwipeDirections = useRef<PanDirectionsProps>();
+  const visible = useRef<boolean>(Boolean(propsVisible));
 
-  private hiddenLocation: LocationProps;
-  private animatedValue = new Animated.Value(0);
-  private width = Constants.screenWidth;
-  private height = Constants.screenHeight;
-  private counter = 0;
-  private swipe: PanDirectionsProps = {};
-  private thresholdX = 0;
-  private thresholdY = 0;
-  private ref = React.createRef<any>();
-
-  constructor(props: Props) {
-    super(props);
-
-    this.hiddenLocation = this.getHiddenLocation(0, 0);
-    this.state = {
-      visible: props.visible,
-      hide: false
-    };
-  }
-
-  componentDidUpdate(prevProps: Props) {
-    const {isPanning, dragDeltas, swipeDirections} = this.props.context;
-    const {dragDeltas: prevDragDeltas, swipeDirections: prevSwipeDirections} = prevProps.context;
-    const {hide} = this.state;
-
-    if (
-      isPanning &&
-      (dragDeltas.x || dragDeltas.y) &&
-      (dragDeltas.x !== prevDragDeltas.x || dragDeltas.y !== prevDragDeltas.y)
-    ) {
-      this.onDrag();
-    }
-
-    if (
-      isPanning &&
-      (swipeDirections.x || swipeDirections.y) &&
-      (swipeDirections.x !== prevSwipeDirections.x || swipeDirections.y !== prevSwipeDirections.y)
-    ) {
-      this.onSwipe(swipeDirections);
-    }
-
-    if (hide) {
-      this.hide();
-    }
-  }
-
-  static getDerivedStateFromProps(nextProps: DialogDismissibleProps, prevState: State) {
-    const {visible} = nextProps;
-    const {visible: prevVisible} = prevState;
-
-    if (prevVisible && !visible) {
-      return {hide: true};
-    }
-
-    return null;
-  }
-
-  resetSwipe = () => {
-    this.counter = 0;
-    this.swipe = {};
-  };
-
-  isSwiping = (): boolean => {
-    return !_.isUndefined(this.swipe.x) || !_.isUndefined(this.swipe.y);
-  };
-
-  onDrag = () => {
-    if (this.isSwiping()) {
-      if (this.counter < MAXIMUM_DRAGS_AFTER_SWIPE) {
-        this.counter += 1;
-      } else {
-        this.resetSwipe();
-      }
-    }
-  };
-
-  onSwipe = (swipeDirections: PanDirectionsProps) => {
-    this.swipe = swipeDirections;
-  };
-
-  getHiddenLocation = (left: number, top: number): LocationProps => {
-    const {direction} = this.props;
-    const topInset = Constants.isIphoneX ? Constants.getSafeAreaInsets().top : Constants.isIOS ? 20 : 0;
-    const bottomInset = Constants.isIphoneX ? Constants.getSafeAreaInsets().bottom : Constants.isIOS ? 20 : 0;
-    
+  const getHiddenLocation = useCallback((left: number, top: number): LocationProps => {
     const result = {left: 0, top: 0};
     switch (direction) {
       case PanningProvider.Directions.LEFT:
-        result.left = -left - this.width;
+        result.left = -left - width.current;
         break;
       case PanningProvider.Directions.RIGHT:
         result.left = Constants.screenWidth - left;
         break;
       case PanningProvider.Directions.UP:
-        result.top = -top - this.height - topInset;
+        result.top = -top - height.current - TOP_INSET;
         break;
       case PanningProvider.Directions.DOWN:
       default:
-        result.top = Constants.screenHeight - top + bottomInset;
+        result.top = Constants.screenHeight - top + BOTTOM_INSET;
         break;
     }
 
     return result;
-  };
+  },
+  [direction]);
 
-  animateTo = (toValue: number, animationEndCallback?: Animated.EndCallback) => {
-    Animated.timing(this.animatedValue, {
+  const hiddenLocation = useRef<LocationProps>(getHiddenLocation(0, 0));
+
+  const animateTo = useCallback((toValue: number, animationEndCallback?: Animated.EndCallback) => {
+    Animated.timing(animatedValue.current, {
       toValue,
       duration: 300,
       easing: Easing.bezier(0.2, 0, 0.35, 1),
       useNativeDriver: true
     }).start(animationEndCallback);
-  };
+  }, []);
 
-  getAnimationStyle = () => {
+  const isSwiping = useCallback((): boolean => {
+    return !_.isUndefined(swipe.current.x) || !_.isUndefined(swipe.current.y);
+  }, []);
+
+  const resetSwipe = useCallback(() => {
+    counter.current = 0;
+    swipe.current = {};
+  }, []);
+
+  const onDrag = useCallback(() => {
+    if (isSwiping()) {
+      if (counter.current < MAXIMUM_DRAGS_AFTER_SWIPE) {
+        counter.current += 1;
+      } else {
+        resetSwipe();
+      }
+    }
+  }, [isSwiping, resetSwipe]);
+
+  const hide = useCallback(() => {
+    // TODO: test we're not animating?
+    animateTo(0, () => {
+      visible.current = false;
+      onDismiss?.();
+    });
+  }, [animateTo, onDismiss]);
+
+  useEffect(() => {
+    if (
+      isPanning &&
+      (dragDeltas.x || dragDeltas.y) &&
+      (dragDeltas.x !== prevDragDeltas.current?.x || dragDeltas.y !== prevDragDeltas.current?.y)
+    ) {
+      onDrag();
+      prevDragDeltas.current = dragDeltas;
+    }
+  }, [isPanning, dragDeltas, onDrag, hide]);
+
+  useEffect(() => {
+    if (
+      isPanning &&
+      (swipeDirections.x || swipeDirections.y) &&
+      (swipeDirections.x !== prevSwipeDirections.current?.x || swipeDirections.y !== prevSwipeDirections.current?.y)
+    ) {
+      swipe.current = swipeDirections;
+    }
+  }, [isPanning, swipeDirections, hide]);
+
+  useEffect(() => {
+    if (visible.current && !propsVisible) {
+      hide();
+    }
+  }, [propsVisible, hide]);
+
+  const onLayout = useCallback((event: LayoutChangeEvent) => {
+    // DO NOT move the width\height into the measureInWindow - it causes errors with orientation change
+    const layout = event.nativeEvent.layout;
+    width.current = layout.width;
+    height.current = layout.height;
+    thresholdX.current = width.current / 2;
+    thresholdY.current = height.current / 2;
+    if (containerRef.current) {
+      // @ts-ignore TODO: can we fix this on ViewProps \ View?
+      containerRef.current.measureInWindow((x: number, y: number) => {
+        hiddenLocation.current = getHiddenLocation(x, y);
+        animateTo(1);
+      });
+    }
+  },
+  [getHiddenLocation, animateTo]);
+
+  const getAnimationStyle = useCallback(() => {
     return {
       transform: [
         {
-          translateX: this.animatedValue.interpolate({
+          translateX: animatedValue.current.interpolate({
             inputRange: [0, 1],
-            outputRange: [this.hiddenLocation.left, 0]
+            outputRange: [hiddenLocation.current.left, 0]
           })
         },
         {
-          translateY: this.animatedValue.interpolate({
+          translateY: animatedValue.current.interpolate({
             inputRange: [0, 1],
-            outputRange: [this.hiddenLocation.top, 0]
+            outputRange: [hiddenLocation.current.top, 0]
           })
         }
       ]
     };
-  };
+  }, []);
 
-  onLayout = (event: LayoutChangeEvent) => {
-    // DO NOT move the width\height into the measureInWindow - it causes errors with orientation change
-    const layout = event.nativeEvent.layout;
-    this.width = layout.width;
-    this.height = layout.height;
-    this.thresholdX = this.width / 2;
-    this.thresholdY = this.height / 2;
-    if (this.ref.current) {
-      this.ref.current.measureInWindow((x: number, y: number) => {
-        this.hiddenLocation = this.getHiddenLocation(x, y);
-        this.animateTo(1);
-      });
-    }
-  };
-
-  hide = () => {
-    const {onDismiss} = this.props;
-    // TODO: test we're not animating?
-    this.animateTo(0, () => this.setState({visible: false, hide: false}, onDismiss));
-  };
-
-  resetToShown = (left: number, top: number, direction: PanningDirections) => {
+  const resetToShown = useCallback((left: number, top: number, direction: PanningDirections) => {
     const toValue = [PanningProvider.Directions.LEFT, PanningProvider.Directions.RIGHT].includes(direction)
-      ? 1 + left / this.hiddenLocation.left
-      : 1 + top / this.hiddenLocation.top;
+      ? 1 + left / hiddenLocation.current.left
+      : 1 + top / hiddenLocation.current.top;
 
-    this.animateTo(toValue);
-  };
+    animateTo(toValue);
+  },
+  [animateTo]);
 
-  onPanLocationChanged = ({left = 0, top = 0}: PanLocationProps) => {
-    const {direction = DEFAULT_DIRECTION} = this.props;
+  const onPanLocationChanged = useCallback(({left = 0, top = 0}: PanLocationProps) => {
     const endValue = {x: Math.round(left), y: Math.round(top)};
-    if (this.isSwiping()) {
-      this.hide();
+    if (isSwiping()) {
+      hide();
     } else {
-      this.resetSwipe();
+      resetSwipe();
       if (
-        (direction === PanningProvider.Directions.LEFT && endValue.x <= -this.thresholdX) ||
-        (direction === PanningProvider.Directions.RIGHT && endValue.x >= this.thresholdX) ||
-        (direction === PanningProvider.Directions.UP && endValue.y <= -this.thresholdY) ||
-        (direction === PanningProvider.Directions.DOWN && endValue.y >= this.thresholdY)
+        (direction === PanningProvider.Directions.LEFT && endValue.x <= -thresholdX.current) ||
+          (direction === PanningProvider.Directions.RIGHT && endValue.x >= thresholdX.current) ||
+          (direction === PanningProvider.Directions.UP && endValue.y <= -thresholdY.current) ||
+          (direction === PanningProvider.Directions.DOWN && endValue.y >= thresholdY.current)
       ) {
-        this.hide();
+        hide();
       } else {
-        this.resetToShown(left, top, direction);
+        resetToShown(left, top, direction);
       }
     }
-  };
+  },
+  [isSwiping, hide, resetSwipe, direction, resetToShown]);
 
-  render() {
-    const {containerStyle, style} = this.props;
-    const {visible} = this.state;
+  return (
+    // @ts-ignore
+    <View ref={containerRef} style={containerStyle} onLayout={onLayout}>
+      <PanResponderView
+        // !visible.current && styles.hidden is done to fix a bug is iOS
+        style={[style, getAnimationStyle(), !visible.current && styles.hidden]}
+        isAnimated
+        onPanLocationChanged={onPanLocationChanged}
+      >
+        {children}
+      </PanResponderView>
+    </View>
+  );
+};
 
-    return (
-      <View ref={this.ref} style={containerStyle} onLayout={this.onLayout}>
-        <PanResponderView
-          // !visible && styles.hidden is done to fix a bug is iOS
-          style={[style, this.getAnimationStyle(), !visible && styles.hidden]}
-          isAnimated
-          onPanLocationChanged={this.onPanLocationChanged}
-        >
-          {this.props.children}
-        </PanResponderView>
-      </View>
-    );
-  }
-}
+DialogDismissibleView.defaultProps = {
+  direction: DEFAULT_DIRECTION,
+  onDismiss: () => {}
+};
 
-export default asPanViewConsumer<DialogDismissibleProps>(DialogDismissibleView);
+export default DialogDismissibleView;
 
 const styles = StyleSheet.create({
   hidden: {
