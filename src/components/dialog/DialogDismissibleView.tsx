@@ -242,6 +242,7 @@ const DialogDismissibleView = (props: Props) => {
   );
 };
 
+DialogDismissibleView.displayName = 'IGNORE';
 DialogDismissibleView.defaultProps = {
   direction: DEFAULT_DIRECTION,
   onDismiss: () => {}
