@@ -24,6 +24,7 @@ declare class Carousel extends Component<CarouselProps, CarouselState> {
         pageWidth: number;
         initialOffset: {
             x: number;
+            y: number;
         };
         prevProps: CarouselProps;
     } | {
@@ -47,7 +48,7 @@ declare class Carousel extends Component<CarouselProps, CarouselState> {
     getSnapToOffsets: () => number[] | undefined;
     shouldUsePageWidth(): number | false | undefined;
     shouldEnablePagination(): boolean | undefined;
-    onContainerLayout: ({ nativeEvent: { layout: { width: containerWidth } } }: LayoutChangeEvent) => void;
+    onContainerLayout: ({ nativeEvent: { layout: { width: containerWidth, height: containerHeight } } }: LayoutChangeEvent) => void;
     shouldAllowAccessibilityLayout(): boolean | undefined;
     onContentSizeChange: () => void;
     onMomentumScrollEnd: () => void;
