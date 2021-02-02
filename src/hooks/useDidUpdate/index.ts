@@ -7,15 +7,12 @@ const useDidUpdate = (callback: () => void, dep: [any]) => {
   const isMounted = useRef<boolean>(false);
 
   useEffect(() => {
-    if (!isMounted.current) {
-      return;
+    if (isMounted.current) {
+      callback();
+    } else {
+      isMounted.current = true;
     }
-    callback();
-  }, [dep]);
-
-  useEffect(() => {
-    isMounted.current = true;
-  }, []);
+  }, dep);
 };
 
 export default useDidUpdate;

@@ -2,9 +2,8 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, AccessibilityInfo, findNodeHandle} from 'react-native';
-import {View as AnimatableView} from 'react-native-animatable';
-import {Typography, Spacings, Colors, BorderRadiuses, AnimatableManager} from '../../style';
+import {Animated, StyleSheet, AccessibilityInfo, findNodeHandle} from 'react-native';
+import {Typography, Spacings, Colors, BorderRadiuses} from '../../style';
 import {Constants} from '../../helpers';
 import {BaseComponent} from '../../commons';
 import View from '../view';
@@ -15,7 +14,7 @@ import Modal from '../modal';
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
 
-const DEFAULT_COLOR = Colors.blue30;
+const DEFAULT_COLOR = Colors.primary;
 const DEFAULT_HINT_OFFSET = Spacings.s4;
 const DEFAULT_EDGE_MARGINS = Spacings.s5;
 const HINT_POSITIONS = {
@@ -27,17 +26,6 @@ const TARGET_POSITIONS = {
   RIGHT: 'right',
   CENTER: 'center'
 };
-
-AnimatableManager.loadAnimationDefinitions({
-  hintAppearDown: {
-    from: {opacity: 0, translateY: 20},
-    to: {opacity: 1, translateY: 0}
-  },
-  hintAppearUp: {
-    from: {opacity: 0, translateY: -20},
-    to: {opacity: 1, translateY: 0}
-  }
-});
 
 /**
  * @description: Hint component for displaying a tooltip over wrapped component
@@ -124,6 +112,17 @@ class Hint extends BaseComponent {
   state = {
     targetLayout: this.props.targetFrame
   };
+
+  visibleAnimated = new Animated.Value(Number(!!this.props.visible))
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.visible !== this.props.visible) {
+      Animated.timing(this.visibleAnimated, {
+        toValue: Number(!!this.props.visible),
+        duration: 170
+      }).start();
+    }
+  }
 
   focusAccessibilityOnHint = () => {
     const {message} = this.props;
@@ -264,6 +263,17 @@ class Hint extends BaseComponent {
     return paddings;
   }
 
+  getHintAnimatedStyle = () => {
+    const {position} = this.props;
+    const translateY = position === HINT_POSITIONS.TOP ? -10 : 10;
+    return {
+      opacity: this.visibleAnimated,
+      transform: [{
+        translateY: this.visibleAnimated.interpolate({inputRange: [0, 1], outputRange: [translateY, 0]})
+      }]
+    };
+  }
+
   getTipPosition() {
     const {position} = this.getThemeProps();
     const tipPositionStyle = {};
@@ -343,19 +353,18 @@ class Hint extends BaseComponent {
   }
 
   renderHint() {
-    const {position, message, messageStyle, icon, iconStyle, borderRadius, color, testID} = this.getThemeProps();
-    const shownUp = position === HINT_POSITIONS.TOP;
+    const {message, messageStyle, icon, iconStyle, borderRadius, color, testID} = this.getThemeProps();
 
     if (this.showHint) {
       return (
-        <AnimatableView
-          animation={shownUp ? AnimatableManager.animations.hintAppearUp : AnimatableManager.animations.hintAppearDown}
-          duration={200}
+        <View
+          animated
           style={[
             {width: this.containerWidth},
             styles.animatedContainer,
             this.getHintPosition(),
-            this.getHintPadding()
+            this.getHintPadding(),
+            this.getHintAnimatedStyle()
           ]}
           pointerEvents="box-none"
           testID={testID}
@@ -371,7 +380,7 @@ class Hint extends BaseComponent {
             {icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
             <Text style={[styles.hintMessage, messageStyle]}>{message}</Text>
           </View>
-        </AnimatableView>
+        </View>
       );
     }
   }

@@ -97,6 +97,10 @@ export type BadgeProps = ViewProps &
      */
     iconProps?: object;
     /**
+     * Custom element to render instead of an icon
+     */
+    customElement?: JSX.Element;
+    /**
      * Use to identify the badge in tests
      */
     testId?: string;
@@ -107,7 +111,7 @@ export type BadgeProps = ViewProps &
  * @extends: Animatable.View
  * @extendslink: https://github.com/oblador/react-native-animatable
  * @image: https://user-images.githubusercontent.com/33805983/34480753-df7a868a-efb6-11e7-9072-80f5c110a4f3.png
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.tsx
  */
 class Badge extends PureComponent<BadgeProps> {
   styles: ReturnType<typeof createStyles>;
@@ -143,7 +147,7 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   getBadgeSizeStyle() {
-    const {borderWidth, size, icon} = this.props;
+    const {borderWidth, size, icon, customElement} = this.props;
     const label = this.getFormattedLabel();
     const badgeHeight = _.isNumber(size) ? size : BADGE_SIZES[size];
 
@@ -161,7 +165,9 @@ class Badge extends PureComponent<BadgeProps> {
       }
       return style;
     }
-
+    if (customElement) {
+      return style;
+    }
     const isPimple = label === undefined;
     if (isPimple || icon) {
       style.paddingHorizontal = 0;
@@ -230,38 +236,34 @@ class Badge extends PureComponent<BadgeProps> {
     }
   }
 
+  renderCustomElement() {
+    const {customElement} = this.props;
+    return customElement;
+  }
+
   renderIcon() {
     const {icon, iconStyle, iconProps, borderColor, label} = this.props;
     const flex = label ? 0 : 1;
     return (
-      <Image
-        source={icon!}
-        resizeMode="contain"
-        //@ts-ignore
-        borderColor={borderColor}
-        {...iconProps}
-        style={{
-          flex,
-          ...iconStyle
-        }}
-      />
+      icon && (
+        <Image
+          source={icon!}
+          resizeMode="contain"
+          //@ts-ignore
+          borderColor={borderColor}
+          {...iconProps}
+          style={{
+            flex,
+            ...iconStyle
+          }}
+        />
+      )
     );
   }
 
   render() {
     // TODO: remove testId after deprecation
-    const {
-      activeOpacity,
-      backgroundColor,
-      containerStyle,
-      hitSlop,
-      icon,
-      label,
-      onPress,
-      testId,
-      testID,
-      ...others
-    } = this.props;
+    const {activeOpacity, backgroundColor, containerStyle, hitSlop, onPress, testId, testID, ...others} = this.props;
     const backgroundStyle = backgroundColor && {backgroundColor};
     const sizeStyle = this.getBadgeSizeStyle();
     const borderStyle = this.getBorderStyling();
@@ -293,8 +295,9 @@ class Badge extends PureComponent<BadgeProps> {
           {...animationProps}
           row
         >
-          {icon && this.renderIcon()}
-          {label && this.renderLabel()}
+          {this.renderCustomElement()}
+          {this.renderIcon()}
+          {this.renderLabel()}
         </Container>
       </View>
     );
@@ -306,7 +309,7 @@ function createStyles(props: BadgeProps) {
     badge: {
       alignSelf: 'flex-start',
       borderRadius: BorderRadiuses.br100,
-      backgroundColor: !props.icon ? Colors.primary : undefined,
+      backgroundColor: (!props.icon || props.customElement) ? Colors.primary : undefined,
       alignItems: 'center',
       justifyContent: 'center',
       overflow: 'hidden'

@@ -2,12 +2,12 @@ declare const _default: {
     enableErrors: boolean;
     validateOnBlur: boolean;
     floatingPlaceholderColor: {
-        focus: any;
+        focus: string;
         error: any;
         disabled: string;
     };
     labelColor: {
-        focus: any;
+        focus: string;
         error: any;
         disabled: string;
     };

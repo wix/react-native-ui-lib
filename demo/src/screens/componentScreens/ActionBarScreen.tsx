@@ -45,7 +45,7 @@ export default class ActionBarScreen extends Component {
 
           <View style={styles.page}>
             <ActionBar
-              backgroundColor={Colors.blue30}
+              backgroundColor={Colors.primary}
               actions={[
                 {label: 'Hide', onPress: () => Alert.alert('hide'), white: true},
                 {label: 'Add Discount', onPress: () => Alert.alert('add discount'), white: true},

@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, {PureComponent, GetDerivedStateFromProps} from 'react';
+import {ViewProps} from 'react-native';
 import {
   asBaseComponent,
   forwardRef,
@@ -9,7 +10,7 @@ import {
 import View from '../view';
 import RadioGroupContext from './RadioGroupContext';
 
-export type RadioGroupProps = {
+export type RadioGroupProps = ViewProps & {
   /**
    * The initial value of the selected radio button
    */
