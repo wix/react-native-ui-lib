@@ -240,7 +240,7 @@ const DialogDismissibleView = (props: Props) => {
           style={[style, animatedStyle, !visible.current && styles.hidden]}
         >
           <FlingGestureHandler onHandlerStateChange={direction ? flingHandler : undefined} direction={getDirection()}>
-            <Animated.View>{children}</Animated.View>
+            <Animated.View style={style}>{children}</Animated.View>
           </FlingGestureHandler>
         </Animated.View>
       </PanGestureHandler>
