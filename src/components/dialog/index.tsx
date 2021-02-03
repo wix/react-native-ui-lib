@@ -8,10 +8,9 @@ import {asBaseComponent} from '../../commons/new';
 import {LogService} from '../../services';
 import Modal from '../modal';
 import View from '../view';
-import PanListenerView from '../panningViews/panListenerView';
 import DialogDismissibleView from './DialogDismissibleView';
 import OverlayFadingBackground from './OverlayFadingBackground';
-import PanningProvider, {PanningDirections} from '../panningViews/panningProvider';
+import {PanningDirections} from '../panningViews/panningProvider';
 
 // TODO: KNOWN ISSUES
 // 1. iOS pressing on the background while enter animation is happening will not call onDismiss
@@ -204,34 +203,31 @@ class Dialog extends Component<DialogProps, DialogState> {
     this.setState({dialogVisibility: false});
   };
 
-  renderPannableHeader = (directions: PanningDirections[]) => {
-    const {renderPannableHeader, pannableHeaderProps} = this.props;
-    if (renderPannableHeader) {
-      return <PanListenerView directions={directions}>{renderPannableHeader(pannableHeaderProps)}</PanListenerView>;
-    }
-  };
-
   renderDialogView = () => {
-    const {children, renderPannableHeader, panDirection = PanningProvider.Directions.DOWN, containerStyle, testID} = this.props;
+    const {
+      children,
+      renderPannableHeader,
+      pannableHeaderProps,
+      panDirection = PanningDirections.DOWN,
+      containerStyle,
+      testID
+    } = this.props;
     const {dialogVisibility} = this.state;
-    const Container = renderPannableHeader ? View : PanListenerView;
 
     return (
       <View testID={testID} style={[this.styles.dialogViewSize]} pointerEvents="box-none">
-        <PanningProvider>
-          <DialogDismissibleView
-            direction={panDirection}
-            visible={dialogVisibility}
-            onDismiss={this.onDismiss}
-            containerStyle={this.styles.flexType}
-            style={this.styles.flexType}
-          >
-            <Container directions={[panDirection]} style={[this.styles.overflow, this.styles.flexType, containerStyle]}>
-              {this.renderPannableHeader([panDirection])}
-              {children}
-            </Container>
-          </DialogDismissibleView>
-        </PanningProvider>
+        <DialogDismissibleView
+          direction={panDirection}
+          visible={dialogVisibility}
+          onDismiss={this.onDismiss}
+          containerStyle={this.styles.flexType}
+          style={this.styles.flexType}
+        >
+          <View style={[this.styles.overflow, this.styles.flexType, containerStyle]}>
+            {renderPannableHeader?.(pannableHeaderProps)}
+            {children}
+          </View>
+        </DialogDismissibleView>
       </View>
     );
   };
