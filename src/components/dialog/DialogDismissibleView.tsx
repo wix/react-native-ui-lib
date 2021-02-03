@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {useEffect, useRef, useCallback, useState} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
 import {
@@ -57,6 +56,7 @@ interface Props extends DialogDismissibleProps {
 }
 
 const DEFAULT_DIRECTION = PanningDirections.DOWN;
+const FLING_VELOCITY_THRESHOLD = 1000;
 const TOP_INSET = Constants.isIphoneX ? Constants.getSafeAreaInsets().top : Constants.isIOS ? 20 : 0;
 const BOTTOM_INSET = Constants.isIphoneX ? Constants.getSafeAreaInsets().bottom : Constants.isIOS ? 20 : 0;
 const TIMING_ANIMATION_CONFIG: Animated.WithTimingConfig = {
@@ -159,11 +159,17 @@ const DialogDismissibleView = (props: Props) => {
   [isHorizontal, setThreshold, getHiddenLocation, animateIn]);
 
   const isFling = useWorkletCallback((event: PanGestureHandlerEventExtra) => {
-    if (direction === PanningDirections.DOWN) {
-      return event.velocityY > 1000;
+    switch (direction) {
+      case PanningDirections.LEFT:
+        return event.velocityX < -FLING_VELOCITY_THRESHOLD;
+      case PanningDirections.RIGHT:
+        return event.velocityX > FLING_VELOCITY_THRESHOLD;
+      case PanningDirections.UP:
+        return event.velocityY < -FLING_VELOCITY_THRESHOLD;
+      case PanningDirections.DOWN:
+      default:
+        return event.velocityY > FLING_VELOCITY_THRESHOLD;
     }
-
-    return false;
   },
   [direction]);
 
@@ -207,41 +213,15 @@ const DialogDismissibleView = (props: Props) => {
   },
   [direction, isFling, isGreaterThanThreshold]);
 
-  // TODO: change to useAnimatedGestureHandler?
-  const flingHandler = useCallback((event: FlingGestureHandlerStateChangeEvent) => {
-    if (event.nativeEvent.state === State.ACTIVE) {
-      animateOut();
-    }
-  },
-  [animateOut]);
-
-  const getDirection = useCallback((): Directions => {
-    switch (direction) {
-      case PanningDirections.LEFT:
-        return Directions.LEFT;
-      case PanningDirections.RIGHT:
-        return Directions.RIGHT;
-      case PanningDirections.UP:
-        return Directions.UP;
-      case PanningDirections.DOWN:
-      default:
-        return Directions.DOWN;
-    }
-  }, [direction]);
-
   return (
     // @ts-ignore
     <View ref={containerRef} style={containerStyle} onLayout={onLayout}>
       <PanGestureHandler onGestureEvent={direction ? gestureHandler : undefined}>
         <Animated.View
           // !visible.current && styles.hidden is done to fix a bug is iOS
-          // Have to have two Animated.View because of this error:
-          // nesting touch handlers with native animated driver is not supported yet
           style={[style, animatedStyle, !visible.current && styles.hidden]}
         >
-          <FlingGestureHandler onHandlerStateChange={direction ? flingHandler : undefined} direction={getDirection()}>
-            <Animated.View style={style}>{children}</Animated.View>
-          </FlingGestureHandler>
+          {children}
         </Animated.View>
       </PanGestureHandler>
     </View>
