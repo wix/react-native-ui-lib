@@ -1,6 +1,16 @@
 import _ from 'lodash';
 import React, {useEffect, useRef, useCallback, useContext} from 'react';
-import {Animated, Easing, StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  useAnimatedGestureHandler,
+  useDerivedValue,
+  interpolate,
+  Easing,
+  runOnJS
+} from 'react-native-reanimated';
 import {Constants} from '../../helpers';
 import View from '../view';
 import PanningContext from '../panningViews/panningContext';
@@ -34,7 +44,7 @@ interface DialogDismissibleProps {
   /**
    * onDismiss callback
    */
-  onDismiss?: () => void;
+  onDismiss: () => void;
   /**
    * The dialog`s container style
    */
@@ -57,6 +67,10 @@ interface LocationProps {
 const DEFAULT_DIRECTION = PanningProvider.Directions.DOWN;
 const TOP_INSET = Constants.isIphoneX ? Constants.getSafeAreaInsets().top : Constants.isIOS ? 20 : 0;
 const BOTTOM_INSET = Constants.isIphoneX ? Constants.getSafeAreaInsets().bottom : Constants.isIOS ? 20 : 0;
+const TIMING_ANIMATION_CONFIG: Animated.WithTimingConfig = {
+  duration: 300,
+  easing: Easing.bezier(0.2, 0, 0.35, 1)
+};
 
 const DialogDismissibleView = (props: Props) => {
   const {direction = DEFAULT_DIRECTION, visible: propsVisible, containerStyle, style, children, onDismiss} = props;
@@ -69,7 +83,6 @@ const DialogDismissibleView = (props: Props) => {
   const thresholdY = useRef<number>(0);
   const counter = useRef<number>(0);
   const containerRef = useRef<typeof View>();
-  const animatedValue = useRef<Animated.AnimatedValue>(new Animated.Value(0));
   const swipe = useRef<PanDirectionsProps>({});
   const prevDragDeltas = useRef<PanAmountsProps>();
   const prevSwipeDirections = useRef<PanDirectionsProps>();
@@ -99,13 +112,35 @@ const DialogDismissibleView = (props: Props) => {
 
   const hiddenLocation = useRef<LocationProps>(getHiddenLocation(0, 0));
 
-  const animateTo = useCallback((toValue: number, animationEndCallback?: Animated.EndCallback) => {
-    Animated.timing(animatedValue.current, {
-      toValue,
-      duration: 300,
-      easing: Easing.bezier(0.2, 0, 0.35, 1),
-      useNativeDriver: true
-    }).start(animationEndCallback);
+  const animationValue = useSharedValue<number>(0);
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{translateY: animationValue.value}]
+    };
+  });
+
+  function dismiss() {
+    visible.current = false;
+    onDismiss();
+  }
+
+  function dismissWorklet(isFinished: boolean) {
+    'worklet';
+    console.log('Miki', 'dismissWorklet', isFinished);
+    runOnJS(dismiss)();
+  }
+
+  const animateIn = useCallback(() => {
+    animationValue.value = hiddenLocation.current.top;
+    animationValue.value = withTiming(0, TIMING_ANIMATION_CONFIG);
+  }, []);
+
+  const animateOut = useCallback(() => {
+    animationValue.value = withTiming(hiddenLocation.current.top, TIMING_ANIMATION_CONFIG, dismissWorklet);
+  }, [onDismiss]);
+
+  const animateTo = useCallback(() => {
+    // TODO:
   }, []);
 
   const isSwiping = useCallback((): boolean => {
@@ -128,12 +163,8 @@ const DialogDismissibleView = (props: Props) => {
   }, [isSwiping, resetSwipe]);
 
   const hide = useCallback(() => {
-    // TODO: test we're not animating?
-    animateTo(0, () => {
-      visible.current = false;
-      onDismiss?.();
-    });
-  }, [animateTo, onDismiss]);
+    // TODO:
+  }, []);
 
   useEffect(() => {
     if (
@@ -158,11 +189,13 @@ const DialogDismissibleView = (props: Props) => {
 
   useEffect(() => {
     if (visible.current && !propsVisible) {
-      hide();
+      console.log('Miki', 'useEffect', 'should hide');
+      animateOut();
     }
-  }, [propsVisible, hide]);
+  }, [propsVisible, animateOut]);
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
+    console.log('Miki', 'onLayout');
     // DO NOT move the width\height into the measureInWindow - it causes errors with orientation change
     const layout = event.nativeEvent.layout;
     width.current = layout.width;
@@ -173,30 +206,11 @@ const DialogDismissibleView = (props: Props) => {
       // @ts-ignore TODO: can we fix this on ViewProps \ View?
       containerRef.current.measureInWindow((x: number, y: number) => {
         hiddenLocation.current = getHiddenLocation(x, y);
-        animateTo(1);
+        animateIn();
       });
     }
   },
   [getHiddenLocation, animateTo]);
-
-  const getAnimationStyle = useCallback(() => {
-    return {
-      transform: [
-        {
-          translateX: animatedValue.current.interpolate({
-            inputRange: [0, 1],
-            outputRange: [hiddenLocation.current.left, 0]
-          })
-        },
-        {
-          translateY: animatedValue.current.interpolate({
-            inputRange: [0, 1],
-            outputRange: [hiddenLocation.current.top, 0]
-          })
-        }
-      ]
-    };
-  }, []);
 
   const resetToShown = useCallback((left: number, top: number, direction: PanningDirections) => {
     const toValue = [PanningProvider.Directions.LEFT, PanningProvider.Directions.RIGHT].includes(direction)
@@ -227,13 +241,14 @@ const DialogDismissibleView = (props: Props) => {
   },
   [isSwiping, hide, resetSwipe, direction, resetToShown]);
 
+  console.log('Miki', 'render', animationValue.value);
   return (
     // @ts-ignore
     <View ref={containerRef} style={containerStyle} onLayout={onLayout}>
       <PanResponderView
         // !visible.current && styles.hidden is done to fix a bug is iOS
-        style={[style, getAnimationStyle(), !visible.current && styles.hidden]}
-        isAnimated
+        style={[style, animatedStyle, !visible.current && styles.hidden]}
+        reanimated
         onPanLocationChanged={onPanLocationChanged}
       >
         {children}
@@ -244,8 +259,7 @@ const DialogDismissibleView = (props: Props) => {
 
 DialogDismissibleView.displayName = 'IGNORE';
 DialogDismissibleView.defaultProps = {
-  direction: DEFAULT_DIRECTION,
-  onDismiss: () => {}
+  direction: DEFAULT_DIRECTION
 };
 
 export default DialogDismissibleView;

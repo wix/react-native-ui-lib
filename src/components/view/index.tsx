@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
-import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle} from 'react-native';
+import {View as RNView, SafeAreaView, Animated as RNAnimated, ViewProps as RNViewProps, StyleProp, ViewStyle} from 'react-native';
+import Animated from 'react-native-reanimated';
 import {
   asBaseComponent,
   forwardRef,
@@ -18,6 +19,10 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifier
    * Use Animate.View as a container
    */
   animated?: boolean;
+  /**
+   * Use Animate.View (from reanimated 2) as a container
+   */
+  reanimated?: boolean;
   /**
    * Turn off accessibility for this view and its nested children
    */
@@ -38,7 +43,7 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifier
    * Set background color
    */
   backgroundColor?: string;
-  style?: StyleProp<ViewStyle | Animated.AnimatedProps<ViewStyle>>;
+  style?: StyleProp<ViewStyle | RNAnimated.AnimatedProps<ViewStyle>>;
 }
 export type ViewPropTypes = ViewProps; //TODO: remove after ComponentPropTypes deprecation;
 
@@ -62,8 +67,10 @@ class View extends PureComponent<PropsTypes, ViewState> {
     super(props);
 
     this.Container = props.useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
-    if (props.animated) {
+    if (props.reanimated) {
       this.Container = Animated.createAnimatedComponent(this.Container);
+    } else if (props.animated) {
+      this.Container = RNAnimated.createAnimatedComponent(this.Container);
     }
 
     this.state = {
