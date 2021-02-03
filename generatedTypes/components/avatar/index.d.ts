@@ -220,14 +220,6 @@ declare const _default: React.ComponentClass<Pick<AccessibilityProps, "accessibi
      */
     customRibbon?: JSX.Element | undefined;
     /**
-     * Determine if to show online badge
-     */
-    isOnline?: boolean | undefined;
-    /**
-     * AWAY, ONLINE, OFFLINE or NONE mode (if set to a value other then 'NONE' will override isOnline prop)
-     */
-    status?: StatusModes | undefined;
-    /**
      * Custom size for the Avatar
      */
     size: number;
