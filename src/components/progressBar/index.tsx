@@ -3,7 +3,6 @@ import {Animated, Easing, StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} f
 import {asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Constants} from '../../helpers';
-// import {ThemeService} from '../../services';
 import View from '../view';
 import {Colors, BorderRadiuses, Spacings} from '../../style';
 
@@ -115,11 +114,10 @@ class ProgressBar extends PureComponent<Props, State> {
 
   getProgressStyle() {
     const {fullWidth, progressColor} = this.props;
-    // const themeColor = ThemeService.getThemeColor({useCustomTheme: true}, this.context);
     const borderRadius = fullWidth ? styles.fullWidthProgressBorderRadius : styles.inlineBorderRadius;
     const progressStyle = {
       right: this.state.containerWidth,
-      backgroundColor: progressColor || DEFAULT_COLOR //animatedStripes ? Colors.getColorTint(themeColor, 50) : Colors.getColorTint(themeColor, 30)
+      backgroundColor: progressColor || DEFAULT_COLOR
     };
 
     return {
