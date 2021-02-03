@@ -5,6 +5,7 @@ import {
   PanGestureHandler,
   PanGestureHandlerProperties,
   PanGestureHandlerGestureEvent,
+  PanGestureHandlerEventExtra,
   FlingGestureHandler,
   FlingGestureHandlerGestureEvent,
   FlingGestureHandlerStateChangeEvent,
@@ -31,15 +32,6 @@ import {
   PanDirectionsProps,
   PanLocationProps
 } from '../panningViews/panningProvider';
-
-const MAXIMUM_DRAGS_AFTER_SWIPE = 2;
-
-// TODO: move this to panningContext
-interface PanContextProps {
-  isPanning: boolean;
-  dragDeltas: PanAmountsProps;
-  swipeDirections: PanDirectionsProps;
-}
 
 interface DialogDismissibleProps {
   /**
@@ -127,6 +119,7 @@ const DialogDismissibleView = (props: Props) => {
     onDismiss();
   }
 
+  // TODO: use isFinished?
   function dismissWorklet(isFinished: boolean) {
     'worklet';
     runOnJS(dismiss)();
@@ -136,9 +129,19 @@ const DialogDismissibleView = (props: Props) => {
     animationValue.value = withTiming(0, TIMING_ANIMATION_CONFIG);
   }, []);
 
+  function animateInWorklet() {
+    'worklet';
+    runOnJS(animateIn)();
+  }
+
   const animateOut = useCallback(() => {
     animationValue.value = withTiming(hiddenLocation.current.top, TIMING_ANIMATION_CONFIG, dismissWorklet);
   }, [onDismiss]);
+
+  function animateOutWorklet() {
+    'worklet';
+    runOnJS(animateOut)();
+  }
 
   useEffect(() => {
     if (visible.current && !propsVisible) {
@@ -163,38 +166,43 @@ const DialogDismissibleView = (props: Props) => {
   },
   [setThreshold, getHiddenLocation, animateIn]);
 
-  const isHorizontal = useCallback(() => {
+  const isHorizontal = useWorkletCallback(() => {
     return direction === PanningDirections.LEFT || direction === PanningDirections.RIGHT;
   }, [direction]);
 
+  const isFling = useWorkletCallback((event: PanGestureHandlerEventExtra) => {
+    if (direction === PanningDirections.DOWN) {
+      return event.velocityY > 1000;
+    }
+
+    return false;
+  },
+  [direction]);
+
+  const isGreaterThanThreshold = useWorkletCallback((event: PanGestureHandlerEventExtra, context: {start: number}) => {
+    const value = context.start + (isHorizontal() ? event.translationX : event.translationY);
+    return (direction === PanningDirections.LEFT && value <= -threshold.x) ||
+    (direction === PanningDirections.RIGHT && value >= threshold.x) ||
+    (direction === PanningDirections.UP && value <= -threshold.y) ||
+    (direction === PanningDirections.DOWN && value >= threshold.y);
+  }, [isHorizontal, direction, threshold]);
+
   const gestureHandler = useAnimatedGestureHandler({
-    onStart: (_event, context: {start: number}) => {
+    onStart: (_event: PanGestureHandlerEventExtra, context: {start: number}) => {
       context.start = animationValue.value;
     },
-    onActive: (event, context) => {
+    onActive: (event: PanGestureHandlerEventExtra, context: {start: number}) => {
       animationValue.value = Math.max(0, context.start + event.translationY);
     },
-    onEnd: (event, context) => {
-      const value = context.start + (isHorizontal() ? event.translationX : event.translationY);
-      if (
-        (direction === PanningDirections.LEFT && value <= -threshold.x) ||
-          (direction === PanningDirections.RIGHT && value >= threshold.x) ||
-          (direction === PanningDirections.UP && value <= -threshold.y) ||
-          (direction === PanningDirections.DOWN && value >= threshold.y)
-      ) {
-        (() => {
-          'worklet';
-          runOnJS(animateOut)();
-        })();
+    onEnd: (event: PanGestureHandlerEventExtra, context: {start: number}) => {
+      if (isFling(event) || isGreaterThanThreshold(event, context)) {
+        animateOutWorklet();
       } else {
-        (() => {
-          'worklet';
-          runOnJS(animateIn)();
-        })();
+        animateInWorklet();
       }
     }
   },
-  [threshold]);
+  [isFling, isGreaterThanThreshold]);
 
   // TODO: change to useAnimatedGestureHandler?
   const flingHandler = useCallback((event: FlingGestureHandlerStateChangeEvent) => {
@@ -215,11 +223,7 @@ const DialogDismissibleView = (props: Props) => {
           style={[style, animatedStyle, !visible.current && styles.hidden]}
         >
           {/* <FlingGestureHandler onHandlerStateChange={flingHandler} direction={Directions.DOWN | Directions.UP}> */}
-          <FlingGestureHandler
-            numberOfPointers={MAXIMUM_DRAGS_AFTER_SWIPE}
-            onHandlerStateChange={flingHandler}
-            direction={Directions.DOWN}
-          >
+          <FlingGestureHandler onHandlerStateChange={flingHandler} direction={Directions.DOWN}>
             <Animated.View>{children}</Animated.View>
           </FlingGestureHandler>
         </Animated.View>
