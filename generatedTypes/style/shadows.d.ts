@@ -4,6 +4,72 @@ declare type Shadow = {
     bottom?: ShadowStyleIOS;
 } & ShadowStyleIOS;
 declare const _default: {
+    sh10: {
+        top: {
+            shadowColor: string;
+            shadowOpacity: number;
+            shadowRadius: number;
+            shadowOffset: {
+                height: number;
+                width: number;
+            };
+            elevation: number;
+        };
+        bottom: {
+            shadowColor: string;
+            shadowOpacity: number;
+            shadowRadius: number;
+            shadowOffset: {
+                height: number;
+                width: number;
+            };
+            elevation: number;
+        };
+    };
+    sh20: {
+        top: {
+            shadowColor: string;
+            shadowOpacity: number;
+            shadowRadius: number;
+            shadowOffset: {
+                height: number;
+                width: number;
+            };
+            elevation: number;
+        };
+        bottom: {
+            shadowColor: string;
+            shadowOpacity: number;
+            shadowRadius: number;
+            shadowOffset: {
+                height: number;
+                width: number;
+            };
+            elevation: number;
+        };
+    };
+    sh30: {
+        top: {
+            shadowColor: string;
+            shadowOpacity: number;
+            shadowRadius: number;
+            shadowOffset: {
+                height: number;
+                width: number;
+            };
+            elevation: number;
+        };
+        bottom: {
+            shadowColor: string;
+            shadowOpacity: number;
+            shadowRadius: number;
+            shadowOffset: {
+                height: number;
+                width: number;
+            };
+            elevation: number;
+        };
+    };
     white10: {
         top: {
             shadowColor: string;

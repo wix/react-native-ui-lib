@@ -93,7 +93,11 @@ class DateTimePicker extends Component {
     /**
      * style to apply to the iOS dialog header
      */
-    headerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number])
+    headerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * Render custom input
+     */
+    renderInput: PropTypes.elementType
   };
 
   static defaultProps = {

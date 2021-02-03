@@ -105,5 +105,7 @@ declare const colorObject: Colors & {
     yellow80: string;
     white: string;
     black: string;
+} & {
+    primary: string;
 };
 export default colorObject;

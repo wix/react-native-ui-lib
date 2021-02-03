@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import ReactNative, {NativeModules, StyleSheet, ViewPropTypes, Image, DeviceEventEmitter} from 'react-native';
+import ReactNative, {NativeModules, StyleSheet, ViewPropTypes, Image} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses, ThemeManager, Typography} from '../../style';
 import Assets from '../../assets';
@@ -105,14 +105,7 @@ class ChipsInput extends Component {
       const textInputHandle = ReactNative.findNodeHandle(this.input);
       if (textInputHandle && NativeModules.TextInputDelKeyHandler) {
         NativeModules.TextInputDelKeyHandler.register(textInputHandle);
-        DeviceEventEmitter.addListener('onBackspacePress', this.onKeyPress);
       }
-    }
-  }
-
-  componentWillUnmount() {
-    if (Constants.isAndroid) {
-      DeviceEventEmitter.removeListener('onBackspacePress', this.onKeyPress);
     }
   }
 
@@ -169,10 +162,10 @@ class ChipsInput extends Component {
     this.setState({tagIndexToRemove: tagIndex});
   }
 
-  onChangeText = (value) => {
+  onChangeText = _.debounce((value) => {
     this.setState({value, tagIndexToRemove: undefined});
     _.invoke(this.props, 'onChangeText', value);
-  }
+  }, 0);
 
   onTagPress(index) {
     const {onTagPress} = this.props;
@@ -212,7 +205,7 @@ class ChipsInput extends Component {
     const tagsCount = _.size(tags);
     const keyCode = _.get(event, 'nativeEvent.key');
     const hasNoValue = _.isEmpty(value);
-    const pressedBackspace = Constants.isAndroid || keyCode === Constants.backspaceKey;
+    const pressedBackspace = keyCode === Constants.backspaceKey;
     const hasTags = tagsCount > 0;
 
     if (pressedBackspace) {
@@ -384,7 +377,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   tag: {
-    backgroundColor: Colors.blue30,
+    backgroundColor: Colors.primary,
     ...basicTagStyle
   },
   inValidTag: {

@@ -1,6 +1,5 @@
 import React, {PropsWithChildren, PureComponent} from 'react';
-import {StyleSheet} from 'react-native';
-import {View as AnimatableView} from 'react-native-animatable';
+import {StyleSheet, Animated} from 'react-native';
 import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons/new';
 import {Colors, Spacings} from '../../style';
@@ -43,15 +42,12 @@ export interface FloatingButtonProps {
   testID?: string;
 }
 
-const SHOW_ANIMATION_DELAY = 350;
-const SHOW_ANIMATION_DURATION = 180;
-const HIDE_ANIMATION_DURATION = 150;
 const gradientImage = () => require('./gradient.png');
 
 /**
  * @description: Hovering button with gradient background
  * @modifiers: margin, background, color
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FloatingButtonScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FloatingButtonScreen.tsx
  * @extends: Button
  * @extendsLink: https://github.com/wix/react-native-ui-lib/blob/master/src/components/button/index.js
  */
@@ -60,17 +56,35 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
 
   initialVisibility?: boolean;
   firstLoad: boolean;
+  visibleAnimated: Animated.Value;
 
   constructor(props: FloatingButtonProps) {
     super(props);
 
     this.initialVisibility = props.visible;
     this.firstLoad = true;
+    this.visibleAnimated = new Animated.Value(Number(!!props.visible));
   }
 
-  onAnimationEnd = () => {
-    this.setState({animating: false});
-  };
+  componentDidUpdate(prevProps: FloatingButtonProps) {
+    if (prevProps.visible !== this.props.visible) {
+      Animated.timing(this.visibleAnimated, {
+        toValue: Number(!!this.props.visible),
+        duration: 300,
+        useNativeDriver: true
+      }).start();
+    }
+  }
+
+  getAnimatedStyle = () => {
+    return {
+      opacity: this.visibleAnimated,
+      transform: [{translateY: this.visibleAnimated.interpolate({
+        inputRange: [0, 1],
+        outputRange: [Constants.screenHeight / 2, 0]
+      })}]
+    };
+  }
 
   renderButton() {
     const {bottomMargin, button, secondaryButton} = this.props;
@@ -115,8 +129,6 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
 
   render() {
     const {withoutAnimation, secondaryButton, visible} = this.props;
-    const Container = !withoutAnimation ? AnimatableView : View;
-
     // NOTE: keep this.firstLoad as true as long as the visibility changed to true
     this.firstLoad && !visible ? this.firstLoad = true : this.firstLoad = false;
 
@@ -129,30 +141,25 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
     }
 
     return (
-      <Container
+      <View
         pointerEvents="box-none"
-        style={[styles.animatedContainer, Constants.isAndroid && {zIndex: 99}]}
-        animation={!visible ? 'fadeOutDown' : 'fadeInUp'}
-        duration={SHOW_ANIMATION_DURATION}
-        delay={!visible ? HIDE_ANIMATION_DURATION : SHOW_ANIMATION_DELAY}
-        easing={'ease-out'}
-        onAnimationEnd={this.onAnimationEnd}
+        animated
+        style={[styles.container, this.getAnimatedStyle()]}
       >
         {this.renderOverlay()}
         {this.renderButton()}
         {secondaryButton && this.renderSecondaryButton()}
-      </Container>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  animatedContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
+  container: {
+    ...StyleSheet.absoluteFillObject,
+    top: undefined,
     alignItems: 'center',
-    bottom: 0
+    zIndex: Constants.isAndroid ? 99 : undefined
   },
   image: {
     ...StyleSheet.absoluteFillObject,

@@ -123,6 +123,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
     return (
       <Card style={{marginBottom: 10}} onPress={() => {}}>
         <Card.Section
+          bg-white
           content={[
             {text: 'You’re Invited!', text70: true, grey10: true},
             {text: 'join now', text90: true, grey50: true}
@@ -148,6 +149,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
           contentStyle={{alignItems: 'center'}}
         />
         <Card.Section
+          bg-white
           padding-20
           flex
           content={[{text: 'All site', text70: true, grey10: true}]}
@@ -171,6 +173,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
       <Card {...cardProps} flex marginV-10 onPress={() => {}} useNative activeOpacity={1} activeScale={0.96}>
         {image}
         <Card.Section
+          bg-white
           padding-20
           content={[{text: 'All site', text70: true, grey10: true}]}
           contentStyle={{alignItems: 'center'}}
@@ -227,7 +230,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
       <ScrollView style={{height: 100, marginBottom: 20}} horizontal showsHorizontalScrollIndicator={false}>
         {_.times(4, i => {
           return (
-            <Card key={i} width={100} style={{marginRight: 20}}>
+            <Card key={i} width={100} style={{marginRight: 20}} backgroundColor={Colors.white}>
               <View padding-15>
                 <Text text30 grey30>
                   {i}
@@ -263,7 +266,7 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
             imageStyle={{height: 160}}
           />
 
-          <View padding-20>
+          <View padding-20 bg-white>
             <Text text40 color={Colors.grey10}>
               {post.title}
             </Text>

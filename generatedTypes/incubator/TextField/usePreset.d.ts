@@ -983,7 +983,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
         error?: string | undefined;
         disabled?: string | undefined;
     } | {
-        focus: any;
+        focus: string;
         error: any;
         disabled: string;
     };
@@ -1029,7 +1029,7 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
         error?: string | undefined;
         disabled?: string | undefined;
     } | {
-        focus: any;
+        focus: string;
         error: any;
         disabled: string;
     };

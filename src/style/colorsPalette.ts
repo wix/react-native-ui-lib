@@ -85,7 +85,7 @@ const extraFixColorsMap = {
 };
 
 const themeColors = {
-  primary: colorsPalette.blue30
+  primary: colorsPalette.violet30
 };
 
 export {

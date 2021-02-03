@@ -181,7 +181,7 @@ class MainScreen extends Component {
           paddingV-s2
           onPress={() => this.openScreen(item)}
           onLongPress={() => this.setDefaultScreen(item)}
-          activeBackgroundColor={Colors.blue40}
+          activeBackgroundColor={Colors.primary}
           activeOpacity={1}
         >
           <Text style={[item.deprecate && styles.entryTextDeprecated]} grey10 text50>

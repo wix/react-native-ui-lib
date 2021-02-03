@@ -91,8 +91,9 @@ export default {
     return require('./components/textArea').default;
   },
   get TextField() {
-    return require('./components/textField/TextFieldMigrator').default;
-    // return require('./components/textField').default;
+    // TODO: Start migration by exporting TextFieldMigrator
+    // return require('./components/textField/TextFieldMigrator').default;
+    return require('./components/textField').default;
   },
   get MaskedInput() {
     return require('./components/maskedInput').default;

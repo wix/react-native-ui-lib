@@ -21,7 +21,7 @@ import * as CardPresenter from './CardPresenter';
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 const DEFAULT_SELECTION_PROPS = {
   borderWidth: 2,
-  color: Colors.blue30,
+  color: Colors.primary,
   indicatorSize: 20,
   icon: Assets.icons.checkSmall,
   iconColor: Colors.white,
@@ -96,7 +96,7 @@ type State = {
  * @extendslink: docs/TouchableOpacity
  * @modifiers: margin, padding
  * @gif: https://media.giphy.com/media/l0HU9SKWmv0VTOYMM/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.tsx
  */
 class Card extends PureComponent<PropTypes, State> {
   static displayName = 'Card';

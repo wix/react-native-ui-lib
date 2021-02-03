@@ -63,11 +63,22 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
      * Additional props passed to icon
      */
     iconProps?: object;
+<<<<<<< HEAD
+=======
+    /**
+     * Custom element to render instead of an icon
+     */
+    customElement?: JSX.Element;
+    /**
+     * Use to identify the badge in tests
+     */
+    testId?: string;
+>>>>>>> e0247b77839e4bef2b99eae9a0fa356518e3c06f
 };
 /**
  * @description: Round colored badge, typically used to show a number
  * @image: https://user-images.githubusercontent.com/33805983/34480753-df7a868a-efb6-11e7-9072-80f5c110a4f3.png
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.tsx
  */
 declare class Badge extends PureComponent<BadgeProps> {
     styles: ReturnType<typeof createStyles>;
@@ -86,14 +97,15 @@ declare class Badge extends PureComponent<BadgeProps> {
     getFormattedLabel(): any;
     getBorderStyling(): ViewStyle;
     renderLabel(): JSX.Element | undefined;
-    renderIcon(): JSX.Element;
+    renderCustomElement(): JSX.Element | undefined;
+    renderIcon(): 0 | JSX.Element | undefined;
     render(): JSX.Element;
 }
 declare function createStyles(props: BadgeProps): {
     badge: {
         alignSelf: "flex-start";
         borderRadius: number;
-        backgroundColor: any;
+        backgroundColor: string | undefined;
         alignItems: "center";
         justifyContent: "center";
         overflow: "hidden";
@@ -387,6 +399,17 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      * Additional props passed to icon
      */
     iconProps?: object | undefined;
+<<<<<<< HEAD
+=======
+    /**
+     * Custom element to render instead of an icon
+     */
+    customElement?: JSX.Element | undefined;
+    /**
+     * Use to identify the badge in tests
+     */
+    testId?: string | undefined;
+>>>>>>> e0247b77839e4bef2b99eae9a0fa356518e3c06f
 } & {
     useCustomTheme?: boolean | undefined;
 }, any> & typeof Badge;

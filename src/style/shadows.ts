@@ -5,6 +5,55 @@ import Colors from './colors';
 type Shadow = {top?: ShadowStyleIOS, bottom?: ShadowStyleIOS} & ShadowStyleIOS;
 
 const Shadows = {
+  sh10: {
+    top: {
+      shadowColor: Colors.grey40,
+      shadowOpacity: 0.18,
+      shadowRadius: 5,
+      shadowOffset: {height: -1, width: 0},
+      elevation: 2
+    },
+    bottom: {
+      shadowColor: Colors.grey40,
+      shadowOpacity: 0.18,
+      shadowRadius: 5,
+      shadowOffset: {height: 1, width: 0},
+      elevation: 2
+    }
+  },
+  sh20: {
+    top: {
+      shadowColor: Colors.grey30,
+      shadowOpacity: 0.2,
+      shadowRadius: 10,
+      shadowOffset: {height: -2, width: 0},
+      elevation: 3
+    },
+    bottom: {
+      shadowColor: Colors.grey30,
+      shadowOpacity: 0.2,
+      shadowRadius: 10,
+      shadowOffset: {height: 2, width: 0},
+      elevation: 3
+    }
+  },
+  sh30: {
+    top: {
+      shadowColor: Colors.grey30,
+      shadowOpacity: 0.2,
+      shadowRadius: 12,
+      shadowOffset: {height: -5, width: 0},
+      elevation: 4
+    },
+    bottom: {
+      shadowColor: Colors.grey30,
+      shadowOpacity: 0.2,
+      shadowRadius: 12,
+      shadowOffset: {height: 5, width: 0},
+      elevation: 4
+    }
+  },
+  /* Old Presets */
   white10: {
     top: {shadowColor: Colors.grey20, shadowOpacity: 0.04, shadowRadius: 13.5},
     bottom: {shadowColor: Colors.grey10, shadowOpacity: 0.09, shadowRadius: 2, shadowOffset: {height: 2, width: 0}}

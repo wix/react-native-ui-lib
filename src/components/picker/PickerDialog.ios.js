@@ -29,10 +29,10 @@ class PickerDialog extends BaseComponent {
 
     return (
       <View style={styles.header}>
-        <Text text70 blue30 onPress={onCancel} accessibilityRole={onCancel ? 'button' : undefined}>
+        <Text text70 primary onPress={onCancel} accessibilityRole={onCancel ? 'button' : undefined}>
           {_.get(topBarProps, 'cancelLabel', 'Cancel')}
         </Text>
-        <Text text70 blue30 onPress={onDone} accessibilityRole={onDone ? 'button' : undefined}>
+        <Text text70 primary onPress={onDone} accessibilityRole={onDone ? 'button' : undefined}>
           {_.get(topBarProps, 'doneLabel', 'Done')}
         </Text>
       </View>

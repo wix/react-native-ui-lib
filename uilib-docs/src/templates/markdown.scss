@@ -1,13 +1,12 @@
-@import "src/styles/constants";
+@import 'src/styles/constants';
 
 .markdown {
   display: flex;
-  flex: 1;
-  justify-content: center;
 
   .markdown-content {
     padding: 0 72px;
-    width: $minScreenWidth;
+    width: 80%;
+    min-width: 50vw;
   }
 
   p {
@@ -27,11 +26,11 @@
       background: transparent;
       color: $dark10;
       padding: 0;
+      white-space: pre-wrap;
     }
   }
 
   code {
-    font-size: 16px;
     line-height: 1.3;
     display: inline;
     word-break: break-word;

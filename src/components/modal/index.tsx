@@ -32,7 +32,7 @@ export interface ModalProps extends RNModalProps {
  * @extends: Modal
  * @extendslink: https://facebook.github.io/react-native/docs/modal.html
  * @gif: https://media.giphy.com/media/3oFzmfSX8KgvctI4Ks/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.tsx
  */
 class Modal extends Component<ModalProps> {
   static displayName = 'Modal';

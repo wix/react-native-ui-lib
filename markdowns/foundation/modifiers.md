@@ -76,7 +76,7 @@ It's always important to use your margins and paddings correctly, with modifiers
 <View marginT-5 marginB-10>...</View>
 ```
 
-! padding and margin modifiers can also take [Spacing](https://github.com/wix/react-native-ui-lib/blob/master/src/style/spacings.js) constants.
+! padding and margin modifiers can also take [Spacing](https://github.com/wix/react-native-ui-lib/blob/master/src/style/spacings.ts) constants. 
 ```
 <View margin-s5 padding-s2>...</View>
 ```

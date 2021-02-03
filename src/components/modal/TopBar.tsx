@@ -65,12 +65,12 @@ type topBarButtonProp = {
 
 const TOP_BAR_HEIGHT = Constants.isIOS ? 44 : 56;
 const DEFAULT_BUTTON_PROPS = {
-  color: Colors.blue30
+  color: Colors.primary
 };
 
 /**
  * @description: Modal.TopBar, inner component for configuring the Modal component's title, buttons and statusBar
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.tsx
  */
 class TopBar extends Component<ModalTopBarProps> {
   static displayName = 'Modal.TopBar';

@@ -35,7 +35,7 @@ class TabControllerScreen extends Component<{}, State> {
     this.state.items = this.generateTabItems();
   }
 
-  generateTabItems = (fewItems = this.state.fewItems, centerSelected = this.state.centerSelected): TabControllerItemProps[] => {
+  generateTabItems = (fewItems = this.state.fewItems): TabControllerItemProps[] => {
     let items: TabControllerItemProps[] = _.chain(TABS)
       .take(fewItems ? 3 : TABS.length)
       .map<TabControllerItemProps>(tab => ({label: tab, key: tab}))
@@ -43,10 +43,7 @@ class TabControllerScreen extends Component<{}, State> {
 
     const addItem: TabControllerItemProps = {icon: Assets.icons.demo.add, key: 'add', ignore: true, width: 60, onPress: this.onAddItem};
 
-    if (!centerSelected) {
-      items = [...items, addItem];
-    }
-    return items;
+    return [...items, addItem];
   };
 
   componentDidMount() {
@@ -83,7 +80,7 @@ class TabControllerScreen extends Component<{}, State> {
   toggleCenterSelected = () => {
     const {fewItems, centerSelected} = this.state;
     this.setState({
-      items: this.generateTabItems(fewItems, !centerSelected),
+      items: this.generateTabItems(fewItems),
       centerSelected: !centerSelected,
       key: Date.now()
     });

@@ -32,7 +32,7 @@ export interface TabControllerPageProps {
 
 /**
  * @description: TabController's TabPage
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
  */
 export default class TabPage extends PureComponent<TabControllerPageProps> {
   static displayName = 'TabController.TabPage';

@@ -1,4 +1,4 @@
-import React, {forwardRef} from 'react';
+import React, {useEffect, forwardRef} from 'react';
 import {mapKeys} from 'lodash';
 // @ts-ignore
 import OldTextField from './index';
@@ -52,13 +52,21 @@ function migrateProps(props: any) {
   return fixedProps;
 }
 
-export default forwardRef(({migrate = false, ...props}: any, ref) => {
+const TextFieldMigrator = forwardRef(({migrate = false, ...props}: any, ref) => {
+  useEffect(() => {
+    if (!migrate) {
+      LogService.warn(`RNUILib TextField component will soon be replaced with a new implementation, in order to start the migration - please pass the 'migrate' prop`);
+    }
+  }, []);
+
   if (migrate) {
     const migratedProps = migrateProps(props);
     // @ts-ignore
     return <NewTextField {...migratedProps} ref={ref}/>;
   } else {
-    LogService.warn(`RNUILib TextField component will soon be replaced with a new implementation, in order to start the migration - please pass the 'migrate' prop`);
     return <OldTextField {...props} ref={ref}/>;
   }
 });
+
+TextFieldMigrator.displayName = 'TextField';
+export default TextFieldMigrator;

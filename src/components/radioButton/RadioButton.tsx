@@ -21,7 +21,7 @@ import asRadioGroupChild from './asRadioGroupChild';
 import {RadioGroupContextProps} from './RadioGroupContext';
 
 const DEFAULT_SIZE = 24;
-const DEFAULT_COLOR = Colors.blue30;
+const DEFAULT_COLOR = Colors.primary;
 
 export type RadioButtonProps = RadioGroupContextProps &
   ViewProps & {
