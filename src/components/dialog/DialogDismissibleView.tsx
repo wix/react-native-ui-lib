@@ -112,10 +112,11 @@ const DialogDismissibleView = (props: Props) => {
     onDismiss();
   }
 
-  // TODO: use isFinished?
   function dismissWorklet(isFinished: boolean) {
     'worklet';
-    runOnJS(dismiss)();
+    if (isFinished) {
+      runOnJS(dismiss)();
+    }
   }
 
   const animateIn = useCallback(() => {
