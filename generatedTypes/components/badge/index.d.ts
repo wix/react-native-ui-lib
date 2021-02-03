@@ -13,7 +13,7 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
      */
     backgroundColor?: string;
     /**
-     * the badge size
+     * the badge size (default, small)
      */
     size: number;
     /**
@@ -63,17 +63,10 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
      * Additional props passed to icon
      */
     iconProps?: object;
-<<<<<<< HEAD
-=======
     /**
      * Custom element to render instead of an icon
      */
     customElement?: JSX.Element;
-    /**
-     * Use to identify the badge in tests
-     */
-    testId?: string;
->>>>>>> e0247b77839e4bef2b99eae9a0fa356518e3c06f
 };
 /**
  * @description: Round colored badge, typically used to show a number
@@ -349,7 +342,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      */
     backgroundColor?: string | undefined;
     /**
-     * the badge size
+     * the badge size (default, small)
      */
     size: number;
     /**
@@ -399,17 +392,10 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      * Additional props passed to icon
      */
     iconProps?: object | undefined;
-<<<<<<< HEAD
-=======
     /**
      * Custom element to render instead of an icon
      */
     customElement?: JSX.Element | undefined;
-    /**
-     * Use to identify the badge in tests
-     */
-    testId?: string | undefined;
->>>>>>> e0247b77839e4bef2b99eae9a0fa356518e3c06f
 } & {
     useCustomTheme?: boolean | undefined;
 }, any> & typeof Badge;

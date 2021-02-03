@@ -48,11 +48,11 @@ declare class ProgressBar extends PureComponent<Props, State> {
     };
     getProgressStyle(): {
         right: number | undefined;
-        backgroundColor: any;
+        backgroundColor: string;
         borderRadius: number;
     } | {
         right: number | undefined;
-        backgroundColor: any;
+        backgroundColor: string;
         borderBottomRightRadius: number;
         borderTopRightRadius: number;
     };
