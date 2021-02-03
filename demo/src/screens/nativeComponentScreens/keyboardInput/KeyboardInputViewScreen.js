@@ -38,7 +38,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
       initialProps: undefined
     },
     receivedKeyboardData: undefined,
-    useSafeArea: true,
+    useSafeArea: false,
     keyboardOpenState: false
   };
 
