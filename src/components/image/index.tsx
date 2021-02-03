@@ -133,8 +133,8 @@ class Image extends PureComponent<Props, State> {
     return source;
   }
 
-  getImageSource() {
-    const {assetName, assetGroup, source} = this.props;
+  getImageSource(error: boolean) {
+    const {assetName, assetGroup, source, errorSource} = this.props;
 
     if (!_.isUndefined(assetName)) {
       return _.get(Assets, `${assetGroup}.${assetName}`);
@@ -143,7 +143,7 @@ class Image extends PureComponent<Props, State> {
       return this.sourceTransformer(this.props);
     }
 
-    return this.getVerifiedSource(source);
+    return this.getVerifiedSource(error ? errorSource : source);
   }
 
   onError = (event: NativeSyntheticEvent<ImageErrorEventData>) => {
@@ -154,8 +154,7 @@ class Image extends PureComponent<Props, State> {
   }
 
   render() {
-    const {error} = this.state;
-    const source = error ? this.getVerifiedSource(this.props.errorSource) : this.getImageSource();
+    const source = this.getImageSource(this.state.error);
     const {
       tintColor,
       style,
