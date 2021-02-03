@@ -26,12 +26,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {Constants} from '../../helpers';
 import View from '../view';
-import {
-  PanningDirections,
-  PanAmountsProps,
-  PanDirectionsProps,
-  PanLocationProps
-} from '../panningViews/panningProvider';
+import {PanningDirections} from '../panningViews/panningProvider';
 
 interface DialogDismissibleProps {
   /**
@@ -61,11 +56,6 @@ interface Props extends DialogDismissibleProps {
   children?: React.ReactNode | React.ReactNode[];
 }
 
-interface LocationProps {
-  left: number;
-  top: number;
-}
-
 const DEFAULT_DIRECTION = PanningDirections.DOWN;
 const TOP_INSET = Constants.isIphoneX ? Constants.getSafeAreaInsets().top : Constants.isIOS ? 20 : 0;
 const BOTTOM_INSET = Constants.isIphoneX ? Constants.getSafeAreaInsets().bottom : Constants.isIOS ? 20 : 0;
@@ -77,42 +67,45 @@ const TIMING_ANIMATION_CONFIG: Animated.WithTimingConfig = {
 const DialogDismissibleView = (props: Props) => {
   const {direction = DEFAULT_DIRECTION, visible: propsVisible, containerStyle, style, children, onDismiss} = props;
 
-  const width = useRef<number>(Constants.screenWidth);
-  const height = useRef<number>(Constants.screenHeight);
-  const containerRef = useRef<typeof View>();
-  const visible = useRef<boolean>(Boolean(propsVisible));
-  const [threshold, setThreshold] = useState<PanAmountsProps>({x: 0, y: 0});
+  const isHorizontal = useCallback(() => {
+    return direction === PanningDirections.LEFT || direction === PanningDirections.RIGHT;
+  }, [direction]);
 
-  const getHiddenLocation = useCallback((left: number, top: number): LocationProps => {
-    const result = {left: 0, top: 0};
+  const isHorizontalWorklet = useWorkletCallback(() => {
+    return direction === PanningDirections.LEFT || direction === PanningDirections.RIGHT;
+  }, [direction]);
+
+  const containerRef = useRef<typeof View>();
+  const size = useRef<number>(isHorizontal() ? Constants.screenWidth : Constants.screenHeight);
+  const visible = useRef<boolean>(Boolean(propsVisible));
+  const [threshold, setThreshold] = useState<number>(0);
+
+  const getHiddenLocation = useCallback((location: number): number => {
     switch (direction) {
       case PanningDirections.LEFT:
-        result.left = -left - width.current;
-        break;
+        return -location - size.current;
       case PanningDirections.RIGHT:
-        result.left = Constants.screenWidth - left;
-        break;
+        return Constants.screenWidth - location;
       case PanningDirections.UP:
-        result.top = -top - height.current - TOP_INSET;
-        break;
+        return -location - size.current - TOP_INSET;
       case PanningDirections.DOWN:
       default:
-        result.top = Constants.screenHeight - top + BOTTOM_INSET;
-        break;
+        return Constants.screenHeight - location + BOTTOM_INSET;
     }
-
-    return result;
   },
   [direction]);
 
-  const hiddenLocation = useRef<LocationProps>(getHiddenLocation(0, 0));
+  const hiddenLocation = useRef<number>(getHiddenLocation(0));
 
   const animationValue = useSharedValue<number>(0);
   const animatedStyle = useAnimatedStyle(() => {
+    const transform = isHorizontalWorklet()
+      ? [{translateX: animationValue.value}]
+      : [{translateY: animationValue.value}];
     return {
-      transform: [{translateY: animationValue.value}]
+      transform
     };
-  });
+  }, [isHorizontalWorklet]);
 
   function dismiss() {
     visible.current = false;
@@ -135,7 +128,7 @@ const DialogDismissibleView = (props: Props) => {
   }
 
   const animateOut = useCallback(() => {
-    animationValue.value = withTiming(hiddenLocation.current.top, TIMING_ANIMATION_CONFIG, dismissWorklet);
+    animationValue.value = withTiming(hiddenLocation.current, TIMING_ANIMATION_CONFIG, dismissWorklet);
   }, [onDismiss]);
 
   function animateOutWorklet() {
@@ -152,23 +145,18 @@ const DialogDismissibleView = (props: Props) => {
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     // DO NOT move the width\height into the measureInWindow - it causes errors with orientation change
     const layout = event.nativeEvent.layout;
-    width.current = layout.width;
-    height.current = layout.height;
-    setThreshold({x: width.current / 2, y: height.current / 2});
+    size.current = isHorizontal() ? layout.width : layout.height;
+    setThreshold(size.current / 2);
     if (containerRef.current) {
       // @ts-ignore TODO: can we fix this on ViewProps \ View?
       containerRef.current.measureInWindow((x: number, y: number) => {
-        hiddenLocation.current = getHiddenLocation(x, y);
-        animationValue.value = hiddenLocation.current.top;
+        hiddenLocation.current = getHiddenLocation(isHorizontal() ? x : y);
+        animationValue.value = hiddenLocation.current;
         animateIn();
       });
     }
   },
-  [setThreshold, getHiddenLocation, animateIn]);
-
-  const isHorizontal = useWorkletCallback(() => {
-    return direction === PanningDirections.LEFT || direction === PanningDirections.RIGHT;
-  }, [direction]);
+  [isHorizontal, setThreshold, getHiddenLocation, animateIn]);
 
   const isFling = useWorkletCallback((event: PanGestureHandlerEventExtra) => {
     if (direction === PanningDirections.DOWN) {
@@ -180,19 +168,34 @@ const DialogDismissibleView = (props: Props) => {
   [direction]);
 
   const isGreaterThanThreshold = useWorkletCallback((event: PanGestureHandlerEventExtra, context: {start: number}) => {
-    const value = context.start + (isHorizontal() ? event.translationX : event.translationY);
-    return (direction === PanningDirections.LEFT && value <= -threshold.x) ||
-    (direction === PanningDirections.RIGHT && value >= threshold.x) ||
-    (direction === PanningDirections.UP && value <= -threshold.y) ||
-    (direction === PanningDirections.DOWN && value >= threshold.y);
-  }, [isHorizontal, direction, threshold]);
+    const value = context.start + (isHorizontalWorklet() ? event.translationX : event.translationY);
+    return (
+      ((direction === PanningDirections.LEFT || direction === PanningDirections.UP) && value <= -threshold) ||
+        ((direction === PanningDirections.RIGHT || direction === PanningDirections.DOWN) && value >= threshold)
+    );
+  },
+  [isHorizontalWorklet, direction, threshold]);
 
   const gestureHandler = useAnimatedGestureHandler({
     onStart: (_event: PanGestureHandlerEventExtra, context: {start: number}) => {
       context.start = animationValue.value;
     },
     onActive: (event: PanGestureHandlerEventExtra, context: {start: number}) => {
-      animationValue.value = Math.max(0, context.start + event.translationY);
+      switch (direction) {
+        case PanningDirections.LEFT:
+          animationValue.value = Math.min(0, context.start + event.translationX);
+          break;
+        case PanningDirections.RIGHT:
+          animationValue.value = Math.max(0, context.start + event.translationX);
+          break;
+        case PanningDirections.UP:
+          animationValue.value = Math.min(0, context.start + event.translationY);
+          break;
+        case PanningDirections.DOWN:
+        default:
+          animationValue.value = Math.max(0, context.start + event.translationY);
+          break;
+      }
     },
     onEnd: (event: PanGestureHandlerEventExtra, context: {start: number}) => {
       if (isFling(event) || isGreaterThanThreshold(event, context)) {
@@ -202,7 +205,7 @@ const DialogDismissibleView = (props: Props) => {
       }
     }
   },
-  [isFling, isGreaterThanThreshold]);
+  [direction, isFling, isGreaterThanThreshold]);
 
   // TODO: change to useAnimatedGestureHandler?
   const flingHandler = useCallback((event: FlingGestureHandlerStateChangeEvent) => {
@@ -212,18 +215,31 @@ const DialogDismissibleView = (props: Props) => {
   },
   [animateOut]);
 
+  const getDirection = useCallback((): Directions => {
+    switch (direction) {
+      case PanningDirections.LEFT:
+        return Directions.LEFT;
+      case PanningDirections.RIGHT:
+        return Directions.RIGHT;
+      case PanningDirections.UP:
+        return Directions.UP;
+      case PanningDirections.DOWN:
+      default:
+        return Directions.DOWN;
+    }
+  }, [direction]);
+
   return (
     // @ts-ignore
     <View ref={containerRef} style={containerStyle} onLayout={onLayout}>
-      <PanGestureHandler onGestureEvent={gestureHandler}>
+      <PanGestureHandler onGestureEvent={direction ? gestureHandler : undefined}>
         <Animated.View
           // !visible.current && styles.hidden is done to fix a bug is iOS
           // Have to have two Animated.View because of this error:
           // nesting touch handlers with native animated driver is not supported yet
           style={[style, animatedStyle, !visible.current && styles.hidden]}
         >
-          {/* <FlingGestureHandler onHandlerStateChange={flingHandler} direction={Directions.DOWN | Directions.UP}> */}
-          <FlingGestureHandler onHandlerStateChange={flingHandler} direction={Directions.DOWN}>
+          <FlingGestureHandler onHandlerStateChange={direction ? flingHandler : undefined} direction={getDirection()}>
             <Animated.View>{children}</Animated.View>
           </FlingGestureHandler>
         </Animated.View>
