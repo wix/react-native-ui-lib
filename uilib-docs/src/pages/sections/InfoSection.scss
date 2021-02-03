@@ -6,9 +6,16 @@
   justify-content: space-between;
   padding: 40px 0;
 
+  & > div:first-child {
+    flex: 1;
+  }
+
   .column {
     margin-right: 20px;
-    min-width: 200px;
+
+    @include desktop {
+      min-width: 200px;
+    }
 
     .title {
       margin: 0;
