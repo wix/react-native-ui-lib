@@ -61,9 +61,7 @@ export default class LoaderScreen extends BaseComponent {
     return (
       <View style={[overlay ? [styles.overlayContainer, {backgroundColor}] : styles.container, containerStyle]}>
         <View flex center>
-          {customLoader ? (
-            <View>{customLoader}</View>
-          ) : (
+          {customLoader || (
             <ActivityIndicator
               size={'large'}
               animating
