@@ -48,7 +48,7 @@ const useScrollReached = (props: ScrollEnablerProps = {}): ScrollEnablerResultPr
     const layoutSize = horizontal ? layoutWidth : layoutHeight;
     let offset = horizontal ? offsetX : offsetY;
     const contentSize = horizontal ? contentWidth : contentHeight;
-    if (Constants.isRTL && Constants.isAndroid) {
+    if (horizontal && Constants.isRTL && Constants.isAndroid) {
       const scrollingWidth = Math.max(0, contentSize - layoutSize);
       offset = scrollingWidth - offset;
     }

@@ -23,10 +23,10 @@ export type ScrollToResultProps<T extends ScrollToSupportedViews> = {
   scrollViewRef: RefObject<T>;
   /**
    * scrollTo callback.
-   * scrollToOffset - the x or y to scroll to.
+   * offset - the x or y to scroll to.
    * animated - should the scroll be animated (default is true)
    */
-  scrollTo: (scrollToOffset: number, animated?: boolean) => void;
+  scrollTo: (offset: number, animated?: boolean) => void;
   /**
    * onContentSizeChange callback (should be set to your onContentSizeChange).
    * Needed for RTL support on Android.
@@ -61,24 +61,25 @@ const useScrollTo = <T extends ScrollToSupportedViews>(props: ScrollToProps<T>):
   },
   [horizontal]);
 
-  const scrollTo = useCallback((scrollTo: number, animated = true) => {
+  const scrollTo = useCallback((offset: number, animated = true) => {
     if (
-      Constants.isRTL &&
+      horizontal &&
+        Constants.isRTL &&
         Constants.isAndroid &&
         !_.isUndefined(contentSize.current) &&
         !_.isUndefined(containerSize.current)
     ) {
       const scrollingWidth = Math.max(0, contentSize.current - containerSize.current);
-      scrollTo = scrollingWidth - scrollTo;
+      offset = scrollingWidth - offset;
     }
 
     // @ts-ignore
     if (_.isFunction(scrollViewRef.current.scrollToOffset)) {
       // @ts-ignore
-      scrollViewRef.current.scrollToOffset({offset: scrollTo, animated});
+      scrollViewRef.current.scrollToOffset({offset, animated});
       // @ts-ignore
     } else if (_.isFunction(scrollViewRef.current.scrollTo)) {
-      const scrollToXY = horizontal ? {x: scrollTo} : {y: scrollTo};
+      const scrollToXY = horizontal ? {x: offset} : {y: offset};
       // @ts-ignore
       scrollViewRef.current.scrollTo({...scrollToXY, animated});
     }
