@@ -46,8 +46,13 @@ const useScrollReached = (props: ScrollEnablerProps = {}): ScrollEnablerResultPr
     } = event;
 
     const layoutSize = horizontal ? layoutWidth : layoutHeight;
-    const offset = horizontal ? offsetX : offsetY;
+    let offset = horizontal ? offsetX : offsetY;
     const contentSize = horizontal ? contentWidth : contentHeight;
+    if (Constants.isRTL && Constants.isAndroid) {
+      const scrollingWidth = Math.max(0, contentSize - layoutSize);
+      offset = scrollingWidth - offset;
+    }
+
     const closeToStart = offset <= threshold;
     if (closeToStart !== isScrollAtStart) {
       setScrollAtStart(closeToStart);
