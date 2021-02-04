@@ -6,9 +6,12 @@
   .markdown-content {
     padding: 0 20px;
     min-width: 50vw;
+    padding-bottom: 20px;
+    overflow-y: auto;
 
     @include desktop {
       padding: 0 72px;
+      padding-bottom: 40px;
       width: 80%;
     }
   }
