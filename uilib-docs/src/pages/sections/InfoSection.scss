@@ -1,0 +1,42 @@
+@import 'src/styles/constants';
+
+.info-section {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 40px 0;
+
+  & > div:first-child {
+    flex: 1;
+  }
+
+  .column {
+    margin-right: 20px;
+
+    @include desktop {
+      min-width: 200px;
+    }
+
+    .title {
+      margin: 0;
+      margin-bottom: 20px;
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      a {
+        font-size: 0.8em;
+        line-height: 1.2;
+        color: $dark10;
+      }
+    }
+  }
+
+  .qr {
+    height: 100px;
+  }
+}

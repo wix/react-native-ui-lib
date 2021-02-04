@@ -26,12 +26,12 @@ const COLOR_BY_STATE = {
 };
 const UNDERLINE_COLOR_BY_STATE = {
   default: Colors.grey50,
-  focus: Colors.blue30,
+  focus: Colors.primary,
   error: Colors.red30
 };
 const PLACEHOLDER_COLOR_BY_STATE = {
   default: Colors.grey30,
-  focus: Colors.blue30
+  focus: Colors.primary
 };
 const CHAR_COUNTER_COLOR_BY_STATE = {
   default: Colors.grey30,
@@ -559,7 +559,7 @@ export default class TextField extends BaseInput {
     const {renderExpandableInput, testID} = this.getThemeProps();
 
     if (_.isFunction(renderExpandableInput)) {
-      return renderExpandableInput(this.getThemeProps());
+      return renderExpandableInput(this.getThemeProps(), this.toggleExpandableModal);
     }
 
     return (
@@ -652,7 +652,7 @@ export default class TextField extends BaseInput {
             pointerEvents="none"
             source={iconSource}
             resizeMode={'contain'}
-            style={[this.styles.rightButtonImage, {tintColor: iconColor || Colors.blue30}]}
+            style={[this.styles.rightButtonImage, {tintColor: iconColor || Colors.primary}]}
           />
         </TouchableOpacity>
       );

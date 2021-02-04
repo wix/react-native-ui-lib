@@ -1,10 +1,44 @@
-@import "src/styles/constants";
+@import 'src/styles/constants';
+
+@mixin button() {
+  button {
+    box-shadow: none;
+    outline: 0;
+    border: 0;
+    min-width: 180px;
+    padding: 12px 24px;
+    border-radius: 100px;
+    font-size: $text40;
+    font-weight: 500;
+    background-color: $white;
+    color: $black;
+    border: 1px solid $black;
+    cursor: pointer;
+    transition: 0.2s all;
+
+    &:hover {
+      background-color: $black;
+      color: $white;
+    }
+
+    &.dark {
+      background-color: $black;
+      color: $white;
+
+      &:hover {
+        background-color: $dark10;
+      }
+    }
+  }
+}
 
 .main-page {
-  // height: 100%;
+  @include button();
+  width: 100%;
   display: flex;
   flex-direction: column;
-  padding-bottom: 20px;
+  margin: auto;
+  align-items: center;
 
   .main-section {
     position: relative;
@@ -32,7 +66,7 @@
       }
 
       &:after {
-        content: "Try our new Expo App!";
+        content: 'Try our new Expo App!';
         position: absolute;
         top: 20px;
         right: calc(100% + 10px);
@@ -42,16 +76,16 @@
         border-radius: 2px;
         box-shadow: -1px 1px 2px $dark60;
       }
-      
+
       &:before {
-        content: "";
+        content: '';
         position: absolute;
         right: 100%;
         top: 30px;
         border: 5px solid transparent;
         border-left-color: $dark80;
       }
-      
+
       > a {
         display: inline-block;
         background-color: $white;
@@ -133,29 +167,6 @@
 
       img {
         height: 500px;
-      }
-    }
-  }
-
-  .support-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background: $blue10;
-    color: $white;
-    // width: 60vw;
-    // margin: 0 auto;
-    margin-top: 20px;
-    padding: 40px;
-
-    > div:first-child {
-      // width: 25%;
-    }
-
-    > div:nth-child(2) {
-      img {
-        margin-right: 20px;
       }
     }
   }

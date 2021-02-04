@@ -89,7 +89,15 @@ class DateTimePicker extends Component {
     /**
      * Props to pass the Dialog component
      */
-    dialogProps: PropTypes.object
+    dialogProps: PropTypes.object,
+    /**
+     * style to apply to the iOS dialog header
+     */
+    headerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    /**
+     * Render custom input
+     */
+    renderInput: PropTypes.elementType
   };
 
   static defaultProps = {
@@ -202,10 +210,10 @@ class DateTimePicker extends Component {
   };
 
   renderHeader() {
-    const {useCustomTheme} = this.props;
+    const {useCustomTheme, headerStyle} = this.props;
 
     return (
-      <View row spread bg-white paddingH-20 style={styles.header}>
+      <View row spread bg-white paddingH-20 style={[styles.header, headerStyle]}>
         <Button
           link
           iconSource={Assets.icons.x}

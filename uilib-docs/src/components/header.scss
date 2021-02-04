@@ -1,29 +1,23 @@
-@import "src/styles/constants";
+@import 'src/styles/constants';
 
 .header {
   position: fixed;
+  flex: 1;
   top: 0;
   width: 100%;
   height: $headerHeight;
   display: flex;
   align-items: center;
-  padding: 0px 20px;
+  padding: 0px 11%;
   background: $white;
+  z-index: 100;
+  box-shadow: 1px 1px 5px rgba($dark10, 0.2);
+  
+  // background-color: rgba(white, .15);  
+  // backdrop-filter: blur(50px);
 
   .logo {
-    height: 50px;
-    border-radius: 2px;
-    padding: 4px;
-    border: 1px solid $primary;
-    vertical-align: middle;
-  }
-
-  .logo-title {
-    font-size: $text10;
-    color: $primary;
-    letter-spacing: 2px;
-    vertical-align: middle;
-    margin-left: 5px;
+    height: 40px;
   }
 
   .links {
@@ -32,10 +26,14 @@
     justify-content: flex-end;
 
     a {
-      margin-right: 40px;
-      font-size: $text20;
-      color: $primary;
+      font-size: $text40;
+      color: $dark10;
       text-decoration: none;
+      font-weight: 500;
+
+      &:not(:last-child) {
+        margin-right: 40px;
+      }
     }
   }
 }

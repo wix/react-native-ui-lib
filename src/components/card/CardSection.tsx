@@ -36,7 +36,7 @@ export type CardSectionProps = ViewProps & {
    * Will be used for the background when provided
    */
   imageSource?: ImageSourcePropType;
-  source?: ImageSourcePropType;
+  source?: ImageSourcePropType; // TODO: remove after deprecation
   /**
    * The style for the background image
    */
@@ -51,7 +51,7 @@ type Props = CardSectionProps & asCardChildProps;
 
 /**
  * @description: Card.Section for rendering content easily inside a card
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.tsx
  */
 class CardSection extends PureComponent<Props> {
   static displayName = 'Card.Section';
@@ -60,7 +60,7 @@ class CardSection extends PureComponent<Props> {
     super(props);
 
     if (props.imageSource) {
-      LogService.deprecationWarn({component: 'CardSection', oldProp: 'imageSource', newProp: 'source'});
+      LogService.deprecationWarn({component: 'CardSection', oldProp: 'source', newProp: 'imageSource'});
     }
   }
 
@@ -89,7 +89,7 @@ class CardSection extends PureComponent<Props> {
 
   renderImage = () => {
     const {source, imageSource, imageStyle, imageProps, testID} = this.props;
-    const finalSource = source || imageSource;
+    const finalSource = imageSource || source;
 
     // not actually needed, instead of adding ts-ignore
     if (finalSource) {
@@ -113,7 +113,7 @@ class CardSection extends PureComponent<Props> {
       style,
       ...others
     } = this.props;
-    const finalSource = source || imageSource;
+    const finalSource = imageSource || source;
 
     return (
       <View style={[styles.container, borderStyle, style]} {...others}>

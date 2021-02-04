@@ -38,7 +38,7 @@ type Props = CardImageProps & asCardChildProps;
 
 /**
  * @description: Card.Image, part of the Card component belongs inside a Card (better be a direct child)
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.tsx
  */
 class CardImage extends PureComponent<Props> {
   static displayName = 'Card.Image';

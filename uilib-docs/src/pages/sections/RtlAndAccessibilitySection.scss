@@ -1,0 +1,49 @@
+@import 'src/styles/constants';
+
+.rtl-accessibility-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 100px;
+  width: 100%;
+  text-align: center;
+
+  .cards {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3%;
+    width: 70%;
+    align-items: center;
+    
+    @include desktop {
+      flex-direction: row;
+      justify-content: space-between;
+      min-width: 50vw;
+    }
+    
+    .card {
+      width: 15vw;
+      min-width: 300px;
+      box-shadow: 6px 6px 50px 15px rgba($primary, 0.05);
+      background-color: $white;
+      text-align: center;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      padding: 40px;
+      
+      @include desktop {
+        margin-right: 20px;
+        margin-bottom: 0;
+      }
+      
+      .title {
+        font-weight: 500;
+      }
+
+      img {
+        width: 20%;
+        min-width: 50px;
+      }
+    }
+  }
+}

@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   ImagePropsBase,
   ImageStyle,
-  TextStyle
+  TextStyle,
+  AccessibilityProps
 } from 'react-native';
 import {Colors} from '../../style';
 import {forwardRef, asBaseComponent} from '../../commons/new';
@@ -43,7 +44,7 @@ export enum BadgePosition {
 
 const DEFAULT_BADGE_SIZE = 'pimpleBig';
 
-export type AvatarProps = {
+export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
   /**
    * Adds fade in animation when Avatar image loads
    */
@@ -145,7 +146,7 @@ export type AvatarPropTypes = AvatarProps; //TODO: remove after ComponentPropTyp
  * @extendsnotes: (when passing onPress)
  * @extendslink: docs/TouchableOpacity
  * @image: https://user-images.githubusercontent.com/33805983/34480603-197d7f64-efb6-11e7-9feb-db8ba756f055.png
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/AvatarsScreen.tsx
  */
 class Avatar extends PureComponent<AvatarProps> {
   styles: ReturnType<typeof createStyles>;
@@ -382,7 +383,7 @@ function createStyles(props: AvatarProps) {
       lineHeight: undefined
     },
     ribbon: {
-      backgroundColor: Colors.blue30,
+      backgroundColor: Colors.primary,
       paddingHorizontal: 6,
       paddingVertical: 3
     }
