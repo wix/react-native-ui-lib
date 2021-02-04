@@ -6,8 +6,10 @@ import com.facebook.react.PackageList;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+import com.facebook.react.bridge.JSIModulePackage;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
+import com.swmansion.reanimated.ReanimatedJSIModulePackage;
 import com.wix.reactnativeuilib.UiLibPackageList;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -19,6 +21,11 @@ public class MainApplication extends NavigationApplication {
         @Override
         protected String getJSMainModuleName() {
             return "demo";
+        }
+
+        @Override
+        protected JSIModulePackage getJSIModulePackage() {
+            return new ReanimatedJSIModulePackage(); // <- add
         }
 
         @Override
