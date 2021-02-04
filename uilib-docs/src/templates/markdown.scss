@@ -4,13 +4,16 @@
   display: flex;
 
   .markdown-content {
-    padding: 0 72px;
-    width: 80%;
+    padding: 0 20px;
     min-width: 50vw;
+
+    @include desktop {
+      padding: 0 72px;
+      width: 80%;
+    }
   }
 
   p {
-    width: 70%;
     word-break: break-word;
     line-height: 1.4;
   }
@@ -19,7 +22,6 @@
     background-color: $dark80;
     border-radius: 4px;
     padding: 16px;
-    max-width: 60vw;
     box-shadow: 2px 2px 2px $dark60;
 
     code {
@@ -31,14 +33,12 @@
   }
 
   code {
-    line-height: 1.3;
-    display: inline;
     word-break: break-word;
-    width: 100%;
+    display: inline-block;
     background: $dark70;
     color: $primary;
-    padding: 6px 10px;
-    border-radius: 4px;
+    padding: 1px 2px;
+    margin-bottom: 2px;
   }
 
   li {

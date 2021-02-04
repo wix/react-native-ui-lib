@@ -1,9 +1,11 @@
 @import 'src/styles/constants';
 
 .navbar {
+  display: none;
   position: fixed;
-  width: $navbarWidth;
   height: calc(100% - #{$headerHeight});
+  width: 100%;
+  background-color: $white;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 20px;
@@ -11,6 +13,20 @@
   border-radius: 2px;
   margin-top: 20px;
   border-right: 2px solid $dark80;
+  z-index: 100;
+
+  
+
+  &.visible {
+    display: initial;
+  }
+
+  @include desktop {
+    opacity: 1;
+    display: initial;
+    width: $navbarWidth;
+    background-color: initial;
+  }
 
   .search {
     position: sticky;
