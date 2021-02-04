@@ -51,16 +51,16 @@ module.exports = {
     schema: [MAP_SCHEMA]
   },
   create(context) {
-    function reportPropValueShapeDeprecation(attributePropertyKey, attributeName, origin, node) {
-      const nodeName = _.get(node, 'name.name');
+    function reportPropValueShapeDeprecation(propKey, attribute, origin, node) {
+      const componentName = utils.getComponentName(node);
       const destination = _.get(origin, 'fix.propName');
-      const message = `The shape of '${attributeName}' prop of '${nodeName}' doesn't contain '${origin.prop}' anymore. Please use '${destination}' instead (fix is available).`;
+      const message = `The shape of '${attribute}' prop of '${componentName}' doesn't contain '${origin.prop}' anymore. Please use '${destination}' instead (fix is available).`;
       context.report({
         node,
         message,
         fix(fixer) {
-          if (destination && attributePropertyKey) {
-            return fixer.replaceText(attributePropertyKey, destination);
+          if (destination && propKey) {
+            return fixer.replaceText(propKey, destination);
           }
         }
       });
@@ -69,9 +69,9 @@ module.exports = {
     function testJSXAttributes(node) {
       try {
         const {deprecations} = _.get(context, 'options[0]');
-        const nodeName = _.get(node, 'name.name');
+        const componentName = utils.getComponentName(node);
         _.forEach(deprecations, deprecation => {
-          if (_.includes(deprecation.components, nodeName)) {
+          if (_.includes(deprecation.components, componentName)) {
             _.forEach(node.attributes, attribute => {
               const attributeName = _.get(attribute, 'name.name');
               if (attribute.type === 'JSXSpreadAttribute') {
