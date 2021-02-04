@@ -11,11 +11,8 @@
   padding: 20px;
   padding-top: 0;
   border-radius: 2px;
-  margin-top: 20px;
   border-right: 2px solid $dark80;
   z-index: 100;
-
-  
 
   &.visible {
     display: initial;
@@ -26,6 +23,7 @@
     display: initial;
     width: $navbarWidth;
     background-color: initial;
+    margin-top: 20px;
   }
 
   .search {
