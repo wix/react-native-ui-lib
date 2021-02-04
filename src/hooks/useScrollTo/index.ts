@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import {RefObject, useCallback, useRef} from 'react';
-import {ScrollView, FlatList} from 'react-native';
+import {ScrollView, FlatList, LayoutChangeEvent} from 'react-native';
+import {Constants} from '../../helpers';
 
 export type ScrollToSupportedViews = ScrollView | FlatList;
 
@@ -26,14 +27,51 @@ export type ScrollToResultProps<T extends ScrollToSupportedViews> = {
    * animated - should the scroll be animated (default is true)
    */
   scrollTo: (scrollToOffset: number, animated?: boolean) => void;
+  /**
+   * onContentSizeChange callback (should be set to your onContentSizeChange).
+   * Needed for RTL support on Android.
+   */
+  onContentSizeChange: (contentWidth: number, contentHeight: number) => void;
+  /**
+   * onLayout callback (should be set to your onLayout).
+   * Needed for RTL support on Android.
+   */
+  onLayout: (event: LayoutChangeEvent) => void;
 };
 
 const useScrollTo = <T extends ScrollToSupportedViews>(props: ScrollToProps<T>): ScrollToResultProps<T> => {
   const {scrollViewRef: propsScrollViewRef, horizontal = true} = props;
   const newScrollViewRef = useRef<T>(null);
   const scrollViewRef = propsScrollViewRef || newScrollViewRef;
+  const contentSize = useRef<number | undefined>(undefined);
+  const containerSize = useRef<number | undefined>(undefined);
+
+  const onContentSizeChange = useCallback((contentWidth: number, contentHeight: number) => {
+    contentSize.current = horizontal ? contentWidth : contentHeight;
+  },
+  [horizontal]);
+
+  const onLayout = useCallback((event: LayoutChangeEvent) => {
+    const {
+      nativeEvent: {
+        layout: {width, height}
+      }
+    } = event;
+    containerSize.current = horizontal ? width : height;
+  },
+  [horizontal]);
 
   const scrollTo = useCallback((scrollTo: number, animated = true) => {
+    if (
+      Constants.isRTL &&
+        Constants.isAndroid &&
+        !_.isUndefined(contentSize.current) &&
+        !_.isUndefined(containerSize.current)
+    ) {
+      const scrollingWidth = Math.max(0, contentSize.current - containerSize.current);
+      scrollTo = scrollingWidth - scrollTo;
+    }
+
     // @ts-ignore
     if (_.isFunction(scrollViewRef.current.scrollToOffset)) {
       // @ts-ignore
@@ -49,7 +87,9 @@ const useScrollTo = <T extends ScrollToSupportedViews>(props: ScrollToProps<T>):
 
   return {
     scrollViewRef,
-    scrollTo
+    scrollTo,
+    onContentSizeChange,
+    onLayout
   };
 };
 
