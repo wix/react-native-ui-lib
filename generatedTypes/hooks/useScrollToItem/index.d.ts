@@ -47,6 +47,16 @@ export declare type ScrollToItemResultProps<T extends ScrollToSupportedViews> = 
      * Use in order to focus the item with the specified index (use when the selectedIndex is not changed)
      */
     focusIndex: (index: number, animated?: boolean) => void;
+    /**
+     * onContentSizeChange callback (should be set to your onContentSizeChange).
+     * Needed for RTL support on Android.
+     */
+    onContentSizeChange: (contentWidth: number, contentHeight: number) => void;
+    /**
+     * onLayout callback (should be set to your onLayout).
+     * Needed for RTL support on Android.
+     */
+    onLayout: (event: LayoutChangeEvent) => void;
 };
 declare const useScrollToItem: {
     <T extends ScrollToSupportedViews>(props: ScrollToItemProps<T>): ScrollToItemResultProps<T>;
