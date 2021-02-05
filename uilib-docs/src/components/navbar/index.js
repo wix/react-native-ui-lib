@@ -37,12 +37,9 @@ class Navbar extends Component {
 
   getMarkdownPages(data) {
     const markdownPages = data.allFile.edges;
-    const pages = _.flow(pages =>
-      _.map(
-        pages,
-        ({node}) => node.childMarkdownRemark.frontmatter,
-        items => _.sortBy(items, 'index')
-      )
+    const pages = _.flow(
+      pages => _.map(pages, ({node}) => node.childMarkdownRemark.frontmatter),
+      items => _.sortBy(items, 'index')
     )(markdownPages);
 
     return pages;
