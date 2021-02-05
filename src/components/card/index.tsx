@@ -1,7 +1,14 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, ViewStyle} from 'react-native';
-import {BlurView} from '@react-native-community/blur';
+
+let BlurView: any;
+try {
+  BlurView = require('@react-native-community/blur').BlurView;
+} catch (error) {
+  // warning in ctor, depends if user pass enableBlur
+}
+// import {BlurView} from '@react-native-community/blur';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 // import {PureBaseComponent} from '../../commons';
@@ -125,6 +132,10 @@ class Card extends PureComponent<PropTypes, State> {
       animatedSelected: new Animated.Value(Number(this.props.selected))
     };
     this.styles = createStyles(this.props);
+
+    if (props.enableBlur && !BlurView) {
+      console.error(`RNUILib Card's "enableBlur" prop requires installing "@react-native-community/blur" dependency`);
+    }
   }
 
   componentDidUpdate(prevProps: PropTypes) {
@@ -303,7 +314,7 @@ class Card extends PureComponent<PropTypes, State> {
         {...others}
         ref={forwardedRef}
       >
-        {Constants.isIOS && enableBlur && (
+        {Constants.isIOS && enableBlur && BlurView && (
           // @ts-ignore
           <BlurView
             style={[this.styles.blurView, {borderRadius: brRadius}]}
