@@ -1,0 +1,21 @@
+@import 'src/styles/constants';
+
+.fab {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  
+  bottom: 20px;
+  right: 20px;
+  padding: 10px;
+  background-color: $dark80;
+  box-shadow: 1px 1px 5px rgba($dark10, 0.2);
+  z-index: 200;
+  
+
+  @include desktop {
+    display: none;
+  }
+}
