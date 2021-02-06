@@ -67,7 +67,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const {pageWidth: nextPageWidth, pageHeight: nextPageHeight} = nextProps;
 
     if ((!_.isUndefined(nextPageWidth) && pageWidth !== nextPageWidth)
-      && (!_.isUndefined(nextPageHeight) && pageHeight !== nextPageHeight)) {
+      || (!_.isUndefined(nextPageHeight) && pageHeight !== nextPageHeight)) {
       const pageWidth = nextPageWidth;
       const pageHeight = nextPageHeight;
 
@@ -217,8 +217,8 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   shouldEnablePagination() {
-    const {pagingEnabled} = this.props;
-    return pagingEnabled && !this.shouldUsePageWidth();
+    const {pagingEnabled, horizontal} = this.props;
+    return horizontal ? (pagingEnabled && !this.shouldUsePageWidth()) : true;
   }
 
   onContainerLayout = ({
@@ -434,7 +434,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   renderCarousel() {
-    const {containerStyle, animated, ...others} = this.props;
+    const {containerStyle, animated, horizontal, ...others} = this.props;
     const {initialOffset} = this.state;
     const scrollContainerStyle = this.shouldUsePageWidth()
       ? {paddingRight: this.getItemSpacings(this.props)}
@@ -447,11 +447,11 @@ class Carousel extends Component<CarouselProps, CarouselState> {
           {...others}
           ref={this.carousel}
           contentContainerStyle={scrollContainerStyle}
-          horizontal={this.props.horizontal}
+          horizontal={horizontal}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
-          pagingEnabled={this.props.horizontal ? this.shouldEnablePagination() : true}
-          snapToOffsets={this.props.horizontal ? snapToOffsets : undefined}
+          pagingEnabled={this.shouldEnablePagination()}
+          snapToOffsets={snapToOffsets}
           decelerationRate="fast"
           contentOffset={initialOffset} // iOS only
           scrollEventThrottle={200}
