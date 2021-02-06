@@ -5,18 +5,18 @@ import classnames from 'classnames';
 
 const undocumentedGroups = ['Incubator'];
 
-export default ({id, link, components, currentPage}) => {
+export default ({id, link, components, currentPage, onLinkClick}) => {
   const hasChildren = _.size(components) > 1;
 
   if (!hasChildren) {
-    return <ItemEntry id={id} link={link} currentPage={currentPage} />;
+    return <ItemEntry id={id} link={link} currentPage={currentPage} onLinkClick={onLinkClick} />;
   } else {
     return (
       <li key={id}>
         {undocumentedGroups.includes(id) ? (
           <span class={classnames('entry', {selected: id === currentPage})}>{id}</span>
         ) : (
-          <Link key={id} to={`/docs/${id}/`}>
+          <Link key={id} to={`/docs/${id}/`} onClick={onLinkClick}>
             <span class={classnames('entry', {selected: id === currentPage})}>{id}</span>
           </Link>
         )}
@@ -24,7 +24,7 @@ export default ({id, link, components, currentPage}) => {
         <ul class="nested">
           {_.map(_.filter(components, c => c.node.displayName !== id), c => {
             return (
-              <ItemEntry id={c.node.displayName} currentPage={currentPage} />
+              <ItemEntry id={c.node.displayName} currentPage={currentPage} onLinkClick={onLinkClick}/>
             );
           })}
         </ul>
@@ -33,10 +33,10 @@ export default ({id, link, components, currentPage}) => {
   }
 };
 
-const ItemEntry = ({id, link, currentPage}) => {
+const ItemEntry = ({id, link, currentPage, onLinkClick}) => {
   return (
     <li key={id}>
-      <Link key={id} to={link || `/docs/${id}/`}>
+      <Link key={id} to={link || `/docs/${id}/`} onClick={onLinkClick}>
         <span class={classnames('entry', {selected: id === currentPage})}>
           {id}
         </span>
