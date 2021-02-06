@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {StaticQuery, graphql} from 'gatsby';
 import classnames from 'classnames';
 import _ from 'lodash';
+import fuzzysearch from 'fuzzysearch';
 
 import './index.scss';
 import searchIcon from '../../images/search.svg';
@@ -35,15 +36,17 @@ class Navbar extends Component {
     }
   };
 
-  getMarkdownPages(data) {
+  getMarkdownPages = data => {
+    const {filter} = this.state;
     const markdownPages = data.allFile.edges;
     const pages = _.flow(
       pages => _.map(pages, ({node}) => node.childMarkdownRemark.frontmatter),
+      items => _.filter(items, item => fuzzysearch(_.toLower(filter), _.toLower(item.title))),
       items => _.sortBy(items, 'index')
     )(markdownPages);
 
     return pages;
-  }
+  };
 
   getNavbarComponents(data) {
     const components = data.allComponentMetadata.edges;
@@ -84,9 +87,8 @@ class Navbar extends Component {
     const markdowns = this.getMarkdownPages(data);
     const components = this.getNavbarComponents(data);
     const filteredComponents = _.filter(components, component =>
-      _.includes(_.lowerCase(component.node.displayName), _.lowerCase(filter))
+      fuzzysearch(_.toLower(filter), _.toLower(component.node.displayName))
     );
-
     const componentsByGroups = _.groupBy(filteredComponents, c => _.split(c.node.displayName, '.')[0]);
 
     const navbarClassName = classnames('navbar', {
@@ -99,17 +101,20 @@ class Navbar extends Component {
           {this.renderSearch()}
           <ul>
             {_.map(markdowns, page => {
-              return <Item id={page.title} link={page.path} onLinkClick={() => this.toggleNavbar(false)} />;
+              return (
+                <Item key={page.title} id={page.title} link={page.path} onLinkClick={() => this.toggleNavbar(false)} />
+              );
             })}
-            <li className="separator" />
+            {!_.isEmpty(markdowns) && <li className="separator" />}
             {_.map(componentsByGroups, (components, key) => {
               return (
                 <Item
+                  key={key}
                   id={key}
                   components={components}
                   currentPage={currentPage}
                   onLinkClick={() => this.toggleNavbar(false)}
-                ></Item>
+                />
               );
             })}
           </ul>
