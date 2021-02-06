@@ -1,3 +1,4 @@
+import React from 'react';
 import {StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, PointPropType} from 'react-native';
 import {PageControlProps} from '../pageControl';
 
@@ -100,4 +101,13 @@ export interface CarouselState {
   pageHeight: number;
   initialOffset: PointPropType;
   prevProps: CarouselProps;
+}
+
+// @ts-ignore
+class CarouselTypesForDocs extends React.Component<CarouselProps> { // eslint-disable-line
+  static displayName = 'Carousel';
+
+  render() {
+    return null;
+  }
 }
