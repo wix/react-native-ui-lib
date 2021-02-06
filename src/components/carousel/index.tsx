@@ -15,11 +15,11 @@ type DefaultProps = Partial<CarouselProps>
 
 /**
  * @description: Carousel for scrolling pages horizontally
- * @gif: https://media.giphy.com/media/l0HU7f8gjpRlMRhKw/giphy.gif, https://media.giphy.com/media/3oFzmcjX9OhpyckhcQ/giphy.gif
+ * @gif: https://user-images.githubusercontent.com/1780255/107120257-3eebf900-6895-11eb-9800-402e9e0dc692.gif, https://user-images.githubusercontent.com/1780255/107120257-3eebf900-6895-11eb-9800-402e9e0dc692.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CarouselScreen.tsx
  * @extends: ScrollView
  * @extendsLink: https://facebook.github.io/react-native/docs/scrollview
- * @notes: This is screen width Component
+ * @notes: This is a screen width Component
  */
 class Carousel extends Component<CarouselProps, CarouselState> {
   static displayName = 'Carousel';
