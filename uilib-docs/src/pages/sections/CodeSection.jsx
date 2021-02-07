@@ -19,7 +19,7 @@ export default () => {
 
   return (
     <div className="code-section">
-      <h2>Effortless App Building Using Our Toolset</h2>
+      <h2 className="headline">Effortless App Building Using Our Toolset</h2>
       <div className="code-example">
         <TabBar onChangeIndex={setSelectedTab} selectedIndex={selectedTab} />
         <Tab {...tabs[selectedTab]} />

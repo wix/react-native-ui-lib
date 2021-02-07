@@ -215,7 +215,10 @@ $tabletOfContentWidth: 20vw;
   flex-direction: row;
   flex: 1;
   justify-content: center;
-  width: $containerWidth;
+
+  @include desktop {
+    width: $containerWidth;
+  }
 
   div {
     display: block;
@@ -228,6 +231,7 @@ $tabletOfContentWidth: 20vw;
   }
 
   .sidebar {
+    display: none;
     position: fixed;
     right: 0;
     bottom: 0;
@@ -240,6 +244,10 @@ $tabletOfContentWidth: 20vw;
 
     @include tabletOfContent();
     @include visuals();
+
+    @include desktop {
+      display: initial;
+    }
   }
 
   .component-header {

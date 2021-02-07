@@ -12,11 +12,15 @@
     display: flex;
     flex: 1;
     height: 100%;
+    width: 100%;
     border-top: 0;
     // overflow-y: auto;
     // overflow-x: hidden;
-    width: 80%;
     min-width: 50vw;
+    
+    @include desktop {
+      width: 80%;
+    }
   }
 
   .content {
@@ -25,7 +29,9 @@
     width: 100%;
 
     &.with-navbar {
-      padding-left: $navbarWidth;
+      @include desktop {
+        padding-left: $navbarWidth;
+      }
     }
   }
 }
