@@ -43,7 +43,7 @@ class TabControllerScreen extends Component<{}, State> {
 
     const addItem: TabControllerItemProps = {icon: Assets.icons.demo.add, key: 'add', ignore: true, width: 60, onPress: this.onAddItem};
 
-    return [...items, addItem];
+    return fewItems ? items : [...items, addItem];
   };
 
   componentDidMount() {
