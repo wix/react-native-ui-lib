@@ -75,6 +75,14 @@ function getRelevantComponents(edges) {
             props: _.reduce(groupedEdge, (props, e) => [...props, ...e.node.props], [])
           }
         };
+        
+        /* Fix duplicate props (e.g Carousel) when they appear in different files of the component code */
+        const groupedProps = _.groupBy(edge.node.props, 'name');
+        _.forEach(groupedProps, (group, groupKey) => {
+          groupedProps[groupKey] = _.reduce(group, (result, prop) => _.merge(result, prop), {})
+        });
+        edge.node.props = _.values(groupedProps);
+
         return edge;
       } else {
         return groupedEdge[0];
