@@ -43,7 +43,7 @@ class TabControllerScreen extends Component<{}, State> {
 
     const addItem: TabControllerItemProps = {icon: Assets.icons.demo.add, key: 'add', ignore: true, width: 60, onPress: this.onAddItem};
 
-    return [...items, addItem];
+    return fewItems ? items : [...items, addItem];
   };
 
   componentDidMount() {
@@ -154,9 +154,7 @@ class TabControllerScreen extends Component<{}, State> {
             enableShadow
             activeBackgroundColor={Colors.blue60}
             centerSelected={centerSelected}
-          >
-            {/* {this.renderTabItems()} */}
-          </TabController.TabBar>
+          />
           {this.renderTabPages()}
         </TabController>
         <View absB left margin-20 marginB-100 style={{zIndex: 1}}>
