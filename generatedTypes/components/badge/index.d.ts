@@ -15,7 +15,7 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
     /**
      * the badge size (default, small)
      */
-    size: number;
+    size?: number;
     /**
      * Press handler
      */
@@ -344,7 +344,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
     /**
      * the badge size (default, small)
      */
-    size: number;
+    size?: number | undefined;
     /**
      * Press handler
      */
