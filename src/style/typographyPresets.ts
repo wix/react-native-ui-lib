@@ -90,7 +90,7 @@ const text80: TextStyle = {
 // text90
 const text90: TextStyle = {
   fontSize: 12,
-  fontWeight: Constants.isIOS ? WEIGHT_TYPES.BOLD : undefined,
+  fontWeight: Constants.isIOS ? WEIGHT_TYPES.BOLD : 'bold',
   lineHeight: 16,
   fontFamily: 'System'
 };
@@ -98,7 +98,7 @@ const text90: TextStyle = {
 // text100
 const text100: TextStyle = {
   fontSize: 10,
-  fontWeight: Constants.isIOS ? WEIGHT_TYPES.BOLD : undefined,
+  fontWeight: Constants.isIOS ? WEIGHT_TYPES.BOLD : 'bold',
   lineHeight: 16,
   fontFamily: 'System'
 };
@@ -225,7 +225,7 @@ _.forEach(keys, (key) => {
     const fontWeightKey = `${fontKey}${weightValue}` as keyof TypographyKeys;
     Typography[fontWeightKey] = {
       ...Typography[fontKey],
-      fontWeight: Constants.isIOS ? WEIGHT_TYPES[weightKey] : undefined
+      fontWeight: Constants.isIOS ? WEIGHT_TYPES[weightKey] : weightKey == 'BOLD' ? 'bold' : undefined
     };
   });
 });
