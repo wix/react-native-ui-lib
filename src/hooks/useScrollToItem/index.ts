@@ -60,6 +60,16 @@ export type ScrollToItemResultProps<T extends ScrollToSupportedViews> = Pick<Scr
    * Use in order to focus the item with the specified index (use when the selectedIndex is not changed)
    */
   focusIndex: (index: number, animated?: boolean) => void;
+  /**
+   * onContentSizeChange callback (should be set to your onContentSizeChange).
+   * Needed for RTL support on Android.
+   */
+  onContentSizeChange: (contentWidth: number, contentHeight: number) => void;
+  /**
+   * onLayout callback (should be set to your onLayout).
+   * Needed for RTL support on Android.
+   */
+  onLayout: (event: LayoutChangeEvent) => void;
 };
 
 const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemProps<T>): ScrollToItemResultProps<T> => {
@@ -75,7 +85,7 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
   const itemsWidths = useRef<(number | null)[]>(_.times(itemsCount, () => null));
   const currentIndex = useRef<number>(selectedIndex || 0);
   const [offsets, setOffsets] = useState<Offsets>({CENTER: [], LEFT: [], RIGHT: []});
-  const {scrollViewRef, scrollTo} = useScrollTo<T>({scrollViewRef: propsScrollViewRef});
+  const {scrollViewRef, scrollTo, onContentSizeChange, onLayout} = useScrollTo<T>({scrollViewRef: propsScrollViewRef});
 
   // TODO: reset?
   //   useEffect(() => {
@@ -151,7 +161,9 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     scrollViewRef,
     onItemLayout,
     itemsWidths: offsets.CENTER.length > 0 ? (itemsWidths.current as number[]) : [],
-    focusIndex
+    focusIndex,
+    onContentSizeChange,
+    onLayout
   };
 };
 
