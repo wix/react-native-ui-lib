@@ -1,4 +1,6 @@
 // TODO: deprecate all places where we check if _.isPlainObject
+// TODO: deprecate getItemValue prop
+// TODO: deprecate getItemLabel prop
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
@@ -210,9 +212,10 @@ class Picker extends PureComponent {
   getContextValue = () => {
     const {value, searchValue} = this.state;
     const {migrate, mode, getItemValue, getItemLabel, renderItem, showSearch} = this.props;
+    const pickerValue = !migrate && _.isPlainObject(value) ? value?.value : value;
     return {
       migrate,
-      value,
+      value: pickerValue,
       onPress: mode === Picker.modes.MULTI ? this.toggleItemSelection : this.onDoneSelecting,
       isMultiMode: mode === Picker.modes.MULTI,
       getItemValue,
@@ -224,19 +227,9 @@ class Picker extends PureComponent {
     };
   };
 
-  shouldNotChangePickerLabelWhileSelecting = () => {
-    const {mode} = this.props;
-    return mode === Picker.modes.MULTI;
-  };
-
   getLabelValueText = () => {
-    const {value: propsValue} = this.props;
-    const {value: stateValue} = this.props;
-
-    if (this.shouldNotChangePickerLabelWhileSelecting()) {
-      return this.getLabel(propsValue);
-    }
-    return this.getLabel(stateValue);
+    const {value} = this.props;
+    return this.getLabel(value);
   };
 
   getLabelsFromArray = value => {
@@ -253,12 +246,12 @@ class Picker extends PureComponent {
   getLabel(value) {
     const {getLabel} = this.props;
 
+    if (_.isFunction(getLabel) && !_.isUndefined(getLabel(value))) {
+      return getLabel(value);
+    }
+    
     if (_.isArray(value)) {
       return this.getLabelsFromArray(value);
-    }
-
-    if (_.isFunction(getLabel)) {
-      return getLabel(value);
     }
 
     if (_.isPlainObject(value)) {

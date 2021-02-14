@@ -50,7 +50,7 @@ export class Typography {
       const size = await rnTextSize.measure({
         text, // text to measure, can include symbols
         width: containerWidth, // max-width of the "virtual" container
-        ...typography, // RN font specification
+        ...typography // RN font specification
       });
       return size;
     }

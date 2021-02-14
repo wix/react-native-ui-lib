@@ -26,12 +26,12 @@ const COLOR_BY_STATE = {
 };
 const UNDERLINE_COLOR_BY_STATE = {
   default: Colors.grey50,
-  focus: Colors.blue30,
+  focus: Colors.primary,
   error: Colors.red30
 };
 const PLACEHOLDER_COLOR_BY_STATE = {
   default: Colors.grey30,
-  focus: Colors.blue30
+  focus: Colors.primary
 };
 const CHAR_COUNTER_COLOR_BY_STATE = {
   default: Colors.grey30,
@@ -215,7 +215,7 @@ export default class TextField extends BaseInput {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_prevProps, prevState) {
     if (_.isEmpty(prevState.value) !== _.isEmpty(this.state.value) || prevState.focused !== this.state.focused) {
       this.updateFloatingPlaceholderState();
     }
@@ -559,7 +559,7 @@ export default class TextField extends BaseInput {
     const {renderExpandableInput, testID} = this.getThemeProps();
 
     if (_.isFunction(renderExpandableInput)) {
-      return renderExpandableInput(this.getThemeProps());
+      return renderExpandableInput(this.getThemeProps(), this.toggleExpandableModal);
     }
 
     return (
@@ -652,7 +652,7 @@ export default class TextField extends BaseInput {
             pointerEvents="none"
             source={iconSource}
             resizeMode={'contain'}
-            style={[this.styles.rightButtonImage, {tintColor: iconColor || Colors.blue30}]}
+            style={[this.styles.rightButtonImage, {tintColor: iconColor || Colors.primary}]}
           />
         </TouchableOpacity>
       );
@@ -749,7 +749,7 @@ export default class TextField extends BaseInput {
   };
 }
 
-function createStyles({centered, multiline, title, floatingPlaceholder}, rightItemTopPadding = 0) {
+function createStyles({centered, multiline}, rightItemTopPadding = 0) {
   const itemTopPadding = Constants.isIOS ? (rightItemTopPadding - 3) : (rightItemTopPadding - 1);
 
   return StyleSheet.create({

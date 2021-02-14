@@ -2,9 +2,11 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, Image} from 'react-native';
 import {View, Colors, Dialog, Text, Picker, Avatar, Assets, PanningProvider} from 'react-native-ui-lib'; //eslint-disable-line
-import contacts from '../../data/conversations';
+import contactsData from '../../data/conversations';
 import tagIcon from '../../assets/icons/tags.png';
 import dropdown from '../../assets/icons/chevronDown.png';
+
+const contacts = _.map(contactsData, c => ({...c, value: c.name, label: c.name}));
 
 const options = [
   {label: 'JavaScript', value: 'js'},
@@ -135,12 +137,12 @@ export default class PickerScreen extends Component {
             // topBarProps={{doneLabel: 'YES', cancelLabel: 'NO'}}
             wheelPickerProps={{
               style: {width: 200},
-              color: Colors.violet30,
+              color: Colors.green30,
               labelStyle: {fontSize: 32, fontFamily: 'sans-serif-condensed-light'},
               itemHeight: 55
             }}
-            selectLabelStyle={{color: Colors.violet30}}
-            cancelLabelStyle={{color: Colors.violet30}}
+            selectLabelStyle={{color: Colors.green30}}
+            cancelLabelStyle={{color: Colors.green30}}
           >
             {_.map(options, option => (
               <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
@@ -248,7 +250,7 @@ export default class PickerScreen extends Component {
             // useNativePicker
           >
             {_.map(options, option => (
-              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled} />
+              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
             ))}
           </Picker>
         </View>

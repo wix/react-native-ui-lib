@@ -5,11 +5,11 @@ import Colors from './colors';
 export class ThemeManager {
 
   theme = {
-    primaryColor: Colors.blue30,
+    primaryColor: Colors.primary,
     CTA: {
       textColor: Colors.white,
       disabledColor: Colors.dark60,
-      backgroundColor: Colors.blue30
+      backgroundColor: Colors.primary
     },
     titleColor: Colors.dark10,
     subtitleColor: Colors.dark40,

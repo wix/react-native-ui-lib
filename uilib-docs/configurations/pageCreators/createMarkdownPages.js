@@ -4,7 +4,7 @@ module.exports = async ({graphql, boundActionCreators}) => {
   const {createPage} = boundActionCreators;
   const result = await graphql(`
     {
-      allFile(filter: {sourceInstanceName: {eq: "markdown-pages"}}) {
+      allFile(filter: {sourceInstanceName: {eq: "markdown-pages"}, childMarkdownRemark: {frontmatter: {path: {ne: null}}}}) {
         edges {
           node {
             id
@@ -24,11 +24,13 @@ module.exports = async ({graphql, boundActionCreators}) => {
   `);
 
   result.data.allFile.edges.forEach(({node}) => {
-    createPage({
-      name: node.name,
-      path: node.childMarkdownRemark.frontmatter.path,
-      component: path.resolve(`src/templates/markdownTemplate.js`),
-      context: {} // additional data can be passed via context
-    });
+    if (node.childMarkdownRemark.frontmatter.path) {
+      createPage({
+        name: node.name,
+        path: node.childMarkdownRemark.frontmatter.path,
+        component: path.resolve(`src/templates/markdownTemplate.js`),
+        context: {} // additional data can be passed via context
+      });
+    }
   });
 };

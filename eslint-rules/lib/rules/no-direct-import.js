@@ -2,13 +2,16 @@ const MAP_SCHEMA = {
   type: 'object',
   properties: {
     origin: {
-      type: 'string',
+      type: 'string'
     },
     destination: {
-      type: 'string',
+      type: 'string'
     },
+    applyAutofix: {
+      type: 'boolean'
+    }
   },
-  additionalProperties: false,
+  additionalProperties: false
 };
 
 module.exports = {
@@ -19,7 +22,7 @@ module.exports = {
       recommended: true,
     },
     messages: {
-      uiLib: 'Do not import directly from this source. Please use another import source (autofix available).',
+      uiLib: 'Do not import directly from this source. Please use another import source (autofix may be available).',
     },
     fixable: 'code',
     schema: [
@@ -31,12 +34,14 @@ module.exports = {
       try {
         const origin = context.options[0].origin;
         const destination = context.options[0].destination;
-        const msg = `Do not import directly from '${origin}'. Please use '${destination}' (autofix available).`;
+        const applyAutofix = context.options[0].applyAutofix;
+        const autofixMessage = applyAutofix ? ' (autofix available)' : '';
+        const message = `Do not import directly from '${origin}'. Please use '${destination}'${autofixMessage}.`;
         context.report({
           node,
-          message: `${msg}`,
+          message,
           fix(fixer) {
-            if (node && destination) {
+            if (node && applyAutofix && destination) {
               return fixer.replaceText(node.source, `'${destination}'`);
             }
           },
@@ -46,7 +51,7 @@ module.exports = {
       }
     }
 
-    function checkImportDeclaretion(node) {
+    function checkImportDeclaration(node) {
       const origin = context.options[0].origin;
       const source = node.source.value;
       if (source && origin && source === origin) {
@@ -55,7 +60,7 @@ module.exports = {
     }
 
     return {
-      ImportDeclaration: node => checkImportDeclaretion(node),
+      ImportDeclaration: checkImportDeclaration
     };
   },
 };

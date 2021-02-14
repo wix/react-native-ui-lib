@@ -29,10 +29,10 @@ class PickerDialog extends BaseComponent {
 
     return (
       <View style={styles.header}>
-        <Text text70 blue30 onPress={onCancel} accessibilityRole={onCancel ? 'button' : undefined}>
+        <Text text70 primary onPress={onCancel} accessibilityRole={onCancel ? 'button' : undefined}>
           {_.get(topBarProps, 'cancelLabel', 'Cancel')}
         </Text>
-        <Text text70 blue30 onPress={onDone} accessibilityRole={onDone ? 'button' : undefined}>
+        <Text text70 primary onPress={onDone} accessibilityRole={onDone ? 'button' : undefined}>
           {_.get(topBarProps, 'doneLabel', 'Done')}
         </Text>
       </View>
@@ -53,8 +53,10 @@ class PickerDialog extends BaseComponent {
 
   render() {
     const dialogProps = extractComponentProps(Dialog, this.props);
+    // TODO: should be taken from dialogProps but there's an issue with "babel-plugin-typescript-to-proptypes" plugin
+    const {panDirection} = this.props;
     return (
-      <Dialog {...dialogProps} height={250} width="100%" migrate bottom animationConfig={{duration: 300}}>
+      <Dialog {...dialogProps} height={250} width="100%" migrate bottom animationConfig={{duration: 300}} panDirection={panDirection}>
         <View flex bg-white>
           {this.renderHeader()}
           <View centerV flex>

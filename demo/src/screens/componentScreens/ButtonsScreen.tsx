@@ -318,7 +318,7 @@ export default class ButtonsScreen extends Component {
 
             <Button
               style={{marginBottom: ButtonSpace}}
-              blue30
+              primary
               outline
               iconSource={plusIcon}
               label="Icon"
@@ -339,7 +339,7 @@ export default class ButtonsScreen extends Component {
               style={{marginBottom: ButtonSpace}}
             >
               <Image source={plusIcon} />
-              <Text style={{marginLeft: 10, color: Colors.blue30}}>
+              <Text marginL-10 primary>
                 Custom Icon
               </Text>
             </Button>

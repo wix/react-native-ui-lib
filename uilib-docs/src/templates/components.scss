@@ -1,74 +1,287 @@
-@import "src/styles/constants";
+@import 'src/styles/constants';
 
-@mixin component-props() {
-  .component-props {
-    table {
-      text-align: left;
-      width: 100%;
-      border-collapse: collapse;
+// side margins are 10vw
+$containerWidth: calc(100% - 10vw);
+$tabletOfContentWidth: 20vw;
 
-      tr {
-        &:first-child {
-          background-color: $secondary;
-          color: $primary;
-          font-size: $text30;
-          text-transform: capitalize;
+@mixin component-api() {
+  .component-api {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+
+    .prop-info {
+      margin-bottom: 20px;
+
+      .title {
+        position: relative;
+        margin: 0;
+        font-weight: 600;
+
+        &.focused::before {
+          content: '';
+          position: absolute;
+          top: 10%;
+          left: -10px;
+          height: 80%;
+          border-left: 4px solid $yellow30;
         }
+      }
+      .description {
+        color: $dark10;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      .type,
+      .default-value {
+        font-size: $text50;
+        color: $dark30;
+      }
+    }
+  }
+}
+
+@mixin tabletOfContent() {
+  .table-of-content {
+    ul {
+      list-style: none;
+      padding: 20px;
+      margin: 0;
+
+      .list-header {
+        font-size: $text30;
+        margin: 0;
+        margin-bottom: 8px;
+      }
+
+      li {
+        position: relative;
+        font-size: $text50;
+        margin-bottom: 4px;
 
         &:hover {
-          td {
-            border-color: $primary;
+          a {
+            color: $yellow30;
           }
-        }
 
-        th {
-          padding: 16px 20px;
-
-          &:first-child {
-            border-top-left-radius: 6px;
-            border-bottom-left-radius: 6px;
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -20px;
+            display: block;
+            height: 100%;
+            border-left: 3px solid $yellow30;
           }
-          &:last-child {
-            border-top-right-radius: 6px;
-            border-bottom-right-radius: 6px;
-          }
-        }
-
-        td {
-          padding: 12px;
-          border-bottom: 1px solid $dark60;
-          transition: all 0.2s;
         }
       }
     }
   }
 }
 
-.docs-page {
-  @include component-props();
+@mixin visuals() {
+  .visuals {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    margin-top: 20px;
 
-  div {
-    display: block;
+    img {
+      width: 70%;
+      border-radius: 4px;
+      border: 6px solid $dark60;
+      box-shadow: 2px 2px 10px rgba($dark10, 0.3);
+      margin-bottom: 20px;
+    }
   }
+}
+
+@mixin modifiersAndExtends() {
+  .modifiers,
+  .extend-section {
+    margin-bottom: 20px;
+    .title {
+      position: relative;
+
+      a {
+        color: inherit;
+        text-decoration: underline;
+      }
+
+      &:hover .tooltip {
+        opacity: 1;
+      }
+
+      &::after {
+        content: 'ℹ';
+        position: absolute;
+        left: 100%;
+        margin-left: 2px;
+        display: inline-block;
+        line-height: 16px;
+        text-align: center;
+        width: 16px;
+        height: 16px;
+        background-color: rgba($primary, 0.6);
+        color: $white;
+        border-radius: 50%;
+      }
+
+      .tooltip {
+        position: absolute;
+        top: 0;
+        right: 100%;
+        min-width: 300px;
+        background-color: $white;
+        margin-right: 20px;
+        padding: 4px 8px;
+        border-radius: 2px;
+        box-shadow: 1px 1px 3px rgba($black, 0.4);
+        opacity: 0;
+        z-index: 10;
+        transition: 0.3s opacity;
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        background-color: $yellow40;
+        display: inline-block;
+        font-size: $text50;
+        padding: 2px 8px;
+        border-radius: 2px;
+        margin-right: 4px;
+        margin-bottom: 4px;
+
+        &.link {
+          background-color: $blue60;
+
+          &::after {
+            content: '';
+            background-image: url('../images/externalLink.svg');
+            background-size: 100%;
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+          }
+
+          a {
+            color: $dark10;
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin notes {
+  .notes {
+    background-color: $orange30;
+    color: $white;
+    padding: 20px;
+    border-radius: 4px;
+    margin-top: 20px;
+
+    .title {
+      font-weight: 600;
+      text-transform: uppercase;
+      img {
+        display: inline-block;
+        height: 16px;
+        margin-bottom: -2px;
+      }
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+}
+
+.docs-page {
+  @include component-api();
+  @include notes();
 
   display: flex;
   flex-direction: row;
   flex: 1;
   justify-content: center;
 
+  @include desktop {
+    width: $containerWidth;
+  }
+
+  div {
+    display: block;
+  }
+
   .docs-page__content {
-    padding: 0 72px;
+    padding: 20px;
     flex: 1;
     overflow-y: auto;
-    max-width: $minScreenWidth;
   }
 
-  .title {
-    margin-bottom: 0;
+  .sidebar {
+    display: none;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    top: $headerHeight;
+    width: $tabletOfContentWidth;
+    background-color: $white;
+    margin-top: 20px;
+    border-left: 2px solid $dark80;
+    overflow-y: auto;
+
+    @include tabletOfContent();
+    @include visuals();
+
+    @include desktop {
+      display: initial;
+    }
   }
 
-  .code-example {
-    margin-left: 8px;
-    font-size: $text30;
+  .component-header {
+    display: flex;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 1px 1px 15px 0px rgba($dark40, 0.25);
+    background-color: $white;
+
+    > div:first-child {
+      width: 70%;
+    }
+
+    > div:nth-child(2) {
+      flex: 1;
+      border-left: 2px solid $dark80;
+      padding-left: 20px;
+      margin-left: 20px;
+    }
+
+    .title {
+      margin: 0;
+    }
+
+    .code-example {
+      margin-left: 8px;
+      font-size: $text30;
+    }
+
+    .description {
+      margin: 0;
+      margin-bottom: 12px;
+    }
+
+    @include modifiersAndExtends();
   }
 }

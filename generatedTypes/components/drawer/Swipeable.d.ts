@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { Animated } from 'react-native';
-export declare type PropType = {
+declare type Props = {
     children: any;
     friction: number;
     leftThreshold?: number;
@@ -42,7 +42,8 @@ declare type StateType = {
     rightOffset: number | typeof undefined;
     rowWidth: number | typeof undefined;
 };
-export default class Swipeable extends Component<PropType, StateType> {
+export declare type SwipeableProps = Props;
+export default class Swipeable extends Component<Props, StateType> {
     static displayName: string;
     static defaultProps: {
         friction: number;
@@ -51,7 +52,7 @@ export default class Swipeable extends Component<PropType, StateType> {
         fullLeftThreshold: number;
         fullRightThreshold: number;
     };
-    constructor(props: PropType);
+    constructor(props: Props);
     _handleDrag: (e: any) => void;
     getTransX: () => Animated.AnimatedInterpolation;
     getShowLeftAction: () => Animated.Value | Animated.AnimatedInterpolation;

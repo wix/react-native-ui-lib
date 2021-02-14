@@ -26,7 +26,7 @@ export enum ButtonSize {
   large = 'large'
 }
 
-export enum AnimationDirection {
+export enum ButtonAnimationDirection {
   center = 'center',
   left = 'left',
   right = 'right'
@@ -146,7 +146,7 @@ export type ButtonProps = TouchableOpacityProps &
     /**
      * the direction of the animation ('left' and 'right' will effect the button's own alignment)
      */
-    animateTo?: AnimationDirection;
+    animateTo?: ButtonAnimationDirection;
   };
 export type ButtonPropTypes = ButtonProps; //TODO: remove after ComponentPropTypes deprecation;
 
@@ -196,7 +196,7 @@ class Button extends PureComponent<Props, ButtonState> {
 
   static sizes = ButtonSize;
 
-  static animationDirection = AnimationDirection;
+  static animationDirection = ButtonAnimationDirection;
 
   // This redundant constructor for some reason fix tests :/
   // eslint-disable-next-line
@@ -270,7 +270,7 @@ class Button extends PureComponent<Props, ButtonState> {
         return disabledBackgroundColor || DISABLED_COLOR;
       }
 
-      return propsBackgroundColor || stateBackgroundColor || themeBackgroundColor || Colors.blue30;
+      return propsBackgroundColor || stateBackgroundColor || themeBackgroundColor || Colors.primary;
     }
     return 'transparent';
   }
@@ -288,9 +288,9 @@ class Button extends PureComponent<Props, ButtonState> {
 
     let color: string | undefined = Colors.white;
     if (link) {
-      color = linkColor || Colors.blue30;
+      color = linkColor || Colors.primary;
     } else if (outline) {
-      color = outlineColor || Colors.blue30;
+      color = outlineColor || Colors.primary;
     } else if (this.isIconButton) {
       color = undefined; // Colors.dark10;
     }
@@ -325,31 +325,31 @@ class Button extends PureComponent<Props, ButtonState> {
     CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.XSMALL}
       : {
-          paddingVertical: PADDINGS.XSMALL,
-          paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
-          minWidth: MIN_WIDTH.XSMALL
-        };
+        paddingVertical: PADDINGS.XSMALL,
+        paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
+        minWidth: MIN_WIDTH.XSMALL
+      };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.SMALL}
       : {
-          paddingVertical: PADDINGS.SMALL,
-          paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
-          minWidth: MIN_WIDTH.SMALL
-        };
+        paddingVertical: PADDINGS.SMALL,
+        paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
+        minWidth: MIN_WIDTH.SMALL
+      };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.MEDIUM}
       : {
-          paddingVertical: PADDINGS.MEDIUM,
-          paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
-          minWidth: MIN_WIDTH.MEDIUM
-        };
+        paddingVertical: PADDINGS.MEDIUM,
+        paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
+        minWidth: MIN_WIDTH.MEDIUM
+      };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.LARGE}
       : {
-          paddingVertical: PADDINGS.LARGE,
-          paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
-          minWidth: MIN_WIDTH.LARGE
-        };
+        paddingVertical: PADDINGS.LARGE,
+        paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
+        minWidth: MIN_WIDTH.LARGE
+      };
 
     if (outline) {
       _.forEach(CONTAINER_STYLE_BY_SIZE, style => {
@@ -389,7 +389,7 @@ class Button extends PureComponent<Props, ButtonState> {
     if ((outline || outlineColor) && !link) {
       outlineStyle = {
         borderWidth: outlineWidth || 1,
-        borderColor: outlineColor || Colors.blue30
+        borderColor: outlineColor || Colors.primary
       };
 
       if (disabled) {
@@ -470,7 +470,7 @@ class Button extends PureComponent<Props, ButtonState> {
       if (typeof iconSource === 'function') {
         return iconSource(iconStyle);
       } else {
-        return <Image source={iconSource} supportRTL={supportRTL} style={iconStyle} />;
+        return <Image source={iconSource} supportRTL={supportRTL} style={iconStyle}/>;
       }
     }
     return null;

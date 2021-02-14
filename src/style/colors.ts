@@ -215,7 +215,7 @@ function threeDigitHexToSix(value: string) {
   return value.replace(/./g, '$&$&');
 }
 
-const TypedColors = Colors as ExtendTypeWith<typeof Colors, typeof colorsPalette>
+const TypedColors = Colors as ExtendTypeWith<typeof Colors, typeof colorsPalette & typeof themeColors>;
 const colorObject = new TypedColors();
 colorObject.loadColors(colorsPalette);
 export default colorObject;

@@ -11,15 +11,15 @@ import * as presenter from './CarouselPresenter';
 import {CarouselProps, CarouselState, PageControlPosition} from './types';
 export {CarouselProps};
 
-interface DefaultProps extends Partial<CarouselProps> {}
+type DefaultProps = Partial<CarouselProps>
 
 /**
  * @description: Carousel for scrolling pages horizontally
- * @gif: https://media.giphy.com/media/l0HU7f8gjpRlMRhKw/giphy.gif, https://media.giphy.com/media/3oFzmcjX9OhpyckhcQ/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CarouselScreen.js
+ * @gif: https://user-images.githubusercontent.com/1780255/107120258-40b5bc80-6895-11eb-9596-8065d3a940ff.gif, https://user-images.githubusercontent.com/1780255/107120257-3eebf900-6895-11eb-9800-402e9e0dc692.gif
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CarouselScreen.tsx
  * @extends: ScrollView
  * @extendsLink: https://facebook.github.io/react-native/docs/scrollview
- * @notes: This is screed width Component
+ * @notes: This is a screen width Component
  */
 class Carousel extends Component<CarouselProps, CarouselState> {
   static displayName = 'Carousel';
@@ -28,7 +28,8 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     initialPage: 0,
     pagingEnabled: true,
     autoplay: false,
-    autoplayInterval: 4000
+    autoplayInterval: 4000,
+    horizontal: true
   };
 
   static pageControlPositions = PageControlPosition;
@@ -41,6 +42,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     super(props);
 
     const defaultPageWidth = props.loop || !props.pageWidth ? Constants.screenWidth : props.pageWidth;
+    const pageHeight = props.pageHeight ?? Constants.screenHeight;
 
     this.state = {
       containerWidth: undefined,
@@ -48,34 +50,34 @@ class Carousel extends Component<CarouselProps, CarouselState> {
       currentPage: this.shouldUsePageWidth() ? this.getCalcIndex(props.initialPage) : props.initialPage,
       currentStandingPage: props.initialPage,
       pageWidth: defaultPageWidth,
-      initialOffset: {
-        x: presenter.calcOffset(props, {
-          // @ts-ignore (defaultProps)
-          currentPage: props.initialPage,
-          pageWidth: defaultPageWidth
-        }),
-        y: 0
-      },
+      pageHeight,
+      initialOffset: presenter.calcOffset(props, {
+        // @ts-ignore (defaultProps)
+        currentPage: props.initialPage,
+        pageWidth: defaultPageWidth,
+        pageHeight
+      }),
       prevProps: props
     };
   }
 
   static getDerivedStateFromProps(nextProps: CarouselProps, prevState: CarouselState) {
     const {currentPage, prevProps} = prevState;
-    const {pageWidth} = prevProps;
-    const {pageWidth: nextPageWidth} = nextProps;
+    const {pageWidth, pageHeight} = prevProps;
+    const {pageWidth: nextPageWidth, pageHeight: nextPageHeight} = nextProps;
 
-    if (!_.isUndefined(nextPageWidth) && pageWidth !== nextPageWidth) {
-      const pageWidth = nextPageWidth;
+    if ((!_.isUndefined(nextPageWidth) && pageWidth !== nextPageWidth)
+      || (!_.isUndefined(nextPageHeight) && pageHeight !== nextPageHeight)) {
+      const pageWidth = nextPageWidth as number;
+      const pageHeight = nextPageHeight as number;
 
       return {
         pageWidth,
-        initialOffset: {
-          x: presenter.calcOffset(prevProps, {
-            currentPage,
-            pageWidth
-          })
-        },
+        initialOffset: presenter.calcOffset(prevProps, {
+          currentPage,
+          pageWidth,
+          pageHeight
+        }),
         prevProps: nextProps
       };
     }
@@ -149,10 +151,10 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   };
 
   updateOffset = (animated = false) => {
-    const x = presenter.calcOffset(this.props, this.state);
+    const {x, y} = presenter.calcOffset(this.props, this.state);
 
     if (this.carousel && this.carousel.current) {
-      this.carousel.current.scrollTo({x, animated});
+      this.carousel.current.scrollTo({x, y, animated});
 
       if (Constants.isAndroid) {
         // this is done to handle onMomentumScrollEnd not being called in Android:
@@ -180,7 +182,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     this.startAutoPlay();
   }
 
-  goToPage(pageIndex: number, animated: boolean = true) {
+  goToPage(pageIndex: number, animated = true) {
     this.setState({currentPage: this.getCalcIndex(pageIndex)}, () => this.updateOffset(animated));
   }
 
@@ -203,10 +205,8 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     if (containerWidth) {
       const spacings = pageWidth === containerWidth ? 0 : this.getItemSpacings(this.props);
       const initialBreak = pageWidth - (containerWidth - pageWidth - spacings) / 2;
-      const snapToOffsets = _.times(
-        presenter.getChildrenLength(this.props),
-        index => initialBreak + index * pageWidth + this.getContainerMarginHorizontal()
-      );
+      const snapToOffsets = _.times(presenter.getChildrenLength(this.props),
+        index => initialBreak + index * pageWidth + this.getContainerMarginHorizontal());
       return snapToOffsets;
     }
   };
@@ -217,24 +217,22 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   shouldEnablePagination() {
-    const {pagingEnabled} = this.props;
-    return pagingEnabled && !this.shouldUsePageWidth();
+    const {pagingEnabled, horizontal} = this.props;
+    return horizontal ? (pagingEnabled && !this.shouldUsePageWidth()) : true;
   }
 
   onContainerLayout = ({
     nativeEvent: {
-      layout: {width: containerWidth}
+      layout: {width: containerWidth, height: containerHeight}
     }
   }: LayoutChangeEvent) => {
-    const {pageWidth = containerWidth} = this.props;
+    const {pageWidth = containerWidth, pageHeight = containerHeight} = this.props;
 
-    const initialOffset = {
-      x: presenter.calcOffset(this.props, {
-        currentPage: this.state.currentPage,
-        pageWidth
-      }),
-      y: 0
-    };
+    const initialOffset = presenter.calcOffset(this.props, {
+      currentPage: this.state.currentPage,
+      pageWidth,
+      pageHeight
+    });
 
     this.setState({containerWidth, pageWidth, initialOffset});
   };
@@ -292,14 +290,18 @@ class Carousel extends Component<CarouselProps, CarouselState> {
       return;
     }
 
-    const {loop, autoplay} = this.props;
-    const {pageWidth} = this.state;
+    const {loop, autoplay, horizontal} = this.props;
+    const {pageWidth, pageHeight} = this.state;
     const offsetX = event.nativeEvent.contentOffset.x;
+    const offsetY = event.nativeEvent.contentOffset.y;
 
-    if (offsetX >= 0) {
+    const offset = horizontal ? offsetX : offsetY;
+    const pageSize = horizontal ? pageWidth : pageHeight;
+
+    if (offset >= 0) {
       if (!this.orientationChange) {
         // Avoid new calculation on orientation change
-        const newPage = presenter.calcPageIndex(offsetX, this.props, pageWidth);
+        const newPage = presenter.calcPageIndex(offset, this.props, pageSize);
         this.setState({currentPage: newPage});
       }
       this.orientationChange = false;
@@ -319,7 +321,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
   renderChild = (child: ReactNode, key: Key): JSX.Element | undefined => {
     if (child) {
-      const paddingLeft = this.shouldUsePageWidth() ? this.getItemSpacings(this.props) : undefined;
+      const paddingLeft = this.props.horizontal ? this.shouldUsePageWidth() ? this.getItemSpacings(this.props) : undefined : 0;
       const index = Number(key);
       const length = presenter.getChildrenLength(this.props);
       const containerMarginHorizontal = this.getContainerMarginHorizontal();
@@ -432,22 +434,22 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   renderCarousel() {
-    const {containerStyle, animated, ...others} = this.props;
+    const {containerStyle, animated, horizontal, ...others} = this.props;
     const {initialOffset} = this.state;
     const scrollContainerStyle = this.shouldUsePageWidth()
       ? {paddingRight: this.getItemSpacings(this.props)}
       : undefined;
     const snapToOffsets = this.getSnapToOffsets();
     const marginBottom = Math.max(0, this.getContainerPaddingVertical() - 16);
-
     return (
       <View animated={animated} style={[{marginBottom}, containerStyle]} onLayout={this.onContainerLayout}>
         <ScrollView
           {...others}
           ref={this.carousel}
           contentContainerStyle={scrollContainerStyle}
-          horizontal
+          horizontal={horizontal}
           showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
           pagingEnabled={this.shouldEnablePagination()}
           snapToOffsets={snapToOffsets}
           decelerationRate="fast"

@@ -23,7 +23,7 @@ const INACTIVE_COLOR = Colors.dark60;
 
 /**
  * @description: A Slider component
- * @example: https://github.com/wix/react-native-ui-lib/blob/feat/new_components/demo/src/screens/componentScreens/SliderScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.js
  */
 export default class Slider extends PureBaseComponent {
   static displayName = 'Slider';
@@ -176,15 +176,15 @@ export default class Slider extends PureBaseComponent {
 
   /* Gesture Recognizer */
 
-  handleMoveShouldSetPanResponder = (e, gestureState) => {
+  handleMoveShouldSetPanResponder = () => {
     return true;
   };
-  handlePanResponderGrant = (e, gestureState) => {
+  handlePanResponderGrant = () => {
     this.updateThumbStyle(true);
     this._dx = 0;
     this.onSeekStart();
   };
-  handlePanResponderMove = (e, gestureState) => {
+  handlePanResponderMove = (_e, gestureState) => {
     if (this.props.disabled) {
       return;
     }
@@ -192,7 +192,7 @@ export default class Slider extends PureBaseComponent {
     this.update(dx - this._dx);
     this._dx = dx;
   };
-  handlePanResponderEnd = (e, gestureState) => {
+  handlePanResponderEnd = () => {
     this.updateThumbStyle(false);
     this.bounceToStep();
     this.onSeekEnd();

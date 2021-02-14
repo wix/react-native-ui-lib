@@ -23,7 +23,7 @@ if (!Math.sign) {
   };
 }
 
-export type PropType = {
+type Props = {
   children: any,
   friction: number,
   leftThreshold?: number,
@@ -58,6 +58,7 @@ export type PropType = {
   containerStyle?: Object,
   childrenContainerStyle?: Object
 };
+
 type StateType = {
   dragX: Animated.Value,
   rowTranslation: Animated.Value,
@@ -66,7 +67,9 @@ type StateType = {
   rowWidth: number | typeof undefined
 };
 
-export default class Swipeable extends Component<PropType, StateType> {
+export type SwipeableProps = Props;
+
+export default class Swipeable extends Component<Props, StateType> {
   static displayName = 'IGNORE';
   static defaultProps = {
     friction: 1,
@@ -83,7 +86,7 @@ export default class Swipeable extends Component<PropType, StateType> {
   // _showRightAction: ?Animated.Interpolation | ?Animated.Value;
   // _rightActionTranslate: ?Animated.Interpolation;
 
-  constructor(props: PropType) {
+  constructor(props: Props) {
     super(props);
 
     const dragX = new Animated.Value(0);

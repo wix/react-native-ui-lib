@@ -7,10 +7,10 @@ import {BaseComponent} from '../../commons';
 import View from '../../components/view';
 import Text from '../../components/text';
 
-
 /**
  * @description: Component that shows a full screen with an activity indicator
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreenScreens/LoadingScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/LoadingScreen.js
+ * 
  */
 export default class LoaderScreen extends BaseComponent {
   static displayName = 'LoaderScreen';
@@ -21,6 +21,10 @@ export default class LoaderScreen extends BaseComponent {
      * Color of the loading indicator
      */
     loaderColor: PropTypes.string,
+    /**
+     * Custom loader
+     */
+    customLoader: PropTypes.element,
     /**
      * Color of the loader background (only when passing 'overlay')
      */
@@ -43,18 +47,29 @@ export default class LoaderScreen extends BaseComponent {
   };
 
   render() {
-    const {message, messageStyle, loaderColor, overlay, backgroundColor, containerStyle, ...others} = this.props;
+    const {
+      message,
+      messageStyle,
+      loaderColor,
+      overlay,
+      backgroundColor,
+      customLoader,
+      containerStyle,
+      ...others
+    } = this.props;
 
     return (
       <View style={[overlay ? [styles.overlayContainer, {backgroundColor}] : styles.container, containerStyle]}>
         <View flex center>
-          <ActivityIndicator
-            size={'large'}
-            animating
-            color={loaderColor || (Constants.isIOS ? Colors.dark60 : Colors.primary)}
-            {...others}
-          />
-          {!overlay && message && <Text style={[styles.message, messageStyle]}>{message}</Text>}
+          {customLoader || (
+            <ActivityIndicator
+              size={'large'}
+              animating
+              color={loaderColor || (Constants.isIOS ? Colors.dark60 : Colors.primary)}
+              {...others}
+            />
+          )}
+          {message && <Text style={[styles.message, messageStyle]}>{message}</Text>}
         </View>
       </View>
     );

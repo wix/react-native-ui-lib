@@ -1,7 +1,8 @@
 import {ReactElement} from 'react';
-import {StyleProp, TextStyle, ViewStyle, AccessibilityProps} from 'react-native';
+import {StyleProp, TextStyle, ViewStyle, AccessibilityProps, ColorValue} from 'react-native';
 import {BaseComponent} from '../commons';
 import {AccessibilityProps} from '../modifiers';
+import {TextFieldProps} from './Inputs';
 
 export type Tag =
   | string
@@ -19,7 +20,7 @@ export type ChipsInputOnChangeTagsAction = 'added' | 'removed';
 
 export type ChipsInputOnChangeTagsFunc = (tags: Tag[], action: ChipsInputOnChangeTagsAction, tag: Tag) => void;
 
-export interface ChipsInputProps {
+export interface ChipsInputProps extends TextFieldProps {
   tags?: Tag[];
   getLabel?: (tag?: Tag) => string;
   renderTag?: ChipsInputRenderTagFunc;
@@ -32,8 +33,8 @@ export interface ChipsInputProps {
   tagStyle?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<TextStyle>;
   hideUnderline?: boolean;
-  placeholderTextColor?: string;
-  selectionColor?: string;
+  placeholderTextColor?: ColorValue;
+  selectionColor?: ColorValue;
   style?: StyleProp<ViewStyle>;
   testID?: string;
 }

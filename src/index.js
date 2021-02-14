@@ -91,6 +91,8 @@ export default {
     return require('./components/textArea').default;
   },
   get TextField() {
+    // TODO: Start migration by exporting TextFieldMigrator
+    // return require('./components/textField/TextFieldMigrator').default;
     return require('./components/textField').default;
   },
   get MaskedInput() {
@@ -225,6 +227,9 @@ export default {
   },
   get withScrollReached() {
     return require('./commons').withScrollReached;
+  },
+  get Modifiers() {
+    return require('./commons').modifiers;
   },
 
   // Helpers

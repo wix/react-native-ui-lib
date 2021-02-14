@@ -93,7 +93,7 @@ export declare function extractModifierProps(props: Dictionary<any>): _.Dictiona
  * @deprecated switch to Modifiers#extractComponentProps
  */
 export declare function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]): Pick<Partial<Dictionary<any>>, number>;
-export declare function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps: string[]): Pick<Partial<Dictionary<any>>, number>;
+export declare function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps?: string[]): Pick<Partial<Dictionary<any>>, number>;
 export declare function getThemeProps(props?: any, context?: any): any;
 export declare function generateModifiersStyle(options: {
     color: boolean;
