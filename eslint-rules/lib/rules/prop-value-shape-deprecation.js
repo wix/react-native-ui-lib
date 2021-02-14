@@ -51,16 +51,16 @@ module.exports = {
     schema: [MAP_SCHEMA]
   },
   create(context) {
-    function reportPropValueShapeDeprecation(propKey, attribute, origin, node) {
+    function reportPropValueShapeDeprecation(propKey, prop, deprecation, node) {
       const componentName = utils.getComponentName(node);
-      const destination = _.get(origin, 'fix.propName');
-      const message = `The shape of '${attribute}' prop of '${componentName}' doesn't contain '${origin.prop}' anymore. Please use '${destination}' instead (fix is available).`;
+      const newProp = _.get(deprecation, 'fix.propName');
+      const message = `The shape of '${prop}' prop of '${componentName}' doesn't contain '${deprecation.prop}' anymore. Please use '${newProp}' instead (fix is available).`;
       context.report({
         node,
         message,
         fix(fixer) {
-          if (destination && propKey) {
-            return fixer.replaceText(propKey, destination);
+          if (newProp && propKey) {
+            return fixer.replaceText(propKey, newProp);
           }
         }
       });
