@@ -1,24 +1,11 @@
 import React, {useEffect, useRef, useCallback, useState} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
-import {
-  PanGestureHandler,
-  PanGestureHandlerProperties,
-  PanGestureHandlerGestureEvent,
-  PanGestureHandlerEventExtra,
-  FlingGestureHandler,
-  FlingGestureHandlerGestureEvent,
-  FlingGestureHandlerStateChangeEvent,
-  TapGestureHandler,
-  State,
-  Directions
-} from 'react-native-gesture-handler';
+import {PanGestureHandler, PanGestureHandlerEventExtra} from 'react-native-gesture-handler';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
   useAnimatedGestureHandler,
-  useDerivedValue,
-  interpolate,
   Easing,
   runOnJS,
   useWorkletCallback
@@ -97,7 +84,8 @@ const DialogDismissibleView = (props: Props) => {
 
   const hiddenLocation = useRef<number>(getHiddenLocation(0));
 
-  const animationValue = useSharedValue<number>(0);
+  const persistentAnimationValue = useRef<number>(hiddenLocation.current);
+  const animationValue = useSharedValue<number>(persistentAnimationValue.current);
   const animatedStyle = useAnimatedStyle(() => {
     const transform = isHorizontalWorklet()
       ? [{translateX: animationValue.value}]
@@ -107,8 +95,29 @@ const DialogDismissibleView = (props: Props) => {
     };
   }, [isHorizontalWorklet]);
 
+  function open() {
+    persistentAnimationValue.current = 0;
+  }
+
+  function openWorklet(isFinished: boolean) {
+    'worklet';
+    if (isFinished) {
+      runOnJS(open)();
+    }
+  }
+
+  const animateIn = useCallback(() => {
+    animationValue.value = withTiming(0, TIMING_ANIMATION_CONFIG, openWorklet);
+  }, []);
+
+  function animateInWorklet() {
+    'worklet';
+    runOnJS(animateIn)();
+  }
+
   function dismiss() {
     visible.current = false;
+    persistentAnimationValue.current = hiddenLocation.current;
     onDismiss();
   }
 
@@ -117,15 +126,6 @@ const DialogDismissibleView = (props: Props) => {
     if (isFinished) {
       runOnJS(dismiss)();
     }
-  }
-
-  const animateIn = useCallback(() => {
-    animationValue.value = withTiming(0, TIMING_ANIMATION_CONFIG);
-  }, []);
-
-  function animateInWorklet() {
-    'worklet';
-    runOnJS(animateIn)();
   }
 
   const animateOut = useCallback(() => {
@@ -152,6 +152,7 @@ const DialogDismissibleView = (props: Props) => {
       // @ts-ignore TODO: can we fix this on ViewProps \ View?
       containerRef.current.measureInWindow((x: number, y: number) => {
         hiddenLocation.current = getHiddenLocation(isHorizontal() ? x : y);
+        persistentAnimationValue.current = hiddenLocation.current;
         animationValue.value = hiddenLocation.current;
         animateIn();
       });
