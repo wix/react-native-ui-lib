@@ -3,6 +3,7 @@ import {SectionList, StyleSheet} from 'react-native';
 import {Colors, View, Text, TouchableOpacity, Spacings, Image, Assets, Incubator} from 'react-native-ui-lib';
 import {menuStructure} from 'unicorn-demo-app';
 import _ from 'lodash';
+import fuzzysearch from 'fuzzysearch';
 
 const {TextField} = Incubator;
 
@@ -16,8 +17,12 @@ const sections = _.map(menuStructure, (section, key) => {
 export default function MainScreen({navigation}) {
   const [searchText, setSearchText] = React.useState('');
 
+  const includedInSearch = (text = '') => {
+    return fuzzysearch(searchText.toLowerCase(), text.toLowerCase());
+  };
+
   const renderSectionHeader = useCallback(({section}) => {
-    if (!_.find(section.data, screen => _.includes(screen.title.toLowerCase(), searchText.toLowerCase()))) {
+    if (!_.find(section.data, screen => includedInSearch(screen.title))) {
       return null;
     }
 
@@ -32,7 +37,7 @@ export default function MainScreen({navigation}) {
   [searchText]);
 
   const renderItem = useCallback(({item}) => {
-    if (!_.includes(item.title.toLowerCase(), searchText.toLowerCase())) {
+    if (!includedInSearch(item.title)) {
       return null;
     }
 
