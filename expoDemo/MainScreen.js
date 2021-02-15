@@ -21,6 +21,11 @@ export default function MainScreen({navigation}) {
     return fuzzysearch(searchText.toLowerCase(), text.toLowerCase());
   };
 
+  const onItemPress = useCallback(({customValue: screenId}) => {
+    // convert "unicorn.components.ActionBarScreen" -> "ActionBar"
+    navigation.navigate(screenId);
+  });
+
   const renderSectionHeader = useCallback(({section}) => {
     if (!_.find(section.data, screen => includedInSearch(screen.title))) {
       return null;
@@ -45,17 +50,16 @@ export default function MainScreen({navigation}) {
       return <View height={Spacings.s2} bg-grey70/>;
     }
 
+    const screenId = _.chain(item.screen).split('.').last().replace('Screen', '').value();
+
     return (
       <TouchableOpacity
         activeOpacity={1}
         key={item.title}
         style={styles.sectionItem}
         activeBackgroundColor={Colors.violet80}
-        onPress={() => {
-          // convert "unicorn.components.ActionBarScreen" -> "ActionBar"
-          const screenId = _.chain(item.screen).split('.').last().replace('Screen', '').value();
-          navigation.navigate(screenId);
-        }}
+        customValue={screenId}
+        onPress={onItemPress}
       >
         <Text grey10 text70M>
           {item.title}
