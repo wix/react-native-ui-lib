@@ -34,6 +34,9 @@ module.exports = {
       get CarouselScreen() {
         return require('./screens/componentScreens/CarouselScreen').default;
       },
+      get CarouselVerticalScreen() {
+        return require('./screens/componentScreens/CarouselVerticalScreen').default;
+      },
       get CheckboxScreen() {
         return require('./screens/componentScreens/CheckboxScreen').default;
       },

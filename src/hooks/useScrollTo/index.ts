@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import {RefObject, useCallback, useRef} from 'react';
-import {ScrollView, FlatList} from 'react-native';
+import {ScrollView, FlatList, LayoutChangeEvent} from 'react-native';
+import {Constants} from '../../helpers';
 
 export type ScrollToSupportedViews = ScrollView | FlatList;
 
@@ -22,25 +23,63 @@ export type ScrollToResultProps<T extends ScrollToSupportedViews> = {
   scrollViewRef: RefObject<T>;
   /**
    * scrollTo callback.
-   * scrollToOffset - the x or y to scroll to.
+   * offset - the x or y to scroll to.
    * animated - should the scroll be animated (default is true)
    */
-  scrollTo: (scrollToOffset: number, animated?: boolean) => void;
+  scrollTo: (offset: number, animated?: boolean) => void;
+  /**
+   * onContentSizeChange callback (should be set to your onContentSizeChange).
+   * Needed for RTL support on Android.
+   */
+  onContentSizeChange: (contentWidth: number, contentHeight: number) => void;
+  /**
+   * onLayout callback (should be set to your onLayout).
+   * Needed for RTL support on Android.
+   */
+  onLayout: (event: LayoutChangeEvent) => void;
 };
 
 const useScrollTo = <T extends ScrollToSupportedViews>(props: ScrollToProps<T>): ScrollToResultProps<T> => {
   const {scrollViewRef: propsScrollViewRef, horizontal = true} = props;
   const newScrollViewRef = useRef<T>(null);
   const scrollViewRef = propsScrollViewRef || newScrollViewRef;
+  const contentSize = useRef<number | undefined>(undefined);
+  const containerSize = useRef<number | undefined>(undefined);
 
-  const scrollTo = useCallback((scrollTo: number, animated = true) => {
+  const onContentSizeChange = useCallback((contentWidth: number, contentHeight: number) => {
+    contentSize.current = horizontal ? contentWidth : contentHeight;
+  },
+  [horizontal]);
+
+  const onLayout = useCallback((event: LayoutChangeEvent) => {
+    const {
+      nativeEvent: {
+        layout: {width, height}
+      }
+    } = event;
+    containerSize.current = horizontal ? width : height;
+  },
+  [horizontal]);
+
+  const scrollTo = useCallback((offset: number, animated = true) => {
+    if (
+      horizontal &&
+        Constants.isRTL &&
+        Constants.isAndroid &&
+        !_.isUndefined(contentSize.current) &&
+        !_.isUndefined(containerSize.current)
+    ) {
+      const scrollingWidth = Math.max(0, contentSize.current - containerSize.current);
+      offset = scrollingWidth - offset;
+    }
+
     // @ts-ignore
     if (_.isFunction(scrollViewRef.current.scrollToOffset)) {
       // @ts-ignore
-      scrollViewRef.current.scrollToOffset({offset: scrollTo, animated});
+      scrollViewRef.current.scrollToOffset({offset, animated});
       // @ts-ignore
     } else if (_.isFunction(scrollViewRef.current.scrollTo)) {
-      const scrollToXY = horizontal ? {x: scrollTo} : {y: scrollTo};
+      const scrollToXY = horizontal ? {x: offset} : {y: offset};
       // @ts-ignore
       scrollViewRef.current.scrollTo({...scrollToXY, animated});
     }
@@ -49,7 +88,9 @@ const useScrollTo = <T extends ScrollToSupportedViews>(props: ScrollToProps<T>):
 
   return {
     scrollViewRef,
-    scrollTo
+    scrollTo,
+    onContentSizeChange,
+    onLayout
   };
 };
 
