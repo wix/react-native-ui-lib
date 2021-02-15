@@ -67,7 +67,7 @@ const DialogDismissibleView = (props: Props) => {
   const height = useRef<number>(Constants.screenHeight);
   const thresholdX = useRef<number>(0);
   const thresholdY = useRef<number>(0);
-  const counter = useRef<number>(0);
+  const dragsCounter = useRef<number>(0);
   const containerRef = useRef<typeof View>();
   const animatedValue = useRef<Animated.AnimatedValue>(new Animated.Value(0));
   const swipe = useRef<PanDirectionsProps>({});
@@ -113,14 +113,14 @@ const DialogDismissibleView = (props: Props) => {
   }, []);
 
   const resetSwipe = useCallback(() => {
-    counter.current = 0;
+    dragsCounter.current = 0;
     swipe.current = {};
   }, []);
 
   const onDrag = useCallback(() => {
     if (isSwiping()) {
-      if (counter.current < MAXIMUM_DRAGS_AFTER_SWIPE) {
-        counter.current += 1;
+      if (dragsCounter.current < MAXIMUM_DRAGS_AFTER_SWIPE) {
+        dragsCounter.current += 1;
       } else {
         resetSwipe();
       }
