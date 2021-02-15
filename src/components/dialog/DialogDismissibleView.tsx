@@ -75,7 +75,7 @@ const DialogDismissibleView = (props: Props) => {
   const prevSwipeDirections = useRef<PanDirectionsProps>();
   const visible = useRef<boolean>(Boolean(propsVisible));
 
-  const getHiddenLocation = useCallback((left: number, top: number): LocationProps => {
+  const getHiddenLocation = useCallback((left: number, top: number) => {
     const result = {left: 0, top: 0};
     switch (direction) {
       case PanningProvider.Directions.LEFT:
@@ -108,7 +108,7 @@ const DialogDismissibleView = (props: Props) => {
     }).start(animationEndCallback);
   }, []);
 
-  const isSwiping = useCallback((): boolean => {
+  const isSwiping = useCallback(() => {
     return !_.isUndefined(mutableSwipeDirections.current.x) || !_.isUndefined(mutableSwipeDirections.current.y);
   }, []);
 
