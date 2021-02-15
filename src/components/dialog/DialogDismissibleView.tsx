@@ -70,7 +70,7 @@ const DialogDismissibleView = (props: Props) => {
   const dragsCounter = useRef<number>(0);
   const containerRef = useRef<typeof View>();
   const animatedValue = useRef<Animated.AnimatedValue>(new Animated.Value(0));
-  const swipe = useRef<PanDirectionsProps>({});
+  const mutableSwipeDirections = useRef<PanDirectionsProps>({});
   const prevDragDeltas = useRef<PanAmountsProps>();
   const prevSwipeDirections = useRef<PanDirectionsProps>();
   const visible = useRef<boolean>(Boolean(propsVisible));
@@ -109,12 +109,12 @@ const DialogDismissibleView = (props: Props) => {
   }, []);
 
   const isSwiping = useCallback((): boolean => {
-    return !_.isUndefined(swipe.current.x) || !_.isUndefined(swipe.current.y);
+    return !_.isUndefined(mutableSwipeDirections.current.x) || !_.isUndefined(mutableSwipeDirections.current.y);
   }, []);
 
   const resetSwipe = useCallback(() => {
     dragsCounter.current = 0;
-    swipe.current = {};
+    mutableSwipeDirections.current = {};
   }, []);
 
   const onDrag = useCallback(() => {
@@ -152,7 +152,7 @@ const DialogDismissibleView = (props: Props) => {
       (swipeDirections.x || swipeDirections.y) &&
       (swipeDirections.x !== prevSwipeDirections.current?.x || swipeDirections.y !== prevSwipeDirections.current?.y)
     ) {
-      swipe.current = swipeDirections;
+      mutableSwipeDirections.current = swipeDirections;
     }
   }, [isPanning, swipeDirections, hide]);
 
