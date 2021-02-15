@@ -1,9 +1,0 @@
-{
-  "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 52572,
-  "expoServerNgrokUrl": "https://s6-mvx.ethanshar.expodemo.exp.direct",
-  "packagerNgrokUrl": "https://packager.s6-mvx.ethanshar.expodemo.exp.direct",
-  "ngrokPid": 52596
-}
