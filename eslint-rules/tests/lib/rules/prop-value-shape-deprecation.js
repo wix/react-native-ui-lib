@@ -71,6 +71,16 @@ const myProps = {
 <Label avatar={{goodProp: goodValue, ...myProps}}/>
 `;
 
+const deprecationWithoutFix = `import React, {Component} from 'react';
+import {ListItem} from 'our-source';
+class NewFeature extends Component {
+  render () {
+    return (
+      <ListItem thumbnail={{useCustomTheme: true}}/>
+    )
+  };
+}`;
+
 ruleTester.run('prop-value-shape-deprecation', rule, {
   valid: [
     {
@@ -253,6 +263,16 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
           )
         };
       }`
+    },
+    {
+      options: ruleOptions,
+      code: deprecationWithoutFix,
+      errors: [
+        {
+          message: `The shape of 'thumbnail' prop of 'ListItem' doesn't contain 'useCustomTheme' anymore. Please stop using it.`
+        }
+      ],
+      output: deprecationWithoutFix
     }
   ]
 });

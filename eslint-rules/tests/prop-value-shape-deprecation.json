@@ -24,5 +24,15 @@
         }
       }
     ]
+  },
+  {
+    "components": ["ListItem"],
+    "propNames": ["thumbnail"],
+    "shape": [
+      {
+        "prop": "useCustomTheme",
+        "message": "Please don't use 'useCustomTheme' inside thumbnail."
+      }
+    ]
   }
 ]
