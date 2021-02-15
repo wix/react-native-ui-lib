@@ -1,6 +1,7 @@
 import React from 'react';
 import './InfoSection.scss';
 import qr from '../../images/newDesign/qr.png';
+import expoSnackLink from '../../data/expoSnackLink';
 
 export default () => {
   return (
@@ -24,7 +25,7 @@ export default () => {
               </a>
             </li>
             <li>
-              <a target="_blank" rel="noreferrer" href="https://snack.expo.io/@ethanshar/rnuilib_snack">
+              <a target="_blank" rel="noreferrer" href={expoSnackLink}>
                 Expo-Snack
               </a>
             </li>

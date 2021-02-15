@@ -13,7 +13,7 @@ const MIN_TABS_FOR_SCROLL = 1;
 const DEFAULT_BACKGROUND_COLOR = Colors.white;
 const DEFAULT_HEIGHT = 48;
 
-type TabBarProps = ScrollBarProps /* & TabBarItemProps */ & {
+export type TabBarProps = ScrollBarProps /* & TabBarItemProps */ & {
   /**
    * Show Tab Bar bottom shadow
    */

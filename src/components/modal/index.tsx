@@ -1,11 +1,15 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Modal as RNModal, ModalProps as RNModalProps, TouchableWithoutFeedback, GestureResponderEvent} from 'react-native';
-import {BlurView} from '@react-native-community/blur';
 import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons/new';
 import TopBar, {ModalTopBarProps} from './TopBar';
 import View from '../../components/view';
+
+let BlurView: any;
+try {
+  BlurView = require('@react-native-community/blur').BlurView;
+} catch (error) {} // warning in ctor, depends if user pass enableBlur
 
 export {ModalTopBarProps};
 export interface ModalProps extends RNModalProps {
@@ -47,6 +51,14 @@ class Modal extends Component<ModalProps> {
   static displayName = 'Modal';
   static TopBar: typeof TopBar;
 
+  constructor(props: ModalProps) {
+    super(props);
+
+    if (props.enableModalBlur && !BlurView) {
+      console.error(`RNUILib Modal's "enableModalBlur" prop requires installing "@react-native-community/blur" dependency`);
+    }
+  }
+
   renderTouchableOverlay() {
     const {testID, overlayBackgroundColor, onBackgroundPress, accessibilityLabel = 'Dismiss'} = this.props;
     if (_.isFunction(onBackgroundPress) || !!overlayBackgroundColor) {
@@ -74,7 +86,7 @@ class Modal extends Component<ModalProps> {
 
   render() {
     const {blurView, enableModalBlur, visible, ...others} = this.props;
-    const defaultContainer = enableModalBlur && Constants.isIOS ? BlurView : View;
+    const defaultContainer = enableModalBlur && Constants.isIOS && BlurView ? BlurView : View;
     const Container: any = blurView ? blurView : defaultContainer;
 
     return (

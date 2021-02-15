@@ -68,8 +68,8 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
     if ((!_.isUndefined(nextPageWidth) && pageWidth !== nextPageWidth)
       || (!_.isUndefined(nextPageHeight) && pageHeight !== nextPageHeight)) {
-      const pageWidth = nextPageWidth;
-      const pageHeight = nextPageHeight;
+      const pageWidth = nextPageWidth as number;
+      const pageHeight = nextPageHeight as number;
 
       return {
         pageWidth,
