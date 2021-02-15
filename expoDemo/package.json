@@ -16,6 +16,7 @@
     "@react-navigation/native": "^5.0.8",
     "@react-navigation/stack": "^5.1.0",
     "expo": "^40.0.0",
+    "fuzzysearch": "^1.0.3",
     "lodash": "^4.17.15",
     "react": "16.13.1",
     "react-dom": "16.13.1",

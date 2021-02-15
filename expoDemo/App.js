@@ -3,6 +3,7 @@ import _ from 'lodash';
 import {screens} from 'unicorn-demo-app';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import './src/assets';
 import MainScreen from './MainScreen';
 
 const Stack = createStackNavigator();
