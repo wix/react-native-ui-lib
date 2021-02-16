@@ -1,5 +1,5 @@
 import { RefObject } from 'react';
-import { ScrollView, FlatList } from 'react-native';
+import { ScrollView, FlatList, LayoutChangeEvent } from 'react-native';
 export declare type ScrollToSupportedViews = ScrollView | FlatList;
 export declare type ScrollToProps<T extends ScrollToSupportedViews> = {
     /**
@@ -18,10 +18,20 @@ export declare type ScrollToResultProps<T extends ScrollToSupportedViews> = {
     scrollViewRef: RefObject<T>;
     /**
      * scrollTo callback.
-     * scrollToOffset - the x or y to scroll to.
+     * offset - the x or y to scroll to.
      * animated - should the scroll be animated (default is true)
      */
-    scrollTo: (scrollToOffset: number, animated?: boolean) => void;
+    scrollTo: (offset: number, animated?: boolean) => void;
+    /**
+     * onContentSizeChange callback (should be set to your onContentSizeChange).
+     * Needed for RTL support on Android.
+     */
+    onContentSizeChange: (contentWidth: number, contentHeight: number) => void;
+    /**
+     * onLayout callback (should be set to your onLayout).
+     * Needed for RTL support on Android.
+     */
+    onLayout: (event: LayoutChangeEvent) => void;
 };
 declare const useScrollTo: <T extends ScrollToSupportedViews>(props: ScrollToProps<T>) => ScrollToResultProps<T>;
 export default useScrollTo;

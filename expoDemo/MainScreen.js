@@ -1,59 +1,105 @@
-import React from 'react';
-import {ScrollView, TextInput} from 'react-native';
-import {Colors, View, Text, TouchableOpacity} from 'react-native-ui-lib';
+import React, {useCallback} from 'react';
+import {SectionList, StyleSheet} from 'react-native';
+import {Colors, View, Text, TouchableOpacity, Spacings, Image, Assets, Incubator} from 'react-native-ui-lib';
 import {menuStructure} from 'unicorn-demo-app';
 import _ from 'lodash';
+import fuzzysearch from 'fuzzysearch';
+
+const {TextField} = Incubator;
+
+const sections = _.map(menuStructure, (section, key) => {
+  return {
+    key,
+    data: section.screens
+  };
+});
 
 export default function MainScreen({navigation}) {
   const [searchText, setSearchText] = React.useState('');
 
+  const includedInSearch = (text = '') => {
+    return fuzzysearch(searchText.toLowerCase(), text.toLowerCase());
+  };
+
+  const onItemPress = useCallback(({customValue: screenId}) => {
+    // convert "unicorn.components.ActionBarScreen" -> "ActionBar"
+    navigation.navigate(screenId);
+  });
+
+  const renderSectionHeader = useCallback(({section}) => {
+    if (!_.find(section.data, screen => includedInSearch(screen.title))) {
+      return null;
+    }
+
+    return (
+      <View paddingV-s1 paddingH-s5 bg-primary>
+        <Text text90BO uppercase grey70>
+          {section.key}
+        </Text>
+      </View>
+    );
+  },
+  [searchText]);
+
+  const renderItem = useCallback(({item}) => {
+    if (!includedInSearch(item.title)) {
+      return null;
+    }
+
+    if (!item.title) {
+      return <View height={Spacings.s2} bg-grey70/>;
+    }
+
+    const screenId = _.chain(item.screen).split('.').last().replace('Screen', '').value();
+
+    return (
+      <TouchableOpacity
+        activeOpacity={1}
+        key={item.title}
+        style={styles.sectionItem}
+        activeBackgroundColor={Colors.violet80}
+        customValue={screenId}
+        onPress={onItemPress}
+      >
+        <Text grey10 text70M>
+          {item.title}
+        </Text>
+      </TouchableOpacity>
+    );
+  },
+  [searchText]);
+
   return (
-    <View>
-      <TextInput
-        style={{padding: 10, marginBottom:0, fontSize: 18}}
-        placeholder= 'Search for your component...'
-        onChangeText={text => setSearchText(text)}
-        value={searchText}
+    <View flex bg-white>
+      <SectionList
+        ListHeaderComponent={
+          <TextField
+            migrate
+            placeholder="Search component name"
+            onChangeText={text => setSearchText(text)}
+            value={searchText}
+            preset={null}
+            text70
+            fieldStyle={styles.fieldStyle}
+            leadingAccessory={<Image source={Assets.icons.search} marginH-s2/>}
+          />
+        }
+        sections={sections}
+        renderSectionHeader={renderSectionHeader}
+        renderItem={renderItem}
       />
-      <ScrollView>
-        <View bg-white>
-          {_.map(menuStructure, section => {
-            return (
-              <View key={section.title}>
-                <Text text50 marginL-s5 marginV-s3>
-                  {section.title}
-                </Text>
-                {_.map(section.screens, screen => {
-                  return (
-                    <TouchableOpacity
-                      activeOpacity={1}
-                      bg-blue40
-                      paddingH-s5
-                      paddingV-s4
-                      key={screen.title}
-                      activeBackgroundColor={Colors.blue20}
-                      style={{borderBottomWidth: 1, borderColor: Colors.white}}
-                      onPress={() => {
-                        // convert "unicorn.components.ActionBarScreen" -> "ActionBar"
-                        const screenId = _.chain(screen.screen)
-                          .split('.')
-                          .last()
-                          .replace('Screen', '')
-                          .value();
-                        navigation.navigate(screenId);
-                      }}
-                    >
-                      <Text white text70M>
-                        {screen.title}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                }).filter(item => item.key.toLowerCase().indexOf(searchText.toLowerCase()) !== -1)}
-              </View>
-            );
-          })}
-        </View>
-      </ScrollView>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  fieldStyle: {
+    paddingVertical: Spacings.s3
+  },
+  sectionItem: {
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.grey60,
+    paddingHorizontal: Spacings.s5,
+    paddingVertical: Spacings.s3
+  }
+});

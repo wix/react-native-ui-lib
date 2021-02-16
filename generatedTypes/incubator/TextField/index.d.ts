@@ -76,11 +76,11 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
     /**
      * Pass to render a leading element
      */
-    leadingAccessory?: React.ReactElement<any, string | ((props: any) => React.ReactElement<any, string | any | (new (props: any) => React.Component<any, any, any>)> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
+    leadingAccessory?: React.ReactElement<any, string | ((props: any) => React.ReactElement<any, any> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
     /**
      * Pass to render a trailing element
      */
-    trailingAccessory?: React.ReactElement<any, string | ((props: any) => React.ReactElement<any, string | any | (new (props: any) => React.Component<any, any, any>)> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
+    trailingAccessory?: React.ReactElement<any, string | ((props: any) => React.ReactElement<any, any> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
     /**
      * Pass to add floating placeholder support
      */
@@ -131,11 +131,11 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
     /**
      * Pass to render a leading element
      */
-    leadingAccessory?: React.ReactElement<any, string | ((props: any) => React.ReactElement<any, string | any | (new (props: any) => React.Component<any, any, any>)> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
+    leadingAccessory?: React.ReactElement<any, string | ((props: any) => React.ReactElement<any, any> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
     /**
      * Pass to render a trailing element
      */
-    trailingAccessory?: React.ReactElement<any, string | ((props: any) => React.ReactElement<any, string | any | (new (props: any) => React.Component<any, any, any>)> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
+    trailingAccessory?: React.ReactElement<any, string | ((props: any) => React.ReactElement<any, any> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
     /**
      * Pass to add floating placeholder support
      */
@@ -186,11 +186,11 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
     /**
      * Pass to render a leading element
      */
-    leadingAccessory?: React.ReactElement<any, string | ((props: any) => React.ReactElement<any, string | any | (new (props: any) => React.Component<any, any, any>)> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
+    leadingAccessory?: React.ReactElement<any, string | ((props: any) => React.ReactElement<any, any> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
     /**
      * Pass to render a trailing element
      */
-    trailingAccessory?: React.ReactElement<any, string | ((props: any) => React.ReactElement<any, string | any | (new (props: any) => React.Component<any, any, any>)> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
+    trailingAccessory?: React.ReactElement<any, string | ((props: any) => React.ReactElement<any, any> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
     /**
      * Pass to add floating placeholder support
      */
@@ -241,11 +241,11 @@ declare const _default: React.ComponentClass<(Partial<Record<"margin" | "marginL
     /**
      * Pass to render a leading element
      */
-    leadingAccessory?: React.ReactElement<any, string | ((props: any) => React.ReactElement<any, string | any | (new (props: any) => React.Component<any, any, any>)> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
+    leadingAccessory?: React.ReactElement<any, string | ((props: any) => React.ReactElement<any, any> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
     /**
      * Pass to render a trailing element
      */
-    trailingAccessory?: React.ReactElement<any, string | ((props: any) => React.ReactElement<any, string | any | (new (props: any) => React.Component<any, any, any>)> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
+    trailingAccessory?: React.ReactElement<any, string | ((props: any) => React.ReactElement<any, any> | null) | (new (props: any) => React.Component<any, any, any>)> | undefined;
     /**
      * Pass to add floating placeholder support
      */

@@ -68,9 +68,4 @@ const Layout = ({children, location}) => {
   );
 };
 
-Layout.propTypes = {
-  navbar: PropTypes.element,
-  children: PropTypes.func
-};
-
 export default Layout;
