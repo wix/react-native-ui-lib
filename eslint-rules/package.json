@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-uilib",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "description": "uilib set of eslint rules",
   "keywords": [
     "eslint",

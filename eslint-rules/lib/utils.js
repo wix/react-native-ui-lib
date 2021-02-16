@@ -92,6 +92,12 @@ function getSpecifierIndex(node, name) {
   return matchIndex;
 }
 
+function getComponentName(node) {
+  const nodeProperty = _.get(node, 'name.property.name');
+  const nodeName = nodeProperty ? _.get(node, 'name.object.name') : _.get(node, 'name.name');
+  return nodeProperty ? (nodeName + '.' + nodeProperty) : nodeName;
+}
+
 module.exports = {
   isPropFont,
   findAndReportHardCodedValues,
@@ -101,4 +107,5 @@ module.exports = {
   findValueNodeOfIdentifier,
   getLocalImportSpecifier,
   getSpecifierIndex,
+  getComponentName
 };
