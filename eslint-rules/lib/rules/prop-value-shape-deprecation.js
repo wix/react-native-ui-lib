@@ -54,10 +54,8 @@ module.exports = {
     function reportPropValueShapeDeprecation(propKey, prop, deprecation, node) {
       const componentName = utils.getComponentName(node);
       const newProp = _.get(deprecation, 'fix.propName');
-      const fixMsg = _.get(deprecation, 'fix')
-        ? ` Please use '${newProp}' instead (fix is available).`
-        : ' Please stop using it.';
-      const message = `The shape of '${prop}' prop of '${componentName}' doesn't contain '${deprecation.prop}' anymore.${fixMsg}`;
+      const fixMessage = _.get(deprecation, 'message') ? ' ' + _.get(deprecation, 'message') : '';
+      const message = `The shape of '${prop}' prop of '${componentName}' doesn't contain '${deprecation.prop}' anymore.${fixMessage}`;
       context.report({
         node,
         message,

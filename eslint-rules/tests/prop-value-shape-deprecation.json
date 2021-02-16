@@ -5,7 +5,7 @@
     "shape": [
       {
         "prop": "imageSource",
-        "message": "Please use the 'source' prop instead (fix is available).",
+        "message": "Please use 'source' instead (fix is available).",
         "fix": {
           "propName": "source"
         }
@@ -18,7 +18,7 @@
     "shape": [
       {
         "prop": "title",
-        "message": "Please use the 'header' prop instead (fix is available).",
+        "message": "Please use 'header' instead (fix is available).",
         "fix": {
           "propName": "header"
         }
@@ -30,8 +30,7 @@
     "propNames": ["thumbnail"],
     "shape": [
       {
-        "prop": "useCustomTheme",
-        "message": "Please don't use 'useCustomTheme' inside thumbnail."
+        "prop": "useCustomTheme"
       }
     ]
   }

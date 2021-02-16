@@ -269,7 +269,7 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
       code: deprecationWithoutFix,
       errors: [
         {
-          message: `The shape of 'thumbnail' prop of 'ListItem' doesn't contain 'useCustomTheme' anymore. Please stop using it.`
+          message: `The shape of 'thumbnail' prop of 'ListItem' doesn't contain 'useCustomTheme' anymore.`
         }
       ],
       output: deprecationWithoutFix
