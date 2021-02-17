@@ -200,7 +200,7 @@ const TextField = (props: InternalTextFieldProps) => {
               retainSpace
             />
           )}
-          {showCharCounter && <CharCounter maxLength={others.maxLength} charCounterStyle={charCounterStyle} />}
+          {showCharCounter && <CharCounter maxLength={others.maxLength} charCounterStyle={charCounterStyle}/>}
         </View>
       </View>
     </FieldContext.Provider>
