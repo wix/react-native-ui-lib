@@ -12,7 +12,7 @@
     "@react-native-community/datetimepicker": "3.0.4",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/netinfo": "5.9.7",
-    "@react-native-community/picker": "^1.7.1",
+    "@react-native-picker/picker": "^1.9.4",
     "@react-navigation/native": "^5.0.8",
     "@react-navigation/stack": "^5.1.0",
     "expo": "^40.0.0",
