@@ -62,6 +62,9 @@ class CardSection extends PureComponent<Props> {
       contentStyle,
       testID
     } = this.props;
+    if (!leadingIcon && !trailingIcon && _.isEmpty(content)) {
+      return;
+    }
 
     return (
       <>

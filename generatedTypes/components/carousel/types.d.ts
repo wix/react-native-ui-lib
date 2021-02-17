@@ -14,6 +14,10 @@ export interface CarouselProps {
      */
     pageWidth?: number;
     /**
+     * the page height (all pages should have the same height).
+     */
+    pageHeight?: number;
+    /**
      * the spacing between the items
      */
     itemSpacings?: number;
@@ -27,7 +31,7 @@ export interface CarouselProps {
      */
     containerPaddingVertical?: number;
     /**
-     * if true, will have infinite scroll
+     * if true, will have infinite scroll (do not turn on for vertical scrolling)
      */
     loop?: boolean;
     /**
@@ -78,12 +82,18 @@ export interface CarouselProps {
      * the amount of ms to wait before switching to the next page, in case autoplay is on
      */
     autoplayInterval?: number;
+    /**
+     * When true the scroll view's children are arranged horizontally in a row
+     * instead of vertically in a column. The default value is true.
+     */
+    horizontal?: boolean | null;
 }
 export interface CarouselState {
     containerWidth?: number;
     currentPage: number;
     currentStandingPage?: number;
     pageWidth: number;
+    pageHeight: number;
     initialOffset: PointPropType;
     prevProps: CarouselProps;
 }

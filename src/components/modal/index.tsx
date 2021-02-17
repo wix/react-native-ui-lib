@@ -6,8 +6,21 @@ import {asBaseComponent} from '../../commons/new';
 import TopBar, {ModalTopBarProps} from './TopBar';
 import View from '../../components/view';
 
+let BlurView: any;
+try {
+  BlurView = require('@react-native-community/blur').BlurView;
+} catch (error) {} // warning in ctor, depends if user pass enableBlur
+
 export {ModalTopBarProps};
 export interface ModalProps extends RNModalProps {
+    /**
+     * Blurs the modal background when transparent (iOS only)
+     */
+    enableModalBlur?: boolean;
+    /**
+     * A custom view to use as a BlueView instead of the default one
+     */
+    blurView?: JSX.Element;
     /**
      * allow dismissing a modal when clicking on its background
      */
@@ -38,6 +51,14 @@ class Modal extends Component<ModalProps> {
   static displayName = 'Modal';
   static TopBar: typeof TopBar;
 
+  constructor(props: ModalProps) {
+    super(props);
+
+    if (props.enableModalBlur && !BlurView) {
+      console.error(`RNUILib Modal's "enableModalBlur" prop requires installing "@react-native-community/blur" dependency`);
+    }
+  }
+
   renderTouchableOverlay() {
     const {testID, overlayBackgroundColor, onBackgroundPress, accessibilityLabel = 'Dismiss'} = this.props;
     if (_.isFunction(onBackgroundPress) || !!overlayBackgroundColor) {
@@ -64,12 +85,16 @@ class Modal extends Component<ModalProps> {
   }
 
   render() {
-    const {visible, ...others} = this.props;
+    const {blurView, enableModalBlur, visible, ...others} = this.props;
+    const defaultContainer = enableModalBlur && Constants.isIOS && BlurView ? BlurView : View;
+    const Container: any = blurView ? blurView : defaultContainer;
 
     return (
       <RNModal visible={Boolean(visible)} {...others}>
-        {this.renderTouchableOverlay()}
-        {this.props.children}
+        <Container style={{flex: 1}} blurType="light">
+          {this.renderTouchableOverlay()}
+          {this.props.children}
+        </Container>
       </RNModal>
     );
   }

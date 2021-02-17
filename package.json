@@ -66,10 +66,11 @@
     "@babel/preset-react": "^7.10.1",
     "@babel/runtime": "^7.8.4",
     "@react-native-community/async-storage": "^1.6.2",
+    "@react-native-community/blur": "^3.4.1",
     "@react-native-community/datetimepicker": "^2.1.0",
     "@react-native-community/eslint-config": "^1.1.0",
     "@react-native-community/netinfo": "^5.6.2",
-    "@react-native-community/picker": "^1.6.5",
+    "@react-native-picker/picker": "^1.9.4",
     "@testing-library/react-hooks": "^3.4.2",
     "@types/lodash": "^4.0.0",
     "@types/prop-types": "^15.5.3",
@@ -108,9 +109,10 @@
     "react-native": ">=0.63.4",
     "react-native-gesture-handler": ">=1.9.0",
     "react-native-reanimated": ">=1.13.2",
+    "@react-native-community/blur": ">=3.4.1",
     "@react-native-community/datetimepicker": "^2.1.0",
     "@react-native-community/netinfo": "^5.6.2",
-    "@react-native-community/picker": "^1.6.5"
+    "@react-native-picker/picker": "^1.9.4"
   },
   "jest": {
     "preset": "react-native",
