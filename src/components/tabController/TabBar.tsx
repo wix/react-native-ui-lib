@@ -1,17 +1,7 @@
 // TODO: support commented props
 // TODO: disable scroll when content width is shorter than screen width
-import React, {useEffect, useState, useCallback, useMemo, useRef, useContext} from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  Platform,
-  TextProps,
-  StyleProp,
-  ViewStyle,
-  LayoutRectangle,
-  NativeSyntheticEvent,
-  NativeScrollEvent
-} from 'react-native';
+import React, {useEffect, useMemo, useRef, useContext, ReactNode} from 'react';
+import {StyleSheet, Platform, TextProps, StyleProp, ViewStyle} from 'react-native';
 import Reanimated from 'react-native-reanimated';
 import _ from 'lodash';
 
@@ -23,6 +13,8 @@ import {Colors, Spacings, Typography} from '../../style';
 import {Constants} from '../../helpers';
 import {LogService} from '../../services';
 import FadedScrollView from './FadedScrollView';
+
+import {useScrollToItem} from '../../hooks';
 
 const {Code, Value, interpolate, block, set} = Reanimated;
 
@@ -130,7 +122,7 @@ interface Props extends TabControllerBarProps, BaseComponentInjectedProps, Forwa
 
 /**
  * @description: TabController's TabBar component
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
  */
 const TabBar = (props: Props) => {
   const {
@@ -150,7 +142,7 @@ const TabBar = (props: Props) => {
     activeBackgroundColor,
     backgroundColor,
     containerWidth: propsContainerWidth,
-    centerSelected: propsCenterSelected,
+    centerSelected,
     containerStyle,
     testID,
     children: propsChildren
@@ -158,7 +150,7 @@ const TabBar = (props: Props) => {
 
   const context = useContext(TabBarContext);
   // @ts-ignore // TODO: typescript
-  const {itemStates, items: contextItems, selectedIndex, currentPage, targetPage, registerTabItems} = context;
+  const {itemStates, items: contextItems, currentPage, targetPage, registerTabItems, selectedIndex} = context;
 
   const children = useRef<Props['children']>(_.filter(propsChildren, (child: ChildProps) => !!child));
 
@@ -197,13 +189,6 @@ const TabBar = (props: Props) => {
     }
   }, []);
 
-  const [itemsWidths, setItemsWidths] = useState<number[]>([]);
-  const [itemsOffsets, setItemsOffsets] = useState<number[]>([]);
-  const [scrollEnabled, setScrollEnabled] = useState<boolean>(false);
-  const tabBar = useRef<ScrollView>(null);
-  const tabBarScrollOffset = useRef<number>(0);
-  const contentWidth = useRef<number>(0);
-
   const containerWidth: number = useMemo(() => {
     return propsContainerWidth || Constants.screenWidth;
   }, [propsContainerWidth]);
@@ -212,136 +197,100 @@ const TabBar = (props: Props) => {
   }, [contextItems, propsItems]);
 
   const itemsCount = useRef<number>(items ? _.size(items) : React.Children.count(children.current));
-  const _itemsWidths = useRef<(number | null | undefined)[]>(_.times(itemsCount.current, () => null));
-  const _itemsOffsets = useRef<(number | null | undefined)[]>(_.times(itemsCount.current, () => null));
 
-  const onScroll = useCallback(({nativeEvent: {contentOffset}}: NativeSyntheticEvent<NativeScrollEvent>) => {
-    tabBarScrollOffset.current = contentOffset.x;
-    if (Constants.isRTL && Constants.isAndroid) {
-      const scrollingWidth = Math.max(0, contentWidth.current - containerWidth);
-      tabBarScrollOffset.current = scrollingWidth - tabBarScrollOffset.current;
-    }
-  },
-  [containerWidth]);
-
-  const snapBreakpoints = useMemo(() => {
-    return itemsWidths && itemsOffsets && itemsWidths.length > 0 && itemsOffsets.length > 0 && propsCenterSelected
-      ? _.times(itemsWidths.length, index => {
-        const screenCenter = containerWidth / 2;
-        const itemOffset = itemsOffsets[index];
-        const itemWidth = itemsWidths[index];
-        return itemOffset - screenCenter + itemWidth / 2;
-      })
-      : undefined;
-  }, [itemsWidths, itemsOffsets, propsCenterSelected, containerWidth]);
-
-  const guesstimateCenterValue = 60;
-  const centerOffset = propsCenterSelected ? containerWidth / 2 - guesstimateCenterValue : 0;
-
-  // TODO: move this logic into a ScrollPresenter or something
-  const focusSelected = useCallback(([index]: readonly number[], animated = true) => {
-    const itemOffset = _itemsOffsets.current[index];
-    const itemWidth = _itemsWidths.current[index];
-    const screenCenter = containerWidth / 2;
-
-    let targetOffset;
-
-    if (!_.isNil(itemOffset) && !_.isNil(itemWidth)) {
-      if (propsCenterSelected) {
-        targetOffset = itemOffset - screenCenter + itemWidth / 2;
-      } else if (itemOffset < tabBarScrollOffset.current) {
-        targetOffset = itemOffset - itemWidth;
-      } else if (itemOffset + itemWidth > tabBarScrollOffset.current + containerWidth) {
-        const offsetChange = Math.max(0, itemOffset - (tabBarScrollOffset.current + containerWidth));
-        targetOffset = tabBarScrollOffset.current + offsetChange + itemWidth;
-      }
-
-      if (!_.isUndefined(targetOffset)) {
-        if (Constants.isRTL && Constants.isAndroid) {
-          const scrollingWidth = Math.max(0, contentWidth.current - containerWidth);
-          targetOffset = scrollingWidth - targetOffset;
-        }
-
-        if (tabBar?.current) {
-          tabBar.current.scrollTo({x: targetOffset, animated});
-        }
-      }
-    }
-  },
-  [containerWidth]);
-
-  function getItemsOffsets() {
-    return _.times(_itemsWidths.current.length,
-      i => _.chain(_itemsWidths.current).take(i).sum().value() + centerOffset);
-  }
-
-  const setItemsLayouts = useCallback(() => {
-    // It's important to calculate itemOffsets for RTL support
-    _itemsOffsets.current = getItemsOffsets();
-    const itemsOffsets = _.map(_itemsOffsets.current, offset => (offset ? offset : 0) + INDICATOR_INSET);
-    const itemsWidths = _.map(_itemsWidths.current, width => (width ? width : 0) - INDICATOR_INSET * 2);
-    contentWidth.current = _.sum(_itemsWidths.current);
-    const scrollEnabled = contentWidth.current > containerWidth;
-
-    setItemsWidths(itemsWidths);
-    setItemsOffsets(itemsOffsets);
-    setScrollEnabled(scrollEnabled);
-    focusSelected([selectedIndex], false);
-  }, [containerWidth, selectedIndex]);
-
-  const onItemLayout = useCallback(({width}: Partial<LayoutRectangle>, itemIndex: number) => {
-    _itemsWidths.current[itemIndex] = width;
-    if (!_.includes(_itemsWidths.current, null)) {
-      setItemsLayouts();
-    }
-  },
-  [setItemsLayouts]);
-
-  const _renderTabBarItems = _.map(items, (item, index) => {
-    return (
-      <TabBarItem
-        labelColor={labelColor}
-        selectedLabelColor={selectedLabelColor}
-        labelStyle={labelStyle}
-        selectedLabelStyle={selectedLabelStyle}
-        uppercase={uppercase}
-        iconColor={iconColor}
-        selectedIconColor={selectedIconColor}
-        activeBackgroundColor={activeBackgroundColor}
-        key={item.label}
-        // width={_itemsWidths.current[index]}
-        {...item}
-        {...context}
-        index={index}
-        state={itemStates[index]}
-        onLayout={onItemLayout}
-      />
-    );
+  const {scrollViewRef: tabBar, onItemLayout, itemsWidths, focusIndex, onContentSizeChange, onLayout} = useScrollToItem({
+    itemsCount: itemsCount.current,
+    selectedIndex,
+    offsetType: centerSelected ? useScrollToItem.offsetType.CENTER : useScrollToItem.offsetType.DYNAMIC
   });
 
-  // TODO: Remove once props.children is deprecated
-  const _renderTabBarItemsFromChildren = !children.current
-    ? null
-    : React.Children.map(children.current, (child: Partial<ChildProps>, index: number) => {
-      // @ts-ignore TODO: typescript - not sure if this can be easily solved
-      return React.cloneElement(child, {
-        labelColor,
-        selectedLabelColor,
-        labelStyle,
-        selectedLabelStyle,
-        uppercase,
-        iconColor,
-        selectedIconColor,
-        activeBackgroundColor,
-        ...child.props,
-        ...context,
-        index,
-        state: itemStates[index],
-        onLayout: onItemLayout
-      });
-    });
+  const indicatorOffsets = useMemo((): number[] => {
+    let index = 0;
+    const offsets = [];
+    offsets.push(0);
+    while (index < itemsWidths.length - 1) {
+      ++index;
+      offsets[index] = offsets[index - 1] + itemsWidths[index - 1];
+    }
 
-  const renderTabBarItems = _.isEmpty(itemStates) ? null : items ? _renderTabBarItems : _renderTabBarItemsFromChildren;
+    return offsets;
+  }, [itemsWidths]);
+
+  const _renderTabBarItems = useMemo((): ReactNode => {
+    return _.map(items, (item, index) => {
+      return (
+        <TabBarItem
+          labelColor={labelColor}
+          selectedLabelColor={selectedLabelColor}
+          labelStyle={labelStyle}
+          selectedLabelStyle={selectedLabelStyle}
+          uppercase={uppercase}
+          iconColor={iconColor}
+          selectedIconColor={selectedIconColor}
+          activeBackgroundColor={activeBackgroundColor}
+          key={item.label}
+          // width={_itemsWidths.current[index]}
+          {...item}
+          {...context}
+          index={index}
+          state={itemStates[index]}
+          onLayout={onItemLayout}
+        />
+      );
+    });
+  }, [
+    labelColor,
+    selectedLabelColor,
+    labelStyle,
+    selectedLabelStyle,
+    uppercase,
+    iconColor,
+    selectedIconColor,
+    activeBackgroundColor,
+    itemStates,
+    centerSelected,
+    onItemLayout
+  ]);
+
+  // TODO: Remove once props.children is deprecated
+  const _renderTabBarItemsFromChildren = useMemo((): ReactNode | null => {
+    return !children.current
+      ? null
+      : React.Children.map(children.current, (child: Partial<ChildProps>, index: number) => {
+        // @ts-ignore TODO: typescript - not sure if this can be easily solved
+        return React.cloneElement(child, {
+          labelColor,
+          selectedLabelColor,
+          labelStyle,
+          selectedLabelStyle,
+          uppercase,
+          iconColor,
+          selectedIconColor,
+          activeBackgroundColor,
+          ...child.props,
+          ...context,
+          index,
+          state: itemStates[index],
+          onLayout: centerSelected ? onItemLayout : undefined
+        });
+      });
+  }, [
+    labelColor,
+    selectedLabelColor,
+    labelStyle,
+    selectedLabelStyle,
+    uppercase,
+    iconColor,
+    selectedIconColor,
+    activeBackgroundColor,
+    itemStates,
+    centerSelected,
+    onItemLayout
+  ]);
+
+  const renderTabBarItems = useMemo(() => {
+    return _.isEmpty(itemStates) ? null : items ? _renderTabBarItems : _renderTabBarItemsFromChildren;
+  }, [itemStates, items, _renderTabBarItems, _renderTabBarItemsFromChildren]);
 
   const _indicatorWidth = new Value(0); // TODO: typescript?
   const _indicatorOffset = new Value(0); // TODO: typescript?
@@ -352,50 +301,62 @@ const TabBar = (props: Props) => {
     left: _indicatorOffset
   };
 
-  const renderSelectedIndicator =
+  const selectedIndicator =
     itemsWidths && itemsWidths.length > 0 ? (
       <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]}/>
     ) : undefined;
 
-  const renderCodeBlock = () => {
+  const renderCodeBlock = _.memoize(() => {
     const nodes: any[] = [];
 
     nodes.push(set(_indicatorOffset,
       interpolate(currentPage, {
-        inputRange: itemsOffsets.map((_v, i) => i),
-        outputRange: itemsOffsets
+        inputRange: indicatorOffsets.map((_v, i) => i),
+        outputRange: indicatorOffsets
       })));
     nodes.push(set(_indicatorWidth,
-      interpolate(currentPage, {inputRange: itemsWidths.map((_v, i) => i), outputRange: itemsWidths})));
+      interpolate(currentPage, {
+        inputRange: itemsWidths.map((_v, i) => i),
+        outputRange: itemsWidths.map(v => v - 2 * INDICATOR_INSET)
+      })));
 
-    nodes.push(Reanimated.onChange(targetPage, Reanimated.call([targetPage], focusSelected)));
+    nodes.push(Reanimated.onChange(targetPage, Reanimated.call([targetPage], focusIndex as any)));
 
-    return <Code>{() => block(nodes)}</Code>;
-  };
+    const temp = <Code>{() => block(nodes)}</Code>;
+    return temp;
+  });
 
-  const shadowStyle = enableShadow ? propsShadowStyle || styles.containerShadow : undefined;
+  const shadowStyle = useMemo(() => {
+    return enableShadow ? propsShadowStyle || styles.containerShadow : undefined;
+  }, [enableShadow, propsShadowStyle]);
+
+  const _containerStyle = useMemo(() => {
+    return [styles.container, shadowStyle, {width: containerWidth}, containerStyle];
+  }, [shadowStyle, containerWidth, containerStyle]);
+
+  const indicatorContainerStyle = useMemo(() => {
+    return [styles.tabBar, !_.isUndefined(height) && {height}, {backgroundColor}];
+  }, [height, backgroundColor]);
+
+  const scrollViewContainerStyle = useMemo(() => {
+    return {minWidth: containerWidth};
+  }, [containerWidth]);
+
   return (
-    <View style={[styles.container, shadowStyle, {width: containerWidth}, containerStyle]}>
+    <View style={_containerStyle}>
       <FadedScrollView
-        // @ts-ignore TODO: typescript
+        /**
+         // @ts-ignore TODO: typescript */
         ref={tabBar}
         horizontal
-        contentContainerStyle={{minWidth: containerWidth}}
-        scrollEnabled={scrollEnabled}
-        onScroll={onScroll}
+        contentContainerStyle={scrollViewContainerStyle}
+        scrollEnabled // TODO:
         testID={testID}
-        snapToOffsets={snapBreakpoints}
+        onContentSizeChange={onContentSizeChange}
+        onLayout={onLayout}
       >
-        <View
-          style={[
-            styles.tabBar,
-            !_.isUndefined(height) && {height},
-            {paddingHorizontal: centerOffset, backgroundColor}
-          ]}
-        >
-          {renderTabBarItems}
-        </View>
-        {renderSelectedIndicator}
+        <View style={indicatorContainerStyle}>{renderTabBarItems}</View>
+        {selectedIndicator}
       </FadedScrollView>
       {_.size(itemsWidths) > 1 && renderCodeBlock()}
     </View>
@@ -435,7 +396,8 @@ const styles = StyleSheet.create({
     left: 0,
     width: 70,
     height: 2,
-    backgroundColor: Colors.blue30
+    marginHorizontal: INDICATOR_INSET,
+    backgroundColor: Colors.primary
   },
   containerShadow: {
     ...Platform.select({

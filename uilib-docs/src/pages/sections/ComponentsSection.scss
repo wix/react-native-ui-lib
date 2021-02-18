@@ -1,0 +1,34 @@
+@import 'src/styles/constants';
+
+.components {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  .components-inner {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    p {
+      @include desktop {
+        width: 40%;
+        min-width: 200px;
+      }
+    }
+  }
+
+  img {
+    width: 100vw;
+    min-width: 400px;
+    margin-top: 20px;
+
+    @include desktop {
+      margin-top: 0;
+    }
+  }
+}

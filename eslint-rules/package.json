@@ -7,7 +7,7 @@
     "eslintplugin",
     "eslint-plugin"
   ],
-  "author": "Tnbal Tish <inbalti@wix.com>",
+  "author": "Inbal Tish <inbalti@wix.com>",
   "license": "MIT",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

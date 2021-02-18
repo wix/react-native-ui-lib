@@ -1,0 +1,97 @@
+@import 'src/styles/constants';
+.intro {
+  position: relative;
+  height: 75vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  @include desktop {
+    height: 100vh;
+  }
+
+  .intro-cover {
+    position: absolute;
+    width: 180vw;
+    right: -10vw;
+    opacity: 0.3;
+
+    @include desktop {
+      width: 100vw;
+      opacity: 1;
+    }
+  }
+
+  .intro-content {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    top: 15vh;
+    text-align: center;
+
+    @include desktop() {
+      top: 15vw;
+      left: 7vw;
+      width: 40%;
+      text-align: start;
+    }
+
+    > p {
+      font-size: 3em;
+      font-weight: 600;
+      margin: 0;
+
+      > .lib-name {
+        color: $primary;
+      }
+    }
+
+    .git-stars {
+      display: flex;
+      align-items: center;
+      border: 1px solid;
+      border-radius: 2px;
+      align-self: center;
+
+      @include desktop {
+        align-self: flex-start;
+      }
+
+      img {
+        padding: 0 4px;
+        height: 16px;
+      }
+
+      span {
+        display: inline-block;
+        vertical-align: middle;
+        padding: 0 10px;
+        border-left: 1px solid;
+        font-weight: 500;
+      }
+    }
+
+    .buttons {
+      margin-top: 40px;
+      align-self: center;
+      display: flex;
+      flex-direction: column;
+
+      @include desktop() {
+        align-self: flex-start;
+        flex-direction: row;
+      }
+
+      > :first-child {
+        margin-bottom: 10px;
+
+        @include desktop() {
+          margin-right: 10px;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

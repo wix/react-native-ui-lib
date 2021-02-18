@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {Colors, View, Badge, Button, Text} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, View, Badge, Button, Text, Image} from 'react-native-ui-lib'; //eslint-disable-line
 const BadgesSpace = 30;
 const plusIcon = require('../../assets/icons/chevronUp.png');
 const minusIcon = require('../../assets/icons/chevronDown.png');
@@ -8,15 +8,11 @@ const star = require('../../assets/icons/star.png');
 const bell = require('../../assets/icons/bell.png');
 
 export default class BadgesScreen extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    value: 42
+  };
 
-    this.state = {
-      value: 42
-    };
-  }
-
-  changeLabelValue(value) {
+  changeLabelValue(value: number) {
     const currValue = this.state.value;
     const newValue = currValue + value;
     if (newValue >= 1) {
@@ -25,6 +21,23 @@ export default class BadgesScreen extends Component {
   }
 
   render() {
+    const customElement1 = (
+      <View row>
+        <Image source={bell}/>
+        <Image source={bell}/>
+      </View>
+    );
+
+    const customElement2 = (
+      <View row>
+        <Image source={bell}/>
+        <Text white text90>
+          37
+        </Text>
+        <Image source={bell}/>
+      </View>
+    );
+
     return (
       <ScrollView style={{backgroundColor: Colors.dark70}} contentContainerStyle={styles.container}>
         <Text text50 row center marginB-15>
@@ -86,7 +99,6 @@ export default class BadgesScreen extends Component {
         <View row>
           <View
             center
-            column
             style={{justifyContent: 'space-around', alignItems: 'flex-start', width: 140, height: 140}}
           >
             <Text text80 row>
@@ -98,7 +110,7 @@ export default class BadgesScreen extends Component {
             </Text>
           </View>
 
-          <View center column style={{justifyContent: 'space-around', width: 40, height: 140}}>
+          <View center style={{justifyContent: 'space-around', width: 40, height: 140}}>
             <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.green30} size={'pimpleSmall'}/>
             <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.red30} size={'pimpleBig'}/>
             <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.blue30} size={'pimpleHuge'}/>
@@ -141,10 +153,17 @@ export default class BadgesScreen extends Component {
           Counter Icon Badges
         </Text>
         <View row paddingH-15>
-            <Badge marginR-10 label={'9999'} labelFormatterLimit={3} icon={bell} backgroundColor={Colors.red30}/>
-            <Badge marginR-10 label={'4'} icon={bell} backgroundColor={Colors.red30}/>
+          <Badge marginR-10 label={'9999'} labelFormatterLimit={3} icon={bell} backgroundColor={Colors.red30}/>
+          <Badge marginR-10 label={'4'} icon={bell} backgroundColor={Colors.red30}/>
         </View>
 
+        <Text text50 marginB-10 row center marginT-25>
+          Custom Element Badges
+        </Text>
+        <View row paddingH-15>
+          <Badge marginR-10 label={'17'} customElement={customElement1}/>
+          <Badge marginR-10 customElement={customElement2} backgroundColor={Colors.grey30}/>
+        </View>
       </ScrollView>
     );
   }

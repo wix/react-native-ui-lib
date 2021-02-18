@@ -51,7 +51,7 @@ type Props = CardSectionProps & asCardChildProps;
 
 /**
  * @description: Card.Section for rendering content easily inside a card
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.tsx
  */
 class CardSection extends PureComponent<Props> {
   static displayName = 'Card.Section';
@@ -66,6 +66,10 @@ class CardSection extends PureComponent<Props> {
 
   renderContent = () => {
     const {content, leadingIcon, trailingIcon, contentStyle, testID} = this.props;
+    if (!leadingIcon && !trailingIcon && _.isEmpty(content)) {
+      return;
+    }
+
     return (
       <>
         {leadingIcon && <Image testID={`${testID}.leadingIcon`} {...leadingIcon}/>}

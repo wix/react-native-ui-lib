@@ -1,9 +1,0 @@
-{
-  "scheme": null,
-  "hostType": "lan",
-  "lanType": "ip",
-  "dev": true,
-  "minify": false,
-  "urlRandomness": "a7-syr",
-  "https": false
-}

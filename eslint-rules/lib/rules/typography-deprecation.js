@@ -55,6 +55,17 @@ module.exports = {
 
     const imports = [];
 
+    function isComponentRelevant(node, components) {
+      let isComponentRelevant = true;
+      if (!_.isEmpty(components)) {
+        if (_.get(node, 'parent.type') === 'JSXOpeningElement') {
+          return components.includes(_.get(node, 'parent.name.name'));
+        }
+      }
+
+      return isComponentRelevant;
+    }
+
     function findAndReportDeprecation(node, useDefaultImport, useShortVersion) {
       imports.forEach(currentImport => {
         const source = Object.keys(currentImport)[0];
@@ -70,10 +81,13 @@ module.exports = {
             );
 
             if (foundDeprecations.length > 0) {
-              const fix = useDefaultImport
-                ? foundDeprecations[0].fix
-                : getLocalizedFix(foundDeprecations[0].fix, currentImport);
-              reportDeprecatedTypography(node, {...foundDeprecations[0], fix}, useShortVersion);
+              const foundDeprecation = foundDeprecations[0];
+              if (isComponentRelevant(node, foundDeprecation.components)) {
+                const fix = useDefaultImport
+                  ? foundDeprecation.fix
+                  : getLocalizedFix(foundDeprecation.fix, currentImport);
+                reportDeprecatedTypography(node, {...foundDeprecation, fix}, useShortVersion);
+              }
             }
           }
         }
@@ -85,7 +99,6 @@ module.exports = {
     }
 
     function testJSXAttribute(node) {
-      if (node.value) return; // so we only have truthy props (title and not title={'Text'})
       findAndReportDeprecation(node, true, true);
     }
 

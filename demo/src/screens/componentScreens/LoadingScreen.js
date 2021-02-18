@@ -1,40 +1,22 @@
 import React, {Component} from 'react';
-import {View as AnimatableView} from 'react-native-animatable';
-import {View, Text, LoaderScreen, Colors} from 'react-native-ui-lib';//eslint-disable-line
-
+import {View, Text, LoaderScreen, Colors} from 'react-native-ui-lib';
 export default class LoadingScreen extends Component {
-
   state = {
-    loading: true,
+    loading: true
   };
 
   componentDidMount() {
     setTimeout(() => {
-      this.setState({
-        animationConfig: {
-          animation: 'fadeOut',
-          onAnimationEnd: () => this.setState({loading: false}),
-        },
-      });
+      this.setState({loading: false});
     }, 2500);
   }
 
   render() {
-    const {loading, animationConfig} = this.state;
+    const {loading} = this.state;
     return (
       <View flex bg-orange70 center>
-        <Text text10>
-          Content Content Content
-        </Text>
-        {loading &&
-        <AnimatableView {...animationConfig}>
-          <LoaderScreen
-            color={Colors.blue30}
-            message="Loading..."
-            overlay
-          />
-        </AnimatableView>
-        }
+        <Text text10>Content Content Content</Text>
+        {loading && <LoaderScreen color={Colors.blue30} message="Loading..." overlay/>}
       </View>
     );
   }

@@ -1,8 +1,8 @@
 import React, {useCallback} from 'react';
-import {ViewProps, ScrollView, ScrollViewProps, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
+import {ViewProps, ScrollView, ScrollViewProps, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent} from 'react-native';
 import Fader from '../fader';
-import withScrollEnabler, {WithScrollEnablerProps} from '../../commons/withScrollEnabler';
-import withScrollReached, {WithScrollReachedProps} from '../../commons/withScrollReached';
+import useScrollEnabler from '../../hooks/useScrollEnabler';
+import useScrollReached from '../../hooks/useScrollReached';
 import forwardRef, {ForwardRefInjectedProps} from '../../commons/forwardRef';
 
 export type FadedScrollViewProps = ViewProps &
@@ -10,22 +10,42 @@ export type FadedScrollViewProps = ViewProps &
     children?: React.ReactNode | React.ReactNode[];
   };
 
-type ScrollReachedProps = FadedScrollViewProps & WithScrollReachedProps;
-type ScrollEnabledProps = ScrollReachedProps & WithScrollEnablerProps;
-type Props = ScrollEnabledProps & ForwardRefInjectedProps;
+type Props = FadedScrollViewProps & ForwardRefInjectedProps;
 
 const FADER_SIZE = 76;
 
 const FadedScrollView = (props: Props) => {
-  const {scrollEnablerProps, scrollReachedProps, children, onScroll: propsOnScroll, ...other} = props;
-  const showStart = scrollEnablerProps.scrollEnabled && !scrollReachedProps.isScrollAtStart;
-  const showEnd = scrollEnablerProps.scrollEnabled && !scrollReachedProps.isScrollAtEnd;
+  const {
+    children,
+    onScroll: propsOnScroll,
+    onContentSizeChange: propsOnContentSizeChange,
+    onLayout: propsOnLayout,
+    ...other
+  } = props;
+  const {onContentSizeChange, onLayout, scrollEnabled} = useScrollEnabler({horizontal: true});
+  const {onScroll: onScrollReached, isScrollAtStart, isScrollAtEnd} = useScrollReached({
+    horizontal: true,
+    threshold: 50
+  });
+
+  const showStart = scrollEnabled && !isScrollAtStart;
+  const showEnd = scrollEnabled && !isScrollAtEnd;
 
   const onScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    scrollReachedProps.onScroll(event);
+    onScrollReached(event);
       propsOnScroll?.(event);
   },
-  [scrollReachedProps.onScroll, propsOnScroll]);
+  [onScrollReached, propsOnScroll]);
+
+  const _onContentSizeChange = useCallback((w: number, h: number) => {
+    propsOnContentSizeChange?.(w, h);
+    onContentSizeChange?.(w, h);
+  }, [propsOnContentSizeChange, onContentSizeChange]);
+
+  const _onLayout = useCallback((event: LayoutChangeEvent) => {
+    propsOnLayout?.(event);
+    onLayout?.(event);
+  }, [propsOnLayout, onLayout]);
 
   if (children) {
     return (
@@ -36,9 +56,9 @@ const FadedScrollView = (props: Props) => {
           scrollEventThrottle={16}
           decelerationRate={'fast'}
           {...other}
-          scrollEnabled={scrollEnablerProps.scrollEnabled}
-          onContentSizeChange={scrollEnablerProps.onContentSizeChange}
-          onLayout={scrollEnablerProps.onLayout}
+          scrollEnabled={scrollEnabled}
+          onContentSizeChange={_onContentSizeChange}
+          onLayout={_onLayout}
           onScroll={onScroll}
           ref={props.forwardedRef}
         >
@@ -53,8 +73,4 @@ const FadedScrollView = (props: Props) => {
   return null;
 };
 
-// TODO: fix withScrollEnabler props (add <>)
-export default withScrollReached<FadedScrollViewProps>(withScrollEnabler(forwardRef<Props>(FadedScrollView)), {
-  horizontal: true,
-  threshold: 50
-});
+export default forwardRef<Props>(FadedScrollView);
