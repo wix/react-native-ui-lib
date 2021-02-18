@@ -39,6 +39,7 @@
   flex-direction: column;
   margin: auto;
   align-items: center;
+  padding: 0 20px;
 
   .main-section {
     position: relative;
@@ -144,7 +145,7 @@
 
       code {
         display: inline-block;
-        white-space: pre;
+        white-space: break-spaces;
         text-align: left;
         background: $grey10;
         padding: 10px;

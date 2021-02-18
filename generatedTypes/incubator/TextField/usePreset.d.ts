@@ -198,8 +198,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     retainSpace?: boolean | undefined;
     showCharCounter?: boolean | undefined;
     charCounterStyle?: import("react-native").TextStyle | undefined;
-    leadingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, string | any | (new (props: any) => import("react").Component<any, any, any>)> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
-    trailingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, string | any | (new (props: any) => import("react").Component<any, any, any>)> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
+    leadingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, any> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
+    trailingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, any> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
     validate?: "number" | Function | "required" | "email" | "url" | "price" | import("./types").Validator[] | undefined;
     validateOnStart?: boolean | undefined;
     validateOnChange?: boolean | undefined;
@@ -560,8 +560,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     retainSpace?: boolean | undefined;
     showCharCounter?: boolean | undefined;
     charCounterStyle?: import("react-native").TextStyle | undefined;
-    leadingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, string | any | (new (props: any) => import("react").Component<any, any, any>)> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
-    trailingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, string | any | (new (props: any) => import("react").Component<any, any, any>)> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
+    leadingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, any> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
+    trailingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, any> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
     validate?: "number" | Function | "required" | "email" | "url" | "price" | import("./types").Validator[] | undefined;
     validateOnStart?: boolean | undefined;
     validateOnChange?: boolean | undefined;
@@ -1042,8 +1042,8 @@ export default function usePreset({ preset, ...props }: InternalTextFieldProps):
     retainSpace?: boolean | undefined;
     showCharCounter?: boolean | undefined;
     charCounterStyle?: import("react-native").TextStyle | undefined;
-    leadingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, string | any | (new (props: any) => import("react").Component<any, any, any>)> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
-    trailingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, string | any | (new (props: any) => import("react").Component<any, any, any>)> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
+    leadingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, any> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
+    trailingAccessory?: import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, any> | null) | (new (props: any) => import("react").Component<any, any, any>)> | undefined;
     validate?: "number" | Function | "required" | "email" | "url" | "price" | import("./types").Validator[] | undefined;
     validateOnStart?: boolean | undefined;
     validateOnChange?: boolean | undefined;

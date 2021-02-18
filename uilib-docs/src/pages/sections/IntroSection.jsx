@@ -4,6 +4,8 @@ import './IntroSection.scss';
 import introCover from '../../images/newDesign/introCover.jpg';
 import goldStar from '../../images/goldStar.svg';
 
+import expoSnackLink from '../../data/expoSnackLink';
+
 export default () => {
   return (
     <div className="intro">
@@ -14,7 +16,7 @@ export default () => {
         </p>
         <div className="git-stars">
           <img src={goldStar} />
-          <span className="star-count">2.8k</span>
+          <span className="star-count">2.9k</span>
         </div>
 
         <div className="buttons">
@@ -22,7 +24,7 @@ export default () => {
             <button className="dark">View Docs</button>
           </Link>
 
-          <a href="https://snack.expo.io/@ethanshar/rnuilib_snack" target="_blank" rel="noopener noreferrer">
+          <a href={expoSnackLink} target="_blank" rel="noopener noreferrer">
             <button>Expo-Snack Demo</button>
           </a>
         </div>

@@ -173,7 +173,7 @@ const TabBar = (props: Props) => {
 
   const itemsCount = useRef<number>(_.size(items));
 
-  const {scrollViewRef: tabBar, onItemLayout, itemsWidths, focusIndex} = useScrollToItem({
+  const {scrollViewRef: tabBar, onItemLayout, itemsWidths, focusIndex, onContentSizeChange, onLayout} = useScrollToItem({
     itemsCount: itemsCount.current,
     selectedIndex,
     offsetType: centerSelected ? useScrollToItem.offsetType.CENTER : useScrollToItem.offsetType.DYNAMIC
@@ -292,6 +292,8 @@ const TabBar = (props: Props) => {
         contentContainerStyle={scrollViewContainerStyle}
         scrollEnabled // TODO:
         testID={testID}
+        onContentSizeChange={onContentSizeChange}
+        onLayout={onLayout}
       >
         <View style={indicatorContainerStyle}>{renderTabBarItems}</View>
         {selectedIndicator}
