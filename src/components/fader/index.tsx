@@ -40,6 +40,10 @@ export type FaderProps = Pick<ImageProps, 'supportRTL'> & {
 
 const DEFAULT_FADE_SIZE = 50;
 
+/**
+ * @description: A gradient fading overlay to render on top of overflowing content (like scroll component)
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FaderScreen.tsx
+ */
 function Fader(props: FaderProps) {
   const getFadeSize = useCallback(() => {
     return props.size || DEFAULT_FADE_SIZE;

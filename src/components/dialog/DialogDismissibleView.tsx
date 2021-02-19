@@ -56,6 +56,7 @@ interface LocationProps {
 const DEFAULT_DIRECTION = PanningProvider.Directions.DOWN;
 
 class DialogDismissibleView extends PureComponent<Props, State> {
+  static displayName = 'IGNORE';
 
   public static defaultProps: Partial<Props> = {
     direction: DEFAULT_DIRECTION,
