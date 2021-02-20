@@ -16,7 +16,7 @@ import {
 } from '../../commons/new';
 import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
 
-export interface TouchableOpacityProps extends Omit<RNViewProps, 'style' | 'onPress'>, ContainerModifiers {
+export interface TouchableOpacityProps extends Omit<RNTouchableOpacityProps, 'style' | 'onPress'>, ContainerModifiers {
     /**
      * background color for TouchableOpacity
      */
