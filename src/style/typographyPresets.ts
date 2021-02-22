@@ -225,7 +225,7 @@ _.forEach(keys, (key) => {
     const fontWeightKey = `${fontKey}${weightValue}` as keyof TypographyKeys;
     Typography[fontWeightKey] = {
       ...Typography[fontKey],
-      fontWeight: Constants.isIOS ? WEIGHT_TYPES[weightKey] : ( weightKey == 'BO' || weightKey == 'H' ) ? 'bold' : undefined
+      fontWeight: Constants.isIOS ? WEIGHT_TYPES[weightKey] : ( weightKey === 'BO' || weightKey === 'H' ) ? 'bold' : undefined
     };
   });
 });
