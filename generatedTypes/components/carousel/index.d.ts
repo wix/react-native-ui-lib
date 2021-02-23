@@ -16,7 +16,7 @@ declare class Carousel extends Component<CarouselProps, CarouselState> {
     static defaultProps: DefaultProps;
     static pageControlPositions: typeof PageControlPosition;
     carousel: RefObject<ScrollView>;
-    autoplayTimer?: number;
+    autoplayTimer?: ReturnType<typeof setTimeout>;
     orientationChange?: boolean;
     skippedInitialScroll?: boolean;
     constructor(props: CarouselProps);
