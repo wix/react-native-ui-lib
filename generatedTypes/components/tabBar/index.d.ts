@@ -2,7 +2,7 @@ import React, { Component, ElementRef, RefObject } from 'react';
 import { ScrollView, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { ScrollBarProps } from '../scrollBar';
 import TabBarItem, { TabBarItemProps } from './TabBarItem';
-declare type TabBarProps = ScrollBarProps & {
+export declare type TabBarProps = ScrollBarProps & {
     /**
      * Show Tab Bar bottom shadow
      */
