@@ -9,13 +9,13 @@ import expoSnackLink from '../../data/expoSnackLink';
 export default () => {
   return (
     <div className="intro">
-      <img src={introCover} className="intro-cover" />
+      <img src={introCover} alt="showcase" className="intro-cover" />
       <div className="intro-content">
         <p>
           <span className="lib-name">RNUI</span> is a UI Toolset & Components Library for React Native
         </p>
         <div className="git-stars">
-          <img src={goldStar} />
+          <img src={goldStar} alt="gold star" />
           <span className="star-count">2.9k</span>
         </div>
 
