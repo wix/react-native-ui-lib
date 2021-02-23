@@ -34,7 +34,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
   static pageControlPositions = PageControlPosition;
   carousel: RefObject<ScrollView> = React.createRef();
-  autoplayTimer?: number;
+  autoplayTimer?: ReturnType<typeof setTimeout>;
   orientationChange?: boolean;
   skippedInitialScroll?: boolean;
 
