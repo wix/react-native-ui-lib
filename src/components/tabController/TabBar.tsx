@@ -192,6 +192,7 @@ const TabBar = (props: Props) => {
   const containerWidth: number = useMemo(() => {
     return propsContainerWidth || Constants.screenWidth;
   }, [propsContainerWidth]);
+
   const items = useMemo(() => {
     return contextItems || propsItems;
   }, [contextItems, propsItems]);
@@ -239,6 +240,7 @@ const TabBar = (props: Props) => {
       );
     });
   }, [
+    items,
     labelColor,
     selectedLabelColor,
     labelStyle,
@@ -275,6 +277,7 @@ const TabBar = (props: Props) => {
         });
       });
   }, [
+    propsChildren,
     labelColor,
     selectedLabelColor,
     labelStyle,
