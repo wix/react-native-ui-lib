@@ -17,8 +17,8 @@ import {
 import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
 
 
-export type TouchableOpacityProps = Omit<RNTouchableOpacityProps, 'style' | 'onPress'> &
-  ContainerModifiers & {
+export interface TouchableOpacityProps extends Omit<RNTouchableOpacityProps, 'style' | 'onPress'>,
+  ContainerModifiers {
     /**
      * background color for TouchableOpacity
      */
