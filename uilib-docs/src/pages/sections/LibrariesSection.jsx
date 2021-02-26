@@ -25,7 +25,7 @@ const Library = ({image, name, link}) => {
   return (
     <a href={link} target="_blank" rel="noopener noreferrer">
       <div className="library">
-        <img src={image} />
+        <img src={image} alt={name} />
         <h5 className="name">{name}</h5>
       </div>
     </a>

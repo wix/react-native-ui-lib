@@ -72,10 +72,10 @@ class Navbar extends Component {
     });
     return (
       <div className="search">
-        <img src={searchIcon} />
+        <img src={searchIcon} alt="search" />
         <input placeholder="Search..." onChange={this.setFilter} value={filter} />
         <button className={clearButtonClassName} onClick={this.resetSearch}>
-          <img src={clearIcon} />
+          <img src={clearIcon} alt="clear search" />
         </button>
       </div>
     );
