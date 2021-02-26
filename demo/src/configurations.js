@@ -2,11 +2,16 @@ import {Assets, Colors, Typography, Spacings} from 'react-native-ui-lib'; // esl
 
 Assets.loadAssetsGroup('icons.demo', {
   add: require('./assets/icons/add.png'),
+  camera: require('./assets/icons/cameraSelected.png'),
   close: require('./assets/icons/close.png'),
   dashboard: require('./assets/icons/dashboard.png'),
   image: require('./assets/icons/image.png'),
   refresh: require('./assets/icons/refresh.png'),
   search: require('./assets/icons/search.png')
+});
+
+Assets.loadAssetsGroup('images.demo', {
+  brokenImage: require('./assets/images/placeholderMissingImage.png')
 });
 
 Typography.loadTypographies({

@@ -39,6 +39,7 @@ export interface ModalProps extends RNModalProps {
 declare class Modal extends Component<ModalProps> {
     static displayName: string;
     static TopBar: typeof TopBar;
+    constructor(props: ModalProps);
     renderTouchableOverlay(): JSX.Element | undefined;
     render(): JSX.Element;
 }
