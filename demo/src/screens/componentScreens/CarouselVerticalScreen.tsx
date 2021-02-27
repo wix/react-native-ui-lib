@@ -1,13 +1,8 @@
 import {Carousel, Constants, Text, View, Colors} from 'react-native-ui-lib';
 import React, {Component} from 'react';
+import {StyleSheet, Animated, TextStyle} from 'react-native';
 import _ from 'lodash';
-import {StyleSheet} from 'react-native';
-import {
-  renderBooleanOption,
-  renderSliderOption
-} from '../ExampleScreenPresenter';
-
-interface Props {}
+import {renderBooleanOption, renderSliderOption} from '../ExampleScreenPresenter';
 
 interface State {
   numberOfPagesShown: number;
@@ -29,10 +24,11 @@ const BACKGROUND_COLORS = [
 
 const pageHeight = Constants.windowHeight / 2;
 
-class CarouselVerticalScreen extends Component<Props, State> {
+class CarouselVerticalScreen extends Component<{}, State> {
   carousel = React.createRef<typeof Carousel>();
+  animatedScrollOffset = new Animated.ValueXY();
 
-  constructor(props: Props) {
+  constructor(props: {}) {
     super(props);
 
     this.state = {
@@ -41,44 +37,70 @@ class CarouselVerticalScreen extends Component<Props, State> {
     };
   }
 
+  renderAnimatedCounter = () => {
+    const {numberOfPagesShown} = this.state;
+    const animatedStyles = _.times(numberOfPagesShown, page => {
+      return {
+        opacity: this.animatedScrollOffset.y.interpolate({
+          inputRange: [pageHeight * page - 50, pageHeight * page, pageHeight * page + 50],
+          outputRange: [0, 1, 0]
+        }),
+        transform: [
+          {
+            translateX: this.animatedScrollOffset.y.interpolate({
+              inputRange: [pageHeight * page - 50, pageHeight * page, pageHeight * page + 50],
+              outputRange: [-50, 0, 50]
+            })
+          }
+        ]
+      };
+    });
+    return (
+      <View absT>
+        {_.times(numberOfPagesShown, page => (
+          <Text key={page} h1 animated style={[styles.animatedPageCounter, animatedStyles[page]] as TextStyle}>
+            {page}
+          </Text>
+        ))}
+      </View>
+    );
+  };
+
   render() {
-    const {numberOfPagesShown, autoplay} = this.state
+    const {numberOfPagesShown, autoplay} = this.state;
     return (
       <View flex paddingT-20>
         <View marginH-20 marginB-20>
           {renderBooleanOption.call(this, 'autoplay', 'autoplay')}
-          {renderSliderOption.call(
-            this,
-            'Number of pages shown',
-            'numberOfPagesShown',
-            {
-              min: 3,
-              max: 10,
-              step: 1,
-              initial: 5
-            }
-          )}
+          {renderSliderOption.call(this, 'Number of pages shown', 'numberOfPagesShown', {
+            min: 3,
+            max: 10,
+            step: 1,
+            initial: 5
+          })}
         </View>
-        <Carousel
-          key={'carousel'}
-          ref={this.carousel}
-          autoplay={autoplay}
-          pageWidth={Constants.windowWidth}
-          pageHeight={pageHeight}
-          initialPage={0}
-          containerStyle={{height: pageHeight}}
-          allowAccessibleLayout
-          horizontal={false}
-        >
-          {_.map([...Array(numberOfPagesShown)], (_, index) => (
-            <Page
-              style={{backgroundColor: BACKGROUND_COLORS[index]}}
-              key={index}
-            >
-              <Text style={styles.pageText}>{index}</Text>
-            </Page>
-          ))}
-        </Carousel>
+        <View>
+          <Carousel
+            key={'carousel'}
+            ref={this.carousel}
+            animatedScrollOffset={this.animatedScrollOffset}
+            scrollEventThrottle={16}
+            autoplay={autoplay}
+            pageWidth={Constants.windowWidth}
+            pageHeight={pageHeight}
+            initialPage={0}
+            containerStyle={{height: pageHeight}}
+            allowAccessibleLayout
+            horizontal={false}
+          >
+            {_.map([...Array(numberOfPagesShown)], (_, index) => (
+              <Page style={{backgroundColor: BACKGROUND_COLORS[index]}} key={index}>
+                <Text style={styles.pageText}>{index}</Text>
+              </Page>
+            ))}
+          </Carousel>
+          {this.renderAnimatedCounter()}
+        </View>
       </View>
     );
   }
@@ -103,7 +125,12 @@ const styles = StyleSheet.create({
   pageText: {
     fontSize: 40,
     color: 'white'
+  },
+  animatedPageCounter: {
+    position: 'absolute',
+    top: 20,
+    left: 20
   }
 });
 
-export default CarouselVerticalScreen
+export default CarouselVerticalScreen;
