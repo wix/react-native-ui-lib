@@ -59,7 +59,7 @@ class CardSection extends PureComponent<Props> {
   constructor(props: Props) {
     super(props);
 
-    if (props.imageSource) {
+    if (props.source) {
       LogService.deprecationWarn({component: 'CardSection', oldProp: 'source', newProp: 'imageSource'});
     }
   }
