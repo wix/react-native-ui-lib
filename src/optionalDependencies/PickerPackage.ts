@@ -1,4 +1,4 @@
-let PickerPackage:any, CommunityPickerPackage:any;
+let PickerPackage: any, CommunityPickerPackage: any;
 try {
   PickerPackage = require('@react-native-picker/picker'); // New package
 } catch (error) {
