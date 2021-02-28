@@ -1,15 +1,13 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Modal as RNModal, ModalProps as RNModalProps, TouchableWithoutFeedback, GestureResponderEvent} from 'react-native';
+import {BlurViewPackage} from '../../optionalDependencies';
 import {Constants} from '../../helpers';
 import {asBaseComponent} from '../../commons/new';
 import TopBar, {ModalTopBarProps} from './TopBar';
 import View from '../../components/view';
 
-let BlurView: any;
-try {
-  BlurView = require('@react-native-community/blur').BlurView;
-} catch (error) {} // warning in ctor, depends if user pass enableBlur
+const BlurView = BlurViewPackage?.BlurView;
 
 export {ModalTopBarProps};
 export interface ModalProps extends RNModalProps {

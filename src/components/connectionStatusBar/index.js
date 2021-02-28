@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {StyleSheet, Text} from 'react-native';
-import NetInfo from '@react-native-community/netinfo';
+import {NetInfoPackage as NetInfo} from '../../optionalDependencies';
 import {Constants} from '../../helpers';
 import {PureBaseComponent} from '../../commons';
 import {Colors, Typography} from '../../style';
@@ -59,7 +59,12 @@ export default class ConnectionStatusBar extends PureBaseComponent {
       isConnected: true,
       isCancelled: false
     };
-    this.getInitialConnectionState();
+    
+    if (NetInfo) {
+      this.getInitialConnectionState();
+    } else {
+      console.error(`RNUILib ConnectionStatusBar component requires installing "@react-native-community/netinfo" dependency`);
+    }
   }
 
   generateStyles() {
@@ -67,7 +72,7 @@ export default class ConnectionStatusBar extends PureBaseComponent {
   }
 
   componentDidMount() {
-    this.unsubscribe = NetInfo.addEventListener(this.onConnectionChange);
+    this.unsubscribe = NetInfo?.addEventListener(this.onConnectionChange);
   }
 
   componentWillUnmount() {
@@ -100,7 +105,7 @@ export default class ConnectionStatusBar extends PureBaseComponent {
   }
 
   async getInitialConnectionState() {
-    const isConnected = (await NetInfo.fetch()).isConnected;
+    const isConnected = (await NetInfo?.fetch()).isConnected;
 
     this.setState({isConnected});
     if (this.props.onConnectionChange) {
