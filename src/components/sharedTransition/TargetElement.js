@@ -4,6 +4,7 @@ import TouchableOpacity from '../touchableOpacity';
 import ShareTransitionContext from './ShareTransitionContext';
 
 class TargetElement extends Component {
+  displayName = 'IGNORE';
   state = {};
 
   componentDidMount() {

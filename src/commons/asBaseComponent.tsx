@@ -33,7 +33,7 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
     };
 
     static getDerivedStateFromError(error: any) {
-      UIComponent.defaultProps?.onError(error, WrappedComponent.defaultProps);
+      UIComponent.defaultProps?.onError?.(error, WrappedComponent.defaultProps);
       return {error: true};
     }
 

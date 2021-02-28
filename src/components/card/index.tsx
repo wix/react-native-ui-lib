@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, ViewStyle} from 'react-native';
-import {BlurView} from '@react-native-community/blur';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 // import {PureBaseComponent} from '../../commons';
@@ -16,10 +15,14 @@ import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Image from '../image';
 import CardImage from './CardImage';
 import CardSection, {CardSectionProps} from './CardSection';
+import {BlurViewPackage} from '../../optionalDependencies';
 // @ts-ignore
 import Assets from '../../assets';
 import CardContext from './CardContext';
 import * as CardPresenter from './CardPresenter';
+
+const BlurView = BlurViewPackage?.BlurView;
+
 
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 const DEFAULT_SELECTION_PROPS = {
@@ -125,6 +128,10 @@ class Card extends PureComponent<PropTypes, State> {
       animatedSelected: new Animated.Value(Number(this.props.selected))
     };
     this.styles = createStyles(this.props);
+
+    if (props.enableBlur && !BlurView) {
+      console.error(`RNUILib Card's "enableBlur" prop requires installing "@react-native-community/blur" dependency`);
+    }
   }
 
   componentDidUpdate(prevProps: PropTypes) {
@@ -303,7 +310,7 @@ class Card extends PureComponent<PropTypes, State> {
         {...others}
         ref={forwardedRef}
       >
-        {Constants.isIOS && enableBlur && (
+        {Constants.isIOS && enableBlur && BlurView && (
           // @ts-ignore
           <BlurView
             style={[this.styles.blurView, {borderRadius: brRadius}]}

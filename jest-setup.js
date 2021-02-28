@@ -8,3 +8,4 @@ jest.mock('@react-native-community/blur', () => {});
 jest.mock('@react-native-community/netinfo', () => {});
 jest.mock('react-native-reanimated', () => ({}));
 jest.mock('react-native-gesture-handler', () => {});
+jest.mock('@react-native-picker/picker', () => ({Picker: {Item: {}}}));

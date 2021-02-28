@@ -8,15 +8,11 @@ const star = require('../../assets/icons/star.png');
 const bell = require('../../assets/icons/bell.png');
 
 export default class BadgesScreen extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    value: 42
+  };
 
-    this.state = {
-      value: 42
-    };
-  }
-
-  changeLabelValue(value) {
+  changeLabelValue(value: number) {
     const currValue = this.state.value;
     const newValue = currValue + value;
     if (newValue >= 1) {
@@ -103,7 +99,6 @@ export default class BadgesScreen extends Component {
         <View row>
           <View
             center
-            column
             style={{justifyContent: 'space-around', alignItems: 'flex-start', width: 140, height: 140}}
           >
             <Text text80 row>
@@ -115,7 +110,7 @@ export default class BadgesScreen extends Component {
             </Text>
           </View>
 
-          <View center column style={{justifyContent: 'space-around', width: 40, height: 140}}>
+          <View center style={{justifyContent: 'space-around', width: 40, height: 140}}>
             <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.green30} size={'pimpleSmall'}/>
             <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.red30} size={'pimpleBig'}/>
             <Badge containerStyle={{marginLeft: BadgesSpace}} backgroundColor={Colors.blue30} size={'pimpleHuge'}/>
