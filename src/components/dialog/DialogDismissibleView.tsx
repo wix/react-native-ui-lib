@@ -55,8 +55,6 @@ interface LocationProps {
 }
 
 const DEFAULT_DIRECTION = PanningProvider.Directions.DOWN;
-const TOP_INSET = Constants.isIphoneX ? Constants.getSafeAreaInsets().top : Constants.isIOS ? 20 : 0;
-const BOTTOM_INSET = Constants.isIphoneX ? Constants.getSafeAreaInsets().bottom : Constants.isIOS ? 20 : 0;
 
 const DialogDismissibleView = (props: Props) => {
   const {direction = DEFAULT_DIRECTION, visible: propsVisible, containerStyle, style, children, onDismiss} = props;
@@ -65,6 +63,8 @@ const DialogDismissibleView = (props: Props) => {
 
   const width = useRef<number>(Constants.screenWidth);
   const height = useRef<number>(Constants.screenHeight);
+  const TOP_INSET = useRef<number>(Constants.isIphoneX ? Constants.getSafeAreaInsets().top : Constants.isIOS ? 20 : 0);
+  const BOTTOM_INSET = useRef<number>(Constants.isIphoneX ? Constants.getSafeAreaInsets().bottom : Constants.isIOS ? 20 : 0);
   const thresholdX = useRef<number>(0);
   const thresholdY = useRef<number>(0);
   const dragsCounter = useRef<number>(0);
@@ -85,11 +85,11 @@ const DialogDismissibleView = (props: Props) => {
         result.left = Constants.screenWidth - left;
         break;
       case PanningProvider.Directions.UP:
-        result.top = -top - height.current - TOP_INSET;
+        result.top = -top - height.current - TOP_INSET.current;
         break;
       case PanningProvider.Directions.DOWN:
       default:
-        result.top = Constants.screenHeight - top + BOTTOM_INSET;
+        result.top = Constants.screenHeight - top + BOTTOM_INSET.current;
         break;
     }
 
