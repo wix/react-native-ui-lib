@@ -15,15 +15,14 @@ import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Image from '../image';
 import CardImage from './CardImage';
 import CardSection, {CardSectionProps} from './CardSection';
+import {BlurViewPackage} from '../../optionalDependencies';
 // @ts-ignore
 import Assets from '../../assets';
 import CardContext from './CardContext';
 import * as CardPresenter from './CardPresenter';
 
-let BlurView: any;
-try {
-  BlurView = require('@react-native-community/blur').BlurView;
-} catch (error) {} // warning in ctor, depends if user pass enableBlur
+const BlurView = BlurViewPackage?.BlurView;
+
 
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 const DEFAULT_SELECTION_PROPS = {
