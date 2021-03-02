@@ -54,6 +54,7 @@ declare class Carousel extends Component<CarouselProps, CarouselState> {
     onMomentumScrollEnd: () => void;
     goToNextPage(): void;
     onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+    onScrollEvent: (...args: any[]) => void;
     renderChild: (child: ReactNode, key: Key) => JSX.Element | undefined;
     renderChildren(): JSX.Element[] | null | undefined;
     renderPageControl(): JSX.Element | undefined;

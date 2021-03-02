@@ -86,10 +86,11 @@ class Navbar extends Component {
     const {filter, showNavbar} = this.state;
     const markdowns = this.getMarkdownPages(data);
     const components = this.getNavbarComponents(data);
-    const filteredComponents = _.filter(components, component =>
-      fuzzysearch(_.toLower(filter), _.toLower(component.node.displayName))
-    );
-    const componentsByGroups = _.groupBy(filteredComponents, c => _.split(c.node.displayName, '.')[0]);
+    const componentsByGroups = _.groupBy(components, c => _.split(c.node.displayName, '.')[0]);
+    const filteredComponentsByGroups = _.pickBy(componentsByGroups, (group, key) => {
+      const groupComponents = [key, ..._.map(group, 'node.displayName')]
+      return !!_.find(groupComponents, componentName => fuzzysearch(_.toLower(filter), _.toLower(componentName)))
+    });
 
     const navbarClassName = classnames('navbar', {
       visible: showNavbar
@@ -106,7 +107,7 @@ class Navbar extends Component {
               );
             })}
             {!_.isEmpty(markdowns) && <li className="separator" />}
-            {_.map(componentsByGroups, (components, key) => {
+            {_.map(filteredComponentsByGroups, (components, key) => {
               return (
                 <Item
                   key={key}
@@ -119,7 +120,7 @@ class Navbar extends Component {
             })}
           </ul>
         </div>
-        <Fab onClick={this.toggleNavbar} />
+        <Fab onClick={this.toggleNavbar}/>
       </>
     );
   };

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+import {DateTimePickerPackage as RNDateTimePicker} from '../../optionalDependencies';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import Assets from '../../assets';
@@ -115,6 +115,10 @@ class DateTimePicker extends Component {
       prevValue: props.value,
       value: props.value
     };
+
+    if (!RNDateTimePicker) {
+      console.error(`RNUILib DateTimePicker component requires installing "@react-native-community/datetimepicker" dependency`);
+    }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -226,6 +230,10 @@ class DateTimePicker extends Component {
   }
 
   renderDateTimePicker() {
+    if (!RNDateTimePicker) {
+      return null;
+    }
+
     const {value, showExpandableOverlay} = this.state;
     const {mode, minimumDate, maximumDate, locale, is24Hour, minuteInterval, timeZoneOffsetInMinutes} = this.props;
 

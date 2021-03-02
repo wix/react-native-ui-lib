@@ -1,10 +1,10 @@
-import { StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, PointPropType } from 'react-native';
+import { ScrollViewProps, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, PointPropType, Animated } from 'react-native';
 import { PageControlProps } from '../pageControl';
 export declare enum PageControlPosition {
     OVER = "over",
     UNDER = "under"
 }
-export interface CarouselProps {
+export interface CarouselProps extends ScrollViewProps {
     /**
      * the first page to start with
      */
@@ -87,6 +87,11 @@ export interface CarouselProps {
      * instead of vertically in a column. The default value is true.
      */
     horizontal?: boolean | null;
+    /**
+     * Pass to attach to ScrollView's Animated.event in order to animated elements base on
+     * Carousel scroll offset (pass new Animated.ValueXY())
+     */
+    animatedScrollOffset?: Animated.ValueXY;
 }
 export interface CarouselState {
     containerWidth?: number;

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component, RefObject, ReactNode, Key} from 'react';
-import {ScrollView, StyleSheet, LayoutChangeEvent, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
+import {Animated, ScrollView, StyleSheet, LayoutChangeEvent, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -319,6 +319,12 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     _.invoke(this.props, 'onScroll', event);
   };
 
+  // @ts-ignore
+  onScrollEvent = Animated.event([{nativeEvent: {contentOffset: {y: this.props?.animatedScrollOffset?.y, x: this.props?.animatedScrollOffset?.x}}}], {
+    useNativeDriver: true,
+    listener: this.onScroll
+  });
+
   renderChild = (child: ReactNode, key: Key): JSX.Element | undefined => {
     if (child) {
       const paddingLeft = this.props.horizontal ? this.shouldUsePageWidth() ? this.getItemSpacings(this.props) : undefined : 0;
@@ -434,33 +440,34 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   renderCarousel() {
-    const {containerStyle, animated, horizontal, ...others} = this.props;
+    const {containerStyle, animated, horizontal, animatedScrollOffset, ...others} = this.props;
     const {initialOffset} = this.state;
     const scrollContainerStyle = this.shouldUsePageWidth()
       ? {paddingRight: this.getItemSpacings(this.props)}
       : undefined;
     const snapToOffsets = this.getSnapToOffsets();
     const marginBottom = Math.max(0, this.getContainerPaddingVertical() - 16);
+    const ScrollContainer = animatedScrollOffset ? Animated.ScrollView : ScrollView;
     return (
       <View animated={animated} style={[{marginBottom}, containerStyle]} onLayout={this.onContainerLayout}>
-        <ScrollView
-          {...others}
-          ref={this.carousel}
-          contentContainerStyle={scrollContainerStyle}
-          horizontal={horizontal}
+        <ScrollContainer
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
+          decelerationRate="fast"
+          scrollEventThrottle={200}
+          {...others}
+          ref={this.carousel}
+          onScroll={animatedScrollOffset ? this.onScrollEvent : this.onScroll}
+          contentContainerStyle={scrollContainerStyle}
+          horizontal={horizontal}
           pagingEnabled={this.shouldEnablePagination()}
           snapToOffsets={snapToOffsets}
-          decelerationRate="fast"
           contentOffset={initialOffset} // iOS only
-          scrollEventThrottle={200}
           onContentSizeChange={this.onContentSizeChange}
-          onScroll={this.onScroll}
           onMomentumScrollEnd={this.onMomentumScrollEnd}
         >
           {this.renderChildren()}
-        </ScrollView>
+        </ScrollContainer>
         {this.renderPageControl()}
         {this.renderCounter()}
       </View>

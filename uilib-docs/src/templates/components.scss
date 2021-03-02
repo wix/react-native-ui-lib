@@ -133,6 +133,7 @@ $tabletOfContentWidth: 20vw;
 
       .tooltip {
         position: absolute;
+        pointer-events: none;
         top: 0;
         right: 100%;
         min-width: 300px;
