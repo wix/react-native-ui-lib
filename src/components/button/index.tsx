@@ -1,198 +1,23 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
-import {
-  asBaseComponent,
-  forwardRef,
-  BaseComponentInjectedProps,
-  ForwardRefInjectedProps,
-  TypographyModifiers,
-  ColorsModifiers,
-  BackgroundColorModifier,
-  MarginModifiers
-} from '../../commons/new';
-//@ts-ignore
+import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle} from 'react-native';
+import {asBaseComponent, forwardRef} from '../../commons/new';
 import {Constants} from '../../helpers';
 import {Colors, Typography, BorderRadiuses} from '../../style';
 import {extractColorValue, extractTypographyValue} from '../../commons/modifiers';
-import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
-import Text, {TextProps} from '../text';
+import TouchableOpacity from '../touchableOpacity';
+import Text from '../text';
 import Image from '../image';
 
-export enum ButtonSize {
-  xSmall = 'xSmall',
-  small = 'small',
-  medium = 'medium',
-  large = 'large'
-}
+import {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonPropTypes, ButtonState, Props, DEFAULT_PROPS} from './ButtonTypes';
+export {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonPropTypes};
 
-export enum ButtonAnimationDirection {
-  center = 'center',
-  left = 'left',
-  right = 'right'
-}
+import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE, DISABLED_COLOR} from './ButtonConstants';
 
-export type ButtonProps = TouchableOpacityProps &
-  TypographyModifiers &
-  ColorsModifiers &
-  BackgroundColorModifier &
-  MarginModifiers & {
-    /**
-     * Text to show inside the button
-     */
-    label?: string;
-    /**
-     * The Button text color (inherited from Text component)
-     */
-    color?: string;
-    /**
-     * Icon image source or a callback function that returns a source
-     */
-    iconSource?: object | number | Function;
-    /**
-     * Icon image style
-     */
-    iconStyle?: StyleProp<ImageStyle>;
-    /**
-     * Should the icon be right to the label
-     */
-    iconOnRight?: boolean;
-    /**
-     * whether the icon should flip horizontally on RTL locals
-     */
-    supportRTL?: boolean;
-    /**
-     * Color of the button background
-     */
-    backgroundColor?: string;
-    /**
-     * Color of the disabled button background
-     */
-    disabledBackgroundColor?: string;
-    /**
-     * Size of the button [large, medium, small, xSmall]
-     */
-    size?: ButtonSize;
-    /**
-     * Custom border radius.
-     */
-    borderRadius?: number;
-    /**
-     * Actions handler
-     */
-    onPress?: (props: any) => void;
-    /**
-     * Disable interactions for the component
-     */
-    disabled?: boolean;
-    /**
-     * Button will have outline style
-     */
-    outline?: boolean;
-    /**
-     * The outline color
-     */
-    outlineColor?: string;
-    /**
-     * The outline width
-     */
-    outlineWidth?: number;
-    /**
-     * Button will look like a link
-     */
-    link?: boolean;
-    /**
-     * label color for when it's displayed as link
-     */
-    linkColor?: string;
-    /**
-     * Additional styles for label text
-     */
-    labelStyle?: StyleProp<TextStyle>;
-    /**
-     * Props that will be passed to the button's Text label.
-     */
-    labelProps?: TextProps;
-    /**
-     * should the button act as a coast to coast button (no border radius)
-     */
-    fullWidth?: boolean;
-    /**
-     * should the button be a round button
-     */
-    round?: boolean;
-    /**
-     * Control shadow visibility (iOS-only)
-     */
-    enableShadow?: boolean;
-    /**
-     * avoid inner button padding
-     */
-    avoidInnerPadding?: boolean;
-    /**
-     * avoid minimum width constraints
-     */
-    avoidMinWidth?: boolean;
-    /**
-     * callback for getting activeBackgroundColor (e.g. (calculatedBackgroundColor, prop) => {...})
-     * better set using ThemeManager
-     */
-    getActiveBackgroundColor?: (backgroundColor: string, props: any) => string;
-    /**
-     * should animate layout change
-     * Note?: For Android you must set 'setLayoutAnimationEnabledExperimental(true)' via RN's 'UIManager'
-     */
-    animateLayout?: boolean;
-    /**
-     * the direction of the animation ('left' and 'right' will effect the button's own alignment)
-     */
-    animateTo?: ButtonAnimationDirection;
-  };
-export type ButtonPropTypes = ButtonProps; //TODO: remove after ComponentPropTypes deprecation;
-
-export type ButtonState = {
-  size?: number;
-  borderRadius?: number;
-  isLandscape?: boolean;
-};
-
-const PADDINGS = {
-  XSMALL: 3,
-  SMALL: 4.5,
-  MEDIUM: 6.5,
-  LARGE: 9.5
-};
-const HORIZONTAL_PADDINGS = {
-  XSMALL: 11,
-  SMALL: 14,
-  MEDIUM: 16,
-  LARGE: 20
-};
-const MIN_WIDTH = {
-  XSMALL: 66,
-  SMALL: 70,
-  MEDIUM: 77,
-  LARGE: 90
-};
-const DEFAULT_SIZE = ButtonSize.large;
-const DISABLED_COLOR = Colors.dark60;
-
-type Props = ButtonProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
-
-/**
- * @description: Basic button component
- * @extends: TouchableOpacity
- * @extendslink: docs/TouchableOpacity
- * @modifiers: margin, background
- * @gif: https://media.giphy.com/media/xULW8j5WzsuPytqklq/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.tsx
- */
 class Button extends PureComponent<Props, ButtonState> {
   static displayName = 'Button';
 
-  static defaultProps = {
-    iconOnRight: false
-  };
+  static defaultProps = DEFAULT_PROPS;
 
   static sizes = ButtonSize;
 

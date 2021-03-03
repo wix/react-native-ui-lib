@@ -59,13 +59,17 @@ class CardSection extends PureComponent<Props> {
   constructor(props: Props) {
     super(props);
 
-    if (props.imageSource) {
+    if (props.source) {
       LogService.deprecationWarn({component: 'CardSection', oldProp: 'source', newProp: 'imageSource'});
     }
   }
 
   renderContent = () => {
     const {content, leadingIcon, trailingIcon, contentStyle, testID} = this.props;
+    if (!leadingIcon && !trailingIcon && _.isEmpty(content)) {
+      return;
+    }
+
     return (
       <>
         {leadingIcon && <Image testID={`${testID}.leadingIcon`} {...leadingIcon}/>}

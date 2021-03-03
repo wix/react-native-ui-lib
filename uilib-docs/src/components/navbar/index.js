@@ -2,14 +2,17 @@ import React, {Component} from 'react';
 import {StaticQuery, graphql} from 'gatsby';
 import classnames from 'classnames';
 import _ from 'lodash';
+import fuzzysearch from 'fuzzysearch';
 
 import './index.scss';
 import searchIcon from '../../images/search.svg';
 import clearIcon from '../../images/delete.svg';
 import Item from './item';
+import Fab from '../fab';
 
 class Navbar extends Component {
   state = {
+    showNavbar: false,
     filter: ''
   };
 
@@ -28,23 +31,22 @@ class Navbar extends Component {
       return _.flow(
         p => _.split(p, '/'),
         items => _.filter(items, i => !_.isEmpty(i)),
-        _.last,
+        _.last
       )(path);
     }
   };
 
-  getMarkdownPages(data) {
+  getMarkdownPages = data => {
+    const {filter} = this.state;
     const markdownPages = data.allFile.edges;
-    const pages = _.flow(pages =>
-      _.map(
-        pages,
-        ({node}) => node.childMarkdownRemark.frontmatter,
-        items => _.sortBy(items, 'index')
-      )
+    const pages = _.flow(
+      pages => _.map(pages, ({node}) => node.childMarkdownRemark.frontmatter),
+      items => _.filter(items, item => fuzzysearch(_.toLower(filter), _.toLower(item.title))),
+      items => _.sortBy(items, 'index')
     )(markdownPages);
 
     return pages;
-  }
+  };
 
   getNavbarComponents(data) {
     const components = data.allComponentMetadata.edges;
@@ -57,6 +59,12 @@ class Navbar extends Component {
     return filteredComponents;
   }
 
+  toggleNavbar = value => {
+    this.setState({
+      showNavbar: _.isBoolean(value) ? value : !this.state.showNavbar
+    });
+  };
+
   renderSearch = () => {
     const {filter} = this.state;
     const clearButtonClassName = classnames('clear-button', {
@@ -64,14 +72,10 @@ class Navbar extends Component {
     });
     return (
       <div className="search">
-        <img src={searchIcon} />
-        <input
-          placeholder="Search..."
-          onChange={this.setFilter}
-          value={filter}
-        />
+        <img src={searchIcon} alt="search" />
+        <input placeholder="Search..." onChange={this.setFilter} value={filter} />
         <button className={clearButtonClassName} onClick={this.resetSearch}>
-          <img src={clearIcon} />
+          <img src={clearIcon} alt="clear search" />
         </button>
       </div>
     );
@@ -79,37 +83,45 @@ class Navbar extends Component {
 
   renderNavbar = data => {
     const currentPage = this.getCurrentPage();
-    const {filter} = this.state;
+    const {filter, showNavbar} = this.state;
     const markdowns = this.getMarkdownPages(data);
     const components = this.getNavbarComponents(data);
-    const filteredComponents = _.filter(components, component =>
-      _.includes(_.lowerCase(component.node.displayName), _.lowerCase(filter))
-    );
+    const componentsByGroups = _.groupBy(components, c => _.split(c.node.displayName, '.')[0]);
+    const filteredComponentsByGroups = _.pickBy(componentsByGroups, (group, key) => {
+      const groupComponents = [key, ..._.map(group, 'node.displayName')]
+      return !!_.find(groupComponents, componentName => fuzzysearch(_.toLower(filter), _.toLower(componentName)))
+    });
 
-    const componentsByGroups = _.groupBy(
-      filteredComponents,
-      c => _.split(c.node.displayName, '.')[0]
-    );
+    const navbarClassName = classnames('navbar', {
+      visible: showNavbar
+    });
 
     return (
-      <div className="navbar">
-        {this.renderSearch()}
-        <ul>
-          {_.map(markdowns, page => {
-            return <Item id={page.title} link={page.path} />;
-          })}
-          <li className="separator" />
-          {_.map(componentsByGroups, (components, key) => {
-            return (
-              <Item
-                id={key}
-                components={components}
-                currentPage={currentPage}
-              ></Item>
-            );
-          })}
-        </ul>
-      </div>
+      <>
+        <div className={navbarClassName}>
+          {this.renderSearch()}
+          <ul>
+            {_.map(markdowns, page => {
+              return (
+                <Item key={page.title} id={page.title} link={page.path} onLinkClick={() => this.toggleNavbar(false)} />
+              );
+            })}
+            {!_.isEmpty(markdowns) && <li className="separator" />}
+            {_.map(filteredComponentsByGroups, (components, key) => {
+              return (
+                <Item
+                  key={key}
+                  id={key}
+                  components={components}
+                  currentPage={currentPage}
+                  onLinkClick={() => this.toggleNavbar(false)}
+                />
+              );
+            })}
+          </ul>
+        </div>
+        <Fab onClick={this.toggleNavbar}/>
+      </>
     );
   };
 
@@ -125,7 +137,12 @@ class Navbar extends Component {
                 }
               }
             }
-            allFile(filter: {sourceInstanceName: {eq: "markdown-pages"}, childMarkdownRemark: {frontmatter: {path: {ne: null}}}}) {
+            allFile(
+              filter: {
+                sourceInstanceName: {eq: "markdown-pages"}
+                childMarkdownRemark: {frontmatter: {path: {ne: null}}}
+              }
+            ) {
               edges {
                 node {
                   childMarkdownRemark {

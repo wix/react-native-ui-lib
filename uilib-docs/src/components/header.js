@@ -13,7 +13,7 @@ const Header = ({githubDomain}) => {
 
       <div className="links">
         <Link to="/getting-started/setup">Docs</Link>
-        <a target="_blank" href={githubDomain}>
+        <a target="_blank" rel="noreferrer" href={githubDomain}>
           GitHub
         </a>
       </div>

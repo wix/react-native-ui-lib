@@ -1,30 +1,42 @@
 @import 'src/styles/constants';
 .intro {
   position: relative;
-  height: 100vh;
+  height: 75vh;
   width: 100%;
   display: flex;
   justify-content: center;
 
-  .intro-cover {
-    position: absolute;
-    width: 100vw;
+  @include desktop {
+    height: 100vh;
   }
 
-  .intro-inner {
-    display: flex;
+  .intro-cover {
+    position: absolute;
+    width: 180vw;
+    right: -10vw;
+    opacity: 0.3;
+
+    @include desktop {
+      width: 100vw;
+      opacity: 1;
+    }
   }
 
   .intro-content {
     position: absolute;
-    top: 20vw;
-    left: 7vw;
+    z-index: 1;
     display: flex;
     flex-direction: column;
-    z-index: 1;
-    width: 40%;
-    justify-content: center;
     align-items: flex-start;
+    top: 15vh;
+    text-align: center;
+
+    @include desktop() {
+      top: 15vw;
+      left: 7vw;
+      width: 40%;
+      text-align: start;
+    }
 
     > p {
       font-size: 3em;
@@ -41,6 +53,11 @@
       align-items: center;
       border: 1px solid;
       border-radius: 2px;
+      align-self: center;
+
+      @include desktop {
+        align-self: flex-start;
+      }
 
       img {
         padding: 0 4px;
@@ -58,9 +75,22 @@
 
     .buttons {
       margin-top: 40px;
+      align-self: center;
+      display: flex;
+      flex-direction: column;
+
+      @include desktop() {
+        align-self: flex-start;
+        flex-direction: row;
+      }
 
       > :first-child {
-        margin-right: 10px;
+        margin-bottom: 10px;
+
+        @include desktop() {
+          margin-right: 10px;
+          margin-bottom: 0;
+        }
       }
     }
   }

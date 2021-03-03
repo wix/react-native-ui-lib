@@ -32,6 +32,10 @@ export declare type FaderProps = Pick<ImageProps, 'supportRTL'> & {
      */
     tintColor?: string;
 };
+/**
+ * @description: A gradient fading overlay to render on top of overflowing content (like scroll component)
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FaderScreen.tsx
+ */
 declare function Fader(props: FaderProps): JSX.Element;
 declare namespace Fader {
     var displayName: string;

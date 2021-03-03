@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {ViewProps, ScrollView, ScrollViewProps, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
+import {ViewProps, ScrollView, ScrollViewProps, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent} from 'react-native';
 import Fader from '../fader';
 import useScrollEnabler from '../../hooks/useScrollEnabler';
 import useScrollReached from '../../hooks/useScrollReached';
@@ -15,7 +15,13 @@ type Props = FadedScrollViewProps & ForwardRefInjectedProps;
 const FADER_SIZE = 76;
 
 const FadedScrollView = (props: Props) => {
-  const {children, onScroll: propsOnScroll, ...other} = props;
+  const {
+    children,
+    onScroll: propsOnScroll,
+    onContentSizeChange: propsOnContentSizeChange,
+    onLayout: propsOnLayout,
+    ...other
+  } = props;
   const {onContentSizeChange, onLayout, scrollEnabled} = useScrollEnabler({horizontal: true});
   const {onScroll: onScrollReached, isScrollAtStart, isScrollAtEnd} = useScrollReached({
     horizontal: true,
@@ -31,6 +37,16 @@ const FadedScrollView = (props: Props) => {
   },
   [onScrollReached, propsOnScroll]);
 
+  const _onContentSizeChange = useCallback((w: number, h: number) => {
+    propsOnContentSizeChange?.(w, h);
+    onContentSizeChange?.(w, h);
+  }, [propsOnContentSizeChange, onContentSizeChange]);
+
+  const _onLayout = useCallback((event: LayoutChangeEvent) => {
+    propsOnLayout?.(event);
+    onLayout?.(event);
+  }, [propsOnLayout, onLayout]);
+
   if (children) {
     return (
       <>
@@ -41,8 +57,8 @@ const FadedScrollView = (props: Props) => {
           decelerationRate={'fast'}
           {...other}
           scrollEnabled={scrollEnabled}
-          onContentSizeChange={onContentSizeChange}
-          onLayout={onLayout}
+          onContentSizeChange={_onContentSizeChange}
+          onLayout={_onLayout}
           onScroll={onScroll}
           ref={props.forwardedRef}
         >
@@ -57,4 +73,5 @@ const FadedScrollView = (props: Props) => {
   return null;
 };
 
+FadedScrollView.displayName = 'IGNORE';
 export default forwardRef<Props>(FadedScrollView);
