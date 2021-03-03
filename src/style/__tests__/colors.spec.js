@@ -19,6 +19,14 @@ describe('style/Colors', () => {
     expect(uut.rgba(101, 200, 136, 0.25)).toBe('rgba(101, 200, 136, 0.25)');
   });
 
+  it('should add alpha to 3 digits hex color value', () => {
+    expect(uut.rgba('#333', 0.7)).toBe('rgba(51, 51, 51, 0.7)');
+    expect(uut.rgba('#333', 0.1)).toBe('rgba(51, 51, 51, 0.1)');
+    expect(uut.rgba('#DEF', 0.25)).toBe('rgba(221, 238, 255, 0.25)');
+    expect(uut.rgba('#F24', 1)).toBe('rgba(255, 34, 68, 1)');
+  });
+
+
   it('should handle wrong number of params', () => {
     expect(() => uut.rgba(101, 136, 0.7)).toThrow(new Error('rgba can work with either 2 or 4 arguments'));
   });

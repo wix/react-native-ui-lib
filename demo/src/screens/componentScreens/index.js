@@ -10,12 +10,14 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.CardsScreen', () => require('./CardsScreen').default);
   registrar('unicorn.animations.CardScannerScreen', () => require('../componentScreens/CardScannerScreen').default);
   registrar('unicorn.components.CarouselScreen', () => require('./CarouselScreen').default);
+  registrar('unicorn.components.CarouselVerticalScreen', () => require('./CarouselVerticalScreen').default);
   registrar('unicorn.components.CheckboxScreen', () => require('./CheckboxScreen').default);
   registrar('unicorn.components.ChipScreen', () => require('./ChipScreen').default);
   registrar('unicorn.components.ConnectionStatusBar', () => require('./ConnectionStatusBarScreen').default);
   registrar('unicorn.components.DialogScreen', () => require('./DialogScreen').default);
   registrar('unicorn.components.DrawerScreen', () => require('./DrawerScreen').default);
-  registrar('unicorn.components.TagsInputScreen', () => require('./TagsInputScreen').default);
+  registrar('unicorn.components.ExpandableSectionScreen', () => require('./ExpandableSectionScreen').default);
+  registrar('unicorn.components.ChipsInputScreen', () => require('./ChipsInputScreen').default);
   registrar('unicorn.components.HintsScreen', () => require('./HintsScreen').default);
   registrar('unicorn.components.ImageScreen', () => require('./ImageScreen').default);
   registrar('unicorn.components.ProgressiveImageScreen', () => require('./ProgressiveImageScreen').default);
@@ -61,7 +63,5 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.WithScrollEnablerScreen', () => require('./WithScrollEnablerScreen').default);
   registrar('unicorn.components.WithScrollReachedScreen', () => require('./WithScrollReachedScreen').default);
   registrar('unicorn.components.FaderScreen', () => require('./FaderScreen').default);
-  // Incubator Screens
-  registrar('unicorn.components.IncubatorTextFieldScreen', () => require('./IncubatorTextFieldScreen').default);
 }
 

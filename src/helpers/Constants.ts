@@ -1,10 +1,10 @@
-import {Platform, Dimensions, NativeModules, I18nManager, AccessibilityInfo, AccessibilityEvent} from 'react-native';
+import {Platform, Dimensions, NativeModules, I18nManager, AccessibilityInfo, AccessibilityChangeEvent} from 'react-native';
 
 
 export enum orientations {
   PORTRAIT = 'portrait',
   LANDSCAPE = 'landscape'
-};
+}
 
 const isAndroid: boolean = Platform.OS === 'android';
 const isIOS: boolean = Platform.OS === 'ios';
@@ -20,12 +20,12 @@ isTablet = Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth, sc
 
 function setStatusBarHeight() {
   const {StatusBarManager} = NativeModules;
-  statusBarHeight = 0; // so there will be a value for any case
-  statusBarHeight = isIOS ? 20 : StatusBarManager.HEIGHT;
-  if (isIOS) {
-    // override guesstimate height with the actual height from StatusBarManager
-    StatusBarManager.getHeight((data: any) => (statusBarHeight = data.height));
-  }
+  statusBarHeight = StatusBarManager?.HEIGHT || 0; // So there will be a value for any case
+  // statusBarHeight = isIOS ? 20 : StatusBarManager.HEIGHT;
+  // if (isIOS) {
+  //   // override guesstimate height with the actual height from StatusBarManager
+  //   StatusBarManager.getHeight((data: any) => (statusBarHeight = data.height));
+  // }
 }
 
 function getAspectRatio() {
@@ -49,7 +49,7 @@ const accessibility = {
   isScreenReaderEnabled: false
 };
 
-function handleScreenReaderChanged(isScreenReaderEnabled: AccessibilityEvent) {
+function handleScreenReaderChanged(isScreenReaderEnabled: AccessibilityChangeEvent) {
   accessibility.isScreenReaderEnabled = isScreenReaderEnabled as boolean;
 }
 
@@ -136,7 +136,10 @@ const constants = {
   /* Accessibility */
   get accessibility() {
     return accessibility;
-  }
+  },
+  /* Keyboard */
+  backspaceKey: 'Backspace',
+  enterKey: 'Enter'
 };
 
 setStatusBarHeight();

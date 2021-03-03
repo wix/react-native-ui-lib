@@ -1,9 +1,9 @@
 declare function warn(message: string): void;
-declare function deprecationWarn({ component, oldProp, newProp }?: ({
-    component?: string;
-    oldProp?: string;
+declare function deprecationWarn({ component, oldProp, newProp }: {
+    component: string;
+    oldProp: string;
     newProp?: string;
-})): void;
+}): void;
 declare const _default: {
     warn: typeof warn;
     deprecationWarn: typeof deprecationWarn;

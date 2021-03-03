@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, ViewStyle} from 'react-native';
-import {BlurView} from '@react-native-community/blur';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 // import {PureBaseComponent} from '../../commons';
@@ -11,20 +10,24 @@ import {
   BaseComponentInjectedProps,
   ForwardRefInjectedProps
 } from '../../commons/new';
-import View, {ViewPropTypes} from '../view';
+import View, {ViewProps} from '../view';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Image from '../image';
 import CardImage from './CardImage';
 import CardSection, {CardSectionProps} from './CardSection';
+import {BlurViewPackage} from '../../optionalDependencies';
 // @ts-ignore
 import Assets from '../../assets';
 import CardContext from './CardContext';
 import * as CardPresenter from './CardPresenter';
 
+const BlurView = BlurViewPackage?.BlurView;
+
+
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 const DEFAULT_SELECTION_PROPS = {
   borderWidth: 2,
-  color: Colors.blue30,
+  color: Colors.primary,
   indicatorSize: 20,
   icon: Assets.icons.checkSmall,
   iconColor: Colors.white,
@@ -32,7 +35,7 @@ const DEFAULT_SELECTION_PROPS = {
 };
 
 export {CardSectionProps};
-export type CardPropTypes = ViewPropTypes &
+export type CardProps = ViewProps &
   TouchableOpacityProps & {
     /**
      * card custom width
@@ -90,10 +93,11 @@ export type CardPropTypes = ViewPropTypes &
       hideIndicator?: boolean;
     };
   };
+export type CardPropTypes = CardProps; //TODO: remove after ComponentPropTypes deprecation;
 
 type PropTypes = BaseComponentInjectedProps &
   ForwardRefInjectedProps &
-  CardPropTypes;
+  CardProps;
 
 type State = {
   animatedSelected: Animated.Value;
@@ -106,7 +110,7 @@ type State = {
  * @extendslink: docs/TouchableOpacity
  * @modifiers: margin, padding
  * @gif: https://media.giphy.com/media/l0HU9SKWmv0VTOYMM/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.tsx
  */
 class Card extends PureComponent<PropTypes, State> {
   static displayName = 'Card';
@@ -124,6 +128,10 @@ class Card extends PureComponent<PropTypes, State> {
       animatedSelected: new Animated.Value(Number(this.props.selected))
     };
     this.styles = createStyles(this.props);
+
+    if (props.enableBlur && !BlurView) {
+      console.error(`RNUILib Card's "enableBlur" prop requires installing "@react-native-community/blur" dependency`);
+    }
   }
 
   componentDidUpdate(prevProps: PropTypes) {
@@ -302,7 +310,7 @@ class Card extends PureComponent<PropTypes, State> {
         {...others}
         ref={forwardedRef}
       >
-        {Constants.isIOS && enableBlur && (
+        {Constants.isIOS && enableBlur && BlurView && (
           // @ts-ignore
           <BlurView
             style={[this.styles.blurView, {borderRadius: brRadius}]}
@@ -322,7 +330,7 @@ function createStyles({
   height,
   borderRadius,
   selectionOptions
-}: CardPropTypes) {
+}: CardProps) {
   const selectionOptionsWithDefaults = {
     ...DEFAULT_SELECTION_PROPS,
     ...selectionOptions
@@ -375,7 +383,7 @@ Card.Image = CardImage;
 Card.Section = CardSection;
 
 export default asBaseComponent<
-  CardPropTypes,
+  CardProps,
   {
     Image: typeof CardImage;
     Section: typeof CardSection;

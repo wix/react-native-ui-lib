@@ -40,15 +40,19 @@ describe('components/PickerPresenter', () => {
   });
 
   describe('getItemLabel', () => {
+    it('should return item label when value is not an object', () => {
+      expect(uut.getItemLabel('label', 'value', undefined)).toEqual('label');
+    });
+
     it('should return item label when value is an object', () => {
       const itemProps = {value: {value: 'value', label: 'label'}};
-      expect(uut.getItemLabel(itemProps)).toEqual('label');
+      expect(uut.getItemLabel(undefined, itemProps.value, undefined)).toEqual('label');
     });
 
     it('should return item label according to getLabel function ', () => {
       const getLabel = itemValue => `${itemValue.value} - ${itemValue.label}`;
       const itemProps = {value: {value: 'value', label: 'label'}, getLabel};
-      expect(uut.getItemLabel(itemProps)).toEqual('value - label');
+      expect(uut.getItemLabel(undefined, itemProps.value, getLabel)).toEqual('value - label');
     });
   });
 });

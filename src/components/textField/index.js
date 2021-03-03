@@ -26,12 +26,12 @@ const COLOR_BY_STATE = {
 };
 const UNDERLINE_COLOR_BY_STATE = {
   default: Colors.grey50,
-  focus: Colors.blue30,
+  focus: Colors.primary,
   error: Colors.red30
 };
 const PLACEHOLDER_COLOR_BY_STATE = {
   default: Colors.grey30,
-  focus: Colors.blue30
+  focus: Colors.primary
 };
 const CHAR_COUNTER_COLOR_BY_STATE = {
   default: Colors.grey30,
@@ -197,7 +197,8 @@ export default class TextField extends BaseInput {
       value: props.value, // for floatingPlaceholder functionality
       floatingPlaceholderState: new Animated.Value(this.shouldFloatPlaceholder(props.value) ? 1 : 0),
       showExpandableModal: false,
-      floatingPlaceholderTranslate: 0
+      floatingPlaceholderTranslate: 0,
+      charCountColor: CHAR_COUNTER_COLOR_BY_STATE.default
     };
 
     this.generatePropsWarnings(props);
@@ -214,7 +215,7 @@ export default class TextField extends BaseInput {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_prevProps, prevState) {
     if (_.isEmpty(prevState.value) !== _.isEmpty(this.state.value) || prevState.focused !== this.state.focused) {
       this.updateFloatingPlaceholderState();
     }
@@ -318,8 +319,29 @@ export default class TextField extends BaseInput {
     return 0;
   }
 
+  setCharCountColor(key) {
+    this.maxReached = key === Constants.backspaceKey ? false : this.isCounterLimit();
+    const color = this.state.focused && this.maxReached ?
+      CHAR_COUNTER_COLOR_BY_STATE.error : CHAR_COUNTER_COLOR_BY_STATE.default;
+
+    if (color !== this.state.charCountColor) {
+      this.setState({charCountColor: color});
+    }
+  }
+
+  getCharCountColor() {
+    const {charCountColor} = this.state;
+    const {disabledColor} = this.getThemeProps();
+
+    return this.isDisabled() && disabledColor ? disabledColor : charCountColor;
+  }
+
   getTopPaddings() {
     return this.shouldFakePlaceholder() ? (this.shouldShowTopError() ? undefined : 25) : undefined;
+  }
+
+  getTopErrorsPosition() {
+    return !this.props.title && this.shouldShowTopError() ? {top: Constants.isIOS ? -25 : -27} : undefined;
   }
 
   isDisabled() {
@@ -379,6 +401,11 @@ export default class TextField extends BaseInput {
     return !expandable && rightButtonProps && rightButtonProps.iconSource;
   }
 
+  shouldRenderTitle() {
+    const {floatingPlaceholder, title} = this.getThemeProps();
+    return !floatingPlaceholder && title;
+  }
+
   onPressRightButton = () => {
     _.invoke(this.props, 'rightButtonProps.onPress');
   };
@@ -401,6 +428,7 @@ export default class TextField extends BaseInput {
             onLayout={this.onPlaceholderLayout}
             style={[
               this.styles.placeholder,
+              this.getTopErrorsPosition(),
               typography,
               // TODO: we need to exclude completely any dependency on line height
               // in this component since it always breaks alignments
@@ -449,23 +477,20 @@ export default class TextField extends BaseInput {
   }
 
   renderTitle() {
-    const {floatingPlaceholder, title, titleColor, titleStyle} = this.getThemeProps();
+    const {title, titleColor, titleStyle} = this.getThemeProps();
     const color = this.getStateColor(titleColor || PLACEHOLDER_COLOR_BY_STATE);
 
-    if (!floatingPlaceholder && title) {
+    if (this.shouldRenderTitle()) {
       return <Text style={[{color}, this.styles.topLabel, this.styles.label, titleStyle]}>{title}</Text>;
     }
   }
 
   renderCharCounter() {
-    const {focused} = this.state;
-    const {maxLength, showCharacterCounter, disabledColor} = this.getThemeProps();
+    const {maxLength, showCharacterCounter} = this.getThemeProps();
 
     if (maxLength && showCharacterCounter) {
       const counter = this.getCharCount();
-      const textColor =
-        this.isCounterLimit() && focused ? CHAR_COUNTER_COLOR_BY_STATE.error : CHAR_COUNTER_COLOR_BY_STATE.default;
-      const color = this.isDisabled() && disabledColor ? disabledColor : textColor;
+      const color = this.getCharCountColor();
 
       return (
         <Text
@@ -504,7 +529,7 @@ export default class TextField extends BaseInput {
       return renderExpandable(this.getThemeProps(), this.state);
     }
 
-    const textInputProps = TextField.extractOwnProps(this.props, 'error');
+    const textInputProps = TextField.extractOwnProps(this.props, ['error', 'testID']);
 
     return (
       <Modal
@@ -534,7 +559,7 @@ export default class TextField extends BaseInput {
     const {renderExpandableInput, testID} = this.getThemeProps();
 
     if (_.isFunction(renderExpandableInput)) {
-      return renderExpandableInput(this.getThemeProps());
+      return renderExpandableInput(this.getThemeProps(), this.toggleExpandableModal);
     }
 
     return (
@@ -620,14 +645,14 @@ export default class TextField extends BaseInput {
 
       return (
         <TouchableOpacity
-          {...others} accessibilityLabel={accessibilityLabel} 
-          style={[this.styles.rightButton, style]} onPress={this.onPressRightButton}
+          {...others} accessibilityLabel={accessibilityLabel}
+          style={[this.styles.rightButton, this.getTopErrorsPosition(), style]} onPress={this.onPressRightButton}
         >
           <Image
             pointerEvents="none"
             source={iconSource}
             resizeMode={'contain'}
-            style={[this.styles.rightButtonImage, {tintColor: iconColor || Colors.blue30}]}
+            style={[this.styles.rightButtonImage, {tintColor: iconColor || Colors.primary}]}
           />
         </TouchableOpacity>
       );
@@ -639,7 +664,7 @@ export default class TextField extends BaseInput {
 
     if (rightIconSource) {
       return (
-        <View style={this.styles.rightIcon} pointerEvents="none">
+        <View style={[this.styles.rightButton, this.getTopErrorsPosition()]} pointerEvents="none">
           <Image source={rightIconSource} resizeMode={'center'} style={[this.styles.rightButtonImage, rightIconStyle]}/>
         </View>
       );
@@ -698,13 +723,14 @@ export default class TextField extends BaseInput {
 
   onKeyPress = event => {
     this.lastKey = event.nativeEvent.key;
+    this.setCharCountColor(this.lastKey);
     _.invoke(this.props, 'onKeyPress', event);
   };
 
   onChangeText = text => {
     // when character count exceeds maxLength text will be empty string.
     // HACK: To avoid setting state value to '' we check the source of that deletion
-    if (text === '' && this.lastKey && this.lastKey !== 'Backspace') {
+    if (text === '' && this.lastKey && this.lastKey !== Constants.backspaceKey) {
       return;
     }
 
@@ -723,7 +749,7 @@ export default class TextField extends BaseInput {
   };
 }
 
-function createStyles({centered, multiline, hideUnderline}, rightItemTopPadding = 0) {
+function createStyles({centered, multiline}, rightItemTopPadding = 0) {
   const itemTopPadding = Constants.isIOS ? (rightItemTopPadding - 3) : (rightItemTopPadding - 1);
 
   return StyleSheet.create({
@@ -788,12 +814,6 @@ function createStyles({centered, multiline, hideUnderline}, rightItemTopPadding 
     },
     rightElement: {
       paddingRight: ICON_SIZE + ICON_LEFT_PADDING
-    },
-    rightIcon: {
-      position: 'absolute',
-      right: 0,
-      alignSelf: 'flex-start',
-      paddingTop: itemTopPadding
     },
     rightButton: {
       position: 'absolute',

@@ -54,6 +54,9 @@ export default {
   get Drawer() {
     return require('./components/drawer').default;
   },
+  get ExpandableSection() {
+    return require('./components/expandableSection').default;
+  },
   get Fader() {
     return require('./components/fader').default;
   },
@@ -78,6 +81,9 @@ export default {
   get KeyboardAwareListView() {
     return require('./components/KeyboardAwareScrollView').KeyboardAwareListView;
   },
+  get KeyboardAwareFlatList() {
+    return require('./components/KeyboardAwareScrollView').KeyboardAwareFlatList;
+  },
   get BaseInput() {
     return require('./components/baseInput').default;
   },
@@ -85,6 +91,8 @@ export default {
     return require('./components/textArea').default;
   },
   get TextField() {
+    // TODO: Start migration by exporting TextFieldMigrator
+    // return require('./components/textField/TextFieldMigrator').default;
     return require('./components/textField').default;
   },
   get MaskedInput() {
@@ -147,8 +155,11 @@ export default {
   get TabBar() {
     return require('./components/tabBar').default;
   },
-  get TagsInput() {
+  get TagsInput() { // TODO: Renamed to ChipsInput, to be deleted after migration
     return require('./components/tagsInput').default;
+  },
+  get ChipsInput() {
+    return require('./components/chipsInput').default;
   },
   get RadioButton() {
     return require('./components/radioButton/RadioButton').default;
@@ -217,6 +228,9 @@ export default {
   get withScrollReached() {
     return require('./commons').withScrollReached;
   },
+  get Modifiers() {
+    return require('./commons').modifiers;
+  },
 
   // Helpers
   get AvatarHelper() {
@@ -234,7 +248,7 @@ export default {
     return require('./services').LogService;
   },
 
-  // NativeComponents 
+  // NativeComponents
   get HighlighterOverlayView() {
     return require('./nativeComponents').HighlighterOverlayView;
   },
@@ -281,6 +295,9 @@ export default {
   },
   get AnimatableManager() {
     return require('./style').AnimatableManager;
+  },
+  get Hooks() {
+    return require('./hooks');
   },
 
   // Incubator

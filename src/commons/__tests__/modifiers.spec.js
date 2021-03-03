@@ -45,19 +45,18 @@ describe('Modifiers', () => {
       expect(uut.extractTypographyValue({
         text40: true,
         text70: false
-      }),).toEqual(Typography.text40);
+      })).toEqual(Typography.text40);
     });
 
     it('should prioritize last typography modifier prop in case there is more than one', () => {
       expect(uut.extractTypographyValue({
         text40: true,
         text70: true
-      }),).toEqual(Typography.text70);
+      })).toEqual(Typography.text70);
       expect(uut.extractTypographyValue({
         text70: true,
         text40: true
-      }),).toEqual(Typography.text40);
-      
+      })).toEqual(Typography.text40);
     });
 
     it('should return value of the custom made typography', () => {
@@ -67,17 +66,20 @@ describe('Modifiers', () => {
       expect(uut.extractTypographyValue({
         text40: true,
         customTypography: true
-      }),).toEqual({...Typography.text40, ...customTypography});
+      })).toEqual({...Typography.text40, ...customTypography});
       expect(uut.extractTypographyValue({
         customTypography: true,
         text40: true
-      }),).toEqual({...customTypography, ...Typography.text40});
+      })).toEqual({...customTypography, ...Typography.text40});
     });
 
     it('should merge typography modifiers', () => {
       const bold = {fontWeight: 'bold'};
       Typography.loadTypographies({bold});
-      expect(uut.extractTypographyValue({text70: true, bold: true})).toEqual({...Typography.text70, fontWeight: 'bold'});
+      expect(uut.extractTypographyValue({text70: true, bold: true})).toEqual({
+        ...Typography.text70,
+        fontWeight: 'bold'
+      });
     });
   });
 
@@ -91,7 +93,7 @@ describe('Modifiers', () => {
         'paddingB-15': true,
         'paddingH-20': true,
         'paddingV-15': true
-      }),).toEqual({
+      })).toEqual({
         padding: 25,
         paddingLeft: 15,
         paddingTop: 10,
@@ -125,7 +127,7 @@ describe('Modifiers', () => {
         'marginB-15': true,
         'marginH-20': true,
         'marginV-15': true
-      }),).toEqual({
+      })).toEqual({
         margin: 25,
         marginLeft: 15,
         marginTop: 10,
@@ -221,7 +223,13 @@ describe('Modifiers', () => {
       expect(uut.extractPositionStyle({abs: true})).toEqual({position: 'absolute'});
     });
     it('should return absolute fill object style', () => {
-      expect(uut.extractPositionStyle({absF: true})).toEqual({position: 'absolute', top: 0, left: 0, right: 0, bottom: 0});
+      expect(uut.extractPositionStyle({absF: true})).toEqual({
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+      });
     });
     it('should return absolute with top value', () => {
       expect(uut.extractPositionStyle({absT: true})).toEqual({position: 'absolute', top: 0});
@@ -241,7 +249,6 @@ describe('Modifiers', () => {
     it('should return absolute with horizontal values', () => {
       expect(uut.extractPositionStyle({absH: true})).toEqual({position: 'absolute', left: 0, right: 0});
     });
-
   });
 
   describe('extractFlexStyle - flex modifier', () => {
@@ -299,7 +306,7 @@ describe('Modifiers', () => {
         'paddingL-20': true,
         'bg-red30': true,
         other: 'some-value'
-      }),).toEqual({
+      })).toEqual({
         'paddingL-20': true,
         'bg-red30': true
       });
@@ -308,7 +315,7 @@ describe('Modifiers', () => {
         'margin-50': true,
         'background-blue20': true,
         other: 'some-value'
-      }),).toEqual({
+      })).toEqual({
         'margin-50': true,
         'background-blue20': true
       });
@@ -364,9 +371,9 @@ describe('Modifiers', () => {
       expect(uut.getThemeProps.call(SampleComponent, {test: true})).toEqual({prop1: 'yes', test: true});
       expect(uut.getThemeProps.call(SampleComponent, {test: false})).toEqual({prop1: 'no', test: false});
     });
-    
+
     it('should prioritize forced theme props over user props', () => {
-      ThemeManager.setComponentForcedTheme('SampleComponent', (props) => ({foo: 'forced'}));
+      ThemeManager.setComponentForcedTheme('SampleComponent', () => ({foo: 'forced'}));
       expect(uut.getThemeProps.call(SampleComponent, {foo: 'user-value', other: 'other'})).toEqual({
         foo: 'forced',
         other: 'other'

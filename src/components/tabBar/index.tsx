@@ -1,127 +1,131 @@
 import _ from 'lodash';
-import React, {Component} from 'react';
-import {
-  Platform, 
-  StyleSheet, 
-  Animated, 
-  ScrollView, 
-  NativeSyntheticEvent, 
-  NativeScrollEvent, 
-  ViewStyle
-} from 'react-native';
+import React, {Component, ElementRef, RefObject} from 'react';
+import {Platform, StyleSheet, ScrollView, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors} from '../../style';
-import {asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
-import View, {ViewPropTypes} from '../view';
-import Image from '../image';
+import {asBaseComponent} from '../../commons/new';
+import View from '../view';
+import ScrollBar, {ScrollBarProps} from '../scrollBar';
 import TabBarItem, {TabBarItemProps} from './TabBarItem';
-
-
-export type TabBarProps = BaseComponentInjectedProps & ViewPropTypes & {
-    /**
-     * Show Tab Bar bottom shadow
-     */
-    enableShadow?: boolean,
-    /**
-     * The minimum number of tabs to render
-     */
-    minTabsForScroll?: number,
-    /**
-     * current selected tab index
-     */
-    selectedIndex?: number,
-    /**
-     * callback for when index has change (will not be called on ignored items)
-     */
-    onChangeIndex?: (props: any) => void,
-    /**
-     * callback for when tab selected
-     */
-    onTabSelected?: (props: any) => void,
-    /**
-     * custom style for the selected indicator
-     */
-    indicatorStyle?: ViewStyle,
-    /** 
-     * The background color 
-     */
-    backgroundColor: string,
-    /**
-     * Tab Bar height
-     */
-    height?: number,
-    children: React.ReactNode,
-    style?: ViewStyle,
-    testID?: string
-}
-
-export type State = {
-  gradientOpacity: Animated.Value,
-  scrollEnabled?: boolean,
-  currentIndex?: number
-};
 
 
 const MIN_TABS_FOR_SCROLL = 1;
 const DEFAULT_BACKGROUND_COLOR = Colors.white;
 const DEFAULT_HEIGHT = 48;
-const GRADIENT_WIDTH = 74;
-const INDICATOR_HEIGHT = 2;
-const gradientImage = () => require('./assets/gradient.png');
+
+export type TabBarProps = ScrollBarProps /* & TabBarItemProps */ & {
+  /**
+   * Show Tab Bar bottom shadow
+   */
+  enableShadow?: boolean;
+  /**
+   * The minimum number of tabs to render in scroll mode
+   */
+  minTabsForScroll?: number;
+  /**
+   * current selected tab index
+   */
+  selectedIndex?: number;
+  /**
+   * callback for when index has change (will not be called on ignored items)
+   */
+  onChangeIndex?: (index: number) => void;
+  /**
+   * callback for when tab selected
+   */
+  onTabSelected?: (index: number) => void;
+  /**
+   * custom style for the selected indicator
+   */
+  indicatorStyle?: StyleProp<ViewStyle>;
+  /**
+   * Tab Bar height
+   */
+  height?: number;
+  /**
+   * Pass when container width is different than the screen width
+   */
+  containerWidth?: number;
+  /**
+   * The background color
+   */
+  backgroundColor?: string;
+  /**
+   * set darkTheme style
+   */
+  darkTheme?: boolean;
+  children?: React.ReactNode;
+  style?: ViewStyle;
+  testID?: string
+}
+
+interface State {
+  scrollEnabled: boolean;
+  currentIndex: number;
+}
 
 /**
  * @description: TabBar Component
  * @modifiers: alignment, flex, padding, margin, background, typography, color (list of supported modifiers)
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabBarScreen.js
- * @extends: ScrollView
- * @extendsLink: https://facebook.github.io/react-native/docs/scrollview
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabBarScreen.tsx
+ * @extends: ScrollBar
+ * @extendsLink:https://github.com/wix/react-native-ui-lib/blob/master/src/components/scrollBar/index.js
  * @notes: This is screen width component.
  */
 class TabBar extends Component<TabBarProps, State> {
   static displayName = 'TabBar';
 
-  static defaultProps = {
-    selectedIndex: 0,
-    backgroundColor: DEFAULT_BACKGROUND_COLOR
+  static defaultProps: Partial<TabBarProps> = {
+    selectedIndex: 0
   };
 
-  static Item: typeof TabBarItem;
+  static Item = TabBarItem;
+
+  scrollContentWidth?: number;
+  contentOffset: {
+    x: number;
+    y: number;
+  }
+  scrollBar: RefObject<ScrollView>;
+  itemsRefs: ElementRef<typeof TabBarItem>[];
 
   constructor(props: TabBarProps) {
     super(props);
 
     this.state = {
-      gradientOpacity: new Animated.Value(0),
       scrollEnabled: false,
-      currentIndex: props.selectedIndex
+      currentIndex: props.selectedIndex || 0
     };
+
+    this.contentOffset = {x: 0, y: 0};
+    this.scrollBar = React.createRef();
+    this.itemsRefs = [];
   }
 
-  styles = createStyles(this.props);
-  scrollContainerWidth: number = Constants.screenWidth;
-  scrollContentWidth = 0;
-  contentOffset: any = {x: 0, y: 0};
-  itemsRefs: any[] = [];
-  scrollView?: any = undefined;
-
   componentDidUpdate(prevProps: TabBarProps, prevState: State) {
+    const prevChildrenCount = React.Children.count(prevProps.children);
+    if (this.childrenCount !== prevChildrenCount) {
+      this.updateIndicator(0);
+    }
     // TODO: since we're implementing an uncontrolled component here, we should verify the selectedIndex has changed
     // between this.props and nextProps (basically the meaning of selectedIndex should be initialIndex)
-    const {selectedIndex} = this.props;
     const isIndexManuallyChanged =
-      selectedIndex !== prevState.currentIndex && prevProps.selectedIndex !== selectedIndex;
-    if (isIndexManuallyChanged && selectedIndex !== undefined) {
-      this.updateIndicator(selectedIndex);
-    } else {
-      const prevChildrenCount = React.Children.count(prevProps.children);
-      if (this.childrenCount < prevChildrenCount) {
-        this.updateIndicator(0);
-      }
+      this.props.selectedIndex !== prevState.currentIndex && prevProps.selectedIndex !== this.props.selectedIndex;
+    if (isIndexManuallyChanged) {
+      this.updateIndicator(this.props.selectedIndex);
     }
   }
 
+  // generateStyles() {
+  //   this.styles = createStyles(this.props);
+  // }
+
   get childrenCount() {
     return React.Children.count(this.props.children);
+  }
+
+  get scrollContainerWidth() {
+    return this.props.containerWidth || Constants.screenWidth;
   }
 
   isIgnored(index: number) {
@@ -129,8 +133,16 @@ class TabBar extends Component<TabBarProps, State> {
     return _.get(child, 'props.ignore');
   }
 
-  updateIndicator(index: number) {
-    if (!this.isIgnored(index)) {
+  hasOverflow() {
+    return this.scrollContentWidth && this.scrollContentWidth > this.scrollContainerWidth;
+  }
+
+  shouldBeMarked = (index: number) => {
+    return this.state.currentIndex === index && !this.isIgnored(index) && this.childrenCount > 1;
+  };
+
+  updateIndicator(index?: number) {
+    if (index !== undefined && !this.isIgnored(index)) {
       this.setState({currentIndex: index}, () => {
         this.scrollToSelected();
       });
@@ -138,16 +150,14 @@ class TabBar extends Component<TabBarProps, State> {
   }
 
   scrollToSelected(animated = true) {
-    if (this.itemsRefs && this.state.currentIndex) {
-      const childRef = this.itemsRefs[this.state.currentIndex];
-      const childLayout = childRef.getLayout();
-  
-      if (childLayout && this.hasOverflow()) {
-        if (childLayout.x + childLayout.width - this.contentOffset.x > this.scrollContainerWidth) {
-          this.scrollView.scrollTo({x: childLayout.x - this.scrollContainerWidth + childLayout.width, y: 0, animated});
-        } else if (childLayout.x - this.contentOffset.x < 0) {
-          this.scrollView.scrollTo({x: childLayout.x, y: 0, animated});
-        }
+    const childRef: any = this.itemsRefs[this.state.currentIndex];
+    const childLayout = childRef.getLayout();
+
+    if (childLayout && this.hasOverflow()) {
+      if (childLayout.x + childLayout.width - this.contentOffset.x > this.scrollContainerWidth) {
+        this.scrollBar?.current?.scrollTo?.({x: childLayout.x - this.scrollContainerWidth + childLayout.width, y: 0, animated});
+      } else if (childLayout.x - this.contentOffset.x < 0) {
+        this.scrollBar?.current?.scrollTo?.({x: childLayout.x, y: 0, animated});
       }
     }
   }
@@ -172,143 +182,103 @@ class TabBar extends Component<TabBarProps, State> {
     }, 0);
   };
 
-  getStylePropValue(flattenStyle: object, propName: string) {
-    let prop;
-    if (flattenStyle) {
-      const propObject: any = _.pick(flattenStyle, [propName]);
-      prop = propObject[propName];
-    }
-    return prop;
-  }
-
-  animateGradientOpacity = (x: number, contentWidth: number, containerWidth: number) => {
-    const overflow = contentWidth - containerWidth;
-    const newValue = x > 0 && x >= overflow - 1 ? 0 : 1;
-
-    Animated.spring(this.state.gradientOpacity, {
-      toValue: newValue,
-      speed: 20,
-      useNativeDriver: true
-    }).start();
-  };
-
   onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const {layoutMeasurement, contentOffset, contentSize} = event.nativeEvent;
+    const {contentOffset} = event.nativeEvent;
     this.contentOffset = contentOffset;
-    const x = contentOffset.x;
-    const contentWidth = contentSize.width;
-    const containerWidth = layoutMeasurement.width;
-
-    this.animateGradientOpacity(x, contentWidth, containerWidth);
   };
 
   onContentSizeChange = (width: number) => {
     if (this.scrollContentWidth !== width) {
+      this.scrollContentWidth = width;
       const {minTabsForScroll} = this.props;
       const minChildrenCount = minTabsForScroll || MIN_TABS_FOR_SCROLL;
-
-      this.scrollContentWidth = width;
-
       if (this.hasOverflow() && this.childrenCount > minChildrenCount) {
-        this.setState({gradientOpacity: new Animated.Value(1), scrollEnabled: true});
+        this.setState({scrollEnabled: true});
       }
     }
   };
 
-  hasOverflow() {
-    if (this.scrollContentWidth) {
-      if (this.scrollContentWidth > this.scrollContainerWidth) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  renderGradient(height: number, tintColor: string) {
-    const width = GRADIENT_WIDTH;
-
-    if (this.hasOverflow()) {
-      return (
-        <Animated.View
-          pointerEvents="none"
-          style={{
-            width,
-            height: height - INDICATOR_HEIGHT,
-            position: 'absolute',
-            right: 0,
-            opacity: this.state.gradientOpacity
-          }}
-        >
-          <Image
-            source={gradientImage()}
-            style={{width, height: height - INDICATOR_HEIGHT, tintColor}}
-            resizeMode={'stretch'}
-            supportRTL
-          />
-        </Animated.View>
-      );
-    }
-  }
-
   renderTabBar() {
-    const {height, backgroundColor} = this.props;
+    const {height, backgroundColor = DEFAULT_BACKGROUND_COLOR, containerView, containerProps, gradientMargins} = this.props;
     const {scrollEnabled} = this.state;
     const containerHeight = height || DEFAULT_HEIGHT;
 
     return (
-      <View row>
-        <ScrollView
-          ref={r => (this.scrollView = r)}
-          style={{height: containerHeight}}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          scrollEnabled={scrollEnabled}
-          scrollEventThrottle={16}
-          onScroll={this.onScroll}
-          onContentSizeChange={this.onContentSizeChange}
-          contentContainerStyle={{minWidth: '100%'}}
+      <ScrollBar
+        // @ts-ignore
+        ref={this.scrollBar}
+        contentContainerStyle={styles.scrollBarContainer}
+        scrollEnabled={scrollEnabled}
+        scrollEventThrottle={16}
+        onScroll={this.onScroll}
+        onContentSizeChange={this.onContentSizeChange}
+        height={containerHeight}
+        gradientColor={backgroundColor}
+        containerView={containerView}
+        containerProps={containerProps}
+        gradientMargins={gradientMargins}
+      >
+        <View
+          row
+          style={[
+            styles.tabBar,
+            {
+              height: containerHeight,
+              backgroundColor
+            }
+          ]}
         >
-          <View row style={this.styles.tabBar}>
-            {this.renderChildren()}
-          </View>
-        </ScrollView>
-        {this.renderGradient(containerHeight, backgroundColor)}
-      </View>
+          {this.renderChildren()}
+        </View>
+      </ScrollBar>
     );
   }
 
-  shouldBeMarked = (index: number) => {
-    return this.state.currentIndex === index && !this.isIgnored(index) && this.childrenCount > 1;
-  };
-
   renderChildren() {
     this.itemsRefs = [];
-    const {indicatorStyle} = this.props;
+    const {indicatorStyle, darkTheme} = this.props;
 
     const children = React.Children.map(this.props.children, (child, index) => {
-      if (React.isValidElement(child)) {
-        return React.cloneElement(child, {
-          indicatorStyle,
-          selected: this.shouldBeMarked(index),
-          onPress: () => {
-            this.onItemPress(index, child.props);
-          },
-          ref: (r: any) => {
-            this.itemsRefs[index] = r;
-          }
-        });
-      }
+      // @ts-ignore
+      const accessLabel = child?.props.accessibilityLabel || child.props.label || '';
+
+      //TODO: review it again, all types here should be correct. As from React.Children.map it gets definitely child: React.ReactNode, and React.cloneElement does not accept it.
+      // But seems it's work in a real life, so maybe it is just trouble with types compatibility
+      //@ts-ignore
+      return React.cloneElement(child, {
+        indicatorStyle,
+        darkTheme,
+        selected: this.shouldBeMarked(index),
+        onPress: () => {
+          // @ts-ignore
+          this.onItemPress(index, child.props);
+        },
+        ref: (r: any) => {
+          this.itemsRefs[index] = r;
+        },
+        accessibilityLabel: `${accessLabel} ${index + 1} out of ${this.childrenCount}`
+      });
     });
     return children;
   }
 
   render() {
-    const {enableShadow, style} = this.props;
+    const {enableShadow, style, backgroundColor = DEFAULT_BACKGROUND_COLOR} = this.props;
 
     return (
+      // @ts-ignore
       <View
         useSafeArea
-        style={[this.styles.container, enableShadow && this.styles.containerShadow, style, {height: undefined}]}
+        style={[
+          styles.container,
+          enableShadow && styles.containerShadow,
+          style,
+          {
+            height: undefined,
+            width: this.scrollContainerWidth,
+            backgroundColor
+          }
+        ]}
       >
         {this.renderTabBar()}
       </View>
@@ -316,36 +286,34 @@ class TabBar extends Component<TabBarProps, State> {
   }
 }
 
-function createStyles({backgroundColor = DEFAULT_BACKGROUND_COLOR}) {
-  return StyleSheet.create({
-    container: {
-      zIndex: 100
-    },
-    containerShadow: {
-      ...Platform.select({
-        ios: {
-          shadowColor: Colors.dark10,
-          shadowOpacity: 0.05,
-          shadowRadius: 2,
-          shadowOffset: {height: 6, width: 0}
-        },
-        android: {
-          elevation: 5,
-          backgroundColor: Colors.white
-        }
-      })
-    },
-    tabBar: {
-      flex: 1,
-      height: DEFAULT_HEIGHT,
-      backgroundColor
-    },
-    shadowImage: {
-      width: '100%'
-    }
-  });
-}
+export default asBaseComponent<TabBarProps, typeof TabBar>(TabBar);
 
-TabBar.Item = TabBarItem;
 
-export default asBaseComponent<TabBarProps, {Item: typeof TabBarItem}>(TabBar);
+const styles = StyleSheet.create({
+  container: {
+    zIndex: 100
+  },
+  containerShadow: {
+    ...Platform.select({
+      ios: {
+        shadowColor: Colors.dark10,
+        shadowOpacity: 0.05,
+        shadowRadius: 2,
+        shadowOffset: {height: 6, width: 0}
+      },
+      android: {
+        elevation: 5,
+        backgroundColor: Colors.white
+      }
+    })
+  },
+  tabBar: {
+    flex: 1
+  },
+  shadowImage: {
+    width: '100%'
+  },
+  scrollBarContainer: {
+    minWidth: '100%'
+  }
+});

@@ -87,6 +87,7 @@ interface DialogState {
   orientationKey: orientations;
   modalVisibility?: boolean;
   dialogVisibility?: boolean;
+  fadeOut?: boolean;
 }
 
 const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.dark10, 0.6);
@@ -161,8 +162,18 @@ class Dialog extends Component<DialogProps, DialogState> {
     }
   }
 
-  onDismiss = () => {
-    this.setState({modalVisibility: false}, () => {
+  // TODO: revert adding this workaround once RN fixes https://github.com/facebook/react-native/issues/29455
+  onFadeDone = () => {
+    if (!this.state.modalVisibility) {
+      setTimeout(() => { // unfortunately this is needed if a modal needs to open on iOS
+        _.invoke(this.props, 'onDialogDismissed', this.props);
+        _.invoke(this.props, 'onModalDismissed', this.props);
+      }, 100);
+    }
+  }
+
+  _onDismiss = () => {
+    this.setState({modalVisibility: false, fadeOut: false}, () => {
       const props = this.props;
       if (props.visible) {
         _.invoke(props, 'onDismiss', props);
@@ -172,6 +183,16 @@ class Dialog extends Component<DialogProps, DialogState> {
         _.invoke(props, 'onDialogDismissed', props);
       }
     });
+  }
+
+  onDismiss = () => {
+    const fadeOut = Constants.isIOS && this.props.visible;
+
+    if (fadeOut) {
+      this.setState({fadeOut}, this._onDismiss);
+    } else {
+      this._onDismiss();
+    }
   };
 
   onModalDismissed = () => {
@@ -217,10 +238,11 @@ class Dialog extends Component<DialogProps, DialogState> {
 
   // TODO: renderOverlay {_.invoke(this.props, 'renderOverlay')}
   renderDialogContainer = () => {
-    const {modalVisibility, dialogVisibility} = this.state;
+    const {modalVisibility, dialogVisibility, fadeOut} = this.state;
     const {useSafeArea, bottom, overlayBackgroundColor, testID} = this.props;
     const addBottomSafeArea = Constants.isIphoneX && (useSafeArea && bottom);
     const bottomInsets = Constants.getSafeAreaInsets().bottom - 8; // TODO: should this be here or in the input style?
+    const onFadeDone = Constants.isIOS ? this.onFadeDone : undefined;
 
     return (
       <View
@@ -233,6 +255,8 @@ class Dialog extends Component<DialogProps, DialogState> {
           modalVisibility={modalVisibility}
           dialogVisibility={dialogVisibility}
           overlayBackgroundColor={overlayBackgroundColor}
+          onFadeDone={onFadeDone}
+          fadeOut={fadeOut}
         />
         {this.renderDialogView()}
         {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>}
@@ -253,7 +277,7 @@ class Dialog extends Component<DialogProps, DialogState> {
         animationType={'none'}
         onBackgroundPress={this.hideDialogView}
         onRequestClose={this.hideDialogView}
-        onDismiss={this.onModalDismissed}
+        // onDismiss={this.onModalDismissed}
         supportedOrientations={supportedOrientations}
         accessibilityLabel={accessibilityLabel}
       >

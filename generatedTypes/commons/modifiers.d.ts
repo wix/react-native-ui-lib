@@ -77,17 +77,23 @@ export declare type ContainerModifiers = AlignmentModifiers & PositionModifiers 
 export declare function extractColorValue(props: Dictionary<any>): any;
 export declare function extractBackgroundColorValue(props: Dictionary<any>): any;
 export declare function extractTypographyValue(props: Dictionary<any>): object | undefined;
-export declare function extractPaddingValues(props: Dictionary<any>): Partial<Record<"padding" | "paddingLeft" | "paddingTop" | "paddingRight" | "paddingBottom" | "paddingHorizontal" | "paddingVertical", number>>;
-export declare function extractMarginValues(props: Dictionary<any>): Partial<Record<"margin" | "marginLeft" | "marginTop" | "marginRight" | "marginBottom" | "marginHorizontal" | "marginVertical", number>>;
+export declare function extractPaddingValues(props: Dictionary<any>): Partial<Record<NativePaddingKeyType, number>>;
+export declare function extractMarginValues(props: Dictionary<any>): Partial<Record<NativeMarginModifierKeyType, number>>;
 export declare function extractAlignmentsValues(props: Dictionary<any>): any;
 export declare function extractPositionStyle(props: Dictionary<any>): {
     position: "absolute";
 } | undefined;
 export declare function extractFlexStyle(props: Dictionary<any>): Partial<Record<NativeFlexModifierKeyType, number>> | undefined;
 export declare function extractAccessibilityProps(props?: any): Partial<any>;
+export declare function extractAnimationProps(props?: any): Pick<any, "onAnimationEnd" | "animation" | "duration" | "delay" | "direction" | "easing" | "iterationCount" | "transition" | "onAnimationBegin" | "useNativeDriver">;
 export declare function extractBorderRadiusValue(props: Dictionary<any>): number | undefined;
 export declare function extractModifierProps(props: Dictionary<any>): _.Dictionary<any>;
+/**
+ * TODO:
+ * @deprecated switch to Modifiers#extractComponentProps
+ */
 export declare function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]): Pick<Partial<Dictionary<any>>, number>;
+export declare function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps?: string[]): Pick<Partial<Dictionary<any>>, number>;
 export declare function getThemeProps(props?: any, context?: any): any;
 export declare function generateModifiersStyle(options: {
     color: boolean;

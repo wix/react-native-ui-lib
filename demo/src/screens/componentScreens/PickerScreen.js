@@ -1,19 +1,12 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView, Image} from 'react-native';
-import {
-  View,
-  Colors,
-  Dialog,
-  Text,
-  Picker,
-  Avatar,
-  Assets,
-  PanningProvider
-} from 'react-native-ui-lib'; //eslint-disable-line
-import contacts from '../../data/conversations';
+import {View, Colors, Dialog, Text, Picker, Avatar, Assets, PanningProvider} from 'react-native-ui-lib'; //eslint-disable-line
+import contactsData from '../../data/conversations';
 import tagIcon from '../../assets/icons/tags.png';
 import dropdown from '../../assets/icons/chevronDown.png';
+
+const contacts = _.map(contactsData, c => ({...c, value: c.name, label: c.name}));
 
 const options = [
   {label: 'JavaScript', value: 'js'},
@@ -37,6 +30,7 @@ export default class PickerScreen extends Component {
       itemsCount: 1,
       // language: {value: 'java', label: 'Java'},
       language: undefined,
+      language2: options[2].value, // for migrated picker example
       languages: [],
       nativePickerValue: 'java',
       customModalValues: [],
@@ -59,7 +53,7 @@ export default class PickerScreen extends Component {
 
   renderDialog = modalProps => {
     const {visible, children, toggleModal, onDone} = modalProps;
-    
+
     return (
       <Dialog
         migrate
@@ -105,19 +99,18 @@ export default class PickerScreen extends Component {
             ))}
           </Picker>
 
-          <View marginT-20>
-            <Picker
-              placeholder="Favorite Languages"
-              value={this.state.languages}
-              onChange={items => this.setState({languages: items})}
-              mode={Picker.modes.MULTI}
-              rightIconSource={dropdown}
-            >
-              {_.map(options, option => (
-                <Picker.Item key={option.value} value={option} disabled={option.disabled}/>
-              ))}
-            </Picker>
-          </View>
+          <Picker
+            marginT-20
+            placeholder="Favorite Languages"
+            value={this.state.languages}
+            onChange={items => this.setState({languages: items})}
+            mode={Picker.modes.MULTI}
+            rightIconSource={dropdown}
+          >
+            {_.map(options, option => (
+              <Picker.Item key={option.value} value={option} disabled={option.disabled}/>
+            ))}
+          </Picker>
 
           <Picker
             title="Native Picker"
@@ -144,33 +137,32 @@ export default class PickerScreen extends Component {
             // topBarProps={{doneLabel: 'YES', cancelLabel: 'NO'}}
             wheelPickerProps={{
               style: {width: 200},
-              color: Colors.violet30,
+              color: Colors.green30,
               labelStyle: {fontSize: 32, fontFamily: 'sans-serif-condensed-light'},
               itemHeight: 55
             }}
-            selectLabelStyle={{color: Colors.violet30}}
-            cancelLabelStyle={{color: Colors.violet30}}
+            selectLabelStyle={{color: Colors.green30}}
+            cancelLabelStyle={{color: Colors.green30}}
           >
             {_.map(options, option => (
               <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
             ))}
           </Picker>
 
-          <View marginT-20>
-            <Picker
-              title="Custom modal"
-              placeholder="Pick multiple Languages"
-              value={this.state.customModalValues}
-              onChange={items => this.setState({customModalValues: items})}
-              mode={Picker.modes.MULTI}
-              rightIconSource={dropdown}
-              renderCustomModal={this.renderDialog}
-            >
-              {_.map(options, option => (
-                <Picker.Item key={option.value} value={option} label={option.label} disabled={option.disabled}/>
-              ))}
-            </Picker>
-          </View>
+          <Picker
+            marginT-20
+            title="Custom modal"
+            placeholder="Pick multiple Languages"
+            value={this.state.customModalValues}
+            onChange={items => this.setState({customModalValues: items})}
+            mode={Picker.modes.MULTI}
+            rightIconSource={dropdown}
+            renderCustomModal={this.renderDialog}
+          >
+            {_.map(options, option => (
+              <Picker.Item key={option.value} value={option} label={option.label} disabled={option.disabled}/>
+            ))}
+          </Picker>
 
           <Text marginT-20 marginB-10 text70 dark60>
             Custom Picker:
@@ -239,6 +231,26 @@ export default class PickerScreen extends Component {
                 )}
                 getItemLabel={item => item.name}
               />
+            ))}
+          </Picker>
+
+          <Text text60 marginT-s5 marginB-s2>Migrated Picker</Text>
+
+          <Picker
+            migrate
+            title="Language"
+            placeholder="Favorite Language"
+            value={this.state.language2}
+            onChange={value => this.setState({language2: value})}
+            topBarProps={{title: 'Languages'}}
+            showSearch
+            searchPlaceholder={'Search a language'}
+            searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.dark50}}
+            // mode={Picker.modes.MULTI}
+            // useNativePicker
+          >
+            {_.map(options, option => (
+              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
             ))}
           </Picker>
         </View>

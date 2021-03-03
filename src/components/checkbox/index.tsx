@@ -1,18 +1,32 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {Animated, Easing, StyleSheet, StyleProp, TouchableOpacityProps, ViewStyle} from 'react-native';
-import {Colors} from '../../style';
+import {
+  Animated,
+  Easing,
+  StyleSheet,
+  StyleProp,
+  TouchableOpacityProps,
+  ViewStyle,
+  TextStyle,
+  ImageStyle
+} from 'react-native';
+import {Colors, Spacings} from '../../style';
 //@ts-ignore
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
+import Text from '../text';
+import View from '../view';
 
 const DEFAULT_SIZE = 24;
-const DEFAULT_COLOR = Colors.blue30;
+const DEFAULT_COLOR = Colors.primary;
 const DEFAULT_ICON_COLOR = Colors.white;
 const DEFAULT_DISABLED_COLOR = Colors.grey50;
 
-export interface CheckboxPropTypes extends TouchableOpacityProps {
+const DEFAULT_BORDER_WIDTH = 2;
+const DEFAULT_BORDER_RADIUS = 8;
+
+export interface CheckboxProps extends TouchableOpacityProps {
   /**
    * The value of the Checkbox. If true the switch will be turned on. Default value is false.
    */
@@ -30,6 +44,10 @@ export interface CheckboxPropTypes extends TouchableOpacityProps {
    */
   color?: string;
   /**
+   * alternative Checkbox outline style
+   */
+  outline?: boolean;
+  /**
    * The size of the checkbox. affect both width and height
    */
   size?: number;
@@ -46,28 +64,41 @@ export interface CheckboxPropTypes extends TouchableOpacityProps {
    */
   iconColor?: string;
   /**
+   * The label of the checkbox
+   */
+  label?: string;
+  /**
+   * The style of the label
+   */
+  labelStyle?: StyleProp<TextStyle>;
+  /**
    * Additional styling
    */
-  style?: StyleProp<ViewStyle>
+  style?: StyleProp<ViewStyle>;
+  /**
+   * Additional styling for checkbox and label container
+   */
+  containerStyle?: StyleProp<ViewStyle>;
 }
+export type CheckboxPropTypes = CheckboxProps; //TODO: remove after ComponentPropTypes deprecation;
 
 interface CheckboxState {
   isChecked: Animated.Value;
-};
+}
 
 /**
  * @description: Checkbox component for toggling boolean value related to some context
  * @extends: TouchableOpacity
  * @extendslink: docs/TouchableOpacity
- * @gif: https://media.giphy.com/media/xULW8j5WzsuPytqklq/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CheckboxScreen.tsx
  */
-class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
+class Checkbox extends Component<CheckboxProps, CheckboxState> {
   static displayName = 'Checkbox';
 
   styles: {
     container: StyleProp<ViewStyle>;
-    selectedIcon: StyleProp<ViewStyle>;
+    selectedIcon: StyleProp<ImageStyle>;
+    checkboxLabel: StyleProp<TextStyle>;
   };
 
   animationStyle: {
@@ -82,7 +113,7 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
     ];
   };
 
-  constructor(props: CheckboxPropTypes) {
+  constructor(props: CheckboxProps) {
     super(props);
 
     this.state = {
@@ -104,7 +135,7 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
     };
   }
 
-  componentDidUpdate(prevProps: CheckboxPropTypes) {
+  componentDidUpdate(prevProps: CheckboxProps) {
     const {value} = this.props;
     if (prevProps.value !== value) {
       this.animateCheckbox(value);
@@ -123,7 +154,7 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
     };
   }
 
-  animateCheckbox(value: CheckboxPropTypes['value']) {
+  animateCheckbox(value: CheckboxProps['value']) {
     const {isChecked} = this.state;
 
     Animated.timing(isChecked, {
@@ -142,40 +173,58 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
     }
   };
 
-  getColor() {
-    const {color, disabled} = this.props;
-    return disabled ? DEFAULT_DISABLED_COLOR : color || DEFAULT_COLOR;
-  }
+  getColor = () => (this.props.disabled ? DEFAULT_DISABLED_COLOR : this.props.color || DEFAULT_COLOR);
+
+  getBackgroundColor = () => (this.props.outline ? 'transparent' : this.getColor());
+
+  getTintColor = () => {
+    const {outline, disabled, iconColor} = this.props;
+    if (outline) {
+      if (disabled) {
+        return DEFAULT_DISABLED_COLOR;
+      } else {
+        return iconColor || DEFAULT_COLOR;
+      }
+    } else if (disabled) {
+      return Colors.white;
+    } else {
+      return iconColor || Colors.white;
+    }
+  };
 
   getBorderStyle() {
     const borderColor = {borderColor: this.getColor()};
-    const borderStyle = [this.styles.container, {borderWidth: 2}, borderColor];
+    const borderStyle = [this.styles.container, {borderWidth: DEFAULT_BORDER_WIDTH}, borderColor];
 
     return borderStyle;
   }
 
-  render() {
-    const {selectedIcon, color, iconColor, disabled, testID, style, ...others} = this.props;
+  renderCheckbox() {
+    const {selectedIcon, label, testID, style, containerStyle, ...others} = this.props;
+
     return (
-      // @ts-ignore
+      //@ts-ignore
       <TouchableOpacity
         {...this.getAccessibilityProps()}
         activeOpacity={1}
         testID={testID}
         {...others}
-        style={[this.getBorderStyle(), style]}
+        style={[this.getBorderStyle(), style, !label && containerStyle]}
         onPress={this.onPress}
       >
         {
           <Animated.View
-            style={[this.styles.container, {backgroundColor: this.getColor()}, {opacity: this.animationStyle.opacity}]}
+            style={[
+              this.styles.container,
+              {opacity: this.animationStyle.opacity},
+              {backgroundColor: this.getBackgroundColor()}
+            ]}
           >
             <Animated.Image
               style={[
                 this.styles.selectedIcon,
-                color && {tintColor: iconColor},
                 {transform: this.animationStyle.transform},
-                disabled && {tintColor: DEFAULT_ICON_COLOR}
+                {tintColor: this.getTintColor()}
               ]}
               source={selectedIcon || Assets.icons.checkSmall}
               testID={`${testID}.selected`}
@@ -185,16 +234,35 @@ class Checkbox extends Component<CheckboxPropTypes, CheckboxState> {
       </TouchableOpacity>
     );
   }
+
+  render() {
+    const {label, labelStyle, containerStyle} = this.props;
+    return label ? (
+      <View row centerV style={[containerStyle]}>
+        {this.renderCheckbox()}
+        <Text style={[this.styles.checkboxLabel, labelStyle]} onPress={this.onPress}>
+          {label}
+        </Text>
+      </View>
+    ) : (
+      this.renderCheckbox()
+    );
+  }
 }
 
-function createStyles(props: CheckboxPropTypes) {
-  const {color = DEFAULT_COLOR, iconColor = DEFAULT_ICON_COLOR, size = DEFAULT_SIZE, borderRadius} = props;
+function createStyles(props: CheckboxProps) {
+  const {
+    color = DEFAULT_COLOR,
+    iconColor = DEFAULT_ICON_COLOR,
+    size = DEFAULT_SIZE,
+    borderRadius = DEFAULT_BORDER_RADIUS
+  } = props;
 
   return StyleSheet.create({
     container: {
       width: size,
       height: size,
-      borderRadius: borderRadius || 8,
+      borderRadius,
       alignItems: 'center',
       justifyContent: 'center',
       borderColor: color
@@ -203,8 +271,12 @@ function createStyles(props: CheckboxPropTypes) {
       tintColor: iconColor,
       alignItems: 'center',
       justifyContent: 'center'
+    },
+    checkboxLabel: {
+      marginLeft: Spacings.s3,
+      alignSelf: 'center'
     }
   });
 }
 
-export default asBaseComponent<CheckboxPropTypes>(Checkbox);
+export default asBaseComponent<CheckboxProps>(Checkbox);

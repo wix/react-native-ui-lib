@@ -2,8 +2,9 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
+import {LogService} from '../../services';
 import {Constants} from '../../helpers';
-import {Typography, ThemeManager} from '../../style';
+import {Typography, Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
 import Image from '../../components/image';
@@ -22,6 +23,7 @@ export default class StateScreen extends BaseComponent {
      * The image source that's showing at the top. use an image that was required locally
      */
     imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    source: PropTypes.oneOfType([PropTypes.object, PropTypes.number]), // TODO: remove after deprecation
     /**
      * To to show as the title
      */
@@ -48,23 +50,30 @@ export default class StateScreen extends BaseComponent {
     super(props);
 
     if (props.testId) {
-      console.warn('StateScreen prop \'testId\' is deprecated. Please use RN \'testID\' prop instead.');
+      LogService.deprecationWarn({component: 'StateScreen', oldProp: 'testId', newProp: 'testID'});
+
+    }
+    if (props.imageSource) {
+      LogService.deprecationWarn({component: 'StateScreen', oldProp: 'source', newProp: 'imageSource'});
     }
   }
 
   generateStyles() {
-    const {imageSource} = this.props;
-    const isRemoteImage = _.isObject(imageSource) && Boolean(imageSource.uri);
+    const {source, imageSource} = this.props;
+    const finalSource = imageSource || source;
+
+    const isRemoteImage = _.isObject(finalSource) && Boolean(finalSource.uri);
     this.styles = createStyles(isRemoteImage);
   }
 
   render() {
-    // TODO: remove testId after deprecation
-    const {title, subtitle, imageSource, ctaLabel, onCtaPress, testId, testID} = this.props;
+    // TODO: remove testId and imageSource after deprecation
+    const {title, subtitle, source, imageSource, ctaLabel, onCtaPress, testId, testID} = this.props;
+    const finalSource = imageSource || source;
 
     return (
       <View style={this.styles.container} testID={testID || testId}>
-        <Image style={this.styles.image} resizeMode={'contain'} source={imageSource}/>
+        <Image style={this.styles.image} resizeMode={'contain'} source={finalSource}/>
         <Text style={[this.styles.title]}>{title}</Text>
         <Text style={[this.styles.subtitle]}>{subtitle}</Text>
         <Button
@@ -92,18 +101,18 @@ function createStyles(isRemoteImage) {
     title: {
       textAlign: 'center',
       ...Typography.text50,
-      color: ThemeManager.titleColor,
+      color: Colors.dark10,
       fontWeight: '300'
     },
     subtitle: {
       textAlign: 'center',
       ...Typography.text70,
-      color: ThemeManager.subtitleColor,
+      color: Colors.dark40,
       fontWeight: '300',
       marginTop: 12
     },
     ctaLabel: {
-      color: ThemeManager.primaryColor,
+      color: Colors.primary,
       ...Typography.text70
     }
   });

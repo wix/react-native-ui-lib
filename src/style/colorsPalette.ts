@@ -102,4 +102,12 @@ const extraFixColorsMap = {
   '#fff': 'white'
 };
 
-export {colorsPalette, extraFixColorsMap};
+const themeColors = {
+  primary: colorsPalette.violet30
+};
+
+export {
+  colorsPalette,
+  themeColors,
+  extraFixColorsMap
+};

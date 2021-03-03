@@ -1,30 +1,29 @@
 import _ from 'lodash';
 import Colors from './colors';
 
+
 export class ThemeManager {
+
   theme = {
-    primaryColor: Colors.blue30,
+    primaryColor: Colors.primary,
     CTA: {
       textColor: Colors.white,
       disabledColor: Colors.dark60,
-      backgroundColor: Colors.blue30
+      backgroundColor: Colors.primary
     },
     titleColor: Colors.dark10,
     subtitleColor: Colors.dark40,
     dividerColor: Colors.dark70,
-    components: {
-      TouchableOpacity: {
-        throttleTime: 0,
-        throttleOptions: {leading: true, trailing: false}
-      }
-    } as Extendable
+    components: {} as Extendable // leave this key and delete the rest on V6
   };
 
   forcedTheme = {
     components: {} as Extendable
   }
 
+  //TODO: deprecate on V6
   setTheme(overrides: Dictionary<string>) {
+    console.warn('ThemeManager.setTheme() is deprecated. Please remove usage before next uilib major version update. Consider using ThemeManager.setComponentTheme instead');
     this.theme = _.merge(this.theme, overrides);
   }
 
@@ -69,6 +68,7 @@ export class ThemeManager {
     return this.forcedTheme.components;
   }
 
+  // TODO: remove getters below
   get primaryColor() {
     return this.theme.primaryColor;
   }

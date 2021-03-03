@@ -1,18 +1,19 @@
 import React, {PureComponent} from 'react';
 import {View, StyleSheet, ImageSourcePropType} from 'react-native';
+import {LogService} from '../../services';
 // import {BaseComponent} from '../../commons';
 import Image, {ImageProps} from '../image';
 import * as CardPresenter from './CardPresenter';
 import asCardChild, {asCardChildProps} from './asCardChild';
-// @ts-ignore
-import {LogService} from '../../services';
 
-// TODO: Remove omitting source after imageSource deprecation
+
+// TODO: Remove omitting source after imageSource deprecation (since it's required for Image)
 export type CardImageProps = Omit<ImageProps, 'source'> & {
   /**
    * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
    */
   imageSource?: ImageSourcePropType;
+  source?: ImageSourcePropType; //TODO: Remove after imageSource deprecation - should take it from ImageProps
   /**
    * Image width
    */
@@ -31,18 +32,13 @@ export type CardImageProps = Omit<ImageProps, 'source'> & {
    * border radius, basically for Android since overflow doesn't work well (deprecated)
    */
   borderRadius?: number;
-  /**
-   * Image source, either remote source or local. Note: for remote pass object {uri: <remote_uri_string>}
-   * TODO: Remove after imageSource deprecation - should take it from Image props
-   */
-  source?: ImageSourcePropType;
 };
 
 type Props = CardImageProps & asCardChildProps;
 
 /**
  * @description: Card.Image, part of the Card component belongs inside a Card (better be a direct child)
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.tsx
  */
 class CardImage extends PureComponent<Props> {
   static displayName = 'Card.Image';
@@ -52,12 +48,14 @@ class CardImage extends PureComponent<Props> {
   constructor(props: Props) {
     super(props);
 
-    if (props.borderRadius) {
-      LogService.warn(
-        'uilib: Please stop passing borderRadius to Card.Image, it will get the borderRadius from the Card'
-      );
-    }
     this.styles = createStyles(props);
+
+    if (props.imageSource) {
+      LogService.deprecationWarn({component: 'CardImage', oldProp: 'imageSource', newProp: 'source'});
+    }
+    if (props.borderRadius) {
+      LogService.deprecationWarn({component: 'CardImage', oldProp: 'borderRadius'});
+    }
   }
 
   render() {

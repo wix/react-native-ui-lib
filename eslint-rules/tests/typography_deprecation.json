@@ -3,5 +3,11 @@
     "path": "Typography.deprecated",
     "message": "Please use 'Typography.valid' instead (fix is available).",
     "fix": "Typography.valid"
+  },
+  {
+    "path": "Typography.title",
+    "message": "Please use 'Typography.heading' instead (fix is available).",
+    "fix": "Typography.heading",
+    "components": ["Text", "TextField"]
   }
 ]

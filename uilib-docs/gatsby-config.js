@@ -3,14 +3,16 @@ const {manifestPlugin, markdownPagesPlugin, componentsDocgenPlugin, incubatorCom
 module.exports = {
   pathPrefix: '/react-native-ui-lib',
   siteMetadata: {
-    title: `U I L I B`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`
+    title: `RNUILib`,
+    description: `React Native UI Toolset and Components Library`,
+    author: `ethans@wix.com`,
+    domain: 'react-native-ui-lib',
+    github: 'https://github.com/wix/react-native-ui-lib'
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-sass`,
-    ...markdownPagesPlugin,
+    ...markdownPagesPlugin(),
     ...componentsDocgenPlugin,
     ...incubatorComponentsDocgenPlugin,
     ...nativeComponentsDocgenPlugin,

@@ -1,152 +1,14 @@
 import React, { PureComponent } from 'react';
-import { LayoutChangeEvent, ImageStyle, TextStyle, StyleProp } from 'react-native';
-import { BaseComponentInjectedProps, ForwardRefInjectedProps, TypographyModifiers, ColorsModifiers, BackgroundColorModifier, MarginModifiers } from '../../commons/new';
-import { TouchableOpacityProps } from '../touchableOpacity';
-import { TextPropTypes } from '../text';
-export declare enum ButtonSize {
-    xSmall = "xSmall",
-    small = "small",
-    medium = "medium",
-    large = "large"
-}
-export declare enum AnimationDirection {
-    center = "center",
-    left = "left",
-    right = "right"
-}
-export declare type ButtonPropTypes = TouchableOpacityProps & TypographyModifiers & ColorsModifiers & BackgroundColorModifier & MarginModifiers & {
-    /**
-     * Text to show inside the button
-     */
-    label?: string;
-    /**
-     * The Button text color (inherited from Text component)
-     */
-    color?: string;
-    /**
-     * Icon image source
-     */
-    iconSource?: object | number | Function;
-    /**
-     * Icon image style
-     */
-    iconStyle?: StyleProp<ImageStyle>;
-    /**
-     * Should the icon be right to the label
-     */
-    iconOnRight?: boolean;
-    /**
-    * whether the icon should flip horizontally on RTL locals
-    */
-    supportRTL?: boolean;
-    /**
-     * Color of the button background
-     */
-    backgroundColor?: string;
-    /**
-     * Color of the disabled button background
-     */
-    disabledBackgroundColor?: string;
-    /**
-     * Size of the button [large, medium, small, xSmall]
-     */
-    size?: ButtonSize;
-    /**
-     * Custom border radius.
-     */
-    borderRadius?: number;
-    /**
-     * Actions handler
-     */
-    onPress?: (props: any) => void;
-    /**
-     * Disable interactions for the component
-     */
-    disabled?: boolean;
-    /**
-     * Button will have outline style
-     */
-    outline?: boolean;
-    /**
-     * The outline color
-     */
-    outlineColor?: string;
-    /**
-     * The outline width
-     */
-    outlineWidth?: number;
-    /**
-     * Button will look like a link
-     */
-    link?: boolean;
-    /**
-     * label color for when it's displayed as link
-     */
-    linkColor?: string;
-    /**
-     * Additional styles for label text
-     */
-    labelStyle?: StyleProp<TextStyle>;
-    /**
-     * Props that will be passed to the button's Text label.
-     */
-    labelProps?: TextPropTypes;
-    /**
-     * should the button act as a coast to coast button (no border radius)
-     */
-    fullWidth?: boolean;
-    /**
-     * should the button be a round button
-     */
-    round?: boolean;
-    /**
-     * Control shadow visibility (iOS-only)
-     */
-    enableShadow?: boolean;
-    /**
-     * avoid inner button padding
-     */
-    avoidInnerPadding?: boolean;
-    /**
-     * avoid minimum width constraints
-     */
-    avoidMinWidth?: boolean;
-    /**
-     * callback for getting activeBackgroundColor (e.g. (calculatedBackgroundColor, prop) => {...})
-     * better set using ThemeManager
-     */
-    getActiveBackgroundColor?: (backgroundColor: string, props: any) => string;
-    /**
-     * should animate layout change
-     * Note?: For Android you must set 'setLayoutAnimationEnabledExperimental(true)' via RN's 'UIManager'
-     */
-    animateLayout?: boolean;
-    /**
-     * the direction of the animation ('left' and 'right' will effect the button's own alignment)
-     */
-    animateTo?: AnimationDirection;
-};
-export declare type ButtonState = {
-    size?: number;
-    borderRadius?: number;
-    isLandscape?: boolean;
-};
-declare type Props = ButtonPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
-/**
- * @description: Basic button component
- * @extends: TouchableOpacity
- * @extendslink: docs/TouchableOpacity
- * @modifiers: margin, background
- * @gif: https://media.giphy.com/media/xULW8j5WzsuPytqklq/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.tsx
- */
+import { LayoutChangeEvent, ImageStyle } from 'react-native';
+import { ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonPropTypes, ButtonState, Props } from './ButtonTypes';
+export { ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonPropTypes };
 declare class Button extends PureComponent<Props, ButtonState> {
     static displayName: string;
     static defaultProps: {
         iconOnRight: boolean;
     };
     static sizes: typeof ButtonSize;
-    static animationDirection: typeof AnimationDirection;
+    static animationDirection: typeof ButtonAnimationDirection;
     constructor(props: Props);
     state: {
         size: undefined;
@@ -182,7 +44,7 @@ declare class Button extends PureComponent<Props, ButtonState> {
             flex: number;
             flexDirection: "row";
         } | {
-            color?: string | undefined;
+            color?: string | typeof import("react-native").OpaqueColorValue | undefined;
             fontFamily?: string | undefined;
             fontSize?: number | undefined;
             fontStyle?: "normal" | "italic" | undefined;
@@ -192,8 +54,8 @@ declare class Button extends PureComponent<Props, ButtonState> {
             textAlign?: "auto" | "left" | "right" | "center" | "justify" | undefined;
             textDecorationLine?: "none" | "underline" | "line-through" | "underline line-through" | undefined;
             textDecorationStyle?: "solid" | "double" | "dotted" | "dashed" | undefined;
-            textDecorationColor?: string | undefined;
-            textShadowColor?: string | undefined;
+            textDecorationColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
+            textShadowColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
             textShadowOffset?: {
                 width: number;
                 height: number;
@@ -204,23 +66,23 @@ declare class Button extends PureComponent<Props, ButtonState> {
             fontVariant?: import("react-native").FontVariant[] | undefined;
             writingDirection?: "auto" | "ltr" | "rtl" | undefined;
             backfaceVisibility?: "visible" | "hidden" | undefined;
-            backgroundColor: string;
-            borderBottomColor?: string | undefined;
+            backgroundColor: import("react-native").ColorValue;
+            borderBottomColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
             borderBottomEndRadius?: number | undefined;
             borderBottomLeftRadius?: number | undefined;
             borderBottomRightRadius?: number | undefined;
             borderBottomStartRadius?: number | undefined;
             borderBottomWidth?: number | undefined;
-            borderColor?: string | undefined;
-            borderEndColor?: string | undefined;
-            borderLeftColor?: string | undefined;
+            borderColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
+            borderEndColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
+            borderLeftColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
             borderLeftWidth?: number | undefined;
             borderRadius?: number | undefined;
-            borderRightColor?: string | undefined;
+            borderRightColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
             borderRightWidth?: number | undefined;
-            borderStartColor?: string | undefined;
+            borderStartColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
             borderStyle?: "solid" | "dotted" | "dashed" | undefined;
-            borderTopColor?: string | undefined;
+            borderTopColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
             borderTopEndRadius?: number | undefined;
             borderTopLeftRadius?: number | undefined;
             borderTopRightRadius?: number | undefined;
@@ -277,7 +139,7 @@ declare class Button extends PureComponent<Props, ButtonState> {
             width?: string | number | undefined;
             zIndex?: number | undefined;
             direction?: "ltr" | "rtl" | "inherit" | undefined;
-            shadowColor?: string | undefined;
+            shadowColor?: string | typeof import("react-native").OpaqueColorValue | undefined;
             shadowOffset?: {
                 width: number;
                 height: number;
@@ -327,7 +189,7 @@ declare class Button extends PureComponent<Props, ButtonState> {
     } | {
         shadowColor: any;
     })[] | undefined;
-    getIconStyle(): StyleProp<ImageStyle>[];
+    getIconStyle(): import("react-native").StyleProp<ImageStyle>[];
     getAnimationDirectionStyle(): {
         alignSelf: string;
     } | undefined;
@@ -336,100 +198,31 @@ declare class Button extends PureComponent<Props, ButtonState> {
     render(): JSX.Element;
 }
 export { Button };
-declare const _default: React.ComponentClass<(Pick<import("react-native").TouchableOpacityProps, "testID" | "hitSlop" | "onLayout" | "hasTVPreferredFocus" | "tvParallaxProperties" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "accessibilityValue" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "disabled" | "onPress" | "onLongPress" | "activeOpacity" | "delayLongPress" | "delayPressIn" | "delayPressOut" | "onBlur" | "onFocus" | "onPressIn" | "onPressOut" | "pressRetentionOffset"> & Partial<Record<import("../../commons/modifiers").AlignmentLiterals, boolean>> & Partial<Record<import("../../commons/modifiers").PositionLiterals, boolean>> & Partial<Record<"padding" | "paddingL" | "paddingT" | "paddingR" | "paddingB" | "paddingH" | "paddingV", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & Partial<Record<"flex" | "flexG" | "flexS", boolean>> & Partial<Record<"br0" | "br10" | "br20" | "br30" | "br40" | "br50" | "br60" | "br100", boolean>> & Partial<Record<"bg", boolean>> & {
-    backgroundColor?: string | undefined;
-    throttleTime?: number | undefined;
-    throttleOptions?: {
-        leading: boolean;
-        trailing: boolean;
-    } | undefined;
-    activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined;
-    customValue?: any;
-    ref?: any;
-    style?: false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined> | import("react-native").Animated.AnimatedProps<import("react-native").ViewStyle> | import("react-native").Animated.AnimatedProps<import("react-native").RegisteredStyle<import("react-native").ViewStyle>> | import("react-native").Animated.AnimatedProps<import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined>> | null | undefined;
-} & import("../../commons/modifiers").CustomModifier & {
-    /**
-     * Text to show inside the button
-     */
+declare const _default: React.ComponentClass<(import("../touchableOpacity").TouchableOpacityProps & import("../../commons/modifiers").CustomModifier & Partial<Record<"bg", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
     label?: string | undefined;
-    /**
-     * The Button text color (inherited from Text component)
-     */
     color?: string | undefined;
-    /**
-     * Icon image source
-     */
     iconSource?: number | object | Function | undefined;
-    /**
-     * Icon image style
-     */
-    iconStyle?: StyleProp<ImageStyle>;
-    /**
-     * Should the icon be right to the label
-     */
+    iconStyle?: import("react-native").StyleProp<ImageStyle>;
     iconOnRight?: boolean | undefined;
-    /**
-    * whether the icon should flip horizontally on RTL locals
-    */
     supportRTL?: boolean | undefined;
-    /**
-     * Color of the button background
-     */
     backgroundColor?: string | undefined;
-    /**
-     * Color of the disabled button background
-     */
     disabledBackgroundColor?: string | undefined;
-    /**
-     * Size of the button [large, medium, small, xSmall]
-     */
     size?: ButtonSize | undefined;
-    /**
-     * Custom border radius.
-     */
     borderRadius?: number | undefined;
-    /**
-     * Actions handler
-     */
     onPress?: ((props: any) => void) | undefined;
-    /**
-     * Disable interactions for the component
-     */
     disabled?: boolean | undefined;
-    /**
-     * Button will have outline style
-     */
     outline?: boolean | undefined;
-    /**
-     * The outline color
-     */
     outlineColor?: string | undefined;
-    /**
-     * The outline width
-     */
     outlineWidth?: number | undefined;
-    /**
-     * Button will look like a link
-     */
     link?: boolean | undefined;
-    /**
-     * label color for when it's displayed as link
-     */
     linkColor?: string | undefined;
-    /**
-     * Additional styles for label text
-     */
-    labelStyle?: StyleProp<TextStyle>;
-    /**
-     * Props that will be passed to the button's Text label.
-     */
+    labelStyle?: import("react-native").StyleProp<import("react-native").TextStyle>;
     labelProps?: (import("react-native").TextProps & import("../../commons/modifiers").CustomModifier & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
         color?: string | undefined;
         center?: boolean | undefined;
         uppercase?: boolean | undefined;
         highlightString?: string | undefined;
-        highlightStyle?: TextStyle | undefined;
+        highlightStyle?: import("react-native").TextStyle | undefined;
         animated?: boolean | undefined;
         textAlign?: string | undefined;
     }) | (import("react-native").TextProps & import("../../commons/modifiers").CustomModifier & Partial<Record<"black" | "white" | "dark10" | "dark20" | "dark30" | "dark40" | "dark50" | "dark60" | "dark70" | "dark80" | "grey10" | "grey20" | "grey30" | "grey40" | "grey50" | "grey60" | "grey70" | "grey80" | "blue10" | "blue20" | "blue30" | "blue40" | "blue50" | "blue60" | "blue70" | "blue80" | "cyan10" | "cyan20" | "cyan30" | "cyan40" | "cyan50" | "cyan60" | "cyan70" | "cyan80" | "green10" | "green20" | "green30" | "green40" | "green50" | "green60" | "green70" | "green80" | "yellow10" | "yellow20" | "yellow30" | "yellow40" | "yellow50" | "yellow60" | "yellow70" | "yellow80" | "orange10" | "orange20" | "orange30" | "orange40" | "orange50" | "orange60" | "orange70" | "orange80" | "red10" | "red20" | "red30" | "red40" | "red50" | "red60" | "red70" | "red80" | "purple10" | "purple20" | "purple30" | "purple40" | "purple50" | "purple60" | "purple70" | "purple80" | "violet10" | "violet20" | "violet30" | "violet40" | "violet50" | "violet60" | "violet70" | "violet80", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
@@ -437,7 +230,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         center?: boolean | undefined;
         uppercase?: boolean | undefined;
         highlightString?: string | undefined;
-        highlightStyle?: TextStyle | undefined;
+        highlightStyle?: import("react-native").TextStyle | undefined;
         animated?: boolean | undefined;
         textAlign?: string | undefined;
     }) | (import("react-native").TextProps & Partial<Record<"text10" | "text20" | "text30" | "text40" | "text50" | "text60" | "text65" | "text70" | "text80" | "text90" | "text100" | "text10T" | "text10L" | "text10R" | "text10M" | "text10BO" | "text10H" | "text10BL" | "text20T" | "text20L" | "text20R" | "text20M" | "text20BO" | "text20H" | "text20BL" | "text30T" | "text30L" | "text30R" | "text30M" | "text30BO" | "text30H" | "text30BL" | "text40T" | "text40L" | "text40R" | "text40M" | "text40BO" | "text40H" | "text40BL" | "text50T" | "text50L" | "text50R" | "text50M" | "text50BO" | "text50H" | "text50BL" | "text60T" | "text60L" | "text60R" | "text60M" | "text60BO" | "text60H" | "text60BL" | "text65T" | "text65L" | "text65R" | "text65M" | "text65BO" | "text65H" | "text65BL" | "text70T" | "text70L" | "text70R" | "text70M" | "text70BO" | "text70H" | "text70BL" | "text80T" | "text80L" | "text80R" | "text80M" | "text80BO" | "text80H" | "text80BL" | "text90T" | "text90L" | "text90R" | "text90M" | "text90BO" | "text90H" | "text90BL" | "text100T" | "text100L" | "text100R" | "text100M" | "text100BO" | "text100H" | "text100BL", boolean>> & import("../../commons/modifiers").CustomModifier & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
@@ -445,7 +238,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         center?: boolean | undefined;
         uppercase?: boolean | undefined;
         highlightString?: string | undefined;
-        highlightStyle?: TextStyle | undefined;
+        highlightStyle?: import("react-native").TextStyle | undefined;
         animated?: boolean | undefined;
         textAlign?: string | undefined;
     }) | (import("react-native").TextProps & Partial<Record<"text10" | "text20" | "text30" | "text40" | "text50" | "text60" | "text65" | "text70" | "text80" | "text90" | "text100" | "text10T" | "text10L" | "text10R" | "text10M" | "text10BO" | "text10H" | "text10BL" | "text20T" | "text20L" | "text20R" | "text20M" | "text20BO" | "text20H" | "text20BL" | "text30T" | "text30L" | "text30R" | "text30M" | "text30BO" | "text30H" | "text30BL" | "text40T" | "text40L" | "text40R" | "text40M" | "text40BO" | "text40H" | "text40BL" | "text50T" | "text50L" | "text50R" | "text50M" | "text50BO" | "text50H" | "text50BL" | "text60T" | "text60L" | "text60R" | "text60M" | "text60BO" | "text60H" | "text60BL" | "text65T" | "text65L" | "text65R" | "text65M" | "text65BO" | "text65H" | "text65BL" | "text70T" | "text70L" | "text70R" | "text70M" | "text70BO" | "text70H" | "text70BL" | "text80T" | "text80L" | "text80R" | "text80M" | "text80BO" | "text80H" | "text80BL" | "text90T" | "text90L" | "text90R" | "text90M" | "text90BO" | "text90H" | "text90BL" | "text100T" | "text100L" | "text100R" | "text100M" | "text100BO" | "text100H" | "text100BL", boolean>> & Partial<Record<"black" | "white" | "dark10" | "dark20" | "dark30" | "dark40" | "dark50" | "dark60" | "dark70" | "dark80" | "grey10" | "grey20" | "grey30" | "grey40" | "grey50" | "grey60" | "grey70" | "grey80" | "blue10" | "blue20" | "blue30" | "blue40" | "blue50" | "blue60" | "blue70" | "blue80" | "cyan10" | "cyan20" | "cyan30" | "cyan40" | "cyan50" | "cyan60" | "cyan70" | "cyan80" | "green10" | "green20" | "green30" | "green40" | "green50" | "green60" | "green70" | "green80" | "yellow10" | "yellow20" | "yellow30" | "yellow40" | "yellow50" | "yellow60" | "yellow70" | "yellow80" | "orange10" | "orange20" | "orange30" | "orange40" | "orange50" | "orange60" | "orange70" | "orange80" | "red10" | "red20" | "red30" | "red40" | "red50" | "red60" | "red70" | "red80" | "purple10" | "purple20" | "purple30" | "purple40" | "purple50" | "purple60" | "purple70" | "purple80" | "violet10" | "violet20" | "violet30" | "violet40" | "violet50" | "violet60" | "violet70" | "violet80", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
@@ -453,140 +246,45 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         center?: boolean | undefined;
         uppercase?: boolean | undefined;
         highlightString?: string | undefined;
-        highlightStyle?: TextStyle | undefined;
+        highlightStyle?: import("react-native").TextStyle | undefined;
         animated?: boolean | undefined;
         textAlign?: string | undefined;
     }) | undefined;
-    /**
-     * should the button act as a coast to coast button (no border radius)
-     */
     fullWidth?: boolean | undefined;
-    /**
-     * should the button be a round button
-     */
     round?: boolean | undefined;
-    /**
-     * Control shadow visibility (iOS-only)
-     */
     enableShadow?: boolean | undefined;
-    /**
-     * avoid inner button padding
-     */
     avoidInnerPadding?: boolean | undefined;
-    /**
-     * avoid minimum width constraints
-     */
     avoidMinWidth?: boolean | undefined;
-    /**
-     * callback for getting activeBackgroundColor (e.g. (calculatedBackgroundColor, prop) => {...})
-     * better set using ThemeManager
-     */
     getActiveBackgroundColor?: ((backgroundColor: string, props: any) => string) | undefined;
-    /**
-     * should animate layout change
-     * Note?: For Android you must set 'setLayoutAnimationEnabledExperimental(true)' via RN's 'UIManager'
-     */
     animateLayout?: boolean | undefined;
-    /**
-     * the direction of the animation ('left' and 'right' will effect the button's own alignment)
-     */
-    animateTo?: AnimationDirection | undefined;
+    animateTo?: ButtonAnimationDirection | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
-}) | (Pick<import("react-native").TouchableOpacityProps, "testID" | "hitSlop" | "onLayout" | "hasTVPreferredFocus" | "tvParallaxProperties" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "accessibilityValue" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "disabled" | "onPress" | "onLongPress" | "activeOpacity" | "delayLongPress" | "delayPressIn" | "delayPressOut" | "onBlur" | "onFocus" | "onPressIn" | "onPressOut" | "pressRetentionOffset"> & Partial<Record<import("../../commons/modifiers").AlignmentLiterals, boolean>> & Partial<Record<import("../../commons/modifiers").PositionLiterals, boolean>> & Partial<Record<"padding" | "paddingL" | "paddingT" | "paddingR" | "paddingB" | "paddingH" | "paddingV", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & Partial<Record<"flex" | "flexG" | "flexS", boolean>> & Partial<Record<"br0" | "br10" | "br20" | "br30" | "br40" | "br50" | "br60" | "br100", boolean>> & Partial<Record<"bg", boolean>> & {
-    backgroundColor?: string | undefined;
-    throttleTime?: number | undefined;
-    throttleOptions?: {
-        leading: boolean;
-        trailing: boolean;
-    } | undefined;
-    activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined;
-    customValue?: any;
-    ref?: any;
-    style?: false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined> | import("react-native").Animated.AnimatedProps<import("react-native").ViewStyle> | import("react-native").Animated.AnimatedProps<import("react-native").RegisteredStyle<import("react-native").ViewStyle>> | import("react-native").Animated.AnimatedProps<import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined>> | null | undefined;
-} & import("../../commons/modifiers").CustomModifier & Partial<Record<"black" | "white" | "dark10" | "dark20" | "dark30" | "dark40" | "dark50" | "dark60" | "dark70" | "dark80" | "grey10" | "grey20" | "grey30" | "grey40" | "grey50" | "grey60" | "grey70" | "grey80" | "blue10" | "blue20" | "blue30" | "blue40" | "blue50" | "blue60" | "blue70" | "blue80" | "cyan10" | "cyan20" | "cyan30" | "cyan40" | "cyan50" | "cyan60" | "cyan70" | "cyan80" | "green10" | "green20" | "green30" | "green40" | "green50" | "green60" | "green70" | "green80" | "yellow10" | "yellow20" | "yellow30" | "yellow40" | "yellow50" | "yellow60" | "yellow70" | "yellow80" | "orange10" | "orange20" | "orange30" | "orange40" | "orange50" | "orange60" | "orange70" | "orange80" | "red10" | "red20" | "red30" | "red40" | "red50" | "red60" | "red70" | "red80" | "purple10" | "purple20" | "purple30" | "purple40" | "purple50" | "purple60" | "purple70" | "purple80" | "violet10" | "violet20" | "violet30" | "violet40" | "violet50" | "violet60" | "violet70" | "violet80", boolean>> & {
-    /**
-     * Text to show inside the button
-     */
+}) | (import("../touchableOpacity").TouchableOpacityProps & import("../../commons/modifiers").CustomModifier & Partial<Record<"black" | "white" | "dark10" | "dark20" | "dark30" | "dark40" | "dark50" | "dark60" | "dark70" | "dark80" | "grey10" | "grey20" | "grey30" | "grey40" | "grey50" | "grey60" | "grey70" | "grey80" | "blue10" | "blue20" | "blue30" | "blue40" | "blue50" | "blue60" | "blue70" | "blue80" | "cyan10" | "cyan20" | "cyan30" | "cyan40" | "cyan50" | "cyan60" | "cyan70" | "cyan80" | "green10" | "green20" | "green30" | "green40" | "green50" | "green60" | "green70" | "green80" | "yellow10" | "yellow20" | "yellow30" | "yellow40" | "yellow50" | "yellow60" | "yellow70" | "yellow80" | "orange10" | "orange20" | "orange30" | "orange40" | "orange50" | "orange60" | "orange70" | "orange80" | "red10" | "red20" | "red30" | "red40" | "red50" | "red60" | "red70" | "red80" | "purple10" | "purple20" | "purple30" | "purple40" | "purple50" | "purple60" | "purple70" | "purple80" | "violet10" | "violet20" | "violet30" | "violet40" | "violet50" | "violet60" | "violet70" | "violet80", boolean>> & Partial<Record<"bg", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
     label?: string | undefined;
-    /**
-     * The Button text color (inherited from Text component)
-     */
     color?: string | undefined;
-    /**
-     * Icon image source
-     */
     iconSource?: number | object | Function | undefined;
-    /**
-     * Icon image style
-     */
-    iconStyle?: StyleProp<ImageStyle>;
-    /**
-     * Should the icon be right to the label
-     */
+    iconStyle?: import("react-native").StyleProp<ImageStyle>;
     iconOnRight?: boolean | undefined;
-    /**
-    * whether the icon should flip horizontally on RTL locals
-    */
     supportRTL?: boolean | undefined;
-    /**
-     * Color of the button background
-     */
     backgroundColor?: string | undefined;
-    /**
-     * Color of the disabled button background
-     */
     disabledBackgroundColor?: string | undefined;
-    /**
-     * Size of the button [large, medium, small, xSmall]
-     */
     size?: ButtonSize | undefined;
-    /**
-     * Custom border radius.
-     */
     borderRadius?: number | undefined;
-    /**
-     * Actions handler
-     */
     onPress?: ((props: any) => void) | undefined;
-    /**
-     * Disable interactions for the component
-     */
     disabled?: boolean | undefined;
-    /**
-     * Button will have outline style
-     */
     outline?: boolean | undefined;
-    /**
-     * The outline color
-     */
     outlineColor?: string | undefined;
-    /**
-     * The outline width
-     */
     outlineWidth?: number | undefined;
-    /**
-     * Button will look like a link
-     */
     link?: boolean | undefined;
-    /**
-     * label color for when it's displayed as link
-     */
     linkColor?: string | undefined;
-    /**
-     * Additional styles for label text
-     */
-    labelStyle?: StyleProp<TextStyle>;
-    /**
-     * Props that will be passed to the button's Text label.
-     */
+    labelStyle?: import("react-native").StyleProp<import("react-native").TextStyle>;
     labelProps?: (import("react-native").TextProps & import("../../commons/modifiers").CustomModifier & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
         color?: string | undefined;
         center?: boolean | undefined;
         uppercase?: boolean | undefined;
         highlightString?: string | undefined;
-        highlightStyle?: TextStyle | undefined;
+        highlightStyle?: import("react-native").TextStyle | undefined;
         animated?: boolean | undefined;
         textAlign?: string | undefined;
     }) | (import("react-native").TextProps & import("../../commons/modifiers").CustomModifier & Partial<Record<"black" | "white" | "dark10" | "dark20" | "dark30" | "dark40" | "dark50" | "dark60" | "dark70" | "dark80" | "grey10" | "grey20" | "grey30" | "grey40" | "grey50" | "grey60" | "grey70" | "grey80" | "blue10" | "blue20" | "blue30" | "blue40" | "blue50" | "blue60" | "blue70" | "blue80" | "cyan10" | "cyan20" | "cyan30" | "cyan40" | "cyan50" | "cyan60" | "cyan70" | "cyan80" | "green10" | "green20" | "green30" | "green40" | "green50" | "green60" | "green70" | "green80" | "yellow10" | "yellow20" | "yellow30" | "yellow40" | "yellow50" | "yellow60" | "yellow70" | "yellow80" | "orange10" | "orange20" | "orange30" | "orange40" | "orange50" | "orange60" | "orange70" | "orange80" | "red10" | "red20" | "red30" | "red40" | "red50" | "red60" | "red70" | "red80" | "purple10" | "purple20" | "purple30" | "purple40" | "purple50" | "purple60" | "purple70" | "purple80" | "violet10" | "violet20" | "violet30" | "violet40" | "violet50" | "violet60" | "violet70" | "violet80", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
@@ -594,7 +292,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         center?: boolean | undefined;
         uppercase?: boolean | undefined;
         highlightString?: string | undefined;
-        highlightStyle?: TextStyle | undefined;
+        highlightStyle?: import("react-native").TextStyle | undefined;
         animated?: boolean | undefined;
         textAlign?: string | undefined;
     }) | (import("react-native").TextProps & Partial<Record<"text10" | "text20" | "text30" | "text40" | "text50" | "text60" | "text65" | "text70" | "text80" | "text90" | "text100" | "text10T" | "text10L" | "text10R" | "text10M" | "text10BO" | "text10H" | "text10BL" | "text20T" | "text20L" | "text20R" | "text20M" | "text20BO" | "text20H" | "text20BL" | "text30T" | "text30L" | "text30R" | "text30M" | "text30BO" | "text30H" | "text30BL" | "text40T" | "text40L" | "text40R" | "text40M" | "text40BO" | "text40H" | "text40BL" | "text50T" | "text50L" | "text50R" | "text50M" | "text50BO" | "text50H" | "text50BL" | "text60T" | "text60L" | "text60R" | "text60M" | "text60BO" | "text60H" | "text60BL" | "text65T" | "text65L" | "text65R" | "text65M" | "text65BO" | "text65H" | "text65BL" | "text70T" | "text70L" | "text70R" | "text70M" | "text70BO" | "text70H" | "text70BL" | "text80T" | "text80L" | "text80R" | "text80M" | "text80BO" | "text80H" | "text80BL" | "text90T" | "text90L" | "text90R" | "text90M" | "text90BO" | "text90H" | "text90BL" | "text100T" | "text100L" | "text100R" | "text100M" | "text100BO" | "text100H" | "text100BL", boolean>> & import("../../commons/modifiers").CustomModifier & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
@@ -602,7 +300,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         center?: boolean | undefined;
         uppercase?: boolean | undefined;
         highlightString?: string | undefined;
-        highlightStyle?: TextStyle | undefined;
+        highlightStyle?: import("react-native").TextStyle | undefined;
         animated?: boolean | undefined;
         textAlign?: string | undefined;
     }) | (import("react-native").TextProps & Partial<Record<"text10" | "text20" | "text30" | "text40" | "text50" | "text60" | "text65" | "text70" | "text80" | "text90" | "text100" | "text10T" | "text10L" | "text10R" | "text10M" | "text10BO" | "text10H" | "text10BL" | "text20T" | "text20L" | "text20R" | "text20M" | "text20BO" | "text20H" | "text20BL" | "text30T" | "text30L" | "text30R" | "text30M" | "text30BO" | "text30H" | "text30BL" | "text40T" | "text40L" | "text40R" | "text40M" | "text40BO" | "text40H" | "text40BL" | "text50T" | "text50L" | "text50R" | "text50M" | "text50BO" | "text50H" | "text50BL" | "text60T" | "text60L" | "text60R" | "text60M" | "text60BO" | "text60H" | "text60BL" | "text65T" | "text65L" | "text65R" | "text65M" | "text65BO" | "text65H" | "text65BL" | "text70T" | "text70L" | "text70R" | "text70M" | "text70BO" | "text70H" | "text70BL" | "text80T" | "text80L" | "text80R" | "text80M" | "text80BO" | "text80H" | "text80BL" | "text90T" | "text90L" | "text90R" | "text90M" | "text90BO" | "text90H" | "text90BL" | "text100T" | "text100L" | "text100R" | "text100M" | "text100BO" | "text100H" | "text100BL", boolean>> & Partial<Record<"black" | "white" | "dark10" | "dark20" | "dark30" | "dark40" | "dark50" | "dark60" | "dark70" | "dark80" | "grey10" | "grey20" | "grey30" | "grey40" | "grey50" | "grey60" | "grey70" | "grey80" | "blue10" | "blue20" | "blue30" | "blue40" | "blue50" | "blue60" | "blue70" | "blue80" | "cyan10" | "cyan20" | "cyan30" | "cyan40" | "cyan50" | "cyan60" | "cyan70" | "cyan80" | "green10" | "green20" | "green30" | "green40" | "green50" | "green60" | "green70" | "green80" | "yellow10" | "yellow20" | "yellow30" | "yellow40" | "yellow50" | "yellow60" | "yellow70" | "yellow80" | "orange10" | "orange20" | "orange30" | "orange40" | "orange50" | "orange60" | "orange70" | "orange80" | "red10" | "red20" | "red30" | "red40" | "red50" | "red60" | "red70" | "red80" | "purple10" | "purple20" | "purple30" | "purple40" | "purple50" | "purple60" | "purple70" | "purple80" | "violet10" | "violet20" | "violet30" | "violet40" | "violet50" | "violet60" | "violet70" | "violet80", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
@@ -610,140 +308,45 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         center?: boolean | undefined;
         uppercase?: boolean | undefined;
         highlightString?: string | undefined;
-        highlightStyle?: TextStyle | undefined;
+        highlightStyle?: import("react-native").TextStyle | undefined;
         animated?: boolean | undefined;
         textAlign?: string | undefined;
     }) | undefined;
-    /**
-     * should the button act as a coast to coast button (no border radius)
-     */
     fullWidth?: boolean | undefined;
-    /**
-     * should the button be a round button
-     */
     round?: boolean | undefined;
-    /**
-     * Control shadow visibility (iOS-only)
-     */
     enableShadow?: boolean | undefined;
-    /**
-     * avoid inner button padding
-     */
     avoidInnerPadding?: boolean | undefined;
-    /**
-     * avoid minimum width constraints
-     */
     avoidMinWidth?: boolean | undefined;
-    /**
-     * callback for getting activeBackgroundColor (e.g. (calculatedBackgroundColor, prop) => {...})
-     * better set using ThemeManager
-     */
     getActiveBackgroundColor?: ((backgroundColor: string, props: any) => string) | undefined;
-    /**
-     * should animate layout change
-     * Note?: For Android you must set 'setLayoutAnimationEnabledExperimental(true)' via RN's 'UIManager'
-     */
     animateLayout?: boolean | undefined;
-    /**
-     * the direction of the animation ('left' and 'right' will effect the button's own alignment)
-     */
-    animateTo?: AnimationDirection | undefined;
+    animateTo?: ButtonAnimationDirection | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
-}) | (Pick<import("react-native").TouchableOpacityProps, "testID" | "hitSlop" | "onLayout" | "hasTVPreferredFocus" | "tvParallaxProperties" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "accessibilityValue" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "disabled" | "onPress" | "onLongPress" | "activeOpacity" | "delayLongPress" | "delayPressIn" | "delayPressOut" | "onBlur" | "onFocus" | "onPressIn" | "onPressOut" | "pressRetentionOffset"> & Partial<Record<import("../../commons/modifiers").AlignmentLiterals, boolean>> & Partial<Record<import("../../commons/modifiers").PositionLiterals, boolean>> & Partial<Record<"padding" | "paddingL" | "paddingT" | "paddingR" | "paddingB" | "paddingH" | "paddingV", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & Partial<Record<"flex" | "flexG" | "flexS", boolean>> & Partial<Record<"br0" | "br10" | "br20" | "br30" | "br40" | "br50" | "br60" | "br100", boolean>> & Partial<Record<"bg", boolean>> & {
-    backgroundColor?: string | undefined;
-    throttleTime?: number | undefined;
-    throttleOptions?: {
-        leading: boolean;
-        trailing: boolean;
-    } | undefined;
-    activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined;
-    customValue?: any;
-    ref?: any;
-    style?: false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined> | import("react-native").Animated.AnimatedProps<import("react-native").ViewStyle> | import("react-native").Animated.AnimatedProps<import("react-native").RegisteredStyle<import("react-native").ViewStyle>> | import("react-native").Animated.AnimatedProps<import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined>> | null | undefined;
-} & Partial<Record<"text10" | "text20" | "text30" | "text40" | "text50" | "text60" | "text65" | "text70" | "text80" | "text90" | "text100" | "text10T" | "text10L" | "text10R" | "text10M" | "text10BO" | "text10H" | "text10BL" | "text20T" | "text20L" | "text20R" | "text20M" | "text20BO" | "text20H" | "text20BL" | "text30T" | "text30L" | "text30R" | "text30M" | "text30BO" | "text30H" | "text30BL" | "text40T" | "text40L" | "text40R" | "text40M" | "text40BO" | "text40H" | "text40BL" | "text50T" | "text50L" | "text50R" | "text50M" | "text50BO" | "text50H" | "text50BL" | "text60T" | "text60L" | "text60R" | "text60M" | "text60BO" | "text60H" | "text60BL" | "text65T" | "text65L" | "text65R" | "text65M" | "text65BO" | "text65H" | "text65BL" | "text70T" | "text70L" | "text70R" | "text70M" | "text70BO" | "text70H" | "text70BL" | "text80T" | "text80L" | "text80R" | "text80M" | "text80BO" | "text80H" | "text80BL" | "text90T" | "text90L" | "text90R" | "text90M" | "text90BO" | "text90H" | "text90BL" | "text100T" | "text100L" | "text100R" | "text100M" | "text100BO" | "text100H" | "text100BL", boolean>> & import("../../commons/modifiers").CustomModifier & {
-    /**
-     * Text to show inside the button
-     */
+}) | (import("../touchableOpacity").TouchableOpacityProps & Partial<Record<"text10" | "text20" | "text30" | "text40" | "text50" | "text60" | "text65" | "text70" | "text80" | "text90" | "text100" | "text10T" | "text10L" | "text10R" | "text10M" | "text10BO" | "text10H" | "text10BL" | "text20T" | "text20L" | "text20R" | "text20M" | "text20BO" | "text20H" | "text20BL" | "text30T" | "text30L" | "text30R" | "text30M" | "text30BO" | "text30H" | "text30BL" | "text40T" | "text40L" | "text40R" | "text40M" | "text40BO" | "text40H" | "text40BL" | "text50T" | "text50L" | "text50R" | "text50M" | "text50BO" | "text50H" | "text50BL" | "text60T" | "text60L" | "text60R" | "text60M" | "text60BO" | "text60H" | "text60BL" | "text65T" | "text65L" | "text65R" | "text65M" | "text65BO" | "text65H" | "text65BL" | "text70T" | "text70L" | "text70R" | "text70M" | "text70BO" | "text70H" | "text70BL" | "text80T" | "text80L" | "text80R" | "text80M" | "text80BO" | "text80H" | "text80BL" | "text90T" | "text90L" | "text90R" | "text90M" | "text90BO" | "text90H" | "text90BL" | "text100T" | "text100L" | "text100R" | "text100M" | "text100BO" | "text100H" | "text100BL", boolean>> & import("../../commons/modifiers").CustomModifier & Partial<Record<"bg", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
     label?: string | undefined;
-    /**
-     * The Button text color (inherited from Text component)
-     */
     color?: string | undefined;
-    /**
-     * Icon image source
-     */
     iconSource?: number | object | Function | undefined;
-    /**
-     * Icon image style
-     */
-    iconStyle?: StyleProp<ImageStyle>;
-    /**
-     * Should the icon be right to the label
-     */
+    iconStyle?: import("react-native").StyleProp<ImageStyle>;
     iconOnRight?: boolean | undefined;
-    /**
-    * whether the icon should flip horizontally on RTL locals
-    */
     supportRTL?: boolean | undefined;
-    /**
-     * Color of the button background
-     */
     backgroundColor?: string | undefined;
-    /**
-     * Color of the disabled button background
-     */
     disabledBackgroundColor?: string | undefined;
-    /**
-     * Size of the button [large, medium, small, xSmall]
-     */
     size?: ButtonSize | undefined;
-    /**
-     * Custom border radius.
-     */
     borderRadius?: number | undefined;
-    /**
-     * Actions handler
-     */
     onPress?: ((props: any) => void) | undefined;
-    /**
-     * Disable interactions for the component
-     */
     disabled?: boolean | undefined;
-    /**
-     * Button will have outline style
-     */
     outline?: boolean | undefined;
-    /**
-     * The outline color
-     */
     outlineColor?: string | undefined;
-    /**
-     * The outline width
-     */
     outlineWidth?: number | undefined;
-    /**
-     * Button will look like a link
-     */
     link?: boolean | undefined;
-    /**
-     * label color for when it's displayed as link
-     */
     linkColor?: string | undefined;
-    /**
-     * Additional styles for label text
-     */
-    labelStyle?: StyleProp<TextStyle>;
-    /**
-     * Props that will be passed to the button's Text label.
-     */
+    labelStyle?: import("react-native").StyleProp<import("react-native").TextStyle>;
     labelProps?: (import("react-native").TextProps & import("../../commons/modifiers").CustomModifier & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
         color?: string | undefined;
         center?: boolean | undefined;
         uppercase?: boolean | undefined;
         highlightString?: string | undefined;
-        highlightStyle?: TextStyle | undefined;
+        highlightStyle?: import("react-native").TextStyle | undefined;
         animated?: boolean | undefined;
         textAlign?: string | undefined;
     }) | (import("react-native").TextProps & import("../../commons/modifiers").CustomModifier & Partial<Record<"black" | "white" | "dark10" | "dark20" | "dark30" | "dark40" | "dark50" | "dark60" | "dark70" | "dark80" | "grey10" | "grey20" | "grey30" | "grey40" | "grey50" | "grey60" | "grey70" | "grey80" | "blue10" | "blue20" | "blue30" | "blue40" | "blue50" | "blue60" | "blue70" | "blue80" | "cyan10" | "cyan20" | "cyan30" | "cyan40" | "cyan50" | "cyan60" | "cyan70" | "cyan80" | "green10" | "green20" | "green30" | "green40" | "green50" | "green60" | "green70" | "green80" | "yellow10" | "yellow20" | "yellow30" | "yellow40" | "yellow50" | "yellow60" | "yellow70" | "yellow80" | "orange10" | "orange20" | "orange30" | "orange40" | "orange50" | "orange60" | "orange70" | "orange80" | "red10" | "red20" | "red30" | "red40" | "red50" | "red60" | "red70" | "red80" | "purple10" | "purple20" | "purple30" | "purple40" | "purple50" | "purple60" | "purple70" | "purple80" | "violet10" | "violet20" | "violet30" | "violet40" | "violet50" | "violet60" | "violet70" | "violet80", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
@@ -751,7 +354,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         center?: boolean | undefined;
         uppercase?: boolean | undefined;
         highlightString?: string | undefined;
-        highlightStyle?: TextStyle | undefined;
+        highlightStyle?: import("react-native").TextStyle | undefined;
         animated?: boolean | undefined;
         textAlign?: string | undefined;
     }) | (import("react-native").TextProps & Partial<Record<"text10" | "text20" | "text30" | "text40" | "text50" | "text60" | "text65" | "text70" | "text80" | "text90" | "text100" | "text10T" | "text10L" | "text10R" | "text10M" | "text10BO" | "text10H" | "text10BL" | "text20T" | "text20L" | "text20R" | "text20M" | "text20BO" | "text20H" | "text20BL" | "text30T" | "text30L" | "text30R" | "text30M" | "text30BO" | "text30H" | "text30BL" | "text40T" | "text40L" | "text40R" | "text40M" | "text40BO" | "text40H" | "text40BL" | "text50T" | "text50L" | "text50R" | "text50M" | "text50BO" | "text50H" | "text50BL" | "text60T" | "text60L" | "text60R" | "text60M" | "text60BO" | "text60H" | "text60BL" | "text65T" | "text65L" | "text65R" | "text65M" | "text65BO" | "text65H" | "text65BL" | "text70T" | "text70L" | "text70R" | "text70M" | "text70BO" | "text70H" | "text70BL" | "text80T" | "text80L" | "text80R" | "text80M" | "text80BO" | "text80H" | "text80BL" | "text90T" | "text90L" | "text90R" | "text90M" | "text90BO" | "text90H" | "text90BL" | "text100T" | "text100L" | "text100R" | "text100M" | "text100BO" | "text100H" | "text100BL", boolean>> & import("../../commons/modifiers").CustomModifier & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
@@ -759,7 +362,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         center?: boolean | undefined;
         uppercase?: boolean | undefined;
         highlightString?: string | undefined;
-        highlightStyle?: TextStyle | undefined;
+        highlightStyle?: import("react-native").TextStyle | undefined;
         animated?: boolean | undefined;
         textAlign?: string | undefined;
     }) | (import("react-native").TextProps & Partial<Record<"text10" | "text20" | "text30" | "text40" | "text50" | "text60" | "text65" | "text70" | "text80" | "text90" | "text100" | "text10T" | "text10L" | "text10R" | "text10M" | "text10BO" | "text10H" | "text10BL" | "text20T" | "text20L" | "text20R" | "text20M" | "text20BO" | "text20H" | "text20BL" | "text30T" | "text30L" | "text30R" | "text30M" | "text30BO" | "text30H" | "text30BL" | "text40T" | "text40L" | "text40R" | "text40M" | "text40BO" | "text40H" | "text40BL" | "text50T" | "text50L" | "text50R" | "text50M" | "text50BO" | "text50H" | "text50BL" | "text60T" | "text60L" | "text60R" | "text60M" | "text60BO" | "text60H" | "text60BL" | "text65T" | "text65L" | "text65R" | "text65M" | "text65BO" | "text65H" | "text65BL" | "text70T" | "text70L" | "text70R" | "text70M" | "text70BO" | "text70H" | "text70BL" | "text80T" | "text80L" | "text80R" | "text80M" | "text80BO" | "text80H" | "text80BL" | "text90T" | "text90L" | "text90R" | "text90M" | "text90BO" | "text90H" | "text90BL" | "text100T" | "text100L" | "text100R" | "text100M" | "text100BO" | "text100H" | "text100BL", boolean>> & Partial<Record<"black" | "white" | "dark10" | "dark20" | "dark30" | "dark40" | "dark50" | "dark60" | "dark70" | "dark80" | "grey10" | "grey20" | "grey30" | "grey40" | "grey50" | "grey60" | "grey70" | "grey80" | "blue10" | "blue20" | "blue30" | "blue40" | "blue50" | "blue60" | "blue70" | "blue80" | "cyan10" | "cyan20" | "cyan30" | "cyan40" | "cyan50" | "cyan60" | "cyan70" | "cyan80" | "green10" | "green20" | "green30" | "green40" | "green50" | "green60" | "green70" | "green80" | "yellow10" | "yellow20" | "yellow30" | "yellow40" | "yellow50" | "yellow60" | "yellow70" | "yellow80" | "orange10" | "orange20" | "orange30" | "orange40" | "orange50" | "orange60" | "orange70" | "orange80" | "red10" | "red20" | "red30" | "red40" | "red50" | "red60" | "red70" | "red80" | "purple10" | "purple20" | "purple30" | "purple40" | "purple50" | "purple60" | "purple70" | "purple80" | "violet10" | "violet20" | "violet30" | "violet40" | "violet50" | "violet60" | "violet70" | "violet80", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
@@ -767,140 +370,45 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         center?: boolean | undefined;
         uppercase?: boolean | undefined;
         highlightString?: string | undefined;
-        highlightStyle?: TextStyle | undefined;
+        highlightStyle?: import("react-native").TextStyle | undefined;
         animated?: boolean | undefined;
         textAlign?: string | undefined;
     }) | undefined;
-    /**
-     * should the button act as a coast to coast button (no border radius)
-     */
     fullWidth?: boolean | undefined;
-    /**
-     * should the button be a round button
-     */
     round?: boolean | undefined;
-    /**
-     * Control shadow visibility (iOS-only)
-     */
     enableShadow?: boolean | undefined;
-    /**
-     * avoid inner button padding
-     */
     avoidInnerPadding?: boolean | undefined;
-    /**
-     * avoid minimum width constraints
-     */
     avoidMinWidth?: boolean | undefined;
-    /**
-     * callback for getting activeBackgroundColor (e.g. (calculatedBackgroundColor, prop) => {...})
-     * better set using ThemeManager
-     */
     getActiveBackgroundColor?: ((backgroundColor: string, props: any) => string) | undefined;
-    /**
-     * should animate layout change
-     * Note?: For Android you must set 'setLayoutAnimationEnabledExperimental(true)' via RN's 'UIManager'
-     */
     animateLayout?: boolean | undefined;
-    /**
-     * the direction of the animation ('left' and 'right' will effect the button's own alignment)
-     */
-    animateTo?: AnimationDirection | undefined;
+    animateTo?: ButtonAnimationDirection | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
-}) | (Pick<import("react-native").TouchableOpacityProps, "testID" | "hitSlop" | "onLayout" | "hasTVPreferredFocus" | "tvParallaxProperties" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "accessibilityValue" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "disabled" | "onPress" | "onLongPress" | "activeOpacity" | "delayLongPress" | "delayPressIn" | "delayPressOut" | "onBlur" | "onFocus" | "onPressIn" | "onPressOut" | "pressRetentionOffset"> & Partial<Record<import("../../commons/modifiers").AlignmentLiterals, boolean>> & Partial<Record<import("../../commons/modifiers").PositionLiterals, boolean>> & Partial<Record<"padding" | "paddingL" | "paddingT" | "paddingR" | "paddingB" | "paddingH" | "paddingV", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & Partial<Record<"flex" | "flexG" | "flexS", boolean>> & Partial<Record<"br0" | "br10" | "br20" | "br30" | "br40" | "br50" | "br60" | "br100", boolean>> & Partial<Record<"bg", boolean>> & {
-    backgroundColor?: string | undefined;
-    throttleTime?: number | undefined;
-    throttleOptions?: {
-        leading: boolean;
-        trailing: boolean;
-    } | undefined;
-    activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined;
-    customValue?: any;
-    ref?: any;
-    style?: false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined> | import("react-native").Animated.AnimatedProps<import("react-native").ViewStyle> | import("react-native").Animated.AnimatedProps<import("react-native").RegisteredStyle<import("react-native").ViewStyle>> | import("react-native").Animated.AnimatedProps<import("react-native").RecursiveArray<false | import("react-native").ViewStyle | import("react-native").RegisteredStyle<import("react-native").ViewStyle> | null | undefined>> | null | undefined;
-} & Partial<Record<"text10" | "text20" | "text30" | "text40" | "text50" | "text60" | "text65" | "text70" | "text80" | "text90" | "text100" | "text10T" | "text10L" | "text10R" | "text10M" | "text10BO" | "text10H" | "text10BL" | "text20T" | "text20L" | "text20R" | "text20M" | "text20BO" | "text20H" | "text20BL" | "text30T" | "text30L" | "text30R" | "text30M" | "text30BO" | "text30H" | "text30BL" | "text40T" | "text40L" | "text40R" | "text40M" | "text40BO" | "text40H" | "text40BL" | "text50T" | "text50L" | "text50R" | "text50M" | "text50BO" | "text50H" | "text50BL" | "text60T" | "text60L" | "text60R" | "text60M" | "text60BO" | "text60H" | "text60BL" | "text65T" | "text65L" | "text65R" | "text65M" | "text65BO" | "text65H" | "text65BL" | "text70T" | "text70L" | "text70R" | "text70M" | "text70BO" | "text70H" | "text70BL" | "text80T" | "text80L" | "text80R" | "text80M" | "text80BO" | "text80H" | "text80BL" | "text90T" | "text90L" | "text90R" | "text90M" | "text90BO" | "text90H" | "text90BL" | "text100T" | "text100L" | "text100R" | "text100M" | "text100BO" | "text100H" | "text100BL", boolean>> & Partial<Record<"black" | "white" | "dark10" | "dark20" | "dark30" | "dark40" | "dark50" | "dark60" | "dark70" | "dark80" | "grey10" | "grey20" | "grey30" | "grey40" | "grey50" | "grey60" | "grey70" | "grey80" | "blue10" | "blue20" | "blue30" | "blue40" | "blue50" | "blue60" | "blue70" | "blue80" | "cyan10" | "cyan20" | "cyan30" | "cyan40" | "cyan50" | "cyan60" | "cyan70" | "cyan80" | "green10" | "green20" | "green30" | "green40" | "green50" | "green60" | "green70" | "green80" | "yellow10" | "yellow20" | "yellow30" | "yellow40" | "yellow50" | "yellow60" | "yellow70" | "yellow80" | "orange10" | "orange20" | "orange30" | "orange40" | "orange50" | "orange60" | "orange70" | "orange80" | "red10" | "red20" | "red30" | "red40" | "red50" | "red60" | "red70" | "red80" | "purple10" | "purple20" | "purple30" | "purple40" | "purple50" | "purple60" | "purple70" | "purple80" | "violet10" | "violet20" | "violet30" | "violet40" | "violet50" | "violet60" | "violet70" | "violet80", boolean>> & {
-    /**
-     * Text to show inside the button
-     */
+}) | (import("../touchableOpacity").TouchableOpacityProps & Partial<Record<"text10" | "text20" | "text30" | "text40" | "text50" | "text60" | "text65" | "text70" | "text80" | "text90" | "text100" | "text10T" | "text10L" | "text10R" | "text10M" | "text10BO" | "text10H" | "text10BL" | "text20T" | "text20L" | "text20R" | "text20M" | "text20BO" | "text20H" | "text20BL" | "text30T" | "text30L" | "text30R" | "text30M" | "text30BO" | "text30H" | "text30BL" | "text40T" | "text40L" | "text40R" | "text40M" | "text40BO" | "text40H" | "text40BL" | "text50T" | "text50L" | "text50R" | "text50M" | "text50BO" | "text50H" | "text50BL" | "text60T" | "text60L" | "text60R" | "text60M" | "text60BO" | "text60H" | "text60BL" | "text65T" | "text65L" | "text65R" | "text65M" | "text65BO" | "text65H" | "text65BL" | "text70T" | "text70L" | "text70R" | "text70M" | "text70BO" | "text70H" | "text70BL" | "text80T" | "text80L" | "text80R" | "text80M" | "text80BO" | "text80H" | "text80BL" | "text90T" | "text90L" | "text90R" | "text90M" | "text90BO" | "text90H" | "text90BL" | "text100T" | "text100L" | "text100R" | "text100M" | "text100BO" | "text100H" | "text100BL", boolean>> & Partial<Record<"black" | "white" | "dark10" | "dark20" | "dark30" | "dark40" | "dark50" | "dark60" | "dark70" | "dark80" | "grey10" | "grey20" | "grey30" | "grey40" | "grey50" | "grey60" | "grey70" | "grey80" | "blue10" | "blue20" | "blue30" | "blue40" | "blue50" | "blue60" | "blue70" | "blue80" | "cyan10" | "cyan20" | "cyan30" | "cyan40" | "cyan50" | "cyan60" | "cyan70" | "cyan80" | "green10" | "green20" | "green30" | "green40" | "green50" | "green60" | "green70" | "green80" | "yellow10" | "yellow20" | "yellow30" | "yellow40" | "yellow50" | "yellow60" | "yellow70" | "yellow80" | "orange10" | "orange20" | "orange30" | "orange40" | "orange50" | "orange60" | "orange70" | "orange80" | "red10" | "red20" | "red30" | "red40" | "red50" | "red60" | "red70" | "red80" | "purple10" | "purple20" | "purple30" | "purple40" | "purple50" | "purple60" | "purple70" | "purple80" | "violet10" | "violet20" | "violet30" | "violet40" | "violet50" | "violet60" | "violet70" | "violet80", boolean>> & Partial<Record<"bg", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
     label?: string | undefined;
-    /**
-     * The Button text color (inherited from Text component)
-     */
     color?: string | undefined;
-    /**
-     * Icon image source
-     */
     iconSource?: number | object | Function | undefined;
-    /**
-     * Icon image style
-     */
-    iconStyle?: StyleProp<ImageStyle>;
-    /**
-     * Should the icon be right to the label
-     */
+    iconStyle?: import("react-native").StyleProp<ImageStyle>;
     iconOnRight?: boolean | undefined;
-    /**
-    * whether the icon should flip horizontally on RTL locals
-    */
     supportRTL?: boolean | undefined;
-    /**
-     * Color of the button background
-     */
     backgroundColor?: string | undefined;
-    /**
-     * Color of the disabled button background
-     */
     disabledBackgroundColor?: string | undefined;
-    /**
-     * Size of the button [large, medium, small, xSmall]
-     */
     size?: ButtonSize | undefined;
-    /**
-     * Custom border radius.
-     */
     borderRadius?: number | undefined;
-    /**
-     * Actions handler
-     */
     onPress?: ((props: any) => void) | undefined;
-    /**
-     * Disable interactions for the component
-     */
     disabled?: boolean | undefined;
-    /**
-     * Button will have outline style
-     */
     outline?: boolean | undefined;
-    /**
-     * The outline color
-     */
     outlineColor?: string | undefined;
-    /**
-     * The outline width
-     */
     outlineWidth?: number | undefined;
-    /**
-     * Button will look like a link
-     */
     link?: boolean | undefined;
-    /**
-     * label color for when it's displayed as link
-     */
     linkColor?: string | undefined;
-    /**
-     * Additional styles for label text
-     */
-    labelStyle?: StyleProp<TextStyle>;
-    /**
-     * Props that will be passed to the button's Text label.
-     */
+    labelStyle?: import("react-native").StyleProp<import("react-native").TextStyle>;
     labelProps?: (import("react-native").TextProps & import("../../commons/modifiers").CustomModifier & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
         color?: string | undefined;
         center?: boolean | undefined;
         uppercase?: boolean | undefined;
         highlightString?: string | undefined;
-        highlightStyle?: TextStyle | undefined;
+        highlightStyle?: import("react-native").TextStyle | undefined;
         animated?: boolean | undefined;
         textAlign?: string | undefined;
     }) | (import("react-native").TextProps & import("../../commons/modifiers").CustomModifier & Partial<Record<"black" | "white" | "dark10" | "dark20" | "dark30" | "dark40" | "dark50" | "dark60" | "dark70" | "dark80" | "grey10" | "grey20" | "grey30" | "grey40" | "grey50" | "grey60" | "grey70" | "grey80" | "blue10" | "blue20" | "blue30" | "blue40" | "blue50" | "blue60" | "blue70" | "blue80" | "cyan10" | "cyan20" | "cyan30" | "cyan40" | "cyan50" | "cyan60" | "cyan70" | "cyan80" | "green10" | "green20" | "green30" | "green40" | "green50" | "green60" | "green70" | "green80" | "yellow10" | "yellow20" | "yellow30" | "yellow40" | "yellow50" | "yellow60" | "yellow70" | "yellow80" | "orange10" | "orange20" | "orange30" | "orange40" | "orange50" | "orange60" | "orange70" | "orange80" | "red10" | "red20" | "red30" | "red40" | "red50" | "red60" | "red70" | "red80" | "purple10" | "purple20" | "purple30" | "purple40" | "purple50" | "purple60" | "purple70" | "purple80" | "violet10" | "violet20" | "violet30" | "violet40" | "violet50" | "violet60" | "violet70" | "violet80", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
@@ -908,7 +416,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         center?: boolean | undefined;
         uppercase?: boolean | undefined;
         highlightString?: string | undefined;
-        highlightStyle?: TextStyle | undefined;
+        highlightStyle?: import("react-native").TextStyle | undefined;
         animated?: boolean | undefined;
         textAlign?: string | undefined;
     }) | (import("react-native").TextProps & Partial<Record<"text10" | "text20" | "text30" | "text40" | "text50" | "text60" | "text65" | "text70" | "text80" | "text90" | "text100" | "text10T" | "text10L" | "text10R" | "text10M" | "text10BO" | "text10H" | "text10BL" | "text20T" | "text20L" | "text20R" | "text20M" | "text20BO" | "text20H" | "text20BL" | "text30T" | "text30L" | "text30R" | "text30M" | "text30BO" | "text30H" | "text30BL" | "text40T" | "text40L" | "text40R" | "text40M" | "text40BO" | "text40H" | "text40BL" | "text50T" | "text50L" | "text50R" | "text50M" | "text50BO" | "text50H" | "text50BL" | "text60T" | "text60L" | "text60R" | "text60M" | "text60BO" | "text60H" | "text60BL" | "text65T" | "text65L" | "text65R" | "text65M" | "text65BO" | "text65H" | "text65BL" | "text70T" | "text70L" | "text70R" | "text70M" | "text70BO" | "text70H" | "text70BL" | "text80T" | "text80L" | "text80R" | "text80M" | "text80BO" | "text80H" | "text80BL" | "text90T" | "text90L" | "text90R" | "text90M" | "text90BO" | "text90H" | "text90BL" | "text100T" | "text100L" | "text100R" | "text100M" | "text100BO" | "text100H" | "text100BL", boolean>> & import("../../commons/modifiers").CustomModifier & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
@@ -916,7 +424,7 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         center?: boolean | undefined;
         uppercase?: boolean | undefined;
         highlightString?: string | undefined;
-        highlightStyle?: TextStyle | undefined;
+        highlightStyle?: import("react-native").TextStyle | undefined;
         animated?: boolean | undefined;
         textAlign?: string | undefined;
     }) | (import("react-native").TextProps & Partial<Record<"text10" | "text20" | "text30" | "text40" | "text50" | "text60" | "text65" | "text70" | "text80" | "text90" | "text100" | "text10T" | "text10L" | "text10R" | "text10M" | "text10BO" | "text10H" | "text10BL" | "text20T" | "text20L" | "text20R" | "text20M" | "text20BO" | "text20H" | "text20BL" | "text30T" | "text30L" | "text30R" | "text30M" | "text30BO" | "text30H" | "text30BL" | "text40T" | "text40L" | "text40R" | "text40M" | "text40BO" | "text40H" | "text40BL" | "text50T" | "text50L" | "text50R" | "text50M" | "text50BO" | "text50H" | "text50BL" | "text60T" | "text60L" | "text60R" | "text60M" | "text60BO" | "text60H" | "text60BL" | "text65T" | "text65L" | "text65R" | "text65M" | "text65BO" | "text65H" | "text65BL" | "text70T" | "text70L" | "text70R" | "text70M" | "text70BO" | "text70H" | "text70BL" | "text80T" | "text80L" | "text80R" | "text80M" | "text80BO" | "text80H" | "text80BL" | "text90T" | "text90L" | "text90R" | "text90M" | "text90BO" | "text90H" | "text90BL" | "text100T" | "text100L" | "text100R" | "text100M" | "text100BO" | "text100H" | "text100BL", boolean>> & Partial<Record<"black" | "white" | "dark10" | "dark20" | "dark30" | "dark40" | "dark50" | "dark60" | "dark70" | "dark80" | "grey10" | "grey20" | "grey30" | "grey40" | "grey50" | "grey60" | "grey70" | "grey80" | "blue10" | "blue20" | "blue30" | "blue40" | "blue50" | "blue60" | "blue70" | "blue80" | "cyan10" | "cyan20" | "cyan30" | "cyan40" | "cyan50" | "cyan60" | "cyan70" | "cyan80" | "green10" | "green20" | "green30" | "green40" | "green50" | "green60" | "green70" | "green80" | "yellow10" | "yellow20" | "yellow30" | "yellow40" | "yellow50" | "yellow60" | "yellow70" | "yellow80" | "orange10" | "orange20" | "orange30" | "orange40" | "orange50" | "orange60" | "orange70" | "orange80" | "red10" | "red20" | "red30" | "red40" | "red50" | "red60" | "red70" | "red80" | "purple10" | "purple20" | "purple30" | "purple40" | "purple50" | "purple60" | "purple70" | "purple80" | "violet10" | "violet20" | "violet30" | "violet40" | "violet50" | "violet60" | "violet70" | "violet80", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & {
@@ -924,44 +432,18 @@ declare const _default: React.ComponentClass<(Pick<import("react-native").Toucha
         center?: boolean | undefined;
         uppercase?: boolean | undefined;
         highlightString?: string | undefined;
-        highlightStyle?: TextStyle | undefined;
+        highlightStyle?: import("react-native").TextStyle | undefined;
         animated?: boolean | undefined;
         textAlign?: string | undefined;
     }) | undefined;
-    /**
-     * should the button act as a coast to coast button (no border radius)
-     */
     fullWidth?: boolean | undefined;
-    /**
-     * should the button be a round button
-     */
     round?: boolean | undefined;
-    /**
-     * Control shadow visibility (iOS-only)
-     */
     enableShadow?: boolean | undefined;
-    /**
-     * avoid inner button padding
-     */
     avoidInnerPadding?: boolean | undefined;
-    /**
-     * avoid minimum width constraints
-     */
     avoidMinWidth?: boolean | undefined;
-    /**
-     * callback for getting activeBackgroundColor (e.g. (calculatedBackgroundColor, prop) => {...})
-     * better set using ThemeManager
-     */
     getActiveBackgroundColor?: ((backgroundColor: string, props: any) => string) | undefined;
-    /**
-     * should animate layout change
-     * Note?: For Android you must set 'setLayoutAnimationEnabledExperimental(true)' via RN's 'UIManager'
-     */
     animateLayout?: boolean | undefined;
-    /**
-     * the direction of the animation ('left' and 'right' will effect the button's own alignment)
-     */
-    animateTo?: AnimationDirection | undefined;
+    animateTo?: ButtonAnimationDirection | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }), any> & typeof Button;

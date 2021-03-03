@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, {PureComponent, GetDerivedStateFromProps} from 'react';
+import {ViewProps} from 'react-native';
 import {
   asBaseComponent,
   forwardRef,
@@ -9,7 +10,7 @@ import {
 import View from '../view';
 import RadioGroupContext from './RadioGroupContext';
 
-export type RadioGroupPropTypes = {
+export type RadioGroupProps = ViewProps & {
   /**
    * The initial value of the selected radio button
    */
@@ -17,14 +18,15 @@ export type RadioGroupPropTypes = {
   /**
    * Invoked once when value changes, by selecting one of the radio buttons in the group
    */
-  onValueChange?: (value: string | number | boolean) => void;
+  onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void);
 };
+export type RadioGroupPropTypes = RadioGroupProps; //TODO: remove after ComponentPropTypes deprecation;
 
 interface RadioGroupState {
-  value?: RadioGroupPropTypes['initialValue'];
+  value?: RadioGroupProps['initialValue'];
 }
 
-type Props = RadioGroupPropTypes &
+type Props = RadioGroupProps &
   BaseComponentInjectedProps &
   ForwardRefInjectedProps;
 
@@ -48,14 +50,14 @@ class RadioGroup extends PureComponent<Props, RadioGroupState> {
   ): RadioGroupState | null => {
     const {value} = prevState;
     const {initialValue} = nextProps;
-    
+
     if (_.isUndefined(nextProps.initialValue) || value === initialValue) {
       return null;
     }
 
     return {
       value: initialValue
-    }
+    };
   };
 
   static getDerivedStateFromProps: GetDerivedStateFromProps<Props, RadioGroupState> = (props, state) => {
@@ -67,7 +69,7 @@ class RadioGroup extends PureComponent<Props, RadioGroupState> {
     return {value, onValueChange: this.onValueChange};
   }
 
-  onValueChange = (value: RadioGroupPropTypes['initialValue']) => {
+  onValueChange = (value: RadioGroupProps['initialValue']) => {
     this.setState({value});
     _.invoke(this.props, 'onValueChange', value);
   };
@@ -85,4 +87,4 @@ class RadioGroup extends PureComponent<Props, RadioGroupState> {
 
 export {RadioGroup}; // For tests
 
-export default asBaseComponent(forwardRef(RadioGroup));
+export default asBaseComponent<RadioGroupProps>(forwardRef(RadioGroup));

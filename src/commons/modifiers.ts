@@ -245,7 +245,7 @@ export function extractFlexStyle(props: Dictionary<any>): Partial<Record<NativeF
   const keys = Object.keys(props);
   const flexProp = keys.find(item => FLEX_KEY_PATTERN.test(item));
   if (flexProp && props[flexProp] === true) {
-    let [flexKey, flexValue] = flexProp.split('-') as [keyof typeof STYLE_KEY_CONVERTERS, string];
+    const [flexKey, flexValue] = flexProp.split('-') as [keyof typeof STYLE_KEY_CONVERTERS, string];
     const convertedFlexKey = STYLE_KEY_CONVERTERS[flexKey];
     const flexValueAsNumber = _.isEmpty(flexValue) ? 1 : Number(flexValue);
 
@@ -258,6 +258,22 @@ export function extractAccessibilityProps(props: any = this.props) {
   return _.pickBy(props, (_value, key) => {
     return /.*ccessib.*/.test(key);
   });
+}
+
+//@ts-ignore
+export function extractAnimationProps(props: any = this.props) {
+  return _.pick(props, [
+    'animation',
+    'duration',
+    'delay',
+    'direction',
+    'easing',
+    'iterationCount',
+    'transition',
+    'onAnimationBegin',
+    'onAnimationEnd',
+    'useNativeDriver'
+  ]);
 }
 
 export function extractBorderRadiusValue(props: Dictionary<any>) {
@@ -288,6 +304,10 @@ export function extractModifierProps(props: Dictionary<any>) {
   return modifierProps;
 }
 
+/**
+ * TODO:
+ * @deprecated switch to Modifiers#extractComponentProps
+ */
 export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
   //@ts-ignore
   const ownPropTypes = this.propTypes;
@@ -297,6 +317,16 @@ export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
     .value();
 
   return ownProps;
+}
+
+export function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps: string[] = []) {
+  const componentPropTypes = component.propTypes;
+  const componentProps = _.chain(props)
+    .pickBy((_value, key) => _.includes(Object.keys(componentPropTypes), key))
+    .omit(ignoreProps)
+    .value();
+
+  return componentProps;
 }
 
 //@ts-ignore
@@ -367,7 +397,7 @@ export function generateModifiersStyle(options = {
   return style;
   // clean empty objects and undefined
   // (!) This change is currently breaking UI layout for some reason - worth investigating
-  // return _.omitBy(style, value => _.isUndefined(value) || (_.isPlainObject(value) && _.isEmpty(value))); 
+  // return _.omitBy(style, value => _.isUndefined(value) || (_.isPlainObject(value) && _.isEmpty(value)));
 }
 
 export function getAlteredModifiersOptions(currentProps: any, nextProps: any) {
