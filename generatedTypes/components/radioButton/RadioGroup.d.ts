@@ -1,6 +1,6 @@
 import React, { PureComponent, GetDerivedStateFromProps } from 'react';
-import { ViewProps } from 'react-native';
 import { BaseComponentInjectedProps, ForwardRefInjectedProps } from '../../commons/new';
+import { ViewProps } from '../view';
 export declare type RadioGroupProps = ViewProps & {
     /**
      * The initial value of the selected radio button

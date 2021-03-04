@@ -1,13 +1,12 @@
 import _ from 'lodash';
 import React, {PureComponent, GetDerivedStateFromProps} from 'react';
-import {ViewProps} from 'react-native';
 import {
   asBaseComponent,
   forwardRef,
   BaseComponentInjectedProps,
   ForwardRefInjectedProps
 } from '../../commons/new';
-import View from '../view';
+import View, {ViewProps} from '../view';
 import RadioGroupContext from './RadioGroupContext';
 
 export type RadioGroupProps = ViewProps & {
