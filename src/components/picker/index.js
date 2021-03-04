@@ -186,6 +186,10 @@ class Picker extends Component {
           value: nextProps.value
         };
       }
+    } else if (_.isFunction(nextProps.renderPicker) && prevState.value !== nextProps.value) {
+      return {
+        value: nextProps.value
+      };
     }
     return null;
   }
