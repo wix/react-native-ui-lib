@@ -232,8 +232,8 @@ class Avatar extends PureComponent<AvatarProps> {
     return _.get(this.props, 'badgeProps.backgroundColor') || statusColor || onlineColor;
   }
 
-  getBadgeSize = (): number => {
-    const badgeSize: BadgeProps['size'] = _.get(this.props, 'badgeProps.size', DEFAULT_BADGE_SIZE);
+  getBadgeSize = () => {
+    const badgeSize = this.props?.badgeProps?.size || DEFAULT_BADGE_SIZE;
 
     if (_.isString(badgeSize)) {
       return BADGE_SIZES[badgeSize] || BADGE_SIZES[DEFAULT_BADGE_SIZE];
