@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {
   StyleSheet,
-  ImageSourcePropType,
+  ImageURISource,
   StyleProp,
   ViewStyle,
   TouchableOpacity,
@@ -68,7 +68,7 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
   /**
    * The image source (external or assets)
    */
-  source?: ImageSourcePropType;
+  source?: ImageURISource;
   /**
    * Image props object
    */
@@ -289,7 +289,6 @@ class Avatar extends PureComponent<AvatarProps> {
       animate,
       source,
       // @ts-ignore
-      imageSource,
       onImageLoadStart,
       onImageLoadEnd,
       onImageLoadError,
@@ -297,16 +296,15 @@ class Avatar extends PureComponent<AvatarProps> {
       imageProps,
       imageStyle
     } = this.props;
-    const hasImage = !_.isUndefined(imageSource) || !_.isUndefined(source);
+    const hasImage = !_.isUndefined(source);
     const ImageContainer = animate ? AnimatedImage : Image;
-    const avatarImageSource = imageSource || source;
 
     if (hasImage) {
       return (
         <ImageContainer
           animate={animate}
           style={[this.getContainerStyle(), StyleSheet.absoluteFillObject, imageStyle]}
-          source={avatarImageSource}
+          source={source}
           onLoadStart={onImageLoadStart}
           onLoadEnd={onImageLoadEnd}
           onError={onImageLoadError}
@@ -324,7 +322,6 @@ class Avatar extends PureComponent<AvatarProps> {
       labelColor: color,
       source,
       //@ts-ignore
-      imageSource,
       backgroundColor,
       onPress,
       containerStyle,
@@ -335,7 +332,7 @@ class Avatar extends PureComponent<AvatarProps> {
       forwardedRef
     } = this.props;
     const Container = onPress ? TouchableOpacity : View;
-    const hasImage = !_.isUndefined(imageSource) || !_.isUndefined(source);
+    const hasImage = !_.isUndefined(source);
     const fontSizeToImageSizeRatio = 0.32;
     const fontSize = size * fontSizeToImageSizeRatio;
 

@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { ImageSourcePropType, StyleProp, ViewStyle, ImagePropsBase, ImageStyle, TextStyle, AccessibilityProps } from 'react-native';
+import { ImageURISource, StyleProp, ViewStyle, ImagePropsBase, ImageStyle, TextStyle, AccessibilityProps } from 'react-native';
 import { BadgeProps } from '../badge';
 import { ImageProps } from '../image';
 export declare enum StatusModes {
@@ -38,7 +38,7 @@ export declare type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'>
     /**
      * The image source (external or assets)
      */
-    source?: ImageSourcePropType;
+    source?: ImageURISource;
     /**
      * Image props object
      */
@@ -186,7 +186,7 @@ declare const _default: React.ComponentClass<Pick<AccessibilityProps, "accessibi
     /**
      * The image source (external or assets)
      */
-    source?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
+    source?: ImageURISource | undefined;
     /**
      * Image props object
      */
