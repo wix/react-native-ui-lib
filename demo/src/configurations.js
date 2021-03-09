@@ -1,4 +1,4 @@
-import {Assets, Colors, Typography, Spacings} from 'react-native-ui-lib'; // eslint-disable-line
+import {Assets, Colors, Typography, Spacings, Incubator} from 'react-native-ui-lib'; // eslint-disable-line
 
 Assets.loadAssetsGroup('icons.demo', {
   add: require('./assets/icons/add.png'),
@@ -42,3 +42,6 @@ Colors.loadSchemes({
     mountainBackground: Colors.violet20
   }
 });
+
+/* Components */
+Incubator.TextField.defaultProps = {...Incubator.TextField.defaultProps, preset: 'default'};
