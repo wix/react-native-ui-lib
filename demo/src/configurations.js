@@ -1,4 +1,4 @@
-import {Assets, Typography, Spacings} from 'react-native-ui-lib'; // eslint-disable-line
+import {Assets, Typography, Spacings, Incubator} from 'react-native-ui-lib'; // eslint-disable-line
 
 Assets.loadAssetsGroup('icons.demo', {
   add: require('./assets/icons/add.png'),
@@ -23,3 +23,5 @@ Typography.loadTypographies({
 Spacings.loadSpacings({
   page: Spacings.s5
 });
+
+Incubator.TextField.defaultProps = {...Incubator.TextField.defaultProps, preset: 'default'};
