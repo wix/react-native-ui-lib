@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {View, Text} from 'react-native-ui-lib';
+import {View, Text, Constants} from 'react-native-ui-lib';
 
 class DarkModeScreen extends Component {
   state = {};
@@ -10,9 +10,13 @@ class DarkModeScreen extends Component {
         <Text h1 textColor>
           Dark Mode
         </Text>
-        <Text marginT-s2 body textColor>
-          Change to dark mode in simulator by pressing Cmd+Shift+A
-        </Text>
+        {Constants.isIOS ? (
+          <Text marginT-s2 body textColor>
+            Change to dark mode in simulator by pressing Cmd+Shift+A
+          </Text>
+        ) : (
+          <Text>Change to dark mode</Text>
+        )}
 
         <View style={styles.moonOrSun} bg-moonOrSun/>
         <View style={[styles.mountain, styles.mountainBackground]} bg-mountainBackground/>
