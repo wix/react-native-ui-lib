@@ -98,7 +98,7 @@ export type ContainerModifiers =
 
 export function extractColorValue(props: Dictionary<any>) {
   const scheme = Appearance.getColorScheme() || 'light';
-  const schemeColors = Colors.schemes[scheme!];
+  const schemeColors = Colors.schemes[scheme];
   const allColorsKeys: Array<keyof typeof Colors> = [..._.keys(Colors), ..._.keys(schemeColors)];
   const colorPropsKeys = _.chain(props)
     .keys()
@@ -111,7 +111,7 @@ export function extractColorValue(props: Dictionary<any>) {
 export function extractBackgroundColorValue(props: Dictionary<any>) {
   let backgroundColor;
   const scheme = Appearance.getColorScheme() || 'light';
-  const schemeColors = Colors.schemes[scheme!];
+  const schemeColors = Colors.schemes[scheme];
 
   const keys = Object.keys(props);
   const bgProp = _.findLast(keys, prop => Colors.getBackgroundKeysPattern().test(prop) && !!props[prop])!;
