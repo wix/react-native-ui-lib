@@ -15,7 +15,7 @@ class DarkModeScreen extends Component {
             Change to dark mode in simulator by pressing Cmd+Shift+A
           </Text>
         ) : (
-          <Text>Change to dark mode</Text>
+          <Tex marginT-s2 body textColort>Change to dark mode</Text>
         )}
 
         <View style={styles.moonOrSun} bg-moonOrSun/>
