@@ -20,7 +20,7 @@ export default class ComponentTemplate extends Component {
     };
 
     if (component.docblock) {
-      const infoRaw = _.split(component.docblock, '@');
+      const infoRaw = _.split(component.docblock, /(^@|\n@)/);
       _.forEach(infoRaw, statement => {
         const match = splitPattern.exec(statement);
         if (statement && match) {
