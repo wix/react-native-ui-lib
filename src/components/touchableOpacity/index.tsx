@@ -44,7 +44,7 @@ export interface TouchableOpacityProps extends Omit<RNTouchableOpacityProps, 'st
      */
     customValue?: any;
     style?: StyleProp<ViewStyle> | Animated.AnimatedProps<StyleProp<ViewStyle>>;
-    onPress?: (props: TouchableOpacityProps) => void;
+    onPress?: (props: TouchableOpacityProps | any) => void;
   }
 
 type Props = BaseComponentInjectedProps &
