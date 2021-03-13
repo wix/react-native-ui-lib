@@ -107,6 +107,7 @@ const WheelPicker = ({items, itemHeight = 48, activeTextColor, inactiveTextColor
       <View width={250} height={height} br20>
         <AnimatedFlatList
           data={items}
+          // @ts-expect-error
           keyExtractor={keyExtractor}
           scrollEventThrottle={100}
           onScroll={onScroll}

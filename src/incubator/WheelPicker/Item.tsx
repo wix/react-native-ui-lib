@@ -59,8 +59,10 @@ export default ({
       key={index}
       center
       onPress={selectItem}
+      // @ts-expect-error
       index={index}
     >
+      {/* @ts-expect-error */}
       <AnimatedText text60R style={{color, ...style}}>
         {text}
       </AnimatedText>

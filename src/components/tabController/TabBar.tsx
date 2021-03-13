@@ -16,7 +16,8 @@ import FadedScrollView from './FadedScrollView';
 
 import {useScrollToItem} from '../../hooks';
 
-const {Code, Value, interpolate, block, set} = Reanimated;
+const {Code, Value, interpolate: _interpolate, interpolateNode, block, set} = Reanimated;
+const interpolate = interpolateNode || _interpolate;
 
 const DEFAULT_HEIGHT = 48;
 const INDICATOR_INSET = Spacings.s4;
