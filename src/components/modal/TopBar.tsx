@@ -4,7 +4,7 @@ import {asBaseComponent} from '../../commons/new';
 import {Constants} from '../../helpers';
 import Assets from '../../assets';
 import {Colors, Typography} from '../../style';
-import View from '../../components/view';
+import View, {ViewProps} from '../../components/view';
 import Button, {ButtonProps} from '../../components/button';
 import Text from '../../components/text';
 
@@ -53,6 +53,10 @@ export interface ModalTopBarProps {
      * whether to include status bar or not (height claculations)
      */
     includeStatusBar?: boolean;
+    /**
+     * style for the TopBar container
+     */
+    containerStyle?: ViewProps['style'];
 }
 
 type topBarButtonProp = {
@@ -128,10 +132,10 @@ class TopBar extends Component<ModalTopBarProps> {
   }
 
   render() {
-    const {title, titleStyle, includeStatusBar} = this.props;
+    const {title, titleStyle, includeStatusBar, containerStyle} = this.props;
 
     return (
-      <View>
+      <View style={containerStyle}>
         {includeStatusBar && <View style={styles.statusBar}/>}
         <View style={styles.container}>
           <View row flex bottom paddingL-15 centerV>
