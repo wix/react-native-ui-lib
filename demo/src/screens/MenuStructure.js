@@ -152,6 +152,7 @@ export const navigationData = {
     screens: [
       {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'},
       {title: '(New) TextField', tags: 'text field input', screen: 'unicorn.components.IncubatorTextFieldScreen'},
+      {title: 'SVG Image (Incubator)', tags: 'svg image experimental', screen: 'unicorn.incubator.SvgImageScreen'},
       {title: 'WheelPicker (Incubator)', tags: 'wheel picker spinner experimental', screen: 'unicorn.incubator.WheelPickerScreen'}
     ]
   },

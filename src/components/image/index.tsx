@@ -16,6 +16,7 @@ import {asBaseComponent, ForwardRefInjectedProps, BaseComponentInjectedProps, Ma
 // @ts-ignore
 import Assets from '../../assets';
 import Overlay, {OverlayTypeType} from '../overlay';
+import SvgImage from './SvgImage';
 
 
 export type ImageProps = RNImageProps & MarginModifiers & {
@@ -153,7 +154,12 @@ class Image extends PureComponent<Props, State> {
     }
   }
 
-  render() {
+  renderSvg = () => {
+    const {source, ...others} = this.props;
+    return <SvgImage data={source} {...others}/>;
+  }
+
+  renderRegularImage() {
     const {error} = this.state;
     const source = error ? this.getVerifiedSource(this.props.errorSource) : this.getImageSource();
     const {
@@ -195,6 +201,16 @@ class Image extends PureComponent<Props, State> {
         )}
       </ImageView>
     );
+  }
+
+  render() {
+    const {source} = this.props;
+    const isSvg = typeof source === 'string' || typeof source === 'function';
+    if (isSvg) {
+      return this.renderSvg();
+    } else {
+      return this.renderRegularImage();
+    }
   }
 }
 
