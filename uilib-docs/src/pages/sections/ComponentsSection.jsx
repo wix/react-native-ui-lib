@@ -15,7 +15,7 @@ export default () => {
           <button className="dark">View Docs</button>
         </Link>
       </div>
-      <img src={showcase} />
+      <img src={showcase} alt="showcase" />
     </div>
   );
 };

@@ -24,7 +24,7 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
     /**
      * the badge size (default, small)
      */
-    size: BadgeSizes | number;
+    size?: BadgeSizes | number;
     /**
      * Press handler
      */
@@ -91,10 +91,8 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
 declare class Badge extends PureComponent<BadgeProps> {
     styles: ReturnType<typeof createStyles>;
     static displayName: string;
-    static defaultProps: {
-        size: string;
-    };
     constructor(props: BadgeProps);
+    get size(): number | "small" | "default" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "large";
     getAccessibilityProps(): {
         accessible: boolean;
         accessibilityRole: string;
@@ -359,7 +357,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
     /**
      * the badge size (default, small)
      */
-    size: number | "small" | "default" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "large";
+    size?: number | "small" | "default" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "large" | undefined;
     /**
      * Press handler
      */

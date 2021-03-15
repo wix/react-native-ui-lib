@@ -84,6 +84,9 @@ declare const Item: {
     displayName: string;
 };
 declare const _default: React.ComponentClass<ScrollBarProps & {
+    /**
+       * Whether to use a FlatList. NOTE: you must pass 'data' and 'renderItem' props as well
+       */
     useCustomTheme?: boolean | undefined;
 }, any> & typeof ScrollBar;
 export default _default;

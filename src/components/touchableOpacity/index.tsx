@@ -17,8 +17,8 @@ import {
 import IncubatorTouchableOpacity from '../../incubator/TouchableOpacity';
 
 
-export type TouchableOpacityProps = Omit<RNTouchableOpacityProps, 'style' | 'onPress'> &
-  ContainerModifiers & {
+export interface TouchableOpacityProps extends Omit<RNTouchableOpacityProps, 'style' | 'onPress'>,
+  ContainerModifiers {
     /**
      * background color for TouchableOpacity
      */
@@ -44,8 +44,8 @@ export type TouchableOpacityProps = Omit<RNTouchableOpacityProps, 'style' | 'onP
      */
     customValue?: any;
     style?: StyleProp<ViewStyle> | Animated.AnimatedProps<StyleProp<ViewStyle>>;
-    onPress?: (props: TouchableOpacityProps) => void;
-  };
+    onPress?: (props: TouchableOpacityProps | any) => void;
+  }
 
 type Props = BaseComponentInjectedProps &
   ForwardRefInjectedProps &

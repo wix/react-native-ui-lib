@@ -16,7 +16,7 @@ declare class Carousel extends Component<CarouselProps, CarouselState> {
     static defaultProps: DefaultProps;
     static pageControlPositions: typeof PageControlPosition;
     carousel: RefObject<ScrollView>;
-    autoplayTimer?: number;
+    autoplayTimer?: ReturnType<typeof setTimeout>;
     orientationChange?: boolean;
     skippedInitialScroll?: boolean;
     constructor(props: CarouselProps);
@@ -54,6 +54,7 @@ declare class Carousel extends Component<CarouselProps, CarouselState> {
     onMomentumScrollEnd: () => void;
     goToNextPage(): void;
     onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+    onScrollEvent: (...args: any[]) => void;
     renderChild: (child: ReactNode, key: Key) => JSX.Element | undefined;
     renderChildren(): JSX.Element[] | null | undefined;
     renderPageControl(): JSX.Element | undefined;

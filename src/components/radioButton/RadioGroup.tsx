@@ -1,13 +1,12 @@
 import _ from 'lodash';
 import React, {PureComponent, GetDerivedStateFromProps} from 'react';
-import {ViewProps} from 'react-native';
 import {
   asBaseComponent,
   forwardRef,
   BaseComponentInjectedProps,
   ForwardRefInjectedProps
 } from '../../commons/new';
-import View from '../view';
+import View, {ViewProps} from '../view';
 import RadioGroupContext from './RadioGroupContext';
 
 export type RadioGroupProps = ViewProps & {
@@ -18,7 +17,7 @@ export type RadioGroupProps = ViewProps & {
   /**
    * Invoked once when value changes, by selecting one of the radio buttons in the group
    */
-  onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void);
+  onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void) | ((value: any) => void);
 };
 export type RadioGroupPropTypes = RadioGroupProps; //TODO: remove after ComponentPropTypes deprecation;
 

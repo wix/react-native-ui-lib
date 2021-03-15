@@ -48,7 +48,7 @@ export type BadgeProps = ViewProps &
     /**
      * the badge size (default, small)
      */
-    size: BadgeSizes | number;
+    size?: BadgeSizes | number;
     /**
      * Press handler
      */
@@ -117,9 +117,6 @@ class Badge extends PureComponent<BadgeProps> {
   styles: ReturnType<typeof createStyles>;
 
   static displayName = 'Badge';
-  static defaultProps = {
-    size: 'default'
-  };
 
   constructor(props: BadgeProps) {
     super(props);
@@ -128,6 +125,10 @@ class Badge extends PureComponent<BadgeProps> {
     if (props.testId) {
       console.warn('Badge prop \'testId\' is deprecated. Please use RN \'testID\' prop instead.');
     }
+  }
+
+  get size() {
+    return this.props.size || 'default';
   }
 
   getAccessibilityProps() {
@@ -142,14 +143,13 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   isSmallBadge() {
-    const {size} = this.props;
-    return size === 'small';
+    return this.size === 'small';
   }
 
   getBadgeSizeStyle() {
-    const {borderWidth, size, icon, customElement} = this.props;
+    const {borderWidth, icon, customElement} = this.props;
     const label = this.getFormattedLabel();
-    const badgeHeight = _.isNumber(size) ? size : BADGE_SIZES[size];
+    const badgeHeight = _.isNumber(this.size) ? this.size : BADGE_SIZES[this.size];
 
     const style: any = {
       paddingHorizontal: this.isSmallBadge() ? 4 : 6,

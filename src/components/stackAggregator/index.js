@@ -48,10 +48,23 @@ export default class StackAggregator extends PureBaseComponent {
     /**
      * A callback for item press
      */
-    onItemPress: PropTypes.func
-  };
+    onItemPress: PropTypes.func,
+    /**
+     * A callback for collapse state will change (value is future collapsed state)
+     */
+    onCollapseWillChange: PropTypes.func,
+    /**
+    * A callback for collapse state change (value is collapsed state)
+    */
+    onCollapseChanged: PropTypes.func,
+    /**
+     * A setting that disables pressability on cards
+     */
+    disablePresses: PropTypes.boolean
+  }
 
   static defaultProps = {
+    disablePresses: false,
     collapsed: true,
     itemBorderRadius: 0
   };
@@ -100,56 +113,78 @@ export default class StackAggregator extends PureBaseComponent {
     return 1;
   }
 
-  animate = () => {
-    this.animateValues();
-    this.animateCards();
-  };
+  animate = async () => {
+    return Promise.all([this.animateValues(), this.animateCards()]);
+  }
 
   animateValues() {
     const {collapsed} = this.state;
     const newValue = collapsed ? buttonStartValue : 1;
-
-    Animated.parallel([
-      Animated.timing(this.animatedOpacity, {
-        duration: DURATION,
-        toValue: Number(newValue),
-        useNativeDriver: true
-      }),
-      Animated.timing(this.animatedScale, {
-        toValue: Number(newValue),
-        easing: this.easeOut,
-        duration: DURATION,
-        useNativeDriver: true
-      }),
-      Animated.timing(this.animatedContentOpacity, {
-        toValue: Number(collapsed ? 0 : 1),
-        easing: this.easeOut,
-        duration: DURATION,
-        useNativeDriver: true
-      })
-    ]).start();
+    return new Promise((resolve) => {
+      Animated.parallel([
+        Animated.timing(this.animatedOpacity, {
+          duration: DURATION,
+          toValue: Number(newValue),
+          useNativeDriver: true
+        }),
+        Animated.timing(this.animatedScale, {
+          toValue: Number(newValue),
+          easing: this.easeOut,
+          duration: DURATION,
+          useNativeDriver: true
+        }),
+        Animated.timing(this.animatedContentOpacity, {
+          toValue: Number(collapsed ? 0 : 1),
+          easing: this.easeOut,
+          duration: DURATION,
+          useNativeDriver: true
+        })
+      ]).start(resolve);
+    });
   }
 
-  animateCards() {
+  animateCards() {    
+    const promises = [];
     for (let index = 0; index < this.itemsCount; index++) {
       const newScale = this.getItemScale(index);
 
-      Animated.timing(this.animatedScaleArray[index], {
-        toValue: Number(newScale),
-        easing: this.easeOut,
-        duration: DURATION,
-        useNativeDriver: true
-      }).start();
+      promises.push(
+        new Promise((resolve) => {
+          Animated.timing(this.animatedScaleArray[index], {
+            toValue: Number(newScale),
+            easing: this.easeOut,
+            duration: DURATION,
+            useNativeDriver: true
+          }).start(resolve);
+        })
+      );
     }
+    return Promise.all(promises);
   }
 
   close = () => {
-    this.setState({collapsed: true}, () => this.animate());
-  };
+    this.setState({collapsed: true}, async () => {
+      _.invoke(this.props, 'onCollapseWillChange', true);
+      if (this.props.onCollapseChanged) {
+        await this.animate();
+        this.props.onCollapseChanged(true);
+      } else {
+        this.animate();
+      }
+    });
+  }
 
   open = () => {
-    this.setState({collapsed: false}, () => this.animate());
-  };
+    this.setState({collapsed: false}, async () => {
+      _.invoke(this.props, 'onCollapseWillChange', false);
+      if (this.props.onCollapseChanged) {
+        await this.animate();
+        this.props.onCollapseChanged(false);
+      } else {
+        this.animate();
+      }
+    });
+  }
 
   getTop(index) {
     let start = 0;
@@ -216,7 +251,7 @@ export default class StackAggregator extends PureBaseComponent {
       >
         <Card
           style={[contentContainerStyle, this.styles.card]}
-          onPress={() => this.onItemPress(index)}
+          onPress={this.props.disablePresses ? false : () => this.onItemPress(index)}
           borderRadius={itemBorderRadius}
           elevation={5}
         >

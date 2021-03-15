@@ -8,6 +8,7 @@ import {Colors} from '../../style';
 import ShareTransitionContext from './ShareTransitionContext';
 
 class SharedArea extends Component {
+  displayName = 'IGNORE';
   static propTypes = {
     /**
      * render details screen

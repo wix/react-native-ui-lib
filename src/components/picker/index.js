@@ -3,7 +3,7 @@
 // TODO: deprecate getItemLabel prop
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {asBaseComponent, forwardRef} from '../../commons';
 import {LogService} from '../../services';
 import View from '../../components/view';
@@ -31,8 +31,9 @@ const ItemType = PropTypes.oneOfType([
  * @description: Picker Component, support single or multiple selection, blurModel and nativePicker
  * @gif: https://media.giphy.com/media/3o751SiuZZiByET2lq/giphy.gif, https://media.giphy.com/media/TgMQnyw5grJIDohzvx/giphy.gif, https://media.giphy.com/media/5hsdmVptBRskZKn787/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.js
+ * @notes: 'useNativePicker' prop requires installing the '@react-native-picker/picker' native library
  */
-class Picker extends PureComponent {
+class Picker extends Component {
   static displayName = 'Picker';
   static propTypes = {
     /**
@@ -186,6 +187,11 @@ class Picker extends PureComponent {
           value: nextProps.value
         };
       }
+    } else if (_.isFunction(nextProps.renderPicker) && prevState.value !== nextProps.value) {
+      return {
+        prevValue: prevState.value,
+        value: nextProps.value
+      };
     }
     return null;
   }

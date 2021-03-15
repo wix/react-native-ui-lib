@@ -1,6 +1,6 @@
 import React, { PureComponent, GetDerivedStateFromProps } from 'react';
-import { ViewProps } from 'react-native';
 import { BaseComponentInjectedProps, ForwardRefInjectedProps } from '../../commons/new';
+import { ViewProps } from '../view';
 export declare type RadioGroupProps = ViewProps & {
     /**
      * The initial value of the selected radio button
@@ -9,7 +9,7 @@ export declare type RadioGroupProps = ViewProps & {
     /**
      * Invoked once when value changes, by selecting one of the radio buttons in the group
      */
-    onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void);
+    onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void) | ((value: any) => void);
 };
 export declare type RadioGroupPropTypes = RadioGroupProps;
 interface RadioGroupState {
@@ -40,7 +40,7 @@ declare const _default: React.ComponentClass<ViewProps & {
     /**
      * Invoked once when value changes, by selecting one of the radio buttons in the group
      */
-    onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void) | undefined;
+    onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void) | ((value: any) => void) | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any>;

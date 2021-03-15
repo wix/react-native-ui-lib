@@ -73,4 +73,5 @@ const FadedScrollView = (props: Props) => {
   return null;
 };
 
+FadedScrollView.displayName = 'IGNORE';
 export default forwardRef<Props>(FadedScrollView);

@@ -15,15 +15,14 @@ import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Image from '../image';
 import CardImage from './CardImage';
 import CardSection, {CardSectionProps} from './CardSection';
+import {BlurViewPackage} from '../../optionalDependencies';
 // @ts-ignore
 import Assets from '../../assets';
 import CardContext from './CardContext';
 import * as CardPresenter from './CardPresenter';
 
-let BlurView: any;
-try {
-  BlurView = require('@react-native-community/blur').BlurView;
-} catch (error) {} // warning in ctor, depends if user pass enableBlur
+const BlurView = BlurViewPackage?.BlurView;
+
 
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 const DEFAULT_SELECTION_PROPS = {
@@ -112,6 +111,7 @@ type State = {
  * @modifiers: margin, padding
  * @gif: https://media.giphy.com/media/l0HU9SKWmv0VTOYMM/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.tsx
+ * @notes: 'enableBlur' prop requires installing the '@react-native-community/blur' native library
  */
 class Card extends PureComponent<PropTypes, State> {
   static displayName = 'Card';
