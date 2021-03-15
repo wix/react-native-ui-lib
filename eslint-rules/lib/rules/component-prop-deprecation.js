@@ -61,6 +61,27 @@ module.exports = {
       }
     }
 
+    function testAttributeForDeprecation(attribute, deprecatedPropList, componentName) {
+      if (attribute.type === 'JSXAttribute') {
+        checkPropDeprecation(
+          attribute,
+          attribute.name,
+          attribute.name.name,
+          deprecatedPropList,
+          componentName
+        );
+      } else if (attribute.type === 'JSXSpreadAttribute') {
+        const spreadSource = findValueNodeOfIdentifier(attribute.argument.name, context);
+        if (spreadSource) {
+          _.forEach(spreadSource.properties, property => {
+            const key = _.get(property, 'key');
+            const propName = _.get(property, 'key.name');
+            checkPropDeprecation(key, key, propName, deprecatedPropList, componentName);
+          });
+        }
+      }
+    }
+
     function deprecationCheck(node) {
       imports.forEach(currentImport => {
         const source = Object.keys(currentImport)[0];
@@ -77,24 +98,7 @@ module.exports = {
               const deprecatedPropList = foundPossibleDeprecation.props;
               const attributes = node.attributes;
               attributes.forEach(attribute => {
-                if (attribute.type === 'JSXAttribute') {
-                  checkPropDeprecation(
-                    attribute,
-                    attribute.name,
-                    attribute.name.name,
-                    deprecatedPropList,
-                    componentName
-                  );
-                } else if (attribute.type === 'JSXSpreadAttribute') {
-                  const spreadSource = findValueNodeOfIdentifier(attribute.argument.name, context);
-                  if (spreadSource) {
-                    _.forEach(spreadSource.properties, property => {
-                      const key = _.get(property, 'key');
-                      const propName = _.get(property, 'key.name');
-                      checkPropDeprecation(key, key, propName, deprecatedPropList, componentName);
-                    });
-                  }
-                }
+                testAttributeForDeprecation(attribute, deprecatedPropList, componentName);
               });
             });
           }
