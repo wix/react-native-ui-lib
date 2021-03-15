@@ -9,7 +9,7 @@ function stringify(object) {
     const cleanObject = {};
     Object.keys(object).forEach(key => {
       const value = object[key];
-      if (value && typeof value === 'object') {
+      if (value && typeof value === 'object') { // TODO: do we need the 'value &&'?
         if (references.indexOf(value) < 0) {
           references.push(value);
           cleanObject[key] = _copyWithoutCircularReferences(references, value);
