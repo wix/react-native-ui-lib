@@ -2,7 +2,6 @@ const _ = require('lodash');
 const utils = require('../utils');
 const {
   organizeDeprecations,
-  OrganizationType,
   getLocalizedFix,
   addToImports,
   getComponentLocalName,
@@ -51,7 +50,7 @@ module.exports = {
     }
 
     const {deprecations, source} = context.options[0];
-    const organizedDeprecations = organizeDeprecations(deprecations, OrganizationType.SOURCE, source);
+    const organizedDeprecations = organizeDeprecations(deprecations, source);
 
     const imports = [];
 

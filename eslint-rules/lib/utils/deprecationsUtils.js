@@ -1,7 +1,3 @@
-const OrganizationType = {
-  SOURCE: 'SOURCE'
-};
-
 function _organizeDeprecationsBySource(deprecations, defaultSource) {
   const obj = {};
   deprecations.forEach(deprecation => {
@@ -16,15 +12,12 @@ function _organizeDeprecationsBySource(deprecations, defaultSource) {
   return obj;
 }
 
-function organizeDeprecations(deprecations, organizationType, defaultSource) {
+function organizeDeprecations(deprecations, defaultSource) {
   if (!deprecations) {
     return {};
   }
 
-  switch (organizationType) {
-    case OrganizationType.SOURCE:
-      return _organizeDeprecationsBySource(deprecations, defaultSource);
-  }
+  return _organizeDeprecationsBySource(deprecations, defaultSource);
 }
 
 function getLocalizedFix(fix, currentImport) {
@@ -47,6 +40,5 @@ function getLocalizedFix(fix, currentImport) {
 
 module.exports = {
   organizeDeprecations,
-  OrganizationType,
   getLocalizedFix
 };

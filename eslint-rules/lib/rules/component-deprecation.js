@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const utils = require('../utils');
-const {addToImports, organizeDeprecations, OrganizationType, getComponentLocalName, getComponentName} = utils;
+const {addToImports, organizeDeprecations, getComponentLocalName, getComponentName} = utils;
 
 const MAP_SCHEMA = {
   type: 'object',
@@ -41,7 +41,7 @@ module.exports = {
     }
 
     const {deprecations} = context.options[0];
-    const organizedDeprecations = organizeDeprecations(deprecations, OrganizationType.SOURCE);
+    const organizedDeprecations = organizeDeprecations(deprecations);
 
     const imports = [];
 
