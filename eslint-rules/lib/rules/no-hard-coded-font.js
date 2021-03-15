@@ -1,6 +1,4 @@
-const utils = require('../utils');
-
-const {findAndReportHardCodedValues} = utils;
+const {findAndReportHardCodedValues} = require('../utils');
 
 module.exports = {
   meta: {

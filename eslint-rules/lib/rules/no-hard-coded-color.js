@@ -1,6 +1,5 @@
 const _ = require('lodash');
-const utils = require('../utils');
-const {findAndReportHardCodedValues} = utils;
+const {findAndReportHardCodedValues} = require('../utils');
 
 const MAP_SCHEMA = {
   type: 'object',

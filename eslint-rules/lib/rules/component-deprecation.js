@@ -1,6 +1,5 @@
 const _ = require('lodash');
-const utils = require('../utils');
-const {addToImports, organizeDeprecations, getComponentLocalName, getComponentName} = utils;
+const {addToImports, organizeDeprecations, getComponentLocalName, getComponentName} = require('../utils');
 
 const MAP_SCHEMA = {
   type: 'object',

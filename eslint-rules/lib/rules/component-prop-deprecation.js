@@ -1,13 +1,12 @@
 // @ts-ignore
 const _ = require('lodash');
-const utils = require('../utils');
 const {
   organizeDeprecations,
   addToImports,
   getComponentLocalName,
   getComponentName,
   findValueNodeOfIdentifier
-} = utils;
+} = require('../utils');
 
 const MAP_SCHEMA = {
   type: 'object',
@@ -63,13 +62,7 @@ module.exports = {
 
     function testAttributeForDeprecation(attribute, deprecatedPropList, componentName) {
       if (attribute.type === 'JSXAttribute') {
-        checkPropDeprecation(
-          attribute,
-          attribute.name,
-          attribute.name.name,
-          deprecatedPropList,
-          componentName
-        );
+        checkPropDeprecation(attribute, attribute.name, attribute.name.name, deprecatedPropList, componentName);
       } else if (attribute.type === 'JSXSpreadAttribute') {
         const spreadSource = findValueNodeOfIdentifier(attribute.argument.name, context);
         if (spreadSource) {
