@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const {findValueNodeOfIdentifier, getComponentName, getPathPrefix, getPathSuffix} = require('../utils');
+const {findValueNodeOfIdentifier, getComponentName, getPathPrefix, getPathSuffix} = require('../utils_old');
 
 const MAP_SCHEMA = {
   type: 'object',

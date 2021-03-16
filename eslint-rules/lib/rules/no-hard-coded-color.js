@@ -1,10 +1,9 @@
 const _ = require('lodash');
-const utils = require('../utils');
+const {findAndReportHardCodedValues} = require('../utils');
 
-const { findAndReportHardCodedValues, propIsColor, isColorException } = utils;
 const MAP_SCHEMA = {
   type: 'object',
-  additionalProperties: true,
+  additionalProperties: true
 };
 
 module.exports = {
@@ -12,16 +11,13 @@ module.exports = {
     docs: {
       description: 'disallow hard coded colors',
       category: 'Best Practices',
-      recommended: true,
+      recommended: true
     },
     messages: {
-      uiLib: 'Use UILib colors instead of hardcoded colors.',
+      uiLib: 'Use UILib colors instead of hardcoded colors.'
     },
     fixable: 'whitespace',
-    schema: [
-      MAP_SCHEMA,
-      MAP_SCHEMA,
-    ],
+    schema: [MAP_SCHEMA]
   },
   create(context) {
     function reportAndFixHardCodedColorString(node) {
@@ -38,7 +34,10 @@ module.exports = {
                 const {validColors} = context.options[0];
                 const {customColors: extraColors} = context.options[0];
                 if (validColors) {
-                  const validColorsDic = _.chain(validColors).mapValues(value => value.toLowerCase()).invert().value();
+                  const validColorsDic = _.chain(validColors)
+                    .mapValues(value => value.toLowerCase())
+                    .invert()
+                    .value();
                   const invertedColorsDict = _.assign({}, validColorsDic, extraColors);
                   const lowerCaseColorString = colorString.toLowerCase().replace(/ /g, '');
                   if (invertedColorsDict[lowerCaseColorString]) {
@@ -46,7 +45,7 @@ module.exports = {
                   }
                 }
               }
-            },
+            }
           });
         }
       } catch (err) {
@@ -54,12 +53,41 @@ module.exports = {
       }
     }
 
+    const colorProps = [
+      'color',
+      'backgroundColor',
+      'borderColor',
+      'borderRightColor',
+      'borderBottomColor',
+      'borderEndColor',
+      'borderLeftColor',
+      'borderStartColor',
+      'borderTopColor',
+      'textShadowColor',
+      'textDecorationColor',
+      'tintColor',
+      'placeholderTextColor',
+      'selectionColor',
+      'underlineColorAndroid'
+    ];
+
+    function propIsColor(propName) {
+      return colorProps.indexOf(propName) !== -1;
+    }
+
+    const colorExceptions = ['transparent'];
+
+    function isColorException(colorString) {
+      const lowerCaseColorString = colorString.toLowerCase();
+      return colorExceptions.indexOf(lowerCaseColorString) !== -1;
+    }
+
     function noHardCodedColors(node) {
-      node.properties.forEach((property) => {
+      node.properties.forEach(property => {
         if (property.key) {
           const propName = property.key.name;
           if (propIsColor(propName)) {
-            findAndReportHardCodedValues(property.value, reportAndFixHardCodedColorString, context.getScope());
+            findAndReportHardCodedValues(property.value, reportAndFixHardCodedColorString, context);
           }
         }
       });
@@ -68,7 +96,7 @@ module.exports = {
     return {
       'CallExpression[callee.object.name=StyleSheet][callee.property.name=create] ObjectExpression': node =>
         noHardCodedColors(node),
-      'JSXAttribute[name.name = style] ObjectExpression': node => noHardCodedColors(node),
+      'JSXAttribute[name.name = style] ObjectExpression': node => noHardCodedColors(node)
     };
-  },
+  }
 };
