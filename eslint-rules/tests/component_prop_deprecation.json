@@ -1,0 +1,73 @@
+[
+    {
+      "component": "Avatar",
+      "source": "module-with-deprecations",
+      "props": [
+        {
+          "prop": "url",
+          "message": "Please use the 'source' prop instead."
+        }
+      ]
+    },
+    {
+      "component": "Thumbnail",
+      "source": "module-with-deprecations",
+      "props": [
+        {
+          "prop": "url",
+          "message": "Please use the 'uri' prop instead.",
+          "fix": {"propName": "uri"}
+        }
+      ]
+    },
+    {
+      "component": "Button",
+      "source": "module-with-deprecations",
+      "props": [
+        {
+          "prop": "text",
+          "message": "Please use the 'label' prop instead.",
+          "fix": {"propName": "label"}
+        }
+      ]
+    },
+    {
+      "component": "List",
+      "source": "another-module-with-deprecations",
+      "props": [
+        {
+          "prop": "text",
+          "message": "Please use the 'label' prop instead.",
+          "fix": {"propName": "label"}
+        }
+      ]
+    },
+    {
+      "component": "List.Item",
+      "source": "module-with-deprecations",
+      "props": [
+        {
+          "prop": "text",
+          "message": "Please use the 'label' prop instead.",
+          "fix": {"propName": "label"}
+        }
+      ]
+    },
+    {
+      "component": "Text",
+      "source": "module-with-deprecations",
+      "props": [
+        {
+          "prop": "t",
+          "message": "Please use the 'title' prop instead.",
+          "fix": {"propName": "title"}
+        },
+        {
+          "prop": "s",
+          "message": "Please use the 'subtitle' prop instead.",
+          "fix": {"propName": "subtitle"}
+        }
+      ]
+    }
+  ]
+  
