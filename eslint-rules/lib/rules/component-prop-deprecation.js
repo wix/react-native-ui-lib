@@ -10,6 +10,38 @@ const {
 
 const MAP_SCHEMA = {
   type: 'object',
+  properties: {
+    component: {
+      type: 'string'
+    },
+    source: {
+      type: 'string'
+    },
+    props: {
+      type: 'array',
+      items: {
+        type: 'object',
+        required: ['prop', 'message'],
+        properties: {
+          prop: {
+            type: 'string'
+          },
+          message: {
+            type: 'string'
+          },
+          fix: {
+            type: 'object',
+            required: ['propName'],
+            properties: {
+              propName: {
+                type: 'string'
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   additionalProperties: true
 };
 

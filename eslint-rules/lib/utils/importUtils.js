@@ -84,6 +84,10 @@ function _addToImports_fromDeclaration(node, imports) {
   _addToImports_fromSpreading(midSource, newImports, imports);
 }
 
+/**
+ * Aggregate all components, from 'import', 'require' or 'spreading' of other components\imports
+ * to a single object.
+ */
 function addToImports(node, imports) {
   if (!node) return;
   if (node.type === 'ImportDeclaration') {

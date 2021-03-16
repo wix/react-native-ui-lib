@@ -17,7 +17,7 @@ module.exports = {
       uiLib: 'Use UILib colors instead of hardcoded colors.'
     },
     fixable: 'whitespace',
-    schema: [MAP_SCHEMA, MAP_SCHEMA]
+    schema: [MAP_SCHEMA]
   },
   create(context) {
     function reportAndFixHardCodedColorString(node) {
