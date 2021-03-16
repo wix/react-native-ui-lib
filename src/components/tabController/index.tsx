@@ -1,6 +1,7 @@
 // TODO: support commented props
 import React, {Component} from 'react';
 import _ from 'lodash';
+// @ts-expect-error
 import Reanimated, {Easing as _Easing, EasingNode} from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
 import {timing, fract, between} from 'react-native-redash';
@@ -33,6 +34,7 @@ const {
   block,
   onChange,
   interpolate: _interpolate,
+  // @ts-expect-error
   interpolateNode,
   round,
   multiply
@@ -197,7 +199,7 @@ class TabController extends Component<TabControllerProps, StateProps> {
             cond(neq(currentPage, toPage), [
               set(isAnimating, 1),
               set(currentPage,
-                // @ts-expect-error
+                // @ts-ignore reanimated2
                 timing({clock, from: fromPage, to: toPage, duration: 280, easing: Easing.bezier(0.34, 1.3, 0.64, 1)}))
             ]),
             // Set isAnimating flag off
