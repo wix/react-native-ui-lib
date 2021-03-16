@@ -1,5 +1,4 @@
 const _ = require("lodash");
-const utils = require("../utils");
 
 const MAP_SCHEMA = {
   type: "object",
@@ -25,6 +24,19 @@ module.exports = {
     schema: [MAP_SCHEMA],
   },
   create(context) {
+    function getSpecifierIndex(node, name) {
+      let matchIndex;
+      if (node && node.specifiers) {
+        _.forEach(node.specifiers, (s, index) => {
+          const x = _.get(s, 'imported.name');
+          if (x === name) {
+            matchIndex = index;
+          }
+        });
+      }
+      return matchIndex;
+    }
+
     function reportDeprecatedFunction(node, options) {
       try {
         const { dueDate } = context.options[0];
@@ -58,7 +70,7 @@ module.exports = {
                 case FIX_TYPES.FUNCTION_NAME:
                   if (node.type === "ImportDeclaration") {
                     // console.warn('fix function import');
-                    const index = utils.getSpecifierIndex(node, options.name);
+                    const index = getSpecifierIndex(node, options.name);
                     // console.warn('from', node.specifiers[index]);
                     fixed = fixer.replaceText(node.specifiers[index], fix);
                     // console.warn('to', fixed);
@@ -205,14 +217,6 @@ module.exports = {
     return {
       ImportDeclaration: (node) => searchForPossibleDeprecation(node),
       CallExpression: (node) => relevantDeprecationsData.length > 0 && testCallExpression(node),
-
-      // MemberExpression: node => localImportSpecifier && testMemberDeprecation(node),
-      // JSXAttribute: node => testJSXAttribute(node),
-      // JSXOpeningElement: node => testJSXOpeningElement(node),
-      // ObjectExpression: node => testObjectExpression(node),
-      // VariableDeclarator: node => testVariableDeclarator(node),
-      // Property: node => testProperty(node),
-      // JSXSpreadAttribute: node => testJSXSpreadAttribute(node)
     };
   },
 };
