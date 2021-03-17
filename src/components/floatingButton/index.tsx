@@ -67,10 +67,12 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   }
 
   componentDidUpdate(prevProps: FloatingButtonProps) {
-    if (prevProps.visible !== this.props.visible) {
+    const {visible, duration} = this.props;
+
+    if (prevProps.visible !== visible) {
       Animated.timing(this.visibleAnimated, {
-        toValue: Number(!!this.props.visible),
-        duration: 300,
+        toValue: Number(!!visible),
+        duration: duration || 300,
         useNativeDriver: true
       }).start();
     }
