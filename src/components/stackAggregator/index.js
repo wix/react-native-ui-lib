@@ -321,7 +321,7 @@ function createStyles() {
     },
     containerShadow: {
       backgroundColor: Colors.white,
-      shadowColor: Colors.dark40,
+      shadowColor: Colors.grey40,
       shadowOpacity: 0.25,
       shadowRadius: 12,
       shadowOffset: {height: 5, width: 0}

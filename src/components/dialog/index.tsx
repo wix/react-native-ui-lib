@@ -5,7 +5,6 @@ import {Colors} from '../../style';
 import Constants, {orientations} from '../../helpers/Constants';
 import {AlignmentModifiers, extractAlignmentsValues} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';
-import {LogService} from '../../services';
 import Modal from '../modal';
 import View from '../view';
 import PanListenerView from '../panningViews/panListenerView';
@@ -55,10 +54,6 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
      */
     useSafeArea?: boolean;
     /**
-     * Called once the modal has been dismissed (iOS only) - Deprecated, use onDialogDismissed instead
-     */
-    onModalDismissed?: (props: any) => void;
-    /**
      * Called once the dialog has been dismissed completely
      */
     onDialogDismissed?: (props: any) => void;
@@ -90,7 +85,7 @@ interface DialogState {
   fadeOut?: boolean;
 }
 
-const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.dark10, 0.6);
+const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.grey10, 0.6);
 
 /**
  * @description: Dialog component for displaying custom content inside a popup dialog
@@ -121,10 +116,6 @@ class Dialog extends Component<DialogProps, DialogState> {
 
     this.styles = createStyles(this.props);
     this.setAlignment();
-
-    if (!_.isUndefined(props.onModalDismissed)) {
-      LogService.deprecationWarn({component: 'Dialog', oldProp: 'onModalDismissed', newProp: 'onDialogDismissed'});
-    }
   }
 
   componentDidMount() {
@@ -195,9 +186,8 @@ class Dialog extends Component<DialogProps, DialogState> {
     }
   };
 
-  onModalDismissed = () => {
+  onDialogDismissed = () => {
     _.invoke(this.props, 'onDialogDismissed', this.props);
-    _.invoke(this.props, 'onModalDismissed', this.props);
   }
 
   hideDialogView = () => {

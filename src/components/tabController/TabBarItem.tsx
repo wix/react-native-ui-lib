@@ -6,7 +6,7 @@ import Reanimated from 'react-native-reanimated';
 import {State} from 'react-native-gesture-handler';
 import {interpolateColor} from 'react-native-redash';
 import {Colors, Typography, Spacings} from '../../style';
-import Badge, {BadgeProps, BADGE_SIZES} from '../../components/badge';
+import Badge, {BadgeProps} from '../../components/badge';
 import {TouchableOpacity} from '../../incubator';
 
 const {cond, eq, call, block, and} = Reanimated;
@@ -269,7 +269,7 @@ export default class TabBarItem extends PureComponent<Props> {
         )}
         {badge && (
           // @ts-ignore
-          <Badge backgroundColor={Colors.red30} size={BADGE_SIZES.default} {...badge} containerStyle={styles.badge}/>
+          <Badge backgroundColor={Colors.red30} size={20} {...badge} containerStyle={styles.badge}/>
         )}
       </TouchableOpacity>
     );

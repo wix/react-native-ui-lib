@@ -24,7 +24,7 @@ export default class MaskedInputScreen extends Component {
     const minutes = paddedValue.substr(2, 2);
 
     return (
-      <Text text20 dark20 center>
+      <Text text20 grey20 center>
         {hours}
         <Text red10>h</Text>
         {minutes}
@@ -37,13 +37,13 @@ export default class MaskedInputScreen extends Component {
     const hasValue = Boolean(value && value.length > 0);
     return (
       <View row center>
-        <Text text30 dark50>
+        <Text text30 grey50>
           -
         </Text>
-        <Text text30 dark10={hasValue} dark60={!hasValue}>
+        <Text text30 grey10={hasValue} grey60={!hasValue}>
           {hasValue ? value : '00'}
         </Text>
-        <Text text80 dark60>
+        <Text text80 grey60>
           $
         </Text>
       </View>

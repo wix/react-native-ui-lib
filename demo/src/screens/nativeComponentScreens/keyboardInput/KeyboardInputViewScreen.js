@@ -38,7 +38,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
       initialProps: undefined
     },
     receivedKeyboardData: undefined,
-    useSafeArea: true,
+    useSafeArea: false,
     keyboardOpenState: false
   };
 
@@ -167,7 +167,7 @@ export default class KeyboardInputViewScreen extends PureComponent {
       <View column center>
         <View style={styles.separatorLine} />
         <View centerV row margin-10>
-          <Text text80 dark40>
+          <Text text80 grey40>
             Safe Area Enabled:
           </Text>
           <Switch
@@ -185,12 +185,12 @@ export default class KeyboardInputViewScreen extends PureComponent {
     const {message} = this.props;
     const {receivedKeyboardData, customKeyboard, useSafeArea} = this.state;
     return (
-      <View flex bg-dark80>
+      <View flex bg-grey80>
         <ScrollView
           contentContainerStyle={styles.scrollContainer}
           keyboardDismissMode={TrackInteractive ? 'interactive' : 'none'}
         >
-          <Text text40 dark10 marginV-20 center>
+          <Text text40 grey10 marginV-20 center>
             {message || 'KeyboardsRegistry'}
           </Text>
           <Text testID={'demo-message'}>{receivedKeyboardData}</Text>
@@ -242,11 +242,11 @@ const styles = StyleSheet.create({
   keyboardContainer: {
     backgroundColor: Colors.white,
     borderWidth: 1,
-    borderColor: Colors.dark60
+    borderColor: Colors.grey60
   },
   separatorLine: {
     flex: 1,
     height: 1,
-    backgroundColor: Colors.dark80
+    backgroundColor: Colors.grey80
   }
 });

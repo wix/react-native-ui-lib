@@ -12,7 +12,7 @@ export default class TypographyScreen extends Component {
   };
 
   static defaultProps = {
-    color: Colors.dark10
+    color: Colors.grey10
   };
 
   state = {
@@ -45,12 +45,12 @@ export default class TypographyScreen extends Component {
             if (fontPreset) {
               modifiers[fontName] = true;
               return (
-                <View key={fontKey} paddingV-20 centerH style={{borderBottomWidth: 1, borderColor: Colors.dark60}}>
+                <View key={fontKey} paddingV-20 centerH style={{borderBottomWidth: 1, borderColor: Colors.grey60}}>
                   <Text style={{color, backgroundColor: Colors.red80}} {...modifiers}>
                     text{fontKey}
                     {weightSuffix}
                   </Text>
-                  <Text text80 dark40>
+                  <Text text80 grey40>
                     fontSize: {fontPreset.fontSize}
                   </Text>
                 </View>

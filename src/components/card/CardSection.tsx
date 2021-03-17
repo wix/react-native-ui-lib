@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType, StyleProp} from 'react-native';
-import {LogService} from '../../services';
 import {asBaseComponent} from '../../commons/new';
 import View, {ViewProps} from '../view';
 import Text, {TextProps} from '../text';
@@ -13,7 +12,7 @@ type ContentType = TextProps & {text?: string};
 export type CardSectionProps = ViewProps & {
   /**
    * Text content for the CardSection.
-   * Example: content={[{text: 'You’re Invited!', text70: true, dark10: true}]}
+   * Example: content={[{text: 'You’re Invited!', text70: true, grey10: true}]}
    */
   content?: ContentType[];
   /**
@@ -33,10 +32,9 @@ export type CardSectionProps = ViewProps & {
    */
   trailingIcon?: ImageProps;
   /**
-   * Will be used for the background when provided
+   * The image source that will be used for the background
    */
   imageSource?: ImageSourcePropType;
-  source?: ImageSourcePropType; // TODO: remove after deprecation
   /**
    * The style for the background image
    */
@@ -56,16 +54,14 @@ type Props = CardSectionProps & asCardChildProps;
 class CardSection extends PureComponent<Props> {
   static displayName = 'Card.Section';
 
-  constructor(props: Props) {
-    super(props);
-
-    if (props.source) {
-      LogService.deprecationWarn({component: 'CardSection', oldProp: 'source', newProp: 'imageSource'});
-    }
-  }
-
   renderContent = () => {
-    const {content, leadingIcon, trailingIcon, contentStyle, testID} = this.props;
+    const {
+      content,
+      leadingIcon,
+      trailingIcon,
+      contentStyle,
+      testID
+    } = this.props;
     if (!leadingIcon && !trailingIcon && _.isEmpty(content)) {
       return;
     }
@@ -92,15 +88,14 @@ class CardSection extends PureComponent<Props> {
   };
 
   renderImage = () => {
-    const {source, imageSource, imageStyle, imageProps, testID} = this.props;
-    const finalSource = imageSource || source;
+    const {imageSource, imageStyle, imageProps, testID} = this.props;
 
     // not actually needed, instead of adding ts-ignore
-    if (finalSource) {
+    if (imageSource) {
       return (
         <Image
           testID={`${testID}.image`}
-          source={finalSource}
+          source={imageSource}
           style={imageStyle}
           customOverlayContent={this.renderContent()}
           {...imageProps}
@@ -111,24 +106,23 @@ class CardSection extends PureComponent<Props> {
 
   render() {
     const {
-      source,
       imageSource,
       context: {borderStyle},
       style,
       ...others
     } = this.props;
-    const finalSource = imageSource || source;
 
     return (
       <View style={[styles.container, borderStyle, style]} {...others}>
-        {finalSource && this.renderImage()}
-        {!finalSource && this.renderContent()}
+        {imageSource && this.renderImage()}
+        {!imageSource && this.renderContent()}
       </View>
     );
   }
 }
 
 export default asBaseComponent<CardSectionProps>(asCardChild(CardSection));
+
 
 const styles = StyleSheet.create({
   container: {

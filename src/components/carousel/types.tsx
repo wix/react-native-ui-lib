@@ -91,7 +91,7 @@ export interface CarouselProps extends ScrollViewProps {
    */
   horizontal?: boolean | null;
   /**
-   * Pass to attach to ScrollView's Animated.event in order to animated elements base on 
+   * Pass to attach to ScrollView's Animated.event in order to animated elements base on
    * Carousel scroll offset (pass new Animated.ValueXY())
    */
   animatedScrollOffset?: Animated.ValueXY;

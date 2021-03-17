@@ -5,6 +5,7 @@ import {Colors, View, Card, CardProps, Button, Text} from 'react-native-ui-lib';
 // @ts-ignore
 import posts from '../../data/posts';
 
+
 const featureIcon = require('../../assets/icons/star.png');
 const shareIcon = require('../../assets/icons/share.png');
 const cardImage = require('../../assets/images/card-example.jpg');
@@ -98,7 +99,6 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
         onPress={() => {}}
         borderRadius={borderRadius}
         useNative
-        backgroundColor={Colors.white}
         activeOpacity={1}
         activeScale={isImageOnLeft ? 0.96 : 1.04}
       >
@@ -143,8 +143,8 @@ export default class CardsScreen extends Component<CardsScreenProps, CardsScreen
           padding-20
           flex-3
           content={[
-            {text: 'Special sale!', text70: true, white: true},
-            {text: '10%', text60: true, white: true}
+            {text: 'Special sale!', text70: true},
+            {text: '10%', text60: true}
           ]}
           contentStyle={{alignItems: 'center'}}
         />

@@ -2,32 +2,32 @@ import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import {View, Text, Image, Card, Constants, Colors} from 'react-native-ui-lib'; // eslint-disable-line
 
+
 const image = require('../../assets/images/card-example.jpg');
 const customOverlayImage = require('../../assets/icons/star.png');
 const customOverlayImage2 = require('../../assets/icons/cameraSelected.png');
-
 const uri = {
   uri: 'https://images.pexels.com/photos/140234/pexels-photo-140234.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260'
 };
 
 export default class OverlaysScreen extends Component {
-  getImageWithOverlay = (type, text, customOverylay) => {
+  getImageWithOverlay = (type: string, text: string, customOverlay?: any) => {
     return (
       <View centerH>
-        <Text dark10>{text}</Text>
-        <Image /* overlayColor={Colors.rgba(Colors.red40, 0.4)} */ style={styles.image} source={image} overlayType={type} customOverlayContent={customOverylay}/>
+        <Text grey10>{text}</Text>
+        <Image /* overlayColor={Colors.rgba(Colors.red40, 0.4)} */ style={styles.image} source={image} overlayType={type} customOverlayContent={customOverlay}/>
       </View>
     );
   };
 
   renderCustomOverlay() {
-    return <Image style={styles.customOverylay} source={customOverlayImage}/>;
+    return <Image style={styles.customOverlay} source={customOverlayImage}/>;
   }
 
   renderCustomOverlay2() {
     return (
       <View flex center>
-        <Image style={styles.customOverylay2} source={customOverlayImage2}/>
+        <Image style={styles.customOverlay2} source={customOverlayImage2}/>
       </View>
     );
   }
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   imageFillContainer: {
     height: 100
   },
-  customOverylay: {
+  customOverlay: {
     position: 'absolute',
     left: 137,
     top: 134,
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     backgroundColor: Colors.rgba(Colors.yellow20, 0.2)
   },
-  customOverylay2: {
+  customOverlay2: {
     width: 40,
     height: 40,
     tintColor: Colors.white

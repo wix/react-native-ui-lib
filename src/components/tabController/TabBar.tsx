@@ -11,7 +11,6 @@ import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjec
 import View from '../../components/view';
 import {Colors, Spacings, Typography} from '../../style';
 import {Constants} from '../../helpers';
-import {LogService} from '../../services';
 import FadedScrollView from './FadedScrollView';
 
 import {useScrollToItem} from '../../hooks';
@@ -114,11 +113,7 @@ export interface TabControllerBarProps {
   testID?: string;
 }
 
-type ChildProps = React.ReactElement<TabControllerItemProps>;
-
-interface Props extends TabControllerBarProps, BaseComponentInjectedProps, ForwardRefInjectedProps {
-  children?: ChildProps[] | ChildProps;
-}
+interface Props extends TabControllerBarProps, BaseComponentInjectedProps, ForwardRefInjectedProps {}
 
 /**
  * @description: TabController's TabBar component
@@ -144,47 +139,27 @@ const TabBar = (props: Props) => {
     containerWidth: propsContainerWidth,
     centerSelected,
     containerStyle,
-    testID,
-    children: propsChildren
+    testID
   } = props;
 
   const context = useContext(TabBarContext);
   // @ts-ignore // TODO: typescript
   const {itemStates, items: contextItems, currentPage, targetPage, registerTabItems, selectedIndex} = context;
 
-  const children = useRef<Props['children']>(_.filter(propsChildren, (child: ChildProps) => !!child));
-
   const _registerTabItems = () => {
     const ignoredItems: number[] = [];
-    let itemsCount;
-
-    if (propsItems) {
-      itemsCount = _.size(propsItems);
-      _.forEach(propsItems, (item, index) => {
-        if (item.ignore) {
-          ignoredItems.push(index);
-        }
-      });
-      // TODO: deprecate with props.children
-    } else {
-      itemsCount = React.Children.count(children.current);
-      // @ts-ignore TODO: typescript - not sure if this can be solved
-      React.Children.toArray(children.current).forEach((child: ChildProps, index: number) => {
-        if (child.props.ignore) {
-          ignoredItems.push(index);
-        }
-      });
-    }
+    const itemsCount = _.size(propsItems);
+    _.forEach(propsItems, (item, index) => {
+      if (item.ignore) {
+        ignoredItems.push(index);
+      }
+    });
 
     registerTabItems(itemsCount, ignoredItems);
   };
 
   useEffect(() => {
-    if (propsChildren) {
-      LogService.warn('uilib: Please pass the "items" prop to TabController.TabBar instead of children');
-    }
-
-    if ((propsItems || children.current) && !contextItems) {
+    if (propsItems && !contextItems) {
       _registerTabItems();
     }
   }, []);
@@ -197,7 +172,7 @@ const TabBar = (props: Props) => {
     return contextItems || propsItems;
   }, [contextItems, propsItems]);
 
-  const itemsCount = useRef<number>(items ? _.size(items) : React.Children.count(children.current));
+  const itemsCount = useRef<number>(_.size(items));
 
   const {scrollViewRef: tabBar, onItemLayout, itemsWidths, focusIndex, onContentSizeChange, onLayout} = useScrollToItem({
     itemsCount: itemsCount.current,
@@ -217,7 +192,11 @@ const TabBar = (props: Props) => {
     return offsets;
   }, [itemsWidths]);
 
-  const _renderTabBarItems = useMemo((): ReactNode => {
+  const renderTabBarItems = useMemo((): ReactNode => {
+    if (_.isEmpty(itemStates)) {
+      return null;
+    }
+
     return _.map(items, (item, index) => {
       return (
         <TabBarItem
@@ -253,47 +232,6 @@ const TabBar = (props: Props) => {
     centerSelected,
     onItemLayout
   ]);
-
-  // TODO: Remove once props.children is deprecated
-  const _renderTabBarItemsFromChildren = useMemo((): ReactNode | null => {
-    return !children.current
-      ? null
-      : React.Children.map(children.current, (child: Partial<ChildProps>, index: number) => {
-        // @ts-ignore TODO: typescript - not sure if this can be easily solved
-        return React.cloneElement(child, {
-          labelColor,
-          selectedLabelColor,
-          labelStyle,
-          selectedLabelStyle,
-          uppercase,
-          iconColor,
-          selectedIconColor,
-          activeBackgroundColor,
-          ...child.props,
-          ...context,
-          index,
-          state: itemStates[index],
-          onLayout: centerSelected ? onItemLayout : undefined
-        });
-      });
-  }, [
-    propsChildren,
-    labelColor,
-    selectedLabelColor,
-    labelStyle,
-    selectedLabelStyle,
-    uppercase,
-    iconColor,
-    selectedIconColor,
-    activeBackgroundColor,
-    itemStates,
-    centerSelected,
-    onItemLayout
-  ]);
-
-  const renderTabBarItems = useMemo(() => {
-    return _.isEmpty(itemStates) ? null : items ? _renderTabBarItems : _renderTabBarItemsFromChildren;
-  }, [itemStates, items, _renderTabBarItems, _renderTabBarItemsFromChildren]);
 
   const _indicatorWidth = new Value(0); // TODO: typescript?
   const _indicatorOffset = new Value(0); // TODO: typescript?

@@ -5,7 +5,7 @@ import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
 import {BorderRadiuses, Spacings} from '../../style';
 import Avatar, {AvatarProps} from '../avatar';
-import Badge, {BadgeProps, BADGE_SIZES} from '../badge';
+import Badge, {BadgeProps} from '../badge';
 import Image, {ImageProps} from '../image';
 import Text from '../text';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
@@ -164,7 +164,7 @@ const Chip = ({
   const renderBadge = useCallback(() => {
     return (
       <Badge
-        size={BADGE_SIZES.default}
+        size={20}
         testID={`${testID}.counter`}
         {...badgeProps}
         // @ts-ignore

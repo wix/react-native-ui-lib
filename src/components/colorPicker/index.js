@@ -107,8 +107,8 @@ class ColorPicker extends PureComponent {
         />
         <View style={styles.buttonContainer}>
           <Button
-            color={Colors.dark10}
-            outlineColor={Colors.dark10}
+            color={Colors.grey10}
+            outlineColor={Colors.grey10}
             style={styles.button}
             round
             outline

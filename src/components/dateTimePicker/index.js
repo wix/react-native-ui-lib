@@ -193,7 +193,6 @@ class DateTimePicker extends Component {
 
     return (
       <Dialog
-        migrate
         visible={showExpandableOverlay}
         width="100%"
         height={null}
@@ -221,10 +220,15 @@ class DateTimePicker extends Component {
         <Button
           link
           iconSource={Assets.icons.x}
-          iconStyle={{tintColor: Colors.dark10}}
+          iconStyle={{tintColor: Colors.grey10}}
           onPress={this.toggleExpandableOverlay}
         />
-        <Button link iconSource={Assets.icons.check} useCustomTheme={useCustomTheme} onPress={this.onDonePressed}/>
+        <Button
+          link
+          iconSource={Assets.icons.check}
+          useCustomTheme={useCustomTheme}
+          onPress={this.onDonePressed}
+        />
       </View>
     );
   }

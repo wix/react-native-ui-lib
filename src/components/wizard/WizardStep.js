@@ -156,7 +156,7 @@ export default class WizardStep extends PureBaseComponent {
 const styles = StyleSheet.create({
   connector: {
     borderWidth: 0.5,
-    borderColor: Colors.dark60
+    borderColor: Colors.grey60
   },
   circle: {
     width: 24,
@@ -168,6 +168,6 @@ const styles = StyleSheet.create({
   },
   label: {
     marginHorizontal: 8,
-    color: Colors.dark20
+    color: Colors.grey20
   }
 });

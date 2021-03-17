@@ -11,9 +11,9 @@ Make sure to use modifiers only on uilib components, some modifiers can cause is
 
 ## Layout Modifiers
 Use our alignment props to quickly position your view's content without getting confused calculating all these flex rules.
-- flex - apply `flex:1` on a view 
+- flex - apply `flex:1` on a view
 - flex-[value] - When you want to control the flex value
-- flexS - FlexShrink 
+- flexS - FlexShrink
 - flexG - FlexGrow
 - left
 - top
@@ -91,18 +91,18 @@ Use the position modifiers to quickly set an absolute position to your views
 Last type of modifiers are for styling your components
 
 - [colorKey] - Controls text components' color
-- background-[colorKey] (or bg-[colorKey]) - Background color 
+- background-[colorKey] (or bg-[colorKey]) - Background color
 
 ```
 <Text blue30>...</Text>
-<View bg-dark70>...</View>
+<View bg-grey70>...</View>
 <TouchableOpacity bg-red30/>
 ```
 
 - [typographyKey] - Controls text components' typography
 ```
 <Text text70>...</Text>
-<TextInput text80/>
+<TextField text80/>
 ```
 
 - br[borderRadiusKey] - Set the view's border radius (e.g. `br10`, `br20`, .., `br60`)
@@ -112,7 +112,7 @@ Last type of modifiers are for styling your components
 
 
 ! all styling modifiers are based on our [`Colors` & `Typography` presets](https://github.com/wix/react-native-ui-lib/wiki/STYLE). <br>
-You can load your own presets and use them as modifiers. 
+You can load your own presets and use them as modifiers.
 
 
 

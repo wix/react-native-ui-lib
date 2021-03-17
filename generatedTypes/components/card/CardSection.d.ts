@@ -9,7 +9,7 @@ declare type ContentType = TextProps & {
 export declare type CardSectionProps = ViewProps & {
     /**
      * Text content for the CardSection.
-     * Example: content={[{text: 'You’re Invited!', text70: true, dark10: true}]}
+     * Example: content={[{text: 'You’re Invited!', text70: true, grey10: true}]}
      */
     content?: ContentType[];
     /**
@@ -29,10 +29,9 @@ export declare type CardSectionProps = ViewProps & {
      */
     trailingIcon?: ImageProps;
     /**
-     * Will be used for the background when provided
+     * The image source that will be used for the background
      */
     imageSource?: ImageSourcePropType;
-    source?: ImageSourcePropType;
     /**
      * The style for the background image
      */
@@ -45,7 +44,7 @@ export declare type CardSectionProps = ViewProps & {
 declare const _default: React.ComponentClass<ViewProps & {
     /**
      * Text content for the CardSection.
-     * Example: content={[{text: 'You’re Invited!', text70: true, dark10: true}]}
+     * Example: content={[{text: 'You’re Invited!', text70: true, grey10: true}]}
      */
     content?: ContentType[] | undefined;
     /**
@@ -65,10 +64,9 @@ declare const _default: React.ComponentClass<ViewProps & {
      */
     trailingIcon?: ImageProps | undefined;
     /**
-     * Will be used for the background when provided
+     * The image source that will be used for the background
      */
     imageSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
-    source?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
     /**
      * The style for the background image
      */

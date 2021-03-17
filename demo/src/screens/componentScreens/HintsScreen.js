@@ -47,7 +47,7 @@ export default class HintsScreen extends Component {
           flex
           padding-20
           paddingT-120
-          bg-dark80
+          bg-grey80
           style={{zIndex: 10}}
           key={useTargetFrame ? 'withTargetFrame' : 'withElement'}
         >

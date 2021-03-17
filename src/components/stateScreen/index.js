@@ -2,7 +2,6 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {LogService} from '../../services';
 import {Constants} from '../../helpers';
 import {Typography, Colors} from '../../style';
 import {BaseComponent} from '../../commons';
@@ -10,6 +9,7 @@ import View from '../../components/view';
 import Image from '../../components/image';
 import Button from '../../components/button';
 import Text from '../../components/text';
+
 
 /**
  * @description: Component that shows a full screen for a certain state, like an empty state
@@ -23,7 +23,6 @@ export default class StateScreen extends BaseComponent {
      * The image source that's showing at the top. use an image that was required locally
      */
     imageSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    source: PropTypes.oneOfType([PropTypes.object, PropTypes.number]), // TODO: remove after deprecation
     /**
      * To to show as the title
      */
@@ -39,41 +38,22 @@ export default class StateScreen extends BaseComponent {
     /**
      * Action handler for "call to action" button
      */
-    onCtaPress: PropTypes.func,
-    /**
-     * Use to identify the container in tests
-     */
-    testId: PropTypes.string
+    onCtaPress: PropTypes.func
   };
 
-  constructor(props) {
-    super(props);
-
-    if (props.testId) {
-      LogService.deprecationWarn({component: 'StateScreen', oldProp: 'testId', newProp: 'testID'});
-
-    }
-    if (props.imageSource) {
-      LogService.deprecationWarn({component: 'StateScreen', oldProp: 'source', newProp: 'imageSource'});
-    }
-  }
-
   generateStyles() {
-    const {source, imageSource} = this.props;
-    const finalSource = imageSource || source;
+    const {imageSource} = this.props;
 
-    const isRemoteImage = _.isObject(finalSource) && Boolean(finalSource.uri);
+    const isRemoteImage = _.isObject(imageSource) && Boolean(imageSource.uri);
     this.styles = createStyles(isRemoteImage);
   }
 
   render() {
-    // TODO: remove testId and imageSource after deprecation
-    const {title, subtitle, source, imageSource, ctaLabel, onCtaPress, testId, testID} = this.props;
-    const finalSource = imageSource || source;
+    const {title, subtitle, imageSource, ctaLabel, onCtaPress, testID} = this.props;
 
     return (
-      <View style={this.styles.container} testID={testID || testId}>
-        <Image style={this.styles.image} resizeMode={'contain'} source={finalSource}/>
+      <View style={this.styles.container} testID={testID}>
+        <Image style={this.styles.image} resizeMode={'contain'} source={imageSource}/>
         <Text style={[this.styles.title]}>{title}</Text>
         <Text style={[this.styles.subtitle]}>{subtitle}</Text>
         <Button
@@ -90,6 +70,7 @@ export default class StateScreen extends BaseComponent {
 
 function createStyles(isRemoteImage) {
   const imageStyle = _.merge({height: 200}, isRemoteImage && {width: Constants.screenWidth * 0.9});
+
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -101,13 +82,13 @@ function createStyles(isRemoteImage) {
     title: {
       textAlign: 'center',
       ...Typography.text50,
-      color: Colors.dark10,
+      color: Colors.grey10,
       fontWeight: '300'
     },
     subtitle: {
       textAlign: 'center',
       ...Typography.text70,
-      color: Colors.dark40,
+      color: Colors.grey40,
       fontWeight: '300',
       marginTop: 12
     },

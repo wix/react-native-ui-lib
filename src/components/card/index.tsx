@@ -3,7 +3,6 @@ import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, ViewStyle} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
-// import {PureBaseComponent} from '../../commons';
 import {
   asBaseComponent,
   forwardRef,
@@ -22,7 +21,6 @@ import CardContext from './CardContext';
 import * as CardPresenter from './CardPresenter';
 
 const BlurView = BlurViewPackage?.BlurView;
-
 
 const DEFAULT_BORDER_RADIUS = BorderRadiuses.br40;
 const DEFAULT_SELECTION_PROPS = {
@@ -348,7 +346,7 @@ function createStyles({
     },
     containerShadow: {
       // sh30 bottom
-      shadowColor: Colors.dark40,
+      shadowColor: Colors.grey40,
       shadowOpacity: 0.25,
       shadowRadius: 12,
       shadowOffset: {height: 5, width: 0}

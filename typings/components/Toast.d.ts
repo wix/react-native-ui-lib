@@ -1,4 +1,3 @@
-
 import {ReactElement} from 'react';
 import {
   GestureResponderEvent,
@@ -29,7 +28,6 @@ export interface ToastProps {
   renderContent?: (props: ToastProps) => ReactElement | ReactElement[];
   centerMessage?: boolean;
   animated?: boolean;
-  enableBlur?: boolean;
   zIndex?: number;
 }
 
