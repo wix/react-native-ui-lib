@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
   header: {
     height: 56,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.dark80
+    borderBottomColor: Colors.grey80
   },
   dialog: {
     backgroundColor: Colors.white,
