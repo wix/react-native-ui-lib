@@ -132,5 +132,5 @@ declare const _default: React.ComponentClass<RNImageProps & Partial<Record<"marg
     errorSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
-}, any>;
+}, any> & typeof Image;
 export default _default;
