@@ -23,4 +23,4 @@ export const MIN_WIDTH = {
 };
 
 export const DEFAULT_SIZE = ButtonSize.large;
-export const DISABLED_COLOR = Colors.dark60;
+export const DISABLED_COLOR = Colors.grey60;

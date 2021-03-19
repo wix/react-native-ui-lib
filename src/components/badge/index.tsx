@@ -11,28 +11,16 @@ import {
   ViewStyle,
   ViewProps
 } from 'react-native';
-import {View as AnimatableView} from 'react-native-animatable';
-import {extractAccessibilityProps, extractAnimationProps} from '../../commons/modifiers';
+import {extractAccessibilityProps} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';
 import {BorderRadiuses, Colors, Spacings, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import View from '../view';
 
+const DEFAULT_SIZE = 16;
 const LABEL_FORMATTER_VALUES = [1, 2, 3, 4] as const;
-
-// TODO: depreciate enum badge sizes, use only number for size
-export enum BADGE_SIZES {
-  pimpleSmall = 6,
-  pimpleBig = 10,
-  pimpleHuge = 14,
-  small = 16,
-  default = 20,
-  large = 24
-}
-
 type LabelFormatterValues = typeof LABEL_FORMATTER_VALUES[number];
-export type BadgeSizes = keyof typeof BADGE_SIZES;
 
 export type BadgeProps = ViewProps &
   TouchableOpacityProps & {
@@ -48,7 +36,7 @@ export type BadgeProps = ViewProps &
     /**
      * the badge size (default, small)
      */
-    size?: BadgeSizes | number;
+    size?: number;
     /**
      * Press handler
      */
@@ -81,7 +69,7 @@ export type BadgeProps = ViewProps &
      * Receives a number from 1 to 4, representing the label's max digit length.
      * Beyond the max number for that digit length, a "+" will show at the end.
      * If set to a value not included in LABEL_FORMATTER_VALUES, no formatting will occur.
-     * Example: labelLengthFormater={2}, label={124}, label will present "99+".
+     * Example: labelLengthFormatter={2}, label={124}, label will present "99+".
      */
     labelFormatterLimit?: LabelFormatterValues;
     /**
@@ -100,16 +88,10 @@ export type BadgeProps = ViewProps &
      * Custom element to render instead of an icon
      */
     customElement?: JSX.Element;
-    /**
-     * Use to identify the badge in tests
-     */
-    testId?: string;
   };
 
 /**
  * @description: Round colored badge, typically used to show a number
- * @extends: Animatable.View
- * @extendslink: https://github.com/oblador/react-native-animatable
  * @image: https://user-images.githubusercontent.com/33805983/34480753-df7a868a-efb6-11e7-9072-80f5c110a4f3.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.tsx
  */
@@ -118,13 +100,14 @@ class Badge extends PureComponent<BadgeProps> {
 
   static displayName = 'Badge';
 
+  static defaultProps = {
+    size: DEFAULT_SIZE
+  };
+
   constructor(props: BadgeProps) {
     super(props);
-    this.styles = createStyles(props);
 
-    if (props.testId) {
-      console.warn('Badge prop \'testId\' is deprecated. Please use RN \'testID\' prop instead.');
-    }
+    this.styles = createStyles(props);
   }
 
   get size() {
@@ -143,18 +126,18 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   isSmallBadge() {
-    return this.size === 'small';
+    const {size} = this.props;
+    return size === DEFAULT_SIZE;
   }
 
   getBadgeSizeStyle() {
-    const {borderWidth, icon, customElement} = this.props;
+    const {borderWidth, icon, customElement, size} = this.props;
     const label = this.getFormattedLabel();
-    const badgeHeight = _.isNumber(this.size) ? this.size : BADGE_SIZES[this.size];
 
     const style: any = {
       paddingHorizontal: this.isSmallBadge() ? 4 : 6,
-      height: badgeHeight,
-      minWidth: badgeHeight
+      height: size,
+      minWidth: size
     };
     if (icon && label) {
       style.paddingRight = 6;
@@ -262,18 +245,12 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   render() {
-    // TODO: remove testId after deprecation
-    const {activeOpacity, backgroundColor, containerStyle, hitSlop, onPress, testId, testID, ...others} = this.props;
+    const {activeOpacity, backgroundColor, containerStyle, hitSlop, onPress, testID, ...others} = this.props;
     const backgroundStyle = backgroundColor && {backgroundColor};
     const sizeStyle = this.getBadgeSizeStyle();
     const borderStyle = this.getBorderStyling();
-    const animationProps = extractAnimationProps();
-    const Container = !_.isEmpty(animationProps) ? AnimatableView : onPress ? TouchableOpacity : View;
+    const Container = onPress ? TouchableOpacity : View;
 
-    if (!_.isEmpty(animationProps)) {
-      console.warn('Badge component will soon stop supporting animationProps.' +
-          'Please wrap your Badge component with your own animation component, such as Animatable.View');
-    }
     return (
       // The extra View wrapper is to break badge's flex-ness
       // @ts-ignore
@@ -286,14 +263,13 @@ class Badge extends PureComponent<BadgeProps> {
         {...this.getAccessibilityProps()}
       >
         <Container
-          testID={testID || testId}
+          testID={testID}
+          row
           pointerEvents={'none'}
           style={[sizeStyle, this.styles.badge, borderStyle, backgroundStyle]}
           onPress={onPress}
           activeOpacity={activeOpacity}
           hitSlop={hitSlop}
-          {...animationProps}
-          row
         >
           {this.renderCustomElement()}
           {this.renderIcon()}

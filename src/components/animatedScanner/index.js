@@ -139,7 +139,7 @@ function createStyles() {
     scanner: {
       ...StyleSheet.absoluteFillObject,
       borderWidth: StyleSheet.hairlineWidth,
-      borderColor: Colors.dark50
+      borderColor: Colors.grey50
     }
   });
 }

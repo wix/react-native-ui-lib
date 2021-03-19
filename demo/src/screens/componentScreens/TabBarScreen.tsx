@@ -124,7 +124,7 @@ export default class TabBarScreen extends Component {
   render() {
     return (
       <ScrollView style={{overflow: 'visible'}} showsVerticalScrollIndicator={false}>
-        <View bg-dark80>
+        <View bg-grey80>
           <TabBar style={styles.tabbar} selectedIndex={0} enableShadow>
             <TabBar.Item
               label="single tab"
@@ -151,7 +151,7 @@ export default class TabBarScreen extends Component {
 
           <TabBar style={styles.tabbar} selectedIndex={0} ref={r => (this.tabbar = r)} enableShadow>
             <TabBar.Item label="Scroll"/>
-            <TabBar.Item label="View" badgeProps={{size: 'pimpleSmall'}}/>
+            <TabBar.Item label="View" badgeProps={{size: 6}}/>
             <TabBar.Item label="tab"/>
             <TabBar.Item label="bar"/>
             <TabBar.Item label="Container"/>

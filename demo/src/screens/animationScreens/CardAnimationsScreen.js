@@ -93,12 +93,12 @@ export default class CardAnimationsScreen extends Component {
         </View>
         <View row center>
           <Button outline size='medium' margin-10 label={`Add at index: ${counter}`} onPress={() => this.addItem()}/>
-          <Button 
-            round outline size='large' label='+' 
+          <Button
+            round outline size='large' label='+'
             onPress={() => this.setState({counter: counter < items.length ? counter + 1 : counter})}
           />
-          <Button 
-            round outline size='large' margin-10 label='-' 
+          <Button
+            round outline size='large' margin-10 label='-'
             onPress={() => this.setState({counter: counter !== 0 ? counter - 1 : 0})}
           />
         </View>
@@ -112,6 +112,6 @@ export default class CardAnimationsScreen extends Component {
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: Colors.dark60,
+    backgroundColor: Colors.grey60,
   },
 });

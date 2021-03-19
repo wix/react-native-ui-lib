@@ -10,7 +10,7 @@ describe('services/AvatarService', () => {
     const avatarColors = uut.getAvatarColors();
     expect(avatarColors).toEqual([
       Colors.blue20,
-      Colors.cyan20,
+      Colors.blue20,
       Colors.green20,
       Colors.yellow20,
       Colors.orange20,

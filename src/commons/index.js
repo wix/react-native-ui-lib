@@ -10,9 +10,6 @@ module.exports = {
   get PureBaseComponent() {
     return (PureBaseComponentClass = PureBaseComponentClass || createBaseComponentClass(true));
   },
-  get SelectableComponent() {
-    return require('./SelectableComponent').default;
-  },
   get UIComponent() {
     return require('./UIComponent').default;
   },

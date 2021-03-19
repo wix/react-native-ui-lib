@@ -9,7 +9,6 @@ export interface StateScreenProps {
   subtitle?: ReactNode[];
   ctaLabel?: string;
   onCtaPress?: (event: GestureResponderEvent) => void;
-  testId?: string;
 }
 
 export class StateScreen extends BaseComponent<StateScreenProps> {}

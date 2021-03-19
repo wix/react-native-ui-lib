@@ -57,7 +57,7 @@ export type SwitchProps = {
    */
   thumbStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>;
-  testID?: string; 
+  testID?: string;
 }
 
 /**
@@ -65,13 +65,13 @@ export type SwitchProps = {
  */
 class Switch extends Component<SwitchProps> {
   static displayName = 'Switch';
-  
+
   state = {
     thumbPosition: new Animated.Value(this.props.value ? 1 : 0)
   };
 
   styles = createStyles(this.props);
-  
+
   componentDidUpdate(prevProps: SwitchProps) {
     const {value} = this.props;
     if (prevProps.value !== value) {
@@ -82,7 +82,7 @@ class Switch extends Component<SwitchProps> {
   getAccessibilityProps() {
     const {disabled, value} = this.props;
 
-    
+
     return {
       accessible: true,
       accessibilityRole: 'switch',
@@ -173,7 +173,7 @@ function createStyles({
   height = DEFAULT_HEIGHT,
   onColor = Colors.primary,
   offColor = Colors.getColorTint(Colors.primary, 60),
-  disabledColor = Colors.dark70,
+  disabledColor = Colors.grey70,
   thumbColor = Colors.white,
   thumbSize = DEFAULT_THUMB_SIZE
 }: SwitchProps) {

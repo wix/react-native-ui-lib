@@ -58,6 +58,6 @@ export default class ContactsListScreen extends Component {
 const styles = StyleSheet.create({
   border: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.dark70
+    borderColor: Colors.grey70
   }
 });

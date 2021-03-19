@@ -54,7 +54,7 @@ class AppleMusic extends Component {
 const styles = StyleSheet.create({
   separator: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.dark60,
+    borderColor: Colors.grey60,
   },
 });
 
@@ -81,12 +81,12 @@ const GridListItem = ({item, index}) => {
   const itemSize = (Constants.screenWidth - (GUTTER_SIZE * (NUMBER_OF_COLUMNS + 1))) / NUMBER_OF_COLUMNS;
   return (
     <View flex marginL-24={index % NUMBER_OF_COLUMNS !== 0} marginB-24>
-      <View height={itemSize} bg-dark80>
+      <View height={itemSize} bg-grey80>
         <Image style={{flex: 1}} source={{uri: item.image[3]['#text']}}/>
       </View>
       <View paddingT-2>
-        <Text text70 dark20 numberOfLines={1}>{item.name}</Text>
-        <Text text80 dark40>{item.artist.name}</Text>
+        <Text text70 grey20 numberOfLines={1}>{item.name}</Text>
+        <Text text80 grey40>{item.artist.name}</Text>
       </View>
     </View>
   );

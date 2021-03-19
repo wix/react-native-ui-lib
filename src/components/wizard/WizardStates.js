@@ -11,13 +11,13 @@ export const States = {
 };
 
 export const StatesConfig = {
-  enabled: {color: Colors.dark30, circleColor: Colors.dark60, enabled: true},
-  disabled: {color: Colors.dark50, circleColor: Colors.dark60},
+  enabled: {color: Colors.grey30, circleColor: Colors.grey60, enabled: true},
+  disabled: {color: Colors.grey50, circleColor: Colors.grey60},
   error: {color: Colors.red30, icon: exclamationSmall, enabled: true, accessibilityInfo: 'Validation Error'},
   skipped: {color: Colors.red30, enabled: true, accessibilityInfo: 'Not completed'},
   completed: {
-    color: Colors.dark30,
-    circleColor: Colors.dark60,
+    color: Colors.grey30,
+    circleColor: Colors.grey60,
     icon: checkMarkSmall,
     enabled: true,
     accessibilityInfo: 'Completed'

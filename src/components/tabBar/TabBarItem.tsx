@@ -197,7 +197,7 @@ class TabBarItem extends PureComponent<TabBarItemProps, State> {
       this.getColorFromStyle(selectedLabelStyle) ||
       this.getColorFromStyle(styles.selectedLabel);
     const badgeFinalProps = badgeProps || badge;
-    const badgeSize = _.get(badgeFinalProps, 'size', 'small');
+    const badgeSize = _.get(badgeFinalProps, 'size', 16);
 
     return (
       <TouchableOpacity
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     borderRightWidth: 1,
-    borderRightColor: Colors.dark70,
+    borderRightColor: Colors.grey70,
     marginVertical: 14 // NOTE: will not cut long text at the top and bottom in iOS if TabBar not high enough
   },
   indicator: {

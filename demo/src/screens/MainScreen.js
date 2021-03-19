@@ -15,7 +15,7 @@ class MainScreen extends Component {
   static propTypes = {
     containerStyle: ViewPropTypes.style,
     renderItem: PropTypes.func,
-    pageStyle: ViewPropTypes.style    
+    pageStyle: ViewPropTypes.style
   };
 
   settingsScreenName = 'unicorn.Settings';
@@ -67,8 +67,8 @@ class MainScreen extends Component {
       this.pushScreen({
         name: this.settingsScreenName,
         passProps: {
-          navigationData: data, 
-          playground: this.props.playground, 
+          navigationData: data,
+          playground: this.props.playground,
           extraSettingsUI: this.props.extraSettingsUI
         }
       });
@@ -152,7 +152,7 @@ class MainScreen extends Component {
         containerStyle={{padding: 16, paddingBottom: 0}}
         style={{
           padding: 12,
-          backgroundColor: Colors.dark80,
+          backgroundColor: Colors.grey80,
           borderRadius: 8
         }}
         enableErrors={false}
@@ -184,10 +184,10 @@ class MainScreen extends Component {
           activeBackgroundColor={Colors.primary}
           activeOpacity={1}
         >
-          <Text style={[item.deprecate && styles.entryTextDeprecated]} dark10 text50>
+          <Text style={[item.deprecate && styles.entryTextDeprecated]} grey10 text50>
             {item.title}
           </Text>
-          <Image source={chevronIcon} style={{tintColor: Colors.dark10}} supportRTL/>
+          <Image source={chevronIcon} style={{tintColor: Colors.grey10}} supportRTL/>
         </TouchableOpacity>
       );
     } else {
@@ -258,7 +258,7 @@ class MainScreen extends Component {
         )}
         {showNoResults && (
           <View padding-20>
-            <Text dark40 text50>
+            <Text grey40 text50>
               Sorry, nothing was found. Try Button or something..
             </Text>
           </View>

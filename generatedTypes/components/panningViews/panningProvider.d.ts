@@ -1,8 +1,4 @@
 import { Component } from 'react';
-/**
- * @deprecated Please transition to PanningDirections
- */
-export declare type PanningProviderDirection = 'up' | 'down' | 'left' | 'right';
 export declare enum PanningDirections {
     UP = "up",
     DOWN = "down",
@@ -14,8 +10,8 @@ export interface PanLocationProps {
     top?: number;
 }
 export interface PanDirectionsProps {
-    x?: PanningDirections | PanningProviderDirection;
-    y?: PanningDirections | PanningProviderDirection;
+    x?: PanningDirections;
+    y?: PanningDirections;
 }
 export interface PanAmountsProps {
     x?: number;

@@ -39,7 +39,7 @@ class Pinterest extends Component {
           color: 'transparent'
         },
         backButton: {
-          color: Colors.dark10
+          color: Colors.grey10
         }
       }
     };

@@ -64,12 +64,12 @@ export default class KeyboardTrackingViewScreen extends PureComponent {
     const {trackInteractive} = this.state;
 
     return (
-      <View flex bg-dark80 paddingT-page>
+      <View flex bg-grey80 paddingT-page>
         <ScrollView
           contentContainerStyle={styles.scrollContainer}
           keyboardDismissMode={trackInteractive ? 'interactive' : 'none'}
         >
-          <Text h1 dark10 marginB-s1>
+          <Text h1 grey10 marginB-s1>
             Keyboard Tracking View
           </Text>
           <Text marginB-s4 grey10>
@@ -125,6 +125,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: '100%',
     borderWidth: 1,
-    borderColor: Colors.dark60
+    borderColor: Colors.grey60
   }
 });

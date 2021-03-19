@@ -48,7 +48,7 @@ export default class PanResponderScreen extends Component {
     const panListener = this.renderPanListener();
 
     return (
-      <View flex bg-dark80>
+      <View flex bg-grey80>
         <View style={styles.container}>
           <Text style={styles.largeText}>Pan Responder</Text>
           <Switch value={isCoupled} onValueChange={this.switchExample} style={styles.switch} />

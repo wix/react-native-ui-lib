@@ -64,7 +64,7 @@ export default class CardScannerScreen extends Component {
           <Card containerStyle={{marginBottom: 15}} onPress={() => console.log('press on a card')}>
             <Card.Image height={115} source={post.coverImage}/>
             <View padding-20>
-              <Text text40 color={Colors.dark10}>
+              <Text text40 color={Colors.grey10}>
                 {post.title}
               </Text>
               <Text text90> | {post.timestamp}</Text>
@@ -72,11 +72,11 @@ export default class CardScannerScreen extends Component {
                 {post.status}
               </Text>
 
-              <Text text70 color={Colors.dark10}>
+              <Text text70 color={Colors.grey10}>
                 {post.description}
               </Text>
 
-              <Text text90 color={Colors.dark50}>
+              <Text text90 color={Colors.grey50}>
                 {post.likes} Likes
               </Text>
               <View row spread>
@@ -94,13 +94,13 @@ export default class CardScannerScreen extends Component {
           </Card>
 
           {this.state.started && !this.state.isDone && (
-            <Text text70 dark10 style={{alignSelf: 'center', marginTop: 20}}>
+            <Text text70 grey10 style={{alignSelf: 'center', marginTop: 20}}>
               Publishing Post...
             </Text>
           )}
 
           {this.state.isDone && (
-            <Text text70 dark10 style={{alignSelf: 'center', marginTop: 20}}>
+            <Text text70 grey10 style={{alignSelf: 'center', marginTop: 20}}>
               Done!
             </Text>
           )}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-import { PanningDirections, PanningProviderDirection, PanAmountsProps } from './panningProvider';
+import { PanningDirections, PanAmountsProps } from './panningProvider';
 export interface DismissibleAnimationProps {
     /**
      * The return animation speed (default is 20)
@@ -25,7 +25,7 @@ export interface PanDismissibleViewProps {
      * The directions of the allowed pan (default allows all directions)
      * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###)
      */
-    directions?: PanningDirections[] | PanningProviderDirection[];
+    directions?: PanningDirections[];
     /**
      * onDismiss callback
      */

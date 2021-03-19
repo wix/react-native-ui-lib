@@ -4,7 +4,7 @@ import {ScrollView, View, Text, StyleSheet, Dimensions, TouchableOpacity} from '
 import {Colors, Typography, Toast} from 'react-native-ui-lib';//eslint-disable-line
 
 const {width} = Dimensions.get('window');
-const baseColors = ['dark', 'blue', 'cyan', 'green', 'yellow', 'orange', 'red', 'purple', 'violet'];
+const baseColors = ['grey', 'blue', 'blue', 'green', 'yellow', 'orange', 'red', 'purple', 'violet'];
 
 export default class ColorsScreen extends Component {
 
@@ -22,7 +22,7 @@ export default class ColorsScreen extends Component {
   onPress(key, value) {
     this.setState({key});
     if (_.includes(key, '60') || _.includes(key, '70') || _.includes(key, '80') || _.includes(key, 'white')) {
-      this.setState({color: Colors.dark10});
+      this.setState({color: Colors.grey10});
     } else {
       this.setState({color: Colors.white});
     }
@@ -41,7 +41,7 @@ export default class ColorsScreen extends Component {
           onDismiss={() => this.setState({showToast: false})}
           visible={this.state.showToast}
         />
-        <ScrollView style={{backgroundColor: Colors.dark80}}>
+        <ScrollView style={{backgroundColor: Colors.grey80}}>
           <View style={styles.pallete}>
             {_.map(Colors, (value, key) => {
               if (!_.isFunction(value)) {
@@ -58,7 +58,7 @@ export default class ColorsScreen extends Component {
             const baseColorTints = _.pickBy(Colors, (color, key) => key.includes(baseColor));
             return (
               <View key={baseColor} style={{paddingLeft: 10}}>
-                <Text style={[Typography.text60, {marginBottom: 2, color: Colors.dark30}]}>{baseColor}s</Text>
+                <Text style={[Typography.text60, {marginBottom: 2, color: Colors.grey30}]}>{baseColor}s</Text>
                 <ScrollView
                   horizontal
                   contentContainerStyle={{marginBottom: 20}}

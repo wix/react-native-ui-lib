@@ -49,19 +49,19 @@ export default class PageControlScreen extends Component {
           color={Colors.orange40}
           size={20}
         />
-        <PageControl containerStyle={containerStyle} numOfPages={10} currentPage={6} inactiveColor={Colors.dark70}/>
+        <PageControl containerStyle={containerStyle} numOfPages={10} currentPage={6} inactiveColor={Colors.grey70}/>
         <PageControl
           containerStyle={containerStyle}
           numOfPages={10}
           currentPage={6}
-          inactiveColor={Colors.dark70}
+          inactiveColor={Colors.grey70}
           enlargeActive
         />
         <PageControl
           containerStyle={containerStyle}
           numOfPages={10}
           currentPage={6}
-          inactiveColor={Colors.dark70}
+          inactiveColor={Colors.grey70}
           enlargeActive
           spacing={10}
         />
@@ -79,8 +79,8 @@ export default class PageControlScreen extends Component {
             spacing={8}
             limitShownPages={limitShownPages}
             containerStyle={containerStyle}
-            inactiveColor={Colors.dark60}
-            color={Colors.dark20}
+            inactiveColor={Colors.grey60}
+            color={Colors.grey20}
             numOfPages={numberOfPagesShown}
             currentPage={currentPage}
             onPagePress={this.onPagePress}

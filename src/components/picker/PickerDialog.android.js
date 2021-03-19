@@ -43,7 +43,7 @@ class PickerDialog extends BaseComponent {
     if (title) {
       return (
         <View style={styles.header}>
-          <Text text60 dark10 style={titleStyle}>
+          <Text text60 grey10 style={titleStyle}>
             {title}
           </Text>
         </View>

@@ -154,9 +154,7 @@ class TabControllerScreen extends Component<{}, State> {
             enableShadow
             activeBackgroundColor={Colors.blue60}
             centerSelected={centerSelected}
-          >
-            {/* {this.renderTabItems()} */}
-          </TabController.TabBar>
+          />
           {this.renderTabPages()}
         </TabController>
         <View absB left margin-20 marginB-100 style={{zIndex: 1}}>

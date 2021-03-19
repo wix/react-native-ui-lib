@@ -45,7 +45,6 @@ export interface PickerProps extends Omit<TextFieldProps, 'value'> {
   value?: PickerItemValue;
   onChange?: (value: PickerItemValue) => void;
   mode?: PickerMode;
-  enableModalBlur?: boolean;
   renderPicker?: (value?: PickerItemValue) => ReactElement | ReactElement[];
   renderItem?: PickerItemRenderItemFunc;
   renderCustomModal?: (modalProps: object) => ReactElement | ReactElement[];

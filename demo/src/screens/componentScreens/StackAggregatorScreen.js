@@ -12,7 +12,7 @@ const contents = [
 ]
 
 export default class StackAggregatorScreen extends Component {
-  
+
   onItemPress = (index) => {
     console.warn('item pressed: ', index);
   }
@@ -32,8 +32,8 @@ export default class StackAggregatorScreen extends Component {
 
   render() {
     return (
-      <ScrollView bg-dark80 keyboardShouldPersistTaps={'handled'} showsVerticalScrollIndicator={false}>
-        <Text center dark40 text90 marginT-20>Thu, 10 Dec, 11:29</Text>
+      <ScrollView bg-grey80 keyboardShouldPersistTaps={'handled'} showsVerticalScrollIndicator={false}>
+        <Text center grey40 text90 marginT-20>Thu, 10 Dec, 11:29</Text>
         <StackAggregator
           containerStyle={{marginTop: 12}}
           onItemPress={this.onItemPress}
@@ -43,7 +43,7 @@ export default class StackAggregatorScreen extends Component {
           })}
         </StackAggregator>
 
-        <Text center dark40 text90 marginT-20>Thu, 11 Dec, 13:03</Text>
+        <Text center grey40 text90 marginT-20>Thu, 11 Dec, 13:03</Text>
         <StackAggregator
           containerStyle={{marginTop: 12}}
           onItemPress={this.onItemPress}

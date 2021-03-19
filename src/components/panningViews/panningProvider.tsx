@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 import PanningContext from './panningContext';
 
-/**
- * @deprecated Please transition to PanningDirections
- */
-export type PanningProviderDirection = 'up' | 'down' | 'left' | 'right';
 
 export enum PanningDirections {
   UP = 'up',
@@ -19,8 +15,8 @@ export interface PanLocationProps {
 }
 
 export interface PanDirectionsProps {
-  x?: PanningDirections | PanningProviderDirection;
-  y?: PanningDirections | PanningProviderDirection;
+  x?: PanningDirections;
+  y?: PanningDirections;
 }
 
 export interface PanAmountsProps {

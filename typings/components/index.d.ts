@@ -14,6 +14,5 @@ export * from './Slider';
 export * from './StackAggregator';
 export * from './StateScreen';
 export * from './Stepper';
-export * from './TagsInput';
 export * from './Toast';
 export * from './WheelPickerDialog';

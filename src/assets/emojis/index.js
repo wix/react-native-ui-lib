@@ -822,7 +822,7 @@ export const emojis = {
   "hole": "🕳",
   "man_in_business_suit_levitating": "🕴",
   "sleuth_or_spy": "🕵",
-  "dark_sunglasses": "🕶",
+  "grey_sunglasses": "🕶",
   "spider": "🕷",
   "spider_web": "🕸",
   "joystick": "🕹",

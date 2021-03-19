@@ -81,8 +81,8 @@ class FeatureHighlightScreen extends Component {
       numOfPages: titles.length,
       currentPage: this.state.currentTargetIndex,
       onPagePress: this.onPagePress,
-      color: Colors.dark30,
-      inactiveColor: Colors.dark80,
+      color: Colors.grey30,
+      inactiveColor: Colors.grey80,
       size: 8
     };
   }

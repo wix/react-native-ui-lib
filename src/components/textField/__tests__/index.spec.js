@@ -38,31 +38,31 @@ describe('TextField', () => {
       uut.state = {focused: true};
       expect(uut.getStateColor({default: Colors.grey10, focus: Colors.green30})).toEqual(Colors.green30);
     });
-    
+
     it('should return default component state colors by default', () => {
       const uut = new TextField({});
       expect(uut.getStateColor()).toEqual(Colors.grey10);
       uut.state = {focused: true};
       expect(uut.getStateColor()).toEqual(Colors.grey10);
     });
-    
+
     it('should return default component state colors by default even when given partial color state', () => {
       const uut = new TextField({});
       expect(uut.getStateColor({focus: Colors.blue30})).toEqual(Colors.grey10);
       uut.state = {focused: true};
-      expect(uut.getStateColor({default: Colors.dark20})).toEqual(Colors.grey10);
+      expect(uut.getStateColor({default: Colors.grey20})).toEqual(Colors.grey10);
     });
-    
+
     it('should return default "error" state when there is an error', () => {
       const uut = new TextField({error: 'error'});
       expect(uut.getStateColor()).toEqual(Colors.grey10);
     });
-    
+
     it('should return given "error" state when there is an error', () => {
       const uut = new TextField({error: 'error'});
       expect(uut.getStateColor({default: Colors.grey10, error: Colors.red20})).toEqual(Colors.red20);
     });
-    
+
     it('should return disabled color when disabled', () => {
       const uut = new TextField({editable: false});
       expect(uut.getStateColor()).toEqual(Colors.grey50);

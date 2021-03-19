@@ -41,7 +41,7 @@ export default class ModalScreen extends Component<ModalScreenPropTypes, State> 
           containerStyle={[styles.pageControl, styles.absoluteContainer]}
           numOfPages={4}
           currentPage={this.state.currentPage}
-          color={Colors.dark10}
+          color={Colors.grey10}
           size={15}
         />
         <Carousel onChangePage={currentPage => this.setState({currentPage})} containerStyle={{flex: 1}}>
@@ -95,7 +95,7 @@ export default class ModalScreen extends Component<ModalScreenPropTypes, State> 
             </View>
           </View>
 
-          <View bg-dark70 flex style={styles.page}>
+          <View bg-grey70 flex style={styles.page}>
             <Modal.TopBar
               title="Custom Style"
               onCancel={() => Alert.alert('cancel')}

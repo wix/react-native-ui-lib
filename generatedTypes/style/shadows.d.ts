@@ -134,7 +134,7 @@ declare const _default: {
             };
         };
     };
-    dark10: {
+    grey10: {
         top: {
             shadowColor: string;
             shadowOpacity: number;
@@ -150,7 +150,7 @@ declare const _default: {
             };
         };
     };
-    dark20: {
+    grey20: {
         top: {
             shadowColor: string;
             shadowOpacity: number;
@@ -166,7 +166,7 @@ declare const _default: {
             };
         };
     };
-    dark30: {
+    grey30: {
         top: {
             shadowColor: string;
             shadowOpacity: number;
@@ -186,7 +186,7 @@ declare const _default: {
             };
         };
     };
-    dark40: {
+    grey40: {
         top: {
             shadowColor: string;
             shadowOpacity: number;
@@ -211,9 +211,9 @@ declare const _default: {
      * arguments:
      * shadows - map of keys and values
      * e.g
-     * dark40: {
-     *   top: {shadowColor: Colors.dark10, shadowOpacity: 0.04, shadowRadius: 4.5, shadowOffset: {height: 5, width: 0}},
-     *   bottom: {shadowColor: Colors.dark20, shadowOpacity: 0.04, shadowRadius: 9, shadowOffset: {height: 10, width: 0}},
+     * grey40: {
+     *   top: {shadowColor: Colors.grey10, shadowOpacity: 0.04, shadowRadius: 4.5, shadowOffset: {height: 5, width: 0}},
+     *   bottom: {shadowColor: Colors.grey20, shadowOpacity: 0.04, shadowRadius: 9, shadowOffset: {height: 10, width: 0}},
      * }
      */
     loadShadows(shadows: Dictionary<Shadow>): void;

@@ -1,7 +1,7 @@
 const Colors = {
-  dark10: '#20303C',
-  dark20: '#43515C',
-  dark30: '#66737C',
+  grey10: '#20303C',
+  grey20: '#43515C',
+  grey30: '#66737C',
   white: '#ffffff',
   black: '#000000'
 };
@@ -25,7 +25,7 @@ const ruleOptions = [{validColors: Colors, customColors: extraFixColorsMap}];
 const invalidStyleSheetExample = `StyleSheet.create({
   container: {
     padding: 5,
-    backgroundColor: '${Colors.dark30}'
+    backgroundColor: '${Colors.grey30}'
   }
 })
 `;
@@ -33,30 +33,30 @@ const invalidStyleSheetExample = `StyleSheet.create({
 const validStyleSheetExample = `StyleSheet.create({
   container: {
     padding: 5,
-    backgroundColor: Colors.dark30
+    backgroundColor: Colors.grey30
   }
 })
 `;
 
-const invalidConditionalExpression = `const test = <Text style = {{ color: true ? '${Colors.dark10}' : '${
-  Colors.dark20
+const invalidConditionalExpression = `const test = <Text style = {{ color: true ? '${Colors.grey10}' : '${
+  Colors.grey20
 }'}}> </Text>;`;
 const validConditionalExpression =
-  'const test = <Text style = {{ color: true ? Colors.dark10 : Colors.dark20}}> </Text>;';
+  'const test = <Text style = {{ color: true ? Colors.grey10 : Colors.grey20}}> </Text>;';
 
 const invalidIdentifierExample = `
-  const x = true ? '${Colors.dark10}' : '${Colors.dark20}'
+  const x = true ? '${Colors.grey10}' : '${Colors.grey20}'
   const test = <Text style = {{ color: x }}> </Text>;
 `;
 const validIdentifierExample = `
-  const x = true ? Colors.dark10 : Colors.dark20
+  const x = true ? Colors.grey10 : Colors.grey20
   const test = <Text style = {{ color: x }}> </Text>;
 `;
 const ruleTester = new RuleTester();
 
 ruleTester.run('no-hard-coded-color', rule, {
   valid: [
-    {code: 'const goodUsage = <Text style={{color: Constants.dark10}}/>;'},
+    {code: 'const goodUsage = <Text style={{color: Constants.grey10}}/>;'},
     {code: 'const goodUsage = <View style={{backgroundColor: Constants.blue20}}/>;'}
   ],
   invalid: [
@@ -86,8 +86,8 @@ ruleTester.run('no-hard-coded-color', rule, {
     },
     {
       options: ruleOptions,
-      code: `const badUsage = <Text style = {{ color: '${Colors.dark10}'}}> </Text>;`,
-      output: 'const badUsage = <Text style = {{ color: Colors.dark10}}> </Text>;',
+      code: `const badUsage = <Text style = {{ color: '${Colors.grey10}'}}> </Text>;`,
+      output: 'const badUsage = <Text style = {{ color: Colors.grey10}}> </Text>;',
       errors: [{message: 'Found \'#20303C\'. Use UILib colors instead of hardcoded colors.'}]
     },
     {
@@ -97,8 +97,8 @@ ruleTester.run('no-hard-coded-color', rule, {
     },
     {
       options: ruleOptions,
-      code: `const badUsage = <Text style = {{ color: '${Colors.dark10.toLowerCase()}'}}> </Text>;`,
-      output: 'const badUsage = <Text style = {{ color: Colors.dark10}}> </Text>;',
+      code: `const badUsage = <Text style = {{ color: '${Colors.grey10.toLowerCase()}'}}> </Text>;`,
+      output: 'const badUsage = <Text style = {{ color: Colors.grey10}}> </Text>;',
       errors: [{message: 'Found \'#20303c\'. Use UILib colors instead of hardcoded colors.'}]
     },
     {

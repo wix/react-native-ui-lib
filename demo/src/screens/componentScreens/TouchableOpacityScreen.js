@@ -14,7 +14,7 @@ export default class TouchableOpacityScreen extends Component {
 
   render() {
     return (
-      <View flex bg-dark70 useSafeArea>
+      <View flex bg-grey70 useSafeArea>
         <View flex center>
           <View marginB-20>
             <Text center>TouchableOpacity with support for throttling.</Text>

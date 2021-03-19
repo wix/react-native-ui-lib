@@ -12,12 +12,6 @@
     "fix": {"componentName": "Touch"}
   },
   {
-    "component": "TextInput",
-    "source": "module-with-deprecations",
-    "message": "Please use the 'TextField' component instead.",
-    "fix": {"componentName": "TextField"}
-  },
-  {
     "component": "List.Part",
     "source": "module-with-deprecations",
     "message": "Please use the 'List.Item' component instead (fix is working partially).",

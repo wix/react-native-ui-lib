@@ -380,7 +380,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     const {pageControlPosition, pageControlProps = {}} = this.props;
 
     if (pageControlPosition) {
-      const {size = 6, spacing = 8, color = Colors.dark20, inactiveColor = Colors.dark60, ...others} = pageControlProps;
+      const {size = 6, spacing = 8, color = Colors.grey20, inactiveColor = Colors.grey60, ...others} = pageControlProps;
       const pagesCount = presenter.getChildrenLength(this.props);
       const containerStyle =
         pageControlPosition === PageControlPosition.UNDER
@@ -410,7 +410,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     if (showCounter && !pageWidth) {
       return (
         <View center style={styles.counter}>
-          <Text dark80 text90 style={[{fontWeight: 'bold'}, counterTextStyle]}>
+          <Text grey80 text90 style={[{fontWeight: 'bold'}, counterTextStyle]}>
             {currentPage + 1}/{pagesCount}
           </Text>
         </View>

@@ -32,12 +32,12 @@ export default class PanListenerScreen extends Component {
     const {locationText, endType} = this.state;
 
     return (
-      <View flex bg-dark80>
+      <View flex bg-grey80>
         <Text text50 margin-40>
           Pan Listener
         </Text>
         <PanListenerView
-          bg-dark70
+          bg-grey70
           centerV
           height={300}
           width="100%"

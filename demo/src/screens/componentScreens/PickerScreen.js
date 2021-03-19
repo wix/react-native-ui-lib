@@ -56,7 +56,6 @@ export default class PickerScreen extends Component {
 
     return (
       <Dialog
-        migrate
         visible={visible}
         onDismiss={() => {
           onDone();
@@ -91,7 +90,7 @@ export default class PickerScreen extends Component {
             style={{color: Colors.red20}}
             showSearch
             searchPlaceholder={'Search a language'}
-            searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.dark50}}
+            searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
             // onSearchChange={value => console.warn('value', value)}
           >
             {_.map(options, option => (
@@ -164,7 +163,7 @@ export default class PickerScreen extends Component {
             ))}
           </Picker>
 
-          <Text marginT-20 marginB-10 text70 dark60>
+          <Text marginT-20 marginB-10 text70 grey60>
             Custom Picker:
           </Text>
           <Picker
@@ -174,7 +173,7 @@ export default class PickerScreen extends Component {
               return (
                 <View row center>
                   <Image style={{marginRight: 1, height: 16, resizeMode: 'contain'}} source={tagIcon}/>
-                  <Text dark10 text80>
+                  <Text grey10 text80>
                     {label} Posts
                   </Text>
                 </View>
@@ -186,7 +185,7 @@ export default class PickerScreen extends Component {
             ))}
           </Picker>
 
-          <Text marginT-20 marginB-10 text70 dark60>
+          <Text marginT-20 marginB-10 text70 grey60>
             Custom Picker Items:
           </Text>
           <Picker
@@ -213,7 +212,7 @@ export default class PickerScreen extends Component {
                     style={{
                       height: 56,
                       borderBottomWidth: 1,
-                      borderColor: Colors.dark80
+                      borderColor: Colors.grey80
                     }}
                     paddingH-15
                     row
@@ -222,7 +221,7 @@ export default class PickerScreen extends Component {
                   >
                     <View row centerV>
                       <Avatar size={35} source={{uri: item.thumbnail}}/>
-                      <Text marginL-10 text70 dark10>
+                      <Text marginL-10 text70 grey10>
                         {item.name}
                       </Text>
                     </View>
@@ -245,8 +244,7 @@ export default class PickerScreen extends Component {
             topBarProps={{title: 'Languages'}}
             showSearch
             searchPlaceholder={'Search a language'}
-            searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.dark50}}
-            // mode={Picker.modes.MULTI}
+            searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
             // useNativePicker
           >
             {_.map(options, option => (

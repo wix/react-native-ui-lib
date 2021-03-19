@@ -39,7 +39,7 @@ const colorNameMap = [
   ['00CCCC', 'Robin\'s Egg Blue'],
   ['00FF00', 'Green'],
   ['00FF7F', 'Spring Green'],
-  ['00FFFF', 'Cyan / Aqua'],
+  ['00FFFF', 'blue / Aqua'],
   ['010D1A', 'Blue Charcoal'],
   ['011635', 'Midnight'],
   ['011D13', 'Holly'],
@@ -1579,7 +1579,7 @@ const colorNameMap = [
 //     const pair = [colors[key].substr(1), key];
 //     map.push(pair);
 //   });
-  
+
 //   return map;
 // }
 // const systemColorsMap = getSystemColorsMap();

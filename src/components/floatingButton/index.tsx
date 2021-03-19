@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   shadow: {
-    shadowColor: Colors.dark40,
+    shadowColor: Colors.grey40,
     shadowOffset: {height: 5, width: 0},
     shadowOpacity: 0.35,
     shadowRadius: 12,

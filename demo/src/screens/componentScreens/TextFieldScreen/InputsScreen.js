@@ -92,7 +92,7 @@ export default class InputsScreen extends Component {
             maxLength={100}
             showCharacterCounter
             editable={false}
-            disabledColor={Colors.dark70}
+            disabledColor={Colors.grey70}
           />
 
           <TextField
@@ -150,8 +150,8 @@ export default class InputsScreen extends Component {
             text70
             containerStyle={{marginBottom: INPUT_SPACING}}
             floatingPlaceholder
-            placeholderTextColor={Colors.cyan30}
-            floatingPlaceholderColor={Colors.cyan30}
+            placeholderTextColor={Colors.blue30}
+            floatingPlaceholderColor={Colors.blue30}
             placeholder="Underline colors & error"
             onChangeText={this.onChangeText}
             error={this.state.error}
@@ -257,7 +257,7 @@ export default class InputsScreen extends Component {
             rightIconSource={dropDown}
           />
 
-          <Text dark10 marginB-5>
+          <Text grey10 marginB-5>
             Text Area
           </Text>
           <View
@@ -266,7 +266,7 @@ export default class InputsScreen extends Component {
               borderWidth: 1,
               marginBottom: INPUT_SPACING,
               padding: 10,
-              borderColor: Colors.dark60
+              borderColor: Colors.grey60
             }}
           >
             <TextArea placeholder="Write something.."/>

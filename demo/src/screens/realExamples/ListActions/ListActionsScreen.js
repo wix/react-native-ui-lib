@@ -14,7 +14,7 @@ const listItems = [
 ];
 
 export default class ListActionsScreen extends Component {
-  
+
   keyExtractor = item => item.id;
 
   renderItem = (item, index) => {
@@ -38,6 +38,6 @@ export default class ListActionsScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.dark80,
+    backgroundColor: Colors.grey80,
   }
 });

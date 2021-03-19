@@ -19,7 +19,7 @@ export class Colors {
   /**
    * Load custom set of colors
    * arguments:
-   * colors - map of keys and colors values e.g {dark10: '#20303C', dark20: '#43515C'}
+   * colors - map of keys and colors values e.g {grey10: '#20303C', grey20: '#43515C'}
    */
   loadColors(colors: {[key: string]: string}) {
     _.forEach(colors, (value, key) => {

@@ -35,9 +35,9 @@ class SwitchScreen extends Component {
             width={30}
             height={4}
             thumbSize={12}
-            onColor={Colors.dark20}
-            offColor={Colors.dark60}
-            thumbColor={Colors.dark10}
+            onColor={Colors.grey20}
+            offColor={Colors.grey60}
+            thumbColor={Colors.grey10}
             value={this.state.value4}
             onValueChange={(value4: boolean) => this.setState({value4})}
             style={{marginBottom: 20}}
@@ -57,7 +57,7 @@ class SwitchScreen extends Component {
             />
           </View>
         </View>
-        <Text text40 dark10>
+        <Text text40 grey10>
           Switch
         </Text>
       </View>

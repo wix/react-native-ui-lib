@@ -3,7 +3,7 @@ import React, {PureComponent} from 'react';
 import {Animated, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import {Constants} from '../../helpers';
 import asPanViewConsumer from './asPanViewConsumer';
-import PanningProvider, {PanningDirections, PanningProviderDirection, PanAmountsProps, PanDirectionsProps} from './panningProvider';
+import PanningProvider, {PanningDirections, PanAmountsProps, PanDirectionsProps} from './panningProvider';
 
 export interface DismissibleAnimationProps {
     /**
@@ -30,7 +30,7 @@ export interface PanDismissibleViewProps {
    * The directions of the allowed pan (default allows all directions)
    * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###)
    */
-  directions?: PanningDirections[] | PanningProviderDirection[];
+  directions?: PanningDirections[];
   /**
    * onDismiss callback
    */

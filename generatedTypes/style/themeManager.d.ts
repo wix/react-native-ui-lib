@@ -14,7 +14,6 @@ export declare class ThemeManager {
     forcedTheme: {
         components: Extendable;
     };
-    setTheme(overrides: Dictionary<string>): void;
     getTheme(): {
         primaryColor: string;
         CTA: {

@@ -125,8 +125,8 @@ export default class ListAnimationsScreen extends Component {
 const styles = StyleSheet.create({
   item: {
     paddingHorizontal: 20,
-    backgroundColor: Colors.dark60,
+    backgroundColor: Colors.grey60,
     borderBottomWidth: 2,
-    borderColor: Colors.dark70
+    borderColor: Colors.grey70
   }
 });

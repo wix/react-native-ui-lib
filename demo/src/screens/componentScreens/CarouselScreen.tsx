@@ -26,7 +26,7 @@ const BACKGROUND_COLORS = [
   Colors.yellow20,
   Colors.purple50,
   Colors.green50,
-  Colors.cyan50,
+  Colors.blue50,
   Colors.purple20,
   Colors.blue60,
   Colors.red10,

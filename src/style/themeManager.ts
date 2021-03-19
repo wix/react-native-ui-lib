@@ -8,23 +8,17 @@ export class ThemeManager {
     primaryColor: Colors.primary,
     CTA: {
       textColor: Colors.white,
-      disabledColor: Colors.dark60,
+      disabledColor: Colors.grey60,
       backgroundColor: Colors.primary
     },
-    titleColor: Colors.dark10,
-    subtitleColor: Colors.dark40,
-    dividerColor: Colors.dark70,
+    titleColor: Colors.grey10,
+    subtitleColor: Colors.grey40,
+    dividerColor: Colors.grey70,
     components: {} as Extendable // leave this key and delete the rest on V6
   };
 
   forcedTheme = {
     components: {} as Extendable
-  }
-
-  //TODO: deprecate on V6
-  setTheme(overrides: Dictionary<string>) {
-    console.warn('ThemeManager.setTheme() is deprecated. Please remove usage before next uilib major version update. Consider using ThemeManager.setComponentTheme instead');
-    this.theme = _.merge(this.theme, overrides);
   }
 
   getTheme() {

@@ -26,8 +26,8 @@ export default class WheelPickerViewScreen extends PureComponent {
 
     return (
       <View flex centerH>
-        <Text margin-10 text40 dark10 style={{fontWeight: 'bold'}}>{'Wheel Picker'}</Text>
-        <Text marginB-30 text60 dark10>{`Current Value is: ${selectedValue}`}</Text>
+        <Text margin-10 text40 grey10 style={{fontWeight: 'bold'}}>{'Wheel Picker'}</Text>
+        <Text marginB-30 text60 grey10>{`Current Value is: ${selectedValue}`}</Text>
         <WheelPicker
           selectedValue={selectedValue}
           onValueChange={this.onValueChange}
