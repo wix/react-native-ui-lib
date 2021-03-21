@@ -1,4 +1,5 @@
 import React from 'react';
+import {Appearance} from 'react-native';
 //@ts-ignore
 import hoistStatics from 'hoist-non-react-statics';
 //@ts-ignore
@@ -28,12 +29,24 @@ function asBaseComponent<PROPS, STATICS = {}>(WrappedComponent: React.ComponentT
       error: false
     };
 
+    componentDidMount() {
+      Appearance.addChangeListener(this.appearanceListener);
+    }
+    
+    componentWillUnmount() {
+      Appearance.removeChangeListener(this.appearanceListener);
+    }
+
+    appearanceListener: Appearance.AppearanceListener = ({colorScheme}) => {
+      this.setState({colorScheme});
+    };
+
     static getThemeProps = (props: any, context: any) => {
       return Modifiers.getThemeProps.call(WrappedComponent, props, context);
     };
 
     static getDerivedStateFromError(error: any) {
-      UIComponent.defaultProps?.onError(error, WrappedComponent.defaultProps);
+      UIComponent.defaultProps?.onError?.(error, WrappedComponent.defaultProps);
       return {error: true};
     }
 

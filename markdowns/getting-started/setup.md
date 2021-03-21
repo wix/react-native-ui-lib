@@ -31,26 +31,25 @@ If you're planning on using specific components, see **UILib Packages**.
 
 If you want it all, install **peer dependencies**
 ```
-npm i react-native-gesture-handler react-native-reanimated @react-native-community/blur @react-native-community/datetimepicker @react-native-community/netinfo @react-native-community/picker
+npm i react-native-gesture-handler react-native-reanimated @react-native-community/blur @react-native-community/datetimepicker @react-native-community/netinfo @react-native-picker/picker
 
 cd ios && pod install
 ```
 
 
-## Install Native Dependencies (must)
-If you're planning on using speicific components, see **UILib Packages**.  
+## Install Native Dependencies
+If you're planning on using specific components, see **UILib Packages**.  
 *For some packages you might still need to install one of the native dependencies*
 
-Some of the components are using these native dependencies, they are defined as peer dependencies so you can install the version that suit you.  
+Some of the components are using the following native dependencies, they are defined as peer dependencies so you can install the version that suit you.  
 It's important to run `cd ios && pod install` if you are using a component that has native dependency 
 
-- "react-native-gesture-handler": ">=1.5.0",
-- "react-native-reanimated": ">=1.4.0",
-- "@react-native-community/blur": ">=3.4.1",
-- ~~"react-native-interactable": ">=2.0.0"~~ (No Need in >=V5.0.0)
+- "react-native-gesture-handler": ">=1.9.0" (mandatory)
+- "react-native-reanimated": ">=1.13.2" (mandatory)
+- "@react-native-community/blur": ">=3.4.1" (required for Card component when passing `enableBlur` prop)
 - "@react-native-community/datetimepicker": "^2.1.0"
-- "@react-native-community/netinfo": "^5.6.2"
-- "@react-native-community/picker": "^1.6.5"
+- "@react-native-community/netinfo": "^5.6.2" (required for ConnectionStatusBar component)
+- "@react-native-picker/picker": "^1.9.4" (required for Picker component when passing `useNativePicker` prop)
 
 ## Demo App
 

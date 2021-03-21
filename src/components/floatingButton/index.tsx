@@ -54,6 +54,10 @@ const gradientImage = () => require('./gradient.png');
 class FloatingButton extends PureComponent<FloatingButtonProps> {
   static displayName = 'FloatingButton';
 
+  static defaultProps = {
+    duration: 300
+  };
+
   initialVisibility?: boolean;
   firstLoad: boolean;
   visibleAnimated: Animated.Value;
@@ -67,10 +71,12 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   }
 
   componentDidUpdate(prevProps: FloatingButtonProps) {
-    if (prevProps.visible !== this.props.visible) {
+    const {visible, duration} = this.props;
+
+    if (prevProps.visible !== visible) {
       Animated.timing(this.visibleAnimated, {
-        toValue: Number(!!this.props.visible),
-        duration: 300,
+        toValue: Number(!!visible),
+        duration,
         useNativeDriver: true
       }).start();
     }

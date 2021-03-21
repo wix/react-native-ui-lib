@@ -20,7 +20,7 @@ export default class ComponentTemplate extends Component {
     };
 
     if (component.docblock) {
-      const infoRaw = _.split(component.docblock, '@');
+      const infoRaw = _.split(component.docblock, /(^@|\n@)/);
       _.forEach(infoRaw, statement => {
         const match = splitPattern.exec(statement);
         if (statement && match) {
@@ -102,7 +102,7 @@ export default class ComponentTemplate extends Component {
 
           <ul>
             {_.map(extendLinks, link => (
-              <li className="link">{link}</li>
+              <li className="link" key={link}>{link}</li>
             ))}
           </ul>
 
@@ -135,7 +135,7 @@ export default class ComponentTemplate extends Component {
       return (
         <div className="notes">
           <span className="title">
-            <img src={importantIcon} /> Important
+            <img src={importantIcon} alt="important" /> Important
           </span>
           {_.map(notes, (note, i) => (
             <div key={i}>{note}</div>
@@ -193,7 +193,7 @@ export default class ComponentTemplate extends Component {
               <h2 className="title inline">{selectedComponent.displayName}</h2>
               {_.map(examples, example => {
                 return (
-                  <span className="code-example">
+                  <span key={example} className="code-example">
                     (
                     <a className="inline" target="_blank" rel="noopener noreferrer" href={example}>
                       code example
@@ -249,7 +249,7 @@ const ComponentAPI = ({props, href = ''}) => {
         const isFocused = _.includes(href, `#${prop.name}`);
         const titleClassname = classnames('title', {focused: isFocused});
         return (
-          <div className="prop-info">
+          <div key={prop.name} className="prop-info">
             <a name={prop.name}>
               <h5 className={titleClassname}>{prop.name}</h5>
             </a>
@@ -271,7 +271,7 @@ const TableOfContent = ({props}) => {
 
         {_.map(props, prop => {
           return (
-            <li>
+            <li key={prop.name}>
               <a href={`#${prop.name}`}>{prop.name}</a>
             </li>
           );

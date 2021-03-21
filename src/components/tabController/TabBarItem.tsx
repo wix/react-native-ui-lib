@@ -125,7 +125,7 @@ export default class TabBarItem extends PureComponent<Props> {
 
     if (this.itemWidth) {
       const {index, onLayout} = this.props;
-      onLayout?.({nativeEvent: {layout: {x: 0, y: 0, width: this.itemWidth, height: 0}}}, index);
+      onLayout?.({nativeEvent: {layout: {x: 0, y: 0, width: this.itemWidth, height: 0}}} as LayoutChangeEvent, index);
     }
   }
 
@@ -259,6 +259,7 @@ export default class TabBarItem extends PureComponent<Props> {
         {icon && (
           <Reanimated.Image
             source={icon}
+            // @ts-ignore reanimated2
             style={[!_.isUndefined(label) && styles.tabItemIconWithLabel, this.getIconStyle()]}
           />
         )}

@@ -24,5 +24,15 @@ interface DialogDismissibleProps {
      */
     visible?: boolean;
 }
-declare const _default: React.ComponentClass<DialogDismissibleProps, any>;
-export default _default;
+interface Props extends DialogDismissibleProps {
+    children?: React.ReactNode | React.ReactNode[];
+}
+declare const DialogDismissibleView: {
+    (props: Props): JSX.Element;
+    displayName: string;
+    defaultProps: {
+        direction: PanningDirections;
+        onDismiss: () => void;
+    };
+};
+export default DialogDismissibleView;

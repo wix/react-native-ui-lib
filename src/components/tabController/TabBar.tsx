@@ -16,7 +16,9 @@ import FadedScrollView from './FadedScrollView';
 
 import {useScrollToItem} from '../../hooks';
 
-const {Code, Value, interpolate, block, set} = Reanimated;
+// @ts-expect-error
+const {Code, Value, interpolate: _interpolate, interpolateNode, block, set} = Reanimated;
+const interpolate = interpolateNode || _interpolate;
 
 const DEFAULT_HEIGHT = 48;
 const INDICATOR_INSET = Spacings.s4;
@@ -192,6 +194,7 @@ const TabBar = (props: Props) => {
   const containerWidth: number = useMemo(() => {
     return propsContainerWidth || Constants.screenWidth;
   }, [propsContainerWidth]);
+
   const items = useMemo(() => {
     return contextItems || propsItems;
   }, [contextItems, propsItems]);
@@ -239,6 +242,7 @@ const TabBar = (props: Props) => {
       );
     });
   }, [
+    items,
     labelColor,
     selectedLabelColor,
     labelStyle,
@@ -275,6 +279,7 @@ const TabBar = (props: Props) => {
         });
       });
   }, [
+    propsChildren,
     labelColor,
     selectedLabelColor,
     labelStyle,

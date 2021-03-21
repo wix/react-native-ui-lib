@@ -9,6 +9,7 @@ export interface ColorPickerProps extends DialogProps {
   animatedIndex?: number;
   initialColor?: ColorValue;
   onSubmit?: (selectedColor: ColorValue, textColor: ColorValue) => void;
+  onValueChange?: Function;
 }
 
 export class ColorPicker extends PureBaseComponent<ColorPickerProps> {}
