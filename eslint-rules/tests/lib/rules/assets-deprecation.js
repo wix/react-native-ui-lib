@@ -2,10 +2,9 @@ const RuleTester = require('eslint').RuleTester;
 const rule = require('../../../lib/rules/assets-deprecation');
 const deprecationsJson = require('../../assets_deprecation.json');
 
-
 RuleTester.setDefaultConfig({
   parser: 'babel-eslint',
-  parserOptions: {ecmaVersion: 6, ecmaFeatures: {jsx: true}},
+  parserOptions: {ecmaVersion: 6, ecmaFeatures: {jsx: true}}
 });
 
 const ruleTester = new RuleTester();
@@ -17,9 +16,9 @@ const notOurSource2 = 'another-source-2';
 const options = [{deprecations: deprecationsJson, source: ourSource}];
 const optionsWithDate = [{deprecations: deprecationsJson, source: ourSource, dueDate: '2 November, Friday'}];
 
-const ourImport = `import {Assets} from '${ourSource}';`
-const ourImportRenamed = `import {Assets as UIAssets} from '${ourSource}';`
-const notOurImport = `import {Assets} from '${notOurSource}';`
+const ourImport = `import {Assets} from '${ourSource}';`;
+const ourImportRenamed = `import {Assets as UIAssets} from '${ourSource}';`;
+const notOurImport = `import {Assets} from '${notOurSource}';`;
 
 const constValid1 = 'const assets = Assets.icons.general.valid;';
 const constValidRenamed1 = 'const assets = UIAssets.icons.general.valid;';
@@ -48,9 +47,11 @@ const jsxDeprecated3 = '<View><Button iconSource={Assets.icons.deprecated}/></Vi
 const jsxDeprecatedRenamed3 = '<View><Button iconSource={UIAssets.icons.deprecated}/></View>';
 
 const jsxValid4 = 'const others = {iconSource: Assets.icons.general.valid}; const test = <Button {...others}/>';
-const jsxValidRenamed4 = 'const others = {iconSource: UIAssets.icons.general.valid}; const test = <Button {...others}/>';
+const jsxValidRenamed4 =
+  'const others = {iconSource: UIAssets.icons.general.valid}; const test = <Button {...others}/>';
 const jsxDeprecated4 = 'const others = {iconSource: Assets.icons.deprecated}; const test = <Button {...others}/>';
-const jsxDeprecatedRenamed4 = 'const others = {iconSource: UIAssets.icons.deprecated}; const test = <Button {...others}/>';
+const jsxDeprecatedRenamed4 =
+  'const others = {iconSource: UIAssets.icons.deprecated}; const test = <Button {...others}/>';
 
 const fullClassValid = `
 ${ourImport}
@@ -204,106 +205,114 @@ class Example extends React.Component {
 
 export default Example;`;
 
-const error = "'Assets.icons.deprecated' is deprecated. Please use 'Assets.icons.general.valid' instead (fix is available).";
+const error =
+  "'Assets.icons.deprecated' is deprecated. Please use 'Assets.icons.general.valid' instead (fix is available).";
 const errorDate = ' Please fix this issue by 2 November, Friday!';
 
 ruleTester.run('assets-deprecation', rule, {
   valid: [
     {
       options: options,
-      code: `${notOurImport} ${constDeprecated1}`,
+      code: `${notOurImport} ${constDeprecated1}`
     },
     {
       options: options,
-      code: `${ourImport} ${constValid1}`,
+      code: `${ourImport} ${constValid1}`
     },
     {
       options: options,
-      code: `${ourImport} ${constValid2}`,
+      code: `${ourImport} ${constValid2}`
     },
     {
       options: options,
-      code: `${ourImport} ${jsxValid1} ${jsx1}`,
+      code: `${ourImport} ${jsxValid1} ${jsx1}`
     },
     {
       options: options,
-      code: `${ourImport} ${jsxValid2}`,
+      code: `${ourImport} ${jsxValid2}`
     },
     {
       options: options,
-      code: `${ourImport} ${jsxValid3}`,
+      code: `${ourImport} ${jsxValid3}`
     },
     {
       options: options,
-      code: `${ourImport} ${jsxValid4}`,
+      code: `${ourImport} ${jsxValid4}`
     },
     {
       options: options,
-      code: `${fullClassValid}`,
+      code: `${fullClassValid}`
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${constValidRenamed1}`,
+      code: `${ourImportRenamed} ${constValidRenamed1}`
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${constValidRenamed2}`,
+      code: `${ourImportRenamed} ${constValidRenamed2}`
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${jsxValidRenamed1} ${jsx1}`,
+      code: `${ourImportRenamed} ${jsxValidRenamed1} ${jsx1}`
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${jsxValidRenamed2}`,
+      code: `${ourImportRenamed} ${jsxValidRenamed2}`
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${jsxValidRenamed3}`,
+      code: `${ourImportRenamed} ${jsxValidRenamed3}`
     },
     {
       options: options,
-      code: `${ourImportRenamed} ${jsxValidRenamed4}`,
+      code: `${ourImportRenamed} ${jsxValidRenamed4}`
     },
     {
       options: options,
-      code: `${fullClassValidRenamed}`,
+      code: `${fullClassValidRenamed}`
     }
   ],
   invalid: [
     {
       options: options,
       code: `${ourImport} ${constDeprecated1}`,
+      output: `${ourImport} const assets = Assets.icons.general.valid;`,
       errors: [{message: error}]
     },
     {
       options: optionsWithDate,
       code: `${ourImport} ${constDeprecated1}`,
+      output: `${ourImport} const assets = Assets.icons.general.valid;`,
       errors: [{message: error + errorDate}]
     },
     {
       options: optionsWithDate,
       code: `${ourImport} ${constDeprecated2}`,
+      output: `${ourImport} const assets = <Button iconSource={Assets.icons.general.valid}/>;`,
       errors: [{message: error + errorDate}]
     },
     {
       options: options,
       code: `${ourImport} ${jsxDeprecated1} ${jsx1}`,
+      output: `${ourImport} const others = {iconSource: Assets.icons.general.valid}; ${jsx1}`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImport} ${jsxDeprecated2}`,
+      output: `${ourImport} <Button iconSource={Assets.icons.general.valid}/>`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImport} ${jsxDeprecated3}`,
+      output: `${ourImport} <View><Button iconSource={Assets.icons.general.valid}/></View>`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImport} ${jsxDeprecated4}`,
+      output: `${ourImport} const others = {iconSource: Assets.icons.general.valid}; const test = <Button {...others}/>`,
       errors: [{message: error}]
     },
     {
@@ -314,6 +323,7 @@ ruleTester.run('assets-deprecation', rule, {
     {
       options: options,
       code: `${ourImportRenamed} ${constDeprecatedRenamed1}`,
+      output: `${ourImportRenamed} const assets = UIAssets.icons.general.valid;`,
       errors: [{message: error}]
     },
     {
@@ -404,37 +414,37 @@ const props = {
   icon: Assets.icons['deprecated']
 };`,
       errors: [{message: error}]
-    },
-// TODO: ¯\_(ツ)_/¯
-//     {
-//       options: options,
-//       code: `
-// ${ourImport}
+    }
+    // TODO: ¯\_(ツ)_/¯
+    //     {
+    //       options: options,
+    //       code: `
+    // ${ourImport}
 
-// const data = 'deprecated';
-// const props = {
-//   title: 'title',
-//   subtitle: 'subtitle',
-//   icon: Assets.icons[data]
-// };`,
-//       errors: [{message: error}]
-//     },
-//     {
-//       options: options,
-//       code: `
-// ${ourImport}
+    // const data = 'deprecated';
+    // const props = {
+    //   title: 'title',
+    //   subtitle: 'subtitle',
+    //   icon: Assets.icons[data]
+    // };`,
+    //       errors: [{message: error}]
+    //     },
+    //     {
+    //       options: options,
+    //       code: `
+    // ${ourImport}
 
-// function getAsset() {
-//   const result = 'deprecated';
-//   return result;
-// }
+    // function getAsset() {
+    //   const result = 'deprecated';
+    //   return result;
+    // }
 
-// const props = {
-//   title: 'title',
-//   subtitle: 'subtitle',
-//   icon: Assets.icons[getAsset()]
-// };`,
-//       errors: [{message: error}]
-//     }
-  ],
+    // const props = {
+    //   title: 'title',
+    //   subtitle: 'subtitle',
+    //   icon: Assets.icons[getAsset()]
+    // };`,
+    //       errors: [{message: error}]
+    //     }
+  ]
 });

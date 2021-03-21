@@ -2,7 +2,8 @@
 import React, {PureComponent} from 'react';
 import {processColor, StyleSheet, LayoutChangeEvent} from 'react-native';
 import _ from 'lodash';
-import Reanimated, {Easing} from 'react-native-reanimated';
+// @ts-expect-error
+import Reanimated, {Easing as _Easing, EasingNode} from 'react-native-reanimated';
 import {TapGestureHandler, LongPressGestureHandler, State, LongPressGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../commons/new';
 import {ViewProps} from '../components/view';
@@ -15,7 +16,9 @@ const {
   or,
   eq,
   neq,
-  interpolate,
+  interpolate: _interpolate,
+  // @ts-expect-error
+  interpolateNode,
   Extrapolate,
   Value,
   call,
@@ -26,6 +29,9 @@ const {
   startClock,
   stopClock
 } = Reanimated;
+
+const Easing = EasingNode || _Easing;
+const interpolate = interpolateNode || _interpolate;
 
 export type TouchableOpacityProps = {
   /**

@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const utils = require('../utils');
+const utils = require('../utils_old');
 
 const MAP_SCHEMA = {
   type: 'object',
