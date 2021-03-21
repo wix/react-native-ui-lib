@@ -132,6 +132,7 @@ declare const colorObject: Colors & {
     violet80: string;
     white: string;
     black: string;
+    transparent: string;
 } & {
     primary: string;
 };

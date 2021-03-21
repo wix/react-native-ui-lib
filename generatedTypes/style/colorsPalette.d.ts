@@ -81,6 +81,7 @@ declare const colorsPalette: {
     violet80: string;
     white: string;
     black: string;
+    transparent: string;
 };
 declare const extraFixColorsMap: {
     black: string;
