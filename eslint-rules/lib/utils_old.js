@@ -56,7 +56,10 @@ function findValueNodeOfIdentifier(identifierName, scope) {
       }
     }
   });
-  return valueNode;
+  if (scope.upper === null) {
+    return valueNode;
+  }
+  return valueNode || findValueNodeOfIdentifier(identifierName, scope.upper);
 }
 
 function getLocalImportSpecifier(node, source, defaultImportName) {
@@ -98,6 +101,16 @@ function getComponentName(node) {
   return nodeProperty ? (nodeName + '.' + nodeProperty) : nodeName;
 }
 
+function getPathPrefix(str) {
+  const index = str.indexOf('.');
+  return index === -1 ? str : str.substring(0, index);
+}
+
+function getPathSuffix(str) {
+  const index = str.indexOf('.');
+  return index === -1 ? undefined : str.substring(index + 1);
+}
+
 module.exports = {
   isPropFont,
   findAndReportHardCodedValues,
@@ -107,5 +120,7 @@ module.exports = {
   findValueNodeOfIdentifier,
   getLocalImportSpecifier,
   getSpecifierIndex,
-  getComponentName
+  getComponentName,
+  getPathPrefix,
+  getPathSuffix
 };
