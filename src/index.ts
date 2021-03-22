@@ -30,6 +30,10 @@ export {default as TouchableOpacity, TouchableOpacityProps} from './components/t
 export {default as Button, ButtonPropTypes, ButtonProps, ButtonSize, ButtonAnimationDirection} from './components/button';
 export {default as Checkbox, CheckboxPropTypes, CheckboxProps} from './components/checkbox';
 export {default as Chip, ChipPropTypes, ChipProps} from './components/chip';
+export {default as ColorPicker, ColorPickerProps} from './components/colorPicker';
+export {default as ColorPickerDialog, ColorPickerDialogProps} from './components/colorPicker/ColorPickerDialog';
+export {default as ColorPalette, ColorPaletteProps} from './components/colorPicker/ColorPalette';
+export {default as ColorSwatch, ColorSwatchProps} from './components/colorPicker/ColorSwatch';
 export {default as FloatingButton, FloatingButtonProps} from './components/floatingButton';
 export {default as Image, ImageProps} from './components/image';
 export {default as Overlay, OverlayTypes} from './components/overlay';
@@ -67,5 +71,5 @@ export {
   PickerProps, ProgressBar, Slider, GradientSlider, ColorSliderGroup, Stepper,
   TagsInput, SharedTransition, StackAggregator, Toast, WheelPickerDialog, Assets,
   BaseComponent, PureBaseComponent, UIComponent, forwardRef, AvatarHelper,
-  LogService, LoaderScreen, StateScreen, WheelPicker, WheelPickerProps, ColorPicker
+  LogService, LoaderScreen, StateScreen, WheelPicker, WheelPickerProps
 } from '../typings';

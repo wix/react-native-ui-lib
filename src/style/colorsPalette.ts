@@ -92,7 +92,7 @@ const colorsPalette = {
   // WHITE,
   white: '#FFFFFF',
   black: '#000000',
-  transparent: '#transparent'
+  transparent: 'transparent'
 };
 
 // For Eslint --fix

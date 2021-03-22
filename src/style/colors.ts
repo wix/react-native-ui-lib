@@ -7,7 +7,12 @@ import {colorsPalette, themeColors} from './colorsPalette';
 import ColorName from './colorName';
 
 type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
-
+export type hsla = {
+  h: number,
+  s: number,
+  l: number,
+  a: number
+}
 export class Colors {
   [key: string]: any;
   schemes: Schemes = {light: {}, dark: {}};
@@ -176,8 +181,8 @@ export class Colors {
   getHSL(color: string) {
     return tinycolor(color).toHsl();
   }
-  isTransparent(color: string) {
-    return _.toUpper(color) === _.toUpper('transparent');
+  isTransparent(color?: string) {
+    return color && _.toUpper(color) === _.toUpper('transparent');
   }
   areEqual(colorA: string, colorB: string) {
     return _.toLower(colorA) === _.toLower(colorB);
@@ -230,7 +235,7 @@ function validateHex(value: string) {
   return value;
 }
 
-function threeDigitHexToSix(value: string) { 
+function threeDigitHexToSix(value: string) {
   return value.replace(/./g, '$&$&');
 }
 

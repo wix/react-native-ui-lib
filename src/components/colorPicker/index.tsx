@@ -1,16 +1,52 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import ColorPalette from './ColorPalette';
 import {SWATCH_MARGIN, SWATCH_SIZE} from './ColorSwatch';
-import {asBaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import Assets from '../../assets';
 import {Colors} from '../../style';
 import View from '../view';
 import Button from '../button';
-import ColorPickerDialog from './ColorPickerDialog';
+import ColorPickerDialog, {ColorPickerDialogProps} from './ColorPickerDialog';
 
+
+interface Props extends ColorPickerDialogProps {
+  /**
+   * Array of colors for the picker's color palette (hex values)
+   */
+  colors: string[];
+  /**
+   * The value of the selected swatch // TODO: rename prop 'selectedValue'
+   */
+  value?: string;
+  /**
+   * The index of the item to animate at first render (default is last)
+   */
+  animatedIndex?: number;
+  /**
+   * onValueChange callback for the picker's color palette change
+   */
+  onValueChange?: (value: string, options: object) => void;
+  /**
+   * Accessibility labels as an object of strings, ex.
+   * {
+   *  addButton: 'add custom color using hex code',
+   *  dismissButton: 'dismiss',
+   *  doneButton: 'done',
+   *  input: 'custom hex color code'
+   * }
+   */
+  accessibilityLabels: {
+    addButton?: string,
+    dismissButton?: string,
+    doneButton?: string,
+    input?: string
+  };
+  style?: StyleProp<ViewStyle>;
+  testID?: string;
+}
+export type ColorPickerProps = Props;
 
 const ACCESSIBILITY_LABELS = {
   addButton: 'add custom color using hex code',
@@ -24,55 +60,16 @@ const ACCESSIBILITY_LABELS = {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.js
  * @notes: This is a screen width component
  */
-class ColorPicker extends PureComponent {
+class ColorPicker extends PureComponent<Props> {
   static displayName = 'ColorPicker';
-
-  static propTypes = {
-    ...ColorPickerDialog.PropTypes,
-    /**
-     * Array of colors for the picker's color palette (hex values)
-     */
-    colors: PropTypes.arrayOf(PropTypes.string),
-    /**
-     * The value of the selected swatch // TODO: rename prop 'selectedValue'
-     */
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    /**
-     * The index of the item to animate at first render (default is last)
-     */
-    animatedIndex: PropTypes.number,
-    /**
-     * onValueChange callback for the picker's color palette change
-     */
-    onValueChange: PropTypes.func,
-    /**
-     * Accessibility labels as an object of strings, ex.
-     * {
-     *  addButton: 'add custom color using hex code',
-     *  dismissButton: 'dismiss',
-     *  doneButton: 'done',
-     *  input: 'custom hex color code'
-     * }
-     */
-    accessibilityLabels: PropTypes.shape({
-      addButton: PropTypes.string,
-      dismissButton: PropTypes.string,
-      doneButton: PropTypes.string,
-      input: PropTypes.string
-    })
-  };
 
   static defaultProps = {
     accessibilityLabels: ACCESSIBILITY_LABELS
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      show: false
-    };
-  }
+  state = {
+    show: false
+  };
 
   get animatedIndex() {
     const {animatedIndex, colors} = this.props;
@@ -134,12 +131,12 @@ class ColorPicker extends PureComponent {
   }
 
   // ColorPalette
-  onValueChange = (value, options) => {
+  onValueChange = (value: string, options: object) => {
     _.invoke(this.props, 'onValueChange', value, options);
   };
 }
 
-export default asBaseComponent(ColorPicker);
+export default asBaseComponent<Props>(ColorPicker);
 
 
 const plusButtonContainerWidth = SWATCH_SIZE + 20 + 12;

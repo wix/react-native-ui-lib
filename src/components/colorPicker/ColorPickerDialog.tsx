@@ -1,19 +1,67 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
-import {LayoutAnimation, StyleSheet, Keyboard, TextInput, PixelRatio, I18nManager} from 'react-native';
+import {
+  LayoutAnimation,
+  StyleSheet,
+  Keyboard,
+  TextInput,
+  PixelRatio,
+  I18nManager,
+  StyleProp,
+  ViewStyle,
+  EmitterSubscription
+} from 'react-native';
 import {Constants} from '../../helpers';
-import {asBaseComponent} from '../../commons';
+import {asBaseComponent} from '../../commons/new';
 import Assets from '../../assets';
 import {Colors, Typography} from '../../style';
 import View from '../view';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
-import Dialog from '../dialog';
+import Dialog, {DialogProps} from '../dialog';
 import Button from '../button';
+//@ts-expect-error
 import ColorSliderGroup from '../slider/ColorSliderGroup';
 import PanningProvider from '../panningViews/panningProvider';
 
+interface Props extends DialogProps {
+  /**
+   * The initial color to pass the picker dialog
+   */
+  initialColor?: string;
+  /**
+   * onSubmit callback for the picker dialog color change
+   */
+  onSubmit?: () => void;
+  /**
+   * Props to pass the Dialog component // TODO: deprecate 'dialogProps' prop
+   */
+  dialogProps?: object;
+  /**
+   * Additional styling for the color preview text.
+   */
+  previewInputStyle?: StyleProp<ViewStyle>;
+  /**
+   * Accessibility labels as an object of strings, ex. {addButton: 'add custom color using hex code', dismissButton: 'dismiss', doneButton: 'done', input: 'custom hex color code'}
+   */
+  /**
+   * Ok (v) button color
+   */
+  buttonColor?: string,
+  accessibilityLabels?: {
+    dismissButton?: string,
+    doneButton?: string,
+    input?: string
+  };
+}
+export type ColorPickerDialogProps = Props;
+
+interface State {
+  keyboardHeight: number,
+  color: any,
+  text?: string,
+  valid: boolean
+}
 
 const KEYBOARD_HEIGHT = 216;
 
@@ -22,45 +70,17 @@ const KEYBOARD_HEIGHT = 216;
  * @extends: Dialog
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.js
  */
-class ColorPickerDialog extends PureComponent {
+class ColorPickerDialog extends PureComponent<Props, State> {
   static displayName = 'ColorPickerDialog';
-
-  static propTypes = {
-    ...Dialog.PropTypes,
-    /**
-     * The initial color to pass the picker dialog
-     */
-    initialColor: PropTypes.string,
-    /**
-     * onSubmit callback for the picker dialog color change
-     */
-    onSubmit: PropTypes.func,
-    /**
-     * Props to pass the Dialog component // TODO: deprecate 'dialogProps' prop
-     */
-    dialogProps: PropTypes.object,
-    /**
-     * Additional styling for the color preview text.
-     */
-    previewInputStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * Accessibility labels as an object of strings, ex. {addButton: 'add custom color using hex code', dismissButton: 'dismiss', doneButton: 'done', input: 'custom hex color code'}
-     */
-    accessibilityLabels: PropTypes.shape({
-      dismissButton: PropTypes.string,
-      doneButton: PropTypes.string,
-      input: PropTypes.string
-    })
-  };
 
   static defaultProps = {
     initialColor: Colors.dark80
   };
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
-    const color = Colors.getHSL(props.initialColor);
+    const color = props.initialColor && Colors.getHSL(props.initialColor);
     const text = this.getColorValue(props.initialColor);
     const {valid} = this.getValidColorString(text);
 
@@ -72,6 +92,12 @@ class ColorPickerDialog extends PureComponent {
     };
   }
 
+  textInput: React.RefObject<TextInput> = React.createRef();
+  //@ts-ignore
+  private keyboardDidShowListener: EmitterSubscription;
+  //@ts-ignore
+  private keyboardDidHideListener: EmitterSubscription;
+
   componentDidMount() {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow);
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide);
@@ -82,7 +108,7 @@ class ColorPickerDialog extends PureComponent {
     this.keyboardDidHideListener.remove();
   }
 
-  keyboardDidShow = e => {
+  keyboardDidShow = (e: any) => {
     if (Constants.isIOS && this.state.keyboardHeight !== e.endCoordinates.height) {
       this.setState({keyboardHeight: e.endCoordinates.height});
     }
@@ -99,27 +125,27 @@ class ColorPickerDialog extends PureComponent {
   };
 
   setFocus = () => {
-    if (this.textInput) {
-      this.textInput.focus();
+    if (this.textInput && this.textInput.current) {
+      this.textInput.current.focus();
     }
   };
 
-  changeHeight(height) {
+  changeHeight(height: number) {
     if (Constants.isAndroid && this.state.keyboardHeight !== height) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       this.setState({keyboardHeight: height});
     }
   }
 
-  getColorValue(color) {
-    if (!_.isString(color)) {
+  getColorValue(color?: string) {
+    if (!color) {
       return;
     }
     return color.replace('#', '');
   }
 
-  getHexColor(text) {
-    if (text && !Colors.isTransparent(text)) {
+  getHexColor(text: string) {
+    if (!Colors.isTransparent(text)) {
       const trimmed = text.replace(/\s+/g, '');
       const hex = `#${trimmed}`;
       return hex;
@@ -127,24 +153,26 @@ class ColorPickerDialog extends PureComponent {
     return text;
   }
 
-  getHexString(color) {
+  getHexString(color: string) {
     return _.toUpper(Colors.getHexString(color));
   }
 
-  getTextColor(color) {
+  getTextColor(color: string) {
     return Colors.isDark(color) ? Colors.white : Colors.dark10;
   }
 
-  getValidColorString(text) {
-    const hex = this.getHexColor(text);
+  getValidColorString(text?: string) {
+    if (text) {
+      const hex = this.getHexColor(text);
 
-    if (Colors.isValidHex(hex)) {
-      return {hex, valid: true};
+      if (Colors.isValidHex(hex)) {
+        return {hex, valid: true};
+      }
     }
     return {undefined, valid: false};
   }
 
-  applyColor = (text) => {
+  applyColor = (text: string) => {
     const {hex, valid} = this.getValidColorString(text);
 
     if (hex) {
@@ -154,15 +182,16 @@ class ColorPickerDialog extends PureComponent {
     }
   };
 
-  updateColor(color) {
+  updateColor(color: string) {
     const hex = this.getHexString(color);
     const text = this.getColorValue(hex);
     this.setState({color, text, valid: true});
   }
 
   resetValues() {
-    const color = Colors.getHSL(this.props.initialColor);
-    const text = this.getColorValue(this.props.initialColor);
+    const {initialColor} = this.props;
+    const color = initialColor && Colors.getHSL(initialColor);
+    const text = this.getColorValue(initialColor);
     const {valid} = this.getValidColorString(text);
 
     this.setState({
@@ -172,12 +201,11 @@ class ColorPickerDialog extends PureComponent {
     });
   }
 
-  onSliderValueChange = color => {
-    const c = Colors.getHSL(color);
-    this.updateColor(c);
+  onSliderValueChange = (color: string) => {
+    this.updateColor(color);
   };
 
-  onChangeText = value => {
+  onChangeText = (value: string) => {
     this.applyColor(value);
   };
 
@@ -197,7 +225,7 @@ class ColorPickerDialog extends PureComponent {
   };
 
   renderHeader() {
-    const {useCustomTheme, accessibilityLabels} = this.props;
+    const {buttonColor, accessibilityLabels} = this.props;
     const {valid} = this.state;
 
     return (
@@ -207,15 +235,15 @@ class ColorPickerDialog extends PureComponent {
           iconSource={Assets.icons.x}
           iconStyle={{tintColor: Colors.dark10}}
           onPress={this.onDismiss}
-          accessibilityLabel={accessibilityLabels.dismissButton}
+          accessibilityLabel={_.get(accessibilityLabels, 'dismissButton')}
         />
         <Button
-          useCustomTheme={useCustomTheme}
+          color={buttonColor}
           disabled={!valid}
           link
           iconSource={Assets.icons.check}
           onPress={this.onDonePressed}
-          accessibilityLabel={accessibilityLabels.doneButton}
+          accessibilityLabel={_.get(accessibilityLabels, 'doneButton')}
         />
       </View>
     );
@@ -264,27 +292,30 @@ class ColorPickerDialog extends PureComponent {
               #
             </Text>
             <TextInput
-              ref={r => (this.textInput = r)}
+              ref={this.textInput}
               value={value}
               maxLength={6}
               numberOfLines={1}
               onChangeText={this.onChangeText}
               style={[
                 styles.input,
-                {color: textColor, width: (value.length + 1) * 16.5 * fontScale},
+                {
+                  color: textColor,
+                  width: value ? (value.length + 1) * 16.5 * fontScale : undefined
+                },
                 Constants.isAndroid && {padding: 0},
                 previewInputStyle
               ]}
               selectionColor={textColor}
               underlineColorAndroid="transparent"
               autoCorrect={false}
-              autoComplete={'off'}
+              autoCompleteType={'off'}
               autoCapitalize={'characters'}
               // keyboardType={'numbers-and-punctuation'} // doesn't work with `autoCapitalize`
               returnKeyType={'done'}
               enablesReturnKeyAutomatically
               onFocus={this.onFocus}
-              accessibilityLabel={accessibilityLabels.input}
+              accessibilityLabel={_.get(accessibilityLabels, 'input')}
             />
           </View>
           <View style={[{backgroundColor: textColor}, styles.underline]}/>
@@ -300,7 +331,7 @@ class ColorPickerDialog extends PureComponent {
       <Dialog
         visible={visible} //TODO: pass all Dialog props instead
         width="100%"
-        height={null}
+        height={undefined}
         bottom
         centerH
         onDismiss={this.onDismiss}
@@ -322,7 +353,7 @@ class ColorPickerDialog extends PureComponent {
   }
 }
 
-export default asBaseComponent(ColorPickerDialog);
+export default asBaseComponent<Props>(ColorPickerDialog);
 
 
 const BORDER_RADIUS = 12;
