@@ -106,7 +106,7 @@ class ColorSwatch extends PureComponent<Props> {
 
   onPress = () => {
     const {color, value, index} = this.props;
-    const tintColor = this.getTintColor(value);
+    const tintColor = value && this.getTintColor(value);
     _.invoke(this.props, 'onPress', value || color, {tintColor, index});
   };
 

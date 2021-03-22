@@ -8,12 +8,6 @@ declare type Schemes = {
         [key: string]: string;
     };
 };
-export declare type hsla = {
-    h: number;
-    s: number;
-    l: number;
-    a: number;
-};
 export declare class Colors {
     [key: string]: any;
     schemes: Schemes;
@@ -113,14 +107,6 @@ declare const colorObject: Colors & {
     orange70: string;
     orange80: string;
     red10: string;
-    /**
-     * Add alpha to hex or rgb color
-     * arguments:
-     * p1 - hex color / R part of RGB
-     * p2 - opacity / G part of RGB
-     * p3 - B part of RGB
-     * p4 - opacity
-     */
     red20: string;
     red30: string;
     red40: string;

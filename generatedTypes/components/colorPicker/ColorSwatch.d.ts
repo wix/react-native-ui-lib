@@ -5,7 +5,7 @@ interface Props {
      * The identifier value of the ColorSwatch in a ColorSwatch palette.
      * Must be different than other ColorSwatches in the same group
      */
-    value: string;
+    value?: string;
     /**
      * The color of the ColorSwatch
      */
