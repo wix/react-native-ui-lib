@@ -13,6 +13,32 @@
     ]
   },
   {
+    "components": ["MediaItem"],
+    "propNames": ["label.avatar", "label.avatarProps"],
+    "shape": [
+      {
+        "prop": "imageSource",
+        "message": "Please use 'source' instead (fix is available).",
+        "fix": {
+          "propName": "source"
+        }
+      }
+    ]
+  },
+  {
+    "components": ["ChipList"],
+    "propNames": ["chips.label.avatar", "chips.label.avatarProps"],
+    "shape": [
+      {
+        "prop": "imageSource",
+        "message": "Please use 'source' instead (fix is available).",
+        "fix": {
+          "propName": "source"
+        }
+      }
+    ]
+  },
+  {
     "components": ["Dialog"],
     "propNames": ["pannableHeaderProps"],
     "shape": [
