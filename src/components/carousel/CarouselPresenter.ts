@@ -1,9 +1,11 @@
+import React, {ReactNode} from 'react';
 import _ from 'lodash';
 import {CarouselProps, CarouselState} from './types';
 
-export function getChildrenLength(props: CarouselProps): number {
-  const length = _.get(props, 'children.length') || 0;
-  return length;
+type PropsWithChildren = CarouselProps & { children?: ReactNode }
+
+export function getChildrenLength(props: PropsWithChildren): number {
+  return React.Children.count(props.children);
 }
 
 export function calcOffset(props: CarouselProps, state: Omit<CarouselState, 'initialOffset' | 'prevProps'>) {
