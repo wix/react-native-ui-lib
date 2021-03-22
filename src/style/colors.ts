@@ -7,12 +7,7 @@ import {colorsPalette, themeColors} from './colorsPalette';
 import ColorName from './colorName';
 
 type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
-export type hsla = {
-  h: number,
-  s: number,
-  l: number,
-  a: number
-}
+
 export class Colors {
   [key: string]: any;
   schemes: Schemes = {light: {}, dark: {}};
