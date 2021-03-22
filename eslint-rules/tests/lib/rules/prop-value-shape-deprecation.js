@@ -194,7 +194,11 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
     {
       options: ruleOptions,
       code: bigExampleError,
-      errors: [{message: `The shape of 'pannableHeaderProps' prop of 'Dialog' doesn't contain 'title' anymore. Please use 'header' instead (fix is available).`}]
+      errors: [
+        {
+          message: `The shape of 'pannableHeaderProps' prop of 'Dialog' doesn't contain 'title' anymore. Please use 'header' instead (fix is available).`
+        }
+      ]
     },
     {
       options: ruleOptions,
@@ -213,7 +217,11 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
         };
 
       <Label goodProp={'goodValue'} {...myProps1} {...myProps2}/>`,
-      errors: [{message: `The shape of 'avatarProps' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`}]
+      errors: [
+        {
+          message: `The shape of 'avatarProps' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+        }
+      ]
     },
     {
       options: ruleOptions,
@@ -232,7 +240,11 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
         };
 
       <Label goodProp={'goodValue'} {...myProps1} {...myProps2}/>`,
-      errors: [{message: `The shape of 'avatarProps' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`}]
+      errors: [
+        {
+          message: `The shape of 'avatarProps' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+        }
+      ]
     },
     {
       options: ruleOptions,
@@ -263,6 +275,188 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
           )
         };
       }`
+    },
+    {
+      options: ruleOptions,
+      code: `import React, {Component} from 'react';
+        import {MediaItem} from 'our-source';
+        class NewFeature extends Component {
+          render () {
+            return (
+              <MediaItem title={'Best title ever'} label={{avatarProps: {${imageSource}}}}/>
+            )
+          };
+        }`,
+      errors: [
+        {
+          message: `The shape of 'label.avatarProps' prop of 'MediaItem' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+        }
+      ],
+      output: `import React, {Component} from 'react';
+        import {MediaItem} from 'our-source';
+        class NewFeature extends Component {
+          render () {
+            return (
+              <MediaItem title={'Best title ever'} label={{avatarProps: {${source}}}}/>
+            )
+          };
+        }`
+    },
+    {
+      options: ruleOptions,
+      code: `import React, {Component} from 'react';
+        import {ChipList} from 'our-source';
+        class NewFeature extends Component {
+          render () {
+            return (
+              <ChipList title={'Best title ever'} chips={[{label: {avatarProps: {${imageSource}}}}]}/>
+            )
+          };
+        }`,
+      errors: [
+        {
+          message: `The shape of 'chips.label.avatarProps' prop of 'ChipList' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+        }
+      ],
+      output: `import React, {Component} from 'react';
+        import {ChipList} from 'our-source';
+        class NewFeature extends Component {
+          render () {
+            return (
+              <ChipList title={'Best title ever'} chips={[{label: {avatarProps: {${source}}}}]}/>
+            )
+          };
+        }`
+    },
+    {
+      options: ruleOptions,
+      code: `import React, {Component} from 'react';
+        import {MediaItem} from 'our-source';
+        class NewFeature extends Component {
+          render () {
+            const labelProps = {
+              avatarProps: {${imageSource}}
+            };
+            return (
+              <MediaItem title={'Best title ever'} label={labelProps}/>
+            )
+          };
+        }`,
+      errors: [
+        {
+          message: `The shape of 'label.avatarProps' prop of 'MediaItem' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+        }
+      ],
+      output: `import React, {Component} from 'react';
+        import {MediaItem} from 'our-source';
+        class NewFeature extends Component {
+          render () {
+            const labelProps = {
+              avatarProps: {${source}}
+            };
+            return (
+              <MediaItem title={'Best title ever'} label={labelProps}/>
+            )
+          };
+        }`
+    },
+    {
+      options: ruleOptions,
+      code: `import React, {Component} from 'react';
+        import {MediaItem} from 'our-source';
+        const labelProps = {
+          avatarProps: {${imageSource}}
+        };
+        class NewFeature extends Component {
+          render () {
+            return (
+              <MediaItem title={'Best title ever'} label={labelProps}/>
+            )
+          };
+        }`,
+      errors: [
+        {
+          message: `The shape of 'label.avatarProps' prop of 'MediaItem' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+        }
+      ],
+      output: `import React, {Component} from 'react';
+        import {MediaItem} from 'our-source';
+        const labelProps = {
+          avatarProps: {${source}}
+        };
+        class NewFeature extends Component {
+          render () {
+            return (
+              <MediaItem title={'Best title ever'} label={labelProps}/>
+            )
+          };
+        }`
+    },
+    {
+      options: ruleOptions,
+      code: `import React, {Component} from 'react';
+        import {MediaItem} from 'our-source';
+        const labelProps = {
+          avatarProps: {${imageSource}}
+        };
+        class NewFeature extends Component {
+          render () {
+            return (
+              <MediaItem title={'Best title ever'} label={{...labelProps, anotherProp: val}}/>
+            )
+          };
+        }`,
+      errors: [
+        {
+          message: `The shape of 'label.avatarProps' prop of 'MediaItem' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+        }
+      ],
+      output: `import React, {Component} from 'react';
+        import {MediaItem} from 'our-source';
+        const labelProps = {
+          avatarProps: {${source}}
+        };
+        class NewFeature extends Component {
+          render () {
+            return (
+              <MediaItem title={'Best title ever'} label={{...labelProps, anotherProp: val}}/>
+            )
+          };
+        }`
+    },
+    {
+      options: ruleOptions,
+      code: `import React, {Component} from 'react';
+        import {MediaItem} from 'our-source';
+        const imageProp = {
+          propA: 'valueA',
+          ${imageSource}
+        };
+        class NewFeature extends Component {
+          render () {
+            return (
+              <MediaItem title={'Best title ever'} label={{avatar: imageProp}}/>
+            )
+          };
+        }`,
+      errors: [
+        {
+          message: `The shape of 'label.avatar' prop of 'MediaItem' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
+        }
+      ],
+      output: `import React, {Component} from 'react';
+        import {MediaItem} from 'our-source';
+        const imageProp = {
+          propA: 'valueA',
+          ${source}
+        };
+        class NewFeature extends Component {
+          render () {
+            return (
+              <MediaItem title={'Best title ever'} label={{avatar: imageProp}}/>
+            )
+          };
+        }`
     },
     {
       options: ruleOptions,
