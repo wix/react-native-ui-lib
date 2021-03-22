@@ -91,7 +91,8 @@ const colorsPalette = {
   violet80: '#F0EEFF',
   // WHITE,
   white: '#FFFFFF',
-  black: '#000000'
+  black: '#000000',
+  transparent: '#transparent'
 };
 
 // For Eslint --fix
