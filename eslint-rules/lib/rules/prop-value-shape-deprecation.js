@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const {findValueNodeOfIdentifier, getComponentName, getPathPrefix, getPathSuffix} = require('../utils_old');
+const {findValueNodeOfIdentifier} = require('../utils');
 
 const MAP_SCHEMA = {
   type: 'object',
@@ -129,6 +129,22 @@ module.exports = {
         });
       }
     }
+
+    function getComponentName(node) {
+      const nodeProperty = _.get(node, 'name.property.name');
+      const nodeName = nodeProperty ? _.get(node, 'name.object.name') : _.get(node, 'name.name');
+      return nodeProperty ? (nodeName + '.' + nodeProperty) : nodeName;
+    }
+
+    function getPathPrefix(str) {
+      const index = str.indexOf('.');
+      return index === -1 ? str : str.substring(0, index);
+    }
+    
+    function getPathSuffix(str) {
+      const index = str.indexOf('.');
+      return index === -1 ? undefined : str.substring(index + 1);
+    }    
 
     function checkAttributeProperties(attributeProperties, attributeName, deprecation, node) {
       for (let i = 0; i < attributeProperties.length; i++) {

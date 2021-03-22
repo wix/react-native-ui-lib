@@ -96,7 +96,7 @@ module.exports = {
       if (attribute.type === 'JSXAttribute') {
         checkPropDeprecation(attribute, attribute.name, attribute.name.name, deprecatedPropList, componentName);
       } else if (attribute.type === 'JSXSpreadAttribute') {
-        const spreadSource = findValueNodeOfIdentifier(attribute.argument.name, context);
+        const spreadSource = findValueNodeOfIdentifier(attribute.argument.name, context.getScope());
         if (spreadSource) {
           _.forEach(spreadSource.properties, property => {
             const key = _.get(property, 'key');
