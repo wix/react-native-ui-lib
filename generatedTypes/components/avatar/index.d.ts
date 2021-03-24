@@ -14,6 +14,29 @@ export declare enum BadgePosition {
     BOTTOM_RIGHT = "BOTTOM_RIGHT",
     BOTTOM_LEFT = "BOTTOM_LEFT"
 }
+export declare type NameToColorProps = {
+    /**
+     * Hash the name (or label) to get a color, so each name will have a specific color.
+     * Default is false.
+     */
+    useHashBackgroundColor: boolean;
+    /**
+     * Avatar colors to be used when useHashBackgroundColor is true
+     */
+    avatarColors?: string[];
+    /**
+     * Replace the default hashing function (name -> number)
+     */
+    hashFunction?: (name?: string) => number;
+    /**
+     * Background color in cases where the getBackgroundColor returns undefined.
+     */
+    defaultColor?: string;
+    /**
+     * Replace the default logic.
+     */
+    getBackgroundColor?: (name?: string, avatarColors?: string[], hashFunction?: (name?: string) => number, defaultColor?: string) => string;
+};
 export declare type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
     /**
      * Adds fade in animation when Avatar image loads
@@ -63,6 +86,20 @@ export declare type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'>
      * fails (equiv. to Image.onError()).
      */
     onImageLoadError?: ImagePropsBase['onError'];
+    /**
+     * The name of the avatar user.
+     * Text initials will be generated from the name.
+     * Has lower priority than label.
+     */
+    name?: string;
+    /**
+     * Override the logic for creating initials of the user name (default from AvatarHelper)
+     */
+    getInitials?: (name?: string, limit?: number) => string;
+    /**
+     * Send this to use the name to infer a backgroundColor
+     */
+    nameToColorProps?: NameToColorProps;
     /**
      * Label that can represent initials
      */
@@ -125,7 +162,6 @@ declare class Avatar extends PureComponent<AvatarProps> {
     static badgePosition: typeof BadgePosition;
     static defaultProps: {
         animate: boolean;
-        backgroundColor: string;
         size: number;
         labelColor: string;
         badgePosition: BadgePosition;
@@ -141,6 +177,10 @@ declare class Avatar extends PureComponent<AvatarProps> {
     renderBadge(): JSX.Element | undefined;
     renderRibbon(): JSX.Element | undefined;
     renderImage(): JSX.Element | undefined;
+    getText: (this: any, label: any, name: any, getInitials: any) => any;
+    get text(): any;
+    getBackgroundColor: (this: any, text: any, useHashBackgroundColor: any, avatarColors: any, hashFunction: any, defaultColor: any, getBackgroundColor: any) => any;
+    get backgroundColor(): any;
     render(): JSX.Element;
 }
 declare function createStyles(props: AvatarProps): {
@@ -211,6 +251,20 @@ declare const _default: React.ComponentClass<Pick<AccessibilityProps, "accessibi
      * fails (equiv. to Image.onError()).
      */
     onImageLoadError?: ((error: import("react-native").NativeSyntheticEvent<import("react-native").ImageErrorEventData>) => void) | undefined;
+    /**
+     * The name of the avatar user.
+     * Text initials will be generated from the name.
+     * Has lower priority than label.
+     */
+    name?: string | undefined;
+    /**
+     * Override the logic for creating initials of the user name (default from AvatarHelper)
+     */
+    getInitials?: ((name?: string | undefined, limit?: number | undefined) => string) | undefined;
+    /**
+     * Send this to use the name to infer a backgroundColor
+     */
+    nameToColorProps?: NameToColorProps | undefined;
     /**
      * Label that can represent initials
      */
