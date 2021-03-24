@@ -7,9 +7,10 @@ class SegmentedControlScreen extends Component {
     return (
       <View flex bottom padding-20>
         <View flex center>
-          <SegmentedControl leftLabel={'Left'} rightLabel={'Right'}/>
-          <SegmentedControl style={styles.container} leftLabel={'Very Long Label'} rightLabel={'Short'}/>
-          <SegmentedControl style={styles.container} leftLabel={'Custom'} rightLabel={'Color'} color={Colors.red30}/>
+          <SegmentedControl labels={['Right', 'Left']}/>
+          <SegmentedControl style={styles.container} labels={['One', 'Two', 'Three', 'Four', 'Five']}/>
+          <SegmentedControl style={styles.container} labels={['Very Very Long Label', 'Short']}/>
+          <SegmentedControl style={styles.container} labels={['Custom', 'Color']} color={Colors.red30}/>
         </View>
         <Text text40 dark10>
           Segmented Control

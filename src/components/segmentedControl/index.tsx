@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {Colors, BorderRadiuses, Spacings} from '../../style';
@@ -8,13 +9,9 @@ import Text from '../text';
 
 export type SegmentedControlProps = {
   /**
-   * The label of the left segment.
+   * Array on segment labels.
    */
-  leftLabel?: string;
-  /**
-   * The label of the right segment.
-   */
-  rightLabel?: string;
+  labels?: string[];
   /**
    * The color of the active segment.
    */
@@ -30,40 +27,39 @@ class SegmentedControl extends Component<SegmentedControlProps> {
   static displayName = 'SegmentedControl';
 
   state = {
-    isLeftActive: true
+    selectedSegment: 0
   };
 
-  onPressRight() {
-    return this.setState({isLeftActive: false});
-  }
+  onSegmentPress = (index: number) => {
+    return this.setState({selectedSegment: index});
+  };
 
-  onPressLeft() {
-    return this.setState({isLeftActive: true});
-  }
+  renderSegment = (index: number) => {
+    const {selectedSegment} = this.state;
+    const {color, labels} = this.props;
 
-  render() {
-    const {leftLabel, rightLabel, color, style} = this.props;
-    const {isLeftActive} = this.state;
-    
-    const activeColor = color || Colors.primary;
-
-    const rightSegmentStyle = isLeftActive ? styles.inActiveSegment : [styles.activeSegment, {borderColor: activeColor}];
-    const leftSegmentStyle = isLeftActive ? [styles.activeSegment, {borderColor: activeColor}] : styles.inActiveSegment;
-    const rightColor = isLeftActive ? Colors.grey20 : activeColor;
-    const leftColor = isLeftActive ? activeColor : Colors.grey20;
-    
+    const isSelected = selectedSegment === index;
+    const segmentedColor = isSelected ? color || Colors.primary : Colors.grey20;
+    const segmentStyle = isSelected ? [styles.SelectedSegment, {borderColor: segmentedColor}] : styles.segment;
 
     return (
+      <TouchableOpacity style={segmentStyle} onPress={() => this.onSegmentPress(index)}>
+        <Text text90 numberOfLines={1} color={segmentedColor}>
+          {labels?.[index]}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
 
+  render() {
+    const {style, labels} = this.props;
+
+    return (
       <View center row style={[styles.container, style]}>
-        <TouchableOpacity style={leftSegmentStyle} onPress={() => this.onPressLeft()}>
-          <Text text90 numberOfLines={1} color={leftColor}>{leftLabel}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={rightSegmentStyle} onPress={() => this.onPressRight()}>
-          <Text text90 numberOfLines={1} color={rightColor}>{rightLabel}</Text>
-        </TouchableOpacity>
+        {_.map(labels, (_value, index) => {
+          return this.renderSegment(index);
+        })}
       </View>
-
     );
   }
 }
@@ -75,9 +71,8 @@ const styles = StyleSheet.create({
     height: Spacings.s7,
     borderColor: Colors.grey60,
     borderWidth: 1
-
   },
-  activeSegment: {
+  SelectedSegment: {
     borderRadius: BorderRadiuses.br100,
     borderWidth: 1,
     height: Spacings.s7,
@@ -85,7 +80,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     justifyContent: 'center'
   },
-  inActiveSegment: {
+  segment: {
     paddingHorizontal: Spacings.s3
   }
 });
