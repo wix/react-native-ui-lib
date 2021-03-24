@@ -33,7 +33,7 @@ declare type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps &
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
  * @extends: Text
- * @extendslink: https://facebook.github.io/react-native/docs/text.html
+ * @extendsLink: https://facebook.github.io/react-native/docs/text.html
  * @modifiers: margins, color, typography
  */
 declare class Text extends PureComponent<PropsTypes> {
