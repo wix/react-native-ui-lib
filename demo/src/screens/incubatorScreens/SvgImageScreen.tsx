@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Image, View, Text} from 'react-native-ui-lib';
+import {Image, View, Text, Assets} from 'react-native-ui-lib';
 // @ts-ignore
 import {renderBooleanOption, renderRadioGroup} from '../ExampleScreenPresenter';
-const file = require('../../../../uilib-docs/src/images/newDesign/headerLogo.svg').default;
+const file = Assets.svgs.demo.logo;
 const xml = `
   <svg width="32" height="32" viewBox="0 0 32 32">
     <path
