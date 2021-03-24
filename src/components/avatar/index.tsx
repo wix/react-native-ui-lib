@@ -11,6 +11,7 @@ import {
   TextStyle,
   AccessibilityProps
 } from 'react-native';
+import memoize from 'memoize-one';
 import {Colors} from '../../style';
 import {forwardRef, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
@@ -21,6 +22,7 @@ import Text from '../text';
 import Image, {ImageProps} from '../image';
 // @ts-ignore
 import AnimatedImage from '../animatedImage';
+import * as AvatarHelper from '../../helpers/AvatarHelper';
 
 const deprecatedProps = [
   {old: 'isOnline', new: 'badgeProps.backgroundColor'},
@@ -43,6 +45,35 @@ export enum BadgePosition {
 }
 
 const DEFAULT_BADGE_SIZE = 'pimpleBig';
+
+export type NameToColorProps = {
+  /**
+   * Hash the name (or label) to get a color, so each name will have a specific color.
+   * Default is false.
+   */
+  useHashBackgroundColor: boolean;
+  /**
+   * Avatar colors to be used when useHashBackgroundColor is true
+   */
+  avatarColors?: string[];
+  /**
+   * Replace the default hashing function (name -> number)
+   */
+  hashFunction?: (name?: string) => number;
+  /**
+   * Background color in cases where the getBackgroundColor returns undefined.
+   */
+  defaultColor?: string;
+  /**
+   * Replace the default logic.
+   */
+  getBackgroundColor?: (
+    name?: string,
+    avatarColors?: string[],
+    hashFunction?: (name?: string) => number,
+    defaultColor?: string
+  ) => string;
+};
 
 export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
   /**
@@ -93,6 +124,20 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
    * fails (equiv. to Image.onError()).
    */
   onImageLoadError?: ImagePropsBase['onError'];
+  /**
+   * The name of the avatar user.
+   * Text initials will be generated from the name.
+   * Has lower priority than label.
+   */
+  name?: string;
+  /**
+   * Override the logic for creating initials of the user name (default from AvatarHelper)
+   */
+  getInitials?: (name?: string, limit?: number) => string;
+  /**
+   * Send this to use the name to infer a backgroundColor
+   */
+  nameToColorProps?: NameToColorProps;
   /**
    * Label that can represent initials
    */
@@ -169,7 +214,6 @@ class Avatar extends PureComponent<AvatarProps> {
 
   static defaultProps = {
     animate: false,
-    backgroundColor: Colors.dark80,
     size: 50,
     labelColor: Colors.dark10,
     badgePosition: BadgePosition.TOP_RIGHT
@@ -318,14 +362,61 @@ class Avatar extends PureComponent<AvatarProps> {
     }
   }
 
+  getText = memoize((label, name, getInitials) => {
+    let text = label;
+    if (_.isUndefined(label) && !_.isUndefined(name) && !_.isUndefined(getInitials)) {
+      text = getInitials(name);
+    }
+
+    return text;
+  });
+
+  get text() {
+    const {label, name, getInitials = AvatarHelper.getInitials} = this.props;
+    return this.getText(label, name, getInitials);
+  }
+
+  getBackgroundColor = memoize((text,
+    useHashBackgroundColor,
+    avatarColors,
+    hashFunction,
+    defaultColor = Colors.dark80,
+    // eslint-disable-next-line max-params
+    getBackgroundColor) => {
+    if (useHashBackgroundColor) {
+      return getBackgroundColor(text, avatarColors, hashFunction, defaultColor);
+    } else {
+      return defaultColor;
+    }
+  });
+
+  get backgroundColor() {
+    const {backgroundColor, nameToColorProps, name} = this.props;
+    if (backgroundColor) {
+      return backgroundColor;
+    }
+
+    const {
+      useHashBackgroundColor,
+      avatarColors = AvatarHelper.getAvatarColors(),
+      hashFunction = AvatarHelper.hashStringToNumber,
+      defaultColor,
+      getBackgroundColor = AvatarHelper.getBackgroundColor
+    } = nameToColorProps || {};
+    return this.getBackgroundColor(name,
+      useHashBackgroundColor,
+      avatarColors,
+      hashFunction,
+      defaultColor,
+      getBackgroundColor);
+  }
+
   render() {
     const {
-      label,
       labelColor: color,
       source,
       //@ts-ignore
       imageSource,
-      backgroundColor,
       onPress,
       containerStyle,
       children,
@@ -338,6 +429,7 @@ class Avatar extends PureComponent<AvatarProps> {
     const hasImage = !_.isUndefined(imageSource) || !_.isUndefined(source);
     const fontSizeToImageSizeRatio = 0.32;
     const fontSize = size * fontSizeToImageSizeRatio;
+    const text = this.text;
 
     return (
       <Container
@@ -351,11 +443,15 @@ class Avatar extends PureComponent<AvatarProps> {
         {...extractAccessibilityProps(this.props)}
       >
         <View
-          style={[this.getInitialsContainer(), {backgroundColor}, hasImage && this.styles.initialsContainerWithInset]}
+          style={[
+            this.getInitialsContainer(),
+            {backgroundColor: this.backgroundColor},
+            hasImage && this.styles.initialsContainerWithInset
+          ]}
         >
-          {!_.isUndefined(label) && (
+          {!_.isUndefined(text) && (
             <Text numberOfLines={1} style={[{fontSize}, this.styles.initials, {color}]} testID={`${testID}.label`}>
-              {label}
+              {text}
             </Text>
           )}
         </View>
