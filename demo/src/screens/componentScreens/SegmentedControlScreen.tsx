@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {StyleSheet, Alert} from 'react-native';
-import {Text, View, Colors, SegmentedControl} from 'react-native-ui-lib';
+import {StyleSheet} from 'react-native';
+import {Text, View, Colors, SegmentedControl} from 'react-native-ui-lib'; 
 
 class SegmentedControlScreen extends Component {
 
   onChangeIndex = (segment: string, index: number) => {
-    Alert.alert('Index ' + index + ' of the ' + segment + ' segmentedControl was pressed!');
+    console.warn('Index ' + index + ' of the ' + segment + ' segmentedControl was pressed');
   }
 
   render() {
