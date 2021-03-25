@@ -9,6 +9,10 @@ export declare type SegmentedControlProps = {
      * The color of the active segment.
      */
     color?: string;
+    /**
+     * Callback for when index has change.
+     */
+    onChangeIndex?: (index: number) => void;
     style?: StyleProp<ViewStyle>;
     testID?: string;
 };

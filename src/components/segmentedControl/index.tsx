@@ -16,6 +16,10 @@ export type SegmentedControlProps = {
    * The color of the active segment.
    */
   color?: string;
+  /**
+   * Callback for when index has change.
+   */
+  onChangeIndex?: (index: number) => void;
   style?: StyleProp<ViewStyle>;
   testID?: string;
 };
@@ -31,7 +35,10 @@ class SegmentedControl extends Component<SegmentedControlProps> {
   };
 
   onSegmentPress = (index: number) => {
-    return this.setState({selectedSegment: index});
+    if (this.state.selectedSegment !== index) {
+      this.props.onChangeIndex?.(index);
+      return this.setState({selectedSegment: index});
+    }
   };
 
   renderSegment = (index: number) => {
@@ -43,7 +50,7 @@ class SegmentedControl extends Component<SegmentedControlProps> {
     const segmentStyle = isSelected ? [styles.SelectedSegment, {borderColor: segmentedColor}] : styles.segment;
 
     return (
-      <TouchableOpacity style={segmentStyle} onPress={() => this.onSegmentPress(index)}>
+      <TouchableOpacity key={index} style={segmentStyle} onPress={() => this.onSegmentPress(index)}>
         <Text text90 numberOfLines={1} color={segmentedColor}>
           {labels?.[index]}
         </Text>
