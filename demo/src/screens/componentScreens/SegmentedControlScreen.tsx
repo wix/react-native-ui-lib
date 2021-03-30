@@ -13,7 +13,7 @@ class SegmentedControlScreen extends Component {
       <View flex bottom padding-20>
         <View flex center>
           <SegmentedControl onChangeIndex={(index: number) => this.onChangeIndex('first', index)} labels={['Left', 'Right']}/>
-          <SegmentedControl onChangeIndex={(index: number) => this.onChangeIndex('second', index)} style={styles.container} labels={['One', 'Two', 'Three', 'Four', 'Five']}/>
+          <SegmentedControl onChangeIndex={(index: number) => this.onChangeIndex('second', index)} style={styles.container} labels={['1', '2', '3', '4', '5']} initialIndex={2}/>
           <SegmentedControl onChangeIndex={(index: number) => this.onChangeIndex('third', index)} style={styles.container} labels={['Very Very Long Label', 'Short']}/>
           <SegmentedControl onChangeIndex={(index: number) => this.onChangeIndex('forth', index)} style={styles.container} labels={['Custom', 'Color']} color={Colors.red30}/>
         </View>

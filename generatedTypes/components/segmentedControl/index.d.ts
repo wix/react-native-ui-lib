@@ -13,6 +13,10 @@ export declare type SegmentedControlProps = {
      * Callback for when index has change.
      */
     onChangeIndex?: (index: number) => void;
+    /**
+     * Initial index to be active.
+     */
+    initialIndex?: number;
     style?: StyleProp<ViewStyle>;
     testID?: string;
 };

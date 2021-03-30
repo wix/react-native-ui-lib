@@ -1,11 +1,13 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
+import Reanimated, {Easing} from 'react-native-reanimated';
 import {Colors, BorderRadiuses, Spacings} from '../../style';
 import {asBaseComponent} from '../../commons/new';
-import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
-import Text from '../text';
+import Segment from './segment';
+
+const BORDER_WIDTH = 1;
 
 export type SegmentedControlProps = {
   /**
@@ -20,51 +22,95 @@ export type SegmentedControlProps = {
    * Callback for when index has change.
    */
   onChangeIndex?: (index: number) => void;
+  /**
+   * Initial index to be active.
+   */
+  initialIndex?: number;
   style?: StyleProp<ViewStyle>;
   testID?: string;
 };
 
 /**
- * SegmentedControl component for toggling two values
+ * @description: SegmentedControl component for toggling two values or more
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SegmentedControlScreen.tsx
  */
 class SegmentedControl extends Component<SegmentedControlProps> {
   static displayName = 'SegmentedControl';
+  static defaultProps = {
+    color: Colors.primary,
+    initialIndex: 0
+  };
 
   state = {
-    selectedSegment: 0
+    selectedSegment: this.props.initialIndex
   };
+
+  segments: {width: number; x: number}[] = [];
+  segmentsCounter = 0;
+  animatedValue = new Reanimated.Value(this.state.selectedSegment);
 
   onSegmentPress = (index: number) => {
     if (this.state.selectedSegment !== index) {
       this.props.onChangeIndex?.(index);
-      return this.setState({selectedSegment: index});
+      this.updateSelectedSegment(index);
     }
   };
 
-  renderSegment = (index: number) => {
-    const {selectedSegment} = this.state;
-    const {color, labels} = this.props;
+  updateSelectedSegment = (index: number) => {
+    Reanimated.timing(this.animatedValue, {
+      toValue: index,
+      duration: 300,
+      easing: Easing.bezier(0.33, 1, 0.68, 1)
+    }).start();
 
-    const isSelected = selectedSegment === index;
-    const segmentedColor = isSelected ? color || Colors.primary : Colors.grey20;
-    const segmentStyle = isSelected ? [styles.SelectedSegment, {borderColor: segmentedColor}] : styles.segment;
+    return this.setState({selectedSegment: index});
+  };
+
+  onLayout = (index: number, event: LayoutChangeEvent) => {
+    const {x, width} = event.nativeEvent.layout;
+    this.segments[index] = {x, width};
+    this.segmentsCounter++;
 
     return (
-      <TouchableOpacity key={index} style={segmentStyle} onPress={() => this.onSegmentPress(index)}>
-        <Text text90 numberOfLines={1} color={segmentedColor}>
-          {labels?.[index]}
-        </Text>
-      </TouchableOpacity>
+      this.segmentsCounter === this.props.labels?.length && this.setState({selectedSegment: this.props.initialIndex})
     );
   };
 
+  getAnimatedStyle = () => {
+    if (this.segmentsCounter === this.props.labels?.length) {
+      const left = this.animatedValue.interpolate({
+        inputRange: _.times(this.segmentsCounter),
+        outputRange: _.map(this.segments, segment => segment.x - BORDER_WIDTH)
+      });
+
+      const width = this.animatedValue.interpolate({
+        inputRange: _.times(this.segmentsCounter),
+        outputRange: _.map(this.segments, segment => segment.width)
+      });
+
+      return {width, left};
+    }
+    return undefined;
+  };
+
   render() {
-    const {style, labels} = this.props;
+    const {style, labels, color} = this.props;
+    const animatedStyle = this.getAnimatedStyle();
 
     return (
-      <View center row style={[styles.container, style]}>
+      <View row center style={[styles.container, style]}>
+        {animatedStyle && <Reanimated.View style={[styles.selectedSegment, animatedStyle, {borderColor: color}]}/>}
         {_.map(labels, (_value, index) => {
-          return this.renderSegment(index);
+          return (
+            <Segment
+              segmentOnLayout={this.onLayout}
+              index={index}
+              onPress={index => this.onSegmentPress(index)}
+              label={labels?.[index]}
+              isSelected={this.state.selectedSegment === index}
+              color={color}
+            />
+          );
         })}
       </View>
     );
@@ -77,15 +123,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.grey80,
     height: Spacings.s7,
     borderColor: Colors.grey60,
-    borderWidth: 1
+    borderWidth: BORDER_WIDTH
   },
-  SelectedSegment: {
+  selectedSegment: {
+    height: Spacings.s7 - 2 * BORDER_WIDTH,
+    position: 'absolute',
+    borderWidth: BORDER_WIDTH,
     borderRadius: BorderRadiuses.br100,
-    borderWidth: 1,
-    height: Spacings.s7,
-    paddingHorizontal: Spacings.s3,
-    backgroundColor: Colors.white,
-    justifyContent: 'center'
+    backgroundColor: Colors.white
   },
   segment: {
     paddingHorizontal: Spacings.s3
