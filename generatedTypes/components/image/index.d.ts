@@ -57,7 +57,7 @@ declare type State = {
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
  * @extends: Image
- * @extendslink: https://facebook.github.io/react-native/docs/image.html
+ * @extendsLink: https://facebook.github.io/react-native/docs/image.html
  */
 declare class Image extends PureComponent<Props, State> {
     static displayName: string;
@@ -132,5 +132,5 @@ declare const _default: React.ComponentClass<RNImageProps & Partial<Record<"marg
     errorSource?: number | import("react-native").ImageURISource | import("react-native").ImageURISource[] | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
-}, any>;
+}, any> & typeof Image;
 export default _default;

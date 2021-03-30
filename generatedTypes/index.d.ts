@@ -99,6 +99,7 @@ export {
   WheelPickerProps,
   ColorPicker,
   Picker,
+  PickerItemValue,
   PickerProps
 } from '../typings';
 

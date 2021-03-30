@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleProp, TextStyle, ImageSourcePropType } from 'react-native';
+import { ViewProps } from '../../components/view';
 import { ButtonProps } from '../../components/button';
 export interface ModalTopBarProps {
     /**
@@ -46,6 +47,10 @@ export interface ModalTopBarProps {
      * whether to include status bar or not (height claculations)
      */
     includeStatusBar?: boolean;
+    /**
+     * style for the TopBar container
+     */
+    containerStyle?: ViewProps['style'];
 }
 declare const _default: React.ComponentClass<ModalTopBarProps & {
     useCustomTheme?: boolean | undefined;

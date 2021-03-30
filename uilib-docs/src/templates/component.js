@@ -20,7 +20,7 @@ export default class ComponentTemplate extends Component {
     };
 
     if (component.docblock) {
-      const infoRaw = _.split(component.docblock, '@');
+      const infoRaw = _.split(component.docblock, /(^@|\n@)/);
       _.forEach(infoRaw, statement => {
         const match = splitPattern.exec(statement);
         if (statement && match) {
@@ -50,7 +50,7 @@ export default class ComponentTemplate extends Component {
 
       return (
         <span className="inline" key={component}>
-          {!extendedComponent && componentInfo.extendsLink ? (
+          {extendedComponent && componentInfo.extendsLink ? (
             <a href={componentInfo.extendsLink} rel="noopener noreferrer" target="_blank">
               {text}
             </a>

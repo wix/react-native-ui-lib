@@ -76,7 +76,7 @@ type State = {
 /**
  * @description: Image wrapper with extra functionality like source transform and assets support
  * @extends: Image
- * @extendslink: https://facebook.github.io/react-native/docs/image.html
+ * @extendsLink: https://facebook.github.io/react-native/docs/image.html
  */
 class Image extends PureComponent<Props, State> {
   static displayName = 'Image';
@@ -213,4 +213,4 @@ const styles = StyleSheet.create({
 
 hoistNonReactStatic(Image, RNImage);
 export {Image};
-export default asBaseComponent<ImageProps>(Image);
+export default asBaseComponent<ImageProps, typeof Image>(Image);

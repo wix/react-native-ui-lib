@@ -24,7 +24,7 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
     /**
      * the badge size (default, small)
      */
-    size: BadgeSizes | number;
+    size?: BadgeSizes | number;
     /**
      * Press handler
      */
@@ -84,17 +84,15 @@ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
 /**
  * @description: Round colored badge, typically used to show a number
  * @extends: Animatable.View
- * @extendslink: https://github.com/oblador/react-native-animatable
+ * @extendsLink: https://github.com/oblador/react-native-animatable
  * @image: https://user-images.githubusercontent.com/33805983/34480753-df7a868a-efb6-11e7-9072-80f5c110a4f3.png
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.tsx
  */
 declare class Badge extends PureComponent<BadgeProps> {
     styles: ReturnType<typeof createStyles>;
     static displayName: string;
-    static defaultProps: {
-        size: string;
-    };
     constructor(props: BadgeProps);
+    get size(): number | "small" | "default" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "large";
     getAccessibilityProps(): {
         accessible: boolean;
         accessibilityRole: string;
@@ -359,7 +357,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
     /**
      * the badge size (default, small)
      */
-    size: number | "small" | "default" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "large";
+    size?: number | "small" | "default" | "pimpleSmall" | "pimpleBig" | "pimpleHuge" | "large" | undefined;
     /**
      * Press handler
      */

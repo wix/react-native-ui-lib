@@ -11,6 +11,10 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifier
      */
     animated?: boolean;
     /**
+      * Use Animate.View (from react-native-reanimated) as a container
+     */
+    reanimated?: boolean;
+    /**
      * Turn off accessibility for this view and its nested children
      */
     inaccessible?: boolean;
@@ -34,8 +38,6 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifier
 }
 export declare type ViewPropTypes = ViewProps;
 declare const _default: React.ComponentClass<ViewProps & {
-    useCustomTheme?: boolean | undefined; /**
-     * Use Animate.View as a container
-     */
+    useCustomTheme?: boolean | undefined;
 }, any>;
 export default _default;

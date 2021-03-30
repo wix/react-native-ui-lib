@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const utils = require('../utils');
+const {findValueNodeOfIdentifier, getComponentName, getPathPrefix, getPathSuffix} = require('../utils_old');
 
 const MAP_SCHEMA = {
   type: 'object',
@@ -52,7 +52,7 @@ module.exports = {
   },
   create(context) {
     function reportPropValueShapeDeprecation(propKey, prop, deprecation, node) {
-      const componentName = utils.getComponentName(node);
+      const componentName = getComponentName(node);
       const newProp = _.get(deprecation, 'fix.propName');
       const fixMessage = _.get(deprecation, 'message') ? ' ' + _.get(deprecation, 'message') : '';
       const message = `The shape of '${prop}' prop of '${componentName}' doesn't contain '${deprecation.prop}' anymore.${fixMessage}`;
@@ -70,24 +70,13 @@ module.exports = {
     function testJSXAttributes(node) {
       try {
         const {deprecations} = _.get(context, 'options[0]');
-        const componentName = utils.getComponentName(node);
+        const componentName = getComponentName(node);
         _.forEach(deprecations, deprecation => {
           if (_.includes(deprecation.components, componentName)) {
             _.forEach(node.attributes, attribute => {
-              const attributeName = _.get(attribute, 'name.name');
-              if (attribute.type === 'JSXSpreadAttribute') {
-                const spreadSource = utils.findValueNodeOfIdentifier(attribute.argument.name, context.getScope());
-                const spreadSourceName = _.get(spreadSource, 'properties[0].key.name');
-                checkAttributeProperties(
-                  spreadSource.properties[0].value.properties,
-                  spreadSourceName,
-                  deprecation,
-                  node,
-                  context
-                );
-              } else if (_.includes(deprecation.propNames, attributeName)) {
-                checkAttribute(attribute, deprecation, node);
-              }
+              _.forEach(deprecation.propNames, deprecationProp => {
+                recursiveDeprecation(attribute, deprecationProp, deprecation, deprecationProp, node);
+              });
             });
           }
         });
@@ -96,34 +85,58 @@ module.exports = {
       }
     }
 
-    function checkAttribute(attribute, deprecation, node) {
-      const attributeName = _.get(attribute, 'name.name');
-      const attributeType = _.get(attribute, 'value.expression.type');
-      if (attributeType === 'Identifier') {
-        const passedProp = utils.findValueNodeOfIdentifier(attribute.value.expression.name, context.getScope());
-        if (passedProp && passedProp.properties) {
-          checkAttributeProperties(passedProp.properties, attributeName, deprecation, node, context);
+    function recursiveDeprecation(attribute, deprecationProp, deprecation, deprecationPath, node) {
+      const deprecationPrefix = getPathPrefix(deprecationProp);
+      const deprecationSuffix = getPathSuffix(deprecationProp);
+      let passedProps;
+      let attributeName = _.get(attribute, 'name.name') || _.get(attribute, 'key.name');
+      if (attribute.type === 'JSXSpreadAttribute' || attribute.type === 'ExperimentalSpreadProperty') {
+        const spreadSource = findValueNodeOfIdentifier(attribute.argument.name, context.getScope());
+        const spreadSourceName = _.get(spreadSource, 'properties[0].key.name');
+        if (deprecationPrefix === spreadSourceName) {
+          checkAttributeProperties(spreadSource.properties[0].value.properties, deprecationPath, deprecation, node);
         }
-      }
-      const attributeProps = _.get(attribute, 'value.expression.properties');
-      for (let index = 0; index < attributeProps.length; index++) {
-        const spreadElementType = _.get(attribute, `value.expression.properties[${index}].type`);
-        if (attributeType === 'ObjectExpression' && spreadElementType === 'ExperimentalSpreadProperty') {
-          const spreadSource = utils.findValueNodeOfIdentifier(
-            attribute.value.expression.properties[index].argument.name,
-            context.getScope()
-          );
-          if (spreadSource && spreadSource.properties) {
-            checkAttributeProperties(spreadSource.properties, attributeName, deprecation, node);
-          }
+      } else if (!deprecationSuffix && deprecationPrefix === attributeName) {
+        const attributeType = _.get(attribute, 'value.expression.type') || _.get(attribute, 'type');
+        if (attributeType === 'Identifier') {
+          const passedPropsName = _.get(attribute, 'value.expression.name');
+          passedProps = findValueNodeOfIdentifier(passedPropsName, context.getScope());
         }
+        let attributeProperties = passedProps
+          ? _.get(passedProps, 'properties')
+          : attributeType === 'Property'
+          ? _.get(attribute, 'value.properties')
+          : _.get(attribute, 'value.expression.properties');
+        if (attributeType === 'Property' && !attributeProperties) {
+          const passedPropsName = _.get(attribute, 'value.name');
+          passedProps = findValueNodeOfIdentifier(passedPropsName, context.getScope());
+          attributeProperties = passedProps.properties;
+        }
+        checkAttributeProperties(attributeProperties, deprecationPath, deprecation, node);
+      } else if (deprecationSuffix) {
+        const attributeType = _.get(attribute, 'value.expression.type');
+        if (attributeType === 'Identifier') {
+          const passedPropsName = _.get(attribute, 'value.expression.name');
+          passedProps = findValueNodeOfIdentifier(passedPropsName, context.getScope());
+        }
+        const attributeProperties = passedProps
+          ? _.get(passedProps, 'properties')
+          : _.get(attribute, 'value.expression.properties') ||
+            _.get(attribute, 'value.properties') ||
+            _.get(attribute, 'value.expression.elements[0].properties');
+        _.forEach(attributeProperties, attributeProperty => {
+          recursiveDeprecation(attributeProperty, deprecationSuffix, deprecation, deprecationPath, node);
+        });
       }
-      const attributeProperties = _.get(attribute, 'value.expression.properties');
-      checkAttributeProperties(attributeProperties, attributeName, deprecation, node);
     }
 
     function checkAttributeProperties(attributeProperties, attributeName, deprecation, node) {
-      for (let i = 0; i <= attributeProperties.length; i++) {
+      for (let i = 0; i < attributeProperties.length; i++) {
+        const propertyType = _.get(attributeProperties[i], 'type');
+        if (propertyType === 'ExperimentalSpreadProperty') {
+          const spreadProps = findValueNodeOfIdentifier(attributeProperties[i].argument.name, context.getScope());
+          checkAttributeProperties(spreadProps.properties, attributeName, deprecation, node);
+        }
         const propertyName = _.get(attributeProperties[i], 'key.name');
         const origin = propertyName && _.find(deprecation.shape, ['prop', propertyName]);
         if (origin && origin.prop && propertyName === origin.prop) {

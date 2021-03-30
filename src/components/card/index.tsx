@@ -107,10 +107,11 @@ type State = {
  * @description: Card component
  * @extends: TouchableOpacity
  * @extendsnotes: (Touchable when passing onPress)
- * @extendslink: docs/TouchableOpacity
+ * @extendsLink: docs/TouchableOpacity
  * @modifiers: margin, padding
  * @gif: https://media.giphy.com/media/l0HU9SKWmv0VTOYMM/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardsScreen.tsx
+ * @notes: 'enableBlur' prop requires installing the '@react-native-community/blur' native library
  */
 class Card extends PureComponent<PropTypes, State> {
   static displayName = 'Card';

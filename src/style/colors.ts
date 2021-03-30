@@ -6,8 +6,11 @@ import {colorsPalette, themeColors} from './colorsPalette';
 //@ts-ignore
 import ColorName from './colorName';
 
+type Schemes = {light: {[key: string]: string}; dark: {[key: string]: string}};
+
 export class Colors {
   [key: string]: any;
+  schemes: Schemes = {light: {}, dark: {}};
 
   constructor() {
     const colors = Object.assign(colorsPalette, themeColors);
@@ -22,6 +25,22 @@ export class Colors {
     _.forEach(colors, (value, key) => {
       this[key] = value;
     });
+  }
+  /**
+   * Load set of schemes for light/dark mode
+   * arguments:
+   * schemes - two sets of map of colors e.g {light: {screen: 'white'}, dark: {screen: 'black'}}
+   */
+  loadSchemes(schemes: Schemes) {
+    const lightSchemeKeys = Object.keys(schemes.light);
+    const darkSchemeKeys = Object.keys(schemes.dark);
+
+    const missingKeys = _.xor(lightSchemeKeys, darkSchemeKeys);
+    if (!_.isEmpty(missingKeys)) {
+      console.error(`There is a mismatch in scheme keys: ${missingKeys.join(', ')}`);
+    }
+
+    this.schemes = schemes;
   }
 
   /**
