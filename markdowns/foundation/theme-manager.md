@@ -15,7 +15,7 @@ The default value will be overridden if a prop is being passed to the component 
 
 Example
 
-```
+```js
 import {ThemeManager} from 'react-native-ui-lib';
 
 ThemeManager.setComponentTheme('Text', {
@@ -39,7 +39,7 @@ Same as `setComponentTheme` only it can't be overridden by props passed to the c
 
 Example
 
-```
+```js
 ThemeManager.setComponentForcedTheme('Card', (props, context) => {
   return {
     containerStyle: [styles.defaultContainerStyle, props.containerStyle]
