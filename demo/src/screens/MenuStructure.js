@@ -138,6 +138,7 @@ export const navigationData = {
     title: 'Animations & Gestures',
     screens: [
       {title: 'Animated Image', tags: 'animated image', screen: 'unicorn.components.AnimatedImageScreen'},
+      {title: 'Haptic feedback', tags: 'haptic feedback', screen: 'unicorn.components.HapticScreen'},
       {title: 'ProgressiveImage', tags: 'progressive image cover overlay', screen: 'unicorn.components.ProgressiveImageScreen'},
       {title: 'List Animations', tags: 'animated card', screen: 'unicorn.animations.ListAnimationsScreen'},
       {title: 'Card Animations', tags: 'animated card', screen: 'unicorn.animations.CardAnimationsScreen'},
