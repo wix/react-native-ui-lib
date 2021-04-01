@@ -55,7 +55,7 @@ type Props = BaseComponentInjectedProps &
  * @description: A wrapper for TouchableOpacity component. Support onPress, throttling and activeBackgroundColor
  * @extends: TouchableOpacity
  * @modifiers: margins, paddings, alignments, background, borderRadius
- * @extendslink: https://facebook.github.io/react-native/docs/touchableopacity.html
+ * @extendsLink: https://facebook.github.io/react-native/docs/touchableopacity.html
  * @gif: https://media.giphy.com/media/xULW8AMIgw7l31zjm8/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/src/components/touchableOpacity/index.tsx
  */

@@ -118,7 +118,7 @@ export type ChipPropTypes = ChipProps; //TODO: remove after ComponentPropTypes d
 /**
  * @description: Chip component
  * @extends: TouchableOpacity
- * @extendslink: docs/TouchableOpacity
+ * @extendsLink: docs/TouchableOpacity
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipScreen.tsx
  */
 const Chip = ({

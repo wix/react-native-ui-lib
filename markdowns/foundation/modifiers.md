@@ -27,7 +27,7 @@ Use our alignment props to quickly position your view's content without getting 
 
 ! Notice that the layout modifiers affect the View's children
 
-```
+```jsx
 <View flex left>
   <Button label="Button" />
 </View>
@@ -60,7 +60,7 @@ It's always important to use your margins and paddings correctly, with modifiers
 - paddingB-[value] - Bottom padding
 - paddingH-[value] - Horizontal padding
 - paddingV-[value] - Vertical padding
-```
+```jsx
 <View paddingV-20 paddingH-30>...</View>
 ```
 
@@ -72,12 +72,12 @@ It's always important to use your margins and paddings correctly, with modifiers
 - marginH-[value] - Horizontal margin
 - marginV-[value] - Vertical margin
 
-```
+```jsx
 <View marginT-5 marginB-10>...</View>
 ```
 
 ! padding and margin modifiers can also take [Spacing](https://github.com/wix/react-native-ui-lib/blob/master/src/style/spacings.ts) constants. 
-```
+```jsx
 <View margin-s5 padding-s2>...</View>
 ```
 ## Position Modifiers
@@ -93,20 +93,20 @@ Last type of modifiers are for styling your components
 - [colorKey] - Controls text components' color
 - background-[colorKey] (or bg-[colorKey]) - Background color 
 
-```
+```jsx
 <Text blue30>...</Text>
 <View bg-dark70>...</View>
 <TouchableOpacity bg-red30/>
 ```
 
 - [typographyKey] - Controls text components' typography
-```
+```jsx
 <Text text70>...</Text>
 <TextInput text80/>
 ```
 
 - br[borderRadiusKey] - Set the view's border radius (e.g. `br10`, `br20`, .., `br60`)
-```
+```jsx
 <View br40>...</View>
 ```
 

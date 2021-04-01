@@ -50,7 +50,7 @@ export default class ComponentTemplate extends Component {
 
       return (
         <span className="inline" key={component}>
-          {!extendedComponent && componentInfo.extendsLink ? (
+          {extendedComponent && componentInfo.extendsLink ? (
             <a href={componentInfo.extendsLink} rel="noopener noreferrer" target="_blank">
               {text}
             </a>

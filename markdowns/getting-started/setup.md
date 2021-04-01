@@ -30,7 +30,7 @@ If you're planning on using specific components, see **UILib Packages**.
 *For some packages you might still need to install one of the peer dependencies*
 
 If you want it all, install **peer dependencies**
-```
+```js
 npm i react-native-gesture-handler react-native-reanimated @react-native-community/blur @react-native-community/datetimepicker @react-native-community/netinfo @react-native-picker/picker
 
 cd ios && pod install

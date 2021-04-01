@@ -106,7 +106,7 @@ interface StaticMembers {
 /**
  * @description: A controlled, customizable TextField with validation support
  * @extends: TextInput
- * @extendslink: https://reactnative.dev/docs/textinput
+ * @extendsLink: https://reactnative.dev/docs/textinput
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/IncubatorTextFieldScreen.tsx
  */
 const TextField = (props: InternalTextFieldProps) => {

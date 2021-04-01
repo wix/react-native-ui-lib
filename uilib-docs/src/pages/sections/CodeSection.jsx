@@ -57,7 +57,7 @@ const Tab = ({headline, codeSnippet}) => {
   return (
     <div className="tab-page">
       <p>{headline}</p>
-      <pre className="code">
+      <pre>
         <code className="language-javascript">{codeSnippet}</code>
       </pre>
     </div>
