@@ -56,7 +56,7 @@ export type CardProps = ViewProps &
     /**
      * action for when pressing the card
      */
-    onPress?: () => void;
+    onPress?: TouchableOpacityProps['onPress'];
     /**
      * whether the card should have shadow or not
      */
