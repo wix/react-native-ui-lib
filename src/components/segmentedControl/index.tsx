@@ -1,12 +1,15 @@
 import _ from 'lodash';
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
-import Reanimated, {Easing} from 'react-native-reanimated';
+import Reanimated, {EasingNode, Easing as _Easing} from 'react-native-reanimated';
 import {Colors, BorderRadiuses, Spacings} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Segment from './segment';
 
+const {interpolate: _interpolate, interpolateNode} = Reanimated;
+const interpolate = interpolateNode || _interpolate;
+const Easing = EasingNode || _Easing;
 const BORDER_WIDTH = 1;
 
 export type SegmentedControlProps = {
@@ -34,58 +37,48 @@ export type SegmentedControlProps = {
  * @description: SegmentedControl component for toggling two values or more
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SegmentedControlScreen.tsx
  */
-class SegmentedControl extends Component<SegmentedControlProps> {
-  static displayName = 'SegmentedControl';
-  static defaultProps = {
-    color: Colors.primary,
-    initialIndex: 0
-  };
+const SegmentedControl = (props: SegmentedControlProps) => {
+  const [selectedSegment, setSelectedSegment] = useState(props.initialIndex || 0);
 
-  state = {
-    selectedSegment: this.props.initialIndex
-  };
+  const segments: {x: number; width: number}[] = [];
+  let segmentsCounter = 0;
+  const animatedValue = new Reanimated.Value(selectedSegment);
 
-  segments: {width: number; x: number}[] = [];
-  segmentsCounter = 0;
-  animatedValue = new Reanimated.Value(this.state.selectedSegment);
-
-  onSegmentPress = (index: number) => {
-    if (this.state.selectedSegment !== index) {
-      this.props.onChangeIndex?.(index);
-      this.updateSelectedSegment(index);
+  const onSegmentPress = (index: number) => {
+    if (selectedSegment !== index) {
+      props.onChangeIndex?.(index);
+      updateSelectedSegment(index);
     }
   };
 
-  updateSelectedSegment = (index: number) => {
-    Reanimated.timing(this.animatedValue, {
+  const updateSelectedSegment = (index: number) => {
+    Reanimated.timing(animatedValue, {
       toValue: index,
       duration: 300,
       easing: Easing.bezier(0.33, 1, 0.68, 1)
     }).start();
 
-    return this.setState({selectedSegment: index});
+    return setSelectedSegment(index);
   };
 
-  onLayout = (index: number, event: LayoutChangeEvent) => {
+  const onLayout = (index: number, event: LayoutChangeEvent) => {
     const {x, width} = event.nativeEvent.layout;
-    this.segments[index] = {x, width};
-    this.segmentsCounter++;
+    segments[index] = {x, width};
+    segmentsCounter++;
 
-    return (
-      this.segmentsCounter === this.props.labels?.length && this.setState({selectedSegment: this.props.initialIndex})
-    );
+    return segmentsCounter === props.labels?.length && setSelectedSegment(props.initialIndex || 0);
   };
 
-  getAnimatedStyle = () => {
-    if (this.segmentsCounter === this.props.labels?.length) {
-      const left = this.animatedValue.interpolate({
-        inputRange: _.times(this.segmentsCounter),
-        outputRange: _.map(this.segments, segment => segment.x - BORDER_WIDTH)
+  const getAnimatedStyle = () => {
+    if (segmentsCounter === props.labels?.length) {
+      const left = interpolate(selectedSegment, {
+        inputRange: _.times(segmentsCounter),
+        outputRange: _.map(segments, segment => segment.x - BORDER_WIDTH)
       });
 
-      const width = this.animatedValue.interpolate({
-        inputRange: _.times(this.segmentsCounter),
-        outputRange: _.map(this.segments, segment => segment.width)
+      const width = interpolate(selectedSegment, {
+        inputRange: _.times(segmentsCounter),
+        outputRange: _.map(segments, segment => segment.width)
       });
 
       return {width, left};
@@ -93,29 +86,28 @@ class SegmentedControl extends Component<SegmentedControlProps> {
     return undefined;
   };
 
-  render() {
-    const {style, labels, color} = this.props;
-    const animatedStyle = this.getAnimatedStyle();
+  const {style, labels, color = Colors.primary} = props;
+  const animatedStyle = getAnimatedStyle();
 
-    return (
-      <View row center style={[styles.container, style]}>
-        {animatedStyle && <Reanimated.View style={[styles.selectedSegment, animatedStyle, {borderColor: color}]}/>}
-        {_.map(labels, (_value, index) => {
-          return (
-            <Segment
-              segmentOnLayout={this.onLayout}
-              index={index}
-              onPress={index => this.onSegmentPress(index)}
-              label={labels?.[index]}
-              isSelected={this.state.selectedSegment === index}
-              color={color}
-            />
-          );
-        })}
-      </View>
-    );
-  }
-}
+  return (
+    <View row center style={[styles.container, style]}>
+      {animatedStyle && <Reanimated.View style={[styles.selectedSegment, animatedStyle, {borderColor: color}]}/>}
+      {_.map(labels, (_value, index) => {
+        return (
+          <Segment
+            key={index}
+            segmentOnLayout={onLayout}
+            index={index}
+            onPress={index => onSegmentPress(index)}
+            label={labels?.[index]}
+            isSelected={selectedSegment === index}
+            color={color}
+          />
+        );
+      })}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -136,5 +128,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacings.s3
   }
 });
+
+SegmentedControl.displayName = 'SegmentedControl';
 
 export default asBaseComponent<SegmentedControlProps>(SegmentedControl);
