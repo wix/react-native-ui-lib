@@ -21,9 +21,9 @@ function SvgImage(props: SvgImageProps) {
   } else if (data) {
     const File = data; // Must be with capital letter
     return <File {...others}/>;
-  } else {
-    return null;
   }
+
+  return null;
 }
 
 SvgImage.displayName = 'IGNORE';
