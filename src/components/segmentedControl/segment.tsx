@@ -1,15 +1,27 @@
 import React from 'react';
-import {StyleSheet, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp} from 'react-native';
 import {Colors, Spacings} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 import Text from '../text';
+import Image from '../image';
 
-export type SegmentProps = {
+export type SegmentItemProps = {
   /**
-   * The label of the segment.
+   * The title of the segment.
    */
-  label?: string;
+  title?: string;
+  /**
+   * An icon for the segment.
+   */
+  iconSource?: ImageSourcePropType;
+  /**
+   * An icon for the segment.
+   */
+  iconStyle?: StyleProp<ImageStyle>;
+};
+
+export type SegmentProps = SegmentItemProps & {
   /**
    * Is the item selected.
    */
@@ -17,7 +29,8 @@ export type SegmentProps = {
   /**
    * The color of the active segment.
    */
-  color?: string;
+  activeColor?: string;
+  unActiveColor?: string;
   /**
    * Callback for when segment has pressed.
    */
@@ -36,9 +49,19 @@ export type SegmentProps = {
  * Segment sub-component for SegmentedControl component
  */
 const Segment = (props: SegmentProps) => {
-  const {color = Colors.primary, label, isSelected, segmentOnLayout, onPress, index} = props;
+  const {
+    activeColor = Colors.primary,
+    title,
+    iconSource,
+    iconStyle,
+    isSelected,
+    segmentOnLayout,
+    onPress,
+    unActiveColor,
+    index
+  } = props;
 
-  const segmentedColor = isSelected ? color : Colors.grey20;
+  const segmentedColor = isSelected ? activeColor : unActiveColor;
   const segmentStyle = [styles.segment, {borderColor: segmentedColor}];
 
   return (
@@ -46,10 +69,14 @@ const Segment = (props: SegmentProps) => {
       onLayout={event => segmentOnLayout?.(index, event)}
       style={segmentStyle}
       onPress={() => onPress(index)}
+      row
     >
-      <Text text90 numberOfLines={1} color={segmentedColor}>
-        {label}
-      </Text>
+      {title && (
+        <Text text90 numberOfLines={1} color={segmentedColor}>
+          {title}
+        </Text>
+      )}
+      {iconSource && <Image source={iconSource} style={[{tintColor: segmentedColor}, iconStyle]}/>}
     </TouchableOpacity>
   );
 };

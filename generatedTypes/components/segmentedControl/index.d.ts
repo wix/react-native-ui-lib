@@ -1,14 +1,15 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
+import { SegmentItemProps } from './segment';
 export declare type SegmentedControlProps = {
     /**
      * Array on segment labels.
      */
-    labels?: string[];
+    labels?: SegmentItemProps[];
     /**
      * The color of the active segment.
      */
-    color?: string;
+    activeColor?: string;
     /**
      * Callback for when index has change.
      */
@@ -17,6 +18,23 @@ export declare type SegmentedControlProps = {
      * Initial index to be active.
      */
     initialIndex?: number;
+    /**
+     * The segmentedControl borderRadius
+     */
+    borderRadius?: number;
+    /**
+     * The segmentedControl borderRadius
+     */
+    containerBorderRadius?: number;
+    /**
+     * The background color of the segmentedControl
+     */
+    backgroundColor?: string;
+    /**
+     * The background color of the active segment
+     */
+    activeBackgroundColor?: string;
+    unActiveColor?: string;
     style?: StyleProp<ViewStyle>;
     testID?: string;
 };
