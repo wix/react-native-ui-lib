@@ -102,6 +102,7 @@
     "react-native-navigation": "7.6.0",
     "react-native-svg": "^12.1.0",
     "react-native-svg-transformer": "^0.14.3",
+    "react-native-reanimated": "2.0.0",
     "react-test-renderer": "^16.13.1",
     "shell-utils": "^1.0.10",
     "typescript": "3.9.7"
