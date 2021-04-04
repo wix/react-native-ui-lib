@@ -2,11 +2,11 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
 import {View, Text, Button} from 'react-native-ui-lib';
-import {HapticMethods, triggerHaptic} from '../../../../src/services';
+import {HapticService} from '../../../../src/services';
 
 export default class HapticScreen extends Component {
   onPress = ({method}: {method: string}) => {
-    triggerHaptic(method, 'HapticScreen');
+    HapticService.triggerHaptic(method, 'HapticScreen');
   };
 
   render() {
@@ -17,7 +17,7 @@ export default class HapticScreen extends Component {
             Haptic Screen
           </Text>
 
-          {_.map(HapticMethods, method => {
+          {_.map(HapticService.HapticMethods, method => {
             return <Button marginV-8 marginH-60 label={method} key={method} onPress={() => this.onPress({method})}/>;
           })}
         </View>

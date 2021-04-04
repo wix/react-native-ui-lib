@@ -5,7 +5,7 @@ const options = {
   ignoreAndroidSystemSettings: false
 };
 
-export const HapticMethods = [
+const HapticMethods = [
   'selection',
   'impactLight',
   'impactMedium',
@@ -15,10 +15,15 @@ export const HapticMethods = [
   'notificationError'
 ];
 
-export function triggerHaptic(hapticMethod: string, componentName: string) {
+function triggerHaptic(hapticMethod: string, componentName: string) {
   if (HapticFeedbackPackage) {
     HapticFeedbackPackage.trigger(hapticMethod, options);
   } else {
     console.error(`RNUILib ${componentName}'s requires installing "react-native-haptic-feedback" dependency`);
   }
 }
+
+export default {
+  HapticMethods,
+  triggerHaptic
+};
