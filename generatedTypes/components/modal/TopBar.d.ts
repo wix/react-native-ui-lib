@@ -26,7 +26,7 @@ export interface ModalTopBarProps {
     /**
      * done action callback
      */
-    onDone?: (props: any) => void;
+    onDone?: (props?: any) => void;
     /**
      * cancel action props (Button props)
      */
@@ -42,7 +42,7 @@ export interface ModalTopBarProps {
     /**
      * cancel action callback
      */
-    onCancel?: (props: any) => void;
+    onCancel?: (props?: any) => void;
     /**
      * whether to include status bar or not (height claculations)
      */

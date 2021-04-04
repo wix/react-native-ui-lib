@@ -25,7 +25,7 @@ export declare type CardProps = ViewProps & TouchableOpacityProps & {
     /**
      * action for when pressing the card
      */
-    onPress?: () => void;
+    onPress?: TouchableOpacityProps['onPress'];
     /**
      * whether the card should have shadow or not
      */
@@ -83,7 +83,7 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
     /**
      * action for when pressing the card
      */
-    onPress?: (() => void) | undefined;
+    onPress?: ((props?: any) => void) | undefined;
     /**
      * whether the card should have shadow or not
      */
