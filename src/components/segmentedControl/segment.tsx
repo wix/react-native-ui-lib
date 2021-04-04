@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {StyleSheet, LayoutChangeEvent} from 'react-native';
 import {Colors, Spacings} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -33,32 +33,26 @@ export type SegmentProps = {
 };
 
 /**
- * SegmentedControl component for toggling two values
+ * Segment sub-component for SegmentedControl component
  */
-class Segment extends Component<SegmentProps> {
-  static defaultProps = {
-    color: Colors.primary
-  };
+const Segment = (props: SegmentProps) => {
+  const {color = Colors.primary, label, isSelected, segmentOnLayout, onPress, index} = props;
 
-  render() {
-    const {color, label, isSelected, segmentOnLayout, onPress, index} = this.props;
+  const segmentedColor = isSelected ? color : Colors.grey20;
+  const segmentStyle = [styles.segment, {borderColor: segmentedColor}];
 
-    const segmentedColor = isSelected ? color : Colors.grey20;
-    const segmentStyle = [styles.segment, {borderColor: segmentedColor}];
-
-    return (
-      <TouchableOpacity
-        onLayout={event => segmentOnLayout?.(index, event)}
-        style={segmentStyle}
-        onPress={() => onPress(index)}
-      >
-        <Text text90 numberOfLines={1} color={segmentedColor}>
-          {label}
-        </Text>
-      </TouchableOpacity>
-    );
-  }
-}
+  return (
+    <TouchableOpacity
+      onLayout={event => segmentOnLayout?.(index, event)}
+      style={segmentStyle}
+      onPress={() => onPress(index)}
+    >
+      <Text text90 numberOfLines={1} color={segmentedColor}>
+        {label}
+      </Text>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   segment: {
