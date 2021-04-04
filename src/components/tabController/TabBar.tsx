@@ -16,7 +16,6 @@ import FadedScrollView from './FadedScrollView';
 
 import {useScrollToItem} from '../../hooks';
 
-// @ts-expect-error
 const {Code, Value, interpolate: _interpolate, interpolateNode, block, set} = Reanimated;
 const interpolate = interpolateNode || _interpolate;
 

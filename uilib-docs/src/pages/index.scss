@@ -139,21 +139,21 @@
     background: $violet20;
     color: $white;
 
-    .code-examples {
-      display: flex;
-      align-items: flex-start;
+    // .code-examples {
+    //   display: flex;
+    //   align-items: flex-start;
 
-      code {
-        display: inline-block;
-        white-space: break-spaces;
-        text-align: left;
-        background: $dark10;
-        padding: 10px;
-        margin-right: 10px;
-        font-size: $text40;
-        line-height: 1.4;
-      }
-    }
+    //   code {
+    //     display: inline-block;
+    //     white-space: break-spaces;
+    //     text-align: left;
+    //     background: $dark10;
+    //     padding: 10px;
+    //     margin-right: 10px;
+    //     font-size: $text40;
+    //     line-height: 1.4;
+    //   }
+    // }
   }
 
   .components-section {

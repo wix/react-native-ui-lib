@@ -4,9 +4,63 @@ path: "/foundation/colors"
 title: "Colors"
 ---
 
+#### loadColors
+Load set of colors to use in the app.  
+These colors will be accessible through the Colors class and as modifiers.
+usage:
+```javascript
+import {Colors} from 'react-native-ui-lib';
+
+Colors.loadColors({
+  error: '#ff2442',
+  success: '#00CD8B',
+  text: '#20303C'
+});
+```
+
+```jsx
+import {View, Text, Colors} from 'react-native-ui-lib';
+
+<View>
+  <Text style={{color: Colors.error}}>Error Message</Text>
+  <Text success>Success Message</Text>
+<View>
+```
+
+#### loadSchemes
+Load set of scheme colors to support dark/light mode.  
+This features works hand in hand with our modifiers 
+
+```js
+Colors.loadSchemes({
+  light: {
+    screenBG: 'transparent',
+    textColor: Colors.grey10,
+    moonOrSun: Colors.yellow30,
+    mountainForeground: Colors.green30,
+    mountainBackground: Colors.green50
+  },
+  dark: {
+    screenBG: Colors.grey10,
+    textColor: Colors.white,
+    moonOrSun: Colors.grey80,
+    mountainForeground: Colors.violet10,
+    mountainBackground: Colors.violet20
+  }
+});
+```
+
+```jsx
+<View flex padding-page bg-screenBG>
+  <Text h1 textColor>
+    Dark Mode
+  </Text>      
+</View>
+```
+
 #### rgba
 usage:
-```jsx
+```js
 import {Colors} from 'react-native-ui-lib';
 
 Colors.rgba('#ff2442', 0.05); // 'rgb(255, 36, 66, 0.05)'
@@ -15,7 +69,7 @@ Colors.rgba(44, 224, 112, 0.2); // 'rgb(44, 224, 112, 0.2)'
 
 #### getColorTint
 usage:
-```jsx
+```js
 import {Colors} from 'react-native-ui-lib';
 
 Colors.getColorTint(Colors.green30, 70); // will return the value of Colors.green70

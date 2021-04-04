@@ -158,7 +158,7 @@ export const DEFAULT_PROPS = {
 /**
  * @description: Basic button component
  * @extends: TouchableOpacity
- * @extendslink: docs/TouchableOpacity
+ * @extendsLink: docs/TouchableOpacity
  * @modifiers: margin, background
  * @gif: https://media.giphy.com/media/xULW8j5WzsuPytqklq/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.tsx

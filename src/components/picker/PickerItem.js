@@ -16,7 +16,7 @@ import PickerContext from './PickerContext';
 /**
  * @description: Picker.Item, for configuring the Picker's selectable options
  * @extends: TouchableOpacity
- * @extendslink: docs/TouchableOpacity
+ * @extendsLink: docs/TouchableOpacity
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PickerScreen.js
  */
 const PickerItem = props => {
