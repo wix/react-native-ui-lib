@@ -321,7 +321,7 @@ exports[`Button backgroundColor should return undefined if this button is link 1
             "lineHeight": 24,
           },
           Object {
-            "color": "#00BBF2",
+            "color": "#5847FF",
           },
           Object {},
           Object {},
@@ -352,7 +352,7 @@ exports[`Button backgroundColor should return undefined if this button is outlin
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#00BBF2",
+      "borderColor": "#5847FF",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -390,7 +390,7 @@ exports[`Button backgroundColor should return undefined if this button is outlin
             "lineHeight": 24,
           },
           Object {
-            "color": "#00BBF2",
+            "color": "#5847FF",
           },
           Object {},
           Object {},
@@ -420,7 +420,7 @@ exports[`Button border radius should return 0 border radius when border radius p
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 0,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -487,7 +487,7 @@ exports[`Button border radius should return 0 border radius when button is full 
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 0,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -554,7 +554,7 @@ exports[`Button border radius should return given border radius when use plain n
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 12,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -621,7 +621,7 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -693,7 +693,7 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -802,7 +802,7 @@ exports[`Button container size should have no padding of button is a link nor mi
             "lineHeight": 24,
           },
           Object {
-            "color": "#00BBF2",
+            "color": "#5847FF",
           },
           Object {
             "fontFamily": "System",
@@ -837,7 +837,7 @@ exports[`Button container size should have no padding of button is an icon butto
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -852,12 +852,11 @@ exports[`Button container size should have no padding of button is an icon butto
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    onError={[Function]}
     source={14}
     style={
       Array [
-        Object {
-          "tintColor": undefined,
-        },
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -935,7 +934,7 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#00BBF2",
+      "borderColor": "#5847FF",
       "borderRadius": 999,
       "borderWidth": 2,
       "flexDirection": "row",
@@ -973,7 +972,7 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
             "lineHeight": 24,
           },
           Object {
-            "color": "#00BBF2",
+            "color": "#5847FF",
           },
           Object {},
           Object {},
@@ -1003,7 +1002,7 @@ exports[`Button container size should return style for large button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -1071,7 +1070,7 @@ exports[`Button container size should return style for large button 2`] = `
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#00BBF2",
+      "borderColor": "#5847FF",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -1109,7 +1108,7 @@ exports[`Button container size should return style for large button 2`] = `
             "lineHeight": 24,
           },
           Object {
-            "color": "#00BBF2",
+            "color": "#5847FF",
           },
           Object {},
           Object {},
@@ -1139,7 +1138,7 @@ exports[`Button container size should return style for medium button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -1212,7 +1211,7 @@ exports[`Button container size should return style for medium button 2`] = `
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#00BBF2",
+      "borderColor": "#5847FF",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -1250,7 +1249,7 @@ exports[`Button container size should return style for medium button 2`] = `
             "lineHeight": 24,
           },
           Object {
-            "color": "#00BBF2",
+            "color": "#5847FF",
           },
           Object {
             "fontFamily": "System",
@@ -1285,7 +1284,7 @@ exports[`Button container size should return style for round button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "height": undefined,
@@ -1352,7 +1351,7 @@ exports[`Button container size should return style for small button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -1425,7 +1424,7 @@ exports[`Button container size should return style for small button 2`] = `
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#00BBF2",
+      "borderColor": "#5847FF",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -1463,7 +1462,7 @@ exports[`Button container size should return style for small button 2`] = `
             "lineHeight": 24,
           },
           Object {
-            "color": "#00BBF2",
+            "color": "#5847FF",
           },
           Object {
             "fontFamily": "System",
@@ -1498,7 +1497,7 @@ exports[`Button container size should return style for xSmall button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -1571,7 +1570,7 @@ exports[`Button container size should return style for xSmall button 2`] = `
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#00BBF2",
+      "borderColor": "#5847FF",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -1609,7 +1608,7 @@ exports[`Button container size should return style for xSmall button 2`] = `
             "lineHeight": 24,
           },
           Object {
-            "color": "#00BBF2",
+            "color": "#5847FF",
           },
           Object {
             "fontFamily": "System",
@@ -1644,7 +1643,7 @@ exports[`Button icon should apply color on icon 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -1659,12 +1658,11 @@ exports[`Button icon should apply color on icon 1`] = `
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    onError={[Function]}
     source={12}
     style={
       Array [
-        Object {
-          "tintColor": undefined,
-        },
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -1698,7 +1696,7 @@ exports[`Button icon should apply color on icon 2`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -1713,12 +1711,11 @@ exports[`Button icon should apply color on icon 2`] = `
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    onError={[Function]}
     source={12}
     style={
       Array [
-        Object {
-          "tintColor": undefined,
-        },
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -1752,7 +1749,7 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -1767,12 +1764,11 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    onError={[Function]}
     source={12}
     style={
       Array [
-        Object {
-          "tintColor": undefined,
-        },
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -1810,7 +1806,7 @@ exports[`Button icon should return icon style according to different variations 
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#00BBF2",
+      "borderColor": "#5847FF",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -1826,12 +1822,11 @@ exports[`Button icon should return icon style according to different variations 
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    onError={[Function]}
     source={12}
     style={
       Array [
-        Object {
-          "tintColor": undefined,
-        },
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -1839,7 +1834,7 @@ exports[`Button icon should return icon style according to different variations 
         Object {},
         Array [
           Object {
-            "tintColor": "#00BBF2",
+            "tintColor": "#5847FF",
           },
           undefined,
         ],
@@ -1880,12 +1875,11 @@ exports[`Button icon should return icon style according to different variations 
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    onError={[Function]}
     source={12}
     style={
       Array [
-        Object {
-          "tintColor": undefined,
-        },
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -1893,7 +1887,7 @@ exports[`Button icon should return icon style according to different variations 
         Object {},
         Array [
           Object {
-            "tintColor": "#00BBF2",
+            "tintColor": "#5847FF",
           },
           undefined,
         ],
@@ -1934,12 +1928,11 @@ exports[`Button icon should return icon style according to different variations 
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    onError={[Function]}
     source={12}
     style={
       Array [
-        Object {
-          "tintColor": undefined,
-        },
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -1973,7 +1966,7 @@ exports[`Button icon should return the right spacing according to button size wh
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2040,7 +2033,7 @@ exports[`Button icon should return the right spacing according to button size wh
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2112,7 +2105,7 @@ exports[`Button icon should return the right spacing according to button size wh
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2184,7 +2177,7 @@ exports[`Button icon should return the right spacing according to button size wh
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2256,7 +2249,7 @@ exports[`Button label size should return style for large button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2323,7 +2316,7 @@ exports[`Button label size should return style for medium button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2395,7 +2388,7 @@ exports[`Button label size should return style for small button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2467,7 +2460,7 @@ exports[`Button label size should return style for xSmall button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2606,7 +2599,7 @@ exports[`Button labelColor should return color according to color modifier 1`] =
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2673,7 +2666,7 @@ exports[`Button labelColor should return color according to color prop 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2874,7 +2867,7 @@ exports[`Button labelColor should return undefined color if this is an icon butt
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2889,12 +2882,11 @@ exports[`Button labelColor should return undefined color if this is an icon butt
     accessibilityRole="image"
     accessible={false}
     assetGroup="icons"
+    onError={[Function]}
     source={12}
     style={
       Array [
-        Object {
-          "tintColor": undefined,
-        },
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -2965,7 +2957,7 @@ exports[`Button link should render button as a link 1`] = `
             "lineHeight": 24,
           },
           Object {
-            "color": "#00BBF2",
+            "color": "#5847FF",
           },
           Object {},
           Object {},
@@ -2996,7 +2988,7 @@ exports[`Button outline should render button with an outline 1`] = `
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#00BBF2",
+      "borderColor": "#5847FF",
       "borderRadius": 999,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -3034,7 +3026,7 @@ exports[`Button outline should render button with an outline 1`] = `
             "lineHeight": 24,
           },
           Object {
-            "color": "#00BBF2",
+            "color": "#5847FF",
           },
           Object {},
           Object {},
@@ -3064,7 +3056,7 @@ exports[`Button outline should render button with an outlineColor 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderColor": "blue",
       "borderRadius": 999,
       "borderWidth": 1,
@@ -3203,7 +3195,7 @@ exports[`Button outline should return custom borderWidth according to outlineWid
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
-      "borderColor": "#00BBF2",
+      "borderColor": "#5847FF",
       "borderRadius": 999,
       "borderWidth": 3,
       "flexDirection": "row",
@@ -3241,7 +3233,7 @@ exports[`Button outline should return custom borderWidth according to outlineWid
             "lineHeight": 24,
           },
           Object {
-            "color": "#00BBF2",
+            "color": "#5847FF",
           },
           Object {},
           Object {},
@@ -3377,7 +3369,7 @@ exports[`Button outline should return undefined when link is true, even when out
             "lineHeight": 24,
           },
           Object {
-            "color": "#00BBF2",
+            "color": "#5847FF",
           },
           Object {},
           Object {},
@@ -3407,7 +3399,7 @@ exports[`Button should render default button 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#00BBF2",
+      "backgroundColor": "#5847FF",
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1044" height="1128" viewBox="0 0 1044 1128">
+  <defs>
+    <style>
+      .cls-1 {
+        fill-rule: evenodd;
+        fill: url(#linear-gradient);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="2082" y1="678" x2="1038" y2="1722" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fa5c6a"/>
+      <stop offset="1" stop-color="#f4048b"/>
+    </linearGradient>
+  </defs>
+  <path id="REMX_black" data-name="REMX black" class="cls-1" d="M1038,636H2082V1764H1038V636Zm884.02,970.02H1788.01l-62.02-83.19-62.04,83.19H1456V1506l-39.95,100.02h-74.03l-40-100.02L1302,1606.02H1197.99V1260.01h104.03l75.76,177.08L1456,1260.01h74.03l-147.64-198.03-80.34.05-0.03,77.97H1197.99V793.982h192.02c73.91,0.153,133.98,60.175,133.98,134.023a133.24,133.24,0,0,1-38.6,93.874l240.39,321.6,62.23-83.47H1922L1792.84,1433.2ZM1390.01,895.983l-87.99-.045V960l87.99-.02c16.97-.049,30.71-14.947,30.71-31.945S1406.98,896.033,1390.01,895.983Zm170,404.227v265.62l99.02-132.81Zm36.03-256.23H1922v96.03H1596.04v-96.03Zm0-123.981L1922,920.023V1016H1596.04V920Zm-0.03-126.017H1922v96l-325.96,0Z" transform="translate(-1038 -636)"/>
+</svg>

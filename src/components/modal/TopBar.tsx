@@ -4,8 +4,8 @@ import {asBaseComponent} from '../../commons/new';
 import {Constants} from '../../helpers';
 import Assets from '../../assets';
 import {Colors, Typography} from '../../style';
-import View from '../../components/view';
-import Button, {ButtonPropTypes} from '../../components/button';
+import View, {ViewProps} from '../../components/view';
+import Button, {ButtonProps} from '../../components/button';
 import Text from '../../components/text';
 
 export interface ModalTopBarProps {
@@ -20,7 +20,7 @@ export interface ModalTopBarProps {
     /**
      * done action props (Button props)
      */
-    doneButtonProps?: Omit<ButtonPropTypes, 'onPress'>;
+    doneButtonProps?: Omit<ButtonProps, 'onPress'>;
     /**
      * done action label
      */
@@ -32,11 +32,11 @@ export interface ModalTopBarProps {
     /**
      * done action callback
      */
-    onDone?: (props: any) => void;
+    onDone?: (props?: any) => void;
     /**
      * cancel action props (Button props)
      */
-    cancelButtonProps?: Omit<ButtonPropTypes, 'onPress'>;
+    cancelButtonProps?: Omit<ButtonProps, 'onPress'>;
     /**
      * cancel action label
      */
@@ -48,11 +48,15 @@ export interface ModalTopBarProps {
     /**
      * cancel action callback
      */
-    onCancel?: (props: any) => void;
+    onCancel?: (props?: any) => void;
     /**
      * whether to include status bar or not (height claculations)
      */
     includeStatusBar?: boolean;
+    /**
+     * style for the TopBar container
+     */
+    containerStyle?: ViewProps['style'];
 }
 
 type topBarButtonProp = {
@@ -60,17 +64,17 @@ type topBarButtonProp = {
   label?: string;
   icon?: ImageSourcePropType;
   accessibilityLabel?: string;
-  buttonProps?: Omit<ButtonPropTypes, 'onPress'>;
+  buttonProps?: Omit<ButtonProps, 'onPress'>;
 }
 
 const TOP_BAR_HEIGHT = Constants.isIOS ? 44 : 56;
 const DEFAULT_BUTTON_PROPS = {
-  color: Colors.blue30
+  color: Colors.primary
 };
 
 /**
  * @description: Modal.TopBar, inner component for configuring the Modal component's title, buttons and statusBar
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ModalScreen.tsx
  */
 class TopBar extends Component<ModalTopBarProps> {
   static displayName = 'Modal.TopBar';
@@ -128,10 +132,10 @@ class TopBar extends Component<ModalTopBarProps> {
   }
 
   render() {
-    const {title, titleStyle, includeStatusBar} = this.props;
+    const {title, titleStyle, includeStatusBar, containerStyle} = this.props;
 
     return (
-      <View>
+      <View style={containerStyle}>
         {includeStatusBar && <View style={styles.statusBar}/>}
         <View style={styles.container}>
           <View row flex bottom paddingL-15 centerV>

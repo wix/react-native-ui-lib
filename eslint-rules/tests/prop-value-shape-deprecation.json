@@ -1,0 +1,63 @@
+[
+  {
+    "components": ["ListItem", "Label", "Chip", "Dialog.Header"],
+    "propNames": ["avatar", "avatarProps"],
+    "shape": [
+      {
+        "prop": "imageSource",
+        "message": "Please use 'source' instead (fix is available).",
+        "fix": {
+          "propName": "source"
+        }
+      }
+    ]
+  },
+  {
+    "components": ["MediaItem"],
+    "propNames": ["label.avatar", "label.avatarProps"],
+    "shape": [
+      {
+        "prop": "imageSource",
+        "message": "Please use 'source' instead (fix is available).",
+        "fix": {
+          "propName": "source"
+        }
+      }
+    ]
+  },
+  {
+    "components": ["ChipList"],
+    "propNames": ["chips.label.avatar", "chips.label.avatarProps"],
+    "shape": [
+      {
+        "prop": "imageSource",
+        "message": "Please use 'source' instead (fix is available).",
+        "fix": {
+          "propName": "source"
+        }
+      }
+    ]
+  },
+  {
+    "components": ["Dialog"],
+    "propNames": ["pannableHeaderProps"],
+    "shape": [
+      {
+        "prop": "title",
+        "message": "Please use 'header' instead (fix is available).",
+        "fix": {
+          "propName": "header"
+        }
+      }
+    ]
+  },
+  {
+    "components": ["ListItem"],
+    "propNames": ["thumbnail"],
+    "shape": [
+      {
+        "prop": "useCustomTheme"
+      }
+    ]
+  }
+]

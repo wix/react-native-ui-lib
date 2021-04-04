@@ -1,5 +1,5 @@
-import React from 'react';
-import { ButtonPropTypes } from '../button';
+import React, { PropsWithChildren } from 'react';
+import { ButtonProps } from '../button';
 export interface FloatingButtonProps {
     /**
      * Whether the button is visible
@@ -8,11 +8,11 @@ export interface FloatingButtonProps {
     /**
      * Button element (all Button's component's props)
      */
-    button?: ButtonPropTypes;
+    button?: PropsWithChildren<ButtonProps>;
     /**
      * Secondary button element (all Button's component's props)
      */
-    secondaryButton?: ButtonPropTypes;
+    secondaryButton?: PropsWithChildren<ButtonProps>;
     /**
      * The bottom margin of the button, or secondary button if passed
      */
@@ -29,6 +29,10 @@ export interface FloatingButtonProps {
      * Whether to show background overlay
      */
     hideBackgroundOverlay?: boolean;
+    /**
+     * Used as testing identifier
+     */
+    testID?: string;
 }
 declare const _default: React.ComponentClass<FloatingButtonProps & {
     useCustomTheme?: boolean | undefined;

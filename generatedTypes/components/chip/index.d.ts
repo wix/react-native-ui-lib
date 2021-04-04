@@ -1,8 +1,10 @@
 import React from 'react';
-import { StyleProp, ViewStyle, ViewProps, TouchableOpacityProps, ImageStyle, ImageProps, TextStyle, ImageSourcePropType } from 'react-native';
-import { AvatarPropTypes } from '../avatar';
+import { StyleProp, ViewStyle, ViewProps, ImageStyle, TextStyle, ImageSourcePropType } from 'react-native';
+import { AvatarProps } from '../avatar';
 import { BadgeProps } from '../badge';
-export declare type ChipPropTypes = ViewProps & TouchableOpacityProps & {
+import { ImageProps } from '../image';
+import { TouchableOpacityProps } from '../touchableOpacity';
+export declare type ChipProps = ViewProps & TouchableOpacityProps & {
     /**
      * Chip's size. Number or a width and height object.
      */
@@ -53,11 +55,11 @@ export declare type ChipPropTypes = ViewProps & TouchableOpacityProps & {
     /**
      * Avatar props object
      */
-    avatarProps?: AvatarPropTypes;
+    avatarProps?: AvatarProps;
     /**
      * Additional icon props
      */
-    iconProps?: ImageProps;
+    iconProps?: Omit<ImageProps, 'source'>;
     /**
      * Icon style
      */
@@ -91,6 +93,7 @@ export declare type ChipPropTypes = ViewProps & TouchableOpacityProps & {
      */
     dismissContainerStyle?: StyleProp<ImageStyle>;
 };
+export declare type ChipPropTypes = ChipProps;
 declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps & {
     /**
      * Chip's size. Number or a width and height object.
@@ -142,11 +145,11 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
     /**
      * Avatar props object
      */
-    avatarProps?: AvatarPropTypes | undefined;
+    avatarProps?: AvatarProps | undefined;
     /**
      * Additional icon props
      */
-    iconProps?: ImageProps | undefined;
+    iconProps?: Pick<ImageProps, "margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV" | "style" | "testID" | "onLayout" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityState" | "accessibilityHint" | "accessibilityValue" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "width" | "height" | "borderRadius" | "borderBottomLeftRadius" | "borderBottomRightRadius" | "borderTopLeftRadius" | "borderTopRightRadius" | "aspectRatio" | "onError" | "onLoad" | "onLoadEnd" | "onLoadStart" | "progressiveRenderingEnabled" | "resizeMode" | "resizeMethod" | "loadingIndicatorSource" | "defaultSource" | "blurRadius" | "capInsets" | "onProgress" | "onPartialLoad" | "fadeDuration" | "cover" | "sourceTransformer" | "assetName" | "assetGroup" | "tintColor" | "supportRTL" | "overlayType" | "overlayColor" | "customOverlayContent" | "errorSource"> | undefined;
     /**
      * Icon style
      */

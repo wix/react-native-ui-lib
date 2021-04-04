@@ -1,6 +1,18 @@
 {
   "presets": ["@babel/preset-typescript" /* , "@babel/preset-react" */],
-  "plugins": ["babel-plugin-typescript-to-proptypes"],
+  "plugins": [
+    ["babel-plugin-typescript-to-proptypes", {"comments": true}],
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "alias": {
+          "style": "./src/style",
+          "helpers": "./src/helpers"
+        }
+      }
+    ]
+  ],
   "compact": false,
   "minified": false
 }

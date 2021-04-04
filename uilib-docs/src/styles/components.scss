@@ -1,23 +1,55 @@
 h1 {
-  font-weight: 400;
+  font-size: 2.3em;
+  font-weight: 500;
 }
 
 h2 {
+  font-size: 2em;
   font-weight: 500;
 }
 
 h3 {
+  font-size: 1.7em;
   font-weight: 500;
 }
 
 h4 {
+  font-size: 1.4em;
   font-weight: 500;
 }
 
 h5 {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 0.8em;
   font-weight: 600;
 }
 
 p {
-  font-size: $text30;
+  font-size: 1.2em;
+
+  &.default-size {
+    font-size: 1em;
+  }
+}
+
+a {
+  color: $violet20;
+  text-decoration: none;
+}
+
+small {
+  font-size: 0.8em;
+}
+
+strong {
+  font-weight: 600;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
 }

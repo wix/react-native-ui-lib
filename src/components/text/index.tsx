@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Text as RNText, StyleSheet, TextProps, TextStyle, Animated} from 'react-native';
+import {Text as RNText, StyleSheet, TextProps as RNTextProps, TextStyle, Animated} from 'react-native';
 import {
   asBaseComponent,
   forwardRef,
@@ -13,7 +13,7 @@ import {Colors} from '../../style';
 import _ from 'lodash';
 
 
-export type TextPropTypes = TextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
+export type TextProps = RNTextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & {
   /**
    * color of the text
    */
@@ -40,14 +40,16 @@ export type TextPropTypes = TextProps & TypographyModifiers & ColorsModifiers & 
   animated?: boolean;
   textAlign?: string;
 }
+export type TextPropTypes = TextProps; //TODO: remove after ComponentPropTypes deprecation;
 
-type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextPropTypes;
+type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & TextProps;
 
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
  * @extends: Text
- * @extendslink: https://facebook.github.io/react-native/docs/text.html
+ * @extendsLink: https://facebook.github.io/react-native/docs/text.html
  * @modifiers: margins, color, typography
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextScreen.js
  */
 class Text extends PureComponent<PropsTypes> {
   static displayName = 'Text';
@@ -155,4 +157,4 @@ const styles = StyleSheet.create({
 
 export {Text}; // For tests
 
-export default asBaseComponent<TextPropTypes>(forwardRef<PropsTypes>(Text));
+export default asBaseComponent<TextProps>(forwardRef<PropsTypes>(Text));

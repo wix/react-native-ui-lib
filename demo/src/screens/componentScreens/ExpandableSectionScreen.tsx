@@ -17,7 +17,7 @@ const elements = [
       ]}
       style={{padding: 20}}
     />
-    <Card.Section imageSource={cardImage2} imageStyle={{height: 120}} />
+    <Card.Section source={cardImage2} imageStyle={{height: 120}} />
   </Card>,
   <Card style={{marginBottom: 10}} onPress={() => {}}>
     <Card.Section
@@ -27,7 +27,7 @@ const elements = [
       ]}
       style={{padding: 20}}
     />
-    <Card.Section imageSource={cardImage} imageStyle={{height: 120}} />
+    <Card.Section source={cardImage} imageStyle={{height: 120}} />
   </Card>,
   <Card style={{marginBottom: 10}} onPress={() => {}}>
     <Card.Section
@@ -37,7 +37,7 @@ const elements = [
       ]}
       style={{padding: 20}}
     />
-    <Card.Section imageSource={cardImage2} imageStyle={{height: 120}} />
+    <Card.Section source={cardImage2} imageStyle={{height: 120}} />
   </Card>
 ];
 
@@ -62,13 +62,11 @@ class ExpandableSectionScreen extends PureComponent {
 
   getHeaderElement() {
     return (
-      <View>
-        <Text margin-10 dark10 text60>
+      <View margin-10 spread row>
+        <Text dark10 text60>
           ExpandableSection's sectionHeader
         </Text>
-        <View style={styles.header}>
-          <Image style={styles.icon} source={this.getChevron()} />
-        </View>
+        <Image style={styles.icon} source={this.getChevron()}/>
       </View>
     );
   }
@@ -124,12 +122,7 @@ class ExpandableSectionScreen extends PureComponent {
 export default ExpandableSectionScreen;
 
 const styles = StyleSheet.create({
-  header: {
-    marginLeft: 380,
-    marginTop: 20,
-    position: 'absolute'
-  },
   icon: {
-    backgroundColor: 'transparent'
+    alignSelf: 'center'
   }
 });

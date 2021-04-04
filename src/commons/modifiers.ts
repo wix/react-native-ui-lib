@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {StyleSheet} from 'react-native';
+import {Appearance, StyleSheet} from 'react-native';
 import {Typography, Colors, BorderRadiuses, Spacings, ThemeManager} from '../style';
 import {BorderRadiusesLiterals} from '../style/borderRadiuses';
 import TypographyPresets from '../style/typographyPresets';
@@ -96,26 +96,28 @@ export type ContainerModifiers =
   BorderRadiusModifiers &
   BackgroundColorModifier;
 
-
 export function extractColorValue(props: Dictionary<any>) {
-  // const props = this.getThemeProps();
-  const allColorsKeys: Array<keyof typeof Colors> = _.keys(Colors);
+  const scheme = Appearance.getColorScheme() || 'light';
+  const schemeColors = Colors.schemes[scheme];
+  const allColorsKeys: Array<keyof typeof Colors> = [..._.keys(Colors), ..._.keys(schemeColors)];
   const colorPropsKeys = _.chain(props)
     .keys()
     .filter(key => _.includes(allColorsKeys, key))
     .value();
-  const color = _.findLast(colorPropsKeys, colorKey => props[colorKey] === true)!;
-  return Colors[color];
+  const colorKey = _.findLast(colorPropsKeys, colorKey => props[colorKey] === true)!;
+  return schemeColors[colorKey] || Colors[colorKey];
 }
 
 export function extractBackgroundColorValue(props: Dictionary<any>) {
   let backgroundColor;
+  const scheme = Appearance.getColorScheme() || 'light';
+  const schemeColors = Colors.schemes[scheme];
 
   const keys = Object.keys(props);
   const bgProp = _.findLast(keys, prop => Colors.getBackgroundKeysPattern().test(prop) && !!props[prop])!;
   if (props[bgProp]) {
     const key = bgProp.replace(Colors.getBackgroundKeysPattern(), '');
-    backgroundColor = Colors[key];
+    backgroundColor = schemeColors[key] || Colors[key];
   }
 
   return backgroundColor;
@@ -245,7 +247,7 @@ export function extractFlexStyle(props: Dictionary<any>): Partial<Record<NativeF
   const keys = Object.keys(props);
   const flexProp = keys.find(item => FLEX_KEY_PATTERN.test(item));
   if (flexProp && props[flexProp] === true) {
-    let [flexKey, flexValue] = flexProp.split('-') as [keyof typeof STYLE_KEY_CONVERTERS, string];
+    const [flexKey, flexValue] = flexProp.split('-') as [keyof typeof STYLE_KEY_CONVERTERS, string];
     const convertedFlexKey = STYLE_KEY_CONVERTERS[flexKey];
     const flexValueAsNumber = _.isEmpty(flexValue) ? 1 : Number(flexValue);
 
@@ -319,7 +321,7 @@ export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
   return ownProps;
 }
 
-export function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps: string[]) {
+export function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps: string[] = []) {
   const componentPropTypes = component.propTypes;
   const componentProps = _.chain(props)
     .pickBy((_value, key) => _.includes(Object.keys(componentPropTypes), key))

@@ -1,13 +1,18 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import Animated, {Easing} from 'react-native-reanimated';
+import Animated, {Easing as _Easing, EasingNode} from 'react-native-reanimated';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import TouchableOpacity from '../touchableOpacity';
 import {Colors} from '../../style';
 import ShareTransitionContext from './ShareTransitionContext';
 
+const {interpolate: _interpolate, interpolateNode} = Animated;
+const Easing = EasingNode || _Easing;
+const interpolate = interpolateNode || _interpolate;
+
 class SharedArea extends Component {
+  displayName = 'IGNORE';
   static propTypes = {
     /**
      * render details screen
@@ -36,14 +41,14 @@ class SharedArea extends Component {
     return {
       ...StyleSheet.absoluteFillObject,
       backgroundColor: Colors.white,
-      opacity: Animated.interpolate(this.transition, {inputRange: [0, 1], outputRange: [0, 1]})
+      opacity: interpolate(this.transition, {inputRange: [0, 1], outputRange: [0, 1]})
     };
   }
 
   getDetailsStyle() {
     return {
       ...StyleSheet.absoluteFillObject,
-      opacity: Animated.interpolate(this.transition, {inputRange: [90, 100], outputRange: [0, 1]})
+      opacity: interpolate(this.transition, {inputRange: [90, 100], outputRange: [0, 1]})
     };
   }
 
@@ -52,19 +57,19 @@ class SharedArea extends Component {
     if (sourceLayout && this.transition) {
       return {
         position: 'absolute',
-        width: Animated.interpolate(this.transition, {
+        width: interpolate(this.transition, {
           inputRange: [0, 100],
           outputRange: [sourceLayout.width, targetLayout.width]
         }),
-        height: Animated.interpolate(this.transition, {
+        height: interpolate(this.transition, {
           inputRange: [0, 100],
           outputRange: [sourceLayout.height, targetLayout.height]
         }),
-        top: Animated.interpolate(this.transition, {
+        top: interpolate(this.transition, {
           inputRange: [0, 100],
           outputRange: [sourceLayout.y, targetLayout.y]
         }),
-        left: Animated.interpolate(this.transition, {
+        left: interpolate(this.transition, {
           inputRange: [0, 100],
           outputRange: [sourceLayout.x, targetLayout.x]
         })

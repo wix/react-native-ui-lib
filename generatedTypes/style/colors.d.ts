@@ -1,7 +1,16 @@
 import _ from 'lodash';
 import tinycolor from 'tinycolor2';
+declare type Schemes = {
+    light: {
+        [key: string]: string;
+    };
+    dark: {
+        [key: string]: string;
+    };
+};
 export declare class Colors {
     [key: string]: any;
+    schemes: Schemes;
     constructor();
     /**
      * Load custom set of colors
@@ -11,6 +20,12 @@ export declare class Colors {
     loadColors(colors: {
         [key: string]: string;
     }): void;
+    /**
+     * Load set of schemes for light/dark mode
+     * arguments:
+     * schemes - two sets of map of colors e.g {light: {screen: 'white'}, dark: {screen: 'black'}}
+     */
+    loadSchemes(schemes: Schemes): void;
     /**
      * Add alpha to hex or rgb color
      * arguments:
@@ -61,14 +76,6 @@ declare const colorObject: Colors & {
     blue80: string;
     cyan10: string;
     cyan20: string;
-    /**
-     * Add alpha to hex or rgb color
-     * arguments:
-     * p1 - hex color / R part of RGB
-     * p2 - opacity / G part of RGB
-     * p3 - B part of RGB
-     * p4 - opacity
-     */
     cyan30: string;
     cyan40: string;
     cyan50: string;
@@ -125,5 +132,8 @@ declare const colorObject: Colors & {
     violet80: string;
     white: string;
     black: string;
+    transparent: string;
+} & {
+    primary: string;
 };
 export default colorObject;

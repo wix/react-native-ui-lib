@@ -1,3 +1,5 @@
+const path = require('path');
+
 const manifestPlugin = [
   {
     resolve: `gatsby-plugin-manifest`,
@@ -13,15 +15,25 @@ const manifestPlugin = [
   }
 ];
 
-const markdownPagesPlugin = [
+const markdownPagesPlugin = (path = `${__dirname}/../../markdowns/`) => [
   {
     resolve: `gatsby-source-filesystem`,
     options: {
       name: `markdown-pages`,
-      path: `${__dirname}/../../markdowns/`
+      path
     }
   },
-  `gatsby-transformer-remark`
+  {
+    resolve: `gatsby-transformer-remark`,
+    plugins: [
+      {
+        resolve: `gatsby-remark-prismjs`,
+        options: {
+        }
+      }
+    ]
+  }
+  /* `gatsby-transformer-remark` */
 ];
 
 const componentsDocgenPlugin = [
@@ -70,7 +82,7 @@ const layoutPlugin = [
   {
     resolve: `gatsby-plugin-layout`,
     options: {
-      component: require.resolve(`${__dirname}/../src/components/layout.js`)
+      component: require.resolve(`${path.resolve('./')}/src/components/layout.js`)
     }
   }
 ];

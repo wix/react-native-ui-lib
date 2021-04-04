@@ -1,14 +1,23 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {ImageSourcePropType, ImageStyle, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacityProps, ViewStyle, ViewProps} from 'react-native';
+import {
+  ImageSourcePropType,
+  ImageStyle,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacityProps,
+  ViewStyle,
+  ViewProps
+} from 'react-native';
 import {View as AnimatableView} from 'react-native-animatable';
 import {extractAccessibilityProps, extractAnimationProps} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';
-import {BorderRadiuses, Colors, Typography} from '../../style';
+import {BorderRadiuses, Colors, Spacings, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import View from '../view';
-
 
 const LABEL_FORMATTER_VALUES = [1, 2, 3, 4] as const;
 
@@ -20,93 +29,94 @@ export enum BADGE_SIZES {
   small = 16,
   default = 20,
   large = 24
-};
-
-type LabelFormatterValues = typeof LABEL_FORMATTER_VALUES[number]
-export type BadgeSizes = keyof typeof BADGE_SIZES
-
-export type BadgeProps = ViewProps & TouchableOpacityProps & {
-  /**
-   * Text to show inside the badge.
-   * Not passing a label (undefined) will present a pimple badge.
-   */
-  label?: string;
-  /**
-   * Color of the badge background
-   */
-  backgroundColor?: string;
-  /**
-   * the badge size (default, small)
-   */
-  size: BadgeSizes | number;
-  /**
-   * Press handler
-   */
-  onPress?: (props: any) => void;
-  /**
-   * Defines how far a touch event can start away from the badge.
-   */
-  hitSlop?: ViewProps['hitSlop'];
-  /**
-   * width of border around the badge
-   */
-  borderWidth?: number;
-  /**
-   * radius of border around the badge
-   */
-  borderRadius?: number;
-  /**
-   * color of border around the badge
-   */
-  borderColor?: ImageStyle['borderColor'];
-  /**
-   * Additional styles for the top container
-   */
-  containerStyle?: StyleProp<ViewStyle>
-  /**
-   * Additional styles for the badge label
-   */
-  labelStyle?: TextStyle;
-  /**
-   * Receives a number from 1 to 4, representing the label's max digit length.
-   * Beyond the max number for that digit length, a "+" will show at the end.
-   * If set to a value not included in LABEL_FORMATTER_VALUES, no formatting will occur.
-   * Example: labelLengthFormater={2}, label={124}, label will present "99+".
-   */
-  labelFormatterLimit?: LabelFormatterValues;
-  /**
-   * Renders an icon badge
-   */
-  icon?: ImageSourcePropType;
-  /**
-   * Additional styling to badge icon
-   */
-  iconStyle?: object;
-  /**
-   * Additional props passed to icon
-   */
-  iconProps?: object;
-  /**
-   * Use to identify the badge in tests
-   */
-  testId?: string;
 }
+
+type LabelFormatterValues = typeof LABEL_FORMATTER_VALUES[number];
+export type BadgeSizes = keyof typeof BADGE_SIZES;
+
+export type BadgeProps = ViewProps &
+  TouchableOpacityProps & {
+    /**
+     * Text to show inside the badge.
+     * Not passing a label (undefined) will present a pimple badge.
+     */
+    label?: string;
+    /**
+     * Color of the badge background
+     */
+    backgroundColor?: string;
+    /**
+     * the badge size (default, small)
+     */
+    size?: BadgeSizes | number;
+    /**
+     * Press handler
+     */
+    onPress?: (props: any) => void;
+    /**
+     * Defines how far a touch event can start away from the badge.
+     */
+    hitSlop?: ViewProps['hitSlop'];
+    /**
+     * width of border around the badge
+     */
+    borderWidth?: number;
+    /**
+     * radius of border around the badge
+     */
+    borderRadius?: number;
+    /**
+     * color of border around the badge
+     */
+    borderColor?: ImageStyle['borderColor'];
+    /**
+     * Additional styles for the top container
+     */
+    containerStyle?: StyleProp<ViewStyle>;
+    /**
+     * Additional styles for the badge label
+     */
+    labelStyle?: TextStyle;
+    /**
+     * Receives a number from 1 to 4, representing the label's max digit length.
+     * Beyond the max number for that digit length, a "+" will show at the end.
+     * If set to a value not included in LABEL_FORMATTER_VALUES, no formatting will occur.
+     * Example: labelLengthFormater={2}, label={124}, label will present "99+".
+     */
+    labelFormatterLimit?: LabelFormatterValues;
+    /**
+     * Renders an icon badge
+     */
+    icon?: ImageSourcePropType;
+    /**
+     * Additional styling to badge icon
+     */
+    iconStyle?: object;
+    /**
+     * Additional props passed to icon
+     */
+    iconProps?: object;
+    /**
+     * Custom element to render instead of an icon
+     */
+    customElement?: JSX.Element;
+    /**
+     * Use to identify the badge in tests
+     */
+    testId?: string;
+  };
 
 /**
  * @description: Round colored badge, typically used to show a number
  * @extends: Animatable.View
- * @extendslink: https://github.com/oblador/react-native-animatable
+ * @extendsLink: https://github.com/oblador/react-native-animatable
  * @image: https://user-images.githubusercontent.com/33805983/34480753-df7a868a-efb6-11e7-9072-80f5c110a4f3.png
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/BadgesScreen.tsx
  */
 class Badge extends PureComponent<BadgeProps> {
-
   styles: ReturnType<typeof createStyles>;
 
   static displayName = 'Badge';
-  static defaultProps = {
-    size: 'default'
-  };
 
   constructor(props: BadgeProps) {
     super(props);
@@ -115,6 +125,10 @@ class Badge extends PureComponent<BadgeProps> {
     if (props.testId) {
       console.warn('Badge prop \'testId\' is deprecated. Please use RN \'testID\' prop instead.');
     }
+  }
+
+  get size() {
+    return this.props.size || 'default';
   }
 
   getAccessibilityProps() {
@@ -129,21 +143,31 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   isSmallBadge() {
-    const {size} = this.props;
-    return size === 'small';
+    return this.size === 'small';
   }
 
   getBadgeSizeStyle() {
-    const {borderWidth, size, icon} = this.props;
+    const {borderWidth, icon, customElement} = this.props;
     const label = this.getFormattedLabel();
-    const badgeHeight = _.isNumber(size) ? size : BADGE_SIZES[size];
+    const badgeHeight = _.isNumber(this.size) ? this.size : BADGE_SIZES[this.size];
 
     const style: any = {
       paddingHorizontal: this.isSmallBadge() ? 4 : 6,
       height: badgeHeight,
       minWidth: badgeHeight
     };
-
+    if (icon && label) {
+      style.paddingRight = 6;
+      style.paddingLeft = 4;
+      style.height = Spacings.s5;
+      if (borderWidth) {
+        style.height += borderWidth * 2;
+      }
+      return style;
+    }
+    if (customElement) {
+      return style;
+    }
     const isPimple = label === undefined;
     if (isPimple || icon) {
       style.paddingHorizontal = 0;
@@ -166,7 +190,7 @@ class Badge extends PureComponent<BadgeProps> {
   getFormattedLabel() {
     const {labelFormatterLimit, label} = this.props;
 
-      if (_.isNaN(label)) {
+    if (_.isNaN(label)) {
       return label;
     }
 
@@ -212,40 +236,38 @@ class Badge extends PureComponent<BadgeProps> {
     }
   }
 
+  renderCustomElement() {
+    const {customElement} = this.props;
+    return customElement;
+  }
+
   renderIcon() {
-    const {icon, iconStyle, iconProps, borderColor} = this.props;
+    const {icon, iconStyle, iconProps, borderColor, label} = this.props;
+    const flex = label ? 0 : 1;
     return (
-      <Image
-        source={icon!}
-        resizeMode="contain"
-        //@ts-ignore
-        borderColor={borderColor}
-        {...iconProps}
-        style={{
-          flex: 1,
-          ...iconStyle
-        }}
-      />
+      icon && (
+        <Image
+          source={icon!}
+          resizeMode="contain"
+          //@ts-ignore
+          borderColor={borderColor}
+          {...iconProps}
+          style={{
+            flex,
+            ...iconStyle
+          }}
+        />
+      )
     );
   }
 
   render() {
     // TODO: remove testId after deprecation
-    const {
-      activeOpacity,
-      backgroundColor,
-      containerStyle,
-      hitSlop,
-      icon,
-      onPress,
-      testId,
-      testID,
-      ...others
-    } = this.props;
+    const {activeOpacity, backgroundColor, containerStyle, hitSlop, onPress, testId, testID, ...others} = this.props;
     const backgroundStyle = backgroundColor && {backgroundColor};
     const sizeStyle = this.getBadgeSizeStyle();
     const borderStyle = this.getBorderStyling();
-    const animationProps =  extractAnimationProps();
+    const animationProps = extractAnimationProps();
     const Container = !_.isEmpty(animationProps) ? AnimatableView : onPress ? TouchableOpacity : View;
 
     if (!_.isEmpty(animationProps)) {
@@ -255,7 +277,14 @@ class Badge extends PureComponent<BadgeProps> {
     return (
       // The extra View wrapper is to break badge's flex-ness
       // @ts-ignore
-      <View style={containerStyle} {...others} backgroundColor={undefined} borderWidth={undefined} {...this.getAccessibilityProps()}>
+      <View
+        style={containerStyle}
+        {...others}
+        backgroundColor={undefined}
+        // @ts-expect-error
+        borderWidth={undefined}
+        {...this.getAccessibilityProps()}
+      >
         <Container
           testID={testID || testId}
           pointerEvents={'none'}
@@ -264,8 +293,11 @@ class Badge extends PureComponent<BadgeProps> {
           activeOpacity={activeOpacity}
           hitSlop={hitSlop}
           {...animationProps}
+          row
         >
-          {icon ? this.renderIcon() : this.renderLabel()}
+          {this.renderCustomElement()}
+          {this.renderIcon()}
+          {this.renderLabel()}
         </Container>
       </View>
     );
@@ -277,7 +309,7 @@ function createStyles(props: BadgeProps) {
     badge: {
       alignSelf: 'flex-start',
       borderRadius: BorderRadiuses.br100,
-      backgroundColor: !props.icon ? Colors.primary : undefined,
+      backgroundColor: (!props.icon || props.customElement) ? Colors.primary : undefined,
       alignItems: 'center',
       justifyContent: 'center',
       overflow: 'hidden'
@@ -297,4 +329,4 @@ function createStyles(props: BadgeProps) {
 }
 export {Badge}; // For tests
 
-export default asBaseComponent<BadgeProps, typeof Badge>(Badge)
+export default asBaseComponent<BadgeProps, typeof Badge>(Badge);

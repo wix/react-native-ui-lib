@@ -34,8 +34,14 @@ module.exports = {
       get CarouselScreen() {
         return require('./screens/componentScreens/CarouselScreen').default;
       },
+      get CarouselVerticalScreen() {
+        return require('./screens/componentScreens/CarouselVerticalScreen').default;
+      },
       get CheckboxScreen() {
         return require('./screens/componentScreens/CheckboxScreen').default;
+      },
+      get ChipScreen() {
+        return require('./screens/componentScreens/ChipScreen').default;
       },
       get ConnectionStatusBarScreen() {
         return require('./screens/componentScreens/ConnectionStatusBarScreen').default;
@@ -202,6 +208,10 @@ module.exports = {
       },
       get ProgressBarScreen() {
         return require('./screens/componentScreens/ProgressBarScreen').default;
+      },
+      // Incubator 
+      get IncubatorTextFieldScreen() {
+        return require('./screens/incubatorScreens/IncubatorTextFieldScreen').default;
       },
       // realExamples
       get AppleMusic() {

@@ -1,64 +1,38 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Alert, ScrollView} from 'react-native';
-import {
-  Colors,
-  Typography,
-  TouchableOpacity,
-  Text,
-  FloatingButton
-} from 'react-native-ui-lib';
+import {Colors, Text, FloatingButton} from 'react-native-ui-lib';
+import {renderBooleanOption} from '../ExampleScreenPresenter';
 
-export default class FloatingButtonScreen extends Component {
-  constructor(props) {
-    super(props);
+interface State {
+  showButton: boolean;
+  showSecondary: boolean;
+}
 
-    this.state = {
-      showButton: true
-    };
-  }
-
-  showButton = () => {
-    this.setState({
-      showButton: true
-    });
-  };
-
-  hideButton = () => {
-    this.setState({
-      showButton: false
-    });
+export default class FloatingButtonScreen extends Component<{}, State> {
+  state = {
+    showButton: true,
+    showSecondary: true
   };
 
   notNow = () => {
     Alert.alert('Not Now!');
-    this.hideButton();
+    this.setState({showButton: false});
   };
 
   close = () => {
     Alert.alert('Closed.');
-    this.hideButton();
+    this.setState({showButton: false});
   };
 
   render() {
+    const {showSecondary} = this.state;
     return (
       <View style={styles.container}>
-        <Text text60 style={{textAlign: 'center'}}>
+        <Text text60 center marginB-s4>
           Trigger Floating Button
         </Text>
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={[styles.triggerButton, {marginRight: 10}]}
-            onPress={this.showButton}
-          >
-            <Text style={styles.triggerButtonText}>Show</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.triggerButton}
-            onPress={this.hideButton}
-          >
-            <Text style={styles.triggerButtonText}>Hide</Text>
-          </TouchableOpacity>
-        </View>
+        {renderBooleanOption.call(this, 'Show Floating Button', 'showButton')}
+        {renderBooleanOption.call(this, 'Show Secondary Button', 'showSecondary')}
 
         <ScrollView showsVerticalScrollIndicator={false}>
           <View paddingT-20>
@@ -66,30 +40,21 @@ export default class FloatingButtonScreen extends Component {
               Scroll behind a FloatingButton
             </Text>
             <Text text80 marginT-10 style={{lineHeight: 24}}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum. Contrary to popular belief, Lorem Ipsum is not simply
-              random text. It has roots in a piece of classical Latin literature
-              from 45 BC, making it over 2000 years old. Lorem Ipsum is simply
-              dummy text of the printing and typesetting industry. Lorem Ipsum
-              has been the industry standard dummy text ever since the 1500s,
-              when an unknown printer took a galley of type and scrambled it to
-              make a type specimen book. It has survived not only five
-              centuries, but also the leap into electronic typesetting,
-              remaining essentially unchanged. It was popularised in the 1960s
-              with the release of Letraset sheets containing Lorem Ipsum
-              passages, and more recently with desktop publishing software like
-              Aldus PageMaker including versions of Lorem Ipsum. Contrary to
-              popular belief, Lorem Ipsum is not simply random text. It has
-              roots in a piece of classical Latin literature from 45 BC, making
-              it over 2000 years old.
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+              industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+              scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release
+              of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+              like Aldus PageMaker including versions of Lorem Ipsum. Contrary to popular belief, Lorem Ipsum is not
+              simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000
+              years old. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+              the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+              scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release
+              of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+              like Aldus PageMaker including versions of Lorem Ipsum. Contrary to popular belief, Lorem Ipsum is not
+              simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000
+              years old.
             </Text>
           </View>
         </ScrollView>
@@ -100,11 +65,15 @@ export default class FloatingButtonScreen extends Component {
             label: 'Approve',
             onPress: this.close
           }}
-          secondaryButton={{
-            label: 'Not now',
-            onPress: this.notNow,
-            color: Colors.red30
-          }}
+          secondaryButton={
+            showSecondary
+              ? {
+                label: 'Not now',
+                onPress: this.notNow,
+                color: Colors.red30
+              }
+              : undefined
+          }
           // bottomMargin={80}
           // hideBackgroundOverlay
           // withoutAnimation
@@ -119,24 +88,6 @@ const styles = StyleSheet.create({
     padding: 30,
     paddingBottom: 0,
     flex: 1,
-    backgroundColor: Colors.dark80
-  },
-  buttonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    margin: 20
-  },
-  triggerButton: {
-    backgroundColor: Colors.dark10,
-    width: 100,
-    height: 30,
-    borderWidth: 1,
-    borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  triggerButtonText: {
-    color: Colors.white,
-    ...Typography.text60
+    backgroundColor: Colors.white
   }
 });

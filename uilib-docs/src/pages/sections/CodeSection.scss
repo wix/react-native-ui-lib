@@ -1,0 +1,64 @@
+@import 'src/styles/constants';
+
+.code-section {
+  padding-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .headline {
+    text-align: center;
+  }
+
+  .code-example {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+
+    @include desktop {
+      width: 55vw;
+    }
+
+    .view-docs-button {
+      margin-top: 40px;
+      align-self: center;
+    }
+  }
+
+  .tabs {
+    display: flex;
+    border: 1px solid;
+    height: 32px;
+
+    @include desktop {
+      height: 46px;
+    }
+
+    .tab {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.8em;
+      transition: 0.2s all;
+
+      &:not(:last-child) {
+        border-right: 1px solid;
+      }
+
+      &.selected {
+        background-color: $black;
+        color: $white;
+      }
+    }
+  }
+
+  .tab-page {
+    pre {
+      background-color: $dark10;
+      padding: 20px;
+      width: 100%;
+    }
+  }
+}

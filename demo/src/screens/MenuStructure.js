@@ -4,6 +4,7 @@ export const navigationData = {
     screens: [
       {title: 'Border Radius', tags: 'corener border radius circle', screen: 'unicorn.style.BorderRadiusesScreen'},
       {title: 'Colors', tags: 'palette rgb hex', screen: 'unicorn.style.ColorsScreen'},
+      {title: 'Dark Mode', tags: 'dark mode colors', screen: 'unicorn.style.DarkModeScreen'},
       {title: 'Shadows (iOS)', tags: 'shadow', screen: 'unicorn.style.ShadowsScreen'},
       {title: 'Spacings', tags: 'space margins paddings gutter', screen: 'unicorn.style.SpacingsScreen'},
       {title: 'Typography', tags: 'fonts text', screen: 'unicorn.style.TypographyScreen'}
@@ -86,6 +87,7 @@ export const navigationData = {
     title: 'Layouts & Templates',
     screens: [
       {title: 'Carousel', tags: 'carousel', screen: 'unicorn.components.CarouselScreen'},
+      {title: 'Carousel (Vertical)', tags: 'carousel', screen: 'unicorn.components.CarouselVerticalScreen'},
       {title: 'LoadingScreen', tags: 'loading screen', screen: 'unicorn.screens.LoadingScreen'},
       {title: 'Modal', tags: 'modal topbar screen', screen: 'unicorn.screens.ModalScreen'},
       {title: 'StateScreen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
@@ -149,7 +151,8 @@ export const navigationData = {
     title: 'Incubator (Experimental)',
     screens: [
       {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'},
-      {title: '(New) TextField', tags: 'text field input', screen: 'unicorn.components.IncubatorTextFieldScreen'}
+      {title: '(New) TextField', tags: 'text field input', screen: 'unicorn.components.IncubatorTextFieldScreen'},
+      {title: 'WheelPicker (Incubator)', tags: 'wheel picker spinner experimental', screen: 'unicorn.incubator.WheelPickerScreen'}
     ]
   },
   Inspirations: {

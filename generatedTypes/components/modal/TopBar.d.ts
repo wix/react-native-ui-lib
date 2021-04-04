@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleProp, TextStyle, ImageSourcePropType } from 'react-native';
-import { ButtonPropTypes } from '../../components/button';
+import { ViewProps } from '../../components/view';
+import { ButtonProps } from '../../components/button';
 export interface ModalTopBarProps {
     /**
        * title to display in the center of the top bar
@@ -13,7 +14,7 @@ export interface ModalTopBarProps {
     /**
      * done action props (Button props)
      */
-    doneButtonProps?: Omit<ButtonPropTypes, 'onPress'>;
+    doneButtonProps?: Omit<ButtonProps, 'onPress'>;
     /**
      * done action label
      */
@@ -25,11 +26,11 @@ export interface ModalTopBarProps {
     /**
      * done action callback
      */
-    onDone?: (props: any) => void;
+    onDone?: (props?: any) => void;
     /**
      * cancel action props (Button props)
      */
-    cancelButtonProps?: Omit<ButtonPropTypes, 'onPress'>;
+    cancelButtonProps?: Omit<ButtonProps, 'onPress'>;
     /**
      * cancel action label
      */
@@ -41,11 +42,15 @@ export interface ModalTopBarProps {
     /**
      * cancel action callback
      */
-    onCancel?: (props: any) => void;
+    onCancel?: (props?: any) => void;
     /**
      * whether to include status bar or not (height claculations)
      */
     includeStatusBar?: boolean;
+    /**
+     * style for the TopBar container
+     */
+    containerStyle?: ViewProps['style'];
 }
 declare const _default: React.ComponentClass<ModalTopBarProps & {
     useCustomTheme?: boolean | undefined;

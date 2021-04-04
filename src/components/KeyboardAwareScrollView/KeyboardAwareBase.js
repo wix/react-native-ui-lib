@@ -100,7 +100,7 @@ export default class KeyboardAwareBase extends Component {
   _scrollToFocusedTextInput() {
     if (this.props.getTextInputRefs) {
       const textInputRefs = this.props.getTextInputRefs();
-      textInputRefs.some((textInputRef, index, array) => {
+      textInputRefs.some((textInputRef) => {
         const isFocusedFunc = textInputRef.isFocused();
         const isFocused = isFocusedFunc && typeof isFocusedFunc === 'function' ? isFocusedFunc() : isFocusedFunc;
         if (isFocused) {
@@ -132,7 +132,7 @@ export default class KeyboardAwareBase extends Component {
     }
   }
 
-  _onKeyboardWillHide(event) {
+  _onKeyboardWillHide() {
     const keyboardHeight = this.state.keyboardHeight;
     this.setState({keyboardHeight: 0});
 

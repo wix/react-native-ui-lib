@@ -1,13 +1,13 @@
 {
   "name": "eslint-plugin-uilib",
-  "version": "1.0.27",
+  "version": "2.0.0",
   "description": "uilib set of eslint rules",
   "keywords": [
     "eslint",
     "eslintplugin",
     "eslint-plugin"
   ],
-  "author": "Tnbal Tish <inbalti@wix.com>",
+  "author": "Inbal Tish <inbalti@wix.com>",
   "license": "MIT",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

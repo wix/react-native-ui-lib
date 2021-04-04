@@ -1,14 +1,24 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&display=swap');
-@import "src/styles/constants";
-@import "src/styles/components";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import '~prismjs/themes/prism-tomorrow.css';
+@import 'src/styles/constants';
+@import 'src/styles/components';
 
 html,
 body {
   width: 100%;
   height: 100%;
   margin: 0;
-  font-family: Montserrat, Geneva, sans-serif;
+  // font-family: Montserrat, Geneva, sans-serif;
+  font-family: Poppins, sans-serif;
   -webkit-font-smoothing: antialiased;
+  font-size: 12px;
+  @include tablet {
+    font-size: 14px;
+  }
+  @include desktop {
+    font-size: 16px;
+  }
 }
 
 #___gatsby {
@@ -28,9 +38,3 @@ body {
 .inline {
   display: inline-block;
 }
-
-a {
-  color: $violet20;
-  text-decoration: none;
-}
-

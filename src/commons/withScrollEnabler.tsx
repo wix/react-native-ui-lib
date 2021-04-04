@@ -1,7 +1,5 @@
 import React, {useState, useCallback, useRef} from 'react';
-// eslint-disable-next-line no-unused-vars
 import {FlatListProps, ScrollViewProps, LayoutChangeEvent} from 'react-native';
-// eslint-disable-next-line no-unused-vars
 import forwardRef, {ForwardRefInjectedProps} from './forwardRef';
 //@ts-ignore
 import hoistStatics from 'hoist-non-react-statics';
@@ -21,9 +19,7 @@ export type WithScrollEnablerProps = {
 
 type PropTypes = ForwardRefInjectedProps & SupportedViewsProps;
 
-function withScrollEnabler<PROPS, STATICS = {}>(
-  WrappedComponent: React.ComponentType<PROPS & WithScrollEnablerProps>
-): React.ComponentType<PROPS> & STATICS {
+function withScrollEnabler<PROPS, STATICS = {}>(WrappedComponent: React.ComponentType<PROPS & WithScrollEnablerProps>): React.ComponentType<PROPS> & STATICS {
   const ScrollEnabler: React.FunctionComponent<PROPS & PropTypes> = (props: PROPS & PropTypes) => {
     const [scrollEnabled, setScrollEnabled] = useState(true);
     const contentSize = useRef(0);
@@ -36,36 +32,32 @@ function withScrollEnabler<PROPS, STATICS = {}>(
       }
     }, [scrollEnabled]);
 
-    const onContentSizeChange = useCallback(
-      (contentWidth: number, contentHeight: number) => {
-        const size = props.horizontal ? contentWidth : contentHeight;
-        if (size !== contentSize.current) {
-          contentSize.current = size;
-          if (layoutSize.current > 0) {
-            checkScroll();
-          }
+    const onContentSizeChange = useCallback((contentWidth: number, contentHeight: number) => {
+      const size = props.horizontal ? contentWidth : contentHeight;
+      if (size !== contentSize.current) {
+        contentSize.current = size;
+        if (layoutSize.current > 0) {
+          checkScroll();
         }
-      },
-      [props.horizontal, checkScroll]
-    );
+      }
+    },
+    [props.horizontal, checkScroll]);
 
-    const onLayout = useCallback(
-      (event: LayoutChangeEvent) => {
-        const {
-          nativeEvent: {
-            layout: {width, height}
-          }
-        } = event;
-        const size = props.horizontal ? width : height;
-        if (size !== layoutSize.current) {
-          layoutSize.current = size;
-          if (contentSize.current > 0) {
-            checkScroll();
-          }
+    const onLayout = useCallback((event: LayoutChangeEvent) => {
+      const {
+        nativeEvent: {
+          layout: {width, height}
         }
-      },
-      [props.horizontal, checkScroll]
-    );
+      } = event;
+      const size = props.horizontal ? width : height;
+      if (size !== layoutSize.current) {
+        layoutSize.current = size;
+        if (contentSize.current > 0) {
+          checkScroll();
+        }
+      }
+    },
+    [props.horizontal, checkScroll]);
 
     return (
       <WrappedComponent

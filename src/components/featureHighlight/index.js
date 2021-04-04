@@ -30,7 +30,7 @@ const contentViewHeight = Constants.isAndroid ? 268 : 282;
  * @important: FeatureHighlight uses a native library. You MUST add and link the native library to both iOS and Android projects. For instruction please see
  * @importantLink: https://facebook.github.io/react-native/docs/linking-libraries-ios.html
  * @extends: HighlighterOverlayView
- * @extendslink: docs/HighlighterOverlayView
+ * @extendsLink: docs/HighlighterOverlayView
  * @gif: https://media.giphy.com/media/3ohs4D5irZm5GojsDS/giphy.gif, https://media.giphy.com/media/3oxQNaDQckPZI78rWo/giphy.gif
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.js
  */
@@ -173,7 +173,8 @@ class FeatureHighlight extends BaseComponent {
       this.state.fadeAnim, // The animated value to drive
       {
         toValue, // Animate to value
-        duration: toValue ? 100 : 0 // Make it take a while
+        duration: toValue ? 100 : 0, // Make it take a while
+        useNativeDriver: true
       },).start(); // Starts the animation
   }
 

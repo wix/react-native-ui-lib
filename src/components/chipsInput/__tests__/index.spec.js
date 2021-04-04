@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {Constants} from '../../../helpers';
-import ChipsInput from '../index';
+import {ChipsInput} from '../index';
 
 describe('ChipsInput', () => {
   let uut;
@@ -59,15 +59,6 @@ describe('ChipsInput', () => {
       uut.onKeyPress(pressEvent);
       expect(uut.state.tagIndexToRemove).toBe(undefined);
       expect(removeTagSpy).not.toHaveBeenCalled();
-    });
-
-    it('should ignore key event if platform is Android', () => {
-      Constants.isAndroid = true;
-      const pressEvent = {};
-      _.set(uut.state, 'tags', [{}, {}, {}]);
-      uut.onKeyPress(pressEvent);
-      expect(uut.state.tagIndexToRemove).toBe(2);
-      Constants.isAndroid = false;
     });
 
     it('should not update state if input value is not empty', () => {

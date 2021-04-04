@@ -1,11 +1,11 @@
 import React from 'react';
-import { Animated, ViewStyle } from 'react-native';
-import { ViewPropTypes } from '../view';
+import { ViewStyle } from 'react-native';
+import { ViewProps } from '../view';
 import { TouchableOpacityProps } from '../touchableOpacity';
 import CardImage from './CardImage';
 import CardSection, { CardSectionProps } from './CardSection';
 export { CardSectionProps };
-export declare type CardPropTypes = ViewPropTypes & TouchableOpacityProps & {
+export declare type CardProps = ViewProps & TouchableOpacityProps & {
     /**
      * card custom width
      */
@@ -25,7 +25,7 @@ export declare type CardPropTypes = ViewPropTypes & TouchableOpacityProps & {
     /**
      * action for when pressing the card
      */
-    onPress?: () => void;
+    onPress?: TouchableOpacityProps['onPress'];
     /**
      * whether the card should have shadow or not
      */
@@ -62,21 +62,8 @@ export declare type CardPropTypes = ViewPropTypes & TouchableOpacityProps & {
         hideIndicator?: boolean;
     };
 };
-declare const _default: React.ComponentClass<ViewPropTypes & Pick<import("react-native").TouchableOpacityProps, "testID" | "onLayout" | "hitSlop" | "hasTVPreferredFocus" | "tvParallaxProperties" | "accessible" | "accessibilityActions" | "accessibilityLabel" | "accessibilityRole" | "accessibilityStates" | "accessibilityState" | "accessibilityHint" | "accessibilityValue" | "onAccessibilityAction" | "accessibilityComponentType" | "accessibilityLiveRegion" | "importantForAccessibility" | "accessibilityElementsHidden" | "accessibilityTraits" | "accessibilityViewIsModal" | "onAccessibilityEscape" | "onAccessibilityTap" | "onMagicTap" | "accessibilityIgnoresInvertColors" | "disabled" | "activeOpacity" | "onLongPress" | "delayLongPress" | "delayPressIn" | "delayPressOut" | "onBlur" | "onFocus" | "onPressIn" | "onPressOut" | "pressRetentionOffset"> & Partial<Record<import("../../commons/modifiers").AlignmentLiterals, boolean>> & Partial<Record<import("../../commons/modifiers").PositionLiterals, boolean>> & Partial<Record<"padding" | "paddingL" | "paddingT" | "paddingR" | "paddingB" | "paddingH" | "paddingV", boolean>> & Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & Partial<Record<"flex" | "flexG" | "flexS", boolean>> & Partial<Record<"br0" | "br10" | "br20" | "br30" | "br40" | "br50" | "br60" | "br100", boolean>> & Partial<Record<"bg", boolean>> & {
-    backgroundColor?: string | undefined;
-    throttleTime?: number | undefined;
-    throttleOptions?: {
-        leading: boolean;
-        trailing: boolean;
-    } | undefined;
-    activeBackgroundColor?: string | undefined;
-    useNative?: boolean | undefined;
-    customValue?: any; /**
-     * card custom height
-     */
-    style?: false | ViewStyle | import("react-native").RegisteredStyle<ViewStyle> | import("react-native").RecursiveArray<false | ViewStyle | import("react-native").RegisteredStyle<ViewStyle> | null | undefined> | Animated.AnimatedProps<ViewStyle> | Animated.AnimatedProps<import("react-native").RegisteredStyle<ViewStyle>> | Animated.AnimatedProps<import("react-native").RecursiveArray<false | ViewStyle | import("react-native").RegisteredStyle<ViewStyle> | null | undefined>> | null | undefined;
-    onPress?: ((props: TouchableOpacityProps) => void) | undefined;
-} & {
+export declare type CardPropTypes = CardProps;
+declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps & {
     /**
      * card custom width
      */
@@ -96,7 +83,7 @@ declare const _default: React.ComponentClass<ViewPropTypes & Pick<import("react-
     /**
      * action for when pressing the card
      */
-    onPress?: (() => void) | undefined;
+    onPress?: ((props?: any) => void) | undefined;
     /**
      * whether the card should have shadow or not
      */

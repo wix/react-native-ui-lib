@@ -1,201 +1,27 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
-import {
-  asBaseComponent,
-  forwardRef,
-  BaseComponentInjectedProps,
-  ForwardRefInjectedProps,
-  TypographyModifiers,
-  ColorsModifiers,
-  BackgroundColorModifier,
-  MarginModifiers
-} from '../../commons/new';
-//@ts-ignore
-import {Constants} from '../../helpers';
-import {Colors, Typography, BorderRadiuses} from '../../style';
+import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle} from 'react-native';
+import {asBaseComponent, forwardRef} from '../../commons/new';
+import {Constants} from 'helpers';
+import {Colors, Typography, BorderRadiuses} from 'style';
 import {extractColorValue, extractTypographyValue} from '../../commons/modifiers';
-import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
-import Text, {TextPropTypes} from '../text';
+import TouchableOpacity from '../touchableOpacity';
+import Text from '../text';
 import Image from '../image';
 
-export enum ButtonSize {
-  xSmall = 'xSmall',
-  small = 'small',
-  medium = 'medium',
-  large = 'large'
-}
+import {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonPropTypes, ButtonState, Props, DEFAULT_PROPS} from './ButtonTypes';
+export {ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonPropTypes};
 
-export enum AnimationDirection {
-  center = 'center',
-  left = 'left',
-  right = 'right'
-}
+import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE, DISABLED_COLOR} from './ButtonConstants';
 
-export type ButtonPropTypes = TouchableOpacityProps &
-  TypographyModifiers &
-  ColorsModifiers &
-  BackgroundColorModifier &
-  MarginModifiers & {
-    /**
-     * Text to show inside the button
-     */
-    label?: string;
-    /**
-     * The Button text color (inherited from Text component)
-     */
-    color?: string;
-    /**
-     * Icon image source or a callback function that returns a source
-     */
-    iconSource?: object | number | Function;
-    /**
-     * Icon image style
-     */
-    iconStyle?: StyleProp<ImageStyle>;
-    /**
-     * Should the icon be right to the label
-     */
-    iconOnRight?: boolean;
-    /**
-     * whether the icon should flip horizontally on RTL locals
-     */
-    supportRTL?: boolean;
-    /**
-     * Color of the button background
-     */
-    backgroundColor?: string;
-    /**
-     * Color of the disabled button background
-     */
-    disabledBackgroundColor?: string;
-    /**
-     * Size of the button [large, medium, small, xSmall]
-     */
-    size?: ButtonSize;
-    /**
-     * Custom border radius.
-     */
-    borderRadius?: number;
-    /**
-     * Actions handler
-     */
-    onPress?: (props: any) => void;
-    /**
-     * Disable interactions for the component
-     */
-    disabled?: boolean;
-    /**
-     * Button will have outline style
-     */
-    outline?: boolean;
-    /**
-     * The outline color
-     */
-    outlineColor?: string;
-    /**
-     * The outline width
-     */
-    outlineWidth?: number;
-    /**
-     * Button will look like a link
-     */
-    link?: boolean;
-    /**
-     * label color for when it's displayed as link
-     */
-    linkColor?: string;
-    /**
-     * Additional styles for label text
-     */
-    labelStyle?: StyleProp<TextStyle>;
-    /**
-     * Props that will be passed to the button's Text label.
-     */
-    labelProps?: TextPropTypes;
-    /**
-     * should the button act as a coast to coast button (no border radius)
-     */
-    fullWidth?: boolean;
-    /**
-     * should the button be a round button
-     */
-    round?: boolean;
-    /**
-     * Control shadow visibility (iOS-only)
-     */
-    enableShadow?: boolean;
-    /**
-     * avoid inner button padding
-     */
-    avoidInnerPadding?: boolean;
-    /**
-     * avoid minimum width constraints
-     */
-    avoidMinWidth?: boolean;
-    /**
-     * callback for getting activeBackgroundColor (e.g. (calculatedBackgroundColor, prop) => {...})
-     * better set using ThemeManager
-     */
-    getActiveBackgroundColor?: (backgroundColor: string, props: any) => string;
-    /**
-     * should animate layout change
-     * Note?: For Android you must set 'setLayoutAnimationEnabledExperimental(true)' via RN's 'UIManager'
-     */
-    animateLayout?: boolean;
-    /**
-     * the direction of the animation ('left' and 'right' will effect the button's own alignment)
-     */
-    animateTo?: AnimationDirection;
-  };
-
-export type ButtonState = {
-  size?: number;
-  borderRadius?: number;
-  isLandscape?: boolean;
-};
-
-const PADDINGS = {
-  XSMALL: 3,
-  SMALL: 4.5,
-  MEDIUM: 6.5,
-  LARGE: 9.5
-};
-const HORIZONTAL_PADDINGS = {
-  XSMALL: 11,
-  SMALL: 14,
-  MEDIUM: 16,
-  LARGE: 20
-};
-const MIN_WIDTH = {
-  XSMALL: 66,
-  SMALL: 70,
-  MEDIUM: 77,
-  LARGE: 90
-};
-const DEFAULT_SIZE = ButtonSize.large;
-const DISABLED_COLOR = Colors.dark60;
-
-type Props = ButtonPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
-
-/**
- * @description: Basic button component
- * @extends: TouchableOpacity
- * @extendslink: docs/TouchableOpacity
- * @modifiers: margin, background
- * @gif: https://media.giphy.com/media/xULW8j5WzsuPytqklq/giphy.gif
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.tsx
- */
 class Button extends PureComponent<Props, ButtonState> {
   static displayName = 'Button';
 
-  static defaultProps = {
-    iconOnRight: false
-  };
+  static defaultProps = DEFAULT_PROPS;
 
   static sizes = ButtonSize;
 
-  static animationDirection = AnimationDirection;
+  static animationDirection = ButtonAnimationDirection;
 
   // This redundant constructor for some reason fix tests :/
   // eslint-disable-next-line
@@ -269,7 +95,7 @@ class Button extends PureComponent<Props, ButtonState> {
         return disabledBackgroundColor || DISABLED_COLOR;
       }
 
-      return propsBackgroundColor || stateBackgroundColor || themeBackgroundColor || Colors.blue30;
+      return propsBackgroundColor || stateBackgroundColor || themeBackgroundColor || Colors.primary;
     }
     return 'transparent';
   }
@@ -287,9 +113,9 @@ class Button extends PureComponent<Props, ButtonState> {
 
     let color: string | undefined = Colors.white;
     if (link) {
-      color = linkColor || Colors.blue30;
+      color = linkColor || Colors.primary;
     } else if (outline) {
-      color = outlineColor || Colors.blue30;
+      color = outlineColor || Colors.primary;
     } else if (this.isIconButton) {
       color = undefined; // Colors.dark10;
     }
@@ -324,31 +150,31 @@ class Button extends PureComponent<Props, ButtonState> {
     CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.XSMALL}
       : {
-          paddingVertical: PADDINGS.XSMALL,
-          paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
-          minWidth: MIN_WIDTH.XSMALL
-        };
+        paddingVertical: PADDINGS.XSMALL,
+        paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
+        minWidth: MIN_WIDTH.XSMALL
+      };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.SMALL}
       : {
-          paddingVertical: PADDINGS.SMALL,
-          paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
-          minWidth: MIN_WIDTH.SMALL
-        };
+        paddingVertical: PADDINGS.SMALL,
+        paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
+        minWidth: MIN_WIDTH.SMALL
+      };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.MEDIUM}
       : {
-          paddingVertical: PADDINGS.MEDIUM,
-          paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
-          minWidth: MIN_WIDTH.MEDIUM
-        };
+        paddingVertical: PADDINGS.MEDIUM,
+        paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
+        minWidth: MIN_WIDTH.MEDIUM
+      };
     CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.LARGE}
       : {
-          paddingVertical: PADDINGS.LARGE,
-          paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
-          minWidth: MIN_WIDTH.LARGE
-        };
+        paddingVertical: PADDINGS.LARGE,
+        paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
+        minWidth: MIN_WIDTH.LARGE
+      };
 
     if (outline) {
       _.forEach(CONTAINER_STYLE_BY_SIZE, style => {
@@ -388,7 +214,7 @@ class Button extends PureComponent<Props, ButtonState> {
     if ((outline || outlineColor) && !link) {
       outlineStyle = {
         borderWidth: outlineWidth || 1,
-        borderColor: outlineColor || Colors.blue30
+        borderColor: outlineColor || Colors.primary
       };
 
       if (disabled) {
@@ -469,7 +295,7 @@ class Button extends PureComponent<Props, ButtonState> {
       if (typeof iconSource === 'function') {
         return iconSource(iconStyle);
       } else {
-        return <Image source={iconSource} supportRTL={supportRTL} style={iconStyle} />;
+        return <Image source={iconSource} supportRTL={supportRTL} style={iconStyle}/>;
       }
     }
     return null;
@@ -572,4 +398,4 @@ function createStyles() {
 
 export {Button}; // For tests
 
-export default asBaseComponent<ButtonPropTypes, typeof Button>(forwardRef<Props>(Button));
+export default asBaseComponent<ButtonProps, typeof Button>(forwardRef<Props>(Button));

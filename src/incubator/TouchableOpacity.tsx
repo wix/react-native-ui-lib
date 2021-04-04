@@ -1,10 +1,11 @@
 // TODO: support hitSlop
 import React, {PureComponent} from 'react';
-import {processColor, StyleSheet, ViewStyle} from 'react-native';
+import {processColor, StyleSheet, LayoutChangeEvent} from 'react-native';
 import _ from 'lodash';
-import Reanimated, {Easing} from 'react-native-reanimated';
+import Reanimated, {Easing as _Easing, EasingNode} from 'react-native-reanimated';
 import {TapGestureHandler, LongPressGestureHandler, State, LongPressGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../commons/new';
+import {ViewProps} from '../components/view';
 
 const {
   Clock,
@@ -14,7 +15,8 @@ const {
   or,
   eq,
   neq,
-  interpolate,
+  interpolate: _interpolate,
+  interpolateNode,
   Extrapolate,
   Value,
   call,
@@ -26,7 +28,10 @@ const {
   stopClock
 } = Reanimated;
 
-type TouchableOpacityPropTypes = {
+const Easing = EasingNode || _Easing;
+const interpolate = interpolateNode || _interpolate;
+
+export type TouchableOpacityProps = {
   /**
    * Background color
    */
@@ -54,7 +59,7 @@ type TouchableOpacityPropTypes = {
   /**
    * Pass controlled pressState to track gesture state changes
    */
-  pressState?: object;
+  pressState?: State;
   /**
    * If true, disable all interactions for this component.
    */
@@ -62,16 +67,19 @@ type TouchableOpacityPropTypes = {
   /**
    * Pass custom style
    */
-  style?: ViewStyle;
+  style?: ViewProps['style'];
+  onLayout?: (event: LayoutChangeEvent) => void;
+  testID?: string;
 };
 
+type Props = TouchableOpacityProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
 
 /**
  * @description: a Better, enhanced TouchableOpacity component
  * @modifiers: flex, margin, padding, background
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/TouchableOpacityScreen.js
  */
-class TouchableOpacity extends PureComponent<TouchableOpacityPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps> {
+class TouchableOpacity extends PureComponent<Props> {
   static displayName = 'Incubator.TouchableOpacity';
 
   static defaultProps = {
@@ -91,6 +99,7 @@ class TouchableOpacity extends PureComponent<TouchableOpacityPropTypes & BaseCom
   _scale = runTiming(this.clock, this.pressState, this.props.activeScale || 1, 1);
   _opacity = runTiming(this.clock, this.pressState, this.props.activeOpacity || 0.2, 1);
   _color = cond(eq(this.pressState, State.BEGAN),
+    // @ts-expect-error
     processColor(this.props.feedbackColor || this.backgroundColor),
     processColor(this.backgroundColor));
 
@@ -217,4 +226,4 @@ function runTiming(clock: any, gestureState: any, initialValue: number, endValue
   ]);
 }
 
-export default asBaseComponent<TouchableOpacityPropTypes>(forwardRef(TouchableOpacity));
+export default asBaseComponent<TouchableOpacityProps>(forwardRef<Props>(TouchableOpacity));

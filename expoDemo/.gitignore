@@ -54,3 +54,8 @@ buck-out/
 
 # Bundle artifact
 *.jsbundle
+
+# Expo
+.expo
+__generated__
+web-build

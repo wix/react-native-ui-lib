@@ -1,9 +1,17 @@
 import React, {PureComponent} from 'react';
-import {View as RNView, SafeAreaView, Animated, ViewProps, StyleProp, ViewStyle} from 'react-native';
-import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps, ContainerModifiers} from '../../commons/new';
+import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle} from 'react-native';
+import Reanimated from 'react-native-reanimated';
+import {
+  asBaseComponent,
+  forwardRef,
+  BaseComponentInjectedProps,
+  ForwardRefInjectedProps,
+  ContainerModifiers
+} from '../../commons/new';
 import Constants from '../../helpers/Constants';
 
-export interface ViewPropTypes extends Omit<ViewProps, 'style'>, ContainerModifiers {
+
+export interface ViewProps extends Omit<RNViewProps, 'style'>, ContainerModifiers {
   /**
    * If true, will render as SafeAreaView
    */
@@ -12,6 +20,10 @@ export interface ViewPropTypes extends Omit<ViewProps, 'style'>, ContainerModifi
    * Use Animate.View as a container
    */
   animated?: boolean;
+  /**
+    * Use Animate.View (from react-native-reanimated) as a container
+   */
+  reanimated?: boolean;
   /**
    * Turn off accessibility for this view and its nested children
    */
@@ -34,7 +46,9 @@ export interface ViewPropTypes extends Omit<ViewProps, 'style'>, ContainerModifi
   backgroundColor?: string;
   style?: StyleProp<ViewStyle | Animated.AnimatedProps<ViewStyle>>;
 }
-type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & ViewPropTypes;
+export type ViewPropTypes = ViewProps; //TODO: remove after ComponentPropTypes deprecation;
+
+type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps & ViewProps;
 
 interface ViewState {
   ready: boolean;
@@ -43,7 +57,7 @@ interface ViewState {
 /**
  * @description: An enhanced View component
  * @extends: View
- * @extendslink: https://facebook.github.io/react-native/docs/view.html
+ * @extendsLink: https://facebook.github.io/react-native/docs/view.html
  * @modifiers: margins, paddings, alignments, background, borderRadius
  */
 class View extends PureComponent<PropsTypes, ViewState> {
@@ -54,7 +68,9 @@ class View extends PureComponent<PropsTypes, ViewState> {
     super(props);
 
     this.Container = props.useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
-    if (props.animated) {
+    if (props.reanimated) {
+      this.Container = Reanimated.createAnimatedComponent(this.Container);
+    } else if (props.animated) {
       this.Container = Animated.createAnimatedComponent(this.Container);
     }
 
@@ -88,11 +104,13 @@ class View extends PureComponent<PropsTypes, ViewState> {
     const {
       modifiers,
       style,
+      /* eslint-disable */
       left,
       top,
       right,
       bottom,
       flex: propsFlex,
+      /* eslint-enable */
       forwardedRef,
       inaccessible,
       ...others
@@ -122,4 +140,4 @@ class View extends PureComponent<PropsTypes, ViewState> {
   }
 }
 
-export default asBaseComponent<ViewPropTypes>(forwardRef(View));
+export default asBaseComponent<ViewProps>(forwardRef(View));

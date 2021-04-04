@@ -1,6 +1,7 @@
 import React, { PureComponent, GetDerivedStateFromProps } from 'react';
 import { BaseComponentInjectedProps, ForwardRefInjectedProps } from '../../commons/new';
-export declare type RadioGroupPropTypes = {
+import { ViewProps } from '../view';
+export declare type RadioGroupProps = ViewProps & {
     /**
      * The initial value of the selected radio button
      */
@@ -8,12 +9,13 @@ export declare type RadioGroupPropTypes = {
     /**
      * Invoked once when value changes, by selecting one of the radio buttons in the group
      */
-    onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void);
+    onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void) | ((value: any) => void);
 };
+export declare type RadioGroupPropTypes = RadioGroupProps;
 interface RadioGroupState {
-    value?: RadioGroupPropTypes['initialValue'];
+    value?: RadioGroupProps['initialValue'];
 }
-declare type Props = RadioGroupPropTypes & BaseComponentInjectedProps & ForwardRefInjectedProps;
+declare type Props = RadioGroupProps & BaseComponentInjectedProps & ForwardRefInjectedProps;
 /**
  * Wrap a group of Radio Buttons to automatically control their selection
  */
@@ -26,11 +28,20 @@ declare class RadioGroup extends PureComponent<Props, RadioGroupState> {
         value: string | number | boolean | undefined;
         onValueChange: (value: string | number | boolean | undefined) => void;
     };
-    onValueChange: (value: RadioGroupPropTypes['initialValue']) => void;
+    onValueChange: (value: RadioGroupProps['initialValue']) => void;
     render(): JSX.Element;
 }
 export { RadioGroup };
-declare const _default: React.ComponentClass<RadioGroupPropTypes & {
+declare const _default: React.ComponentClass<ViewProps & {
+    /**
+     * The initial value of the selected radio button
+     */
+    initialValue?: string | number | boolean | undefined;
+    /**
+     * Invoked once when value changes, by selecting one of the radio buttons in the group
+     */
+    onValueChange?: ((value: string) => void) | ((value: number) => void) | ((value: boolean) => void) | ((value: any) => void) | undefined;
+} & {
     useCustomTheme?: boolean | undefined;
 }, any>;
 export default _default;

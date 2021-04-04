@@ -1,10 +1,10 @@
-import { StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, PointPropType } from 'react-native';
+import { ScrollViewProps, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, PointPropType, Animated } from 'react-native';
 import { PageControlProps } from '../pageControl';
 export declare enum PageControlPosition {
     OVER = "over",
     UNDER = "under"
 }
-export interface CarouselProps {
+export interface CarouselProps extends ScrollViewProps {
     /**
      * the first page to start with
      */
@@ -13,6 +13,10 @@ export interface CarouselProps {
      * the page width (all pages should have the same width). Does not work if passing 'loop' prop
      */
     pageWidth?: number;
+    /**
+     * the page height (all pages should have the same height).
+     */
+    pageHeight?: number;
     /**
      * the spacing between the items
      */
@@ -27,7 +31,7 @@ export interface CarouselProps {
      */
     containerPaddingVertical?: number;
     /**
-     * if true, will have infinite scroll
+     * if true, will have infinite scroll (do not turn on for vertical scrolling)
      */
     loop?: boolean;
     /**
@@ -78,12 +82,23 @@ export interface CarouselProps {
      * the amount of ms to wait before switching to the next page, in case autoplay is on
      */
     autoplayInterval?: number;
+    /**
+     * When true the scroll view's children are arranged horizontally in a row
+     * instead of vertically in a column. The default value is true.
+     */
+    horizontal?: boolean | null;
+    /**
+     * Pass to attach to ScrollView's Animated.event in order to animated elements base on
+     * Carousel scroll offset (pass new Animated.ValueXY())
+     */
+    animatedScrollOffset?: Animated.ValueXY;
 }
 export interface CarouselState {
     containerWidth?: number;
     currentPage: number;
     currentStandingPage?: number;
     pageWidth: number;
+    pageHeight: number;
     initialOffset: PointPropType;
     prevProps: CarouselProps;
 }

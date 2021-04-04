@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import View, {ViewPropTypes} from '../view';
+import View, {ViewProps} from '../view';
 import asPanViewConsumer from './asPanViewConsumer';
 import {PanLocationProps, PanAmountsProps} from './panningProvider';
 
-export interface PanResponderViewPropTypes extends ViewPropTypes {
+export interface PanResponderViewProps extends ViewProps {
     /**
      * Will be called with the current location ({left, top}) when the pan has ended
      */
@@ -18,21 +18,23 @@ export interface PanResponderViewPropTypes extends ViewPropTypes {
      */
     isAnimated?: boolean;
 }
+export type PanResponderViewPropTypes = PanResponderViewProps; //TODO: remove after ComponentPropTypes deprecation;
 
-interface PanResponderPropTypes {
+
+interface PanResponderProps {
   isPanning: boolean;
   dragDeltas: PanAmountsProps;
 }
 
-interface Props extends PanResponderViewPropTypes {
-  context: PanResponderPropTypes;
+interface Props extends PanResponderViewProps {
+  context: PanResponderProps;
 }
 
 /**
  * @description: panResponderView component created to making listening to swipe and drag events easier.
  * @notes: Has to be used as a child of a PanningProvider that also has a PanListenerView.
  *         The PanListenerView is the one that sends the drag\swipe events.
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PanResponderScreen.js
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PanResponderScreen.tsx
  */
 class PanResponderView extends PureComponent<Props> {
   static displayName = 'PanResponderView';
@@ -104,4 +106,4 @@ class PanResponderView extends PureComponent<Props> {
   }
 }
 
-export default asPanViewConsumer<PanResponderViewPropTypes>(PanResponderView);
+export default asPanViewConsumer<PanResponderViewProps>(PanResponderView);

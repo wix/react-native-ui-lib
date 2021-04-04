@@ -1,7 +1,7 @@
 import React from 'react';
-import { TextStyle, ImageSourcePropType, ImageStyle, ViewProps } from 'react-native';
-import { RadioGroupContextPropTypes } from './RadioGroupContext';
-export declare type RadioButtonPropTypes = RadioGroupContextPropTypes & ViewProps & {
+import { TextStyle, StyleProp, ImageSourcePropType, ImageStyle, ViewStyle, ViewProps } from 'react-native';
+import { RadioGroupContextProps } from './RadioGroupContext';
+export declare type RadioButtonProps = RadioGroupContextProps & ViewProps & {
     /**
      * The identifier value of the radio button. must be different than other RadioButtons in the same group
      */
@@ -51,11 +51,16 @@ export declare type RadioButtonPropTypes = RadioGroupContextPropTypes & ViewProp
      */
     iconOnRight?: boolean;
     /**
-      * Should the content be rendered right to the button
-      */
+     * Should the content be rendered right to the button
+     */
     contentOnRight?: boolean;
+    /**
+     * Additional styling for the container
+     */
+    containerStyle?: StyleProp<ViewStyle>;
 };
-declare const _default: React.ComponentClass<RadioGroupContextPropTypes & ViewProps & {
+export declare type RadioButtonPropTypes = RadioButtonProps;
+declare const _default: React.ComponentClass<RadioGroupContextProps & ViewProps & {
     /**
      * The identifier value of the radio button. must be different than other RadioButtons in the same group
      */
@@ -105,9 +110,13 @@ declare const _default: React.ComponentClass<RadioGroupContextPropTypes & ViewPr
      */
     iconOnRight?: boolean | undefined;
     /**
-      * Should the content be rendered right to the button
-      */
+     * Should the content be rendered right to the button
+     */
     contentOnRight?: boolean | undefined;
+    /**
+     * Additional styling for the container
+     */
+    containerStyle?: StyleProp<ViewStyle>;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any>;

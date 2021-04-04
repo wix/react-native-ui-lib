@@ -1,6 +1,6 @@
 import React, { PureComponent, RefObject } from 'react';
 import { Animated, ViewStyle, TextStyle } from 'react-native';
-import Swipeable, { PropType as SwipeableProps } from './Swipeable';
+import Swipeable, { SwipeableProps } from './Swipeable';
 interface ItemProps {
     width?: number;
     background?: string;
@@ -11,7 +11,7 @@ interface ItemProps {
     style?: ViewStyle;
     testID?: string;
 }
-interface DrawerProps {
+interface Props {
     /**
      * The drawer animation bounciness
      */
@@ -92,14 +92,32 @@ interface DrawerProps {
      * Style
      */
     style?: ViewStyle;
+    /**
+     * Callback for open action
+     */
+    onSwipeableWillOpen?: Function;
+    /**
+     * Callback for close action
+     */
+    onSwipeableWillClose?: Function;
+    /**
+     * Custom value of any type to pass on to the component and receive back in the action callbacks
+     */
+    customValue?: any;
+    /**
+     * Used as testing identifier
+     */
+    testID?: string;
 }
+export declare type DrawerProps = Props;
+export declare type DrawerItemProps = ItemProps;
 /**
  * @description: Drawer Component
  * @important: If your app works with RNN, your screen must be wrapped
  * with gestureHandlerRootHOC from 'react-native-gesture-handler'. see
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
-declare class Drawer extends PureComponent<DrawerProps> {
+declare class Drawer extends PureComponent<Props> {
     static displayName: string;
     static defaultProps: {
         itemsTintColor: string;
@@ -137,7 +155,7 @@ declare class Drawer extends PureComponent<DrawerProps> {
     private renderAction;
     render(): JSX.Element;
 }
-declare const _default: React.ComponentClass<DrawerProps & {
+declare const _default: React.ComponentClass<Props & {
     useCustomTheme?: boolean | undefined;
 }, any> & typeof Drawer;
 export default _default;

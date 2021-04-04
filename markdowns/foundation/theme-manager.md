@@ -3,18 +3,19 @@ index: 7
 path: "/foundation/theme-manager"
 title: "Theme Manager"
 ---
-Use the `ThemeManager` to set default global behaviour for your app. 
+Use the `ThemeManager` to set default global behavior for your app. 
 
-**setComponentTheme**
+#### setComponentTheme
 
-Set default props for a component by passing an object or a callback (for dynamic, runtime default props)
+Set default props for a component by passing an object or a callback (for dynamic, runtime default props)  
+The default value will be overridden if a prop is being passed to the component instance. (See `setComponentForcedTheme` for that)
 
 - `ThemeManager.setComponentTheme(componentName, defaultPropsObject);`
 - `ThemeManager.setComponentTheme(componentName, componentProps => newDefaultPropsObject);`
 
-example
+Example
 
-```
+```js
 import {ThemeManager} from 'react-native-ui-lib';
 
 ThemeManager.setComponentTheme('Text', {
@@ -26,9 +27,22 @@ ThemeManager.setComponentTheme('Text', {
 ThemeManager.setComponentTheme('Button', (props, context) => {
 
   return {
-    backgroundColor: props.outline ? 'black' : 'green' , // this will apply a different backgroundColor depends if the Button is an outline or not
+    // this will apply a different backgroundColor
+    // depends if the Button is an outline or not
+    backgroundColor: props.outline ? 'black' : 'green',
   };
 });
 ```
 
+#### setComponentForcedTheme
+Same as `setComponentTheme` only it can't be overridden by props passed to the component. 
 
+Example
+
+```js
+ThemeManager.setComponentForcedTheme('Card', (props, context) => {
+  return {
+    containerStyle: [styles.defaultContainerStyle, props.containerStyle]
+  };
+});
+```

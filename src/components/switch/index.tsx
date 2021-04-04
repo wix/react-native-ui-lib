@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, Animated, Easing, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, ColorValue} from 'react-native';
 import {Constants} from '../../helpers';
 import {Colors, BorderRadiuses} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -35,19 +35,19 @@ export type SwitchProps = {
   /**
    * The Switch background color when it's turned on
    */
-  onColor?: string;
+  onColor?: ColorValue;
   /**
    * The Switch background color when it's turned off
    */
-  offColor?: string;
+  offColor?: ColorValue;
   /**
    * The Switch background color when it's disabled
    */
-  disabledColor?: string;
+  disabledColor?: ColorValue;
   /**
    * The Switch's thumb color
    */
-  thumbColor?: string;
+  thumbColor?: ColorValue;
   /**
    * The Switch's thumb size (width & height)
    */
@@ -55,7 +55,7 @@ export type SwitchProps = {
   /**
    * The Switch's thumb style
    */
-  thumbStyle?: object | number | []; 
+  thumbStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>;
   testID?: string; 
 }
@@ -171,12 +171,12 @@ class Switch extends Component<SwitchProps> {
 function createStyles({
   width = DEFAULT_WIDTH,
   height = DEFAULT_HEIGHT,
-  onColor = Colors.blue30,
-  offColor = Colors.blue60,
+  onColor = Colors.primary,
+  offColor = Colors.getColorTint(Colors.primary, 60),
   disabledColor = Colors.dark70,
   thumbColor = Colors.white,
   thumbSize = DEFAULT_THUMB_SIZE
-}) {
+}: SwitchProps) {
   return StyleSheet.create({
     switch: {
       width,
