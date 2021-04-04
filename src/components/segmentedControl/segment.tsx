@@ -19,6 +19,7 @@ export type SegmentItemProps = {
    * An icon for the segment.
    */
   iconStyle?: StyleProp<ImageStyle>;
+  iconOnRight?: boolean;
 };
 
 export type SegmentProps = SegmentItemProps & {
@@ -58,11 +59,16 @@ const Segment = (props: SegmentProps) => {
     segmentOnLayout,
     onPress,
     unActiveColor,
-    index
+    index,
+    iconOnRight
   } = props;
 
   const segmentedColor = isSelected ? activeColor : unActiveColor;
   const segmentStyle = [styles.segment, {borderColor: segmentedColor}];
+
+  const renderIcon = () => {
+    return iconSource && <Image source={iconSource} style={[{tintColor: segmentedColor}, iconStyle]}/>;
+  };
 
   return (
     <TouchableOpacity
@@ -71,12 +77,13 @@ const Segment = (props: SegmentProps) => {
       onPress={() => onPress(index)}
       row
     >
+      {!iconOnRight && renderIcon()}
       {title && (
         <Text text90 numberOfLines={1} color={segmentedColor}>
           {title}
         </Text>
       )}
-      {iconSource && <Image source={iconSource} style={[{tintColor: segmentedColor}, iconStyle]}/>}
+      {iconOnRight && renderIcon()}
     </TouchableOpacity>
   );
 };

@@ -13,6 +13,7 @@ export declare type SegmentItemProps = {
      * An icon for the segment.
      */
     iconStyle?: StyleProp<ImageStyle>;
+    iconOnRight?: boolean;
 };
 export declare type SegmentProps = SegmentItemProps & {
     /**

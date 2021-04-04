@@ -34,10 +34,6 @@ export type SegmentedControlProps = {
    */
   borderRadius?: number;
   /**
-   * The segmentedControl borderRadius
-   */
-  containerBorderRadius?: number;
-  /**
    * The background color of the segmentedControl
    */
   backgroundColor?: string;
@@ -46,6 +42,9 @@ export type SegmentedControlProps = {
    */
   activeBackgroundColor?: string;
   unActiveColor?: string;
+  outlineColor?: string;
+  outlineWidth?: number;
+  iconOnRight?: boolean;
   style?: StyleProp<ViewStyle>;
   testID?: string;
 };
@@ -61,11 +60,12 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     style,
     labels,
     activeColor = Colors.primary,
-    containerBorderRadius = BorderRadiuses.br100,
     borderRadius = BorderRadiuses.br100,
     backgroundColor = Colors.grey80,
     activeBackgroundColor = Colors.white,
-    unActiveColor = Colors.grey20
+    unActiveColor = Colors.grey20,
+    outlineColor = Colors.grey60,
+    outlineWidth = BORDER_WIDTH
   } = props;
   const [selectedSegment, setSelectedSegment] = useState(-1);
 
@@ -102,7 +102,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     if (segmentsCounter.current === labels?.length) {
       const left = interpolate(animatedValue, {
         inputRange: _.times(segmentsCounter.current),
-        outputRange: _.map(segments.current, segment => segment.x - BORDER_WIDTH)
+        outputRange: _.map(segments.current, segment => segment.x - outlineWidth)
       });
 
       const width = interpolate(animatedValue, {
@@ -118,12 +118,20 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   const animatedStyle = getAnimatedStyle();
 
   return (
-    <View row center style={[styles.container, style, {borderRadius: containerBorderRadius, backgroundColor}]}>
+    <View
+      row
+      center
+      style={[
+        styles.container,
+        style,
+        {borderRadius, backgroundColor, borderColor: outlineColor, borderWidth: outlineWidth}
+      ]}
+    >
       <Reanimated.View
         style={[
           styles.selectedSegment,
           animatedStyle,
-          {borderColor: activeColor, borderRadius, backgroundColor: activeBackgroundColor}
+          {borderColor: activeColor, borderRadius, backgroundColor: activeBackgroundColor, borderWidth: outlineWidth}
         ]}
       />
       {_.map(labels, (_value, index) => {
@@ -132,7 +140,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
             key={index}
             segmentOnLayout={onLayout}
             index={index}
-            onPress={index => onSegmentPress(index)}
+            onPress={onSegmentPress}
             isSelected={selectedSegment === index}
             activeColor={activeColor}
             unActiveColor={unActiveColor}
@@ -148,13 +156,11 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.grey80,
     height: Spacings.s7,
-    borderColor: Colors.grey60,
-    borderWidth: BORDER_WIDTH
+    borderColor: Colors.grey60
   },
   selectedSegment: {
     height: Spacings.s7 - 2 * BORDER_WIDTH,
     position: 'absolute',
-    borderWidth: BORDER_WIDTH,
     backgroundColor: Colors.white
   },
   segment: {

@@ -28,7 +28,8 @@ const SegmentedControlScreen = () => {
             {
               title: 'Very Long Label with icon',
               iconSource: Assets.icons.search,
-              iconStyle: {marginLeft: Spacings.s1, width: 16, height: 16}
+              iconStyle: {marginLeft: Spacings.s1, width: 16, height: 16},
+              iconOnRight: true
             },
             {title: 'Short'}
           ]}
@@ -38,7 +39,6 @@ const SegmentedControlScreen = () => {
           style={styles.container}
           labels={[{title: 'With'}, {title: 'Custom'}, {title: 'Colors'}]}
           activeColor={Colors.grey10}
-          containerBorderRadius={BorderRadiuses.br20}
           borderRadius={BorderRadiuses.br20}
           backgroundColor={Colors.grey10}
           activeBackgroundColor={Colors.grey40}

@@ -23,10 +23,6 @@ export declare type SegmentedControlProps = {
      */
     borderRadius?: number;
     /**
-     * The segmentedControl borderRadius
-     */
-    containerBorderRadius?: number;
-    /**
      * The background color of the segmentedControl
      */
     backgroundColor?: string;
@@ -35,6 +31,9 @@ export declare type SegmentedControlProps = {
      */
     activeBackgroundColor?: string;
     unActiveColor?: string;
+    outlineColor?: string;
+    outlineWidth?: number;
+    iconOnRight?: boolean;
     style?: StyleProp<ViewStyle>;
     testID?: string;
 };
