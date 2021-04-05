@@ -8,7 +8,8 @@ import {
   TouchableOpacityProps,
   ViewStyle,
   TextStyle,
-  ImageStyle
+  ImageStyle,
+  TextProps
 } from 'react-native';
 import {Colors, Spacings} from '../../style';
 //@ts-ignore
@@ -71,6 +72,10 @@ export interface CheckboxProps extends TouchableOpacityProps {
    * The style of the label
    */
   labelStyle?: StyleProp<TextStyle>;
+  /**
+   * Props that will be passed to the checkbox Text label.
+   */
+  labelProps?: TextProps;
   /**
    * Additional styling
    */
@@ -236,11 +241,11 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   }
 
   render() {
-    const {label, labelStyle, containerStyle} = this.props;
+    const {label, labelStyle, containerStyle, labelProps} = this.props;
     return label ? (
       <View row centerV style={[containerStyle]}>
         {this.renderCheckbox()}
-        <Text style={[this.styles.checkboxLabel, labelStyle]} onPress={this.onPress}>
+        <Text {...labelProps} style={[this.styles.checkboxLabel, labelStyle]} onPress={this.onPress}>
           {label}
         </Text>
       </View>
