@@ -3,13 +3,17 @@ import { StyleProp, ViewStyle } from 'react-native';
 import { SegmentItemProps } from './segment';
 export declare type SegmentedControlProps = {
     /**
-     * Array on segment labels.
+     * Array on segments.
      */
-    labels?: SegmentItemProps[];
+    segments?: SegmentItemProps[];
     /**
-     * The color of the active segment.
+     * The color of the active segment (label and outline).
      */
     activeColor?: string;
+    /**
+     * The color of the inactive segments (label).
+     */
+    inActiveColor?: string;
     /**
      * Callback for when index has change.
      */
@@ -23,18 +27,29 @@ export declare type SegmentedControlProps = {
      */
     borderRadius?: number;
     /**
-     * The background color of the segmentedControl
+     * The background color of the inactive segments
      */
     backgroundColor?: string;
     /**
      * The background color of the active segment
      */
     activeBackgroundColor?: string;
-    unActiveColor?: string;
+    /**
+     * The color of the segmentedControl outline
+     */
     outlineColor?: string;
+    /**
+     * The width of the segments
+     */
     outlineWidth?: number;
+    /**
+     * Should the icon be on right of the label
+     */
     iconOnRight?: boolean;
-    style?: StyleProp<ViewStyle>;
+    /**
+     * Additional spacing styles for the container
+     */
+    containerStyle?: StyleProp<ViewStyle>;
     testID?: string;
 };
 declare const _default: React.ComponentClass<SegmentedControlProps & {

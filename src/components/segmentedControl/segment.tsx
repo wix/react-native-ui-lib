@@ -8,9 +8,9 @@ import Image from '../image';
 
 export type SegmentItemProps = {
   /**
-   * The title of the segment.
+   * The label of the segment.
    */
-  title?: string;
+  label?: string;
   /**
    * An icon for the segment.
    */
@@ -19,6 +19,9 @@ export type SegmentItemProps = {
    * An icon for the segment.
    */
   iconStyle?: StyleProp<ImageStyle>;
+  /**
+   * Should the icon be on right of the label
+   */
   iconOnRight?: boolean;
 };
 
@@ -28,10 +31,13 @@ export type SegmentProps = SegmentItemProps & {
    */
   isSelected?: boolean;
   /**
-   * The color of the active segment.
+   * The color of the active segment (label and outline).
    */
   activeColor?: string;
-  unActiveColor?: string;
+  /**
+   * The color of the inactive segment (label).
+   */
+  inActiveColor?: string;
   /**
    * Callback for when segment has pressed.
    */
@@ -52,18 +58,18 @@ export type SegmentProps = SegmentItemProps & {
 const Segment = (props: SegmentProps) => {
   const {
     activeColor = Colors.primary,
-    title,
+    label,
     iconSource,
     iconStyle,
     isSelected,
     segmentOnLayout,
     onPress,
-    unActiveColor,
+    inActiveColor,
     index,
     iconOnRight
   } = props;
 
-  const segmentedColor = isSelected ? activeColor : unActiveColor;
+  const segmentedColor = isSelected ? activeColor : inActiveColor;
   const segmentStyle = [styles.segment, {borderColor: segmentedColor}];
 
   const renderIcon = () => {
@@ -78,9 +84,9 @@ const Segment = (props: SegmentProps) => {
       row
     >
       {!iconOnRight && renderIcon()}
-      {title && (
+      {label && (
         <Text text90 numberOfLines={1} color={segmentedColor}>
-          {title}
+          {label}
         </Text>
       )}
       {iconOnRight && renderIcon()}

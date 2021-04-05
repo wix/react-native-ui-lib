@@ -12,37 +12,37 @@ const SegmentedControlScreen = () => {
       <View flex center>
         <SegmentedControl
           onChangeIndex={(index: number) => onChangeIndex('first', index)}
-          labels={[{title: 'Left'}, {title: 'Right'}]}
+          segments={[{label: 'Left'}, {label: 'Right'}]}
         />
         <SegmentedControl
           onChangeIndex={(index: number) => onChangeIndex('second', index)}
-          style={styles.container}
-          labels={[{title: '1'}, {title: '2'}, {title: '3'}, {title: Assets.emojis.airplane}, {title: '5'}]}
+          containerStyle={styles.container}
+          segments={[{label: '1'}, {label: '2'}, {label: '3'}, {label: Assets.emojis.airplane}, {label: '5'}]}
           initialIndex={2}
         />
         <SegmentedControl
           onChangeIndex={(index: number) => onChangeIndex('third', index)}
-          style={styles.container}
+          containerStyle={styles.container}
           activeColor={Colors.red30}
-          labels={[
+          segments={[
             {
-              title: 'Very Long Label with icon',
+              label: 'Very Long Label with icon',
               iconSource: Assets.icons.search,
               iconStyle: {marginLeft: Spacings.s1, width: 16, height: 16},
               iconOnRight: true
             },
-            {title: 'Short'}
+            {label: 'Short'}
           ]}
         />
         <SegmentedControl
           onChangeIndex={(index: number) => onChangeIndex('forth', index)}
-          style={styles.container}
-          labels={[{title: 'With'}, {title: 'Custom'}, {title: 'Colors'}]}
+          containerStyle={styles.container}
+          segments={[{label: 'With'}, {label: 'Custom'}, {label: 'Colors'}]}
           activeColor={Colors.grey10}
           borderRadius={BorderRadiuses.br20}
           backgroundColor={Colors.grey10}
           activeBackgroundColor={Colors.grey40}
-          unActiveColor={Colors.grey70}
+          inActiveColor={Colors.grey70}
         />
       </View>
       <Text text40 dark10>

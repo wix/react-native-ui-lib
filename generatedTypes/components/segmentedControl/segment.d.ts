@@ -2,9 +2,9 @@ import React from 'react';
 import { LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp } from 'react-native';
 export declare type SegmentItemProps = {
     /**
-     * The title of the segment.
+     * The label of the segment.
      */
-    title?: string;
+    label?: string;
     /**
      * An icon for the segment.
      */
@@ -13,6 +13,9 @@ export declare type SegmentItemProps = {
      * An icon for the segment.
      */
     iconStyle?: StyleProp<ImageStyle>;
+    /**
+     * Should the icon be on right of the label
+     */
     iconOnRight?: boolean;
 };
 export declare type SegmentProps = SegmentItemProps & {
@@ -21,10 +24,13 @@ export declare type SegmentProps = SegmentItemProps & {
      */
     isSelected?: boolean;
     /**
-     * The color of the active segment.
+     * The color of the active segment (label and outline).
      */
     activeColor?: string;
-    unActiveColor?: string;
+    /**
+     * The color of the inactive segment (label).
+     */
+    inActiveColor?: string;
     /**
      * Callback for when segment has pressed.
      */
@@ -44,10 +50,13 @@ declare const _default: React.ComponentClass<SegmentItemProps & {
      */
     isSelected?: boolean | undefined;
     /**
-     * The color of the active segment.
+     * The color of the active segment (label and outline).
      */
     activeColor?: string | undefined;
-    unActiveColor?: string | undefined;
+    /**
+     * The color of the inactive segment (label).
+     */
+    inActiveColor?: string | undefined;
     /**
      * Callback for when segment has pressed.
      */
