@@ -1,13 +1,90 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {Alert} from 'react-native';
-import {Chip, Colors, Spacings, Text, Typography, View} from 'react-native-ui-lib';
+import {Chip, Colors, Spacings, Text, Typography, View, Dialog, WheelPickerDialog} from 'react-native-ui-lib';
 
 const avatarImage = {
   uri: 'https://randomuser.me/api/portraits/women/24.jpg'
 };
 const checkmark = require('../../assets/icons/check-small.png');
+const chevron = require('../../assets/icons/chevronDown.png');
+
 
 export default class ChipScreen extends Component {
+
+  colors = [
+    {value: Colors.red10, label: 'Red'},
+    {value: Colors.blue10, label: 'Blue'},
+    {value: Colors.purple10, label: 'Purple'},
+    {value: Colors.green10, label: 'Green'},
+    {value: Colors.yellow10, label: 'Yellow'}
+  ];
+
+  state = {
+    showDialog: false,
+    selectedValue: this.colors[2].label
+  };
+
+  toggleDialog = (showDialog: boolean) => {
+    this.setState({showDialog});
+  };
+
+  openDialog = () => {
+    this.toggleDialog(true);
+  }
+
+  closeDialog = () => {
+    this.toggleDialog(false);
+  };
+
+  onSelect = (itemValue: string) => {
+    const values = _.filter(this.colors, {value: itemValue});
+    if (values.length > 0) {
+      this.setState({selectedValue: values[0].label});
+    }
+    this.closeDialog();
+  };
+
+  renderItem = ({item: color}) => {
+    return (
+      <Text text50 margin-20 color={color.value}>
+        {color.label}
+      </Text>
+    );
+  };
+
+  renderContent = () => {
+    const {selectedValue} = this.state;
+
+    return (
+      <WheelPickerDialog
+        items={this.colors}
+        selectedValue={selectedValue}
+        onSelect={this.onSelect}
+        onCancel={this.closeDialog}
+        wheelPickerProps={{
+          style: {width: 200}
+        }}
+      />
+    );
+  };
+
+  renderPickerDialog = () => {
+    const {showDialog} = this.state;
+
+    return (
+      <Dialog
+        migrate
+        visible={showDialog}
+        useSafeArea
+        bottom
+        onDismiss={this.closeDialog}
+      >
+        {this.renderContent()}
+      </Dialog>
+    );
+  };
+
   renderExample = (text: string, chip: JSX.Element) => {
     return (
       <View row spread marginB-12>
@@ -20,6 +97,7 @@ export default class ChipScreen extends Component {
   render() {
     return (
       <View style={{padding: 20}}>
+        {this.state.showDialog && this.renderPickerDialog()}
         <Text marginB-20 text40>
           Chip
         </Text>
@@ -27,15 +105,15 @@ export default class ChipScreen extends Component {
           Default
         </Text>
         {this.renderExample(
-          'label',
+          'Label',
           <Chip label={'Chip'}/>
         )}
         {this.renderExample(
-          'label with onPress',
+          'Label + onPress',
           <Chip label={'Chip'} onPress={() => Alert.alert('onPress')}/>
         )}
         {this.renderExample(
-          'label + onDismiss',
+          'Label + onDismiss',
           <Chip
             label={'Chip'}
             iconColor={Colors.black}
@@ -62,23 +140,23 @@ export default class ChipScreen extends Component {
           />
         )}
         {this.renderExample(
-          'Right icon',
+          'Right icon + onPress',
           <Chip
-            label={'Chip'}
-            rightIconSource={checkmark}
-            iconStyle={{width: 24, height: 24}}
-            iconProps={{tintColor: Colors.black}}
+            label={this.state.selectedValue}
+            rightIconSource={chevron}
+            iconStyle={{margin: 8}}
+            onPress={this.openDialog}
           />
         )}
         {this.renderExample(
-          'label + Avatar',
+          'Label + Avatar',
           <Chip
             label={'Chip'}
             avatarProps={{source: avatarImage, size: 20}}
           />
         )}
         {this.renderExample(
-          'label + Badge',
+          'Label + Badge',
           <Chip
             label={'Chip'}
             labelStyle={{
@@ -95,7 +173,7 @@ export default class ChipScreen extends Component {
           />
         )}
         {this.renderExample(
-          'label + Badge',
+          'Label + Badge',
           <Chip
             label={'Chip'}
             badgeProps={{
