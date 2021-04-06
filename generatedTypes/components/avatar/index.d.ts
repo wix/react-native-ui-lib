@@ -14,14 +14,9 @@ export declare enum BadgePosition {
     BOTTOM_RIGHT = "BOTTOM_RIGHT",
     BOTTOM_LEFT = "BOTTOM_LEFT"
 }
-export declare type NameToColorProps = {
+export declare type AutoColorsProps = {
     /**
-     * Hash the name (or label) to get a color, so each name will have a specific color.
-     * Default is false.
-     */
-    useHashBackgroundColor: boolean;
-    /**
-     * Avatar colors to be used when useHashBackgroundColor is true
+     * Avatar colors to be used when useAutoColorsConfig is true
      */
     avatarColors?: string[];
     /**
@@ -97,9 +92,14 @@ export declare type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'>
      */
     getInitials?: (name?: string, limit?: number) => string;
     /**
+     * Hash the name (or label) to get a color, so each name will have a specific color.
+     * Default is false.
+     */
+    useAutoColorsConfig?: boolean;
+    /**
      * Send this to use the name to infer a backgroundColor
      */
-    nameToColorProps?: NameToColorProps;
+    autoColorsConfig?: AutoColorsProps;
     /**
      * Label that can represent initials
      */
@@ -179,7 +179,7 @@ declare class Avatar extends PureComponent<AvatarProps> {
     renderImage(): JSX.Element | undefined;
     getText: (this: any, label: any, name: any, getInitials: any) => any;
     get text(): any;
-    getBackgroundColor: (this: any, text: any, useHashBackgroundColor: any, avatarColors: any, hashFunction: any, defaultColor: any, getBackgroundColor: any) => any;
+    getBackgroundColor: (this: any, text: any, useAutoColorsConfig: any, avatarColors: any, hashFunction: any, defaultColor: any, getBackgroundColor: any) => any;
     get backgroundColor(): any;
     render(): JSX.Element;
 }
@@ -262,9 +262,14 @@ declare const _default: React.ComponentClass<Pick<AccessibilityProps, "accessibi
      */
     getInitials?: ((name?: string | undefined, limit?: number | undefined) => string) | undefined;
     /**
+     * Hash the name (or label) to get a color, so each name will have a specific color.
+     * Default is false.
+     */
+    useAutoColorsConfig?: boolean | undefined;
+    /**
      * Send this to use the name to infer a backgroundColor
      */
-    nameToColorProps?: NameToColorProps | undefined;
+    autoColorsConfig?: AutoColorsProps | undefined;
     /**
      * Label that can represent initials
      */

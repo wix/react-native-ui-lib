@@ -46,14 +46,9 @@ export enum BadgePosition {
 
 const DEFAULT_BADGE_SIZE = 'pimpleBig';
 
-export type NameToColorProps = {
+export type AutoColorsProps = {
   /**
-   * Hash the name (or label) to get a color, so each name will have a specific color.
-   * Default is false.
-   */
-  useHashBackgroundColor: boolean;
-  /**
-   * Avatar colors to be used when useHashBackgroundColor is true
+   * Avatar colors to be used when useAutoColorsConfig is true
    */
   avatarColors?: string[];
   /**
@@ -135,9 +130,14 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
    */
   getInitials?: (name?: string, limit?: number) => string;
   /**
+   * Hash the name (or label) to get a color, so each name will have a specific color.
+   * Default is false.
+   */
+  useAutoColorsConfig?: boolean;
+  /**
    * Send this to use the name to infer a backgroundColor
    */
-  nameToColorProps?: NameToColorProps;
+  autoColorsConfig?: AutoColorsProps;
   /**
    * Label that can represent initials
    */
@@ -377,13 +377,13 @@ class Avatar extends PureComponent<AvatarProps> {
   }
 
   getBackgroundColor = memoize((text,
-    useHashBackgroundColor,
+    useAutoColorsConfig,
     avatarColors,
     hashFunction,
     defaultColor = Colors.dark80,
     // eslint-disable-next-line max-params
     getBackgroundColor) => {
-    if (useHashBackgroundColor) {
+    if (useAutoColorsConfig) {
       return getBackgroundColor(text, avatarColors, hashFunction, defaultColor);
     } else {
       return defaultColor;
@@ -391,20 +391,19 @@ class Avatar extends PureComponent<AvatarProps> {
   });
 
   get backgroundColor() {
-    const {backgroundColor, nameToColorProps, name} = this.props;
+    const {backgroundColor, useAutoColorsConfig, autoColorsConfig, name} = this.props;
     if (backgroundColor) {
       return backgroundColor;
     }
 
     const {
-      useHashBackgroundColor,
       avatarColors = AvatarHelper.getAvatarColors(),
       hashFunction = AvatarHelper.hashStringToNumber,
       defaultColor,
       getBackgroundColor = AvatarHelper.getBackgroundColor
-    } = nameToColorProps || {};
+    } = autoColorsConfig || {};
     return this.getBackgroundColor(name,
-      useHashBackgroundColor,
+      useAutoColorsConfig,
       avatarColors,
       hashFunction,
       defaultColor,
