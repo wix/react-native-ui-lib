@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {View, Text, Button} from 'react-native-ui-lib';
-import {HapticService} from '../../../../src/services';
+import {View, Text, Button, HapticService} from 'react-native-ui-lib';
 
 export default class HapticScreen extends Component {
   onPress = ({method}: {method: string}) => {
