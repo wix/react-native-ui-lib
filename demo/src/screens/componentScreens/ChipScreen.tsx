@@ -156,7 +156,7 @@ export default class ChipScreen extends Component {
           />
         )}
         {this.renderExample(
-          'Label + Badge',
+          'Label + Badge (counter)',
           <Chip
             label={'Chip'}
             labelStyle={{
