@@ -140,7 +140,7 @@ export default class ChipScreen extends Component {
           />
         )}
         {this.renderExample(
-          'Right icon + onPress',
+          'Right icon + onPress + dynamic label',
           <Chip
             label={this.state.selectedValue}
             rightIconSource={chevron}
