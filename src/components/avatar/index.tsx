@@ -59,15 +59,6 @@ export type AutoColorsProps = {
    * Background color in cases where the getBackgroundColor returns undefined.
    */
   defaultColor?: string;
-  /**
-   * Replace the default logic.
-   */
-  getBackgroundColor?: (
-    name?: string,
-    avatarColors?: string[],
-    hashFunction?: (name?: string) => number,
-    defaultColor?: string
-  ) => string;
 };
 
 export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
@@ -121,14 +112,10 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
   onImageLoadError?: ImagePropsBase['onError'];
   /**
    * The name of the avatar user.
-   * Text initials will be generated from the name.
-   * Has lower priority than label.
+   * If no label is provided, the initials will be generated from the name.
+   * autoColorsConfig will use the name to create the background color of the Avatar.
    */
   name?: string;
-  /**
-   * Override the logic for creating initials of the user name (default from AvatarHelper)
-   */
-  getInitials?: (name?: string, limit?: number) => string;
   /**
    * Hash the name (or label) to get a color, so each name will have a specific color.
    * Default is false.
@@ -362,29 +349,28 @@ class Avatar extends PureComponent<AvatarProps> {
     }
   }
 
-  getText = memoize((label, name, getInitials) => {
+  getText = memoize((label, name) => {
     let text = label;
-    if (_.isUndefined(label) && !_.isUndefined(name) && !_.isUndefined(getInitials)) {
-      text = getInitials(name);
+    if (_.isNil(label) && !_.isNil(name)) {
+      text = AvatarHelper.getInitials(name);
     }
 
     return text;
   });
 
   get text() {
-    const {label, name, getInitials = AvatarHelper.getInitials} = this.props;
-    return this.getText(label, name, getInitials);
+    const {label, name} = this.props;
+    return this.getText(label, name);
   }
 
   getBackgroundColor = memoize((text,
     useAutoColorsConfig,
     avatarColors,
     hashFunction,
-    defaultColor = Colors.dark80,
     // eslint-disable-next-line max-params
-    getBackgroundColor) => {
+    defaultColor = Colors.dark80) => {
     if (useAutoColorsConfig) {
-      return getBackgroundColor(text, avatarColors, hashFunction, defaultColor);
+      return AvatarHelper.getBackgroundColor(text, avatarColors, hashFunction, defaultColor);
     } else {
       return defaultColor;
     }
@@ -399,15 +385,9 @@ class Avatar extends PureComponent<AvatarProps> {
     const {
       avatarColors = AvatarHelper.getAvatarColors(),
       hashFunction = AvatarHelper.hashStringToNumber,
-      defaultColor,
-      getBackgroundColor = AvatarHelper.getBackgroundColor
+      defaultColor
     } = autoColorsConfig || {};
-    return this.getBackgroundColor(name,
-      useAutoColorsConfig,
-      avatarColors,
-      hashFunction,
-      defaultColor,
-      getBackgroundColor);
+    return this.getBackgroundColor(name, useAutoColorsConfig, avatarColors, hashFunction, defaultColor);
   }
 
   render() {

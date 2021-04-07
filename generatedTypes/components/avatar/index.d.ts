@@ -27,10 +27,6 @@ export declare type AutoColorsProps = {
      * Background color in cases where the getBackgroundColor returns undefined.
      */
     defaultColor?: string;
-    /**
-     * Replace the default logic.
-     */
-    getBackgroundColor?: (name?: string, avatarColors?: string[], hashFunction?: (name?: string) => number, defaultColor?: string) => string;
 };
 export declare type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
     /**
@@ -83,14 +79,10 @@ export declare type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'>
     onImageLoadError?: ImagePropsBase['onError'];
     /**
      * The name of the avatar user.
-     * Text initials will be generated from the name.
-     * Has lower priority than label.
+     * If no label is provided, the initials will be generated from the name.
+     * autoColorsConfig will use the name to create the background color of the Avatar.
      */
     name?: string;
-    /**
-     * Override the logic for creating initials of the user name (default from AvatarHelper)
-     */
-    getInitials?: (name?: string, limit?: number) => string;
     /**
      * Hash the name (or label) to get a color, so each name will have a specific color.
      * Default is false.
@@ -177,9 +169,9 @@ declare class Avatar extends PureComponent<AvatarProps> {
     renderBadge(): JSX.Element | undefined;
     renderRibbon(): JSX.Element | undefined;
     renderImage(): JSX.Element | undefined;
-    getText: (this: any, label: any, name: any, getInitials: any) => any;
+    getText: (this: any, label: any, name: any) => any;
     get text(): any;
-    getBackgroundColor: (this: any, text: any, useAutoColorsConfig: any, avatarColors: any, hashFunction: any, defaultColor: any, getBackgroundColor: any) => any;
+    getBackgroundColor: (this: any, text: any, useAutoColorsConfig: any, avatarColors: any, hashFunction: any, defaultColor?: any) => any;
     get backgroundColor(): any;
     render(): JSX.Element;
 }
@@ -253,14 +245,10 @@ declare const _default: React.ComponentClass<Pick<AccessibilityProps, "accessibi
     onImageLoadError?: ((error: import("react-native").NativeSyntheticEvent<import("react-native").ImageErrorEventData>) => void) | undefined;
     /**
      * The name of the avatar user.
-     * Text initials will be generated from the name.
-     * Has lower priority than label.
+     * If no label is provided, the initials will be generated from the name.
+     * autoColorsConfig will use the name to create the background color of the Avatar.
      */
     name?: string | undefined;
-    /**
-     * Override the logic for creating initials of the user name (default from AvatarHelper)
-     */
-    getInitials?: ((name?: string | undefined, limit?: number | undefined) => string) | undefined;
     /**
      * Hash the name (or label) to get a color, so each name will have a specific color.
      * Default is false.
