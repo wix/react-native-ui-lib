@@ -156,15 +156,15 @@ export default class ChipScreen extends Component {
           />
         )}
         {this.renderExample(
-          'Label + Badge (counter)',
+          'Label + Counter',
           <Chip
             label={'Chip'}
             labelStyle={{
               marginRight: undefined
             }}
+            useCounter
             badgeProps={{
               label: '4',
-              backgroundColor: 'transparent',
               labelStyle: {
                 ...Typography.text80R,
                 color: Colors.grey20

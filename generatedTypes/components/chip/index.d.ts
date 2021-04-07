@@ -53,6 +53,10 @@ export declare type ChipProps = ViewProps & TouchableOpacityProps & {
      */
     badgeProps?: BadgeProps;
     /**
+     * Display badge as counter (no background)
+     */
+    useCounter?: boolean;
+    /**
      * Avatar props object
      */
     avatarProps?: AvatarProps;
@@ -142,6 +146,10 @@ declare const _default: React.ComponentClass<ViewProps & TouchableOpacityProps &
      * Badge props object
      */
     badgeProps?: BadgeProps | undefined;
+    /**
+     * Display badge as counter (no background)
+     */
+    useCounter?: boolean | undefined;
     /**
      * Avatar props object
      */

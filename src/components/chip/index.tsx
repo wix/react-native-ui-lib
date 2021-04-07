@@ -62,7 +62,10 @@ export type ChipProps = ViewProps & TouchableOpacityProps & {
    * Badge props object
    */
   badgeProps?: BadgeProps;
-
+  /**
+   * Display badge as counter (no background)
+   */
+  useCounter?: boolean;
   //AVATAR
   /**
    * Avatar props object
@@ -127,6 +130,7 @@ const Chip = ({
   avatarProps,
   backgroundColor,
   badgeProps,
+  useCounter,
   borderRadius = BorderRadiuses.br100,
   containerStyle,
   onDismiss,
@@ -168,6 +172,7 @@ const Chip = ({
       <Badge
         size={BADGE_SIZES.default}
         testID={`${testID}.counter`}
+        backgroundColor={useCounter ? 'transparent' : undefined}
         {...badgeProps}
         // @ts-ignore
         containerStyle={[getMargins('badge'), badgeProps.containerStyle]}
