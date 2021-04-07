@@ -52,7 +52,7 @@ export function getBackgroundColor(name?: string,
   }
 
   const hash = hashFunction(name);
-  const index = hash % avatarColors.length;
+  const index = Math.abs(hash % avatarColors.length);
   return avatarColors[index];
 }
 

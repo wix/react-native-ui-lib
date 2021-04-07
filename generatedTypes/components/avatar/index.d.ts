@@ -171,8 +171,8 @@ declare class Avatar extends PureComponent<AvatarProps> {
     renderImage(): JSX.Element | undefined;
     getText: (this: any, label: any, name: any) => any;
     get text(): any;
-    getBackgroundColor: (this: any, text: any, useAutoColorsConfig: any, avatarColors: any, hashFunction: any, defaultColor?: any) => any;
-    get backgroundColor(): any;
+    getBackgroundColor: (this: any, text: any, avatarColors: any, hashFunction: any, defaultColor: any) => string | undefined;
+    get backgroundColor(): string | undefined;
     render(): JSX.Element;
 }
 declare function createStyles(props: AvatarProps): {
