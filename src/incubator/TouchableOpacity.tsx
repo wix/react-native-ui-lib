@@ -2,7 +2,6 @@
 import React, {PureComponent} from 'react';
 import {processColor, StyleSheet, LayoutChangeEvent} from 'react-native';
 import _ from 'lodash';
-// @ts-expect-error
 import Reanimated, {Easing as _Easing, EasingNode} from 'react-native-reanimated';
 import {TapGestureHandler, LongPressGestureHandler, State, LongPressGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../commons/new';
@@ -17,7 +16,6 @@ const {
   eq,
   neq,
   interpolate: _interpolate,
-  // @ts-expect-error
   interpolateNode,
   Extrapolate,
   Value,

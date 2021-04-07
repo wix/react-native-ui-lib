@@ -35,6 +35,7 @@ declare type PropsTypes = BaseComponentInjectedProps & ForwardRefInjectedProps &
  * @extends: Text
  * @extendsLink: https://facebook.github.io/react-native/docs/text.html
  * @modifiers: margins, color, typography
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextScreen.js
  */
 declare class Text extends PureComponent<PropsTypes> {
     static displayName: string;

@@ -58,6 +58,9 @@ declare type State = {
  * @description: Image wrapper with extra functionality like source transform and assets support
  * @extends: Image
  * @extendsLink: https://facebook.github.io/react-native/docs/image.html
+ * @notes: please note that for SVG support you need to add both
+ * `react-native-svg` and `react-native-svg-transformer`,
+ * and also configure them (see `metro.config.js`)
  */
 declare class Image extends PureComponent<Props, State> {
     static displayName: string;
@@ -81,6 +84,8 @@ declare class Image extends PureComponent<Props, State> {
     getVerifiedSource(source?: ImageSourcePropType): any;
     getImageSource(): any;
     onError: (event: NativeSyntheticEvent<ImageErrorEventData>) => void;
+    renderSvg: () => JSX.Element;
+    renderRegularImage(): JSX.Element;
     render(): JSX.Element;
 }
 export { Image };

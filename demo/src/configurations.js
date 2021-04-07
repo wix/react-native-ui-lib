@@ -14,6 +14,10 @@ Assets.loadAssetsGroup('images.demo', {
   brokenImage: require('./assets/images/placeholderMissingImage.png')
 });
 
+Assets.loadAssetsGroup('svgs.demo', {
+  logo: require('../../uilib-docs/src/images/newDesign/headerLogo.svg').default
+});
+
 Typography.loadTypographies({
   h1: {...Typography.text40},
   h2: {...Typography.text50},

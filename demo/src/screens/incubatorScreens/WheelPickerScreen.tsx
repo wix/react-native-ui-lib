@@ -1,7 +1,6 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {View, Text, Incubator, Colors, Typography} from 'react-native-ui-lib';
 import _ from 'lodash';
-import {ItemProps} from 'src/incubator/WheelPicker/Item';
 
 // Months
 const months = [
@@ -22,27 +21,61 @@ const months = [
 // Years
 const years = _.times(2020, i => i);
 
-export default () => {
+const useData = (initialMonth?: string, initialYear?: string) => {
 
-  const onChange = useCallback((index: number, item?: ItemProps) => {
-    console.log(item, index);
+  const [selectedMonth, setMonth] = useState<string | undefined>(initialMonth);
+  const [selectedYear, setYear] = useState<string | undefined>(initialYear);
+
+  const onMonthChange = (item: string | undefined, _: number) => {
+    setMonth(item);
+  };
+
+  const onYearChange = (item: string | undefined, _: number) => {
+    setYear(item);
+  };
+
+  const getMonths = useCallback(() => {
+    return _.map(months, item => ({label: item, value: item}));
   }, []);
+
+  const getYears = useCallback(() => {
+    return _.map(years, item => ({label: '' + item, value: item}));
+  }, []);
+
+  return {
+    getMonths, 
+    getYears,
+    onMonthChange,
+    onYearChange,
+    selectedMonth,
+    selectedYear
+  };
+};
+
+export default () => {
+  
+  const {selectedMonth, onMonthChange, getMonths, selectedYear, onYearChange, getYears} = useData('February', undefined);
 
   return (
     <View flex padding-page>
       <Text h1>Wheel Picker</Text>
-      <View flex centerV centerH paddingT-page>
+      
+      <View flex centerV centerH>
         <Text h3>Months</Text>
         <Incubator.WheelPicker
-          onChange={onChange}
+          style={{width: '100%'}}
+          onChange={onMonthChange}
           activeTextColor={Colors.primary}
           inactiveTextColor={Colors.grey20}
-          items={_.map(months, i => ({text: i, value: i}))}
-          textStyle={{...Typography.text60R}}
+          items={getMonths()}
+          textStyle={Typography.text60R}
+          selectedValue={selectedMonth}
         />
-
-        <Text h3 marginT-s5>Years</Text>
-        <Incubator.WheelPicker onChange={onChange} items={_.map(years, i => ({text: '' + i, value: i}))} />
+        
+        <Text h3>Years</Text>
+        <View height={300} width={'100%'}>
+          <Incubator.WheelPicker onChange={onYearChange} selectedValue={selectedYear} items={getYears()}/>
+        </View>
       </View>
     </View>
   );
