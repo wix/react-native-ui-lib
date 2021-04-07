@@ -44,9 +44,18 @@ describe('services/AvatarService', () => {
 
   it('should getInitials', () => {
     expect(uut.getInitials('Austin Guerrero')).toBe('AG');
+    expect(uut.getInitials('Austin Guerrero', 1)).toBe('A');
+    expect(uut.getInitials('Austin Guerrero', 2)).toBe('AG');
+    expect(uut.getInitials('Austin Guerrero', 3)).toBe('AG');
     expect(uut.getInitials('Austin   Guerrero')).toBe('AG');
     expect(uut.getInitials('theresa simpson')).toBe('TS');
+    expect(uut.getInitials('theresa simpson', 1)).toBe('T');
+    expect(uut.getInitials('theresa simpson', 2)).toBe('TS');
+    expect(uut.getInitials('theresa simpson', 3)).toBe('TS');
     expect(uut.getInitials('Sarah Michelle Galler')).toBe('SM');
+    expect(uut.getInitials('Sarah Michelle Galler', 1)).toBe('S');
+    expect(uut.getInitials('Sarah Michelle Galler', 2)).toBe('SM');
+    expect(uut.getInitials('Sarah Michelle Galler', 3)).toBe('SMG');
     expect(uut.getInitials('Keith')).toBe('K');
     expect(uut.getInitials()).toBe('');
     expect(uut.getInitials(' Austin ')).toBe('A');
