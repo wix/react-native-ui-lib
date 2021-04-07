@@ -100,8 +100,8 @@ const WheelPicker = React.memo(
       }
     };
 
-    const scrollToPassedIndex = (animated = false) => {
-      scrollToIndex(currentIndex, animated);
+    const scrollToPassedIndex = () => {
+      scrollToIndex(currentIndex, false);
     };
 
     const scrollToIndex = (index: number, animated: boolean) => {
