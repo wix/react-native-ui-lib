@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const {findValueNodeOfIdentifier} = require('../utils');
+const {findValueNodeOfIdentifier, getComponentLocalName} = require('../utils');
 
 const MAP_SCHEMA = {
   type: 'object',
@@ -52,7 +52,7 @@ module.exports = {
   },
   create(context) {
     function reportPropValueShapeDeprecation(propKey, prop, deprecation, node) {
-      const componentName = getComponentName(node);
+      const componentName = getComponentLocalName(node);
       const newProp = _.get(deprecation, 'fix.propName');
       const fixMessage = _.get(deprecation, 'message') ? ' ' + _.get(deprecation, 'message') : '';
       const message = `The shape of '${prop}' prop of '${componentName}' doesn't contain '${deprecation.prop}' anymore.${fixMessage}`;
@@ -70,7 +70,7 @@ module.exports = {
     function testJSXAttributes(node) {
       try {
         const {deprecations} = _.get(context, 'options[0]');
-        const componentName = getComponentName(node);
+        const componentName = getComponentLocalName(node);
         _.forEach(deprecations, deprecation => {
           if (_.includes(deprecation.components, componentName)) {
             _.forEach(node.attributes, attribute => {
@@ -130,21 +130,15 @@ module.exports = {
       }
     }
 
-    function getComponentName(node) {
-      const nodeProperty = _.get(node, 'name.property.name');
-      const nodeName = nodeProperty ? _.get(node, 'name.object.name') : _.get(node, 'name.name');
-      return nodeProperty ? (nodeName + '.' + nodeProperty) : nodeName;
-    }
-
     function getPathPrefix(str) {
       const index = str.indexOf('.');
       return index === -1 ? str : str.substring(0, index);
     }
-    
+
     function getPathSuffix(str) {
       const index = str.indexOf('.');
       return index === -1 ? undefined : str.substring(index + 1);
-    }    
+    }
 
     function checkAttributeProperties(attributeProperties, attributeName, deprecation, node) {
       for (let i = 0; i < attributeProperties.length; i++) {
