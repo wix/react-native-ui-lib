@@ -1,5 +1,5 @@
-import React from 'react';
-import {StyleSheet, LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp} from 'react-native';
+import React, {useCallback, useMemo} from 'react';
+import {LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp} from 'react-native';
 import {Colors, Spacings} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
@@ -37,7 +37,7 @@ export type SegmentProps = SegmentItemProps & {
   /**
    * The color of the inactive segment (label).
    */
-  inActiveColor?: string;
+  inactiveColor?: string;
   /**
    * Callback for when segment has pressed.
    */
@@ -49,40 +49,49 @@ export type SegmentProps = SegmentItemProps & {
   /**
    * onLayout function.
    */
-  segmentOnLayout?: (index: number, event: LayoutChangeEvent) => void;
+  onLayout?: (index: number, event: LayoutChangeEvent) => void;
 };
 
 /**
  * Segment sub-component for SegmentedControl component
  */
-const Segment = (props: SegmentProps) => {
+const Segment = React.memo((props: SegmentProps) => {
   const {
     activeColor = Colors.primary,
     label,
     iconSource,
     iconStyle,
     isSelected,
-    segmentOnLayout,
+    onLayout,
     onPress,
-    inActiveColor,
+    inactiveColor,
     index,
     iconOnRight
   } = props;
 
-  const segmentedColor = isSelected ? activeColor : inActiveColor;
-  const segmentStyle = [styles.segment, {borderColor: segmentedColor}];
+  const segmentedColor = useMemo(() => (isSelected ? activeColor : inactiveColor), [
+    isSelected,
+    activeColor,
+    inactiveColor
+  ]);
 
-  const renderIcon = () => {
+  const segmentStyle = useMemo(() => ({paddingHorizontal: Spacings.s3, borderColor: segmentedColor}), [segmentedColor]);
+
+  const renderIcon = useCallback(() => {
     return iconSource && <Image source={iconSource} style={[{tintColor: segmentedColor}, iconStyle]}/>;
-  };
+  }, [iconSource, segmentedColor, iconStyle]);
+
+  const onSegmentPress = useCallback(() => {
+    onPress(index);
+  }, [index, onPress]);
+
+  const segmentOnLayout = useCallback((event: LayoutChangeEvent) => {
+      onLayout?.(index, event);
+  },
+  [onLayout, index]);
 
   return (
-    <TouchableOpacity
-      onLayout={event => segmentOnLayout?.(index, event)}
-      style={segmentStyle}
-      onPress={() => onPress(index)}
-      row
-    >
+    <TouchableOpacity onLayout={segmentOnLayout} style={segmentStyle} onPress={onSegmentPress} row>
       {!iconOnRight && renderIcon()}
       {label && (
         <Text text90 numberOfLines={1} color={segmentedColor}>
@@ -92,12 +101,6 @@ const Segment = (props: SegmentProps) => {
       {iconOnRight && renderIcon()}
     </TouchableOpacity>
   );
-};
-
-const styles = StyleSheet.create({
-  segment: {
-    paddingHorizontal: Spacings.s3
-  }
 });
 
 export default asBaseComponent<SegmentProps>(Segment);

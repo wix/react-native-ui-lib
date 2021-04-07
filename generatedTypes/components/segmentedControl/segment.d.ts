@@ -30,7 +30,7 @@ export declare type SegmentProps = SegmentItemProps & {
     /**
      * The color of the inactive segment (label).
      */
-    inActiveColor?: string;
+    inactiveColor?: string;
     /**
      * Callback for when segment has pressed.
      */
@@ -42,7 +42,7 @@ export declare type SegmentProps = SegmentItemProps & {
     /**
      * onLayout function.
      */
-    segmentOnLayout?: (index: number, event: LayoutChangeEvent) => void;
+    onLayout?: (index: number, event: LayoutChangeEvent) => void;
 };
 declare const _default: React.ComponentClass<SegmentItemProps & {
     /**
@@ -56,7 +56,7 @@ declare const _default: React.ComponentClass<SegmentItemProps & {
     /**
      * The color of the inactive segment (label).
      */
-    inActiveColor?: string | undefined;
+    inactiveColor?: string | undefined;
     /**
      * Callback for when segment has pressed.
      */
@@ -68,7 +68,7 @@ declare const _default: React.ComponentClass<SegmentItemProps & {
     /**
      * onLayout function.
      */
-    segmentOnLayout?: ((index: number, event: LayoutChangeEvent) => void) | undefined;
+    onLayout?: ((index: number, event: LayoutChangeEvent) => void) | undefined;
 } & {
     useCustomTheme?: boolean | undefined;
 }, any>;

@@ -7,13 +7,13 @@ export declare type SegmentedControlProps = {
      */
     segments?: SegmentItemProps[];
     /**
-     * The color of the active segment (label and outline).
+     * The color of the active segment label.
      */
     activeColor?: string;
     /**
      * The color of the inactive segments (label).
      */
-    inActiveColor?: string;
+    inactiveColor?: string;
     /**
      * Callback for when index has change.
      */
@@ -35,11 +35,11 @@ export declare type SegmentedControlProps = {
      */
     activeBackgroundColor?: string;
     /**
-     * The color of the segmentedControl outline
+     * The color of the active segment outline
      */
     outlineColor?: string;
     /**
-     * The width of the segments
+     * The width of the active segment outline
      */
     outlineWidth?: number;
     /**
