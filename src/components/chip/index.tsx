@@ -115,6 +115,8 @@ export type ChipProps = ViewProps & TouchableOpacityProps & {
 }
 export type ChipPropTypes = ChipProps; //TODO: remove after ComponentPropTypes deprecation;
 
+const DEFAULT_SIZE = 26;
+
 /**
  * @description: Chip component
  * @extends: TouchableOpacity
@@ -125,11 +127,11 @@ const Chip = ({
   avatarProps,
   backgroundColor,
   badgeProps,
-  borderRadius,
+  borderRadius = BorderRadiuses.br100,
   containerStyle,
   onDismiss,
   dismissColor,
-  dismissIcon,
+  dismissIcon = Assets.icons.x,
   dismissIconStyle,
   dismissContainerStyle,
   iconProps,
@@ -140,8 +142,8 @@ const Chip = ({
   labelStyle,
   onPress,
   resetSpacings,
-  size,
-  useSizeAsMinimum,
+  size = DEFAULT_SIZE,
+  useSizeAsMinimum = true,
   testID,
   ...others
 }: ChipProps) => {
@@ -306,12 +308,6 @@ const Chip = ({
 };
 
 Chip.displayName = 'Chip';
-Chip.defaultProps = {
-  borderRadius: BorderRadiuses.br100,
-  dismissIcon: Assets.icons.x,
-  useSizeAsMinimum: true,
-  size: 26
-};
 
 const styles = StyleSheet.create({
   container: {
