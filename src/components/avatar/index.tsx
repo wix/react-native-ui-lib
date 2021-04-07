@@ -363,17 +363,8 @@ class Avatar extends PureComponent<AvatarProps> {
     return this.getText(label, name);
   }
 
-  getBackgroundColor = memoize((text,
-    useAutoColorsConfig,
-    avatarColors,
-    hashFunction,
-    // eslint-disable-next-line max-params
-    defaultColor = Colors.dark80) => {
-    if (useAutoColorsConfig) {
-      return AvatarHelper.getBackgroundColor(text, avatarColors, hashFunction, defaultColor);
-    } else {
-      return defaultColor;
-    }
+  getBackgroundColor = memoize((text, avatarColors, hashFunction, defaultColor) => {
+    return AvatarHelper.getBackgroundColor(text, avatarColors, hashFunction, defaultColor);
   });
 
   get backgroundColor() {
@@ -385,9 +376,13 @@ class Avatar extends PureComponent<AvatarProps> {
     const {
       avatarColors = AvatarHelper.getAvatarColors(),
       hashFunction = AvatarHelper.hashStringToNumber,
-      defaultColor
+      defaultColor = Colors.dark80
     } = autoColorsConfig || {};
-    return this.getBackgroundColor(name, useAutoColorsConfig, avatarColors, hashFunction, defaultColor);
+    if (useAutoColorsConfig) {
+      return this.getBackgroundColor(name, avatarColors, hashFunction, defaultColor);
+    } else {
+      return defaultColor;
+    }
   }
 
   render() {
