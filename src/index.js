@@ -170,6 +170,9 @@ export default {
   get ScrollBar() {
     return require('./components/scrollBar').default;
   },
+  get SegmentedControl() {
+    return require('./components/segmentedControl').default;
+  },
   get SharedTransition() {
     return require('./components/sharedTransition').default;
   },

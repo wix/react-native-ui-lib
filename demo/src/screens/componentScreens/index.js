@@ -32,6 +32,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.animations.ProgressBarScreen', () => require('../componentScreens/ProgressBarScreen').default);
   registrar('unicorn.components.RadioButtonScreen', () => require('./RadioButtonScreen').default);
   registrar('unicorn.components.ScrollBarScreen', () => require('./ScrollBarScreen').default);
+  registrar('unicorn.components.SegmentedControlScreen', () => require('./SegmentedControlScreen').default);
   registrar('unicorn.components.SharedTransitionScreen', () => require('./SharedTransitionScreen').default);
   registrar('unicorn.components.StepperScreen', () => require('./StepperScreen').default);
   registrar('unicorn.components.SwitchScreen', () => require('./SwitchScreen').default);

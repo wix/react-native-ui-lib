@@ -56,6 +56,7 @@ export const navigationData = {
       {title: 'Picker', tags: 'picker form', screen: 'unicorn.components.PickerScreen'},
       {title: 'DateTimePicker', tags: 'date time picker form', screen: 'unicorn.components.DateTimePickerScreen'},
       {title: 'RadioButton', tags: 'radio button group controls', screen: 'unicorn.components.RadioButtonScreen'},
+      {title: 'SegmentedControl', tags: 'segmented control switch toggle', screen: 'unicorn.components.SegmentedControlScreen'},
       {title: 'Stepper', tags: 'stepper form', screen: 'unicorn.components.StepperScreen'},
       {title: 'Slider', tags: 'slider', screen: 'unicorn.components.SliderScreen'},
       {title: 'Switch', tags: 'switch toggle', screen: 'unicorn.components.SwitchScreen'},
