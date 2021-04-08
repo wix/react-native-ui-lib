@@ -18,6 +18,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.DrawerScreen', () => require('./DrawerScreen').default);
   registrar('unicorn.components.ExpandableSectionScreen', () => require('./ExpandableSectionScreen').default);
   registrar('unicorn.components.ChipsInputScreen', () => require('./ChipsInputScreen').default);
+  registrar('unicorn.components.HapticScreen', () => require('./HapticScreen').default);
   registrar('unicorn.components.HintsScreen', () => require('./HintsScreen').default);
   registrar('unicorn.components.ImageScreen', () => require('./ImageScreen').default);
   registrar('unicorn.components.ProgressiveImageScreen', () => require('./ProgressiveImageScreen').default);

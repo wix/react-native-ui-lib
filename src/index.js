@@ -250,6 +250,9 @@ export default {
   get LogService() {
     return require('./services').LogService;
   },
+  get HapticService() {
+    return require('./services').HapticService;
+  },
 
   // NativeComponents
   get HighlighterOverlayView() {

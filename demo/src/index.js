@@ -58,6 +58,9 @@ module.exports = {
       get ChipsInputScreen() {
         return require('./screens/componentScreens/ChipsInputScreen').default;
       },
+      get HapticScreen() {
+        return require('./screens/componentScreens/HapticScreen').default;
+      },
       get HintsScreen() {
         return require('./screens/componentScreens/HintsScreen').default;
       },
