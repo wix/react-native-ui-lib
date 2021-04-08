@@ -15,7 +15,7 @@ Assets.loadAssetsGroup('images.demo', {
 });
 
 Assets.loadAssetsGroup('svgs.demo', {
-  logo: require('../../uilib-docs/src/images/newDesign/headerLogo.svg').default
+  logo: require('./assets/svgs/headerLogo.svg').default
 });
 
 Typography.loadTypographies({
