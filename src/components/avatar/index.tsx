@@ -376,7 +376,7 @@ class Avatar extends PureComponent<AvatarProps> {
     const {
       avatarColors = AvatarHelper.getAvatarColors(),
       hashFunction = AvatarHelper.hashStringToNumber,
-      defaultColor = Colors.dark80
+      defaultColor = Colors.grey80
     } = autoColorsConfig || {};
     if (useAutoColors) {
       return this.getBackgroundColor(name, avatarColors, hashFunction, defaultColor);
