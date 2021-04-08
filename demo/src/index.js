@@ -58,6 +58,9 @@ module.exports = {
       get ChipsInputScreen() {
         return require('./screens/componentScreens/ChipsInputScreen').default;
       },
+      get HapticScreen() {
+        return require('./screens/componentScreens/HapticScreen').default;
+      },
       get HintsScreen() {
         return require('./screens/componentScreens/HintsScreen').default;
       },
@@ -90,6 +93,9 @@ module.exports = {
       },
       get RadioButtonScreen() {
         return require('./screens/componentScreens/RadioButtonScreen').default;
+      },
+      get SegmentedControlScreen() {
+        return require('./screens/componentScreens/SegmentedControlScreen').default;
       },
       get SharedTransitionScreen() {
         return require('./screens/componentScreens/SharedTransitionScreen').default;
