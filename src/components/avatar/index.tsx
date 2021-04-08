@@ -48,7 +48,7 @@ const DEFAULT_BADGE_SIZE = 'pimpleBig';
 
 export type AutoColorsProps = {
   /**
-   * Avatar colors to be used when useAutoColorsConfig is true
+   * Avatar colors to be used when useAutoColors is true
    */
   avatarColors?: string[];
   /**
@@ -120,7 +120,7 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> & {
    * Hash the name (or label) to get a color, so each name will have a specific color.
    * Default is false.
    */
-  useAutoColorsConfig?: boolean;
+   useAutoColors?: boolean;
   /**
    * Send this to use the name to infer a backgroundColor
    */
@@ -368,7 +368,7 @@ class Avatar extends PureComponent<AvatarProps> {
   });
 
   get backgroundColor() {
-    const {backgroundColor, useAutoColorsConfig, autoColorsConfig, name} = this.props;
+    const {backgroundColor, useAutoColors, autoColorsConfig, name} = this.props;
     if (backgroundColor) {
       return backgroundColor;
     }
@@ -378,7 +378,7 @@ class Avatar extends PureComponent<AvatarProps> {
       hashFunction = AvatarHelper.hashStringToNumber,
       defaultColor = Colors.dark80
     } = autoColorsConfig || {};
-    if (useAutoColorsConfig) {
+    if (useAutoColors) {
       return this.getBackgroundColor(name, avatarColors, hashFunction, defaultColor);
     } else {
       return defaultColor;

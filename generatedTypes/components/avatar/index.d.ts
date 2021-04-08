@@ -16,7 +16,7 @@ export declare enum BadgePosition {
 }
 export declare type AutoColorsProps = {
     /**
-     * Avatar colors to be used when useAutoColorsConfig is true
+     * Avatar colors to be used when useAutoColors is true
      */
     avatarColors?: string[];
     /**
@@ -87,7 +87,7 @@ export declare type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'>
      * Hash the name (or label) to get a color, so each name will have a specific color.
      * Default is false.
      */
-    useAutoColorsConfig?: boolean;
+    useAutoColors?: boolean;
     /**
      * Send this to use the name to infer a backgroundColor
      */
@@ -253,7 +253,7 @@ declare const _default: React.ComponentClass<Pick<AccessibilityProps, "accessibi
      * Hash the name (or label) to get a color, so each name will have a specific color.
      * Default is false.
      */
-    useAutoColorsConfig?: boolean | undefined;
+    useAutoColors?: boolean | undefined;
     /**
      * Send this to use the name to infer a backgroundColor
      */
