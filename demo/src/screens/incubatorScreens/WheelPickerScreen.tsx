@@ -21,10 +21,13 @@ const months = [
 // Years
 const years = _.times(2020, i => i);
 
-const useData = (initialMonth?: string, initialYear?: string) => {
+const days = _.times(365, i => i + 1);
+
+const useData = (initialMonth?: string, initialYear?: string, initialDays?: number) => {
 
   const [selectedMonth, setMonth] = useState<string | undefined>(initialMonth);
   const [selectedYear, setYear] = useState<string | undefined>(initialYear);
+  const [selectedDays, setDays] = useState<number | undefined>(initialDays);
 
   const onMonthChange = (item: string | undefined, _: number) => {
     setMonth(item);
@@ -32,6 +35,10 @@ const useData = (initialMonth?: string, initialYear?: string) => {
 
   const onYearChange = (item: string | undefined, _: number) => {
     setYear(item);
+  };
+
+  const onDaysChange = (item: number | undefined, _: number) => {
+    setDays(item);
   };
 
   const getMonths = useCallback(() => {
@@ -42,25 +49,33 @@ const useData = (initialMonth?: string, initialYear?: string) => {
     return _.map(years, item => ({label: '' + item, value: item}));
   }, []);
 
+  const getDays = useCallback(() => {
+    return _.map(days, item => ({label: '' + item, value: item}));
+  }, []);
+
+
   return {
     getMonths, 
     getYears,
+    getDays,
     onMonthChange,
     onYearChange,
+    onDaysChange,
     selectedMonth,
-    selectedYear
+    selectedYear,
+    selectedDays
   };
 };
 
 export default () => {
   
-  const {selectedMonth, onMonthChange, getMonths, selectedYear, onYearChange, getYears} = useData('February', undefined);
+  const {selectedMonth, onMonthChange, getMonths, selectedYear, onYearChange, getYears, selectedDays, onDaysChange, getDays} = useData('February', undefined, 5);
 
   return (
     <View flex padding-page>
       <Text h1>Wheel Picker</Text>
       
-      <View flex centerV centerH>
+      <View flex marginT-20 centerH>
         <Text h3>Months</Text>
         <Incubator.WheelPicker
           style={{width: '100%'}}
@@ -75,6 +90,11 @@ export default () => {
         <Text h3>Years</Text>
         <View height={300} width={'100%'}>
           <Incubator.WheelPicker onChange={onYearChange} selectedValue={selectedYear} items={getYears()}/>
+        </View>
+
+        <Text h3 style={{marginTop: -50}}>Days</Text>
+        <View height={100} width={'100%'}>
+          <Incubator.WheelPicker onChange={onDaysChange} selectedValue={selectedDays} rightLabel={selectedDays === 1 ? 'Day' : 'Days'} items={getDays()}/>
         </View>
       </View>
     </View>

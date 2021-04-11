@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextStyle, ViewStyle } from 'react-native';
 import { ItemProps } from './Item';
+import { TextProps } from '../../components/text';
 export interface WheelPickerProps {
     /**
      * Data source for WheelPicker
@@ -29,6 +30,18 @@ export interface WheelPickerProps {
      */
     textStyle?: TextStyle;
     /**
+     * Additional label on the right of the item text
+     */
+    rightLabel?: string;
+    /**
+     * The Additional right label's style
+     */
+    rightLabelStyle?: TextStyle;
+    /**
+     * The Additional right label's props
+     */
+    rightLabelProps?: TextProps;
+    /**
      * Event, on active row change
      */
     onChange?: (item: string | number, index: number) => void;
@@ -45,5 +58,5 @@ export interface WheelPickerProps {
      */
     selectedValue: ItemProps | number | string;
 }
-declare const WheelPicker: React.MemoExoticComponent<({ items: propItems, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, onChange, style, children, selectedValue }: WheelPickerProps) => JSX.Element>;
+declare const WheelPicker: React.MemoExoticComponent<({ items: propItems, itemHeight, numberOfVisibleRows, activeTextColor, inactiveTextColor, textStyle, rightLabel, rightLabelStyle, rightLabelProps, onChange, style, children, selectedValue }: WheelPickerProps) => JSX.Element>;
 export default WheelPicker;

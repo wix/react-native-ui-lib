@@ -9,6 +9,7 @@ import Fader, {FaderPosition} from '../../components/fader';
 import {Constants} from '../../helpers';
 import Item, {ItemProps} from './Item';
 import usePresenter from './usePresenter';
+import Text, {TextProps} from '../../components/text';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -40,6 +41,18 @@ export interface WheelPickerProps {
    */
   textStyle?: TextStyle;
   /**
+   * Additional label on the right of the item text
+   */
+  rightLabel?: string;
+  /**
+   * The Additional right label's style
+   */
+  rightLabelStyle?: TextStyle;
+  /**
+   * The Additional right label's props
+   */
+  rightLabelProps?: TextProps;
+  /**
    * Event, on active row change
    */
   onChange?: (item: string | number, index: number) => void;
@@ -62,9 +75,12 @@ const WheelPicker = React.memo(
     items: propItems,
     itemHeight = 44,
     numberOfVisibleRows = 5,
-    activeTextColor,
+    activeTextColor = Colors.primary,
     inactiveTextColor,
     textStyle,
+    rightLabel,
+    rightLabelStyle,
+    rightLabelProps,
     onChange,
     style,
     children,
@@ -153,7 +169,12 @@ const WheelPicker = React.memo(
               height: Spacings.s9,
               borderColor: Colors.grey60
             }}
-          />
+            center
+          >
+            <Text marginL-80 text80M {...rightLabelProps} color={activeTextColor} style={rightLabelStyle}>
+              {rightLabel}
+            </Text>
+          </View>
         </View>
       );
     };
