@@ -62,9 +62,13 @@ module.exports = {
             foundDeprecations.forEach(foundDeprecation => {
               let fixNode;
               if (node.type === 'ImportDeclaration') {
-                fixNode = node.specifiers.filter(
+                const foundSpecifiers = node.specifiers.filter(
                   specifier => _.get(specifier, 'imported.name') === foundDeprecation.component
-                )[0].imported;
+                );
+
+                if (foundSpecifiers.length > 0) {
+                  fixNode = foundSpecifiers[0].imported;
+                }
               } else if (node.type === 'VariableDeclarator') {
                 const properties = _.get(node, 'id.properties');
                 if (properties) {

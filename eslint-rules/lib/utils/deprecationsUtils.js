@@ -21,6 +21,10 @@ function organizeDeprecations(deprecations, defaultSource) {
 }
 
 function getLocalizedFix(fix, currentImport) {
+  if (!fix) {
+    return;
+  }
+  
   let localizedFix = fix;
   const indexOfDot = fix.indexOf('.');
   if (indexOfDot > 0) {

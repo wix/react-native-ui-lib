@@ -50,7 +50,9 @@ function _addToImports_fromSpreading(midSource, newImports, imports) {
 function _getImportsFromProperties(node) {
   const newImports = {};
   _.map(node.id.properties, property => {
-    newImports[property.value.name] = property.key.name;
+    if (property.type === 'Property') {
+      newImports[property.value.name] = property.key.name;
+    }
   });
 
   return newImports;
