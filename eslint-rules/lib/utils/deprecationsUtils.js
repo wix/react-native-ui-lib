@@ -1,3 +1,5 @@
+const {getComponentName, getPrefix, isNamespace} = require('./componentUtils');
+
 function _organizeDeprecationsBySource(deprecations, defaultSource) {
   const obj = {};
   deprecations.forEach(deprecation => {
@@ -24,7 +26,7 @@ function getLocalizedFix(fix, currentImport) {
   if (!fix) {
     return;
   }
-  
+
   let localizedFix = fix;
   const indexOfDot = fix.indexOf('.');
   if (indexOfDot > 0) {
@@ -42,7 +44,23 @@ function getLocalizedFix(fix, currentImport) {
   return localizedFix;
 }
 
+function getPossibleDeprecations(componentLocalName, imports, currentImport, deprecationSource) {
+  const source = Object.keys(currentImport)[0];
+  const components = currentImport[source];
+  const componentName = getComponentName(componentLocalName, imports);
+  const prefix = getPrefix(componentLocalName);
+  return deprecationSource.filter(currentDeprecationSource => {
+    return (
+      (isNamespace(currentImport, componentLocalName) ||
+        components[componentLocalName] ||
+        (prefix && components[prefix])) &&
+      currentDeprecationSource.component === componentName
+    );
+  });
+}
+
 module.exports = {
   organizeDeprecations,
-  getLocalizedFix
+  getLocalizedFix,
+  getPossibleDeprecations
 };

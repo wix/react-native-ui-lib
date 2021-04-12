@@ -5,6 +5,7 @@ const {
   addToImports,
   getComponentLocalName,
   getComponentName,
+  getPossibleDeprecations,
   findValueNodeOfIdentifier
 } = require('../utils');
 
@@ -116,9 +117,13 @@ module.exports = {
           if (deprecationSource) {
             // There are deprecations from this source
             const componentName = getComponentName(componentLocalName, imports);
-            const foundPossibleDeprecations = deprecationSource.filter(
-              currentDeprecationSource => currentDeprecationSource.component === componentName
+            const foundPossibleDeprecations = getPossibleDeprecations(
+              componentLocalName,
+              imports,
+              currentImport,
+              deprecationSource
             );
+            
             foundPossibleDeprecations.forEach(foundPossibleDeprecation => {
               const deprecatedPropList = foundPossibleDeprecation.props;
               const attributes = node.attributes;

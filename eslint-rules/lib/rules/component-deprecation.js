@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const {addToImports, organizeDeprecations, getComponentLocalName, getComponentName} = require('../utils');
+const {addToImports, organizeDeprecations, getComponentLocalName, getPossibleDeprecations} = require('../utils');
 
 const MAP_SCHEMA = {
   type: 'object',
@@ -43,10 +43,27 @@ module.exports = {
     const organizedDeprecations = organizeDeprecations(deprecations);
 
     const imports = [];
+    const parents = [];
+
+    function getParent(localName) {
+      const foundParents = parents.filter(parent => Object.keys(parent)[0] === localName);
+      return !_.isEmpty(foundParents) ? foundParents[0][localName] : undefined;
+    }
+
+    function isParent(foundDeprecation, localName) {
+      if (foundDeprecation.parent) {
+        const parent = getParent(localName);
+        if (foundDeprecation.parent === parent) {
+          return true;
+        }
+      }
+
+      return false;
+    }
 
     function importDeprecationCheck(node) {
       const previousImports = _.cloneDeep(imports);
-      addToImports(node, imports);
+      addToImports(node, imports, parents);
       const addedImports = _.differenceWith(imports, previousImports, _.isEqual);
       addedImports.forEach(currentImport => {
         const source = Object.keys(currentImport)[0];
@@ -60,6 +77,11 @@ module.exports = {
 
           if (foundDeprecations.length > 0) {
             foundDeprecations.forEach(foundDeprecation => {
+              const localName = Object.keys(components).find(key => components[key] === foundDeprecation.component);
+              if (isParent(foundDeprecation, localName)) {
+                return;
+              }
+
               let fixNode;
               if (node.type === 'ImportDeclaration') {
                 const foundSpecifiers = node.specifiers.filter(
@@ -92,13 +114,18 @@ module.exports = {
           const deprecationSource = organizedDeprecations[source];
           if (deprecationSource) {
             // There are deprecations from this source
-            const componentName = getComponentName(componentLocalName, imports);
-            const foundDeprecations = deprecationSource.filter(
-              currentDeprecationSource => currentDeprecationSource.component === componentName
+            const foundDeprecations = getPossibleDeprecations(
+              componentLocalName,
+              imports,
+              currentImport,
+              deprecationSource
             );
 
             if (foundDeprecations.length > 0) {
               const foundDeprecation = foundDeprecations[0];
+              if (isParent(foundDeprecation, componentLocalName)) {
+                return;
+              }
 
               // This is a little hacky, is there a better way?
               if (componentLocalName.includes(foundDeprecation.component)) {

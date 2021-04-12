@@ -1,5 +1,5 @@
 const {findValueNodeOfIdentifier} = require('./generalUtils');
-const {organizeDeprecations, getLocalizedFix} = require('./deprecationsUtils');
+const {organizeDeprecations, getLocalizedFix, getPossibleDeprecations} = require('./deprecationsUtils');
 const {addToImports} = require('./importUtils');
 const {getComponentLocalName, getComponentName} = require('./componentUtils');
 const {findAndReportHardCodedValues} = require('./noHardCodedUtils');
@@ -11,6 +11,7 @@ module.exports = {
   // Deprecations
   organizeDeprecations,
   getLocalizedFix,
+  getPossibleDeprecations,
   // Imports
   addToImports,
   // Components
