@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const {findValueNodeOfIdentifier, getComponentName, getPathPrefix, getPathSuffix} = require('../utils_old');
+const {findValueNodeOfIdentifier, getComponentLocalName, addToImports, getComponentName} = require('../utils');
 
 const MAP_SCHEMA = {
   type: 'object',
@@ -52,7 +52,7 @@ module.exports = {
   },
   create(context) {
     function reportPropValueShapeDeprecation(propKey, prop, deprecation, node) {
-      const componentName = getComponentName(node);
+      const componentName = getComponentName(getComponentLocalName(node), imports);
       const newProp = _.get(deprecation, 'fix.propName');
       const fixMessage = _.get(deprecation, 'message') ? ' ' + _.get(deprecation, 'message') : '';
       const message = `The shape of '${prop}' prop of '${componentName}' doesn't contain '${deprecation.prop}' anymore.${fixMessage}`;
@@ -67,10 +67,12 @@ module.exports = {
       });
     }
 
+    const imports = [];
+
     function testJSXAttributes(node) {
       try {
         const {deprecations} = _.get(context, 'options[0]');
-        const componentName = getComponentName(node);
+        const componentName = getComponentName(getComponentLocalName(node), imports);
         _.forEach(deprecations, deprecation => {
           if (_.includes(deprecation.components, componentName)) {
             _.forEach(node.attributes, attribute => {
@@ -130,6 +132,16 @@ module.exports = {
       }
     }
 
+    function getPathPrefix(str) {
+      const index = str.indexOf('.');
+      return index === -1 ? str : str.substring(0, index);
+    }
+
+    function getPathSuffix(str) {
+      const index = str.indexOf('.');
+      return index === -1 ? undefined : str.substring(index + 1);
+    }
+
     function checkAttributeProperties(attributeProperties, attributeName, deprecation, node) {
       for (let i = 0; i < attributeProperties.length; i++) {
         const propertyType = _.get(attributeProperties[i], 'type');
@@ -146,6 +158,8 @@ module.exports = {
     }
 
     return {
+      ImportDeclaration: node => addToImports(node, imports),
+      VariableDeclarator: node => addToImports(node, imports),
       JSXOpeningElement: testJSXAttributes
     };
   }
