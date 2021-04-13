@@ -1,4 +1,4 @@
-const {findValueNodeOfIdentifier} = require('./generalUtils');
+const {getPrefix, getSuffix, findValueNodeOfIdentifier} = require('./generalUtils');
 const {organizeDeprecations, getLocalizedFix, getPossibleDeprecations} = require('./deprecationsUtils');
 const {addToImports} = require('./importUtils');
 const {getComponentLocalName, getComponentName} = require('./componentUtils');
@@ -7,6 +7,8 @@ const {stringify} = require('./debugUtils');
 
 module.exports = {
   // General
+  getPrefix,
+  getSuffix,
   findValueNodeOfIdentifier,
   // Deprecations
   organizeDeprecations,

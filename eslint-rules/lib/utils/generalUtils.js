@@ -1,3 +1,13 @@
+function getPrefix(str) {
+  const indexOfDot = str.indexOf('.');
+  return indexOfDot === -1 ? str : str.substring(0, indexOfDot);
+}
+
+function getSuffix(str) {
+  const indexOfDot = str.indexOf('.');
+  return indexOfDot === -1 ? undefined : str.substring(indexOfDot + 1);
+}
+
 function findValueNodeOfIdentifier(identifierName, scope) {
   const varsInScope = scope.variables;
   let valueNode = false;
@@ -16,5 +26,7 @@ function findValueNodeOfIdentifier(identifierName, scope) {
 
 
 module.exports = {
+  getPrefix,
+  getSuffix,
   findValueNodeOfIdentifier
 };

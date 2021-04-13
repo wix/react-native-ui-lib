@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const {getPrefix} = require('./generalUtils');
 
 function getComponentLocalName(node) {
   if (!node) return;
@@ -10,18 +10,13 @@ function getComponentLocalName(node) {
   return `${start}.${end}`; // <List.Part/> OR <module.List.Part/> etc.
 }
 
-function getPrefix(componentLocalName) {
-  const indexOfDot = componentLocalName.indexOf('.');
-  return componentLocalName.slice(0, indexOfDot);
-}
-
 function isNamespace(currentImport, componentLocalName) {
   const components = Object.values(currentImport)[0];
   const prefix = getPrefix(componentLocalName);
   if (prefix && components[prefix]) {
     return components[prefix].isNamespace;
   }
-  
+
   return false;
 }
 
@@ -50,8 +45,6 @@ module.exports = {
   getComponentLocalName,
   // Get the real name of the component
   getComponentName,
-  // Get the prefix of the component name (List for List.Part for example)
-  getPrefix,
   // Is the localName comes from a namespace (module.Component)
   isNamespace
 };

@@ -1,4 +1,5 @@
-const {getComponentName, getPrefix, isNamespace} = require('./componentUtils');
+const {getPrefix} = require('./generalUtils');
+const {getComponentName, isNamespace} = require('./componentUtils');
 
 function _organizeDeprecationsBySource(deprecations, defaultSource) {
   const obj = {};
