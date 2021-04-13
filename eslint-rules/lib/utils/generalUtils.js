@@ -13,7 +13,7 @@ function findValueNodeOfIdentifier(identifierName, scope) {
   let valueNode = false;
   varsInScope.forEach((variable) => {
     if (variable.name === identifierName) {
-      if (variable.defs) {
+      if (variable.defs && variable.defs.length > 0) {
         valueNode = variable.defs[variable.defs.length - 1].node.init;
       }
     }
