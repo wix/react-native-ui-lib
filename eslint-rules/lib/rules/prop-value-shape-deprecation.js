@@ -1,5 +1,12 @@
 const _ = require('lodash');
-const {findValueNodeOfIdentifier, getComponentLocalName, addToImports, getComponentName} = require('../utils');
+const {
+  getPrefix,
+  getSuffix,
+  findValueNodeOfIdentifier,
+  getComponentLocalName,
+  addToImports,
+  getComponentName
+} = require('../utils');
 
 const MAP_SCHEMA = {
   type: 'object',
@@ -88,8 +95,8 @@ module.exports = {
     }
 
     function recursiveDeprecation(attribute, deprecationProp, deprecation, deprecationPath, node) {
-      const deprecationPrefix = getPathPrefix(deprecationProp);
-      const deprecationSuffix = getPathSuffix(deprecationProp);
+      const deprecationPrefix = getPrefix(deprecationProp);
+      const deprecationSuffix = getSuffix(deprecationProp);
       let passedProps;
       let attributeName = _.get(attribute, 'name.name') || _.get(attribute, 'key.name');
       if (attribute.type === 'JSXSpreadAttribute' || attribute.type === 'ExperimentalSpreadProperty') {
@@ -130,16 +137,6 @@ module.exports = {
           recursiveDeprecation(attributeProperty, deprecationSuffix, deprecation, deprecationPath, node);
         });
       }
-    }
-
-    function getPathPrefix(str) {
-      const index = str.indexOf('.');
-      return index === -1 ? str : str.substring(0, index);
-    }
-
-    function getPathSuffix(str) {
-      const index = str.indexOf('.');
-      return index === -1 ? undefined : str.substring(index + 1);
     }
 
     function checkAttributeProperties(attributeProperties, attributeName, deprecation, node) {
