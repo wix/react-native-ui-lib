@@ -351,7 +351,6 @@ ruleTester.run('component-deprecation', rule, {
     {
       options: ruleOptions,
       code: `import {ScrollView as S} from 'module-with-deprecations'; <S/>;`,
-      code: `import {ScrollView as S} from 'module-with-deprecations'; <S/>;`,
       errors: [
         {message: "The 'ScrollView' component is deprecated. Please use the 'MyComponent.ScrollView' component instead."},
       ]
